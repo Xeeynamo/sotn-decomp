@@ -351,40 +351,34 @@ void func_8019BD0C(struct UnkStruct1* arg0)
     }
 }
 
-extern u8 D_8003BE3C;
 extern EntityInit EntityInit_8018067C;
 
-// [Entity]
+// [Entity] Top of room 3, demon button?
 void func_8019BDF8(Entity* entity)
 {
-    s16 temp_3;
-
-    switch (entity->step) {
-        case 0:
+    switch (entity->step)
+    {
+    case 0:
             InitializeEntity(&EntityInit_8018067C);
-
-            temp_3 = 3;
-
-            do {
-                entity->hitPoints = 0x7FFF;
-                entity->animCurFrame = temp_3;
-                entity->hitboxState = 3;
-                entity->hitboxWidth = 6;
-                entity->hitboxHeight = 8;
-            } while (0);
-
-            if (D_8003BE3C != 0) {
+            
+            entity->animCurFrame = 3;
+            entity->hitPoints = 32767;
+            entity->hitboxState = 3;
+            entity->hitboxWidth = 6;
+            entity->hitboxHeight = 8;
+            
+            if (g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] != 0) {
                 entity->animCurFrame = 4;
             }
             // fallthrough
-        case 1:
-            if (entity->unk44 == 7) {
-                g_api.PlaySfx(0x640);
-                D_8003BE3C = 1;
-                g_api.func_800F1FC4(0x50);
-                entity->animCurFrame = 4;
-                entity->step++;
-            }
-            return;
+    case 1:
+        if (entity->unk44 == 7) {
+            g_api.PlaySfx(0x640);
+            g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] = 1;
+            g_api.func_800F1FC4(0x50);
+            entity->animCurFrame = 4;
+            entity->step++;
+        }
+        break;
     }
 }
