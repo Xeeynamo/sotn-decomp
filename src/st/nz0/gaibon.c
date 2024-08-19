@@ -107,7 +107,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_IDLE:
         AnimateEntity(D_80181250, self);
         if (!self->animFrameDuration && self->animFrameIdx == 1) {
-            func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+            PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
         }
         if (self->hitFlags) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
@@ -149,7 +149,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_80181250, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (!(--self->ext.GS_Props.timer)) {
@@ -164,7 +164,7 @@ void EntityGaibon(Entity* self) {
                 SetStep(4);
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             break;
         }
@@ -206,7 +206,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_80181298, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             // Reuse of speedLimit variable, unrelated to speed
             speedLimit = 0xF;
@@ -218,7 +218,7 @@ void EntityGaibon(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_SMALL_FIREBALL, self, other);
-                    func_801C29B0(SFX_EXPLODE_FAST_A);
+                    PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -245,7 +245,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             break;
         }
@@ -311,11 +311,11 @@ void EntityGaibon(Entity* self) {
                     if (!self->ext.GS_Props.nearDeath) {
                         CreateEntityFromEntity(
                             E_GAIBON_SMALL_FIREBALL, self, other);
-                        func_801C29B0(SFX_EXPLODE_FAST_A);
+                        PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     } else {
                         CreateEntityFromEntity(
                             E_GAIBON_BIG_FIREBALL, self, other);
-                        func_801C29B0(SFX_EXPLODE_B);
+                        PlaySfxPositional(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
                     if (self->facingLeft) {
@@ -349,7 +349,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
-                    func_801C29B0(SFX_EXPLODE_B);
+                    PlaySfxPositional(SFX_EXPLODE_B);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -420,7 +420,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(D_801812AC, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
@@ -441,7 +441,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(D_801812AC, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             if (GetSideToPlayer() & 1) {
                 self->velocityX -= FIX(5.0 / 128);
@@ -479,7 +479,7 @@ void EntityGaibon(Entity* self) {
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
             if (func_801BCCFC(D_80181240) & 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_SCREAM);
+                PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
                 SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;
@@ -488,10 +488,10 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.flag = 0;
                 SetSubStep(GAIBON_NEAR_DEATH_TRANSFORM);
                 if (self->flags & FLAG_DEAD) {
-                    func_801C29B0(SFX_NOISE_SWEEP_DOWN_A);
+                    PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                     SetStep(GAIBON_DYING);
                 } else {
-                    func_801C29B0(NA_SE_EN_GAIBON_SCREAM);
+                    PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
                 }
             }
             break;
@@ -517,14 +517,14 @@ void EntityGaibon(Entity* self) {
                 // do-while needed on PSX but not PSP
                 do {
                     self->palette = D_80180D30[3];
-                    func_801C29B0(SFX_EXPLODE_SMALL);
+                    PlaySfxPositional(SFX_EXPLODE_SMALL);
                     self->step_s++;
                 } while (0);
             }
             break;
         case GAIBON_DYING_TURN_INTO_BONES:
             if (!(self->ext.GS_Props.timer & 7)) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAME);
+                PlaySfxPositional(NA_SE_EN_GAIBON_FLAME);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, other);

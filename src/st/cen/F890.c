@@ -476,7 +476,7 @@ void EntityElevatorStationary(Entity* self) {
             player->posY.i.hi++;
             posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if ((g_Timer % 16) == 0) {
-                func_8019A328(SFX_METAL_CLANG_A);
+                PlaySfxPositional(SFX_METAL_CLANG_A);
             }
             if (posY == 0x74) {
                 self->step_s++;
@@ -516,7 +516,7 @@ void EntityElevatorStationary(Entity* self) {
         case 1:
             self->posY.val -= FIX(0.5);
             if ((g_Timer % 16) == 0) {
-                func_8019A328(SFX_METAL_CLANG_A);
+                PlaySfxPositional(SFX_METAL_CLANG_A);
             }
             break;
 

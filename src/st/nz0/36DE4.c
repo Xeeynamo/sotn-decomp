@@ -44,7 +44,7 @@ void func_801B6DE4(Entity* self) {
                 self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0 -
                                         (g_Tilemap.scrollY.i.hi - 4));
                 self->step++;
-                func_801C29B0(SFX_SWITCH_CLICK);
+                PlaySfxPositional(SFX_SWITCH_CLICK);
                 g_ElevatorTarget = self->params;
             }
         }

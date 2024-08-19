@@ -281,7 +281,7 @@ void func_801C9BC0(void) {
 
 #include "../clut_lerp.h"
 
-void func_801CAD28(s16 sfxId) {
+void PlaySfxPositional(s16 sfxId) {
     s32 sfxVol;
     s32 temp_v0_2;
     s16 sfxPan;
@@ -401,7 +401,7 @@ void func_801CC6F8(Entity* entity) {
     }
 
     SetStep(6);
-    func_801CAD28(0x783);
+    PlaySfxPositional(0x783);
     entity->ext.et_801CC820.unk80 = 0x20;
 }
 

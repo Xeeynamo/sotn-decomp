@@ -152,7 +152,7 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
-            func_801916C4(NA_SE_EV_WINDOW_LATCH);
+            PlaySfxPositional(NA_SE_EV_WINDOW_LATCH);
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
@@ -952,7 +952,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
     case 2:
         self->posY.val += FIX(0.5);
         if ((self->posY.i.hi + g_Tilemap.scrollY.i.hi) >= 175) {
-            func_801916C4(SFX_START_SLAM_B);
+            PlaySfxPositional(SFX_START_SLAM_B);
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
             self->step++;
         }
@@ -1307,7 +1307,7 @@ void func_801B5488(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801916C4(SFX_WALL_DEBRIS_B);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;

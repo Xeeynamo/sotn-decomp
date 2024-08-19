@@ -220,7 +220,7 @@ s16 GetSine(u8 arg0) { return D_80181978[arg0]; } // Unique
 
 void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     if (sfxId != 0) {
-        func_801C29B0(sfxId);
+        PlaySfxPositional(sfxId);
     }
 
     if (arg0 == 0xFF) {

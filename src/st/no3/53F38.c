@@ -33,7 +33,7 @@ void EntityMerman(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN_DYING)) {
-        func_801CAD28(0x71D);
+        PlaySfxPositional(0x71D);
         self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -238,7 +238,7 @@ void EntityMerman(Entity* self) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                func_801CAD28(SFX_FIREBALL_SHOT_C);
+                PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN_UNK2, self, newEntity);
@@ -365,7 +365,7 @@ void EntityMerman(Entity* self) {
             if (!(g_Timer % 8)) {
                 self->ext.merman.palette++;
                 if (self->ext.merman.palette == PAL_DRA(0x2C0)) {
-                    func_801CAD28(SFX_FM_EXPLODE_B);
+                    PlaySfxPositional(SFX_FM_EXPLODE_B);
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(E_MERMAN_UNK3, self, newEntity);

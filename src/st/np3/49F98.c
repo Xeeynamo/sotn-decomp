@@ -214,13 +214,13 @@ void EntityBloodyZombie(Entity* self) {
     s32 animStatus;
 
     if (self->unk44 && self->step & 1) {
-        func_801916C4(NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM);
-        func_801916C4(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
+        PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM);
+        PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
         SetStep(BLOODY_ZOMBIE_TAKE_HIT);
     }
 
     if (self->flags & FLAG_DEAD && self->step < 8) {
-        func_801916C4(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
+        PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
         self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
         SetStep(BLOODY_ZOMBIE_DYING);
@@ -312,7 +312,7 @@ void EntityBloodyZombie(Entity* self) {
     case BLOODY_ZOMBIE_ATTACK:
         animStatus = AnimateEntity(D_801825FC, self);
         if (animStatus & 0x80 && self->animFrameIdx == 10) {
-            func_801916C4(SFX_WEAPON_SWISH_B);
+            PlaySfxPositional(SFX_WEAPON_SWISH_B);
         }
         if (animStatus == 0) {
             SetStep(BLOODY_ZOMBIE_WALK);
@@ -352,7 +352,7 @@ void EntityBloodyZombie(Entity* self) {
 
         if (self->animFrameIdx < 13) {
             if (!(g_Timer % 8)) {
-                func_801916C4(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
+                PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x4A, self, newEntity);
@@ -369,7 +369,7 @@ void EntityBloodyZombie(Entity* self) {
             self->ext.generic.unk80.modeS16.unk0 = 0;
         } else {
             if (self->ext.generic.unk80.modeS16.unk0 == 0) {
-                func_801916C4(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
+                PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
             }
 
             self->ext.generic.unk80.modeS16.unk0++;
@@ -407,7 +407,7 @@ void EntityBloodyZombie(Entity* self) {
             }
             self->ext.generic.unk80.modeS16.unk0 = 64;
             self->animCurFrame = 0;
-            func_801916C4(NA_SE_EN_EXPLOSIVE_DEATH);
+            PlaySfxPositional(NA_SE_EN_EXPLOSIVE_DEATH);
             self->step++;
         }
         break;

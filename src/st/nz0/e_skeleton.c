@@ -124,7 +124,7 @@ void EntitySkeleton(Entity* self) {
                 ((u16)self->posY.i.hi <= 240)) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) { // Spawn bone
-                    func_801C29B0(NA_SE_EN_SKELETON_THROW_BONE);
+                    PlaySfxPositional(NA_SE_EN_SKELETON_THROW_BONE);
                     CreateEntityFromCurrentEntity(0x2F, newEntity);
                     if (self->facingLeft != 0) {
                         newEntity->posX.i.hi -= 8;
@@ -177,7 +177,7 @@ void EntitySkeleton(Entity* self) {
         }
         break;
     case SKELETON_DESTROY:
-        func_801C29B0(SFX_SKELETON_DEATH_C);
+        PlaySfxPositional(SFX_SKELETON_DEATH_C);
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {

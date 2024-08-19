@@ -53,7 +53,7 @@ extern u16 g_InitializeEntityData0[];
 
 #include "../entity_intense_explosion.h"
 
-void func_801916C4(s16 sfxId) {
+void PlaySfxPositional(s16 sfxId) {
     s32 posX;
     s32 posY;
     s16 sfxPan;

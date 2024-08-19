@@ -7,7 +7,7 @@ void func_8018A520(s16);
 void UpdateRoomPosition(void);
 void func_8018CAB0(void);
 void InitRoomEntities(s32 objLayoutId);
-void func_801916C4(u16);
+void PlaySfxPositional(u16);
 void BottomCornerText(u8*, u8);
 
 extern MyRoomDef rooms_layers[];

@@ -129,7 +129,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     case LEFT_SECRET_ROOM_WALL_IDLE:
         if (self->hitFlags != 0) {
-            func_801C29B0(SFX_WALL_DEBRIS_B);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -208,7 +208,7 @@ void EntityBottomSecretRoomFloor(
 
     case BOTTOM_SECRET_ROOM_FLOOR_IDLE:
         if (self->hitFlags != 0) {
-            func_801C29B0(SFX_WALL_DEBRIS_B);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         return;
@@ -293,7 +293,7 @@ void func_801B19A0(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             if (self->params == 0) {
-                func_801C29B0(SFX_WALL_DEBRIS_B);
+                PlaySfxPositional(SFX_WALL_DEBRIS_B);
                 for (i = 0; i < 2; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
@@ -445,7 +445,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
 
         if (self->ext.generic.unk88.U8.unk0 != var_v1) {
             self->ext.generic.unk88.U8.unk0 = var_v1;
-            func_801C29B0(0x69D);
+            PlaySfxPositional(0x69D);
         }
     }
 
@@ -1081,7 +1081,7 @@ void EntityFloorSpikes(Entity* self) {
         }
     }
     if (self->ext.generic.unk88.U8.unk0 != 0) {
-        func_801C29B0(0x69D);
+        PlaySfxPositional(0x69D);
         self->ext.generic.unk88.S8.unk0 = 0;
     }
     prim = *((s32*)(&self->ext.generic.unk7C));
@@ -1104,7 +1104,7 @@ void EntityTableWithGlobe(Entity* self) {
     case 1:
         AnimateEntity(D_80180EF0, self);
         if (self->hitFlags != 0) {
-            func_801C29B0(SFX_GLASS_BREAK_E);
+            PlaySfxPositional(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].params = D_80180F10[self->params];
@@ -1134,7 +1134,7 @@ void func_801B3648(Entity* self) {
     case 1:
         AnimateEntity(D_80180F1C, self);
         if (self->hitFlags != 0) {
-            func_801C29B0(SFX_GLASS_BREAK_A);
+            PlaySfxPositional(SFX_GLASS_BREAK_A);
             self->hitboxState = 0;
             SetStep(2);
         }
@@ -1208,7 +1208,7 @@ void func_801B37C0(Entity* self) {
             newEntity->params = 2;
             newEntity->posY.i.hi -= 8;
         }
-        func_801C29B0(SFX_GLASS_BREAK_E);
+        PlaySfxPositional(SFX_GLASS_BREAK_E);
         self->step++;
 
     case 3:

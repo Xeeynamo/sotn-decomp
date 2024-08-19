@@ -287,7 +287,7 @@ void func_8019055C(void) {
 
 // Appears to handle playing SFX in a way that reduces volume with
 // distance from player. Especially noticable in Slogra/Gaibon fight.
-void func_801C29B0(s16 sfxId) {
+void PlaySfxPositional(s16 sfxId) {
     s32 sfxVol;
     s32 temp_v0_2;
     s16 sfxPan;

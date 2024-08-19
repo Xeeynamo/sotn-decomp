@@ -116,7 +116,7 @@ void EntityBlade(Entity* self) {
     if ((self->flags & 0x100) && (self->step < 0x18U) &&
         (((self + 13)->ext.GH_Props.unk88 != 0) ||
          ((self + 10)->ext.GH_Props.unk88 != 0))) {
-        func_801916C4(0x750);
+        PlaySfxPositional(0x750);
         func_801CE1E8(0x18);
     }
     switch (self->step) {
@@ -286,7 +286,7 @@ void EntityBlade(Entity* self) {
             collider.unk18 = 9;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801916C4(SFX_STOMP_HARD_C);
+                PlaySfxPositional(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
@@ -339,7 +339,7 @@ void EntityBlade(Entity* self) {
             func_801D0A00(var_s2);
             if ((self->ext.GH_Props.unkB0[0] == 1) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(SFX_BONE_SWORD_SWISH_C);
+                PlaySfxPositional(SFX_BONE_SWORD_SWISH_C);
             }
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
@@ -368,7 +368,7 @@ void EntityBlade(Entity* self) {
         break;
     case 10:
         if (self->step_s == 0) {
-            func_801916C4(0x74E);
+            PlaySfxPositional(0x74E);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
@@ -420,7 +420,7 @@ void EntityBlade(Entity* self) {
         break;
     case 14:
         if (self->step_s == 0) {
-            func_801916C4(0x74F);
+            PlaySfxPositional(0x74F);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
@@ -464,7 +464,7 @@ void EntityBlade(Entity* self) {
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 3) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(SFX_STOMP_HARD_A);
+                PlaySfxPositional(SFX_STOMP_HARD_A);
             }
             if (self->ext.GH_Props.unkB0[0] == 0 &&
                 self->ext.GH_Props.unkB0[2] == 0) {
@@ -478,7 +478,7 @@ void EntityBlade(Entity* self) {
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(SFX_ARROW_SHOT_A);
+                PlaySfxPositional(SFX_ARROW_SHOT_A);
                 (self + 15)->ext.GH_Props.unk8C = 1;
                 (self + 15)->ext.GH_Props.rotZ = 0x400;
                 (self + 15)->rotZ = 0x400;
@@ -503,9 +503,9 @@ void EntityBlade(Entity* self) {
         case 5:
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801916C4(SFX_FM_EXPLODE_B);
+                    PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
-                    func_801916C4(SFX_EXPLODE_D);
+                    PlaySfxPositional(SFX_EXPLODE_D);
                 }
             }
             if (--self->ext.GH_Props.unk80 == 0) {

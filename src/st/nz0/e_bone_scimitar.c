@@ -166,7 +166,7 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
-            func_801C29B0(SFX_BONE_SWORD_SWISH_B);
+            PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
         }
 
         if (animStatus == 0) {

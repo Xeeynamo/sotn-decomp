@@ -6,7 +6,7 @@ void EntityZombie(Entity* self) {
     s32 temp_a0;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 4)) {
-        func_801916C4(SFX_EXPLODE_SMALL);
+        PlaySfxPositional(SFX_EXPLODE_SMALL);
         self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);

@@ -188,7 +188,7 @@ extern s16 g_SineTable[];
 
 void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     if (sfxId != 0) {
-        func_801916C4(sfxId);
+        PlaySfxPositional(sfxId);
     }
 
     if (arg0 == 0xFF) {
