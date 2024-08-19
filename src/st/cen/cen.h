@@ -8,10 +8,6 @@
 
 #define CASTLE_FLAG_BANK 0x00
 
-// CEN Sound IDs
-
-#define SE_CEN_ELEVATOR_DOOR 0X675
-
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID_01,

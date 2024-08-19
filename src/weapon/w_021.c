@@ -13,6 +13,7 @@ extern s32 g_HandId;
 #include "w_021_2.h"
 #define g_Animset w_021_1
 #define g_Animset2 w_021_2
+#include "sfx.h"
 
 extern SpriteParts D_97000_8017A040[];
 
@@ -461,7 +462,7 @@ s32 func_ptr_80170004(Entity* self) {
                 g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
                 g_unkGraphicsStruct.BottomCornerTextTimer = 0;
             }
-            g_api.PlaySfx(0x67C);
+            g_api.PlaySfx(SFX_ITEM_PICKUP);
             temp_s1 = g_api.equipDefs[upperParams].name;
             g_api.AddToInventory(upperParams, EQUIP_HAND);
             func_97000_8017AB54(temp_s1, 1);
@@ -520,7 +521,7 @@ s32 func_ptr_80170004(Entity* self) {
                 g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
                 g_unkGraphicsStruct.BottomCornerTextTimer = 0;
             }
-            g_api.PlaySfx(0x67C);
+            g_api.PlaySfx(SFX_ITEM_PICKUP);
             temp_s1 = g_api.equipDefs[upperParams].name;
             g_api.AddToInventory(upperParams, EQUIP_HAND);
             func_97000_8017AB54(temp_s1, 1);

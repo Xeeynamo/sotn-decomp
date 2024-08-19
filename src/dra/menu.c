@@ -2657,7 +2657,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
     }
 
     if (prevCursor != *nav) {
-        PlaySfx(SE_UI_SELECT);
+        PlaySfx(SFX_UI_MOVE);
     }
 }
 

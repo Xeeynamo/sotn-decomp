@@ -339,7 +339,7 @@ void EntityBlade(Entity* self) {
             func_801D0A00(var_s2);
             if ((self->ext.GH_Props.unkB0[0] == 1) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(0x66E);
+                func_801916C4(SFX_BONE_SWORD_SWISH_C);
             }
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&

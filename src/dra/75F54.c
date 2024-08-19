@@ -1209,7 +1209,7 @@ void func_80118640(void) {
 void func_80118670(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 40), 0);
-        PlaySfx(NA_SE_PL_MP_GAUGE);
+        PlaySfx(SFX_UI_MP_FULL);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 112), 0);
     }
     if (PLAYER.animFrameDuration < 0) {
