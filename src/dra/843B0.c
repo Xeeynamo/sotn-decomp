@@ -1455,7 +1455,7 @@ void EntityBatFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        PlaySfx(NA_SE_PL_BT_FIREBALL);
+        PlaySfx(SFX_QUICK_STUTTER_EXPLODE);
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->animSet = 9;
         self->anim = D_800B0798;
@@ -2829,7 +2829,7 @@ void EntitySummonSpirit(Entity* self) {
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
-            PlaySfx(NA_SE_PL_MP_GAUGE);
+            PlaySfx(SFX_UI_MP_FULL);
             self->step++;
         }
         break;

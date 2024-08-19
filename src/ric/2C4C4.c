@@ -2386,7 +2386,7 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
         /* fallthrough */
     case 2:
         if (!(++D_80175890 & 7)) {
-            g_api.PlaySfx(0x672);
+            g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 9; i++) {

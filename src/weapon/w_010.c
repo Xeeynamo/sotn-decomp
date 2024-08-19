@@ -371,7 +371,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             }
-            g_api.PlaySfx(SE_WPN_POWER_OF_SIRE);
+            g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
             self->step++;
         }
         break;

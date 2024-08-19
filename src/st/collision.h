@@ -462,7 +462,7 @@ void HitDetection(void) {
                             } else if (iterEnt2->hitEffect & 0x80) {
                                 g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
-                                g_api.PlaySfx(SFX_WEAPON_HIT);
+                                g_api.PlaySfx(SFX_WEAPON_HIT_A);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
