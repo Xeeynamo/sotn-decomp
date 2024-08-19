@@ -344,7 +344,7 @@ void EntityOwl(Entity* self) {
         case 2:
             AnimateEntity(D_80182710, self);
             if ((g_Timer & 7) == 7) {
-                func_801916C4(0x66D);
+                func_801916C4(SFX_BONE_SWORD_SWISH_B);
             }
             if (self->ext.owl.unk80 & 0x40) {
                 SetStep(7);
@@ -980,7 +980,7 @@ void EntityOwlKnight(Entity* self) {
         }
         AnimateEntity(D_801828A0, self);
         if (!--self->ext.owl.unk82) {
-            func_801916C4(0x672);
+            func_801916C4(SFX_NOISE_SWEEP_DOWN_A);
             SetStep(18);
         }
         break;

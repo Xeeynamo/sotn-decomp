@@ -492,7 +492,7 @@ void EntityElevatorStationary(Entity* self) {
                 self->step = 1;
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                g_api.PlaySfx(SE_CEN_ELEVATOR_DOOR);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
         break;
@@ -509,7 +509,7 @@ void EntityElevatorStationary(Entity* self) {
                 self->step_s++;
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                g_api.PlaySfx(SE_CEN_ELEVATOR_DOOR);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
             break;
 

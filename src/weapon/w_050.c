@@ -8,6 +8,7 @@ extern s32 g_HandId;
 #include "w_050_2.h"
 #define g_Animset w_050_1
 #define g_Animset2 w_050_2
+#include "sfx.h"
 
 extern WeaponAnimation D_162000_8017AFC0[];
 extern SpriteParts D_162000_8017A040[];
@@ -46,7 +47,7 @@ void EntityWeaponAttack(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
         if (animIndex == 1) {
-            g_api.PlaySfx(0x669);
+            g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
             g_api.CreateEntFactoryFromEntity(

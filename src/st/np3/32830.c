@@ -665,11 +665,11 @@ void EntityCavernDoorLever(Entity* entity) {
             if (entity->rotZ > 0) {
                 entity->rotZ = 0;
                 if (g_CastleFlags[48] == 0) {
-                    g_api.PlaySfx(0x675);
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
                 g_CastleFlags[48] = 1;
             } else if (!(g_Timer & 0xF)) {
-                g_api.PlaySfx(0x675);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
         break;
@@ -766,7 +766,7 @@ void EntityCavernDoor(Entity* self) {
     case 1:
         if (g_CastleFlags[48]) {
             // Missing line compared to NO3
-            // g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
+            // g_api.PlaySfx(SFX_SWITCH_CLICK);
             self->step++;
         }
         break;
@@ -890,7 +890,7 @@ void EntityClickSwitch(Entity* entity) {
             entity->posY.val += FIX(0.75);
             if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Tilemap.scrollY.i.hi;
-                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                g_api.PlaySfx(SFX_SWITCH_CLICK);
                 g_CastleFlags[49] = 1;
                 entity->step++;
             }
@@ -1621,7 +1621,7 @@ void EntitySwitch(Entity* self) {
             if ((g_Tilemap.scrollY.i.hi + self->posY.i.hi) > 193) {
                 self->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
                 g_CastleFlags[50] = true;
-                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                g_api.PlaySfx(SFX_SWITCH_CLICK);
                 self->step++;
             }
         }

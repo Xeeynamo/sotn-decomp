@@ -309,7 +309,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             self->ext.shield.unk80 = 0x20;
-            g_api.PlaySfx(SFX_UNK_669);
+            g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             self->step++;
         }
         break;
