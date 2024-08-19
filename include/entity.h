@@ -194,7 +194,8 @@ typedef struct PACKED {
     /* 0x98 */ s32 unk98;
     /* 0x9C */ s32 accelerationX;
     /* 0xA0 */ s32 accelerationY;
-    /* 0xA4 */ s32 unkA4;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 vol;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
