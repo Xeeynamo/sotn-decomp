@@ -194,7 +194,8 @@ typedef struct PACKED {
     /* 0x98 */ s32 unk98;
     /* 0x9C */ s32 accelerationX;
     /* 0xA0 */ s32 accelerationY;
-    /* 0xA4 */ s32 unkA4;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 vol;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
@@ -616,7 +617,7 @@ typedef struct {
     /* 0x86 */ u8 pad86[2];
     /* 0x88 */ u8 unk88;
     /* 0x89 */ u8 unk89;
-} ET_801B3C38;
+} ET_WargExplosionPuffOpaque;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -1500,7 +1501,7 @@ typedef union { // offset=0x7C
     ET_Succubus succubus;
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
-    ET_801B3C38 et38;
+    ET_WargExplosionPuffOpaque wargpuff;
     ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;

@@ -58,7 +58,7 @@ typedef enum {
     /* 0x4A */ E_BLOOD_SPLATTER,
     /* 0x4B */ E_STAIRWAY_PIECE,
     /* 0x4C */ E_FALLING_ROCK,
-    /* 0x4D */ E_ID_4D,
+    /* 0x4D */ E_WARG_EXP_OPAQUE,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,

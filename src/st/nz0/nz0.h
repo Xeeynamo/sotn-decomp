@@ -30,7 +30,7 @@ typedef enum {
     /* 0x31 */ E_SPITTLEBONE = 0x31,
     /* 0x32 */ E_ROTATE_SPITTLEBONE,
     /* 0x33 */ E_SPITTLEBONE_SPIT,
-    /* 0x38 */ E_FIRE = 0x38,
+    /* 0x38 */ E_WARG_EXP_OPAQUE = 0x38,
     /* 0x3F */ E_BOSS_ROOM_BLOCK = 0x3F,
     /* 0x40 */ E_SLOGRA,
     /* 0x41 */ E_SLOGRA_SPEAR,

@@ -72,7 +72,7 @@ typedef enum EntityIDs {
     /* 0x5B */ E_ID_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
     /* 0x5E */ E_ID_5E,
-    /* 0x62 */ E_ID_62 = 0x62,
+    /* 0x62 */ E_WARG_EXP_OPAQUE = 0x62,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
