@@ -670,17 +670,12 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ s32 unk7C;
-    /* 0x80 */ s16 unk80;
+    /* 0x7C */ s32 accelY;
+    /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 unk82;
-    union {
-        /* 0x84 */ s32 val;
-        struct {
-            /* 0x84 */ s16 unk0;
-            /* 0x86 */ s16 unk2;
-        } modeS16;
-    } unk84; // size = 0x4
+    /* 0x84 */ f32 topY;
     /* 0x88 */ u16 unk88;
+    /* 0x8A */ s16 unk8A;
 } ET_WaterEffects;
 
 typedef struct {

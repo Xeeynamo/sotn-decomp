@@ -143,7 +143,7 @@ void EntitySplashWater(Entity* self) {
 
             g_api.PlaySfxVolPan(D_801813A8, 0x7F, temp_a2);
             self->velocityY = D_80183878[params].x;
-            self->ext.waterEffects.unk7C = D_80183878[params].y;
+            self->ext.waterEffects.accelY = D_80183878[params].y;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
@@ -156,7 +156,7 @@ void EntitySplashWater(Entity* self) {
 
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.unk7C;
+        self->velocityY += self->ext.waterEffects.accelY;
         if (self->velocityY > FIX(2.5)) {
             self->step++;
         }
@@ -274,8 +274,8 @@ void EntitySurfacingWater(Entity* self) {
             prim = prim->next;
         }
         rnd = (rand() & 1) + 12;
-        self->ext.generic.unk84.S16.unk2 = D_80183898[(u8)self->params] + rnd;
-        self->velocityX = self->ext.generic.unk88.S16.unk2 * 16;
+        self->ext.waterEffects.topY.i.hi = D_80183898[(u8)self->params] + rnd;
+        self->velocityX = self->ext.waterEffects.unk8A * 16;
         if (params != 0) {
             self->velocityY = self->velocityX / var_s2;
             if (self->velocityY < 0) {
@@ -285,7 +285,7 @@ void EntitySurfacingWater(Entity* self) {
         break;
 
     case 1:
-        self->ext.waterEffects.unk84.val -= 0x4000;
+        self->ext.waterEffects.topY.val -= FIX(0.25);
         break;
     }
 
@@ -330,8 +330,8 @@ void EntitySurfacingWater(Entity* self) {
     while (j < 2) {
         prim->y2 = prim->y2 - bottom;
         prim->y3 = prim->y3 - bottom;
-        prim->y0 = prim->y2 - self->ext.waterEffects.unk84.modeS16.unk2;
-        prim->y1 = prim->y3 - self->ext.waterEffects.unk84.modeS16.unk2;
+        prim->y0 = prim->y2 - self->ext.waterEffects.topY.i.hi;
+        prim->y1 = prim->y3 - self->ext.waterEffects.topY.i.hi;
         prim->x2 = prim->x0 = temp_t0;
         prim->x3 = prim->x1 = x;
         prim->b1 += 248;
@@ -397,7 +397,7 @@ void EntitySideWaterSplash(Entity* self) {
             temp_s1 += rsin(angle) * *ptr;
             temp_lo = rcos(angle) * *ptr;
             self->velocityX = temp_s1 + (((params & 0xFF00) << 0x10) >> 0xE);
-            self->ext.waterEffects.unk7C = 0x2C00;
+            self->ext.waterEffects.accelY = FIX(22.0/128);
             self->velocityY = temp_s3 + temp_lo;
         } else {
         DestroyEntity:
@@ -408,7 +408,7 @@ void EntitySideWaterSplash(Entity* self) {
 
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.unk7C;
+        self->velocityY += self->ext.waterEffects.accelY;
         break;
     }
 
@@ -488,12 +488,12 @@ void EntitySmallWaterDrop(Entity* self) {
         }
         self->velocityX = var_v1 + (temp_s5 * 16);
         self->velocityY = D_801838F4[params * 2 + 1];
-        self->ext.waterEffects.unk7C = 0x4000;
+        self->ext.waterEffects.accelY = FIX(0.25);
         break;
 
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.unk7C;
+        self->velocityY += self->ext.waterEffects.accelY;
         break;
     }
 
