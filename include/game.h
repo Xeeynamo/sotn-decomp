@@ -1696,6 +1696,9 @@ extern s32 g_IsTimeAttackUnlocked;
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
+enum CASTLE_FLAGS {
+    CASTLE_FLAG_CHI_DEMON_BUTTON = 0x50,
+};
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
 extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
