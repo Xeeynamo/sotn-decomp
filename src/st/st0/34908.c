@@ -198,9 +198,11 @@ s32 func_801B51E4(s16* posX) {
 
 #include "../alloc_entity.h"
 
-s32 GetSineScaled(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
+extern s16 g_SineTable[];
 
-s16 GetSine(u8 arg0) { return D_80181990[arg0]; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
+
+s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
 
 void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityX = GetSineScaled(arg0, arg1);

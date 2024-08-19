@@ -188,6 +188,8 @@ s32 func_801BCF74(s16* posX) {
 
 #include "../alloc_entity.h"
 
+extern s16 D_80181978[];
+
 s32 GetSineScaled(u8 arg0, s16 arg1) { return D_80181978[arg0] * arg1; }
 
 s16 GetSine(u8 arg0) { return D_80181978[arg0]; } // Unique

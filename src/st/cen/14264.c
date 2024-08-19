@@ -157,7 +157,7 @@ s32 func_801948EC(s16* posX) {
 
 #include "../alloc_entity.h"
 
-static s16 D_80180BBC[] = {
+static s16 g_SineTable[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC, 0x031F,
     0x0381, 0x03E3, 0x0444, 0x04A5, 0x0505, 0x0564, 0x05C2, 0x061F, 0x067C,
     0x06D7, 0x0732, 0x078B, 0x07E3, 0x083A, 0x088F, 0x08E4, 0x0937, 0x0988,
@@ -189,9 +189,9 @@ static s16 D_80180BBC[] = {
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
 
-s32 GetSineScaled(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
 
-s16 GetSine(u8 arg0) { return D_80180BBC[arg0]; }
+s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
 
 void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityX = GetSineScaled(arg0 & 0xFF, arg1);
