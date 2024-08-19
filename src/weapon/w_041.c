@@ -1,17 +1,149 @@
 // Weapon ID #41. Used by weapons:
 // Monster vial 2
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "w_041_1.h"
 #include "w_041_2.h"
 #define g_Animset w_041_1
 #define g_Animset2 w_041_2
-#include "shared.h"
 #include "sfx.h"
 
-extern AnimationFrame D_123000_8017A4A4[];
-extern FrameProperty D_123000_8017A50C[];
+static s16 D_123000_8017A284[] = {
+    COLOR16(0, 0, 0, 0),    COLOR16(3, 3, 3, 0),    COLOR16(5, 5, 5, 0),
+    COLOR16(7, 7, 7, 0),    COLOR16(8, 8, 8, 0),    COLOR16(11, 11, 11, 0),
+    COLOR16(14, 14, 14, 0), COLOR16(16, 16, 16, 0), COLOR16(28, 28, 0, 0),
+    COLOR16(8, 1, 1, 0),    COLOR16(17, 1, 1, 0),   COLOR16(22, 1, 1, 0),
+    COLOR16(29, 1, 1, 0),   COLOR16(13, 9, 6, 0),   COLOR16(16, 14, 11, 0),
+    COLOR16(25, 1, 16, 0),  COLOR16(0, 0, 0, 0),    COLOR16(6, 6, 9, 1),
+    COLOR16(7, 7, 10, 1),   COLOR16(9, 9, 11, 1),   COLOR16(11, 11, 12, 1),
+    COLOR16(13, 13, 13, 1), COLOR16(14, 14, 14, 1), COLOR16(15, 15, 15, 1),
+    COLOR16(16, 16, 16, 1), COLOR16(17, 17, 17, 1), COLOR16(18, 18, 18, 1),
+    COLOR16(19, 19, 19, 1), COLOR16(20, 20, 20, 1), COLOR16(21, 21, 21, 1),
+    COLOR16(22, 22, 22, 1), COLOR16(22, 23, 24, 1), COLOR16(0, 0, 0, 0),
+    COLOR16(5, 3, 7, 1),    COLOR16(5, 3, 8, 1),    COLOR16(6, 4, 10, 1),
+    COLOR16(7, 5, 12, 1),   COLOR16(8, 6, 13, 1),   COLOR16(9, 7, 15, 1),
+    COLOR16(10, 8, 17, 1),  COLOR16(11, 9, 19, 1),  COLOR16(12, 12, 21, 1),
+    COLOR16(14, 16, 23, 1), COLOR16(16, 19, 25, 1), COLOR16(17, 23, 27, 1),
+    COLOR16(19, 26, 29, 1), COLOR16(21, 30, 31, 1), COLOR16(31, 31, 31, 1),
+    COLOR16(0, 0, 0, 0),    COLOR16(25, 25, 24, 0), COLOR16(17, 17, 17, 0),
+    COLOR16(9, 9, 9, 0),    COLOR16(13, 13, 12, 0), COLOR16(4, 4, 3, 0),
+    COLOR16(3, 3, 3, 0),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(10, 0, 0, 0),   COLOR16(24, 13, 13, 0), COLOR16(20, 0, 0, 0),
+    COLOR16(24, 2, 2, 0),   COLOR16(0, 0, 0, 1),    COLOR16(0, 12, 11, 0),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(1, 0, 0, 0),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 0, 1),
+    COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 1, 0)};
+
+static AnimationFrame D_123000_8017A4A4[] = {
+    {4, FRAME(0x01, 0x02)}, {1, FRAME(0x02, 0x04)},
+    {1, FRAME(0x03, 0x06)}, {1, FRAME(0x0A, 0x12)},
+    {1, FRAME(0x04, 0x08)}, {1, FRAME(0x05, 0x0A)},
+    {4, FRAME(0x06, 0x0C)}, {2, FRAME(0x07, 0x0A)},
+    {2, FRAME(0x08, 0x0E)}, {2, FRAME(0x09, 0x10)},
+    {1, FRAME(0x0A, 0x12)}, {2, FRAME(0x03, 0x06)},
+    {2, FRAME(0x02, 0x04)}, A_LOOP_AT(0)};
+
+static AnimationFrame D_123000_8017A4DC[] = {
+    {2, FRAME(0x0C, 0x16)}, {1, FRAME(0x0D, 0x16)},
+    {2, FRAME(0x0E, 0x16)}, {1, FRAME(0x0F, 0x16)},
+    {1, FRAME(0x10, 0x16)}, {1, FRAME(0x11, 0x16)},
+    {1, FRAME(0x12, 0x16)}, {1, FRAME(0x0E, 0x16)},
+    {1, FRAME(0x0D, 0x16)}, A_END};
+
+static AnimationFrame D_123000_8017A504[] = {{0x80, 0x000B}, A_END};
+
+static FrameProperty D_123000_8017A50C[] = {
+    {0x00, 0x00, 0x00, 0x00}, {0x00, 0xFA, 0x06, 0x0D},
+    {0x00, 0xFB, 0x06, 0x0A}, {0x00, 0xFE, 0x06, 0x07},
+    {0x00, 0x04, 0x06, 0x08}, {0x00, 0x07, 0x06, 0x0C},
+    {0x00, 0x08, 0x06, 0x0E}, {0x00, 0x06, 0x06, 0x0B},
+    {0x00, 0x04, 0x06, 0x09}, {0x00, 0x02, 0x06, 0x06},
+    {0x00, 0x00, 0x03, 0x03}, {0xC1, 0xC1, 0x00, 0x00}};
+
+static s32 D_123000_8017A53C[] = {
+    FIX(0.875),
+    FIX(0.375),
+    FIX(1.125),
+    FIX(0.625),
+};
+
+static s32 D_123000_8017A54C[] = {
+    FIX(-3.25),
+    FIX(-3),
+    FIX(-3.5),
+};
+
+static u16* g_WeaponCluts[] = {D_123000_8017A284};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
+
 extern s32 D_123000_8017B200;
 
 void func_123000_8017A914(void) {
@@ -105,8 +237,6 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
     return NULL;
 }
 
-extern AnimationFrame D_123000_8017A4DC[];
-extern AnimationFrame D_123000_8017A504[];
 extern s32 D_123000_8017A53C[];
 extern s32 D_123000_8017A54C[];
 extern s32 D_123000_8017B204;

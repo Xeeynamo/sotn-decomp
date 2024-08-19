@@ -1,9 +1,6 @@
 // Weapon ID #52. Used by weapons:
 // Alucard shield, Unknown#214
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_052_1.h"
 #include "w_052_2.h"
 #define g_Animset w_052_1
@@ -167,7 +164,7 @@ static u8 D_170000_8017ABF0[] = {
 static u16* g_WeaponCluts[] = {&D_170000_8017A808};
 static s32 g_HandId = HAND_ID;
 
-extern SpriteParts D_170000_8017A040[];
+#include "shared.h"
 
 extern s32 D_170000_8017CB84;
 extern s16 D_170000_8017CB88[];
@@ -226,7 +223,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_170000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;
@@ -381,7 +378,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetSpriteBank1(D_170000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;
