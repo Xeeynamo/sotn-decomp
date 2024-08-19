@@ -35,6 +35,14 @@
 // playSfx flags
 typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
+enum SfxModes {
+    SFX_MODE_CHANNELS_12_19,
+    SFX_MODE_CHANNELS_22_23,
+    SFX_MODE_RELEASE_22_23,
+    SFX_MODE_CHANNELS_20_21,
+    SFX_MODE_SCRIPT_NO_PAUSE = 5
+};
+
 #define SET_VOLUME_22_23 1
 #define SET_SOUNDMODE_MONO 5
 #define SET_SOUNDMODE_STEREO 6

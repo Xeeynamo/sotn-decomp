@@ -1480,7 +1480,7 @@ typedef struct {
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
-    /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
+    /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, u16 distance);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
@@ -1560,7 +1560,7 @@ extern void (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
-extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);
+extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, u16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
