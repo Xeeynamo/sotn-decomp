@@ -1412,6 +1412,14 @@ typedef struct {
     /* 0x8C */ s32 unk8C;
 } ET_SelEnt8;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+} ET_ZombieSpawner;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1540,6 +1548,7 @@ typedef union { // offset=0x7C
     ET_LockCamera lockCamera;
     ET_CavernDoor cavernDoor;
     ET_SelEnt8 selEnt8;
+    ET_ZombieSpawner zombieSpawner;
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
