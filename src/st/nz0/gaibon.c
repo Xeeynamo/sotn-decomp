@@ -527,7 +527,7 @@ void EntityGaibon(Entity* self) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAME);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_FIRE, self, other);
+                    CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, other);
                     other->posY.i.hi += 28;
                     // Scatter bones randomly between +- 32
                     other->posX.i.hi += ((Random() & 63) - 32);
