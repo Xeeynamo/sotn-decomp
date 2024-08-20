@@ -280,7 +280,7 @@ void EntityMerman(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityX = 0;
             }
-            func_8018FC4C(&D_8018236C);
+            UnkCollisionFunc5(&D_8018236C);
             if (self->facingLeft != 0) {
                 self->velocityX -= FIX(0.03125);
             } else {
