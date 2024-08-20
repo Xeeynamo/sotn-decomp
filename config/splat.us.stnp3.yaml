@@ -85,7 +85,7 @@ segments:
       - [0x31FEC, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x32020, .rodata, 44DCC] # EntityMerman2
       - [0x32044, .rodata, 48238] # EntityMerman
-      - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
+      - [0x3206C, .rodata, e_bone_scimitar] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C] # EntityBat
       - [0x320A0, .rodata, 49BC8] # EntityZombie
       - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
@@ -120,7 +120,7 @@ segments:
       - [0x44144, c, player_water_effect]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
-      - [0x490E8, c] # EntityBoneScimitar
+      - [0x490E8, c, e_bone_scimitar] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]
       - [0x49F98, c] # EntityBloodyZombie

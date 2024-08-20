@@ -36,14 +36,14 @@ void func_801C90E8(void) {
         SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
-    if ((g_CurrentEntity->ext.generic.unk7C.U8.unk0) == 0) {
+    if ((g_CurrentEntity->ext.boneScimitar.attackTimer) == 0) {
         if (GetDistanceToPlayerX() < 64) {
             if (g_CurrentEntity->facingLeft != (GetSideToPlayer() & 1)) {
                 SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
     } else {
-        g_CurrentEntity->ext.generic.unk7C.S8.unk0--;
+        g_CurrentEntity->ext.boneScimitar.attackTimer--;
     }
 }
 
@@ -63,15 +63,15 @@ void EntityBoneScimitar(Entity* self) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                              FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
-            self->ext.generic.unk9C = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            self->ext.boneScimitar.initialX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (self->params & D_80182460) {
                 DestroyEntity(self);
                 return;
             }
         }
-        self->ext.generic.unk7C.S8.unk0 = 80;    // Skeleton attack timer cycle
-        self->ext.generic.unk80.modeS8.unk0 = 0; // Facing init
-        self->ext.generic.unk84.S8.unk0 = 0; // Skeleton attack timer selector
+        self->ext.boneScimitar.attackTimer = 80;    // Skeleton attack timer cycle
+        self->ext.boneScimitar.facingLeft = 0; // Facing init
+        self->ext.boneScimitar.attackTimerIndex = 0; // Skeleton attack timer selector
         break;
 
     case BONE_SCIMITAR_IDLE:
@@ -87,9 +87,9 @@ void EntityBoneScimitar(Entity* self) {
         if (AnimateEntity(D_80182464, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft;
+        self->ext.boneScimitar.facingLeft = self->facingLeft;
 
-        if (self->ext.generic.unk80.modeS8.unk0 == 0) {
+        if (self->ext.boneScimitar.facingLeft == 0) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
@@ -105,9 +105,9 @@ void EntityBoneScimitar(Entity* self) {
         if (AnimateEntity(D_80182474, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft ^ 1;
+        self->ext.boneScimitar.facingLeft = self->facingLeft ^ 1;
 
-        if (self->ext.generic.unk80.modeS8.unk0 == 0) {
+        if (self->ext.boneScimitar.facingLeft == 0) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
@@ -124,12 +124,12 @@ void EntityBoneScimitar(Entity* self) {
         if (self->animCurFrame == 12) {
             self->hitboxWidth = 20;
             self->hitboxHeight = 17;
-            *(s16*)&self->hitboxOffX = -11;
+            self->hitboxOffX = -11;
             self->hitboxOffY = -14;
         } else {
             self->hitboxWidth = 8;
             self->hitboxHeight = 18;
-            *(s16*)&self->hitboxOffX = -1;
+            self->hitboxOffX = -1;
             self->hitboxOffY = 0;
         }
 
@@ -139,9 +139,9 @@ void EntityBoneScimitar(Entity* self) {
 
         if (animStatus == 0) {
             SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
-            self->ext.generic.unk7C.S8.unk0 =
+            self->ext.boneScimitar.attackTimer =
                 D_80182528[self->params % 2]
-                          [(++self->ext.generic.unk84.S8.unk0) & 3];
+                          [(++self->ext.boneScimitar.attackTimerIndex) & 3];
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
             }
@@ -152,7 +152,7 @@ void EntityBoneScimitar(Entity* self) {
         switch (self->step_s) {
         case BONE_SCIMITAR_JUMPING:
             if (!(AnimateEntity(D_801824A0, self) & 1)) {
-                u8 facing_ = self->ext.generic.unk80.modeS8.unk0;
+                u8 facing_ = self->ext.boneScimitar.facingLeft;
                 s32 facing;
 
                 if (Random() % 4) {
@@ -201,7 +201,7 @@ void EntityBoneScimitar(Entity* self) {
         case BONE_SCIMITAR_WALK_RIGHT:
             self->velocityX = FIX(0.5);
             if (((s16)((g_Tilemap.scrollX.i.hi + self->posX.i.hi) -
-                       ((u16)self->ext.generic.unk9C))) > 32) {
+                       self->ext.boneScimitar.initialX)) > 32) {
                 self->step_s++;
             }
             break;
@@ -209,14 +209,14 @@ void EntityBoneScimitar(Entity* self) {
         case BONE_SCIMITAR_WALK_LEFT:
             self->velocityX = FIX(-0.5);
             if (((s16)((g_Tilemap.scrollX.i.hi + ((u16)self->posX.i.hi)) -
-                       ((u16)self->ext.generic.unk9C))) < -32) {
+                       self->ext.boneScimitar.initialX)) < -32) {
                 self->step_s--;
             }
             break;
         }
 
-        if (self->ext.generic.unk7C.U8.unk0 != 0) { // Attack delay counter
-            self->ext.generic.unk7C.U8.unk0--;
+        if (self->ext.boneScimitar.attackTimer != 0) { // Attack delay counter
+            self->ext.boneScimitar.attackTimer--;
             return;
         }
 
@@ -235,7 +235,7 @@ void EntityBoneScimitar(Entity* self) {
             CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_HEAD, newEntity);
             newEntity->facingLeft = self->facingLeft;
             newEntity->params = i;
-            newEntity->ext.generic.unk88.S8.unk0 = D_801824C8[i];
+            newEntity->ext.boneScimitar.explosionTimer = D_801824C8[i];
 
             if (self->facingLeft != 0) {
                 newEntity->posX.i.hi -= D_80182508[i];
@@ -268,8 +268,7 @@ void EntityBoneScimitar(Entity* self) {
 // Bone parts that rotate and fall down when killed
 void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
-        entity->ext.generic.unk88.S8.unk0--;
-        if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
+        if (--entity->ext.boneScimitar.explosionTimer & 0xFF) {
             entity->rotZ += D_801824B8[entity->params];
             FallEntity();
             MoveEntity();
