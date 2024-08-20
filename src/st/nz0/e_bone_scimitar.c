@@ -107,7 +107,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_IDLE:
-        if (func_801BCCFC(sensors_ground) != 0) {
+        if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
@@ -207,7 +207,7 @@ void EntityBoneScimitar(Entity* self) {
             break;
 
         case BONE_SCIMITAR_IN_AIR:
-            if (func_801BCCFC(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensor_move, 2);

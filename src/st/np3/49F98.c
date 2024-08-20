@@ -235,7 +235,7 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_UNK_2:
-        if (func_801BC8E4(&D_801825D4) & 1) {
+        if (UnkCollisionFunc3(&D_801825D4) & 1) {
             SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;

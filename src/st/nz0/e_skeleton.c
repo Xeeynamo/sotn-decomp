@@ -73,7 +73,7 @@ void EntitySkeleton(Entity* self) {
         self->ext.generic.unk84.S8.unk0 = 0;
         break;
     case SKELETON_IDLE: // Wait for player to be close enough
-        if (func_801BCCFC(sensors_ground) != 0) {
+        if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
         }
         break;
@@ -164,7 +164,7 @@ void EntitySkeleton(Entity* self) {
             }
             break;
         case 1:
-            if (func_801BCCFC(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensors_move, 2);

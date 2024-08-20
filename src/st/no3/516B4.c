@@ -848,7 +848,7 @@ void EntityMerman2(Entity* self) {
                 func_801D2D40(0x1B);
             }
             if (self->ext.merman2.isUnderwater == 0) {
-                if (func_801C5074(&D_80183938) & 1) {
+                if (UnkCollisionFunc3(&D_80183938) & 1) {
                     g_api.FreePrimitives(self->primIndex);
                     self->hitboxHeight = 21;
                     self->flags &= ~FLAG_HAS_PRIMS;
@@ -992,7 +992,7 @@ void EntityMerman2(Entity* self) {
             self->rotZ += self->ext.merman2.rotation;
             self->velocityY -= FIX(0.125);
 
-            if (func_801C5074(&D_80183938) & 1) {
+            if (UnkCollisionFunc3(&D_80183938) & 1) {
                 if (self->facingLeft == 0) {
                     self->velocityX = FIX(2.5);
                 } else {
@@ -1105,7 +1105,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 1:
-            func_801C5074(&D_80183948);
+            UnkCollisionFunc3(&D_80183948);
             prim = self->ext.merman2.prim;
             self->velocityY -= FIX(0.1875);
             if (self->facingLeft != 0) {

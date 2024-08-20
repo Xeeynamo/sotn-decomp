@@ -358,7 +358,7 @@ void EntityOwl(Entity* self) {
     case 9:
         switch (self->step_s) {
         case 0:
-            if (func_801BC8E4(D_801826CC) & 1) {
+            if (UnkCollisionFunc3(D_801826CC) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->animCurFrame = 0xD;
                 if (self->posX.i.hi > KNIGHT->posX.i.hi) {
@@ -560,7 +560,7 @@ void EntityOwlKnight(Entity* self) {
         OWL->facingLeft = self->facingLeft;
         break;
     case 1:
-        if (func_801BC8E4(D_80182758) & 1) {
+        if (UnkCollisionFunc3(D_80182758) & 1) {
             SetStep(2);
         }
         break;

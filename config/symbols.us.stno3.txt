@@ -87,6 +87,7 @@ GetDistanceToPlayerY = 0x801C4FA0;
 GetSideToPlayer = 0x801C4FD4;
 MoveEntity = 0x801C5018;
 FallEntity = 0x801C5048;
+UnkCollisionFunc3 = 0x801C5074;
 UnkCollisionFunc2 = 0x801C52EC;
 AllocEntity = 0x801C54D4;
 SetStep = 0x801C58A4;

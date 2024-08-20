@@ -144,7 +144,7 @@ void EntityMerman(Entity* self) {
         case MERMAN_JUMPING_IN_AIR:
             AnimateEntity(D_80183AAC, self);
             if (!self->ext.merman.isUnderwater) {
-                if (func_801C5074(&D_80183A4C) & 1) {
+                if (UnkCollisionFunc3(&D_80183A4C) & 1) {
                     self->animFrameDuration = 0;
                     self->animFrameIdx = 0;
                     self->step_s++;
@@ -300,7 +300,7 @@ void EntityMerman(Entity* self) {
                 self->velocityX = 0;
                 self->velocityY = FIX(2);
                 self->posY.i.hi -= 9;
-                func_801C5074(&D_80183A4C);
+                UnkCollisionFunc3(&D_80183A4C);
                 self->animFrameIdx = 2;
                 self->hitboxWidth = 5;
                 self->animFrameDuration = 0;
@@ -314,7 +314,7 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_LUNGE_STANDING:
-            func_801C5074(&D_80183A4C);
+            UnkCollisionFunc3(&D_80183A4C);
             if (AnimateEntity(D_80183ACC, self) == 0) {
                 self->velocityY = 0;
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
@@ -348,7 +348,7 @@ void EntityMerman(Entity* self) {
             self->step_s++;
 
         case MERMAN_DYING_KNOCKEDBACK:
-            if (func_801C5074(&D_80183A6C) & 1) {
+            if (UnkCollisionFunc3(&D_80183A6C) & 1) {
                 if (!(GetSideToPlayer() & 1)) {
                     self->velocityX = FIX(-0.5);
                 } else {

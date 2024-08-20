@@ -37,7 +37,7 @@ void EntityZombie(Entity* self) {
         break;
 
     case 1:
-        if (func_801C5074(&D_80183CAC) & 1) {
+        if (UnkCollisionFunc3(&D_80183CAC) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
