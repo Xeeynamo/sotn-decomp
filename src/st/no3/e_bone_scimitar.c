@@ -1,5 +1,5 @@
 /*
- * Overlay: NP3
+ * Overlay: NO3
  * Enemy: Bone Scimitar
  */
 
