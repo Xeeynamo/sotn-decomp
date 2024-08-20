@@ -9,6 +9,8 @@ extern s32 g_HandId;
 #define g_Animset w_030_1
 #define g_Animset2 w_030_2
 
+extern AnimationFrame D_D6000_8017A514[];
+extern AnimationFrame D_D6000_8017A548[];
 extern WeaponAnimation D_D6000_8017A5E4[];
 extern s16 D_D6000_8017A66C[16];
 extern s32 D_D6000_8017CC44;
@@ -185,7 +187,100 @@ void func_ptr_8017000C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_030", func_ptr_80170010);
+s32 func_ptr_80170010(Entity* self) {
+    s32 hitboxSize;
+
+    if (self->ext.weapon.parent->entityId == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->animSet = 9;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+        self->rotX = self->rotY = 0x20;
+        self->anim = D_D6000_8017A514;
+        if ((u8)self->params != 0) {
+            self->anim = D_D6000_8017A548;
+        }
+        self->zPriority = PLAYER.zPriority + 8;
+        self->facingLeft = (self->ext.weapon.parent->facingLeft + 1) & 1;
+        SetSpeedX(FIX(3.5));
+        self->attack = 0x14;
+        self->hitboxState = 2;
+        self->nFramesInvincibility = 4;
+        self->stunFrames = 4;
+        self->attackElement = ELEMENT_HIT;
+        self->hitEffect = 1;
+        self->entityRoomIndex = 0;
+        self->posY.i.hi -= 0x27;
+        g_api.func_80118894(self);
+        self->ext.weapon.vol = 0x30;
+        self->step++;
+        break;
+    case 1:
+        if (!(g_GameTimer & 7)) {
+            FntPrint("vol:%02x\n", self->ext.weapon.vol);
+            g_api.PlaySfxVolPan(SFX_EXPLODE_FAST_A, self->ext.weapon.vol, 0);
+            self->ext.weapon.vol += 8;
+            if (self->ext.weapon.vol > 0x7F) {
+                self->ext.weapon.vol = 0x7F;
+            }
+        }
+        self->rotZ += 0x100;
+        self->rotX += 2;
+        if (self->rotX > 0x100) {
+            self->rotX = 0x100;
+        }
+        self->rotY = self->rotX;
+        if (self->ext.weapon.parent->animFrameIdx == 0x20 &&
+            self->animFrameDuration == 1) {
+            g_api.PlaySfx(SFX_EXPLODE_SMALL);
+            if ((u8)self->params != 0) {
+                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+                self->step++;
+                break;
+            }
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 2:
+        self->posX.val += self->velocityX;
+        if (!(g_GameTimer & 3)) {
+            self->rotZ += 0x400;
+        }
+        if (!(g_GameTimer & 1) && (rand() & 1)) {
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 0x24), 0);
+        }
+        if (self->hitFlags != 0) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->rotX -= 16;
+        self->rotY = self->rotX;
+        if (self->rotX < 0x40) {
+            self->hitboxState = 0;
+            self->animSet = 0;
+            self->ext.weapon.lifetime = 0x80;
+            self->step++;
+        }
+        /* fallthrough */
+    case 4:
+        if (--self->ext.weapon.lifetime == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    hitboxSize = (self->rotX >> 0x6) * 3;
+    self->hitboxWidth = hitboxSize;
+    self->hitboxHeight = hitboxSize;
+}
 
 static s32 func_ptr_80170014(Entity* self) {}
 

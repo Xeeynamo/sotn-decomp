@@ -25,7 +25,7 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 1:
-        if (func_801BCCFC(&D_801824CC) & 1) {
+        if (UnkCollisionFunc3(&D_801824CC) & 1) {
             newEntity = &self[1];
             self->ext.spittleBone.unk7C = 0;
             CreateEntityFromEntity(E_ROTATE_SPITTLEBONE, self, newEntity);
@@ -94,7 +94,7 @@ void EntitySpittleBone(Entity* self) {
             newEntity->posX.i.hi += -(rsin(self->rotZ) * 0x10) >> 0xC;
             newEntity->posY.i.hi += -(rcos(self->rotZ) * 0x10) >> 0xC;
         }
-        func_801C29B0(SFX_SKELETON_DEATH_C);
+        PlaySfxPositional(SFX_SKELETON_DEATH_C);
         DestroyEntity(self);
         break;
 
@@ -213,7 +213,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         self->velocityY += FIX(0.0625);
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects != 0) {
-            func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
+            PlaySfxPositional(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
             EntityUnkId14Spawner(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
             self->hitboxState = 0;

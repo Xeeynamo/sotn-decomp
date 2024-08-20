@@ -117,7 +117,128 @@ void func_15B000_8017B88C(Entity* ent, Point16* outPoint, bool arg2) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170004);
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170008);
+void func_ptr_80170008(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s32 i;
+    s16 angle;
+    s16 lifetime;
+    s32 xOffset;
+    u16 posY;
+    u16 posX;
+    u8 red, green;
+
+    if (!(PLAYER.ext.weapon.anim > 0x40 && PLAYER.ext.weapon.anim < 0x48) ||
+        g_Player.unk46 == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    xOffset = 12;
+    if (PLAYER.facingLeft != 0) {
+        xOffset = -12;
+    }
+
+    self->posX.i.hi = xOffset + PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi - 26;
+    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        self->posY.i.hi -= 5;
+    }
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 16);
+        self->primIndex = primIndex;
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+
+        for (i = 0; i < 16; i++) {
+            angle = i * 256;
+            prim->u0 = ((rcos(angle) * 2) >> 8) + 32;
+            prim->v0 = -32 - ((rsin(angle) * 2) >> 8);
+
+            angle = (i + 1) * 256;
+            prim->u1 = ((rcos((s32)angle) * 2) >> 8) + 32;
+            prim->v1 = -32 - ((rsin((s32)angle) * 2) >> 8);
+
+            if (prim->v0 < 4) {
+                prim->v0 = 0xFF;
+            }
+            if (prim->v1 < 4) {
+                prim->v1 = 0xFF;
+            }
+
+            prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
+            prim->g3 = prim->g2 = 0x7F;
+            prim->clut = 0x15F;
+            prim->tpage = 0x1A;
+            prim->r1 = prim->b1 = prim->g1 = 0;
+            prim->r0 = prim->b0 = prim->g0 = 0;
+            prim->r2 = prim->r3 = 0xFF;
+            prim->b2 = prim->b3 = 0;
+            prim->type = PRIM_GT4;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->ext.weapon.lifetime = 4;
+        self->ext.weapon.unk7E = 0x19;
+        if (self->params & 0x7F00) {
+            self->ext.weapon.unk7E = 40;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        if (self->ext.weapon.lifetime < 40) {
+            self->ext.weapon.lifetime += 6;
+        }
+        self->ext.weapon.unk7E--;
+        if (!self->ext.weapon.unk7E) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    red = 0x80;
+    if (self->ext.weapon.unk7E < 8) {
+        red = (self->ext.weapon.unk7E * 16);
+    }
+    i = 0; // FAKE? why here?
+    green = red >> 1;
+    posX = self->posX.i.hi;
+    posY = self->posY.i.hi;
+    lifetime = self->ext.weapon.lifetime;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < 16; i++) {
+        prim->x2 = prim->x3 = posX;
+        prim->y2 = prim->y3 = posY;
+
+        prim->r3 = red;
+        prim->r2 = red;
+
+        prim->g3 = green;
+        prim->g2 = green;
+
+        angle = i * 256;
+        prim->x0 = posX + (((rcos(angle) >> 4) * lifetime) >> 8);
+        prim->y0 = posY - (((rsin(angle) >> 4) * lifetime) >> 8);
+
+        angle = (i + 1) * 256;
+        prim->x1 = posX + (((rcos(angle) >> 4) * lifetime) >> 8);
+        prim->y1 = posY - (((rsin(angle) >> 4) * lifetime) >> 8);
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_8017000C);
 

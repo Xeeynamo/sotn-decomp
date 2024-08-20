@@ -6,36 +6,7 @@
 #include "../prevent_entity_from_respawning.h"
 #include "../animate_entity.h"
 
-u8 func_801B4AF0(u8 frames[], Entity* self, u8 arg2) {
-    u16 animFrameStart = self->animFrameIdx * 2;
-    u8* var_s1 = &frames[animFrameStart];
-    s16 var_a1 = 0;
-
-    if (self->animFrameDuration == 0) {
-        if (*var_s1 != 0) {
-            if (*var_s1 == 0xFF) {
-                return 0;
-            }
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1++;
-            self->animFrameIdx++;
-            var_a1 = 128;
-        } else {
-            var_s1 = frames;
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
-            self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1;
-            self->animFrameIdx++;
-            return 0;
-        }
-    }
-    self->animFrameDuration--;
-    self->animCurFrame = var_s1[-1];
-    var_a1 |= 1;
-    return var_a1;
-}
+#include "../unk_anim_func.h"
 
 // Absolute distance from g_CurrentEntity to the player in the X Axis
 s16 GetDistanceToPlayerX(void) {
@@ -86,161 +57,39 @@ u8 func_801B4D18(void) {
     return unkState;
 }
 
-s32 func_801B4D5C(u16* sensors) {
-    Collider col;
-    Collider colBack;
-    s16 x;
-    s16 y;
-    s16 i;
-
-    MoveEntity();
-    FallEntity();
-    if (g_CurrentEntity->velocityY >= 0) {
-        x = g_CurrentEntity->posX.i.hi;
-        y = g_CurrentEntity->posY.i.hi;
-        for (i = 0; i < 4; i++) {
-            x += *sensors++;
-            y += *sensors++;
-            g_api.CheckCollision(x, y, &col, 0);
-            if (col.effects & EFFECT_UNK_8000) {
-                if (i == 1) {
-                    if (col.effects & EFFECT_SOLID) {
-                        g_api.CheckCollision(x, y - 8, &colBack, 0);
-                        if (!(colBack.effects & EFFECT_SOLID)) {
-                            g_CurrentEntity->posY.i.hi =
-                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
-                            g_CurrentEntity->velocityX = 0;
-                            g_CurrentEntity->velocityY = 0;
-                            g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                            return 1;
-                        }
-                    }
-                    continue;
-                }
-            }
-            if (col.effects & EFFECT_NOTHROUGH && i != 1) {
-                if (col.effects & EFFECT_QUICKSAND) {
-                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                    return 4;
-                }
-                g_api.CheckCollision(x, y - 8, &colBack, 0);
-                if (!(colBack.effects & EFFECT_SOLID)) {
-                    g_CurrentEntity->posY.i.hi =
-                        g_CurrentEntity->posY.i.hi + col.unk18;
-                    g_CurrentEntity->velocityX = 0;
-                    g_CurrentEntity->velocityY = 0;
-                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                    return 1;
-                }
-            }
-        }
-    }
-    g_CurrentEntity->flags |= FLAG_UNK_10000000;
-    return 0;
-}
+#include "../unk_collision_func3.h"
 
 INCLUDE_ASM("st/st0/nonmatchings/34908", func_801B4FD4);
 
-s32 func_801B51E4(s16* posX) {
-    Collider collider;
-    s16 temp2;
-    s16 temp4;
-    s16 x, y;
-
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    temp2 = g_CurrentEntity->posY.i.hi + 3;
-    g_CurrentEntity->posY.i.hi = temp2;
-    x = g_CurrentEntity->posX.i.hi + *posX;
-    posX++;
-    y = temp2 + *posX;
-    g_api.CheckCollision(x, y, &collider, 0);
-    if (!(collider.effects & EFFECT_SOLID)) {
-        return 0;
-    }
-    posX++;
-
-    g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
-    if (g_CurrentEntity->velocityX != 0) {
-        if (g_CurrentEntity->velocityX < 0) {
-            temp4 = x - *posX;
-            posX++;
-        } else {
-            temp4 = x + *posX;
-            posX++;
-        }
-        y = y + *posX - 7;
-        g_api.CheckCollision(temp4, y, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
-                EFFECT_UNK_0002) {
-                g_CurrentEntity->posX.val =
-                    g_CurrentEntity->posX.val - g_CurrentEntity->velocityX;
-                g_CurrentEntity->velocityX = 0;
-                return 0xFF;
-            }
-            return 0x61;
-        }
-        y += 15;
-        g_api.CheckCollision(temp4, y, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            if (collider.effects & EFFECT_UNK_8000) {
-                return 0x61;
-            }
-            return 1;
-        }
-        g_CurrentEntity->posX.val -= g_CurrentEntity->velocityX;
-        g_CurrentEntity->velocityX = 0;
-
-        return 0x80;
-    }
-    return 1;
-}
+#include "../unk_collision_func2.h"
 
 #include "../alloc_entity.h"
 
-s32 func_801B542C(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
+extern s16 g_SineTable[];
 
-s16 func_801B5458(u8 arg0) { return D_80181990[arg0]; }
+#include "../get_sine_scaled.h"
 
-void func_801B5474(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_801B542C(arg0, arg1);
-    g_CurrentEntity->velocityY = func_801B542C(arg0 - 0x40, arg1);
-}
+#include "../get_sine.h"
 
-u8 func_801B54E0(s16 arg0, s16 arg1) {
-    return (ratan2(arg1, arg0) >> 4) + 0x40;
-}
+#include "../set_entity_velocity_from_angle.h"
 
-u8 func_801B5518(Entity* arg0, Entity* arg1) {
-    s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
-    s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
-    return func_801B54E0(a, b);
-}
+#include "../ratan2_shifted.h"
 
-u8 func_801B5560(s32 arg0, s32 arg1) {
-    s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
-    s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
-    return func_801B54E0(a, b);
-}
+#include "../get_angle_between_entities_shifted.h"
+
+#include "../get_angle_point_to_entity_shifted.h"
 
 #include "../adjust_value_within_threshold.h"
 
 #include "../unk_entity_func0.h"
 
-u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
+#include "../ratan2.h"
 
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_between_entities.h"
 
-u16 func_801B56F4(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_point_to_entity.h"
 
+// different from other versions
 u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 temp_a2 = arg2 - arg1;
     u16 ret;
@@ -264,18 +113,9 @@ u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_step.h"
 
-void SetSubStep(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_sub_step.h"
 
 void func_801B57D0(u16 params) {
     Entity* current;
@@ -296,43 +136,9 @@ void func_801B57D0(u16 params) {
 
 #include "../init_entity.h"
 
-void EntityDummy(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->step++;
-    }
-}
+#include "../entity_dummy.h"
 
-s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    u16 temp_a1;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX != 0) {
-        x = g_CurrentEntity->posX.i.hi;
-        y = g_CurrentEntity->posY.i.hi;
-        for (i = 0; i < sensorCount; i++) {
-            if (velocityX < 0) {
-                s16 newX = x + *hitSensors++;
-                x = newX;
-            } else {
-                s16 newX = x - *hitSensors++;
-                x = newX;
-            }
-
-            y += *hitSensors++;
-            g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & 2 &&
-                ((!(collider.effects & 0x8000)) || (i != 0))) {
-                return 2;
-            }
-        }
-        return 0;
-    }
-}
+#include "../unk_collision_func.h"
 
 #include "../check_field_collision.h"
 

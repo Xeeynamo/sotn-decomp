@@ -1176,7 +1176,7 @@ void ExecCdSoundCommands(void) {
     }
 }
 
-void ApplyQuadChannelSetting(
+void PlaySfxScript(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
     u16 volumeMod;
     u16 calcVolume;
@@ -1201,7 +1201,7 @@ void ApplyQuadChannelSetting(
         g_SfxScriptDistance[channel_group] = distance;
     }
     g_CurrentSfxScriptSfxId[channel_group] = arg0;
-    g_SfxScriptUnk4[channel_group] = g_SfxData[arg0].unk4;
+    g_SfxScriptMode[channel_group] = g_SfxData[arg0].mode;
     progId = g_SfxData[arg0].prog + 1;
     g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
     g_SfxScriptTimer[channel_group] = 0;
@@ -1209,7 +1209,9 @@ void ApplyQuadChannelSetting(
     g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
 }
 
-void func_80135624(
+// channel group is 0-3 so play on one of these pairs:
+// (12,13),(14,15),(16,17),(18,19)
+void KeyOn12_19(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
     if (do_key_off) {
         // do key off for two channels
@@ -1220,7 +1222,7 @@ void func_80135624(
     func_80132A04(
         (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
         g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
-    g_CurrentSfxId[channel_group] = arg0;
+    g_CurrentSfxId12_19[channel_group] = arg0;
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
@@ -1234,105 +1236,107 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
         if (g_SeqIsPlaying == 0) {
             for (i = 0; i < 3; i++) {
                 if (arg0 == g_CurrentSfxScriptSfxId2[i]) {
-                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                    PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
                 if (g_CurrentSfxScriptSfxId2[i] == 0) {
-                    ApplyQuadChannelSetting(arg0, i, false, volume, distance);
+                    PlaySfxScript(arg0, i, false, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
                 if (g_SfxScriptUnk6[i] < g_SfxData[arg0].unk6) {
-                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                    PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
                 if (g_SfxData[arg0].unk6 == g_SfxScriptUnk6[i]) {
-                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                    PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
             }
             return;
         }
         if (g_SfxData[arg0].unk6 >= g_SfxScriptUnk6[3]) {
-            ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
+            PlaySfxScript(arg0, 3, true, volume, distance);
         }
     } else {
-        switch (g_SfxData[arg0].unk4) {
-        case 1:
-            g_CurSfxId = arg0;
+        switch (g_SfxData[arg0].mode) {
+        case SFX_MODE_CHANNELS_22_23:
+            g_CurSfxId22_23 = arg0;
             if (volume == 0xFFFF) {
-                g_CurSfxVol = 0x7F;
+                g_CurSfxVol22_23 = 0x7F;
             } else {
-                g_CurSfxVol = volume;
+                g_CurSfxVol22_23 = volume;
             }
-            g_CurSfxDistance = distance;
+            g_CurSfxDistance22_23 = distance;
             KeyOnChannels22_23();
             return;
-        case 3:
-            g_CurSfxId2 = arg0;
+        case SFX_MODE_CHANNELS_20_21:
+            g_CurSfxId20_21 = arg0;
             if (volume == 0xFFFF) {
-                g_CurSfxVol2 = 0x7F;
+                g_CurSfxVol20_21 = 0x7F;
             } else {
-                g_CurSfxVol2 = volume;
+                g_CurSfxVol20_21 = volume;
             }
-            g_CurSfxDistance2 = distance;
+            g_CurSfxDistance20_21 = distance;
             KeyOnChannels20_21();
             return;
-        case 2:
+        case SFX_MODE_RELEASE_22_23:
             SetReleaseRateLow_22_23();
-            g_CurSfxId = 0;
+            g_CurSfxId22_23 = 0;
             return;
-        case 0:
-            g_CurSfxVol3 =
+        case SFX_MODE_CHANNELS_12_19:
+            g_CurSfxVol12_19 =
                 (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
             if (volume == 0xFFFF) {
-                g_CurSfxDistance3 = 0;
+                g_CurSfxDistance12_19 = 0;
             } else {
-                g_CurSfxDistance3 = distance;
-                g_CurSfxVol3 = (g_CurSfxVol3 * volume) >> 7;
+                g_CurSfxDistance12_19 = distance;
+                g_CurSfxVol12_19 = (g_CurSfxVol12_19 * volume) >> 7;
             }
             if (g_SeqIsPlaying == 0) {
                 for (i = 0; i < 4; i++) {
-                    if (arg0 == g_CurrentSfxId[i]) {
-                        func_80135624(
-                            arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
+                    if (arg0 == g_CurrentSfxId12_19[i]) {
+                        KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
-                    if (g_CurrentSfxId[i] == 0) {
-                        func_80135624(
-                            arg0, i, false, g_CurSfxVol3, g_CurSfxDistance3);
+                    if (g_CurrentSfxId12_19[i] == 0) {
+                        KeyOn12_19(arg0, i, false, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
                     if (D_8013AED4[i] < g_SfxData[arg0].unk6) {
-                        func_80135624(
-                            arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
+                        KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 for (i = 0; i < 3; i++) {
                     if (g_SfxData[arg0].unk6 == D_8013AED4[i]) {
-                        func_80135624(
-                            arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
+                        KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 return;
             }
-            if (g_CurrentSfxId[3] == 0) {
-                func_80135624(arg0, 3, false, g_CurSfxVol3, g_CurSfxDistance3);
+            if (g_CurrentSfxId12_19[3] == 0) {
+                KeyOn12_19(
+                    arg0, 3, false, g_CurSfxVol12_19, g_CurSfxDistance12_19);
                 return;
             }
             if (g_SfxData[arg0].unk6 >= D_8013AED4[3]) {
-                func_80135624(arg0, 3, true, g_CurSfxVol3, g_CurSfxDistance3);
+                KeyOn12_19(
+                    arg0, 3, true, g_CurSfxVol12_19, g_CurSfxDistance12_19);
             }
             break;
         }
@@ -1478,12 +1482,12 @@ void func_80136010(void) {
         for (i = 0; i < 4; i++) {
             sum = var_a0[i * 2] + var_a2[i * 2];
             if (sum == 0) {
-                g_CurrentSfxId[i] = 0;
+                g_CurrentSfxId12_19[i] = 0;
                 D_8013AED4[i] = 0;
             }
         }
     } else if ((s8)(g_KeyStatus[18] + g_KeyStatus[19]) == 0) {
-        g_CurrentSfxId[3] = 0;
+        g_CurrentSfxId12_19[3] = 0;
         D_8013AED4[3] = 0;
     }
     if (g_SeqIsPlaying == 0) {

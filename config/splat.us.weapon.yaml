@@ -169,7 +169,7 @@ segments:
     subsegments:
       - [0x35040, animset, w_007_1]
       - [0x35884, animset, w_007_2]
-      - [0x35884, data, w_007]
+      - [0x35884, .data, w_007]
       - [0x35CA0, c, w_007]
       - [0x36918, sbss, w_007]
   - name: f_008
@@ -263,7 +263,7 @@ segments:
     subsegments:
       - [0x58040, animset, w_012_1]
       - [0x582B0, animset, w_012_2]
-      - [0x582B0, data, w_012]
+      - [0x582B0, .data, w_012]
       - [0x58ACC, c, w_012]
       - [0x59B28, sbss, w_012]
   - name: f_013
@@ -671,7 +671,7 @@ segments:
     subsegments:
       - [0xF2040, animset, w_034_1]
       - [0xF2784, animset, w_034_2]
-      - [0xF2784, data, w_034]
+      - [0xF2784, .data, w_034]
       - [0xF2950, c, w_034]
       - [0xF33F0, sbss, w_034]
   - name: f_035
@@ -797,7 +797,7 @@ segments:
     subsegments:
       - [0x123040, animset, w_041_1]
       - [0x123284, animset, w_041_2]
-      - [0x123284, data, w_041]
+      - [0x123284, .data, w_041]
       - [0x123560, .rodata, w_041]
       - [0x123574, c, w_041]
       - [0x124200, sbss, w_041]

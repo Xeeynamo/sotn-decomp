@@ -140,7 +140,7 @@ void func_801A805C(Entity* self) {
                     posY += 16;
                     paramsPtr++;
                 }
-                g_api.PlaySfx(0x67F);
+                g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_B);
             } else {
                 if (params == 9) {
                     newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);

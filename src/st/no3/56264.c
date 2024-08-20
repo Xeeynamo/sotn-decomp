@@ -11,7 +11,7 @@ void EntityBat(Entity* entity) {
             CreateEntityFromEntity(2, entity, newEntity);
             newEntity->params = 1;
         }
-        func_801CAD28(SE_BAT_DEATH);
+        PlaySfxPositional(SE_BAT_DEATH);
         DestroyEntity(entity);
         return;
     }

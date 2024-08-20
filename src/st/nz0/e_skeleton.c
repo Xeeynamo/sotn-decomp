@@ -43,11 +43,11 @@ static s16 D_801824B8[] = {0, 19, 8, 0};
 static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 void func_801C5F2C(Entity* self) {
-    if ((func_801BCF74(D_801824B8) & 0x60) == 0x60) {
+    if ((UnkCollisionFunc2(D_801824B8) & 0x60) == 0x60) {
         self->posX.val -= self->velocityX;
     }
 
-    if (!(func_801BD720(sensors_move, LEN(sensors_move)) & 2)) {
+    if (!(UnkCollisionFunc(sensors_move, LEN(sensors_move)) & 2)) {
         if ((--self->ext.generic.unk7C.U8.unk0) == 0) {
             SetStep(4);
         }
@@ -73,7 +73,7 @@ void EntitySkeleton(Entity* self) {
         self->ext.generic.unk84.S8.unk0 = 0;
         break;
     case SKELETON_IDLE: // Wait for player to be close enough
-        if (func_801BCCFC(sensors_ground) != 0) {
+        if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
         }
         break;
@@ -124,7 +124,7 @@ void EntitySkeleton(Entity* self) {
                 ((u16)self->posY.i.hi <= 240)) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) { // Spawn bone
-                    func_801C29B0(NA_SE_EN_SKELETON_THROW_BONE);
+                    PlaySfxPositional(NA_SE_EN_SKELETON_THROW_BONE);
                     CreateEntityFromCurrentEntity(0x2F, newEntity);
                     if (self->facingLeft != 0) {
                         newEntity->posX.i.hi -= 8;
@@ -164,7 +164,7 @@ void EntitySkeleton(Entity* self) {
             }
             break;
         case 1:
-            if (func_801BCCFC(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensors_move, 2);
@@ -177,7 +177,7 @@ void EntitySkeleton(Entity* self) {
         }
         break;
     case SKELETON_DESTROY:
-        func_801C29B0(SFX_SKELETON_DEATH_C);
+        PlaySfxPositional(SFX_SKELETON_DEATH_C);
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {

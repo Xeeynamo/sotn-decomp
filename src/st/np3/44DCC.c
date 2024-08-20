@@ -149,7 +149,7 @@ void EntitySplashWater(Entity* self) {
 
             g_api.PlaySfxVolPan(D_8018122C, 0x7F, temp_a2);
             self->velocityY = D_80182188[params].x;
-            self->ext.waterEffects.unk7C = D_80182188[params].y;
+            self->ext.waterEffects.accelY = D_80182188[params].y;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
@@ -162,7 +162,7 @@ void EntitySplashWater(Entity* self) {
 
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.unk7C;
+        self->velocityY += self->ext.waterEffects.accelY;
         if (self->velocityY > FIX(2.5)) {
             self->step++;
         }
@@ -280,8 +280,8 @@ void EntitySurfacingWater(Entity* self) {
             prim = prim->next;
         }
         rnd = (rand() & 1) + 12;
-        self->ext.generic.unk84.S16.unk2 = D_801821A8[(u8)self->params] + rnd;
-        self->velocityX = self->ext.generic.unk88.S16.unk2 * 16;
+        self->ext.waterEffects.topY.i.hi = D_801821A8[(u8)self->params] + rnd;
+        self->velocityX = self->ext.waterEffects.unk8A * 16;
         if (params != 0) {
             self->velocityY = self->velocityX / var_s2;
             if (self->velocityY < 0) {
@@ -291,7 +291,7 @@ void EntitySurfacingWater(Entity* self) {
         break;
 
     case 1:
-        self->ext.waterEffects.unk84.val -= 0x4000;
+        self->ext.waterEffects.topY.val -= FIX(0.25);
         break;
     }
 
@@ -336,8 +336,8 @@ void EntitySurfacingWater(Entity* self) {
     while (j < 2) {
         prim->y2 = prim->y2 - bottom;
         prim->y3 = prim->y3 - bottom;
-        prim->y0 = prim->y2 - self->ext.waterEffects.unk84.modeS16.unk2;
-        prim->y1 = prim->y3 - self->ext.waterEffects.unk84.modeS16.unk2;
+        prim->y0 = prim->y2 - self->ext.waterEffects.topY.i.hi;
+        prim->y1 = prim->y3 - self->ext.waterEffects.topY.i.hi;
         prim->x2 = prim->x0 = temp_t0;
         prim->x3 = prim->x1 = x;
         prim->b1 += 248;
@@ -403,7 +403,7 @@ void EntitySideWaterSplash(Entity* self) {
             temp_s1 += rsin(angle) * *ptr;
             temp_lo = rcos(angle) * *ptr;
             self->velocityX = temp_s1 + (((params & 0xFF00) << 0x10) >> 0xE);
-            self->ext.waterEffects.unk7C = 0x2C00;
+            self->ext.waterEffects.accelY = FIX(22.0 / 128);
             self->velocityY = temp_s3 + temp_lo;
         } else {
         DestroyEntity:
@@ -414,7 +414,7 @@ void EntitySideWaterSplash(Entity* self) {
 
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.unk7C;
+        self->velocityY += self->ext.waterEffects.accelY;
         break;
     }
 
@@ -494,12 +494,12 @@ void EntitySmallWaterDrop(Entity* self) {
         }
         self->velocityX = var_v1 + (temp_s5 * 16);
         self->velocityY = D_80182204[params * 2 + 1];
-        self->ext.waterEffects.unk7C = 0x4000;
+        self->ext.waterEffects.accelY = FIX(0.25);
         break;
 
     case 1:
         MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.unk7C;
+        self->velocityY += self->ext.waterEffects.accelY;
         break;
     }
 
@@ -652,7 +652,7 @@ void EntityMerman2(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN2_DYING)) {
-        func_801916C4(0x71D);
+        PlaySfxPositional(0x71D);
         self->drawFlags = 0;
         if (self->flags & FLAG_HAS_PRIMS) {
             g_api.FreePrimitives(self->primIndex);
@@ -845,7 +845,7 @@ void EntityMerman2(Entity* self) {
                 func_801C6458(0x1B);
             }
             if (self->ext.merman2.isUnderwater == 0) {
-                if (func_801BC8E4(&D_80182248) & 1) {
+                if (UnkCollisionFunc3(&D_80182248) & 1) {
                     g_api.FreePrimitives(self->primIndex);
                     self->hitboxHeight = 21;
                     self->flags &= ~FLAG_HAS_PRIMS;
@@ -879,7 +879,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_WALKING_TO_PLAYER_WALKING:
             AnimateEntity(D_80182270, self);
-            colRes = func_801BCB5C(&D_80182268);
+            colRes = UnkCollisionFunc2(&D_80182268);
             if (colRes == 0xFF) {
                 self->facingLeft ^= 1;
             }
@@ -925,7 +925,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_SPIT_FIRE_ATTACK:
             if (AnimateEntity(D_8018227C, self) == 0) {
-                func_801916C4(SFX_FIREBALL_SHOT_C);
+                PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 i = 0;
                 if (newEntity != NULL) {
@@ -989,7 +989,7 @@ void EntityMerman2(Entity* self) {
             self->rotZ += self->ext.merman2.rotation;
             self->velocityY -= FIX(0.125);
 
-            if (func_801BC8E4(&D_80182248) & 1) {
+            if (UnkCollisionFunc3(&D_80182248) & 1) {
                 if (self->facingLeft == 0) {
                     self->velocityX = FIX(2.5);
                 } else {
@@ -1102,7 +1102,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 1:
-            func_801BC8E4(&D_80182258);
+            UnkCollisionFunc3(&D_80182258);
             prim = self->ext.merman2.prim;
             self->velocityY -= FIX(0.1875);
             if (self->facingLeft != 0) {
@@ -1131,7 +1131,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 2:
-            func_801916C4(SFX_FM_EXPLODE_B);
+            PlaySfxPositional(SFX_FM_EXPLODE_B);
             func_801B653C();
             DestroyEntity(self);
         }

@@ -96,7 +96,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
     }
 
     if (!animFlag) {
-        func_801CAD28(SE_OWL_WING_FLAP);
+        PlaySfxPositional(SE_OWL_WING_FLAP);
     }
 }
 

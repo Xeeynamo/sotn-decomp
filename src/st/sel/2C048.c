@@ -700,13 +700,13 @@ const char* D_80180454[] = {
 };
 void func_801AD590(void) {
     if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL); // MP sfx also used for Main Menu Select
         if (++g_MainMenuCursor == 5) {
             g_MainMenuCursor = 1;
         }
     }
     if (g_pads[0].tapped & (PAD_LEFT + PAD_UP)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL);
         if (--g_MainMenuCursor == 0) {
             g_MainMenuCursor = 4;
         }
@@ -782,34 +782,34 @@ void func_801AD78C(void) {
 
 void UpdateNameEntry(void) {
     if (g_pads[0].repeat & PAD_RIGHT) {
-        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        g_api.PlaySfx(SFX_UI_MOVE);
         D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
     }
 
     if (g_pads[0].repeat & PAD_DOWN) {
-        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        g_api.PlaySfx(SFX_UI_MOVE);
         D_801BC3E0 = ((D_801BC3E0 + 8) & 0x18) | (D_801BC3E0 & 7);
     }
 
     if (g_pads[0].repeat & PAD_LEFT) {
-        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        g_api.PlaySfx(SFX_UI_MOVE);
         D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 - 1) & 7);
     }
 
     if (g_pads[0].repeat & PAD_UP) {
-        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        g_api.PlaySfx(SFX_UI_MOVE);
         D_801BC3E0 = ((D_801BC3E0 - 8) & 0x18) | (D_801BC3E0 & 7);
     }
 
     if (g_pads[0].tapped & (PAD_R1 + PAD_R2)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL);
         if (++g_InputCursorPos == 8) {
             g_InputCursorPos = 0;
         }
     }
 
     if (g_pads[0].tapped & (PAD_L1 + PAD_L2)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL);
         if (--g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
         }
@@ -834,32 +834,32 @@ void UpdateNameEntry(void) {
 void UpdateFileSelect(void) {
     if (g_SaveSummary[0].padding >= 0 || g_SaveSummary[1].padding >= 0) {
         if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
-            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            g_api.PlaySfx(SFX_UI_MOVE);
             // clamp selector inside the 6 possible X coord positions
             g_MemCardSelectorX = (g_MemCardSelectorX + 1) % 6;
         }
 
         if (g_pads[0].repeat & PAD_DOWN) { // move selector down
-            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            g_api.PlaySfx(SFX_UI_MOVE);
             // clamp selector inside the 5 possible Y coord positions
             g_MemCardSelectorY = (g_MemCardSelectorY + 4) % 5;
         }
 
         if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
-            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            g_api.PlaySfx(SFX_UI_MOVE);
             // clamp selector inside the 6 possible X coord positions
             g_MemCardSelectorX = (g_MemCardSelectorX + 5) % 6;
         }
 
         if (g_pads[0].repeat & PAD_UP) { // move selector up
-            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            g_api.PlaySfx(SFX_UI_MOVE);
             // clamp selector inside the 5 possible Y coord positions
             g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
         }
 
         if (g_SaveSummary[0].padding > 0 && g_SaveSummary[1].padding > 0 &&
             (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
-            g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+            g_api.PlaySfx(SFX_UI_MP_FULL);
             // clamp selector inside the 6 possible X coord positions
             g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
         }

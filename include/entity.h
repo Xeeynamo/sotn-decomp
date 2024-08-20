@@ -195,7 +195,8 @@ typedef struct PACKED {
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s32 accelerationX;
     /* 0xA0 */ s32 accelerationY;
-    /* 0xA4 */ s32 unkA4;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 vol;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
@@ -265,6 +266,55 @@ typedef struct {
 #endif
     u8 anim;
 } ET_KarmaCoin;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 : 16;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    byte pad[16];
+    s32 vol;
+    s32 unk9C;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
+} ET_WeaponUnk012;
+
+typedef struct PACKED {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+    struct Entity* parent;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    s16 unk98;
+    s16 unk9A;
+    s16 unk9C;
+    s16 unk9E;
+    s16 unkA0;
+    s16 unkA2;
+    s32 unkA4;
+    s32 unkA8;
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
+    u8 anim;
+    u8 unkAD;
+    s16 equipId;
+} ET_Sword;
 
 typedef struct PACKED {
     s16 angle;
@@ -639,7 +689,7 @@ typedef struct {
     /* 0x86 */ u8 pad86[2];
     /* 0x88 */ u8 unk88;
     /* 0x89 */ u8 unk89;
-} ET_801B3C38;
+} ET_WargExplosionPuffOpaque;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -693,17 +743,12 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ s32 unk7C;
-    /* 0x80 */ s16 unk80;
+    /* 0x7C */ s32 accelY;
+    /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 unk82;
-    union {
-        /* 0x84 */ s32 val;
-        struct {
-            /* 0x84 */ s16 unk0;
-            /* 0x86 */ s16 unk2;
-        } modeS16;
-    } unk84; // size = 0x4
+    /* 0x84 */ f32 topY;
     /* 0x88 */ u16 unk88;
+    /* 0x8A */ s16 unk8A;
 } ET_WaterEffects;
 
 typedef struct {
@@ -1439,6 +1484,30 @@ typedef struct {
     /* 0x8C */ s32 unk8C;
 } ET_SelEnt8;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+} ET_ZombieSpawner;
+
+typedef struct {
+    /* 0x7C */ u8 attackTimer;
+    /* 0x7D */ s32 : 24;
+    /* 0x80 */ u8 facingLeft;
+    /* 0x81 */ s32 : 24;
+    /* 0x84 */ u8 attackTimerIndex;
+    /* 0x85 */ s32 : 24;
+    /* 0x88 */ u8 explosionTimer;
+    /* 0x89 */ s32 : 24;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 initialX;
+} ET_BoneScimitar;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1477,11 +1546,13 @@ typedef union { // offset=0x7C
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
+    ET_WeaponUnk012 weapon_012;
     ET_WeaponUnk030 weapon_030;
     ET_WeaponUnk046 weapon_046;
     ET_Shield shield;
     ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
+    ET_Sword sword;
     ET_HeavenSword heavenSword;
     ET_HeavenSword2 heavenSword2;
     ET_MedusaShieldLaser medshieldlaser;
@@ -1524,7 +1595,7 @@ typedef union { // offset=0x7C
     ET_Succubus succubus;
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
-    ET_801B3C38 et38;
+    ET_WargExplosionPuffOpaque wargpuff;
     ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;
@@ -1568,11 +1639,15 @@ typedef union { // offset=0x7C
     ET_LockCamera lockCamera;
     ET_CavernDoor cavernDoor;
     ET_SelEnt8 selEnt8;
+    ET_ZombieSpawner zombieSpawner;
+    ET_BoneScimitar boneScimitar;
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk012, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk046, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_KarmaCoin, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Sword, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword2, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Shield, anim));

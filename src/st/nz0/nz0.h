@@ -30,7 +30,7 @@ typedef enum {
     /* 0x31 */ E_SPITTLEBONE = 0x31,
     /* 0x32 */ E_ROTATE_SPITTLEBONE,
     /* 0x33 */ E_SPITTLEBONE_SPIT,
-    /* 0x38 */ E_FIRE = 0x38,
+    /* 0x38 */ E_WARG_EXP_OPAQUE = 0x38,
     /* 0x3F */ E_BOSS_ROOM_BLOCK = 0x3F,
     /* 0x40 */ E_SLOGRA,
     /* 0x41 */ E_SLOGRA_SPEAR,
@@ -50,7 +50,7 @@ typedef enum {
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
-s32 func_801BD720(u16* hitSensors, s16 sensorCount);
+s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);

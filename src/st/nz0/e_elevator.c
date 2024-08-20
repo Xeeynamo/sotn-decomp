@@ -96,7 +96,7 @@ void EntityElevator(Entity* self) {
             } else {
                 self->step = ELEVATOR_ASCEND;
             }
-            func_801C29B0(0x6E6);
+            PlaySfxPositional(0x6E6);
         }
         self->ext.elevator.elevatorTarget = g_ElevatorTarget;
         break;

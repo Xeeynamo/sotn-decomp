@@ -149,7 +149,7 @@ bool InitGame(void) {
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = NULL;
     api.PlaySfxVolPan = PlaySfxVolPan;
-    api.func_80134678 = NULL;
+    api.SetVolumeCommand22_23 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.func_8010BF64 = NULL;
@@ -377,7 +377,7 @@ static bool InitSfxData(struct FileAsString* file) {
         DO_ITEM("prog", jitem, item, item->prog);
         DO_ITEM("note", jitem, item, item->note);
         DO_ITEM("volume", jitem, item, item->volume);
-        DO_ITEM("unk4", jitem, item, item->unk4);
+        DO_ITEM("mode", jitem, item, item->mode);
         DO_ITEM("tone", jitem, item, item->tone);
         DO_ITEM("unk6", jitem, item, item->unk6);
     }

@@ -58,7 +58,7 @@ typedef enum {
     /* 0x4A */ E_BLOOD_SPLATTER,
     /* 0x4B */ E_STAIRWAY_PIECE,
     /* 0x4C */ E_FALLING_ROCK,
-    /* 0x4D */ E_ID_4D,
+    /* 0x4D */ E_WARG_EXP_OPAQUE,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,
@@ -81,7 +81,7 @@ extern void func_801BB044(s16);
 extern void func_801BB140(s16);
 extern void func_801BB2F8(s16);
 extern void func_801BB3F4(s16);
-extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
+extern s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern s32 GetDistanceToPlayerX(void);
 extern void EntityUnkId14(Entity* entity);

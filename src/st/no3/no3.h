@@ -5,10 +5,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-#define SE_SKEL_SWORD_SWING 0x66D
-#define SE_LEVER_SWITCH_MOVE 0x675
-#define SE_FLOOR_SWITCH_CLICK 0x676
-// #define 0x684
 #define SE_OWL_WING_FLAP 0x68C
 #define SE_WARG_DEATH_EXPLODE 0x697
 #define SE_BAT_DEATH 0x69C
@@ -72,11 +68,12 @@ typedef enum EntityIDs {
     /* 0x43 */ E_MERMAN_UNK1,
     /* 0x44 */ E_MERMAN_UNK3,
     /* 0x47 */ E_BONE_SCIMITAR_HEAD = 0x47,
+    /* 0x4C */ E_ZOMBIE = 0x4C,
     /* 0x59 */ E_ID_59 = 0x59,
     /* 0x5B */ E_ID_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
     /* 0x5E */ E_ID_5E,
-    /* 0x62 */ E_ID_62 = 0x62,
+    /* 0x62 */ E_WARG_EXP_OPAQUE = 0x62,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -253,3 +250,20 @@ extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 
 extern Dialogue g_Dialogue;
+
+extern u16 g_BoneScimitarInit[];
+extern s32 D_80183B50;      // Flag for special bone scimitar to appear or not
+extern u8 D_80183B54[];     // animation: Walking Forward
+extern u8 D_80183B64[];     // animation: Walking Backwards
+extern u8 D_80183B74[];     // animation: Swing Sword
+extern u8 D_80183B90[];     // animation: Jumping
+extern u8 D_80183B9C[];     // animation: Landing
+extern s8 D_80183BB8[];     // Skeleton parts array selector
+extern s32 D_80183BC0[];    // Skeleton parts velocityX
+extern s32 D_80183BDC[];    // Skeleton parts velocityY
+extern u16 D_80183BF8[];    // Skeleton parts posX
+extern u16 D_80183C08[];    // Skeleton parts posY
+extern s8 D_80183C18[2][4]; // Skeleton attack timer cycle
+extern s32 D_80183C20;
+extern s32 D_80183C30;
+extern s32 D_80183C38;

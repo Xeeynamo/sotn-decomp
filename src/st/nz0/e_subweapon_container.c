@@ -111,7 +111,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
-        func_801C29B0(SFX_GLASS_BREAK_E);
+        PlaySfxPositional(SFX_GLASS_BREAK_E);
         self->hitboxState = 0;
         self->animCurFrame = 2;
         self->step++;

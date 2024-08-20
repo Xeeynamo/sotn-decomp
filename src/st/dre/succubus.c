@@ -249,7 +249,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_DYING:
         switch (self->step_s) {
         case SUCCUBUS_DYING_SETUP:
-            func_801A046C(NA_VO_SU_NO_SCREAM);
+            PlaySfxPositional(NA_VO_SU_NO_SCREAM);
             CreateEntityFromCurrentEntity(
                 E_SUCCUBUS_CUTSCENE, &g_Entities[200]);
             g_Entities[200].params = 1;
@@ -283,7 +283,7 @@ void EntitySuccubus(Entity* self) {
             self->velocityY += FIX(0.125);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY >= 176) {
-                func_801A046C(SFX_STOMP_HARD_A);
+                PlaySfxPositional(SFX_STOMP_HARD_A);
                 self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
                 SetSubStep(SUCCUBUS_DYING_ANIM_1);
                 posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -318,7 +318,7 @@ void EntitySuccubus(Entity* self) {
 
         AnimateEntity(D_801806C4, self);
         if ((self->animFrameIdx == 3) && (self->animFrameDuration == 0)) {
-            func_801A046C(NA_SE_SU_FLAPPING_WINGS);
+            PlaySfxPositional(NA_SE_SU_FLAPPING_WINGS);
         }
 
         posY = self->posY.i.hi - self->ext.succubus.yOffset;
@@ -357,7 +357,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_FLY_1:
             AnimateEntity(D_801806E8, self);
             if ((self->animFrameIdx == 3) && (self->animFrameDuration == 0)) {
-                func_801A046C(NA_SE_SU_FLAPPING_WINGS);
+                PlaySfxPositional(NA_SE_SU_FLAPPING_WINGS);
             }
 
             MoveEntity();
@@ -449,7 +449,7 @@ void EntitySuccubus(Entity* self) {
             }
             AnimateEntity(D_801806E8, self);
             if ((self->animFrameIdx == 3) && (self->animFrameDuration == 0)) {
-                func_801A046C(NA_SE_SU_FLAPPING_WINGS);
+                PlaySfxPositional(NA_SE_SU_FLAPPING_WINGS);
             }
             MoveEntity();
             if (--self->ext.succubus.timer == 0) {
@@ -501,7 +501,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_PETAL_ATTACK_ANIM:
             if (AnimateEntity(D_8018070C, self) == 0) {
                 self->ext.succubus.timer = 128;
-                func_801A046C(NA_VO_SU_LAUGH);
+                PlaySfxPositional(NA_VO_SU_LAUGH);
                 self->step_s++;
             }
             break;
@@ -516,7 +516,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             if ((self->ext.succubus.timer % 64) == 0) {
-                func_801A046C(NA_SE_SU_PETAL_ATTACK);
+                PlaySfxPositional(NA_SE_SU_PETAL_ATTACK);
             }
             if (--self->ext.succubus.timer == 0) {
                 SetStep(SUCCUBUS_FLY);
@@ -540,7 +540,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_CHARGE_SETUP:
             self->ext.succubus.timer = 112;
             self->animCurFrame = 36;
-            func_801A046C(NA_VO_SU_BLANK);
+            PlaySfxPositional(NA_VO_SU_BLANK);
             self->step_s++;
 
         case SUCCUBUS_CHARGE_FLY_TOWARDS_PLAYER:
@@ -615,7 +615,7 @@ void EntitySuccubus(Entity* self) {
             }
             self->posY.i.hi = posY = entity->posY.i.hi;
             self->posX.i.hi = posX;
-            func_801A046C(NA_VO_SU_SUCK_YOU_DRY);
+            PlaySfxPositional(NA_VO_SU_SUCK_YOU_DRY);
             self->step_s++;
 
         case SUCCUBUS_CHARGE_DEAL_DAMAGE:
@@ -660,9 +660,9 @@ void EntitySuccubus(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             if (self->ext.succubus.unk87) {
-                func_801A046C(NA_VO_SU_DELICIOUS);
+                PlaySfxPositional(NA_VO_SU_DELICIOUS);
             } else {
-                func_801A046C(NA_VO_SU_LAUGH);
+                PlaySfxPositional(NA_VO_SU_LAUGH);
             }
             self->ext.succubus.unk87 = false;
         }
@@ -711,8 +711,8 @@ void EntitySuccubus(Entity* self) {
             self->ext.succubus.timer = 64;
             self->hitboxState = 0;
             D_80180660 = 6;
-            func_801A046C(NA_VO_SU_GRUNT_1);
-            func_801A046C(NA_SE_SU_CREATE_CLONES);
+            PlaySfxPositional(NA_VO_SU_GRUNT_1);
+            PlaySfxPositional(NA_SE_SU_CREATE_CLONES);
             self->step_s++;
 
         case SUCCUBUS_CLONE_ATTACK_WAIT:
@@ -785,7 +785,7 @@ void EntitySuccubus(Entity* self) {
                 SetSubStep(SUCCUBUS_CLONE_ATTACK_ANIM_2);
             }
             if ((self->animFrameIdx == 4) && (self->animFrameDuration == 0)) {
-                func_801A046C(NA_SE_SU_CHARGE_PINKBALLS);
+                PlaySfxPositional(NA_SE_SU_CHARGE_PINKBALLS);
 
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -805,9 +805,9 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             if ((self->animFrameIdx == 5) && (self->animFrameDuration == 0)) {
-                func_801A046C(NA_VO_SU_GRUNT_2);
-                func_801A046C(NA_VO_SU_CRYSTAL_1);
-                func_801A046C(SFX_FIRE_SHOT);
+                PlaySfxPositional(NA_VO_SU_GRUNT_2);
+                PlaySfxPositional(NA_VO_SU_CRYSTAL_1);
+                PlaySfxPositional(SFX_FIRE_SHOT);
                 self->ext.succubus.unk85 = true;
             }
             break;
@@ -841,8 +841,8 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_SPIKE_ATTACK_1:
             if (AnimateEntity(D_80180748, self) == 0) {
                 self->ext.succubus.unk85 = true;
-                func_801A046C(NA_VO_SU_CRYSTAL_2);
-                func_801A046C(NA_VO_SU_GRUNT_3);
+                PlaySfxPositional(NA_VO_SU_CRYSTAL_2);
+                PlaySfxPositional(NA_VO_SU_GRUNT_3);
                 self->ext.succubus.timer = 64;
                 SetSubStep(2);
             }
@@ -879,9 +879,9 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_GET_HIT:
         if (self->step_s == 0) {
             if (Random() % 2) {
-                func_801A046C(NA_VO_SU_HURT_1);
+                PlaySfxPositional(NA_VO_SU_HURT_1);
             } else {
-                func_801A046C(NA_VO_SU_HURT_2);
+                PlaySfxPositional(NA_VO_SU_HURT_2);
             }
 
             self->ext.succubus.timer = 32;
@@ -1118,7 +1118,7 @@ void EntitySuccubusClone(Entity* self) {
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            func_801A046C(0x6E2);
+            PlaySfxPositional(0x6E2);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
@@ -1137,9 +1137,9 @@ void EntitySuccubusClone(Entity* self) {
             }
         }
         if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
-            func_801A046C(NA_VO_SU_GRUNT_2);
-            func_801A046C(NA_VO_SU_CRYSTAL_1);
-            func_801A046C(SFX_FIRE_SHOT);
+            PlaySfxPositional(NA_VO_SU_GRUNT_2);
+            PlaySfxPositional(NA_VO_SU_CRYSTAL_1);
+            PlaySfxPositional(SFX_FIRE_SHOT);
             self->ext.succubus.unk85 = 1;
         }
         break;

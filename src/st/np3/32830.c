@@ -152,7 +152,7 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
-            func_801916C4(NA_SE_EV_WINDOW_LATCH);
+            PlaySfxPositional(NA_SE_EV_WINDOW_LATCH);
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
@@ -665,11 +665,11 @@ void EntityCavernDoorLever(Entity* entity) {
             if (entity->rotZ > 0) {
                 entity->rotZ = 0;
                 if (g_CastleFlags[48] == 0) {
-                    g_api.PlaySfx(0x675);
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
                 g_CastleFlags[48] = 1;
             } else if (!(g_Timer & 0xF)) {
-                g_api.PlaySfx(0x675);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
         break;
@@ -766,7 +766,7 @@ void EntityCavernDoor(Entity* self) {
     case 1:
         if (g_CastleFlags[48]) {
             // Missing line compared to NO3
-            // g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
+            // g_api.PlaySfx(SFX_SWITCH_CLICK);
             self->step++;
         }
         break;
@@ -890,7 +890,7 @@ void EntityClickSwitch(Entity* entity) {
             entity->posY.val += FIX(0.75);
             if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Tilemap.scrollY.i.hi;
-                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                g_api.PlaySfx(SFX_SWITCH_CLICK);
                 g_CastleFlags[49] = 1;
                 entity->step++;
             }
@@ -952,7 +952,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
     case 2:
         self->posY.val += FIX(0.5);
         if ((self->posY.i.hi + g_Tilemap.scrollY.i.hi) >= 175) {
-            func_801916C4(SFX_START_SLAM_B);
+            PlaySfxPositional(SFX_START_SLAM_B);
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
             self->step++;
         }
@@ -1307,7 +1307,7 @@ void func_801B5488(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801916C4(SFX_WALL_DEBRIS_B);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -1621,7 +1621,7 @@ void EntitySwitch(Entity* self) {
             if ((g_Tilemap.scrollY.i.hi + self->posY.i.hi) > 193) {
                 self->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
                 g_CastleFlags[50] = true;
-                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                g_api.PlaySfx(SFX_SWITCH_CLICK);
                 self->step++;
             }
         }
@@ -1768,23 +1768,5 @@ void EntityUnkId49(Entity* self) {
         g_Tilemap.fg[0xCE / 2] = temp;
         self->step++;
         break;
-    }
-}
-
-void func_801B653C(void) {
-    Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-    s32 i;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            CreateEntityFromEntity(E_ID_4D, g_CurrentEntity, entity);
-            entity->params = 2;
-            entity->ext.generic.unk88.U8.unk1 = 6 - i;
-            entity->ext.generic.unk84.S16.unk0 = temp_s3;
-            entity->ext.generic.unk88.U8.unk0 = temp_s4;
-        }
     }
 }
