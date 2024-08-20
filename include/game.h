@@ -1588,7 +1588,7 @@ typedef struct {
     /* 0x0C */ u8 frameStart;  // when the animation starts
     /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
     /* 0x0E */ s16 unused;     // reserved, always 0
-} WeaponAnimation;
+} WeaponAnimation;             // size = 0x10
 
 #define TILE_SIZE 16
 #define TILE_MASK 0x0F
