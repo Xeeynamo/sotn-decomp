@@ -332,25 +332,7 @@ void func_8019686C(u16 entityId, Entity* src, Entity* dst) {
     }
 }
 
-void func_80196934(void) {
-    Entity* entity;
-    s16 temp_s3;
-    s32 i;
-    u8 temp_s4;
-
-    temp_s4 = Random() & 3;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            CreateEntityFromEntity(2, g_CurrentEntity, entity);
-            entity->ext.generic.unk84.U8.unk1 = 6 - i;
-            entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
-            entity->ext.generic.unk84.U8.unk0 = temp_s4;
-        }
-    }
-}
+#include "../make_explosions.h"
 
 #include "../entity_big_red_fireball.h"
 
