@@ -10,7 +10,7 @@ static u8 g_EntityUnkId12Data[] = {
 extern u8 g_EntityUnkId12Data[];
 #endif
 
-static u16 D_80180538[] = {
+static u16 g_EntityUnkId12TilemapProps[] = {
     0x0000, 0x0000, 0x0600, 0x0100, 0x0000, 0x0000, 0x0600, 0x01FC,
     0x0000, 0x00FC, 0x0600, 0x01FC, 0x0000, 0x0000, 0x0600, 0x01FC,
     0x0000, 0x00FC, 0x0600, 0x0300, 0x0000, 0x00FC, 0x0600, 0x01FC,
@@ -82,7 +82,7 @@ void EntityUnkId12(Entity* entity) {
                 var_s0 *= 4;
             }
             params = (params << 3) + var_s0;
-            tilemapProps = &D_80180538[params];
+            tilemapProps = &g_EntityUnkId12TilemapProps[params];
             g_Tilemap.x = *tilemapProps++;
             g_Tilemap.y = *tilemapProps++;
             g_Tilemap.width = *tilemapProps++;
