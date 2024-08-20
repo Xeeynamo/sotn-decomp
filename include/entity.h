@@ -244,6 +244,55 @@ typedef struct {
     u8 anim;
 } ET_KarmaCoin;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 : 16;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    byte pad[16];
+    s32 vol;
+    s32 unk9C;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
+} ET_WeaponUnk012;
+
+typedef struct PACKED {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+    struct Entity* parent;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    s16 unk98;
+    s16 unk9A;
+    s16 unk9C;
+    s16 unk9E;
+    s16 unkA0;
+    s16 unkA2;
+    s32 unkA4;
+    s32 unkA8;
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
+    u8 anim;
+    u8 unkAD;
+    s16 equipId;
+} ET_Sword;
+
 typedef struct PACKED {
     s16 angle;
     s16 unk7E;
@@ -1458,10 +1507,12 @@ typedef union { // offset=0x7C
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
+    ET_WeaponUnk012 weapon_012;
     ET_WeaponUnk046 weapon_046;
     ET_Shield shield;
     ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
+    ET_Sword sword;
     ET_HeavenSword heavenSword;
     ET_HeavenSword2 heavenSword2;
     ET_MedusaShieldLaser medshieldlaser;
@@ -1552,8 +1603,10 @@ typedef union { // offset=0x7C
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk012, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk046, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_KarmaCoin, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Sword, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword2, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Shield, anim));
