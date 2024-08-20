@@ -216,32 +216,7 @@ u8 func_8019EAF0(s32 arg0) {
 
 #include "../entity_intense_explosion.h"
 
-void func_8019F170(Entity* entity) {
-    if (!entity->step) {
-        InitializeEntity(g_InitializeEntityData0);
-        entity->unk6C = 0xF0;
-        entity->rotX = 0x1A0;
-        entity->rotY = 0x1A0;
-        entity->animSet = ANIMSET_DRA(8);
-        entity->animCurFrame = 1;
-        entity->zPriority += 0x10;
-
-        if (entity->params != 0) {
-            entity->palette = entity->params;
-        } else {
-            entity->palette = 0x8160;
-        }
-
-        entity->step++;
-        return;
-    }
-
-    MoveEntity();
-
-    if (!AnimateEntity(D_80181338, entity)) {
-        DestroyEntity(entity);
-    }
-}
+#include "../initialize_unk_entity.h"
 
 #include "../make_entity_from_id.h"
 

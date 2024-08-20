@@ -23,6 +23,7 @@ unk14_yVel = 0x80182650;
 unk14_startFrame = 0x80182668;
 unk14_lifetime = 0x8018266C;
 g_olroxDroolCollOffsets = 0x80182674;
+g_UnkEntityAnimData = 0x8018267C;
 g_UnkRecursPrimVecOrder = 0x8018268C;
 g_UnkRecursPrim2Inds = 0x801826AC;
 g_ESoulStealOrbAngles = 0x801826D0;

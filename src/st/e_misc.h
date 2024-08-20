@@ -315,33 +315,11 @@ u8 func_8018FD48(s32 arg0) {
 
 #include "entity_intense_explosion.h"
 
-u8 D_8018104C[] = {
+u8 g_UnkEntityAnimData[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
 };
-void func_801903C8(Entity* self) {
-    if (!self->step) {
-        InitializeEntity(g_InitializeEntityData0);
-        self->unk6C = 0xF0;
-        self->rotX = 0x01A0;
-        self->rotY = 0x01A0;
-        self->animSet = ANIMSET_DRA(8);
-        self->animCurFrame = 1;
-        self->zPriority += 16;
 
-        if (self->params) {
-            self->palette = self->params;
-        } else {
-            self->palette = PAL_OVL(0x160);
-        }
-
-        self->step++;
-    } else {
-        MoveEntity();
-        if (!AnimateEntity(D_8018104C, self)) {
-            DestroyEntity(self);
-        }
-    }
-}
+#include "initialize_unk_entity.h"
 
 #include "make_entity_from_id.h"
 
