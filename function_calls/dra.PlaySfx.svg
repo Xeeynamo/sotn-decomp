@@ -5123,7 +5123,7 @@
 <g id="node321" class="node">
 <title>w_054.EntityWeaponAttack</title>
 <g id="a_node321"><a xlink:href="w_054.EntityWeaponAttack.svg" xlink:title="w_054.EntityWeaponAttack">
-<ellipse fill="red" stroke="black" cx="83146.19" cy="-198" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="83146.19" cy="-198" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="83146.19" y="-194.3" font-family="Times,serif" font-size="14.00">w_054.EntityWeaponAttack</text>
 </a>
 </g>
@@ -5155,7 +5155,7 @@
 <g id="node323" class="node">
 <title>w_056.EntityWeaponAttack</title>
 <g id="a_node323"><a xlink:href="w_056.EntityWeaponAttack.svg" xlink:title="w_056.EntityWeaponAttack">
-<ellipse fill="red" stroke="black" cx="83736.19" cy="-198" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="83736.19" cy="-198" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="83736.19" y="-194.3" font-family="Times,serif" font-size="14.00">w_056.EntityWeaponAttack</text>
 </a>
 </g>
