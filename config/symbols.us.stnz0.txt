@@ -10,6 +10,7 @@ unk14_yVel = 0x80181F04;
 unk14_startFrame = 0x80181F1C;
 unk14_lifetime = 0x80181F20;
 g_olroxDroolCollOffsets = 0x80181F28;
+g_UnkEntityAnimData = 0x80181F30;
 g_UnkRecursPrimVecOrder = 0x80181F40;
 g_UnkRecursPrim2Inds = 0x80181F60;
 g_eBlueDoorUV = 0x801826B8;
