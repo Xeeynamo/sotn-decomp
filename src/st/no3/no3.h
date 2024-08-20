@@ -68,6 +68,7 @@ typedef enum EntityIDs {
     /* 0x43 */ E_MERMAN_UNK1,
     /* 0x44 */ E_MERMAN_UNK3,
     /* 0x47 */ E_BONE_SCIMITAR_HEAD = 0x47,
+    /* 0x4C */ E_ZOMBIE = 0x4C,
     /* 0x59 */ E_ID_59 = 0x59,
     /* 0x5B */ E_ID_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
