@@ -70,12 +70,11 @@ INCLUDE_ASM("weapon/nonmatchings/w_030", func_ptr_80170008);
 
 void func_ptr_8017000C(Entity* self) {
     s16 result;
-    s16 var_v0;
+    s16 angleDiff;
     s16 maskedParams;
     s32 temp_a2;
-    s16 t0;
+    s16 angle;
     s32 temp_lo;
-    s32 var_v0_2;
 
     maskedParams = (self->params >> 8) & 0x7F;
     switch (self->step) {
@@ -105,7 +104,7 @@ void func_ptr_8017000C(Entity* self) {
             self->facingLeft = 0;
             self->drawFlags = DRAW_COLORS;
             self->step = 2;
-            g_api.PlaySfx(0x6BA);
+            g_api.PlaySfx(SFX_UNK_6BA);
             self->ext.weapon.unk80 = rand();
             self->ext.weapon.lifetime = ((u8)self->params * 4) + 0x30;
             D_D6000_8017CC44++;
@@ -128,28 +127,28 @@ void func_ptr_8017000C(Entity* self) {
     case 1:
         if (maskedParams == 2) {
             result = g_api.func_80118B18(
-                self, self->ext.weapon.other, self->ext.weapon.unk82);
+                self, self->ext.weapon_030.other, self->ext.weapon.unk82);
             if (result >= 0) {
                 temp_a2 = self->ext.weapon.unk80 & 0xFFF;
-                t0 = temp_a2;
-                var_v0 = abs(t0 - result);
-                if (self->ext.weapon.unk98 > var_v0) {
-                    self->ext.weapon.unk98 = var_v0;
+                angle = temp_a2;
+                angleDiff = abs(angle - result);
+                if (self->ext.weapon.unk98 > angleDiff) {
+                    self->ext.weapon.unk98 = angleDiff;
                 }
-
-                if (t0 < result) {
-                    if (var_v0 < 0x800) {
-                        goto block_28;
+                if (angle < result) {
+                    if (angleDiff < 0x800) {
+                        angle += self->ext.weapon.unk98;
+                    } else {
+                        angle -= self->ext.weapon.unk98;
                     }
-                    goto block_27;
-                } else if (var_v0 < 0x800) {
-                block_27:
-                    var_v0_2 = temp_a2 - (u16)self->ext.weapon.unk98;
                 } else {
-                block_28:
-                    var_v0_2 = (u16)self->ext.weapon.unk98 + temp_a2;
+                    if (angleDiff < 0x800) {
+                        angle -= self->ext.weapon.unk98;
+                    } else {
+                        angle += self->ext.weapon.unk98;
+                    }
                 }
-                self->ext.weapon.unk80 = var_v0_2 & 0xFFF;
+                self->ext.weapon.unk80 = angle & 0xFFF;
             }
             self->velocityX =
                 (rcos(self->ext.weapon.unk80) * self->ext.weapon.unk9A) >> 5;
@@ -176,10 +175,10 @@ void func_ptr_8017000C(Entity* self) {
         self->ext.weapon.unk80 += 0x100;
         self->rotZ = -self->ext.weapon.unk80 + 0x800;
         if (--self->ext.weapon.lifetime == 0) {
-            self->ext.weapon.other = g_api.func_80118970();
+            self->ext.weapon_030.other = g_api.func_80118970();
             self->ext.weapon.unk98 = 0x20;
             self->ext.weapon.unk9A = 0x600;
-            g_api.PlaySfx(0x627);
+            g_api.PlaySfx(SFX_ARROW_SHOT_C);
             self->step = 1;
         }
         break;

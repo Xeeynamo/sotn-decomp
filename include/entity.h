@@ -190,7 +190,7 @@ typedef struct PACKED {
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 unk90;
-    /* 0x94 */ struct Entity* other;
+    /* 0x94 */ s32 unk94;
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s32 accelerationX;
@@ -201,6 +201,28 @@ typedef struct PACKED {
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 equipId;
 } ET_Weapon;
+
+typedef struct PACKED {
+    /* 0x7C */ s16 lifetime;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s16 childPalette;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ struct Entity* other;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s32 accelerationX;
+    /* 0xA0 */ s32 accelerationY;
+    /* 0xA4 */ s32 unkA4;
+    /* 0xA8 */ s32 unkA8;
+    /* 0xAC */ u8 anim;
+    /* 0xAD */ u8 unkAD;
+    /* 0xAE */ s16 equipId;
+} ET_WeaponUnk030;
 
 typedef struct PACKED {
     s32 unk7C;
@@ -1455,6 +1477,7 @@ typedef union { // offset=0x7C
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
+    ET_WeaponUnk030 weapon_030;
     ET_WeaponUnk046 weapon_046;
     ET_Shield shield;
     ET_DarkShield darkShield;
