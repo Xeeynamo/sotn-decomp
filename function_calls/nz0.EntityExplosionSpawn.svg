@@ -19,33 +19,33 @@
 <g id="node2" class="node">
 <title>nz0.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="nz0.DestroyEntity.svg" xlink:title="nz0.DestroyEntity">
-<ellipse fill="green" stroke="black" cx="204.34" cy="-18" rx="95.58" ry="18"/>
-<text text-anchor="middle" x="204.34" y="-14.3" font-family="Times,serif" font-size="14.00">nz0.DestroyEntity</text>
+<ellipse fill="green" stroke="black" cx="200.34" cy="-18" rx="95.58" ry="18"/>
+<text text-anchor="middle" x="200.34" y="-14.3" font-family="Times,serif" font-size="14.00">nz0.DestroyEntity</text>
 </a>
 </g>
 </g>
 <!-- nz0.EntityExplosionSpawn&#45;&gt;nz0.DestroyEntity -->
 <g id="edge1" class="edge">
 <title>nz0.EntityExplosionSpawn&#45;&gt;nz0.DestroyEntity</title>
-<path fill="none" stroke="black" d="M301.98,-179.93C282.95,-148.57 242.32,-81.6 219.93,-44.71"/>
-<polygon fill="black" stroke="black" points="222.84,-42.75 214.66,-36.02 216.85,-46.38 222.84,-42.75"/>
-<text text-anchor="middle" x="209.66" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M301.6,-179.93C281.86,-148.57 239.73,-81.6 216.51,-44.71"/>
+<polygon fill="black" stroke="black" points="219.33,-42.62 211.04,-36.02 213.4,-46.34 219.33,-42.62"/>
+<text text-anchor="middle" x="206.04" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- nz0.func_801C29B0 -->
+<!-- nz0.PlaySfxPositional -->
 <g id="node3" class="node">
-<title>nz0.func_801C29B0</title>
-<g id="a_node3"><a xlink:href="nz0.func_801C29B0.svg" xlink:title="nz0.func_801C29B0">
-<ellipse fill="green" stroke="black" cx="421.34" cy="-18" rx="103.18" ry="18"/>
-<text text-anchor="middle" x="421.34" y="-14.3" font-family="Times,serif" font-size="14.00">nz0.func_801C29B0</text>
+<title>nz0.PlaySfxPositional</title>
+<g id="a_node3"><a xlink:href="nz0.PlaySfxPositional.svg" xlink:title="nz0.PlaySfxPositional">
+<ellipse fill="green" stroke="black" cx="424.34" cy="-18" rx="110.48" ry="18"/>
+<text text-anchor="middle" x="424.34" y="-14.3" font-family="Times,serif" font-size="14.00">nz0.PlaySfxPositional</text>
 </a>
 </g>
 </g>
-<!-- nz0.EntityExplosionSpawn&#45;&gt;nz0.func_801C29B0 -->
+<!-- nz0.EntityExplosionSpawn&#45;&gt;nz0.PlaySfxPositional -->
 <g id="edge2" class="edge">
-<title>nz0.EntityExplosionSpawn&#45;&gt;nz0.func_801C29B0</title>
-<path fill="none" stroke="black" d="M322.79,-179.93C341.99,-148.57 383,-81.6 405.59,-44.71"/>
-<polygon fill="black" stroke="black" points="408.68,-46.37 410.92,-36.02 402.71,-42.72 408.68,-46.37"/>
-<text text-anchor="middle" x="405.92" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<title>nz0.EntityExplosionSpawn&#45;&gt;nz0.PlaySfxPositional</title>
+<path fill="none" stroke="black" d="M323.07,-179.93C342.81,-148.57 384.94,-81.6 408.16,-44.71"/>
+<polygon fill="black" stroke="black" points="411.27,-46.34 413.63,-36.02 405.34,-42.62 411.27,-46.34"/>
+<text text-anchor="middle" x="408.63" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- nz0.EntityAxeKnightThrowingAxe -->
 <g id="node4" class="node">
