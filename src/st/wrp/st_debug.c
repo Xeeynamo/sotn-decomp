@@ -3,9 +3,10 @@
 static u8 D_80180528[] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20};
 
 #ifndef VERSION_PSP // moved to BSS
-static u8 D_80180530[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+static u8 g_EntityUnkId12Data[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 #else
-extern u8 D_80180530[];
+extern u8 g_EntityUnkId12Data[];
 #endif
 
 static u16 D_80180538[] = {
@@ -88,7 +89,7 @@ void EntityUnkId12(Entity* entity) {
         }
     } else {
         InitializeEntity(D_80180488);
-        var_s0 = entity->ext.generic.unk7C.u = D_80180530[params];
+        var_s0 = entity->ext.generic.unk7C.u = g_EntityUnkId12Data[params];
         if (var_s0) {
             entity->hitboxWidth = D_80180528[params];
             entity->hitboxHeight = 16;
