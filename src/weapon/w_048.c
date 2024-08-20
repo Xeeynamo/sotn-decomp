@@ -187,7 +187,7 @@ void func_ptr_80170008(Entity* self) {
             prim->r0 = prim->b0 = prim->g0 = 0;
             prim->r3 = prim->g3 = 0;
             prim->r2 = prim->g2 = 0;
-            prim->type = 4;
+            prim->type = PRIM_GT4;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                              DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
