@@ -218,24 +218,7 @@ s16 GetSine(u8 arg0) { return D_80181978[arg0]; } // Unique
 
 #include "../set_sub_step.h"
 
-void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
-    if (sfxId != 0) {
-        PlaySfxPositional(sfxId);
-    }
-
-    if (arg0 == 0xFF) {
-        DestroyEntity(g_CurrentEntity);
-        return;
-    }
-
-    g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    g_CurrentEntity->params = arg0;
-    g_CurrentEntity->animCurFrame = 0;
-    g_CurrentEntity->drawFlags = 0;
-    g_CurrentEntity->step = 0;
-    g_CurrentEntity->step_s = 0;
-}
+#include "../entity_explosion_spawn.h"
 
 #include "../init_entity.h"
 
