@@ -882,7 +882,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_WALKING_TO_PLAYER_WALKING:
             AnimateEntity(D_80183960, self);
-            colRes = func_801C52EC(&D_80183958);
+            colRes = UnkCollisionFunc2(&D_80183958);
             if (colRes == 0xFF) {
                 self->facingLeft ^= 1;
             }

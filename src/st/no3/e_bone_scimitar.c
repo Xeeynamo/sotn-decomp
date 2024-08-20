@@ -1,10 +1,10 @@
 #include "no3.h"
 
-s32 func_801C52EC(s32*);
+s32 UnkCollisionFunc2(s32*);
 s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 
 void func_801D59D0(void) {
-    s32 temp = func_801C52EC(&D_80183C30);
+    s32 temp = UnkCollisionFunc2(&D_80183C30);
     s32 temp2 = UnkCollisionFunc(&D_80183C38, 3);
 
     if ((temp == 128) || (temp2 & 2)) {

@@ -29,7 +29,7 @@ typedef enum {
 } BoneScimitarSpecialSubSteps;
 
 void func_801C90E8(void) {
-    s32 temp = func_801BCB5C(&D_80182540);
+    s32 temp = UnkCollisionFunc2(&D_80182540);
     s16 temp2 = UnkCollisionFunc(&D_80182548, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
@@ -190,7 +190,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_SPECIAL:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        func_801BCB5C(&D_80182540);
+        UnkCollisionFunc2(&D_80182540);
         if (((((u32)self->velocityX) >> 0x1F) ^ self->facingLeft) != 0) {
             AnimateEntity(D_80182464, self);
         } else {

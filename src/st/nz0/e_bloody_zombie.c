@@ -275,7 +275,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         AnimateEntity(anim_walk, self);
-        func_801BCF74(sensors_move);
+        UnkCollisionFunc2(sensors_move);
 
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-0.375);
@@ -311,7 +311,7 @@ void EntityBloodyZombie(Entity* self) {
         if (AnimateEntity(anim_chase, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        func_801BCF74(sensors_move);
+        UnkCollisionFunc2(sensors_move);
 
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.75);

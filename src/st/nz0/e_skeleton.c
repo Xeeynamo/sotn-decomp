@@ -43,7 +43,7 @@ static s16 D_801824B8[] = {0, 19, 8, 0};
 static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 void func_801C5F2C(Entity* self) {
-    if ((func_801BCF74(D_801824B8) & 0x60) == 0x60) {
+    if ((UnkCollisionFunc2(D_801824B8) & 0x60) == 0x60) {
         self->posX.val -= self->velocityX;
     }
 

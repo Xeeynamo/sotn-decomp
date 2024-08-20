@@ -276,7 +276,7 @@ void EntityAxeKnight(Entity* self) {
             self->velocityX += 0x300;
         }
 
-        if (func_801BCF74(sensors_move) & 0x60) {
+        if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
@@ -322,7 +322,7 @@ void EntityAxeKnight(Entity* self) {
             self->velocityX -= 0x200;
         }
 
-        if (func_801BCF74(sensors_move) & 0x60) {
+        if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }

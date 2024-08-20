@@ -55,7 +55,7 @@ void EntityZombie(Entity* self) {
 
     case 3:
         AnimateEntity(D_80183C7C, self);
-        temp_a0 = func_801C52EC(&D_80183CBC);
+        temp_a0 = UnkCollisionFunc2(&D_80183CBC);
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.5);
         } else {
