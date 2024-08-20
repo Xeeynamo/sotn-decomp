@@ -250,3 +250,20 @@ extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 
 extern Dialogue g_Dialogue;
+
+extern u16 g_BoneScimitarInit[];
+extern s32 D_80183B50;      // Flag for special bone scimitar to appear or not
+extern u8 D_80183B54[];     // animation: Walking Forward
+extern u8 D_80183B64[];     // animation: Walking Backwards
+extern u8 D_80183B74[];     // animation: Swing Sword
+extern u8 D_80183B90[];     // animation: Jumping
+extern u8 D_80183B9C[];     // animation: Landing
+extern s8 D_80183BB8[];     // Skeleton parts array selector
+extern s32 D_80183BC0[];    // Skeleton parts velocityX
+extern s32 D_80183BDC[];    // Skeleton parts velocityY
+extern u16 D_80183BF8[];    // Skeleton parts posX
+extern u16 D_80183C08[];    // Skeleton parts posY
+extern s8 D_80183C18[2][4]; // Skeleton attack timer cycle
+extern s32 D_80183C20;
+extern s32 D_80183C30;
+extern s32 D_80183C38;

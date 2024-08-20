@@ -1469,6 +1469,22 @@ typedef struct {
     /* 0x88 */ s32 unk88;
 } ET_ZombieSpawner;
 
+typedef struct {
+    /* 0x7C */ u8 attackTimer;
+    /* 0x7D */ s32 : 24;
+    /* 0x80 */ u8 facingLeft;
+    /* 0x81 */ s32 : 24;
+    /* 0x84 */ u8 attackTimerIndex;
+    /* 0x85 */ s32 : 24;
+    /* 0x88 */ u8 explosionTimer;
+    /* 0x89 */ s32 : 24;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 initialX;
+} ET_BoneScimitar;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1600,6 +1616,7 @@ typedef union { // offset=0x7C
     ET_CavernDoor cavernDoor;
     ET_SelEnt8 selEnt8;
     ET_ZombieSpawner zombieSpawner;
+    ET_BoneScimitar boneScimitar;
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
