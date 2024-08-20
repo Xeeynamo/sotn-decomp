@@ -263,7 +263,7 @@ segments:
     subsegments:
       - [0x58040, animset, w_012_1]
       - [0x582B0, animset, w_012_2]
-      - [0x582B0, data, w_012]
+      - [0x582B0, .data, w_012]
       - [0x58ACC, c, w_012]
       - [0x59B28, sbss, w_012]
   - name: f_013
