@@ -30,7 +30,7 @@ typedef enum {
 
 void func_801C90E8(void) {
     s32 temp = func_801BCB5C(&D_80182540);
-    s16 temp2 = func_801BD308(&D_80182548, 3);
+    s16 temp2 = UnkCollisionFunc(&D_80182548, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);

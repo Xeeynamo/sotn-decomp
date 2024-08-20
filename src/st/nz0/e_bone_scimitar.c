@@ -61,7 +61,7 @@ static u16 sensor_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 void func_801C3708(void) {
     s32 temp = func_801BCF74(D_8018216C);
-    s32 temp2 = func_801BD720(sensor_move, LEN(sensor_move));
+    s32 temp2 = UnkCollisionFunc(sensor_move, LEN(sensor_move));
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);

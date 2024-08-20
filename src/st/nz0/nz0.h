@@ -50,7 +50,7 @@ typedef enum {
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
-s32 func_801BD720(u16* hitSensors, s16 sensorCount);
+s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);

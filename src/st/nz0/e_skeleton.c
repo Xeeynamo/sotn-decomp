@@ -47,7 +47,7 @@ void func_801C5F2C(Entity* self) {
         self->posX.val -= self->velocityX;
     }
 
-    if (!(func_801BD720(sensors_move, LEN(sensors_move)) & 2)) {
+    if (!(UnkCollisionFunc(sensors_move, LEN(sensors_move)) & 2)) {
         if ((--self->ext.generic.unk7C.U8.unk0) == 0) {
             SetStep(4);
         }
