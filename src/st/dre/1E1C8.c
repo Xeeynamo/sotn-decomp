@@ -288,41 +288,7 @@ void func_8019F304(void) {
 
 #include "../clut_lerp.h"
 
-void PlaySfxPositional(s16 sfxId) {
-    s32 sfxVol;
-    s32 temp_v0_2;
-    s16 sfxPan;
-    s32 y;
-    s16 var_v0_4;
-    s16 var_v1;
-
-    sfxVol = g_CurrentEntity->posX.i.hi - 128;
-    sfxPan = (abs(sfxVol) - 32) >> 5;
-    if (sfxPan > 8) {
-        sfxPan = 8;
-    } else if (sfxPan < 0) {
-        sfxPan = 0;
-    }
-    if (sfxVol < 0) {
-        sfxPan = -sfxPan;
-    }
-    sfxVol = abs(sfxVol) - 96;
-    y = g_CurrentEntity->posY.i.hi - 128;
-    temp_v0_2 = abs(y) - 112;
-    var_v1 = sfxVol;
-    if (temp_v0_2 > 0) {
-        var_v1 += temp_v0_2;
-    }
-    if (var_v1 < 0) {
-        var_v0_4 = 0;
-    } else {
-        var_v0_4 = var_v1;
-    }
-    sfxVol = 127 - (var_v0_4 >> 1);
-    if (sfxVol > 0) {
-        g_api.PlaySfxVolPan(sfxId, sfxVol, sfxPan);
-    }
-}
+#include "../play_sfx_positional.h"
 
 #include "../e_stage_name.h"
 
