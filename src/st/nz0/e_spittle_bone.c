@@ -46,7 +46,7 @@ void EntitySpittleBone(Entity* self) {
     case 2:
         AnimateEntity(D_80182524, self);
         self->ext.spittleBone.unk7C =
-            func_801C1034(self->ext.spittleBone.unk7C);
+            UnkCollisionFunc4(self->ext.spittleBone.unk7C);
         if (self->ext.spittleBone.unk82 != 0) {
             self->rotZ += self->ext.spittleBone.unk80;
             self->ext.spittleBone.unk82--;
@@ -131,7 +131,7 @@ void EntityRotateSpittlebone(Entity* self) {
     case 1:
         temp1 = self->ext.spittleBone.unk7C & 0x3F;
         prevEntity = &self[-1];
-        temp4 = func_801C1034(self->ext.spittleBone.unk7C);
+        temp4 = UnkCollisionFunc4(self->ext.spittleBone.unk7C);
         self->ext.spittleBone.unk7C = temp4;
         if ((temp4 & 0x3F) != temp1) {
             temp2 = temp4 & 0x3C;
