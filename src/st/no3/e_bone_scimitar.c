@@ -210,7 +210,7 @@ void EntityBoneScimitar(Entity* self) {
 
         case BONE_SCIMITAR_WALK_LEFT:
             self->velocityX = FIX(-0.5);
-            if (((s16)((g_Tilemap.scrollX.i.hi + ((u16)self->posX.i.hi)) -
+            if (((s16)((g_Tilemap.scrollX.i.hi + self->posX.i.hi) -
                        self->ext.boneScimitar.initialX)) < -32) {
                 self->step_s--;
             }
@@ -284,7 +284,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     }
     InitializeEntity(D_80180B84);
     entity->drawFlags = FLAG_DRAW_ROTZ;
-    entity->animCurFrame = *(u8*)&entity->params + 16;
+    entity->animCurFrame = (entity->params & 0xFF) + 16;
 
     if (entity->facingLeft != 0) {
         entity->velocityX = -entity->velocityX;
