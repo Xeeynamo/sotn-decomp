@@ -141,9 +141,10 @@ void EntityBoneScimitar(Entity* self) {
 
         if (animStatus == 0) {
             SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+            self->ext.boneScimitar.attackTimerIndex++;
             self->ext.boneScimitar.attackTimer =
                 D_80183C18[self->params % 2]
-                          [(++self->ext.boneScimitar.attackTimerIndex) & 3];
+                          [self->ext.boneScimitar.attackTimerIndex & 3];
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
             }
