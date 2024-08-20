@@ -63,15 +63,17 @@ void EntityBoneScimitar(Entity* self) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                              FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
-            self->ext.boneScimitar.initialX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            self->ext.boneScimitar.initialX =
+                g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (self->params & D_80182460) {
                 DestroyEntity(self);
                 return;
             }
         }
-        self->ext.boneScimitar.attackTimer = 80;    // Skeleton attack timer cycle
-        self->ext.boneScimitar.facingLeft = 0; // Facing init
-        self->ext.boneScimitar.attackTimerIndex = 0; // Skeleton attack timer selector
+        self->ext.boneScimitar.attackTimer = 80; // Skeleton attack timer cycle
+        self->ext.boneScimitar.facingLeft = 0;   // Facing init
+        self->ext.boneScimitar.attackTimerIndex =
+            0; // Skeleton attack timer selector
         break;
 
     case BONE_SCIMITAR_IDLE:
