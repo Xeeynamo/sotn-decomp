@@ -29,8 +29,8 @@ typedef enum {
 } BoneScimitarSpecialSubSteps;
 
 void func_801D59D0(void) {
-    s32 temp = func_801C52EC(&D_80183C30);
-    s16 temp2 = func_801C5A98(&D_80183C38, 3);
+    s32 temp = UnkCollisionFunc2(&D_80183C30);
+    s16 temp2 = UnkCollisionFunc(&D_80183C38, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);
@@ -77,7 +77,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_IDLE:
-        if (func_801C5074(&D_80183C20) != 0) {
+        if (UnkCollisionFunc3(&D_80183C20) != 0) {
             self->step++;
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
@@ -178,7 +178,7 @@ void EntityBoneScimitar(Entity* self) {
             break;
 
         case BONE_SCIMITAR_IN_AIR:
-            if (func_801C5074(&D_80183C20) != 0) {
+            if (UnkCollisionFunc3(&D_80183C20) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(&D_80183C38, 2);
@@ -193,7 +193,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_SPECIAL:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        func_801C52EC(&D_80183C30);
+        UnkCollisionFunc2(&D_80183C30);
         if (((((u32)self->velocityX) >> 0x1F) ^ self->facingLeft) != 0) {
             AnimateEntity(D_80183B54, self);
         } else {
