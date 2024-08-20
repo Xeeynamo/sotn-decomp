@@ -1,6 +1,7 @@
 #include "wrp.h"
 
-static u8 D_80180528[] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20};
+static u8 g_EntityUnkId12Hitbox[] = {
+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20};
 
 #ifndef VERSION_PSP // moved to BSS
 static u8 g_EntityUnkId12Data[] = {
@@ -91,11 +92,11 @@ void EntityUnkId12(Entity* entity) {
         InitializeEntity(D_80180488);
         var_s0 = entity->ext.generic.unk7C.u = g_EntityUnkId12Data[params];
         if (var_s0) {
-            entity->hitboxWidth = D_80180528[params];
+            entity->hitboxWidth = g_EntityUnkId12Hitbox[params];
             entity->hitboxHeight = 16;
         } else {
             entity->hitboxWidth = 16;
-            entity->hitboxHeight = D_80180528[params];
+            entity->hitboxHeight = g_EntityUnkId12Hitbox[params];
         }
     }
 }
