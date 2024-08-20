@@ -73,7 +73,7 @@ void EntitySecretButton(Entity* self) {
         case 1:
             MoveEntity();
             self->rotZ += 0x40;
-            if (func_801B4D5C(D_801808F8) & 1) {
+            if (UnkCollisionFunc3(D_801808F8) & 1) {
                 self->step_s++;
                 break;
             }

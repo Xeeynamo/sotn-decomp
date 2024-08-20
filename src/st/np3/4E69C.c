@@ -26,7 +26,7 @@ void EntityHammer(Entity* self) {
         self->hitboxHeight = 6;
         /* fallthrough */
     case 1:
-        if (func_801BC8E4(D_80182978) & 1) {
+        if (UnkCollisionFunc3(D_80182978) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }

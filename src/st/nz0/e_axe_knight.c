@@ -231,7 +231,7 @@ void EntityAxeKnight(Entity* self) {
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
     case AXE_KNIGHT_IDLE:
-        if (func_801BCCFC(sensors_ground) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
@@ -276,7 +276,7 @@ void EntityAxeKnight(Entity* self) {
             self->velocityX += 0x300;
         }
 
-        if (func_801BCF74(sensors_move) & 0x60) {
+        if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
@@ -322,7 +322,7 @@ void EntityAxeKnight(Entity* self) {
             self->velocityX -= 0x200;
         }
 
-        if (func_801BCF74(sensors_move) & 0x60) {
+        if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }

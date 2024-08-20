@@ -37,7 +37,7 @@ void EntityZombie(Entity* self) {
         break;
 
     case 1:
-        if (func_801BC8E4(D_801825BC) & 1) {
+        if (UnkCollisionFunc3(D_801825BC) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
@@ -55,7 +55,7 @@ void EntityZombie(Entity* self) {
 
     case 3:
         AnimateEntity(D_8018258C, self);
-        temp_a0 = func_801BCB5C(&D_801825CC);
+        temp_a0 = UnkCollisionFunc2(&D_801825CC);
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.5);
         } else {

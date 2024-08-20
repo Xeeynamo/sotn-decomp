@@ -18,7 +18,6 @@ EntityStairwayPiece = 0x801B5790;
 EntitySlogra = 0x801B6990;
 EntityGaibon = 0x801B78BC;
 EntityRedDoor = 0x801BB89C;
-EntityRelicOrb = 0x801BF1A0;
 EntityMessageBox = 0x801BFD98;
 EntityStageNamePopup = 0x801C2860;
 EntityMerman2 = 0x801C6564;

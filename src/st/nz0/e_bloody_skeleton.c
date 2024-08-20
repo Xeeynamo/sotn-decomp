@@ -32,7 +32,7 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_IDLE:
-        if (func_801BCCFC(&D_80182694) & 1) {
+        if (UnkCollisionFunc3(&D_80182694) & 1) {
             self->step_s = 0;
             self->step++;
         }

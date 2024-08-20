@@ -128,7 +128,7 @@ void EntityBlade(Entity* self) {
         self->facingLeft = self->params;
         /* fallthrough */
     case 1:
-        if (func_801BC8E4(D_801833E4) & 1) {
+        if (UnkCollisionFunc3(D_801833E4) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }

@@ -162,7 +162,7 @@ void EntitySlogra(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        func_801BCF74(&D_8018106C);
+        UnkCollisionFunc2(&D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 if (self->ext.GS_Props.attackMode == 0) {
@@ -320,7 +320,7 @@ void EntitySlogra(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        func_801BCF74(&D_8018106C);
+        UnkCollisionFunc2(&D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 self->ext.GS_Props.flag ^= 1;

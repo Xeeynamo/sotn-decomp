@@ -25,7 +25,7 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 1:
-        if (func_801BCCFC(&D_801824CC) & 1) {
+        if (UnkCollisionFunc3(&D_801824CC) & 1) {
             newEntity = &self[1];
             self->ext.spittleBone.unk7C = 0;
             CreateEntityFromEntity(E_ROTATE_SPITTLEBONE, self, newEntity);

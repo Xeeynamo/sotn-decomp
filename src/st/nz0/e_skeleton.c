@@ -43,11 +43,11 @@ static s16 D_801824B8[] = {0, 19, 8, 0};
 static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 void func_801C5F2C(Entity* self) {
-    if ((func_801BCF74(D_801824B8) & 0x60) == 0x60) {
+    if ((UnkCollisionFunc2(D_801824B8) & 0x60) == 0x60) {
         self->posX.val -= self->velocityX;
     }
 
-    if (!(func_801BD720(sensors_move, LEN(sensors_move)) & 2)) {
+    if (!(UnkCollisionFunc(sensors_move, LEN(sensors_move)) & 2)) {
         if ((--self->ext.generic.unk7C.U8.unk0) == 0) {
             SetStep(4);
         }
@@ -73,7 +73,7 @@ void EntitySkeleton(Entity* self) {
         self->ext.generic.unk84.S8.unk0 = 0;
         break;
     case SKELETON_IDLE: // Wait for player to be close enough
-        if (func_801BCCFC(sensors_ground) != 0) {
+        if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
         }
         break;
@@ -164,7 +164,7 @@ void EntitySkeleton(Entity* self) {
             }
             break;
         case 1:
-            if (func_801BCCFC(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensors_move, 2);

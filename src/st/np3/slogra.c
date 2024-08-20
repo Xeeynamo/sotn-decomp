@@ -98,7 +98,7 @@ void EntitySlogra(Entity* self) {
         CreateEntityFromCurrentEntity(E_SLOGRA_SPEAR, &self[1]);
 
     case SLOGRA_FLOOR_ALIGN:
-        if (func_801BC8E4(&D_801812D0) & 1) {
+        if (UnkCollisionFunc3(&D_801812D0) & 1) {
             SetStep(SLOGRA_IDLE);
         }
         break;
@@ -134,7 +134,7 @@ void EntitySlogra(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        func_801BCB5C(&D_801812E0);
+        UnkCollisionFunc2(&D_801812E0);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 if (self->ext.GS_Props.attackMode == 0) {
@@ -270,7 +270,7 @@ void EntitySlogra(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        func_801BCB5C(&D_801812E0);
+        UnkCollisionFunc2(&D_801812E0);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 self->ext.GS_Props.flag ^= 1;
@@ -320,7 +320,7 @@ void EntitySlogra(Entity* self) {
                 AnimateEntity(D_801813CC, self);
             }
 
-            if (func_801BC8E4(&D_801812D0) & 1) {
+            if (UnkCollisionFunc3(&D_801812D0) & 1) {
                 g_api.func_80102CD8(1);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
@@ -360,7 +360,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
-            func_801BC8E4(&D_801812D0);
+            UnkCollisionFunc3(&D_801812D0);
             AnimateEntity(D_801813C4, self);
             if (!(g_Timer % 4)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
