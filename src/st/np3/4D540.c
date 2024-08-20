@@ -295,7 +295,7 @@ void func_801CE04C(Entity* entity, Collider* collider) {
             }
         }
     }
-    entity->ext.generic.unk88.S16.unk0 = var_s0;
+    entity->ext.GH_Props.unk88 = var_s0;
 }
 
 s32 func_801CE120(Entity* self, s32 facing) {
