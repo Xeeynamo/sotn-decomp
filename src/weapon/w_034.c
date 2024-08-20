@@ -6,9 +6,6 @@
 #define g_Animset w_034_1
 #define g_Animset2 w_034_2
 
-extern u8 D_8007341E;
-extern u8 D_8007341F;
-
 static u16 D_F2000_8017A784[] = {
     COLOR16(0, 0, 0, 0),    COLOR16(31, 31, 31, 1), COLOR16(6, 6, 6, 0),
     COLOR16(11, 11, 11, 0), COLOR16(16, 16, 16, 0), COLOR16(21, 21, 21, 0),
@@ -181,16 +178,16 @@ static s32 func_ptr_80170004(Entity* self) {
 
         if (self->facingLeft) {
             self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX;
-            self->ext.sword.unk7C = 0x2000;
+            self->ext.sword.unk7C = FIX(0.125);
         } else {
             self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
-            self->ext.sword.unk7C = -0x2000;
+            self->ext.sword.unk7C = FIX(-0.125);
         }
 
         self->velocityX += PLAYER.velocityX;
         self->ext.sword.unk84 = 0x200;
         self->velocityY = FIX(-0.25);
-        self->ext.sword.unk86 = 0x400;
+        self->ext.sword.unk86 = FIX(1.0 / 64);
         self->rotZ = 0;
         self->drawFlags |= FLAG_DRAW_ROTZ;
         SetWeaponProperties(self, 0);
@@ -218,10 +215,10 @@ static s32 func_ptr_80170004(Entity* self) {
         var_s1 = self->ext.sword.unk84;
         self->ext.sword.unk84 += 0x10;
         xDist = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);
-        if (xDist < (D_8007341E + self->hitboxWidth) >> 1) {
+        if (xDist < (PLAYER.hitboxWidth + self->hitboxWidth) >> 1) {
             yDist =
                 abs((PLAYER.posY.i.hi + PLAYER.hitboxOffY) - self->posY.i.hi);
-            if (yDist < (D_8007341F + self->hitboxHeight) >> 1) {
+            if (yDist < (PLAYER.hitboxHeight + self->hitboxHeight) >> 1) {
                 DestroyEntity(self);
                 return;
             }
@@ -229,7 +226,7 @@ static s32 func_ptr_80170004(Entity* self) {
         xVar = (PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi;
         yVar = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - self->posY.i.hi;
         angleTarget = ratan2(-yVar, xVar) & 0xFFF;
-        angle = self->ext.heavenSword.unk82 & 0xFFF;
+        angle = self->ext.sword.unk82 & 0xFFF;
         angleDiff = abs(angle - angleTarget);
         if (var_s1 > angleDiff) {
             var_s1 = angleDiff;

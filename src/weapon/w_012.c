@@ -6,8 +6,6 @@
 #define g_Animset w_012_1
 #define g_Animset2 w_012_2
 
-extern u8 D_8007341E;
-extern u8 D_8007341F;
 extern s32 D_58000_8017BB28;
 
 static u16 D_58000_8017A2B0[] = {
@@ -265,10 +263,10 @@ static void EntityWeaponAttack(Entity* self) {
         self->step++;
     } else {
         if (maskedParams == 0x100) {
-            DecelerateX(0x3000);
+            DecelerateX(FIX(0.1875));
         }
         if (maskedParams == 0x200) {
-            DecelerateX(0x1000);
+            DecelerateX(FIX(0.0625));
         }
         self->posX.val += self->velocityX;
 
@@ -348,15 +346,15 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         if (self->facingLeft != 0) {
             self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX;
-            self->ext.weapon_012.unk7C = 0x2800;
+            self->ext.weapon_012.unk7C = FIX(0.15625);
         } else {
             self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
-            self->ext.weapon_012.unk7C = -0x2800;
+            self->ext.weapon_012.unk7C = FIX(-0.15625);
         }
         self->velocityX += PLAYER.velocityX;
         self->ext.weapon_012.unk84 = 0x80;
         self->velocityY = ((rand() & FIX(0.5) - 1) * 2) + FIX(2);
-        self->ext.weapon_012.unk86 = -0x2000;
+        self->ext.weapon_012.unk86 = FIX(-0.125);
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 4;
@@ -374,7 +372,7 @@ static s32 func_ptr_80170004(Entity* self) {
         self->posY.val += self->velocityY;
         self->velocityX += self->ext.weapon_012.unk7C;
         self->velocityY += self->ext.weapon_012.unk86;
-        self->ext.weapon_012.unk86 -= 0x1C0;
+        self->ext.weapon_012.unk86 -= FIX(7.0 / 1024);
         if (self->ext.weapon_012.unk7E == 4) {
             self->animCurFrame++;
         }
@@ -389,10 +387,10 @@ static s32 func_ptr_80170004(Entity* self) {
         var_s1 = self->ext.weapon_012.unk84;
         self->ext.weapon_012.unk84 += 0x10;
         xDiff = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);
-        if (xDiff < (D_8007341E + self->hitboxWidth) >> 1) {
+        if (xDiff < (PLAYER.hitboxWidth + self->hitboxWidth) >> 1) {
             yDiff =
                 abs((PLAYER.posY.i.hi + PLAYER.hitboxOffY) - self->posY.i.hi);
-            if (yDiff < (D_8007341F + self->hitboxHeight) >> 1) {
+            if (yDiff < (PLAYER.hitboxHeight + self->hitboxHeight) >> 1) {
                 DestroyEntity(self);
                 return;
             }
