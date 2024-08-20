@@ -78,7 +78,7 @@ void EntityUnkId1C(Entity* self) {
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            func_801A046C(0x6E2);
+            PlaySfxPositional(0x6E2);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
@@ -96,9 +96,9 @@ void EntityUnkId1C(Entity* self) {
             }
         }
         if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
-            func_801A046C(0x872);
-            func_801A046C(0x87C);
-            func_801A046C(SFX_FIRE_SHOT);
+            PlaySfxPositional(0x872);
+            PlaySfxPositional(0x87C);
+            PlaySfxPositional(SFX_FIRE_SHOT);
             self->ext.generic.unk84.S8.unk1 = 1;
         }
         break;

@@ -104,6 +104,7 @@ EntityUnkId14Spawner = 0x801C8C84;
 EntityUnkId14 = 0x801C8E9C;
 EntityUnkId15 = 0x801C8F8C;
 EntityIntenseExplosion = 0x801C992C;
+PlaySfxPositional = 0x801CAD28;
 EntityStageNamePopup = 0x801CAFF0;
 EntitySoulStealOrb = 0x801CBC74;
 EntityEnemyBlood = 0x801CC008;

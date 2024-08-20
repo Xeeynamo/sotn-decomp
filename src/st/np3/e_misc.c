@@ -324,7 +324,7 @@ void func_8019055C(void) {
 
 #include "../clut_lerp.h"
 
-void func_801916C4(s16 sfxId) {
+void PlaySfxPositional(s16 sfxId) {
     s32 sfxVol;
     s32 temp_v0_2;
     s16 sfxPan;

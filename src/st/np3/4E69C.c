@@ -15,7 +15,7 @@ void EntityHammer(Entity* self) {
         func_801CE1E8(0xC);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 24)) {
-        func_801916C4(0x745);
+        PlaySfxPositional(0x745);
         func_801CE1E8(0x18);
     }
     switch (self->step) {
@@ -161,7 +161,7 @@ void EntityHammer(Entity* self) {
             collider.unk18 = 10;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801916C4(SFX_STOMP_HARD_C);
+                PlaySfxPositional(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18 + 1;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
@@ -195,7 +195,7 @@ void EntityHammer(Entity* self) {
             func_801CE258(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(0x743);
+                PlaySfxPositional(0x743);
                 self->step_s++;
             }
             break;
@@ -222,7 +222,7 @@ void EntityHammer(Entity* self) {
             }
             if ((self->ext.GH_Props.unkB0[0] == 6) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(SFX_FM_EXPLODE_D);
+                PlaySfxPositional(SFX_FM_EXPLODE_D);
                 g_api_func_80102CD8(1);
             }
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
@@ -268,7 +268,7 @@ void EntityHammer(Entity* self) {
         break;
     case 12:
         if (self->step_s == 0) {
-            func_801916C4(0x744);
+            PlaySfxPositional(0x744);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
@@ -304,9 +304,9 @@ void EntityHammer(Entity* self) {
             self->velocityY += FIX(0.1875);
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801916C4(SFX_FM_EXPLODE_B);
+                    PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
-                    func_801916C4(SFX_EXPLODE_D);
+                    PlaySfxPositional(SFX_EXPLODE_D);
                 }
             }
             return;

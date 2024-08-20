@@ -189,47 +189,27 @@ static s16 g_SineTable[] = {
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
 
-s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
+#include "../get_sine_scaled.h"
 
-s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
+#include "../get_sine.h"
 
-void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = GetSineScaled(arg0 & 0xFF, arg1);
-    g_CurrentEntity->velocityY = GetSineScaled((arg0 - 0x40) & 0xFF, arg1);
-}
+#include "../set_entity_velocity_from_angle.h"
 
-u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
+#include "../ratan2_shifted.h"
 
-u8 GetAngleBetweenEntitiesShifted(Entity* arg0, Entity* arg1) {
-    u16 x;
-    u16 y;
+#include "../get_angle_between_entities_shifted.h"
 
-    x = arg1->posX.i.hi - arg0->posX.i.hi;
-    y = arg1->posY.i.hi - arg0->posY.i.hi;
-
-    return Ratan2Shifted(x, y);
-}
-
-u16 GetAnglePointToEntityShifted(s16 x, s16 y) {
-    x -= g_CurrentEntity->posX.i.hi;
-    y -= g_CurrentEntity->posY.i.hi;
-
-    return Ratan2Shifted(x, y);
-}
+#include "../get_angle_point_to_entity_shifted.h"
 
 #include "../adjust_value_within_threshold.h"
 
 #include "../unk_entity_func0.h"
 
-u16 Ratan2(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
+#include "../ratan2.h"
 
 #include "../get_angle_between_entities.h"
 
-u16 GetAnglePointToEntity(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_point_to_entity.h"
 
 #include "../get_normalized_angle.h"
 
@@ -241,7 +221,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
-        func_8019A328(arg1);
+        PlaySfxPositional(arg1);
     }
     if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);

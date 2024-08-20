@@ -187,7 +187,7 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
-            func_801CAD28(SE_NO3_WINDOW_CLOSE);
+            PlaySfxPositional(SE_NO3_WINDOW_CLOSE);
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
@@ -1387,7 +1387,7 @@ void EntityUnkId26(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801CAD28(SFX_WALL_DEBRIS_B);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;

@@ -430,7 +430,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
-            func_801916C4(SFX_WALL_DEBRIS_B);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);

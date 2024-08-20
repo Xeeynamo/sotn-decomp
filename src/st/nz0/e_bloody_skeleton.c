@@ -17,7 +17,7 @@ void EntityBloodSkeleton(Entity* self) {
     u8* animation;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 3)) {
-        func_801C29B0(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
+        PlaySfxPositional(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
         self->hitboxState = 0;
         SetStep(BLOOD_SKELETON_DISASSEMBLE);
     }
@@ -74,7 +74,7 @@ void EntityBloodSkeleton(Entity* self) {
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->rotZ = 0;
                 self->drawFlags |= 4;
-                func_801C29B0(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
+                PlaySfxPositional(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
                 self->step_s++;
                 return;
             }

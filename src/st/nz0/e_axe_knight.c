@@ -94,7 +94,7 @@ void func_801C3F9C(AxePrim* prim) {
                 newEnt->posY.i.hi = prim->next->y0;
                 newEnt->params = 0;
             }
-            func_801C29B0(SFX_EXPLODE_B);
+            PlaySfxPositional(SFX_EXPLODE_B);
             UnkPolyFunc0((Primitive*)prim);
         }
         return;
@@ -174,7 +174,7 @@ s32 func_801C4198(Entity* axeKnight) {
         } else {
             return 1;
         }
-        func_801C29B0(SFX_FM_EXPLODE_B);
+        PlaySfxPositional(SFX_FM_EXPLODE_B);
         axeKnight->step_s++;
         break;
     case 1:
@@ -213,7 +213,7 @@ void EntityAxeKnight(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != AXE_KNIGHT_DYING) {
-            func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
+            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
             self->hitboxState = 0;
             self->ext.generic.unk80.modeS16.unk0 = 65;
@@ -341,7 +341,7 @@ void EntityAxeKnight(Entity* self) {
                 self->ext.generic.unk7C.S8.unk0 = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
-            func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
@@ -360,7 +360,7 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(anim_throw_duck, self);
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
-                func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
+                PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
@@ -393,7 +393,7 @@ void EntityAxeKnight(Entity* self) {
         }
 
         if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
-            func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
@@ -457,7 +457,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 velocityX;
 
     if (entity->flags & FLAG_DEAD) {
-        func_801C29B0(SFX_WEAPON_BREAK);
+        PlaySfxPositional(SFX_WEAPON_BREAK);
         EntityExplosionSpawn(0, 0);
         return;
     }
