@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>w_012.EntityWeaponAttack</title>
 <g id="a_node4"><a xlink:href="w_012.EntityWeaponAttack.svg" xlink:title="w_012.EntityWeaponAttack">
-<ellipse fill="red" stroke="black" cx="138.44" cy="-378" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="138.44" cy="-378" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="138.44" y="-374.3" font-family="Times,serif" font-size="14.00">w_012.EntityWeaponAttack</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>w_012.func_ptr_80170004</title>
 <g id="a_node5"><a xlink:href="w_012.func_ptr_80170004.svg" xlink:title="w_012.func_ptr_80170004">
-<ellipse fill="red" stroke="black" cx="428.44" cy="-378" rx="133.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="428.44" cy="-378" rx="133.48" ry="18"/>
 <text text-anchor="middle" x="428.44" y="-374.3" font-family="Times,serif" font-size="14.00">w_012.func_ptr_80170004</text>
 </a>
 </g>
