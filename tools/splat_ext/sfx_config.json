@@ -4,7 +4,7 @@
         "prog": "u8",
         "note": "u8",
         "volume": "s8",
-        "unk4": "u8",
+        "mode": "u8",
         "tone": "u8",
         "unk6": "u8"
     },

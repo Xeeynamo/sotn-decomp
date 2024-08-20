@@ -270,22 +270,23 @@ void SetReleaseRateLow_22_23(void) {
     g_KeyOffChannels |= MASK_22_23;
 }
 
-s32 func_80134678(s16 arg0, u16 arg1) {
+s32 SetVolumeCommand22_23(s16 vol, u16 distance) {
     s32 ret = -2;
     u16 temp;
 
-    if (g_CurSfxId != 0) {
+    if (g_CurSfxId22_23 != 0) {
         ret = 0;
-        temp = arg1 + 8;
+        temp = distance + 8;
 
         if (temp >= 0x11) {
-            arg1 = 0;
+            distance = 0;
             ret = -1;
         }
 
-        g_CurSfxDistance = arg1;
-        g_CurSfxVol = arg0;
-        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
+        g_CurSfxDistance22_23 = distance;
+        g_CurSfxVol22_23 = vol;
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
+            SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
 
         if (g_SoundCommandRingBufferWritePos == 0x100) {
@@ -377,7 +378,7 @@ void RestoreSfxScriptData(s16 arg0, s16 arg1) {
     g_SfxScriptVolume[arg1] = g_SfxScriptVolumeCopy[arg0];
     g_SfxScriptDistance[arg1] = g_SfxScriptDistanceCopy[arg0];
     g_SfxScriptTimer[arg1] = g_SfxScriptTimerCopy[arg0];
-    g_SfxScriptUnk4[arg1] = D_80139018[arg0];
+    g_SfxScriptMode[arg1] = g_SfxScriptModeCopy[arg0];
     g_CurrentSfxScript[arg1] = D_801390B4[arg0];
 }
 
@@ -388,20 +389,20 @@ void PauseSfxScripts(void) {
         if (g_CurrentSfxScriptSfxId[i] == 0) {
             continue;
         }
-        if (g_SfxScriptUnk4[i] == 5) {
+        if (g_SfxScriptMode[i] == SFX_MODE_SCRIPT_NO_PAUSE) {
             continue;
         }
         g_CurrentSfxScriptSfxIdCopy[i] = g_CurrentSfxScriptSfxId[i];
         g_SfxScriptVolumeCopy[i] = g_SfxScriptVolume[i];
         g_SfxScriptDistanceCopy[i] = g_SfxScriptDistance[i];
         g_SfxScriptTimerCopy[i] = g_SfxScriptTimer[i];
-        D_80139018[i] = g_SfxScriptUnk4[i];
+        g_SfxScriptModeCopy[i] = g_SfxScriptMode[i];
         D_801390B4[i] = g_CurrentSfxScript[i];
         g_CurrentSfxScriptSfxId[i] = 0;
         g_SfxScriptVolume[i] = 0;
         g_SfxScriptDistance[i] = 0;
         g_SfxScriptTimer[i] = 0;
-        g_SfxScriptUnk4[i] = 0;
+        g_SfxScriptMode[i] = 0;
         g_CurrentSfxScript[i] = 0;
         g_CurrentSfxScriptSfxId2[i] = 0;
         g_SfxScriptUnk6[i] = 0;
@@ -434,22 +435,24 @@ void UnpauseSfxScripts(void) {
 }
 
 void KeyOnChannels20_21(void) {
-    u16 temp = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId2].volume) >> 7;
-    func_80132A04(20, g_SfxData[g_CurSfxId2].vabid, g_SfxData[g_CurSfxId2].prog,
-                  g_SfxData[g_CurSfxId2].tone, g_SfxData[g_CurSfxId2].note,
-                  (temp * (u16)g_CurSfxVol2) >> 7, g_CurSfxDistance2);
+    u16 temp = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId20_21].volume) >> 7;
+    func_80132A04(
+        20, g_SfxData[g_CurSfxId20_21].vabid, g_SfxData[g_CurSfxId20_21].prog,
+        g_SfxData[g_CurSfxId20_21].tone, g_SfxData[g_CurSfxId20_21].note,
+        (temp * (u16)g_CurSfxVol20_21) >> 7, g_CurSfxDistance20_21);
 }
 
 void KeyOnChannels22_23(void) {
     u16 volume;
 
-    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId].volume >> 7;
-    volume = volume * g_CurSfxVol >> 7;
-    func_80132A04(22, g_SfxData[g_CurSfxId].vabid, g_SfxData[g_CurSfxId].prog,
-                  g_SfxData[g_CurSfxId].tone, g_SfxData[g_CurSfxId].note,
-                  volume, g_CurSfxDistance);
-    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 144]) >> 8;
-    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 145]) >> 8;
+    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
+    volume = volume * g_CurSfxVol22_23 >> 7;
+    func_80132A04(
+        22, g_SfxData[g_CurSfxId22_23].vabid, g_SfxData[g_CurSfxId22_23].prog,
+        g_SfxData[g_CurSfxId22_23].tone, g_SfxData[g_CurSfxId22_23].note,
+        volume, g_CurSfxDistance22_23);
+    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 145]) >> 8;
     SsUtSetVVol(22, g_VolL, g_VolR);
     SsUtSetVVol(23, g_VolL, g_VolR);
 }
@@ -457,10 +460,10 @@ void KeyOnChannels22_23(void) {
 void SetVolume22_23(void) {
     u16 volume;
 
-    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId].volume >> 7;
-    volume = volume * g_CurSfxVol >> 7;
-    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 144]) >> 8;
-    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 145]) >> 8;
+    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
+    volume = volume * g_CurSfxVol22_23 >> 7;
+    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 145]) >> 8;
     SsUtSetVVol(22, g_VolL, g_VolR);
     SsUtSetVVol(23, g_VolL, g_VolR);
 }

@@ -107,37 +107,37 @@ void ExecSoundCommands(void) {
                 break;
             case 0xA0:
                 SetReleaseRateHigh20_21();
-                g_CurSfxId2 = 0;
+                g_CurSfxId20_21 = 0;
                 break;
             case 0xA4:
                 SetReleaseRateHigh22_23();
-                g_CurSfxId = 0;
+                g_CurSfxId22_23 = 0;
                 break;
             case 0xA1:
                 SetReleaseRateLow_20_21();
-                g_CurSfxId2 = 0;
+                g_CurSfxId20_21 = 0;
                 break;
             case SET_RELEASE_RATE_LOW_20_21 - 1:
-                if (g_CurSfxId2 != 0) {
+                if (g_CurSfxId20_21 != 0) {
                     SetReleaseRateLow_20_21();
                 }
                 break;
             case SET_KEY_ON_20_21 - 1:
-                if (g_CurSfxId2 != 0) {
+                if (g_CurSfxId20_21 != 0) {
                     KeyOnChannels20_21();
                 }
                 break;
             case 0xA5:
                 SetReleaseRateLow_22_23();
-                g_CurSfxId = 0;
+                g_CurSfxId22_23 = 0;
                 break;
             case SET_RELEASE_RATE_LOW_22_23 - 1:
-                if (g_CurSfxId != 0) {
+                if (g_CurSfxId22_23 != 0) {
                     SetReleaseRateLow_22_23();
                 }
                 break;
             case SET_KEY_ON_22_23 - 1:
-                if (g_CurSfxId != 0) {
+                if (g_CurSfxId22_23 != 0) {
                     KeyOnChannels22_23();
                 }
                 break;

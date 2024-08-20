@@ -97,7 +97,7 @@ void EntityOwl(Entity* self) {
         case 0:
             xVar = self->velocityX / 16;
             yVar = self->velocityY / 16;
-            self->ext.owl.unk84 = func_801BCE58(xVar, yVar);
+            self->ext.owl.unk84 = Ratan2Shifted(xVar, yVar);
             self->step_s++;
             break;
         case 1:
@@ -106,8 +106,9 @@ void EntityOwl(Entity* self) {
             // Might be able to change types on these two functions to
             // remove the s16 cast.
             self->ext.owl.unk84 = AdjustValueWithinThreshold(
-                6, self->ext.owl.unk84, (s16)func_801BCE90(self, self + 3));
-            func_801BCDEC(self->ext.owl.unk84, 0x20);
+                6, self->ext.owl.unk84,
+                (s16)GetAngleBetweenEntitiesShifted(self, self + 3));
+            SetEntityVelocityFromAngle(self->ext.owl.unk84, 0x20);
             if (self->velocityX > 0) {
                 self->facingLeft = 1;
             } else {
@@ -123,7 +124,8 @@ void EntityOwl(Entity* self) {
         case 2:
             xVar = abs(xVar);
             yVar = abs(yVar);
-            func_801BCDEC(self->ext.owl.unk84, self->ext.owl.unk88);
+            SetEntityVelocityFromAngle(
+                self->ext.owl.unk84, self->ext.owl.unk88);
             self->ext.owl.unk88--;
             if (self->ext.owl.unk88 < 0) {
                 self->ext.owl.unk88 = 0;
@@ -277,9 +279,10 @@ void EntityOwl(Entity* self) {
             HELPER->posY.i.hi = (KNIGHT->posY.i.hi - 0x20);
             // probably not an angle here but reusing variable.
             angle = AdjustValueWithinThreshold(
-                4, self->ext.owl.unk84, (s16)func_801BCE90(self, self + 3));
+                4, self->ext.owl.unk84,
+                (s16)GetAngleBetweenEntitiesShifted(self, self + 3));
             self->ext.owl.unk84 = angle;
-            func_801BCDEC(angle, 0x10);
+            SetEntityVelocityFromAngle(angle, 0x10);
             xVar = HELPER->posX.i.hi - self->posX.i.hi;
             yVar = HELPER->posY.i.hi - self->posY.i.hi;
             if (xVar > 0) {
