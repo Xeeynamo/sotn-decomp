@@ -210,6 +210,7 @@ enum SfxModes {
 #define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define SFX_UNK_6B1 0x6B1
+#define SFX_UNK_6BA 0x6BA
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
