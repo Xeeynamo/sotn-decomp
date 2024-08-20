@@ -358,7 +358,7 @@ void EntityOwl(Entity* self) {
     case 9:
         switch (self->step_s) {
         case 0:
-            if (func_801BC8E4(D_801826CC) & 1) {
+            if (UnkCollisionFunc3(D_801826CC) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->animCurFrame = 0xD;
                 if (self->posX.i.hi > KNIGHT->posX.i.hi) {
@@ -560,7 +560,7 @@ void EntityOwlKnight(Entity* self) {
         OWL->facingLeft = self->facingLeft;
         break;
     case 1:
-        if (func_801BC8E4(D_80182758) & 1) {
+        if (UnkCollisionFunc3(D_80182758) & 1) {
             SetStep(2);
         }
         break;
@@ -671,7 +671,7 @@ void EntityOwlKnight(Entity* self) {
                 SetStep(10);
             }
         }
-        func_801BCB5C(D_80182768);
+        UnkCollisionFunc2(D_80182768);
         self->velocityX -= self->velocityX / 16;
         if (abs(self->velocityX) < FIX(0.5)) {
             self->velocityX = 0;
@@ -695,7 +695,7 @@ void EntityOwlKnight(Entity* self) {
         if (AnimateEntity(D_80182834, self) == 0) {
             SetStep(10);
         }
-        func_801BCB5C(D_80182768);
+        UnkCollisionFunc2(D_80182768);
         self->velocityX -= self->velocityX / 8;
         if (abs(self->velocityX) < FIX(0.5)) {
             self->velocityX = 0;
@@ -731,7 +731,7 @@ void EntityOwlKnight(Entity* self) {
         if (!miscTemp) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        func_801BCB5C(D_80182768);
+        UnkCollisionFunc2(D_80182768);
         if (self->facingLeft ^ self->ext.owl.unk8C) {
             self->velocityX = FIX(0.5);
         } else {
@@ -772,7 +772,7 @@ void EntityOwlKnight(Entity* self) {
             self->ext.owl.unk8C = 1;
             self->step_s++;
         }
-        func_801BCB5C(D_80182768);
+        UnkCollisionFunc2(D_80182768);
         if (self->ext.owl.unk8C != 0) {
             miscTemp = AnimateEntity(D_801827A8, self);
         } else {
@@ -826,7 +826,7 @@ void EntityOwlKnight(Entity* self) {
         if (self->animFrameDuration == 0 && self->animFrameIdx == 5) {
             PlaySfxPositional(SFX_WEAPON_SWISH_A);
         }
-        func_801BCB5C(D_80182768);
+        UnkCollisionFunc2(D_80182768);
         self->velocityX -= self->velocityX / 16;
         if (abs(self->velocityX) < FIX(0.5)) {
             self->velocityX = 0;
@@ -866,7 +866,7 @@ void EntityOwlKnight(Entity* self) {
             break;
         case 2: /* switch 2 */
             AnimateEntity(D_801827BC, self);
-            miscTemp = func_801BCB5C(D_80182768);
+            miscTemp = UnkCollisionFunc2(D_80182768);
             if (miscTemp & 0x80) {
                 self->ext.owl.unk82 = 1;
             }
@@ -895,7 +895,7 @@ void EntityOwlKnight(Entity* self) {
                 self->animFrameDuration = 0;
                 self->step_s = 1;
             }
-            func_801BCB5C(D_80182768);
+            UnkCollisionFunc2(D_80182768);
             self->velocityX -= self->velocityX / 8;
             if (abs(self->velocityX) < FIX(0.5)) {
                 self->velocityX = 0;
@@ -942,7 +942,7 @@ void EntityOwlKnight(Entity* self) {
             } else {
                 self->velocityX = FIX(0.5);
             }
-            func_801BCB5C(D_80182768);
+            UnkCollisionFunc2(D_80182768);
             xVar = GetDistanceToPlayerX();
             if (xVar < 0x50) {
                 SetSubStep(1);
@@ -952,7 +952,7 @@ void EntityOwlKnight(Entity* self) {
             if (AnimateEntity(D_80182888, self) == 0) {
                 SetStep(10);
             }
-            func_801BCB5C(D_80182768);
+            UnkCollisionFunc2(D_80182768);
             self->velocityX -= self->velocityX / 8;
             if (abs(self->velocityX) < FIX(0.5)) {
                 self->velocityX = 0;

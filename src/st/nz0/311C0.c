@@ -510,7 +510,7 @@ void EntityMoveableBox(Entity* self) {
             }
         }
 
-        func_801BCF74(&D_80180EB8);
+        UnkCollisionFunc2(&D_80180EB8);
 
         if (self->params == 0) {
             temp_v0_2 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;

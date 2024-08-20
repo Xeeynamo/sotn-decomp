@@ -60,8 +60,8 @@ static s16 D_8018216C[] = {0, 20, 12, 0};
 static u16 sensor_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 void func_801C3708(void) {
-    s32 temp = func_801BCF74(D_8018216C);
-    s32 temp2 = func_801BD720(sensor_move, LEN(sensor_move));
+    s32 temp = UnkCollisionFunc2(D_8018216C);
+    s32 temp2 = UnkCollisionFunc(sensor_move, LEN(sensor_move));
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);
@@ -107,7 +107,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_IDLE:
-        if (func_801BCCFC(sensors_ground) != 0) {
+        if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
@@ -207,7 +207,7 @@ void EntityBoneScimitar(Entity* self) {
             break;
 
         case BONE_SCIMITAR_IN_AIR:
-            if (func_801BCCFC(sensors_ground) != 0) {
+            if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensor_move, 2);
@@ -222,7 +222,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_SPECIAL:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        func_801BCF74(&D_8018216C);
+        UnkCollisionFunc2(&D_8018216C);
         if (((((u32)self->velocityX) >> 0x1F) ^ self->facingLeft) != 0) {
             AnimateEntity(anim_walk, self);
         } else {

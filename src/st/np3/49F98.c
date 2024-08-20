@@ -235,7 +235,7 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_UNK_2:
-        if (func_801BC8E4(&D_801825D4) & 1) {
+        if (UnkCollisionFunc3(&D_801825D4) & 1) {
             SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
@@ -247,7 +247,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         AnimateEntity(D_801825EC, self);
-        func_801BCB5C(D_801825E4);
+        UnkCollisionFunc2(D_801825E4);
 
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-0.375);
@@ -283,7 +283,7 @@ void EntityBloodyZombie(Entity* self) {
         if (AnimateEntity(D_8018267C, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        func_801BCB5C(D_801825E4);
+        UnkCollisionFunc2(D_801825E4);
 
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.75);

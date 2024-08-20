@@ -557,7 +557,7 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
-            if (func_801BC8E4(D_801814B4) & 1) {
+            if (UnkCollisionFunc3(D_801814B4) & 1) {
                 SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;

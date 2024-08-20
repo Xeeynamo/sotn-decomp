@@ -282,7 +282,7 @@ void func_801966B0(u16* sensors) {
         g_CurrentEntity->step_s++;
         break;
     case 1:
-        if (func_80192190(sensors) & 1) {
+        if (UnkCollisionFunc3(sensors) & 1) {
             g_CurrentEntity->animCurFrame = 1;
             g_CurrentEntity->step_s++;
         }

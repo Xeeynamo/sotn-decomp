@@ -845,7 +845,7 @@ void EntityMerman2(Entity* self) {
                 func_801C6458(0x1B);
             }
             if (self->ext.merman2.isUnderwater == 0) {
-                if (func_801BC8E4(&D_80182248) & 1) {
+                if (UnkCollisionFunc3(&D_80182248) & 1) {
                     g_api.FreePrimitives(self->primIndex);
                     self->hitboxHeight = 21;
                     self->flags &= ~FLAG_HAS_PRIMS;
@@ -879,7 +879,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_WALKING_TO_PLAYER_WALKING:
             AnimateEntity(D_80182270, self);
-            colRes = func_801BCB5C(&D_80182268);
+            colRes = UnkCollisionFunc2(&D_80182268);
             if (colRes == 0xFF) {
                 self->facingLeft ^= 1;
             }
@@ -989,7 +989,7 @@ void EntityMerman2(Entity* self) {
             self->rotZ += self->ext.merman2.rotation;
             self->velocityY -= FIX(0.125);
 
-            if (func_801BC8E4(&D_80182248) & 1) {
+            if (UnkCollisionFunc3(&D_80182248) & 1) {
                 if (self->facingLeft == 0) {
                     self->velocityX = FIX(2.5);
                 } else {
@@ -1102,7 +1102,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 1:
-            func_801BC8E4(&D_80182258);
+            UnkCollisionFunc3(&D_80182258);
             prim = self->ext.merman2.prim;
             self->velocityY -= FIX(0.1875);
             if (self->facingLeft != 0) {
