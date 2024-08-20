@@ -51,7 +51,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette = PAL_DRA(0x110);
         self->unk5A = 0x64;
         if (g_HandId != 0) {
-            self->animSet = self->animSet + 2;
+            self->animSet += 2;
             self->palette += 0x18;
             self->unk5A += 2;
         }
@@ -67,11 +67,12 @@ void EntityWeaponAttack(Entity* self) {
             for (i = 0; i < 12; i++) {
                 if (i <= 3) {
                     prim->r2 = rand() & 3;
-                    do {
-                        prim->b2 = 1;
-                    } while (0);
+                    prim->b2 = 1;
                 }
-                if (i >= 7 && (i & 1)) {
+                if (i < 7) {
+                    prim->r2 = rand() & 7;
+                    prim->b2 = 1;
+                } else if (i & 1) {
                     prim->r2 = rand() & 0xF;
                     prim->b2 = 2;
                 } else {
