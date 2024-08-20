@@ -245,6 +245,31 @@ typedef struct {
 } ET_KarmaCoin;
 
 typedef struct PACKED {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 xPos;
+    s16 unk8A;
+    struct Entity* parent;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 unkA4;
+    s32 unkA8;
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
+    u8 anim;
+    u8 unkAD;
+    s16 equipId;
+} ET_Sword;
+
+typedef struct PACKED {
     s16 angle;
     s16 unk7E;
     s16 unk80;
@@ -1454,6 +1479,7 @@ typedef union { // offset=0x7C
     ET_Shield shield;
     ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
+    ET_Sword sword;
     ET_HeavenSword heavenSword;
     ET_HeavenSword2 heavenSword2;
     ET_MedusaShieldLaser medshieldlaser;

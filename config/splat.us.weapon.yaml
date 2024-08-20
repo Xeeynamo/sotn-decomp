@@ -671,7 +671,7 @@ segments:
     subsegments:
       - [0xF2040, animset, w_034_1]
       - [0xF2784, animset, w_034_2]
-      - [0xF2784, data, w_034]
+      - [0xF2784, .data, w_034]
       - [0xF2950, c, w_034]
       - [0xF33F0, sbss, w_034]
   - name: f_035
