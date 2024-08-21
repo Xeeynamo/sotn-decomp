@@ -1486,10 +1486,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 spawnDelay;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 unk88;
+    /* 0x88 */ s32 spawnSide;
 } ET_ZombieSpawner;
 
 typedef struct {
