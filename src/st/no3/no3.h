@@ -246,7 +246,3 @@ extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 
 extern Dialogue g_Dialogue;
-
-extern u16 g_BoneScimitarInit[];
-extern s32 D_80183BC0[]; // Skeleton parts velocityX
-extern s32 D_80183BDC[]; // Skeleton parts velocityY
