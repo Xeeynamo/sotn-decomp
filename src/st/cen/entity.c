@@ -94,7 +94,7 @@ EntityInit g_InitDataEnt13 = {
     .enemyId = 2,
 };
 
-EntityInit D_8018044C = {
+EntityInit g_EntityUnkId12Init = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -153,10 +153,10 @@ u16 g_eRedDoorTiles[][8] = {
     {0x03A3, 0x03A7, 0x03A8, 0x03A3, 0x02F4, 0x030F, 0x0310, 0x02F4},
 };
 
-u8 D_801804D4[] = {32, 32, 32, 32, 32, 32, 80, 32};
-u8 D_801804DC[] = {0, 0, 0, 0, 0, 0, 0, 0};
+u8 g_EntityUnkId12Hitbox[] = {32, 32, 32, 32, 32, 32, 80, 32};
+u8 g_EntityUnkId12Data[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-u16 D_801804E4[] = {
+u16 g_EntityUnkId12TilemapProps[] = {
     0x0000, 0x0000, 0x0600, 0x0100, 0x0000, 0x0000, 0x0600, 0x01FC,
     0x0000, 0x00FC, 0x0600, 0x01FC, 0x0000, 0x0000, 0x0600, 0x01FC,
     0x0000, 0x00FC, 0x0600, 0x0300, 0x0000, 0x00FC, 0x0600, 0x01FC,
