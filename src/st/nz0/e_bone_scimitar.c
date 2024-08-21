@@ -75,7 +75,7 @@ void func_801C3708(void) {
             }
         }
     } else {
-        g_CurrentEntity->ext.generic.unk7C.U8.unk0--;
+        g_CurrentEntity->ext.boneScimitar.attackTimer--;
     }
 }
 
@@ -95,15 +95,17 @@ void EntityBoneScimitar(Entity* self) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                              FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
-            self->ext.generic.unk9C = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            self->ext.boneScimitar.initialX =
+                g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (self->params & D_8018208C) {
                 DestroyEntity(self);
                 return;
             }
         }
-        self->ext.generic.unk7C.S8.unk0 = 80;    // Skeleton attack timer cycle
-        self->ext.generic.unk80.modeS8.unk0 = 0; // Facing init
-        self->ext.generic.unk84.S8.unk0 = 0; // Skeleton attack timer selector
+        self->ext.boneScimitar.attackTimer = 80; // Skeleton attack timer cycle
+        self->ext.boneScimitar.facingLeft = 0;   // Facing init
+        self->ext.boneScimitar.attackTimerIndex =
+            0; // Skeleton attack timer selector
         break;
 
     case BONE_SCIMITAR_IDLE:
