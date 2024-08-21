@@ -214,7 +214,7 @@ void EntityAxeKnight(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         if (self->step != AXE_KNIGHT_DYING) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_SCREAM);
-            func_801B3B78();
+            AxeKnightDeath();
             self->hitboxState = 0;
             self->ext.generic.unk80.modeS16.unk0 = 65;
             self->zPriority -= 0x10;

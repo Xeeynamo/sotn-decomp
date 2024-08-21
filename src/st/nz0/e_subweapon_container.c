@@ -31,7 +31,8 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxOffX = 0;
         self->hitboxState = 2;
         self->palette += self->params;
-        CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
+        CreateEntityFromEntity(
+            E_func_801C7884, self, &self[1]); // Create SubWeapon
         self[1].posY.i.hi -= 72;
         self[1].params = D_801825CC[self->params];
         self[1].zPriority = self->zPriority - 2;
@@ -56,7 +57,7 @@ void EntitySubWeaponContainer(Entity* self) {
         if (!(g_Timer & 0xF)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x3C, self, newEntity);
+                CreateEntityFromEntity(E_func_801C77B8, self, newEntity);
                 rnd = (Random() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
@@ -86,7 +87,7 @@ void EntitySubWeaponContainer(Entity* self) {
         while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x3A, self, newEntity);
+                CreateEntityFromEntity(E_func_801C7538, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->posX;
                 newEntity->posY.i.hi += glassPieceTBL->posY;
                 newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
@@ -102,7 +103,7 @@ void EntitySubWeaponContainer(Entity* self) {
             newEntity = AllocEntity(
                 &g_Entities[UNK_ENTITY_51], &g_Entities[UNK_ENTITY_100]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x3B, self, newEntity);
+                CreateEntityFromEntity(E_func_801C7654, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;

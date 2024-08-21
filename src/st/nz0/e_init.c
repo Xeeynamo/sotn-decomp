@@ -24,18 +24,18 @@ void EntityUnkId15(Entity*);
 void EntityPurpleBrickScrollingBackground(Entity*);
 void EntityLeftSecretRoomWall(Entity*);
 void EntityBottomSecretRoomFloor(Entity*);
-void func_801B1C18(Entity*);
-void func_801B1E54(Entity*);
+void BoxPuzzleFloorButton(Entity*);
+void BoxPuzzleSpikes(Entity*);
 void EntityMoveableBox(Entity*);
 void EntityCannonLever(Entity*);
 void EntityCannon(Entity*);
 void EntityCannonShot(Entity*);
 void EntityCannonWall(Entity*);
-void func_801B2AD8(Entity*);
+void EntityBloodSkeleElevButton(Entity*);
 void EntityElevator2(Entity*);
-void func_801B19A0(Entity*);
+void EntitySecretWallDebris(Entity*);
 void EntityRedEyeBust(Entity*);
-void func_801B2FD8(Entity*);
+void EntityFloorButton(Entity*);
 void EntityFloorSpikes(Entity*);
 void EntityBloodSkeleton(Entity*);
 void EntityBoneScimitar(Entity*);
@@ -52,9 +52,9 @@ void EntitySpittleBone(Entity*);
 void EntityRotateSpittlebone(Entity*);
 void EntitySpittleBoneSpit(Entity*);
 void EntityTableWithGlobe(Entity*);
-void func_801B3648(Entity*);
-void func_801B3A50(Entity*);
-void func_801B37C0(Entity*);
+void EntityLifeMaxTank(Entity*);
+void EntityBlueFlameTable(Entity*);
+void EntityRelicContainer(Entity*);
 void EntityWargExplosionPuffOpaque(Entity*);
 void EntitySubWeaponContainer(Entity*);
 void func_801C7538(Entity*);
@@ -103,18 +103,18 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     (PfnEntityUpdate)EntityPurpleBrickScrollingBackground,
     (PfnEntityUpdate)EntityLeftSecretRoomWall,
     (PfnEntityUpdate)EntityBottomSecretRoomFloor,
-    (PfnEntityUpdate)func_801B1C18,
-    (PfnEntityUpdate)func_801B1E54,
+    (PfnEntityUpdate)BoxPuzzleFloorButton,
+    (PfnEntityUpdate)BoxPuzzleSpikes,
     (PfnEntityUpdate)EntityMoveableBox,
     (PfnEntityUpdate)EntityCannonLever,
     (PfnEntityUpdate)EntityCannon,
     (PfnEntityUpdate)EntityCannonShot,
     (PfnEntityUpdate)EntityCannonWall,
-    (PfnEntityUpdate)func_801B2AD8,
+    (PfnEntityUpdate)EntityBloodSkeleElevButton,
     (PfnEntityUpdate)EntityElevator2,
-    (PfnEntityUpdate)func_801B19A0,
+    (PfnEntityUpdate)EntitySecretWallDebris,
     (PfnEntityUpdate)EntityRedEyeBust,
-    (PfnEntityUpdate)func_801B2FD8,
+    (PfnEntityUpdate)EntityFloorButton,
     (PfnEntityUpdate)EntityFloorSpikes,
     (PfnEntityUpdate)EntityBloodSkeleton,
     (PfnEntityUpdate)EntityBoneScimitar,
@@ -131,9 +131,9 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     (PfnEntityUpdate)EntityRotateSpittlebone,
     (PfnEntityUpdate)EntitySpittleBoneSpit,
     (PfnEntityUpdate)EntityTableWithGlobe,
-    (PfnEntityUpdate)func_801B3648,
-    (PfnEntityUpdate)func_801B3A50,
-    (PfnEntityUpdate)func_801B37C0,
+    (PfnEntityUpdate)EntityLifeMaxTank,
+    (PfnEntityUpdate)EntityBlueFlameTable,
+    (PfnEntityUpdate)EntityRelicContainer,
     (PfnEntityUpdate)EntityWargExplosionPuffOpaque,
     (PfnEntityUpdate)EntitySubWeaponContainer,
     (PfnEntityUpdate)func_801C7538,

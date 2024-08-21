@@ -161,7 +161,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x22, self, newEntity);
+                    CreateEntityFromEntity(E_WALL_DEBRIS, self, newEntity);
                     newEntity->posX.i.hi += (Random() & 0xF);
                     newEntity->posY.i.hi -= 0x20 - (Random() & 0x3F);
                 }
@@ -248,7 +248,8 @@ void EntityBottomSecretRoomFloor(
     }
 }
 
-void func_801B19A0(Entity* self) {
+// Debris produced when left wall is destroyed
+void EntitySecretWallDebris(Entity* self) {
     Collider collider;
     Entity* newEntity;
     s32 rnd;
@@ -297,7 +298,7 @@ void func_801B19A0(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(0x22, self, newEntity);
+                        CreateEntityFromEntity(E_WALL_DEBRIS, self, newEntity);
                         newEntity->params = 0x1;
                     }
                 }
@@ -321,7 +322,7 @@ void func_801B19A0(Entity* self) {
     }
 }
 
-void func_801B1C18(Entity* self) {
+void BoxPuzzleFloorButton(Entity* self) {
     s32 temp_s1 = GetPlayerCollisionWith(self, 8, 8, 4);
     s16 primIndex;
     POLY_GT4* poly;
@@ -384,7 +385,8 @@ void func_801B1C18(Entity* self) {
     poly->y0 = self->posY.i.hi - 8;
 }
 
-void func_801B1E54(Entity* self, s16 primIndex) {
+// Spikes which go up and down when pressing the buttons
+void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
     POLY_GT4* poly;
     s8 var_v1;
     s32 temp;
@@ -679,7 +681,7 @@ void EntityCannon(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
             }
-            CreateEntityFromEntity(0x1E, self, &self[1]);
+            CreateEntityFromEntity(E_CANNON_SHOT, self, &self[1]);
             self->step++;
         }
         break;
@@ -782,7 +784,8 @@ void EntityCannonWall(Entity* self) {
     }
 }
 
-void func_801B2AD8(Entity* self) {
+// Floor button which you kill the blood skeleton to lift the small elevator
+void EntityBloodSkeleElevButton(Entity* self) {
     POLY_GT4* poly;
     s16 primIndex;
     s32 var_a0;
@@ -795,7 +798,7 @@ void func_801B2AD8(Entity* self) {
         self->hitboxOffY = -22;
         self->hitboxWidth = 6;
         self->hitboxState = 1;
-        CreateEntityFromEntity(0x26, self, &self[-1]);
+        CreateEntityFromEntity(E_BLOOD_SKELETON, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Tilemap.scrollY.i.hi;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -932,7 +935,8 @@ void EntityElevator2(Entity* self) {
     prim->y0 = self->posY.i.hi - 120;
 }
 
-void func_801B2FD8(Entity* self) {
+// First floor button encountered
+void EntityFloorButton(Entity* self) {
     s32 temp = GetPlayerCollisionWith(self, 8, 8, 4);
     Primitive* prim;
     Entity* player;
@@ -957,8 +961,8 @@ void func_801B2FD8(Entity* self) {
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
-        prim->u0 = 0x48;
-        prim->v0 = 0xC8;
+        prim->u0 = 72;
+        prim->v0 = 200;
         prim->v1 = prim->u1 = 0x10;
         prim->priority = 0x5F;
         prim->drawMode = 2;
@@ -1118,7 +1122,9 @@ void EntityTableWithGlobe(Entity* self) {
     }
 }
 
-void func_801B3648(Entity* self) {
+// Tank (and decoration) at bottom of secret floor room. When broken,
+// provides a Life Max Up
+void EntityLifeMaxTank(Entity* self) {
     Entity* newEntity;
 
     switch (self->step) {
@@ -1133,7 +1139,7 @@ void func_801B3648(Entity* self) {
 
     case 1:
         AnimateEntity(D_80180F1C, self);
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             PlaySfxPositional(SFX_GLASS_BREAK_A);
             self->hitboxState = 0;
             SetStep(2);
@@ -1161,7 +1167,8 @@ void func_801B3648(Entity* self) {
     }
 }
 
-void func_801B37C0(Entity* self) {
+// Breakable container holding Skill of Wolf, Bat Card, maybe others
+void EntityRelicContainer(Entity* self) {
     Entity* newEntity;
 
     switch (self->step) {
@@ -1176,7 +1183,7 @@ void func_801B37C0(Entity* self) {
             self->hitboxOffY = -0xA;
             self->hitboxOffX = 0;
             self->hitboxState = 2;
-            CreateEntityFromEntity(0x37, self, &self[1]);
+            CreateEntityFromEntity(E_RELIC_CONTAINER, self, self + 1);
             self[1].params = 0x100;
         }
 
@@ -1194,12 +1201,12 @@ void func_801B37C0(Entity* self) {
 
     case 2:
         if (self->params > 0x1) {
-            CreateEntityFromEntity(E_RELIC_ORB, self, &self[1]);
+            CreateEntityFromEntity(E_RELIC_ORB, self, self + 1);
         } else {
-            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_HEART_DROP, self, self + 1);
         }
 
-        self[1].params = D_80180F9C[self->params];
+        (self + 1)->params = D_80180F9C[self->params];
         do { // !FAKE
         } while (0);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1239,7 +1246,8 @@ void func_801B37C0(Entity* self) {
     }
 }
 
-void func_801B3A50(Entity* self) {
+// Table in room with bone-throwing skeleton. Drops a Resist Thunder.
+void EntityBlueFlameTable(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180CDC);
@@ -1270,7 +1278,7 @@ void func_801B3A50(Entity* self) {
     }
 }
 
-void func_801B3B78() {
+void AxeKnightDeath() {
     Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
@@ -1279,7 +1287,6 @@ void func_801B3B78() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            // Make a EntityWargExplosionPuffOpaque
             CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
             entity->params = 2;
             entity->ext.wargpuff.unk89 = 6 - i;
