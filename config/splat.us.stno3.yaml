@@ -61,7 +61,7 @@ segments:
       - [0x3AC0, data]
       - [0x3AF0, data]
       - [0x3B30, data]
-      - [0x3B50, data, e_bone_scimitar]
+      - [0x3B50, .data, e_bone_scimitar]
       - [0x3C44, data]
       - [0x3CC4, .data, rooms]
       - [0x3DC8, .data, e_layout] # layout entries data

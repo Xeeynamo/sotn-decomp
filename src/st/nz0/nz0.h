@@ -230,8 +230,6 @@ extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
 extern u16 D_80180CA0[];
-extern u16 D_80180C58[];
-extern u16 D_80180C58[];
 extern s32 D_80182504[];
 extern u8 D_80182524[];
 
