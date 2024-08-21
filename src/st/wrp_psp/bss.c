@@ -8,7 +8,7 @@ s32 WarpBackgroundBrightness;
 s32 D_80180648;
 
 // st_debug.c
-u8 D_80180530[8];
+u8 g_EntityUnkId12Data[8];
 
 // e_misc.c
 u8 D_80180608[8]; // different than the D_80180608 in warp.c ???

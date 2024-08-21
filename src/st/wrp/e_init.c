@@ -53,7 +53,7 @@ u16 g_EInitGeneric[] = {
 u16 g_InitDataEnt13[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
 };
-u16 D_80180488[] = {
+u16 g_EntityUnkId12Init[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
 u16 g_eInitGeneric2[] = {
