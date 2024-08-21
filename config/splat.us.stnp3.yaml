@@ -56,6 +56,8 @@ segments:
       - [0x23D0, data]
       - [0x2400, data]
       - [0x2440, data]
+      - [0x2460, .data, e_bone_scimitar]
+      - [0x2554, data]
       - [0x2720, data]
       - [0x2740, data]
       - [0x2A20, data]

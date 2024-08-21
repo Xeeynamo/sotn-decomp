@@ -93,7 +93,6 @@ extern u16 D_80180B18[];
 extern u16 D_80180B48[];
 extern u16 D_80180B54[];
 extern u16 D_80180B6C[];
-extern u16 D_80180B84[];
 extern u16 D_80180B90[];
 extern u16 D_80180BA8[];
 extern ObjInit2 D_80180BFC[];
@@ -249,5 +248,5 @@ extern s32 D_801D7D5C;
 extern Dialogue g_Dialogue;
 
 extern u16 g_BoneScimitarInit[];
-extern s32 D_80183BC0[];    // Skeleton parts velocityX
-extern s32 D_80183BDC[];    // Skeleton parts velocityY
+extern s32 D_80183BC0[]; // Skeleton parts velocityX
+extern s32 D_80183BDC[]; // Skeleton parts velocityY

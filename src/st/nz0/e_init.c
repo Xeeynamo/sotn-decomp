@@ -194,7 +194,7 @@ u16 D_80180C40[] = {
 u16 g_BoneScimitarInit[] = {
     0x8003, 0x0001, 0x004D, 0x0204, 0x0069, 0x0000,
 };
-u16 D_80180C58[] = {
+u16 g_ScimitarPartsInit[] = {
     0x8003, 0x0000, 0x004D, 0x0204, 0x0002, 0x0000,
 };
 u16 g_EAxeKnightInit[] = {
