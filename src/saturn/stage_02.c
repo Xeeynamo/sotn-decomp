@@ -97,7 +97,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDF64, func_060DDF64);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE178, func_060DE178);
 
 // SAT func_060DE2B0
-void func_801B3B78(void) {
+void AxeKnightDeath(void) {
     Entity* newEntity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;

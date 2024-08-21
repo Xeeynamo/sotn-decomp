@@ -39,7 +39,7 @@ void EntityRedEyeBust(Entity* self) {
 // A purplish-red brick background that scrolls behind the foreground layer
 void EntityPurpleBrickScrollingBackground(Entity* self) {
     Primitive* prim;
-    s16 primIndex;
+    s32 primIndex;
     s32 tempPosX;
     s32 tempPosY;
     s32 x, y;
@@ -57,8 +57,8 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
             return;
         }
         prim = &g_PrimBuf[primIndex];
-        self->primIndex = (s32)primIndex;
-        *(s32*)&self->ext.generic.unk7C = prim;
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->tpage = 0xF;
@@ -68,7 +68,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xBF;
             prim->priority = 0x20;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
 
@@ -79,7 +79,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         tempPosX = tempPosX - 0x80;
         tempPosY = self->posY.i.hi;
         tempPosY = (tempPosY & 0x3F) - 0x40;
-        prim = *((s32*)(&self->ext.generic.unk7C));
+        prim = self->ext.prim;
         // Primitives are laid out in a 5-tall by 3-wide grid
         for (y = 0; y < 5; y++) {
             for (x = 0; x < 3; x++) {
@@ -135,8 +135,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_BREAK:
-        self->ext.generic.unk84.unk++;
-        tileLayoutPtr = &D_80180E54 + (self->ext.generic.unk84.unk * 0x4);
+        self->ext.nz0311c0.unk84++;
+        tileLayoutPtr = &D_80180E54 + (self->ext.nz0311c0.unk84 * 4);
 
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
@@ -151,17 +151,17 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x13;
         }
-        self->ext.generic.unk80.modeS32 = 32;
+        self->ext.nz0311c0.unk80 = 32;
         self->step++;
 
-        if (self->ext.generic.unk84.unk == 3) {
+        if (self->ext.nz0311c0.unk84 == 3) {
             g_CastleFlags[129] = 1;
             g_api.func_800F1FC4(0x81);
 
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x22, self, newEntity);
+                    CreateEntityFromEntity(E_WALL_DEBRIS, self, newEntity);
                     newEntity->posX.i.hi += (Random() & 0xF);
                     newEntity->posY.i.hi -= 0x20 - (Random() & 0x3F);
                 }
@@ -171,7 +171,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_CHECK:
-        if (--self->ext.generic.unk80.modeS32 == 0) {
+        if (--self->ext.nz0311c0.unk80 == 0) {
             self->step = LEFT_SECRET_ROOM_WALL_IDLE;
         }
         break;
@@ -214,8 +214,8 @@ void EntityBottomSecretRoomFloor(
         return;
 
     case BOTTOM_SECRET_ROOM_FLOOR_BREAK:
-        self->ext.generic.unk84.unk++;
-        tileLayoutPtr = &D_80180E94 + (self->ext.generic.unk84.unk * 2);
+        self->ext.nz0311c0.unk84++;
+        tileLayoutPtr = &D_80180E94 + (self->ext.nz0311c0.unk84 * 2);
 
         tilePos = 0x2E7;
         for (i = 0; i < 2; i++) {
@@ -230,10 +230,10 @@ void EntityBottomSecretRoomFloor(
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
-        self->ext.generic.unk80.modeS32 = 32;
+        self->ext.nz0311c0.unk80 = 32;
         self->step++;
 
-        if (self->ext.generic.unk84.unk == 3) {
+        if (self->ext.nz0311c0.unk84 == 3) {
             g_CastleFlags[130] = 1;
             g_api.func_800F1FC4(0x82);
             DestroyEntity(self);
@@ -241,14 +241,15 @@ void EntityBottomSecretRoomFloor(
         break;
 
     case BOTTOM_SECRET_ROOM_FLOOR_CHECK:
-        if (--self->ext.generic.unk80.modeS32 == 0) {
+        if (--self->ext.nz0311c0.unk80 == 0) {
             self->step = BOTTOM_SECRET_ROOM_FLOOR_IDLE;
         }
         break;
     }
 }
 
-void func_801B19A0(Entity* self) {
+// Debris produced when left wall is destroyed
+void EntitySecretWallDebris(Entity* self) {
     Collider collider;
     Entity* newEntity;
     s32 rnd;
@@ -297,7 +298,7 @@ void func_801B19A0(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(0x22, self, newEntity);
+                        CreateEntityFromEntity(E_WALL_DEBRIS, self, newEntity);
                         newEntity->params = 0x1;
                     }
                 }
@@ -321,10 +322,10 @@ void func_801B19A0(Entity* self) {
     }
 }
 
-void func_801B1C18(Entity* self) {
+void BoxPuzzleFloorButton(Entity* self) {
     s32 temp_s1 = GetPlayerCollisionWith(self, 8, 8, 4);
     s16 primIndex;
-    POLY_GT4* poly;
+    Primitive* prim;
     Entity* player;
     s32 temp;
 
@@ -336,19 +337,19 @@ void func_801B1C18(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[primIndex];
+        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *((s32*)(&self->ext.generic.unk7C)) = poly;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        poly->code = 6;
-        poly->tpage = 0xF;
-        poly->clut = 9;
-        poly->u0 = 72;
-        poly->v0 = 200;
-        poly->u1 = 16;
-        poly->v1 = 16;
-        poly->pad2 = 0x5F;
-        poly->pad3 = 2;
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 72;
+        prim->v0 = 200;
+        prim->u1 = 16;
+        prim->v1 = 16;
+        prim->priority = 0x5F;
+        prim->drawMode = DRAW_UNK02;
 
     case 1:
         if (temp_s1 != 0) {
@@ -371,7 +372,7 @@ void func_801B1C18(Entity* self) {
         break;
 
     case 3:
-        self->posY.val += 0xFFFF0000;
+        self->posY.val -= FIX(1);
         temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
         if (temp < 464) {
             self->posY.i.hi = 464 - g_Tilemap.scrollY.i.hi;
@@ -379,13 +380,14 @@ void func_801B1C18(Entity* self) {
         }
         break;
     }
-    poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
-    poly->x0 = self->posX.i.hi - 8;
-    poly->y0 = self->posY.i.hi - 8;
+    prim = self->ext.prim;
+    prim->x0 = self->posX.i.hi - 8;
+    prim->y0 = self->posY.i.hi - 8;
 }
 
-void func_801B1E54(Entity* self, s16 primIndex) {
-    POLY_GT4* poly;
+// Spikes which go up and down when pressing the buttons
+void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
+    Primitive* prim;
     s8 var_v1;
     s32 temp;
 
@@ -403,26 +405,26 @@ void func_801B1E54(Entity* self, s16 primIndex) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[primIndex];
+        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *((s32*)(&self->ext.generic.unk7C)) = poly;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        poly->code = 6;
-        poly->tpage = 0xF;
-        poly->clut = 9;
-        poly->u0 = 40;
-        poly->v0 = 200;
-        poly->u1 = 32;
-        poly->v1 = 32;
-        poly->pad2 = 0x5F;
-        poly->pad3 = 2;
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 40;
+        prim->v0 = 200;
+        prim->u1 = 32;
+        prim->v1 = 32;
+        prim->priority = 0x5F;
+        prim->drawMode = DRAW_UNK02;
 
         if (self->params & D_80180EB4) {
             self->posY.i.hi = 480 - g_Tilemap.scrollY.i.hi;
-            self->ext.generic.unk88.S8.unk0 = 1;
+            self->ext.nz0311c0.unk88 = 1;
         } else {
             self->posY.i.hi = 452 - g_Tilemap.scrollY.i.hi;
-            self->ext.generic.unk88.S8.unk0 = 0;
+            self->ext.nz0311c0.unk88 = 0;
         }
 
     case 1:
@@ -434,7 +436,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
             }
             var_v1 = 1;
         } else {
-            self->posY.val += 0xFFFF0000;
+            self->posY.val -= FIX(1);
             temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp < 452) {
                 self->posY.i.hi = 452 - g_Tilemap.scrollY.i.hi;
@@ -443,15 +445,15 @@ void func_801B1E54(Entity* self, s16 primIndex) {
             var_v1 = 0;
         }
 
-        if (self->ext.generic.unk88.U8.unk0 != var_v1) {
-            self->ext.generic.unk88.U8.unk0 = var_v1;
+        if (self->ext.nz0311c0.unk88 != var_v1) {
+            self->ext.nz0311c0.unk88 = var_v1;
             PlaySfxPositional(0x69D);
         }
     }
 
-    poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
-    poly->x0 = self->posX.i.hi - 16;
-    poly->y0 = self->posY.i.hi - 16;
+    prim = self->ext.prim;
+    prim->x0 = self->posX.i.hi - 16;
+    prim->y0 = self->posY.i.hi - 16;
     temp = 480 - (g_Tilemap.scrollY.i.hi + self->posY.i.hi);
     D_801CB736[self->params] = temp;
 }
@@ -459,7 +461,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
 // moveable box for spike/switch areas
 void EntityMoveableBox(Entity* self) {
     Entity* player;
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 temp_s1 = GetPlayerCollisionWith(self, 0x10, 0x10, 5);
     s32 var_s1 = temp_s1;
     s16 primIndex;
@@ -474,19 +476,19 @@ void EntityMoveableBox(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[primIndex];
+        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *((s32*)(&self->ext.generic.unk7C.s)) = poly;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        poly->code = 6;
-        poly->tpage = 0xF;
-        poly->clut = 9;
-        poly->u0 = 8;
-        poly->v0 = 200;
-        poly->u1 = 32;
-        poly->v1 = 32;
-        poly->pad2 = 112;
-        poly->pad3 = 2;
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 8;
+        prim->v0 = 200;
+        prim->u1 = 32;
+        prim->v1 = 32;
+        prim->priority = 112;
+        prim->drawMode = DRAW_UNK02;
 
     case 1:
         player = &PLAYER;
@@ -522,12 +524,12 @@ void EntityMoveableBox(Entity* self) {
             if (abs(temp_v0_2 - 256) < 24) {
                 var_s1 = 2;
             }
-            if ((self->ext.generic.unk84.unk == 0) &&
+            if ((self->ext.nz0311c0.unk84 == 0) &&
                 ((s16)D_801CB736[var_s1] != 0)) {
                 var_s1 = 0;
                 self->posX.val -= self->velocityX;
             }
-            self->ext.generic.unk84.unk = var_s1;
+            self->ext.nz0311c0.unk84 = var_s1;
             if (var_s1 != 0) {
                 self->posY.i.hi =
                     (448 - D_801CB736[var_s1]) - g_Tilemap.scrollY.i.hi;
@@ -535,18 +537,15 @@ void EntityMoveableBox(Entity* self) {
         }
         break;
     }
-    poly = (POLY_GT4*)(*(s32*)(&self->ext.generic.unk7C.s));
+    prim = self->ext.prim;
     new_var = ((u16)self->posX.i.hi) - 16;
-    poly->x0 = new_var;
-    poly->y0 = ((u16)self->posY.i.hi) - 16;
+    prim->x0 = new_var;
+    prim->y0 = ((u16)self->posY.i.hi) - 16;
 }
 
 // lever to operate cannon
 void EntityCannonLever(Entity* self) {
-    /** TODO: !FAKE
-     * self->ext.generic.unk7C should be a POLY_G4*
-     */
-    POLY_GT4* poly;
+    Primitive* prim;
     s16 primIndex;
     s32 temp_v0_2;
     s32 temp_v1_2;
@@ -564,20 +563,20 @@ void EntityCannonLever(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[primIndex];
+        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *(s32*)&self->ext.generic.unk7C = poly;
+        self->ext.prim = prim;
 
         self->flags |= FLAG_HAS_PRIMS;
-        poly->code = 6;
-        poly->tpage = 0xF;
-        poly->clut = 9;
-        poly->u0 = 0x68;
-        poly->v0 = 0x80;
-        poly->u1 = 8;
-        poly->v1 = 0x28;
-        poly->pad2 = 0x70;
-        poly->pad3 = 2;
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 0x68;
+        prim->v0 = 0x80;
+        prim->u1 = 8;
+        prim->v1 = 0x28;
+        prim->priority = 0x70;
+        prim->drawMode = DRAW_UNK02;
 
         if (PLAYER.posX.i.hi < 128) {
             self->hitboxState = 0;
@@ -614,9 +613,9 @@ void EntityCannonLever(Entity* self) {
     if (D_8003BE6F[0] != 0) {
         self->hitboxState = 0;
     }
-    poly = (POLY_GT4*)*(s32*)&self->ext.generic.unk7C.s;
-    poly->x0 = self->posX.i.hi - 4;
-    poly->y0 = self->posY.i.hi - 20;
+    prim = self->ext.prim;
+    prim->x0 = self->posX.i.hi - 4;
+    prim->y0 = self->posY.i.hi - 20;
 }
 
 // cannon for shortcut
@@ -639,7 +638,7 @@ void EntityCannon(Entity* self) {
 
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        *(s32*)&self->ext.generic.unk7C = prim;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
@@ -649,7 +648,7 @@ void EntityCannon(Entity* self) {
         prim->u1 = 0x38;
         prim->v1 = 0x20;
         prim->priority = 0x70;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
 
         prim = prim->next;
         prim->type = PRIM_SPRT;
@@ -662,7 +661,7 @@ void EntityCannon(Entity* self) {
         prim->x0 = self->posX.i.hi - 8;
         prim->y0 = 120 - g_Tilemap.scrollY.i.hi;
         prim->priority = 0x78;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
 
         if (D_8003BE6F[0] != 0) {
             self->step = 3;
@@ -679,13 +678,13 @@ void EntityCannon(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
             }
-            CreateEntityFromEntity(0x1E, self, &self[1]);
+            CreateEntityFromEntity(E_CANNON_SHOT, self, &self[1]);
             self->step++;
         }
         break;
 
     case 2:
-        prim = *(s32*)&self->ext.generic.unk7C;
+        prim = self->ext.prim;
         prim = prim->next;
         self->posX.i.hi = prim->x0 + 8;
         self->posX.i.lo = 0;
@@ -707,7 +706,7 @@ void EntityCannon(Entity* self) {
         break;
     }
 
-    prim = *(s32*)&self->ext.generic.unk7C;
+    prim = self->ext.prim;
     prim->x0 = self->posX.i.hi - 24;
     prim->y0 = self->posY.i.hi - 16;
 }
@@ -782,8 +781,9 @@ void EntityCannonWall(Entity* self) {
     }
 }
 
-void func_801B2AD8(Entity* self) {
-    POLY_GT4* poly;
+// Floor button which you kill the blood skeleton to lift the small elevator
+void EntityBloodSkeleElevButton(Entity* self) {
+    Primitive* prim;
     s16 primIndex;
     s32 var_a0;
     s32 temp;
@@ -795,7 +795,7 @@ void func_801B2AD8(Entity* self) {
         self->hitboxOffY = -22;
         self->hitboxWidth = 6;
         self->hitboxState = 1;
-        CreateEntityFromEntity(0x26, self, &self[-1]);
+        CreateEntityFromEntity(E_BLOOD_SKELETON, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Tilemap.scrollY.i.hi;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -803,19 +803,19 @@ void func_801B2AD8(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[primIndex];
+        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *(s32*)&self->ext.generic.unk7C = poly;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        poly->tpage = 0xF;
-        poly->clut = 9;
-        poly->u0 = 72;
-        poly->v0 = 200;
-        poly->u1 = 16;
-        poly->v1 = 16;
-        poly->pad2 = 0x5F;
-        poly->code = 6;
-        poly->pad3 = 2;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 72;
+        prim->v0 = 200;
+        prim->u1 = 16;
+        prim->v1 = 16;
+        prim->priority = 0x5F;
+        prim->type = PRIM_SPRT;
+        prim->drawMode = DRAW_UNK02;
 
     case 1:
         var_a0 = self->hitFlags;
@@ -832,7 +832,7 @@ void func_801B2AD8(Entity* self) {
             }
             g_CallElevator = true;
         } else {
-            self->posY.val += 0xFFFF0000;
+            self->posY.val -= FIX(1);
             temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp < 372) {
                 self->posY.i.hi = 372 - g_Tilemap.scrollY.i.hi;
@@ -841,9 +841,9 @@ void func_801B2AD8(Entity* self) {
         }
 
     default:
-        poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
-        poly->x0 = self->posX.i.hi - 8;
-        poly->y0 = self->posY.i.hi - 8;
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi - 8;
+        prim->y0 = self->posY.i.hi - 8;
     }
 }
 
@@ -880,7 +880,7 @@ void EntityElevator2(Entity* self) {
         prim->u1 = 0x20;
         prim->v1 = 0x48;
         prim->priority = 0x72;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
 
         prim = prim->next;
         for (i = 0; i < 2; i++) {
@@ -892,7 +892,7 @@ void EntityElevator2(Entity* self) {
             prim->u1 = 8;
             prim->v1 = 0x40;
             prim->priority = 0x5F;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
 
@@ -932,7 +932,8 @@ void EntityElevator2(Entity* self) {
     prim->y0 = self->posY.i.hi - 120;
 }
 
-void func_801B2FD8(Entity* self) {
+// First floor button encountered
+void EntityFloorButton(Entity* self) {
     s32 temp = GetPlayerCollisionWith(self, 8, 8, 4);
     Primitive* prim;
     Entity* player;
@@ -943,8 +944,7 @@ void func_801B2FD8(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGeneric);
-        self->ext.generic.unk80.modeS32 =
-            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        self->ext.nz0311c0.unk80 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -957,11 +957,11 @@ void func_801B2FD8(Entity* self) {
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
-        prim->u0 = 0x48;
-        prim->v0 = 0xC8;
+        prim->u0 = 72;
+        prim->v0 = 200;
         prim->v1 = prim->u1 = 0x10;
         prim->priority = 0x5F;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
 
         posX = self->posX.i.hi;
         posX += g_Tilemap.scrollX.i.hi;
@@ -981,9 +981,9 @@ void func_801B2FD8(Entity* self) {
             player->posY.i.hi++;
             self->posY.val += FIX(1.0);
             posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-            if ((self->ext.generic.unk80.modeS32 + 4) < posY) {
-                self->posY.i.hi = (self->ext.generic.unk80.modeS16.unk0 + 4) -
-                                  g_Tilemap.scrollY.i.hi;
+            if ((self->ext.nz0311c0.unk80 + 4) < posY) {
+                self->posY.i.hi =
+                    (self->ext.nz0311c0.unk80 + 4) - g_Tilemap.scrollY.i.hi;
                 self[1].ext.stub[0xC] = 1;
                 self->step++;
                 LOW(self[1].ext.stub[0x8]) ^= 1;
@@ -998,11 +998,11 @@ void func_801B2FD8(Entity* self) {
 
     case 2:
         if (temp == 0) {
-            self->posY.val += ~0xFFFF;
+            self->posY.val -= FIX(1);
             posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-            if (posY < self->ext.generic.unk80.modeS32) {
-                self->posY.i.hi = self->ext.generic.unk80.modeS16.unk0 -
-                                  g_Tilemap.scrollY.i.hi;
+            if (posY < self->ext.nz0311c0.unk80) {
+                self->posY.i.hi =
+                    self->ext.nz0311c0.unk80 - g_Tilemap.scrollY.i.hi;
                 self->step = 1;
             }
         }
@@ -1030,8 +1030,7 @@ void EntityFloorSpikes(Entity* self) {
         self->attackElement = 1;
         self->attack = 7;
         self->hitboxState = 1;
-        self->ext.generic.unk80.modeS32 =
-            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        self->ext.nz0311c0.unk80 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
         temp = 4;
         new_var = self->posY.i.hi - 4;
@@ -1048,7 +1047,7 @@ void EntityFloorSpikes(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *((s32*)(&self->ext.generic.unk7C)) = prim;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
@@ -1057,34 +1056,33 @@ void EntityFloorSpikes(Entity* self) {
         prim->v0 = 0xC8;
         prim->v1 = prim->u1 = 0x20;
         prim->priority = 0x5F;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         self->posY.i.hi -= 28;
 
     case 1:
         self->hitboxState = 1;
-        if (self->ext.generic.unk84.unk != 0) {
+        if (self->ext.nz0311c0.unk84 != 0) {
             self->posY.val += FIX(1.0);
             new_var = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             var_v1 = g_Tilemap.scrollY.i.hi;
-            if (new_var > self->ext.generic.unk80.modeS32) {
+            if (new_var > self->ext.nz0311c0.unk80) {
                 self->hitboxState = 0;
-                self->posY.i.hi = self->ext.generic.unk80.modeS16.unk0 - var_v1;
+                self->posY.i.hi = self->ext.nz0311c0.unk80 - var_v1;
             }
         } else {
-            self->posY.val += 0xFFFF0000;
+            self->posY.val -= FIX(1);
             new_var = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             var_v1 = g_Tilemap.scrollY.i.hi;
-            if (new_var < (self->ext.generic.unk80.modeS32 - 28)) {
-                self->posY.i.hi =
-                    self->ext.generic.unk80.modeS16.unk0 - 28 - var_v1;
+            if (new_var < (self->ext.nz0311c0.unk80 - 28)) {
+                self->posY.i.hi = self->ext.nz0311c0.unk80 - 28 - var_v1;
             }
         }
     }
-    if (self->ext.generic.unk88.U8.unk0 != 0) {
+    if (self->ext.nz0311c0.unk88 != 0) {
         PlaySfxPositional(0x69D);
-        self->ext.generic.unk88.S8.unk0 = 0;
+        self->ext.nz0311c0.unk88 = 0;
     }
-    prim = *((s32*)(&self->ext.generic.unk7C));
+    prim = self->ext.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
 }
@@ -1118,7 +1116,9 @@ void EntityTableWithGlobe(Entity* self) {
     }
 }
 
-void func_801B3648(Entity* self) {
+// Tank (and decoration) at bottom of secret floor room. When broken,
+// provides a Life Max Up
+void EntityLifeMaxTank(Entity* self) {
     Entity* newEntity;
 
     switch (self->step) {
@@ -1133,7 +1133,7 @@ void func_801B3648(Entity* self) {
 
     case 1:
         AnimateEntity(D_80180F1C, self);
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             PlaySfxPositional(SFX_GLASS_BREAK_A);
             self->hitboxState = 0;
             SetStep(2);
@@ -1161,7 +1161,8 @@ void func_801B3648(Entity* self) {
     }
 }
 
-void func_801B37C0(Entity* self) {
+// Breakable container holding Skill of Wolf, Bat Card, maybe others
+void EntityRelicContainer(Entity* self) {
     Entity* newEntity;
 
     switch (self->step) {
@@ -1176,7 +1177,7 @@ void func_801B37C0(Entity* self) {
             self->hitboxOffY = -0xA;
             self->hitboxOffX = 0;
             self->hitboxState = 2;
-            CreateEntityFromEntity(0x37, self, &self[1]);
+            CreateEntityFromEntity(E_RELIC_CONTAINER, self, self + 1);
             self[1].params = 0x100;
         }
 
@@ -1194,12 +1195,12 @@ void func_801B37C0(Entity* self) {
 
     case 2:
         if (self->params > 0x1) {
-            CreateEntityFromEntity(E_RELIC_ORB, self, &self[1]);
+            CreateEntityFromEntity(E_RELIC_ORB, self, self + 1);
         } else {
-            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_HEART_DROP, self, self + 1);
         }
 
-        self[1].params = D_80180F9C[self->params];
+        (self + 1)->params = D_80180F9C[self->params];
         do { // !FAKE
         } while (0);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1239,7 +1240,8 @@ void func_801B37C0(Entity* self) {
     }
 }
 
-void func_801B3A50(Entity* self) {
+// Table in room with bone-throwing skeleton. Drops a Resist Thunder.
+void EntityBlueFlameTable(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180CDC);
@@ -1270,7 +1272,7 @@ void func_801B3A50(Entity* self) {
     }
 }
 
-void func_801B3B78() {
+void AxeKnightDeath() {
     Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
@@ -1279,7 +1281,6 @@ void func_801B3B78() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            // Make a EntityWargExplosionPuffOpaque
             CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
             entity->params = 2;
             entity->ext.wargpuff.unk89 = 6 - i;
