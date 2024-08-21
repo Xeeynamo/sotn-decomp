@@ -22,7 +22,7 @@ static u16 g_EntityUnkId12TilemapProps[] = {
 
 extern ObjInit D_801804E0[];
 extern u16 g_eInitGeneric2[];
-extern u16 D_80180488[];
+extern u16 g_EntityUnkId12Init[];
 
 void func_80186FD0(Entity* self) {
     ObjInit* objInit = &D_801804E0[self->params];
@@ -89,7 +89,7 @@ void EntityUnkId12(Entity* entity) {
             g_Tilemap.height = *tilemapProps;
         }
     } else {
-        InitializeEntity(D_80180488);
+        InitializeEntity(g_EntityUnkId12Init);
         var_s0 = entity->ext.generic.unk7C.u = g_EntityUnkId12Data[params];
         if (var_s0) {
             entity->hitboxWidth = g_EntityUnkId12Hitbox[params];
