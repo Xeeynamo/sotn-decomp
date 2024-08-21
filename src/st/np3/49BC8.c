@@ -90,25 +90,25 @@ void EntityZombieSpawner(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180A60);
-        self->ext.zombieSpawner.unk80 = 1;
+        self->ext.zombieSpawner.spawnDelay = 1;
         self->flags &= FLAG_UNK_2000;
     }
 
     if (g_CastleFlags[0x37]) {
         self->posX.i.hi = 128;
-        if (--self->ext.zombieSpawner.unk80 == 0) {
+        if (--self->ext.zombieSpawner.spawnDelay == 0) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ZOMBIE, self, newEntity);
                 rnd = (Random() & 0x3F) + 96;
 
-                if (self->ext.zombieSpawner.unk88 != 0) {
+                if (self->ext.zombieSpawner.spawnSide != 0) {
                     newEntity->posX.i.hi += rnd;
                 } else {
                     newEntity->posX.i.hi -= rnd;
                 }
                 newEntity->posY.i.hi -= 48;
-                self->ext.zombieSpawner.unk88 ^= 1;
+                self->ext.zombieSpawner.spawnSide ^= 1;
 
                 // Zombies are prevented from spawning too close to the
                 // edges of the room.
@@ -119,7 +119,7 @@ void EntityZombieSpawner(Entity* self) {
                     DestroyEntity(newEntity);
                 }
             }
-            self->ext.zombieSpawner.unk80 = (Random() & 0x3F) + 32;
+            self->ext.zombieSpawner.spawnDelay = (Random() & 0x3F) + 32;
         }
     }
 }
