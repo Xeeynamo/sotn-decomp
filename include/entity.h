@@ -1485,6 +1485,14 @@ typedef struct {
     /* 0x9C */ s32 initialX;
 } ET_BoneScimitar;
 
+// Common EXT member for all of NZ0/311C0.c file.
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ u8 unk88;
+} ET_NZ0_311C0;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1617,6 +1625,7 @@ typedef union { // offset=0x7C
     ET_SelEnt8 selEnt8;
     ET_ZombieSpawner zombieSpawner;
     ET_BoneScimitar boneScimitar;
+    ET_NZ0_311C0 nz0311c0;
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
