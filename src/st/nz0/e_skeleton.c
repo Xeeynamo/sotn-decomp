@@ -16,6 +16,12 @@ typedef enum {
     SKELETON_DESTROY
 } SKELETON_STEPS;
 
+typedef enum {
+    SKELETON_JUMPING,
+    SKELETON_IN_AIR,
+    SKELETON_LAND
+} SkeletonJumpSubSteps;
+
 static u8 anim_walk[] = {0x06, 0x01, 0x04, 0x02, 0x04, 0x03, 0x06,
                          0x04, 0x05, 0x05, 0x05, 0x06, 0x00};
 static u8 anim_walk_backwards[] = {0x06, 0x01, 0x05, 0x06, 0x05, 0x05, 0x06,
@@ -39,17 +45,17 @@ static u32 bone_projectile_velocity_x[] = {
     FIX(-.125), FIX(-.5),  FIX(-1), FIX(-1.5),
     FIX(-2),    FIX(-2.5), FIX(-3), FIX(-3.5)};
 static s16 sensors_ground[][2] = {{0, 19}, {0, 4}, {8, -4}, {-16, 0}};
-static s16 D_801824B8[] = {0, 19, 8, 0};
+static s16 sensors_special[] = {0, 19, 8, 0};
 static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
-void func_801C5F2C(Entity* self) {
-    if ((UnkCollisionFunc2(D_801824B8) & 0x60) == 0x60) {
+static void SkeletonAttackCheck(Entity* self) {
+    if ((UnkCollisionFunc2(sensors_special) & 0x60) == 0x60) {
         self->posX.val -= self->velocityX;
     }
 
     if (!(UnkCollisionFunc(sensors_move, LEN(sensors_move)) & 2)) {
-        if ((--self->ext.generic.unk7C.U8.unk0) == 0) {
-            SetStep(4);
+        if ((--self->ext.skeleton.attackTimer) == 0) {
+            SetStep(SKELETON_ATTACK);
         }
     } else {
         SetStep(SKELETON_JUMP);
@@ -68,9 +74,9 @@ void EntitySkeleton(Entity* self) {
     switch (self->step) {
     case SKELETON_INIT:
         InitializeEntity(D_80180C88);
-        self->ext.generic.unk7C.S8.unk0 = 0x50;
-        self->ext.generic.unk80.modeS8.unk0 = 0;
-        self->ext.generic.unk84.S8.unk0 = 0;
+        self->ext.skeleton.attackTimer = 80; // Skeleton attack timer cycle
+        self->ext.skeleton.facingLeft = 0;   // Facing init
+        self->ext.skeleton.attackTimerIndex = 0;
         break;
     case SKELETON_IDLE: // Wait for player to be close enough
         if (UnkCollisionFunc3(sensors_ground) != 0) {
@@ -79,10 +85,10 @@ void EntitySkeleton(Entity* self) {
         break;
     case SKELETON_WALK_TOWARDS_PLAYER:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft;
+        self->ext.skeleton.facingLeft = self->facingLeft;
         AnimateEntity(anim_walk, self);
 
-        if (self->ext.generic.unk80.modeS8.unk0 == 0) {
+        if (self->ext.skeleton.facingLeft == 0) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
@@ -91,14 +97,14 @@ void EntitySkeleton(Entity* self) {
         if (GetDistanceToPlayerX() < 76) {
             self->step = SKELETON_WALK_AWAY_FROM_PLAYER;
         }
-        func_801C5F2C(self);
+        SkeletonAttackCheck(self);
         break;
     case SKELETON_WALK_AWAY_FROM_PLAYER:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft ^ 1;
+        self->ext.skeleton.facingLeft = self->facingLeft ^ 1;
         AnimateEntity(anim_walk_backwards, self);
 
-        if (self->ext.generic.unk80.modeS8.unk0 == 0) {
+        if (self->ext.skeleton.facingLeft == 0) {
             self->velocityX = FIX(-0.5);
         } else {
             self->velocityX = FIX(0.5);
@@ -107,15 +113,16 @@ void EntitySkeleton(Entity* self) {
         if (GetDistanceToPlayerX() > 92) {
             self->step = SKELETON_WALK_TOWARDS_PLAYER;
         }
-        func_801C5F2C(self);
+        SkeletonAttackCheck(self);
         break;
     case SKELETON_ATTACK:
         animStatus = AnimateEntity(anim_throw_bone, self);
         if (!animStatus) {
             SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
-            self->ext.generic.unk7C.S8.unk0 =
+            self->ext.skeleton.attackTimerIndex++;
+            self->ext.skeleton.attackTimer =
                 attack_timer_cycles[self->params & 1]
-                                   [++self->ext.generic.unk84.S8.unk0 & 3];
+                                   [self->ext.skeleton.attackTimerIndex & 3];
             break;
         }
 
@@ -125,8 +132,9 @@ void EntitySkeleton(Entity* self) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) { // Spawn bone
                     PlaySfxPositional(NA_SE_EN_SKELETON_THROW_BONE);
-                    CreateEntityFromCurrentEntity(0x2F, newEntity);
-                    if (self->facingLeft != 0) {
+                    CreateEntityFromCurrentEntity(
+                        E_SKELETON_THROWN_BONE, newEntity);
+                    if (self->facingLeft) {
                         newEntity->posX.i.hi -= 8;
                     } else {
                         newEntity->posX.i.hi += 8;
@@ -139,9 +147,9 @@ void EntitySkeleton(Entity* self) {
         break;
     case SKELETON_JUMP:
         switch (self->step_s) {
-        case 0:
+        case SKELETON_JUMPING:
             if (!(AnimateEntity(anim_jump1, self) & 1)) {
-                u8 facing_ = self->ext.generic.unk80.modeS8.unk0;
+                u8 facing_ = self->ext.skeleton.facingLeft;
                 s32 facing;
 
                 if (Random() % 4) {
@@ -163,13 +171,13 @@ void EntitySkeleton(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 1:
+        case SKELETON_IN_AIR:
             if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensors_move, 2);
             break;
-        case 2:
+        case SKELETON_LAND:
             if (AnimateEntity(anim_jump2, self) & 1) {
                 self->step_s = 0;
                 SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
@@ -181,11 +189,11 @@ void EntitySkeleton(Entity* self) {
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x30, newEntity);
+                CreateEntityFromCurrentEntity(E_SKELETON_PIECES, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->params = i;
-                newEntity->ext.generic.unk88.S8.unk0 = dead_parts_selector[i];
-                if (self->facingLeft != 0) {
+                newEntity->ext.skeleton.explosionTimer = dead_parts_selector[i];
+                if (self->facingLeft) {
                     newEntity->posX.i.hi -= dead_parts_pos_x[i];
                 } else {
                     newEntity->posX.i.hi += dead_parts_pos_x[i];
@@ -202,86 +210,88 @@ void EntitySkeleton(Entity* self) {
     }
 }
 
-void func_801C6494(Entity* entity) { // From skeleton death explosion
-    if (entity->step) {
-        entity->ext.generic.unk88.S8.unk0--;
-        if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->rotZ += anim_bone_rot[entity->params];
+void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
+    if (self->step) {
+        self->ext.skeleton.explosionTimer--;
+        if (self->ext.skeleton.explosionTimer & 0xFF) {
+            self->rotZ += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();
             return;
         }
 
-        entity->entityId = E_EXPLOSION;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-        entity->params = 0;
-        entity->step = 0;
+        self->entityId = E_EXPLOSION;
+        self->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+        self->params = 0;
+        self->step = 0;
         return;
     }
 
     InitializeEntity(D_80180C94);
-    entity->drawFlags = FLAG_DRAW_ROTZ;
-    entity->animCurFrame = entity->params + 15;
+    self->drawFlags = FLAG_DRAW_ROTZ;
+    self->animCurFrame = self->params + 15;
 
-    if (entity->facingLeft != 0) {
-        entity->velocityX = -entity->velocityX;
+    if (self->facingLeft) {
+        self->velocityX = -self->velocityX;
     }
 }
 
-void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
+void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
     s32 velocityX;
     u32 xDistanceToPlayer;
 
-    if (entity->step) {
-        if (entity->flags & FLAG_DEAD) {
+    if (self->step) {
+        if (self->flags & FLAG_DEAD) {
             EntityExplosionSpawn(0, 0);
             return;
         }
 
-        entity->rotZ += 0x80;
-        entity->velocityY += 0x2400;
+        self->rotZ += 0x80;
+        self->velocityY += 0x2400;
         MoveEntity();
 
-        if (entity->posY.i.hi > 240) {
-            DestroyEntity(entity);
+        if (self->posY.i.hi > 240) {
+            DestroyEntity(self);
         }
     } else {
         InitializeEntity(D_80180CA0);
-        entity->posY.val -= FIX(0.0625);
+        self->posY.val -= FIX(0.0625);
         xDistanceToPlayer = GetDistanceToPlayerX();
         xDistanceToPlayer /= 32;
         xDistanceToPlayer = MAX(xDistanceToPlayer, 7);
         velocityX = bone_projectile_velocity_x[xDistanceToPlayer];
-        xDistanceToPlayer = entity->facingLeft;
+        xDistanceToPlayer = self->facingLeft;
 
         if (xDistanceToPlayer > 0) {
             velocityX = -velocityX;
         }
 
-        entity->velocityY = FIX(-4.5);
-        entity->velocityX = velocityX;
-        entity->drawFlags = FLAG_DRAW_ROTZ;
+        self->velocityY = FIX(-4.5);
+        self->velocityX = velocityX;
+        self->drawFlags = FLAG_DRAW_ROTZ;
     }
 }
 
-void func_801C6678(Entity* entity) { // From Skeleton
-    if (entity->step == 0) {
+// Unclear if this has a way to run. Not called, and not in
+// the main entity list.
+void func_801C6678(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(D_80180C88);
-        entity->rotX = 0x120;
-        entity->rotY = 0x200;
-        entity->unk6C = 0;
-        entity->hitboxState = 0;
-        entity->drawFlags = entity->drawFlags | 0xB;
+        self->rotX = 0x120;
+        self->rotY = 0x200;
+        self->unk6C = 0;
+        self->hitboxState = 0;
+        self->drawFlags = self->drawFlags | 0xB;
         return;
     }
 
-    entity->facingLeft = entity[-1].facingLeft;
-    entity->zPriority = entity[-1].zPriority - 1;
-    entity->animCurFrame = entity[-1].animCurFrame;
-    entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.i.hi - 20;
+    self->facingLeft = self[-1].facingLeft;
+    self->zPriority = self[-1].zPriority - 1;
+    self->animCurFrame = self[-1].animCurFrame;
+    self->posX.i.hi = self[-1].posX.i.hi;
+    self->posY.i.hi = self[-1].posY.i.hi - 20;
 
-    if (entity[-1].entityId != 0x2E) {
-        DestroyEntity(entity);
+    if (self[-1].entityId != E_SKELETON) {
+        DestroyEntity(self);
     }
 }

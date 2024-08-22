@@ -46,8 +46,8 @@ void EntityBloodyZombie(Entity*);
 void func_801C5D20(Entity*);
 void EntityBloodSplatter(Entity*);
 void EntitySkeleton(Entity*);
-void func_801C6574(Entity*);
-void func_801C6494(Entity*);
+void EntitySkeletonThrownBone(Entity*);
+void EntitySkeletonPieces(Entity*);
 void EntitySpittleBone(Entity*);
 void EntityRotateSpittlebone(Entity*);
 void EntitySpittleBoneSpit(Entity*);
@@ -125,8 +125,8 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     (PfnEntityUpdate)func_801C5D20,
     (PfnEntityUpdate)EntityBloodSplatter,
     (PfnEntityUpdate)EntitySkeleton,
-    (PfnEntityUpdate)func_801C6574,
-    (PfnEntityUpdate)func_801C6494,
+    (PfnEntityUpdate)EntitySkeletonThrownBone,
+    (PfnEntityUpdate)EntitySkeletonPieces,
     (PfnEntityUpdate)EntitySpittleBone,
     (PfnEntityUpdate)EntityRotateSpittlebone,
     (PfnEntityUpdate)EntitySpittleBoneSpit,
