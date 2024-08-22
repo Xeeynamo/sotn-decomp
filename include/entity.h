@@ -59,7 +59,7 @@ typedef struct ET_Generic {
         } modeS8;
     } unk80; // size = 0x4
     /* 0x84 */ Multi unk84;
-    /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
+    /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
@@ -1489,14 +1489,15 @@ typedef struct {
     f32 yCoord;
 } ET_CavernDoor;
 
-// Unknown g_Entities[8] accessed in a SEL function
+// Unknown g_Entities[8] and [1] accessed directly in SEL
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 : 16;
     /* 0x8C */ s32 unk8C;
-} ET_SelEnt8;
+} ET_UnkSelEnts;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -1661,7 +1662,7 @@ typedef union { // offset=0x7C
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
     ET_CavernDoor cavernDoor;
-    ET_SelEnt8 selEnt8;
+    ET_UnkSelEnts unkSelEnts;
     ET_ZombieSpawner zombieSpawner;
     ET_Skeleton skeleton;
     ET_NZ0_311C0 nz0311c0;
