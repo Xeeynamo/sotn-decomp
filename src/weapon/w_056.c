@@ -6,6 +6,7 @@ extern s32 g_HandId;
 #include "shared.h"
 #include "w_056_1.h"
 #include "w_056_2.h"
+#include "w_053_056.h"
 #define g_Animset w_056_1
 #define g_Animset2 w_056_2
 
@@ -175,7 +176,186 @@ void EntityWeaponAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_ptr_80170004);
+extern s16 D_18C000_8017AFA4[];
+extern s16 D_18C000_8017AFB8[];
+extern W053_056Config D_18C000_8017AFCC[];
+
+s32 func_ptr_80170004(Entity* self) {
+    Primitive* prim;
+    W053_056Config* config;
+    s16 angle;
+    s32 shift;
+    s16 x, y;
+    s16 lifetime;
+    s32 clut;
+    u8 u, v;
+    u16 params;
+
+    u32 factory;
+
+    params = (self->params >> 8) & 0x7F;
+
+    if (g_HandId != 0) {
+        v = 0x80;
+        clut = 0x18;
+    } else {
+        clut = 0;
+        v = 0;
+    }
+
+    config = &D_18C000_8017AFCC[params];
+
+    if (self->step == 0) {
+        self->facingLeft = PLAYER.facingLeft;
+        self->ext.weapon.unk82 = 20;
+        if (self->facingLeft != 0) {
+            self->ext.weapon.unk82 = -20;
+        }
+        self->ext.weapon.unk80 = -5;
+        if (g_Player.unk0C & 0x20) {
+            self->ext.weapon.unk80 = 11;
+        }
+        self->posX.i.hi += self->ext.weapon.unk82;
+        self->posY.i.hi += self->ext.weapon.unk80;
+
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+
+        if (self->primIndex != -1) {
+            prim = &g_PrimBuf[self->primIndex];
+
+            if (config->uFlag != 0) {
+                prim->u0 = prim->u2 = 0xC0;
+                prim->u1 = prim->u3 = 0x80;
+            } else {
+                prim->u0 = prim->u2 = 0x80;
+                prim->u1 = prim->u3 = 0xC0;
+            }
+
+            if (config->vFlag != 0) {
+                prim->v1 = v | 0x40;
+                prim->v0 = v | 0x40;
+                prim->v3 = v;
+                prim->v2 = v;
+            } else {
+                prim->v1 = v;
+                prim->v0 = v;
+                prim->v3 = v | 0x40;
+                prim->v2 = v | 0x40;
+            }
+
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = config->r;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = config->g;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = config->b;
+
+            prim->tpage = 0x19;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+
+            if ((params == 0) || (params == 0xA) || (params == 0x14) ||
+                (params == 0x1E) || (params > 0x27 && params <= 0x31)) {
+                self->ext.weapon.equipId =
+                    self->ext.weapon.parent->ext.weapon.equipId;
+                SetWeaponProperties(self, 0);
+                self->enemyId = self->ext.weapon.parent->enemyId;
+                self->hitboxWidth = 30;
+                self->hitboxHeight = 32;
+            }
+
+            if ((params & 3) == 0) {
+                g_api.PlaySfx(SFX_WEAPON_SWISH_C);
+            }
+            self->rotZ = config->rotZ;
+            self->ext.weapon.lifetime = config->lifetime;
+            self->ext.weapon.unk7E = 0;
+            self->step++;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+    }
+
+    if ((params == 0) || (params == 0xA) || (params == 0x14) ||
+        (params == 0x1E) || (params == 0x28)) {
+        factory = params + 1;
+        factory = ((g_HandId + 1) << 0xC) + 0x38 +
+                  ((self->ext.weapon.unk7E + (factory)) << 0x10);
+        g_api.CreateEntFactoryFromEntity(self, factory, 0);
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    if (config->clutFlag != 0) {
+        prim->clut = clut + D_18C000_8017AFB8[self->ext.weapon.unk7E];
+    } else {
+        prim->clut = clut + D_18C000_8017AFA4[self->ext.weapon.unk7E];
+    }
+
+    self->ext.weapon.unk7E++;
+    if (self->ext.weapon.unk7E >= 9) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (params >= 0x1E && params < 0x32) {
+        self->hitboxOffX = 0x12;
+    } else {
+        self->ext.weapon.unk82 = 0x26;
+        if (self->facingLeft) {
+            self->ext.weapon.unk82 = -0x26;
+        }
+        self->ext.weapon.unk80 = -5;
+        if (g_Player.unk0C & 0x20) {
+            self->ext.weapon.unk80 = 0xB;
+        }
+        self->posX.i.hi = self->ext.weapon.unk82 + PLAYER.posX.i.hi;
+        self->posY.i.hi = self->ext.weapon.unk80 + PLAYER.posY.i.hi;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    lifetime = self->ext.weapon.lifetime;
+    angle = self->rotZ;
+    // this may seem silly, however the right shift
+    // for assigning `prim->y`_X_ on PSX uses `srav`
+    // and this ensures 8 gets put into a register.
+    // the shifts used to compute the value for `x`_X_
+    // also shift by 8, but that is done with `sra`
+    // which uses the immediate value. 🤦
+    shift = 8;
+
+    angle += 1536;
+    if (self->facingLeft) {
+        prim->x0 = x - (((rcos(angle) >> 4) * lifetime) >> 8);
+    } else {
+        prim->x0 = x + (((rcos(angle) >> 4) * lifetime) >> 8);
+    }
+    prim->y0 = y - (((rsin(angle) >> 4) * lifetime) >> shift);
+
+    angle -= 1024;
+    if (self->facingLeft) {
+        prim->x1 = x - (((rcos(angle) >> 4) * lifetime) >> 8);
+    } else {
+        prim->x1 = x + (((rcos(angle) >> 4) * lifetime) >> 8);
+    }
+    prim->y1 = y - (((rsin(angle) >> 4) * lifetime) >> shift);
+
+    angle -= 2048;
+    if (self->facingLeft) {
+        prim->x2 = x - (((rcos(angle) >> 4) * lifetime) >> 8);
+    } else {
+        prim->x2 = x + (((rcos(angle) >> 4) * lifetime) >> 8);
+    }
+    prim->y2 = y - (((rsin(angle) >> 4) * lifetime) >> shift);
+
+    angle += 1024;
+    if (self->facingLeft) {
+        prim->x3 = x - (((rcos(angle) >> 4) * lifetime) >> 8);
+    } else {
+        prim->x3 = x + (((rcos(angle) >> 4) * lifetime) >> 8);
+    }
+    prim->y3 = y - (((rsin(angle) >> 4) * lifetime) >> shift);
+}
 
 static void func_ptr_80170008(Entity* self) {}
 
