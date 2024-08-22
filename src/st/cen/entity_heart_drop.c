@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 // Bizarre variable - u16 here, but u8 in EntityHolyGlassesCutscene
 extern u16 D_801805D8[];

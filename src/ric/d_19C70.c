@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
 s16 D_80155C70[] = {0x8139, 0x813A, 0x813B, 0x0000};

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
 s32 D_80155EE0[] = {0x00000F80, 0x00000100, 0x00000700, 0x00000880};

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
 u8 D_80154C40[] = {0x30, 0x3F, 0x20, 0x2F, 0x10, 0x1E, 0x10, 0x3F,
