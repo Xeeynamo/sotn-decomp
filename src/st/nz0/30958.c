@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 /*
  * File: 394D4.c
  * Overlay: NZ0

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef HARD_LINK
 void DestroyEntity(Entity* entity) {
     s32 i;

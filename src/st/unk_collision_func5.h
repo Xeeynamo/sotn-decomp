@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 bool UnkCollisionFunc5(Point16* unk) {
     Collider collider;
 

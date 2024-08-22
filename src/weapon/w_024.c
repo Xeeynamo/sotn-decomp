@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #24. Used by weapons:
 // Dark shield, Unknown#208
 #include "weapon_private.h"

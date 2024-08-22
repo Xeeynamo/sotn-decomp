@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "stage.h"
 
 #ifndef CASTLE_FLAG_BANK

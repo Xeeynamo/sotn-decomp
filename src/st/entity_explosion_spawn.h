@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef STAGE_LOADER_H
 #define STAGE_LOADER_H
 

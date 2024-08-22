@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #6. Used by weapons:
 // Moon rod, Unknown#172
 #define FUNC_04_VOID

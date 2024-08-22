@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 extern u16 g_eUnk14SpawnRots[];
 
 void EntityUnkId14Spawner(

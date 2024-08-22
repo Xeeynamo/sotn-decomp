@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "ric.h"
 
 Entity* RicGetFreeEntity(s16 start, s16 end);

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #33. Used by weapons:
 // Nunchaku
 #include "weapon_private.h"

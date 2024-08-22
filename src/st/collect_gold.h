@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 extern u32 c_GoldPrizes[];
 extern const char* g_goldCollectTexts[];
 

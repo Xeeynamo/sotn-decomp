@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef HARD_LINK
 void DestroyEntitiesFromIndex(s16 index) {
     Entity* entity = &g_Entities[index];

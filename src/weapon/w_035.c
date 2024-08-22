@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #35. Used by weapons:
 // Red Rust
 #include "weapon_private.h"

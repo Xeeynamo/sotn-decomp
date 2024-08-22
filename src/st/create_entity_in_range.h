@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void CreateEntityWhenInVerticalRange(LayoutEntity* obj) {
     s16 yClose;
     s16 yFar;

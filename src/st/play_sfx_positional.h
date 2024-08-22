@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void PlaySfxPositional(s16 sfxId) {
     s32 posX;
     s32 posY;

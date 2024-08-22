@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "np3.h"
 
 static u16 func_801C4144(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {

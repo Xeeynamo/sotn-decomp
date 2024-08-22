@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #40. Used by weapons:
 // Monster vial 1
 #include "weapon_private.h"

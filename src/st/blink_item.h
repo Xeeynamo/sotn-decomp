@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "game.h"
 
 void BlinkItem(Entity* self, u16 renderFlags) {

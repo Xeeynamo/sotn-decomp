@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #25. Used by weapons:
 // Goddess shield, Unknown#209
 #include "weapon_private.h"

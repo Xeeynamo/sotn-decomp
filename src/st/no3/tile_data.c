@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include <stage.h>
 
 #include "tilemap_18838.h"

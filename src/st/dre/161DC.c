@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "dre.h"
 
 void func_801961DC(s16 arg0) {

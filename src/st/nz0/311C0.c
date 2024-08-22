@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "nz0.h"
 
 // bust with red eyes that can have a candle on it

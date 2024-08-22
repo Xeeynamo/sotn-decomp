@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "mad.h"
 
 // BSS START size = 0x16

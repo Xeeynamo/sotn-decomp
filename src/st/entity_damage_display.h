@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 extern u16 g_eDamageDisplayInit[];
 extern u16 g_eDamageDisplayClut[];
 

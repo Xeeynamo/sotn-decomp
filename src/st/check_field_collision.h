@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
     Collider collider;
     s32 velocityX;

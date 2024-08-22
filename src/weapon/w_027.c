@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #27. Used by weapons:
 // Medusa shield, Unknown#211
 #include "weapon_private.h"

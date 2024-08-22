@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "weapon.h"
 #include "pc.h"
 #include <string.h>

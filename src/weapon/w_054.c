@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #54. Used by weapons:
 // Gurthang, Unknown#195
 #include "weapon_private.h"

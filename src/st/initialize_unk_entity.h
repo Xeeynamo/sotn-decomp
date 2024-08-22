@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 extern u8 g_UnkEntityAnimData[];
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {

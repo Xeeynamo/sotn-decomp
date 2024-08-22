@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     Tilemap* tilemap;
 

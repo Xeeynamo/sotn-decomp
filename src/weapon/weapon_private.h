@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef WEAPON_PRIVATE_H
 #define WEAPON_PRIVATE_H
 

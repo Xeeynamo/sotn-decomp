@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #10. Used by weapons:
 // Iron shield, Unknown#205
 #include "weapon_private.h"

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "nz0.h"
 
 static s16 D_80181978[] = {

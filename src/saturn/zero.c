@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "zero.h"
 #include "inc_asm.h"
 #include "sattypes.h"

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef SATURN_TYPES_H
 #define SATURN_TYPES_H
 

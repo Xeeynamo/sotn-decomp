@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #11. Used by weapons:
 // AxeLord shield, Unknown#206
 #include "weapon_private.h"

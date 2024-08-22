@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #9. Used by weapons:
 // Knight shield, Unknown#204
 #include "weapon_private.h"

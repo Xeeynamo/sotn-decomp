@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #51. Used by weapons:
 // Estoc, Claymore, Flamberge, Zwei hander, Obsidian sword, Great Sword,
 // Unknown#182, Unknown#183, Unknown#184, Unknown#185

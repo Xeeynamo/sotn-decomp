@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #13. Used by weapons:
 // Heaven sword, Unknown#202
 // #202 seems to be the special attack with two heaven swords.

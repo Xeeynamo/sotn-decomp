@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.

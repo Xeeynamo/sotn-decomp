@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "../wrp/wrp.h"
 
 extern void* D_801801B8[];

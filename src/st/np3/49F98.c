@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 /*
  * Overlay: NP3
  * Enemy: Bloody Zombie

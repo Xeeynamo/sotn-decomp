@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #32. Used by weapons:
 // Combat knife, Unknown#175
 #include "weapon_private.h"

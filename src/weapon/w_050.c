@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #50. Used by weapons:
 // Icebrand, Unknown#181, Unknown#199, Unknown#200, Unknown#201
 #include "weapon_private.h"

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #53. Used by weapons:
 // Katana, Osafune katana, Masamune, Yasutsuna, Unknown#189, Unknown#192,
 // Unknown#193, Unknown#194

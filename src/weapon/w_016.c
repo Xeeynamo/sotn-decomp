@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #16. Used by weapons:
 // Bwaka knife, Boomerang, Javelin, Fire boomerang, Iron ball
 #include "weapon_private.h"

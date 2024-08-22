@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 typedef enum ItemSlots {
     LEFT_HAND_SLOT,
     RIGHT_HAND_SLOT,

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 /*
  * Overlay: ST0
  * Description: Cutscene of Richter talking to Dracula

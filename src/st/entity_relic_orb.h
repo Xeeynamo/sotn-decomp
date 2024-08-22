@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "stage.h"
 
 const char* g_RelicOrbTexts[] = {

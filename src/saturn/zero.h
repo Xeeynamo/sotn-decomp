@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef ZERO_BIN_H
 #define ZERO_BIN_H
 #include "sattypes.h"

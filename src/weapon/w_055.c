@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #55. Used by weapons:
 // Holy sword, Unknown#196
 #include "weapon_private.h"

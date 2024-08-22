@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include <game.h>
 
 u8 D_800C4CEC[] = {

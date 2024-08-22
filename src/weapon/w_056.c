@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #56. Used by weapons:
 // Muramasa
 #include "weapon_private.h"

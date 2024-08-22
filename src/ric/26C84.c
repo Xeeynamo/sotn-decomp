@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "ric.h"
 
 // same as DRA/func_8011BD48

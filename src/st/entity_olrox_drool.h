@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Purpose is not 100% clear. Creates a falling blue droplet that sizzles after
 // hitting the ground. In existing overlays, this entity is not used. But looks
 // like Olrox's drool, so using that until we find any other uses.

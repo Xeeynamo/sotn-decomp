@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 
 #ifndef SCR_H
 #define SCR_H

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "nz0.h"
 
 // This file consists of EntityMariaCutscene, and all the functions it calls.

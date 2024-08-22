@@ -1,5 +1,4 @@
-
-
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef SYS_H
 #define SYS_H
 

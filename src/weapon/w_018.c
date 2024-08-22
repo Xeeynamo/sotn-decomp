@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #18. Used by weapons:
 // Power of Sire
 #include "weapon_private.h"

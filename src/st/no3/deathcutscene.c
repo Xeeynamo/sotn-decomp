@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "no3.h"
 
 void func_801BE544(void) {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include <types.h>
 
 // A struct which describes variations of Weapon #53 and #56

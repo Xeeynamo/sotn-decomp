@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 
 #ifndef DEF_H
 #define DEF_H

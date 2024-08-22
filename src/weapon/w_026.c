@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #26. Used by weapons:
 // Shaman shield, Unknown#210
 #include "weapon_private.h"

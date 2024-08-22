@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // something is off with the headers in this target
 #include "../../include/common.h"
 #include "../../include/psxsdk/libgpu.h"

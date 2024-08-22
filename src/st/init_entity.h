@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void InitializeEntity(u16 arg0[]) {
     u16 enemyId;
     EnemyDef* enemyDef;

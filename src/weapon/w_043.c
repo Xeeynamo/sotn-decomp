@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #43. Used by weapons:
 // Alucard sword, Sword Familiar, Alucart sword, Unknown#197
 #include "weapon_private.h"

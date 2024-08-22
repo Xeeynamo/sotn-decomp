@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void MakeExplosions(void) {
     s32 temp_s3;
     s8 temp_s4;

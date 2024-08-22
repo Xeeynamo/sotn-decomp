@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "types.h"
 
 const u8 D_8018D4F0[8] = {

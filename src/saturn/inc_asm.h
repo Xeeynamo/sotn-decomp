@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef INCLUDE_ASM_H
 #define INCLUDE_ASM_H
 

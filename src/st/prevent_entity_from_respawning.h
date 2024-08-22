@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
         u16 index = entity->entityRoomIndex - 1 >> 5;

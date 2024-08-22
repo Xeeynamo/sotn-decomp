@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 /*
  * Creates entities between the previous horizontal position and
  * the passed in x position toward the right.

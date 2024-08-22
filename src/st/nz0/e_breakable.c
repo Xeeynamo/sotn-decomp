@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "nz0.h"
 
 static u8 D_80180DE4[] = {4, 1, 4, 2, 0, 0, 0, 0};

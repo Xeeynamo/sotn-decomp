@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void EntityEnemyBlood(Entity* self) {
     const int NParticles = 12;
     FakePrim* prim;

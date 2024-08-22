@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 params;
 

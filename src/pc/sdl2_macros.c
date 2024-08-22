@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include <game.h>
 #ifdef _MSC_VER
 #define SDL_MAIN_HANDLED

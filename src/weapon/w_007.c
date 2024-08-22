@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #7. Used by weapons:
 // Shield rod, Unknown#173
 #define FUNC_04_VOID

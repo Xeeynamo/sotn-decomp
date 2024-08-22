@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 extern s32 unk14_yVel[];
 extern u8 unk14_startFrame[];
 extern u16 unk14_lifetime[];

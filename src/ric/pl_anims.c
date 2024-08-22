@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "ric.h"
 
 AnimationFrame* D_8015538C[] = {ric_anim_stand, ric_anim_stand};

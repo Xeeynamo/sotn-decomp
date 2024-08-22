@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #52. Used by weapons:
 // Alucard shield, Unknown#214
 #include "weapon_private.h"

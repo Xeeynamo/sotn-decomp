@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "../wrp/wrp.h"
 
 u16 g_eBreakableInit[] = {

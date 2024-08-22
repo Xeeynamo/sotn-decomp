@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;

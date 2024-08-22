@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #38. Used by weapons:
 // Rapier, Unknown#191
 #include "weapon_private.h"

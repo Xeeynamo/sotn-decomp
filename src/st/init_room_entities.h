@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 /*
  * Sets up layout arrays and initializes stage state to
  * initial values.

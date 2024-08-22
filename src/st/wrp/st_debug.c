@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "wrp.h"
 
 static u8 g_EntityUnkId12Hitbox[] = {

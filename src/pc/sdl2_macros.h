@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef MACRO_H
 #define MACRO_H
 #include "game.h"

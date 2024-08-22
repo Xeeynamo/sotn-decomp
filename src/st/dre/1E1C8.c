@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "dre.h"
 
 #include "../check_coll_offsets.h"

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #46. Used by weapons:
 // Holbein dagger, Blue knuckles
 #include "weapon_private.h"

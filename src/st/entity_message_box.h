@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 
 // params: message box duration
 // ext.messageBox.label: box size and text to render

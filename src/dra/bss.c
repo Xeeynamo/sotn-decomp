@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include <game.h>
 #include <psxsdk/libsnd.h>
 #include "disk.h"

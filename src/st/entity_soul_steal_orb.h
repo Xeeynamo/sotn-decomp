@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {

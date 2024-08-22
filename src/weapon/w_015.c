@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Weapon ID #15. Used by weapons:
 // Shuriken, Cross shuriken, Buffalo star, Flame star, TNT
 #include "weapon_private.h"

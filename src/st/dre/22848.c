@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 #include "dre.h"
 
 extern SVECTOR* D_80181544[][3];
