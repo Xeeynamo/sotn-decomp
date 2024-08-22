@@ -12,9 +12,6 @@ typedef struct {
     s16 unk14;
 } unkstr_801C06B0;
 
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
-MATRIX* RotMatrixYXZ(SVECTOR* r, MATRIX* m); /* extern */
-extern u16 D_801805D4[];
 extern SVECTOR D_80182690;
 extern SVECTOR D_80182698;
 extern SVECTOR D_801826A0;
