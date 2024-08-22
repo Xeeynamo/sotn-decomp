@@ -16,6 +16,12 @@ typedef enum {
     SKELETON_DESTROY
 } SKELETON_STEPS;
 
+typedef enum {
+    SKELETON_JUMPING,
+    SKELETON_IN_AIR,
+    SKELETON_LAND
+} SkeletonJumpSubSteps;
+
 static u8 anim_walk[] = {0x06, 0x01, 0x04, 0x02, 0x04, 0x03, 0x06,
                          0x04, 0x05, 0x05, 0x05, 0x06, 0x00};
 static u8 anim_walk_backwards[] = {0x06, 0x01, 0x05, 0x06, 0x05, 0x05, 0x06,
@@ -141,7 +147,7 @@ void EntitySkeleton(Entity* self) {
         break;
     case SKELETON_JUMP:
         switch (self->step_s) {
-        case 0:
+        case SKELETON_JUMPING:
             if (!(AnimateEntity(anim_jump1, self) & 1)) {
                 u8 facing_ = self->ext.skeleton.facingLeft;
                 s32 facing;
@@ -165,13 +171,13 @@ void EntitySkeleton(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 1:
+        case SKELETON_IN_AIR:
             if (UnkCollisionFunc3(sensors_ground) != 0) {
                 self->step_s++;
             }
             CheckFieldCollision(sensors_move, 2);
             break;
-        case 2:
+        case SKELETON_LAND:
             if (AnimateEntity(anim_jump2, self) & 1) {
                 self->step_s = 0;
                 SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
