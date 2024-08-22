@@ -203,6 +203,20 @@ typedef struct PACKED {
     /* 0xAE */ s16 equipId;
 } ET_Weapon;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s32 unk84;
+    s32 unk88;
+    byte pad[32];
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
+} ET_WeaponUnk006;
+
 typedef struct PACKED {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
@@ -1554,6 +1568,7 @@ typedef union { // offset=0x7C
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
+    ET_WeaponUnk006 weapon_006;
     ET_WeaponUnk012 weapon_012;
     ET_WeaponUnk030 weapon_030;
     ET_WeaponUnk046 weapon_046;
@@ -1653,7 +1668,9 @@ typedef union { // offset=0x7C
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk006, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk012, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk030, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk046, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_KarmaCoin, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Sword, anim));
