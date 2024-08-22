@@ -1499,14 +1499,14 @@ typedef struct {
     /* 0x81 */ s32 : 24;
     /* 0x84 */ u8 attackTimerIndex;
     /* 0x85 */ s32 : 24;
-    /* 0x88 */ u8 explosionTimer;
+    /* 0x88 */ s8 explosionTimer;
     /* 0x89 */ s32 : 24;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 initialX;
-} ET_BoneScimitar;
+} ET_Skeleton;
 
 // Common EXT member for all of NZ0/311C0.c file.
 typedef struct {
@@ -1648,7 +1648,7 @@ typedef union { // offset=0x7C
     ET_CavernDoor cavernDoor;
     ET_SelEnt8 selEnt8;
     ET_ZombieSpawner zombieSpawner;
-    ET_BoneScimitar boneScimitar;
+    ET_Skeleton skeleton;
     ET_NZ0_311C0 nz0311c0;
 } Ext;
 
