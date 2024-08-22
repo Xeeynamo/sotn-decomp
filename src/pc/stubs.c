@@ -99,6 +99,7 @@ char D_80097902[] = "dummy";
 s32 g_EquippedWeaponIds[2] = {0};
 u8 g_SaveName[12];
 Tilemap g_Tilemap;
+BgLayer g_BgLayers[MAX_BG_LAYER_COUNT];
 u8 g_CastleMap[0x800];
 u8 g_saveIcon0[0x180];
 u8 g_saveIcon1[0x180];

@@ -1639,7 +1639,6 @@ typedef struct {
     /* 800730CC */ s32 height;
     /* 800730D0 */ s32 unk30;
     /* 800730D4 */ s32 D_800730D4;
-    /* 800730D8 */ BgLayer bg[MAX_BG_LAYER_COUNT];
 } Tilemap;
 
 typedef struct {
@@ -1833,6 +1832,9 @@ extern Event g_EvSwCardNew; // 80073078
 extern s32 g_PrevScrollY;
 extern s32 D_80073080;
 extern Tilemap g_Tilemap;
+// this was previously g_Tilemap.bg, but func_801BD8F0 showed that it is a
+// separate symbol.
+extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;

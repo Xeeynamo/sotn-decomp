@@ -1118,8 +1118,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         tileLayoutPtr = &D_80181144;
         tilePos = 0x1F1;
         for (i = 0; i < 3; i++) {
-            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
+            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -1217,8 +1217,8 @@ void EntityMermanRockRightSide(Entity* self) {
         tileLayoutPtr = &D_80181180;
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++) {
-            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
+            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -1323,7 +1323,7 @@ void func_801B5488(Entity* self) {
         for (tileLayoutPtr = &D_801811E6, i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
-                g_Tilemap.bg[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                g_BgLayers[0].layout[tileLayoutPos] = *tileLayoutPtr;
                 tileLayoutPos += 0x30;
             }
         }

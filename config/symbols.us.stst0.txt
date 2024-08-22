@@ -47,7 +47,6 @@ EntityDraculaFinalForm = 0x801ADD60;
 EntityDraculaMegaFireball = 0x801AEFD8;
 EntityDraculaRainAttack = 0x801AF154;
 PrologueScroll = 0x801B0464;
-Random = 0x801B186C;
 EntityDamageDisplay = 0x801B2A3C;
 CreateEntityFromCurrentEntity = 0x801B3B68;
 EntityRedDoor = 0x801B3CD0;
