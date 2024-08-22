@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * Scans `g_LayoutObjVertical` looking for the next element with
  * an x  position to the right of the provided argument or the end

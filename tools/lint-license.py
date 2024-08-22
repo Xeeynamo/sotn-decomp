@@ -1,7 +1,7 @@
 import sys
 
 
-def add_spdx_license(file_path, license):  # AGPL-3.0-only
+def add_spdx_license(file_path, license):  # AGPL-3.0-or-later
     spdx_line = f"// SPDX-License-Identifier: {license}"
     try:
         with open(file_path, "r") as file:

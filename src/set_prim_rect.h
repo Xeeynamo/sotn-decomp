@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->x0 = x;
     poly->y0 = y;

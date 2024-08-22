@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #30. Used by weapons:
 // Sword of Dawn, Unknown#177
 #include "weapon_private.h"

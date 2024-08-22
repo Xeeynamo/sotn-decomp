@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #57. Used by weapons:
 // Mablung Sword
 #include "weapon_private.h"

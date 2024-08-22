@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * Returns the player's side position relative to g_CurrentEntity
  * 0 = Player is on the right side

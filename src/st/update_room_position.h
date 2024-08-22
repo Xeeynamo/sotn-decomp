@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * Creates any new entities that may need to be created
  * based on a change in the scroll delta.

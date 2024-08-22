@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_InitializeEntityData0);

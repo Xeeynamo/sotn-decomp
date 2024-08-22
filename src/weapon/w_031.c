@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #31. Used by weapons:
 // Basilard, Unknown#174
 #include "weapon_private.h"

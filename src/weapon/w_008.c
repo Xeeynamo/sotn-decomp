@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #8. Used by weapons:
 // Leather shield, Unknown#203
 #define SHIELDSPELL_S32

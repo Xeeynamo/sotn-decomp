@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // This function checks if the player collides with the specified entity
 // and from which direction.
 // w and h holds the collider size of the entity

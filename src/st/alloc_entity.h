@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 

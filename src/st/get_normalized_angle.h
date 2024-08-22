@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     u16 temp_a2;
     u16 var_v0;

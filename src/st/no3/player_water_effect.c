@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
 static u16 func_801D0A2C(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef ST_PRIVATE_H
 #define ST_PRIVATE_H
 

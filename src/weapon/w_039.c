@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #39. Used by weapons:
 // Were Bane, Unknown#190
 #include "weapon_private.h"

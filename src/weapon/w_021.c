@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #21. Used by weapons:
 // Orange, Apple, Banana, Grapes, Strawberry, Pineapple, Peanuts, Toadstool,
 // Shiitake, Cheesecake, Shortcake, Tart, Parfait, Pudding, Ice cream,

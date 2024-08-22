@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #1. Used by weapons:
 // Knuckle duster, Jewel knuckles, Iron Fist, Fist of Tulkas, Unknown#186,
 // Unknown#187, Unknown#188

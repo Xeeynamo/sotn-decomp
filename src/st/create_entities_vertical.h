@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * Creates entities between the previous vertical position and
  * the passed in y position going up.

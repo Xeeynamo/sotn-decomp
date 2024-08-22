@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #17. Used by weapons:
 // Pentagram, Bat Pentagram
 #include "weapon_private.h"

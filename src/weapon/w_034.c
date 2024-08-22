@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-only
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #34. Used by weapons:
 // Shotel, Unknown#176
 #include "weapon_private.h"
