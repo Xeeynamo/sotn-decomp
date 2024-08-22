@@ -194,10 +194,21 @@ void func_801BD8F0(Entity* self) {
     case 6:
         SetGeomScreen(0x80);
         SetGeomOffset(0x80, 0x80);
+        #ifndef VERSION_PC
         sp38 = (MATRIX*)SPAD(0);
         sp40 = (SVECTOR*)SPAD(8);
         sp3c = (VECTOR*)SPAD(10);
         sp34 = (SVECTOR*)SPAD(14);
+        #else
+        MATRIX sp38_;
+        SVECTOR sp40_;
+        VECTOR sp3c_;
+        SVECTOR sp34_;
+        sp38 = &sp38_;
+        sp40 = &sp40_;
+        sp3c = &sp3c_;
+        sp34 = &sp34_;
+        #endif
         sp34[0] = D_80182690;
         sp34[1] = D_80182698;
         sp34[2] = D_801826A0;
