@@ -248,13 +248,13 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
                 break;
             }
-            e->ext.selEnt8.unk8C = 0x80;
+            e->ext.unkSelEnts.unk8C = 0x80;
             e->step++;
             break;
 
         case 4:
-            e->ext.selEnt8.unk8C--;
-            if (e->ext.selEnt8.unk8C == 0) {
+            e->ext.unkSelEnts.unk8C--;
+            if (e->ext.unkSelEnts.unk8C == 0) {
                 D_801BC3E8 |= 1;
                 e->step++;
             }

@@ -490,9 +490,9 @@ void func_801B519C(void) {
     case 1:
         y = 0xA2;
         prim = self->ext.prim;
-        angle = self->ext.generic.unk88.unk + 0x40;
+        angle = self->ext.unkSelEnts.unk88 + 0x40;
         angle2 = angle;
-        self->ext.generic.unk88.S16.unk0 = angle2;
+        self->ext.unkSelEnts.unk88 = angle2;
         while (prim) {
             s16 xBase;
             s32 sin;
