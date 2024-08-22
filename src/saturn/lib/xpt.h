@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-only
 #ifndef XPT_H
 #define XPT_H
 typedef unsigned char Uint8;

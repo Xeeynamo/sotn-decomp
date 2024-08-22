@@ -177,7 +177,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd' | python3 ./tools/lint-license.py - AGPL-3.0-only
+	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-only
 	python3 ./tools/lint-license.py include/game.h AGPL-3.0-only
 	python3 ./tools/lint-license.py include/entity.h AGPL-3.0-only
 	python3 ./tools/lint-license.py include/items.h AGPL-3.0-only
