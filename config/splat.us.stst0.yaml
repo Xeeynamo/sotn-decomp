@@ -82,7 +82,7 @@ segments:
       - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, rodata]
       - [0x27D3C, .rodata, prim_helpers]
-      - [0x27D44, rodata]
+      - [0x27D44, .rodata, 3D8F0]
       - [0x27D64, c]
       - [0x28984, c, draculacutscene]
       - [0x2A218, c]

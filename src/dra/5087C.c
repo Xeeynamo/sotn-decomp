@@ -263,50 +263,50 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
 void func_800F0940(void) {
     s32 temp;
 
-    switch (g_Tilemap.bg[0].scrollKind) {
+    switch (g_BgLayers[0].scrollKind) {
     case 1:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
         return;
     case 2:
-        g_Tilemap.bg[0].scrollX.i.hi = (g_Tilemap.scrollX.i.hi / 2);
-        g_Tilemap.bg[0].scrollY.i.hi = (g_Tilemap.scrollY.i.hi / 2) + 0x76;
+        g_BgLayers[0].scrollX.i.hi = (g_Tilemap.scrollX.i.hi / 2);
+        g_BgLayers[0].scrollY.i.hi = (g_Tilemap.scrollY.i.hi / 2) + 0x76;
         return;
     case 3:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
         return;
     case 4:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
         if (g_StageId == STAGE_RCHI) {
-            g_Tilemap.bg[0].scrollY.i.hi += 0x80;
+            g_BgLayers[0].scrollY.i.hi += 0x80;
         }
         return;
     case 5:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
         if (g_StageId == STAGE_RDAI) {
-            g_Tilemap.bg[0].scrollX.i.hi += 0x80;
+            g_BgLayers[0].scrollX.i.hi += 0x80;
         }
         return;
     case 6:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
         temp = (g_Tilemap.scrollY.i.hi / 2 - ((g_Tilemap.vSize - 1) << 7)) +
-               (g_Tilemap.bg[0].h << 7);
-        g_Tilemap.bg[0].scrollY.i.hi = temp;
+               (g_BgLayers[0].h << 7);
+        g_BgLayers[0].scrollY.i.hi = temp;
         if (g_StageId == STAGE_RDAI) {
-            g_Tilemap.bg[0].scrollX.i.hi += 0x80;
-            g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
+            g_BgLayers[0].scrollX.i.hi += 0x80;
+            g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
         }
         return;
     case 7:
-        g_Tilemap.bg[0].scrollY.i.hi = 4;
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollY.i.hi = 4;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
         return;
     default:
-        g_Tilemap.bg[0].scrollX.i.hi = 0;
-        g_Tilemap.bg[0].scrollY.i.hi = 4;
+        g_BgLayers[0].scrollX.i.hi = 0;
+        g_BgLayers[0].scrollY.i.hi = 4;
         return;
     }
 }
@@ -503,8 +503,8 @@ void func_800F1424(void) {
     if (g_pads[1].tapped & PAD_L1) {
         g_Tilemap.flags ^= 1;
     }
-    if ((g_pads[1].tapped & PAD_L2) && (g_Tilemap.bg[0].tileDef != 0)) {
-        g_Tilemap.bg[0].flags ^= 1;
+    if ((g_pads[1].tapped & PAD_L2) && (g_BgLayers[0].tileDef != 0)) {
+        g_BgLayers[0].flags ^= 1;
     }
 }
 

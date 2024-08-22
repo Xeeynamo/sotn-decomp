@@ -13,6 +13,7 @@ D_8006ED4C          = 0x8006ED4C;
 
 g_Player            = 0x80072BD0;
 g_Tilemap           = 0x80073084;
+g_BgLayers          = 0x800730D8;
 g_Camera            = 0x8007308C;
 g_CurrentRoom       = 0x800730A0;
 

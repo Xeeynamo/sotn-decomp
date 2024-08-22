@@ -1198,8 +1198,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         tileLayoutPtr = &D_8018127C;
         tilePos = 0x1F1;
         for (i = 0; i < 3; i++) {
-            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
+            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -1297,8 +1297,8 @@ void EntityMermanRockRightSide(Entity* self) {
         tileLayoutPtr = &D_801812B8;
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++) {
-            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
+            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -1403,7 +1403,7 @@ void EntityUnkId26(Entity* self) {
         for (tileLayoutPtr = &D_8018131E, i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
-                g_Tilemap.bg[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                g_BgLayers[0].layout[tileLayoutPos] = *tileLayoutPtr;
                 tileLayoutPos += 0x30;
             }
         }
@@ -1688,7 +1688,7 @@ void EntityDeathSkySwirl(Entity* self) {
         prim->priority = 0x1F;
         prim->drawMode = DRAW_DEFAULT;
     }
-    g_Tilemap.bg[0].flags &= 0xFFFE;
+    g_BgLayers[0].flags &= 0xFFFE;
     self->ext.deathSkySwirl.unk84 -= 32;
     SetGeomScreen(256);
     SetGeomOffset(128, 192);

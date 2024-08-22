@@ -1286,7 +1286,7 @@ void HideAllBackgroundLayers(void) {
 
     g_Tilemap.flags = 0;
     for (i = 0; i < MAX_BG_LAYER_COUNT; i++) {
-        g_Tilemap.bg[i].flags = 0;
+        g_BgLayers[i].flags = 0;
     }
 }
 
@@ -1445,7 +1445,7 @@ void RenderTilemap(void) {
     }
 
     l = 0;
-    bg = g_Tilemap.bg;
+    bg = g_BgLayers;
     for (; l < MAX_BG_LAYER_COUNT; l++, bg++) {
         if (bg->hideTimer > 0) {
             bg->hideTimer--;
@@ -1590,16 +1590,16 @@ void SetRoomForegroundLayer(LayerDef* layerDef) {
 }
 
 void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef) {
-    g_Tilemap.bg[index].flags = 0;
-    g_Tilemap.bg[index].tileDef = layerDef->tileDef;
-    g_Tilemap.bg[index].layout = layerDef->layout;
-    if (g_Tilemap.bg[index].tileDef != 0) {
-        g_Tilemap.bg[index].order = layerDef->zPriority;
-        g_Tilemap.bg[index].flags = layerDef->flags;
-        g_Tilemap.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
-        g_Tilemap.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
-        g_Tilemap.bg[index].scrollKind = layerDef->rect.params;
-        g_Tilemap.bg[index].hideTimer = 1;
+    g_BgLayers[index].flags = 0;
+    g_BgLayers[index].tileDef = layerDef->tileDef;
+    g_BgLayers[index].layout = layerDef->layout;
+    if (g_BgLayers[index].tileDef != 0) {
+        g_BgLayers[index].order = layerDef->zPriority;
+        g_BgLayers[index].flags = layerDef->flags;
+        g_BgLayers[index].w = layerDef->rect.right - layerDef->rect.left + 1;
+        g_BgLayers[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
+        g_BgLayers[index].scrollKind = layerDef->rect.params;
+        g_BgLayers[index].hideTimer = 1;
     }
 }
 
@@ -1610,7 +1610,7 @@ void LoadRoomLayer(s32 layerIndex) {
     SetRoomBackgroundLayer(0, g_api.o.tileLayers[layerIndex].bg);
 
     for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
-        g_Tilemap.bg[i].flags = 0;
+        g_BgLayers[i].flags = 0;
     }
 }
 

@@ -158,6 +158,38 @@ extern long ratan2(long y, long x);
 #define gte_stsxy(r0)                                                          \
     __asm__ volatile("swc2	$14, 0( %0 )" : : "r"(r0) : "memory")
 
+#define gte_stsxy3_gt3(r0)                                                     \
+    __asm__ volatile(                                                          \
+        "swc2	$12, 8( %0 );"                                                   \
+        "swc2	$13, 20( %0 );"                                                  \
+        "swc2	$14, 32( %0 )"                                                   \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "memory")
+
+#define gte_ldv3c(r0)                                                          \
+    __asm__ volatile(                                                          \
+        "lwc2	$0, 0( %0 );"                                                    \
+        "lwc2	$1, 4( %0 );"                                                    \
+        "lwc2	$2, 8( %0 );"                                                    \
+        "lwc2	$3, 12( %0 );"                                                   \
+        "lwc2	$4, 16( %0 );"                                                   \
+        "lwc2	$5, 20( %0 )"                                                    \
+        :                                                                      \
+        : "r"(r0))
+
+#define gte_SetTransVector(r0)                                                 \
+    __asm__ volatile(                                                          \
+        "lw	$12, 0( %0 );"                                                     \
+        "lw	$13, 4( %0 );"                                                     \
+        "lw	$14, 8( %0 );"                                                     \
+        "ctc2	$12, $5;"                                                        \
+        "ctc2	$13, $6;"                                                        \
+        "ctc2	$14, $7"                                                         \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "$12", "$13", "$14")
+
 #define gte_SetGeomScreen(r0) __asm__ volatile("ctc2	%0, $26" : : "r"(r0))
 
 #else
