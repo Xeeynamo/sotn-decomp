@@ -471,8 +471,8 @@ void func_801641A0(Entity* entity) {
 // When the factory is made, unk5 loads into ext.factory.unk9A. This appears
 // to create a delay before the factory actually creates the child.
 // So 36, 37, 38, 39 create this entity with delay of 0, 4, 8, or 12 frames.
-// All 4 are used in func_8015B348. 36 alone (for instant child) is used
-// when Richter does an item crash without a subweapon, in func_8015D678.
+// All 4 are used in RicHandleDeadPrologue. 36 alone (for instant child) is used
+// when Richter does an item crash without a subweapon, in RicDoCrash.
 // Creates a large semi-transparent circle around Richter which shrinks inward.
 void EntityShrinkingPowerUpRing(Entity* self) {
     s16 selfX;
@@ -666,6 +666,7 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // RicHandleHit.
 void RicEntityHitByIce(Entity* self) {
+    const int PrimCount = LEN(D_80155244) / 3;
     s32 i;
     Primitive* prim;
     s16 angle;
@@ -688,7 +689,7 @@ void RicEntityHitByIce(Entity* self) {
     sp18 = ((g_Player.unk0C & 0x10000) == sp18);
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT3, 24);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT3, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -714,7 +715,7 @@ void RicEntityHitByIce(Entity* self) {
             self->ext.hitbyice.unk7E = 1;
         }
         if (PLAYER.velocityY != 0) {
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 self->rotZ = -0x100;
             } else {
                 self->rotZ = 0x100;
@@ -726,8 +727,8 @@ void RicEntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        if (PLAYER.step == 0x10) {
-            if (PLAYER.facingLeft == 0) {
+        if (PLAYER.step == PL_S_DEAD) {
+            if (!PLAYER.facingLeft) {
                 self->rotZ = -0x180;
             } else {
                 self->rotZ = 0x180;
@@ -742,45 +743,45 @@ void RicEntityHitByIce(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (PLAYER.step == 0x10) {
+        if (PLAYER.step == PL_S_DEAD) {
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->rotZ = -0x280;
                 } else {
                     self->rotZ = 0x280;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->rotZ = -0x380;
                 } else {
                     self->rotZ = 0x380;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->rotZ = -0x180;
                 } else {
                     self->rotZ = 0x180;
                 }
             }
         }
-        if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
+        if (self->ext.hitbyice.unk80 && !--self->ext.hitbyice.unk82) {
             sp18 = true;
         }
-        if ((self->ext.hitbyice.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
+        if ((self->ext.hitbyice.unk7E) && (g_Player.pl_vram_flag & 0xC)) {
             sp18 = true;
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            if (self->ext.hitbyice.unk80 != 0) {
+            if (self->ext.hitbyice.unk80) {
                 self->ext.hitbyice.unk7C = 0x80;
             }
             self->step++;
         }
         break;
     case 2:
-        if (--self->ext.hitbyice.unk7C == 0) {
+        if (!--self->ext.hitbyice.unk7C) {
             DestroyEntity(self);
             return;
         }
@@ -790,7 +791,7 @@ void RicEntityHitByIce(Entity* self) {
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 24; i++) {
+    for (i = 0; i < PrimCount; i++) {
         offset = D_80155244[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(

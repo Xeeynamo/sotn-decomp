@@ -1652,7 +1652,7 @@ void func_80127CC8(Entity* entity) {
 
         if (ret == -1) {
             DestroyEntity(entity);
-            g_Player.unk5C = 0xFFFF;
+            g_Player.unk5C = -1;
             return;
         }
 

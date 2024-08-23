@@ -425,7 +425,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     return;
 }
 
-// Entity ID #21. Blueprint 22. Called in func_8015B348.
+// Entity ID #21. Blueprint 22. Called in RicHandleDeadPrologue.
 // Creates the white column around Richter when he is revived in the Prologue.
 void EntityRichterRevivalColumn(Entity* self) {
     Primitive* prim;
@@ -580,8 +580,8 @@ void EntityCrossBoomerang(Entity* self) {
             return;
         }
         // Alternatively, if we're offscreen, we will also be destroyed.
-        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
-            (self->facingLeft != 0 && self->posX.i.hi >= 0x121)) {
+        if ((!self->facingLeft && self->posX.i.hi < -0x20) ||
+            (self->facingLeft && self->posX.i.hi >= 0x121)) {
             self->step = 7;
             self->ext.crossBoomerang.timer = 0x20;
             return;
@@ -978,7 +978,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 var_s0 = 0x560;
                 var_s1 = 0x2A0;
                 var_s2 = 0xAA0;
@@ -1189,7 +1189,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 var_s0 = 0x560;
                 var_s1 = 0x2A0;
                 var_s3 = 0xAA0;
@@ -1371,7 +1371,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
         selfY = self->posY.i.hi;
         offsetX = 12;
         offsetY = 8;
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             offsetX = -offsetX;
             offsetY = -offsetY;
         }
@@ -1416,7 +1416,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
         offsetX = 12;
-        if (self->facingLeft == 0) {
+        if (!self->facingLeft) {
             angle_a = 0x72E;
             angle_b = 0xD2;
             angle_c = 0x8D2;
@@ -1542,7 +1542,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
 
         facingLeft = PLAYER.facingLeft;
-        self->ext.reboundStone.stoneAngle = facingLeft == 0 ? 0xE80 : 0x980;
+        self->ext.reboundStone.stoneAngle = !facingLeft ? 0xE80 : 0x980;
         self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
 
         self->ext.reboundStone.lifeTimer = 0x40;

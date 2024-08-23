@@ -70,7 +70,7 @@ void RicEntityEntFactory(Entity* self) {
         case 3:
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step == 0xA) {
+            if (PLAYER.step == PL_S_HIT) {
                 self->entityId = 0;
                 return;
             }
@@ -339,7 +339,7 @@ void func_80160FC4(Entity* self) {
                 posX /= 2;
             }
         }
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             posX = -posX;
         }
         self->posX.i.hi += posX;

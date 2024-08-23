@@ -329,7 +329,7 @@ void EntityBiblePageBeam(Entity* self) {
             return;
         }
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             self->ext.et_8016E46C.unk7C = -16;
             self->ext.et_8016E46C.unk7E = -2;
         } else {
@@ -408,7 +408,7 @@ void EntityBiblePageBeam(Entity* self) {
         prim = prim->next;
     }
     halfwidth = self->ext.et_8016E46C.unk7E / 2;
-    hitboxOffX = self->facingLeft == 0 ? halfwidth : -halfwidth;
+    hitboxOffX = !self->facingLeft ? halfwidth : -halfwidth;
     self->hitboxOffX = hitboxOffX;
     self->hitboxWidth = abs(hitboxOffX);
     self->hitboxHeight = var_s7 - self->posY.i.hi;
@@ -2082,7 +2082,7 @@ void RicEntitySubwpnBible(Entity* self) {
         cosine = rcos(self->ext.et_BibleSubwpn.unk82);
         temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
         temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
         } else {
             temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;

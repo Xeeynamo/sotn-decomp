@@ -228,7 +228,7 @@ void RicEntityTeleport(Entity* self) {
 }
 
 // Entity #10, uses blueprint #10. Appears related to poisoning, due to call in
-// RicPrepareAttack
+// RicDoAttack
 void func_80166784(Entity* self) {
     byte stackpad[40];
     s32 sp38;
@@ -282,7 +282,7 @@ void func_80166784(Entity* self) {
         self->velocityX = 0;
         self->velocityY = 0;
         self->palette = 0x8148;
-        if (PLAYER.facingLeft == 0) {
+        if (!PLAYER.facingLeft) {
             self->ext.et_80166784.unk88 = playerUnk46;
         } else {
             self->ext.et_80166784.unk88 = 3;
@@ -327,20 +327,20 @@ void func_80166784(Entity* self) {
     if (lowerParams == 0) {
         if (self->step == 1) {
             if (PLAYER.step == PL_S_CROUCH) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     var_s3 = D_80155A40[var_s4];
                 } else {
                     var_s3 = D_80155A1C[var_s4].x;
                 }
                 var_s5 = D_80155A1C[var_s4].y;
             } else {
-                if (PLAYER.step == 0) {
-                    if (PLAYER.facingLeft == 0) {
+                if (PLAYER.step == PL_S_STAND) {
+                    if (!PLAYER.facingLeft) {
                         var_s3 = D_80155A08[var_s4];
                     } else {
                         var_s3 = D_801559E4[var_s4].x;
                     }
-                } else if (PLAYER.facingLeft == 0) {
+                } else if (!PLAYER.facingLeft) {
                     var_s3 = D_80155A78[var_s4];
                 } else {
                     var_s3 = D_80155A54[var_s4].x;
@@ -355,7 +355,7 @@ void func_80166784(Entity* self) {
                 var_s3 = D_801559AC[PLAYER.animFrameIdx].x;
                 var_s5 = D_801559AC[PLAYER.animFrameIdx].y;
             }
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 var_s3 = -var_s3;
             }
         }
@@ -479,7 +479,7 @@ void func_80166784(Entity* self) {
 
             self->ext.et_80166784.unk84 = 6;
             if (var_s4 == 0) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     xDiff = D_80155A08[0];
                 } else {
                     xDiff = D_801559E4[0].x;
@@ -596,7 +596,7 @@ void func_80166784(Entity* self) {
                 }
                 break;
             }
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 self->velocityX = -self->velocityX;
             }
             self->velocityX /= 2;
@@ -724,18 +724,18 @@ void func_8016779C(Entity* entity) {
     }
 
     if (PLAYER.step == PL_S_CROUCH) {
-        if (PLAYER.facingLeft != 0) {
+        if (PLAYER.facingLeft) {
             entity->animCurFrame = D_80155CCC[D_80175080];
         } else {
             entity->animCurFrame = D_80155CB8[D_80175080];
         }
     } else if (PLAYER.step == 0) {
-        if (PLAYER.facingLeft != 0) {
+        if (PLAYER.facingLeft) {
             entity->animCurFrame = D_80155CF4[D_80175080];
         } else {
             entity->animCurFrame = D_80155CE0[D_80175080];
         }
-    } else if (PLAYER.facingLeft != 0) {
+    } else if (PLAYER.facingLeft) {
         entity->animCurFrame = D_80155D1C[D_80175080];
     } else {
         entity->animCurFrame = D_80155D08[D_80175080];

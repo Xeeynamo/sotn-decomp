@@ -6,6 +6,23 @@ typedef enum {
     E_ENTITYFACTORY,
 } EntityIDs;
 
+#define GAME_OVER 0x80000
+#define NO_AFTERIMAGE 0x08000000
+
+#define CHECK_GROUND 1
+#define CHECK_FALL 4
+#define CHECK_FACING 8
+#define CHECK_JUMP 0x10
+#define CHECK_CRASH 0x40
+#define CHECK_80 0x80
+#define CHECK_GRAVITY_HIT 0x200
+#define CHECK_ATTACK 0x1000
+#define CHECK_CROUCH 0x2000
+#define CHECK_GRAVITY_FALL 0x8000
+#define CHECK_GRAVITY_JUMP 0x10000
+#define CHECK_GROUND_AFTER_HIT 0x20000
+#define CHECK_SLIDE 0x40000
+
 // Richter mostly uses the same steps as Alucard, or uses unused Alucard steps.
 // There are a couple steps that mean one thing for Alucard, and another for
 // Richter. This enum handles Richter's version of the ones that overlap.
@@ -15,30 +32,34 @@ enum RicSteps {
     PL_S_CROUCH,
     PL_S_FALL,
     PL_S_JUMP,
-    PL_S_5,
-    PL_S_6,
-    PL_S_7,
+    PL_S_5, // unused
+    PL_S_6, // unused
+    PL_S_7, // unused
     PL_S_HIGHJUMP,
-    PL_S_9,
+    PL_S_9, // unused
     PL_S_HIT,
-    PL_S_11,
+    PL_S_11, // unused
     PL_S_BOSS_GRAB,
-    PL_S_13,
-    PL_S_14,
-    PL_S_15,
+    PL_S_13, // unused
+    PL_S_14, // unused
+    PL_S_15, // unused
     PL_S_DEAD,
-    PL_S_17,
+    PL_S_17, // unused
     PL_S_STAND_IN_AIR,
     PL_S_FLAME_WHIP,
     PL_S_HYDROSTORM,
     PL_S_THROW_DAGGERS,
-    PL_S_22,
-    PL_S_23,
+    PL_S_DEAD_PROLOGUE,
+    PL_S_SLIDE,
     PL_S_BLADEDASH,
     PL_S_RUN,
-    PL_S_26,
+    PL_S_SLIDE_KICK,
     PL_S_SUBWPN_CRASH,
-
+    PL_S_28, // unused
+    PL_S_29, // unused
+    PL_S_30, // unused
+    PL_S_31, // unused
+    PL_S_INIT,
     PL_S_DEBUG = 0xF0,
 };
 
@@ -85,14 +106,14 @@ extern void RicHandleBladeDash(void);
 extern void RicSetStep(int step);
 void RicSetAnimation(AnimationFrame* anim);
 extern void RicDecelerateX(s32 speed);
-extern s32 RicCheckMovement(void);
+extern s32 RicCheckFacing(void);
 extern void RicSetSpeedX(s32 speed);
 extern void RicSetCrouch(s32 arg0, s32 velocityX);
 extern void RicSetStand(s32 velocityX);
 extern void RicSetWalk(s32);
 extern void RicSetRun(void);
-extern void func_8015CF08(void);
-extern bool func_8015DBB0(s32);
+extern void RicSetFall(void);
+extern bool RicCheckInput(s32 checks);
 static void DebugShowWaitInfo(const char* str);
 extern void func_8015F9F0(Entity* entity);
 extern void RicSetSubweaponParams(Entity*);
@@ -176,7 +197,7 @@ extern s16 D_80154574[];
 extern s16 D_80154594[];
 extern s32 D_8015459C;
 extern RECT D_801545A0;
-extern s16 D_801545A8;
+extern s16 g_DeadPrologueTimer;
 extern s16 D_801545AA;
 extern s16 D_801545AC;
 extern u8 D_801545B0[];

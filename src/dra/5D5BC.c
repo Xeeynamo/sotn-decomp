@@ -61,21 +61,21 @@ extern s32 D_80137968;
 extern PlayerHud g_PlayerHud;
 extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
 
-bool func_800FD5BC(DamageParam* arg0) {
-    if (arg0->damageKind != 5) {
-        if (arg0->damageKind >= 16) {
-            arg0->damageTaken = g_Status.hpMax / 8;
-        } else if (g_Status.hpMax >= (arg0->damageTaken * 20)) {
-            arg0->damageKind = 3;
+bool CalcPlayerDamage(DamageParam* damage) {
+    if (damage->damageKind != 5) {
+        if (damage->damageKind >= 16) {
+            damage->damageTaken = g_Status.hpMax / 8;
+        } else if (g_Status.hpMax >= (damage->damageTaken * 20)) {
+            damage->damageKind = 3;
         } else {
-            arg0->damageKind = 2;
+            damage->damageKind = 2;
         }
     }
-    if (g_Status.hp <= arg0->damageTaken) {
+    if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         return true;
     }
-    g_Status.hp -= arg0->damageTaken;
+    g_Status.hp -= damage->damageTaken;
     return false;
 }
 
