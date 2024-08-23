@@ -2126,4 +2126,3 @@ void RicEntitySubwpnBible(Entity* self) {
         }
     }
 }
-
