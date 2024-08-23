@@ -198,18 +198,6 @@ typedef struct {
 } FactoryBlueprint;
 
 typedef struct {
-    s16 xOffset;
-    s16 yOffset;
-    s32 velocityX;
-    s32 velocityY;
-    s16 timerInit;
-    s16 tpage;
-    s16 clut;
-    u8 uBase;
-    u8 vBase;
-} unkStr80154E5C; // size = 0x14
-
-typedef struct {
     s32 unk0;
     s16 unk4;
 } unkstr_800cfe48; // for EntityAlucard

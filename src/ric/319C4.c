@@ -6,6 +6,7 @@
 // subweapon 25. And subweapon 25 is the crash of subweapon 7.
 // And subweapon 7 is the rebound stone. This is an entity spawned from the
 // rebound stone crash.
+static s32 angles_80155EE0[] = {0x00000F80, 0x00000100, 0x00000700, 0x00000880};
 void func_8016D9C4(Entity* self) {
     Primitive* prim;
     PrimLineG2* primLine;
@@ -31,7 +32,7 @@ void func_8016D9C4(Entity* self) {
             primLine->y0 = primLine->y1 = PLAYER.posY.i.hi - 0x1C;
             primLine->r0 = primLine->g0 = primLine->b0 = 0x80;
             primLine->r1 = primLine->g1 = primLine->b1 = 0x70;
-            primLine->angle = D_80155EE0[i];
+            primLine->angle = angles_80155EE0[i];
             primLine->delay = 1;
             primLine = (PrimLineG2*)primLine->next;
         }
@@ -414,6 +415,7 @@ void EntityBiblePageBeam(Entity* self) {
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
+static s16 D_80155EF0[] = {0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155};
 void EntityBiblePage(Entity* self) {
     Primitive* prim;
     s16 temp_a1_3;
@@ -2125,9 +2127,118 @@ void RicEntitySubwpnBible(Entity* self) {
     }
 }
 
-static const SVECTOR D_80156C50 = {0x0000, 0x0000, 0x0000, 0x0000};
-static const SVECTOR D_80156C58 = {0xFFA0, 0x0000, 0x0000, 0x0000};
-
+static SVECTOR D_80155EFC = {-8, -72, -4, 0};
+static SVECTOR D_80155F04 = {8, -72, -4, 0};
+static SVECTOR D_80155F0C = {-48, -32, -4, 0};
+static SVECTOR D_80155F14 = {-8, -32, -4, 0};
+static SVECTOR D_80155F1C = {8, -32, -4, 0};
+static SVECTOR D_80155F24 = {48, -32, -4, 0};
+static SVECTOR D_80155F2C = {-48, -16, -4, 0};
+static SVECTOR D_80155F34 = {-8, -16, -4, 0};
+static SVECTOR D_80155F3C = {8, -16, -4, 0};
+static SVECTOR D_80155F44 = {48, -16, -4, 0};
+static SVECTOR D_80155F4C = {-8, 72, -4, 0};
+static SVECTOR D_80155F54 = {8, 72, -4, 0};
+static SVECTOR D_80155F5C = {-24, -48, -4, 0};
+static SVECTOR D_80155F64 = {-8, -48, -4, 0};
+static SVECTOR D_80155F6C = {8, -48, -4, 0};
+static SVECTOR D_80155F74 = {24, -48, -4, 0};
+static SVECTOR D_80155F7C = {-24, -32, -4, 0};
+static SVECTOR D_80155F84 = {24, -32, -4, 0};
+static SVECTOR D_80155F8C = {-24, -16, -4, 0};
+static SVECTOR D_80155F94 = {24, -16, -4, 0};
+static SVECTOR D_80155F9C = {-24, 0, -4, 0};
+static SVECTOR D_80155FA4 = {-8, 0, -4, 0};
+static SVECTOR D_80155FAC = {8, 0, -4, 0};
+static SVECTOR D_80155FB4 = {24, 0, -4, 0};
+static SVECTOR D_80155FBC = {-8, -72, 4, 0};
+static SVECTOR D_80155FC4 = {8, -72, 4, 0};
+static SVECTOR D_80155FCC = {-48, -32, 4, 0};
+static SVECTOR D_80155FD4 = {-8, -32, 4, 0};
+static SVECTOR D_80155FDC = {8, -32, 4, 0};
+static SVECTOR D_80155FE4 = {48, -32, 4, 0};
+static SVECTOR D_80155FEC = {-48, -16, 4, 0};
+static SVECTOR D_80155FF4 = {-8, -16, 4, 0};
+static SVECTOR D_80155FFC = {8, -16, 4, 0};
+static SVECTOR D_80156004 = {48, -16, 4, 0};
+static SVECTOR D_8015600C = {-8, 72, 4, 0};
+static SVECTOR D_80156014 = {8, 72, 4, 0};
+static SVECTOR D_8015601C = {-24, -48, 4, 0};
+static SVECTOR D_80156024 = {-8, -48, 4, 0};
+static SVECTOR D_8015602C = {8, -48, 4, 0};
+static SVECTOR D_80156034 = {24, -48, 4, 0};
+static SVECTOR D_8015603C = {-24, -32, 4, 0};
+static SVECTOR D_80156044 = {24, -32, 4, 0};
+static SVECTOR D_8015604C = {-24, -16, 4, 0};
+static SVECTOR D_80156054 = {24, -16, 4, 0};
+static SVECTOR D_8015605C = {-24, 0, 4, 0};
+static SVECTOR D_80156064 = {-8, 0, 4, 0};
+static SVECTOR D_8015606C = {8, 0, 4, 0};
+static SVECTOR D_80156074 = {24, 0, 4, 0};
+static SVECTOR* D_8015607C[][4] = {
+    &D_80155F14, &D_80155F1C, &D_80155F3C, &D_80155F34, &D_8015601C,
+    &D_80156024, &D_80155FD4, &D_8015603C, &D_8015602C, &D_80156034,
+    &D_80156044, &D_80155FDC, &D_8015604C, &D_80155FF4, &D_80156064,
+    &D_8015605C, &D_80155FFC, &D_80156054, &D_80156074, &D_8015606C,
+    &D_80155FD4, &D_80156024, &D_8015601C, &D_8015603C, &D_80156044,
+    &D_80156034, &D_8015602C, &D_80155FDC, &D_80156064, &D_80155FF4,
+    &D_8015604C, &D_8015605C, &D_80156074, &D_80156054, &D_80155FFC,
+    &D_8015606C, &D_80155FDC, &D_8015602C, &D_80156024, &D_80155FD4,
+    &D_80155FF4, &D_80155FD4, &D_8015603C, &D_8015604C, &D_80156054,
+    &D_80156044, &D_80155FDC, &D_80155FFC, &D_8015606C, &D_80155FFC,
+    &D_80155FF4, &D_80156064, &D_80155FFC, &D_80155FDC, &D_80155FD4,
+    &D_80155FF4, &D_80155F04, &D_80155FC4, &D_8015602C, &D_80155F6C,
+    &D_80155F6C, &D_8015602C, &D_80155FDC, &D_80155F1C, &D_80155F3C,
+    &D_80155FFC, &D_8015606C, &D_80155FAC, &D_80155FAC, &D_8015606C,
+    &D_80156014, &D_80155F54, &D_8015603C, &D_80155FD4, &D_80155F14,
+    &D_80155F7C, &D_80155FDC, &D_80156044, &D_80155F84, &D_80155F1C,
+    &D_8015602C, &D_80155FC4, &D_80155FBC, &D_80156024, &D_8015604C,
+    &D_8015603C, &D_80155FCC, &D_80155FEC, &D_80156004, &D_80155FE4,
+    &D_80156044, &D_80156054, &D_80156014, &D_8015606C, &D_80156064,
+    &D_8015600C, &D_80156024, &D_80155FBC, &D_80155EFC, &D_80155F64,
+    &D_80155FD4, &D_80156024, &D_80155F64, &D_80155F14, &D_80156064,
+    &D_80155FF4, &D_80155F34, &D_80155FA4, &D_8015600C, &D_80156064,
+    &D_80155FA4, &D_80155F4C, &D_80155F34, &D_80155FF4, &D_8015604C,
+    &D_80155F8C, &D_80155F94, &D_80156054, &D_80155FFC, &D_80155F3C,
+    &D_80155F34, &D_80155F3C, &D_80155FAC, &D_80155FA4, &D_80155FA4,
+    &D_80155FAC, &D_80155F54, &D_80155F4C, &D_80155EFC, &D_80155F04,
+    &D_80155F6C, &D_80155F64, &D_80155F64, &D_80155F6C, &D_80155F1C,
+    &D_80155F14, &D_80155F24, &D_80155FE4, &D_80156004, &D_80155F44,
+    &D_80155FBC, &D_80155FC4, &D_80155F04, &D_80155EFC, &D_80155FEC,
+    &D_80155FCC, &D_80155F0C, &D_80155F2C, &D_80155F54, &D_80156014,
+    &D_8015600C, &D_80155F4C, &D_80155FCC, &D_8015603C, &D_80155F7C,
+    &D_80155F0C, &D_80155F8C, &D_8015604C, &D_80155FEC, &D_80155F2C,
+    &D_80156044, &D_80155FE4, &D_80155F24, &D_80155F84, &D_80155F44,
+    &D_80156004, &D_80156054, &D_80155F94, &D_80155F7C, &D_80155F14,
+    &D_80155F34, &D_80155F8C, &D_80155F1C, &D_80155F84, &D_80155F94,
+    &D_80155F3C, &D_80155F0C, &D_80155F7C, &D_80155F8C, &D_80155F2C,
+    &D_80155F84, &D_80155F24, &D_80155F44, &D_80155F94};
+static u8 D_8015635C[][5] = {
+    {0x38, 0x08, 0x10, 0x10, 0x0D}, {0x58, 0x08, 0x10, 0x10, 0x0E},
+    {0x58, 0x08, 0x10, 0x10, 0x1E}, {0x58, 0x08, 0x10, 0x10, 0x2E},
+    {0x58, 0x08, 0x10, 0x10, 0x3E}, {0x58, 0x08, 0x10, 0x10, 0x4E},
+    {0x58, 0x08, 0x10, 0x10, 0x5E}, {0x58, 0x08, 0x10, 0x10, 0x6E},
+    {0x58, 0x08, 0x10, 0x10, 0x7E}, {0x68, 0x08, 0x10, 0x10, 0x4E},
+    {0x68, 0x08, 0x10, 0x10, 0x2E}, {0x68, 0x08, 0x10, 0x10, 0x0E},
+    {0x68, 0x08, 0x10, 0x10, 0x6E}, {0x68, 0x18, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x38, 0x18, 0x10, 0x10, 0x0F}, {0x38, 0x28, 0x10, 0x48, 0x0F},
+    {0x50, 0x20, 0x10, 0x18, 0x0F}, {0x50, 0x38, 0x10, 0x10, 0x0F},
+    {0x70, 0x48, 0x08, 0x08, 0x0F}, {0x70, 0x48, 0x08, 0x08, 0x0F},
+    {0x70, 0x48, 0x08, 0x08, 0x4F}, {0x70, 0x48, 0x08, 0x08, 0x4F},
+    {0x50, 0x50, 0x18, 0x08, 0x0F}, {0x50, 0x50, 0x18, 0x08, 0x4F},
+    {0x50, 0x50, 0x18, 0x08, 0x1F}, {0x50, 0x50, 0x18, 0x08, 0x5F},
+    {0x68, 0x58, 0x10, 0x10, 0x0F}, {0x68, 0x58, 0x10, 0x10, 0x1F},
+    {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F}};
+static const SVECTOR D_80156C50 = {0, 0, 0};
+static const SVECTOR D_80156C58 = {-96, 0, 0};
 void RicEntityGiantSpinningCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
@@ -2147,7 +2258,7 @@ void RicEntityGiantSpinningCross(Entity* self) {
     pos = D_80156C50;
     sp50 = D_80156C58;
     if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(PRIM_GT4, 46);
+        self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_8015635C));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2172,7 +2283,8 @@ void RicEntityGiantSpinningCross(Entity* self) {
         self->step++;
         primUVCoords = &D_8015635C[0];
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
+        for (i = 0; i < LEN(D_8015635C); i++, prim = prim->next,
+            primUVCoords += 5) {
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
@@ -2290,7 +2402,7 @@ void RicEntityGiantSpinningCross(Entity* self) {
     gte_stszotz(&z);
     self->hitboxOffX = prim->x0 - self->posX.i.hi;
     self->hitboxOffY = prim->y0 - self->posY.i.hi;
-    for (i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
+    for (i = 0; i < LEN(D_8015635C); i++, prim = prim->next, vectors_ptr += 4) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
         temp_a3 = vectors_ptr[2];
