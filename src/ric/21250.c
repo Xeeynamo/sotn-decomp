@@ -1335,6 +1335,7 @@ void func_801603B4(Entity* self) {}
 
 void func_801603BC(void) {}
 
+void RicEntityGiantSpinningCross(Entity*);
 PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
     RicEntityEntFactory,

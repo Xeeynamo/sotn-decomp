@@ -132,7 +132,6 @@ void RicEntityHolyWaterFlame(Entity* self);
 void func_80161C2C(Entity* self);
 void func_80166784(Entity* self);
 void EntityHydroStorm(Entity* self);
-void RicEntityGiantSpinningCross(Entity* self);
 void RicEntitySubwpnCrashCross(Entity* self);
 void func_80167A58(Entity* self);
 void func_80167A60(Entity* self);
