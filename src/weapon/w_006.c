@@ -2,18 +2,36 @@
 // Moon rod, Unknown#172
 #define FUNC_04_VOID
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_006_1.h"
-#include "w_006_2.h"
 #define g_Animset w_006_1
-#define g_Animset2 w_006_2
+#include "color_tables.h"
+#include "animations.h"
 
-extern u16 D_2E000_8017ABD4[];
-extern s32 D_2E000_8017ABF0[];
+static WeaponAnimation D_2E000_8017ABC4[] = {
+    {g_Anim0, g_Hitboxes, 6, SFX_UNK_689, 0x48, 3}};
 
-extern WeaponAnimation D_2E000_8017ABC4[];
+static u16 D_2E000_8017ABD4[] = {
+    1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2,
+};
+
+static s32 D_2E000_8017ABF0[] = {
+    FIX(1.25), -FIX(1.75), FIX(0.5), -FIX(1), -FIX(0.25),
+};
+
+/* duplicated in w_007 */
+static u8 D_2E000_8017AC04[6][8] = {
+    {0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60},
+    {0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60},
+    {0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50},
+    {0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38},
+    {0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38},
+    {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40}};
+
+static u16* g_WeaponCluts[] = {g_Clut0, g_Clut0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
+
 static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s8 animIndex;
@@ -176,8 +194,6 @@ static void func_ptr_80170004(Entity* self) {
         }
     }
 }
-
-extern u8 D_2E000_8017AC04[6][8];
 
 static s32 func_2E000_8017B6A0(Primitive* prim, s32 x, s32 y) {
     s32 size;

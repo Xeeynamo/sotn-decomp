@@ -291,7 +291,14 @@ set(SOURCE_FILES_STAGE_WRP
 set(SOURCE_FILES_WEAPON
     src/weapon/w_000.c
     src/weapon/w_002.c
+    src/weapon/w_003.c
+    src/weapon/w_004.c
+    src/weapon/w_005.c
+    src/weapon/w_006.c
     src/weapon/w_007.c
+    src/weapon/w_008.c
+    src/weapon/w_009.c
+    src/weapon/w_010.c
     src/weapon/w_012.c
     src/weapon/w_034.c
     src/weapon/w_041.c
@@ -302,16 +309,23 @@ set(SOURCE_FILES_WEAPON
 )
 
 # WEAPON_ID needs to be a string and not just a number
-set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_000)
-set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_002)
-set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_007)
-set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_012)
-set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_034)
-set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_041)
-set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_045)
-set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
-set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
-set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_052)
+set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_000;W_000")
+set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_002;W_002")
+set_source_files_properties(src/weapon/w_003.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_003;W_003")
+set_source_files_properties(src/weapon/w_004.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_004;W_004")
+set_source_files_properties(src/weapon/w_005.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_005;W_005")
+set_source_files_properties(src/weapon/w_006.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_006;W_006")
+set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_007;W_007")
+set_source_files_properties(src/weapon/w_008.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_008;W_008")
+set_source_files_properties(src/weapon/w_009.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_009;W_009")
+set_source_files_properties(src/weapon/w_010.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_010;W_010")
+set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_012;W_012")
+set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_034;W_034")
+set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_041;W_041")
+set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_045;W_045")
+set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_046;W_046")
+set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_051;W_051")
+set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS "WEAPON_ID=w_052;W_052")
 
 # organization is:
 # two executables, sdl2 and null, plus a shared library "core"

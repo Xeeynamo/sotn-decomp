@@ -1,19 +1,22 @@
 // Weapon ID #9. Used by weapons:
 // Knight shield, Unknown#204
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
 #include "w_009_1.h"
-#include "w_009_2.h"
 #define g_Animset w_009_1
-#define g_Animset2 w_009_2
-#include "shared.h"
-#include "sfx.h"
+#include "color_tables.h"
+#include "animations.h"
 
-extern SpriteParts D_43000_8017A040[];
-extern s8 D_43000_8017A9F8;
-extern AnimationFrame* D_43000_8017AA40;
-extern s32 D_43000_8017AA78[];
+// angles
+s32 D_43000_8017AA78[] = {
+    0x00000000, 0x00000200, 0x00000400, 0x00000600, 0x00000800, 0x00000A00,
+    0x00000C00, 0x00000E00, 0x00001000, 0x00001200, 0x00001400, 0x00001600,
+    0x00001800, 0x00001A00, 0x00001C00, 0x00001E00,
+};
+
+static u16* g_WeaponCluts[] = {g_Clut0, g_Clut0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
 
 static void EntityWeaponAttack(Entity* self) {
     s32 anim1;
@@ -55,7 +58,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_43000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;
@@ -142,14 +145,14 @@ static void EntityWeaponAttack(Entity* self) {
         break;
     }
     if (self->step != 4) {
-        g_api.PlayAnimation(&D_43000_8017A9F8, &D_43000_8017AA40);
+        g_api.PlayAnimation(g_FrameProps, g_Anim);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-s32 func_ptr_80170004(Entity* self) {}
+static s32 func_ptr_80170004(Entity* self) {}
 
 static void func_ptr_80170008(Entity* self) {}
 
@@ -184,7 +187,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetSpriteBank1(D_43000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;

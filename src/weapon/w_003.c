@@ -1,15 +1,18 @@
 // Weapon ID #3. Used by weapons:
 // Morningstar
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_003_1.h"
-#include "w_003_2.h"
 #define g_Animset w_003_1
-#define g_Animset2 w_003_2
+#include "color_tables.h"
+#include "animations.h"
 
-extern WeaponAnimation D_19000_8017AC28[];
+static WeaponAnimation D_19000_8017AC28[] = {
+    {g_Anim0, g_Hitboxes, 5, SFX_UNK_689, 0x48, 3}};
+
+static u16* g_WeaponCluts[] = {g_Clut0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
 
 static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
@@ -63,7 +66,7 @@ static void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-s32 func_ptr_80170004(Entity* self) {}
+static s32 func_ptr_80170004(Entity* self) {}
 
 static void func_ptr_80170008(Entity* self) {}
 

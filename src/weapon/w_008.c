@@ -2,18 +2,20 @@
 // Leather shield, Unknown#203
 #define SHIELDSPELL_S32
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_008_1.h"
-#include "w_008_2.h"
 #define g_Animset w_008_1
-#define g_Animset2 w_008_2
+#include "color_tables.h"
+#include "animations.h"
 
-extern SpriteParts D_3C000_8017A040[];
-extern s8 D_3C000_8017A9F8;
-extern AnimationFrame* D_3C000_8017AA40;
-extern s32 D_3C000_8017AA78[];
+s32 g_Angles[] = {
+    0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
+    0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
+};
+
+static u16* g_WeaponCluts[] = {g_Clut0, g_Clut0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
 
 static void EntityWeaponAttack(Entity* self) {
     s32 anim1;
@@ -55,7 +57,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_3C000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;
@@ -142,14 +144,14 @@ static void EntityWeaponAttack(Entity* self) {
         break;
     }
     if (self->step != 4) {
-        g_api.PlayAnimation(&D_3C000_8017A9F8, &D_3C000_8017AA40);
+        g_api.PlayAnimation(g_FrameProps, g_Anim);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-s32 func_ptr_80170004(Entity* self) {}
+static s32 func_ptr_80170004(Entity* self) {}
 
 static void func_ptr_80170008(Entity* self) {}
 
@@ -184,7 +186,7 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        SetSpriteBank1(D_3C000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;
@@ -388,31 +390,31 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
     bottom++;
     prim = prim->next;
     for (i = 0; i < 9; i++) {
-        angle = D_3C000_8017AA78[i];
+        angle = g_Angles[i];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk94 / 256;
         prim->y0 = top + baseCoord;
         prim->y2 = (bottom + baseCoord) - 1;
-        angle = D_3C000_8017AA78[(i + 1) % 9];
+        angle = g_Angles[(i + 1) % 9];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk94 / 256;
         prim->y1 = top + baseCoord;
         prim->y3 = (bottom + baseCoord) - 1;
         prim->x0 = prim->x2 = back + (((front - back) * i) / 9);
         prim->x1 = prim->x3 = back + (((front - back) * (i + 1)) / 9);
-        angle = D_3C000_8017AA78[(i + 6) % 9];
+        angle = g_Angles[(i + 6) % 9];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk92 / 256;
         prim->x0 += baseCoord;
         prim->x1 += baseCoord;
-        angle = D_3C000_8017AA78[(i + 7) % 9];
+        angle = g_Angles[(i + 7) % 9];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk92 / 256;
         prim->x2 += baseCoord;
         prim->x3 += baseCoord;
-        angle = D_3C000_8017AA78[i];
+        angle = g_Angles[i];
         prim->r0 = prim->g0 = prim->b0 = prim->r2 = prim->g2 = prim->b2 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        angle = D_3C000_8017AA78[(i + 1) % 9];
+        angle = g_Angles[(i + 1) % 9];
         prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        D_3C000_8017AA78[i] += self->ext.shield.unk8A;
+        g_Angles[i] += self->ext.shield.unk8A;
         prim = prim->next;
     }
 }

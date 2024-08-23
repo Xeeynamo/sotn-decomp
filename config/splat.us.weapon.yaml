@@ -95,8 +95,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x19040, animset, w_003_1]
-      - [0x19884, animset, w_003_2]
-      - [0x19884, data, w_003]
+      - [0x19884, .data, w_003]
       - [0x19C40, c, w_003]
       - [0x1A26C, sbss, w_003]
   - name: f_004
@@ -113,8 +112,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x20040, animset, w_004_1]
-      - [0x20EAC, animset, w_004_2]
-      - [0x20EAC, data, w_004]
+      - [0x20EAC, .data, w_004]
       - [0x2131C, c, w_004]
       - [0x2196C, sbss, w_004]
   - name: f_005
@@ -131,8 +129,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x27040, animset, w_005_1]
-      - [0x27EAC, animset, w_005_2]
-      - [0x27EAC, data, w_005]
+      - [0x27EAC, .data, w_005]
       - [0x2831C, c, w_005]
       - [0x28998, sbss, w_005]
   - name: f_006
@@ -149,8 +146,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x2E040, animset, w_006_1]
-      - [0x2E884, animset, w_006_2]
-      - [0x2E884, data, w_006]
+      - [0x2E884, .data, w_006]
       - [0x2EC40, .rodata, w_006]
       - [0x2EC54, c, w_006]
       - [0x2F9B8, sbss, w_006]
@@ -168,7 +164,6 @@ segments:
     subalign: 4
     subsegments:
       - [0x35040, animset, w_007_1]
-      - [0x35884, animset, w_007_2]
       - [0x35884, .data, w_007]
       - [0x35CA0, c, w_007]
       - [0x36918, sbss, w_007]
@@ -186,8 +181,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x3C040, animset, w_008_1]
-      - [0x3C804, animset, w_008_2]
-      - [0x3C804, data, w_008]
+      - [0x3C804, .data, w_008]
       - [0x3CAC4, .rodata, w_008]
       - [0x3CB4C, c, w_008]
       - [0x3DF78, sbss, w_008]
@@ -205,8 +199,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x43040, animset, w_009_1]
-      - [0x43804, animset, w_009_2]
-      - [0x43804, data, w_009]
+      - [0x43804, .data, w_009]
       - [0x43AC4, .rodata, w_009]
       - [0x43B4C, c, w_009]
       - [0x450F0, sbss, w_009]
@@ -224,8 +217,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x4A040, animset, w_010_1]
-      - [0x4A8EC, animset, w_010_2]
-      - [0x4A8EC, data, w_010]
+      - [0x4A8EC, .data, w_010]
       - [0x4AC08, .rodata, w_010]
       - [0x4ACC0, c, w_010]
       - [0x4CC1C, sbss, w_010]

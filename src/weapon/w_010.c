@@ -1,23 +1,37 @@
 // Weapon ID #10. Used by weapons:
 // Iron shield, Unknown#205
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_010_1.h"
-#include "w_010_2.h"
 #define g_Animset w_010_1
-#define g_Animset2 w_010_2
 #include "items.h"
-#include "sfx.h"
-
-extern SpriteParts D_4A000_8017A040[];
-extern s8 D_4A000_8017AB20;
-extern AnimationFrame* D_4A000_8017AB68;
-extern s16 D_4A000_8017ABBC[];
-extern s16 D_4A000_8017ABDC[];
+#include "color_tables.h"
+#include "animations.h"
 
 extern s32 D_4A000_8017CC1C; // g_DebugWaitInfoTimer
+
+AnimationFrame D_4A000_8017ABA0[] = {
+    {2, FRAME(0x3F, 0x0C)},
+    {2, FRAME(0x40, 0x0C)},
+    {2, FRAME(0x41, 0x0C)},
+    {2, FRAME(0x42, 0x0C)},
+    {2, FRAME(0x43, 0x0C)},
+    {2, FRAME(0x44, 0x0C)},
+    A_END};
+
+s16 D_4A000_8017ABBC[] = {
+    0x0000, 0x0300, 0x0600, 0x0900, 0x0C00, 0x0F00, 0x1200, 0x1500,
+    0x1800, 0x1B00, 0x1E00, 0x2100, 0x2400, 0x2700, 0x2A00, 0x2D00,
+};
+
+s16 D_4A000_8017ABDC[] = {
+    0x0000, 0x0300, 0x0600, 0x0900, 0x0C00, 0x0F00, 0x1200, 0x1500,
+    0x1800, 0x1B00, 0x1E00, 0x2100, 0x2400, 0x2700, 0x2A00, 0x2D00,
+};
+
+static u16* g_WeaponCluts[] = {g_Clut0, g_Clut0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
 
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
@@ -88,7 +102,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        SetSpriteBank1(D_4A000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;
@@ -175,14 +189,12 @@ static void EntityWeaponAttack(Entity* self) {
         break;
     }
     if (self->step != 4) {
-        g_api.PlayAnimation(&D_4A000_8017AB20, &D_4A000_8017AB68);
+        g_api.PlayAnimation(g_FrameProps, g_Anim);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
-
-extern AnimationFrame D_4A000_8017ABA0[];
 
 s32 func_ptr_80170004(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
@@ -242,7 +254,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             return;
         }
 
-        SetSpriteBank1(D_4A000_8017A040);
+        SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
             self->palette = 0x128;

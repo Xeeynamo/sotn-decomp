@@ -1,17 +1,21 @@
 // Weapon ID #5. Used by weapons:
 // Star flail, Unknown#171
 #include "weapon_private.h"
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_005_1.h"
-#include "w_005_2.h"
 #define g_Animset w_005_1
-#define g_Animset2 w_005_2
+#include "color_tables.h"
+#include "animations.h"
 
-extern WeaponAnimation D_27000_8017B2F4[];
+static WeaponAnimation D_27000_8017B2F4[] = {
+    {g_Anim0, g_Hitboxes, 3, SFX_UNK_689, 0x4F, 3},
+    {g_Anim1, g_Hitboxes, 3, SFX_UNK_689, 0x56, 3}};
 
-void EntityWeaponAttack(Entity* self) {
+static u16* g_WeaponCluts[] = {g_Clut0};
+static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
+
+static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s8 animIndex;
 
@@ -65,7 +69,7 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-s32 func_ptr_80170004(Entity* self) {}
+static s32 func_ptr_80170004(Entity* self) {}
 
 static void func_ptr_80170008(Entity* self) {}
 
