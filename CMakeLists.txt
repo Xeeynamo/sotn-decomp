@@ -224,19 +224,16 @@ set(SOURCE_FILES_RIC
     src/ric/24788.c
     src/ric/2A060.c
     src/ric/319C4.c
-    src/ric/d_188F4.c
-    src/ric/d_194B0.c
-    src/ric/d_19EE0.c
     src/ric/spriteparts.c
     src/ric/1CB04.c
     src/ric/202A8.c
     src/ric/21250.c
     src/ric/26C84.c
     src/ric/2C4C4.c
+    src/ric/e_giant_spinning_cross.c
     src/ric/bss.c
     src/ric/d_18568.c
-    src/ric/d_18C40.c
-    src/ric/d_19C70.c
+    src/ric/pl_anims.c
 )
 
 set(SOURCE_FILES_TT_000
