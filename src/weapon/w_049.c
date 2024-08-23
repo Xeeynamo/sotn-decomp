@@ -11,7 +11,10 @@ extern s32 g_HandId;
 #include "sfx.h"
 
 extern WeaponAnimation D_15B000_8017AFFC[];
-extern SpriteParts D_15B000_8017A040[];
+extern s16 D_15B000_8017B03C[];
+extern AnimationFrame D_15B000_8017B074[];
+extern AnimationFrame D_15B000_8017B0D4[];
+extern AnimationFrame D_15B000_8017B10C[];
 extern s32 D_15B000_8017C8CC;
 
 /* near-duplicate of EntityWeaponAttack_w_048 */
@@ -31,7 +34,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     if (self->step == 0) {
-        SetSpriteBank1(D_15B000_8017A040);
+        SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;
@@ -86,8 +89,6 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-extern s16 D_15B000_8017B03C[];
-
 void func_15B000_8017B88C(Entity* ent, Point16* outPoint, bool arg2) {
     s32 idx;
 
@@ -115,7 +116,90 @@ void func_15B000_8017B88C(Entity* ent, Point16* outPoint, bool arg2) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170004);
+s32 func_ptr_80170004(Entity* self) {
+    s32 angle;
+    s32 magnitude;
+    s16 baseX, baseY;
+    s16 offsetX;
+    bool rotate;
+    s16 initialX, initialY;
+    u8 params;
+
+    if ((PLAYER.ext.player.anim < 0x41 || PLAYER.ext.player.anim > 0x47) ||
+        g_Player.unk46 == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    params = self->params;
+    offsetX = 0xC;
+    if (PLAYER.facingLeft) {
+        offsetX = -0xC;
+    }
+
+    baseX = offsetX + PLAYER.posX.i.hi;
+    baseY = PLAYER.posY.i.hi - 0x1A;
+    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        baseY = PLAYER.posY.i.hi - 0x1F;
+    }
+
+    switch (self->step) {
+    case 0:
+        rotate = 0;
+        self->animSet = 9;
+        self->anim = D_15B000_8017B074;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = 1;
+        self->flags = FLAG_UNK_100000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->ext.weapon.unk80 = params * 512;
+        self->rotZ = self->ext.weapon.unk80 - FIX(1.0 / 64);
+        self->attack = self->ext.weapon.parent->attack;
+        self->attackElement = self->ext.weapon.parent->attackElement;
+        self->hitboxState = self->ext.weapon.parent->hitboxState;
+        self->nFramesInvincibility =
+            self->ext.weapon.parent->nFramesInvincibility;
+        self->stunFrames = self->ext.weapon.parent->stunFrames;
+        self->hitEffect = self->ext.weapon.parent->hitEffect;
+        self->entityRoomIndex = self->ext.weapon.parent->entityRoomIndex;
+        g_api.func_80118894(self);
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->ext.weapon.unk7E = 0x40;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.weapon.lifetime = 0x28;
+        self->step++;
+        break;
+    case 1:
+        rotate = 1;
+        initialX = self->ext.weapon.unk7E; // ???
+        if (self->ext.weapon.unk7E >= 8) {
+            self->ext.weapon.unk7E -= 3;
+        }
+        if (--self->ext.weapon.lifetime == 0x18 && params == 0) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x40, 0);
+        }
+        self->ext.weapon.unk80 = self->ext.weapon.unk80 - 0x20;
+        if (self->ext.weapon.lifetime < 0x11) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    angle = self->ext.weapon.unk80;
+    initialX = self->posX.i.hi;
+    magnitude = self->ext.weapon.unk7E;
+    initialY = self->posY.i.hi;
+    self->posX.i.hi = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
+    self->posY.i.hi = baseY - (((rsin(angle) >> 4) * magnitude) >> 8);
+    if (rotate != 0) {
+        self->rotZ = ratan2(-(s16)(self->posY.i.hi - initialY),
+                            (s16)(self->posX.i.hi - initialX));
+    }
+}
 
 void func_ptr_80170008(Entity* self) {
     Primitive* prim;
@@ -240,17 +324,156 @@ void func_ptr_80170008(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_8017000C);
+void func_ptr_8017000C(Entity* self) {
+    Point16 point;
+    s32 palette;
+    u32 upperParams;
+    s32 lowerParams;
+    s16 tempX, tempY;
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170010);
+    if ((PLAYER.ext.player.anim < 0x41 || PLAYER.ext.player.anim > 0x47 ||
+         g_Player.unk46 == 0) &&
+        (self->step == 0)) {
+        DestroyEntity(self);
+        return;
+    }
 
-extern SpriteParts D_15B000_8017AA44[];
-extern AnimationFrame D_15B000_8017B10C[];
+    upperParams = (self->params >> 8) & 0x7F;
+    lowerParams = (u8)self->params;
+    if (self->step == 0) {
+        self->facingLeft = PLAYER.facingLeft;
+        if (upperParams == 1) {
+            func_15B000_8017B88C(self, &point, false);
+        } else {
+            func_15B000_8017B88C(self, &point, true);
+        }
+
+        tempX = point.x;
+        tempY = point.y;
+        self->posX.i.hi += (tempX * lowerParams / 8);
+        self->posY.i.hi += (tempY * lowerParams / 8);
+        self->posY.i.hi += rand() % 16;
+        self->posX.i.hi += rand() % 4;
+
+        SetSpriteBank2(g_Animset2);
+        self->animSet = ANIMSET_OVL(0x11);
+        self->unk5A = 0x65;
+        palette = rand() & 7;
+        self->palette = palette + 0x117;
+        if (g_HandId != 0) {
+            self->palette = palette + 0x12F;
+            self->unk5A += 2;
+            self->animSet += 2;
+        }
+        self->anim = D_15B000_8017B0D4;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotX = 0x80;
+        self->rotY = 0x80;
+        self->rotX = self->rotY = (rand() & 0x3F) | 0x80;
+        self->zPriority = PLAYER.zPriority + (rand() & 1) * 4;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        if (rand() % 3) {
+            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        }
+
+        self->velocityY = -FIX(0.5);
+        if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+            if (PLAYER.ext.player.anim >= 0x43 &&
+                PLAYER.ext.player.anim < 0x45) {
+                self->posY.i.hi -= 1;
+            } else {
+                self->posY.i.hi -= 3;
+            }
+        }
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->enemyId = self->ext.weapon.parent->enemyId;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->step++;
+    } else {
+        self->posY.val += self->velocityY;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+s32 func_ptr_80170010(Entity* self) {
+    s32 magnitude;
+    s16 baseX, baseY;
+    s16 offsetX;
+    s16 angle;
+    s8 params;
+
+    if ((PLAYER.ext.player.anim < 0x41 || PLAYER.ext.player.anim > 0x47 ||
+         g_Player.unk46 == 0) &&
+        (self->step == 0 || self->step == 1)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    params = self->params;
+    offsetX = 0xC;
+    if (PLAYER.facingLeft != 0) {
+        offsetX = -0xC;
+    }
+
+    baseX = offsetX + PLAYER.posX.i.hi;
+    baseY = PLAYER.posY.i.hi - 0x1A;
+    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        baseY = PLAYER.posY.i.hi - 0x1F;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->facingLeft = 1;
+        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->ext.weapon.unk80 = params * 512;
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->enemyId = self->ext.weapon.parent->enemyId;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 0;
+        self->ext.weapon.unk7E = 0xC;
+        self->ext.weapon.lifetime = rand() % 5;
+        self->step++;
+        break;
+    case 1:
+        self->ext.weapon.unk7E += 4;
+        self->ext.weapon.unk80 -= 0x20;
+        if (self->ext.weapon.unk7E >= 0x40) {
+            self->step += 1;
+        }
+        break;
+    case 2:
+        self->ext.weapon.unk7E += 4;
+        self->flags = FLAG_UNK_08000000;
+        if (self->ext.weapon.unk7E >= 0x70) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    angle = self->ext.weapon.unk80;
+    magnitude = self->ext.weapon.unk7E;
+    self->ext.weapon.lifetime++;
+    self->posX.i.hi = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
+    self->posY.i.hi = baseY - (((rsin(angle) >> 4) * magnitude) >> 8);
+    if (self->ext.weapon.lifetime % 7 == 0) {
+        g_api.CreateEntFactoryFromEntity(
+            self, ((g_HandId + 1) << 0xC) | 0x65, 0);
+    }
+}
 
 static s32 func_ptr_80170014(Entity* self) {
     switch (self->step) {
     case 0:
-        SetSpriteBank2(D_15B000_8017AA44);
+        SetSpriteBank2(g_Animset2);
         self->animSet = ANIMSET_OVL(0x11);
         self->unk5A = 101;
         self->palette = 0x117;
