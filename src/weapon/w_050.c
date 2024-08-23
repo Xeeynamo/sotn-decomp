@@ -227,10 +227,10 @@ void func_ptr_80170008(Entity* self) {
             self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < PrimCount; i++) {
-                angle = i << 0x18 >> 0x10;
+                angle = i << 8;
                 prim->u0 = +0x20 + ((rcos(angle) * 2) >> 8);
                 prim->v0 = -0x20 - ((rsin(angle) * 2) >> 8);
-                angle = (i + 1) << 0x18 >> 0x10;
+                angle = (i + 1) << 8;
                 prim->u1 = +0x20 + ((rcos(angle) * 2) >> 8);
                 prim->v1 = -0x20 - ((rsin(angle) * 2) >> 8);
                 if (prim->v0 < 4) {
@@ -290,7 +290,7 @@ void func_ptr_80170008(Entity* self) {
     magnitude = self->ext.weapon.lifetime;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCount; i++) {
-        angle = i << 0x18 >> 0x10;
+        angle = i << 8;
         prim->x3 = baseX;
         prim->x2 = baseX;
         prim->y3 = baseY;
@@ -298,7 +298,7 @@ void func_ptr_80170008(Entity* self) {
         prim->r2 = prim->r3 = prim->b2 = prim->b3 = prim->g2 = prim->g3 = color;
         prim->x0 = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
         prim->y0 = baseY - (((rsin(angle) >> 4) * magnitude) >> 8);
-        angle = (i + 1) << 0x18 >> 0x10;
+        angle = (i + 1) << 8;
         prim->x1 = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
         prim->y1 = baseY - (((rsin(angle) >> 4) * magnitude) >> 8);
         prim = prim->next;
