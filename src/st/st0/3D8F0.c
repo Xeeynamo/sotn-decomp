@@ -59,7 +59,7 @@ void func_801BD8F0(Entity* self) {
             SetStep(7);
             return;
         }
-        self->flags |= FLAG_UNK_800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = sp48;
         prim = &g_PrimBuf[sp48];
         self->ext.prim = prim;

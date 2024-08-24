@@ -237,7 +237,7 @@ static void EntityWeaponAttack(Entity* self) {
                     prim->r3 = 0x80;
             prim->drawMode |= DRAW_COLORS;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         SetWeaponProperties(self, 0);
         self->hitboxOffX = 0x2B;
         self->hitboxWidth = 0x1E;

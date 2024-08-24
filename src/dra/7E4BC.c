@@ -1502,7 +1502,7 @@ void EntityLevelUpAnimation(Entity* self) {
             return;
         }
         PlaySfx(NA_SE_PL_MAX_HP_MP_INCREASED);
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_800000 | FLAG_UNK_20000 |
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000 |
                       FLAG_UNK_10000;
         CreateEntFactoryFromEntity(self, 0x4A002CU, 0);
         self->posX.i.hi = PLAYER.posX.i.hi;

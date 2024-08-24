@@ -67,7 +67,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
         if (self->primIndex != -1) {
-            self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+            self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
         }
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
