@@ -45,7 +45,11 @@ def convert_rgb555(in_array):
             b = bits >> 10 & 0b11111  # bits 14-10
             g = (bits >> 5) & 0b11111  # bits 9-5
             r = bits & 0b11111  # bits 4-0
-            pixel = [r * 8, g * 8, b * 8]  # 5 bits is 0-31, multiply to 0-255
+            # Transform 5-bit to 8-bit color
+            r = round(r/31 * 255)
+            g = round(g/31 * 255)
+            b = round(b/31 * 255)
+            pixel = [r, g, b]
             out_row.append(pixel)
         out_array.append(out_row)
     return np.array(out_array)
