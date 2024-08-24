@@ -65,7 +65,7 @@ void RicEntityFactory(Entity* self) {
         case 4:
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step != 25) {
+            if (PLAYER.step != PL_S_RUN) {
                 self->entityId = 0;
                 return;
             }
@@ -81,7 +81,7 @@ void RicEntityFactory(Entity* self) {
         case 7:
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step != 10) {
+            if (PLAYER.step != PL_S_HIT) {
             setIdZeroAndReturn:
                 self->entityId = 0;
                 return;
@@ -157,7 +157,7 @@ void RicEntityFactory(Entity* self) {
 }
 
 void func_80160C38(Entity* entity) {
-    if (PLAYER.step != 23) {
+    if (PLAYER.step != PL_S_SLIDE) {
         DestroyEntity(entity);
     } else {
         entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -185,7 +185,7 @@ void func_80160C38(Entity* entity) {
 }
 
 void func_80160D2C(Entity* self) {
-    if (PLAYER.step != 26) {
+    if (PLAYER.step != PL_S_SLIDE_KICK) {
         DestroyEntity(self);
         return;
     }
@@ -243,7 +243,7 @@ void RicEntityBladeDash(Entity* self) {
 }
 
 void func_80160F0C(Entity* self) {
-    if (PLAYER.step != 8) {
+    if (PLAYER.step != PL_S_HIGHJUMP) {
         DestroyEntity(self);
         return;
     }

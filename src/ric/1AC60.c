@@ -11,7 +11,7 @@
 
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
-    if (PLAYER.step != 0 || PLAYER.step_s != 1) {
+    if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
         return TELEPORT_CHECK_NONE;
     }
 

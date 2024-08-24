@@ -899,7 +899,7 @@ void RicEntityHitByLightning(Entity* self) {
         if (++self->ext.hitbylightning.unk9C >= 0x91) {
             var_s0 = true;
         }
-    } else if (PLAYER.step != 10) {
+    } else if (PLAYER.step != PL_S_HIT) {
         var_s0 = true;
     }
     switch (self->step) {
@@ -928,7 +928,7 @@ void RicEntityHitByLightning(Entity* self) {
             prim->drawMode = 0x133;
             prim = prim->next;
         }
-        if ((PLAYER.velocityY != 0) && (PLAYER.step != 0x10)) {
+        if ((PLAYER.velocityY != 0) && (PLAYER.step != PL_S_DEAD)) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
