@@ -1344,11 +1344,10 @@ void func_801601DC(Entity* entity) {
     }
 }
 
-void func_801603B4(Entity* self) {}
+static void RicEntityDummy(Entity* self) {}
 
 void func_801603BC(void) {}
 
-void func_801603B4(Entity* self);
 void RicEntityFactory(Entity* self);
 void func_80160FC4(Entity* self);
 void RicEntitySubwpnCross(Entity* self);
@@ -1366,7 +1365,7 @@ void func_80167A58(Entity* self);
 void func_80167A60(Entity* self);
 void func_8016779C(Entity* self);
 void func_80167964(Entity* self);
-void func_801603B4(Entity* self);
+void RicEntityDummy(Entity* self);
 void func_80161EF8(Entity* self);
 void func_80167A68(Entity* self);
 void RicEntityRevivalColumn(Entity* self);
@@ -1415,9 +1414,9 @@ void func_8015FEA8(Entity* self);
 void RicEntityCrashStopwatchDoneSparkle(Entity* self);
 void func_80170548(Entity* self);
 void RicEntityTeleport(Entity* self);
-void func_801603B4(Entity* self);
+void RicEntityDummy(Entity* self);
 PfnEntityUpdate g_RicEntityTbl[] = {
-    func_801603B4,
+    RicEntityDummy,
     RicEntityFactory,
     func_80160FC4,
     RicEntitySubwpnCross,
@@ -1435,7 +1434,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_80167A60,
     func_8016779C,
     func_80167964,
-    func_801603B4,
+    RicEntityDummy,
     func_80161EF8,
     func_80167A68,
     RicEntityRevivalColumn,
@@ -1484,7 +1483,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntityCrashStopwatchDoneSparkle,
     func_80170548,
     RicEntityTeleport,
-    func_801603B4};
+    RicEntityDummy};
 
 // Corresponding DRA function is UpdatePlayerEntities
 void RicUpdatePlayerEntities(void) {
