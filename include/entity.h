@@ -1759,40 +1759,35 @@ typedef union { // offset=0x7C
     ET_NZ0_311C0 nz0311c0;
 } Ext;
 
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk006, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk012, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk030, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk046, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_KarmaCoin, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Sword, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword2, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Shield, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_DarkShield, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_MedusaShieldLaser, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_ShamanShieldStar, anim));
-STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeraldShieldSwirlEffect, anim));
+#define SYNC_FIELD(struct1, struct2, field_name)                               \
+    STATIC_ASSERT(OFF(struct1, field_name) == OFF(struct2, field_name))
 
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_HolyWater, subweaponId));
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_SubwpnAxe, subweaponId));
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_AxeCrash, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_CrossBoomerang, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_BibleSubwpn, subweaponId));
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_BibleBeam, subweaponId));
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_StopWatch, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_ReboundStone, subweaponId));
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) ==
-              OFF(ET_ReboundStoneCrashExplosion, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_VibhutiCrashCloud, subweaponId));
-STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_Agunea, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_AguneaCrash, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_GiantSpinningCross, subweaponId));
-STATIC_ASSERT(
-    OFF(ET_Subweapon, subweaponId) == OFF(ET_CrashCross, subweaponId));
+SYNC_FIELD(ET_Player, ET_Weapon, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk012, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk030, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk046, anim);
+SYNC_FIELD(ET_Player, ET_KarmaCoin, anim);
+SYNC_FIELD(ET_Player, ET_Sword, anim);
+SYNC_FIELD(ET_Player, ET_HeavenSword, anim);
+SYNC_FIELD(ET_Player, ET_HeavenSword2, anim);
+SYNC_FIELD(ET_Player, ET_Shield, anim);
+SYNC_FIELD(ET_Player, ET_DarkShield, anim);
+SYNC_FIELD(ET_Player, ET_MedusaShieldLaser, anim);
+SYNC_FIELD(ET_Player, ET_ShamanShieldStar, anim);
+SYNC_FIELD(ET_Player, ET_HeraldShieldSwirlEffect, anim);
+
+SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_AxeCrash, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_CrossBoomerang, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_BibleSubwpn, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_BibleBeam, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_StopWatch, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_ReboundStone, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_ReboundStoneCrashExplosion, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_VibhutiCrashCloud, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_Agunea, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_AguneaCrash, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_GiantSpinningCross, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_CrashCross, subweaponId);
