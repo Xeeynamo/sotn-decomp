@@ -232,7 +232,6 @@ set(SOURCE_FILES_RIC
     src/ric/2C4C4.c
     src/ric/e_giant_spinning_cross.c
     src/ric/bss.c
-    src/ric/bss2.c
     src/ric/d_18568.c
     src/ric/pl_anims.c
 )

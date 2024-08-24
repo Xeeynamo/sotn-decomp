@@ -268,14 +268,6 @@ extern FrameProperty D_80155964[];
 extern s8 D_80156A28;
 extern s8 D_80156904;
 
-extern s32 D_80173B64;
-extern u8 D_80173B68[0x1400];
-extern s16 D_80174F68;
-extern s16 D_80174F6C;
-extern s32 D_80174F70;
-extern s32 D_80174F74;
-extern s32 D_80174F78;
-extern s32 g_DebugWaitInfoTimer;
 extern s32 D_80174F80[11];
 extern u8 D_80174FAC;
 extern u8 D_80174FB0;

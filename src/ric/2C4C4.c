@@ -513,6 +513,8 @@ static AnimationFrame anim_cross_boomerang[] = {
     {36, FRAME(1, 0)}, {1, FRAME(2, 0)}, {1, FRAME(3, 0)},
     {1, FRAME(4, 0)},  {1, FRAME(5, 0)}, {1, FRAME(6, 0)},
     {1, FRAME(7, 0)},  {1, FRAME(8, 0)}, A_LOOP_AT(0)};
+static Point16 D_80175088[4][128];
+static s32 D_80175888;
 void EntityCrossBoomerang(Entity* self) {
     s32 xAccel;
     Point16* temp_a0;
@@ -1291,6 +1293,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
 // Applies to subweapon 1, and its crash, subweapon 21. Very neat!
 // Not quite the same as the one in DRA, but close.
 static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
+static s32 D_8017588C;
 void RicEntitySubwpnThrownDagger(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -2357,6 +2360,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
     }
 }
 
+static s32 crash_vibhuti_timer;
 void EntitySubwpnCrashVibhuti(Entity* self) {
     FakePrim* prim;
     s32 magnitude;
@@ -2381,7 +2385,7 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
             prim->drawMode = 0xA;
             prim = prim->next;
         }
-        D_80175890 = 0;
+        crash_vibhuti_timer = 0;
         self->step++;
         return;
     case 1:
@@ -2414,7 +2418,7 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
         }
         /* fallthrough */
     case 2:
-        if (!(++D_80175890 & 7)) {
+        if (!(++crash_vibhuti_timer & 7)) {
             g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
         }
         prim = &g_PrimBuf[self->primIndex];

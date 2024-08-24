@@ -461,10 +461,11 @@ bool RicCheckInput(s32 checks) {
     return false;
 }
 
+static s32 debug_wait_info_timer;
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    if (g_DebugWaitInfoTimer++ & 4) {
+    if (debug_wait_info_timer++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
@@ -1070,6 +1071,7 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
+static s32 D_80174F80[11];
 void func_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
@@ -1079,8 +1081,8 @@ void func_8015F9F0(Entity* entity) {
         return;
     }
 
-    for (i = 0;; ++i) {
-        for (enemyId = 2; enemyId < 11; ++enemyId) {
+    for (i = 0;; i++) {
+        for (enemyId = 2; enemyId < LEN(D_80174F80); ++enemyId) {
             if (D_80174F80[enemyId] == i) {
                 ++D_80174F80[enemyId];
                 entity->enemyId = enemyId;
@@ -1090,6 +1092,14 @@ void func_8015F9F0(Entity* entity) {
     }
 }
 
+static u8 D_80174FAC;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB0;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB4;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB8;
+STATIC_PAD_BSS(3);
 void func_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
@@ -1201,6 +1211,7 @@ s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
 }
 
 // Corresponding DRA function is func_80119F70
+static Point16 D_80174FBC[16];
 void func_8015FEA8(Entity* entity) {
     Primitive* prim;
     s16 temp_xRand;
@@ -1286,6 +1297,7 @@ static AnimationFrame anim_80154924[] = {
     {2, FRAME(9, 0)},  {2, FRAME(10, 0)},
     {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
     {2, FRAME(13, 0)}, A_END};
+static s32 D_80174FFC;
 void func_801601DC(Entity* entity) {
     s16 posX;
     s16 posY;

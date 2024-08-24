@@ -1932,7 +1932,7 @@ void EntityStopwatch(Entity* self) {
     }
 }
 
-void func_80172AE8(Entity* entity) {
+void RicSubpwnBibleTrail(Entity* entity) {
     Primitive* prim;
     s32 ret;
 

@@ -4,6 +4,7 @@
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
 // DRA version is very similar.
+static Point16 D_80175000[32];
 void RicEntityTeleport(Entity* self) {
     Primitive* prim;
     s32 selfUnk7C;
@@ -274,6 +275,8 @@ static s16 D_80155C78[] = {
     0x000F, 0x000D, 0x000B, 0x0009, 0x0007, 0x0005, 0x0003, 0x00FF};
 static u16 D_80155C98[] = {
     0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15};
+static u32 D_80175080;
+static s32 D_80175084;
 void func_80166784(Entity* self) {
     byte stackpad[40];
     s32 sp38;

@@ -484,14 +484,15 @@ void func_80159C04(void) {
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 
+static s32 ric_hit_stun_timer;
 void RicHandleHit(s32 damageEffect, u32 damageKind, s16 prevStep) {
     DamageParam damage;
     s32 xShift;
     s32 i;
     bool step_s_zero = false;
 
-    if (D_80173B64 != 0) {
-        D_80173B64--;
+    if (ric_hit_stun_timer) {
+        ric_hit_stun_timer--;
     }
     switch (PLAYER.step_s) {
     case 0:
@@ -678,7 +679,7 @@ void RicHandleHit(s32 damageEffect, u32 damageKind, s16 prevStep) {
         }
         if (g_Player.pl_vram_flag & 2) {
             func_80158B04(1);
-            D_80173B64 = 0x18;
+            ric_hit_stun_timer = 0x18;
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
             PLAYER.step_s = 5;
@@ -734,7 +735,7 @@ void RicHandleHit(s32 damageEffect, u32 damageKind, s16 prevStep) {
                     break;
                 }
             }
-            D_80173B64 = 8;
+            ric_hit_stun_timer = 8;
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
             g_api.func_80102CD8(2);
@@ -752,7 +753,7 @@ void RicHandleHit(s32 damageEffect, u32 damageKind, s16 prevStep) {
         }
         break;
     case 3:
-        if (D_80173B64 == 0) {
+        if (!ric_hit_stun_timer) {
             RicSetSpeedX(FIX(0.75));
             if (RicCheckInput(
                     CHECK_80 | CHECK_GRAVITY_HIT | CHECK_GROUND_AFTER_HIT)) {
@@ -762,7 +763,7 @@ void RicHandleHit(s32 damageEffect, u32 damageKind, s16 prevStep) {
         break;
     case 5:
         RicDecelerateX(0x2000);
-        if (D_80173B64 != 0) {
+        if (ric_hit_stun_timer) {
             if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
             }
@@ -863,13 +864,25 @@ void RicHandleBossGrab(void) {
 }
 
 // Compare to DRA func_80115394
+enum DeathKind {
+    DEATH_GENERIC,
+    DEATH_BY_FIRE,
+    DEATH_BY_THUNDER,
+    DEATH_BY_ICE,
+};
+static u8 dead_dissolve_bmp[0x1400];
+static s16 D_80174F68;
+STATIC_PAD_BSS(2);
+static s16 D_80174F6C;
+STATIC_PAD_BSS(2);
+static enum DeathKind death_kind;
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS) {
     s32 j;
     s32 i;
     u8* s2;
     u8* imgPtr;
-    s32 alwaysZero = 0;
+    s32 disableColorChange = 0;
     PlayerDraw* playerDraw = &g_PlayerDraw[0];
 
     switch (PLAYER.step_s) {
@@ -888,7 +901,7 @@ void RicHandleDead(
             // RIC blueprint 53 has child 9, func_80161C2C
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x200, 53), 0);
-            D_80174F70 = 1;
+            death_kind = DEATH_BY_FIRE;
         } else if (damageEffects & ELEMENT_THUNDER) {
             func_8015FA5C(2);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
@@ -899,7 +912,7 @@ void RicHandleDead(
                 g_CurrentEntity, FACTORY(0x100, 48), 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x200, 48), 0);
-            D_80174F70 = 2;
+            death_kind = DEATH_BY_THUNDER;
         } else if (damageEffects & ELEMENT_ICE) {
             func_8015FA5C(3);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
@@ -909,7 +922,7 @@ void RicHandleDead(
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 47), 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x100, 47), 0);
-            D_80174F70 = 3;
+            death_kind = DEATH_BY_ICE;
             PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
             func_8015FA5C(1);
@@ -919,7 +932,7 @@ void RicHandleDead(
             // RIC blueprint 11 has child 5, func_8016147C
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x500, 11), 0);
-            D_80174F70 = 0;
+            death_kind = DEATH_GENERIC;
         }
         playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = playerDraw->r1 =
             playerDraw->b1 = playerDraw->g1 = playerDraw->r2 = playerDraw->b2 =
@@ -940,7 +953,7 @@ void RicHandleDead(
         if (PLAYER.velocityY > FIX(1.0 / 16)) {
             PLAYER.velocityY >>= 2;
             PLAYER.velocityX >>= 3;
-            StoreImage(&D_801545A0, D_80173B68);
+            StoreImage(&D_801545A0, dead_dissolve_bmp);
             D_80174F6C = 0;
             D_80174F68 = 0x40;
             PLAYER.step_s++;
@@ -959,7 +972,7 @@ void RicHandleDead(
             PLAYER.velocityY = 0;
         }
         for (i = 0; i < 4; i++) {
-            s2 = imgPtr = D_80173B68;
+            s2 = imgPtr = dead_dissolve_bmp;
             s2 += ((D_80174F6C >> 1) & 7);
             s2 += ((D_80174F6C & 0xFF) >> 4) << 6;
             for (j = 0; j < 0x28; j++) {
@@ -983,8 +996,8 @@ void RicHandleDead(
         break;
     }
     // Always happens, kind of weird
-    if (alwaysZero == 0) {
-        if (D_80174F70 == 0) {
+    if (!disableColorChange) {
+        if (death_kind == DEATH_GENERIC) {
             if (playerDraw->r0 < 0xF8) {
                 playerDraw->r0 += 2;
             }
@@ -997,7 +1010,7 @@ void RicHandleDead(
                 playerDraw->g2 = playerDraw->b3 = playerDraw->g3 =
                     playerDraw->g0;
         }
-        if (D_80174F70 == 1 || D_80174F70 == 2) {
+        if (death_kind == DEATH_BY_FIRE || death_kind == DEATH_BY_THUNDER) {
             if (playerDraw->g0 > 8) {
                 playerDraw->g0 -= 2;
             }
@@ -1006,7 +1019,7 @@ void RicHandleDead(
                     playerDraw->b2 = playerDraw->g2 = playerDraw->b3 =
                         playerDraw->g3 = playerDraw->g0;
         }
-        if (D_80174F70 == 3) {
+        if (death_kind == DEATH_BY_ICE) {
             if ((playerDraw->r0 > 8) && (g_Timer & 1)) {
                 playerDraw->r0 -= 1;
             }
@@ -1080,14 +1093,14 @@ void RicHandleGenericSubwpnCrash(void) {
     }
 }
 
+static s32 throw_dagger_timer;
 void RicHandleThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
-        D_80174F74 = 0x200;
+        throw_dagger_timer = 0x200;
         PLAYER.step_s++;
     } else {
         RicCheckFacing();
-        D_80174F74--;
-        if (D_80174F74 == 0) {
+        if (!--throw_dagger_timer) {
             g_Player.unk46 = 0;
             RicSetStand(0);
             g_Player.unk4E = 1;
@@ -1097,17 +1110,18 @@ void RicHandleThrowDaggers(void) {
         RicSetJump();
         g_Player.unk46 = 0;
         g_Player.unk4E = 1;
-        D_80174F74 = 0;
+        throw_dagger_timer = 0;
     }
     if (!(g_Player.pl_vram_flag & 1)) {
         RicSetFall();
         g_Player.unk46 = 0;
         g_Player.unk4E = 1;
-        D_80174F74 = 0;
+        throw_dagger_timer = 0;
     }
 }
 
 // This happens when he dies in prologue and gets saved by Maria.
+static s32 dead_prologue_timer;
 void RicHandleDeadPrologue(void) {
     switch (PLAYER.step_s) {
     case 0:
@@ -1150,7 +1164,7 @@ void RicHandleDeadPrologue(void) {
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 22), 0);
             g_DeadPrologueTimer = 0x30;
             g_api.PlaySfx(0x6E2);
-            D_80174F78 = 0xA0;
+            dead_prologue_timer = 0xA0;
             PLAYER.step_s++;
         }
         break;
@@ -1172,8 +1186,8 @@ void RicHandleDeadPrologue(void) {
         if (g_Status.hp < g_Status.hpMax) {
             g_Status.hp++;
         }
-        D_80174F78--;
-        if ((D_80174F78 >= 0) && (D_80174F78 % 20 == 0)) {
+        dead_prologue_timer--;
+        if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
             g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
         }
         break;
@@ -1185,8 +1199,8 @@ void RicHandleDeadPrologue(void) {
         if (g_Status.hp < g_Status.hpMax) {
             g_Status.hp++;
         }
-        D_80174F78--;
-        if ((D_80174F78 >= 0) && (D_80174F78 % 20 == 0)) {
+        dead_prologue_timer--;
+        if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
             g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
         }
         break;
