@@ -222,50 +222,49 @@ void func_ptr_80170008(Entity* self) {
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, PrimCount);
-        if (self->primIndex != -1) {
-
-            self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
-            prim = &g_PrimBuf[self->primIndex];
-            for (i = 0; i < PrimCount; i++) {
-                angle = i << 8;
-                prim->u0 = +0x20 + ((rcos(angle) * 2) >> 8);
-                prim->v0 = -0x20 - ((rsin(angle) * 2) >> 8);
-                angle = (i + 1) << 8;
-                prim->u1 = +0x20 + ((rcos(angle) * 2) >> 8);
-                prim->v1 = -0x20 - ((rsin(angle) * 2) >> 8);
-                if (prim->v0 < 4) {
-                    prim->v0 = 0xFF;
-                }
-                if (prim->v1 < 4) {
-                    prim->v1 = 0xFF;
-                }
-                prim->u2 = prim->u3 = 0x20;
-                prim->v2 = prim->v3 = 0xE0;
-                prim->clut = 0x15F;
-                prim->tpage = 0x1A;
-                prim->r1 = prim->b1 = prim->g1 = 0;
-                prim->r0 = prim->b0 = prim->g0 = 0;
-                prim->b2 = prim->b3 = prim->g2 = prim->g3 = prim->r2 =
-                    prim->r3 = 0xFF;
-                prim->type = PRIM_GT4;
-                prim->priority = PLAYER.zPriority + 2;
-                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
-                                 DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-                prim = prim->next;
-            }
-            self->ext.weapon.lifetime = 4;
-            self->ext.weapon.unk7E = 0x28;
-            self->ext.weapon.equipId =
-                self->ext.weapon.parent->ext.weapon.equipId;
-            SetWeaponProperties(self, 0);
-            self->enemyId = self->ext.weapon.parent->enemyId;
-            self->hitboxOffX = 0;
-            self->hitboxOffY = 0;
-            self->step++;
-            break;
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
         }
-        DestroyEntity(self);
-        return;
+
+        self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            angle = i << 8;
+            prim->u0 = +0x20 + ((rcos(angle) * 2) >> 8);
+            prim->v0 = -0x20 - ((rsin(angle) * 2) >> 8);
+            angle = (i + 1) << 8;
+            prim->u1 = +0x20 + ((rcos(angle) * 2) >> 8);
+            prim->v1 = -0x20 - ((rsin(angle) * 2) >> 8);
+            if (prim->v0 < 4) {
+                prim->v0 = 0xFF;
+            }
+            if (prim->v1 < 4) {
+                prim->v1 = 0xFF;
+            }
+            prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
+            prim->clut = 0x15F;
+            prim->tpage = 0x1A;
+            prim->r1 = prim->b1 = prim->g1 = 0;
+            prim->r0 = prim->b0 = prim->g0 = 0;
+            prim->b2 = prim->b3 = prim->g2 = prim->g3 = prim->r2 = prim->r3 =
+                0xFF;
+            prim->type = PRIM_GT4;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->ext.weapon.lifetime = 4;
+        self->ext.weapon.unk7E = 0x28;
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->enemyId = self->ext.weapon.parent->enemyId;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->step++;
+        break;
     case 1:
         if (self->ext.weapon.lifetime < 0x28) {
             self->ext.weapon.lifetime += 6;
