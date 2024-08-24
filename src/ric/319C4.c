@@ -1582,11 +1582,11 @@ void EntityStopwatch(Entity* self) {
             RicCreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
-                (&D_801758D0)[self->ext.et_801719A4.unk94] = (u32)self;
+                D_801758D4[self->ext.et_801719A4.unk94 - 1] = self;
             }
             if (self->ext.et_801719A4.unk94 >= 2) {
                 self->ext.et_801719A4.unk98 =
-                    D_801758CC[self->ext.et_801719A4.unk94];
+                    D_801758D4[self->ext.et_801719A4.unk94 - 2];
             }
         } else {
             RicCreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
@@ -1697,7 +1697,7 @@ void EntityStopwatch(Entity* self) {
             g_unkGraphicsStruct.D_800973FC = 0;
         }
         if (self->ext.et_801719A4.unk94 != 0) {
-            (&D_801758D0)[self->ext.et_801719A4.unk94] = 0;
+            D_801758D4[self->ext.et_801719A4.unk94 - 1] = 0;
         }
         DestroyEntity(self);
         return;
@@ -1710,7 +1710,7 @@ void EntityStopwatch(Entity* self) {
         if (self->ext.et_801719A4.unk94 < 2) {
             var_s4 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
             var_s6 = PLAYER.posY.val + FIX(-16);
-        } else if (D_801758CC[self->ext.et_801719A4.unk94] != 0) {
+        } else if (D_801758D4[self->ext.et_801719A4.unk94 - 2] != NULL) {
             var_s4 = self->ext.et_801719A4.unk98->posX.val +
                      (PLAYER.facingLeft ? FIX(16) : FIX(-16));
             var_s6 = self->ext.et_801719A4.unk98->posY.val + FIX(-16);
@@ -1734,7 +1734,7 @@ void EntityStopwatch(Entity* self) {
                     self->facingLeft = PLAYER.facingLeft;
                 }
             }
-        } else if (D_801758CC[self->ext.et_801719A4.unk94] != 0) {
+        } else if (D_801758D4[self->ext.et_801719A4.unk94 - 2] != NULL) {
             parent = self->ext.et_801719A4.unk98;
             if (parent->facingLeft != self->facingLeft) {
                 if (abs(var_s4 - self->posX.val) >= FIX(1)) {

@@ -110,7 +110,7 @@ void RicInit(s16 initParam) {
     }
     g_PlayerDraw->enableColorBlend = 0;
     RicDebugOff();
-    for (i = 0; i < 0x20; i++) {
+    for (i = 0; i < LEN(D_80175958); i++) {
         radius = (rand() & 0x3FF) + 0x100;
         intensity = (rand() & 0xFF) + 0x100;
         val = rcos(radius) * 0x10;
