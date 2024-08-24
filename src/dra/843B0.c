@@ -469,7 +469,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
 }
 
 // axe thrown when using subweapon
-// near-duplicate of EntitySubwpnCrashAgunea
+// near-duplicate of RicEntityCrashAgunea
 void EntitySubwpnThrownAxe(Entity* self) {
     s32 sp10;
     s32 sp18;

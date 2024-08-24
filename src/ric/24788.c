@@ -7,7 +7,7 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end);
 static u8 entity_ranges[][2] = {
     {0x30, 0x3F}, {0x20, 0x2F}, {0x10, 0x1E}, {0x10, 0x3F},
     {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
-void RicEntityEntFactory(Entity* self) {
+void RicEntityFactory(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
     s16 i;
@@ -211,7 +211,7 @@ void func_80160D2C(Entity* self) {
         self->hitboxOffY = 12;
     }
 
-    if (self->hitFlags != 0) {
+    if (self->hitFlags) {
         g_Player.unk44 |= 0x80;
     } else {
         g_Player.unk44 &= ~0x80;
@@ -220,7 +220,7 @@ void func_80160D2C(Entity* self) {
 }
 
 // created from a blueprint, #24
-void BladeDashHelper(Entity* self) {
+void RicEntityBladeDash(Entity* self) {
     if (PLAYER.step != PL_S_BLADEDASH) {
         DestroyEntity(self);
     } else {

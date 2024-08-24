@@ -49,7 +49,7 @@ segments:
       - [0x19D94, .data, 2C4C4]
       - [0x19ED0, .data, 319C4] # TODO adjust offset
       - [0x19EFC, .data, e_giant_spinning_cross]
-      - [0x1A444, .rodata, 1AC60] #UpdateEntityRichter
+      - [0x1A444, .rodata, 1AC60] # UpdateEntityRichter
       - [0x1A5E0, .rodata, 1AC60]
       - [0x1A5F0, .rodata, 1CB04]
       - [0x1A7A8, .rodata, 1FCD0]
@@ -62,10 +62,10 @@ segments:
       - [0x1AA28, .rodata, 2A060]
       - [0x1AAA0, .rodata, 2A060]
       - [0x1AABC, .rodata, 2C4C4]
-      - [0x1AAD4, .rodata, 2C4C4] #EntitySubwpnCrashCross
-      - [0x1AAEC, .rodata, 2C4C4] #EntityRichterRevivalColumn
-      - [0x1AB04, .rodata, 2C4C4] #EntityCrossBoomerang
-      - [0x1AB24, .rodata, 2C4C4] #EntitySubwpnAgunea
+      - [0x1AAD4, .rodata, 2C4C4] # RicEntitySubwpnCrashCross
+      - [0x1AAEC, .rodata, 2C4C4] # RicEntityRevivalColumn
+      - [0x1AB04, .rodata, 2C4C4] # RicEntitySubwpnCross
+      - [0x1AB24, .rodata, 2C4C4] # RicEntitySubwpnAgunea
       - [0x1AB38, .rodata, 319C4]
       - [0x1AB68, .rodata, e_giant_spinning_cross]
       - [0x1AC50, .rodata, e_giant_spinning_cross]

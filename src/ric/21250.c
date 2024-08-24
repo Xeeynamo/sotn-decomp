@@ -1072,7 +1072,7 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
 }
 
 static s32 D_80174F80[11];
-void func_8015F9F0(Entity* entity) {
+static void func_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
 
@@ -1348,21 +1348,88 @@ void func_801603B4(Entity* self) {}
 
 void func_801603BC(void) {}
 
-void RicEntityGiantSpinningCross(Entity*);
+void func_801603B4(Entity* self);
+void RicEntityFactory(Entity* self);
+void func_80160FC4(Entity* self);
+void RicEntitySubwpnCross(Entity* self);
+void func_80169C10(Entity* self);
+void func_8016147C(Entity* self);
+void RicEntitySubwpnCrossTrail(Entity* self);
+void RicEntitySubwpnHolyWater(Entity* self);
+void RicEntitySubwpnHolyWaterFlame(Entity* self);
+void func_80161C2C(Entity* self);
+void func_80166784(Entity* self);
+void RicEntityCrashHydroStorm(Entity* self);
+void RicEntityCrashCross(Entity* self);
+void RicEntitySubwpnCrashCross(Entity* self);
+void func_80167A58(Entity* self);
+void func_80167A60(Entity* self);
+void func_8016779C(Entity* self);
+void func_80167964(Entity* self);
+void func_801603B4(Entity* self);
+void func_80161EF8(Entity* self);
+void func_80167A68(Entity* self);
+void RicEntityRevivalColumn(Entity* self);
+void func_80161FF0(Entity* self);
+void func_80160C38(Entity* self);
+void RicEntityBladeDash(Entity* self);
+void func_801623E0(Entity* self);
+void func_80162604(Entity* self);
+void func_80162C84(Entity* self);
+void func_80162870(Entity* self);
+void func_80160F0C(Entity* self);
+void func_80162C7C(Entity* self);
+void RicEntityPlayerBlinkWhite(Entity* self);
+void RicEntitySubwpnCrashCrossParticles(Entity* self);
+void func_801641A0(Entity* self);
+void RicEntityShrinkingPowerUpRing(Entity* self);
+void func_80167A70(Entity* self);
+void RicEntityCrashAgunea(Entity* self);
+void RicEntityCrashAxe(Entity* self);
+void RicEntitySubwpnDagger(Entity* self);
+void func_80160D2C(Entity* self);
+void RicEntityHitByIce(Entity* self);
+void RicEntityHitByLightning(Entity* self);
+void RicEntitySubwpnReboundStone(Entity* self);
+void RicEntitySubwpnThrownVibhuti(Entity* self);
+void RicEntitySubwpnAgunea(Entity* self);
+void RicEntityAguneaHitEnemy(Entity* self);
+void RicEntityCrashVibhuti(Entity* self);
+void RicEntityVibhutiCrashCloud(Entity* self);
+void func_8016E324(Entity* self);
+void func_8016D9C4(Entity* self);
+void func_8016DF74(Entity* self);
+void RicEntityCrashBible(Entity* self);
+void RicEntityCrashBibleBeam(Entity* self);
+void RicEntitySubpwnBible(Entity* self);
+void RicEntitySubpwnBibleTrail(Entity* self);
+void RicEntitySubwpnStopwatch(Entity* self);
+void RicEntitySubwpnStopwatchCircle(Entity* self);
+void func_801705EC(Entity* self);
+void func_8016F198(Entity* self);
+void RicEntityAguneaCircle(Entity* self);
+void RicEntityAguneaLightning(Entity* self);
+void func_8016D920(Entity* self);
+void func_801601DC(Entity* self);
+void func_8015FEA8(Entity* self);
+void RicEntityCrashStopwatchDoneSparkle(Entity* self);
+void func_80170548(Entity* self);
+void RicEntityTeleport(Entity* self);
+void func_801603B4(Entity* self);
 PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
-    RicEntityEntFactory,
+    RicEntityFactory,
     func_80160FC4,
-    EntityCrossBoomerang,
+    RicEntitySubwpnCross,
     func_80169C10,
     func_8016147C,
-    EntityCrossShadow,
-    RicEntityHolyWater,
-    RicEntityHolyWaterFlame,
+    RicEntitySubwpnCrossTrail,
+    RicEntitySubwpnHolyWater,
+    RicEntitySubwpnHolyWaterFlame,
     func_80161C2C,
     func_80166784,
-    EntityHydroStorm,
-    RicEntityGiantSpinningCross,
+    RicEntityCrashHydroStorm,
+    RicEntityCrashCross,
     RicEntitySubwpnCrashCross,
     func_80167A58,
     func_80167A60,
@@ -1371,10 +1438,10 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
     func_80161EF8,
     func_80167A68,
-    EntityRichterRevivalColumn,
+    RicEntityRevivalColumn,
     func_80161FF0,
     func_80160C38,
-    BladeDashHelper,
+    RicEntityBladeDash,
     func_801623E0,
     func_80162604,
     func_80162C84,
@@ -1384,11 +1451,11 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntityPlayerBlinkWhite,
     RicEntitySubwpnCrashCrossParticles,
     func_801641A0,
-    EntityShrinkingPowerUpRing,
+    RicEntityShrinkingPowerUpRing,
     func_80167A70,
-    EntitySubwpnCrashAgunea,
-    EntitySubwpnCrashAxe,
-    RicEntitySubwpnThrownDagger,
+    RicEntityCrashAgunea,
+    RicEntityCrashAxe,
+    RicEntitySubwpnDagger,
     func_80160D2C,
     RicEntityHitByIce,
     RicEntityHitByLightning,
@@ -1396,25 +1463,25 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntitySubwpnThrownVibhuti,
     RicEntitySubwpnAgunea,
     RicEntityAguneaHitEnemy,
-    EntitySubwpnCrashVibhuti,
+    RicEntityCrashVibhuti,
     RicEntityVibhutiCrashCloud,
     func_8016E324,
     func_8016D9C4,
     func_8016DF74,
-    EntityBiblePage,
-    EntityBiblePageBeam,
-    RicEntitySubwpnBible,
-    func_80172AE8,
-    EntityStopwatch,
-    EntityStopwatchCircle,
+    RicEntityCrashBible,
+    RicEntityCrashBibleBeam,
+    RicEntitySubpwnBible,
+    RicEntitySubpwnBibleTrail,
+    RicEntitySubwpnStopwatch,
+    RicEntitySubwpnStopwatchCircle,
     func_801705EC,
     func_8016F198,
-    EntityAguneaCircle,
-    EntityAguneaLightning,
+    RicEntityAguneaCircle,
+    RicEntityAguneaLightning,
     func_8016D920,
     func_801601DC,
     func_8015FEA8,
-    StopwatchCrashDoneSparkle,
+    RicEntityCrashStopwatchDoneSparkle,
     func_80170548,
     RicEntityTeleport,
     func_801603B4};

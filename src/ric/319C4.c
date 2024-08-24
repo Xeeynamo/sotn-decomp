@@ -299,7 +299,7 @@ void func_8016E324(Entity* entity) {
 
 #define BIBLE_PAGE_COUNT 6
 static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
-void EntityBiblePageBeam(Entity* self) {
+void RicEntityCrashBibleBeam(Entity* self) {
     Primitive* prim;
     s16 var_s7;
     s16 hitboxOffX;
@@ -406,7 +406,7 @@ static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
     0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
 };
 static s32 bible_pages_volume;
-void EntityBiblePage(Entity* self) {
+void RicEntityCrashBible(Entity* self) {
     Primitive* prim;
     s16 temp_a1_3;
     s16 temp_v0_6;
@@ -713,12 +713,12 @@ void func_8016F198(Entity* self) {
     }
 }
 
-// Entity ID #64, created by blueprint #72. This call is in EntityStopwatch.
-// When Richter has the stopwatch weapon, and uses it as a crash, it makes
-// 4 floating stopwatches. When they are done they disappear in a spinning
-// sparkle. This entity represents that sparkle. 4 copies of this entity
-// are made when the crash is done.
-void StopwatchCrashDoneSparkle(Entity* self) {
+// Entity ID #64, created by blueprint #72. This call is in
+// RicEntitySubwpnStopwatch. When Richter has the stopwatch weapon, and uses it
+// as a crash, it makes 4 floating stopwatches. When they are done they
+// disappear in a spinning sparkle. This entity represents that sparkle. 4
+// copies of this entity are made when the crash is done.
+void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
     Primitive* prim;
     u32 selfX;
     u32 selfY;
@@ -1063,7 +1063,6 @@ void func_80170548(Entity* entity) {
         entity->hitboxHeight = 8;
         entity->step++;
         break;
-
     case 1:
         if (++entity->ext.generic.unk7C.s >= 5) {
             DestroyEntity(entity);
@@ -1080,7 +1079,6 @@ void func_801705EC(Entity* entity) {
         entity->flags = FLAG_UNK_04000000;
         entity->ext.generic.unk7E.modeU16 = 0;
         entity->step++;
-
     case 1:
     case 3:
     case 5:
@@ -1091,7 +1089,6 @@ void func_801705EC(Entity* entity) {
         entity->ext.generic.unk7C.s = 0;
         entity->step++;
         break;
-
     case 2:
     case 4:
     case 6:
@@ -1100,7 +1097,6 @@ void func_801705EC(Entity* entity) {
             entity->step++;
         }
         break;
-
     case 8:
         DestroyEntity(entity);
         break;
@@ -1147,8 +1143,8 @@ static void AguneaShuffleParams(s32 bufSize, s32* buf) {
     }
 }
 
-// Agunea item crash lightning, created by EntityAguneaCircle, blueprint 68
-void EntityAguneaLightning(Entity* self) {
+// Agunea item crash lightning, created by RicEntityAguneaCircle, blueprint 68
+void RicEntityAguneaLightning(Entity* self) {
     u16 sp10[4];
     s16 sp18;
     u16 sp20;
@@ -1286,7 +1282,7 @@ void EntityAguneaLightning(Entity* self) {
 
 #define LIGHTNING_COUNT 8
 static s32 g_AguneaParams[LIGHTNING_COUNT];
-void EntityAguneaCircle(Entity* self) {
+void RicEntityAguneaCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
     s16 xCoord;
@@ -1433,7 +1429,7 @@ void EntityAguneaCircle(Entity* self) {
     return;
 }
 
-void EntityStopwatchCircle(Entity* self) {
+void RicEntitySubwpnStopwatchCircle(Entity* self) {
     Primitive* prim;
     s16 temp_s0_4;
     s32 sine;
@@ -1503,8 +1499,9 @@ void EntityStopwatchCircle(Entity* self) {
 }
 
 static u32 D_801758D0;
-static Entity* D_801758D4[3]; // used by EntityStopwatch, should never underflow
-void EntityStopwatch(Entity* self) {
+static Entity*
+    D_801758D4[3]; // used by RicEntitySubwpnStopwatch, should never underflow
+void RicEntitySubwpnStopwatch(Entity* self) {
     Primitive* prim;
     s16 firstmult;
     s16 secondmult;
@@ -1932,7 +1929,7 @@ void EntityStopwatch(Entity* self) {
     }
 }
 
-void RicSubpwnBibleTrail(Entity* entity) {
+void RicEntitySubpwnBibleTrail(Entity* entity) {
     Primitive* prim;
     s32 ret;
 
@@ -1977,7 +1974,7 @@ void RicSubpwnBibleTrail(Entity* entity) {
             entity->ext.generic.unk7E.modeU8.unk0;
 }
 
-void RicEntitySubwpnBible(Entity* self) {
+void RicEntitySubpwnBible(Entity* self) {
     Primitive* prim;
     s16 left;
     s16 top;

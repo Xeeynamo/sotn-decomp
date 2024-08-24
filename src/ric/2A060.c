@@ -928,7 +928,7 @@ void func_80167A70(Entity* self) {
 // Entity ID #11. Created by blueprint 12.
 // This is blueprintNum for subweapon ID 16.
 // That is the crash for subweapon 3. That's holy water!
-void EntityHydroStorm(Entity* self) {
+void RicEntityCrashHydroStorm(Entity* self) {
     PrimLineG2* line;
     s16 primcount;
     s32 trigresult;

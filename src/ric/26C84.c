@@ -446,7 +446,7 @@ static s16 D_8015519C[][6] = {
     {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0400},
     {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0100},
     {0x0500, 0x0A00, 0x0100, 0x0200, 0x7100, 0x0100}};
-void EntityShrinkingPowerUpRing(Entity* self) {
+void RicEntityShrinkingPowerUpRing(Entity* self) {
     s16 selfX;
     s16 selfY;
     s16 rScale;

@@ -934,7 +934,7 @@ void EntityHitByIce(Entity* self) {
 
 // Transparent white circle closes over player
 // Entity ID #38. Created by blueprint 53. No known callers.
-// Near-duplicate of RIC EntityShrinkingPowerUpRing.
+// Near-duplicate of RIC RicEntityShrinkingPowerUpRing.
 void EntityTransparentWhiteCircle(Entity* self) {
     s16 selfX;
     s16 selfY;

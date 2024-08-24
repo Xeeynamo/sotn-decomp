@@ -112,79 +112,10 @@ extern void RicSetWalk(s32);
 extern void RicSetRun(void);
 extern void RicSetFall(void);
 extern bool RicCheckInput(s32 checks);
-static void DebugShowWaitInfo(const char* str);
-extern void func_8015F9F0(Entity* entity);
 extern void RicSetSubweaponParams(Entity*);
 extern s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY);
 extern Entity* RicCreateEntFactoryFromEntity(
     Entity* entity, u32 arg1, s32 arg2);
-
-// Forward declarations for all the entity updating functions
-void func_801603B4(Entity* self);
-void RicEntityEntFactory(Entity* self);
-void func_80160FC4(Entity* self);
-void EntityCrossBoomerang(Entity* self);
-void func_80169C10(Entity* self);
-void func_8016147C(Entity* self);
-void EntityCrossShadow(Entity* self);
-void RicEntityHolyWater(Entity* self);
-void RicEntityHolyWaterFlame(Entity* self);
-void func_80161C2C(Entity* self);
-void func_80166784(Entity* self);
-void EntityHydroStorm(Entity* self);
-void RicEntitySubwpnCrashCross(Entity* self);
-void func_80167A58(Entity* self);
-void func_80167A60(Entity* self);
-void func_8016779C(Entity* self);
-void func_80167964(Entity* self);
-void func_80161EF8(Entity* self);
-void func_80167A68(Entity* self);
-void EntityRichterRevivalColumn(Entity* self);
-void func_80161FF0(Entity* self);
-void func_80160C38(Entity* self);
-void BladeDashHelper(Entity* self);
-void func_801623E0(Entity* self);
-void func_80162604(Entity* self);
-void func_80162C84(Entity* self);
-void func_80162870(Entity* self);
-void func_80160F0C(Entity* self);
-void func_80162C7C(Entity* self);
-void RicEntityPlayerBlinkWhite(Entity* self);
-void RicEntitySubwpnCrashCrossParticles(Entity* self);
-void func_801641A0(Entity* self);
-void EntityShrinkingPowerUpRing(Entity* self);
-void func_80167A70(Entity* self);
-void EntitySubwpnCrashAgunea(Entity* self);
-void EntitySubwpnCrashAxe(Entity* self);
-void RicEntitySubwpnThrownDagger(Entity* self);
-void func_80160D2C(Entity* self);
-void RicEntityHitByIce(Entity* self);
-void RicEntityHitByLightning(Entity* self);
-void RicEntitySubwpnReboundStone(Entity* self);
-void RicEntitySubwpnThrownVibhuti(Entity* self);
-void RicEntitySubwpnAgunea(Entity* self);
-void RicEntityAguneaHitEnemy(Entity* self);
-void EntitySubwpnCrashVibhuti(Entity* self);
-void RicEntityVibhutiCrashCloud(Entity* self);
-void func_8016E324(Entity* self);
-void func_8016D9C4(Entity* self);
-void func_8016DF74(Entity* self);
-void EntityBiblePage(Entity* self);
-void EntityBiblePageBeam(Entity* self);
-void RicEntitySubwpnBible(Entity* self);
-void func_80172AE8(Entity* self);
-void EntityStopwatch(Entity* self);
-void EntityStopwatchCircle(Entity* self);
-void func_801705EC(Entity* self);
-void func_8016F198(Entity* self);
-void EntityAguneaCircle(Entity* self);
-void EntityAguneaLightning(Entity* self);
-void func_8016D920(Entity* self);
-void func_801601DC(Entity* self);
-void func_8015FEA8(Entity* self);
-void StopwatchCrashDoneSparkle(Entity* self);
-void func_80170548(Entity* self);
-extern void RicEntityTeleport(Entity* self);
 
 extern s32 func_8016840C(s16 x, s16 y);
 
@@ -214,6 +145,18 @@ extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];
 extern u8 D_801548F4[6][8];
 extern FactoryBlueprint g_RicFactoryBlueprints[];
+
+extern s8 D_80156A28;
+extern s8 D_80156904;
+
+extern ButtonComboState g_bladeDashButtons;
+extern ButtonComboState D_801758E4;
+extern u16 g_RicDebugCurFrame;
+extern u16 g_RicDebugDrawFlags;
+extern u16 g_RicDebugPalette;
+extern s16 g_IsRicDebugEnter;
+extern s32 D_80175958[32];
+extern s32 D_801759D8[32];
 
 // pl_anims.c
 extern AnimationFrame* D_8015538C[];
@@ -264,29 +207,3 @@ extern AnimationFrame D_801558DC[];
 extern AnimationFrame D_8015591C[];
 extern AnimationFrame D_80155950[];
 extern FrameProperty D_80155964[];
-
-extern s8 D_80156A28;
-extern s8 D_80156904;
-
-extern s32 D_80174F80[11];
-extern u8 D_80174FAC;
-extern u8 D_80174FB0;
-extern u8 D_80174FB4;
-extern u8 D_80174FB8;
-extern Point16 D_80174FBC[16];
-extern s32 D_80174FFC;
-extern Point16 D_80175000[32];
-extern u32 D_80175080;
-extern s32 D_80175084;
-extern Point16 D_80175088[4][128];
-extern s32 D_80175888;
-extern s32 D_8017588C;
-extern s32 D_80175890;
-extern ButtonComboState g_bladeDashButtons;
-extern ButtonComboState D_801758E4;
-extern u16 g_RicDebugCurFrame;
-extern u16 g_RicDebugDrawFlags;
-extern u16 g_RicDebugPalette;
-extern s16 g_IsRicDebugEnter;
-extern s32 D_80175958[32];
-extern s32 D_801759D8[32];

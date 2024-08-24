@@ -112,7 +112,7 @@ static u8 D_8015635C[][5] = {
     {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F}};
 static const SVECTOR D_80156C50 = {0, 0, 0};
 static const SVECTOR D_80156C58 = {-96, 0, 0};
-void RicEntityGiantSpinningCross(Entity* self) {
+void RicEntityCrashCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
     VECTOR trans1;

@@ -6,7 +6,7 @@ static s16 D_80155D94[] = {16, 0, -1, 0};
 
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
-void RicEntityHolyWater(Entity* self) {
+void RicEntitySubwpnHolyWater(Entity* self) {
     s16 argY;
     s32 collision_result;
     s32 tempXVel;
@@ -161,7 +161,7 @@ void RicEntityHolyWater(Entity* self) {
 // Entity ID #8. Blueprint 7.
 static Point32 D_80155D9C[] = {{28, 0}, {28, 16}, {28, 32}, {28, 48},
                                {60, 0}, {60, 16}, {60, 32}, {60, 48}};
-void RicEntityHolyWaterFlame(Entity* self) {
+void RicEntitySubwpnHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
     s16 pad[2];
@@ -440,7 +440,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
 
 // Entity ID #21. Blueprint 22. Called in RicHandleDeadPrologue.
 // Creates the white column around Richter when he is revived in the Prologue.
-void EntityRichterRevivalColumn(Entity* self) {
+void RicEntityRevivalColumn(Entity* self) {
     Primitive* prim;
     u32 three = 3;
     u32 one = 1;
@@ -515,7 +515,7 @@ static AnimationFrame anim_cross_boomerang[] = {
     {1, FRAME(7, 0)},  {1, FRAME(8, 0)}, A_LOOP_AT(0)};
 static Point16 D_80175088[4][128];
 static s32 D_80175888;
-void EntityCrossBoomerang(Entity* self) {
+void RicEntitySubwpnCross(Entity* self) {
     s32 xAccel;
     Point16* temp_a0;
     s16 playerHitboxX;
@@ -704,16 +704,16 @@ void func_80169C10(Entity* entity) {
     }
 }
 
-// made by blueprint #5, see step 0 of EntityCrossBoomerang
+// made by blueprint #5, see step 0 of RicEntitySubwpnCross
 static s16 D_80155E68[] = {9, 10, 11, 12};
-void EntityCrossShadow(Entity* self) {
+void RicEntitySubwpnCrossTrail(Entity* self) {
     s16* temp;
 
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        // the parent pointer is set in RicEntityEntFactory.
-        // the value of unk84 is set in EntityCrossBoomerang
+        // the parent pointer is set in RicEntityFactory.
+        // the value of unk84 is set in RicEntitySubwpnCross
         self->ext.crossBoomerang.unk84 =
             self->ext.factory.parent->ext.crossBoomerang.unk84;
         self->animSet = ANIMSET_OVL(17);
@@ -860,7 +860,7 @@ static u8 D_80155E70[][4] = {
     {0x3F, 0x3F, 0x5F, 0x00}, {0x3F, 0x3F, 0x5F, 0x00},
     {0x2F, 0x2F, 0x6F, 0x00}, {0x2F, 0x2F, 0x6F, 0x00},
     {0x1F, 0x1F, 0x7F, 0x00}, {0x1F, 0x1F, 0x7F, 0x00}};
-void EntitySubwpnCrashAgunea(Entity* self) {
+void RicEntityCrashAgunea(Entity* self) {
     s32 sp10;
     s32 sp18;
     Primitive* prevPrim;
@@ -1080,7 +1080,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
 
 // RIC entity #37. Comes from blueprint 41. That's subweapon 20.
 // Subweapon 20 is crash of subweapon 2, which is the axe.
-void EntitySubwpnCrashAxe(Entity* self) {
+void RicEntityCrashAxe(Entity* self) {
     s32 sp10;
     s32 sp18;
     Primitive* prevPrim;
@@ -1294,7 +1294,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
 // Not quite the same as the one in DRA, but close.
 static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
 static s32 D_8017588C;
-void RicEntitySubwpnThrownDagger(Entity* self) {
+void RicEntitySubwpnDagger(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 offsetX;
@@ -2361,7 +2361,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
 }
 
 static s32 crash_vibhuti_timer;
-void EntitySubwpnCrashVibhuti(Entity* self) {
+void RicEntityCrashVibhuti(Entity* self) {
     FakePrim* prim;
     s32 magnitude;
     s32 angle;
