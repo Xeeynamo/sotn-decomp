@@ -62,7 +62,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->primIndex = primIndex;
         if (primIndex != -1) {
-            self->flags |= FLAG_UNK_800000;
+            self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 12; i++) {
                 if (i <= 3) {
@@ -138,7 +138,7 @@ void EntityWeaponAttack(Entity* self) {
         i = 0;
 
         xValues = D_17E000_8017AEF4;
-        self->flags |= FLAG_UNK_800000;
+        self->flags |= FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
 
         for (; i < 12; i++) {

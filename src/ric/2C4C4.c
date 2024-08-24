@@ -1314,7 +1314,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
         // Not sure what this unkB0 does, but it seems to be
         // a standard part of the Ext, and may not be entity specific.

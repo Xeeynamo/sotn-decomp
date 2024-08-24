@@ -266,12 +266,10 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
 #define FLAG_UNK_400000 0x400000
-#define FLAG_UNK_800000 0x800000
-#define FLAG_UNK_00200000 0x00200000
-
 // When an entity used AllocPrimitives and their primIndex set.
 // At their destruction they need to free the prims with FreePrimitives.
-#define FLAG_HAS_PRIMS 0x00800000
+#define FLAG_HAS_PRIMS 0x800000
+#define FLAG_UNK_00200000 0x00200000
 
 #define FLAG_UNK_01000000 0x01000000
 #define FLAG_UNK_02000000 0x02000000
