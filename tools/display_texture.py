@@ -1,3 +1,5 @@
+# Written by bismurphy, please contact in case of bugs or feature requests!
+
 # Used for debugging and especially identifying entities based on their primitives.
 # If you have a primitive pulling a texture from a Tpage, with a Clut, and
 # getting a texture from UV coordinates, this will attempt to show you the texture
