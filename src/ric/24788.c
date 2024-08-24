@@ -169,12 +169,12 @@ void func_80160C38(Entity* entity) {
             entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
-            entity->ext.generic.unkB0 = 0x12;
+            entity->ext.subweapon.subweaponId = PL_W_KICK;
             RicSetSubweaponParams(entity);
-            entity->ext.generic.unk7C.s = entity->hitboxState;
+            entity->ext.subweapon.timer = entity->hitboxState;
             entity->step++;
         }
-        entity->hitboxState = entity->ext.generic.unk7C.s;
+        entity->hitboxState = entity->ext.subweapon.timer;
         if (PLAYER.animFrameIdx < 2) {
             entity->hitboxState = 0;
         }
@@ -192,13 +192,12 @@ void func_80160D2C(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->facingLeft = PLAYER.facingLeft;
-
     if (self->step == 0) {
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
         self->hitboxOffX = 0x14;
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
-        self->ext.generic.unkB0 = 0x17;
+        self->ext.subweapon.subweaponId = PL_W_23;
         RicSetSubweaponParams(self);
         self->step++;
     }

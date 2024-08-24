@@ -959,17 +959,25 @@ typedef struct {
     s16 unk80;
     s16 unk82;
     s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
 } ET_ReboundStone;
-
-typedef struct {
-    s16 timer;
-} ET_Vibhuti;
 
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 pad[24];
-    /* 0xB0 */ s16 unkB0;
+    /* 0xB0 */ s16 subweaponId;
 } ET_GiantSpinningCross;
 
 typedef struct {
@@ -983,14 +991,13 @@ typedef struct {
     s16 unk80;
     s16 unk82;
     s16 pad[0x16];
-    s16 unkB0;
-} ET_80170F64;
+    s16 subweaponId;
+} ET_AguneaCrash;
 
 typedef struct {
     s16 timer;
     s16 size;
 } ET_stopwatchCircle;
-
 typedef struct {
     s16 unk7C;
     s16 unk7E;
@@ -1004,10 +1011,13 @@ typedef struct {
     s16 unk94;
     s16 unk96;
     struct Entity* unk98;
+#ifdef VERSION_PC
+    s32 pad[3];
+#else
     s32 pad[5];
-    s16 unkB0;
-} ET_801719A4;
-
+#endif
+    s16 subweaponId;
+} ET_StopWatch;
 typedef struct {
     s16 unk7C;
     s16 unk7E;
@@ -1022,8 +1032,12 @@ typedef struct {
     s16 unk94;
     s16 unk96;
     struct Entity* unk98;
+#ifdef VERSION_PC
+    s32 pad[3];
+#else
     s32 pad[5];
-    s16 unkB0;
+#endif
+    s16 subweaponId;
 } ET_BibleSubwpn;
 
 typedef struct {
@@ -1034,9 +1048,17 @@ typedef struct {
     s32 unk84;
     s32 unk88;
     struct Entity* parent1;
-    s32 pad[10];
+#ifndef VERSION_PC
+    s32 pad[8];
+#else
+    s32 pad[7];
+#endif
+    s16 subweaponId;
+#ifndef VERSION_PC
+    s32 pad2;
+#endif
     struct Entity* parent2;
-} ET_80128C2C;
+} ET_Agunea;
 
 typedef struct {
     s16 unk7C;
@@ -1147,19 +1169,41 @@ typedef struct {
 } ET_Teleport;
 
 typedef struct {
-    s16 timer;
-    s16 angle;
-    s16 unk80;
-    s16 unk82;
-} ET_HolyWater;
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_Subweapon;
 typedef struct {
     s16 timer;
     s16 angle;
     s16 unk80;
     s16 unk82;
-    s16 unk84;
-} ET_HolyWaterFlame;
-
+    s16 hitboxState;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_HolyWater;
 typedef struct {
     u16 unk7C;
     u16 unk7E;
@@ -1168,7 +1212,107 @@ typedef struct {
     u8 unk82;
     byte pad83;
     s32 unk84;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
 } ET_CrashCross;
+typedef struct {
+    s16 timer;
+    s16 unk7E;
+    u16 unk80;
+    u16 pad82;
+    Point16* unk84;
+#ifndef VERSION_PC
+    /* 0x88 */ s32 : 32;
+#endif
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_CrossBoomerang;
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s8 unk8A;
+    u8 unk8B[12];
+    s32 unk98;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_SubwpnAxe;
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s8 unk8A;
+    u8 unk8B[12];
+    s32 unk98;
+    s32 unk9C;
+    u16 unkA0;
+    u16 : 16;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_AxeCrash;
+typedef struct {
+    s16 timer;
+    u16 unk7E;
+    s16 unk80;
+    s16 pad82;
+    s32 unk84;
+    s32 unk88;
+    u16 unk8C;
+} ET_VibhutiCrash;
+typedef struct {
+    s16 unk7C;
+    s16 : 16;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    struct Entity* parent;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_VibhutiCrashCloud;
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    byte pad[46];
+    s16 subweaponId;
+} ET_BibleBeam;
 
 typedef struct {
     u16 unk7C;
@@ -1179,14 +1323,25 @@ typedef struct {
     byte pad83;
     s32 unk84;
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
-
 typedef struct {
-    s16 timer;
+    s16 unk7C;
     s16 unk7E;
-    u16 unk80;
-    u16 pad82;
-    Point16* unk84;
-} ET_CrossBoomerang;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_ReboundStoneCrashExplosion;
 
 typedef struct {
     f32 unk7C;
@@ -1208,35 +1363,7 @@ typedef struct {
     s16 unkB0;
     s32 unkB4;
     s32 unkB8;
-} ET_80166784;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    s16 unk88;
-    s8 unk8A;
-    u8 unk8B[12];
-    s32 unk98;
-} ET_AguneaCrash;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    s16 unk88;
-    s8 unk8A;
-    u8 unk8B[12];
-    s32 unk98;
-    s32 unk9C;
-    u16 unkA0;
-} ET_AxeCrash;
+} ET_Whip;
 
 typedef struct {
     s32 pad7c;
@@ -1249,47 +1376,11 @@ typedef struct {
 } ET_801291C4;
 
 typedef struct {
-    s16 timer;
-    u16 unk7E;
-    s16 unk80;
-    s16 pad82;
-    s32 unk84;
-    s32 unk88;
-    u16 unk8C;
-} ET_VibhutiCrash;
-
-typedef struct {
-    s16 unk7C;
-    s16 : 16;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    struct Entity* parent;
-} ET_VibhutiCrashCloud;
-
-typedef struct {
     PrimLineG2* lines[4];
     s16 unk8C;
     s16 unk8E;
     s16 unk90;
 } ET_8016D9C4;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-} ET_8016DF74;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    byte pad[46];
-    s16 unkB0;
-} ET_8016E46C;
 
 typedef struct {
     struct Primitive* prim1;
@@ -1298,6 +1389,7 @@ typedef struct {
     struct Primitive* prim4;
     s16 unk8C;
     s16 unk8E;
+    u8 unk90;
 } ET_801AF774;
 
 typedef struct {
@@ -1545,14 +1637,13 @@ typedef union { // offset=0x7C
     ET_HellfireHandler hellfireHandler;
     ET_ReboundStone reboundStone;
     ET_8016D9C4 et_8016D9C4;
-    ET_8016E46C et_8016E46C;
-    ET_8016DF74 et_8016DF74;
+    ET_BibleBeam bibleBeam;
+    ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
     ET_CrossBoomerang crossBoomerang;
-    ET_Vibhuti vibhuti;
+    ET_Subweapon subweapon;
     ET_HolyWater holywater;
-    ET_HolyWaterFlame holywaterflame;
     ET_CrashCross crashcross;
-    ET_AguneaCrash aguneaCrash;
+    ET_SubwpnAxe subwpnAxe;
     ET_AxeCrash axeCrash;
     ET_VibhutiCrash vibhutiCrash;
     ET_VibhutiCrashCloud vibCrashCloud;
@@ -1597,20 +1688,20 @@ typedef union { // offset=0x7C
     ET_Merman merman;
     ET_Merman_2 merman2;
     ET_MermanWaterSplash mermanWaterSplash;
-    ET_80128C2C et_80128C2C;
+    ET_Agunea agunea;
     ET_801291C4 et_801291C4;
     ET_8017091C et_8017091C;
-    ET_80170F64 et_80170F64;
+    ET_AguneaCrash aguneaCrash;
     ET_stopwatchCircle et_stopwatchCircle;
     ET_stopwatchSparkle et_stopWatchSparkle;
     ET_stopwatch stopwatch;
     ET_80161FF0 et_80161FF0;
     ET_80162870 et_80162870;
-    ET_80166784 et_80166784;
+    ET_Whip whip;
     ET_RichterPowerUpRing ricPowerRing;
     ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
-    ET_801719A4 et_801719A4;
+    ET_StopWatch et_801719A4;
     ET_BibleSubwpn et_BibleSubwpn;
     ET_801CF254 et_801CF254;
     ET_GurkhaSword gurkhaSword;
@@ -1682,3 +1773,26 @@ STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_DarkShield, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_MedusaShieldLaser, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_ShamanShieldStar, anim));
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeraldShieldSwirlEffect, anim));
+
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_HolyWater, subweaponId));
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_SubwpnAxe, subweaponId));
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_AxeCrash, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_CrossBoomerang, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_BibleSubwpn, subweaponId));
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_BibleBeam, subweaponId));
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_StopWatch, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_ReboundStone, subweaponId));
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) ==
+              OFF(ET_ReboundStoneCrashExplosion, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_VibhutiCrashCloud, subweaponId));
+STATIC_ASSERT(OFF(ET_Subweapon, subweaponId) == OFF(ET_Agunea, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_AguneaCrash, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_GiantSpinningCross, subweaponId));
+STATIC_ASSERT(
+    OFF(ET_Subweapon, subweaponId) == OFF(ET_CrashCross, subweaponId));

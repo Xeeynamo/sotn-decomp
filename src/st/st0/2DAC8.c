@@ -837,7 +837,7 @@ void func_801AF774(Entity* self) {
         self->drawMode |= (DRAW_TPAGE | 0x20);
         self->flags &= ~FLAG_UNK_08000000;
         D_801C2578 = 1;
-        self->ext.aguneaCrash.unk8B[5] = 1;
+        self->ext.et_801AF774.unk90 = 1;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x5C);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
@@ -1032,9 +1032,9 @@ void func_801AF774(Entity* self) {
         if (self->ext.et_801AF774.unk8E < 0) {
             self->step = 4;
         }
-        if ((self->ext.aguneaCrash.unk8B[5] != 0) &&
+        if ((self->ext.et_801AF774.unk90 != 0) &&
             (self->ext.et_801AF774.unk8E < 0x10)) {
-            self->ext.aguneaCrash.unk8B[5] = 0;
+            self->ext.et_801AF774.unk90 = 0;
             CreateEntityFromCurrentEntity(0x23, self + 1);
         }
         return;

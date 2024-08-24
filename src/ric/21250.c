@@ -1109,7 +1109,7 @@ void func_8015FA5C(s32 arg0) {
 
 void RicSetSubweaponParams(Entity* entity) {
     u16 attack;
-    SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
+    SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
 
     if ((g_Player.D_80072F00[PL_T_INVINCIBLE]) != NULL) {
         attack = subwpn->attack * 2;
@@ -1358,9 +1358,9 @@ void RicEntitySubwpnCrossTrail(Entity* self);
 void RicEntitySubwpnHolyWater(Entity* self);
 void RicEntitySubwpnHolyWaterFlame(Entity* self);
 void func_80161C2C(Entity* self);
-void func_80166784(Entity* self);
+void RicEntityWhip(Entity* self);
 void RicEntityCrashHydroStorm(Entity* self);
-void RicEntityCrashCross(Entity* self);
+void RicEntityCrashCrossBeam(Entity* self);
 void RicEntitySubwpnCrashCross(Entity* self);
 void func_80167A58(Entity* self);
 void func_80167A60(Entity* self);
@@ -1384,7 +1384,7 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void RicEntityShrinkingPowerUpRing(Entity* self);
 void func_80167A70(Entity* self);
-void RicEntityCrashAgunea(Entity* self);
+void RicEntitySubwpnAxe(Entity* self);
 void RicEntityCrashAxe(Entity* self);
 void RicEntitySubwpnDagger(Entity* self);
 void func_80160D2C(Entity* self);
@@ -1396,7 +1396,7 @@ void RicEntitySubwpnAgunea(Entity* self);
 void RicEntityAguneaHitEnemy(Entity* self);
 void RicEntityCrashVibhuti(Entity* self);
 void RicEntityVibhutiCrashCloud(Entity* self);
-void func_8016E324(Entity* self);
+void RicEntityCrashReboundStone(Entity* self);
 void func_8016D9C4(Entity* self);
 void func_8016DF74(Entity* self);
 void RicEntityCrashBible(Entity* self);
@@ -1409,7 +1409,7 @@ void func_801705EC(Entity* self);
 void func_8016F198(Entity* self);
 void RicEntityAguneaCircle(Entity* self);
 void RicEntityAguneaLightning(Entity* self);
-void func_8016D920(Entity* self);
+void RicEntityCrashReboundStoneParticles(Entity* self);
 void func_801601DC(Entity* self);
 void func_8015FEA8(Entity* self);
 void RicEntityCrashStopwatchDoneSparkle(Entity* self);
@@ -1427,9 +1427,9 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntitySubwpnHolyWater,
     RicEntitySubwpnHolyWaterFlame,
     func_80161C2C,
-    func_80166784,
+    RicEntityWhip,
     RicEntityCrashHydroStorm,
-    RicEntityCrashCross,
+    RicEntityCrashCrossBeam,
     RicEntitySubwpnCrashCross,
     func_80167A58,
     func_80167A60,
@@ -1453,7 +1453,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_801641A0,
     RicEntityShrinkingPowerUpRing,
     func_80167A70,
-    RicEntityCrashAgunea,
+    RicEntitySubwpnAxe,
     RicEntityCrashAxe,
     RicEntitySubwpnDagger,
     func_80160D2C,
@@ -1465,7 +1465,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntityAguneaHitEnemy,
     RicEntityCrashVibhuti,
     RicEntityVibhutiCrashCloud,
-    func_8016E324,
+    RicEntityCrashReboundStone,
     func_8016D9C4,
     func_8016DF74,
     RicEntityCrashBible,
@@ -1478,7 +1478,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_8016F198,
     RicEntityAguneaCircle,
     RicEntityAguneaLightning,
-    func_8016D920,
+    RicEntityCrashReboundStoneParticles,
     func_801601DC,
     func_8015FEA8,
     RicEntityCrashStopwatchDoneSparkle,
@@ -1486,8 +1486,8 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntityTeleport,
     func_801603B4};
 
-// Corresponding DRA function is func_8011A4D0
-void func_801603C4(void) {
+// Corresponding DRA function is UpdatePlayerEntities
+void RicUpdatePlayerEntities(void) {
     SubweaponDef subwpn;
     Entity* entity;
     s32 i;

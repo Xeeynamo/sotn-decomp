@@ -73,8 +73,8 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     func_80124A8C,
     func_8011A4C8};
 
-// Corresponding RIC function is func_801603C4
-void func_8011A4D0(void) {
+// Corresponding RIC function is RicUpdatePlayerEntities
+void UpdatePlayerEntities(void) {
     Entity* entity;
     s32 temp_s2;
     s32 i;

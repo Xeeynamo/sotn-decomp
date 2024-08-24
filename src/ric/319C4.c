@@ -1,11 +1,11 @@
 #include "ric.h"
 #include "sfx.h"
 
-// RIC Entity # 49. Comes from blueprint 57. Factory call in func_8016E324.
-// func_8016E324 is RIC Entity #48. Comes from blueprint 56. Blueprint 56 is
-// subweapon 25. And subweapon 25 is the crash of subweapon 7.
-// And subweapon 7 is the rebound stone. This is an entity spawned from the
-// rebound stone crash.
+// RIC Entity # 49. Comes from blueprint 57. Factory call in
+// RicEntityCrashReboundStone. RicEntityCrashReboundStone is RIC Entity #48.
+// Comes from blueprint 56. Blueprint 56 is subweapon 25. And subweapon 25 is
+// the crash of subweapon 7. And subweapon 7 is the rebound stone. This is an
+// entity spawned from the rebound stone crash.
 static s32 angles_80155EE0[] = {0x00000F80, 0x00000100, 0x00000700, 0x00000880};
 void func_8016D9C4(Entity* self) {
     Primitive* prim;
@@ -186,18 +186,19 @@ void func_8016DF74(Entity* self) {
             prim->y0 = prim->y1 = 0;
             prim = prim->next;
         }
-        self->ext.et_8016DF74.unk7C = 0x40;
-        self->ext.et_8016DF74.unk80 = 0x10;
-        self->ext.et_8016DF74.unk7E = 0;
-        self->ext.et_8016DF74.unk84 = 0;
-        self->ext.et_8016DF74.unk82 = 8;
+        self->ext.reboundStoneCrashExplosion.unk7C = 0x40;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
+        self->ext.reboundStoneCrashExplosion.unk7E = 0;
+        self->ext.reboundStoneCrashExplosion.unk84 = 0;
+        self->ext.reboundStoneCrashExplosion.unk82 = 8;
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
     case 1:
-        self->ext.et_8016DF74.unk84 += 0x20;
-        if (self->ext.et_8016DF74.unk84 > 0x120) {
-            self->ext.factory.unkB0 = 0x1D;
+        self->ext.reboundStoneCrashExplosion.unk84 += 0x20;
+        if (self->ext.reboundStoneCrashExplosion.unk84 > 0x120) {
+            self->ext.reboundStoneCrashExplosion.subweaponId =
+                PL_W_CRASH_REBOUND_EXPLOSION;
             RicSetSubweaponParams(self);
             self->posX.val = FIX(128.0);
             self->posY.val = FIX(128.0);
@@ -207,10 +208,10 @@ void func_8016DF74(Entity* self) {
         }
         break;
     case 2:
-        if (++self->ext.et_8016DF74.unk86 == 5) {
-            self->ext.et_8016DF74.unk80 = -0x18;
-        } else if (self->ext.et_8016DF74.unk86 >= 0xF) {
-            self->ext.et_8016DF74.unk82 = -0x18;
+        if (++self->ext.reboundStoneCrashExplosion.unk86 == 5) {
+            self->ext.reboundStoneCrashExplosion.unk80 = -0x18;
+        } else if (self->ext.reboundStoneCrashExplosion.unk86 >= 0xF) {
+            self->ext.reboundStoneCrashExplosion.unk82 = -0x18;
             self->step++;
         }
         break;
@@ -220,45 +221,55 @@ void func_8016DF74(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    self->ext.et_8016DF74.unk7C += self->ext.et_8016DF74.unk80;
-    if (self->ext.et_8016DF74.unk7C >= 0x100) {
-        self->ext.et_8016DF74.unk7C = 0xFF;
-        self->ext.et_8016DF74.unk80 = 0;
-    } else if (self->ext.et_8016DF74.unk7C < 0) {
-        self->ext.et_8016DF74.unk80 = 0;
-        self->ext.et_8016DF74.unk7C = 0;
+    self->ext.reboundStoneCrashExplosion.unk7C +=
+        self->ext.reboundStoneCrashExplosion.unk80;
+    if (self->ext.reboundStoneCrashExplosion.unk7C >= 0x100) {
+        self->ext.reboundStoneCrashExplosion.unk7C = 0xFF;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0;
+    } else if (self->ext.reboundStoneCrashExplosion.unk7C < 0) {
+        self->ext.reboundStoneCrashExplosion.unk80 = 0;
+        self->ext.reboundStoneCrashExplosion.unk7C = 0;
     }
-    self->ext.et_8016DF74.unk7E += self->ext.et_8016DF74.unk82;
-    if (self->ext.et_8016DF74.unk7E >= 0x100) {
-        self->ext.et_8016DF74.unk7E = 0xFF;
-        self->ext.et_8016DF74.unk82 = 0;
-    } else if (self->ext.et_8016DF74.unk7E < 0) {
-        self->ext.et_8016DF74.unk82 = 0;
-        self->ext.et_8016DF74.unk7E = 0;
+    self->ext.reboundStoneCrashExplosion.unk7E +=
+        self->ext.reboundStoneCrashExplosion.unk82;
+    if (self->ext.reboundStoneCrashExplosion.unk7E >= 0x100) {
+        self->ext.reboundStoneCrashExplosion.unk7E = 0xFF;
+        self->ext.reboundStoneCrashExplosion.unk82 = 0;
+    } else if (self->ext.reboundStoneCrashExplosion.unk7E < 0) {
+        self->ext.reboundStoneCrashExplosion.unk82 = 0;
+        self->ext.reboundStoneCrashExplosion.unk7E = 0;
         self->step += 1;
     }
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 16; i++) {
-        prim->b0 = prim->b1 = self->ext.et_8016DF74.unk7C;
-        prim->b2 = prim->b3 = self->ext.et_8016DF74.unk7E;
-        prim->r0 = prim->r1 = prim->g0 = prim->g1 = self->ext.et_8016DF74.unk7C;
-        prim->r2 = prim->r3 = prim->g2 = prim->g3 = self->ext.et_8016DF74.unk7E;
+        prim->b0 = prim->b1 = self->ext.reboundStoneCrashExplosion.unk7C;
+        prim->b2 = prim->b3 = self->ext.reboundStoneCrashExplosion.unk7E;
+        prim->r0 = prim->r1 = prim->g0 = prim->g1 =
+            self->ext.reboundStoneCrashExplosion.unk7C;
+        prim->r2 = prim->r3 = prim->g2 = prim->g3 =
+            self->ext.reboundStoneCrashExplosion.unk7E;
         if (self->step < 2U) {
             prim->x2 =
-                ((rcos(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC) + 0x80;
-            prim->x3 =
-                ((rcos((i + 1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC) +
+                ((rcos(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
+                 0xC) +
                 0x80;
-            prim->y2 = ((rsin(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
-            prim->y3 =
-                ((rsin((i + 1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
+            prim->x3 = ((rcos((i + 1) << 7) *
+                         self->ext.reboundStoneCrashExplosion.unk84) >>
+                        0xC) +
+                       0x80;
+            prim->y2 =
+                ((rsin(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
+                 0xC);
+            prim->y3 = ((rsin((i + 1) << 7) *
+                         self->ext.reboundStoneCrashExplosion.unk84) >>
+                        0xC);
         }
         prim = prim->next;
     }
     return;
 }
 
-void func_8016E324(Entity* entity) {
+void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
@@ -319,11 +330,11 @@ void RicEntityCrashBibleBeam(Entity* self) {
         }
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         if (self->facingLeft) {
-            self->ext.et_8016E46C.unk7C = -16;
-            self->ext.et_8016E46C.unk7E = -2;
+            self->ext.bibleBeam.unk7C = -16;
+            self->ext.bibleBeam.unk7E = -2;
         } else {
-            self->ext.et_8016E46C.unk7C = 16;
-            self->ext.et_8016E46C.unk7E = 2;
+            self->ext.bibleBeam.unk7C = 16;
+            self->ext.bibleBeam.unk7E = 2;
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
@@ -342,8 +353,8 @@ void RicEntityCrashBibleBeam(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
-            self->ext.et_8016E46C.unkB0 = 0x11;
+        if (++self->ext.bibleBeam.unk80 >= 0x3C) {
+            self->ext.bibleBeam.subweaponId = PL_W_BIBLE_BEAM;
             RicSetSubweaponParams(self);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
             g_api.PlaySfx(SFX_TELEPORT_BANG_A);
@@ -351,15 +362,15 @@ void RicEntityCrashBibleBeam(Entity* self) {
         }
         break;
     case 2:
-        self->ext.et_8016E46C.unk80++;
-        self->ext.et_8016E46C.unk7E += self->ext.et_8016E46C.unk7C;
-        var_s3 = bible_pages_pos[1].x + self->ext.et_8016E46C.unk7E;
+        self->ext.bibleBeam.unk80++;
+        self->ext.bibleBeam.unk7E += self->ext.bibleBeam.unk7C;
+        var_s3 = bible_pages_pos[1].x + self->ext.bibleBeam.unk7E;
         if (var_s3 < -0x50 || var_s3 > 0x150) {
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_8016E46C.unk80 >= 0x78) {
+        if (++self->ext.bibleBeam.unk80 >= 0x78) {
             DestroyEntity(self);
             return;
         }
@@ -372,30 +383,30 @@ void RicEntityCrashBibleBeam(Entity* self) {
         if (var_s3 >= BIBLE_PAGE_COUNT) {
             var_s3 = i - 4;
         }
-        temp_v1 = (rsin((self->ext.et_8016E46C.unk80 * 20) + (i << 8)) * 96);
+        temp_v1 = (rsin((self->ext.bibleBeam.unk80 * 20) + (i << 8)) * 96);
         prim->r0 = prim->r1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (i << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 15) + (i << 8)) * 96;
         prim->g0 = prim->g1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (i << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 10) + (i << 8)) * 96;
         prim->b0 = prim->b1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (var_s3 << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 15) + (var_s3 << 8)) * 96;
         prim->r2 = prim->r3 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (var_s3 << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 10) + (var_s3 << 8)) * 96;
         prim->g2 = prim->g3 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (var_s3 << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 20) + (var_s3 << 8)) * 96;
         prim->b2 = prim->b3 = abs(temp_v1 >> 0xc);
         prim->x1 = bible_pages_pos[i].x;
         prim->y0 = prim->y1 = bible_pages_pos[i].y;
         prim->x3 = bible_pages_pos[var_s3].x;
         prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
-        prim->x0 = bible_pages_pos[i].x + self->ext.et_8016E46C.unk7E;
-        prim->x2 = bible_pages_pos[var_s3].x + self->ext.et_8016E46C.unk7E;
+        prim->x0 = bible_pages_pos[i].x + self->ext.bibleBeam.unk7E;
+        prim->x2 = bible_pages_pos[var_s3].x + self->ext.bibleBeam.unk7E;
         if (var_s7 < abs(bible_pages_pos[i].y)) {
             var_s7 = abs(bible_pages_pos[i].y);
         }
         prim = prim->next;
     }
-    halfwidth = self->ext.et_8016E46C.unk7E / 2;
+    halfwidth = self->ext.bibleBeam.unk7E / 2;
     hitboxOffX = !self->facingLeft ? halfwidth : -halfwidth;
     self->hitboxOffX = hitboxOffX;
     self->hitboxWidth = abs(hitboxOffX);
@@ -1337,27 +1348,27 @@ void RicEntityAguneaCircle(Entity* self) {
             prim->drawMode = 0x200 | DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.et_80170F64.unkB0 = 0x1A;
+        self->ext.aguneaCrash.subweaponId = PL_W_CRASH_AGUNEA;
         RicSetSubweaponParams(self);
         self->step++;
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
+        for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
             prim = prim->next;
         }
         prim->drawMode &= ~DRAW_HIDE;
-        if (++self->ext.et_80170F64.unk7C >= 4) {
-            self->ext.et_80170F64.unk7C = 0;
+        if (++self->ext.aguneaCrash.unk7C >= 4) {
+            self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
         break;
     case 2:
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
+        for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
             prim = prim->next;
         }
-        if (self->ext.et_80170F64.unk7C == 0) {
+        if (self->ext.aguneaCrash.unk7C == 0) {
             prim->drawMode = 0x235;
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
@@ -1368,20 +1379,20 @@ void RicEntityAguneaCircle(Entity* self) {
             prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
                 prim->r3 = prim->g3 = 0x7F;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0xFF;
-            self->ext.et_80170F64.unk7E = 1;
-            self->ext.et_80170F64.unk80 = 2;
-            self->ext.et_80170F64.unk82 = 0x64;
+            self->ext.aguneaCrash.unk7E = 1;
+            self->ext.aguneaCrash.unk80 = 2;
+            self->ext.aguneaCrash.unk82 = 0x64;
         } else {
-            self->ext.et_80170F64.unk80 += 2;
+            self->ext.aguneaCrash.unk80 += 2;
             prim->drawMode |= DRAW_HIDE;
         }
-        if (++self->ext.et_80170F64.unk7C >= 4) {
+        if (++self->ext.aguneaCrash.unk7C >= 4) {
             // think this loop has to count down since we assign to i
             for (i = LIGHTNING_COUNT - 1; i >= 0; i--) {
                 g_AguneaParams[i] = i;
             }
             AguneaShuffleParams(LIGHTNING_COUNT, &g_AguneaParams[0]);
-            self->ext.et_80170F64.unk7C = 0;
+            self->ext.aguneaCrash.unk7C = 0;
             g_api.PlaySfx(SFX_THUNDER_B);
             self->step++;
         }
@@ -1389,23 +1400,23 @@ void RicEntityAguneaCircle(Entity* self) {
     case 3:
         RicCreateEntFactoryFromEntity(
             self,
-            FACTORY(g_AguneaParams[self->ext.et_80170F64.unk7C] * 0x100, 68),
+            FACTORY(g_AguneaParams[self->ext.aguneaCrash.unk7C] * 0x100, 68),
             0);
-        if (++self->ext.et_80170F64.unk7C >= LIGHTNING_COUNT) {
+        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT) {
             self->hitboxHeight = self->hitboxWidth = 0x80;
-            self->ext.et_80170F64.unk7C = 0;
+            self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
         break;
     case 4:
-        if (++self->ext.et_80170F64.unk7C >= LIGHTNING_COUNT + 1) {
+        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT + 1) {
             self->step++;
         }
         break;
     case 5:
-        self->ext.et_80170F64.unk80 += 2;
-        self->ext.et_80170F64.unk82 -= 10;
-        if (self->ext.et_80170F64.unk82 <= 0) {
+        self->ext.aguneaCrash.unk80 += 2;
+        self->ext.aguneaCrash.unk82 -= 10;
+        if (self->ext.aguneaCrash.unk82 <= 0) {
             self->hitboxHeight = self->hitboxWidth = 0;
             self->step++;
         }
@@ -1415,16 +1426,16 @@ void RicEntityAguneaCircle(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (self->ext.et_80170F64.unk7E != 0) {
+    if (self->ext.aguneaCrash.unk7E != 0) {
         prim = &g_PrimBuf[self->primIndex];
-        prim->x0 = prim->x2 = self->posX.i.hi - self->ext.et_80170F64.unk80;
-        prim->x1 = prim->x3 = self->posX.i.hi + self->ext.et_80170F64.unk80;
-        prim->y0 = prim->y1 = self->posY.i.hi - self->ext.et_80170F64.unk80;
-        prim->y2 = prim->y3 = self->posY.i.hi + self->ext.et_80170F64.unk80;
+        prim->x0 = prim->x2 = self->posX.i.hi - self->ext.aguneaCrash.unk80;
+        prim->x1 = prim->x3 = self->posX.i.hi + self->ext.aguneaCrash.unk80;
+        prim->y0 = prim->y1 = self->posY.i.hi - self->ext.aguneaCrash.unk80;
+        prim->y2 = prim->y3 = self->posY.i.hi + self->ext.aguneaCrash.unk80;
         prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
-            prim->r3 = prim->g3 = (self->ext.et_80170F64.unk82 * 0x7F) / 100;
+            prim->r3 = prim->g3 = (self->ext.aguneaCrash.unk82 * 0x7F) / 100;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            (self->ext.et_80170F64.unk82 * 0xFF) / 100;
+            (self->ext.aguneaCrash.unk82 * 0xFF) / 100;
     }
     return;
 }
@@ -1582,7 +1593,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             RicCreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
             self->ext.et_801719A4.unk94 = 0;
         }
-        self->ext.et_801719A4.unkB0 = 6;
+        self->ext.et_801719A4.subweaponId = PL_W_STOPWATCH;
         RicSetSubweaponParams(self);
         g_api.PlaySfx(0x6AD);
         if (self->ext.et_801719A4.unk94 < 2) {
@@ -2016,7 +2027,7 @@ void RicEntitySubpwnBible(Entity* self) {
         prim->priority = PLAYER.zPriority + 1;
         prim->drawMode = 0x108;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
-        self->ext.et_BibleSubwpn.unkB0 = 5;
+        self->ext.et_BibleSubwpn.subweaponId = PL_W_BIBLE;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;

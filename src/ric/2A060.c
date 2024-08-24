@@ -277,7 +277,7 @@ static u16 D_80155C98[] = {
     0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15};
 static u32 D_80175080;
 static s32 D_80175084;
-void func_80166784(Entity* self) {
+void RicEntityWhip(Entity* self) {
     byte stackpad[40];
     s32 sp38;
     s16 upperParams;
@@ -316,8 +316,8 @@ void func_80166784(Entity* self) {
     lowerParams = self->params & 0xFF;
     upperParams = self->params & 0xFF00;
     if (lowerParams == 0) {
-        if (self->ext.et_80166784.unkA6 != 0) {
-            self->ext.et_80166784.unkA6--;
+        if (self->ext.whip.unkA6 != 0) {
+            self->ext.whip.unkA6--;
         }
     }
     playerUnk46 = g_Player.unk46;
@@ -331,47 +331,47 @@ void func_80166784(Entity* self) {
         self->velocityY = 0;
         self->palette = 0x8148;
         if (!PLAYER.facingLeft) {
-            self->ext.et_80166784.unk88 = playerUnk46;
+            self->ext.whip.unk88 = playerUnk46;
         } else {
-            self->ext.et_80166784.unk88 = 3;
+            self->ext.whip.unk88 = 3;
         }
-        self->ext.et_80166784.unk8C = 0x600;
+        self->ext.whip.unk8C = 0x600;
     }
     if (self->step != 0) {
-        xDiff = self->posX.val - self->ext.et_80166784.unk98;
-        yDiff = self->posY.val - self->ext.et_80166784.unk9C;
-        self->ext.et_80166784.unk7C.val += xDiff;
-        self->ext.et_80166784.unk80.val += yDiff;
+        xDiff = self->posX.val - self->ext.whip.unk98;
+        yDiff = self->posY.val - self->ext.whip.unk9C;
+        self->ext.whip.unk7C.val += xDiff;
+        self->ext.whip.unk80.val += yDiff;
     }
     directionsPressed = g_Player.padPressed & 0xF000;
     if (directionsPressed == PAD_UP) {
-        var_s4 = D_80155B2C[0][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[0][self->ext.whip.unk88];
     }
     if (directionsPressed == PAD_DOWN) {
-        var_s4 = D_80155B2C[3][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[3][self->ext.whip.unk88];
     }
     if (directionsPressed == PAD_RIGHT) {
-        var_s4 = D_80155B2C[1][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[1][self->ext.whip.unk88];
     }
     if (directionsPressed == PAD_LEFT) {
-        var_s4 = D_80155B2C[2][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[2][self->ext.whip.unk88];
     }
     if (directionsPressed == (PAD_UP + PAD_RIGHT)) {
-        var_s4 = D_80155B2C[4][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[4][self->ext.whip.unk88];
     }
     if (directionsPressed == (PAD_UP + PAD_LEFT)) {
-        var_s4 = D_80155B2C[5][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[5][self->ext.whip.unk88];
     }
     if (directionsPressed == (PAD_DOWN + PAD_RIGHT)) {
-        var_s4 = D_80155B2C[6][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[6][self->ext.whip.unk88];
     }
     if (directionsPressed == (PAD_DOWN + PAD_LEFT)) {
-        var_s4 = D_80155B2C[7][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[7][self->ext.whip.unk88];
     }
     if (directionsPressed == 0) {
-        var_s4 = D_80155B2C[8][self->ext.et_80166784.unk88];
+        var_s4 = D_80155B2C[8][self->ext.whip.unk88];
     }
-    self->ext.et_80166784.unk86 = 0;
+    self->ext.whip.unk86 = 0;
     if (lowerParams == 0) {
         if (self->step == 1) {
             if (PLAYER.step == PL_S_CROUCH) {
@@ -428,7 +428,7 @@ void func_80166784(Entity* self) {
             self->hitboxHeight = 3;
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
-            self->ext.et_80166784.unkB0 = 0xE;
+            self->ext.whip.unkB0 = PL_W_WHIP;
             RicSetSubweaponParams(self);
         }
         if (lowerParams == 0) {
@@ -443,11 +443,11 @@ void func_80166784(Entity* self) {
         self->posX.val = var_s3;
         self->posY.val = var_s5;
         self->flags = 0x04070000;
-        self->ext.et_80166784.unk8C = 0x500;
-        self->ext.et_80166784.unk7C.val = self->posX.val;
-        self->ext.et_80166784.unk80.val = self->posY.val;
-        self->ext.et_80166784.unk98 = self->ext.et_80166784.unk7C.val;
-        self->ext.et_80166784.unk9C = self->ext.et_80166784.unk80.val;
+        self->ext.whip.unk8C = 0x500;
+        self->ext.whip.unk7C.val = self->posX.val;
+        self->ext.whip.unk80.val = self->posY.val;
+        self->ext.whip.unk98 = self->ext.whip.unk7C.val;
+        self->ext.whip.unk9C = self->ext.whip.unk80.val;
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (self->primIndex != -1) {
             self->flags |= 0x800000;
@@ -458,26 +458,26 @@ void func_80166784(Entity* self) {
             prim->drawMode = 0x35;
         }
         self->step = 2;
-        func_80166784(self);
+        RicEntityWhip(self);
         break;
     case 1:
         if (upperParams == 0) {
             if ((u16)(self->palette + 0x7EC0) < 8) {
-                if (self->ext.et_80166784.unkA4 != 0) {
-                    self->ext.et_80166784.unkA4--;
+                if (self->ext.whip.unkA4 != 0) {
+                    self->ext.whip.unkA4--;
                 } else {
                     self->palette++;
                 }
             }
-        } else if (self->ext.et_80166784.unkA4 != 0) {
+        } else if (self->ext.whip.unkA4 != 0) {
             if (!(lowerParams & 1)) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
-                self->ext.et_80166784.unkA4 = 0;
+                self->ext.whip.unkA4 = 0;
             }
         }
         if (lowerParams < 8) {
-            if (self->ext.et_80166784.unk84 != 0) {
-                if (--self->ext.et_80166784.unk84 == 0) {
+            if (self->ext.whip.unk84 != 0) {
+                if (--self->ext.whip.unk84 == 0) {
                     if (self->velocityY < 0) {
                         self->velocityY = 0;
                     }
@@ -486,7 +486,7 @@ void func_80166784(Entity* self) {
             } else {
                 self->velocityX = self->velocityX * 3 / 4;
             }
-            if (self->ext.et_80166784.unk88 == var_s4) {
+            if (self->ext.whip.unk88 == var_s4) {
                 break;
             }
 
@@ -501,9 +501,9 @@ void func_80166784(Entity* self) {
                 } else {
                     a0 = self;
                 }
-                if (self->ext.et_80166784.unkA6 == 0) {
+                if (self->ext.whip.unkA6 == 0) {
                     g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
-                    self->ext.et_80166784.unkA6 = 0x20;
+                    self->ext.whip.unkA6 = 0x20;
                 }
                 if (upperParams == 0) {
                     a0 = self;
@@ -515,7 +515,7 @@ void func_80166784(Entity* self) {
                 RicCreateEntFactoryFromEntity(a0, a1, 0);
             }
 
-            self->ext.et_80166784.unk84 = 6;
+            self->ext.whip.unk84 = 6;
             if (var_s4 == 0) {
                 if (!PLAYER.facingLeft) {
                     xDiff = D_80155A08[0];
@@ -539,7 +539,7 @@ void func_80166784(Entity* self) {
                 self->velocityY = D_80155AE4[var_s4].x;
                 self->velocityX = D_80155AE4[var_s4].y;
             }
-            self->ext.et_80166784.unk88 = var_s4;
+            self->ext.whip.unk88 = var_s4;
         }
         break;
     case 2:
@@ -585,16 +585,16 @@ void func_80166784(Entity* self) {
                 randy = rand() | ~0x3FF;
                 self->velocityX = (rcos(randy) << 0xB) >> 4;
                 self->velocityY = -(rsin(randy) << 0xB) >> 3;
-                self->ext.et_80166784.unk8C = 0x600;
+                self->ext.whip.unk8C = 0x600;
                 break;
             case 4:
-                self->ext.et_80166784.unk8C = 0x3C0;
+                self->ext.whip.unk8C = 0x3C0;
                 if (PLAYER.animFrameDuration == 1) {
                     self->velocityX = FIX(-8);
                 }
                 break;
             case 5:
-                self->ext.et_80166784.unk8C += 0xC0;
+                self->ext.whip.unk8C += 0xC0;
                 if (self->flags & FLAG_HAS_PRIMS) {
                     g_api.FreePrimitives(self->primIndex);
                     self->flags &= ~FLAG_HAS_PRIMS;
@@ -607,7 +607,7 @@ void func_80166784(Entity* self) {
                     }
                 }
                 if (lowerParams == (0x10 - PLAYER.animFrameDuration)) {
-                    self->ext.et_80166784.unk8C = 0x600;
+                    self->ext.whip.unk8C = 0x600;
                 }
                 // This very well might be a switch
                 if (PLAYER.animFrameDuration > 14) {
@@ -642,7 +642,7 @@ void func_80166784(Entity* self) {
         }
         break;
     }
-    temp_a2 = self->ext.et_80166784.unk8C;
+    temp_a2 = self->ext.whip.unk8C;
     temp_s6 = self->posX.val;
     sp38 = self->posY.val;
     if (lowerParams == 0) {
@@ -657,8 +657,8 @@ void func_80166784(Entity* self) {
         var_s7 = (self - 7)->posY.val;
         self->posY.val = (yDiff + var_s7) / 2;
     } else {
-        temp_a3 = temp_s6 - self->ext.et_80166784.unk7C.val;
-        var_s7 = sp38 - self->ext.et_80166784.unk80.val;
+        temp_a3 = temp_s6 - self->ext.whip.unk7C.val;
+        var_s7 = sp38 - self->ext.whip.unk80.val;
         if (self->step == 1) {
             if (self->velocityY < FIX(0.5)) {
                 self->posX.val = temp_a3 + temp_s6;
@@ -695,14 +695,14 @@ void func_80166784(Entity* self) {
             self->posY.val = var_s5 + yDiff;
         }
     }
-    self->ext.et_80166784.unk7C.val = temp_s6;
-    self->ext.et_80166784.unk80.val = sp38;
-    self->ext.et_80166784.unkA0 = var_s7;
-    self->ext.et_80166784.unk98 = self->posX.val;
-    self->ext.et_80166784.unk9C = self->posY.val;
+    self->ext.whip.unk7C.val = temp_s6;
+    self->ext.whip.unk80.val = sp38;
+    self->ext.whip.unkA0 = var_s7;
+    self->ext.whip.unk98 = self->posX.val;
+    self->ext.whip.unk9C = self->posY.val;
     if (lowerParams == 0) {
         D_80175080 = var_s4;
-        D_80175084 = self->ext.et_80166784.unk88;
+        D_80175084 = self->ext.whip.unk88;
     }
     if ((self->primIndex != -1) && (self->flags & FLAG_HAS_PRIMS)) {
         prim = &g_PrimBuf[self->primIndex];
@@ -710,9 +710,9 @@ void func_80166784(Entity* self) {
         prim->y0 = self->posY.i.hi;
         // for some reason need this to make it use lh instead of lhu for x1 and
         // y1.
-        dumb_temp = self->ext.et_80166784.unk7C;
+        dumb_temp = self->ext.whip.unk7C;
         prim->x1 = dumb_temp.i.hi;
-        dumb_temp = self->ext.et_80166784.unk80;
+        dumb_temp = self->ext.whip.unk80;
         prim->y1 = dumb_temp.i.hi;
         if (PLAYER.animFrameIdx == 4) {
             prim->priority = PLAYER.zPriority + 4;
@@ -947,7 +947,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->ext.factory.unkB0 = 0x10;
+        self->ext.subweapon.subweaponId = PL_W_HYDROSTORM;
         RicSetSubweaponParams(self);
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000;
@@ -988,7 +988,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
         if (self->params == 1) {
             g_api.func_801027C4(3);
         }
-        self->ext.timer.t = 0x160;
+        self->ext.subweapon.timer = 0x160;
         if ((self->params < 32) && !(self->params & 3)) {
             g_api.PlaySfx(0x708);
         }
@@ -1025,7 +1025,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
             }
             line = line->next;
         }
-        self->ext.timer.t++;
+        self->ext.subweapon.timer++;
         break;
 
     case 2:
