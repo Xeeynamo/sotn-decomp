@@ -1,5 +1,66 @@
 #include "ric.h"
 
+AnimationFrame* D_8015538C[] = {anim_stand, anim_stand};
+AnimationFrame D_80155394[] = {{64, FRAME(38, 2)}, A_LOOP_AT(0)};
+AnimationFrame D_8015539C[] = {
+    {2, FRAME(55, 2)},  {1, FRAME(144, 2)}, {2, FRAME(145, 2)},
+    {3, FRAME(144, 2)}, {4, FRAME(145, 2)}, {12, FRAME(144, 2)},
+    {4, FRAME(16, 2)},  A_JUMP_AT(1)};
+AnimationFrame anim_stand[] = {
+    {7, FRAME(1, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(3, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(1, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(3, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(1, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(3, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(1, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(3, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(1, 2)},
+    {7, FRAME(2, 2)},
+    {7, FRAME(3, 2)},
+    {7, FRAME(2, 2)},
+    {8, FRAME(1, 2)},
+    {8, FRAME(2, 2)},
+    {8, FRAME(3, 2)},
+    {8, FRAME(2, 2)},
+    {9, FRAME(1, 2)},
+    {9, FRAME(2, 2)},
+    {9, FRAME(3, 2)},
+    {9, FRAME(2, 2)},
+    {10, FRAME(1, 2)},
+    {10, FRAME(2, 2)},
+    {10, FRAME(3, 2)},
+    {10, FRAME(2, 2)},
+    {11, FRAME(1, 2)},
+    {11, FRAME(2, 2)},
+    {11, FRAME(3, 2)},
+    {11, FRAME(2, 2)},
+    {12, FRAME(1, 2)},
+    {12, FRAME(2, 2)},
+    {13, FRAME(3, 2)},
+    {13, FRAME(2, 2)},
+    {15, FRAME(1, 2)},
+    {15, FRAME(2, 2)},
+    {15, FRAME(3, 2)},
+    {128, FRAME(2, 2)},
+    {4, FRAME(4, 2)},
+    {4, FRAME(5, 2)},
+    {4, FRAME(6, 2)},
+    {64, FRAME(7, 2)},
+    A_END};
+AnimationFrame D_80155480[] = {{64, FRAME(7, 2)}, A_LOOP_AT(0)};
+AnimationFrame ric_anim_walk[] = {
+    {3, FRAME(8, 2)},  {6, FRAME(9, 2)},  {5, FRAME(10, 2)}, {6, FRAME(11, 2)},
+    {7, FRAME(12, 2)}, {6, FRAME(13, 2)}, {5, FRAME(14, 2)}, {6, FRAME(15, 2)},
+    {4, FRAME(8, 2)},  A_LOOP_AT(0)};
 AnimationFrame anim_land_strong_impact[] = {
     0x0001, 0x0410, 0x0001, 0x0611, 0x0010, 0x0612, A_END};
 AnimationFrame anim_crouch[] = {{64, FRAME(18, 6)}, A_END};
@@ -117,59 +178,4 @@ FrameProperty D_80155964[] = {
     0x00, 0x00, 0x09, 0x10, 0xFF, 0x11, 0x0C, 0x07, 0xF9, 0x0A, 0x08, 0x05,
     0xFE, 0x06, 0x08, 0x08, 0xFA, 0x06, 0x07, 0x11, 0x04, 0x06, 0x0A, 0x09,
     0xFD, 0x03, 0x09, 0x14, 0x00, 0x08, 0x08, 0x08, 0xFF, 0x0A, 0x0C, 0x07,
-};
-
-Point16 D_801559AC[] = {
-    0x0007, 0xFFFE, 0x0010, 0xFFFE, 0x0005, 0xFFEE, 0xFFF2,
-    0xFFEE, 0xFFE9, 0xFFFA, 0xFFE8, 0xFFFA, 0xFFE7, 0xFFFA,
-};
-
-Point16 D_801559C8[] = {
-    0x0007, 0x000B, 0x0010, 0x000B, 0x0005, 0xFFFB, 0xFFF2,
-    0xFFFB, 0xFFE9, 0x000B, 0xFFE8, 0x000B, 0xFFE7, 0x000B,
-};
-
-Point16 D_801559E4[] = {
-    0xFFF1, 0xFFFC, 0xFFF2, 0xFFF2, 0xFFF7, 0xFFFA, 0xFFEE, 0xFFFA, 0xFFF7,
-    0x0002, 0xFFF5, 0xFFF7, 0xFFF0, 0xFFF6, 0xFFF9, 0x0000, 0xFFF2, 0x0000,
-};
-
-s16 D_80155A08[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
-                    0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
-
-Point16 D_80155A1C[] = {
-    0xFFF1, 0x0009, 0xFFF2, 0xFFFF, 0xFFF7, 0x0007, 0xFFEE, 0x0009, 0xFFF7,
-    0x000F, 0xFFF5, 0x0004, 0xFFF0, 0x0003, 0xFFF9, 0x000D, 0xFFF2, 0x000D,
-};
-
-s16 D_80155A40[] = {
-    0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
-    0x0010, 0x000B, 0x000E, 0x0007, 0x0000,
-};
-
-Point16 D_80155A54[] = {
-    0xFFF1, 0xFFFA, 0xFFF2, 0xFFF0, 0xFFF7, 0xFFF8, 0xFFEE, 0xFFFA, 0xFFF7,
-    0x0000, 0xFFF5, 0xFFF5, 0xFFF0, 0xFFF4, 0xFFF9, 0xFFFE, 0xFFF2, 0xFFFE};
-
-s16 D_80155A78[] = {
-    0x000F, 0x000E, 0x0012, 0x0009, 0x0009, 0x0010, 0x000B, 0x000E, 0x0007,
-    0x0000, 0x0001, 0x0000, 0x0005, 0x0000, 0x0002, 0x0000, 0x0007, 0x0000,
-    0x0004, 0x0000, 0x0008, 0x0000, 0x0003, 0x0000, 0x0006, 0x0000};
-
-Point32 D_80155AAC[] = {
-    0x00040000, 0x00020000, 0x00040000, 0xFFFD8000, 0x00100000,
-    0x00000000, 0x00100000, 0x00000000, 0xFFEC0000, 0x00000000,
-    0xFFE00000, 0x00000000, 0xFFCC0000, 0x00000000};
-
-Point32 D_80155AE4[] = {
-    0x00000000, 0x00000000, 0xFFFD8000, 0x00000000, 0xFFFFE000, 0x00020000,
-    0xFFFFE000, 0xFFFE0000, 0x00008000, 0x00000000, 0xFFFE0000, 0x00018000,
-    0xFFFE0000, 0xFFFE8000, 0x00008000, 0x00018000, 0x00008000, 0xFFFE8000};
-
-s32 D_80155B2C[][9] = {
-    {1, 1, 5, 6, 0, 1, 1, 0, 0}, {2, 5, 2, 0, 7, 2, 0, 2, 0},
-    {3, 6, 0, 3, 8, 0, 3, 0, 3}, {4, 0, 7, 8, 4, 0, 0, 4, 4},
-    {5, 5, 5, 0, 0, 5, 1, 2, 0}, {6, 6, 0, 6, 0, 1, 6, 0, 3},
-    {7, 0, 7, 0, 7, 1, 0, 7, 4}, {8, 0, 0, 8, 8, 4, 3, 7, 8},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0},
 };

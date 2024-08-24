@@ -1,6 +1,9 @@
 #include "ric.h"
 #include "sfx.h"
 
+// Unused?
+static s16 D_80155D94[] = {16, 0, -1, 0};
+
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
 void RicEntityHolyWater(Entity* self) {
@@ -156,6 +159,8 @@ void RicEntityHolyWater(Entity* self) {
 }
 
 // Entity ID #8. Blueprint 7.
+static Point32 D_80155D9C[] = {{28, 0}, {28, 16}, {28, 32}, {28, 48},
+                               {60, 0}, {60, 16}, {60, 32}, {60, 48}};
 void RicEntityHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
@@ -308,6 +313,14 @@ void RicEntityHolyWaterFlame(Entity* self) {
 
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
 // That's the crash for subweapon 4. That's the cross.
+static u16 crash_cross_img_data[] = {
+    0x94A5, 0x98C6, 0x9CE7, 0xA108, 0xA529, 0xA94A, 0xAD6B, 0xB18C,
+    0xB5AD, 0xB9CE, 0xBDEF, 0xC210, 0xC631, 0xCA52, 0xCE73, 0xD294,
+    0xD6B5, 0xDAD6, 0xDEF7, 0xE318, 0xE318, 0xE318, 0xE318, 0xE318,
+    0xE318, 0xE318, 0xE318, 0xE318, 0xE318, 0xDEF7, 0xDAD6, 0xD6B5,
+    0xD294, 0xCE73, 0xCA52, 0xC631, 0xC210, 0xBDEF, 0xB9CE, 0xB5AD,
+    0xB18C, 0xAD6B, 0xA94A, 0xA529, 0xA108, 0x9CE7, 0x98C6, 0x94A5};
+static RECT crash_cross_img_vram = {0x0301, 0x01F8, 0x0030, 0x0001};
 void RicEntitySubwpnCrashCross(Entity* self) {
     Primitive* prim;
     s16 right;
@@ -331,7 +344,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->zPriority = 0xC2;
         self->ext.factory.unkB0 = 0xC;
         RicSetSubweaponParams(self);
-        LoadImage(&D_80155E3C, D_80155DDC);
+        LoadImage(&crash_cross_img_vram, crash_cross_img_data);
         g_api.PlaySfx(0x6DF);
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
@@ -425,7 +438,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     return;
 }
 
-// Entity ID #21. Blueprint 22. Called in func_8015B348.
+// Entity ID #21. Blueprint 22. Called in RicHandleDeadPrologue.
 // Creates the white column around Richter when he is revived in the Prologue.
 void EntityRichterRevivalColumn(Entity* self) {
     Primitive* prim;
@@ -443,7 +456,7 @@ void EntityRichterRevivalColumn(Entity* self) {
         self->posY.i.hi = 0x78;
         self->ext.ricColumn.unk80 = 1;
         self->zPriority = 0xC2;
-        LoadImage(&D_80155E3C, &D_80155DDC);
+        LoadImage(&crash_cross_img_vram, crash_cross_img_data);
         self->step += 1;
         break;
     case 1:
@@ -496,6 +509,10 @@ void EntityRichterRevivalColumn(Entity* self) {
     prim->priority = self->zPriority;
 }
 
+static AnimationFrame anim_cross_boomerang[] = {
+    {36, FRAME(1, 0)}, {1, FRAME(2, 0)}, {1, FRAME(3, 0)},
+    {1, FRAME(4, 0)},  {1, FRAME(5, 0)}, {1, FRAME(6, 0)},
+    {1, FRAME(7, 0)},  {1, FRAME(8, 0)}, A_LOOP_AT(0)};
 void EntityCrossBoomerang(Entity* self) {
     s32 xAccel;
     Point16* temp_a0;
@@ -514,7 +531,7 @@ void EntityCrossBoomerang(Entity* self) {
         RicCreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
         self->animSet = ANIMSET_OVL(0x11);
         self->unk5A = 0x66;
-        self->anim = D_80155E44;
+        self->anim = anim_cross_boomerang;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         RicSetSpeedX(FIX(3.5625));
@@ -580,8 +597,8 @@ void EntityCrossBoomerang(Entity* self) {
             return;
         }
         // Alternatively, if we're offscreen, we will also be destroyed.
-        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
-            (self->facingLeft != 0 && self->posX.i.hi >= 0x121)) {
+        if ((!self->facingLeft && self->posX.i.hi < -0x20) ||
+            (self->facingLeft && self->posX.i.hi >= 0x121)) {
             self->step = 7;
             self->ext.crossBoomerang.timer = 0x20;
             return;
@@ -686,6 +703,7 @@ void func_80169C10(Entity* entity) {
 }
 
 // made by blueprint #5, see step 0 of EntityCrossBoomerang
+static s16 D_80155E68[] = {9, 10, 11, 12};
 void EntityCrossShadow(Entity* self) {
     s16* temp;
 
@@ -834,6 +852,12 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
 
 // RIC entity #36. Uses RIC blueprint 67. Comes from subweapon 28.
 // Subweapon 28 is the crash of subweapon 9, which is the Agunea (thunder).
+static u8 D_80155E70[][4] = {
+    {0x4F, 0x4F, 0x4F, 0x00}, {0x4F, 0x4F, 0x4F, 0x00},
+    {0x4F, 0x4F, 0x4F, 0x00}, {0x3F, 0x3F, 0x5F, 0x00},
+    {0x3F, 0x3F, 0x5F, 0x00}, {0x3F, 0x3F, 0x5F, 0x00},
+    {0x2F, 0x2F, 0x6F, 0x00}, {0x2F, 0x2F, 0x6F, 0x00},
+    {0x1F, 0x1F, 0x7F, 0x00}, {0x1F, 0x1F, 0x7F, 0x00}};
 void EntitySubwpnCrashAgunea(Entity* self) {
     s32 sp10;
     s32 sp18;
@@ -978,7 +1002,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 var_s0 = 0x560;
                 var_s1 = 0x2A0;
                 var_s2 = 0xAA0;
@@ -1189,7 +1213,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 var_s0 = 0x560;
                 var_s1 = 0x2A0;
                 var_s3 = 0xAA0;
@@ -1266,7 +1290,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
 // RIC Entity #38. Blueprint 43 AND 44.
 // Applies to subweapon 1, and its crash, subweapon 21. Very neat!
 // Not quite the same as the one in DRA, but close.
-
+static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
 void RicEntitySubwpnThrownDagger(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -1290,7 +1314,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
         // Not sure what this unkB0 does, but it seems to be
         // a standard part of the Ext, and may not be entity specific.
@@ -1371,7 +1395,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
         selfY = self->posY.i.hi;
         offsetX = 12;
         offsetY = 8;
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             offsetX = -offsetX;
             offsetY = -offsetY;
         }
@@ -1416,7 +1440,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
         offsetX = 12;
-        if (self->facingLeft == 0) {
+        if (!self->facingLeft) {
             angle_a = 0x72E;
             angle_b = 0xD2;
             angle_c = 0x8D2;
@@ -1542,7 +1566,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
 
         facingLeft = PLAYER.facingLeft;
-        self->ext.reboundStone.stoneAngle = facingLeft == 0 ? 0xE80 : 0x980;
+        self->ext.reboundStone.stoneAngle = !facingLeft ? 0xE80 : 0x980;
         self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
 
         self->ext.reboundStone.lifeTimer = 0x40;
@@ -2280,6 +2304,11 @@ void RicEntityAguneaHitEnemy(Entity* self) {
 }
 
 // White cloud that comes out of Richter's finger with the Vibhuti crash
+static AnimationFrame D_80155EA8[] = {
+    {3, FRAME(1, 0)},  {3, FRAME(2, 0)},  {3, FRAME(3, 0)},  {3, FRAME(4, 0)},
+    {3, FRAME(5, 0)},  {3, FRAME(6, 0)},  {3, FRAME(7, 0)},  {3, FRAME(8, 0)},
+    {3, FRAME(9, 0)},  {3, FRAME(10, 0)}, {3, FRAME(11, 0)}, {3, FRAME(12, 0)},
+    {3, FRAME(13, 0)}, A_LOOP_AT(0)};
 void RicEntityVibhutiCrashCloud(Entity* entity) {
     s16 primIndex;
     s32 newVelocity;

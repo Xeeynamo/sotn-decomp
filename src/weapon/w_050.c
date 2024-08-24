@@ -227,7 +227,7 @@ void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCount; i++) {
             angle = i << 8;
@@ -324,7 +324,7 @@ void func_ptr_8017000C(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         offsetX = point.x;

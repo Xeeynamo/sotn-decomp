@@ -290,7 +290,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
         func_8011A290(self);
         self->hitboxWidth = 4;
@@ -1652,7 +1652,7 @@ void func_80127CC8(Entity* entity) {
 
         if (ret == -1) {
             DestroyEntity(entity);
-            g_Player.unk5C = 0xFFFF;
+            g_Player.unk5C = -1;
             return;
         }
 
@@ -2551,7 +2551,7 @@ void func_80129864(Entity* self) {
         self->palette = PAL_OVL(0x19F);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->zPriority = 0x1C3;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_800000 |
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
                       FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->drawFlags = FLAG_DRAW_ROTZ;
         if (self->params & 0x7F00) {
@@ -2633,7 +2633,7 @@ void func_80129864(Entity* self) {
         }
         break;
     case 3:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000 | FLAG_UNK_100000 |
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_100000 |
                       FLAG_UNK_10000;
         s1 = rcos(self->ext.et_80129864.unk82) >> 8;
         self->ext.et_80129864.unk82 += 0x80;

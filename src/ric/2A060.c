@@ -228,7 +228,52 @@ void RicEntityTeleport(Entity* self) {
 }
 
 // Entity #10, uses blueprint #10. Appears related to poisoning, due to call in
-// RicPrepareAttack
+// RicDoAttack
+static Point16 D_801559AC[] = {
+    0x0007, 0xFFFE, 0x0010, 0xFFFE, 0x0005, 0xFFEE, 0xFFF2,
+    0xFFEE, 0xFFE9, 0xFFFA, 0xFFE8, 0xFFFA, 0xFFE7, 0xFFFA};
+static Point16 D_801559C8[] = {
+    0x0007, 0x000B, 0x0010, 0x000B, 0x0005, 0xFFFB, 0xFFF2,
+    0xFFFB, 0xFFE9, 0x000B, 0xFFE8, 0x000B, 0xFFE7, 0x000B};
+static Point16 D_801559E4[] = {
+    0xFFF1, 0xFFFC, 0xFFF2, 0xFFF2, 0xFFF7, 0xFFFA, 0xFFEE, 0xFFFA, 0xFFF7,
+    0x0002, 0xFFF5, 0xFFF7, 0xFFF0, 0xFFF6, 0xFFF9, 0x0000, 0xFFF2, 0x0000};
+static s16 D_80155A08[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
+                           0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
+static Point16 D_80155A1C[] = {
+    0xFFF1, 0x0009, 0xFFF2, 0xFFFF, 0xFFF7, 0x0007, 0xFFEE, 0x0009, 0xFFF7,
+    0x000F, 0xFFF5, 0x0004, 0xFFF0, 0x0003, 0xFFF9, 0x000D, 0xFFF2, 0x000D,
+};
+static s16 D_80155A40[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
+                           0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
+static Point16 D_80155A54[] = {
+    0xFFF1, 0xFFFA, 0xFFF2, 0xFFF0, 0xFFF7, 0xFFF8, 0xFFEE, 0xFFFA, 0xFFF7,
+    0x0000, 0xFFF5, 0xFFF5, 0xFFF0, 0xFFF4, 0xFFF9, 0xFFFE, 0xFFF2, 0xFFFE};
+static s16 D_80155A78[] = {
+    0x000F, 0x000E, 0x0012, 0x0009, 0x0009, 0x0010, 0x000B, 0x000E, 0x0007,
+    0x0000, 0x0001, 0x0000, 0x0005, 0x0000, 0x0002, 0x0000, 0x0007, 0x0000,
+    0x0004, 0x0000, 0x0008, 0x0000, 0x0003, 0x0000, 0x0006, 0x0000};
+static Point32 D_80155AAC[] = {
+    0x00040000, 0x00020000, 0x00040000, 0xFFFD8000, 0x00100000,
+    0x00000000, 0x00100000, 0x00000000, 0xFFEC0000, 0x00000000,
+    0xFFE00000, 0x00000000, 0xFFCC0000, 0x00000000};
+static Point32 D_80155AE4[] = {
+    0x00000000, 0x00000000, 0xFFFD8000, 0x00000000, 0xFFFFE000, 0x00020000,
+    0xFFFFE000, 0xFFFE0000, 0x00008000, 0x00000000, 0xFFFE0000, 0x00018000,
+    0xFFFE0000, 0xFFFE8000, 0x00008000, 0x00018000, 0x00008000, 0xFFFE8000};
+static s32 D_80155B2C[][9] = {
+    {1, 1, 5, 6, 0, 1, 1, 0, 0}, {2, 5, 2, 0, 7, 2, 0, 2, 0},
+    {3, 6, 0, 3, 8, 0, 3, 0, 3}, {4, 0, 7, 8, 4, 0, 0, 4, 4},
+    {5, 5, 5, 0, 0, 5, 1, 2, 0}, {6, 6, 0, 6, 0, 1, 6, 0, 3},
+    {7, 0, 7, 0, 7, 1, 0, 7, 4}, {8, 0, 0, 8, 8, 4, 3, 7, 8},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+};
+static s16 D_80155C70[] = {0x8139, 0x813A, 0x813B, 0x0000};
+static s16 D_80155C78[] = {
+    0x0010, 0x000E, 0x000C, 0x000A, 0x0008, 0x0006, 0x0004, 0x0002,
+    0x000F, 0x000D, 0x000B, 0x0009, 0x0007, 0x0005, 0x0003, 0x00FF};
+static u16 D_80155C98[] = {
+    0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15};
 void func_80166784(Entity* self) {
     byte stackpad[40];
     s32 sp38;
@@ -282,7 +327,7 @@ void func_80166784(Entity* self) {
         self->velocityX = 0;
         self->velocityY = 0;
         self->palette = 0x8148;
-        if (PLAYER.facingLeft == 0) {
+        if (!PLAYER.facingLeft) {
             self->ext.et_80166784.unk88 = playerUnk46;
         } else {
             self->ext.et_80166784.unk88 = 3;
@@ -327,20 +372,20 @@ void func_80166784(Entity* self) {
     if (lowerParams == 0) {
         if (self->step == 1) {
             if (PLAYER.step == PL_S_CROUCH) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     var_s3 = D_80155A40[var_s4];
                 } else {
                     var_s3 = D_80155A1C[var_s4].x;
                 }
                 var_s5 = D_80155A1C[var_s4].y;
             } else {
-                if (PLAYER.step == 0) {
-                    if (PLAYER.facingLeft == 0) {
+                if (PLAYER.step == PL_S_STAND) {
+                    if (!PLAYER.facingLeft) {
                         var_s3 = D_80155A08[var_s4];
                     } else {
                         var_s3 = D_801559E4[var_s4].x;
                     }
-                } else if (PLAYER.facingLeft == 0) {
+                } else if (!PLAYER.facingLeft) {
                     var_s3 = D_80155A78[var_s4];
                 } else {
                     var_s3 = D_80155A54[var_s4].x;
@@ -355,7 +400,7 @@ void func_80166784(Entity* self) {
                 var_s3 = D_801559AC[PLAYER.animFrameIdx].x;
                 var_s5 = D_801559AC[PLAYER.animFrameIdx].y;
             }
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 var_s3 = -var_s3;
             }
         }
@@ -396,18 +441,8 @@ void func_80166784(Entity* self) {
         self->posY.val = var_s5;
         self->flags = 0x04070000;
         self->ext.et_80166784.unk8C = 0x500;
-#ifdef VERSION_PC
-#ifdef _MSC_VER
-        self->ext.et_80166784.unk7C = *(f32*)&self->posX.val;
-        self->ext.et_80166784.unk80 = *(f32*)&self->posY.val;
-#else
-        self->ext.et_80166784.unk7C = (f32)self->posX.val;
-        self->ext.et_80166784.unk80 = (f32)self->posY.val;
-#endif()
-#else
-        self->ext.et_80166784.unk7C = self->posX.val;
-        self->ext.et_80166784.unk80 = self->posY.val;
-#endif
+        self->ext.et_80166784.unk7C.val = self->posX.val;
+        self->ext.et_80166784.unk80.val = self->posY.val;
         self->ext.et_80166784.unk98 = self->ext.et_80166784.unk7C.val;
         self->ext.et_80166784.unk9C = self->ext.et_80166784.unk80.val;
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
@@ -479,7 +514,7 @@ void func_80166784(Entity* self) {
 
             self->ext.et_80166784.unk84 = 6;
             if (var_s4 == 0) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     xDiff = D_80155A08[0];
                 } else {
                     xDiff = D_801559E4[0].x;
@@ -596,7 +631,7 @@ void func_80166784(Entity* self) {
                 }
                 break;
             }
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 self->velocityX = -self->velocityX;
             }
             self->velocityX /= 2;
@@ -657,18 +692,8 @@ void func_80166784(Entity* self) {
             self->posY.val = var_s5 + yDiff;
         }
     }
-#ifdef VERSION_PC
-#ifdef _MSC_VER
-    self->ext.et_80166784.unk7C = *(f32*)&temp_s6;
-    self->ext.et_80166784.unk80 = *(f32*)&sp38;
-#else
-    self->ext.et_80166784.unk7C = (f32)temp_s6;
-    self->ext.et_80166784.unk80 = (f32)sp38;
-#endif
-#else
-    self->ext.et_80166784.unk7C = temp_s6;
-    self->ext.et_80166784.unk80 = sp38;
-#endif
+    self->ext.et_80166784.unk7C.val = temp_s6;
+    self->ext.et_80166784.unk80.val = sp38;
     self->ext.et_80166784.unkA0 = var_s7;
     self->ext.et_80166784.unk98 = self->posX.val;
     self->ext.et_80166784.unk9C = self->posY.val;
@@ -707,6 +732,18 @@ void func_80166784(Entity* self) {
     }
 }
 
+static s16 D_80155CB8[] = {0x000A, 0x000B, 0x000D, 0x0011, 0x000F,
+                           0x000C, 0x0012, 0x000E, 0x0010, 0x0000};
+static s16 D_80155CCC[] = {0x000A, 0x000B, 0x0011, 0x000D, 0x000F,
+                           0x0012, 0x000C, 0x0010, 0x000E, 0x0000};
+static s16 D_80155CE0[] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0006,
+                           0x0003, 0x0009, 0x0005, 0x0007, 0x0000};
+static s16 D_80155CF4[] = {0x0001, 0x0002, 0x0008, 0x0004, 0x0006,
+                           0x0009, 0x0003, 0x0007, 0x0005, 0x0000};
+static s16 D_80155D08[] = {0x0013, 0x0014, 0x0016, 0x001A, 0x0018,
+                           0x0015, 0x001B, 0x0017, 0x0019, 0x0000};
+static s16 D_80155D1C[] = {0x0013, 0x0014, 0x001A, 0x0016, 0x0018,
+                           0x001B, 0x0015, 0x0019, 0x0017, 0x0000};
 void func_8016779C(Entity* entity) {
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
@@ -724,18 +761,18 @@ void func_8016779C(Entity* entity) {
     }
 
     if (PLAYER.step == PL_S_CROUCH) {
-        if (PLAYER.facingLeft != 0) {
+        if (PLAYER.facingLeft) {
             entity->animCurFrame = D_80155CCC[D_80175080];
         } else {
             entity->animCurFrame = D_80155CB8[D_80175080];
         }
     } else if (PLAYER.step == 0) {
-        if (PLAYER.facingLeft != 0) {
+        if (PLAYER.facingLeft) {
             entity->animCurFrame = D_80155CF4[D_80175080];
         } else {
             entity->animCurFrame = D_80155CE0[D_80175080];
         }
-    } else if (PLAYER.facingLeft != 0) {
+    } else if (PLAYER.facingLeft) {
         entity->animCurFrame = D_80155D1C[D_80175080];
     } else {
         entity->animCurFrame = D_80155D08[D_80175080];
@@ -745,6 +782,9 @@ void func_8016779C(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
 }
 
+static s16 D_80155D30[] = {0x10, 0x18, 0x11, 0x19, 0x12, 0x1A, 0x13, 0x1B, 0x14,
+                           0x1C, 0x15, 0x1D, 0x16, 0x1E, 0x17, 0x00, 0x02, 0x01,
+                           0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x00, 0x00};
 void func_80167964(Entity* entity) {
     if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
@@ -773,6 +813,12 @@ void func_80167A68(Entity* self) {}
 
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
 // blueprint 40. Duplicate of DRA EntityHolyWaterBreakGlass.
+static s16 D_80155D64[4][6] = {
+    {2, -2, 0, -4, 0, 0},
+    {-3, -3, -1, 1, 2, 0},
+    {-4, -3, 2, -2, -2, 2},
+    {-1, 0, 0, -4, 3, 3},
+};
 void func_80167A70(Entity* self) {
     Point16 sp10[8];
     Primitive* prim;

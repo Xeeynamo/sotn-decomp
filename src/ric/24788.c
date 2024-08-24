@@ -4,6 +4,9 @@ Entity* RicGetFreeEntity(s16 start, s16 end);
 Entity* RicGetFreeEntityReverse(s16 start, s16 end);
 
 // Similar to same function in DRA
+static u8 entity_ranges[][2] = {
+    {0x30, 0x3F}, {0x20, 0x2F}, {0x10, 0x1E}, {0x10, 0x3F},
+    {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
 void RicEntityEntFactory(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
@@ -70,7 +73,7 @@ void RicEntityEntFactory(Entity* self) {
         case 3:
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step == 0xA) {
+            if (PLAYER.step == PL_S_HIT) {
                 self->entityId = 0;
                 return;
             }
@@ -100,10 +103,9 @@ void RicEntityEntFactory(Entity* self) {
     // Save this value so we don't have to re-fetch on every for-loop cycle
     unk96Copy = self->ext.factory.unk96;
     for (i = 0; i < unk96Copy; i++) {
-
-        // !FAKE, this should probably be &D_80154C40[unk9C] or similar,
-        // instead of doing &D_80154C40 followed by +=
-        data_idx = &D_80154C40[0];
+        // !FAKE, this should probably be &entity_ranges[unk9C] or similar,
+        // instead of doing &entity_ranges followed by +=
+        data_idx = entity_ranges;
         data_idx += self->ext.factory.unk9C * 2;
 
         startIndex = *data_idx;
@@ -264,6 +266,40 @@ void func_80160F0C(Entity* self) {
 // Entity ID #2. Created by 6 blueprints:
 // 0, 1, 24, 74, 75, 76.
 // Matches DRA func_8011B5A4
+static u16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
+static s32 velocity_x_80154C5C[] = {
+    -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000};
+static u16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
+static AnimationFrame anim_80154C80[] = {
+    {1, FRAME(0x01, 0)},
+    {1, FRAME(0x02, 0)},
+    {1, FRAME(0x03, 0)},
+    {1, FRAME(0x04, 0)},
+    {1, FRAME(0x05, 0)},
+    {1, FRAME(0x06, 0)},
+    {1, FRAME(0x07, 0)},
+    {1, FRAME(0x08, 0)},
+    {1, FRAME(0x09, 0)},
+    {1, FRAME(0x0A, 0)},
+    {1, FRAME(0x0B, 0)},
+    {1, FRAME(0x0C, 0)},
+    {1, FRAME(0x0D, 0)},
+    {1, FRAME(0x0E, 0)},
+    {1, FRAME(0x0F, 0)},
+    {1, FRAME(0x10, 0)},
+    {1, FRAME(0x11, 0)},
+    {1, FRAME(0x12, 0)},
+    {1, FRAME(0x13, 0)},
+    {1, FRAME(0x14, 0)},
+    {1, FRAME(0x15, 0)},
+    {1, FRAME(0x16, 0)},
+    {1, FRAME(0x17, 0)},
+    {1, FRAME(0x18, 0)},
+    A_END};
+static u8 sensors1_80154CE4[] = {0x02, 0x09, 0x03, 0x0A, 0x01, 0x08, 0x04,
+                                 0x0B, 0x00, 0x07, 0x05, 0x0C, 0x06, 0x0D};
+static u8 sensors2_80154CF4[] = {
+    0x02, 0x09, 0x03, 0x0A, 0x04, 0x0B, 0x05, 0x0C, 0x06, 0x0D};
 void func_80160FC4(Entity* self) {
     s16 posX;
     s32 i;
@@ -278,13 +314,13 @@ void func_80160FC4(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = 5;
-        self->anim = D_80154C80;
+        self->anim = anim_80154C80;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = 0x30;
         self->drawFlags = 0xB;
         self->unk6C = 0x60;
-        posX = D_80154C50[paramsLo];
+        posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
             posX += 6;
         }
@@ -301,36 +337,40 @@ void func_80160FC4(Entity* self) {
             self->posY.i.hi -= 8;
         }
         if (paramsHi == 4) {
-            for (i = paramsLo * 2; i < 14; i++) {
-                if (g_Player.colliders3[D_80154CE4[i]].effects & 3) {
+            for (i = paramsLo * 2; i < LEN(sensors1_80154CE4); i++) {
+                if (g_Player.colliders3[sensors1_80154CE4[i]].effects & 3) {
                     break;
                 }
             }
-            if (i == 14) {
+            if (i == LEN(sensors1_80154CE4)) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_80154604[D_80154CE4[i]].x;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_80154604[D_80154CE4[i]].y;
+            self->posX.i.hi =
+                PLAYER.posX.i.hi + D_80154604[sensors1_80154CE4[i]].x;
+            self->posY.i.hi =
+                PLAYER.posY.i.hi + D_80154604[sensors1_80154CE4[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotY = self->rotX = D_80154C74[1] + 0x40;
+            self->rotY = self->rotX = rot_x_80154C74[1] + 0x40;
             self->step++;
             return;
         }
         if (paramsHi == 8) {
-            for (i = paramsLo * 2; i < 10; i++) {
-                if (g_Player.colliders3[D_80154CF4[i]].effects & 3) {
+            for (i = paramsLo * 2; i < LEN(sensors2_80154CF4); i++) {
+                if (g_Player.colliders3[sensors2_80154CF4[i]].effects & 3) {
                     break;
                 }
             }
-            if (i == 10) {
+            if (i == LEN(sensors2_80154CF4)) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_80154604[D_80154CF4[i]].x;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_80154604[D_80154CF4[i]].y;
-            self->velocityY = D_80154C5C[paramsLo];
-            self->rotY = self->rotX = D_80154C74[paramsLo] + 0x20;
+            self->posX.i.hi =
+                PLAYER.posX.i.hi + D_80154604[sensors2_80154CF4[i]].x;
+            self->posY.i.hi =
+                PLAYER.posY.i.hi + D_80154604[sensors2_80154CF4[i]].y;
+            self->velocityY = velocity_x_80154C5C[paramsLo];
+            self->rotY = self->rotX = rot_x_80154C74[paramsLo] + 0x20;
             self->step++;
             return;
         }
@@ -339,25 +379,25 @@ void func_80160FC4(Entity* self) {
                 posX /= 2;
             }
         }
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             posX = -posX;
         }
         self->posX.i.hi += posX;
         self->posY.i.hi += 0x18;
-        self->rotX = D_80154C74[paramsLo] + 0x40;
-        self->velocityY = D_80154C5C[paramsLo];
+        self->rotX = rot_x_80154C74[paramsLo] + 0x40;
+        self->velocityY = velocity_x_80154C5C[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
             RicSetSpeedX(-0x3000);
-            self->rotX = D_80154C74[1] + 0x40;
+            self->rotX = rot_x_80154C74[1] + 0x40;
         }
         if (paramsHi == 5) {
-            self->velocityY = D_80154C5C[4 - paramsLo * 2];
+            self->velocityY = velocity_x_80154C5C[4 - paramsLo * 2];
         }
         if (paramsHi == 2) {
             self->velocityY = FIX(-0.5);
             RicSetSpeedX(-0x3000);
-            self->rotX = D_80154C74[1] + 0x40;
+            self->rotX = rot_x_80154C74[1] + 0x40;
         }
         self->rotY = self->rotX;
         if (paramsHi == 10) {
@@ -378,6 +418,29 @@ void func_80160FC4(Entity* self) {
 }
 
 // Corresponding DRA function is func_8011E4BC
+static unkStr_8011E4BC D_80154D00 = {
+    0x08, 0xC0, 0x60, 0x00, 0x01, 0x01, 0x0004, 0x0033, 0x0003, 0x08800000};
+static unkStr_8011E4BC D_80154D10 = {
+    0x10, 0x7F, 0x7F, 0x7F, 0x01, 0x01, 0x0002, 0x0033, 0x0001, 0x0C800000};
+static unkStr_8011E4BC D_80154D20 = {
+    0x08, 0x7F, 0x7F, 0x7F, 0x02, 0x02, 0x0002, 0x0033, 0x0000, 0x08800000};
+static unkStr_8011E4BC D_80154D30 = {
+    0x06, 0x7F, 0xFF, 0xFF, 0x01, 0x01, 0x0004, 0x0073, 0x0003, 0x08800000};
+static unkStr_8011E4BC D_80154D40 = {
+    0x0C, 0xC0, 0x60, 0x00, 0x01, 0x01, 0x0004, 0x0033, 0x0003, 0x08800000};
+static unkStr_8011E4BC D_80154D50 = {
+    0x0C, 0x7F, 0x00, 0x00, 0x03, 0x03, 0x0002, 0x0002, 0x0004, 0x0C800000};
+static unkStr_8011E4BC D_80154D60 = {
+    0x08, 0x1F, 0x1F, 0x7F, 0x01, 0x01, 0x0004, 0x0033, 0x0006, 0x0C800000};
+static unkStr_8011E4BC D_80154D70 = {
+    0x14, 0x7F, 0x7F, 0xC0, 0x01, 0x01, 0xFFFE, 0x0033, 0x0007, 0x0C800000};
+static unkStr_8011E4BC D_80154D80 = {
+    0x06, 0xC0, 0xC0, 0xC0, 0x02, 0x02, 0x0002, 0x007B, 0x0008, 0x08800000};
+static unkStr_8011E4BC D_80154D90 = {
+    0x10, 0x7F, 0x7F, 0x7F, 0x01, 0x01, 0x0002, 0x0033, 0x0009, 0x08800000};
+static unkStr_8011E4BC* D_80154DA0[] = {
+    &D_80154D00, &D_80154D10, &D_80154D20, &D_80154D30, &D_80154D40,
+    &D_80154D50, &D_80154D60, &D_80154D70, &D_80154D80, &D_80154D90};
 void func_8016147C(Entity* self) {
     byte stackpad[0x28];
     FakePrim* tilePrim;
@@ -618,6 +681,26 @@ void func_8016147C(Entity* self) {
 }
 
 // DRA function is func_8011EDA8
+static AnimationFrame anim_80154DC8[] = {
+    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(4, 0)},
+    {2, FRAME(3, 0)}, {2, FRAME(4, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {1, FRAME(6, 0)},
+    {1, FRAME(7, 0)}, {1, FRAME(8, 0)}, A_END};
+static AnimationFrame anim_80154E04[] = {
+    {1, FRAME(9, 0)},
+    {2, FRAME(10, 0)},
+    {2, FRAME(11, 0)},
+    {2, FRAME(12, 0)},
+    {2, FRAME(13, 0)},
+    {2, FRAME(14, 0)},
+    {2, FRAME(15, 0)},
+    {2, FRAME(16, 0)},
+    {2, FRAME(17, 0)},
+    {2, FRAME(18, 0)},
+    {3, FRAME(19, 0)},
+    {4, FRAME(20, 0)},
+    A_END};
 void func_80161C2C(Entity* self) {
     u16 params = self->params;
     s16 paramsHi = self->params >> 8;
@@ -631,19 +714,19 @@ void func_80161C2C(Entity* self) {
             self->rotY = 0xC0;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->animSet = ANIMSET_DRA(2);
-            self->anim = D_80154E04;
+            self->anim = anim_80154E04;
         }
 
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (params & 3) {
-                self->anim = D_80154DC8;
+                self->anim = anim_80154DC8;
                 self->rotX = 0x120;
                 self->rotY = 0x120;
                 self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
-                self->anim = D_80154C80;
+                self->anim = anim_80154C80;
                 self->palette = 0x8170;
             }
         }
@@ -673,14 +756,14 @@ void func_80161C2C(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->anim != D_80154C80)) {
+        if ((self->animFrameIdx == 8) && (self->anim != anim_80154C80)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->anim == D_80154C80)) {
+        if ((self->animFrameIdx == 16) && (self->anim == anim_80154C80)) {
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -691,11 +774,15 @@ void func_80161C2C(Entity* self) {
     }
 }
 
+static AnimationFrame anim_80154E38[] = {
+    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(6, 0)},
+    {2, FRAME(7, 0)}, {2, FRAME(8, 0)}, A_END};
 void func_80161EF8(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = ANIMSET_DRA(2);
-        self->anim = D_80154E38;
+        self->anim = anim_80154E38;
         self->flags =
             FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority + 4;
@@ -716,12 +803,28 @@ void func_80161EF8(Entity* self) {
     }
 }
 
+typedef struct {
+    s16 xPos;
+    s16 yPos;
+    s32 velocityX;
+    s32 velocityY;
+    s16 timerInit;
+    s16 tpage;
+    s16 clut;
+    u8 uBase;
+    u8 vBase;
+} Props_80161FF0; // size = 0x14
+static Props_80161FF0 D_80154E5C[] = {
+    {-0x40, 0, +FIX(2.5), FIX(0), 0x0060, 0x1B, 0x0118, 128, 0},
+    {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
+    {0, -0x40, FIX(0), +FIX(2.5), 0x0030, 0x19, 0x011A, 0, 0},
+    {0, +0x40, FIX(0), -FIX(2.5), 0x0018, 0x19, 0x011B, 128, 0}};
 void func_80161FF0(Entity* self) {
     Primitive* prim;
 
     u16 posX = self->posX.i.hi;
     u16 posY = self->posY.i.hi;
-    unkStr80154E5C* temp_s2 = &D_80154E5C[(s16)self->params];
+    Props_80161FF0* props = &D_80154E5C[(s16)self->params];
 
     switch (self->step) {
     case 0:
@@ -733,23 +836,23 @@ void func_80161FF0(Entity* self) {
         g_api.PlaySfx(0x881);
         self->ext.et_80161FF0.unk7C = 0x100;
         prim = &g_PrimBuf[self->primIndex];
-        prim->u0 = temp_s2->uBase;
-        prim->v0 = temp_s2->vBase;
-        prim->u1 = temp_s2->uBase + 0x7F;
-        prim->v1 = temp_s2->vBase;
-        prim->u2 = temp_s2->uBase;
-        prim->v2 = temp_s2->vBase + 0x6F;
-        prim->u3 = temp_s2->uBase + 0x7F;
-        prim->v3 = temp_s2->vBase + 0x6F;
-        prim->tpage = temp_s2->tpage;
-        prim->clut = temp_s2->clut;
+        prim->u0 = props->uBase;
+        prim->v0 = props->vBase;
+        prim->u1 = props->uBase + 0x7F;
+        prim->v1 = props->vBase;
+        prim->u2 = props->uBase;
+        prim->v2 = props->vBase + 0x6F;
+        prim->u3 = props->uBase + 0x7F;
+        prim->v3 = props->vBase + 0x6F;
+        prim->tpage = props->tpage;
+        prim->clut = props->clut;
         prim->priority = PLAYER.zPriority + 8;
         prim->drawMode = 0x31;
-        self->velocityX = temp_s2->velocityX;
-        self->velocityY = temp_s2->velocityY;
-        self->posX.i.hi += temp_s2->xOffset;
+        self->velocityX = props->velocityX;
+        self->velocityY = props->velocityY;
+        self->posX.i.hi += props->xPos;
         posX = self->posX.i.hi;
-        posY = self->posY.i.hi + temp_s2->yOffset;
+        posY = self->posY.i.hi + props->yPos;
         self->posY.i.hi = posY;
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->step++;
@@ -759,7 +862,7 @@ void func_80161FF0(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->ext.et_80161FF0.unk7C < 25) {
-            self->ext.et_80161FF0.unk7E = temp_s2->timerInit;
+            self->ext.et_80161FF0.unk7E = props->timerInit;
             self->step++;
         }
         break;
@@ -916,6 +1019,11 @@ void func_80162604(Entity* entity) {
     }
 }
 
+static s16 D_80154EAC[] = {0x016E, 0x0161, 0x0160, 0x0162};
+// 0xFFFF2AAB = -FIX(1. / 3)
+// 0xFFFDAAAB = -FIX(5. / 3)
+static s32 D_80154EB4[] = {FIX(5. / 3), -FIX(5. / 3), FIX(1. / 3), -0xD555};
+static s32 D_80154EC4[] = {-FIX(2), -FIX(5. / 3), -FIX(3), -0x25555};
 void func_80162870(Entity* self) {
     Primitive* prim;
     s16 params;

@@ -54,7 +54,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->ext.weapon.unk7E = 0x7F;
         self->facingLeft = 0;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_800000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority + 4;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
         self->rotX = self->rotY = 0x100;

@@ -893,7 +893,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PLAYER.velocityY = 0;
             g_Player.D_80072F00[8] = 24;
             PLAYER.step_s = 5;
-            if (g_Player.unk52 == 0xF &&
+            if (g_Player.prev_step_s == 0xF &&
                 (func_80113D7C(g_Player.damageTaken) != 0)) {
                 return;
             }
@@ -933,7 +933,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PlaySfx(SFX_WALL_DEBRIS_B);
                 func_80102CD8(2);
                 PLAYER.step_s = 1;
-                if (g_Player.unk52 == 0xF &&
+                if (g_Player.prev_step_s == 0xF &&
                     (func_80113D7C(g_Player.damageTaken) != 0)) {
                     return;
                 }

@@ -2,7 +2,6 @@
 #define GAME_H
 #include "common.h"
 #include "log.h"
-#include "macros.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -184,10 +183,6 @@ typedef struct Prim {
 #define FALL_GRAVITY 0x4000
 #define FALL_TERMINAL_VELOCITY 0x60000
 
-#define TOTAL_ENTITY_COUNT 256
-#define STAGE_ENTITY_START 64
-#define MaxEntityCount 32
-
 #define WEAPON_0_START 0xE0
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
@@ -271,12 +266,10 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
 #define FLAG_UNK_400000 0x400000
-#define FLAG_UNK_800000 0x800000
-#define FLAG_UNK_00200000 0x00200000
-
 // When an entity used AllocPrimitives and their primIndex set.
 // At their destruction they need to free the prims with FreePrimitives.
-#define FLAG_HAS_PRIMS 0x00800000
+#define FLAG_HAS_PRIMS 0x800000
+#define FLAG_UNK_00200000 0x00200000
 
 #define FLAG_UNK_01000000 0x01000000
 #define FLAG_UNK_02000000 0x02000000
@@ -1495,7 +1488,7 @@ typedef struct {
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
-    /* 8003C894 */ s32 (*func_800FD5BC)(DamageParam* arg0);
+    /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
@@ -1575,7 +1568,7 @@ extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_func_800FF110)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
-extern s32 (*g_api_func_800FD5BC)(DamageParam* arg0);
+extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
@@ -1696,13 +1689,13 @@ typedef struct {
     /* 80072F6A */ s16 unk4A;
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
-    /* 80072F70 */ u16 unk50;
-    /* 80072F72 */ u16 unk52;
+    /* 80072F70 */ u16 prev_step;
+    /* 80072F72 */ u16 prev_step_s;
     /* 80072F74 */ u16 unk54;
     /* 80072F76 */ u16 unk56;
     /* 80072F78 */ u16 unk58;
     /* 80072F7A */ u16 damageTaken;
-    /* 80072F7C */ u16 unk5C;
+    /* 80072F7C */ u16 unk5C; // ALU: hellfire spell state, RIC: isPrologue
     /* 80072F7E */ u16 unk5E; // status ailment timer
     /* 80072F80 */ u16 unk60;
     /* 80072F82 */ u16 unk62;
@@ -1835,7 +1828,31 @@ extern Tilemap g_Tilemap;
 // this was previously g_Tilemap.bg, but func_801BD8F0 showed that it is a
 // separate symbol.
 extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
+
+#define PLAYER_CHARACTER 0
+#define TOTAL_ENTITY_COUNT 256
+#define STAGE_ENTITY_START 64
+#define MaxEntityCount 32
+#define PLAYER g_Entities[PLAYER_CHARACTER]
+typedef enum {
+    UNK_ENTITY_1 = 1,
+    UNK_ENTITY_2,
+    UNK_ENTITY_3,
+    UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
+    E_WEAPON = 0x10,
+    UNK_ENTITY_11 = 0x11, // related to wolf
+    UNK_ENTITY_12 = 0x12, // related to wolf?
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
+    UNK_ENTITY_100 = 0x100
+} EntityTypes;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+
 extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;

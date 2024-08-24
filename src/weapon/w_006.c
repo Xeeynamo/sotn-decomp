@@ -240,7 +240,7 @@ static void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->velocityY = FIX(1.0 / 2.0);
         range = 24;
         posX = (rand() % range) - 0xC;

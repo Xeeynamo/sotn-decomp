@@ -251,7 +251,7 @@ void func_801B69F8(Entity* entity) {
         if (func_801B6480(D_8018B304)) {
             D_801BC350 = D_801D6B00 = D_801BC3E8 = 0;
             D_8003C704 = 1;
-            entity->flags |= FLAG_UNK_800000 | FLAG_UNK_2000;
+            entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
             ++entity->step;
         }

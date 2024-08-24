@@ -64,6 +64,7 @@ void AddToInventory(u16 itemId, s32 itemCategory);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800F2288(s32 arg0);
+bool CalcPlayerDamage(DamageParam* damage);
 void DebugInputWait(const char* msg);
 
 int g_Frame = 0;
@@ -163,7 +164,7 @@ bool InitGame(void) {
     api.func_800F27F4 = NULL;
     api.func_800FF110 = NULL;
     api.func_800FD664 = func_800FD664;
-    api.func_800FD5BC = NULL;
+    api.CalcPlayerDamage = CalcPlayerDamage;
     api.LearnSpell = NULL;
     api.DebugInputWait = DebugInputWait;
     api.unused12C = NULL;

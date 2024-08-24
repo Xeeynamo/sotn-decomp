@@ -33,7 +33,7 @@ static void DecelerateY(s32 speed) {
     }
 }
 
-s32 RicCheckMovement(void) {
+s32 RicCheckFacing(void) {
     if (g_Player.unk44 & 2) {
         return 0;
     }
@@ -118,7 +118,7 @@ void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
 void func_8015CC70(s16 arg0) {
     PLAYER.step_s = arg0;
-    PLAYER.step = 0x0020;
+    PLAYER.step = PL_S_INIT;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
     if (arg0 & 1) {
@@ -185,22 +185,22 @@ void RicSetRun(void) {
     }
 }
 
-void func_8015CF08(void) {
+void RicSetFall(void) {
     /**
      * TODO: labels are !FAKE
      */
-    if ((g_Player.unk50 != 0x19) && (g_Player.unk50 != 0x17)) {
+    if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
         PLAYER.velocityX = 0;
     }
-    if (g_Player.unk50 != 1) {
-        if (g_Player.unk50 != 0x19) {
+    if (g_Player.prev_step != PL_S_WALK) {
+        if (g_Player.prev_step != PL_S_RUN) {
             RicSetAnimation(D_80155534);
             goto block_6;
         }
         goto block_7;
     }
 block_6:
-    if (g_Player.unk50 == 0x19) {
+    if (g_Player.prev_step == PL_S_RUN) {
     block_7:
         g_Player.unk44 = 0x10;
     }
@@ -210,7 +210,7 @@ block_6:
     g_Player.D_80072F00[PL_T_6] = 8;
     g_Player.D_80072F00[PL_T_CURSE] = 0;
     g_Player.D_80072F00[PL_T_8] = 0;
-    if (g_Player.unk50 == 0x17) {
+    if (g_Player.prev_step == PL_S_SLIDE) {
         g_Player.D_80072F00[PL_T_6] = 0;
         g_Player.D_80072F00[PL_T_5] = 0;
         PLAYER.animFrameIdx = 2;
@@ -221,10 +221,10 @@ block_6:
 
 void RicSetJump(void) {
     if (g_Player.unk72) {
-        func_8015CF08();
+        RicSetFall();
         return;
     }
-    if (RicCheckMovement() != 0 || PLAYER.step == Player_Slide) {
+    if (RicCheckFacing() != 0 || PLAYER.step == Player_Slide) {
         RicSetAnimation(D_8015550C);
         if (PLAYER.step == PL_S_RUN) {
             RicSetSpeedX(FIX(2.25));

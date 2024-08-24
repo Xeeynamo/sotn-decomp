@@ -923,8 +923,8 @@ void EntityAlucard(void) {
     }
 block_159:
 block_160:
-    g_Player.unk50 = PLAYER.step;
-    g_Player.unk52 = PLAYER.step_s;
+    g_Player.prev_step = PLAYER.step;
+    g_Player.prev_step_s = PLAYER.step_s;
     D_800ACDF8 = (s32)g_Player.D_80072F00[11];
     switch (PLAYER.step) {
     case Player_Stand:
