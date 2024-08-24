@@ -9,7 +9,14 @@ extern s32 g_HandId;
 #define g_Animset w_015_1
 #define g_Animset2 w_015_2
 
+extern SpriteParts D_6D000_8017A2B0[];
 extern s16 D_6D000_8017A6B8[];
+extern AnimationFrame D_6D000_8017A6C0[];
+extern s16 D_6D000_8017A6FC[];
+extern s16 D_6D000_8017A71C[];
+extern AnimationFrame D_6D000_8017A770[];
+extern s16 D_6D000_8017A78C[];
+extern s32 D_6D000_8017BFC8;
 
 void EntityWeaponAttack(Entity* self) {
     switch (self->step) {
@@ -30,7 +37,7 @@ void EntityWeaponAttack(Entity* self) {
 
         SetSpeedX(FIX(8));
         if (((self->params >> 8) & 0x7F) == 3) {
-            SetSpeedX(FIX(349525.0 / 65536.0));
+            SetSpeedX(FIX(5.33333));
         }
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 3;
         if (PLAYER.step != 2) {
@@ -49,11 +56,11 @@ void EntityWeaponAttack(Entity* self) {
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         if (((self->params >> 8) & 0x7F) == 1) {
-            self->drawFlags |= 4;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
         }
         if (((self->params >> 8) & 0x7F) == 3) {
             self->palette = PAL_OVL(0x160);
-            self->drawFlags |= 4;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
         }
         if (!((self->params >> 8) & 0x7F)) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_A);
@@ -125,9 +132,6 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-extern AnimationFrame D_6D000_8017A6C0[];
-extern s32 D_6D000_8017BFC8;
-
 static void func_ptr_80170008(Entity* self) {
     Entity* factory;
 
@@ -166,9 +170,6 @@ static void func_ptr_80170008(Entity* self) {
     }
 }
 
-extern s16 D_6D000_8017A6FC[];
-extern s16 D_6D000_8017A71C[];
-
 void func_ptr_8017000C(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -192,15 +193,15 @@ void func_ptr_8017000C(Entity* self) {
 
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
 
         self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 32);
 
         if (self->primIndex == -1) {
-            self->flags &= ~FLAG_UNK_800000;
+            self->flags &= ~FLAG_HAS_PRIMS;
         }
 
-        if (self->flags & FLAG_UNK_800000) {
+        if (self->flags & FLAG_HAS_PRIMS) {
             prim = &g_PrimBuf[self->primIndex];
             while (prim != NULL) {
                 prim->r0 = 128;
@@ -304,10 +305,10 @@ void func_ptr_8017000C(Entity* self) {
             self->velocityY = FIX(-6);
             self->ext.weapon.lifetime = 16;
 
-            if (self->flags & FLAG_UNK_800000) {
+            if (self->flags & FLAG_HAS_PRIMS) {
                 prim = &g_PrimBuf[self->primIndex];
                 while (prim != NULL) {
-                    prim->drawMode |= 8;
+                    prim->drawMode |= DRAW_HIDE;
                     prim = prim->next;
                 }
             }
@@ -316,7 +317,7 @@ void func_ptr_8017000C(Entity* self) {
         x = self->posX.i.hi;
         y = self->posY.i.hi;
 
-        if (self->flags & FLAG_UNK_800000) {
+        if (self->flags & FLAG_HAS_PRIMS) {
             prim = &g_PrimBuf[self->primIndex];
             while (prim) {
                 if (prim->x3 == 0) {
@@ -392,13 +393,9 @@ void func_ptr_8017000C(Entity* self) {
     }
 }
 
-extern SpriteParts D_6D000_8017A2B0[];
-extern AnimationFrame D_6D000_8017A770[];
-extern s16 D_6D000_8017A78C[];
-
 s32 func_ptr_80170010(Entity* self) {
     s16 angle;
-    s32 accesserationX;
+    s32 accelerationX;
     s32 accelerationY;
     u16 rotation;
     s16 params;
@@ -435,11 +432,11 @@ s32 func_ptr_80170010(Entity* self) {
                 self->posX.val += self->velocityX;
                 self->posY.val += self->velocityY;
 
-                accesserationX = -self->velocityX;
-                if (accesserationX < 0) {
-                    accesserationX += 15;
+                accelerationX = -self->velocityX;
+                if (accelerationX < 0) {
+                    accelerationX += 15;
                 }
-                self->ext.weapon.accelerationX = (accesserationX >> 4);
+                self->ext.weapon.accelerationX = (accelerationX >> 4);
 
                 accelerationY = -self->velocityY;
                 if (accelerationY < 0) {
@@ -474,9 +471,6 @@ s32 func_ptr_80170010(Entity* self) {
         self->velocityY += self->ext.weapon.accelerationY;
     }
 }
-
-extern SpriteParts D_6D000_8017A2B0[];
-extern AnimationFrame D_6D000_8017A770[];
 
 static s32 func_ptr_80170014(Entity* self) {
     s16 angle;
