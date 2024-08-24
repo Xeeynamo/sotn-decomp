@@ -71,7 +71,7 @@ static s16 func_80156DE4(void) {
 static void RicDebugOff();
 
 // Duplicate of DRA func_80109594
-void RicInit(s16 arg0) {
+void RicInit(s16 initParam) {
     Entity* e;
     s32 radius;
     s32 intensity;
@@ -102,7 +102,7 @@ void RicInit(s16 arg0) {
     g_Player.pl_vram_flag = 1;
     RicSetStand(0);
     PLAYER.anim = D_80155480;
-    g_Player.unk5C = arg0;
+    g_Player.unk5C = initParam;
     if (g_StageId == STAGE_ST0) {
         g_IsPrologueStage = true;
     } else {
@@ -299,9 +299,9 @@ static void CheckBladeDashInput(void) {
         if (--g_bladeDashButtons.timer == 0) {
             g_bladeDashButtons.buttonsCorrect = 0;
         }
-        if ((PLAYER.step == Player_Stand || PLAYER.step == Player_Walk) ||
-            PLAYER.step == Player_Crouch ||
-            (PLAYER.step == Player_Fall || PLAYER.step == Player_Jump)) {
+        if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK ||
+            PLAYER.step == PL_S_CROUCH ||
+            (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP)) {
             if (g_Player.unk72) {
                 g_bladeDashButtons.buttonsCorrect = 0;
             } else if (
@@ -340,9 +340,9 @@ static void CheckHighJumpInput(void) {
             return;
         }
         if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
-            ((PLAYER.step == Player_Crouch) || (PLAYER.step == Player_Stand) ||
-             ((PLAYER.step == Player_Jump) && (PLAYER.velocityY > FIX(1))) ||
-             (PLAYER.step == Player_Fall))) {
+            ((PLAYER.step == PL_S_CROUCH) || (PLAYER.step == PL_S_STAND) ||
+             ((PLAYER.step == PL_S_JUMP) && (PLAYER.velocityY > FIX(1))) ||
+             (PLAYER.step == PL_S_FALL))) {
             if (!g_Player.unk72) {
                 RicSetHighJump();
             }
@@ -430,7 +430,7 @@ void RicMain(void) {
             func_8015CAD4(1, 16);
             break;
         case PL_T_6:
-            if ((PLAYER.step == Player_Fall) && (PLAYER.anim != D_80155534)) {
+            if ((PLAYER.step == PL_S_FALL) && (PLAYER.anim != D_80155534)) {
                 RicSetAnimation(D_80155534);
                 g_Player.unk44 &= ~0x10;
             }
@@ -458,7 +458,7 @@ void RicMain(void) {
         func_8015CC70(i);
     }
     // Richter must use step #32 for something else, look into it!
-    if (PLAYER.step == Player_SpellDarkMetamorphosis) {
+    if (PLAYER.step == PL_S_INIT) {
         goto block_48;
     }
     if (g_DebugPlayer && RicDebug()) {
@@ -473,9 +473,9 @@ void RicMain(void) {
         RicSetStep(PL_S_BOSS_GRAB);
         goto block_48;
     }
-    if (((g_Player.D_80072F00[PL_T_INVINCIBLE] |
-          g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE]) != 0) ||
-        (PLAYER.unk44 == 0)) {
+    if ((g_Player.D_80072F00[PL_T_INVINCIBLE] |
+         g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE]) ||
+        !PLAYER.unk44) {
         goto block_47;
     }
     playerStep = PLAYER.step;
@@ -483,11 +483,11 @@ void RicMain(void) {
     damage.effects = PLAYER.unk44 & ~0x1F;
     damage.damageKind = PLAYER.unk44 & 0x1F;
     damage.damageTaken = PLAYER.hitPoints;
-    isDamageTakenDeadly = g_api.func_800FD5BC(&damage);
+    isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
     damageKind = damage.damageKind;
     damageEffects = damage.effects;
     if (isDamageTakenDeadly) {
-        if (g_Player.unk5C == 0) {
+        if (!g_Player.unk5C) {
             RicSetStep(PL_S_DEAD);
         } else {
             g_Status.hp = 1;
@@ -501,8 +501,8 @@ block_47:
     CheckBladeDashInput();
     CheckHighJumpInput();
 block_48:
-    g_Player.unk50 = PLAYER.step;
-    g_Player.unk52 = PLAYER.step_s;
+    g_Player.prev_step = PLAYER.step;
+    g_Player.prev_step_s = PLAYER.step_s;
     switch (PLAYER.step) {
     case PL_S_STAND:
         RicHandleStand();
@@ -546,22 +546,22 @@ block_48:
     case PL_S_SUBWPN_CRASH:
         RicHandleGenericSubwpnCrash();
         break;
-    case PL_S_22:
-        func_8015B348();
+    case PL_S_DEAD_PROLOGUE:
+        RicHandleDeadPrologue();
         break;
-    case PL_S_23:
-        func_8015B898();
+    case PL_S_SLIDE:
+        RicHandleSlide();
         break;
     case PL_S_RUN:
         RicHandleRun();
         break;
     case Player_SlideKick:
-        PlayerStepSlideKick();
+        RicHandleSlideKick();
         break;
     case PL_S_BLADEDASH:
         RicHandleBladeDash();
         break;
-    case 32:
+    case PL_S_INIT:
         func_8015BCD0();
         break;
     }
@@ -600,16 +600,16 @@ block_48:
         }
         func_8015CAD4(1, 16);
         break;
-    case 23:
-    case 26:
+    case PL_S_SLIDE:
+    case PL_S_SLIDE_KICK:
         var_s4 = 0x20;
         break;
-    case 19:
-    case 20:
-    case 21:
-    case 22:
-    case 27:
-    case 32:
+    case PL_S_FLAME_WHIP:
+    case PL_S_HYDROSTORM:
+    case PL_S_THROW_DAGGERS:
+    case PL_S_DEAD_PROLOGUE:
+    case PL_S_SUBWPN_CRASH:
+    case PL_S_INIT:
         var_s4 = NO_AFTERIMAGE;
         func_8015CAD4(1, 16);
         break;
@@ -632,7 +632,7 @@ block_48:
         if (!(var_s4 & 0x10000)) {
             if (g_Player.unk5C != 0) {
                 if (g_Status.hp < 2) {
-                    func_8015D9B4();
+                    RicSetDeadPrologue();
                     func_8015CAD4(1, 16);
                 }
             } else {
@@ -660,7 +660,7 @@ block_48:
     if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
-    if ((PLAYER.step == 0x10) && (PLAYER.animFrameDuration < 0)) {
+    if ((PLAYER.step == PL_S_DEAD) && (PLAYER.animFrameDuration < 0)) {
         PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
     }
     if (g_Player.unk0C & 0x50) {

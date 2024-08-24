@@ -1,16 +1,32 @@
 #include "ric.h"
 
+static AnimationFrame anim_80154ED4[] = {
+    {4, FRAME(1, 0)}, {4, FRAME(2, 0)}, {4, FRAME(3, 0)},
+    {4, FRAME(4, 0)}, {4, FRAME(5, 0)}, {4, FRAME(6, 0)},
+    {4, FRAME(7, 0)}, {4, FRAME(8, 0)}, A_LOOP_AT(0)};
+static AnimationFrame anim_80154EF8[] = {
+    {0x08, FRAME(0x09, 0)}, {0x08, FRAME(0x0D, 0)}, {0x40, FRAME(0x0A, 0)},
+    {0x02, FRAME(0x0B, 0)}, {0x02, FRAME(0x0C, 0)}, {0x06, FRAME(0x0D, 0)},
+    {0x07, FRAME(0x0E, 0)}, {0x06, FRAME(0x0F, 0)}, {0x05, FRAME(0x0E, 0)},
+    {0x04, FRAME(0x0D, 0)}, {0x03, FRAME(0x0F, 0)}, {0x03, FRAME(0x0E, 0)},
+    {0x03, FRAME(0x0D, 0)}, {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0F, 0)},
+    {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0D, 0)}, {0x04, FRAME(0x0E, 0)},
+    {0x05, FRAME(0x0F, 0)}, {0x06, FRAME(0x0E, 0)}, {0x07, FRAME(0x0D, 0)},
+    {0x30, FRAME(0x0E, 0)}, {0x0C, FRAME(0x09, 0)}, {0x0D, FRAME(0x10, 0)},
+    {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
+    {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
+    {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
 void func_80162C84(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags =
-            0x100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 |
+                        FLAG_UNK_08000000;
         entity->facingLeft = 1;
         entity->unk5A = 0x66;
         entity->zPriority = PLAYER.zPriority - 8;
-        entity->palette = 0x8149;
+        entity->palette = PAL_OVL(0x149);
         entity->animSet = ANIMSET_OVL(19);
-        RicSetAnimation(D_80154ED4);
+        RicSetAnimation(anim_80154ED4);
         entity->velocityX = FIX(-1.75);
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
@@ -33,7 +49,7 @@ void func_80162C84(Entity* entity) {
             entity->ext.generic.unk7E.modeU16++;
         }
         if (entity->posX.i.hi < 0xE0) {
-            RicSetAnimation(D_80154EF8);
+            RicSetAnimation(anim_80154EF8);
             entity->velocityX = 0;
             entity->step++;
             RicCreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
@@ -61,7 +77,7 @@ void func_80162C84(Entity* entity) {
     }
 }
 
-const u32 rodataPadding_801569E4 = 0;
+const u32 rodataPadding_801569E4 = 0; // may indicate a file split
 
 // same as DRA/func_8011BD48
 bool func_80162E9C(Entity* entity) {
@@ -81,6 +97,32 @@ bool func_80162E9C(Entity* entity) {
 
 // EntityPlayerBlinkWhite (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
+static s32 D_80154F7C[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+static s16 D_80154FBC[][10] = {
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x0100, 0x0060, 0x31, 0x200},
+    {0, 2, 6, 0x15F, 0x0100, 0x0100, 0x0100, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x7000, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0200, 0x0010, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x7000, 0x0010, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0200, 0x7000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0100, 0x7002, 0x31, 0x100},
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x7000, 0x0070, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0200, 0x7006, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0200, 0x0200, 0x0400, 0x7001, 0x31, 0x200},
+    {0, 0, 0, 0x166, 0x0100, 0x0100, 0x0100, 0x7005, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x7000, 0x7000, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7100, 0x0100, 0x7005, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x0100, 0x7005, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x7000, 0x0200, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x7000, 0x0100, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x0100, 0x7000, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0400, 0x0100, 0x0400, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x7000, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0200, 0x0800, 0x0800, 0x7007, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x0100, 0x0100, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x00C0, 0x00C0, 0x0100, 0x0010, 0x31, 0x200},
+    {8, 0, 8, 0x165, 0x0100, 0x0100, 0x0100, 0x7007, 0x51, 0x200},
+    {0, 0, 0, 0x168, 0x7100, 0x7100, 0x0200, 0x7007, 0x31, 0x200}};
 void RicEntityPlayerBlinkWhite(Entity* self) {
     Primitive* prim;
     u8 xMargin;
@@ -143,7 +185,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->primIndex = g_api.AllocPrimitives(4U, 8);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -402,7 +444,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
         prim = prim->next;
     }
     if (((upperParams & 0x3F) == 0) || ((upperParams & 0x3F) == 7)) {
-        func_8015CAD4(1, 0xA);
+        func_8015CAD4(1, 10);
     }
 }
 
@@ -471,9 +513,18 @@ void func_801641A0(Entity* entity) {
 // When the factory is made, unk5 loads into ext.factory.unk9A. This appears
 // to create a delay before the factory actually creates the child.
 // So 36, 37, 38, 39 create this entity with delay of 0, 4, 8, or 12 frames.
-// All 4 are used in func_8015B348. 36 alone (for instant child) is used
-// when Richter does an item crash without a subweapon, in func_8015D678.
+// All 4 are used in RicHandleDeadPrologue. 36 alone (for instant child) is used
+// when Richter does an item crash without a subweapon, in RicDoCrash.
 // Creates a large semi-transparent circle around Richter which shrinks inward.
+static s16 D_8015519C[][6] = {
+    {0x0000, 0x0000, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0000},
+    {0x0000, 0x0000, 0x0100, 0x7000, 0x7000, 0x0200},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x1000},
+    {0x0000, 0x0000, 0x7100, 0x0100, 0x7000, 0x0800},
+    {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0400},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0200, 0x7100, 0x0100}};
 void EntityShrinkingPowerUpRing(Entity* self) {
     s16 selfX;
     s16 selfY;
@@ -665,7 +716,42 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // RicHandleHit.
+static Point16 D_801551FC = {0xFFFE, 0xFFE8};
+static Point16 D_80155200 = {0x0000, 0xFFF8};
+static Point16 D_80155204 = {0x0002, 0x0008};
+static Point16 D_80155208 = {0x0000, 0x0018};
+static Point16 D_8015520C = {0x0006, 0xFFF4};
+static Point16 D_80155210 = {0x0008, 0x0000};
+static Point16 D_80155214 = {0x0007, 0x000C};
+static Point16 D_80155218 = {0xFFF8, 0xFFF4};
+static Point16 D_8015521C = {0xFFF7, 0x0000};
+static Point16 D_80155220 = {0xFFF9, 0x000C};
+static Point16 D_80155224 = {0xFFF2, 0xFFFA};
+static Point16 D_80155228 = {0xFFF1, 0x0007};
+static Point16 D_8015522C = {0x000D, 0xFFF9};
+static Point16 D_80155230 = {0x0010, 0x0008};
+static Point16 D_80155234 = {0xFFF9, 0xFFEA};
+static Point16 D_80155238 = {0x0006, 0xFFEB};
+static Point16 D_8015523C = {0xFFF8, 0x0015};
+static Point16 D_80155240 = {0x0007, 0x0016};
+static Point16* D_80155244[] = {
+    &D_801551FC, &D_8015520C, &D_80155200, &D_8015520C, &D_80155210,
+    &D_80155200, &D_80155210, &D_80155204, &D_80155200, &D_80155210,
+    &D_80155214, &D_80155204, &D_80155214, &D_80155208, &D_80155204,
+    &D_80155204, &D_80155208, &D_80155220, &D_80155204, &D_80155220,
+    &D_8015521C, &D_80155200, &D_80155204, &D_8015521C, &D_80155200,
+    &D_8015521C, &D_80155218, &D_80155200, &D_80155218, &D_801551FC,
+    &D_8015520C, &D_8015522C, &D_80155210, &D_8015522C, &D_80155230,
+    &D_80155210, &D_80155230, &D_80155214, &D_80155210, &D_80155218,
+    &D_8015521C, &D_80155224, &D_8015521C, &D_80155228, &D_80155224,
+    &D_8015521C, &D_80155220, &D_80155228, &D_801551FC, &D_80155218,
+    &D_80155234, &D_801551FC, &D_80155238, &D_8015520C, &D_80155208,
+    &D_8015523C, &D_80155220, &D_80155214, &D_80155240, &D_80155208,
+    &D_80155234, &D_80155218, &D_80155224, &D_80155238, &D_8015522C,
+    &D_8015520C, &D_80155228, &D_80155220, &D_8015523C, &D_80155230,
+    &D_80155240, &D_80155214};
 void RicEntityHitByIce(Entity* self) {
+    const int PrimCount = LEN(D_80155244) / 3;
     s32 i;
     Primitive* prim;
     s16 angle;
@@ -688,7 +774,7 @@ void RicEntityHitByIce(Entity* self) {
     sp18 = ((g_Player.unk0C & 0x10000) == sp18);
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT3, 24);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT3, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -714,7 +800,7 @@ void RicEntityHitByIce(Entity* self) {
             self->ext.hitbyice.unk7E = 1;
         }
         if (PLAYER.velocityY != 0) {
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 self->rotZ = -0x100;
             } else {
                 self->rotZ = 0x100;
@@ -726,8 +812,8 @@ void RicEntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        if (PLAYER.step == 0x10) {
-            if (PLAYER.facingLeft == 0) {
+        if (PLAYER.step == PL_S_DEAD) {
+            if (!PLAYER.facingLeft) {
                 self->rotZ = -0x180;
             } else {
                 self->rotZ = 0x180;
@@ -742,45 +828,45 @@ void RicEntityHitByIce(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (PLAYER.step == 0x10) {
+        if (PLAYER.step == PL_S_DEAD) {
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->rotZ = -0x280;
                 } else {
                     self->rotZ = 0x280;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->rotZ = -0x380;
                 } else {
                     self->rotZ = 0x380;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->rotZ = -0x180;
                 } else {
                     self->rotZ = 0x180;
                 }
             }
         }
-        if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
+        if (self->ext.hitbyice.unk80 && !--self->ext.hitbyice.unk82) {
             sp18 = true;
         }
-        if ((self->ext.hitbyice.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
+        if ((self->ext.hitbyice.unk7E) && (g_Player.pl_vram_flag & 0xC)) {
             sp18 = true;
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            if (self->ext.hitbyice.unk80 != 0) {
+            if (self->ext.hitbyice.unk80) {
                 self->ext.hitbyice.unk7C = 0x80;
             }
             self->step++;
         }
         break;
     case 2:
-        if (--self->ext.hitbyice.unk7C == 0) {
+        if (!--self->ext.hitbyice.unk7C) {
             DestroyEntity(self);
             return;
         }
@@ -790,7 +876,7 @@ void RicEntityHitByIce(Entity* self) {
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 24; i++) {
+    for (i = 0; i < PrimCount; i++) {
         offset = D_80155244[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(
@@ -870,6 +956,7 @@ void RicEntityHitByIce(Entity* self) {
     }
 }
 
+static s16 lightning_clut[] = {0x194, 0x199};
 void RicEntityHitByLightning(Entity* self) {
     Primitive* prevPrim;
     Primitive* prim;
@@ -912,7 +999,7 @@ void RicEntityHitByLightning(Entity* self) {
             prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
             prim->tpage = 0x1A;
-            prim->clut = D_80155364[rand() & 1];
+            prim->clut = lightning_clut[rand() & 1];
             prim->priority = PLAYER.zPriority - 2;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
@@ -1012,6 +1099,7 @@ void RicEntityHitByLightning(Entity* self) {
 }
 
 // Corresponding DRA function is func_80124164
+static s32 D_80155368[] = {255, 255, 255, 127, 127, 63, 127, 63, 127};
 void func_80165DD8(
     POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
     s16 top = y - radius;

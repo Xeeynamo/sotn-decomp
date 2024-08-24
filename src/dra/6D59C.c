@@ -545,7 +545,7 @@ void func_8010E570(s32 arg0) {
         PLAYER.step_s = 2;
         atLedge = 0;
     }
-    switch (g_Player.unk50) {
+    switch (g_Player.prev_step) {
 
     case 9:
         anim = 4;
@@ -604,7 +604,7 @@ void func_8010E6AC(s32 arg0) {
         PLAYER.animFrameIdx = 1;
     }
 
-    if (g_Player.unk50 == 2) {
+    if (g_Player.prev_step == 2) {
         PLAYER.animFrameIdx = 4;
     }
 }
@@ -612,7 +612,7 @@ void func_8010E6AC(s32 arg0) {
 void func_8010E7AC(void) {
     SetPlayerStep(Player_Fall);
 
-    if (g_Player.unk50 != 1) {
+    if (g_Player.prev_step != 1) {
         SetPlayerAnim(0x1C);
     }
 
@@ -646,7 +646,7 @@ void func_8010E83C(s32 arg0) {
     PLAYER.velocityY = FIX(-4.875);
     SetPlayerStep(Player_Jump);
 
-    if (g_Player.unk50 == 1) {
+    if (g_Player.prev_step == 1) {
         g_Player.unk44 |= 0x10;
     }
 

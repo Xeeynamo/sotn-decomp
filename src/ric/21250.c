@@ -9,7 +9,7 @@ s32 func_8015D250(s32 unused_arg) {
         return 1;
     }
 
-    subweaponId = func_8015FB84(&subweapon, 0, 0);
+    subweaponId = func_8015FB84(&subweapon, false, false);
     if (subweaponId <= 0) {
         return 1;
     }
@@ -19,7 +19,8 @@ s32 func_8015D250(s32 unused_arg) {
     if (func_8015D1D0(subweaponId, subweapon.unk6) < 0) {
         return 2;
     }
-    if ((s16)func_8015FB84(&subweapon, 0, 1) <= 0) {
+    subweaponId = func_8015FB84(&subweapon, false, true);
+    if (subweaponId <= 0) {
         return 3;
     }
     if (g_Player.unk72) {
@@ -31,22 +32,20 @@ s32 func_8015D250(s32 unused_arg) {
     g_Player.D_80072F00[PL_T_10] = 4;
 
     switch (PLAYER.step) {
-    case 25:
-        PLAYER.step = 0;
+    case PL_S_RUN:
+        PLAYER.step = PL_S_STAND;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         RicSetAnimation(D_801555E8);
         break;
-
-    case 0:
-    case 1:
-    case 2:
-        PLAYER.step = 0;
+    case PL_S_STAND:
+    case PL_S_WALK:
+    case PL_S_CROUCH:
+        PLAYER.step = PL_S_STAND;
         RicSetAnimation(D_801555E8);
         break;
-
-    case 3:
-    case 4:
-        PLAYER.step = 4;
+    case PL_S_FALL:
+    case PL_S_JUMP:
+        PLAYER.step = PL_S_JUMP;
         RicSetAnimation(D_80155638);
         break;
     }
@@ -56,7 +55,7 @@ s32 func_8015D250(s32 unused_arg) {
     return 0;
 }
 
-bool RicPrepareAttack(void) {
+bool RicDoAttack(void) {
     s32 i;
     s16 poisoned;
     s32 temp_rand = rand();
@@ -99,12 +98,12 @@ bool RicPrepareAttack(void) {
             return false;
         case Player_Stand:
         case Player_Walk:
-            PLAYER.step = 0;
+            PLAYER.step = PL_S_STAND;
             RicSetAnimation(D_80155588);
             g_CurrentEntity->velocityX = 0;
             break;
         case PL_S_RUN:
-            PLAYER.step = 0;
+            PLAYER.step = PL_S_STAND;
             RicSetAnimation(D_80155588);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             break;
@@ -114,7 +113,7 @@ bool RicPrepareAttack(void) {
             break;
         case Player_Fall:
         case Player_Jump:
-            PLAYER.step = 4;
+            PLAYER.step = PL_S_JUMP;
             RicSetAnimation(D_801555C8);
             break;
         }
@@ -126,7 +125,7 @@ bool RicPrepareAttack(void) {
     return false;
 }
 
-bool func_8015D678(void) {
+bool RicDoCrash(void) {
     SubweaponDef subWpn;
     Entity* subWpnEnt;
     s16 subWpnID;
@@ -222,11 +221,11 @@ bool func_8015D678(void) {
     return 1;
 }
 
-void func_8015D9B4() { RicSetStep(PL_S_22); }
+void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
-void func_8015D9D4(void) {
-    RicCheckMovement();
-    RicSetStep(PL_S_23);
+void RicSetSlide(void) {
+    RicCheckFacing();
+    RicSetStep(PL_S_SLIDE);
     RicSetAnimation(D_80155750);
     g_CurrentEntity->velocityY = 0;
     RicSetSpeedX(FIX(5.5));
@@ -236,9 +235,9 @@ void func_8015D9D4(void) {
     g_Player.D_80072F00[PL_T_12] = 4;
 }
 
-void func_8015DA60(void) {
+void RicSetSlideKick(void) {
     g_Player.unk44 = 0;
-    RicSetStep(PL_S_26);
+    RicSetStep(PL_S_SLIDE_KICK);
     RicSetAnimation(D_8015577C);
     g_CurrentEntity->velocityY = FIX(-2);
     RicSetSpeedX(FIX(5.5));
@@ -262,17 +261,17 @@ void RicSetBladeDash(void) {
     g_api.PlaySfx(0x707);
 }
 
-bool func_8015DBB0(s32 arg_flags) {
+bool RicCheckInput(s32 checks) {
     s32 velYChange;
     u32 effects;
 
-    if (arg_flags & 8) {
+    if (checks & CHECK_FACING) {
         if (g_Player.unk46 == 0) {
-            RicCheckMovement();
+            RicCheckFacing();
         }
     }
-    velYChange = (arg_flags & 0x8000) ? FIX(28.0 / 128) : 0;
-    if (arg_flags & 0x10000) {
+    velYChange = (checks & CHECK_GRAVITY_FALL) ? FIX(28.0 / 128) : 0;
+    if (checks & CHECK_GRAVITY_JUMP) {
         if (FIX(-1.0 / 8) < PLAYER.velocityY &&
             PLAYER.velocityY < FIX(3.0 / 8) && !(g_Player.unk44 & 0x20) &&
             (g_Player.padPressed & PAD_CROSS)) {
@@ -282,7 +281,7 @@ bool func_8015DBB0(s32 arg_flags) {
             velYChange = FIX(28.0 / 128);
         }
     }
-    if (arg_flags & 0x200) {
+    if (checks & CHECK_GRAVITY_HIT) {
         if (FIX(-1.0 / 8) < PLAYER.velocityY &&
             PLAYER.velocityY < FIX(3.0 / 8)) {
             velYChange = FIX(14.0 / 128);
@@ -297,12 +296,12 @@ bool func_8015DBB0(s32 arg_flags) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if ((arg_flags & 0x80) && (g_Player.pl_vram_flag & 2) &&
+    if ((checks & CHECK_80) && (g_Player.pl_vram_flag & 2) &&
         (PLAYER.velocityY < FIX(-1))) {
         PLAYER.velocityY = FIX(-1);
     }
     if (PLAYER.velocityY >= 0) {
-        if ((arg_flags & 1) && (g_Player.pl_vram_flag & 1)) {
+        if ((checks & CHECK_GROUND) && (g_Player.pl_vram_flag & 1)) {
             switch (g_Player.unk46) {
             case 0:
             default:
@@ -336,7 +335,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
-                    PLAYER.step = 0;
+                    PLAYER.step = PL_S_STAND;
                     PLAYER.anim = D_80155588;
                     if (g_Player.unk44 & 8) {
                         RicCreateEntFactoryFromEntity(
@@ -357,7 +356,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
-                    PLAYER.step = 0;
+                    PLAYER.step = PL_S_STAND;
                     PLAYER.anim = D_80155730;
                     if (!(g_Player.unk44 & 8)) {
                         PLAYER.velocityX = 0;
@@ -380,16 +379,17 @@ bool func_8015DBB0(s32 arg_flags) {
                 if (!(g_Player.unk44 & 8)) {
                     PLAYER.velocityX = 0;
                 }
-                PLAYER.step = 0;
+                PLAYER.step = PL_S_STAND;
                 PLAYER.anim = D_801555E8;
                 g_Player.unk44 = 0;
                 return true;
             }
-        } else if ((arg_flags & 0x20000) && (g_Player.pl_vram_flag & 1)) {
+        } else if (
+            checks & CHECK_GROUND_AFTER_HIT && (g_Player.pl_vram_flag & 1)) {
             RicSetCrouch(1, PLAYER.velocityX);
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
-            if ((g_Player.unk5C != 0) && (g_Status.hp < 2)) {
-                func_8015D9B4();
+            if (g_Player.unk5C && (g_Status.hp < 2)) {
+                RicSetDeadPrologue();
                 return true;
             } else {
                 RicCreateEntFactoryFromEntity(
@@ -398,39 +398,39 @@ bool func_8015DBB0(s32 arg_flags) {
             return true;
         }
     }
-    if ((arg_flags & 4) && !(g_Player.pl_vram_flag & 1)) {
+    if (checks & CHECK_FALL && !(g_Player.pl_vram_flag & 1)) {
         if (g_Player.unk46 != 0) {
             if (g_Player.unk46 == 1) {
                 PLAYER.step_s = 0x40;
-                PLAYER.step = 4;
+                PLAYER.step = PL_S_JUMP;
                 PLAYER.anim = D_801555C8;
                 return true;
             }
             if (g_Player.unk46 == 2) {
                 PLAYER.step_s = 0x41;
-                PLAYER.step = 4;
+                PLAYER.step = PL_S_JUMP;
                 PLAYER.anim = D_801555C8;
                 return true;
             }
             if (g_Player.unk46 == 3) {
                 PLAYER.step_s = 0x42;
-                PLAYER.step = 4;
+                PLAYER.step = PL_S_JUMP;
                 PLAYER.anim = D_80155638;
                 return true;
             }
         } else {
-            func_8015CF08();
+            RicSetFall();
             return true;
         }
     }
     if (g_Player.unk46 != 0) {
         return false;
     }
-    if ((arg_flags & 0x40) && (g_Player.padTapped & PAD_TRIANGLE) &&
-        (func_8015D678() != 0)) {
+    if (checks & CHECK_CRASH && (g_Player.padTapped & PAD_TRIANGLE) &&
+        RicDoCrash()) {
         return true;
     }
-    if (arg_flags & 0x40000) {
+    if (checks & CHECK_SLIDE) {
         if (!PLAYER.facingLeft) {
             effects = g_Player.colliders[2].effects & EFFECT_UNK_8000;
         } else {
@@ -441,20 +441,20 @@ bool func_8015DBB0(s32 arg_flags) {
                 ((PLAYER.posX.i.hi >= 5) || !PLAYER.facingLeft) &&
                 (g_Player.padPressed & PAD_DOWN) &&
                 (g_Player.padTapped & PAD_CROSS)) {
-                func_8015D9D4();
+                RicSetSlide();
                 return true;
             }
         }
     }
-    if (arg_flags & 0x10 && (g_Player.padTapped & PAD_CROSS)) {
+    if (checks & CHECK_JUMP && (g_Player.padTapped & PAD_CROSS)) {
         RicSetJump();
         return true;
     }
-    if ((arg_flags & 0x1000) && (g_Player.padTapped & PAD_SQUARE) &&
-        RicPrepareAttack()) {
+    if (checks & CHECK_ATTACK && (g_Player.padTapped & PAD_SQUARE) &&
+        RicDoAttack()) {
         return true;
     }
-    if ((arg_flags & 0x2000) && (g_Player.padPressed & PAD_DOWN)) {
+    if (checks & CHECK_CROUCH && (g_Player.padPressed & PAD_DOWN)) {
         RicSetCrouch(2, 0);
         return true;
     }
@@ -589,7 +589,7 @@ void func_8015E800(void) {
             continue;
         }
         if ((temp_a0 & EFFECT_UNK_0002) || (PLAYER.velocityY >= 0) ||
-            ((PLAYER.step == 26) && (temp_a0 & EFFECT_UNK_8000))) {
+            (PLAYER.step == PL_S_SLIDE_KICK && (temp_a0 & EFFECT_UNK_8000))) {
             temp_s0 = g_Player.colliders[i].effects &
                       (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
             if ((temp_s0 == EFFECT_SOLID) ||
@@ -600,8 +600,9 @@ void func_8015E800(void) {
                 g_api.CheckCollision(argX, argY, &sp10, 0);
                 sp10effects = sp10.effects;
                 if (!(sp10effects & EFFECT_SOLID)) {
-                    if ((g_Player.colliders[i].effects != 1) ||
-                        (PLAYER.velocityY >= 0) || (PLAYER.step == 26)) {
+                    if (g_Player.colliders[i].effects != EFFECT_SOLID ||
+                        PLAYER.velocityY >= 0 ||
+                        PLAYER.step == PL_S_SLIDE_KICK) {
                         if (temp_s0 & EFFECT_UNK_0800) {
                             *yPosPtr += var_s5 + g_Player.colliders[i].unk8;
                         } else {
@@ -758,7 +759,7 @@ void func_8015EE28(void) {
             continue;
         }
         if ((temp_s0 == EFFECT_SOLID) || (var_a0 & EFFECT_UNK_8000)) {
-            if (((PLAYER.step == 26) || (PLAYER.step == 23)) &&
+            if ((PLAYER.step == PL_S_SLIDE_KICK || PLAYER.step == PL_S_SLIDE) &&
                 !(var_a0 & EFFECT_SOLID)) {
                 continue;
             }
@@ -768,7 +769,7 @@ void func_8015EE28(void) {
             g_api.CheckCollision(argX, argY, &collider, 0);
             collidereffects = collider.effects;
             if (!(collidereffects & 1)) {
-                if ((g_Player.colliders2[i].effects != 1) ||
+                if ((g_Player.colliders2[i].effects != EFFECT_SOLID) ||
                     (PLAYER.velocityY <= 0)) {
                     *vram_ptr |= 2;
                     if (!(*vram_ptr & 1) &&
@@ -1146,6 +1147,11 @@ s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
 }
 
 // Corresponding DRA function is func_80119E78
+u8 D_801548F4[6][8] = {
+    0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60, 0x10, 0x50, 0x20, 0x50,
+    0x10, 0x60, 0x20, 0x60, 0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50,
+    0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 0x78, 0x30, 0x80, 0x30,
+    0x78, 0x38, 0x80, 0x38, 0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40};
 s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
     s16 offset;
     s32 ret = 0;
@@ -1271,6 +1277,14 @@ void func_8015FEA8(Entity* entity) {
 }
 
 // same as DRA/func_8011F074
+static AnimationFrame anim_80154924[] = {
+    {2, FRAME(1, 0)},  {2, FRAME(2, 0)},
+    {2, FRAME(3, 0)},  {2, FRAME(4, 0)},
+    {2, FRAME(5, 0)},  {2, FRAME(6, 0)},
+    {2, FRAME(7, 0)},  {2, FRAME(8, 0)},
+    {2, FRAME(9, 0)},  {2, FRAME(10, 0)},
+    {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
+    {2, FRAME(13, 0)}, A_END};
 void func_801601DC(Entity* entity) {
     s16 posX;
     s16 posY;
@@ -1290,7 +1304,7 @@ void func_801601DC(Entity* entity) {
         }
         entity->rotY = 0x40;
         entity->rotX = 0x40;
-        entity->anim = D_80154924;
+        entity->anim = anim_80154924;
         D_80174FFC++;
         entity->unk6C = 0xFF;
         entity->drawFlags =
@@ -1321,6 +1335,7 @@ void func_801603B4(Entity* self) {}
 
 void func_801603BC(void) {}
 
+void RicEntityGiantSpinningCross(Entity*);
 PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
     RicEntityEntFactory,
@@ -1409,7 +1424,7 @@ void func_801603C4(void) {
             if (entity->step == 0) {
                 entity->pfnUpdate = g_RicEntityTbl[entity->entityId];
             }
-            if ((temp_s2 == 0) || (entity->flags & 0x10000)) {
+            if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
                 entity->pfnUpdate(entity);
                 entity = g_CurrentEntity;
                 if (entity->entityId != 0) {
@@ -1417,7 +1432,7 @@ void func_801603C4(void) {
                         ((u16)(entity->posX.i.hi + 32) > 320 ||
                          (u16)(entity->posY.i.hi + 16) > 272)) {
                         DestroyEntity(entity);
-                    } else if (entity->flags & 0x100000) {
+                    } else if (entity->flags & FLAG_UNK_100000) {
                         g_api.UpdateAnim(0, D_80154674);
                     }
                 }
@@ -1472,7 +1487,7 @@ Entity* RicCreateEntFactoryFromEntity(
      * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
      */
-    Entity* entity = RicGetFreeEntity(8, 0x10);
+    Entity* entity = RicGetFreeEntity(8, 16);
 
     if (entity != NULL) {
         DestroyEntity(entity);
@@ -1484,7 +1499,7 @@ Entity* RicCreateEntFactoryFromEntity(
         entity->facingLeft = source->facingLeft;
         entity->zPriority = source->zPriority;
         entity->params = factoryParams & 0xFFF;
-        entity->ext.generic.unkA0 = (factoryParams >> 8) & 0xFF00;
+        entity->ext.factory.unkA0 = (factoryParams >> 8) & 0xFF00;
         if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
         }

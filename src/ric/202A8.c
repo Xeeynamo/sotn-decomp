@@ -13,7 +13,7 @@ void RicHandleHighJump(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 temp = g_Player.padPressed & PAD_RIGHT;
             } else {
                 temp = g_Player.padPressed & PAD_LEFT;

@@ -46,10 +46,10 @@ s32 func_801746A0(s32 arg0) {
     if (arg0 == 0)
         return 0;
 
-    if (g_Player.unk50 != PLAYER.step || PLAYER.step != 0)
+    if (g_Player.prev_step != PLAYER.step || PLAYER.step != Player_Stand)
         return 1;
 
-    if (g_Player.unk52 != PLAYER.step_s)
+    if (g_Player.prev_step_s != PLAYER.step_s)
         return 1;
 
     if (PLAYER.step_s != 0 && PLAYER.step_s != 4)
