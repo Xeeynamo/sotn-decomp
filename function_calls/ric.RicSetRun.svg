@@ -96,24 +96,24 @@
 <text text-anchor="middle" x="1013.92" y="-38.67" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- ric.RicSetWalk&#45;&gt;ric.RicSetRun -->
-<g id="edge6" class="edge">
+<g id="edge7" class="edge">
 <title>ric.RicSetWalk&#45;&gt;ric.RicSetRun</title>
 <path fill="none" stroke="black" d="M1026.11,-35.53C980.81,-67.96 873.09,-139.87 816.2,-175.76"/>
 <polygon fill="black" stroke="black" points="814.14,-172.93 807.53,-181.2 817.86,-178.86 814.14,-172.93"/>
 <text text-anchor="middle" x="1031.11" y="-39.33" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- ric.func_8015DBB0 -->
+<!-- ric.RicCheckInput -->
 <g id="node7" class="node">
-<title>ric.func_8015DBB0</title>
-<g id="a_node7"><a xlink:href="ric.func_8015DBB0.svg" xlink:title="ric.func_8015DBB0">
-<ellipse fill="green" stroke="black" cx="779.78" cy="-378" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="779.78" y="-374.3" font-family="Times,serif" font-size="14.00">ric.func_8015DBB0</text>
+<title>ric.RicCheckInput</title>
+<g id="a_node7"><a xlink:href="ric.RicCheckInput.svg" xlink:title="ric.RicCheckInput">
+<ellipse fill="green" stroke="black" cx="779.78" cy="-378" rx="93.68" ry="18"/>
+<text text-anchor="middle" x="779.78" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicCheckInput</text>
 </a>
 </g>
 </g>
-<!-- ric.func_8015DBB0&#45;&gt;ric.RicSetRun -->
-<g id="edge7" class="edge">
-<title>ric.func_8015DBB0&#45;&gt;ric.RicSetRun</title>
+<!-- ric.RicCheckInput&#45;&gt;ric.RicSetRun -->
+<g id="edge6" class="edge">
+<title>ric.RicCheckInput&#45;&gt;ric.RicSetRun</title>
 <path fill="none" stroke="black" d="M779.78,-359.93C779.78,-328.97 779.78,-263.3 779.78,-226.13"/>
 <polygon fill="black" stroke="black" points="783.28,-226.02 779.78,-216.02 776.28,-226.02 783.28,-226.02"/>
 <text text-anchor="middle" x="774.78" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

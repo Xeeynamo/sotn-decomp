@@ -79,18 +79,18 @@
 <polygon fill="black" stroke="black" points="875.88,-43.01 883,-35.17 872.54,-36.86 875.88,-43.01"/>
 <text text-anchor="middle" x="878" y="-38.97" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- ric.RicPrepareAttack -->
+<!-- ric.RicDoAttack -->
 <g id="node6" class="node">
-<title>ric.RicPrepareAttack</title>
-<g id="a_node6"><a xlink:href="ric.RicPrepareAttack.svg" xlink:title="ric.RicPrepareAttack">
-<ellipse fill="green" stroke="black" cx="584.78" cy="-378" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="584.78" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicPrepareAttack</text>
+<title>ric.RicDoAttack</title>
+<g id="a_node6"><a xlink:href="ric.RicDoAttack.svg" xlink:title="ric.RicDoAttack">
+<ellipse fill="green" stroke="black" cx="584.78" cy="-378" rx="83.39" ry="18"/>
+<text text-anchor="middle" x="584.78" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicDoAttack</text>
 </a>
 </g>
 </g>
-<!-- ric.RicPrepareAttack&#45;&gt;ric.func_8015D250 -->
+<!-- ric.RicDoAttack&#45;&gt;ric.func_8015D250 -->
 <g id="edge5" class="edge">
-<title>ric.RicPrepareAttack&#45;&gt;ric.func_8015D250</title>
+<title>ric.RicDoAttack&#45;&gt;ric.func_8015D250</title>
 <path fill="none" stroke="black" d="M584.78,-359.93C584.78,-328.97 584.78,-263.3 584.78,-226.13"/>
 <polygon fill="black" stroke="black" points="588.28,-226.02 584.78,-216.02 581.28,-226.02 588.28,-226.02"/>
 <text text-anchor="middle" x="579.78" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
