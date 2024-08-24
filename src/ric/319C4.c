@@ -137,22 +137,8 @@ void func_8016D9C4(Entity* self) {
                 angleChange = -0x80;
             }
             primLine->angle = (primLine->angle - angleChange) & 0xFFF;
-#ifdef VERSION_PC
-#ifdef _MSC_VER
-            {
-                s32 temp_x = (rcos(primLine->angle) << 8);
-                s32 temp_y = (-(rsin(primLine->angle) << 8));
-                primLine->velocityX = *(f32*)&temp_x;
-                primLine->velocityY = *(f32*)&temp_y;
-            }
-#else
-            primLine->velocityX = (f32)(rcos(primLine->angle) << 8);
-            primLine->velocityY = (f32) - (rsin(primLine->angle) << 8);
-#endif
-#else
-            primLine->velocityX = (rcos(primLine->angle) << 8);
-            primLine->velocityY = -(rsin(primLine->angle) << 8);
-#endif
+            primLine->velocityX.val = (rcos(primLine->angle) << 8);
+            primLine->velocityY.val = -(rsin(primLine->angle) << 8);
             primLine->preciseX.val += primLine->velocityX.val;
             primLine->preciseY.val += primLine->velocityY.val;
             self->posX.i.hi = primLine->preciseX.i.hi;
@@ -311,6 +297,8 @@ void func_8016E324(Entity* entity) {
     }
 }
 
+#define BIBLE_PAGE_COUNT 6
+static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
 void EntityBiblePageBeam(Entity* self) {
     Primitive* prim;
     s16 var_s7;
@@ -324,7 +312,7 @@ void EntityBiblePageBeam(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
+        self->primIndex = g_api.AllocPrimitives(PRIM_G4, BIBLE_PAGE_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -338,22 +326,21 @@ void EntityBiblePageBeam(Entity* self) {
             self->ext.et_8016E46C.unk7E = 2;
         }
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
             var_s3 = i + 2;
-            if (var_s3 >= 6) {
+            if (var_s3 >= BIBLE_PAGE_COUNT) {
                 var_s3 = i - 4;
             }
-            prim->x0 = prim->x1 = g_BiblePos[i].x;
-            prim->y0 = prim->y1 = g_BiblePos[i].y;
-            prim->x2 = prim->x3 = g_BiblePos[var_s3].x;
-            prim->y2 = prim->y3 = g_BiblePos[var_s3].y;
+            prim->x0 = prim->x1 = bible_pages_pos[i].x;
+            prim->y0 = prim->y1 = bible_pages_pos[i].y;
+            prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
+            prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
             prim->priority = 0xC2;
             prim->blendMode = 0x435;
             prim = prim->next;
         }
         self->step++;
         break;
-
     case 1:
         if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
             self->ext.et_8016E46C.unkB0 = 0x11;
@@ -366,7 +353,7 @@ void EntityBiblePageBeam(Entity* self) {
     case 2:
         self->ext.et_8016E46C.unk80++;
         self->ext.et_8016E46C.unk7E += self->ext.et_8016E46C.unk7C;
-        var_s3 = g_BiblePos[1].x + self->ext.et_8016E46C.unk7E;
+        var_s3 = bible_pages_pos[1].x + self->ext.et_8016E46C.unk7E;
         if (var_s3 < -0x50 || var_s3 > 0x150) {
             self->step++;
         }
@@ -380,9 +367,9 @@ void EntityBiblePageBeam(Entity* self) {
     }
     var_s7 = 0;
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
         var_s3 = i + 2;
-        if (var_s3 >= 6) {
+        if (var_s3 >= BIBLE_PAGE_COUNT) {
             var_s3 = i - 4;
         }
         temp_v1 = (rsin((self->ext.et_8016E46C.unk80 * 20) + (i << 8)) * 96);
@@ -397,14 +384,14 @@ void EntityBiblePageBeam(Entity* self) {
         prim->g2 = prim->g3 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (var_s3 << 8)) * 96;
         prim->b2 = prim->b3 = abs(temp_v1 >> 0xc);
-        prim->x1 = g_BiblePos[i].x;
-        prim->y0 = prim->y1 = g_BiblePos[i].y;
-        prim->x3 = g_BiblePos[var_s3].x;
-        prim->y2 = prim->y3 = g_BiblePos[var_s3].y;
-        prim->x0 = g_BiblePos[i].x + self->ext.et_8016E46C.unk7E;
-        prim->x2 = g_BiblePos[var_s3].x + self->ext.et_8016E46C.unk7E;
-        if (var_s7 < abs(g_BiblePos[i].y)) {
-            var_s7 = abs(g_BiblePos[i].y);
+        prim->x1 = bible_pages_pos[i].x;
+        prim->y0 = prim->y1 = bible_pages_pos[i].y;
+        prim->x3 = bible_pages_pos[var_s3].x;
+        prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
+        prim->x0 = bible_pages_pos[i].x + self->ext.et_8016E46C.unk7E;
+        prim->x2 = bible_pages_pos[var_s3].x + self->ext.et_8016E46C.unk7E;
+        if (var_s7 < abs(bible_pages_pos[i].y)) {
+            var_s7 = abs(bible_pages_pos[i].y);
         }
         prim = prim->next;
     }
@@ -415,7 +402,10 @@ void EntityBiblePageBeam(Entity* self) {
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
-static s16 D_80155EF0[] = {0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155};
+static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
+    0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
+};
+static s32 bible_pages_volume;
 void EntityBiblePage(Entity* self) {
     Primitive* prim;
     s16 temp_a1_3;
@@ -431,7 +421,7 @@ void EntityBiblePage(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1 + BIBLE_PAGE_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
@@ -453,15 +443,14 @@ void EntityBiblePage(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
-
         prim->u0 = prim->u2 = 0x98;
         prim->v0 = prim->v1 = 0xD8;
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = 0xC2;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
             prim->tpage = 0x1C;
             prim->clut = 0x1AE;
             prim->u0 = prim->u2 = 0x20;
@@ -473,7 +462,7 @@ void EntityBiblePage(Entity* self) {
             prim = prim->next;
         }
         self->ext.et_8016E9E4.unk84 = 0x40;
-        D_801758AC = 0x60;
+        bible_pages_volume = 0x60;
         self->step++;
         break;
     case 1:
@@ -496,7 +485,7 @@ void EntityBiblePage(Entity* self) {
             prim->clut = 0x19F;
             prim->drawMode |= 0x35;
             prim = prim->next;
-            for (i = 0; i < 6; i++) {
+            for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
                 prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             }
@@ -557,12 +546,12 @@ void EntityBiblePage(Entity* self) {
         (self->ext.et_8016E9E4.unk7C == 0x900) ||
         (self->ext.et_8016E9E4.unk7C == 0xD00)) {
         if (self->step < 9) {
-            g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, D_801758AC, 0);
+            g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, bible_pages_volume, 0);
             if (self->step >= 5) {
-                D_801758AC -= 4;
+                bible_pages_volume -= 4;
             }
-            if (D_801758AC < 0) {
-                D_801758AC = 0;
+            if (bible_pages_volume < 0) {
+                bible_pages_volume = 0;
             }
         }
     }
@@ -581,11 +570,11 @@ void EntityBiblePage(Entity* self) {
 
     temp_s6 = rsin(self->ext.et_8016E9E4.unk7E);
     temp_s5 = rcos(self->ext.et_8016E9E4.unk7E);
-    for (i = 0; i < 6; i++) {
-        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) *
+    for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
                      self->ext.et_8016E9E4.unk80) >>
                     0xC;
-        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) *
+        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
                      self->ext.et_8016E9E4.unk80) >>
                     0xC;
         temp_a1_3 =
@@ -595,8 +584,8 @@ void EntityBiblePage(Entity* self) {
             self->posY.i.hi +
             ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
         temp_v0_5 = ((temp_s5 * temp_v0_4) >> 0xC) + 0x200;
-        g_BiblePos[i].x = temp_a1_3;
-        g_BiblePos[i].y = temp_v0_6;
+        bible_pages_pos[i].x = temp_a1_3;
+        bible_pages_pos[i].y = temp_v0_6;
         prim->x0 = prim->x2 = temp_a1_3 - 0x1000 / temp_v0_5;
         prim->x1 = prim->x3 = temp_a1_3 + 0x1000 / temp_v0_5;
         // FAKE, needed for reg match
@@ -1118,7 +1107,7 @@ void func_801705EC(Entity* entity) {
     }
 }
 
-s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
+static s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     s16 temp_s3;
     s16 s3_offset = 0x80;
     s8 arg2_copy = arg2;
@@ -1144,7 +1133,7 @@ s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     }
 }
 
-void AguneaShuffleParams(s32 bufSize, s32* buf) {
+static void AguneaShuffleParams(s32 bufSize, s32* buf) {
     s32 i, idx, swapTemp;
 
     for (i = bufSize - 1; i > 0; i--) {
@@ -1295,6 +1284,8 @@ void EntityAguneaLightning(Entity* self) {
     }
 }
 
+#define LIGHTNING_COUNT 8
+static s32 g_AguneaParams[LIGHTNING_COUNT];
 void EntityAguneaCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
@@ -1390,10 +1381,10 @@ void EntityAguneaCircle(Entity* self) {
         }
         if (++self->ext.et_80170F64.unk7C >= 4) {
             // think this loop has to count down since we assign to i
-            for (i = 7; i >= 0; i--) {
+            for (i = LIGHTNING_COUNT - 1; i >= 0; i--) {
                 g_AguneaParams[i] = i;
             }
-            AguneaShuffleParams(8, &g_AguneaParams[0]);
+            AguneaShuffleParams(LIGHTNING_COUNT, &g_AguneaParams[0]);
             self->ext.et_80170F64.unk7C = 0;
             g_api.PlaySfx(SFX_THUNDER_B);
             self->step++;
@@ -1404,14 +1395,14 @@ void EntityAguneaCircle(Entity* self) {
             self,
             FACTORY(g_AguneaParams[self->ext.et_80170F64.unk7C] * 0x100, 68),
             0);
-        if (++self->ext.et_80170F64.unk7C >= 8) {
+        if (++self->ext.et_80170F64.unk7C >= LIGHTNING_COUNT) {
             self->hitboxHeight = self->hitboxWidth = 0x80;
             self->ext.et_80170F64.unk7C = 0;
             self->step++;
         }
         break;
     case 4:
-        if (++self->ext.et_80170F64.unk7C >= 9) {
+        if (++self->ext.et_80170F64.unk7C >= LIGHTNING_COUNT + 1) {
             self->step++;
         }
         break;
@@ -1511,6 +1502,8 @@ void EntityStopwatchCircle(Entity* self) {
     return;
 }
 
+static u32 D_801758D0;
+static Entity* D_801758D4[3]; // used by EntityStopwatch, should never underflow
 void EntityStopwatch(Entity* self) {
     Primitive* prim;
     s16 firstmult;
@@ -1947,46 +1940,36 @@ void func_80172AE8(Entity* entity) {
     case 0:
         ret = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = ret;
-        if (entity->primIndex != -1) {
-            entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->tpage = 0x1C;
-            prim->clut = 0x19D;
-            prim->u2 = 0x20;
-            prim->u0 = 0x20;
-            prim->u3 = 0x30;
-            prim->u1 = 0x30;
-            prim->v1 = 0;
-            prim->v0 = 0;
-            prim->v3 = 0x10;
-            prim->v2 = 0x10;
-            prim->x0 = prim->x2 = entity->posX.i.hi - 8;
-            prim->x1 = prim->x3 = entity->posX.i.hi + 8;
-            prim->y0 = prim->y1 = entity->posY.i.hi - 8;
-            prim->y2 = prim->y3 = entity->posY.i.hi + 8;
-            prim->priority = entity->zPriority;
-            prim->drawMode = 0x115;
-            entity->ext.generic.unk7E.modeU16 = 0x60U;
-            entity->step++;
-        } else {
+        if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
         }
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0x20;
+        prim->u1 = prim->u3 = 0x30;
+        prim->v0 = prim->v1 = 0;
+        prim->v2 = prim->v3 = 0x10;
+        prim->x0 = prim->x2 = entity->posX.i.hi - 8;
+        prim->x1 = prim->x3 = entity->posX.i.hi + 8;
+        prim->y0 = prim->y1 = entity->posY.i.hi - 8;
+        prim->y2 = prim->y3 = entity->posY.i.hi + 8;
+        prim->priority = entity->zPriority;
+        prim->drawMode = 0x115;
+        entity->ext.generic.unk7E.modeU16 = 0x60;
+        entity->step++;
         break;
-
     case 1:
         if (++entity->ext.generic.unk7C.s > 5) {
             entity->step++;
         }
         entity->ext.generic.unk7E.modeU16 -= 8;
         break;
-
     case 2:
         DestroyEntity(entity);
         return;
-
-    default:
-        break;
     }
     prim = &g_PrimBuf[entity->primIndex];
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =

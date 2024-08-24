@@ -46,7 +46,7 @@ segments:
       - [0x1938C, .data, pl_anims]
       - [0x199AC, .data, 2A060]
       - [0x19D94, .data, 2C4C4]
-      - [0x19EE0, .data, 319C4]
+      - [0x19ED0, .data, 319C4] # TODO adjust offset
       - [0x19EFC, .data, e_giant_spinning_cross]
       - [0x1A444, .rodata, 1AC60] #UpdateEntityRichter
       - [0x1A5E0, .rodata, 1AC60]
@@ -66,7 +66,6 @@ segments:
       - [0x1AB04, .rodata, 2C4C4] #EntityCrossBoomerang
       - [0x1AB24, .rodata, 2C4C4] #EntitySubwpnAgunea
       - [0x1AB38, .rodata, 319C4]
-      - [0x1AB50, .rodata, 319C4]
       - [0x1AB68, .rodata, e_giant_spinning_cross]
       - [0x1AC50, .rodata, e_giant_spinning_cross]
       - [0x1AC60, c, 1AC60]
@@ -80,6 +79,9 @@ segments:
       - [0x2A060, c, 2A060]
       - [0x2C4C4, c, 2C4C4]
       - [0x319C4, c, 319C4]
-      - [0x3328C, c, e_giant_spinning_cross]
+      - [0x359A4, c, 319C4]
+      - [0x3728C, c, e_giant_spinning_cross]
       - [0x37B64, .bss, bss]
+      - [0x39894, .bss, 319C4]
+      - [0x398E0, .bss, bss2]
   - [0x39A58]

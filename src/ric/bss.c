@@ -28,17 +28,3 @@ Point16 D_80175088[4][128];
 s32 D_80175888;
 s32 D_8017588C;
 s32 D_80175890;
-Point16 g_BiblePos[6];
-s32 D_801758AC;
-s32 g_AguneaParams[8];
-u32 D_801758D0;
-Entity* D_801758D4[3]; // used by EntityStopwatch, it should never underflow
-ButtonComboState g_bladeDashButtons;
-ButtonComboState D_801758E4;
-STATIC_PAD_BSS(104);
-u16 g_RicDebugCurFrame;
-u16 g_RicDebugDrawFlags;
-u16 g_RicDebugPalette;
-s16 g_IsRicDebugEnter;
-s32 D_80175958[32];
-s32 D_801759D8[32];
