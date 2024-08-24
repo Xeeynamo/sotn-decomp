@@ -15,6 +15,8 @@
 # this will download the raw VRAM dump. It should be a megabyte. Put it alongside
 # this script, then run this script with the args for the
 # filename, tpage, clut, x, y, w, h that you want.
+# Alternatively, if you use "LIVE" as your filename, the data will attempt to fetch live
+# from a running instance of PCSX-Redux. This avoids goofing around with managing file dumps.
 
 # Example use (while standing on the box in Alchemy Lab):
 # python3 display_texture.py vram_on_box.raw 0xF 9 8 200 32 32
@@ -29,6 +31,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
+import urllib.request
 
 
 # Take a 5-5-5 encoded array and convert to RGB image.
@@ -159,8 +162,19 @@ def draw_tpage_selection(raw_dump, tpage_number, clut_number, left, top, width, 
 # For the chosen filename for the vram dump, we load the bytes, convert
 # to a numpy array, and transform this to a rectangular layout in vram.
 def load_raw_dump(filename):
-    with open(filename, "rb") as dumpfile:
-        dumpbytes = dumpfile.read()
+    # Load the dump from a currently running PCSX instance
+    if filename == "LIVE":
+        api_url = "http://localhost:8080/api/v1/gpu/vram/raw"
+        try:
+            with urllib.request.urlopen(api_url) as response:
+                dumpbytes = response.read()
+                print("VRAM fetched from PCSX.")
+        except urllib.error.URLError as e:
+            print("Error retrieving file:", e)
+    else:  # Load from a specified filename
+        with open(filename, "rb") as dumpfile:
+            dumpbytes = dumpfile.read()
+
     datasize = len(dumpbytes)
     bytestring = np.frombuffer(dumpbytes, dtype=np.uint8)
     return np.reshape(bytestring, (512, int(datasize / 512)))
