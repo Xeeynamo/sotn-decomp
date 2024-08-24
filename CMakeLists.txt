@@ -230,8 +230,6 @@ set(SOURCE_FILES_RIC
     src/ric/21250.c
     src/ric/26C84.c
     src/ric/2C4C4.c
-    src/ric/e_36AE8.c
-    src/ric/e_bible.c
     src/ric/e_giant_spinning_cross.c
     src/ric/bss.c
     src/ric/bss2.c

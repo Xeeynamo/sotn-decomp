@@ -127,7 +127,7 @@ int sprintf(char* dst, const char* fmt, ...);
 #define PAD_FIELD(size) const CRITICAL_PAD_FIELD(size)
 #define STATIC_PAD_BSS(size) static CRITICAL_PAD_FIELD(size)
 #define STATIC_PAD_DATA(size) STATIC_PAD_BSS(size) = {0}
-#define STATIC_PAD_RODATA(size) static const STATIC_PAD_BSS(size) = {0}
+#define STATIC_PAD_RODATA(size) const STATIC_PAD_BSS(size) = {0}
 #else
 #define PAD_FIELD(size)
 #define STATIC_PAD_BSS(size)

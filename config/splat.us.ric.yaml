@@ -42,7 +42,8 @@ segments:
       - [0x1895C, .data, 21250] # g_RicEntityTbl
       - [0x18A6C, assets, factory_blueprint, g_RicFactoryBlueprints]
       - [0x18C40, .data, 24788]
-      - [0x18ED4, .data, 26C84]
+      - [0x18ED4, .data, 24788] # func_80162C84
+      - [0x18F7C, .data, 26C84]
       - [0x1938C, .data, pl_anims]
       - [0x199AC, .data, 2A060]
       - [0x19D94, .data, 2C4C4]
@@ -56,8 +57,8 @@ segments:
       - [0x1A800, .rodata, 20920]
       - [0x1A80C, .rodata, 21250]
       - [0x1A918, .rodata, 24788]
-      - [0x1A9D0, .rodata, 26C84]
-      - [0x1A9E8, .rodata, 26C84] #EntityPlayerBlinkWhite
+      - [0x1A9D0, .rodata, 24788] # func_80162C84
+      - [0x1A9E8, .rodata, 26C84] # EntityPlayerBlinkWhite
       - [0x1AA28, .rodata, 2A060]
       - [0x1AAA0, .rodata, 2A060]
       - [0x1AABC, .rodata, 2C4C4]
