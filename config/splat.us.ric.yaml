@@ -44,7 +44,7 @@ segments:
       - [0x18C40, .data, 24788]
       - [0x18ED4, .data, 24788] # func_80162C84
       - [0x18F7C, .data, 26C84]
-      - [0x1938C, .data, pl_anims]
+      - [0x1938C, .data, pl_anims]    
       - [0x199AC, .data, 2A060]
       - [0x19D94, .data, 2C4C4]
       - [0x19EE0, .data, 319C4]

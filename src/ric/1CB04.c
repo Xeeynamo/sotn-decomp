@@ -57,7 +57,7 @@ void RicHandleStand(void) {
         case 0:
             if (RicCheckFacing() == 0) {
                 if (g_Player.padPressed & PAD_UP) {
-                    RicSetAnimation(D_80155394);
+                    RicSetAnimation(ric_anim_press_up);
                     PLAYER.step_s = 1;
                     break;
                 }
@@ -154,7 +154,7 @@ void RicHandleRun(void) {
             RicSetStand(0);
             if (g_Player.D_80072F00[PL_T_RUN] == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
-                    RicSetAnimation(D_8015539C);
+                    RicSetAnimation(ric_anim_stop_run);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 }
@@ -377,7 +377,7 @@ void RicHandleCrouch(void) {
         if (PLAYER.animFrameDuration != -1) {
             return;
         }
-        RicSetAnimation(anim_crouch);
+        RicSetAnimation(ric_anim_crouch);
         PLAYER.step_s = 0;
         return;
     case 0x2:
@@ -394,7 +394,7 @@ void RicHandleCrouch(void) {
         break;
     case 0x3:
         if (PLAYER.animFrameDuration < 0) {
-            RicSetAnimation(anim_crouch);
+            RicSetAnimation(ric_anim_crouch);
             PLAYER.step_s = 0;
             return;
         }
@@ -420,7 +420,7 @@ void RicHandleCrouch(void) {
             }
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
-            RicSetAnimation(anim_crouch);
+            RicSetAnimation(ric_anim_crouch);
         }
         break;
     case 0x41:
@@ -428,7 +428,7 @@ void RicHandleCrouch(void) {
         if (!(g_Player.padPressed & PAD_SQUARE)) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
-            RicSetAnimation(anim_crouch);
+            RicSetAnimation(ric_anim_crouch);
         }
         break;
     }

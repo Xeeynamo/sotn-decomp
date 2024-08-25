@@ -1,12 +1,12 @@
 #include "ric.h"
 
-AnimationFrame* D_8015538C[] = {anim_stand, anim_stand};
-AnimationFrame D_80155394[] = {{64, FRAME(38, 2)}, A_LOOP_AT(0)};
-AnimationFrame D_8015539C[] = {
+AnimationFrame* D_8015538C[] = {ric_anim_stand, ric_anim_stand};
+AnimationFrame ric_anim_press_up[] = {{64, FRAME(38, 2)}, A_LOOP_AT(0)};
+AnimationFrame ric_anim_stop_run[] = {
     {2, FRAME(55, 2)},  {1, FRAME(144, 2)}, {2, FRAME(145, 2)},
     {3, FRAME(144, 2)}, {4, FRAME(145, 2)}, {12, FRAME(144, 2)},
     {4, FRAME(16, 2)},  A_JUMP_AT(1)};
-AnimationFrame anim_stand[] = {
+AnimationFrame ric_anim_stand[] = {
     {7, FRAME(1, 2)},
     {7, FRAME(2, 2)},
     {7, FRAME(3, 2)},
@@ -56,16 +56,16 @@ AnimationFrame anim_stand[] = {
     {4, FRAME(6, 2)},
     {64, FRAME(7, 2)},
     A_END};
-AnimationFrame D_80155480[] = {{64, FRAME(7, 2)}, A_LOOP_AT(0)};
+AnimationFrame ric_anim_stand_relax[] = {{64, FRAME(7, 2)}, A_LOOP_AT(0)};
 AnimationFrame ric_anim_walk[] = {
     {3, FRAME(8, 2)},  {6, FRAME(9, 2)},  {5, FRAME(10, 2)}, {6, FRAME(11, 2)},
     {7, FRAME(12, 2)}, {6, FRAME(13, 2)}, {5, FRAME(14, 2)}, {6, FRAME(15, 2)},
     {4, FRAME(8, 2)},  A_LOOP_AT(0)};
-AnimationFrame anim_land_strong_impact[] = {
+AnimationFrame ric_anim_crouch_from_stand2[] = {
     0x0001, 0x0410, 0x0001, 0x0611, 0x0010, 0x0612, A_END};
-AnimationFrame anim_crouch[] = {{64, FRAME(18, 6)}, A_END};
-AnimationFrame anim_land_from_run[] = {{16, FRAME(152, 6)}, A_END};
-AnimationFrame anim_crouch_from_stand[] = {
+AnimationFrame ric_anim_crouch[] = {{64, FRAME(18, 6)}, A_END};
+AnimationFrame ric_anim_land_from_air_run[] = {{16, FRAME(152, 6)}, A_END};
+AnimationFrame ric_anim_crouch_from_stand[] = {
     0x0001, 0x0410, 0x0001, 0x0611, 0x0001, 0x0612, A_END};
 AnimationFrame D_801554E0[] = {
     0x0001, 0x0612, 0x0001, 0x0611, 0x0001, 0x0410, A_END};
@@ -103,7 +103,7 @@ AnimationFrame ric_anim_throw_daggers[] = {
 AnimationFrame D_80155638[] = {
     0x0002, 0x0836, 0x0002, 0x0837, 0x0002, 0x0428, 0x0002, 0x0429,
     0x0003, 0x042A, 0x0010, 0x042D, 0x0006, 0x042E, A_END};
-AnimationFrame ric_anim_stand_in_air[] = {
+AnimationFrame ric_ric_anim_stand_in_air[] = {
     {5, FRAME(19, 0)},  {1, FRAME(26, 0)},   {1, FRAME(25, 0)},
     {6, FRAME(125, 0)}, {32, FRAME(126, 0)}, A_LOOP_AT(4)};
 AnimationFrame ric_anim_run[] = {

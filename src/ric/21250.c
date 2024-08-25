@@ -172,7 +172,7 @@ bool RicDoCrash(void) {
         break;
     case SUBWPN_AXE:
         RicSetStep(PL_S_STAND_IN_AIR);
-        RicSetAnimation(ric_anim_stand_in_air);
+        RicSetAnimation(ric_ric_anim_stand_in_air);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72) {
             PLAYER.velocityY = 0;
@@ -207,7 +207,7 @@ bool RicDoCrash(void) {
         break;
     case SUBWPN_CROSS:
         RicSetStep(PL_S_STAND_IN_AIR);
-        RicSetAnimation(ric_anim_stand_in_air);
+        RicSetAnimation(ric_ric_anim_stand_in_air);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72) {
             PLAYER.velocityY = 0;

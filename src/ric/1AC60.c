@@ -101,7 +101,7 @@ void RicInit(s16 initParam) {
     g_Player.unk04 = 1;
     g_Player.pl_vram_flag = 1;
     RicSetStand(0);
-    PLAYER.anim = D_80155480;
+    PLAYER.anim = ric_anim_stand_relax;
     g_Player.unk5C = initParam;
     if (g_StageId == STAGE_ST0) {
         g_IsPrologueStage = true;
@@ -657,7 +657,8 @@ block_48:
     if (PLAYER.anim == D_801556C4) {
         PLAYER.palette = D_80154574[PLAYER.animFrameIdx];
     }
-    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
+    if ((PLAYER.anim == ric_ric_anim_stand_in_air) &&
+        (PLAYER.animFrameIdx == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
     if ((PLAYER.step == PL_S_DEAD) && (PLAYER.animFrameDuration < 0)) {
