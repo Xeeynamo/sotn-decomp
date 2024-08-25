@@ -311,8 +311,9 @@ void func_8011E4BC(Entity* self) {
                 tilePrim->posX.i.hi = (selfXPos + (rand() & 0xF)) - 7;
                 tilePrim->posY.i.hi = selfYPos - (rand() & 0x1F);
                 tilePrim->velocityY.val = 0xFFFF4000 - (rand() & 0x7FFF);
-                if (self->ext.et_8011E4BC.unk8C != NULL) {
-                    tilePrim->velocityX.val = self->ext.et_8011E4BC.unk8C->unk8;
+                if (self->ext.et_8011E4BC.parent != NULL) {
+                    tilePrim->velocityX.val =
+                        self->ext.et_8011E4BC.parent->velocityX;
                 }
                 tilePrim->delay = ((i * 2) + 0xF);
                 break;

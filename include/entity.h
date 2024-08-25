@@ -944,7 +944,7 @@ typedef struct {
 typedef struct {
     s16 unk7C;
     byte pad[14];
-    unk_sub_8011E4BC* unk8C;
+    /* 0x8C */ struct Entity* parent;
 } ET_8011E4BC;
 
 typedef struct {
@@ -961,7 +961,7 @@ typedef struct {
     s16 unk84;
     /* 0x86 */ s16 : 16;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
@@ -972,52 +972,6 @@ typedef struct {
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 subweaponId;
 } ET_ReboundStone;
-
-typedef struct {
-    /* 0x7C */ s16 unk7C;
-    /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 pad[24];
-    /* 0xB0 */ s16 subweaponId;
-} ET_GiantSpinningCross;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-} ET_8017091C;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 pad[0x16];
-    s16 subweaponId;
-} ET_AguneaCrash;
-
-typedef struct {
-    s16 timer;
-    s16 size;
-} ET_stopwatchCircle;
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    f32 unk84;
-    s32 unk88;
-    s32 unk8C;
-    s16 unk90;
-    s16 unk92;
-    s16 unk94;
-    s16 unk96;
-    struct Entity* unk98;
-#ifdef VERSION_PC
-    s32 pad[3];
-#else
-    s32 pad[5];
-#endif
-    s16 subweaponId;
-} ET_StopWatch;
 typedef struct {
     s16 unk7C;
     s16 unk7E;
@@ -1025,20 +979,45 @@ typedef struct {
     s16 unk82;
     s16 unk84;
     s16 unk86;
-    s32 unk88;
-    s32 unk8C;
-    s16 unk90;
-    s16 unk92;
-    s16 unk94;
-    s16 unk96;
-    struct Entity* unk98;
-#ifdef VERSION_PC
-    s32 pad[3];
-#else
-    s32 pad[5];
-#endif
-    s16 subweaponId;
-} ET_BibleSubwpn;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_ReboundStoneCrashExplosion;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+} ET_GiantSpinningCross;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+} ET_8017091C;
 
 typedef struct {
     s16 unk7C;
@@ -1047,22 +1026,132 @@ typedef struct {
     s16 unk82;
     s32 unk84;
     s32 unk88;
-    struct Entity* parent1;
-#ifndef VERSION_PC
-    s32 pad[8];
-#else
-    s32 pad[7];
-#endif
+    /* 0x8C */ struct Entity* parent;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
     s16 subweaponId;
 #ifndef VERSION_PC
     s32 pad2;
 #endif
     struct Entity* parent2;
 } ET_Agunea;
-
 typedef struct {
     s16 unk7C;
     s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s32 : 32;
+    s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 subweaponId;
+} ET_AguneaCrash;
+typedef struct {
+    s16 timer;
+    s16 size;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+} ET_stopwatchCircle;
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    f32 unk84;
+    s32 unk88;
+    /* 0x8C */ struct Entity* parent;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    struct Entity* unk98;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+#ifndef VERSION_PC
+    s32 : 32;
+#endif
+    s16 subweaponId;
+} ET_StopWatch;
+typedef struct {
+    s16 t;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    f32 unk84;
+    f32 unk88;
+    s16 unk8C;
+    s16 unk8E;
+} ET_stopwatch;
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    struct Primitive* unk88;
+    s16 unk8C;
+    s16 unk8E;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+} ET_stopwatchSparkle;
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s32 unk88;
+    /* 0x8C */ struct Entity* parent;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    struct Entity* unk98;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+#ifndef VERSION_PC
+    s32 : 32;
+#endif
+    s16 subweaponId;
+} ET_BibleSubwpn;
+
+typedef struct {
+    s16 unk7C; // TODO rename as timer
+    s16 unk7E;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
 } ET_80161FF0;
 
 typedef struct {
@@ -1070,6 +1159,9 @@ typedef struct {
     s16 unk7E;
     s16 unk80;
     s16 unk82;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
 } ET_80162870;
 
 typedef struct {
@@ -1080,6 +1172,7 @@ typedef struct {
     s16 unk84;
     s16 unk86;
     s32 unk88;
+    struct Entity* parent;
 } ET_8016E9E4;
 
 typedef struct {
@@ -1098,34 +1191,9 @@ typedef struct {
     s16 unk82;
     s16 unk84;
     s16 unk86;
-    struct Primitive* unk88;
-    s16 unk8C;
-    s16 unk8E;
-    s16 unk90;
-    s16 unk92;
-    s16 unk94;
-} ET_stopwatchSparkle;
-
-typedef struct {
-    s16 t;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    f32 unk84;
-    f32 unk88;
-    s16 unk8C;
-    s16 unk8E;
-} ET_stopwatch;
-
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
     s16 unk88;
     s16 unk8A;
+    struct Entity* parent;
 } ET_RichterPowerUpRing;
 
 typedef struct {
@@ -1144,6 +1212,9 @@ typedef struct {
     s16 unk7E;
     s16 unk80;
     s16 unk82;
+    s32 : 32;
+    s32 : 32;
+    struct Entity* parent;
 } ET_HitByIce;
 
 typedef struct {
@@ -1151,7 +1222,9 @@ typedef struct {
     s16 pad7E;
     s16 unk80;
     s16 unk82;
-    byte pad84[12];
+    s32 : 32;
+    s32 : 32;
+    struct Entity* parent;
     s16 unk90;
     s16 unk92;
     s16 unk94;
@@ -1164,7 +1237,7 @@ typedef struct {
     s32 unk80;
     s32 unk84;
     s32 unk88;
-    s32 unk8C;
+    struct Entity* parent;
     s32 unk90;
 } ET_Teleport;
 
@@ -1174,7 +1247,7 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
@@ -1193,7 +1266,7 @@ typedef struct {
     s16 hitboxState;
     /* 0x86 */ s16 : 16;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
@@ -1213,7 +1286,7 @@ typedef struct {
     byte pad83;
     s32 unk84;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
@@ -1233,7 +1306,7 @@ typedef struct {
 #ifndef VERSION_PC
     /* 0x88 */ s32 : 32;
 #endif
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
@@ -1260,6 +1333,9 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
+#ifdef VERSION_PC
+    s32 : 32;
+#endif
     /* 0xB0 */ s16 subweaponId;
 } ET_SubwpnAxe;
 typedef struct {
@@ -1279,6 +1355,9 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
+#ifdef VERSION_PC
+    s32 : 32;
+#endif
     /* 0xB0 */ s16 subweaponId;
 } ET_AxeCrash;
 typedef struct {
@@ -1297,20 +1376,32 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     struct Entity* parent;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 : 32;
     /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 subweaponId;
 } ET_VibhutiCrashCloud;
 typedef struct {
     s16 unk7C;
     s16 unk7E;
     s16 unk80;
-    byte pad[46];
+    s16 : 16;
+    s32 : 32;
+    /* 0x88 */ s32 : 32;
+    struct Entity* parent;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
     s16 subweaponId;
 } ET_BibleBeam;
 
@@ -1322,26 +1413,8 @@ typedef struct {
     u8 unk82;
     byte pad83;
     s32 unk84;
+    struct Entity* parent;
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
-typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 subweaponId;
-} ET_ReboundStoneCrashExplosion;
 
 typedef struct {
     f32 unk7C;
@@ -1366,7 +1439,9 @@ typedef struct {
 } ET_Whip;
 
 typedef struct {
+#ifndef VERSION_PC
     s32 pad7c;
+#endif
     Primitive* unk80;
     s16 unk84;
     s16 unk86;
@@ -1503,7 +1578,7 @@ typedef struct {
     s32 un84;
     s16 unk88;
     s16 unk8A;
-    s32 unk8C;
+    struct Entity* parent;
     s16 unk90;
     s16 unk92;
     s32 unk94;
@@ -1623,6 +1698,10 @@ typedef struct {
     /* 0x88 */ u8 unk88;
 } ET_NZ0_311C0;
 
+// ====== RIC ENTITIES ======
+
+// ==========================
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1635,9 +1714,7 @@ typedef union { // offset=0x7C
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_HellfireHandler hellfireHandler;
-    ET_ReboundStone reboundStone;
     ET_8016D9C4 et_8016D9C4;
-    ET_BibleBeam bibleBeam;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
     ET_CrossBoomerang crossBoomerang;
     ET_Subweapon subweapon;
@@ -1649,6 +1726,9 @@ typedef union { // offset=0x7C
     ET_VibhutiCrashCloud vibCrashCloud;
     ET_RicRevivalColumn ricColumn;
     ET_GiantSpinningCross giantcross;
+    ET_ReboundStone reboundStone;
+    ET_BibleBeam bibleBeam;
+    ET_BibleSubwpn et_BibleSubwpn;
     ET_EquipItemDrop equipItemDrop;
     ET_HeartDrop heartDrop;
     ET_BloodDroplets bloodDroplets;
@@ -1692,17 +1772,16 @@ typedef union { // offset=0x7C
     ET_801291C4 et_801291C4;
     ET_8017091C et_8017091C;
     ET_AguneaCrash aguneaCrash;
+    ET_stopwatch stopwatch;
+    ET_StopWatch et_801719A4;
     ET_stopwatchCircle et_stopwatchCircle;
     ET_stopwatchSparkle et_stopWatchSparkle;
-    ET_stopwatch stopwatch;
     ET_80161FF0 et_80161FF0;
     ET_80162870 et_80162870;
     ET_Whip whip;
     ET_RichterPowerUpRing ricPowerRing;
     ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
-    ET_StopWatch et_801719A4;
-    ET_BibleSubwpn et_BibleSubwpn;
     ET_801CF254 et_801CF254;
     ET_GurkhaSword gurkhaSword;
     ET_Dracula dracula;
@@ -1776,6 +1855,33 @@ SYNC_FIELD(ET_Player, ET_DarkShield, anim);
 SYNC_FIELD(ET_Player, ET_MedusaShieldLaser, anim);
 SYNC_FIELD(ET_Player, ET_ShamanShieldStar, anim);
 SYNC_FIELD(ET_Player, ET_HeraldShieldSwirlEffect, anim);
+
+SYNC_FIELD(ET_EntFactory, ET_Subweapon, parent);
+SYNC_FIELD(ET_EntFactory, ET_CrossBoomerang, parent);
+SYNC_FIELD(ET_EntFactory, ET_8011E4BC, parent);
+SYNC_FIELD(ET_EntFactory, ET_HolyWater, parent);
+SYNC_FIELD(ET_EntFactory, ET_GiantSpinningCross, parent);
+SYNC_FIELD(ET_EntFactory, ET_CrashCross, parent);
+SYNC_FIELD(ET_EntFactory, ET_RicRevivalColumn, parent);
+SYNC_FIELD(ET_EntFactory, ET_80161FF0, parent);
+SYNC_FIELD(ET_EntFactory, ET_80162870, parent);
+SYNC_FIELD(ET_EntFactory, ET_PlayerBlink, parent);
+SYNC_FIELD(ET_EntFactory, ET_RichterPowerUpRing, parent);
+SYNC_FIELD(ET_EntFactory, ET_HitByIce, parent);
+SYNC_FIELD(ET_EntFactory, ET_HitByLightning, parent);
+SYNC_FIELD(ET_EntFactory, ET_ReboundStone, parent);
+SYNC_FIELD(ET_EntFactory, ET_Agunea, parent);
+SYNC_FIELD(ET_EntFactory, ET_801291C4, parent);
+SYNC_FIELD(ET_EntFactory, ET_VibhutiCrashCloud, parent);
+SYNC_FIELD(ET_EntFactory, ET_ReboundStoneCrashExplosion, parent);
+SYNC_FIELD(ET_EntFactory, ET_8016E9E4, parent);
+SYNC_FIELD(ET_EntFactory, ET_BibleBeam, parent);
+SYNC_FIELD(ET_EntFactory, ET_BibleSubwpn, parent);
+SYNC_FIELD(ET_EntFactory, ET_StopWatch, parent);
+SYNC_FIELD(ET_EntFactory, ET_stopwatchCircle, parent);
+SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
+SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
+SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);

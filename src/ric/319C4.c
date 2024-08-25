@@ -273,12 +273,12 @@ void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
-        entity->ext.generic.unk7C.s = 0x14;
+        entity->ext.timer.t = 0x14;
         entity->step++;
 
     case 1:
-        entity->ext.generic.unk7C.s--;
-        if ((entity->ext.generic.unk7C.s) == 0) {
+        entity->ext.timer.t--;
+        if ((entity->ext.timer.t) == 0) {
         case 3:
         case 5:
             RicCreateEntFactoryFromEntity(entity, FACTORY(0, 57), 0);
@@ -286,9 +286,9 @@ void RicEntityCrashReboundStone(Entity* entity) {
         case 2:
         case 4:
         case 6:
-            entity->ext.generic.unk7C.s++;
-            if (entity->ext.generic.unk7C.s >= 11) {
-                entity->ext.generic.unk7C.s = 0;
+            entity->ext.timer.t++;
+            if (entity->ext.timer.t >= 11) {
+                entity->ext.timer.t = 0;
                 entity->posX.val = FIX(128.0);
                 entity->posY.val = 0;
                 RicCreateEntFactoryFromEntity(entity, FACTORY(0x100, 4), 0);
@@ -298,8 +298,8 @@ void RicEntityCrashReboundStone(Entity* entity) {
         break;
 
     case 7:
-        entity->ext.generic.unk7C.s++;
-        if (entity->ext.generic.unk7C.s >= 16) {
+        entity->ext.timer.t++;
+        if (entity->ext.timer.t >= 16) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
             RicCreateEntFactoryFromEntity(entity, FACTORY(0, 58), 0);
@@ -1075,7 +1075,7 @@ void func_80170548(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (++entity->ext.generic.unk7C.s >= 5) {
+        if (++entity->ext.timer.t >= 5) {
             DestroyEntity(entity);
         }
         break;
@@ -1088,23 +1088,23 @@ void func_801705EC(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
-        entity->ext.generic.unk7E.modeU16 = 0;
+        entity->ext.et_80161FF0.unk7E = 0;
         entity->step++;
     case 1:
     case 3:
     case 5:
     case 7:
-        temp = entity->ext.generic.unk7E.modeU16 + 1;
-        entity->ext.generic.unk7E.modeU16 = temp;
+        temp = entity->ext.et_80161FF0.unk7E + 1;
+        entity->ext.et_80161FF0.unk7E = temp;
         RicCreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
-        entity->ext.generic.unk7C.s = 0;
+        entity->ext.timer.t = 0;
         entity->step++;
         break;
     case 2:
     case 4:
     case 6:
-        entity->ext.generic.unk7C.s++;
-        if (entity->ext.generic.unk7C.s >= 16) {
+        entity->ext.et_80161FF0.unk7C++;
+        if (entity->ext.et_80161FF0.unk7C >= 16) {
             entity->step++;
         }
         break;
@@ -1966,14 +1966,14 @@ void RicEntitySubpwnBibleTrail(Entity* entity) {
         prim->y2 = prim->y3 = entity->posY.i.hi + 8;
         prim->priority = entity->zPriority;
         prim->drawMode = 0x115;
-        entity->ext.generic.unk7E.modeU16 = 0x60;
+        entity->ext.et_BibleSubwpn.unk7E = 0x60;
         entity->step++;
         break;
     case 1:
-        if (++entity->ext.generic.unk7C.s > 5) {
+        if (++entity->ext.et_BibleSubwpn.unk7C > 5) {
             entity->step++;
         }
-        entity->ext.generic.unk7E.modeU16 -= 8;
+        entity->ext.et_BibleSubwpn.unk7E -= 8;
         break;
     case 2:
         DestroyEntity(entity);
@@ -1982,7 +1982,7 @@ void RicEntitySubpwnBibleTrail(Entity* entity) {
     prim = &g_PrimBuf[entity->primIndex];
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            entity->ext.generic.unk7E.modeU8.unk0;
+            entity->ext.et_BibleSubwpn.unk7E;
 }
 
 void RicEntitySubpwnBible(Entity* self) {

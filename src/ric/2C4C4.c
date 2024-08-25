@@ -434,7 +434,6 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     prim->drawMode = 0x31;
     prim->priority = self->zPriority;
     g_Player.D_80072F00[PL_T_3] = 2;
-    return;
 }
 
 // Entity ID #21. Blueprint 22. Called in RicHandleDeadPrologue.
@@ -2023,12 +2022,12 @@ void RicEntitySubwpnAgunea(Entity* self) {
         }
         if (self->hitFlags != 0) {
             self->step = 3;
-            self->ext.agunea.parent1 = self->ext.agunea.parent2;
+            self->ext.agunea.parent = self->ext.agunea.parent2;
         }
         break;
     case 4:
-        self->posX.i.hi = self->ext.agunea.parent1->posX.i.hi;
-        self->posY.i.hi = self->ext.agunea.parent1->posY.i.hi;
+        self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
         if (++self->ext.agunea.unk7C >= 16) {
             if (g_PrimBuf[self->primIndex].r1 < 5) {
                 DestroyEntity(self);
@@ -2047,7 +2046,7 @@ void RicEntitySubwpnAgunea(Entity* self) {
             (PAD_UP + PAD_SQUARE)) {
             self->step = 4;
         }
-        ent = self->ext.agunea.parent1;
+        ent = self->ext.agunea.parent;
         if (ent->entityId == 0 ||
             self->ext.agunea.unk7C != 0 &&
                 (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
@@ -2056,8 +2055,8 @@ void RicEntitySubwpnAgunea(Entity* self) {
             return;
         }
 
-        tempX = self->posX.i.hi = self->ext.agunea.parent1->posX.i.hi;
-        tempY = self->posY.i.hi = self->ext.agunea.parent1->posY.i.hi;
+        tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
         if ((self->ext.agunea.unk7C % 12) == 0) {
             self->posX.i.hi += ((rand() & 0xF) - 8);
             self->posY.i.hi += ((rand() & 0xF) - 8);
