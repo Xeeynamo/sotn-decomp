@@ -15,6 +15,8 @@
 # this will download the raw VRAM dump. It should be a megabyte. Put it alongside
 # this script, then run this script with the args for the
 # filename, tpage, clut, x, y, w, h that you want.
+# Alternatively, if you use "LIVE" as your filename, the data will attempt to fetch live
+# from a running instance of PCSX-Redux. This avoids goofing around with managing file dumps.
 
 # Example use (while standing on the box in Alchemy Lab):
 # python3 display_texture.py vram_on_box.raw 0xF 9 8 200 32 32
@@ -29,6 +31,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
+import urllib.request
 
 
 # Take a 5-5-5 encoded array and convert to RGB image.
@@ -53,31 +56,6 @@ def convert_rgb555(in_array):
             out_row.append(pixel)
         out_array.append(out_row)
     return np.array(out_array)
-
-
-def load_stage_cluts(full_image):
-    # Load cluts from row 240 of the dump, starting from the midpoint
-    cluts = []
-    for i in range(16):
-        left = 512 + i * 16
-        right = left + 16
-        clut = full_image[240:241, left:right]
-        cluts.append(clut)
-    return cluts
-
-
-# Load the cluts that come in the big block under the frame buffers. Rows 240-256, from 0 to 256
-def load_global_cluts(full_image):
-    clut_zone = full_image[240:256, 0:256]
-    clut_set = []
-    for idx in range(256):
-        row_number = idx >> 4
-        col_number = idx & 0b1111
-        clut = clut_zone[
-            row_number : row_number + 1, col_number * 16 : (col_number + 1) * 16
-        ]
-        clut_set.append(clut)
-    return clut_set
 
 
 # Once we have a tpage and a clut, apply that clut to color the tpage.
@@ -118,20 +96,30 @@ def get_tpage_by_number(raw_dump, tpage_num):
     return raw_dump[tpage_top:tpage_bottom, tpage_left:tpage_right]
 
 
-# Gets the clut from the dumped image. Note: Return type is a 2D numpy array which has height of 1.
-# This allows displaying the clut as an image. Do clut[0] to get the 1D clut as an actual lookup.
-def get_clut_by_number(colored_dump, clut_number):
-    # Stage cluts are swapped out in each stage (this is my own naming)
-    stage_cluts = load_stage_cluts(colored_dump)
-    # These global cluts are the 256 that sit right below the frame buffers
-    global_cluts = load_global_cluts(colored_dump)
-
-    # This heuristic probably needs work, but it functions for now.
-    if clut_number < 0x100:
-        # note: we use [0] since a CLUT is a 2-d image with a single row. We want it as a 1-d lookup table.
-        return stage_cluts[clut_number]
-    else:
-        return global_cluts[clut_number - 0x100]
+# Initialize cluts form the areas they are stored in vram
+# This process directly mirrors func_800EAD7C
+def generate_cluts(colored_dump):
+    cluts = np.empty((0x300, 16, 3), dtype=int)
+    index = 0
+    # The first 0x100 colors
+    for i in range(240, 256):
+        for j in range(0x200, 0x300, 0x10):
+            clut = colored_dump[i : i + 1, j : j + 0x10]
+            cluts[index] = clut
+            index += 1
+    # colors 0x100 to 0x200
+    for i in range(240, 256):
+        for j in range(0, 0x100, 0x10):
+            clut = colored_dump[i : i + 1, j : j + 0x10]
+            cluts[index] = clut
+            index += 1
+    # colors 0x200 to 0x300
+    for i in range(240, 256):
+        for j in range(0x100, 0x200, 0x10):
+            clut = colored_dump[i : i + 1, j : j + 0x10]
+            cluts[index] = clut
+            index += 1
+    return cluts
 
 
 # For a given tpage and clut, retrieve the tpage from the raw dump, and apply
@@ -139,8 +127,7 @@ def get_clut_by_number(colored_dump, clut_number):
 def retrieve_colored_tpage(raw_dump, tpage_number, clut_number):
     # Load all the data as rgb555, the native format cluts are specified in.
     colored = convert_rgb555(raw_dump)
-    tpage_rendering_clut = get_clut_by_number(colored, clut_number)[0]
-
+    tpage_rendering_clut = generate_cluts(colored)[clut_number]
     # Now we have our tpage rendering clut extracted, get the tpage, and apply that clut.
     tpage = get_tpage_by_number(raw_dump, tpage_number)
     colored_tpage = color_tpage(tpage, tpage_rendering_clut)
@@ -159,8 +146,19 @@ def draw_tpage_selection(raw_dump, tpage_number, clut_number, left, top, width, 
 # For the chosen filename for the vram dump, we load the bytes, convert
 # to a numpy array, and transform this to a rectangular layout in vram.
 def load_raw_dump(filename):
-    with open(filename, "rb") as dumpfile:
-        dumpbytes = dumpfile.read()
+    # Load the dump from a currently running PCSX instance
+    if filename == "LIVE":
+        api_url = "http://localhost:8080/api/v1/gpu/vram/raw"
+        try:
+            with urllib.request.urlopen(api_url) as response:
+                dumpbytes = response.read()
+                print("VRAM fetched from PCSX.")
+        except urllib.error.URLError as e:
+            print("Error retrieving file:", e)
+    else:  # Load from a specified filename
+        with open(filename, "rb") as dumpfile:
+            dumpbytes = dumpfile.read()
+
     datasize = len(dumpbytes)
     bytestring = np.frombuffer(dumpbytes, dtype=np.uint8)
     return np.reshape(bytestring, (512, int(datasize / 512)))
@@ -185,7 +183,8 @@ args = parser.parse_args()
 array = load_raw_dump(args.dump_filename)
 if args.showclut:
     colored = convert_rgb555(array)
-    clut = get_clut_by_number(colored, args.clut_num)
+    clut = generate_cluts(colored)[args.clut_num]
+    clut = clut.reshape((1, 16, 3))  # reshape to turn the clut into a 1x16 image
     plt.imshow(clut)
     plt.show()
 elif args.whole:
