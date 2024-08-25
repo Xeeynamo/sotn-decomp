@@ -96,30 +96,18 @@ def get_tpage_by_number(raw_dump, tpage_num):
     return raw_dump[tpage_top:tpage_bottom, tpage_left:tpage_right]
 
 
-# Initialize cluts form the areas they are stored in vram
-# This process directly mirrors func_800EAD7C
-def generate_cluts(colored_dump):
-    cluts = np.empty((0x300, 16, 3), dtype=int)
-    index = 0
-    # The first 0x100 colors
-    for i in range(240, 256):
-        for j in range(0x200, 0x300, 0x10):
-            clut = colored_dump[i : i + 1, j : j + 0x10]
-            cluts[index] = clut
-            index += 1
-    # colors 0x100 to 0x200
-    for i in range(240, 256):
-        for j in range(0, 0x100, 0x10):
-            clut = colored_dump[i : i + 1, j : j + 0x10]
-            cluts[index] = clut
-            index += 1
-    # colors 0x200 to 0x300
-    for i in range(240, 256):
-        for j in range(0x100, 0x200, 0x10):
-            clut = colored_dump[i : i + 1, j : j + 0x10]
-            cluts[index] = clut
-            index += 1
-    return cluts
+# Retrieve a clut from the vram dump by clut number
+def get_clut(colored_dump, clutnum):
+    # cluts come in 3 blocks from 0 to 256, 256-512, 512-768
+    block_number = clutnum // 0x100
+    # blocks are ordered as 1, 2, 0 based on first digit of clut.
+    block_x_position = ((block_number + 2) % 3) * 0x100
+    # get position within the block
+    clut_base = clutnum % 0x100
+    clut_x = block_x_position + (clut_base % 0x10) * 16
+    clut_y = 240 + clut_base // 0x10
+    clut = colored_dump[clut_y, clut_x : clut_x + 16]
+    return clut
 
 
 # For a given tpage and clut, retrieve the tpage from the raw dump, and apply
@@ -127,7 +115,7 @@ def generate_cluts(colored_dump):
 def retrieve_colored_tpage(raw_dump, tpage_number, clut_number):
     # Load all the data as rgb555, the native format cluts are specified in.
     colored = convert_rgb555(raw_dump)
-    tpage_rendering_clut = generate_cluts(colored)[clut_number]
+    tpage_rendering_clut = get_clut(colored, clut_number)
     # Now we have our tpage rendering clut extracted, get the tpage, and apply that clut.
     tpage = get_tpage_by_number(raw_dump, tpage_number)
     colored_tpage = color_tpage(tpage, tpage_rendering_clut)
@@ -183,7 +171,7 @@ args = parser.parse_args()
 array = load_raw_dump(args.dump_filename)
 if args.showclut:
     colored = convert_rgb555(array)
-    clut = generate_cluts(colored)[args.clut_num]
+    clut = get_clut(colored, args.clut_num)
     clut = clut.reshape((1, 16, 3))  # reshape to turn the clut into a 1x16 image
     plt.imshow(clut)
     plt.show()
