@@ -104,7 +104,7 @@ void EntityStopWatch(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_800000 |
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
                       FLAG_UNK_40000 | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
@@ -644,7 +644,7 @@ void EntityBatEcho(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_800000 | FLAG_UNK_40000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000;
         prim = (Primitive*)&g_PrimBuf[self->primIndex];
         self->ext.batEcho.unk84 = prim;
         for (i = 0; i < 0x11; i++) {
