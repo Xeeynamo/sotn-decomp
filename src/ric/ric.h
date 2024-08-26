@@ -1,11 +1,6 @@
 #include <game.h>
 #include <sfx.h>
 
-typedef enum {
-    E_NONE,
-    E_ENTITYFACTORY,
-} EntityIDs;
-
 #define GAME_OVER 0x80000
 #define NO_AFTERIMAGE 0x08000000
 
@@ -91,6 +86,160 @@ enum RicTimers {
     PL_T_15,
 };
 
+enum RicEntities {
+    E_NONE,
+    E_FACTORY,                       // RicEntityFactory
+    E_80160FC4,                      // func_80160FC4
+    E_SUBWPN_CROSS,                  // RicEntitySubwpnCross
+    E_80169C10,                      // func_80169C10
+    E_8016147C,                      // func_8016147C
+    E_SUBWPN_CROSS_TRAIL,            // RicEntitySubwpnCrossTrail
+    E_SUBWPN_HOLY_WATER,             // RicEntitySubwpnHolyWater
+    E_SUBWPN_HOLY_WATER_FLAME,       // RicEntitySubwpnHolyWaterFlame
+    E_80161C2C,                      // func_80161C2C
+    E_WHIP,                          // RicEntityWhip
+    E_CRASH_HYDROSTORM,              // RicEntityCrashHydroStorm
+    E_CRASH_CROSS_BEAM,              // RicEntityCrashCrossBeam
+    E_CRASH_CROSS_ROTATING,          // RicEntitySubwpnCrashCross
+    E_80167A58,                      // func_80167A58
+    E_80167A60,                      // func_80167A60
+    E_8016779C,                      // func_8016779C
+    E_80167964,                      // func_80167964
+    E_UNUSED_18,                     // RicEntityDummy
+    E_80161EF8,                      // func_80161EF8
+    E_80167A68,                      // func_80167A68
+    E_REVIVAL_COLUMN,                // RicEntityRevivalColumn
+    E_80161FF0,                      // func_80161FF0
+    E_80160C38,                      // func_80160C38
+    E_BLADE_DASH,                    // RicEntityBladeDash
+    E_801623E0,                      // func_801623E0
+    E_80162604,                      // func_80162604
+    E_80162C84,                      // func_80162C84
+    E_80162870,                      // func_80162870
+    E_80160F0C,                      // func_80160F0C
+    E_80162C7C,                      // func_80162C7C
+    E_BLINK_WHITE,                   // RicEntityPlayerBlinkWhite
+    E_SUBWPN_CRASH_CROSS_PARTICLES,  // RicEntitySubwpnCrashCrossParticles
+    E_801641A0,                      // func_801641A0
+    E_SHRINKING_POWERUP_RING,        // RicEntityShrinkingPowerUpRing
+    E_80167A70,                      // func_80167A70
+    E_SUBWPN_AXE,                    // RicEntitySubwpnAxe
+    E_CRASH_AXE,                     // RicEntityCrashAxe
+    E_SUBWPN_DAGGER,                 // RicEntitySubwpnDagger
+    E_80160D2C,                      // func_80160D2C
+    E_HIT_BY_ICE,                    // RicEntityHitByIce
+    E_HIT_BY_LIGHTNING,              // RicEntityHitByLightning
+    E_SUBWPN_REBOUND_STONE,          // RicEntitySubwpnReboundStone
+    E_SUBWPN_VIBHUTI,                // RicEntitySubwpnThrownVibhuti
+    E_SUBWPN_AGUNEA,                 // RicEntitySubwpnAgunea
+    E_SUBWPN_AGUNEA_HIT_ENEMY,       // RicEntityAguneaHitEnemy
+    E_CRASH_VIBHUTI,                 // RicEntityCrashVibhuti
+    E_CRASH_VIBHUTI_CLOUD,           // RicEntityVibhutiCrashCloud
+    E_CRASH_REBOUND_STONE,           // RicEntityCrashReboundStone
+    E_8016D9C4,                      // func_8016D9C4
+    E_8016DF74,                      // func_8016DF74
+    E_CRASH_BIBLE,                   // RicEntityCrashBible
+    E_CRASH_BIBLE_BEAM,              // RicEntityCrashBibleBeam
+    E_SUBWPN_BIBLE,                  // RicEntitySubpwnBible
+    E_SUBWPN_BIBLE_TRAIL,            // RicEntitySubpwnBibleTrail
+    E_SUBWPN_STOPWATCH,              // RicEntitySubwpnStopwatch
+    E_SUBWPN_STOPWATCH_CIRCLE,       // RicEntitySubwpnStopwatchCircle
+    E_801705EC,                      // func_801705EC
+    E_8016F198,                      // func_8016F198
+    E_AGUNEA_CIRCLE,                 // RicEntityAguneaCircle
+    E_AGUNEA_LIGHTNING,              // RicEntityAguneaLightning
+    E_CRASH_REBOUND_STONE_PARTICLES, // RicEntityCrashReboundStoneParticles
+    E_801601DC,                      // func_801601DC
+    E_8015FEA8,                      // func_8015FEA8
+    E_CRASH_STOPWATCH_DONE_PARTICLE, // RicEntityCrashStopwatchDoneSparkle
+    E_80170548,                      // func_80170548
+    E_TELEPORT,                      // RicEntityTeleport
+    E_UNUSED_66,                     // RicEntityDummy
+    NUM_ENTITIES,
+};
+
+enum RicBlueprints {
+    BP_BRAKE_SMOKE,
+    BP_SMOKE,
+    BP_SUBWPN_CROSS,
+    BP_SUBWPN_CROSS_PARTICLES,
+    BP_EMBERS,
+    BP_5,
+    BP_SUBWPN_HOLYWATER,
+    BP_HOLYWATER_FIRE,
+    BP_HIT_BY_FIRE,
+    BP_HOLYWATER_FLAMES,
+    BP_10,
+    BP_MULTIPLE_EMBERS,
+    BP_HYDROSTORM,
+    BP_CRASH_CROSS,
+    BP_CRASH_CROSSES_ONLY,
+    BP_UNUSED_15,
+    BP_UNUSED_16,
+    BP_17,
+    BP_18,
+    BP_AXE,
+    BP_20,
+    BP_UNUSED_21,
+    BP_22,
+    BP_MARIA_POWERS_APPLIED,
+    BP_SLIDE,
+    BP_25,
+    BP_26,
+    BP_BLUE_CIRCLE,
+    BP_BLUE_SPHERE,
+    BP_MARIA,
+    BP_MARIA_POWERS_INVOKED,
+    BP_31,
+    BP_UNUSED_32,
+    BP_RIC_BLINK,
+    BP_34,
+    BP_35,
+    BP_36,
+    BP_37,
+    BP_38,
+    BP_39,
+    BP_UNUSED_40,
+    BP_CRASH_AXE,
+    BP_42,
+    BP_SUBWPN_DAGGER,
+    BP_CRASH_DAGGER,
+    BP_HIGH_JUMP,
+    BP_HIT_BY_CUT,
+    BP_HIT_BY_ICE,
+    BP_HIT_BY_THUNDER,
+    BP_VIBHUTI,
+    BP_REBOUND_STONE,
+    BP_AGUNEA,
+    BP_52,
+    BP_DEATH_BY_FIRE,
+    BP_CRASH_VITHUBI,
+    BP_55,
+    BP_CRASH_REBOUND_STONE,
+    BP_57,
+    BP_CRASH_REBOUND_STONE_EXPLOSION,
+    BP_CRASH_BIBLE,
+    BP_CRASH_BIBLE_BEAM,
+    BP_BIBLE,
+    BP_62,
+    BP_SUBWPN_STOPWATCH,
+    BP_STOPWATCH_RIPPLE,
+    BP_CRASH_STOPWATCH,
+    BP_DRACULA_HEALTHBAR,
+    BP_CRASH_AGUNEA,
+    BP_CRASH_AGUNEA_THUNDER,
+    BP_69,
+    BP_HIT_BY_DARK,
+    BP_HIT_BY_HOLY,
+    BP_AGUNEA_THUNDER,
+    BP_73,
+    BP_SMOKE2,
+    BP_BRAKE_SMOKE2,
+    BP_BRAKE_SMOKE3,
+    BP_TELEPORT,
+    NUM_BLUEPRINTS,
+};
+
 enum RicSubweapons {
     PL_W_NONE,
     PL_W_DAGGER,
@@ -122,6 +271,8 @@ enum RicSubweapons {
     PL_W_27,
     PL_W_28,
     PL_W_CRASH_REBOUND_EXPLOSION,
+    PL_W_30,
+    NUM_WEAPONS,
 };
 
 #define NO_AFTERIMAGE 0x08000000

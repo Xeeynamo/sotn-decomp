@@ -139,15 +139,15 @@ void RicInit(s16 initParam) {
         prim->drawMode = 0x102 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {
-        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(77, 1), 0);
+        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(BP_TELEPORT, 1), 0);
         func_8015CC70(1);
     }
     if (D_80097C98 == 4) {
-        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(77, 3), 0);
+        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(BP_TELEPORT, 3), 0);
         func_8015CC70(3);
     }
     if (D_80097C98 == 5) {
-        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(77, 5), 0);
+        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(BP_TELEPORT, 5), 0);
         func_8015CC70(5);
     }
 }

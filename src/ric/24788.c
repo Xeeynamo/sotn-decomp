@@ -759,7 +759,7 @@ void func_80161C2C(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->anim != anim_80154C80)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                RicCreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
 
@@ -789,11 +789,10 @@ void func_80161EF8(Entity* self) {
         self->velocityY = (rand() & 0x3FFF) - 0x10000;
         self->step++;
         break;
-
     case 1:
         if ((self->animFrameIdx == 6) &&
             (self->animFrameDuration == self->step) && (rand() & 1)) {
-            RicCreateEntFactoryFromEntity(self, 4, 0);
+            RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {
@@ -1162,7 +1161,8 @@ void func_80162C84(Entity* entity) {
             RicSetAnimation(anim_80154EF8);
             entity->velocityX = 0;
             entity->step++;
-            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 4), 0);
+            RicCreateEntFactoryFromEntity(
+                entity, FACTORY(BP_BRAKE_SMOKE, 4), 0);
         }
         break;
     case 2:
@@ -1174,7 +1174,7 @@ void func_80162C84(Entity* entity) {
         break;
     case 3:
         if (!--entity->ext.et_80161FF0.unk7C) {
-            RicCreateEntFactoryFromEntity(entity, 30, 0);
+            RicCreateEntFactoryFromEntity(entity, BP_MARIA_POWERS_INVOKED, 0);
             entity->step++;
         }
         break;

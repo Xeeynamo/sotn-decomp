@@ -10,38 +10,36 @@ void func_8015BCD0(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, 77, 0) == NULL) {
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_TELEPORT, 0) ==
+                NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
             RicSetStand(0);
         }
         break;
-
     case 2:
         func_8015BB80();
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(77, 2), 0) ==
-                NULL) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 2), 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
             RicSetStand(0);
         }
         break;
-
     case 4:
         func_8015BB80();
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(77, 4), 0) ==
-                NULL) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 4), 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
             RicSetStand(0);
         }
         break;
-
     case 1:
     case 3:
     case 5:
@@ -75,7 +73,7 @@ void RicHandleSlideKick(void) {
 
     if (g_Player.pl_vram_flag & 1) {
         g_CurrentEntity->velocityX /= 2;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BRAKE_SMOKE, 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         RicSetCrouch(3, PLAYER.velocityX);
         g_api.PlaySfx(SFX_STOMP_SOFT_A);
@@ -128,12 +126,13 @@ void RicHandleBladeDash(void) {
     } else {
         if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
             g_Player.pl_vram_flag & 1) {
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(24, 2), 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
 
         if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
             (g_Player.pl_vram_flag & 1)) {
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BRAKE_SMOKE, 0);
         }
     }
 }
