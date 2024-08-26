@@ -246,15 +246,15 @@ void func_80109594() {
     }
     func_80111928();
     if (D_80097C98 == 6) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 121), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 1), 0);
         func_8010E42C(1);
     }
     if (D_80097C98 == 4) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x300, 121), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 3), 0);
         func_8010E42C(3);
     }
     if (D_80097C98 == 5) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 121), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 5), 0);
         func_8010E42C(5);
     }
 
@@ -278,7 +278,7 @@ void func_80109594() {
 void func_80109990(void) {
     if (D_80137FB4 == 0) {
         if (g_Status.mp == g_Status.mpMax && !(g_Player.unk0C & 0x100000)) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 40), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 40, 0);
             PlaySfx(SFX_UI_MP_FULL);
             D_80137FB4++;
         }
@@ -555,7 +555,7 @@ void EntityAlucard(void) {
         D_800ACE44--;
     }
     if (g_unkGraphicsStruct.D_800973FC != 0 && D_80137FB8 == 0) {
-        CreateEntFactoryFromEntity(g_Entities, 0x78U, 0);
+        CreateEntFactoryFromEntity(g_Entities, 0x78, 0);
     }
     var_fp = 0;
     var_s6 = 0;
@@ -581,13 +581,14 @@ void EntityAlucard(void) {
                     PlaySfx(SE_HEALTH_REGAINED);
                     if (!(g_Player.unk0C & 0x80)) {
                         CreateEntFactoryFromEntity(
-                            g_CurrentEntity, 0x48002CU, 0);
+                            g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
                         CreateEntFactoryFromEntity(
-                            g_CurrentEntity, 0x44002CU, 0);
+                            g_CurrentEntity, FACTORY(0x2C, 0x44), 0);
                     }
                 }
                 if ((g_Player.unk56 == 2) && !(g_Player.unk0C & 0x80)) {
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x48002CU, 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
                 }
                 if (g_Status.hpMax < g_Status.hp) {
                     g_Status.hp = g_Status.hpMax;
@@ -597,7 +598,7 @@ void EntityAlucard(void) {
             var_s0 = CheckAndDoLevelUp();
             if (var_s0 != 0) {
                 CreateEntFactoryFromEntity(
-                    g_CurrentEntity, ((var_s0 - 1) << 0x10) | 0x19, 0);
+                    g_CurrentEntity, FACTORY(0x19, var_s0 - 1), 0);
             }
             for (var_s0 = 0; var_s0 < 16; var_s0++) {
                 if (g_Player.D_80072F00[var_s0] != 0) {
@@ -781,11 +782,11 @@ void EntityAlucard(void) {
                             switch (var_s0) {
                             case 0:
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x2FU, 0);
+                                    g_CurrentEntity, FACTORY(0x2F, 0), 0);
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x43002CU, 0);
+                                    g_CurrentEntity, FACTORY(0x2C, 0x43), 0);
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x51002CU, 0);
+                                    g_CurrentEntity, FACTORY(0x2C, 0x51), 0);
                                 func_80118C84(0, 0);
                                 func_8010E168(1, 0xC);
                                 break;
@@ -800,9 +801,9 @@ void EntityAlucard(void) {
                             case 2:
                                 g_Player.unk18 = damage.effects;
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x73U, 0);
+                                    g_CurrentEntity, FACTORY(0x73, 0), 0);
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x58002CU, 0);
+                                    g_CurrentEntity, FACTORY(0x2C, 0x58), 0);
                                 g_Player.pl_high_jump_timer = 0x8166;
                                 func_8010E168(1, 0xC);
                                 g_Player.D_80072F00[3] = 6;
@@ -818,9 +819,9 @@ void EntityAlucard(void) {
                                 break;
                             case 5:
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x44002CU, 0);
+                                    g_CurrentEntity, FACTORY(0x2C, 0x44), 0);
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x48002CU, 0);
+                                    g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
                                 func_80118C84(damage.unkC, 1);
                                 func_8010E168(1, 0xC);
                                 break;
@@ -839,7 +840,7 @@ void EntityAlucard(void) {
                                 break;
                             case 9:
                                 CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, 0x4E002CU, 0);
+                                    g_CurrentEntity, FACTORY(0x2C, 0x4E), 0);
                                 if (D_800ACDFC == 0) {
                                     PlaySfx(SFX_UNK_6EB);
                                 }

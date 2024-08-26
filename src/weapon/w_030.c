@@ -253,7 +253,7 @@ s32 func_ptr_80170010(Entity* self) {
             self->rotZ += 0x400;
         }
         if (!(g_GameTimer & 1) && (rand() & 1)) {
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 0x24), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x24, 1), 0);
         }
         if (self->hitFlags != 0) {
             self->step++;

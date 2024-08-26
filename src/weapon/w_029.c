@@ -154,10 +154,7 @@ static void EntityWeaponAttack(Entity* self) {
     if (self->step != 4) {
         g_api.PlayAnimation(&D_CF000_8017AC78, &D_CF000_8017ACC0);
         if (g_GameTimer % 5 == 0) {
-            // Need to enable FACTORY() in weapon overlay
-            // TODO: FACTORY()
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 12) + 0x38, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
         }
     }
     self->palette =

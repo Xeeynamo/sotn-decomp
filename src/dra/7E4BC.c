@@ -557,7 +557,7 @@ void func_8011EDA8(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
@@ -1170,14 +1170,13 @@ void EntityPlayerPinkEffect(Entity* self) {
         if (--self->ext.timer.t != 0) {
             return;
         }
-        if (data_idx->pad2[self->ext.factory.unk7E]) {
+        if (data_idx->unk8[self->ext.factory.unk7E]) {
             CreateEntFactoryFromEntity(
                 self,
-                // factory changed
-                (data_idx->pad2[self->ext.factory.unk7E] +
-                 (data_idx->unk16[self->ext.factory.unk7E] << 16)),
+                FACTORY(data_idx->unk8[self->ext.factory.unk7E],
+                        data_idx->unk16[self->ext.factory.unk7E]),
                 0);
-            if (data_idx->pad2[self->ext.factory.unk7E] == 0x28) {
+            if (data_idx->unk8[self->ext.factory.unk7E] == 0x28) {
                 PlaySfx(SFX_UI_MP_FULL);
             }
         }
@@ -1221,7 +1220,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                 break;
             default:
                 CreateEntFactoryFromEntity(
-                    self, (D_800AE120[temp2] << 0x10) + 0x2F, 0);
+                    self, FACTORY(0x2F, D_800AE120[temp2]), 0);
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             case 0x82:
                 break;
@@ -1505,7 +1504,7 @@ void EntityLevelUpAnimation(Entity* self) {
         PlaySfx(NA_SE_PL_MAX_HP_MP_INCREASED);
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000 |
                       FLAG_UNK_10000;
-        CreateEntFactoryFromEntity(self, 0x4A002CU, 0);
+        CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 48;
         prim = &g_PrimBuf[self->primIndex];
@@ -1565,7 +1564,7 @@ void EntityLevelUpAnimation(Entity* self) {
         self->ext.factory.unk80 = 8;
         self->ext.factory.unk82 = 4;
         if (--self->ext.timer.t == 0) {
-            CreateEntFactoryFromEntity(self, 0xA0028U, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0x28, 10), 0);
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 14; i++) {
                 prim->drawMode =

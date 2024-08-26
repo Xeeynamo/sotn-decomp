@@ -73,7 +73,7 @@ void func_8015CAAC(s32 speed) {
 
 void func_8015CAD4(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 44), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x15), 0);
         if (arg1 >= g_Player.D_80072F00[PL_T_INVINCIBLE]) {
             g_Player.D_80072F00[PL_T_INVINCIBLE] = arg1;
         }
@@ -181,7 +181,7 @@ void RicSetRun(void) {
         RicSetSpeedX(FIX(2.25));
         g_Player.D_80072F00[PL_T_RUN] = 40;
         PLAYER.velocityY = 0;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 1), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
 }
 
@@ -254,7 +254,7 @@ void RicSetHighJump(void) {
     g_Player.pl_high_jump_timer = 0;
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
-    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 45), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 45, 0);
     g_api.PlaySfx(SFX_GRUNT_C);
     g_Player.D_80072F00[PL_T_12] = 4;
     if (g_Player.unk72) {

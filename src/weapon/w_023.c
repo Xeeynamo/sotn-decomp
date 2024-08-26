@@ -369,12 +369,12 @@ static void EntityWeaponShieldSpell(Entity* self) {
                 self, ((g_HandId + 1) << 0xE) + 90, 0);
             // Blueprint 55 has child 39, EntityPlayerPinkEffect
             unusedEnt =
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(0x900, 55), 0);
+                g_api.CreateEntFactoryFromEntity(self, FACTORY(55, 9), 0);
         }
         if (++self->ext.shield.unk80 == 0x70) {
             // Blueprint 55 has child 39, EntityPlayerPinkEffect
             unusedEnt =
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(0xA00, 55), 0);
+                g_api.CreateEntFactoryFromEntity(self, FACTORY(55, 10), 0);
             self->step++;
         }
         break;

@@ -106,7 +106,7 @@ void EntityWeaponAttack(Entity* self) {
                 g_Player.D_80072F00[11] = 0x38;
                 if (animIndex == 1) {
                     g_api.CreateEntFactoryFromEntity(
-                        self, FACTORY(0x1100, 61), 0);
+                        self, FACTORY(61, 0x11), 0);
                 }
             }
         }

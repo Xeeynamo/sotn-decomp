@@ -81,7 +81,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
     case 3:
         if (!(self->ext.holywater.timer & 3)) {
             RicCreateEntFactoryFromEntity(
-                self, (self->ext.holywater.unk82 << 0x10) | 7, 0);
+                self, FACTORY(7, self->ext.holywater.unk82), 0);
             // weirdly nonmatching with ++;
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
             self->velocityX -= (self->velocityX / 32);
@@ -119,7 +119,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
     case 4:
         if (!(self->ext.holywater.timer & 3)) {
             RicCreateEntFactoryFromEntity(
-                self, FACTORY(self->ext.holywater.unk82 * 0x100, 7), 0);
+                self, FACTORY(7, self->ext.holywater.unk82), 0);
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
         }
         self->velocityY += FIX(12.0 / 128);
@@ -222,7 +222,7 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
             self->hitboxWidth = 4;
             self->ext.holywater.hitboxState = self->hitboxState;
             self->posY.i.hi = self->posY.i.hi - 10;
-            RicCreateEntFactoryFromEntity(self, 0x30004U, 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(4, 3), 0);
             self->ext.holywater.timer = 0x50;
             self->posY.i.hi = self->posY.i.hi + 10;
             self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
@@ -354,8 +354,8 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
         self->ext.crashcross.unk82 += one;
         if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 14), 0);
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
+            RicCreateEntFactoryFromEntity(self, 14, 0);
+            RicCreateEntFactoryFromEntity(self, 34, 0);
             self->step += 1;
         }
         break;
@@ -528,7 +528,7 @@ void RicEntitySubwpnCross(Entity* self) {
         self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
         D_80175888++;
         D_80175888 &= 3;
-        RicCreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
+        RicCreateEntFactoryFromEntity(self, 5, 0);
         self->animSet = ANIMSET_OVL(0x11);
         self->unk5A = 0x66;
         self->anim = anim_cross_boomerang;
@@ -625,22 +625,22 @@ void RicEntitySubwpnCross(Entity* self) {
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, 3, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(4, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, 3, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(4, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(4, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, 3, 0);
         }
     }
     // Applies a flickering effect
@@ -1385,7 +1385,7 @@ void RicEntitySubwpnDagger(Entity* self) {
                 self->hitboxState = 0;
                 self->velocityX = -(self->velocityX >> 3);
                 self->posX.i.hi += var_s1;
-                RicCreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(42, 2), 0);
                 self->posX.i.hi -= var_s1;
                 g_api.PlaySfx(REBOUND_STONE_BOUNCE);
                 self->step++;
@@ -1737,7 +1737,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         }
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(42, 2), 0);
             g_api.PlaySfx(REBOUND_STONE_BOUNCE);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
@@ -2063,10 +2063,10 @@ void RicEntitySubwpnAgunea(Entity* self) {
 
             if (g_Status.hearts >= 5) {
                 g_Status.hearts -= 5;
-                RicCreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
+                RicCreateEntFactoryFromEntity(self, 52, 0);
                 g_api.PlaySfx(SFX_THUNDER_B);
             } else if (self->ext.agunea.unk84 == 0) {
-                RicCreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
+                RicCreateEntFactoryFromEntity(self, 52, 0);
                 g_api.PlaySfx(SFX_THUNDER_B);
                 self->ext.agunea.unk84++;
             } else {
@@ -2429,7 +2429,7 @@ void RicEntityCrashVibhuti(Entity* self) {
                     self->ext.vibhutiCrash.unk88 = prim->posY.val;
                     self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
                     // Creates RicEntityVibhutiCrashCloud
-                    RicCreateEntFactoryFromEntity(self, FACTORY(0, 55), 0);
+                    RicCreateEntFactoryFromEntity(self, 55, 0);
                 } else {
                     prim->posX.val += prim->velocityX.val;
                     prim->posY.val += prim->velocityY.val;

@@ -471,7 +471,7 @@ void RicEntityWhip(Entity* self) {
             }
         } else if (self->ext.whip.unkA4 != 0) {
             if (!(lowerParams & 1)) {
-                RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                RicCreateEntFactoryFromEntity(self, 20, 0);
                 self->ext.whip.unkA4 = 0;
             }
         }
@@ -497,7 +497,7 @@ void RicEntityWhip(Entity* self) {
                 s32 a1;
                 Entity* a0;
                 if (upperParams == 0) {
-                    a1 = FACTORY(0, 18);
+                    a1 = 18;
                 } else {
                     a0 = self;
                 }
@@ -507,10 +507,10 @@ void RicEntityWhip(Entity* self) {
                 }
                 if (upperParams == 0) {
                     a0 = self;
-                    a1 = FACTORY(0, 18);
+                    a1 = 18;
                 } else {
                     a0 = self;
-                    a1 = FACTORY(0x100, 18);
+                    a1 = FACTORY(18, 1);
                 }
                 RicCreateEntFactoryFromEntity(a0, a1, 0);
             }
@@ -603,7 +603,7 @@ void RicEntityWhip(Entity* self) {
             case 6:
                 if (upperParams != 0) {
                     if (PLAYER.animFrameDuration == D_80155C78[lowerParams]) {
-                        RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                        RicCreateEntFactoryFromEntity(self, 20, 0);
                     }
                 }
                 if (lowerParams == (0x10 - PLAYER.animFrameDuration)) {

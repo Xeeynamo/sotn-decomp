@@ -79,9 +79,9 @@ int sprintf(char* dst, const char* fmt, ...);
 
 // The second argument to CreateEntFactoryFromEntity has weird bit packing,
 // this takes the 2 relevant inputs and packs them up.
-// A0 should be a value like 0x##00 where ## is two hexadecimal digits.
-// BLUEPRINTNUM is which blueprint gets loaded from g_FactoryBlueprints.
-#define FACTORY(A0, BLUEPRINTNUM) (A0 << 8 | BLUEPRINTNUM)
+// id is which blueprint gets loaded from g_FactoryBlueprints.
+#define FACTORY(id, param) ((id) + (param << 16))
+
 // Tests multiple bits of x being set, based on the bitmask defined in y.
 #define TEST_BITS(x, y) ((x & y) == y)
 

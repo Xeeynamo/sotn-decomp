@@ -402,7 +402,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk80 == 32) {
             // This should spawn the rocks that rise in the background?
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0, 96), 0);
+                self, ((g_HandId + 1) << 0xE) + 96, 0);
             g_unkGraphicsStruct.unk20 = 0;
             SetWeaponProperties(self, 0);
             self->hitboxWidth = self->hitboxHeight = 0x7F;

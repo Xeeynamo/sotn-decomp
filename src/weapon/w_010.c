@@ -80,8 +80,7 @@ static void EntityWeaponAttack(Entity* self) {
     if (self->step == 1 || self->step == 2) {
         if (self->hitFlags != 0) {
             // Creates func_ptr_80170004
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 56, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
             g_api.func_8010E168(0, 0x60);
             self->hitFlags = 0;
         }
@@ -397,9 +396,9 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk86 = 0;
             // This probably has to be the two swords that fly all around
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0, 88), 0);
+                self, ((g_HandId + 1) << 0xE) + FACTORY(88, 0), 0);
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 88), 0);
+                self, ((g_HandId + 1) << 0xE) + FACTORY(88, 1), 0);
             g_unkGraphicsStruct.unk20 = 0;
             self->step++;
         }

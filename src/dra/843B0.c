@@ -352,7 +352,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += var_s5;
-                CreateEntFactoryFromEntity(self, FACTORY(0, 10), 0);
+                CreateEntFactoryFromEntity(self, 10, 0);
                 self->posX.i.hi -= var_s5;
                 PlaySfx(REBOUND_STONE_BOUNCE);
                 self->step++;
@@ -800,7 +800,7 @@ void EntityHolyWater(Entity* entity) {
         temp2 = temp & 1;
         if (temp2 != 0) {
             PlaySfx(SFX_UNK_69A);
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 59), 0);
+            CreateEntFactoryFromEntity(entity, 59, 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
             entity->step = 2;
@@ -809,7 +809,7 @@ void EntityHolyWater(Entity* entity) {
 
     case 2:
         if (!(entity->ext.generic.unk7C.s & 3)) {
-            CreateEntFactoryFromEntity(entity, FACTORY(D_8013841C << 8, 28),
+            CreateEntFactoryFromEntity(entity, FACTORY(28, D_8013841C),
                                        entity->ext.generic.unkB2 << 9);
             D_8013841C++;
         }
@@ -980,7 +980,7 @@ void EntityHolyWaterFlame(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->posY.i.hi = self->posY.i.hi - 0xA;
-        CreateEntFactoryFromEntity(self, 0x70004U, 0);
+        CreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
         self->ext.holywater.timer = 0x50;
         self->posY.i.hi = self->posY.i.hi + 0xA;
         self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
@@ -1095,9 +1095,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
         self->ext.crashcross.unk82 += three * 2;
         if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
-            CreateEntFactoryFromEntity(
-                self, FACTORY(0, 7), self->ext.factory.unkB2 << 9);
-            CreateEntFactoryFromEntity(self, FACTORY(0, 8), 0);
+            CreateEntFactoryFromEntity(self, 7, self->ext.factory.unkB2 << 9);
+            CreateEntFactoryFromEntity(self, 8, 0);
             self->step += 1;
         }
         break;
@@ -1319,7 +1318,7 @@ void EntityHellfireHandler(Entity* self) {
     case 5:
         PLAYER.palette = 0x810D;
         if (self->ext.hellfireHandler.unk80 == 0x10) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 38), 0);
+            CreateEntFactoryFromEntity(self, 38, 0);
         }
         if (--self->ext.hellfireHandler.unk80 == 0) {
             self->ext.hellfireHandler.unk7C = 0;
@@ -1347,14 +1346,14 @@ void EntityHellfireHandler(Entity* self) {
             // When you press up during hellfire, you get different fireballs.
             if (g_Player.padPressed & PAD_UP) {
                 // Blueprint 35 makes child 27, the big black fireballs
-                CreateEntFactoryFromEntity(self, FACTORY(0, 35), 0);
+                CreateEntFactoryFromEntity(self, 35, 0);
             } else {
                 // Blueprint 34 makes child 26, the small, normal fireballs
-                CreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
+                CreateEntFactoryFromEntity(self, 34, 0);
             }
         }
         if (self->ext.hellfireHandler.unk80 == 0x50) {
-            CreateEntFactoryFromEntity(self, FACTORY(0xA00, 4), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(4, 10), 0);
         }
         if (self->ext.hellfireHandler.unk80 < 0x48) {
             self->ext.hellfireHandler.unk7C -= four;
@@ -1540,7 +1539,7 @@ void EntityHellfireBigFireball(Entity* entity) {
                 entity->velocityX += FIX(0.09375);
             }
             if (!(g_GameTimer & 1) && (rand() & 1)) {
-                CreateEntFactoryFromEntity(entity, FACTORY(0x100, 36), 0);
+                CreateEntFactoryFromEntity(entity, FACTORY(36, 1), 0);
             }
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
@@ -1926,7 +1925,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         }
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
-            CreateEntFactoryFromEntity(self, FACTORY(0, 10), 0);
+            CreateEntFactoryFromEntity(self, 10, 0);
             PlaySfx(REBOUND_STONE_BOUNCE);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
@@ -2194,7 +2193,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
             PlaySfx(SFX_WEAPON_SWISH_C);
-            CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
             g_Player.D_80072F00[10] = 4;
             self->step++;
         }
@@ -2246,9 +2245,9 @@ void EntitySubwpnAgunea(Entity* self) {
             self->posX.i.hi += ((rand() & 0xF) - 8);
             self->posY.i.hi += ((rand() & 0xF) - 8);
             if (self->ext.agunea.unk84 == 0) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
+                CreateEntFactoryFromEntity(self, 23, 0);
                 PlaySfx(SFX_THUNDER_B);
-                CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
                 self->ext.agunea.unk84++;
             } else {
                 heartCost = 5;
@@ -2266,9 +2265,9 @@ void EntitySubwpnAgunea(Entity* self) {
                 }
                 if (g_Status.hearts >= heartCost) {
                     g_Status.hearts -= heartCost;
-                    CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
+                    CreateEntFactoryFromEntity(self, 23, 0);
                     PlaySfx(SFX_THUNDER_B);
-                    CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                    CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
                 } else {
                     self->step = 4;
                 }
@@ -2823,12 +2822,12 @@ void EntitySummonSpirit(Entity* self) {
             // Both blueprints have child 61, but 118 has a couple 4s in the
             // other args. 61 is func_80129864. Not yet decompiled.
             if (self->params) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 118), 0);
+                CreateEntFactoryFromEntity(self, 118, 0);
             } else {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 116), 0);
+                CreateEntFactoryFromEntity(self, 116, 0);
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
-            CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(44, 0x67), 0);
             PlaySfx(SFX_UI_MP_FULL);
             self->step++;
         }

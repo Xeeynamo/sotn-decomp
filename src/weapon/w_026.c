@@ -405,7 +405,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             prim = g_PrimBuf[self->primIndex].next;
             prim->drawMode |= DRAW_HIDE;
             // Blueprint 55 has child 39, EntityPlayerPinkEffect
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x600, 55), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(55, 6), 0);
             self->step++;
         }
         break;
@@ -586,7 +586,7 @@ static void func_ptr_80170024(Entity* self) {
         // Factory 90 has child 9 which, for weapons, is func_ptr_80170024, so
         // I think this spawns another copy of the star? Not totally clear.
         g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+            self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
         self->step++;
         break;
     case 1:

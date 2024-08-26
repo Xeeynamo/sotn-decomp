@@ -106,8 +106,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->drawMode = 0x30;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 12) | 56, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
             self->step++;
             return;
         }
@@ -183,12 +182,9 @@ s32 func_ptr_80170004(Entity* self) {
             if (self->animFrameIdx == 6 || self->animFrameIdx == 0xC ||
                 self->animFrameIdx == 0x12) {
                 unk = 0x3E;
-                // TODO: FACTORY()
                 if (g_api.CreateEntFactoryFromEntity(
-                        self,
-                        ((g_HandId + 1) << 12) +
-                            (unk + (self->ext.weapon.unk7E << 16)),
-                        0) != NULL) {
+                        self, WFACTORY(unk, self->ext.weapon.unk7E), 0) !=
+                    NULL) {
                     self->ext.weapon.unk7E++;
                 }
             }
@@ -203,8 +199,7 @@ s32 func_ptr_80170004(Entity* self) {
     case 3:
         if (self->rotX == 0x40) {
             // TODO: FACTORY()
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 12) | 70, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(70, 0), 0);
         }
         if (self->animFrameIdx != 0) {
             self->rotX -= 4;

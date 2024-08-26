@@ -27,14 +27,13 @@ s32 func_8015D250(s32 unused_arg) {
         return 5;
     }
 
-    RicCreateEntFactoryFromEntity(
-        g_CurrentEntity, FACTORY(0, subweapon.blueprintNum), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Player.D_80072F00[PL_T_10] = 4;
 
     switch (PLAYER.step) {
     case PL_S_RUN:
         PLAYER.step = PL_S_STAND;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
         RicSetAnimation(D_801555E8);
         break;
     case PL_S_STAND:
@@ -78,7 +77,7 @@ bool RicDoAttack(void) {
         DestroyEntity(&g_Entities[i]);
     }
     if (RicCreateEntFactoryFromEntity(
-            g_CurrentEntity, FACTORY(poisoned * 0x100, 10), 0)) {
+            g_CurrentEntity, FACTORY(10, poisoned), 0)) {
         if (poisoned) {
             g_api.PlaySfx(0x6B5);
         } else {
@@ -105,7 +104,7 @@ bool RicDoAttack(void) {
         case PL_S_RUN:
             PLAYER.step = PL_S_STAND;
             RicSetAnimation(D_80155588);
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             break;
         case Player_Crouch:
             RicSetAnimation(D_801555A8);
@@ -143,10 +142,10 @@ bool RicDoCrash(void) {
     if (subWpn.blueprintNum != 0) {
         if (subWpnID == 1) {
             subWpnEnt = RicCreateEntFactoryFromEntity(
-                g_CurrentEntity, FACTORY(0x100, subWpn.blueprintNum), 0);
+                g_CurrentEntity, FACTORY(subWpn.blueprintNum, 1), 0);
         } else {
             subWpnEnt = RicCreateEntFactoryFromEntity(
-                g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), 0);
+                g_CurrentEntity, FACTORY(subWpn.blueprintNum, 0), 0);
         }
     }
     if (subWpnEnt == NULL) {
@@ -161,14 +160,14 @@ bool RicDoCrash(void) {
     case SUBWPN_NONE:
         RicSetStep(PL_S_FLAME_WHIP);
         RicSetAnimation(ric_anim_flame_whip);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 36), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(36, 1), 0);
         g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
         break;
     case SUBWPN_DAGGER:
         RicSetStep(PL_S_THROW_DAGGERS);
         RicSetAnimation(ric_anim_throw_daggers);
         g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 2), 0);
         break;
     case SUBWPN_AXE:
         RicSetStep(PL_S_STAND_IN_AIR);
@@ -179,13 +178,13 @@ bool RicDoCrash(void) {
         }
         func_8015CC28();
         g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 2), 0);
         break;
     case SUBWPN_HOLYWATER:
         RicSetStep(PL_S_HYDROSTORM);
         RicSetAnimation(ric_anim_point_finger_up);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 0x40), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 0x47), 0);
         g_api.PlaySfx(SFX_HYDROSTORM);
         break;
     case SUBWPN_REBNDSTONE:
@@ -193,16 +192,16 @@ bool RicDoCrash(void) {
     case SUBWPN_AGUNEA:
         RicSetStep(PL_S_SUBWPN_CRASH);
         RicSetAnimation(ric_anim_point_finger_up);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 0x40), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 0x47), 0);
         g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
         break;
     case SUBWPN_BIBLE:
     case SUBWPN_STOPWATCH:
         RicSetStep(PL_S_SUBWPN_CRASH);
         RicSetAnimation(D_801558E4);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 0x40), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 0x47), 0);
         g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
         break;
     case SUBWPN_CROSS:
@@ -214,7 +213,7 @@ bool RicDoCrash(void) {
         }
         func_8015CC28();
         g_api.PlaySfx(SFX_CROSS_CRASH);
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(33, 2), 0);
         break;
     }
     g_Player.D_80072F00[PL_T_12] = 4;
@@ -230,7 +229,7 @@ void RicSetSlide(void) {
     g_CurrentEntity->velocityY = 0;
     RicSetSpeedX(FIX(5.5));
     func_8015CC28();
-    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 25, 0);
     g_api.PlaySfx(0x707);
     g_Player.D_80072F00[PL_T_12] = 4;
 }
@@ -242,10 +241,10 @@ void RicSetSlideKick(void) {
     g_CurrentEntity->velocityY = FIX(-2);
     RicSetSpeedX(FIX(5.5));
     func_8015CC28();
-    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 25, 0);
     g_api.PlaySfx(SFX_GRUNT_B);
     g_Player.D_80072F00[PL_T_12] = 4;
-    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 31), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 31, 0);
 }
 
 void RicSetBladeDash(void) {
@@ -255,7 +254,7 @@ void RicSetBladeDash(void) {
     RicSetSpeedX(FIX(5.5));
     g_Player.unk46 = 5;
     g_Player.D_80072F00[PL_T_12] = 4;
-    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 26), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, 26, 0);
     func_8015CC28();
     g_api.PlaySfx(SFX_GRUNT_C);
     g_api.PlaySfx(0x707);
@@ -308,15 +307,13 @@ bool RicCheckInput(s32 checks) {
                 if (g_Player.unk44 & 8) {
                     RicSetCrouch(3, PLAYER.velocityX);
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                    RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                     return true;
                 }
                 if (PLAYER.velocityY > FIX(6.875)) {
                     RicSetCrouch(1, 0);
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                    RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 } else if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
                     if ((g_Player.unk44 & 0x10) && (g_Player.unk7A == 0)) {
                         RicSetRun();
@@ -332,14 +329,12 @@ bool RicCheckInput(s32 checks) {
                     PLAYER.step = PL_S_CROUCH;
                     PLAYER.anim = D_801555A8;
                     g_api.PlaySfx(SFX_STOMP_HARD_B);
-                    RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 } else {
                     PLAYER.step = PL_S_STAND;
                     PLAYER.anim = D_80155588;
                     if (g_Player.unk44 & 8) {
-                        RicCreateEntFactoryFromEntity(
-                            g_CurrentEntity, FACTORY(0, 0), 0);
+                        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                         g_api.PlaySfx(SFX_STOMP_HARD_B);
                     } else {
                         PLAYER.velocityX = 0;
@@ -353,16 +348,14 @@ bool RicCheckInput(s32 checks) {
                     PLAYER.step = PL_S_CROUCH;
                     PLAYER.anim = D_80155738;
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                    RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 } else {
                     PLAYER.step = PL_S_STAND;
                     PLAYER.anim = D_80155730;
                     if (!(g_Player.unk44 & 8)) {
                         PLAYER.velocityX = 0;
                     } else {
-                        RicCreateEntFactoryFromEntity(
-                            g_CurrentEntity, FACTORY(0, 0), 0);
+                        RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                         g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     }
                 }
@@ -372,8 +365,7 @@ bool RicCheckInput(s32 checks) {
             case 3:
                 if ((PLAYER.velocityY > FIX(6.875)) || (g_Player.unk44 & 8)) {
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                    RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 }
                 PLAYER.velocityY = 0;
                 if (!(g_Player.unk44 & 8)) {
@@ -392,8 +384,7 @@ bool RicCheckInput(s32 checks) {
                 RicSetDeadPrologue();
                 return true;
             } else {
-                RicCreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0, 0), 0);
+                RicCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             }
             return true;
         }

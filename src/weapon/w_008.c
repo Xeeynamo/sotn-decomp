@@ -340,7 +340,7 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
             prim = prim->next;
             prim->drawMode |= DRAW_HIDE;
             // Blueprint 55 has child 39, EntityPlayerPinkEffect
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x800, 55), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(55, 8), 0);
             self->step++;
         }
         break;

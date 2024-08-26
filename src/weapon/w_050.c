@@ -48,10 +48,8 @@ void EntityWeaponAttack(Entity* self) {
 
         if (animIndex == 1) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x40, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
         SetWeaponProperties(self, 0);
         D_162000_8017CBF8 = 0;
@@ -69,13 +67,12 @@ void EntityWeaponAttack(Entity* self) {
     if ((D_162000_8017CBF8 == 0) && (PLAYER.animFrameIdx == 1)) {
 
         if (animIndex == PLAYER.animFrameIdx) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x44, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x44, 0), 0);
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
             g_api.PlaySfx(SFX_UNK_69D);
         }
         hand = (g_HandId + 1) << 0xC;
-        temp = ((animIndex << 0x10) + 0x61);
+        temp = FACTORY(0x61, animIndex);
         g_api.CreateEntFactoryFromEntity(self, hand + temp, 0);
     }
     D_162000_8017CBF8 = PLAYER.animFrameIdx;

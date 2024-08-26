@@ -14,6 +14,8 @@
 #define HAND_ID 0
 #endif
 
+#define WFACTORY(id, param) (((g_HandId + 1) << 12) + FACTORY(id, param))
+
 // create function names like w_000_EntityWeaponAttack
 #ifdef VERSION_PC
 #define CONCATENATE_DETAIL(x, y, z) x##y##_##z

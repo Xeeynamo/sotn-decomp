@@ -346,7 +346,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             // Blueprint 88 is weapon function 9, func_ptr_80170024
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0, 88), 0);
+                self, ((g_HandId + 1) << 0xE) + 88, 0);
             g_unkGraphicsStruct.unk20 = 0;
             self->step++;
         }
@@ -523,7 +523,7 @@ static void func_ptr_80170024(Entity* self) {
         if (g_Timer % 4 == 0) {
             // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+                self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
         }
         break;
     case 2:
@@ -603,7 +603,7 @@ static void func_ptr_80170024(Entity* self) {
                 // Blueprint 90 is weapon entity 9, func_ptr_80170024, so
                 // ourself.
                 unusedEnt = g_api.CreateEntFactoryFromEntity(
-                    self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+                    self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
             }
             self->posX.val += self->velocityX;
         } else {
@@ -631,7 +631,7 @@ static void func_ptr_80170024(Entity* self) {
         self->animFrameDuration = self->animFrameIdx = 0;
         // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
         unusedEnt = g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+            self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
     }
     self->ext.timer.t++;
 }

@@ -143,7 +143,7 @@ void func_8016D9C4(Entity* self) {
             primLine->preciseY.val += primLine->velocityY.val;
             self->posX.i.hi = primLine->preciseX.i.hi;
             self->posY.i.hi = primLine->preciseY.i.hi;
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 69), 0);
+            RicCreateEntFactoryFromEntity(self, 69, 0);
             if (primLine->preciseY.val < 0) {
                 primLine->delay = 0;
                 primLine->drawMode |= 8;
@@ -281,7 +281,7 @@ void RicEntityCrashReboundStone(Entity* entity) {
         if ((entity->ext.timer.t) == 0) {
         case 3:
         case 5:
-            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 57), 0);
+            RicCreateEntFactoryFromEntity(entity, 57, 0);
             entity->step++;
         case 2:
         case 4:
@@ -291,7 +291,7 @@ void RicEntityCrashReboundStone(Entity* entity) {
                 entity->ext.timer.t = 0;
                 entity->posX.val = FIX(128.0);
                 entity->posY.val = 0;
-                RicCreateEntFactoryFromEntity(entity, FACTORY(0x100, 4), 0);
+                RicCreateEntFactoryFromEntity(entity, FACTORY(4, 1), 0);
                 entity->step++;
             }
         }
@@ -302,7 +302,7 @@ void RicEntityCrashReboundStone(Entity* entity) {
         if (entity->ext.timer.t >= 16) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
-            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 58), 0);
+            RicCreateEntFactoryFromEntity(entity, 58, 0);
         }
         break;
     }
@@ -527,7 +527,7 @@ void RicEntityCrashBible(Entity* self) {
             (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
             // create bible page beam
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 60), 0);
+            RicCreateEntFactoryFromEntity(self, 60, 0);
             self->ext.et_8016E9E4.unk82 = 0;
             self->step++;
         }
@@ -1040,7 +1040,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
                     selfY = self->posY.i.hi;
                     self->posX.i.hi = self->ext.et_stopWatchSparkle.unk90;
                     self->posY.i.hi = self->ext.et_stopWatchSparkle.unk92;
-                    RicCreateEntFactoryFromEntity(self, FACTORY(0, 73), 0);
+                    RicCreateEntFactoryFromEntity(self, 73, 0);
                     self->posX.i.hi = selfX;
                     self->posY.i.hi = selfY;
                 } else {
@@ -1096,7 +1096,7 @@ void func_801705EC(Entity* entity) {
     case 7:
         temp = entity->ext.et_80161FF0.unk7E + 1;
         entity->ext.et_80161FF0.unk7E = temp;
-        RicCreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
+        RicCreateEntFactoryFromEntity(entity, FACTORY(63, temp), 0);
         entity->ext.et_80161FF0.unk7C = 0;
         entity->step++;
         break;
@@ -1399,9 +1399,7 @@ void RicEntityAguneaCircle(Entity* self) {
         break;
     case 3:
         RicCreateEntFactoryFromEntity(
-            self,
-            FACTORY(g_AguneaParams[self->ext.aguneaCrash.unk7C] * 0x100, 68),
-            0);
+            self, FACTORY(68, g_AguneaParams[self->ext.aguneaCrash.unk7C]), 0);
         if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT) {
             self->hitboxHeight = self->hitboxWidth = 0x80;
             self->ext.aguneaCrash.unk7C = 0;
@@ -1580,7 +1578,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim->priority = PLAYER.zPriority + 3;
         prim->drawMode = 0x10A;
         if (self->params & 0xFF00) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
+            RicCreateEntFactoryFromEntity(self, 66, 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
                 D_801758D4[self->ext.et_801719A4.unk94 - 1] = self;
@@ -1590,7 +1588,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
                     D_801758D4[self->ext.et_801719A4.unk94 - 2];
             }
         } else {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
+            RicCreateEntFactoryFromEntity(self, 64, 0);
             self->ext.et_801719A4.unk94 = 0;
         }
         self->ext.et_801719A4.subweaponId = PL_W_STOPWATCH;
@@ -1669,7 +1667,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.et_801719A4.unk7C = 0;
         if (self->ext.et_801719A4.unk94 != 0) {
             self->step = 7;
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 72), 0);
+            RicCreateEntFactoryFromEntity(self, 72, 0);
         } else {
             self->step++;
         }
@@ -1688,7 +1686,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         break;
     case 6:
         if (++self->ext.et_801719A4.unk7C >= 0xF) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0x700, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
             self->step++;
         }
         break;
@@ -2111,7 +2109,7 @@ void RicEntitySubpwnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        RicCreateEntFactoryFromEntity(self, FACTORY(0, 62), 0);
+        RicCreateEntFactoryFromEntity(self, 62, 0);
         if (g_GameTimer % 10 == 0) {
             g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }

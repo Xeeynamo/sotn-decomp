@@ -169,8 +169,7 @@ s32 func_ptr_80170004(Entity* self) {
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
             self->facingLeft++;
             self->facingLeft &= 1;
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 62), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(62, 0), 0);
             self->step++;
         }
         break;
