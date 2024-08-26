@@ -1097,7 +1097,7 @@ void func_801705EC(Entity* entity) {
         temp = entity->ext.et_80161FF0.unk7E + 1;
         entity->ext.et_80161FF0.unk7E = temp;
         RicCreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
-        entity->ext.timer.t = 0;
+        entity->ext.et_80161FF0.unk7C = 0;
         entity->step++;
         break;
     case 2:
