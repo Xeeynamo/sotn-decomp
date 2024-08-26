@@ -18,11 +18,9 @@ void InitPlayerRic(void) {
     real_player_init = RIC_player.D_8013C004;
 }
 
-FactoryBlueprint g_RicFactoryBlueprints[78];
-
 // clang-format off
 // from assets/ric/subweapondefs.json
-SubweaponDef D_80154688[NUM_WEAPONS] = {
+SubweaponDef D_80154688[] = {
     {0, 30000, 0, 0, 0, 0, 0, 0, 2, 1, 15, 0, 0},
     {20, 1, ELEMENT_CUT | ELEMENT_HOLY, 3, 4, 4, 0, BP_SUBWPN_DAGGER, 2, 129, 21, 0, 32},
     {50, 1, ELEMENT_CUT | ELEMENT_HOLY, 3, 32, 4, 0, BP_AXE, 2, 129, 20, 0, 32},
@@ -55,3 +53,4 @@ SubweaponDef D_80154688[NUM_WEAPONS] = {
     {10, 30000, ELEMENT_HIT, 1, 32, 4, 0, 0, 2, 1, 0, 0, 0},
     {15, 30000, ELEMENT_HIT | ELEMENT_THUNDER, 1, 32, 64, 0, 0, 2, 1, 0, 0, 0},
 };
+STATIC_ASSERT(LEN(D_80154688) == NUM_WEAPONS, "weapon array wrong size");

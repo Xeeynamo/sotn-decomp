@@ -1423,7 +1423,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self);
 void func_80170548(Entity* self);
 void RicEntityTeleport(Entity* self);
 void RicEntityDummy(Entity* self);
-static PfnEntityUpdate entity_functions[NUM_ENTITIES] = {
+static PfnEntityUpdate entity_functions[] = {
     RicEntityDummy,
     RicEntityFactory,
     func_80160FC4,
@@ -1492,6 +1492,7 @@ static PfnEntityUpdate entity_functions[NUM_ENTITIES] = {
     func_80170548,
     RicEntityTeleport,
     RicEntityDummy};
+STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
 // Corresponding DRA function is UpdatePlayerEntities
 void RicUpdatePlayerEntities(void) {
@@ -1566,6 +1567,90 @@ void RicUpdatePlayerEntities(void) {
         }
     }
 }
+
+FactoryBlueprint g_RicFactoryBlueprints[] = {
+    B_MAKE(E_80160FC4, 5, 1, true, true, 2, B_DECOR, 0, 0),
+    B_MAKE(E_80160FC4, 3, 1, true, true, 4, B_DECOR, 2, 0),
+    B_MAKE(E_SUBWPN_CROSS, 1, 1, true, true, 0, B_KIND_9, 1, 8),
+    B_MAKE(E_80169C10, 3, 1, true, true, 2, B_DECOR, 0, 0),
+    B_MAKE(E_8016147C, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_SUBWPN_CROSS_TRAIL, 4, 1, true, true, 4, B_DECOR, 0, 4),
+    B_MAKE(E_SUBWPN_HOLY_WATER, 1, 1, true, true, 0, B_KIND_9, 1, 8),
+    B_MAKE(E_SUBWPN_HOLY_WATER_FLAME, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_80161C2C, 6, 1, true, true, 12, B_KIND_8, 3, 0),
+    B_MAKE(E_80161C2C, 128, 1, true, true, 3, B_KIND_8, 3, 8),
+    B_MAKE(E_WHIP, 15, 15, false, true, 0, B_KIND_10, 1, 0),
+    B_MAKE(E_8016147C, 72, 1, true, true, 2, B_KIND_3, 1, 0),
+    B_MAKE(E_CRASH_HYDROSTORM, 48, 1, false, true, 6, B_WPN, 1, 48),
+    B_MAKE(E_CRASH_CROSS_ROTATING, 1, 1, false, true, 0, B_KIND_9, 0, 0),
+    B_MAKE(E_CRASH_CROSS_BEAM, 6, 1, true, true, 24, B_KIND_9, 0, 0),
+    B_MAKE(E_80167A58, 16, 16, false, true, 0, B_KIND_8, 1, 0),
+    B_MAKE(E_80167A60, 15, 15, true, true, 0, B_KIND_8, 1, 0),
+    B_MAKE(E_8016779C, 1, 1, false, true, 0, B_KIND_12, 1, 0),
+    B_MAKE(E_80167964, 1, 1, true, true, 0, B_KIND_8, 0, 0),
+    B_MAKE(E_SUBWPN_AXE, 1, 1, true, true, 0, B_KIND_9, 1, 8),
+    B_MAKE(E_80161EF8, 1, 1, true, true, 0, B_DECOR, 4, 0),
+    B_MAKE(E_80167A68, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_REVIVAL_COLUMN, 1, 1, false, true, 0, B_KIND_3, 0, 0),
+    B_MAKE(E_80161FF0, 4, 1, false, true, 24, B_KIND_3, 0, 0),
+    B_MAKE(E_80160FC4, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_80160C38, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_BLADE_DASH, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_801623E0, 1, 1, true, true, 0, B_KIND_3, 0, 0),
+    B_MAKE(E_80162604, 1, 1, true, true, 0, B_KIND_3, 0, 0),
+    B_MAKE(E_80162C84, 1, 1, false, true, 0, B_KIND_5, 0, 0),
+    B_MAKE(E_80162870, 4, 1, true, true, 4, B_KIND_3, 0, 0),
+    B_MAKE(E_80160D2C, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_80162C7C, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_BLINK_WHITE, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_SUBWPN_CRASH_CROSS_PARTICLES, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_801641A0, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 4),
+    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 8),
+    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 12),
+    B_MAKE(E_80167A70, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_CRASH_AXE, 8, 8, false, true, 0, B_WPN, 1, 32),
+    B_MAKE(E_8016147C, 3, 1, true, true, 3, B_DECOR, 0, 0),
+    B_MAKE(E_SUBWPN_DAGGER, 1, 1, true, true, 0, B_KIND_9, 1, 8),
+    B_MAKE(E_SUBWPN_DAGGER, 128, 1, false, true, 4, B_KIND_14, 4, 8),
+    B_MAKE(E_80160F0C, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_8016147C, 12, 1, true, true, 2, B_KIND_8, 3, 0),
+    B_MAKE(E_HIT_BY_ICE, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_HIT_BY_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_SUBWPN_VIBHUTI, 1, 1, true, true, 0, B_WPN, 1, 8),
+    B_MAKE(E_SUBWPN_REBOUND_STONE, 1, 1, true, true, 0, B_WPN, 1, 4),
+    B_MAKE(E_SUBWPN_AGUNEA, 1, 1, true, true, 0, B_WPN, 1, 4),
+    B_MAKE(E_SUBWPN_AGUNEA_HIT_ENEMY, 1, 1, true, true, 0, B_DECOR, 1, 0),
+    B_MAKE(E_80161C2C, 72, 1, true, true, 2, B_KIND_3, 1, 16),
+    B_MAKE(E_CRASH_VIBHUTI, 1, 1, false, true, 0, B_DECOR, 0, 18),
+    B_MAKE(E_CRASH_VIBHUTI_CLOUD, 1, 1, true, true, 0, B_KIND_6, 0, 0),
+    B_MAKE(E_CRASH_REBOUND_STONE, 1, 1, false, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_8016D9C4, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_8016DF74, 1, 1, false, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_CRASH_BIBLE, 1, 1, false, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_CRASH_BIBLE_BEAM, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_SUBWPN_BIBLE, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_SUBWPN_BIBLE_TRAIL, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_SUBWPN_STOPWATCH, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_SUBWPN_STOPWATCH_CIRCLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_801705EC, 1, 1, false, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_8016F198, 2, 1, true, true, 2, B_DECOR, 0, 0),
+    B_MAKE(E_AGUNEA_CIRCLE, 1, 1, false, true, 0, B_WPN, 0, 20),
+    B_MAKE(E_AGUNEA_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(
+        E_CRASH_REBOUND_STONE_PARTICLES, 1, 1, true, true, 0, B_KIND_3, 0, 0),
+    B_MAKE(E_801601DC, 96, 1, true, true, 4, B_KIND_8, 1, 0),
+    B_MAKE(E_8015FEA8, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_CRASH_STOPWATCH_DONE_PARTICLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_80170548, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_80160FC4, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_80160FC4, 4, 1, true, true, 2, B_DECOR, 3, 0),
+    B_MAKE(E_80160FC4, 6, 6, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_TELEPORT, 1, 1, false, true, 0, B_KIND_3, 0, 0),
+};
+STATIC_ASSERT(
+    LEN(g_RicFactoryBlueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 
 // Similar to the version in DRA but with some logic removed
 Entity* RicCreateEntFactoryFromEntity(

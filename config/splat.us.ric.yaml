@@ -39,8 +39,8 @@ segments:
       - [0x18568, .data, d_18568]
       - [0x18688, assets, subweapondefs, D_80154688]
       - [0x188F4, .data, 21250]
-      - [0x1895C, .data, 21250] # g_RicEntityTbl
-      - [0x18A6C, assets, factory_blueprint, g_RicFactoryBlueprints]
+      - [0x1895C, .data, 21250] # entity table
+      - [0x18A6C, .data, 21250] # blueprints
       - [0x18C40, .data, 24788]
       - [0x18ED4, .data, 24788] # func_80162C84
       - [0x18F7C, .data, 26C84]
