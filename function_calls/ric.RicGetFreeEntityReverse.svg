@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="144.94" cy="-18" rx="144.87" ry="18"/>
 <text text-anchor="middle" x="144.94" y="-14.3" font-family="Times,serif" font-size="14.00">ric.RicGetFreeEntityReverse</text>
 </g>
-<!-- ric.RicEntityEntFactory -->
+<!-- ric.RicEntityFactory -->
 <g id="node2" class="node">
-<title>ric.RicEntityEntFactory</title>
-<g id="a_node2"><a xlink:href="ric.RicEntityEntFactory.svg" xlink:title="ric.RicEntityEntFactory">
-<ellipse fill="green" stroke="black" cx="144.94" cy="-198" rx="120.78" ry="18"/>
-<text text-anchor="middle" x="144.94" y="-194.3" font-family="Times,serif" font-size="14.00">ric.RicEntityEntFactory</text>
+<title>ric.RicEntityFactory</title>
+<g id="a_node2"><a xlink:href="ric.RicEntityFactory.svg" xlink:title="ric.RicEntityFactory">
+<ellipse fill="green" stroke="black" cx="144.94" cy="-198" rx="104.78" ry="18"/>
+<text text-anchor="middle" x="144.94" y="-194.3" font-family="Times,serif" font-size="14.00">ric.RicEntityFactory</text>
 </a>
 </g>
 </g>
-<!-- ric.RicEntityEntFactory&#45;&gt;ric.RicGetFreeEntityReverse -->
+<!-- ric.RicEntityFactory&#45;&gt;ric.RicGetFreeEntityReverse -->
 <g id="edge1" class="edge">
-<title>ric.RicEntityEntFactory&#45;&gt;ric.RicGetFreeEntityReverse</title>
+<title>ric.RicEntityFactory&#45;&gt;ric.RicGetFreeEntityReverse</title>
 <path fill="none" stroke="black" d="M144.94,-179.93C144.94,-148.97 144.94,-83.3 144.94,-46.13"/>
 <polygon fill="black" stroke="black" points="148.44,-46.02 144.94,-36.02 141.44,-46.02 148.44,-46.02"/>
 <text text-anchor="middle" x="139.94" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>

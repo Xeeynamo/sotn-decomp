@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="161.44,-46.02 157.94,-36.02 154.44,-46.02 161.44,-46.02"/>
 <text text-anchor="middle" x="152.94" y="-39.82" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- ric.RicEntityHolyWater -->
+<!-- ric.RicEntitySubwpnHolyWater -->
 <g id="node3" class="node">
-<title>ric.RicEntityHolyWater</title>
-<g id="a_node3"><a xlink:href="ric.RicEntityHolyWater.svg" xlink:title="ric.RicEntityHolyWater">
-<ellipse fill="green" stroke="black" cx="157.94" cy="-378" rx="118.08" ry="18"/>
-<text text-anchor="middle" x="157.94" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicEntityHolyWater</text>
+<title>ric.RicEntitySubwpnHolyWater</title>
+<g id="a_node3"><a xlink:href="ric.RicEntitySubwpnHolyWater.svg" xlink:title="ric.RicEntitySubwpnHolyWater">
+<ellipse fill="green" stroke="black" cx="157.94" cy="-378" rx="155.97" ry="18"/>
+<text text-anchor="middle" x="157.94" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicEntitySubwpnHolyWater</text>
 </a>
 </g>
 </g>
-<!-- ric.RicEntityHolyWater&#45;&gt;ric.RicCheckHolyWaterCollision -->
+<!-- ric.RicEntitySubwpnHolyWater&#45;&gt;ric.RicCheckHolyWaterCollision -->
 <g id="edge2" class="edge">
-<title>ric.RicEntityHolyWater&#45;&gt;ric.RicCheckHolyWaterCollision</title>
+<title>ric.RicEntitySubwpnHolyWater&#45;&gt;ric.RicCheckHolyWaterCollision</title>
 <path fill="none" stroke="black" d="M157.94,-359.93C157.94,-328.97 157.94,-263.3 157.94,-226.13"/>
 <polygon fill="black" stroke="black" points="161.44,-226.02 157.94,-216.02 154.44,-226.02 161.44,-226.02"/>
 <text text-anchor="middle" x="152.94" y="-348.73" font-family="Times,serif" font-size="14.00">3</text>
