@@ -29,7 +29,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     handOffset = 0;
     if (g_HandId) {
-        handOffset = 1 << 7;
+        handOffset = 0x80;
     }
 
     animIndex = (self->params & 0x7FFF) >> 8;
@@ -106,7 +106,7 @@ s32 func_ptr_80170004(Entity* self) {
 #ifdef VERSION_PSP
     xOffset = PLAYER.posX.i.hi + xOffset;
     yOffset = PLAYER.posY.i.hi + yOffset;
-    if (PLAYER.drawFlags & 2) {
+    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
         yOffset -= 3;
     }
 #else
