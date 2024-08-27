@@ -7,7 +7,7 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end);
 static u8 entity_ranges[][2] = {
     {0x30, 0x3F}, {0x20, 0x2F}, {0x10, 0x1E}, {0x10, 0x3F},
     {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
-void RicEntityEntFactory(Entity* self) {
+void RicEntityFactory(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
     s16 i;
@@ -65,7 +65,7 @@ void RicEntityEntFactory(Entity* self) {
         case 4:
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step != 25) {
+            if (PLAYER.step != PL_S_RUN) {
                 self->entityId = 0;
                 return;
             }
@@ -81,7 +81,7 @@ void RicEntityEntFactory(Entity* self) {
         case 7:
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
-            if (PLAYER.step != 10) {
+            if (PLAYER.step != PL_S_HIT) {
             setIdZeroAndReturn:
                 self->entityId = 0;
                 return;
@@ -157,7 +157,7 @@ void RicEntityEntFactory(Entity* self) {
 }
 
 void func_80160C38(Entity* entity) {
-    if (PLAYER.step != 23) {
+    if (PLAYER.step != PL_S_SLIDE) {
         DestroyEntity(entity);
     } else {
         entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -169,12 +169,12 @@ void func_80160C38(Entity* entity) {
             entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
-            entity->ext.generic.unkB0 = 0x12;
+            entity->ext.subweapon.subweaponId = PL_W_KICK;
             RicSetSubweaponParams(entity);
-            entity->ext.generic.unk7C.s = entity->hitboxState;
+            entity->ext.subweapon.timer = entity->hitboxState;
             entity->step++;
         }
-        entity->hitboxState = entity->ext.generic.unk7C.s;
+        entity->hitboxState = entity->ext.subweapon.timer;
         if (PLAYER.animFrameIdx < 2) {
             entity->hitboxState = 0;
         }
@@ -185,20 +185,19 @@ void func_80160C38(Entity* entity) {
 }
 
 void func_80160D2C(Entity* self) {
-    if (PLAYER.step != 26) {
+    if (PLAYER.step != PL_S_SLIDE_KICK) {
         DestroyEntity(self);
         return;
     }
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->facingLeft = PLAYER.facingLeft;
-
     if (self->step == 0) {
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
         self->hitboxOffX = 0x14;
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
-        self->ext.generic.unkB0 = 0x17;
+        self->ext.subweapon.subweaponId = PL_W_23;
         RicSetSubweaponParams(self);
         self->step++;
     }
@@ -211,7 +210,7 @@ void func_80160D2C(Entity* self) {
         self->hitboxOffY = 12;
     }
 
-    if (self->hitFlags != 0) {
+    if (self->hitFlags) {
         g_Player.unk44 |= 0x80;
     } else {
         g_Player.unk44 &= ~0x80;
@@ -220,7 +219,7 @@ void func_80160D2C(Entity* self) {
 }
 
 // created from a blueprint, #24
-void BladeDashHelper(Entity* self) {
+void RicEntityBladeDash(Entity* self) {
     if (PLAYER.step != PL_S_BLADEDASH) {
         DestroyEntity(self);
     } else {
@@ -244,7 +243,7 @@ void BladeDashHelper(Entity* self) {
 }
 
 void func_80160F0C(Entity* self) {
-    if (PLAYER.step != 8) {
+    if (PLAYER.step != PL_S_HIGHJUMP) {
         DestroyEntity(self);
         return;
     }
@@ -515,7 +514,8 @@ void func_8016147C(Entity* self) {
                 tilePrim->posX.i.hi = ((selfXPos + (rand() & 0xF)) - 7);
                 tilePrim->posY.i.hi = selfYPos - (rand() & 0xF);
                 tilePrim->velocityY.val = (FIX(-0.75) - (rand() & 0x7FFF));
-                tilePrim->velocityX.val = self->ext.et_8011E4BC.unk8C->unk8;
+                tilePrim->velocityX.val =
+                    self->ext.et_8011E4BC.parent->velocityX;
                 tilePrim->delay = ((rand() & 0xF) + 0x10);
                 break;
             case 4:
@@ -905,8 +905,8 @@ void func_801623E0(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        entity->ext.generic.unk7E.modeU16 = 32;
-        entity->ext.generic.unk7C.s = 32;
+        entity->ext.et_80161FF0.unk7E = 32;
+        entity->ext.et_80161FF0.unk7C = 32;
         prim = &g_PrimBuf[entity->primIndex];
         prim->u2 = 64;
         prim->u0 = 64;
@@ -926,9 +926,9 @@ void func_801623E0(Entity* entity) {
         break;
 
     case 1:
-        entity->ext.generic.unk7C.s++;
-        entity->ext.generic.unk7E.modeU16++;
-        if (entity->ext.generic.unk7C.s >= 45) {
+        entity->ext.et_80161FF0.unk7C++;
+        entity->ext.et_80161FF0.unk7E++;
+        if (entity->ext.et_80161FF0.unk7C >= 45) {
             DestroyEntity(entity);
             return;
         }
@@ -936,14 +936,14 @@ void func_801623E0(Entity* entity) {
     }
 
     prim = &g_PrimBuf[entity->primIndex];
-    prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-    prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    prim->x0 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
+    prim->y0 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
+    prim->x1 = entity->posX.i.hi + entity->ext.et_80161FF0.unk7C;
+    prim->y1 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
+    prim->x2 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
+    prim->y2 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
+    prim->x3 = entity->posX.i.hi + entity->ext.et_80161FF0.unk7C;
+    prim->y3 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
     prim->clut = (LOH(g_Timer) & 1) + 0x13E;
 }
 
@@ -958,8 +958,8 @@ void func_80162604(Entity* entity) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
-            entity->ext.generic.unk7E.modeU16 = 0;
-            entity->ext.generic.unk7C.s = 0;
+            entity->ext.et_80161FF0.unk7E = 0;
+            entity->ext.et_80161FF0.unk7C = 0;
             prim = &g_PrimBuf[entity->primIndex];
             prim->v1 = 192;
             prim->v0 = 192;
@@ -1007,14 +1007,14 @@ void func_80162604(Entity* entity) {
     def:
     default:
         prim = &g_PrimBuf[entity->primIndex];
-        prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-        prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        prim->x0 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
+        prim->y0 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
+        prim->x1 = entity->posX.i.hi + entity->ext.et_80161FF0.unk7C;
+        prim->y1 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
+        prim->x2 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
+        prim->y2 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
+        prim->x3 = entity->posX.i.hi + entity->ext.et_80161FF0.unk7C;
+        prim->y3 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
         break;
     }
 }
@@ -1110,3 +1110,77 @@ void func_80162870(Entity* self) {
 }
 
 void func_80162C7C(Entity* self) {}
+
+static AnimationFrame anim_80154ED4[] = {
+    {4, FRAME(1, 0)}, {4, FRAME(2, 0)}, {4, FRAME(3, 0)},
+    {4, FRAME(4, 0)}, {4, FRAME(5, 0)}, {4, FRAME(6, 0)},
+    {4, FRAME(7, 0)}, {4, FRAME(8, 0)}, A_LOOP_AT(0)};
+static AnimationFrame anim_80154EF8[] = {
+    {0x08, FRAME(0x09, 0)}, {0x08, FRAME(0x0D, 0)}, {0x40, FRAME(0x0A, 0)},
+    {0x02, FRAME(0x0B, 0)}, {0x02, FRAME(0x0C, 0)}, {0x06, FRAME(0x0D, 0)},
+    {0x07, FRAME(0x0E, 0)}, {0x06, FRAME(0x0F, 0)}, {0x05, FRAME(0x0E, 0)},
+    {0x04, FRAME(0x0D, 0)}, {0x03, FRAME(0x0F, 0)}, {0x03, FRAME(0x0E, 0)},
+    {0x03, FRAME(0x0D, 0)}, {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0F, 0)},
+    {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0D, 0)}, {0x04, FRAME(0x0E, 0)},
+    {0x05, FRAME(0x0F, 0)}, {0x06, FRAME(0x0E, 0)}, {0x07, FRAME(0x0D, 0)},
+    {0x30, FRAME(0x0E, 0)}, {0x0C, FRAME(0x09, 0)}, {0x0D, FRAME(0x10, 0)},
+    {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
+    {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
+    {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
+void func_80162C84(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_UNK_100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 |
+                        FLAG_UNK_08000000;
+        entity->facingLeft = 1;
+        entity->unk5A = 0x66;
+        entity->zPriority = PLAYER.zPriority - 8;
+        entity->palette = PAL_OVL(0x149);
+        entity->animSet = ANIMSET_OVL(19);
+        RicSetAnimation(anim_80154ED4);
+        entity->velocityX = FIX(-1.75);
+        entity->posY.i.hi = 0xBB;
+        entity->posX.i.hi = 0x148;
+        entity->ext.et_80161FF0.unk7E = 0;
+        entity->step++;
+        break;
+    case 1:
+        if (entity->animFrameIdx == 0 && entity->animFrameDuration == 1) {
+            g_api.PlaySfx(0x882);
+        }
+        if (entity->animFrameIdx == 4 && entity->animFrameDuration == 1) {
+            g_api.PlaySfx(0x883);
+        }
+
+        entity->posX.val += entity->velocityX;
+        if (((s16)entity->ext.et_80161FF0.unk7E == 0) &&
+            (entity->posX.i.hi < 256)) {
+            g_api.PlaySfx(0x87D);
+            entity->ext.et_80161FF0.unk7E++;
+        }
+        if (entity->posX.i.hi < 0xE0) {
+            RicSetAnimation(anim_80154EF8);
+            entity->velocityX = 0;
+            entity->step++;
+            RicCreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
+        }
+        break;
+    case 2:
+        if (entity->animFrameIdx == 16) {
+            g_api.PlaySfx(0x87E);
+            entity->ext.et_80161FF0.unk7C = 0x80;
+            entity->step++;
+        }
+        break;
+    case 3:
+        if (!--entity->ext.et_80161FF0.unk7C) {
+            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 30), 0);
+            entity->step++;
+        }
+        break;
+    case 4:
+        break;
+    }
+}
+
+STATIC_PAD_RODATA(4);

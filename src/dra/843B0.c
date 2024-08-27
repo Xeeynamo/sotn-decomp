@@ -469,7 +469,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
 }
 
 // axe thrown when using subweapon
-// near-duplicate of EntitySubwpnCrashAgunea
+// near-duplicate of RicEntitySubwpnAxe
 void EntitySubwpnThrownAxe(Entity* self) {
     s32 sp10;
     s32 sp18;
@@ -981,14 +981,14 @@ void EntityHolyWaterFlame(Entity* self) {
         self->hitboxWidth = 4;
         self->posY.i.hi = self->posY.i.hi - 0xA;
         CreateEntFactoryFromEntity(self, 0x70004U, 0);
-        self->ext.holywaterflame.timer = 0x50;
+        self->ext.holywater.timer = 0x50;
         self->posY.i.hi = self->posY.i.hi + 0xA;
-        self->ext.holywaterflame.unk80 = (rand() & 0xF) + 0x12;
+        self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
         self->step += 1;
         return;
     case 1:
-        angleTemp = self->ext.holywaterflame.angle;
-        self->ext.holywaterflame.angle += 0x180;
+        angleTemp = self->ext.holywater.angle;
+        self->ext.holywater.angle += 0x180;
         angle = angleTemp;
         for (i = 0; i < 4; i++) {
             sp10[i] = self->posX.i.hi + (rsin(angle) >> 0xA);
@@ -997,26 +997,26 @@ void EntityHolyWaterFlame(Entity* self) {
         sp10[0] = self->posX.i.hi;
         sp10[4] = self->posX.i.hi;
         temp_v0_4 =
-            (rsin((s16)((self->ext.holywaterflame.timer * 64) + 0x800)) >> 8) +
-            self->ext.holywaterflame.unk80;
+            (rsin((s16)((self->ext.holywater.timer * 64) + 0x800)) >> 8) +
+            self->ext.holywater.unk80;
         sp20[0] = self->posY.i.hi - temp_v0_4;
         sp20[4] = self->posY.i.hi;
         sp20[2] = (sp20[0] + sp20[4]) / 2;
         sp20[1] = (sp20[0] + sp20[2]) / 2;
         sp20[3] = (sp20[2] + sp20[4]) / 2;
         prim = &g_PrimBuf[self->primIndex];
-        if (self->ext.holywaterflame.timer & 3) {
+        if (self->ext.holywater.timer & 3) {
             self->hitboxState = 0;
         } else {
             self->hitboxState = 2;
         }
-        if (--self->ext.holywaterflame.timer < 0x11) {
+        if (--self->ext.holywater.timer < 0x11) {
             DestroyEntity(self);
             return;
         }
         i = 0;
         while (prim != NULL) {
-            if (self->ext.holywaterflame.timer < 0x29) {
+            if (self->ext.holywater.timer < 0x29) {
                 if (prim->g0 >= 17) {
                     prim->g0 -= 5;
                 }
@@ -2016,7 +2016,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
         self->hitboxWidth = self->hitboxHeight = 4;
-        self->ext.vibhuti.timer = 0x80;
+        self->ext.subweapon.timer = 0x80;
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
         fakeprimY = selfY - 8;
         while (1) {
@@ -2059,7 +2059,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             collisionOffsetX = 2;
         }
 
-        if (--self->ext.vibhuti.timer == 0) {
+        if (!--self->ext.subweapon.timer) {
             DestroyEntity(self);
             return;
         }
@@ -2098,7 +2098,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                     }
                 }
             }
-            if ((self->ext.vibhuti.timer & 7) == i) {
+            if ((self->ext.subweapon.timer & 7) == i) {
                 self->posX.i.hi = fakeprim->posX.i.hi;
                 self->posY.i.hi = fakeprim->posY.i.hi;
                 if (fakeprim->drawMode & DRAW_HIDE) {
@@ -2114,10 +2114,10 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                 }
             }
             if ((self->hitFlags != 0) &&
-                (((self->ext.vibhuti.timer + 1) & 7) == i)) {
+                (((self->ext.subweapon.timer + 1) & 7) == i)) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
-            if ((self->ext.vibhuti.timer - 1) == i) {
+            if ((self->ext.subweapon.timer - 1) == i) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
             fakeprim->x0 = fakeprim->posX.i.hi;
@@ -2181,9 +2181,9 @@ void EntitySubwpnAgunea(Entity* self) {
             self->hitboxWidth = 4;
             self->hitboxOffX = 4;
             self->hitboxOffY = 0;
-            self->posY.i.hi = self->ext.et_80128C2C.unk82 =
+            self->posY.i.hi = self->ext.agunea.unk82 =
                 PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
-            self->posX.i.hi = self->ext.et_80128C2C.unk80 = PLAYER.posX.i.hi;
+            self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
             prim = &g_PrimBuf[self->primIndex];
             prim->type = 2;
             prim->priority = PLAYER.zPriority + 2;
@@ -2207,13 +2207,13 @@ void EntitySubwpnAgunea(Entity* self) {
         }
         if (self->hitFlags != 0) {
             self->step = 3;
-            self->ext.et_80128C2C.parent1 = self->ext.et_80128C2C.parent2;
+            self->ext.agunea.parent = self->ext.agunea.parent2;
         }
         break;
     case 4:
-        self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
-        self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
-        if (++self->ext.et_80128C2C.unk7C >= 16) {
+        self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if (++self->ext.agunea.unk7C >= 16) {
             if (g_PrimBuf[self->primIndex].r1 < 5) {
                 DestroyEntity(self);
                 return;
@@ -2231,25 +2231,25 @@ void EntitySubwpnAgunea(Entity* self) {
             (PAD_UP + PAD_SQUARE)) {
             self->step = 4;
         }
-        ent = self->ext.et_80128C2C.parent1;
+        ent = self->ext.agunea.parent;
         if (ent->entityId == 0 ||
-            self->ext.et_80128C2C.unk7C != 0 &&
+            self->ext.agunea.unk7C != 0 &&
                 (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
                  ent->flags & FLAG_DEAD)) {
             self->step = 2;
             return;
         }
 
-        tempX = self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
-        tempY = self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
-        if ((self->ext.et_80128C2C.unk7C % 12) == 0) {
+        tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if ((self->ext.agunea.unk7C % 12) == 0) {
             self->posX.i.hi += ((rand() & 0xF) - 8);
             self->posY.i.hi += ((rand() & 0xF) - 8);
-            if (self->ext.et_80128C2C.unk84 == 0) {
+            if (self->ext.agunea.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
                 PlaySfx(SFX_THUNDER_B);
                 CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
-                self->ext.et_80128C2C.unk84++;
+                self->ext.agunea.unk84++;
             } else {
                 heartCost = 5;
                 // 0x4d is the item ID for the heart broach.
@@ -2276,7 +2276,7 @@ void EntitySubwpnAgunea(Entity* self) {
         }
         self->posX.i.hi = tempX;
         self->posY.i.hi = tempY;
-        self->ext.et_80128C2C.unk7C++;
+        self->ext.agunea.unk7C++;
         break;
     }
     prim = &g_PrimBuf[self->primIndex];
@@ -2293,8 +2293,8 @@ void EntitySubwpnAgunea(Entity* self) {
     if (tempX < 5) {
         prim->drawMode |= DRAW_HIDE;
     }
-    prim->x0 = self->ext.et_80128C2C.unk80;
-    prim->y0 = self->ext.et_80128C2C.unk82;
+    prim->x0 = self->ext.agunea.unk80;
+    prim->y0 = self->ext.agunea.unk82;
     prim->x1 = self->posX.i.hi;
     prim->y1 = self->posY.i.hi;
     return;

@@ -82,7 +82,7 @@ typedef struct FakePrim {
 
 // Not actually sure if this is for LineG2, but the only time LineG2
 // is used is also the only time this struct is used, so we will call
-// it this for now. That one use is in EntityHydroStorm.
+// it this for now. That one use is in RicEntityCrashHydroStorm.
 typedef struct PrimLineG2 {
     struct PrimLineG2* next;
     /* 0x04 */ u8 r0;

@@ -130,19 +130,19 @@ void func_8015CC70(s16 arg0) {
 
 void RicSetCrouch(s32 kind, s32 velocityX) {
     RicSetStep(PL_S_CROUCH);
-    RicSetAnimation(anim_crouch);
+    RicSetAnimation(ric_anim_crouch);
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
     if (kind == 1) {
-        PLAYER.anim = anim_land_strong_impact;
+        PLAYER.anim = ric_anim_crouch_from_stand2;
         PLAYER.step_s = 4;
     }
     if (kind == 2) {
-        PLAYER.anim = anim_crouch_from_stand;
+        PLAYER.anim = ric_anim_crouch_from_stand;
         PLAYER.step_s = 1;
     }
     if (kind == 3) {
-        PLAYER.anim = anim_land_from_run;
+        PLAYER.anim = ric_anim_land_from_air_run;
         PLAYER.step_s = 4;
     }
 }
@@ -153,7 +153,7 @@ void RicSetStand(s32 velocityX) {
     PLAYER.velocityY = 0;
     g_Player.unk44 = 0;
     RicSetStep(PL_S_STAND);
-    RicSetAnimation(anim_stand);
+    RicSetAnimation(ric_anim_stand);
 }
 
 void RicSetWalk(s32 arg0) {

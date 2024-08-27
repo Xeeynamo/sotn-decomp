@@ -1320,7 +1320,7 @@ void RunMainEngine(void) {
             g_PlOvl.D_8013C008();
         } else {
             EntityAlucard();
-            func_8011A4D0();
+            UpdatePlayerEntities();
         }
         g_api.o.UpdateRoomPosition();
         g_api.o.Update();
@@ -1809,7 +1809,7 @@ void RunMainEngine(void) {
                         } else {
                             if (g_unkGraphicsStruct.unk20 != 0xFF) {
                                 func_8010DF70(g_unkGraphicsStruct.unk20);
-                                func_8011A4D0();
+                                UpdatePlayerEntities();
                             }
                             g_api.o.UpdateStageEntities();
                             func_80102D70();
