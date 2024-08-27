@@ -572,7 +572,7 @@ void func_8011EDA8(Entity* self) {
     }
 }
 
-// same as RIC/func_801601DC
+// same as RIC/RicEntityHitByDark
 void func_8011F074(Entity* entity) {
     s16 posX;
     s16 posY;

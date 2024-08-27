@@ -538,7 +538,7 @@ void func_8011B530(Entity* entity) {
     }
 }
 
-// Entity #2. Many blueprints. Matches RIC func_80160FC4
+// Entity #2. Many blueprints. Matches RIC RicEntitySmokePuff
 void func_8011B5A4(Entity* self) {
     byte stackpad[40];
     s16 posX;

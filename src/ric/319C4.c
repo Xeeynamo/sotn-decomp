@@ -143,7 +143,8 @@ void func_8016D9C4(Entity* self) {
             primLine->preciseY.val += primLine->velocityY.val;
             self->posX.i.hi = primLine->preciseX.i.hi;
             self->posY.i.hi = primLine->preciseY.i.hi;
-            RicCreateEntFactoryFromEntity(self, BP_69, 0);
+            RicCreateEntFactoryFromEntity(
+                self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
             if (primLine->preciseY.val < 0) {
                 primLine->delay = 0;
                 primLine->drawMode |= 8;
@@ -165,7 +166,7 @@ void func_8016D9C4(Entity* self) {
 }
 
 // RIC Entity #50. Blueprint 58. Also created by rebound stone crash. Weird!
-void func_8016DF74(Entity* self) {
+void RicEntityCrashReboundStoneExplosion(Entity* self) {
     Primitive* prim;
     s32 i;
 
@@ -610,6 +611,7 @@ void RicEntityCrashBible(Entity* self) {
 }
 
 void func_8016F198(Entity* self) {
+    const int PrimCount = 16;
     Primitive* prim;
     s16 unk7C;
     s16 temp_s6;
@@ -625,7 +627,7 @@ void func_8016F198(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
@@ -666,7 +668,7 @@ void func_8016F198(Entity* self) {
         tpage = 0x100;
     }
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < PrimCount; i++) {
         sine = rsin(i << 8);
         cosine = rcos(i << 8);
         unk7C = self->ext.factory.unk7C;
@@ -1537,11 +1539,8 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     s32 temp_a1_3;
     s32 temp_t0;
     s32 temp_v1_11;
-    if (g_unkGraphicsStruct.unk0 != 0) {
-        // FAKE, needed to make step load at the right time
-        do {
-            g_unkGraphicsStruct.D_800973FC = 0;
-        } while (0);
+    if (g_unkGraphicsStruct.unk0) {
+        g_unkGraphicsStruct.D_800973FC = 0;
         if ((self->step > 0) && (self->step < 4)) {
             self->step = 4;
         }
@@ -1583,7 +1582,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim->priority = PLAYER.zPriority + 3;
         prim->drawMode = 0x10A;
         if (self->params & 0xFF00) {
-            RicCreateEntFactoryFromEntity(self, BP_DRACULA_HEALTHBAR, 0);
+            RicCreateEntFactoryFromEntity(self, BP_66, 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
                 D_801758D4[self->ext.et_801719A4.unk94 - 1] = self;
@@ -2114,7 +2113,7 @@ void RicEntitySubpwnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        RicCreateEntFactoryFromEntity(self, BP_62, 0);
+        RicCreateEntFactoryFromEntity(self, BP_BIBLE_TRAIL, 0);
         if (g_GameTimer % 10 == 0) {
             g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }

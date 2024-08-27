@@ -355,7 +355,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk82 += one;
         if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
             RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSSES_ONLY, 0);
-            RicCreateEntFactoryFromEntity(self, BP_34, 0);
+            RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSS_PARTICLES, 0);
             self->step += 1;
         }
         break;
@@ -620,8 +620,8 @@ void RicEntitySubwpnCross(Entity* self) {
     }
     // We will increment through these states, creating trails.
     // Factory 3 is entity #4, func_80169C10. Appears to make tiny sparkles.
-    // Factory 4 is entity #5, func_8016147C. Appears to make a "shadow" of the
-    // cross boomerang.
+    // Factory 4 is entity #5, RicEntityHitByCutBlood. Appears to make a
+    // "shadow" of the cross boomerang.
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
@@ -819,7 +819,7 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
         if (prim->r0 == 0) {
             continue;
         }
-        temp_a1 = &D_801548F4;
+        temp_a1 = &uv_anim_801548F4;
         temp_a3 = prim->g0;
         temp_t0 = prim->g1;
         temp_a1 += prim->b0 * 8; // weird array indexing
@@ -2063,10 +2063,10 @@ void RicEntitySubwpnAgunea(Entity* self) {
 
             if (g_Status.hearts >= 5) {
                 g_Status.hearts -= 5;
-                RicCreateEntFactoryFromEntity(self, BP_52, 0);
+                RicCreateEntFactoryFromEntity(self, BP_AGUNEA_HIT_ENEMY, 0);
                 g_api.PlaySfx(SFX_THUNDER_B);
             } else if (self->ext.agunea.unk84 == 0) {
-                RicCreateEntFactoryFromEntity(self, BP_52, 0);
+                RicCreateEntFactoryFromEntity(self, BP_AGUNEA_HIT_ENEMY, 0);
                 g_api.PlaySfx(SFX_THUNDER_B);
                 self->ext.agunea.unk84++;
             } else {
@@ -2429,7 +2429,8 @@ void RicEntityCrashVibhuti(Entity* self) {
                     self->ext.vibhutiCrash.unk88 = prim->posY.val;
                     self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
                     // Creates RicEntityVibhutiCrashCloud
-                    RicCreateEntFactoryFromEntity(self, BP_55, 0);
+                    RicCreateEntFactoryFromEntity(
+                        self, BP_VITHUBI_CRASH_CLOUD, 0);
                 } else {
                     prim->posX.val += prim->velocityX.val;
                     prim->posY.val += prim->velocityY.val;

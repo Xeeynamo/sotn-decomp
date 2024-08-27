@@ -574,29 +574,32 @@ block_48:
     case PL_S_CROUCH:
         var_s4 = NO_AFTERIMAGE;
         if (PLAYER.step_s != 2) {
-            var_s4 = NO_AFTERIMAGE | 0x20;
+            var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK_20;
         }
         break;
     case PL_S_FALL:
     case PL_S_JUMP:
-        var_s4 = NO_AFTERIMAGE | 0x2000;
+        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
         break;
     case PL_S_HIGHJUMP:
         func_8015CAD4(1, 4);
         break;
     case PL_S_HIT:
-        var_s4 = NO_AFTERIMAGE | 0x10000;
-    case 18:
+        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
+    case PL_S_STAND_IN_AIR:
         func_8015CAD4(1, 16);
         break;
     case PL_S_BOSS_GRAB:
-        var_s4 = NO_AFTERIMAGE | 0x100000 | 0x10000 | 0x40;
+        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 |
+                 PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40;
         func_8015CAD4(1, 16);
         break;
     case PL_S_DEAD:
-        var_s4 = NO_AFTERIMAGE | 0x40000 | 0x10000;
+        var_s4 =
+            NO_AFTERIMAGE | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
         if (PLAYER.step_s == 0x80) {
-            var_s4 = NO_AFTERIMAGE | 0x80000 | 0x40000 | 0x10000;
+            var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
+                     PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
         }
         func_8015CAD4(1, 16);
         break;
@@ -614,22 +617,22 @@ block_48:
         func_8015CAD4(1, 16);
         break;
     }
-    if (g_Player.D_80072F00[PL_T_9] != 0) {
-        var_s4 |= 0x400;
+    if (g_Player.D_80072F00[PL_T_9]) {
+        var_s4 |= PLAYER_STATUS_UNK400;
     }
-    if (g_Player.D_80072F00[PL_T_10] != 0) {
-        var_s4 |= 0x800;
+    if (g_Player.D_80072F00[PL_T_10]) {
+        var_s4 |= PLAYER_STATUS_UNK800;
     }
-    if (g_Player.D_80072F00[PL_T_12] != 0) {
-        var_s4 |= 0x1000;
+    if (g_Player.D_80072F00[PL_T_12]) {
+        var_s4 |= PLAYER_STATUS_UNK1000;
     }
     if (*D_80097448 != 0) {
-        var_s4 |= 0x20000;
+        var_s4 |= PLAYER_STATUS_UNK20000;
     }
-    var_s4 |= 0x10000000;
+    var_s4 |= PLAYER_STATUS_UNK10000000;
     g_Player.unk0C = var_s4;
-    if (g_Player.unk08 & 0x10000) {
-        if (!(var_s4 & 0x10000)) {
+    if (g_Player.unk08 & PLAYER_STATUS_UNK10000) {
+        if (!(var_s4 & PLAYER_STATUS_UNK10000)) {
             if (g_Player.unk5C != 0) {
                 if (g_Status.hp < 2) {
                     RicSetDeadPrologue();

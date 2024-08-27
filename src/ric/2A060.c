@@ -746,7 +746,7 @@ static s16 D_80155D08[] = {0x0013, 0x0014, 0x0016, 0x001A, 0x0018,
                            0x0015, 0x001B, 0x0017, 0x0019, 0x0000};
 static s16 D_80155D1C[] = {0x0013, 0x0014, 0x001A, 0x0016, 0x0018,
                            0x001B, 0x0015, 0x0019, 0x0017, 0x0000};
-void func_8016779C(Entity* entity) {
+void RicEntityArmBrandishWhip(Entity* entity) {
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
         return;
@@ -807,11 +807,11 @@ void func_80167964(Entity* entity) {
     }
 }
 
-void func_80167A58(Entity* self) {}
+void RicEntityNotImplemented1(Entity* self) {}
 
-void func_80167A60(Entity* self) {}
+void RicEntityNotImplemented2(Entity* self) {}
 
-void func_80167A68(Entity* self) {}
+void RicEntityNotImplemented3(Entity* self) {}
 
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
 // blueprint 40. Duplicate of DRA EntityHolyWaterBreakGlass.

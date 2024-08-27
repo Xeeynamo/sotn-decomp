@@ -2,7 +2,6 @@
 #include <sfx.h>
 
 #define GAME_OVER 0x80000
-#define NO_AFTERIMAGE 0x08000000
 
 #define CHECK_GROUND 1
 #define CHECK_FALL 4
@@ -89,10 +88,10 @@ enum RicTimers {
 enum RicEntities {
     E_NONE,
     E_FACTORY,                       // RicEntityFactory
-    E_80160FC4,                      // func_80160FC4
+    E_SMOKE_PUFF,                    // RicEntitySmokePuff
     E_SUBWPN_CROSS,                  // RicEntitySubwpnCross
     E_80169C10,                      // func_80169C10
-    E_8016147C,                      // func_8016147C
+    E_HIT_BY_CUT_BLOOD,              // RicEntityHitByCutBlood
     E_SUBWPN_CROSS_TRAIL,            // RicEntitySubwpnCrossTrail
     E_SUBWPN_HOLY_WATER,             // RicEntitySubwpnHolyWater
     E_SUBWPN_HOLY_WATER_FLAME,       // RicEntitySubwpnHolyWaterFlame
@@ -101,23 +100,23 @@ enum RicEntities {
     E_CRASH_HYDROSTORM,              // RicEntityCrashHydroStorm
     E_CRASH_CROSS_BEAM,              // RicEntityCrashCrossBeam
     E_CRASH_CROSS_ROTATING,          // RicEntitySubwpnCrashCross
-    E_80167A58,                      // func_80167A58
-    E_80167A60,                      // func_80167A60
-    E_8016779C,                      // func_8016779C
+    E_NOT_IMPLEMENTED_1,             // RicEntityNotImplemented1
+    E_NOT_IMPLEMENTED_2,             // RicEntityNotImplemented2
+    E_ARM_BRANDISH_WHIP,             // RicEntityArmBrandishWhip
     E_80167964,                      // func_80167964
-    E_UNUSED_18,                     // RicEntityDummy
+    E_DUMMY_18,                      // RicEntityDummy
     E_80161EF8,                      // func_80161EF8
-    E_80167A68,                      // func_80167A68
+    E_NOT_IMPLEMENTED_3,             // RicEntityNotImplemented3
     E_REVIVAL_COLUMN,                // RicEntityRevivalColumn
-    E_80161FF0,                      // func_80161FF0
+    E_APPLY_MARIA_POWER_ANIM,        // RicEntityApplyMariaPowerAnim
     E_80160C38,                      // func_80160C38
     E_BLADE_DASH,                    // RicEntityBladeDash
     E_801623E0,                      // func_801623E0
     E_80162604,                      // func_80162604
-    E_80162C84,                      // func_80162C84
-    E_80162870,                      // func_80162870
+    E_MARIA,                         // RicEntityMaria
+    E_MARIA_POWERS,                  // RicEntityMariaPowers
     E_80160F0C,                      // func_80160F0C
-    E_80162C7C,                      // func_80162C7C
+    E_NOT_IMPLEMENTED_4,             // RicEntityNotImplemented4
     E_BLINK_WHITE,                   // RicEntityPlayerBlinkWhite
     E_SUBWPN_CRASH_CROSS_PARTICLES,  // RicEntitySubwpnCrashCrossParticles
     E_801641A0,                      // func_801641A0
@@ -137,7 +136,7 @@ enum RicEntities {
     E_CRASH_VIBHUTI_CLOUD,           // RicEntityVibhutiCrashCloud
     E_CRASH_REBOUND_STONE,           // RicEntityCrashReboundStone
     E_8016D9C4,                      // func_8016D9C4
-    E_8016DF74,                      // func_8016DF74
+    E_CRASH_REBOUND_STONE_EXPLOSION, // RicEntityCrashReboundStoneExplosion
     E_CRASH_BIBLE,                   // RicEntityCrashBible
     E_CRASH_BIBLE_BEAM,              // RicEntityCrashBibleBeam
     E_SUBWPN_BIBLE,                  // RicEntitySubpwnBible
@@ -149,12 +148,12 @@ enum RicEntities {
     E_AGUNEA_CIRCLE,                 // RicEntityAguneaCircle
     E_AGUNEA_LIGHTNING,              // RicEntityAguneaLightning
     E_CRASH_REBOUND_STONE_PARTICLES, // RicEntityCrashReboundStoneParticles
-    E_801601DC,                      // func_801601DC
-    E_8015FEA8,                      // func_8015FEA8
+    E_HIT_BY_DARK,                   // RicEntityHitByDark
+    E_HIT_BY_HOLY,                   // RicEntityHitByHoly
     E_CRASH_STOPWATCH_DONE_PARTICLE, // RicEntityCrashStopwatchDoneSparkle
     E_80170548,                      // func_80170548
     E_TELEPORT,                      // RicEntityTeleport
-    E_UNUSED_66,                     // RicEntityDummy
+    E_DUMMY_66,                      // RicEntityDummy
     NUM_ENTITIES,
 };
 
@@ -169,31 +168,31 @@ enum RicBlueprints {
     BP_HOLYWATER_FIRE,
     BP_HIT_BY_FIRE,
     BP_HOLYWATER_FLAMES,
-    BP_10,
+    BP_WHIP,
     BP_MULTIPLE_EMBERS,
     BP_HYDROSTORM,
     BP_CRASH_CROSS,
     BP_CRASH_CROSSES_ONLY,
-    BP_UNUSED_15,
-    BP_UNUSED_16,
-    BP_17,
+    BP_NOT_IMPLEMENTED_1,
+    BP_NOT_IMPLEMENTED_2,
+    BP_ARM_BRANDISH_WHIP,
     BP_18,
     BP_AXE,
     BP_20,
-    BP_UNUSED_21,
-    BP_22,
+    BP_NOT_IMPLEMENTED_3,
+    BP_REVIVAL_COLUMN,
     BP_MARIA_POWERS_APPLIED,
     BP_SLIDE,
     BP_25,
-    BP_26,
+    BP_BLADE_DASH,
     BP_BLUE_CIRCLE,
     BP_BLUE_SPHERE,
     BP_MARIA,
     BP_MARIA_POWERS_INVOKED,
     BP_31,
-    BP_UNUSED_32,
+    BP_NOT_IMPLEMENTED_4,
     BP_RIC_BLINK,
-    BP_34,
+    BP_CRASH_CROSS_PARTICLES,
     BP_35,
     BP_36,
     BP_37,
@@ -211,24 +210,24 @@ enum RicBlueprints {
     BP_VIBHUTI,
     BP_REBOUND_STONE,
     BP_AGUNEA,
-    BP_52,
+    BP_AGUNEA_HIT_ENEMY,
     BP_DEATH_BY_FIRE,
     BP_CRASH_VITHUBI,
-    BP_55,
+    BP_VITHUBI_CRASH_CLOUD,
     BP_CRASH_REBOUND_STONE,
     BP_57,
     BP_CRASH_REBOUND_STONE_EXPLOSION,
     BP_CRASH_BIBLE,
     BP_CRASH_BIBLE_BEAM,
     BP_BIBLE,
-    BP_62,
+    BP_BIBLE_TRAIL,
     BP_SUBWPN_STOPWATCH,
     BP_STOPWATCH_RIPPLE,
     BP_CRASH_STOPWATCH,
-    BP_DRACULA_HEALTHBAR,
+    BP_66,
     BP_CRASH_AGUNEA,
     BP_CRASH_AGUNEA_THUNDER,
-    BP_69,
+    BP_CRASH_REBOUND_STONE_PARTICLES,
     BP_HIT_BY_DARK,
     BP_HIT_BY_HOLY,
     BP_AGUNEA_THUNDER,
@@ -275,8 +274,6 @@ enum RicSubweapons {
     NUM_WEAPONS,
 };
 
-#define NO_AFTERIMAGE 0x08000000
-
 extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
 extern SpriteParts* D_80153D24[];
@@ -297,7 +294,7 @@ extern void RicSetRun(void);
 extern void RicSetFall(void);
 extern bool RicCheckInput(s32 checks);
 extern void RicSetSubweaponParams(Entity*);
-extern s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY);
+extern s32 func_8015FDB0(Primitive* poly, s16 posX, s16 posY);
 extern Entity* RicCreateEntFactoryFromEntity(
     Entity* entity, u32 arg1, s32 arg2);
 
@@ -327,7 +324,7 @@ extern u16 D_80154664[8];
 
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];
-extern u8 D_801548F4[6][8];
+extern u8 uv_anim_801548F4[6][8];
 extern FactoryBlueprint g_RicFactoryBlueprints[];
 
 extern s8 D_80156A28;
@@ -372,7 +369,7 @@ extern AnimationFrame ric_anim_stun[];
 extern AnimationFrame D_8015569C[];
 extern AnimationFrame D_801556C4[];
 extern AnimationFrame D_80155704[];
-extern AnimationFrame D_80155730[];
+extern AnimationFrame ric_anim_brandish_whip[];
 extern AnimationFrame D_80155738[];
 extern AnimationFrame D_80155740[];
 extern AnimationFrame D_80155748[];

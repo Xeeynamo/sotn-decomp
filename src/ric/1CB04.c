@@ -92,8 +92,9 @@ void RicHandleStand(void) {
                 if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
-                    RicSetAnimation(D_80155730);
-                    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_17, 0);
+                    RicSetAnimation(ric_anim_brandish_whip);
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
                     break;
                 }
                 g_Player.unk46 = 0;
@@ -241,7 +242,8 @@ void RicHandleJump(void) {
                 g_Player.unk46 = 2;
                 PLAYER.step_s += 1;
                 RicSetAnimation(D_80155740);
-                RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_17, 0);
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
             } else {
                 g_Player.unk46 = 0;
                 PLAYER.step_s = 0;
@@ -412,7 +414,8 @@ void RicHandleCrouch(void) {
                 g_Player.unk46 = 2;
                 PLAYER.step_s++;
                 RicSetAnimation(D_80155738);
-                RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_17, 0);
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
                 return;
             }
             g_Player.unk46 = 0;
@@ -926,7 +929,7 @@ void RicHandleDead(
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x4A), 0);
-            // RIC blueprint 11 has child 5, func_8016147C
+            // RIC blueprint 11 has child 5, RicEntityHitByCutBlood
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MULTIPLE_EMBERS, 5), 0);
             death_kind = DEATH_GENERIC;
@@ -1160,7 +1163,8 @@ void RicHandleDeadPrologue(void) {
             RicSetAnimation(D_801558B4);
             PLAYER.palette = 0x814E;
             g_CurrentEntity->velocityY = FIX(-1);
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_22, 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, BP_REVIVAL_COLUMN, 0);
             g_DeadPrologueTimer = 0x30;
             g_api.PlaySfx(0x6E2);
             dead_prologue_timer = 0xA0;
