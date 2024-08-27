@@ -354,12 +354,13 @@ extern u8 g_BmpCastleMap[0x20000];
 // tDelay: how many frames to wait before starting to make the first entity
 #define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
                tCycle, kind, f, tDelay)                                        \
-    {                                                                          \
-        entityId, (amount),                                                    \
-            ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                \
-                ((!!(isNonCritical)) << 7),                                    \
-            (tCycle), ((kind) & 15) | ((f) << 4), tDelay                       \
-    }
+    {entityId,                                                                 \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (tCycle),                                                                 \
+     ((kind) & 15) | ((f) << 4),                                               \
+     tDelay}
 enum BlueprintKind {
     B_DECOR,      // cannot collide with any other entity, used for decoration
     B_WPN,        // can collide to stage items, like candles or enemies
