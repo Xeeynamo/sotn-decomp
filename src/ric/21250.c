@@ -33,7 +33,7 @@ s32 func_8015D250(s32 unused_arg) {
     switch (PLAYER.step) {
     case PL_S_RUN:
         PLAYER.step = PL_S_STAND;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         RicSetAnimation(D_801555E8);
         break;
     case PL_S_STAND:
@@ -104,7 +104,7 @@ bool RicDoAttack(void) {
         case PL_S_RUN:
             PLAYER.step = PL_S_STAND;
             RicSetAnimation(D_80155588);
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
             break;
         case Player_Crouch:
             RicSetAnimation(D_801555A8);
@@ -317,14 +317,14 @@ bool RicCheckInput(s32 checks) {
                     RicSetCrouch(3, PLAYER.velocityX);
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
                     return true;
                 }
                 if (PLAYER.velocityY > FIX(6.875)) {
                     RicSetCrouch(1, 0);
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
                 } else if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
                     if ((g_Player.unk44 & 0x10) && (g_Player.unk7A == 0)) {
                         RicSetRun();
@@ -341,13 +341,13 @@ bool RicCheckInput(s32 checks) {
                     PLAYER.anim = D_801555A8;
                     g_api.PlaySfx(SFX_STOMP_HARD_B);
                     RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
                 } else {
                     PLAYER.step = PL_S_STAND;
                     PLAYER.anim = D_80155588;
                     if (g_Player.unk44 & 8) {
                         RicCreateEntFactoryFromEntity(
-                            g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                            g_CurrentEntity, BP_SKID_SMOKE, 0);
                         g_api.PlaySfx(SFX_STOMP_HARD_B);
                     } else {
                         PLAYER.velocityX = 0;
@@ -362,7 +362,7 @@ bool RicCheckInput(s32 checks) {
                     PLAYER.anim = D_80155738;
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
                 } else {
                     PLAYER.step = PL_S_STAND;
                     PLAYER.anim = ric_anim_brandish_whip;
@@ -370,7 +370,7 @@ bool RicCheckInput(s32 checks) {
                         PLAYER.velocityX = 0;
                     } else {
                         RicCreateEntFactoryFromEntity(
-                            g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                            g_CurrentEntity, BP_SKID_SMOKE, 0);
                         g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     }
                 }
@@ -381,7 +381,7 @@ bool RicCheckInput(s32 checks) {
                 if ((PLAYER.velocityY > FIX(6.875)) || (g_Player.unk44 & 8)) {
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
-                        g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
                 }
                 PLAYER.velocityY = 0;
                 if (!(g_Player.unk44 & 8)) {
@@ -401,7 +401,7 @@ bool RicCheckInput(s32 checks) {
                 return true;
             } else {
                 RicCreateEntFactoryFromEntity(
-                    g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+                    g_CurrentEntity, BP_SKID_SMOKE, 0);
             }
             return true;
         }

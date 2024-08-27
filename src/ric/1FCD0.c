@@ -73,7 +73,7 @@ void RicHandleSlideKick(void) {
 
     if (g_Player.pl_vram_flag & 1) {
         g_CurrentEntity->velocityX /= 2;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         RicSetCrouch(3, PLAYER.velocityX);
         g_api.PlaySfx(SFX_STOMP_SOFT_A);
@@ -132,7 +132,7 @@ void RicHandleBladeDash(void) {
 
         if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
             (g_Player.pl_vram_flag & 1)) {
-            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BRAKE_SMOKE, 0);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         }
     }
 }

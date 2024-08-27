@@ -182,7 +182,8 @@ void RicSetRun(void) {
         RicSetSpeedX(FIX(2.25));
         g_Player.D_80072F00[PL_T_RUN] = 40;
         PLAYER.velocityY = 0;
-        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_SMOKE, 5), 0);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
     }
 }
 

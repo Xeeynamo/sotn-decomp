@@ -158,8 +158,8 @@ enum RicEntities {
 };
 
 enum RicBlueprints {
-    BP_BRAKE_SMOKE,
-    BP_SMOKE,
+    BP_SKID_SMOKE,
+    BP_SMOKE_PUFF,
     BP_SUBWPN_CROSS,
     BP_SUBWPN_CROSS_PARTICLES,
     BP_EMBERS,
@@ -232,9 +232,9 @@ enum RicBlueprints {
     BP_HIT_BY_HOLY,
     BP_AGUNEA_THUNDER,
     BP_73,
-    BP_SMOKE2,
-    BP_BRAKE_SMOKE2,
-    BP_BRAKE_SMOKE3,
+    BP_SMOKE_PUFF_2,
+    BP_SKID_SMOKE_2,
+    BP_SKID_SMOKE_3,
     BP_TELEPORT,
     NUM_BLUEPRINTS,
 };

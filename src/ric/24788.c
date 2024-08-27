@@ -1158,8 +1158,7 @@ void RicEntityMaria(Entity* entity) {
             RicSetAnimation(anim_maria_offering_powers);
             entity->velocityX = 0;
             entity->step++;
-            RicCreateEntFactoryFromEntity(
-                entity, FACTORY(BP_BRAKE_SMOKE, 4), 0);
+            RicCreateEntFactoryFromEntity(entity, FACTORY(BP_SKID_SMOKE, 4), 0);
         }
         break;
     case 2:
