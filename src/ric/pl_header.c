@@ -2,13 +2,13 @@
 
 void RicMain(void);
 void RicInit(s16 arg0);
-void func_801603C4(void);
+void RicUpdatePlayerEntities(void);
 void func_8015E7B4(Unkstruct_8010BF64* arg0);
 
 PlayerOvl RIC_player = {
     RicMain,
     RicInit,
-    func_801603C4,
+    RicUpdatePlayerEntities,
     func_8015E7B4,
 };
 

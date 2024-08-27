@@ -172,7 +172,7 @@ bool RicDoCrash(void) {
         break;
     case SUBWPN_AXE:
         RicSetStep(PL_S_STAND_IN_AIR);
-        RicSetAnimation(ric_anim_stand_in_air);
+        RicSetAnimation(ric_ric_anim_stand_in_air);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72) {
             PLAYER.velocityY = 0;
@@ -207,7 +207,7 @@ bool RicDoCrash(void) {
         break;
     case SUBWPN_CROSS:
         RicSetStep(PL_S_STAND_IN_AIR);
-        RicSetAnimation(ric_anim_stand_in_air);
+        RicSetAnimation(ric_ric_anim_stand_in_air);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72) {
             PLAYER.velocityY = 0;
@@ -461,10 +461,11 @@ bool RicCheckInput(s32 checks) {
     return false;
 }
 
+static s32 debug_wait_info_timer;
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    if (g_DebugWaitInfoTimer++ & 4) {
+    if (debug_wait_info_timer++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
@@ -1070,7 +1071,8 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
-void func_8015F9F0(Entity* entity) {
+static s32 D_80174F80[11];
+static void func_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
 
@@ -1079,8 +1081,8 @@ void func_8015F9F0(Entity* entity) {
         return;
     }
 
-    for (i = 0;; ++i) {
-        for (enemyId = 2; enemyId < 11; ++enemyId) {
+    for (i = 0;; i++) {
+        for (enemyId = 2; enemyId < LEN(D_80174F80); ++enemyId) {
             if (D_80174F80[enemyId] == i) {
                 ++D_80174F80[enemyId];
                 entity->enemyId = enemyId;
@@ -1090,6 +1092,14 @@ void func_8015F9F0(Entity* entity) {
     }
 }
 
+static u8 D_80174FAC;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB0;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB4;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB8;
+STATIC_PAD_BSS(3);
 void func_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
@@ -1099,7 +1109,7 @@ void func_8015FA5C(s32 arg0) {
 
 void RicSetSubweaponParams(Entity* entity) {
     u16 attack;
-    SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
+    SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
 
     if ((g_Player.D_80072F00[PL_T_INVINCIBLE]) != NULL) {
         attack = subwpn->attack * 2;
@@ -1201,6 +1211,7 @@ s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
 }
 
 // Corresponding DRA function is func_80119F70
+static Point16 D_80174FBC[16];
 void func_8015FEA8(Entity* entity) {
     Primitive* prim;
     s16 temp_xRand;
@@ -1212,7 +1223,8 @@ void func_8015FEA8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->primIndex = (s16)g_api.AllocPrimitives(PRIM_GT4, 16);
+        entity->primIndex =
+            (s16)g_api.AllocPrimitives(PRIM_GT4, LEN(D_80174FBC));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -1221,7 +1233,7 @@ void func_8015FEA8(Entity* entity) {
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         prim = &g_PrimBuf[entity->primIndex];
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < LEN(D_80174FBC); i++) {
             temp_xRand = hitboxX + rand() % 24 - 12;
             temp_yRand = rand();
             D_80174FBC[i].x = temp_xRand;
@@ -1285,6 +1297,7 @@ static AnimationFrame anim_80154924[] = {
     {2, FRAME(9, 0)},  {2, FRAME(10, 0)},
     {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
     {2, FRAME(13, 0)}, A_END};
+static s32 D_80174FFC;
 void func_801601DC(Entity* entity) {
     s16 posX;
     s16 posY;
@@ -1331,37 +1344,103 @@ void func_801601DC(Entity* entity) {
     }
 }
 
-void func_801603B4(Entity* self) {}
+static void RicEntityDummy(Entity* self) {}
 
 void func_801603BC(void) {}
 
-void RicEntityGiantSpinningCross(Entity*);
+void RicEntityFactory(Entity* self);
+void func_80160FC4(Entity* self);
+void RicEntitySubwpnCross(Entity* self);
+void func_80169C10(Entity* self);
+void func_8016147C(Entity* self);
+void RicEntitySubwpnCrossTrail(Entity* self);
+void RicEntitySubwpnHolyWater(Entity* self);
+void RicEntitySubwpnHolyWaterFlame(Entity* self);
+void func_80161C2C(Entity* self);
+void RicEntityWhip(Entity* self);
+void RicEntityCrashHydroStorm(Entity* self);
+void RicEntityCrashCrossBeam(Entity* self);
+void RicEntitySubwpnCrashCross(Entity* self);
+void func_80167A58(Entity* self);
+void func_80167A60(Entity* self);
+void func_8016779C(Entity* self);
+void func_80167964(Entity* self);
+void RicEntityDummy(Entity* self);
+void func_80161EF8(Entity* self);
+void func_80167A68(Entity* self);
+void RicEntityRevivalColumn(Entity* self);
+void func_80161FF0(Entity* self);
+void func_80160C38(Entity* self);
+void RicEntityBladeDash(Entity* self);
+void func_801623E0(Entity* self);
+void func_80162604(Entity* self);
+void func_80162C84(Entity* self);
+void func_80162870(Entity* self);
+void func_80160F0C(Entity* self);
+void func_80162C7C(Entity* self);
+void RicEntityPlayerBlinkWhite(Entity* self);
+void RicEntitySubwpnCrashCrossParticles(Entity* self);
+void func_801641A0(Entity* self);
+void RicEntityShrinkingPowerUpRing(Entity* self);
+void func_80167A70(Entity* self);
+void RicEntitySubwpnAxe(Entity* self);
+void RicEntityCrashAxe(Entity* self);
+void RicEntitySubwpnDagger(Entity* self);
+void func_80160D2C(Entity* self);
+void RicEntityHitByIce(Entity* self);
+void RicEntityHitByLightning(Entity* self);
+void RicEntitySubwpnReboundStone(Entity* self);
+void RicEntitySubwpnThrownVibhuti(Entity* self);
+void RicEntitySubwpnAgunea(Entity* self);
+void RicEntityAguneaHitEnemy(Entity* self);
+void RicEntityCrashVibhuti(Entity* self);
+void RicEntityVibhutiCrashCloud(Entity* self);
+void RicEntityCrashReboundStone(Entity* self);
+void func_8016D9C4(Entity* self);
+void func_8016DF74(Entity* self);
+void RicEntityCrashBible(Entity* self);
+void RicEntityCrashBibleBeam(Entity* self);
+void RicEntitySubpwnBible(Entity* self);
+void RicEntitySubpwnBibleTrail(Entity* self);
+void RicEntitySubwpnStopwatch(Entity* self);
+void RicEntitySubwpnStopwatchCircle(Entity* self);
+void func_801705EC(Entity* self);
+void func_8016F198(Entity* self);
+void RicEntityAguneaCircle(Entity* self);
+void RicEntityAguneaLightning(Entity* self);
+void RicEntityCrashReboundStoneParticles(Entity* self);
+void func_801601DC(Entity* self);
+void func_8015FEA8(Entity* self);
+void RicEntityCrashStopwatchDoneSparkle(Entity* self);
+void func_80170548(Entity* self);
+void RicEntityTeleport(Entity* self);
+void RicEntityDummy(Entity* self);
 PfnEntityUpdate g_RicEntityTbl[] = {
-    func_801603B4,
-    RicEntityEntFactory,
+    RicEntityDummy,
+    RicEntityFactory,
     func_80160FC4,
-    EntityCrossBoomerang,
+    RicEntitySubwpnCross,
     func_80169C10,
     func_8016147C,
-    EntityCrossShadow,
-    RicEntityHolyWater,
-    RicEntityHolyWaterFlame,
+    RicEntitySubwpnCrossTrail,
+    RicEntitySubwpnHolyWater,
+    RicEntitySubwpnHolyWaterFlame,
     func_80161C2C,
-    func_80166784,
-    EntityHydroStorm,
-    RicEntityGiantSpinningCross,
+    RicEntityWhip,
+    RicEntityCrashHydroStorm,
+    RicEntityCrashCrossBeam,
     RicEntitySubwpnCrashCross,
     func_80167A58,
     func_80167A60,
     func_8016779C,
     func_80167964,
-    func_801603B4,
+    RicEntityDummy,
     func_80161EF8,
     func_80167A68,
-    EntityRichterRevivalColumn,
+    RicEntityRevivalColumn,
     func_80161FF0,
     func_80160C38,
-    BladeDashHelper,
+    RicEntityBladeDash,
     func_801623E0,
     func_80162604,
     func_80162C84,
@@ -1371,11 +1450,11 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntityPlayerBlinkWhite,
     RicEntitySubwpnCrashCrossParticles,
     func_801641A0,
-    EntityShrinkingPowerUpRing,
+    RicEntityShrinkingPowerUpRing,
     func_80167A70,
-    EntitySubwpnCrashAgunea,
-    EntitySubwpnCrashAxe,
-    RicEntitySubwpnThrownDagger,
+    RicEntitySubwpnAxe,
+    RicEntityCrashAxe,
+    RicEntitySubwpnDagger,
     func_80160D2C,
     RicEntityHitByIce,
     RicEntityHitByLightning,
@@ -1383,31 +1462,31 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntitySubwpnThrownVibhuti,
     RicEntitySubwpnAgunea,
     RicEntityAguneaHitEnemy,
-    EntitySubwpnCrashVibhuti,
+    RicEntityCrashVibhuti,
     RicEntityVibhutiCrashCloud,
-    func_8016E324,
+    RicEntityCrashReboundStone,
     func_8016D9C4,
     func_8016DF74,
-    EntityBiblePage,
-    EntityBiblePageBeam,
-    RicEntitySubwpnBible,
-    func_80172AE8,
-    EntityStopwatch,
-    EntityStopwatchCircle,
+    RicEntityCrashBible,
+    RicEntityCrashBibleBeam,
+    RicEntitySubpwnBible,
+    RicEntitySubpwnBibleTrail,
+    RicEntitySubwpnStopwatch,
+    RicEntitySubwpnStopwatchCircle,
     func_801705EC,
     func_8016F198,
-    EntityAguneaCircle,
-    EntityAguneaLightning,
-    func_8016D920,
+    RicEntityAguneaCircle,
+    RicEntityAguneaLightning,
+    RicEntityCrashReboundStoneParticles,
     func_801601DC,
     func_8015FEA8,
-    StopwatchCrashDoneSparkle,
+    RicEntityCrashStopwatchDoneSparkle,
     func_80170548,
     RicEntityTeleport,
-    func_801603B4};
+    RicEntityDummy};
 
-// Corresponding DRA function is func_8011A4D0
-void func_801603C4(void) {
+// Corresponding DRA function is UpdatePlayerEntities
+void RicUpdatePlayerEntities(void) {
     SubweaponDef subwpn;
     Entity* entity;
     s32 i;
