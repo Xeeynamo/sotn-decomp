@@ -63,7 +63,7 @@ void EntityWeaponAttack(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         }
         self->velocityX += PLAYER.velocityX;
-        self->ext.timer.t = 0x16;
+        self->ext.weapon_014.unk7C = 0x16;
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 4;
@@ -104,6 +104,7 @@ void EntityWeaponAttack(Entity* self) {
             prim->drawMode = 0x17B;
             prim = prim->next;
         }
+
         g_api.PlaySfxVolPan(SFX_WEAPON_ENERGY, 0x50, 0);
         g_api.PlaySfx(SFX_BONE_SWORD_SWISH_A);
         g_Player.D_80072F00[10] = 4;
@@ -118,11 +119,11 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (--self->ext.timer.t < 7) {
+        if (--self->ext.weapon_014.unk7C < 7) {
             DecelerateX(FIX(14));
         }
-        if (self->ext.timer.t == 0) {
-            self->ext.timer.t = 8;
+        if (self->ext.weapon_014.unk7C == 0) {
+            self->ext.weapon_014.unk7C = 8;
             SetSpeedX(-FIX(3));
             self->step++;
         }
@@ -130,7 +131,7 @@ void EntityWeaponAttack(Entity* self) {
     case 2:
         self->drawFlags &= ~FLAG_DRAW_ROTZ;
         self->posX.val += self->velocityX;
-        if (--self->ext.timer.t == 0) {
+        if (--self->ext.weapon_014.unk7C == 0) {
             self->step++;
         }
         break;
@@ -166,7 +167,7 @@ void EntityWeaponAttack(Entity* self) {
             prim->x2 = xPreviousB;
             prim->y2 = yPreviousB;
         }
-        if (prim->r0 == 0 && i == self->ext.factory.unk9C - 1) {
+        if (prim->r0 == 0 && i == self->ext.weapon_014.unk9C - 1) {
             angle = self->rotZ;
             prim->x1 = self->posX.i.hi + (((rcos(angle) >> 4) * 47) >> 8);
             if (self->facingLeft) {
@@ -186,15 +187,15 @@ void EntityWeaponAttack(Entity* self) {
         yPreviousA = prim->y1;
         xPreviousB = prim->x3;
         yPreviousB = prim->y3;
-        if (self->ext.factory.unk9C - 1 >= 0x11 &&
-            i < self->ext.factory.unk9C - 0x11) {
+        if (self->ext.weapon_014.unk9C - 1 >= 0x11 &&
+            i < self->ext.weapon_014.unk9C - 0x11) {
             prim->drawMode |= DRAW_HIDE;
         }
         prim = prim->next;
     }
 
-    unk9C = self->ext.factory.unk9C;
-    if (self->ext.factory.unk9C != 0) {
+    unk9C = self->ext.weapon_014.unk9C;
+    if (self->ext.weapon_014.unk9C != 0) {
         end = (unk9C > 47) ? 47 : unk9C - 1;
         start = unk9C - 16;
         if (start < 0) {
@@ -218,7 +219,7 @@ void EntityWeaponAttack(Entity* self) {
             prim = prim->next;
         }
     }
-    self->ext.factory.unk9C++;
+    self->ext.weapon_014.unk9C++;
 }
 
 s32 func_ptr_80170004(Entity* self) {
