@@ -54,7 +54,7 @@ void EntityWeaponAttack(Entity* self) {
         self->velocityY = FIX(1);
         offsetY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         self->posY.i.hi = offsetY - 8;
-        if (PLAYER.step != 2) {
+        if (PLAYER.step != Player_Crouch) {
             self->posY.i.hi = offsetY - 16;
         }
         if (self->facingLeft != 0) {
@@ -101,7 +101,8 @@ void EntityWeaponAttack(Entity* self) {
                 prim->clut = 0x135;
             }
             prim->priority = self->zPriority - 2;
-            prim->drawMode = 0x17B;
+            prim->drawMode = DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
 
