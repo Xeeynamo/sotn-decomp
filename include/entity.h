@@ -259,6 +259,18 @@ typedef struct PACKED {
 } ET_WeaponUnk046;
 
 typedef struct {
+    s32 unk7C;
+    s32 : 32;
+    s32 unk84;
+    s32 unk88;
+    byte pad[32];
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
+} ET_WeaponUnk047;
+
+typedef struct {
     s16 timer;
     s16 unk7E;
     s32 unk80;
@@ -1744,6 +1756,7 @@ typedef union { // offset=0x7C
     ET_WeaponUnk012 weapon_012;
     ET_WeaponUnk030 weapon_030;
     ET_WeaponUnk046 weapon_046;
+    ET_WeaponUnk047 weapon_047;
     ET_Shield shield;
     ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
@@ -1846,6 +1859,7 @@ SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk012, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk030, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk046, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk047, anim);
 SYNC_FIELD(ET_Player, ET_KarmaCoin, anim);
 SYNC_FIELD(ET_Player, ET_Sword, anim);
 SYNC_FIELD(ET_Player, ET_HeavenSword, anim);
