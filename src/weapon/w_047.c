@@ -109,7 +109,7 @@ void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + offsetX;
         yVar = self->posY.i.hi + offsetY;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
-        if (collider.effects & 2) {
+        if (collider.effects & EFFECT_UNK_0002) {
             if (offsetX < 0) {
                 self->posX.i.hi += collider.unkC;
             } else {
@@ -124,7 +124,7 @@ void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + offsetX;
         yVar = self->posY.i.hi + offsetY;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk20 + 1;
             self->velocityY = FIX(1);
             self->velocityX = self->velocityX / 2;
@@ -136,7 +136,7 @@ void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + offsetX;
         yVar = self->posY.i.hi + offsetY;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             if (D_14D000_8017B6A4 == 0) {
                 g_api.PlaySfx(SFX_STOMP_SOFT_A);
                 D_14D000_8017B6A4++;
