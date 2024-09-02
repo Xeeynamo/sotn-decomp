@@ -86,17 +86,13 @@ void EntityWeaponAttack(Entity* self) {
 
 extern u8 D_162000_8017B000[6][8];
 
-s32 func_162000_8017B784(Primitive* prim, s32 x, s32 y) {
-    s32 size;
-    s32 left;
-    s32 right;
-    s32 top;
-    s32 bottom;
+s16 func_162000_8017B784(Primitive* prim, s16 x, s16 y) {
+    s16 size;
     u8* uvPtr;
 
     // Should be able to do this as an array access but nope
-    uvPtr = &D_162000_8017B000;
-    uvPtr += prim->b0 * 8;
+    uvPtr = (u8*)D_162000_8017B000;
+    uvPtr += (prim->b0 * 8);
 
     if (prim->b0 >= 3) {
         size = 4;
@@ -106,19 +102,14 @@ s32 func_162000_8017B784(Primitive* prim, s32 x, s32 y) {
     if (prim->b0 == 6) {
         return -1;
     }
-    left = x - size;
-    top = y - size;
-    right = x + size;
-    bottom = y + size;
-
-    prim->x0 = left;
-    prim->y0 = top;
-    prim->x1 = right;
-    prim->y1 = top;
-    prim->x2 = left;
-    prim->y2 = bottom;
-    prim->x3 = right;
-    prim->y3 = bottom;
+    prim->x0 = x - size;
+    prim->y0 = y - size;
+    prim->x1 = x + size;
+    prim->y1 = y - size;
+    prim->x2 = x - size;
+    prim->y2 = y + size;
+    prim->x3 = x + size;
+    prim->y3 = y + size;
 
     prim->u0 = *uvPtr++;
     prim->v0 = *uvPtr++;
@@ -127,8 +118,9 @@ s32 func_162000_8017B784(Primitive* prim, s32 x, s32 y) {
     prim->u2 = *uvPtr++;
     prim->v2 = *uvPtr++;
     prim->u3 = *uvPtr++;
-    prim->v3 = *uvPtr++;
-    if (!(++prim->b1 & 1)) {
+    prim->v3 = *uvPtr;
+    prim->b1++;
+    if (!(prim->b1 & 1)) {
         prim->b0++;
     }
     return 0;
@@ -190,7 +182,108 @@ void func_162000_8017BA38(Entity* ent, Point16* outPoint, bool arg2) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_050", func_ptr_80170004);
+extern Point16 D_162000_8017CBFC[];
+extern Point16 D_162000_8017CD3E;
+
+s32 func_ptr_80170004(Entity* self) {
+    Primitive* prim;
+    s32 i;
+    s16 prim_x, prim_y;
+    s16 x, y;
+    s16 angle;
+    s32 magnitude;
+    s16 xOffset;
+    s32 params;
+
+    if (PLAYER.ext.player.anim <= 0x40 || PLAYER.ext.player.anim >= 0x48 ||
+        !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    params = self->params & 0xFF; // unused, for PSP
+
+    xOffset = 0xC;
+    if (PLAYER.facingLeft) {
+        xOffset = -xOffset;
+    }
+    x = PLAYER.posX.i.hi + xOffset;
+    y = PLAYER.posY.i.hi - 26;
+    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        y -= 5;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 80);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 80; i++) {
+            prim->clut = 0x1B0;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (rand() % 24) + 1;
+            prim->g2 = 0;
+            prim->priority = PLAYER.zPriority + 4;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->ext.weapon.lifetime = 40;
+        self->step++;
+        break;
+    case 1:
+        if (--self->ext.weapon.lifetime == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 80; i++) {
+        switch (prim->g0) {
+        case 0:
+            if (--prim->g1 == 0) {
+                angle = rand();
+                magnitude = (rand() & 0x1F) + 32;
+                D_162000_8017CBFC[i].x =
+                    x + (((rcos(angle) >> 4) * magnitude) >> 8);
+                D_162000_8017CBFC[i].y =
+                    y - (((rsin(angle) >> 4) * magnitude) >> 8);
+                prim->g0++;
+            }
+            break;
+        case 1:
+            prim_x = D_162000_8017CBFC[i].x -
+                     (D_162000_8017CBFC[i].x - x) * prim->g2 / 15;
+            // n.b.! this should simplify to something similar to `prim_x`
+            // above, and on PSP that simplified version matches, but
+            // currently it does not match on PSX.
+            prim_y = D_162000_8017CBFC[i].y -
+                     (D_162000_8017CBFC[i].y -
+                      (D_162000_8017CBFC[i].y -
+                       (D_162000_8017CBFC[i].y - y) * prim->g2)) /
+                         15;
+            prim->g2++;
+            if ((func_162000_8017B784(prim, prim_x, prim_y)) < 0) {
+                prim->drawMode |= DRAW_HIDE;
+                prim->g0++;
+            } else {
+                prim->drawMode &= ~DRAW_HIDE;
+            }
+            break;
+        }
+        prim = prim->next;
+    }
+}
 
 void func_ptr_80170008(Entity* self) {
     const int PrimCount = 16;
