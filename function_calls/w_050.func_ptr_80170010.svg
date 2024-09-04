@@ -12,7 +12,7 @@
 <!-- w_050.func_ptr_80170010 -->
 <g id="node1" class="node">
 <title>w_050.func_ptr_80170010</title>
-<ellipse fill="red" stroke="black" cx="408.44" cy="-198" rx="133.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="408.44" cy="-198" rx="133.48" ry="18"/>
 <text text-anchor="middle" x="408.44" y="-194.3" font-family="Times,serif" font-size="14.00">w_050.func_ptr_80170010</text>
 </g>
 <!-- dra.AllocPrimitives -->
