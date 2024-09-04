@@ -285,7 +285,7 @@ void func_8017160C(s32 amount, s32 entityId) {
             entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
             entity->facingLeft = (g_Entities[0].facingLeft + 1) & 1;
-            entity->params = i + 1;
+REDACTED
         }
         entity->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
         entity->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
@@ -471,12 +471,12 @@ void ProcessEvent(Entity* self, bool resetEvent);
 extern u16 D_80170448[48];
 
 void func_80171ED4(s32 arg0) {
-    u16* dst;
-    u16* src;
+REDACTED
+REDACTED
     RECT rect;
     s32 i;
     s32 x;
-    SpriteParts** spriteBanks;
+REDACTED
     Entity* e;
 
 #ifdef VERSION_PC
@@ -486,43 +486,43 @@ void func_80171ED4(s32 arg0) {
     const int len = 256;
 #endif
 
-    if ((arg0 == 1) || (arg0 == 3)) {
+REDACTED
         ProcessEvent(NULL, true);
-        if (arg0 == 3) {
-            return;
-        }
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
-    dst = &g_Clut[0x1400];
+REDACTED
     src = D_80170448;
-
+REDACTED
     for (i = 0; i < len; i++) {
         *dst++ = *src++;
     }
 
-    dst = &g_Clut[0x1430];
-    src = D_80170720;
-
-    for (i = 0; i < 32; i++) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         *dst++ = *src++;
     }
 
-    rect.x = 0;
+REDACTED
     rect.w = 0x100;
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = &g_Clut[0x1400];
-    LoadImage(&rect, (u_long*)dst);
-
-    spriteBanks = g_api.o.spriteBanks;
-    spriteBanks += 20;
-    *spriteBanks = (SpriteParts*)D_80170040;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
     e = &g_Entities[4];
-
+REDACTED
     DestroyEntity(e);
-
+REDACTED
     e->unk5A = 0x6C;
     e->palette = 0x140;
     e->animSet = ANIMSET_OVL(20);
@@ -530,8 +530,8 @@ void func_80171ED4(s32 arg0) {
     e->facingLeft = (PLAYER.facingLeft + 1) & 1;
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
-    e->params = 0;
-
+REDACTED
+REDACTED
     if (arg0 == 1) {
         e->entityId = 0xD1;
         e->posX.val = 0x800000;
@@ -539,17 +539,17 @@ void func_80171ED4(s32 arg0) {
     } else {
         e->entityId = 0xD1;
         if (D_8003C708.flags & 0x20) {
-            e->posX.val = func_80174864() ? 0xC00000 : 0x400000;
+REDACTED
             e->posY.val = 0xA00000;
         } else {
-            e->posX.val =
-                (PLAYER.facingLeft ? +0x120000 : -0x120000) + PLAYER.posX.val;
+REDACTED
+REDACTED
             e->posY.val = PLAYER.posY.val - 0x220000;
         }
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
-    D_80174D3C = 0;
+REDACTED
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
@@ -1060,10 +1060,10 @@ void func_80173C1C(void) {}
 void func_80173C24(void) {}
 
 void func_80173C2C(Entity* entity) {
-    switch (entity->params) {
-    case 15:
+REDACTED
+REDACTED
         D_80174D3C = 1;
-        break;
+REDACTED
     }
     DestroyEntity(entity);
 }
@@ -1136,8 +1136,8 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
 
 Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
-    s16 start = D_80171094[rangeIndex].start;
-    s16 end = D_80171094[rangeIndex].end;
+REDACTED
+REDACTED
     Entity* entity = &g_Entities[start];
     s32 i;
 
@@ -1147,7 +1147,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
         }
     }
 
-    return NULL;
+REDACTED
 }
 #endif
 
@@ -1214,7 +1214,7 @@ void func_80174038(Entity* entity) {
         }
         break;
     case 2:
-        g_api.PlaySfx(entity->params);
+REDACTED
         entity->step++;
         break;
 

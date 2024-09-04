@@ -500,14 +500,14 @@ void func_8011EDA0(Entity* entity) {}
 
 // RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
-    u16 params = self->params;
-    s16 paramsHi = self->params >> 8;
-    s32 step = self->step;
-    s32 rnd;
-
-    switch (step) {
-    case 0:
-        if (paramsHi == 1) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->rotX = 0xC0;
             self->rotY = 0xC0;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
@@ -522,34 +522,34 @@ void func_8011EDA8(Entity* self) {
                 self->rotY = 0x120;
                 self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                 self->animSet = ANIMSET_DRA(2);
-            } else {
+REDACTED
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_800AD57C;
-                self->palette = 0x8170;
-            }
-        }
+REDACTED
+REDACTED
+REDACTED
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
-
-        if (rand() % 4) {
-            self->zPriority = PLAYER.zPriority + 2;
-        } else {
-            self->zPriority = PLAYER.zPriority - 2;
-        }
-
-        if (paramsHi == 2) {
-            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
-        } else {
-            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
-        }
-
-        rnd = rand() & 31;
-        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->velocityY = FIX(-0.5);
         self->velocityX = PLAYER.velocityX >> 2;
-        self->step++;
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->rotX -= 4;
         self->rotY -= 4;
         self->posY.val += self->velocityY;
@@ -571,18 +571,18 @@ void func_8011EDA8(Entity* self) {
         break;
     }
 }
-
+REDACTED
 // same as RIC/func_801601DC
 void func_8011F074(Entity* entity) {
     s16 posX;
     s16 posY;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
-        entity->zPriority = PLAYER.zPriority + 2;
+REDACTED
         entity->palette = 0x819F;
 
         if (D_8013808C & 1) {
@@ -594,25 +594,25 @@ void func_8011F074(Entity* entity) {
         entity->rotX = 0x40;
         entity->anim = D_800ADC44;
         D_8013808C++;
-        entity->unk6C = 0xFF;
+REDACTED
         entity->drawFlags =
             FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
-        posX = 10;
-        posY = 15;
-        entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
-        entity->posX.i.hi = entity->posX.i.hi - posX + (rand() % 20);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->velocityY = -0x6000 - (rand() & 0x3FFF);
-        entity->step++;
-        break;
-
-    case 1:
-        if (entity->unk6C >= 17) {
-            entity->unk6C += 248;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->posY.val += entity->velocityY;
         entity->rotX += 8;
         entity->rotY += 8;
-        if (entity->animFrameDuration < 0) {
+REDACTED
             DestroyEntity(entity);
         }
         break;
@@ -779,8 +779,8 @@ void EntityHitByIce(Entity* self) {
     Point16* offset;
     bool sp18 = false;
 
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     sp18 = (g_Player.unk0C & 0x10000) == sp18;
     switch (self->step) {
     case 0:
@@ -960,8 +960,8 @@ void EntityTransparentWhiteCircle(Entity* self) {
     bScale = loadedParams[4];
     gOffset = loadedParams[0];
     bOffset = loadedParams[1];
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     temp_s6 = (upperparams >> 8) & 0x40;
     func_8010DFF0(1, 1);
     switch (self->step) {
@@ -1627,9 +1627,9 @@ void func_80121F14(s32 arg0, s32 arg1) {
     for (i = 0; i < LEN(D_80138094); i++, ptr++) {
         ptr->posX.val = arg0 + ptr->posX.val;
         ptr->posY.val = arg1 + ptr->posY.val;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     Primitive* prim;
     s16 temp_s4;
@@ -2224,42 +2224,42 @@ void UnknownEntId49(Entity* self) {
         self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((g_GameTimer >> 1) & 1);
     }
 }
-
-void func_80123A60(Entity* entity) {
-    Entity* player = &PLAYER;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (!(g_Player.unk0C & 0x01000000)) {
-        DestroyEntity(entity);
-        return;
-    }
-
-    entity->posX.i.hi = player->posX.i.hi;
-    entity->posY.i.hi = player->posY.i.hi;
-    if (entity->step == 0) {
-        func_8011A328(entity, 0xB);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
-        entity->step++;
-    }
-
-    if (player->animCurFrame == 5) {
-        entity->hitboxWidth = 12;
-        entity->hitboxHeight = 32;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->hitboxOffX = 0x1C;
         entity->hitboxOffY = -0xC;
-        return;
-    }
-
-    if (player->animCurFrame == 6) {
-        entity->hitboxWidth = 10;
-        entity->hitboxHeight = 10;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->hitboxOffX = 0x1C;
         entity->hitboxOffY = 0x10;
-        return;
-    }
-
+REDACTED
+REDACTED
+REDACTED
     DestroyEntity(entity);
-}
-
+REDACTED
+REDACTED
 void func_80123B40(Entity* self) {
     Entity copy;
     Primitive* prim;
@@ -2342,8 +2342,8 @@ void func_80123B40(Entity* self) {
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         }
         if (params == 1) {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+REDACTED
+REDACTED
                     prim->b3 = self->ext.et_80123B40.unk29;
             prim->clut = 0x100;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS |
@@ -2352,27 +2352,27 @@ void func_80123B40(Entity* self) {
         prim = prim->next;
     }
 }
-
-void func_80123F78(Entity* entity) {
+REDACTED
+REDACTED
     PlayerDraw* plDraw = &g_PlayerDraw[13];
 
     if (g_unkGraphicsStruct.D_800973FC == 0) {
         plDraw->enableColorBlend = 0;
-        DestroyEntity(entity);
-        return;
-    }
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 | FLAG_UNK_04000000 |
                         FLAG_UNK_08000000;
         if (PLAYER.animSet != 1) {
             DestroyEntity(entity);
-            break;
-        }
+REDACTED
+REDACTED
         entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = PLAYER.animCurFrame;
-        entity->unk5A = 0xD;
+REDACTED
         entity->drawFlags = PLAYER.drawFlags;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->palette = 0x815F;
@@ -2424,82 +2424,82 @@ void func_80124164(
     }
 
     if (arg4 == 0) {
-        colorChannel = colorIntensity * D_800AE270[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r3 = (u32)colorChannel >> 8;
-        poly->r1 = (u32)colorChannel >> 8;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
-        colorChannel = colorIntensity * D_800AE270[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g3 = (u32)colorChannel >> 8;
-        poly->g1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b3 = (u32)colorChannel >> 8;
-        poly->b1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[3];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r2 = (u32)colorChannel >> 8;
-        poly->r0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[4];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g2 = (u32)colorChannel >> 8;
-        poly->g0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[5];
-    } else {
-        colorChannel = colorIntensity * D_800AE270[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r3 = (u32)colorChannel >> 8;
-        poly->r1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g3 = (u32)colorChannel >> 8;
-        poly->g1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b3 = (u32)colorChannel >> 8;
-        poly->b1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[6];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r2 = (u32)colorChannel >> 8;
-        poly->r0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[7];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g2 = (u32)colorChannel >> 8;
-        poly->g0 = (u32)colorChannel >> 8;
-        colorChannel = colorIntensity * D_800AE270[8];
-    }
-    if (colorChannel < 0) {
-        colorChannel += 255;
-    }
-    poly->b2 = (u32)colorChannel >> 8;
-    poly->b0 = (u32)colorChannel >> 8;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

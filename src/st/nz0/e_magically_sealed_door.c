@@ -1,31 +1,31 @@
-/*
- * Overlay: NZ0
- * Entity: Magically Sealed Door
- */
-
-#include "nz0.h"
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 #include "sfx.h"
-
+REDACTED
 // Another dupe of EntityIsNearPlayer but needs separate definition in nz0
 s32 EntityIsNearPlayer2(Entity* e) {
-    s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
-
+REDACTED
+REDACTED
     diff = abs(diff);
-
-    if (diff >= 25) {
+REDACTED
+REDACTED
         return 0;
-    } else {
-        diff = PLAYER.posY.i.hi - e->posY.i.hi;
+REDACTED
+REDACTED
         diff = abs(diff);
         if (diff < 33) {
             return 1;
         } else {
             return 0;
         }
-    }
-    return diff;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // sealed door that displays "Magically Sealed" prompt
 void EntityMagicallySealedDoor(Entity* self) {
     Entity* messageBox;
@@ -87,9 +87,9 @@ void EntityMagicallySealedDoor(Entity* self) {
             }
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             prim->r0 = prim->b0 = prim->g0 = 0x7F;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             if (i == 2 && !(self->params & 0x100)) {
                 prim->drawMode |= DRAW_HIDE;
             }

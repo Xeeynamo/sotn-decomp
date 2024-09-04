@@ -607,7 +607,7 @@ void RicEntityCrashBible(Entity* self) {
         prim = prim->next;
     }
 }
-
+REDACTED
 void func_8016F198(Entity* self) {
     Primitive* prim;
     s16 unk7C;
@@ -723,7 +723,7 @@ void func_8016F198(Entity* self) {
         prim = prim->next;
     }
 }
-
+REDACTED
 // Entity ID #64, created by blueprint #72. This call is in
 // RicEntitySubwpnStopwatch. When Richter has the stopwatch weapon, and uses it
 // as a crash, it makes 4 floating stopwatches. When they are done they
@@ -1064,29 +1064,29 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
     }
 }
 
-void func_80170548(Entity* entity) {
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_04000000;
-        entity->ext.generic.unkB0 = 0x1E;
+REDACTED
         RicSetSubweaponParams(entity);
-        entity->hitboxWidth = 8;
-        entity->hitboxHeight = 8;
-        entity->step++;
-        break;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     case 1:
         if (++entity->ext.timer.t >= 5) {
             DestroyEntity(entity);
-        }
-        break;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 void func_801705EC(Entity* entity) {
     u16 temp;
 
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_04000000;
         entity->ext.et_80161FF0.unk7E = 0;
         entity->step++;
@@ -1153,7 +1153,7 @@ static void AguneaShuffleParams(s32 bufSize, s32* buf) {
         buf[idx] = swapTemp;
     }
 }
-
+REDACTED
 // Agunea item crash lightning, created by RicEntityAguneaCircle, blueprint 68
 void RicEntityAguneaLightning(Entity* self) {
     u16 sp10[4];
@@ -1508,7 +1508,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
     }
     return;
 }
-
+REDACTED
 static u32 D_801758D0;
 static Entity*
     D_801758D4[3]; // used by RicEntitySubwpnStopwatch, should never underflow
@@ -1939,13 +1939,13 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
     }
 }
-
+REDACTED
 void RicEntitySubpwnBibleTrail(Entity* entity) {
     Primitive* prim;
     s32 ret;
 
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
         ret = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = ret;
         if (entity->primIndex == -1) {

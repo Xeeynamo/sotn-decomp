@@ -1,9 +1,9 @@
 /*
  * File: 1AC60.c
- * Overlay: RIC
- * Description: Overlay for the character Richter.
- */
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 #include "ric.h"
 #include "player.h"
 
@@ -708,7 +708,7 @@ static void RicDebugEnter(void) {
 
 static void RicDebugExit(void) {
     g_IsRicDebugEnter = false;
-    PLAYER.unk44 = 0;
+REDACTED
     PLAYER.animCurFrame = g_RicDebugCurFrame;
     PLAYER.drawFlags = g_RicDebugDrawFlags;
     PLAYER.palette = g_RicDebugPalette;

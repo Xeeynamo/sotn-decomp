@@ -7,8 +7,8 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A50E0, func_060A50E0);
 
 // SAT: func_060A5558
 void SetPlayerStep(PlayerSteps step) {
-    PLAYER.step = step;
-    PLAYER.step_s = 0;
+REDACTED
+REDACTED
 }
 
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5574, func_060A5574);

@@ -9,7 +9,7 @@ void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void EntityEquipItemDrop(Entity*);
+REDACTED
 void EntityRelicOrb(Entity*);
 void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);

@@ -19,17 +19,17 @@ static void DebugShowWaitInfo(const char* msg) {
     if (D_82000_8017B1B4++ & 4) {
         FntPrint(D_82000_8017A73C); // TODO: inline
     }
-    DrawSync(0);
-    VSync(0);
+REDACTED
+REDACTED
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-    FntFlush(-1);
-}
-
+REDACTED
+REDACTED
+REDACTED
 static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
-    while (!PadRead(0))
+REDACTED
         DebugShowWaitInfo(msg);
 }
 
@@ -128,12 +128,12 @@ s32 func_ptr_80170004(Entity* self) {
     s32 scale;
 
     if (self->ext.weapon.parent->ext.weapon.equipId != 0x48) {
-        DestroyEntity(self);
-        return;
-    }
-
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         if (g_HandId != 0) {

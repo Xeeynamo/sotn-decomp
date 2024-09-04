@@ -535,47 +535,47 @@ void EntityGuardText(Entity* self) {
         prim = prim->next;
     }
 }
-
-void func_80119D3C(Entity* entity) {
-    s32 temp;
-    s32 cos;
-
-    switch (entity->step) {
-    case 0:
-        entity->posY.i.hi -= 16;
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->ext.generic.unk7C.s = 0;
-        entity->step++;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->velocityY = FIX(-0.5);
-        entity->ext.generic.unk7E.modeU16 = 0x40;
+REDACTED
         entity->animCurFrame = 0xE;
         entity->animSet = ANIMSET_DRA(3);
-        entity->ext.generic.unk80.modeS16.unk0 = 0x80;
+REDACTED
         entity->flags = FLAG_UNK_08000000;
-        break;
-
-    case 1:
-        if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             entity->drawFlags = FLAG_DRAW_UNK80;
-        }
+REDACTED
         entity->posY.val += entity->velocityY;
-        cos = rcos(entity->ext.generic.unk7C.s);
-        entity->ext.generic.unk7C.s =
-            entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
-        temp = cos * 8;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (!(g_GameTimer & 3)) {
-            entity->ext.generic.unk7E.modeU16--;
-        }
-        entity->posX.val += temp;
-        entity->ext.generic.unk80.modeS16.unk0--;
-        if (entity->ext.generic.unk80.modeS16.unk0 == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             DestroyEntity(entity);
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // Corresponding RIC function is func_8015FDB0
 s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
     s16 left;
@@ -631,14 +631,14 @@ void func_80119F70(Entity* entity) {
     s16 hitboxY;
     s16 hitboxX;
     s32 temp;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         entity->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013804C));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
-            return;
-        }
+REDACTED
+REDACTED
         entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
@@ -674,7 +674,7 @@ void func_80119F70(Entity* entity) {
             return;
         }
     }
-
+REDACTED
     prim = &g_PrimBuf[entity->primIndex];
     for (i = 0; i < LEN(D_8013804C); i++) {
         switch (prim->g0) {
@@ -700,11 +700,11 @@ void func_80119F70(Entity* entity) {
     }
     return;
 }
-
-void func_8011A290(Entity* entity) {
+REDACTED
+REDACTED
     SubweaponDef subwpn;
 
-    func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
+REDACTED
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
     entity->hitboxState = subwpn.hitboxState;
@@ -713,10 +713,10 @@ void func_8011A290(Entity* entity) {
     entity->hitEffect = subwpn.hitEffect;
     entity->entityRoomIndex = subwpn.entityRoomIndex;
     entity->ext.generic.unkB2 = subwpn.crashId;
-    func_80118894(entity);
-}
-
-void func_8011A328(Entity* entity, s32 arg1) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     SpellDef spell;
 
     func_800FD9D4(&spell, arg1);
@@ -727,9 +727,9 @@ void func_8011A328(Entity* entity, s32 arg1) {
     entity->stunFrames = spell.stunFrames;
     entity->hitEffect = spell.hitEffect;
     entity->entityRoomIndex = spell.entityRoomIndex;
-    func_80118894(entity);
-}
-
+REDACTED
+REDACTED
+REDACTED
 void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out) {
     SpellDef spell;
 
@@ -747,5 +747,5 @@ void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out) {
         func_80118894(entity);
     }
 }
-
-void func_8011A4C8(Entity* entity) {}
+REDACTED
+REDACTED

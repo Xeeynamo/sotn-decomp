@@ -194,18 +194,18 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     }
 
     if (subWeapon) {
-        g_CurrentEntity->params = subWeapon;
-        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-        SetStep(7);
+REDACTED
+REDACTED
+REDACTED
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.equipItemDrop.unk8A = 5;
         if (player->facingLeft ^ 1) {
             g_CurrentEntity->velocityX = FIX(-2);
-            return;
+REDACTED
         }
         g_CurrentEntity->velocityX = FIX(2);
-        return;
+REDACTED
     }
     DestroyEntity(g_CurrentEntity);
 }
@@ -215,12 +215,12 @@ static void CollectSubweapon(u16 subWeaponIdx) {
 static void CollectLifeVessel(void) {
     g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(5, 0x8000);
-    DestroyEntity(g_CurrentEntity);
-}
+REDACTED
+REDACTED
 
 static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
-// if self->params & 0x8000 then the item will not disappear
+REDACTED
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -304,8 +304,8 @@ void EntityPrizeDrop(Entity* self) {
             self->hitboxWidth = 4;
         }
         break;
-    case 1:
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+REDACTED
+REDACTED
         if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
             DestroyEntity(self);
         } else {
@@ -393,7 +393,7 @@ void EntityPrizeDrop(Entity* self) {
         break;
     case 6:
     case 7:
-        switch (self->step_s) {
+REDACTED
         case 0:
             self->animCurFrame = 0;
             if (itemId >= 14 && itemId < 23) {
@@ -428,12 +428,12 @@ void EntityPrizeDrop(Entity* self) {
                 prim->clut = 0x170;
                 prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
                 prim->u1 = prim->u3 = prim->v2 = prim->v3 = 0x20;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+REDACTED
+REDACTED
                         prim->b2 = prim->b3 = 128;
                 prim->drawMode = DRAW_HIDE;
                 prim->priority = self->zPriority + 1;
-                self->step_s++;
+REDACTED
             }
             break;
         case 1:
@@ -444,7 +444,7 @@ void EntityPrizeDrop(Entity* self) {
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->step_s++;
+REDACTED
             } else {
                 FallEntity();
             }

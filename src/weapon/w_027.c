@@ -23,17 +23,17 @@ static void DebugShowWaitInfo(const char* msg) {
     if (D_C1000_8017C6EC++ & 4) {
         FntPrint("\no\n\0"); // TODO: remove extra NUL byte padding
     }
-    DrawSync(0);
-    VSync(0);
+REDACTED
+REDACTED
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-    FntFlush(-1);
-}
-
+REDACTED
+REDACTED
+REDACTED
 static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
-    while (!PadRead(0))
+REDACTED
         DebugShowWaitInfo(msg);
 }
 

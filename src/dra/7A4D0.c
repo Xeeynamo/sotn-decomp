@@ -114,8 +114,8 @@ void UpdatePlayerEntities(void) {
             }
         }
         if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
-            entity->pfnUpdate(entity);
-            entity = g_CurrentEntity;
+REDACTED
+REDACTED
             if (entity->entityId != 0) {
                 if (!(entity->flags & FLAG_UNK_04000000) &&
                     (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
@@ -167,8 +167,8 @@ void UpdatePlayerEntities(void) {
         }
     }
 }
-
-void func_8011A870(void) {
+REDACTED
+REDACTED
     Entity* entity;
     s32 i;
 
@@ -189,8 +189,8 @@ void func_8011A870(void) {
         }
 
         if (entity->pfnUpdate) {
-            entity->pfnUpdate(entity);
-            entity = g_CurrentEntity;
+REDACTED
+REDACTED
             if (entity->entityId != 0) {
                 if (!(entity->flags & FLAG_UNK_04000000) &&
                     (entity->posX.i.hi < -0x20 || entity->posX.i.hi > 0x120 ||
@@ -198,10 +198,10 @@ void func_8011A870(void) {
                     DestroyEntity(entity);
                 } else if (entity->flags & FLAG_UNK_100000) {
                     UpdateAnim(NULL, D_800ACFB4);
-                }
-            }
-        }
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 }
 
 void func_8011A9D8(void) {
@@ -448,7 +448,7 @@ void EntityUnarmedAttack(Entity* entity) {
         (anim->frameStart + 7) <= PLAYER.ext.player.anim ||
         g_Player.unk46 == 0) {
         DestroyEntity(entity);
-        return;
+REDACTED
     }
 
     if (entity->step == 0) {
@@ -671,7 +671,7 @@ void func_8011B5A4(Entity* self) {
         break;
     }
 }
-
+REDACTED
 void EntityUnkId24(Entity* self) {
     u16 upperparams = self->params >> 8;
     if (self->step == 0) {
@@ -709,7 +709,7 @@ void EntityUnkId24(Entity* self) {
 bool func_8011BD48(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->entityId;
-    s16 params = entity->params;
+REDACTED
     Entity* e = &g_Entities[i];
     for (; i < 0x40; i++, e++) {
         if (objId == (s32)e->entityId && params == (s32)e->params &&
@@ -1629,9 +1629,9 @@ void EntityPlayerOutline(Entity* self) {
     }
     func_8010DFF0(1, 1);
 }
-
-void func_8011E0E4(Entity* entity) {}
-
+REDACTED
+REDACTED
+REDACTED
 void EntityGravityBootBeam(Entity* self) {
     Primitive* prim;
     s16 halfWidth;

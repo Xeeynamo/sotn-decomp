@@ -1,7 +1,7 @@
 #include "dre.h"
 
-extern u16 D_80180660[];
-void EntityHeartDrop(Entity* self) {
+REDACTED
+REDACTED
     u16 index;
     u8 value;
     PfnEntityUpdate update;

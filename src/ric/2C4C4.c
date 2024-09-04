@@ -313,12 +313,12 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
 // That's the crash for subweapon 4. That's the cross.
 static u16 crash_cross_img_data[] = {
-    0x94A5, 0x98C6, 0x9CE7, 0xA108, 0xA529, 0xA94A, 0xAD6B, 0xB18C,
-    0xB5AD, 0xB9CE, 0xBDEF, 0xC210, 0xC631, 0xCA52, 0xCE73, 0xD294,
-    0xD6B5, 0xDAD6, 0xDEF7, 0xE318, 0xE318, 0xE318, 0xE318, 0xE318,
-    0xE318, 0xE318, 0xE318, 0xE318, 0xE318, 0xDEF7, 0xDAD6, 0xD6B5,
-    0xD294, 0xCE73, 0xCA52, 0xC631, 0xC210, 0xBDEF, 0xB9CE, 0xB5AD,
-    0xB18C, 0xAD6B, 0xA94A, 0xA529, 0xA108, 0x9CE7, 0x98C6, 0x94A5};
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 static RECT crash_cross_img_vram = {0x0301, 0x01F8, 0x0030, 0x0001};
 void RicEntitySubwpnCrashCross(Entity* self) {
     Primitive* prim;
@@ -659,24 +659,24 @@ void RicEntitySubwpnCross(Entity* self) {
     self->ext.crossBoomerang.unk80 &= 0x3F;
     g_Player.D_80072F00[PL_T_3] = 2;
 }
-
-void func_80169C10(Entity* entity) {
+REDACTED
+REDACTED
     Primitive* prim;
     s16 primIndex;
-    s32 PosX = 8;
-    s32 PosY = 4;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
             entity->velocityY = FIX(0.5);
-            entity->posX.i.hi =
-                ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
-            entity->posY.i.hi =
-                ((u16)entity->posY.i.hi - PosY) + (rand() & 0xF);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             prim = &g_PrimBuf[entity->primIndex];
             prim->clut = 0x1B0;
             prim->tpage = 0x1A;
@@ -686,22 +686,22 @@ void func_80169C10(Entity* entity) {
             prim->priority = prim->priority + 4;
             prim->drawMode = 0x31;
             func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
-            entity->step++;
-        } else {
+REDACTED
+REDACTED
             DestroyEntity(entity);
-        }
-        break;
-
-    default:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->posY.val += entity->velocityY;
         prim = &g_PrimBuf[entity->primIndex];
         if (func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi) != 0) {
             DestroyEntity(entity);
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // made by blueprint #5, see step 0 of RicEntitySubwpnCross
 static s16 D_80155E68[] = {9, 10, 11, 12};
 void RicEntitySubwpnCrossTrail(Entity* self) {
@@ -1503,23 +1503,23 @@ void RicEntitySubwpnDagger(Entity* self) {
 }
 
 static void ReboundStoneBounce1(s32 arg0) {
-    g_CurrentEntity->ext.generic.unk7C.s =
-        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 static void ReboundStoneBounce2(s16 arg0) {
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk7C.s =
-            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // RIC entity #42. Blueprint 50. Comes from subweapon 7.
 // Rebound stone!
 void RicEntitySubwpnReboundStone(Entity* self) {
@@ -1575,7 +1575,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+REDACTED
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
         }
@@ -1946,29 +1946,29 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
         break;
     }
 }
-
+REDACTED
 s32 RicPrimDecreaseBrightness(Primitive* prim, u8 amount) {
     u8 isEnd;
-    s32 i;
-    s32 j;
+REDACTED
+REDACTED
     u8* pColor;
-
+REDACTED
     isEnd = 0;
     pColor = &prim->r0;
     for (i = 0; i < 4; i++, pColor += OFF(Primitive, r1) - OFF(Primitive, r0)) {
-        for (j = 0; j < 3; j++) {
+REDACTED
             pColor[j] -= amount;
-
+REDACTED
             if (pColor[j] < 16) {
                 pColor[j] = 16;
-            } else {
+REDACTED
                 isEnd |= 1;
-            }
-        }
-    }
+REDACTED
+REDACTED
+REDACTED
     return isEnd;
-}
-
+REDACTED
+REDACTED
 // RIC Entity #44. Blueprint 51. Subweapon 9. Agunea (non-crash). DRA
 // blueprint 25. DRA entity 21.
 void RicEntitySubwpnAgunea(Entity* self) {
@@ -2161,9 +2161,9 @@ void RicEntityAguneaHitEnemy(Entity* self) {
             prim->y2 = self->posX.i.hi;
             prim->r0 = prim->g0 = prim->b0 = 0xF0;
             i += 1;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -2184,9 +2184,9 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -2272,11 +2272,11 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
-            prim = prim->next;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->step_s = 0;
         self->step += 1;
         break;
@@ -2293,10 +2293,10 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         }
         if (var_s2 != 0) {
             prim = self->ext.prim;
-            while (prim != NULL) {
+REDACTED
                 prim->drawMode = DRAW_HIDE;
-                prim = prim->next;
-            }
+REDACTED
+REDACTED
             DestroyEntity(self);
             break;
         }
@@ -2313,14 +2313,14 @@ static AnimationFrame D_80155EA8[] = {
 void RicEntityVibhutiCrashCloud(Entity* entity) {
     s16 primIndex;
     s32 newVelocity;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-            entity->posX.val =
+REDACTED
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk84;
             entity->posY.val =
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk88;
@@ -2328,36 +2328,36 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk8C;
             entity->ext.factory.unkB0 = PL_W_CRASH_VIBHUTI;
             RicSetSubweaponParams(entity);
-            entity->unk5A = 0x79;
+REDACTED
             entity->animSet = ANIMSET_DRA(14);
-            entity->palette = 0x819E;
+REDACTED
             entity->anim = D_80155EA8;
             entity->drawMode = 0x30;
             entity->drawFlags = FLAG_DRAW_UNK8;
-            entity->unk6C = 0x60;
-            entity->hitboxWidth = 8;
-            entity->hitboxHeight = 8;
+REDACTED
+REDACTED
+REDACTED
             entity->flags |= FLAG_UNK_100000;
             newVelocity = (rand() % 512) + 0x300;
             entity->velocityX = rcos(newVelocity) * 32;
             entity->velocityY = -(rsin(newVelocity) * 32);
-            entity->step++;
-        } else {
+REDACTED
+REDACTED
             DestroyEntity(entity);
-        }
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (++entity->ext.vibCrashCloud.unk7C >= 39) {
             DestroyEntity(entity);
-        } else {
+REDACTED
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 static s32 crash_vibhuti_timer;
 void RicEntityCrashVibhuti(Entity* self) {
     FakePrim* prim;
@@ -2452,15 +2452,15 @@ void RicEntityCrashVibhuti(Entity* self) {
 }
 
 void RicEntityCrashReboundStoneParticles(Entity* entity) {
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_04000000;
         entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
         RicSetSubweaponParams(entity);
-        entity->hitboxWidth = 4;
-        entity->hitboxHeight = 4;
-        entity->step++;
-        break;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     case 1:
         if (++entity->ext.subweapon.timer >= 4) {
             DestroyEntity(entity);

@@ -1438,7 +1438,7 @@ void func_80105428(void) {
         PlaySfx(SFX_UNK_6E0);
     }
 }
-
+REDACTED
 void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
@@ -1448,7 +1448,7 @@ void DestroyEntity(Entity* entity) {
         FreePrimitives(entity->primIndex);
     }
 
-    ptr = (u32*)entity;
+REDACTED
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = NULL;
@@ -1577,10 +1577,10 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
         g_LoadFile = CdFile_Monster;
         g_LoadOvlIdx = monsterId;
     }
-    return true;
+REDACTED
 }
 
-void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
+REDACTED
     switch (vertexIndex) {
     case 0:
         poly->b0 = colorIntensity;
@@ -1605,11 +1605,11 @@ void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(POLY_GT4* poly, s32 colorIntensity) {
-    func_801071CC(poly, (u8)colorIntensity, 0);
-    func_801071CC(poly, (u8)colorIntensity, 1);
-    func_801071CC(poly, (u8)colorIntensity, 2);
-    func_801071CC(poly, (u8)colorIntensity, 3);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 }
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
@@ -1617,10 +1617,10 @@ void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
 void func_801072DC(POLY_GT4* poly) { func_80107250(poly, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
-    setRGB0(poly, 0, 0, 0);
-    setRGB1(poly, 0, 0, 0);
-    setRGB2(poly, 0, 0, 0);
-    setRGB3(poly, 0, 0, 0);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 }
 
 #include "../set_prim_rect.h"

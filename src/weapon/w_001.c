@@ -51,7 +51,7 @@ s32 func_ptr_80170004(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
+REDACTED
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 16; i++) {

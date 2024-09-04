@@ -1,7 +1,7 @@
-#include "dra.h"
+REDACTED
 #include "dra_bss.h"
-#include "objects.h"
-
+REDACTED
+REDACTED
 // BSS
 #if defined(VERSION_US)
 extern s32 D_80137FDC;
@@ -21,9 +21,9 @@ void func_8011197C(void) {
     PLAYER.unk44 = 0;
     PLAYER.animCurFrame = D_801396E4;
     PLAYER.drawFlags = D_801396E6;
-    PLAYER.palette = D_801396E8;
-}
-
+REDACTED
+REDACTED
+REDACTED
 bool func_801119C4(void) {
     if (D_801396EA == 0) {
         if (g_Player.padTapped & PAD_L2) {
@@ -92,17 +92,17 @@ bool func_801119C4(void) {
     FntPrint("charal:%02x\n", PLAYER.animCurFrame);
     return true;
 }
-
-void func_80111CC0(void) {
+REDACTED
+REDACTED
     if (g_Player.D_80072F00[1] != 0) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700, 44), 0);
-    }
+REDACTED
     if (g_Player.D_80072F00[0] != 0) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 44), 0);
-    }
-}
-
-bool func_80111D24(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     Collider collider;
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.i.hi;
@@ -114,20 +114,20 @@ bool func_80111D24(void) {
     hitboxLeftMargin = collider.effects & EFFECT_MIST_ONLY;
     CheckCollision(posX + 7, posY, &collider, 0);
     hitboxRightMargin = collider.effects & EFFECT_MIST_ONLY;
-
-    if (hitboxRightMargin & hitboxLeftMargin) {
+REDACTED
+REDACTED
         SetSpeedX(speed);
-        return true;
-    } else if (hitboxRightMargin != 0) {
+REDACTED
+REDACTED
         PLAYER.velocityX = -speed;
-        return true;
-    } else if (hitboxLeftMargin != 0) {
+REDACTED
+REDACTED
         PLAYER.velocityX = speed;
-        return true;
-    }
-    return false;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 bool func_80111DE8(bool mistReset) {
     Collider collider1;
     Collider collider2;
@@ -206,20 +206,20 @@ bool func_8011203C(void) {
     s32 collision = func_80111D24();
 
     if (g_Entities[E_WEAPON].step == 5) {
-        if (collision == false) {
+REDACTED
             DestroyEntity(&g_Entities[E_WEAPON]);
-            return true;
-        }
-        return false;
+REDACTED
+REDACTED
+REDACTED
     } else if (g_Entities[E_WEAPON].step <= 2) {
         if (g_Entities[E_WEAPON].step != 0) {
             g_Player.unk46 = 0;
             g_Entities[E_WEAPON].step = 3;
-        }
-    }
-    return false;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_801120B4(void) {
     s32 x_offset;
     u16 local_flags = 3;
@@ -534,7 +534,7 @@ void func_80112B64(void) {
     if (func_8010FDF8(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {
-            func_8010E570(0);
-        }
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED

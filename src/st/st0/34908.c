@@ -11,52 +11,52 @@
 // Absolute distance from g_CurrentEntity to the player in the X Axis
 s16 GetDistanceToPlayerX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (xDistance < 0) {
-        xDistance = -xDistance;
+REDACTED
+REDACTED
+REDACTED
     }
-    return xDistance;
+REDACTED
 }
 
 // Absolute distance from g_CurrentEntity to the player in the Y Axis
 s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
+REDACTED
+REDACTED
+REDACTED
     }
-    return yDistance;
+REDACTED
 }
 
 s32 GetSideToPlayer(void) {
-    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        side |= 2;
-    }
-    return side;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 #include "../move_entity.h"
 
 #include "../fall_entity.h"
 
-u8 func_801B4D18(void) {
-    u8 unkState;
-    Entity* entity;
+REDACTED
+REDACTED
+REDACTED
 
     MoveEntity();
     FallEntity();
 
     entity = g_CurrentEntity;
-
-    if (unkState & 1) {
+REDACTED
+REDACTED
         entity->velocityY = 0;
-    }
-
-    return unkState;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 #include "../unk_collision_func3.h"
 
 INCLUDE_ASM("st/st0/nonmatchings/34908", func_801B4FD4);
@@ -124,9 +124,9 @@ void func_801B57D0(u16 params) {
         DestroyEntity(g_CurrentEntity);
         return;
     }
-    current = g_CurrentEntity;
+REDACTED
     g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = EntityExplosion;
+REDACTED
     g_CurrentEntity->drawFlags = 0;
     current->params = params;
     current->animCurFrame = 0;

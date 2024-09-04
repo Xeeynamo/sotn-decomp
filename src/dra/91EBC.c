@@ -18,17 +18,17 @@ void MuteCd(void) {
 
 void UnMuteCd(void) {
     g_MuteCd = 0;
-    D_8013B694++;
+REDACTED
 }
 
 s32 func_80131F28(void) { return D_80138F7C; }
 
-u16 func_80131F38(void) {
+REDACTED
     if (g_SeqPlayingId == 0) {
         return 0;
     }
     return g_SeqPlayingId | 0x200;
-}
+REDACTED
 
 bool func_80131F68(void) {
     if (D_8013B61C == 0) {
@@ -38,7 +38,7 @@ bool func_80131F68(void) {
 }
 
 s16 GetCdVolume(void) { return g_CdVolume; }
-
+REDACTED
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
 void func_80131FCC(void) {
@@ -61,30 +61,30 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
             CdControl(CdlNop, 0, 0);
             D_8013B680 = 2;
             return D_8013B680;
-        }
+REDACTED
     } else if (*g_CdCommandResult & CdlStatShellOpen ||
                *g_CdCommandResult & CdlStatSeekError) {
-        CdControl(CdlNop, 0, 0);
-        D_8013B680 = 2;
-        return D_8013B680;
+REDACTED
+REDACTED
+REDACTED
     }
 
     if (g_CdCommandStatus == CdlComplete) {
-        if (CdControl(com, param, result)) {
-            D_8013B680 = 0;
-            return D_8013B680;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     D_8013B680 = 1;
-    return D_8013B680;
-}
-
+REDACTED
+REDACTED
+REDACTED
 void SetMaxVolume(void) {
-    g_volumeL = 127;
-    g_volumeR = 127;
-    SsSetMVol(g_volumeL, g_volumeR);
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 void InitSoundVars3(void) {
     s32 i;
@@ -180,29 +180,29 @@ void SetCdVolume(s8 s_num, s16 arg1, s16 arg2) {
 }
 
 void SetMonoStereo(u8 soundMode) {
-    CdlATV audioVolume;
-
-    switch (soundMode) {
-    case MONO_SOUND:
-        if (D_801390A8 != 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             SsSetMono();
-            audioVolume.val2 = 128; // CD (R) --> SPU (R)
-            audioVolume.val0 = 128; // CD (L) --> SPU (L)
-            audioVolume.val3 = 128; // CD Right sound transferred to left
-            audioVolume.val1 = 128; // CD Left sound transferred to right
-            CdMix(&audioVolume);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_SfxVolumeMultiplier = 108;
-            D_801390A8 = 0;
-        }
-        break;
-    case STEREO_SOUND:
-        if (D_801390A8 != 1) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             SsSetStereo();
-            audioVolume.val2 = 224; // CD (R) --> SPU (R)
-            audioVolume.val0 = 224; // CD (L) --> SPU (L)
-            audioVolume.val3 = 0;
-            audioVolume.val1 = 0;
-            CdMix(&audioVolume);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_SfxVolumeMultiplier = 127;
             D_801390A8 = 1;
         }
@@ -215,8 +215,8 @@ void SoundInit(void) {
     SsInitHot();
     SsSetTickMode(SS_TICK60);
     SetMonoStereo(STEREO_SOUND);
-    SsSetReservedVoice(0x10);
-    SsStart();
+REDACTED
+REDACTED
     SsSetTableSize(g_SeqTable, SEQ_TABLE_S_MAX, SEQ_TABLE_T_MAX);
     SsUtSetReverbType(SS_REV_TYPE_STUDIO_B);
     SpuClearReverbWorkArea(SS_REV_TYPE_STUDIO_B);
@@ -351,7 +351,7 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
     if (distance == 0) {
         g_VolL = volume;
         g_VolR = volume;
-    } else {
+REDACTED
         g_VolR = (volume * g_CdVolumeTable[distance * 2 + 144]) >> 7;
         g_VolL = (volume * g_CdVolumeTable[distance * 2 + 145]) >> 7;
     }
@@ -360,8 +360,8 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
     if (voice >= 0 && voice < 24) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, g_VolL, g_VolR);
         SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, g_VolL, g_VolR);
-        return;
-    }
+REDACTED
+REDACTED
 
     // virtual voices 30-33 map to hardware channels 0-4,4-8,8-12,14-18
     switch (voice) {

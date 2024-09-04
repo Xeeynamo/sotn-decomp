@@ -183,9 +183,9 @@ void EntityWeaponAttack(Entity* self) {
 
                     prim->u2 = prim->u3 = 0xC0;
                     prim->v2 = prim->v3 = self->ext.weapon_047.unk88 + 0x40;
-                    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                        prim->b1 = 0;
-                    prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+REDACTED
+REDACTED
+REDACTED
                         prim->b3 = 0xFF;
                     prim->clut = 0x159;
                     prim->tpage = 0x19;

@@ -59,7 +59,7 @@ void EntityRoomForeground(Entity* entity) {
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
-        if (entity->params >= 5) {
+REDACTED
             entity->rotZ = 0x800;
             entity->drawFlags |= 4;
         }
@@ -75,8 +75,8 @@ INCLUDE_ASM("st/st0/nonmatchings/37308", EntityClockTower3D);
 
 INCLUDE_ASM("st/st0/nonmatchings/37308", EntityCutscenePhotograph);
 
-void EntityCutscenePhotographFire(Entity* entity) {
-    switch (entity->step) {
+REDACTED
+REDACTED
     case 0:
         InitializeEntity(D_801805D4);
         entity->animSet = ANIMSET_OVL(7);
@@ -85,7 +85,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->unk6C = 0x40;
         entity->flags &= ~FLAG_UNK_08000000;
-        if (entity->params) {
+REDACTED
             entity->unk6C = 0x10;
             entity->zPriority = 0x1FB;
             entity->drawMode = 0x50;

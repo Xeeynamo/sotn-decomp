@@ -32,7 +32,7 @@ void DestroyEntity(Entity*); // func_0600FFB8h
 // PSX: func_80173C2C
 // SAT: func_060D1040
 void func_80173C2C(Entity* entity) {
-    if (entity->params == 0xF) {
+REDACTED
         D_80174D3C = 1;
     }
     func_0600FFB8(entity); // DestroyEntity
@@ -63,9 +63,9 @@ INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D11DC, func_060D11DC);
 // PSX: func_80173F30
 // SAT: func_060D1224
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 diffx = x - entity->posX.i.hi;
+REDACTED
     // not the same implementation as ratan2
-    return func_0600EE88(-(s16)(y - entity->posY.i.hi), diffx) &
+REDACTED
            0xFFF; // was entity->posY.i.hi
 }
 

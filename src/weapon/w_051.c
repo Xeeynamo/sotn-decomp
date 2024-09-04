@@ -307,12 +307,12 @@ static void EntityWeaponAttack(Entity* self) {
     anim = &D_169000_8017ACD8[subType];
     if (PLAYER.ext.player.anim < anim->frameStart ||
         PLAYER.ext.player.anim >= anim->frameStart + 7 || !g_Player.unk46) {
-        DestroyEntity(self);
-        return;
-    }
-
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->animSet = 10;
         self->palette = 0x110;
         self->unk5A = 100;
@@ -371,12 +371,12 @@ s32 func_ptr_80170004(Entity* self) {
     subType >>= 8;
     anim = &D_169000_8017AD18[subType];
     if (PLAYER.ext.player.anim < 0xD6 || PLAYER.ext.player.anim >= 0xD8) {
-        DestroyEntity(self);
-        return;
-    }
-
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->animSet = 10;
         self->palette = 0x110;
         self->unk5A = 100;

@@ -351,8 +351,8 @@ static s32 func_ptr_80170004(Entity* self) {
     s32 var_v1_2;
 
     maskedParams = self->params & 0x7F00;
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_G4, PrimCount);

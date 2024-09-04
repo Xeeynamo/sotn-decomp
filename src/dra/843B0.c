@@ -179,8 +179,8 @@ void EntityTeleport(Entity* self) {
     }
     selfUnk7C = self->ext.teleport.unk7C;
     selfUnk80 = self->ext.teleport.unk80;
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     prim = &g_PrimBuf[self->primIndex];
     xVar = PLAYER.posX.i.hi;
     yVar = PLAYER.posY.i.hi;
@@ -230,42 +230,42 @@ void EntityTeleport(Entity* self) {
     }
 }
 
-void func_80124A8C(Entity* entity) {
-#ifdef PSY_Q_3_5
-    if (PLAYER.step != 0 ||
-        PLAYER.step_s != 4) { // REAL: Matches with PSY-Q 3.5
-#else
-    if (*(s32*)&PLAYER.step != 0x40000) { // !FAKE: Probably ASPSX
-#endif
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         DestroyEntity(entity);
-        return;
-    }
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->animSet = ANIMSET_DRA(17);
         entity->velocityY = FIX(-0.375);
         SetSpeedX(0x4000);
-        entity->unk5A = 0x50;
-        entity->palette = 0x819F;
+REDACTED
+REDACTED
         entity->anim = D_800AE294;
         entity->flags = FLAG_UNK_100000;
         entity->facingLeft = 0;
-        entity->posY.i.hi -= 16;
+REDACTED
         entity->posX.val += entity->velocityX << 5;
-        entity->step++;
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->posX.val += entity->velocityX;
         entity->posY.val += entity->velocityY;
         if (entity->animFrameDuration < 0) {
             DestroyEntity(entity);
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // dagger thrown when using subweapon
 void EntitySubwpnThrownDagger(Entity* self) {
     Collider collider;
@@ -728,11 +728,11 @@ s32 CheckHolyWaterCollision(s32 baseY, s32 baseX) {
     }
     return 0;
 }
-
-s32 func_80125B6C(s16 arg0, s16 arg1) {
+REDACTED
+REDACTED
     Collider collider;
-    s16 var_a1;
-
+REDACTED
+REDACTED
     if (g_CurrentEntity->velocityX == 0) {
         return 0;
     }
@@ -741,94 +741,94 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
                    g_CurrentEntity->posY.i.hi + arg0, &collider, 0);
     if (g_CurrentEntity->velocityX > 0) {
         var_a1 = collider.unk14;
-    } else {
+REDACTED
         var_a1 = collider.unk1C;
-    }
-
+REDACTED
+REDACTED
     if (collider.effects & EFFECT_UNK_0002) {
-        g_CurrentEntity->posX.i.lo = 0;
-        g_CurrentEntity->posX.i.hi += var_a1;
-        return 2;
-    }
-
-    return 0;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void EntityHolyWater(Entity* entity) {
-    s16 temp3;
-    s32 temp;
-    s32 temp2;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
         entity->animCurFrame = 0x1D;
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->posY.i.hi += 8;
+REDACTED
+REDACTED
         SetSpeedX(0x14000);
         entity->velocityY = FIX(-3.125);
-        func_8011A290(entity);
-        entity->hitboxHeight = 4;
-        entity->hitboxWidth = 4;
+REDACTED
+REDACTED
+REDACTED
         g_Player.D_80072F00[10] = 4;
-        entity->step++;
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->posY.val += entity->velocityY;
         if (entity->velocityY <= 0x3FFFF) {
             entity->velocityY += FIX(0.21875);
-        }
-
+REDACTED
+REDACTED
         temp = CheckHolyWaterCollision(0, 0);
         entity->posX.val += entity->velocityX;
-
+REDACTED
         if (entity->velocityX < 0) {
-            temp3 = -4;
-        } else {
-            temp3 = 4;
-        }
-        temp |= func_80125B6C(-7, temp3);
-
-        if (temp & 2) {
-            temp = 1;
-        } else {
-            temp2 = 1;
-        }
-
-        temp2 = temp & 1;
-        if (temp2 != 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             PlaySfx(SFX_UNK_69A);
             CreateEntFactoryFromEntity(entity, FACTORY(0, 59), 0);
-            entity->ext.generic.unk7C.s = 0x10;
+REDACTED
             entity->animSet = ANIMSET_DRA(0);
-            entity->step = 2;
-        }
-        break;
-
-    case 2:
-        if (!(entity->ext.generic.unk7C.s & 3)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             CreateEntFactoryFromEntity(entity, FACTORY(D_8013841C << 8, 28),
                                        entity->ext.generic.unkB2 << 9);
-            D_8013841C++;
-        }
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
-            entity->ext.generic.unk7C.s = 4;
-            entity->step++;
-        }
-        break;
-
-    case 3:
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             DestroyEntity(entity);
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // Glass breaking effect for holy water. Duplicate of RIC func_80167A70.
 void EntityHolyWaterBreakGlass(Entity* self) {
     Point16 sp10[8];
@@ -1173,7 +1173,7 @@ void EntitySubwpnCrashCross(Entity* self) {
     prim->priority = self->zPriority;
     return;
 }
-
+REDACTED
 // rising blue particles from cross crash
 void EntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
@@ -1408,40 +1408,40 @@ void EntityHellfireNormalFireball(Entity* entity) {
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
         entity->anim = D_800B0798;
-        entity->zPriority = PLAYER.zPriority + 2;
+REDACTED
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(D_800B0830[entity->params]);
         entity->velocityY = D_800B083C[entity->params];
-        entity->ext.generic.unk7C.s = 0x14;
-        func_8011A328(entity, 2);
-        entity->hitboxWidth = 4;
-        entity->hitboxHeight = 4;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->step++;
         break;
 
     case 1:
         if (entity->hitFlags == 0) {
-            entity->ext.generic.unk7C.s--;
-            if ((entity->ext.generic.unk7C.s) == 0) {
-                entity->step++;
-            }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
-            break;
-        }
+REDACTED
+REDACTED
         DestroyEntity(entity);
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
         if (entity->hitFlags != 0) {
             DestroyEntity(entity);
-            break;
-        }
+REDACTED
+REDACTED
         entity->posX.val += entity->velocityX;
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // Entity ID 45. Created by factory blueprint 81.
 // That blueprint is used in ControlBatForm, when step_s is 4.
 // Also, when bat familiar shoots a fireball, the blueprint
@@ -1506,26 +1506,26 @@ void EntityHellfireBigFireball(Entity* entity) {
     case 0:
         if (entity->params != 0) {
             PlaySfx(SFX_UNK_683);
-        }
-
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
-
-        if (entity->params != 0) {
-            entity->posY.i.hi = entity->posY.i.hi + 16;
-        } else {
-            entity->posY.i.hi = entity->posY.i.hi - 4;
-        }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->animSet = ANIMSET_DRA(9);
         entity->rotZ = 0;
         entity->anim = D_800B07C8;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
-        entity->zPriority = PLAYER.zPriority + 2;
+REDACTED
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(-0x10);
-        func_8011A328(entity, 2);
-        entity->hitboxWidth = 8;
-        entity->hitboxHeight = 8;
+REDACTED
+REDACTED
+REDACTED
         entity->step++;
         break;
 
@@ -1533,32 +1533,32 @@ void EntityHellfireBigFireball(Entity* entity) {
         if (entity->animFrameIdx >= 23) {
             if (!(g_GameTimer & 3)) {
                 entity->rotZ += 0x400;
-            }
+REDACTED
             if (entity->velocityX < 0) {
                 entity->velocityX -= FIX(0.09375);
-            } else {
+REDACTED
                 entity->velocityX += FIX(0.09375);
-            }
+REDACTED
             if (!(g_GameTimer & 1) && (rand() & 1)) {
                 CreateEntFactoryFromEntity(entity, FACTORY(0x100, 36), 0);
-            }
+REDACTED
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // circle expands out of player
 void EntityExpandingCircle(Entity* entity) {
     Primitive* prim;
     s32 primIndex;
-
+REDACTED
     if (PLAYER.facingLeft == 0) {
         entity->posX.i.hi = PLAYER.posX.i.hi - 10;
-    } else {
+REDACTED
         entity->posX.i.hi = PLAYER.posX.i.hi + 10;
-    }
+REDACTED
     entity->posY.i.hi = PLAYER.posY.i.hi + 2;
 
     switch (entity->step) {
@@ -1566,8 +1566,8 @@ void EntityExpandingCircle(Entity* entity) {
         primIndex = AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
-            entity->ext.generic.unk7C.s = 22;
-            entity->ext.generic.unk7E.modeU16 = 26;
+REDACTED
+REDACTED
             prim = &g_PrimBuf[entity->primIndex];
             prim->u2 = 64;
             prim->u3 = 127;
@@ -1595,25 +1595,25 @@ void EntityExpandingCircle(Entity* entity) {
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            entity->step++;
-            break;
-        }
+REDACTED
+REDACTED
+REDACTED
         DestroyEntity(entity);
         return;
-
-    case 1:
-        entity->ext.generic.unk7C.s += 2;
-        entity->ext.generic.unk7E.modeU16 += 2;
-        if (entity->ext.generic.unk7C.s >= 0x39) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             DestroyEntity(entity);
-            return;
-        }
-        break;
-
-    default:
-        break;
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     prim = &g_PrimBuf[entity->primIndex];
     prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
     prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
@@ -1636,26 +1636,26 @@ void EntityExpandingCircle(Entity* entity) {
 
 void func_80127CC8(Entity* entity) {
     Primitive* prim;
-    s32 ret;
-
-    if (PLAYER.step != 34) {
+REDACTED
+REDACTED
+REDACTED
         DestroyEntity(entity);
-        return;
-    }
-
-    entity->posX.i.hi = PLAYER.posX.i.hi;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
     switch (entity->step) {
     case 0:
         ret = AllocPrimitives(PRIM_G4, 1);
         entity->primIndex = ret;
-
-        if (ret == -1) {
+REDACTED
+REDACTED
             DestroyEntity(entity);
             g_Player.unk5C = -1;
-            return;
-        }
-
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
@@ -1670,10 +1670,10 @@ void func_80127CC8(Entity* entity) {
         break;
 
     case 1:
-        if (entity->ext.generic.unk7C.s++ >= 0xE) {
+REDACTED
             DestroyEntity(entity);
-            return;
-        }
+REDACTED
+REDACTED
     }
     prim = &g_PrimBuf[entity->primIndex];
     prim->x0 = prim->x2 = entity->posX.i.hi - 3;
@@ -2360,9 +2360,9 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim->y2 = self->posX.i.hi;
             prim->r0 = prim->g0 = prim->b0 = 0xF0;
             i += 1;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -2383,9 +2383,9 @@ void EntityAguneaHitEnemy(Entity* self) {
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -2471,11 +2471,11 @@ void EntityAguneaHitEnemy(Entity* self) {
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
-            prim = prim->next;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->step_s = 0;
         self->step += 1;
         break;
@@ -2492,10 +2492,10 @@ void EntityAguneaHitEnemy(Entity* self) {
         }
         if (var_s2 != 0) {
             prim = self->ext.prim;
-            while (prim != NULL) {
+REDACTED
                 prim->drawMode = DRAW_HIDE;
-                prim = prim->next;
-            }
+REDACTED
+REDACTED
             DestroyEntity(self);
             break;
         }
@@ -2735,7 +2735,7 @@ void func_80129864(Entity* self) {
     self->ext.et_80129864.unk86 += 1;
     self->ext.et_80129864.unk86 = self->ext.et_80129864.unk86 % 8;
 }
-
+REDACTED
 // opens hole in backround and spirit comes out (ID 0x40)
 void EntitySummonSpirit(Entity* self) {
     Primitive* prim;

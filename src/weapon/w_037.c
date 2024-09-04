@@ -335,7 +335,7 @@ static void func_ptr_80170008(Entity* self) {
 
     switch (self->step) {
     case 0:
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+REDACTED
         if (collider.effects & EFFECT_SOLID) {
             DestroyEntity(self);
             return;

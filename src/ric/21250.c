@@ -466,22 +466,22 @@ static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (debug_wait_info_timer++ & 4) {
-        FntPrint("\no\n");
-    }
-    DrawSync(0);
-    VSync(0);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-    FntFlush(-1);
-}
-
+REDACTED
+REDACTED
+REDACTED
 static void DebugInputWait(const char* msg) {
-    while (PadRead(0))
+REDACTED
         DebugShowWaitInfo(msg);
-    while (PadRead(0) == 0)
+REDACTED
         DebugShowWaitInfo(msg);
-}
-
+REDACTED
+REDACTED
 void func_8015E484(void) {
     s32 i;
     s32 collision = 0;
@@ -545,15 +545,15 @@ void func_8015E484(void) {
     }
 }
 
-void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
+REDACTED
     s32 temp = D_80154604[0].x;
 
     arg0->unk14 = temp;
     arg0->unk1C = temp = D_80154604[0].y;
     arg0->unk18 = D_801545F4[1].y - 1;
     arg0->unk20 = D_801545E4[1].y + 1;
-}
-
+REDACTED
+REDACTED
 void func_8015E800(void) {
     Collider sp10;
     s32 temp_a0;
@@ -726,7 +726,7 @@ void func_8015E800(void) {
         }
     }
 }
-
+REDACTED
 void func_8015EE28(void) {
     Collider collider;
     s32 temp_fp;
@@ -899,7 +899,7 @@ void func_8015EE28(void) {
         }
     }
 }
-
+REDACTED
 void func_8015F414(void) {
     Collider collider;
     s32 temp_s0;
@@ -972,7 +972,7 @@ void func_8015F414(void) {
         }
     }
 }
-
+REDACTED
 void func_8015F680(void) {
     Collider collider;
     s32 temp_s0;
@@ -1047,19 +1047,19 @@ void func_8015F680(void) {
         }
     }
 }
-
+REDACTED
 Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
-    s16 i;
-
-    for (i = start; i < end; i++, entity++) {
+REDACTED
+REDACTED
+REDACTED
         if (entity->entityId == E_NONE) {
             return entity;
-        }
-    }
-    return NULL;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
@@ -1070,7 +1070,7 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     }
     return NULL;
 }
-
+REDACTED
 static s32 D_80174F80[11];
 static void func_8015F9F0(Entity* entity) {
     s32 i;
@@ -1091,7 +1091,7 @@ static void func_8015F9F0(Entity* entity) {
         }
     }
 }
-
+REDACTED
 static u8 D_80174FAC;
 STATIC_PAD_BSS(3);
 static u8 D_80174FB0;
@@ -1100,23 +1100,23 @@ static u8 D_80174FB4;
 STATIC_PAD_BSS(3);
 static u8 D_80174FB8;
 STATIC_PAD_BSS(3);
-void func_8015FA5C(s32 arg0) {
-    D_80174FAC = D_80154674[arg0][0];
-    D_80174FB0 = D_80154674[arg0][1];
-    D_80174FB4 = D_80154674[arg0][2];
-    D_80174FB8 = D_80154674[arg0][3];
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void RicSetSubweaponParams(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
 
     if ((g_Player.D_80072F00[PL_T_INVINCIBLE]) != NULL) {
         attack = subwpn->attack * 2;
-    } else {
+REDACTED
         attack = subwpn->attack;
-    }
-
+REDACTED
+REDACTED
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
     entity->hitboxState = subwpn->hitboxState;
@@ -1125,9 +1125,9 @@ void RicSetSubweaponParams(Entity* entity) {
     entity->hitEffect = subwpn->hitEffect;
     entity->entityRoomIndex = subwpn->entityRoomIndex;
     entity->attack = g_api.func_800FD664(entity->attack);
-    func_8015F9F0(entity);
-}
-
+REDACTED
+REDACTED
+REDACTED
 // We're playing as Richter and we used a subweapon (normal or crash)
 s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
     s32 pad[2]; // Needed so stack pointer moves properly
@@ -1155,9 +1155,9 @@ s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
     }
     return -1;
 }
-
+REDACTED
 // Corresponding DRA function is func_80119E78
-u8 D_801548F4[6][8] = {
+REDACTED
     0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60, 0x10, 0x50, 0x20, 0x50,
     0x10, 0x60, 0x20, 0x60, 0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50,
     0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 0x78, 0x30, 0x80, 0x30,
@@ -1209,7 +1209,7 @@ s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
 
     return ret;
 }
-
+REDACTED
 // Corresponding DRA function is func_80119F70
 static Point16 D_80174FBC[16];
 void func_8015FEA8(Entity* entity) {
@@ -1220,15 +1220,15 @@ void func_8015FEA8(Entity* entity) {
     s16 hitboxY;
     s16 hitboxX;
     s32 temp;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         entity->primIndex =
             (s16)g_api.AllocPrimitives(PRIM_GT4, LEN(D_80174FBC));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
-            return;
-        }
+REDACTED
+REDACTED
         entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
@@ -1252,14 +1252,14 @@ void func_8015FEA8(Entity* entity) {
             }
             prim = prim->next;
         }
-        entity->step++;
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (!(g_Player.unk0C & 0x10000)) {
             DestroyEntity(entity);
-            return;
-        }
+REDACTED
+REDACTED
     }
 
     prim = &g_PrimBuf[entity->primIndex];
@@ -1287,8 +1287,8 @@ void func_8015FEA8(Entity* entity) {
     }
     return;
 }
-
-// same as DRA/func_8011F074
+REDACTED
+REDACTED
 static AnimationFrame anim_80154924[] = {
     {2, FRAME(1, 0)},  {2, FRAME(2, 0)},
     {2, FRAME(3, 0)},  {2, FRAME(4, 0)},
@@ -1298,19 +1298,19 @@ static AnimationFrame anim_80154924[] = {
     {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
     {2, FRAME(13, 0)}, A_END};
 static s32 D_80174FFC;
-void func_801601DC(Entity* entity) {
-    s16 posX;
-    s16 posY;
-
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
-        entity->unk5A = 0x79;
+REDACTED
         entity->animSet = ANIMSET_DRA(14);
-        entity->zPriority = PLAYER.zPriority + 2;
-        entity->palette = 0x819F;
-
-        if (D_80174FFC & 1) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             entity->drawMode = 0x70;
         } else {
             entity->drawMode = DRAW_TPAGE;
@@ -1318,32 +1318,32 @@ void func_801601DC(Entity* entity) {
         entity->rotY = 0x40;
         entity->rotX = 0x40;
         entity->anim = anim_80154924;
-        D_80174FFC++;
-        entity->unk6C = 0xFF;
+REDACTED
+REDACTED
         entity->drawFlags =
             FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
-        posX = 10;
-        posY = 15;
-        entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
-        entity->posX.i.hi = entity->posX.i.hi - posX + (rand() % 20);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->velocityY = -0x6000 - (rand() & 0x3FFF);
-        entity->step++;
-        break;
-
-    case 1:
-        if (entity->unk6C >= 17) {
-            entity->unk6C += 248;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->posY.val += entity->velocityY;
         entity->rotX += 8;
         entity->rotY += 8;
-        if (entity->animFrameDuration < 0) {
+REDACTED
             DestroyEntity(entity);
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 static void RicEntityDummy(Entity* self) {}
 
 void func_801603BC(void) {}
@@ -1558,17 +1558,17 @@ void RicUpdatePlayerEntities(void) {
         }
     }
 }
-
+REDACTED
 // Similar to the version in DRA but with some logic removed
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
-    /**
-     * arg2 is unused, but needed to match other functions that call
-     * this function, probably part of the code for a debug build
-     */
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     Entity* entity = RicGetFreeEntity(8, 16);
-
-    if (entity != NULL) {
+REDACTED
+REDACTED
         DestroyEntity(entity);
         entity->entityId = E_ENTITYFACTORY;
         // the parent pointer must align for anything the factory creates
@@ -1581,9 +1581,9 @@ Entity* RicCreateEntFactoryFromEntity(
         entity->ext.factory.unkA0 = (factoryParams >> 8) & 0xFF00;
         if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
-        }
-    } else {
-        return NULL;
-    }
-    return entity;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

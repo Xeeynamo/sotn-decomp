@@ -19,7 +19,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3FC */ (PfnEntityUpdate)EntitySoulStealOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
     /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
-    /* 408 */ (PfnEntityUpdate)EntityEquipItemDrop,
+REDACTED
     /* 40C */ (PfnEntityUpdate)EntityRelicOrb,
     /* 410 */ (PfnEntityUpdate)EntityHeartDrop,
     /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,

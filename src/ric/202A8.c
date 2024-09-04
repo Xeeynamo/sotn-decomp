@@ -1,66 +1,66 @@
-
-#include "ric.h"
-
+REDACTED
+REDACTED
+REDACTED
 void RicHandleHighJump(void) {
-    bool loadAnim = 0;
-    s32 temp;
-
+REDACTED
+REDACTED
+REDACTED
     FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
-    FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
+REDACTED
     g_Player.pl_high_jump_timer++;
-
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
             if (!PLAYER.facingLeft) {
                 temp = g_Player.padPressed & PAD_RIGHT;
-            } else {
+REDACTED
                 temp = g_Player.padPressed & PAD_LEFT;
-            }
-            if (temp == 0) {
+REDACTED
+REDACTED
                 RicDecelerateX(0x1000);
-            }
-        } else {
+REDACTED
+REDACTED
             RicDecelerateX(0x1000);
-        }
-
+REDACTED
+REDACTED
         if (g_Player.pl_vram_flag & 2) {
-            func_80158B04(3);
+REDACTED
             g_Player.pl_high_jump_timer = 0;
-            PLAYER.step_s = 2;
+REDACTED
         } else if (g_Player.pl_high_jump_timer >= 0x1D) {
-            PLAYER.step_s = 1;
+REDACTED
             PLAYER.velocityY = -0x60000;
-        }
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Player.pl_vram_flag & 2) {
-            PLAYER.step_s = 2;
-            func_80158B04(3);
+REDACTED
+REDACTED
             g_Player.pl_high_jump_timer = 0;
-        } else {
+REDACTED
             PLAYER.velocityY += 0x6000;
             if (PLAYER.velocityY > 0x8000) {
-                loadAnim = true;
-            }
-        }
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Player.pl_high_jump_timer >= 5) {
-            loadAnim = true;
-        }
-        break;
-    }
-
-    if (loadAnim) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         RicSetAnimation(D_80155534);
         RicSetStep(PL_S_JUMP);
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 // Same function in DRA is func_8010D59C
 void func_8015C4AC(void) {
     byte stackpad[40];
@@ -113,7 +113,7 @@ void func_8015C4AC(void) {
         g_Entities[1].entityId = 0;
     }
 }
-
+REDACTED
 // Extremely similar to func_8010D800
 void func_8015C6D4(void) {
     byte pad[0x28];
@@ -170,8 +170,8 @@ void func_8015C6D4(void) {
         plDraw++;
     }
 }
-
+REDACTED
 void RicSetStep(int step) {
-    PLAYER.step = step;
-    PLAYER.step_s = 0;
+REDACTED
+REDACTED
 }

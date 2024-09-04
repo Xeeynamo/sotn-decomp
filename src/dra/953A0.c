@@ -1,8 +1,8 @@
-#include "dra.h"
+REDACTED
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
-
+REDACTED
+REDACTED
+REDACTED
 u8 D_800C097C[] = {
     0x00, 0x00, 0x3C, 0x00, 0x3C, 0x01, 0x00, 0x00, 0x38, 0x00,
     0x78, 0x08, 0x00, 0x00, 0x3A, 0x00, 0x32, 0x01, 0xFF,
@@ -1141,41 +1141,41 @@ u8* g_SfxScripts[] = {
 
 void ExecCdSoundCommands(void) {
     if (g_CdSoundCommandQueuePos == 0)
-        return;
-
+REDACTED
+REDACTED
     switch (g_CdSoundCommandQueue[0]) {
     case CD_SOUND_COMMAND_FADE_OUT_2:
         CdFadeOut2();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_FADE_OUT_1:
         CdFadeOut1();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_START_XA:
         CdSoundCommand4();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_6:
         CdSoundCommand6();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_8:
         CdSoundCommand8();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_10:
         CdSoundCommand10();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_12:
         CdSoundCommand12();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_14:
         CdSoundCommand14();
-        break;
+REDACTED
     case CD_SOUND_COMMAND_16:
         g_CdSoundCommand16 = 0;
-    case 0:
+REDACTED
         AdvanceCdSoundCommandQueue();
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void PlaySfxScript(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
     u16 volumeMod;
@@ -1208,7 +1208,7 @@ void PlaySfxScript(
     g_CurrentSfxScriptSfxId2[channel_group] = arg0;
     g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
 }
-
+REDACTED
 // channel group is 0-3 so play on one of these pairs:
 // (12,13),(14,15),(16,17),(18,19)
 void KeyOn12_19(
@@ -1218,14 +1218,14 @@ void KeyOn12_19(
         // channel_group 0 -> 12, 13 etc.
         g_KeyOffChannels |= (1 << ((channel_group + 6) * 2)) +
                             (1 << (((channel_group + 6) * 2) + 1));
-    }
+REDACTED
     func_80132A04(
         (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
         g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
     g_CurrentSfxId12_19[channel_group] = arg0;
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
-}
-
+REDACTED
+REDACTED
 void func_8013572C(s16 arg0, u16 volume, s16 distance) {
     s32 i;
 
@@ -1342,17 +1342,17 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
         }
     }
 }
-
+REDACTED
 s16 IncrementRingBufferPos(s16 arg0) {
-    arg0++;
-
+REDACTED
+REDACTED
     if (arg0 == LEN(g_SfxRingBuffer)) {
-        arg0 = 0;
-    }
-
-    return arg0;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void ExecSfx(void) {
     s16 sfxBufPos;
     s32 isFound;
@@ -1380,7 +1380,7 @@ void ExecSfx(void) {
         g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
     }
 }
-
+REDACTED
 void func_80135D8C(void) {
     s32 i;
     s8* temp_t2;
@@ -1459,7 +1459,7 @@ void func_80135D8C(void) {
         }
     }
 }
-
+REDACTED
 void func_80136010(void) {
     s16* var_t4;
     s32 i;
@@ -1522,25 +1522,25 @@ void func_80136010(void) {
         g_SfxScriptUnk6[3] = 0;
     }
 }
-
-void func_801361F8(void) {
+REDACTED
+REDACTED
     if (g_SoundInitialized != 0) {
-        func_80136010();
+REDACTED
         ExecSfx();
-        func_80135D8C();
+REDACTED
         ExecSoundCommands();
-        func_80133FCC();
+REDACTED
         ExecCdSoundCommands();
         SpuSetKey(SPU_OFF, g_KeyOffChannels);
         g_KeyOffChannels = 0;
-        func_80131FCC();
-
+REDACTED
+REDACTED
         if (g_MuteCd) {
             SetCdVolume(0, 0, 0);
-        } else {
+REDACTED
             SetCdVolume(0, g_CdVolume, g_CdVolume);
-        }
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void nullsub_10(void) {}

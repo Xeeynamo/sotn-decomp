@@ -147,10 +147,10 @@ Primitive* func_801A2C9C(Primitive* prim, u8* model, u16* arg2) {
             LOW(prim->x3) = *SPAD(model[3]);
             prim->drawMode = DRAW_UNK02 | DRAW_COLORS;
             prim->r0 = prim->g0 = prim->b0 = arg2[1];
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
-            prim = prim->next;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             model += 4;
         }
     }
@@ -166,10 +166,10 @@ void Entity3DHouseSpawner(Entity* self) {
         dataPtr = D_801815E8;
         // It appears that the data here will hit an FFFF after 5 cycles.
         while (*dataPtr != -1) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity == NULL) {
-                break;
-            }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             CreateEntityFromCurrentEntity(E_ID_BACKGROUND_HOUSE, newEntity);
             newEntity->posX.i.hi = *dataPtr++ - g_Tilemap.scrollX.i.hi;
             newEntity->posY.i.hi = *dataPtr++ - g_Tilemap.scrollY.i.hi;
@@ -196,9 +196,9 @@ void Entity3DBackgroundHouse(Entity* self) {
     SVECTOR** vertices;
     s32* scratchpad;
     u8* model;
-
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         InitializeEntity(g_EInitGeneric);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         // Usually this can be if primIndex == -1 DestroyEntity but nope

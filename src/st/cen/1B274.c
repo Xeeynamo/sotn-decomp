@@ -18,7 +18,7 @@ void EntityUnkId08(Entity* entity) {
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
-        if (entity->params >= 5) {
+REDACTED
             entity->rotZ = 0x800;
             entity->drawFlags = (u8)(entity->drawFlags | FLAG_DRAW_ROTZ);
         }

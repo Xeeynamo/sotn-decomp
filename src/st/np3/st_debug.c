@@ -3,7 +3,7 @@
 void func_801B246C(Entity* self) {
     ObjInit2* objInit = &D_80180C10[self->params];
 
-    if (self->step == 0) {
+REDACTED
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;

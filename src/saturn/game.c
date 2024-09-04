@@ -374,10 +374,10 @@ void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
 
 // SAT: func_060705A0
-void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
+REDACTED
 
 // SAT: func_060705B8
-s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
+REDACTED
 
 // SAT: func_060705CC
 u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
@@ -692,8 +692,8 @@ void MoveEntity(Entity* entity) {
 }
 
 void func_06079BB4(s32* param_1) {
-    s32* temp = (s32*)*param_1;
-
+REDACTED
+REDACTED
     if (temp != 0) {
         temp[0x14 / 4] = param_1[1];
         temp[0x18 / 4] = param_1[2];
@@ -701,7 +701,7 @@ void func_06079BB4(s32* param_1) {
 }
 
 void func_06079BCC(s32* param_1) {
-    s32* temp = (s32*)*param_1;
+REDACTED
     if (temp != 0) {
         param_1[1] = temp[0x14 / 4];
         param_1[2] = temp[0x18 / 4];
@@ -722,55 +722,55 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A608, func_0607A608);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
 
-// SAT func_0607A9F8
-// Original name: _hkyori_search
+REDACTED
+REDACTED
 // Absolute distance from the specified entity to the player in the X Axis
 s32 GetDistanceToPlayerX(Entity* self) {
-    s16 xDistance = self->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (xDistance < 0) {
-        xDistance = -xDistance;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     }
-    return xDistance;
+REDACTED
 }
 
-// SAT func_0607AA1C
+REDACTED
 // Absolute distance from the specified entity to the player in the Y Axis
 s32 GetDistanceToPlayerY(Entity* self) {
-    s16 yDistance = self->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     }
-    return yDistance;
+REDACTED
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAA4, func_0607AAA4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
-
-// SAT func_0607AAF4
-/*
- * Returns the player's side position relative to g_CurrentEntity
- * 0 = Player is on the right side
- * 1 = Player is on the left side
- * 2 = Player is above
- */
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 s32 GetSideToPlayer(Entity* self) {
-    Entity* player = &PLAYER;
-    s16 side = 0;
-
-    if (self->posX.val > player->posX.val) {
-        side = 1;
-    }
-
-    if (self->posY.val > player->posY.val) {
-        side |= 2;
-    }
-    return side;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB1C, func_0607AB1C);
 
 // _bicyousei_dir_0
@@ -806,9 +806,9 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B104, func_0607B104);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B134, func_0607B134);
 
 // SAT: func_0607B184
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
+REDACTED
+REDACTED
+REDACTED
     while (current < end) {
         if (current->unk74 == 0) { // not entityId?
             DestroyEntity(current);
@@ -822,16 +822,16 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B1C8, func_0607B1C8);
 
 // SAT: func_0607B218
-void func_801C58A4(s32 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
+REDACTED
+REDACTED
+REDACTED
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 // SAT: func_0607B240
-void func_801C58C4(s32 step_s) {
-    g_CurrentEntity->step_s = step_s;
+REDACTED
+REDACTED
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -861,7 +861,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
 
 void func_0607B604(s32* param_1) {
-    s32* temp = (s32*)*param_1;
+REDACTED
     temp[0x14 / 4] = param_1[1];
     temp[0x18 / 4] = param_1[2];
 }

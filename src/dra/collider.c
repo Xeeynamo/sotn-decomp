@@ -1,6 +1,6 @@
 #include "dra.h"
 
-typedef enum {
+REDACTED
     // most common block type
     COLLISION_TYPE_SOLID = 0x03,
 
@@ -27,7 +27,7 @@ typedef enum {
 
     // water
     COLLISION_TYPE_WATER = 0xED
-} CollisionTypes;
+REDACTED
 
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     Collider sp10;

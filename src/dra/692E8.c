@@ -478,10 +478,10 @@ void func_8010A234(s32 arg0) {
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
         if (g_Player.pl_vram_flag & 1) {
-            func_8010E570(0);
-        } else {
-            func_8010E7AC();
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_Player.unk0C &= ~0x01000000;
         func_80111CC0();
         if (arg0 != 0) {

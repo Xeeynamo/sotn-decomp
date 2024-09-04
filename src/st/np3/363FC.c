@@ -1,15 +1,15 @@
-#include "np3.h"
-
+REDACTED
+REDACTED
 // Make a EntityWargExplosionPuffOpaque
-void func_801B653C(void) {
-    Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-    s32 i;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             // Make a EntityWargExplosionPuffOpaque
             CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
             entity->params = 2;
@@ -20,7 +20,7 @@ void func_801B653C(void) {
     }
 }
 
-void EntityWargExplosionPuffOpaque(Entity* self) {
+REDACTED
     Unkstruct_80180FE0* obj;
     s32 velocityX;
     s32 velocityY;
@@ -35,11 +35,11 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
     case 0:
         InitializeEntity(g_InitializeEntityData0);
         params = self->params & 0xF;
-        obj = &D_8018129C[params];
-        self->palette = obj->palette + 0xD0;
+REDACTED
+REDACTED
         self->drawMode = obj->drawMode;
-        self->animSet = obj->animSet;
-        self->unk5A = obj->unk2;
+REDACTED
+REDACTED
         self->ext.wargpuff.unk80 = obj->unk8;
         self->step = params + 1;
 
@@ -52,21 +52,21 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->palette = 0x819F;
             self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
-        }
-        break;
-
-    case 1:
-        MoveEntity();
-        self->velocityY = FIX(1.0);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) != 0) {
-            switch (self->step_s) {
-            case 0:
+REDACTED
+REDACTED
                 self->drawFlags = FLAG_DRAW_UNK8;
                 self->unk6C = 0x80;
                 self->step_s++;
@@ -80,34 +80,34 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
             case 2:
                 self->unk6C += 0xFC;
-                break;
-            }
-        } else {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 3:
-        if (self->step_s == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->drawFlags |= 4;
             switch (self->ext.wargpuff.unk88) {
-            case 1:
+REDACTED
                 if (self->ext.wargpuff.unk89 >= 0x4) {
                     self->ext.wargpuff.unk89 += 0xFD;
                     self->ext.wargpuff.unk84 -= 0x800;
-                }
-                break;
-
-            case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
                 self->ext.wargpuff.unk84 =
                     (u16)self->ext.wargpuff.unk84 +
                     ((u8)self->ext.wargpuff.unk89 * 0xC0);
-                break;
-            }
+REDACTED
+REDACTED
             self->ext.wargpuff.unk84 = self->ext.wargpuff.unk84 & 0xFFF;
             self->rotZ = self->ext.wargpuff.unk84 & 0xFFF;
             temp_s0 = self->ext.wargpuff.unk89 * 0x140;
-            temp_s0 /= 28;
+REDACTED
             self->velocityX = temp_s0 * rsin(self->ext.wargpuff.unk84);
             self->velocityY = -(temp_s0 * rcos(self->ext.wargpuff.unk84));
             self->step_s++;
@@ -132,10 +132,10 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
         }
         MoveEntity();
         if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
-        break;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     case 4:
         if (self->step_s == 0) {
             rnd = Random();
@@ -143,12 +143,12 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->facingLeft = rnd & 1;
             self->rotX = 0xC0;
             self->drawFlags |= 1;
-            self->step_s++;
-        }
-        MoveEntity();
+REDACTED
+REDACTED
+REDACTED
         if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

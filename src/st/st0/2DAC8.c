@@ -3,7 +3,7 @@
 
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
-    Entity* entity = g_CurrentEntity;
+REDACTED
     s16 temp_v1 = entity->posY.i.hi + arg0;
 
     if (temp_v1 >= unk) {
@@ -74,7 +74,7 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
         g_ClutIds[arg2] = GetClut(bufRect.x, bufRect.y);
     }
 }
-
+REDACTED
 void EntityDraculaFinalForm(Entity* self) {
     byte stackpad[56];
     Entity* temp_s2;
@@ -185,7 +185,7 @@ void EntityDraculaFinalForm(Entity* self) {
         case 1:
             if (AnimateEntity(D_80180AB0, self) == 0) {
                 SetSubStep(2);
-            }
+REDACTED
             if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(0.5);
@@ -541,16 +541,16 @@ void EntityDraculaFinalForm(Entity* self) {
             if (primIndex == -1) {
                 g_GameEngineStep = 0xA;
                 g_MenuStep = 0;
-                return;
-            }
+REDACTED
+REDACTED
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             prim->r0 = prim->g0 = prim->b0 = 0;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x100;
             prim->y0 = prim->y1 = 0;
@@ -561,9 +561,9 @@ void EntityDraculaFinalForm(Entity* self) {
         case 6:
             prim = self->ext.prim;
             prim->g0 = prim->b0 = prim->r0 = prim->r0 + 0x18;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             if (prim->r0 >= 0x81) {
                 self->step_s++;
             }
@@ -588,16 +588,16 @@ void EntityDraculaFinalForm(Entity* self) {
         }
         break;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
+REDACTED
+REDACTED
             if (self->params != 0) {
                 return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s != 0) {
                 return;
@@ -611,14 +611,14 @@ void EntityDraculaFinalForm(Entity* self) {
     }
 }
 
-void EntityDraculaMegaFireball(Entity* self) {
-    s16 angle;
-
-    if (self->step == 0) {
-        InitializeEntity(D_80180610);
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
-                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        if (self->params == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             angle = self->rotZ;
             self->rotY = 0x80;
             self->rotX = 0x80;
@@ -626,94 +626,94 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->rotZ = 0x1C0 - angle;
             if (self->facingLeft != 0) {
                 self->velocityX = rcos(angle) * 0x60;
-            } else {
+REDACTED
                 self->velocityX = -(rcos(angle) * 0x60);
-            }
+REDACTED
             self->velocityY = rsin(angle) * 0x60;
-        }
-    }
-    if (self->params != 0) {
-        if (AnimateEntity(D_80180BA0, self) == 0) {
-            DestroyEntity(self);
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Timer & 1) {
-            self->animCurFrame = 0;
-        }
-    } else {
+REDACTED
+REDACTED
+REDACTED
         if (self->rotX < 0x100) {
             self->rotX = self->rotY = self->rotY + 0x10;
-        }
-        AnimateEntity(D_80180BB8, self);
-        MoveEntity();
-    }
-}
-
-void EntityDraculaRainAttack(Entity* self) {
-    Entity* newEntity;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     s32 velY;
     s32 velX;
-    s16 angle;
-    s32 i;
-
+REDACTED
+REDACTED
+REDACTED
     if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
+REDACTED
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->params = 2;
-        }
-        DestroyEntity(self);
-        return;
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_8018061C);
-        if (self->params != 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->hitboxState = 0;
-            self->animCurFrame = 0x59;
+REDACTED
             velX = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + 0x900;
+REDACTED
             self->velocityX = velX * rcos(angle);
             velY = velX * rsin(angle);
-            self->step = 3;
+REDACTED
             self->velocityY = velY;
-            break;
-        }
+REDACTED
+REDACTED
         self->velocityY = FIX(4);
-
-    case 1:
-        MoveEntity();
-        AnimateEntity(D_80180BCC, self);
-        if (func_801ADAC8(0x14) != 0) {
-            SetStep(2);
-        }
-        break;
-
-    case 2:
-        if (AnimateEntity(D_80180BDC, self) == 0) {
-
-            for (i = 0; i < 4; i++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x22, self, newEntity);
-                    newEntity->params = 1;
-                    newEntity->posY.i.hi += 12;
-                }
-            }
-            DestroyEntity(self);
-        }
-        break;
-
-    case 3:
-        MoveEntity();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->velocityY += FIX(0.125);
-        if (self->posY.i.hi >= 0xF1) {
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_801AF380(void) {
     Primitive* prim;
     s16* var_t0;
@@ -787,7 +787,7 @@ void func_801AF380(void) {
         D_801BEB64[i].y = (*var_t0++ - 0x53) << 0x10;
     }
 }
-
+REDACTED
 void func_801AF6D0(void) {
     s16* var_a0;
     s16* var_a1;
@@ -828,10 +828,10 @@ void func_801AF774(Entity* self) {
     s32 xBase;
     s32 yBase;
     inline s32 add(a, b) { return a + b; }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_801805E0);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->hitboxState = 0;
         self->animCurFrame = 0;
         self->drawMode |= (DRAW_TPAGE | 0x20);
@@ -864,9 +864,9 @@ void func_801AF774(Entity* self) {
             prim->y0 = prim->y1 = self->posY.i.hi - 0x25;
             prim->y2 = prim->y3 = self->posY.i.hi + 0x5B;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
             prim->priority = 0xA8;
             prim = prim->next;
@@ -990,9 +990,9 @@ void func_801AF774(Entity* self) {
             prim->g0 = var_t0;
             prim->r0 = var_t0;
 
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim = prim->next;
         }
         var_t0 = (u16)self->ext.et_801AF774.unk8C >> 8;
@@ -1022,9 +1022,9 @@ void func_801AF774(Entity* self) {
             var_a2_3++;
 
             prim->r0 = prim->g0 = prim->b0 = temp_t0;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
             prim = prim->next;
         }
         self->ext.et_801AF774.unk8C =

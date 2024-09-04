@@ -25,17 +25,17 @@ static void DebugShowWaitInfo(const char* msg) {
     if (D_4A000_8017CC1C++ & 4) {
         FntPrint("\no\n");
     }
-    DrawSync(0);
-    VSync(0);
+REDACTED
+REDACTED
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-    FntFlush(-1);
-}
-
+REDACTED
+REDACTED
+REDACTED
 static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
-    while (!PadRead(0))
+REDACTED
         DebugShowWaitInfo(msg);
 }
 
@@ -195,8 +195,8 @@ s32 func_ptr_80170004(Entity* self) {
     }
     FntPrint("charah:%02x\n", self->animSet);
     FntPrint("oya_ptr:%02x\n", self->ext.weapon.parent);
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->palette = PAL_OVL(0x194);

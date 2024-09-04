@@ -56,7 +56,7 @@ void EntityRoomForeground(Entity* entity) {
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
-        if (entity->params >= 5) {
+REDACTED
             entity->rotZ = 0x800;
             entity->drawFlags |= 4;
         }
@@ -160,17 +160,17 @@ void func_801CC90C(Entity* arg0) {
     s16 temp_v0;
 
     temp_v0 = GetDistanceToPlayerX();
-    temp_v1 = arg0->ext.generic.unk84.S16.unk2;
+REDACTED
     if (temp_v1 != 0) {
 
         if ((u32)(temp_v0) < 0x60) {
             temp_v0_2 = temp_v1 - 2;
-            arg0->ext.generic.unk84.S16.unk2 = temp_v0_2;
+REDACTED
             if (temp_v0_2 < 0) {
-                arg0->ext.generic.unk84.S16.unk2 = 0;
+REDACTED
             }
         } else {
-            arg0->ext.generic.unk84.S16.unk2 = (temp_v1 - 1);
+REDACTED
         }
     }
 }
@@ -272,21 +272,21 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
 
 void func_801CF58C(Entity* self) {
     self->velocityX = 0;
-    self->ext.generic.unk84.S16.unk2 = 0x100;
-    SetStep(6);
+REDACTED
+REDACTED
     g_api.PlaySfx(SE_WARG_GROWL);
-    self->ext.generic.unk80.modeS16.unk0 = 0x20;
+REDACTED
 }
 
 void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
     if (self->facingLeft == GetSideToPlayer()) {
-        SetStep(5);
+REDACTED
         return;
     }
 
-    if (self->ext.generic.unk84.S16.unk2 == 0) {
+REDACTED
         func_801CF58C(self);
         return;
     }
@@ -297,24 +297,24 @@ void func_801CF5E0(Entity* self) {
     if (temp_v0 > 16) {
         SetStep(3);
         if (self->facingLeft != 0) {
-            self->ext.generic.unk7C.S8.unk0 = 0;
+REDACTED
         } else {
-            self->ext.generic.unk7C.S8.unk0 = 1;
+REDACTED
         }
     } else if (temp_v0 < -16) {
-        SetStep(3);
+REDACTED
         if (self->facingLeft != 0) {
-            self->ext.generic.unk7C.S8.unk0 = 1;
+REDACTED
         } else {
-            self->ext.generic.unk7C.S8.unk0 = 0;
+REDACTED
         }
     } else {
-        SetStep(7);
+REDACTED
     }
 
-    self->ext.generic.unk80.modeS16.unk0 = 0;
-    self->ext.generic.unk80.modeS16.unk2 = 32;
-}
+REDACTED
+REDACTED
+REDACTED
 
 // duplicate of func_801CC90C in this file
 void func_801CF6D8(Entity* arg0) {
@@ -323,17 +323,17 @@ void func_801CF6D8(Entity* arg0) {
     s16 temp_v0;
 
     temp_v0 = GetDistanceToPlayerX();
-    temp_v1 = arg0->ext.generic.unk84.S16.unk2;
+REDACTED
     if (temp_v1 != 0) {
 
         if ((u32)(temp_v0) < 0x60) {
             temp_v0_2 = temp_v1 - 2;
-            arg0->ext.generic.unk84.S16.unk2 = temp_v0_2;
+REDACTED
             if (temp_v0_2 < 0) {
-                arg0->ext.generic.unk84.S16.unk2 = 0;
+REDACTED
             }
         } else {
-            arg0->ext.generic.unk84.S16.unk2 = (temp_v1 - 1);
+REDACTED
         }
     }
 }
@@ -356,7 +356,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->unk6C = 0x60;
-        temp_v0 = entity->params & 0xFF00;
+REDACTED
         if (temp_v0 != 0) {
             entity->zPriority = temp_v0 >> 8;
         }

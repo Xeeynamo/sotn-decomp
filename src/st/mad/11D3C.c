@@ -18,22 +18,22 @@
 
 #include "../fall_entity.h"
 
-u8 func_8019214C(void) {
-    u8 unkState;
-    Entity* entity;
+REDACTED
+REDACTED
+REDACTED
 
     MoveEntity();
     FallEntity();
 
     entity = g_CurrentEntity;
-
-    if (unkState & 1) {
+REDACTED
+REDACTED
         entity->velocityY = 0;
-    }
-
-    return unkState;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 #include "../unk_collision_func3.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/11D3C", func_80192408);
@@ -77,7 +77,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
         g_api.PlaySfx(arg1);
     }
     if (arg0 == 0xFF) {
-        DestroyEntity(g_CurrentEntity);
+REDACTED
         return;
     }
 
@@ -85,7 +85,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     entity->drawFlags = 0;
     entity->entityId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    entity->params = arg0;
+REDACTED
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;

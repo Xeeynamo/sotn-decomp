@@ -4,19 +4,19 @@
 // The enemy called "Blade", his helper functions, and his swords
 
 static void func_801D0A00(s16* arg0) {
-    func_801CD91C(&g_CurrentEntity[arg0[1]]);
-    func_801CD91C(&g_CurrentEntity[arg0[0]]);
-    func_801CD91C(&g_CurrentEntity[18]);
-    func_801CD83C(&g_CurrentEntity[arg0[2]]);
-    func_801CD83C(&g_CurrentEntity[arg0[3]]);
-
-    for (arg0 += 4; *arg0 != 0; arg0++) {
-        if (*arg0 != 0xFF) {
-            func_801CD83C(&g_CurrentEntity[*arg0]);
-        }
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 static void func_801D0B40(void) {
     s16* unk88 = g_CurrentEntity[15].ext.et_801D0B40.unk88;
     g_CurrentEntity[15].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
@@ -24,83 +24,83 @@ static void func_801D0B40(void) {
     unk88 = g_CurrentEntity[16].ext.et_801D0B40.unk88;
     g_CurrentEntity[16].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
 }
-
+REDACTED
 // Function does not use the argument, but all calls in EntityBlade
 // give one, so we include it here.
 static s32 func_801D0B78(Entity* unused) {
-    s32 ret;
-
-    //! FAKE:
-    do {
-    } while (0);
-
-    ret = 0;
-
-    switch (g_CurrentEntity->step) {
-    case 8:
-        if (GetDistanceToPlayerX() < 64) {
-            ret = 10;
-        }
-        if (GetDistanceToPlayerX() > 80) {
-            ret = 6;
-        }
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
-            ret = 7;
-        }
-        break;
-
-    case 10:
-        if (GetDistanceToPlayerX() < 88) {
-            ret = 8;
-        }
-        if (GetDistanceToPlayerX() < 56) {
-            ret = 7;
-        }
-        if (GetDistanceToPlayerX() > 80) {
-            ret = 6;
-        }
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
-            ret = 7;
-        }
-        break;
-
-    case 12:
-        if (GetDistanceToPlayerX() < 64) {
-            ret = 10;
-        }
-        break;
-
-    case 6:
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
-            ret = 7;
-        }
-        if (GetDistanceToPlayerX() < 48) {
-            ret = 10;
-        }
-        if (GetDistanceToPlayerX() < 80) {
-            ret = 8;
-        }
-        break;
-
-    default:
-        if (GetDistanceToPlayerX() > 80) {
-            ret = 6;
-        }
-        if (GetDistanceToPlayerX() < 64) {
-            ret = 10;
-        }
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
-            ret = 7;
-        }
-        break;
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (g_CurrentEntity->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
-        ret = 12;
-    }
-    return ret;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void EntityBlade(Entity* self) {
     Collider collider;
     Entity* otherEnt;
@@ -132,7 +132,7 @@ void EntityBlade(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
-        break;
+REDACTED
     case 2:
         var_s3 = self;
         for (var_s4 = &D_801833F4; *var_s4 != 0; var_s4 += 5) {
@@ -238,8 +238,8 @@ void EntityBlade(Entity* self) {
         } else {
             var_s2 = D_80183548;
         }
-        switch (self->step_s) {
-        case 0:
+REDACTED
+REDACTED
             if (self->ext.GH_Props.unk84 == 1) {
                 var_s2 = D_801834B8;
             } else {
@@ -276,7 +276,7 @@ void EntityBlade(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            MoveEntity();
+REDACTED
             self->velocityY += FIX(11.0 / 128);
             func_801CDF1C(var_s2, &D_80183720, 0);
             func_801CDE10(var_s2);
@@ -470,7 +470,7 @@ void EntityBlade(Entity* self) {
                 self->ext.GH_Props.unkB0[2] == 0) {
                 self->step_s++;
             }
-            break;
+REDACTED
         case 2:
             var_s2 = D_80183580;
             func_801CDF1C(var_s2, &D_80183A4C, 0);
@@ -519,118 +519,118 @@ void EntityBlade(Entity* self) {
         otherEnt = self + *var_s2;
         otherEnt->facingLeft = self->facingLeft;
         otherEnt->ext.GH_Props.unkA8 = 0;
-    }
+REDACTED
     D_8006C384.y = self->ext.GH_Props.unkB0[0];
     D_8006C38C.y = self->ext.GH_Props.unkB0[2];
 }
 
-void EntityBladeSword(Entity* self) {
-    Primitive *prim, *prim2;
-    s32 x0, x1, y0, y1;
-    s16 primIndex;
-    s16 angle;
-    s32 i;
-
-    if (self->ext.et_801D1BB8.unk8C != 0) {
-        self->step = 8;
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180BC8);
-        self->hitboxWidth = 6;
-        self->hitboxHeight = 6;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->drawFlags |= 4;
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
-        if (primIndex == -1) {
-            self->ext.et_801D1BB8.prim = NULL;
-            break;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.et_801D1BB8.prim = prim;
-        self->flags |= FLAG_HAS_PRIMS;
-
-        for (i = 0; prim != NULL; prim = prim->next) {
-            prim->r0 = i;
-            prim->g0 = i;
-            prim->b0 = i;
-            i += 10;
-            prim->r2 = i;
-            prim->g2 = i;
-            prim->b2 = i;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r2);
-            prim->x0 = self->posX.i.hi;
-            prim->y0 = self->posY.i.hi;
-            LOW(prim->x1) = LOW(prim->x0);
-            LOW(prim->x2) = LOW(prim->x0);
-            LOW(prim->x3) = LOW(prim->x0);
-            prim->priority = self->zPriority;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             prim->drawMode = 0x33;
-        }
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
         self->rotZ = self->ext.et_801D1BB8.unk9C;
-        break;
-
-    case 24:
-        self->hitboxState = 0;
-        self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        break;
-
-    case 8:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (self->facingLeft == 0) {
-            self->velocityX = FIX(-8.0);
-        } else {
-            self->velocityX = FIX(8.0);
-        }
-        MoveEntity();
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     angle = self->rotZ;
-    self->hitboxOffX = -1 * (rsin(angle) * 13) >> 12;
-    self->hitboxOffY = +1 * (rcos(angle) * 13) >> 12;
-
-    prim = self->ext.et_801D1BB8.prim;
-    if (prim != NULL) {
-        for (i = 0; i < 5; i++) {
-            prim2 = prim->next;
-            LOW(prim->x0) = LOW(prim2->x0);
-            LOW(prim->x1) = LOW(prim2->x1);
-            LOW(prim->x2) = LOW(prim2->x2);
-            LOW(prim->x3) = LOW(prim2->x3);
-            if (self->ext.et_801D1BB8.unk8D) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
                 prim->drawMode = 0x33;
-            } else {
+REDACTED
                 prim->drawMode = 0xA;
-            }
-            prim = prim2;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     angle = self->rotZ;
     if (self->facingLeft != 0) {
-        angle = -angle;
-    }
-
-    x0 = (-1 * (rsin(angle) * 20) >> 12) + self->posX.i.hi;
-    y0 = (+1 * (rcos(angle) * 20) >> 12) + self->posY.i.hi;
-    x1 = (+1 * (rsin(angle) * 4) >> 12) + self->posX.i.hi;
-    y1 = (-1 * (rcos(angle) * 4) >> 12) + self->posY.i.hi;
-
-    LOW(prim->x2) = LOW(prim->x0);
-    LOW(prim->x3) = LOW(prim->x1);
-
-    prim->x0 = x0;
-    prim->y0 = y0;
-    prim->y1 = y1;
-    prim->x1 = x1;
-
-    if (self->ext.et_801D1BB8.unk8D) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         prim->drawMode = 0x33;
-    } else {
+REDACTED
         prim->drawMode = 0xA;
-    }
-}
+REDACTED
+REDACTED

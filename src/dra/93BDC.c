@@ -155,18 +155,18 @@ void CdSoundCommand10(void) {
         g_XaFadeCounter++;
         if (g_volumeL > 0) {
             temp = g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter;
-            if (temp < 0) {
-                temp += 0x1FF;
-            }
-            g_volumeL = g_volumeR - (temp >> 9);
-            if (g_volumeL >> 0x10) {
-                g_volumeL = 0;
-            }
-        } else {
-            g_volumeL = 0;
-        }
-        SsSetMVol(g_volumeL, g_volumeL);
-        if (g_volumeL == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_CdSoundCommandStep++;
         }
         break;
@@ -339,29 +339,29 @@ void PlaySfx(s16 sfxId) {
             g_sfxRingBufferWritePos++;
             if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
                 g_sfxRingBufferWritePos = 0;
-            }
-        } else {
-            switch (sfxId) {
-            case 0x10:
-            case 0x11:
-                D_8013980C = 1;
-                break;
-
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
                 D_8013B61C = 1;
-                break;
-
-            default:
-                break;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             }
 
             g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;

@@ -1,8 +1,8 @@
-#include "dra.h"
+REDACTED
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
-
+REDACTED
+REDACTED
+REDACTED
 // BSS
 extern s32 g_WingSmashButtonCounter;
 extern s32 g_WingSmashButtonTimer;
@@ -74,7 +74,7 @@ void func_80115F54(void) {
         PLAYER.velocityY = 0;
     }
 }
-
+REDACTED
 void func_80116208(void) {
     DamageParam damage;
     s32 temp_s0;
@@ -134,8 +134,8 @@ void func_80116208(void) {
 void PlayerStepHellfire(void) {
     // Whether we should run the last 3 function calls at the end
     bool runFinishingBlock = 0;
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
         // Make factory with blueprint #33. Factory makes entities with ID 25.
         // This is EntityHellfireHandler.
         if (CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 33), 0) ==
@@ -204,10 +204,10 @@ void PlayerStepHellfire(void) {
     }
 }
 
-void func_801166A4(void) {
-    switch (PLAYER.step_s) {
-    case 0:
-        func_80113EE0();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_Player.unk40 = 0x8166;
         g_Player.D_80072F00[2] = 6;
         PLAYER.velocityX = 0;
@@ -215,44 +215,44 @@ void func_801166A4(void) {
         PLAYER.ext.player.anim = 0x33;
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5800, 44), 0);
-        PLAYER.step_s++;
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (PLAYER.animFrameDuration < 0) {
-            PlaySfx(NA_SE_VO_AL_WHAT);
-            func_8010E570(0);
-        }
-        break;
-
-    default:
-        break;
-    }
-}
-
-void func_8011678C(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
-        func_8010E570(0);
-    }
-}
-
-void func_801167D0(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     s32* velocityX = &PLAYER.velocityX;
     PLAYER.velocityY = 0;
     *velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
         PLAYER.step = Player_AxearmorStand;
-        PLAYER.step_s = 0;
+REDACTED
         PLAYER.velocityY = 0;
         *velocityX = 0;
         PLAYER.ext.player.anim = 0xCF;
         PLAYER.animFrameIdx = 0;
         PLAYER.animFrameDuration = 0;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 bool BatFormFinished(void) {
     if (g_Entities->step_s == 0) {
         return false;
@@ -277,16 +277,16 @@ void func_8011690C(s16 arg0) {
         PLAYER.rotZ += 16;
         if (arg0 < PLAYER.rotZ) {
             PLAYER.rotZ = arg0;
-        }
-    }
+REDACTED
+REDACTED
     if (arg0 < PLAYER.rotZ) {
         PLAYER.rotZ -= 16;
         if (PLAYER.rotZ < arg0) {
             PLAYER.rotZ = arg0;
-        }
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 s32 CheckWingSmashInput(void) {
     u32 directionsPressed;
     s32 backward;
@@ -395,7 +395,7 @@ s32 CheckWingSmashInput(void) {
     // provided.
     return g_WingSmashButtonCounter == 7;
 }
-
+REDACTED
 void ControlBatForm(void) {
     s32 pressingCross;
     s32 x_offset;
@@ -444,8 +444,8 @@ void ControlBatForm(void) {
         }
     }
 
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
         g_WingSmashButtonCounter = 0;
         PLAYER.rotZ = 0;
         g_Player.unk48 = 0;
@@ -762,7 +762,7 @@ void ControlBatForm(void) {
     }
     g_BatScreechDone = screechDone;
 }
-
+REDACTED
 void func_801177A0(void) {
     byte pad[0x28];
     s32 i;
@@ -776,8 +776,8 @@ void func_801177A0(void) {
     DecelerateY(0x2000);
     func_8011690C(0);
     else_cycles = 0;
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
         for (i = 0; i < 4; i++) {
             if (D_800ACED0[i].y < D_800ACE90[i]) {
                 D_800ACED0[i].y++;
@@ -851,7 +851,7 @@ void func_801177A0(void) {
         PLAYER.velocityX = 0;
     }
 }
-
+REDACTED
 void func_80117AC0(void) {
     Collider collider;
     s32 collisionCount;
@@ -914,7 +914,7 @@ void func_80117AC0(void) {
         break;
     }
 }
-
+REDACTED
 bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
@@ -929,7 +929,7 @@ bool MistFormFinished(void) {
     }
     return 0;
 }
-
+REDACTED
 void ControlMistForm(void) {
     s32 xSpeedDiag;
     s32 ySpeedDiag;
@@ -958,8 +958,8 @@ void ControlMistForm(void) {
     }
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
         func_800EA5E4(0x1BU);
         CheckMoveDirection();
         g_Player.unk48 = 0;
@@ -1107,7 +1107,7 @@ void ControlMistForm(void) {
         }
     }
 }
-
+REDACTED
 void func_801182F8(void) {
     byte pad[0x28];
     s32 i;
@@ -1193,56 +1193,56 @@ void func_801182F8(void) {
         PLAYER.velocityX = 0;
     }
 }
-
-void func_80118614(void) {
+REDACTED
+REDACTED
     if (PLAYER.animFrameDuration < 0) {
-        func_8010E570(0);
-    }
-}
-
-void func_80118640(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (PLAYER.animFrameDuration < 0) {
-        func_8010E470(0, 0);
-    }
-}
-
-void func_80118670(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 40), 0);
         PlaySfx(SFX_UI_MP_FULL);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 112), 0);
-    }
+REDACTED
     if (PLAYER.animFrameDuration < 0) {
-        func_8010E570(0);
-    }
-}
-
-void func_801186EC(void) {
-    if (PLAYER.step_s == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
-            D_80138008 = 0x10;
+REDACTED
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 61), 0);
-            PLAYER.step_s++;
-        }
-    } else if (--D_80138008 == 0) {
-        PLAYER.palette = 0x8100;
-        func_8010E570(0);
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // Given a range of start and end values, finds an unused entity
 // slot in g_Entities to fill in. Starts at start, and goes to
 // end-1. If none in the range are available, returns NULL.
 Entity* GetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
-    s16 i;
-
-    for (i = start; i < end; i++, entity++) {
+REDACTED
+REDACTED
+REDACTED
         if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    return NULL;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // Like GetFreeEntity, but searches for an open spot
 // starting from the end and working backward
 Entity* GetFreeEntityReverse(s16 start, s16 end) {
@@ -1251,18 +1251,18 @@ Entity* GetFreeEntityReverse(s16 start, s16 end) {
 
     for (i = end - 1; i >= start; i--, entity--) {
         if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    return NULL;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_80118894(Entity* self) {
     s32 i;
     s32 search_value;
 
     if (self == &g_Entities[E_WEAPON]) {
-        if (!(self->params & 0x8000)) {
+REDACTED
             self->enemyId = 1;
             return;
         }
@@ -1302,7 +1302,7 @@ void func_80118894(Entity* self) {
         }
     }
 }
-
+REDACTED
 extern s32 D_80138038; // BSS
 Entity* func_80118970(void) {
     s32 big_arr[128];
@@ -1349,78 +1349,78 @@ Entity* func_80118970(void) {
     }
     return NULL;
 }
-
+REDACTED
 s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
-    s16 var_a1;
-    s16 posY;
+REDACTED
+REDACTED
     s16 posX;
     s16 temp;
     s16 diffY;
     s16 diffX;
-
-    if (ent2 != NULL) {
-        posX = ent2->posX.i.hi;
-        posY = ent2->posY.i.hi;
-    } else {
-        posY = 112;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (facingLeft) {
-            posX = -32;
-        } else {
-            posX = 288;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     diffX = posX - ent1->posX.i.hi;
     diffY = posY - ent1->posY.i.hi;
     temp = ratan2(-diffY, diffX) & 0xFFF;
-
-    var_a1 = 0;
-    if (ent2 != NULL) {
+REDACTED
+REDACTED
+REDACTED
         if (ent2->entityId == E_NONE) {
             var_a1 = 0x1000;
         }
         if (ent2->hitboxState == 0) {
-            var_a1 = 0x2000;
-        }
+REDACTED
+REDACTED
         if (ent2->flags & FLAG_UNK_00200000) {
-            var_a1 = 0x3000;
-        }
-    }
-    if (ent1->posX.i.hi > 288) {
-        var_a1 = 0x4000;
-    }
-
-    if (ent1->posX.i.hi < -32) {
-        var_a1 = 0x5000;
-    }
-    if (ent1->posY.i.hi > 240) {
-        var_a1 = 0x6000;
-    }
-
-    if (ent1->posY.i.hi < 0) {
-        var_a1 = 0x7000;
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     return temp - var_a1;
-}
-
-void func_80118C28(s32 arg0) {
-    D_8013803C = D_800ACFB4[arg0][0];
-    D_80138040 = D_800ACFB4[arg0][1];
-    D_80138044 = D_800ACFB4[arg0][2];
-    D_80138048 = D_800ACFB4[arg0][3];
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 s32 func_80118C84(s32 arg0, s32 arg1) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
-
-    if (entity != NULL) {
+REDACTED
+REDACTED
         DestroyEntity(entity);
         entity->entityId = ENTITY_13;
         entity->posX.val = PLAYER.posX.val;
         entity->posY.val = PLAYER.posY.val;
-        entity->ext.generic.unk80.modeS16.unk0 = arg0;
-        entity->ext.generic.unk80.modeS16.unk2 = arg1;
-        return 0;
-    }
-    return -1;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

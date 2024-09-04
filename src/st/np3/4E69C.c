@@ -1,8 +1,8 @@
-#include "np3.h"
+REDACTED
 #include "sfx.h"
-
+REDACTED
 void EntityHammer(Entity* self) {
-    Collider collider;
+REDACTED
     Entity* otherEnt;
     // These are two different ents using var_s3. I dunno.
     Entity* var_s3_1;
@@ -18,19 +18,19 @@ void EntityHammer(Entity* self) {
         PlaySfxPositional(0x745);
         func_801CE1E8(0x18);
     }
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
         InitializeEntity(D_80180B8C);
         self->animCurFrame = 3;
-        self->hitboxWidth = 6;
-        self->hitboxHeight = 6;
+REDACTED
+REDACTED
         /* fallthrough */
-    case 1:
+REDACTED
         if (UnkCollisionFunc3(D_80182978) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
-        break;
+REDACTED
     case 2:
         var_s3_1 = self;
         for (var_s4 = &D_80182988; *var_s4 != 0; var_s4 += 5) {
@@ -117,8 +117,8 @@ void EntityHammer(Entity* self) {
         } else {
             var_s2 = D_80182AD0;
         }
-        switch (self->step_s) {
-        case 0:
+REDACTED
+REDACTED
             if (self->ext.GH_Props.unk84 == 1) {
                 var_s2 = D_80182A40;
             } else {
@@ -131,8 +131,8 @@ void EntityHammer(Entity* self) {
                 self->ext.GH_Props.unkB0[2] == 0) {
                 self->step_s++;
             }
-            break;
-        case 1:
+REDACTED
+REDACTED
             func_801CDF1C(var_s2, &D_80182C9C, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
@@ -152,7 +152,7 @@ void EntityHammer(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            MoveEntity();
+REDACTED
             self->velocityY += FIX(48.0 / 128);
             func_801CDF1C(var_s2, &D_80182CC4, 0);
             func_801CDE10(var_s2);
@@ -167,16 +167,16 @@ void EntityHammer(Entity* self) {
                 func_801CE228();
                 self->step_s = 1;
                 func_801CE4CC(otherEnt);
-            }
-            break;
-        }
+REDACTED
+REDACTED
+REDACTED
         func_801CE258(&D_80182A20);
-        break;
+REDACTED
     case 6:
-        switch (self->step_s) {
-        case 0:
-            self->step_s++;
-        case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             var_s3_2 = self + 8;
             if (self->ext.GH_Props.unk84 == 1) {
                 var_s2 = D_80182AE8;
@@ -248,9 +248,9 @@ void EntityHammer(Entity* self) {
             break;
         case 4:
             func_801CE4CC(self);
-            break;
-        }
-        break;
+REDACTED
+REDACTED
+REDACTED
     case 10:
         if (self->ext.GH_Props.unk84 == 1) {
             var_s2 = D_80182AB8;
@@ -264,18 +264,18 @@ void EntityHammer(Entity* self) {
         if (self->ext.GH_Props.unkB0[2] == 0) {
             self->facingLeft ^= 1;
             func_801CE4CC(self);
-        }
-        break;
+REDACTED
+REDACTED
     case 12:
         if (self->step_s == 0) {
             PlaySfxPositional(0x744);
             self->step_s++;
-        }
+REDACTED
         if (self->ext.GH_Props.unk84 == 1) {
             var_s2 = D_80182A40;
-        } else {
+REDACTED
             var_s2 = D_80182A5C;
-        }
+REDACTED
         func_801CDF1C(var_s2, &D_80182EDC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
@@ -283,11 +283,11 @@ void EntityHammer(Entity* self) {
         if (self->ext.GH_Props.unkB0[0] == 0 &&
             self->ext.GH_Props.unkB0[2] == 0) {
             func_801CE4CC(self);
-        }
-        break;
-    case 24:
-        switch (self->step_s) {
-        case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             for (var_s2 = &D_80182A20; *var_s2 != 0; var_s2++) {
                 otherEnt = self + *var_s2;
                 otherEnt->hitboxState = 0;
@@ -297,10 +297,10 @@ void EntityHammer(Entity* self) {
             self->velocityY = FIX(-2);
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->step_s++;
+REDACTED
             /* fallthrough */
-        case 1:
-            MoveEntity();
+REDACTED
+REDACTED
             self->velocityY += FIX(0.1875);
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
@@ -308,59 +308,59 @@ void EntityHammer(Entity* self) {
                 } else {
                     PlaySfxPositional(SFX_EXPLODE_D);
                 }
-            }
+REDACTED
             return;
-        }
-        break;
-    }
+REDACTED
+REDACTED
+REDACTED
     for (var_s2 = &D_80182A20; *var_s2 != 0; var_s2++) {
         otherEnt = self + *var_s2;
         otherEnt->facingLeft = self->facingLeft;
         otherEnt->ext.GH_Props.unkA8 = 0;
-    }
+REDACTED
     D_8006C384.y = self->ext.GH_Props.unkB0[0];
     D_8006C38C.y = self->ext.GH_Props.unkB0[2];
     return;
-}
-
+REDACTED
+REDACTED
 void EntityGurkhaBodyParts(Entity* self) {
     Entity* parent;
     Collider collider;
     s16 angle;
     s32 speed;
     u16 unk88;
-
-    switch (self->step) {
-    case 0:
-        switch (self->params >> 8) {
-        case 0:
-            InitializeEntity(D_80180B8C);
-            break;
-        case 1:
-            InitializeEntity(D_80180BA4);
-            break;
-        case 2:
-            InitializeEntity(D_80180BBC);
-            break;
-        }
-        self->hitboxWidth = 6;
-        self->hitboxHeight = 6;
-        self->params = (u8)self->params;
-        self->animCurFrame = self->params;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->drawFlags |= DRAW_COLORS;
         break;
     case 1:
         self->rotZ = self->ext.GH_Props.rotZ;
-        break;
-    case 24:
-        switch (self->step_s) {
-        case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             speed = (Random() & 0x1F) + 0x10;
             angle = (Random() * 6) + 0x900;
             self->velocityX = (speed * rcos(angle)) / 2;
             self->velocityY = speed * rsin(angle);
             self->ext.GH_Props.unk80 = (Random() & 0x1F) + 0x20;
-            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+REDACTED
             self->hitboxState = 0;
             self->step_s++;
             break;
@@ -369,9 +369,9 @@ void EntityGurkhaBodyParts(Entity* self) {
             self->velocityY += FIX(0.125);
             self->rotZ += self->ext.GH_Props.unkA6;
             if (--self->ext.GH_Props.unk80 == 0) {
-                self->step = 0;
-                self->pfnUpdate = EntityExplosion;
-                self->params = 0;
+REDACTED
+REDACTED
+REDACTED
                 self->drawFlags = 0;
             }
             return;
@@ -380,12 +380,12 @@ void EntityGurkhaBodyParts(Entity* self) {
     }
     // Careful following control flow here, this is completely after
     // the previous switch.
-    switch (self->params) {
-    case 8:
-    case 14:
-        collider.unk18 = 9;
-        func_801CE04C(self, &collider);
-        break;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     case 9:
     case 15:
         parent = self->ext.GH_Props.parent;
@@ -401,8 +401,8 @@ void EntityGurkhaBodyParts(Entity* self) {
             angle = self->rotZ;
             self->hitboxOffX = (-(rsin(angle) * 8) >> 0xC);
             self->hitboxOffY = (u32)rcos(angle) / 512;
-            self->attack = g_api.enemyDefs[192].attack;
-            self->attackElement = g_api.enemyDefs[192].attackElement;
+REDACTED
+REDACTED
         } else {
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;

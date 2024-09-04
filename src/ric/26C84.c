@@ -1,21 +1,21 @@
-#include "ric.h"
-
+REDACTED
+REDACTED
 // same as DRA/func_8011BD48
-bool func_80162E9C(Entity* entity) {
-    s32 i = 16;
+REDACTED
+REDACTED
     s16 objId = entity->entityId;
-    s16 params = entity->params;
-    Entity* e;
-
-    for (e = &g_Entities[i]; i < 64; i++, e++) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if ((objId == e->entityId) && (params == e->params) && (e != entity)) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // EntityPlayerBlinkWhite (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
 static s32 D_80154F7C[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -368,15 +368,15 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
         func_8015CAD4(1, 10);
     }
 }
-
-void func_801641A0(Entity* entity) {
+REDACTED
+REDACTED
     Primitive* prim;
     s16 primIndex;
-
-    entity->posX.i.hi = PLAYER.posX.i.hi;
-    entity->posY.i.hi = PLAYER.posY.i.hi - 8;
-    switch (entity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
@@ -395,23 +395,23 @@ void func_801641A0(Entity* entity) {
             prim->priority = PLAYER.zPriority + 8;
             prim->drawMode = 0x35;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            entity->step++;
-            goto def;
-        } else {
+REDACTED
+REDACTED
+REDACTED
             DestroyEntity(entity);
-            break;
-        }
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->ext.et_80161FF0.unk7C += 2;
         entity->ext.et_80161FF0.unk7E += 2;
         if (entity->ext.et_80161FF0.unk7C >= 57) {
             DestroyEntity(entity);
-            break;
-        }
-
-    default:
-    def:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         prim = &g_PrimBuf[entity->primIndex];
         prim->x0 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
         prim->y0 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
@@ -423,12 +423,12 @@ void func_801641A0(Entity* entity) {
         prim->y3 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
         if (prim->b3 >= 12) {
             prim->b3 += 244;
-        }
+REDACTED
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 // Entity ID # 34. Created by blueprints 36, 37, 38, 39.
 // Only difference in those blueprints is the "unk5" member of the blueprint.
 // When the factory is made, unk5 loads into ext.factory.unk9A. This appears
@@ -461,18 +461,18 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
     s32 i;
     s32 constE0 = 0xE0;
     u32 upperparams = self->params & 0x7F00;
-    s16* loadedParams = &D_8015519C[upperparams >> 8];
+REDACTED
 
     rScale = loadedParams[2];
     gScale = loadedParams[3];
     bScale = loadedParams[4];
-
+REDACTED
     gOffset = loadedParams[0];
     bOffset = loadedParams[1];
-
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -480,14 +480,14 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
+REDACTED
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
                       FLAG_UNK_10000;
         prim2 = prim1 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim1 = prim1->next;
         }
-
+REDACTED
         for (i = 0; i < 16; i++) {
             prim2->u0 = ((rcos((s16)(i << 8)) * 2) >> 8) + 0x20;
             prim2->v0 = -((rsin((s16)(i << 8)) * 2) >> 8) - 0x21;
@@ -510,31 +510,31 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
         self->ext.ricPowerRing.unk84 = self->ext.ricPowerRing.unk86 = 0x240;
         self->ext.ricPowerRing.unk8A = loadedParams[5];
         self->ext.ricPowerRing.unk88 = 0xC0;
-        self->step++;
+REDACTED
         break;
-
+REDACTED
     case 1:
         self->ext.ricPowerRing.unk7E += 0x40;
         self->ext.ricPowerRing.unk86 -= 10;
         if (self->ext.ricPowerRing.unk86 < 0) {
             self->ext.ricPowerRing.unk86 = 0;
             self->ext.ricPowerRing.unk7C = 0x20;
-            self->step++;
+REDACTED
         }
         self->ext.ricPowerRing.unk84 = self->ext.ricPowerRing.unk86;
         self->ext.ricPowerRing.unk82 -= 5;
         self->ext.ricPowerRing.unk80 -= 5;
         break;
-
+REDACTED
     case 2:
         self->ext.ricPowerRing.unk7E += 0x40;
         self->ext.ricPowerRing.unk82 -= 3;
         self->ext.ricPowerRing.unk80 -= 6;
         if (--self->ext.ricPowerRing.unk7C == 0) {
-            self->step++;
+REDACTED
         }
         break;
-
+REDACTED
     case 3:
         self->ext.ricPowerRing.unk7E = self->ext.ricPowerRing.unk7E + 0x40;
         self->ext.ricPowerRing.unk82 = self->ext.ricPowerRing.unk82 - 3;
@@ -546,11 +546,11 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
         }
         break;
     }
-
+REDACTED
     sp38 = self->ext.ricPowerRing.unk8A;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-
+REDACTED
     prim2 = prim1 = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 16; i++) {
         prim1 = prim1->next;
@@ -634,7 +634,7 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
         prim1 = prim1->next;
     }
 }
-
+REDACTED
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // RicHandleHit.
 static Point16 D_801551FC = {0xFFFE, 0xFFE8};
@@ -656,20 +656,20 @@ static Point16 D_80155238 = {0x0006, 0xFFEB};
 static Point16 D_8015523C = {0xFFF8, 0x0015};
 static Point16 D_80155240 = {0x0007, 0x0016};
 static Point16* D_80155244[] = {
-    &D_801551FC, &D_8015520C, &D_80155200, &D_8015520C, &D_80155210,
-    &D_80155200, &D_80155210, &D_80155204, &D_80155200, &D_80155210,
-    &D_80155214, &D_80155204, &D_80155214, &D_80155208, &D_80155204,
-    &D_80155204, &D_80155208, &D_80155220, &D_80155204, &D_80155220,
-    &D_8015521C, &D_80155200, &D_80155204, &D_8015521C, &D_80155200,
-    &D_8015521C, &D_80155218, &D_80155200, &D_80155218, &D_801551FC,
-    &D_8015520C, &D_8015522C, &D_80155210, &D_8015522C, &D_80155230,
-    &D_80155210, &D_80155230, &D_80155214, &D_80155210, &D_80155218,
-    &D_8015521C, &D_80155224, &D_8015521C, &D_80155228, &D_80155224,
-    &D_8015521C, &D_80155220, &D_80155228, &D_801551FC, &D_80155218,
-    &D_80155234, &D_801551FC, &D_80155238, &D_8015520C, &D_80155208,
-    &D_8015523C, &D_80155220, &D_80155214, &D_80155240, &D_80155208,
-    &D_80155234, &D_80155218, &D_80155224, &D_80155238, &D_8015522C,
-    &D_8015520C, &D_80155228, &D_80155220, &D_8015523C, &D_80155230,
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     &D_80155240, &D_80155214};
 void RicEntityHitByIce(Entity* self) {
     const int PrimCount = LEN(D_80155244) / 3;
@@ -689,8 +689,8 @@ void RicEntityHitByIce(Entity* self) {
     Point16* offset;
     bool sp18 = false;
 
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     // This is badly written but it checks if 0x10000 is unset.
     sp18 = ((g_Player.unk0C & 0x10000) == sp18);
     switch (self->step) {
@@ -876,7 +876,7 @@ void RicEntityHitByIce(Entity* self) {
         prim = prim->next;
     }
 }
-
+REDACTED
 static s16 lightning_clut[] = {0x194, 0x199};
 void RicEntityHitByLightning(Entity* self) {
     Primitive* prevPrim;
@@ -1018,24 +1018,24 @@ void RicEntityHitByLightning(Entity* self) {
     prim->u1 = prim->u3 = (tempAngle << 4) - 0x60;
     prim->v2 = prim->v3 = 0xCF;
 }
-
+REDACTED
 // Corresponding DRA function is func_80124164
 static s32 D_80155368[] = {255, 255, 255, 127, 127, 63, 127, 63, 127};
 void func_80165DD8(
     POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
-    s16 top = y - radius;
-    s16 bottom = y + radius;
-    s32 colorChannel;
-
-    poly->y0 = poly->y1 = top;
-    poly->y2 = poly->y3 = bottom;
-
-    if (poly->y0 < 0) {
-        poly->y0 = poly->y1 = 0;
-    }
-
-    if (poly->y0 > 240) {
-        poly->y2 = poly->y3 = 240;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     }
 
     if (arg4 == 0) {
@@ -1043,31 +1043,31 @@ void func_80165DD8(
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->r1 = poly->r3 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[1];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->g1 = poly->g3 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[2];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->b1 = poly->b3 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[3];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->r0 = poly->r2 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[4];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->g0 = poly->g2 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[5];
     } else {
@@ -1075,45 +1075,45 @@ void func_80165DD8(
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->r1 = poly->r3 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[1];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->g1 = poly->g3 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[2];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->b1 = poly->b3 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[6];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->r0 = poly->r2 = (u32)colorChannel >> 8;
+REDACTED
 
         colorChannel = colorIntensity * D_80155368[7];
         if (colorChannel < 0) {
             colorChannel += 255;
         }
-        poly->g0 = poly->g2 = (u32)colorChannel >> 8;
+REDACTED
         colorChannel = colorIntensity * D_80155368[8];
     }
     if (colorChannel < 0) {
         colorChannel += 255;
     }
-    poly->b0 = poly->b2 = (u32)colorChannel >> 8;
-}
-
-void func_80166024() {
-    PLAYER.palette = 0x815E;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     PLAYER.drawMode = 0x70;
-}
-
-void func_80166044() {
-    PLAYER.palette = 0x8120;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     PLAYER.drawMode = DRAW_DEFAULT;
-}
+REDACTED

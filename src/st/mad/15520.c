@@ -46,7 +46,7 @@ void EntityHeartDrop(Entity* self) {
 
 #include "../entity_olrox_drool.h"
 
-bool func_80195E68(Point16* unk) {
+REDACTED
     Collider collider;
 
     FallEntity();
@@ -243,9 +243,9 @@ u8 func_80195F64(s32 arg0) {
 }
 
 #include "../entity_intense_explosion.h"
-
-void func_801965E4(Entity* entity) {
-    if (entity->step == 0) {
+REDACTED
+REDACTED
+REDACTED
         InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->rotX = 0x1A0;
@@ -254,18 +254,18 @@ void func_801965E4(Entity* entity) {
         entity->animCurFrame = 1;
         entity->zPriority += 0x10;
 
-        if (entity->params != 0) {
-            entity->palette = entity->params;
-        } else {
-            entity->palette = 0x8160;
-        }
-
-        entity->step++;
-        return;
-    }
-
-    MoveEntity();
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (!AnimateEntity(D_80181010, entity)) {
         DestroyEntity(entity);
     }
@@ -372,17 +372,17 @@ void EntityRoomForeground(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = obj->animSet;
-        entity->zPriority = obj->zPriority;
+REDACTED
         entity->unk5A = obj->unk5A;
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
         entity->drawMode = obj->drawMode;
         if (obj->unkC != 0) {
             entity->flags = obj->unkC;
-        }
-    }
-    AnimateEntity(obj->unk10, entity);
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 // Different from other overlays, but identical to the one in Weapon 21.
 void BottomCornerText(u8* str, u8 lowerLeft) {
@@ -443,7 +443,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
 
     prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
     prim->type = 3;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+REDACTED
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
     if (lowerLeft) {
         prim->b0 = prim->b1 = 0xAF;

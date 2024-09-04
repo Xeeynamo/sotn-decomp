@@ -377,12 +377,12 @@ void HandleNowLoading(void) {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_Weapon0;
-                var_s0 =
+REDACTED
                     g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
                 if (var_s0 == 0xFF) {
                     var_s0 = 1;
                 }
-                if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+REDACTED
                     var_s0 = g_EquipDefs[0xD8].weaponId;
                 }
                 g_EquippedWeaponIds[0] = var_s0;
@@ -403,7 +403,7 @@ void HandleNowLoading(void) {
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
             }
-            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+REDACTED
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
             if (LoadFileSim(var_s0, 7) < 0) {
@@ -416,7 +416,7 @@ void HandleNowLoading(void) {
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
             }
-            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+REDACTED
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
             if (LoadFileSim(var_s0, 8) >= 0) {
@@ -436,7 +436,7 @@ void HandleNowLoading(void) {
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
             }
-            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+REDACTED
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
             g_EquippedWeaponIds[1] = var_s0;
@@ -504,13 +504,13 @@ void HandleVideoPlayback(void) {
     Primitive* prim;
     Primitive* prim2;
     u8 temp;
-
+REDACTED
     if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
         switch (g_GameStep) {
-        case 0:
+REDACTED
             if (!g_IsUsingCd) {
-                func_800EA538(0);
-                func_800EA5E4(0x1A);
+REDACTED
+REDACTED
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
@@ -527,19 +527,19 @@ void HandleVideoPlayback(void) {
                 prim->tpage = 0x1C;
                 prim->drawMode = DRAW_HIDE;
                 g_GameStep++;
-                return;
-            }
-            break;
-
-        case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             prim = &g_PrimBuf[D_8013640C];
             prim->p1--;
             if (prim->p1 == 0) {
                 g_GameStep++;
-            }
-            break;
-
-        case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
@@ -550,38 +550,38 @@ void HandleVideoPlayback(void) {
 #elif defined(VERSION_HD)
                 prim2->drawMode = DRAW_DEFAULT;
 #endif
-            }
-            if (temp == 128) {
+REDACTED
+REDACTED
                 prim->p1 = 128;
                 g_GameStep++;
-            }
-            break;
-
-        case 3:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             prim = &g_PrimBuf[D_8013640C];
             prim->p1--;
             if (prim->p1 == 0) {
                 g_GameStep++;
-            }
-            break;
-
-        case 4:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 - 1;
             func_80107250(prim, temp);
-            if (temp == 64) {
+REDACTED
                 prim2 = prim->next;
                 prim2->drawMode = DRAW_HIDE;
-            }
-            if (temp == 0) {
+REDACTED
+REDACTED
                 FreePrimitives(D_8013640C);
                 g_GameStep++;
-            }
-            break;
-
-        case 5:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (!g_IsUsingCd) {
-                D_8003C728 = 1;
+REDACTED
                 g_CurrentStream = 1;
                 g_GameStep++;
             }
@@ -589,17 +589,17 @@ void HandleVideoPlayback(void) {
 
         case 6:
             g_api.o.UpdateRoomPosition();
-            if (D_8003C728 == 0) {
-                func_800E4970();
-            }
-            break;
-        }
-
-    } else {
-        func_800E4970();
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void nullsub_9(void) {}
 
 void HandlePrologueEnd(void) {

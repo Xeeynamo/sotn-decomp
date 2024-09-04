@@ -46,7 +46,7 @@ void RenderPrimitives(void);
 void DrawEntitiesHitbox(s32 drawMode);
 void UpdateCd(void);
 void SoundInit(void);
-
+REDACTED
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
@@ -63,7 +63,7 @@ void DebugShowWaitInfo(const char* msg) {
 void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
-    while (!PadRead(0))
+REDACTED
         DebugShowWaitInfo(msg);
 }
 
@@ -593,11 +593,11 @@ void PrintGpuInfo(void) {
         case DEBUG_COLOR_CHANNEL_BLUE:
             FntPrint("blue");
             break;
-        }
-
+REDACTED
+REDACTED
         if (g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
             FntPrint("  half on\n");
-        } else {
+REDACTED
             FntPrint("  half off\n");
         };
 
@@ -608,21 +608,21 @@ void PrintGpuInfo(void) {
     } else {
         FntPrint("01:%04x,%04x\n", D_8006C384.x, D_8006C384.y);
         FntPrint("23:%04x,%04x\n", D_8006C38C.x, D_8006C38C.y);
-    }
-}
+REDACTED
+REDACTED
 
 void PrintHBlankInfo(void) {
     if (g_DebugEnabled && g_DebugMode != DEBUG_PALETTE_VIEWER) {
         if (g_Timer & 1) {
             FntPrint("l=%03x/100\n", D_801362D4);
             FntPrint("l=%03x/100\n", D_801362D0);
-        } else {
+REDACTED
             FntPrint("l=%03x/100\n", D_801362D0);
             FntPrint("l=%03x/100\n", D_801362D4);
-        }
+REDACTED
         D_801362D0 = D_801362D4;
-    }
-}
+REDACTED
+REDACTED
 
 void SsVabClose(short vab_id);
 #define LOAD_VAB(vab_id, name, addr, data, dataLen)                            \

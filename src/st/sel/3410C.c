@@ -291,7 +291,7 @@ void HandleTitleScreen(void) {
 
 void func_801B4B9C(Entity* entity, s16 step) {
     entity->step = step;
-    entity->step_s = 0;
+REDACTED
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -336,120 +336,120 @@ void func_801B4C68(void) {
 
 void func_801B4D78(void) {
     Entity* e = &g_Entities[UNK_ENTITY_3];
-
+REDACTED
     if (e->step == 0) {
         e->animSet = ANIMSET_OVL(1);
         e->animCurFrame = 1;
         e->palette = 0x200;
-        e->ext.generic.unk80.modeS32 = 0x5C0000;
-        e->posY.i.hi = 208;
+REDACTED
+REDACTED
         e->zPriority = 0x80;
         e->step = 1;
     }
 }
 
-void func_801B4DE0(void) {
+REDACTED
     Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
     s16 primIndex;
-    POLY_GT4* poly;
-
-    switch (unkEntity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
             poly = &g_PrimBuf[primIndex];
             unkEntity->primIndex = primIndex;
             unkEntity->flags |= FLAG_HAS_PRIMS;
-            *(s32*)&unkEntity->ext.generic.unk7C = poly;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
-            poly->x1 = poly->x3 = 255;
-            poly->y0 = poly->y1 = 4;
-            poly->y2 = poly->y3 = 228;
-
-            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
-                    poly->b3 = 255;
-
-            poly->pad2 = 0xC8;
-            poly->x0 = poly->x2 = 0;
-            poly->pad3 = 81;
-            D_801BC3E4 = 0;
-            unkEntity->step++;
-        }
-        break;
-
-    case 1:
-        poly = *(s32*)&unkEntity->ext.generic.unk7C;
-        if (D_801BC3E4 != 0) {
-            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                    poly->r0 = poly->b3 - 2;
-            if (poly->r0 < 5) {
-                D_801BC3E4 = 0;
-                unkEntity->step++;
-            }
-        }
-        break;
-
-    case 2:
-        poly = *(s32*)&unkEntity->ext.generic.unk7C;
-        if (D_801BC3E4 != 0) {
-            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                    poly->r0 = poly->b3 + 1;
-            if (poly->r0 >= 254) {
-                D_801BC3E4 = 0;
-                unkEntity->step++;
-            }
-        }
-    }
-}
-
-void func_801B4FFC(void) {
+REDACTED
     Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
     s16 primIndex;
-    POLY_GT4* poly;
-
-    switch (unkEntity->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
             poly = &g_PrimBuf[primIndex];
             unkEntity->primIndex = primIndex;
             unkEntity->flags |= FLAG_HAS_PRIMS;
-            *(s32*)&unkEntity->ext.generic.unk7C = poly;
-
-            poly->x1 = poly->x3 = 384;
-            poly->y0 = poly->y1 = 4;
-            poly->y2 = poly->y3 = 228;
-
-            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
-                    poly->b3 = poly->x0 = poly->x2 = 0;
-
-            poly->pad2 = 0xC8;
-            poly->pad3 = 0x51;
-
-            unkEntity->step++;
-        }
-        break;
-
-    case 1:
-        poly = *(s32*)&unkEntity->ext.generic.unk7C;
-        if (D_801BC3E4 != 0) {
-            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                    poly->r0 = poly->b3 + 2;
-            if (poly->r0 >= 254) {
-                D_801BC3E4 = 0;
-                unkEntity->step++;
-            }
-        }
-
-    case 2:
-        break;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 void func_801B519C(void) {
     Entity* self;
@@ -516,35 +516,35 @@ void func_801B519C(void) {
 
 void func_801B5350(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_5];
-
+REDACTED
     switch (entity->step) {
     case 0:
         entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = 142;
-        entity->ext.generic.unk80.modeS32 = 0x800000;
-        entity->posY.i.hi = 159;
+REDACTED
+REDACTED
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
         entity->palette = 0x8100;
         entity->step = 1;
         break;
-
+REDACTED
     case 1:
         entity->animCurFrame = 142;
         break;
-
+REDACTED
     case 2:
         if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
             func_801B4B9C(entity, 3);
         }
-        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
+REDACTED
         break;
-
+REDACTED
     case 3:
         AnimateEntity(D_80180504, entity);
-        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
-        if (entity->ext.generic.unk80.modeS16.unk2 < 0x40) {
-            entity->step = 255;
+REDACTED
+REDACTED
+REDACTED
         }
         break;
     }
@@ -552,14 +552,14 @@ void func_801B5350(void) {
 
 void func_801B54C8(void) {
     Entity* e = &g_Entities[UNK_ENTITY_7];
-
+REDACTED
     if (e->step == 0) {
         e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 38;
         e->facingLeft = 1;
         e->unk5A = 0xF;
-        e->ext.generic.unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 158;
+REDACTED
+REDACTED
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->step = 1;
@@ -568,13 +568,13 @@ void func_801B54C8(void) {
 
 void func_801B5548(void) {
     Entity* e = &g_Entities[UNK_ENTITY_7];
-
+REDACTED
     if (e->step == 0) {
         e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 7;
         e->unk5A = 0xF;
-        e->ext.generic.unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 158;
+REDACTED
+REDACTED
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->facingLeft = 0;

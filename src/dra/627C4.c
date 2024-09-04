@@ -268,7 +268,7 @@ s32 MemCardInitAndFormat(void) {
     return 0;
 }
 
-void func_80102EB8(void) {
+REDACTED
     Primitive *poly1, *poly2, *poly3;
     s32 i;
 
@@ -283,19 +283,19 @@ void func_80102EB8(void) {
 
     for (i = 0; i < 3; i++) {
         SetTexturedPrimRect(poly1, 98, 79, 96, 0, 0, 0);
-        func_801072DC(poly1);
-        poly1->tpage = 0x10;
-        poly1->clut = 0x1A1;
+REDACTED
+REDACTED
+REDACTED
         poly1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
         poly1->drawMode = DRAW_HIDE;
         poly1->p1 = 0;
         SetPrimRect(poly2, 80, 79, 96, 0);
-        func_801072DC(poly2);
-        func_801071CC(poly2, 96, 0);
-        func_801071CC(poly2, 96, 1);
-        poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
-            poly2->r2 = poly2->r3 = 0;
-        poly2->tpage = 0x1F;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         poly2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
         poly2->drawMode = DRAW_HIDE;
         poly1 = poly1->next;
@@ -307,8 +307,8 @@ void func_80102EB8(void) {
         poly3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
         poly3->drawMode = DRAW_HIDE;
         poly3 = poly3->next;
-    }
-}
+REDACTED
+REDACTED
 
 void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
     s32 var_v1;
@@ -320,49 +320,49 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
             var_v1 = 0x7F - (g_Timer & 0x1F);
         }
 
-        poly->r0 = poly->r1 = var_v1 - 16;
-        poly->r2 = poly->r3 = var_v1 + 16;
-        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
+REDACTED
+REDACTED
+REDACTED
         poly->pad3 = 0x404;
     } else {
-        poly->b1 = 96;
-        poly->b0 = 96;
-        poly->b3 = 128;
-        poly->b2 = 128;
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         poly->pad3 = 0x415;
     }
 }
 
-POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
-    poly1->x0 = arg1->x0 - 1;
-    poly1->y0 = arg1->y0 - 1;
-    poly1->x1 = arg1->x1;
-    poly1->y1 = arg1->y0 - 1;
-    poly1->pad3 = 0;
-    poly1 = (POLY_GT4*)poly1->tag;
-
-    poly1->x0 = arg1->x0 - 1;
-    poly1->y0 = arg1->y0 - 1;
-    poly1->x1 = arg1->x0 - 1;
-    poly1->y1 = arg1->y2;
-    poly1->pad3 = 0;
-    poly1 = (POLY_GT4*)poly1->tag;
-
-    poly1->x0 = arg1->x0 - 1;
-    poly1->y0 = arg1->y2;
-    poly1->x1 = arg1->x1;
-    poly1->y1 = arg1->y2;
-    poly1->pad3 = 0;
-    poly1 = (POLY_GT4*)poly1->tag;
-
-    poly1->x0 = arg1->x1;
-    poly1->y0 = arg1->y0 - 1;
-    poly1->x1 = arg1->x1;
-    poly1->y1 = arg1->y2;
-    poly1->pad3 = 0;
-    return (POLY_GT4*)poly1->tag;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 s32 HandleSaveMenu(s32 arg0) {
 // For some reason, US and HD have different controls for confirm and exit,

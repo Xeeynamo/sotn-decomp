@@ -470,50 +470,50 @@ void func_801139CC(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
-void func_80113AAC(void) {
-    s32 var_s1 = 0;
-    s32 temp;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     g_Player.unk4A++;
-    if (func_8010FDF8(2) != 0) {
-        return;
-    }
-
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Player.pl_vram_flag & 2) {
-            func_801139CC(3);
+REDACTED
             if (g_Player.unk4A >= 5) {
-                PLAYER.step_s = 2;
+REDACTED
                 PLAYER.rotZ = 0x800;
                 PLAYER.rotPivotY = 2;
                 PLAYER.rotPivotX = 0;
                 PLAYER.drawFlags |= 4;
                 PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
                 SetPlayerAnim(0x2B);
-            } else {
-                PLAYER.step_s = 3;
-            }
+REDACTED
+REDACTED
+REDACTED
         } else if (g_Player.unk4A > 28) {
-            PLAYER.step_s = 1;
+REDACTED
             PLAYER.velocityY = -0x60000;
             SetPlayerAnim(0x1B);
-        }
-        break;
-
-    case 1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Player.pl_vram_flag & 2) {
-            PLAYER.step_s = 2;
-            func_801139CC(3);
-        } else {
+REDACTED
+REDACTED
+REDACTED
             PLAYER.velocityY += 0x6000;
             if (PLAYER.velocityY > 0x8000) {
-                var_s1 = 1;
-            }
-        }
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         PLAYER.drawFlags |= 4;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
@@ -526,69 +526,69 @@ void func_80113AAC(void) {
                  FLAG_DRAW_UNK80 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
                  FLAG_DRAW_ROTX);
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
-        }
-        break;
-
-    case 3:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_Player.unk4A > 20) {
-            var_s1 = 1;
-        }
-        break;
-
-    case 4:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         PLAYER.velocityY += 0x1000;
         if (PLAYER.animFrameDuration < 0) {
-            var_s1 = 2;
-        }
-        break;
-    }
-
-    if (var_s1 != 0) {
-        temp = 0; // TODO: !FAKE
-        if ((var_s1 - 1) != temp) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             SetPlayerAnim(0x1C);
-        }
-        PLAYER.palette = 0x8100;
-        PLAYER.step_s = 1;
+REDACTED
+REDACTED
+REDACTED
         PLAYER.step = Player_Jump;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 s32 func_80113D7C(s16 damageAmount) {
     DamageParam damage;
-    s32 sfx;
+REDACTED
     s32 temp_s0;
-    s16 step;
-    u16 temp_s1;
-
+REDACTED
+REDACTED
+REDACTED
     temp_s0 = HandleDamage(&damage, 2, damageAmount / 2, 1);
     func_80118C84(damage.damageTaken, 0);
-    func_800FE8F0();
-    if (temp_s0 != 4) {
+REDACTED
+REDACTED
         g_Player.D_80072F00[2] = 4;
         g_Player.unk40 = 0x8166;
         sfx = g_SfxPainGrunts[(rand() & 1) + 3];
-        PlaySfx(sfx);
-        if (step && step) // TODO: !FAKE
-            ;
-        return 0;
-    }
-    step = PLAYER.step;
-    temp_s1 = PLAYER.step_s;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     damage.effects = 0;
     damage.damageKind = 0;
     SetPlayerStep(Player_Kill);
     func_80115394(&damage, step, temp_s1);
-    return -1;
-}
-
+REDACTED
+REDACTED
+REDACTED
 s32 func_80113E68(void) {
-    s16 rnd = rand();
+REDACTED
     PLAYER.ext.player.anim = 0x2E + (rnd % 3);
     return rnd % 16;
-}
-
-void func_80113EE0(void) {
+REDACTED
+REDACTED
+REDACTED
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
                          FLAG_DRAW_UNK80 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
@@ -601,51 +601,51 @@ void func_80113EE0(void) {
     PLAYER.rotZ = 0;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
-        func_8010FAF4();
-    }
-}
-
-void func_80113F7C(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     Entity* entity = PLAYER.ext.player.unkB8;
-    s16 posX;
-    s32 var_a0;
-    s32 var_a2;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (entity->facingLeft != 0) {
         var_a2 = -entity->hitboxOffX;
-    } else {
+REDACTED
         var_a2 = entity->hitboxOffX;
-    }
-
+REDACTED
+REDACTED
     if (PLAYER.facingLeft != 0) {
         var_a0 = -PLAYER.hitboxOffX;
-    } else {
+REDACTED
         var_a0 = PLAYER.hitboxOffX;
-    }
-
-    posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (abs(posX) < 16) {
         if (entity->velocityX != 0) {
             if (entity->velocityX >= 0) {
                 PLAYER.entityRoomIndex = 1;
-                return;
-            }
-            goto block_14;
-        }
-        goto block_13;
-    }
-    // TODO: labels are !FAKE
-block_13:
-    if (posX < 0) {
-    block_14:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         PLAYER.entityRoomIndex = 0;
-        return;
-    }
-
+REDACTED
+REDACTED
+REDACTED
     PLAYER.entityRoomIndex = 1;
-}
-
+REDACTED
+REDACTED
 void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     s32 randbit;
     u8 unkAC_offset;
@@ -1038,8 +1038,8 @@ void func_80114DF4(s32 arg0) {
     s32 yShift;
 
     newlyPetrified = 0;
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
         newlyPetrified = 1;
         func_80113EE0();
         func_80113F7C();
@@ -1190,7 +1190,7 @@ void func_80114DF4(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
-
+REDACTED
 // Somewhat weird args, worth more study. arg2 is unused.
 void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     s32 i;
@@ -1380,36 +1380,36 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         PLAYER.velocityY = 0;
     }
 }
-
-void func_80115BB0(void) {
+REDACTED
+REDACTED
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     PLAYER.animFrameDuration = 4;
-
+REDACTED
     if (g_unkGraphicsStruct.unk20 == 0) {
         if (g_Player.pl_vram_flag & 1) {
-            func_8010E570(0);
-        } else {
-            func_8010E7AC();
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4a00, 44), 0);
         g_PlayerDraw->enableColorBlend = 0;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 // same as RIC/func_8015BB80
-void func_80115C50(void) {
+REDACTED
     if (g_StageId == STAGE_TOP) {
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 < 0) {
-            PLAYER.posX.i.hi++;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
 
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 > 0) {
@@ -1439,10 +1439,10 @@ void func_80115DA0(void) {
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
-        break;
-
-    case 2:
-        func_80115C50();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x200, 121), 0) == NULL) {
@@ -1451,10 +1451,10 @@ void func_80115DA0(void) {
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
-        break;
-
-    case 4:
-        func_80115C50();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x400, 121), 0) == NULL) {
@@ -1469,11 +1469,11 @@ void func_80115DA0(void) {
     case 3:
     case 5:
         if (PLAYER.animFrameDuration < 0) {
-            func_8010E570(0);
-        }
+REDACTED
+REDACTED
         if (g_Player.unk1C != 0) {
-            func_8010E570(0);
-        }
-        break;
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 }

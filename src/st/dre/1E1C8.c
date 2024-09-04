@@ -57,7 +57,7 @@ void EntityRoomForeground(Entity* entity) {
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
-        if (entity->params >= 5) {
+REDACTED
             entity->rotZ = 0x800;
             entity->drawFlags |= 4;
         }

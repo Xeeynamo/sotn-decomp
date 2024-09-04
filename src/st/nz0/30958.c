@@ -1,16 +1,16 @@
-/*
- * File: 394D4.c
- * Overlay: NZ0
- * Description: Alchemy Laboratory
- */
-
-#include "nz0.h"
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 #include "sfx.h"
-
-void func_801B0958(Entity* self) {
+REDACTED
+REDACTED
     ObjInit* objInit = &D_80180D64[self->params];
-
-    if (self->step == 0) {
+REDACTED
+REDACTED
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
@@ -20,23 +20,23 @@ void func_801B0958(Entity* self) {
         self->drawMode = objInit->drawMode;
         if (objInit->unkC != 0) {
             self->flags = objInit->unkC;
-        }
-    }
+REDACTED
+REDACTED
     AnimateEntity(objInit->unk10, self);
-}
+REDACTED
 
-bool func_801B0A20(Entity* self) {
-    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
-
+REDACTED
+REDACTED
+REDACTED
     diffX = abs(diffX);
-    if (self->hitboxWidth >= diffX) {
-        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
+REDACTED
+REDACTED
         diffX = abs(diffX);
         return self->hitboxHeight >= diffX;
-    } else {
-        return false;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 void func_801B0AA4(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;

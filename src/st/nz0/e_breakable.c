@@ -52,7 +52,7 @@ void EntityBreakableNZ0(Entity* self) {
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->params =
+REDACTED
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(self);

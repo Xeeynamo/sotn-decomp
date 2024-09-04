@@ -47,7 +47,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
     u16 sp4A;
     s32 status;
     Tilemap* tilemap = &g_Tilemap;
-    Entity* player = &PLAYER;
+REDACTED
 
     sp18 = player->posX.i.hi + tilemap->scrollX.i.hi;
     status = g_Player.unk0C;

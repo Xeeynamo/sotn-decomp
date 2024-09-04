@@ -15,7 +15,7 @@ void func_psp_0923B2F0(Entity* self) {
     switch (self->step) {
     default:
         return;
-    case 0:
+REDACTED
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
             InitializeEntity(g_InitializeData0);

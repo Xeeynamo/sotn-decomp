@@ -778,51 +778,51 @@ bool CheckSwordBrothersInput(void) {
 }
 
 void CheckSpecialMoveInputs(void) {
-    s32 var_v0;
-    s32 i;
-
-    for (i = 0; i < 16; i++) {
-        switch (i) {
-        case 0:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             var_v0 = CheckGravityBootsInput();
-            break;
-        case 1:
+REDACTED
+REDACTED
             var_v0 = CheckQuarterCircleForwardInput();
-            break;
-        case 2:
+REDACTED
+REDACTED
             var_v0 = CheckBackForwardInput();
-            break;
-        case 3:
+REDACTED
+REDACTED
             var_v0 = CheckHellfireInput();
-            break;
-        case 4:
+REDACTED
+REDACTED
             var_v0 = CheckTetraSpiritInput();
-            break;
-        case 6:
+REDACTED
+REDACTED
             var_v0 = CheckSoulStealInput();
-            break;
-        case 9:
+REDACTED
+REDACTED
             var_v0 = CheckSwordBrothersInput();
-            break;
-        case 14:
+REDACTED
+REDACTED
             var_v0 = CheckSummonSpiritInput();
-            break;
-        case 15:
+REDACTED
+REDACTED
             var_v0 = CheckDarkMetamorphosisInput();
-            break;
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-        default:
-            var_v0 = 0;
-            break;
-        }
-        if (var_v0 != 0) {
-            return;
-        }
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

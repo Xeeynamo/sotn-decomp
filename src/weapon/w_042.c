@@ -34,17 +34,17 @@ static void DebugShowWaitInfo(const char* msg) {
     if (D_12A000_8017B5EC++ & 4) {
         FntPrint(D_12A000_8017A760); // TODO: inline
     }
-    DrawSync(0);
-    VSync(0);
+REDACTED
+REDACTED
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
-    FntFlush(-1);
-}
-
+REDACTED
+REDACTED
+REDACTED
 static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
-    while (!PadRead(0))
+REDACTED
         DebugShowWaitInfo(msg);
 }
 
@@ -273,7 +273,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+REDACTED
             DestroyEntity(self);
             return;
         }

@@ -1,4 +1,4 @@
-#include "st0.h"
+REDACTED
 #include "disk.h"
 
 void SetGameState(GameState gameState) {
@@ -16,32 +16,32 @@ void func_801B0058(void) {
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x200; j < 0x300; j += 0x10) {
             g_ClutIds[index++] = GetClut(j, i);
-        }
-    }
-
-    for (i = 0xF0; i < 0x100; i++) {
-        for (j = 0; j < 0x100; j += 0x10) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_ClutIds[index++] = GetClut(j, i);
-        }
-    }
-
-    for (i = 0xF0; i < 0x100; i++) {
-        for (j = 0x100; j < 0x200; j += 0x10) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_ClutIds[index++] = GetClut(j, i);
-        }
-    }
-}
-
-void func_801B0180(void) {
-    RECT rect;
-
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 512;
-    rect.h = 512;
-    ClearImage(&rect, 0, 0, 0);
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
@@ -59,7 +59,7 @@ void func_801B01F8(s32 arg0) {
     } else {
         g_GpuBuffers[1].draw.clip.y = 0x0114;
     }
-    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+REDACTED
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
     SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
@@ -105,7 +105,7 @@ u16 func_801B0414(void) {
 
     return ret;
 }
-
+REDACTED
 // func_801B0414 is undeclared to PrologueScroll. This emulates the
 // undefined signature to avoid splitting the file at this time.
 #define fake_func_801B0414 ((s32(*)())func_801B0414)
@@ -466,7 +466,7 @@ void PrologueScroll(void) {
         break;
     }
 }
-
+REDACTED
 u8 func_801B101C(const char* msg) {
     Primitive* prim;
     s16 i;
@@ -546,5 +546,5 @@ u16* func_801B11E8(char ch) {
 
     return g_api.func_80106A28(jCh, 0);
 }
-
+REDACTED
 INCLUDE_ASM("st/st0/nonmatchings/30030", func_801B1298);

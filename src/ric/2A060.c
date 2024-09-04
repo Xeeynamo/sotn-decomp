@@ -177,8 +177,8 @@ void RicEntityTeleport(Entity* self) {
     }
     selfUnk7C = self->ext.teleport.unk7C;
     selfUnk80 = self->ext.teleport.unk80;
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    self->posY.i.hi = PLAYER.posY.i.hi;
+REDACTED
+REDACTED
     prim = &g_PrimBuf[self->primIndex];
     xVar = PLAYER.posX.i.hi;
     yVar = PLAYER.posY.i.hi;
@@ -231,44 +231,44 @@ void RicEntityTeleport(Entity* self) {
 // Entity #10, uses blueprint #10. Appears related to poisoning, due to call in
 // RicDoAttack
 static Point16 D_801559AC[] = {
-    0x0007, 0xFFFE, 0x0010, 0xFFFE, 0x0005, 0xFFEE, 0xFFF2,
+REDACTED
     0xFFEE, 0xFFE9, 0xFFFA, 0xFFE8, 0xFFFA, 0xFFE7, 0xFFFA};
 static Point16 D_801559C8[] = {
-    0x0007, 0x000B, 0x0010, 0x000B, 0x0005, 0xFFFB, 0xFFF2,
+REDACTED
     0xFFFB, 0xFFE9, 0x000B, 0xFFE8, 0x000B, 0xFFE7, 0x000B};
 static Point16 D_801559E4[] = {
-    0xFFF1, 0xFFFC, 0xFFF2, 0xFFF2, 0xFFF7, 0xFFFA, 0xFFEE, 0xFFFA, 0xFFF7,
+REDACTED
     0x0002, 0xFFF5, 0xFFF7, 0xFFF0, 0xFFF6, 0xFFF9, 0x0000, 0xFFF2, 0x0000};
 static s16 D_80155A08[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
                            0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
 static Point16 D_80155A1C[] = {
-    0xFFF1, 0x0009, 0xFFF2, 0xFFFF, 0xFFF7, 0x0007, 0xFFEE, 0x0009, 0xFFF7,
-    0x000F, 0xFFF5, 0x0004, 0xFFF0, 0x0003, 0xFFF9, 0x000D, 0xFFF2, 0x000D,
-};
+REDACTED
+REDACTED
+REDACTED
 static s16 D_80155A40[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
                            0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
 static Point16 D_80155A54[] = {
-    0xFFF1, 0xFFFA, 0xFFF2, 0xFFF0, 0xFFF7, 0xFFF8, 0xFFEE, 0xFFFA, 0xFFF7,
-    0x0000, 0xFFF5, 0xFFF5, 0xFFF0, 0xFFF4, 0xFFF9, 0xFFFE, 0xFFF2, 0xFFFE};
+REDACTED
+REDACTED
 static s16 D_80155A78[] = {
-    0x000F, 0x000E, 0x0012, 0x0009, 0x0009, 0x0010, 0x000B, 0x000E, 0x0007,
-    0x0000, 0x0001, 0x0000, 0x0005, 0x0000, 0x0002, 0x0000, 0x0007, 0x0000,
-    0x0004, 0x0000, 0x0008, 0x0000, 0x0003, 0x0000, 0x0006, 0x0000};
+REDACTED
+REDACTED
+REDACTED
 static Point32 D_80155AAC[] = {
-    0x00040000, 0x00020000, 0x00040000, 0xFFFD8000, 0x00100000,
-    0x00000000, 0x00100000, 0x00000000, 0xFFEC0000, 0x00000000,
-    0xFFE00000, 0x00000000, 0xFFCC0000, 0x00000000};
+REDACTED
+REDACTED
+REDACTED
 static Point32 D_80155AE4[] = {
-    0x00000000, 0x00000000, 0xFFFD8000, 0x00000000, 0xFFFFE000, 0x00020000,
-    0xFFFFE000, 0xFFFE0000, 0x00008000, 0x00000000, 0xFFFE0000, 0x00018000,
-    0xFFFE0000, 0xFFFE8000, 0x00008000, 0x00018000, 0x00008000, 0xFFFE8000};
+REDACTED
+REDACTED
+REDACTED
 static s32 D_80155B2C[][9] = {
     {1, 1, 5, 6, 0, 1, 1, 0, 0}, {2, 5, 2, 0, 7, 2, 0, 2, 0},
     {3, 6, 0, 3, 8, 0, 3, 0, 3}, {4, 0, 7, 8, 4, 0, 0, 4, 4},
     {5, 5, 5, 0, 0, 5, 1, 2, 0}, {6, 6, 0, 6, 0, 1, 6, 0, 3},
     {7, 0, 7, 0, 7, 1, 0, 7, 4}, {8, 0, 0, 8, 8, 4, 3, 7, 8},
     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-};
+REDACTED
 static s16 D_80155C70[] = {0x8139, 0x813A, 0x813B, 0x0000};
 static s16 D_80155C78[] = {
     0x0010, 0x000E, 0x000C, 0x000A, 0x0008, 0x0006, 0x0004, 0x0002,
@@ -384,7 +384,7 @@ void RicEntityWhip(Entity* self) {
             } else {
                 if (PLAYER.step == PL_S_STAND) {
                     if (!PLAYER.facingLeft) {
-                        var_s3 = D_80155A08[var_s4];
+REDACTED
                     } else {
                         var_s3 = D_801559E4[var_s4].x;
                     }
@@ -518,7 +518,7 @@ void RicEntityWhip(Entity* self) {
             self->ext.whip.unk84 = 6;
             if (var_s4 == 0) {
                 if (!PLAYER.facingLeft) {
-                    xDiff = D_80155A08[0];
+REDACTED
                 } else {
                     xDiff = D_801559E4[0].x;
                 }
@@ -747,22 +747,22 @@ static s16 D_80155D08[] = {0x0013, 0x0014, 0x0016, 0x001A, 0x0018,
                            0x0015, 0x001B, 0x0017, 0x0019, 0x0000};
 static s16 D_80155D1C[] = {0x0013, 0x0014, 0x001A, 0x0016, 0x0018,
                            0x001B, 0x0015, 0x0019, 0x0017, 0x0000};
-void func_8016779C(Entity* entity) {
+REDACTED
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
-        return;
-    }
-
+REDACTED
+REDACTED
+REDACTED
     entity->facingLeft = PLAYER.facingLeft;
-    if (entity->step == 0) {
+REDACTED
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_UNK_10000;
         entity->animSet = ANIMSET_OVL(18);
-        entity->unk5A = 0x46;
-        entity->palette = 0x8120;
-        entity->zPriority = PLAYER.zPriority + 2;
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (PLAYER.step == PL_S_CROUCH) {
         if (PLAYER.facingLeft) {
             entity->animCurFrame = D_80155CCC[D_80175080];
@@ -782,38 +782,38 @@ void func_8016779C(Entity* entity) {
     }
 
     entity->posX.val = g_Entities->posX.val;
-    entity->posY.val = PLAYER.posY.val;
-}
-
+REDACTED
+REDACTED
+REDACTED
 static s16 D_80155D30[] = {0x10, 0x18, 0x11, 0x19, 0x12, 0x1A, 0x13, 0x1B, 0x14,
                            0x1C, 0x15, 0x1D, 0x16, 0x1E, 0x17, 0x00, 0x02, 0x01,
                            0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x00, 0x00};
 void func_80167964(Entity* entity) {
-    if (g_Player.unk46 != 0) {
-        if (entity->step == 0) {
+REDACTED
+REDACTED
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 |
                             FLAG_UNK_04000000 | FLAG_UNK_10000;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         }
-        if (!(entity->params & 0xFF00)) {
-            g_Entities[D_80155D30[entity->animFrameDuration]].palette =
-                PAL_OVL(0x140);
-        }
-        g_Entities[D_80155D30[entity->animFrameDuration]].ext.player.unkA4 = 4;
+REDACTED
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
             DestroyEntity(entity);
-        }
-    } else {
+REDACTED
+REDACTED
         DestroyEntity(entity);
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 void func_80167A58(Entity* self) {}
-
+REDACTED
 void func_80167A60(Entity* self) {}
-
+REDACTED
 void func_80167A68(Entity* self) {}
-
+REDACTED
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
 // blueprint 40. Duplicate of DRA EntityHolyWaterBreakGlass.
 static s16 D_80155D64[4][6] = {
@@ -840,11 +840,11 @@ void func_80167A70(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
+REDACTED
         prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
-
+REDACTED
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
                 fakeprim = (FakePrim*)prim;
@@ -888,14 +888,14 @@ void func_80167A70(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
-        break;
+REDACTED
 
     case 1:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
             return;
         }
-
+REDACTED
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
@@ -921,7 +921,7 @@ void func_80167A70(Entity* self) {
                 prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
             }
         }
-        break;
+REDACTED
     }
 }
 
@@ -939,7 +939,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
     } else {
         primcount = 33 - ((self->params - 32) * 2);
     }
-
+REDACTED
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, primcount);
@@ -992,9 +992,9 @@ void RicEntityCrashHydroStorm(Entity* self) {
         if ((self->params < 32) && !(self->params & 3)) {
             g_api.PlaySfx(0x708);
         }
-        self->step++;
+REDACTED
         break;
-
+REDACTED
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
@@ -1027,7 +1027,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->ext.subweapon.timer++;
         break;
-
+REDACTED
     case 2:
         DestroyEntity(self);
         break;
@@ -1076,26 +1076,26 @@ s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
     }
     return 0;
 }
-
-s32 func_8016840C(s16 x, s16 y) {
+REDACTED
+REDACTED
     Collider collider;
-    u16 temp;
-
+REDACTED
+REDACTED
     if (g_CurrentEntity->velocityX != 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
+REDACTED
                              g_CurrentEntity->posY.i.hi + x, &collider, 0);
         if (g_CurrentEntity->velocityX > 0) {
             temp = collider.unk14;
-        } else {
+REDACTED
             temp = collider.unk1C;
-        }
+REDACTED
         if (!(collider.effects & EFFECT_UNK_0002)) {
-            return 0;
-        }
-    } else {
-        return 0;
-    }
-    g_CurrentEntity->posX.i.lo = 0;
-    g_CurrentEntity->posX.i.hi += temp;
-    return 2;
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

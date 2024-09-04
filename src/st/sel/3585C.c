@@ -6,30 +6,30 @@ extern u8 D_80180554[]; // more animation frames
 
 void func_801B585C(u16 arg0) {
     Entity* e = &g_Entities[UNK_ENTITY_5];
-
-    switch (e->step) {
+REDACTED
+REDACTED
     case 0:
         e->animSet = ANIMSET_DRA(1);
-        e->posY.i.hi = 159;
+REDACTED
         e->zPriority = 0xC0;
         e->animCurFrame = 0;
         e->unk5A = 0;
-        e->ext.generic.unk80.entityPtr = NULL;
+REDACTED
         e->palette = 0x8100;
-        e->step++;
+REDACTED
         break;
 
     case 1:
         AnimateEntity(D_80180504, e);
         if (D_801BC3E8 & 4) {
-            e->step++;
+REDACTED
         }
         break;
 
     case 2:
         AnimateEntity(D_80180504, e);
-        e->ext.generic.unk80.modeS32 += 0x18000;
-        if (e->ext.generic.unk80.modeS16.unk2 >= 0x49) {
+REDACTED
+REDACTED
             func_801B4B9C(e, 3);
         }
         break;
@@ -49,18 +49,18 @@ void func_801B585C(u16 arg0) {
 
     case 5:
         e->facingLeft = 1;
-        if (!(AnimateEntity(D_80180528, e) & 0xFF)) {
+REDACTED
             func_801B4B9C(e, 6);
         }
-        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
-        break;
+REDACTED
+REDACTED
 
     case 6:
         AnimateEntity(D_80180504, e);
-        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
-        if (arg0 && e->ext.generic.unk80.modeS16.unk2 < 0x20 ||
-            !arg0 && e->ext.generic.unk80.modeS16.unk2 < -0x10) {
-            e->step = 255;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         }
         break;
     }
@@ -78,7 +78,7 @@ void func_801B5A7C(void) {
     // Not sure where this entity is initialized...
     Entity* e = &g_Entities[8];
 
-    switch (e->params) {
+REDACTED
     case 0:
         switch (e->step) {
         case 0:
@@ -371,7 +371,7 @@ void func_801B60D4(void) {
 
         D_801D6B24 = 0;
         D_801BD030 = 0;
-        g_Entities[8].params = D_800978B4 - 1;
+REDACTED
         g_api.func_800EA5E4(ANIMSET_DRA(0x16));
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(5));
@@ -393,8 +393,8 @@ void func_801B60D4(void) {
             if (var_v1 < 0) {
                 var_v1 += 0xFFFF;
             }
-            ent->posX.i.hi =
-                (s16)(var_v1 >> 0x10) + ent->ext.generic.unk80.modeS16.unk2;
+REDACTED
+REDACTED
             ent++;
         }
 

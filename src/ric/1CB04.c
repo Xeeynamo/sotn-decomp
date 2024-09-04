@@ -6,19 +6,19 @@ void func_80158B04(s32 arg0) {
     s32 var_s0;
 
     if (PLAYER.facingLeft) {
-        var_s0 = -3;
-    } else {
-        var_s0 = 3;
-    }
-
-    PLAYER.posY.i.hi -= 16;
-    PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 4), 0);
-    PLAYER.posY.i.hi += 16;
-    PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
-
-    if (arg0 & 1) {
-        g_api.func_80102CD8(3);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
 
@@ -29,27 +29,27 @@ void func_80158B04(s32 arg0) {
 }
 
 void RicHandleStand(void) {
-    s32 var_s0;
-
-    if (PLAYER.step < 64) {
-        if (D_8015459C != 0) {
-            D_8015459C--;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         } else if (D_80097448[0] >= 49) {
             if (PLAYER.facingLeft) {
-                var_s0 = -4;
-            } else {
-                var_s0 = 4;
-            }
-            PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
-            PLAYER.posY.i.hi -= 16;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x800, 4), 0);
-            D_8015459C = 0x60;
-            PLAYER.posY.i.hi += 16;
-            PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH | CHECK_SLIDE)) {
         RicDecelerateX(0x2000);
@@ -69,50 +69,50 @@ void RicHandleStand(void) {
         case 1:
             if (RicCheckFacing() != 0) {
                 RicSetWalk(0);
-                break;
+REDACTED
             } else if (g_Player.padPressed & PAD_UP) {
-                break;
-            } else {
+REDACTED
+REDACTED
                 RicSetStand(0);
-                break;
-            }
-
-        case 64:
-            func_8015CB58(1, 1);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (PLAYER.animFrameIdx < 3) {
                 RicCheckFacing();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = PL_S_CROUCH;
                     PLAYER.anim = D_801555A8;
-                    break;
-                }
-            }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (PLAYER.animFrameDuration < 0) {
                 if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
-                    PLAYER.step_s++;
+REDACTED
                     RicSetAnimation(D_80155730);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 17), 0);
-                    break;
-                }
+REDACTED
+REDACTED
                 g_Player.unk46 = 0;
                 RicSetStand(0);
-            }
-            break;
-
-        case 65:
-            func_8015CB58(1, 1);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (g_Player.padPressed & PAD_SQUARE) {
-                break;
-            }
+REDACTED
+REDACTED
             g_Player.unk46 = 0;
             RicSetStand(0);
-            break;
-
-        case 66:
-            func_8015CB58(1, 1);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (PLAYER.animFrameIdx < 3) {
                 RicCheckFacing();
             }
@@ -157,11 +157,11 @@ void RicHandleRun(void) {
                     RicSetAnimation(ric_anim_stop_run);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
-                }
-            } else {
+REDACTED
+REDACTED
                 PLAYER.velocityX = 0;
-            }
-        } else if (PLAYER.step_s == 0) {
+REDACTED
+REDACTED
             RicSetSpeedX(0x24000);
         }
     }
@@ -337,8 +337,8 @@ void RicHandleCrouch(void) {
     RicDecelerateX(0x2000);
     switch (PLAYER.step_s) {
     case 0x0:
-        if (D_8015459C != 0) {
-            D_8015459C--;
+REDACTED
+REDACTED
         } else if ((*D_80097448 >= 0x19) && (g_Player.unk48 == 0)) {
             if (PLAYER.facingLeft) {
                 xShift = -9;
@@ -450,36 +450,36 @@ void func_80159C04(void) {
 
     if (entity->facingLeft) {
         var_a2 = -entity->hitboxOffX;
-    } else {
+REDACTED
         var_a2 = entity->hitboxOffX;
-    }
-
+REDACTED
+REDACTED
     if (PLAYER.facingLeft) {
         var_a0 = -PLAYER.hitboxOffX;
-    } else {
+REDACTED
         var_a0 = PLAYER.hitboxOffX;
-    }
-
-    temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (abs(temp_v0) < 16) {
         if (entity->velocityX != 0) {
             if (entity->velocityX < 0) {
                 PLAYER.entityRoomIndex = 0;
-                return;
-            } else {
+REDACTED
+REDACTED
                 PLAYER.entityRoomIndex = 1;
-                return;
-            }
-        }
-    }
-
-    if (temp_v0 < 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         PLAYER.entityRoomIndex = 0;
-    } else {
+REDACTED
         PLAYER.entityRoomIndex = 1;
-    }
-}
+REDACTED
+REDACTED
 
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
@@ -1031,12 +1031,12 @@ void RicHandleDead(
 }
 
 void RicHandleStandInAir(void) {
-    if (PLAYER.step_s == 0) {
+REDACTED
         PLAYER.velocityY += 0x3800;
         if (PLAYER.velocityY > 0) {
             PLAYER.velocityY = 0;
-            PLAYER.step_s = 1;
-        }
+REDACTED
+REDACTED
     } else if (g_Player.unk4E != 0) {
         g_Player.unk46 = 0;
         RicSetStep(PL_S_JUMP);
@@ -1123,8 +1123,8 @@ void RicHandleThrowDaggers(void) {
 // This happens when he dies in prologue and gets saved by Maria.
 static s32 dead_prologue_timer;
 void RicHandleDeadPrologue(void) {
-    switch (PLAYER.step_s) {
-    case 0:
+REDACTED
+REDACTED
         g_CurrentEntity->flags |= FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 4;
         RicDecelerateX(0x2000);
@@ -1138,13 +1138,13 @@ void RicHandleDeadPrologue(void) {
             PLAYER.step_s++;
         }
         break;
-    case 1:
+REDACTED
         PLAYER.drawFlags = FLAG_DRAW_ROTY;
-        D_801545AA += 64;
+REDACTED
         PLAYER.rotY = (rsin(D_801545AA) >> 0xA) + 256;
-        if (D_801545AC != 0) {
-            D_801545AC--;
-            if ((D_801545AC) == 0) {
+REDACTED
+REDACTED
+REDACTED
                 PLAYER.drawFlags = 0;
                 PLAYER.rotY = 0x100;
                 RicCreateEntFactoryFromEntity(
@@ -1154,12 +1154,12 @@ void RicHandleDeadPrologue(void) {
             }
         }
         break;
-    case 2:
+REDACTED
         // In this step, Richter rises into the air, similar to when he uses the
         // Cross subweapon crash.
         if (!--g_DeadPrologueTimer) {
             RicSetAnimation(D_801558B4);
-            PLAYER.palette = 0x814E;
+REDACTED
             g_CurrentEntity->velocityY = FIX(-1);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 22), 0);
             g_DeadPrologueTimer = 0x30;
@@ -1227,7 +1227,7 @@ void RicHandleDeadPrologue(void) {
             PLAYER.step_s++;
         }
         break;
-    case 7:
+REDACTED
         if (PLAYER.animFrameDuration < 0) {
             g_CurrentEntity->flags &= ~FLAG_UNK_10000;
             g_unkGraphicsStruct.unk20 = 0;
@@ -1304,19 +1304,19 @@ void RicHandleSlide(void) {
         }
     }
 }
-
+REDACTED
 // same as DRA/func_80115C50
-void func_8015BB80(void) {
+REDACTED
     if (g_StageId == STAGE_TOP) {
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 < 0) {
-            PLAYER.posX.i.hi++;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
 
         if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 > 0) {

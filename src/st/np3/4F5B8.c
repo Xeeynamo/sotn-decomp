@@ -1,53 +1,53 @@
 #include "np3.h"
 #include "sfx.h"
 
-void EntityHammerWeapon(Entity* self) {
-    s16 temp_s0;
+REDACTED
+REDACTED
     s32 velY;
-    s32 temp_s1;
-    s16 angle;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180B98);
-        self->hitboxWidth = 10;
-        self->hitboxHeight = 10;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->drawFlags |= 4;
-
-    case 1:
-        angle = *(u16*)&self->ext.stub[0x20];
+REDACTED
+REDACTED
+REDACTED
         self->rotZ = angle;
         self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
         self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
-        break;
-
-    case 24:
-        switch (self->step_s) {
-        case 0:
-            temp_s1 = (Random() & 0x1F) + 0x10;
-            temp_s0 = (Random() * 6) + 0x900;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->velocityX = (temp_s1 * rcos(temp_s0)) / 2;
             velY = temp_s1 * rsin(temp_s0);
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->step_s++;
+REDACTED
             self->velocityY = velY;
-            break;
-
-        case 1:
-            MoveEntity();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->velocityY += FIX(0.125);
             func_801CDC80(&self->rotZ, 0x800, 0x20);
-            break;
-        }
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_801CF778(void) {
     ET_801CF254* et = &g_CurrentEntity[15].ext.et_801CF254;
     et->unk9C = et->next->ext.et_801CF254.unk9C + 0x300;
 }
-
+REDACTED
 int func_801CF7A0(Entity* ent) {
     Entity* otherEnt;
     s32 step;
@@ -114,7 +114,7 @@ int func_801CF7A0(Entity* ent) {
         g_CurrentEntity->ext.factory.unkB0 = 1;
     }
 }
-
+REDACTED
 void EntityGurkha(Entity* self) {
     Collider collider;
     Entity* otherEnt;
@@ -143,7 +143,7 @@ void EntityGurkha(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
-        break;
+REDACTED
     case 2:
         var_s3 = self;
         for (var_s4 = &D_80182F04; *var_s4 != 0; var_s4 += 5) {
@@ -246,8 +246,8 @@ void EntityGurkha(Entity* self) {
                 self->ext.GH_Props.unkB0[2] == 0) {
                 self->step_s++;
             }
-            break;
-        case 1:
+REDACTED
+REDACTED
             func_801CDF1C(var_s2, &D_801831F8, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
@@ -268,7 +268,7 @@ void EntityGurkha(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 3:
-            MoveEntity();
+REDACTED
             self->velocityY += FIX(11.0 / 128);
             func_801CDF1C(var_s2, &D_80183218, 0);
             func_801CDE10(var_s2);
@@ -486,7 +486,7 @@ void EntityGurkha(Entity* self) {
             self->velocityY = FIX(-2);
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->step_s++;
+REDACTED
             /* fallthrough */
         case 1:
             MoveEntity();
@@ -506,91 +506,91 @@ void EntityGurkha(Entity* self) {
         otherEnt = self + *var_s2;
         otherEnt->facingLeft = self->facingLeft;
         otherEnt->ext.GH_Props.unkA8 = 0;
-    }
+REDACTED
     D_8006C384.y = self->ext.GH_Props.unkB0[0];
     D_8006C38C.y = self->ext.GH_Props.unkB0[2];
     return;
-}
-
-void EntityGurkhaSword(Entity* self) {
-    s16 angle;
-    s32 rnd;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180BB0);
-        self->hitboxWidth = 8;
-        self->hitboxHeight = 8;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->drawFlags |= 4;
-        break;
-
-    case 1:
-        angle = self->ext.gurkhaSword.unk9C;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->rotZ = angle;
         self->hitboxOffX = (u32)rsin(angle) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
-        if (self->ext.gurkhaSword.unk8C) {
-            self->step++;
-        }
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-8);
-        } else {
+REDACTED
             self->velocityX = FIX(8);
-        }
-        self->step++;
-
-    case 3:
-        MoveEntity();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->rotZ -= 0x100;
         self->ext.gurkhaSword.unk9C = self->rotZ;
-        self->ext.gurkhaSword.unkA6 = -0xC0;
+REDACTED
         angle = self->rotZ;
         self->hitboxOffX = (u32)rsin(self->rotZ) >> 8;
-        self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
-
+REDACTED
+REDACTED
         if (self->facingLeft != 0) {
             self->velocityX -= FIX(0.25);
-        } else {
+REDACTED
             self->velocityX += FIX(0.25);
-        }
-
+REDACTED
+REDACTED
         if ((g_Timer % 16) == 0) {
             PlaySfxPositional(SFX_ARROW_SHOT_A);
-        }
-
+REDACTED
+REDACTED
         if (abs(self->velocityX) == 0x80000) {
-            self->ext.gurkhaSword.unk8C = 0;
-            self->step = 1;
-        }
-        break;
-
-    case 24:
-        switch (self->step_s) {
-        case 0:
-            rnd = (Random() & 0x1F) + 0x10;
-            angle = (Random() * 6) + 0x900;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->velocityX = (rnd * rcos(angle)) / 2;
             self->velocityY = rnd * rsin(angle);
-            self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
+REDACTED
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->step_s++;
-            break;
-
-        case 1:
-            MoveEntity();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->velocityY += FIX(0.125);
             self->rotZ += self->ext.gurkhaSword.unkA6;
-            if (--self->ext.gurkhaSword.unk80 == 0) {
-                self->step = 0;
-                self->pfnUpdate = EntityExplosion;
-                self->params = 0;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
                 self->drawFlags = 0;
-            }
-        }
-        break;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

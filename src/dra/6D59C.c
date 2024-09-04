@@ -304,15 +304,15 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     return ret;
 }
 
-void func_8010DF70(void) {
-    g_CurrentEntity = &PLAYER;
-
+REDACTED
+REDACTED
+REDACTED
     switch (PLAYER.ext.player.anim) {
-    case 0xBA:
-    case 0xBB:
-    case 0xBE:
-    case 0xF0:
-    case 0xF1:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         PlayAnimation(D_800B0130, D_800B01B8);
     }
 }
@@ -349,14 +349,14 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 void func_8010E0A8(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7E.modeU8.unk0 = 0;
+REDACTED
 }
 
 void func_8010E0B8(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7C.U8.unk1 = 0;
-    entity->ext.generic.unk7C.U8.unk0 = 0;
+REDACTED
+REDACTED
 }
 
 void func_8010E0D0(s32 arg0) {
@@ -713,8 +713,8 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
             ret++;
         }
 
-        if (entity->ext.generic.unkB0 != 0) {
-            if (entity->ext.generic.unkB0 == arg0) {
+REDACTED
+REDACTED
                 var_a2++;
             }
         }

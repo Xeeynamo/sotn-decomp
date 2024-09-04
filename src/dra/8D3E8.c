@@ -655,10 +655,10 @@ void func_8012EAD0(void) {
         }
     }
 }
-
+REDACTED
 void func_8012ED30(void) {
     if (g_Player.padTapped & PAD_CROSS) {
-        func_8012CCE4();
+REDACTED
         D_80138440 = 0x10;
         return;
     }
@@ -706,7 +706,7 @@ void func_8012ED30(void) {
         }
     }
 }
-
+REDACTED
 void func_8012EF2C(void) {
     s16 var_v1;
     s32 i;

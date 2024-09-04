@@ -1,17 +1,17 @@
 #include "dre.h"
 
-void func_801961DC(s16 arg0) {
+REDACTED
     s16 temp_v0 = arg0 - g_unkGraphicsStruct.unkC;
-
-    if (temp_v0 > 1) {
+REDACTED
+REDACTED
         g_unkGraphicsStruct.unkC++;
-    } else if (temp_v0 < -1) {
+REDACTED
         g_unkGraphicsStruct.unkC--;
-    } else {
+REDACTED
         g_unkGraphicsStruct.unkC = arg0;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 void EntityCSMoveAlucard(Entity* self) {
     Tilemap* currentRoomTileLayout = &g_Tilemap;
     Entity* player = &PLAYER;
@@ -127,27 +127,27 @@ void EntityCSMoveAlucard(Entity* self) {
     case 8:
         func_801961DC(0x80);
         if (g_unkGraphicsStruct.unkC == 0x80) {
-            D_8003C8B8 = 1;
+REDACTED
             if (g_unkGraphicsStruct.unk0 != 0) {
                 g_unkGraphicsStruct.unk0 = 0;
-            }
-            DestroyEntity(self);
-        }
+REDACTED
+REDACTED
+REDACTED
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // appears to load from the CD and freeze the game
 void EntityUnkId23(Entity* self) {
     Entity* player = &PLAYER;
     Entity* ent = &g_Entities[80];
     s16 diff;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_8018047C);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.unk0 = 1;
         g_Player.padSim = 0;
@@ -171,8 +171,8 @@ void EntityUnkId23(Entity* self) {
                     g_Player.padSim = PAD_L1;
                 } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = PAD_R2;
-                }
-            }
+REDACTED
+REDACTED
         } else if ((g_Player.pl_vram_flag & 1) && (D_801A3F84 & 2)) {
             diff = player->posX.i.hi - ent->posX.i.hi;
             if (diff < -0x50) {

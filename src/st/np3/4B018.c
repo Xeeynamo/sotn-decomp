@@ -1,6 +1,6 @@
-#include "np3.h"
+REDACTED
 #include "sfx.h"
-
+REDACTED
 // Owl's Owl Knight shows up one slot above it, so define this for
 // ease of readability.
 #define KNIGHT (self + 1)
@@ -20,8 +20,8 @@ void EntityOwl(Entity* self) {
         if (!(self->flags & FLAG_DEAD)) {
             SetStep(8);
             self->ext.owl.unk80 ^= 0x20;
-        }
-    }
+REDACTED
+REDACTED
     if (self->flags & FLAG_DEAD) {
         if (self->step < 9) {
             self->hitboxState = 0;
@@ -31,8 +31,8 @@ void EntityOwl(Entity* self) {
             PlaySfxPositional(0x796);
             SetStep(9);
             KNIGHT->ext.owl.unk80 |= 8;
-        }
-    }
+REDACTED
+REDACTED
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180B2C);
@@ -48,7 +48,7 @@ void EntityOwl(Entity* self) {
             self->posX.i.hi -= 10;
         } else {
             self->posX.i.hi += 10;
-        }
+REDACTED
         if (otherEnt->animCurFrame == 0x10) {
             self->posY.i.hi = otherEnt->posY.i.hi - 0x21;
         } else {
@@ -111,7 +111,7 @@ void EntityOwl(Entity* self) {
             SetEntityVelocityFromAngle(self->ext.owl.unk84, 0x20);
             if (self->velocityX > 0) {
                 self->facingLeft = 1;
-            } else {
+REDACTED
                 self->facingLeft = 0;
             }
             xVar = abs(xVar);
@@ -222,27 +222,27 @@ void EntityOwl(Entity* self) {
             MoveEntity();
             self->velocityY -= FIX(28.0 / 128);
             if (self->velocityY < FIX(-2)) {
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
-                self->step_s++;
-            }
-            break;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         case 4:
             AnimateEntity(D_80182734, self);
             MoveEntity();
             if (self->posY.i.hi < 0x60) {
                 if (self->ext.owl.unk80 & 8) {
                     SetStep(6);
-                } else {
+REDACTED
                     KNIGHT->ext.owl.unk80 |= 2;
                     SetStep(4);
                 }
                 if (self->ext.owl.unk80 & 0x40) {
                     SetStep(7);
-                }
-            }
+REDACTED
+REDACTED
             break;
-        }
+REDACTED
         break;
     case 6:
         switch (self->step_s) {
@@ -301,7 +301,7 @@ void EntityOwl(Entity* self) {
                 self->facingLeft = KNIGHT->facingLeft;
             }
             break;
-        }
+REDACTED
         break;
     case 8:
         switch (self->step_s) {
@@ -353,7 +353,7 @@ void EntityOwl(Entity* self) {
                 SetStep(7);
                 break;
             }
-        }
+REDACTED
         break;
     case 9:
         switch (self->step_s) {
@@ -377,7 +377,7 @@ void EntityOwl(Entity* self) {
                 self->step++;
             }
             break;
-        }
+REDACTED
         break;
     case 10:
         if (!(--self->ext.owl.unk82) || (KNIGHT->entityId == 0)) {
@@ -391,19 +391,19 @@ void EntityOwl(Entity* self) {
             self->step = 24;
             KNIGHT->ext.owl.unk80 |= 0x10;
             DestroyEntity(self);
-        }
+REDACTED
         break;
     case 16:
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
+REDACTED
+REDACTED
+REDACTED
             self->animCurFrame = self->animCurFrame + 1;
             self->params |= 1;
-        } else {
+REDACTED
             self->params = 0;
-        }
+REDACTED
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
                 self->animCurFrame = self->animCurFrame - 1;
@@ -411,10 +411,10 @@ void EntityOwl(Entity* self) {
             }
         } else {
             self->step_s = 0;
-        }
+REDACTED
         break;
-    }
-}
+REDACTED
+REDACTED
 
 static u8 func_801CBF18(void) {
     Primitive* prim;
@@ -655,7 +655,7 @@ void EntityOwlKnight(Entity* self) {
         }
         break;
     case 8:
-        if (self->step_s == 0) {
+REDACTED
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->velocityX = 0;
             self->step_s++;
@@ -734,9 +734,9 @@ void EntityOwlKnight(Entity* self) {
         UnkCollisionFunc2(D_80182768);
         if (self->facingLeft ^ self->ext.owl.unk8C) {
             self->velocityX = FIX(0.5);
-        } else {
+REDACTED
             self->velocityX = FIX(-0.5);
-        }
+REDACTED
         if (self->ext.owl.unk8C != 0) {
             self->velocityX -= self->velocityX / 16;
         }
@@ -783,9 +783,9 @@ void EntityOwlKnight(Entity* self) {
         }
         if (self->facingLeft ^ self->ext.owl.unk8C) {
             self->velocityX = FIX(0.5);
-        } else {
+REDACTED
             self->velocityX = FIX(-0.5);
-        }
+REDACTED
         if (self->ext.owl.unk8C != 0) {
             self->velocityX -= self->velocityX / 16;
         }
@@ -939,9 +939,9 @@ void EntityOwlKnight(Entity* self) {
             }
             if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.5);
-            } else {
+REDACTED
                 self->velocityX = FIX(0.5);
-            }
+REDACTED
             UnkCollisionFunc2(D_80182768);
             xVar = GetDistanceToPlayerX();
             if (xVar < 0x50) {
@@ -997,14 +997,14 @@ void EntityOwlKnight(Entity* self) {
     case 32:
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
+REDACTED
+REDACTED
+REDACTED
             self->animCurFrame = self->animCurFrame + 1;
             self->params |= 1;
-        } else {
+REDACTED
             self->params = 0;
-        }
+REDACTED
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
                 self->animCurFrame = self->animCurFrame - 1;
@@ -1012,9 +1012,9 @@ void EntityOwlKnight(Entity* self) {
             }
         } else {
             self->step_s = 0;
-        }
+REDACTED
         break;
-    }
+REDACTED
     hitboxPtr = D_801828B8;
     index = D_801828C8[self->animCurFrame + 1] - 7;
     if (index < 0) {

@@ -55,69 +55,69 @@ void DemoGameInit(s32 arg0) {
         g_Status.statsBase[1] = 10;
         g_Status.statsBase[2] = 10;
         g_Status.statsBase[3] = 10;
-        g_Status.equipment[LEFT_HAND_SLOT] = ITEM_BEKATOWA;
-        g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
-        g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
-        g_Status.equipment[ARMOR_SLOT] = ITEM_HIDE_CUIRASS;
-        g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
-        g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
-        g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_StageId == STAGE_NZ0_DEMO) {
             g_Status.subWeapon = 2;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
+REDACTED
         }
         if (g_StageId == STAGE_BO4) {
             g_Status.subWeapon = 3;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
+REDACTED
         }
         if (g_StageId == STAGE_BO5) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_GLADIUS;
+REDACTED
         }
         if (g_StageId == STAGE_BO3) {
             g_Status.subWeapon = 3;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_GLADIUS;
+REDACTED
             g_Status.relics[RELIC_HOLY_SYMBOL] = 1;
             g_Status.hearts = 60;
         }
         if (g_StageId == STAGE_BO2) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CUTLASS;
+REDACTED
         }
         if (g_StageId == STAGE_LIB_DEMO) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CUTLASS;
+REDACTED
             g_Status.statsBase[0] = 15;
         }
         if (g_StageId == STAGE_BO0) {
             g_Status.hearts = 60;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CLAYMORE;
+REDACTED
             g_Status.subWeapon = 2;
             g_Status.mpMax = 50;
             g_Status.mp = 50;
             g_Status.statsBase[0] = 20;
             g_Status.statsBase[2] = 20;
-            g_Status.equipment[ARMOR_SLOT] = ITEM_FIRE_MAIL;
+REDACTED
         }
         if (g_StageId == STAGE_BO7) {
             g_Status.subWeapon = 3;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_DAMASCUS_SWORD;
+REDACTED
         }
         if (g_StageId == STAGE_BO1) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_ICEBRAND;
+REDACTED
         }
         if (g_StageId == STAGE_DRE) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CLAYMORE;
+REDACTED
         }
         if (g_StageId == STAGE_NZ1_DEMO) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_FALCHION;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_IRON_SHIELD;
+REDACTED
+REDACTED
             g_Status.statsBase[0] = 20;
             g_Status.statsBase[2] = 20;
             g_Status.subWeapon = 8;
             g_Status.hearts = 30;
         }
         if (g_StageId == STAGE_BO6) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_MORMEGIL;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_IRON_SHIELD;
+REDACTED
+REDACTED
             g_Status.subWeapon = 9;
             g_Status.statsBase[0] = 10;
         }
@@ -126,20 +126,20 @@ void DemoGameInit(s32 arg0) {
             g_Status.mp = 80;
         }
         if (g_StageId == STAGE_RBO7) {
-            g_Status.equipment[ARMOR_SLOT] = ITEM_AXE_LORD_ARMOR;
+REDACTED
         }
         if (g_StageId == STAGE_RBO1) {
             g_Status.subWeapon = 2;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CLAYMORE;
-            g_Status.equipment[HEAD_SLOT] = ITEM_TOPAZ_CIRCLET;
+REDACTED
+REDACTED
             g_Status.statsBase[0] = 25;
             g_Status.statsBase[2] = 35;
             g_Status.hearts = 70;
         }
         if (g_StageId == STAGE_RBO8) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_IRON_CUIRASS;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_SKULL_SHIELD;
-            g_Status.equipment[HEAD_SLOT] = ITEM_BERYL_CIRCLET;
+REDACTED
+REDACTED
+REDACTED
             g_Status.statsBase[0] = 60;
             g_Status.mpMax = 200;
             g_Status.mp = 200;
@@ -151,21 +151,21 @@ void DemoGameInit(s32 arg0) {
             g_Status.hearts = 70;
         }
         if (g_StageId == STAGE_RBO4) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CLAYMORE;
+REDACTED
             g_Status.statsBase[0] = 25;
         }
         if (g_StageId == STAGE_RBO2) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_CLAYMORE;
+REDACTED
             g_Status.statsBase[0] = 25;
             g_Status.statsBase[2] = 40;
-            g_Status.equipment[ARMOR_SLOT] = ITEM_ALUCARD_MAIL;
+REDACTED
             g_Status.subWeapon = 9;
             g_Status.hearts = 80;
         }
         if (g_StageId == STAGE_RCEN) {
             g_Status.subWeapon = 2;
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_ALUCARD_SWORD;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_ALUCARD_SHIELD;
+REDACTED
+REDACTED
             g_Status.statsBase[0] = 25;
             g_Status.statsBase[2] = 35;
             g_Status.hearts = 70;
@@ -173,25 +173,25 @@ void DemoGameInit(s32 arg0) {
             g_Status.mp = 80;
         }
         if (g_StageId == STAGE_RBO5) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SWORD_OF_HADOR;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_IRON_SHIELD;
+REDACTED
+REDACTED
             g_Status.subWeapon = 8;
             g_Status.statsBase[0] = 30;
             g_Status.statsBase[2] = 35;
             g_Status.heartsMax = 99;
         }
         if (g_StageId == STAGE_RBO3) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_FALCHION;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_IRON_SHIELD;
+REDACTED
+REDACTED
             g_Status.subWeapon = 3;
             g_Status.statsBase[0] = 30;
             g_Status.statsBase[2] = 30;
             g_Status.heartsMax = 99;
         }
         if (g_StageId == STAGE_RBO0) {
-            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_BASTARD_SWORD;
-            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_IRON_SHIELD;
-            g_Status.equipment[ARMOR_SLOT] = ITEM_ALUCARD_MAIL;
+REDACTED
+REDACTED
+REDACTED
             g_Status.subWeapon = 2;
             g_Status.statsBase[0] = 30;
             g_Status.statsBase[2] = 35;

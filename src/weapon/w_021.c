@@ -77,7 +77,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
 
     prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
     prim->type = 3;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+REDACTED
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
     if (lowerLeft) {
         prim->b0 = prim->b1 = 0xAF;

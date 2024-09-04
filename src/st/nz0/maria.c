@@ -1,50 +1,50 @@
 #include "nz0.h"
 #include "sfx.h"
 
-void func_801B8E0C(Entity* self) {
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         InitializeEntity(g_MariaInit);
-        D_8003C8B8 = 0;
+REDACTED
         g_unkGraphicsStruct.unk0 = 1;
         g_Player.padSim = PAD_LEFT;
         if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
-        }
+REDACTED
         g_Player.D_80072EFC = 1;
-        break;
-
-    case 1:
-        if (PLAYER.posX.i.hi < 176) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_Player.padSim = 0;
-            self->step++;
-        } else {
+REDACTED
+REDACTED
             g_Player.padSim = 0;
             if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
                 if (g_Timer & 1) {
                     g_Player.padSim = PAD_R2;
-                }
-            } else {
+REDACTED
+REDACTED
                 g_Player.padSim = PAD_LEFT;
-            }
-        }
-        g_Player.D_80072EFC = 1;
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_mariaCutsceneFlags & 0x2000) {
-            D_8003C8B8 = 1;
+REDACTED
             if (g_unkGraphicsStruct.unk0 != 0) {
                 g_unkGraphicsStruct.unk0 = 0;
-            }
-            DestroyEntity(self);
-        }
+REDACTED
+REDACTED
+REDACTED
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
-        break;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 // Maria appearing in the cutscene. Walks in from the door on the left, talks
 // to Alucard, and departs to the right.
 void EntityMaria(Entity* self) {

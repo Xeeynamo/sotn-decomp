@@ -21,9 +21,9 @@ void EntityLifeUpSpawn(Entity* self) {
     s32 k;
     s16 xVar;
     s16 yVar;
-
-    switch (self->step) {
-    case 0:
+REDACTED
+REDACTED
+REDACTED
         InitializeEntity(g_EInitGeneric);
         self->animSet = 2;
         self->animCurFrame = 0;

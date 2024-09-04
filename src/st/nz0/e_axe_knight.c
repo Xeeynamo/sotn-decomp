@@ -1,24 +1,24 @@
-/*
- * Overlay: NZ0
- * Enemy: Axe Knight
- * Description: Low level Axe Knight
- */
-
-#include "nz0.h"
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 #include "sfx.h"
-
-typedef enum {
-    AXE_KNIGHT_INIT,
-    AXE_KNIGHT_IDLE,
-    AXE_KNIGHT_WALK_TOWARDS_PLAYER,
-    AXE_KNIGHT_WALK_AWAY_FROM_PLAYER,
-    AXE_KNIGHT_STANDING_THROW,
-    AXE_KNIGHT_DUCKING_THROW,
-    AXE_KNIGHT_UNUSED, // Charge Attack missing step from the blue AxeKnight
-    AXE_KNIGHT_ARCING_THROW, // Unused, present in the blue AxeKnight
-    AXE_KNIGHT_DYING,
-} EntityAxeKnightSteps;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 extern u16 g_EAxeKnightInit[];
 static s16 sensors_move[] = {0, 32, 8, 0};
 static s16 sensors_ground[4][2] = {{0, 32}, {0, 4}, {8, -4}, {-16, 0}};
@@ -61,29 +61,29 @@ static u32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
 // Weirdly, this function ONLY acts on prim->next, it does not act on prim.
 // However, it does call functions on prim.
 void func_801C3F9C(AxePrim* prim) {
-    Collider collider;
+REDACTED
     Entity* newEnt;
     s16 yVar;
-
+REDACTED
     UnkPrimHelper((Primitive*)prim);
     switch (prim->next->step) {
-    case 0:
+REDACTED
         prim->next->unk0C = 0;
         prim->next->unk10 = -0x10000;
         prim->next->step = 1;
         prim->next->timer = 0x100;
         return;
-    case 1:
+REDACTED
         yVar = prim->next->y0 + (prim->next->unk1E / 3);
         g_api.CheckCollision(prim->next->x1, yVar, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             prim->next->y0 += collider.unk18;
             if (prim->next->unk10 < 0x4000) {
                 prim->next->timer = 1;
-            }
+REDACTED
             prim->next->unk10 = -prim->next->unk10;
             prim->next->unk10 -= prim->next->unk10 / 2;
-        }
+REDACTED
         prim->next->unk10 += 0x1800;
         prim->next->timer--;
         if (prim->next->timer == 0) {
@@ -93,15 +93,15 @@ void func_801C3F9C(AxePrim* prim) {
                 newEnt->posX.i.hi = prim->next->x1;
                 newEnt->posY.i.hi = prim->next->y0;
                 newEnt->params = 0;
-            }
+REDACTED
             PlaySfxPositional(SFX_EXPLODE_B);
             UnkPolyFunc0((Primitive*)prim);
-        }
-        return;
-    }
-}
-
-// Called by EntityAxeKnight
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 extern s16* sprites_nz0_3[];
 s32 func_801C4198(Entity* axeKnight) {
     Primitive* prim;
@@ -194,313 +194,313 @@ s32 func_801C4198(Entity* axeKnight) {
     }
     return 0;
 }
-
-void func_801C4550(void) {
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2 -= 3;
-    } else {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         SetStep(steps[(Random() & 7)]);
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2 = 256;
-    }
-}
-
-// green knight that throws axes
-void EntityAxeKnight(Entity* self) {
-    Entity* newEntity;
-    u8 animStatus;
-    s8* hitbox;
-    s16 temp;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (self->flags & FLAG_DEAD) {
-        if (self->step != AXE_KNIGHT_DYING) {
+REDACTED
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_SCREAM);
             AxeKnightDeath();
             self->hitboxState = 0;
-            self->ext.generic.unk80.modeS16.unk0 = 65;
-            self->zPriority -= 0x10;
-            SetStep(AXE_KNIGHT_DYING);
-        }
-    }
-
-    switch (self->step) {
-    case AXE_KNIGHT_INIT:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         InitializeEntity(g_EAxeKnightInit);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
-        self->ext.generic.unk7C.S8.unk1 = 0;
-        self->ext.generic.unk80.modeS16.unk2 = 512;
-
-    case AXE_KNIGHT_IDLE:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-        }
-        break;
-
-    case AXE_KNIGHT_WALK_TOWARDS_PLAYER:
-        if (self->step_s == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.1875);
-            } else {
+REDACTED
                 self->velocityX = FIX(0.1875);
-            }
-            self->step_s++;
-        }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         animStatus = AnimateEntity(anim_walk, self);
-        if (self->animFrameDuration == 0) {
+REDACTED
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        }
-
-        if (animStatus == 0) {
+REDACTED
+REDACTED
+REDACTED
             if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.1875);
-            } else {
+REDACTED
                 self->velocityX = FIX(0.1875);
-            }
+REDACTED
             if (GetDistanceToPlayerX() < 96) {
-                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 1;
-            }
-        }
-
-        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (self->facingLeft == 0) {
                 self->velocityX -= 0x300;
-            } else {
+REDACTED
                 self->velocityX += 0x300;
-            }
+REDACTED
         } else if (self->facingLeft != 0) {
             self->velocityX -= 0x300;
-        } else {
+REDACTED
             self->velocityX += 0x300;
-        }
-
+REDACTED
+REDACTED
         if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
-        }
-        func_801C4550();
-        break;
-
-    case AXE_KNIGHT_WALK_AWAY_FROM_PLAYER:
-        if (self->step_s == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (self->facingLeft == 0) {
                 self->velocityX = FIX(0.1875);
-            } else {
+REDACTED
                 self->velocityX = FIX(-0.1875);
-            }
-            self->step_s++;
-        }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         animStatus = AnimateEntity(anim_walk, self);
-        if (self->animFrameDuration == 0) {
+REDACTED
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        }
-        if (animStatus == 0) {
+REDACTED
+REDACTED
             if (self->facingLeft == 0) {
                 self->velocityX = FIX(0.1875);
-            } else {
+REDACTED
                 self->velocityX = FIX(-0.1875);
-            }
-
+REDACTED
+REDACTED
             if (GetDistanceToPlayerX() > 80) {
-                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 0;
-            }
-        }
-
-        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (self->facingLeft == 0) {
                 self->velocityX += 0x200;
-            } else {
+REDACTED
                 self->velocityX -= 0x200;
-            }
+REDACTED
         } else if (self->facingLeft != 0) {
             self->velocityX += 0x200;
-        } else {
+REDACTED
             self->velocityX -= 0x200;
-        }
-
+REDACTED
+REDACTED
         if (UnkCollisionFunc2(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
-        }
-        func_801C4550();
-        break;
-
-    case AXE_KNIGHT_STANDING_THROW:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         animStatus = AnimateEntity(anim_throw_stand, self);
-        if (animStatus == 0) {
-        label:
+REDACTED
+REDACTED
             if (GetDistanceToPlayerX() < 89) {
-                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 1;
-            } else {
-                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 0;
-            }
-        } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
-            if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
+REDACTED
+REDACTED
                 newEntity->facingLeft = self->facingLeft;
-                newEntity->posY.i.hi -= 12;
+REDACTED
                 if (newEntity->facingLeft != 0) {
-                    newEntity->posX.i.hi += 8;
-                } else {
-                    newEntity->posX.i.hi -= 8;
-                }
-            }
-        }
-        break;
-
-    case AXE_KNIGHT_DUCKING_THROW:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         animStatus = AnimateEntity(anim_throw_duck, self);
-        if (animStatus != 0) {
-            if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
+REDACTED
+REDACTED
                 PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
-                if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
+REDACTED
+REDACTED
                     newEntity->facingLeft = self->facingLeft;
-                    newEntity->params = 1;
-                    newEntity->posY.i.hi += 12;
+REDACTED
+REDACTED
                     if (newEntity->facingLeft != 0) {
-                        newEntity->posX.i.hi += 8;
-                    } else {
-                        newEntity->posX.i.hi -= 8;
-                    }
-                }
-            }
-        } else {
-            goto label;
-        }
-        break;
-
-    case AXE_KNIGHT_ARCING_THROW: // unused
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         animStatus = AnimateEntity(anim_throw_stand, self);
-        if (animStatus == 0) {
+REDACTED
             if (GetDistanceToPlayerX() > 88) {
-                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 0;
-            } else {
-                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 1;
-            }
-            break;
-        }
-
-        if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
-            if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
+REDACTED
+REDACTED
                 newEntity->facingLeft = self->facingLeft;
-                newEntity->params = 2;
-                newEntity->posY.i.hi -= 40;
+REDACTED
+REDACTED
                 if (newEntity->facingLeft != 0) {
-                    newEntity->posX.i.hi += 16;
-                } else {
-                    newEntity->posX.i.hi -= 16;
-                }
-            }
-        }
-        break;
-
-    case AXE_KNIGHT_DYING:
-        if (self->ext.generic.unk80.modeS16.unk0 != 0) {
-            temp = --self->ext.generic.unk80.modeS16.unk0;
-            if (!(self->ext.generic.unk80.modeS16.unk0 & 7)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEntity != NULL) {
+REDACTED
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                    temp >>= 3;
-                    newEntity->params = 2;
+REDACTED
+REDACTED
                     newEntity->posX.i.hi += dead_particle_pos[temp][0];
                     newEntity->posY.i.hi += dead_particle_pos[temp][1];
-                }
-            }
-        }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (AnimateEntity(anim_die, self) == 0) {
-            if (func_801C4198(self) != 0) {
-                DestroyEntity(self);
-                return;
-            }
-            if (self->step_s < 16) {
-                self->animCurFrame = 0;
-            }
-        }
-        break;
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     hitbox = hitboxes;
     hitbox += hitbox_lookup[self->animCurFrame] * 4;
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
-    self->hitboxWidth = hitbox[0];
-    self->hitboxHeight = hitbox[1];
-}
-
-void EntityAxeKnightRotateAxe(void) {
-    if (g_CurrentEntity->params != 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_CurrentEntity->rotZ += 0x80;
-    } else {
+REDACTED
         g_CurrentEntity->rotZ -= 0x80;
-    }
-
+REDACTED
+REDACTED
     g_CurrentEntity->rotZ &= 0xFFF;
-}
-
+REDACTED
+REDACTED
 void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 velocityX;
-
+REDACTED
     if (entity->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_WEAPON_BREAK);
         EntityExplosionSpawn(0, 0);
-        return;
-    }
-
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_80180C70);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->velocityY = init_velocity_y[entity->params];
         velocityX = init_velocity_x[entity->params];
-
+REDACTED
         if (entity->facingLeft == 0) {
             entity->velocityX = -velocityX;
-        } else {
+REDACTED
             entity->velocityX = velocityX;
-        }
-
-        entity->ext.generic.unk7C.s = -0x40;
-
-        if (entity->params == 2) {
-            entity->step++;
-            return;
-        }
-        break;
-
-    case 1:
-        EntityAxeKnightRotateAxe();
-        if ((u16)entity->ext.generic.unk7C.s < 0x20) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             if (entity->facingLeft != 0) {
                 entity->velocityX -= FIX(0.125);
-            } else {
+REDACTED
                 entity->velocityX += FIX(0.125);
-            }
-        }
-
-        entity->ext.generic.unk7C.s++;
-        MoveEntity();
-        break;
-
-    case 2:
-        EntityAxeKnightRotateAxe();
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         entity->velocityY += FIX(0.125);
-        MoveEntity();
-        break;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED

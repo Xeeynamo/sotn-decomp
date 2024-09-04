@@ -24,12 +24,12 @@ void EntityStageNamePopup(Entity* self) {
         InitializeEntity(g_EInitGeneric);
         self->ext.stpopupj.unk8C = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 181);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        self->primIndex = primIndex;
-        self->flags |= FLAG_HAS_PRIMS;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         prim = &g_PrimBuf[primIndex];
         self->ext.stpopupj.prim = prim;
         for (i = 0; i < 2; i++) {
@@ -52,9 +52,9 @@ void EntityStageNamePopup(Entity* self) {
             if (i) {
                 prim->r0 = prim->b0 = prim->g0 = 0;
             }
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+REDACTED
+REDACTED
+REDACTED
 
             prim->priority = 0xC0 - i;
             prim->drawMode = DRAW_COLORS;

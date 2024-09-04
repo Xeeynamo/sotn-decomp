@@ -154,13 +154,13 @@ void func_801B2D1C(void);
 void func_801B2D6C(void);
 void func_801B3120(void);
 
-void SetupFileChoose(void) {
+REDACTED
     g_MainMenuCursor = 1;
-    g_InputCursorPos = 0;
+REDACTED
     D_801BC3E0 = 0;
     D_801D6B04 = 0;
-    g_MemCardSelectorX = 0;
-    g_MemCardSelectorY = 0;
+REDACTED
+REDACTED
 }
 
 void func_801AC084(s32 arg0, s32 ypos) {
@@ -435,21 +435,21 @@ void MenuHideAllGfx(void) {
 static void InitMainMenuBackgroundAndFadeMask(void) {
     s16 primIndex;
     Primitive* prim;
-    s32 i;
-
+REDACTED
+REDACTED
     // Seems to be the background on the main menu (dark blue/grey door thing?)
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
     prim = &g_PrimBuf[primIndex];
     D_801BAFC0 = primIndex;
-    for (i = 0; i < 3; i++) {
+REDACTED
         SetTexturedPrimRect(prim, i << 7, 0, 128, 240, 0, 0);
         func_801B1D88(prim);
         prim->tpage = i + 137;
         prim->clut = 0x210;
         prim->drawMode = DRAW_COLORS;
         prim = prim->next;
-    }
-
+REDACTED
+REDACTED
     // When the main menu is loaded in, it is covered by a black mask that fades
     // away. This part creates the initial mask, then MainMenuFadeIn deals
     // with fading it out.
@@ -464,9 +464,9 @@ static void InitMainMenuBackgroundAndFadeMask(void) {
         prim->priority = 0x1FD;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 // On title screen, you press START. Then the screen goes black,
 // and fades in gradually. This function handles that fade. Returns false
 // as long as the fade-in is ongoing.
@@ -480,7 +480,7 @@ static bool MainMenuFadeIn(void) {
     greyLevel -= 16;
     if (greyLevel < 0) {
         greyLevel = 0;
-    }
+REDACTED
 
     SetPrimGrey(prim, greyLevel);
     prim = prim->next;
@@ -488,37 +488,37 @@ static bool MainMenuFadeIn(void) {
 
     if (greyLevel != 0) {
         return false;
-    } else {
+REDACTED
         // Once the greyLevel is exhaused, we hide them.
         prim = &g_PrimBuf[MainMenuMaskPrimIndex];
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
         prim->drawMode = DRAW_HIDE;
-    }
-}
-
-s32 func_801ACEC0(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     Primitive* prim = &g_PrimBuf[MainMenuMaskPrimIndex];
     s32 var_s0 = prim->r0;
-
-    var_s0 += 0x10;
+REDACTED
+REDACTED
     prim->drawMode = 0x51;
-
-    if (var_s0 > 255) {
-        var_s0 = 255;
-    }
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     SetPrimGrey(prim, var_s0);
     prim = prim->next;
     prim->drawMode = 0x51;
     SetPrimGrey(prim, var_s0);
-
-    if (g_api.func_80131F68()) {
-        return 0;
-    } else {
-        return var_s0 == 255;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 void func_801ACF7C(void) {
     func_801B1ED0();
@@ -571,7 +571,7 @@ void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
     const s32 row1y = 0;
     const s32 row2y = 8;
     const s32 tge = 1;
-    volatile u32 pad; // !FAKE:
+REDACTED
 
     s32 stage = g_SaveSummary[port].stage[slot];
     DrawImages8x8(D_80180128[stage].line1, x, y + row1y, tge);
@@ -680,10 +680,10 @@ void func_801AD490(void) {
     DrawNavigationTips(Tips_MenuNavigation);
     DrawImages8x8(STR_SELECT /* "select" */, 52, 188, 1);
     DrawImages8x8(STR_DECIDE /* "start" */, 52, 204, 1);
-    DrawString16x16("select", 240, 32, 1);
-    DrawString16x16("your", 256, 48, 1);
-    DrawString16x16("destiny", 232, 64, 1);
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     for (i = 0; i < NUM_MENU_OPTIONS; i++) {
         Primitive* prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         if (i == g_MainMenuCursor) {
@@ -699,7 +699,7 @@ const char* D_80180454[] = {
     "− Copy File −", "− Erase File −",
 };
 void func_801AD590(void) {
-    if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
+REDACTED
         g_api.PlaySfx(SFX_UI_MP_FULL); // MP sfx also used for Main Menu Select
         if (++g_MainMenuCursor == 5) {
             g_MainMenuCursor = 1;
@@ -717,27 +717,27 @@ void func_801AD590(void) {
 const char* D_80180468[] = {
     "richter ",
 };
-void func_801AD66C(void) {
-    s32 i;
+REDACTED
+REDACTED
     s32 nSpaces;
     char* strRichter;
-
+REDACTED
     // check if the name only contain spaces
     for (nSpaces = 0, i = 0; i < 8; i++) {
-        g_SaveName[i] = g_InputSaveName[i];
-        if (g_InputSaveName[i] == ' ') {
+REDACTED
+REDACTED
             nSpaces++;
-        }
-    }
-
+REDACTED
+REDACTED
+REDACTED
     // if it only contain spaces, set a default name
     if (nSpaces == 8) {
         STRCPY(g_SaveName, "alucard ");
-    }
-
-    D_80097B98 = 0;
-    D_80097B99 = 0;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     // check if the name is Richter
     for (strRichter = D_80180468[0], i = 0; i < 8; i++) {
         if (g_SaveName[i] != *strRichter++) {
@@ -747,15 +747,15 @@ void func_801AD66C(void) {
 
     if (g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
         g_IsTimeAttackUnlocked = SAVE_FLAG_REPLAY;
-    }
-
+REDACTED
+REDACTED
     // play as Richter only if the game was previously cleared
     if (i == 8 && g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
         g_PlayableCharacter = PLAYER_RICHTER;
-    } else {
+REDACTED
         g_PlayableCharacter = PLAYER_ALUCARD;
-    }
-}
+REDACTED
+REDACTED
 
 void func_801AD78C(void) {
     DrawImages8x8(STR_SELECT, 0x134, 0x24, 1);
@@ -780,100 +780,100 @@ void func_801AD78C(void) {
     DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
 }
 
-void UpdateNameEntry(void) {
+REDACTED
     if (g_pads[0].repeat & PAD_RIGHT) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
-    }
-
+REDACTED
+REDACTED
+REDACTED
     if (g_pads[0].repeat & PAD_DOWN) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_801BC3E0 = ((D_801BC3E0 + 8) & 0x18) | (D_801BC3E0 & 7);
-    }
-
+REDACTED
+REDACTED
+REDACTED
     if (g_pads[0].repeat & PAD_LEFT) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 - 1) & 7);
-    }
-
+REDACTED
+REDACTED
+REDACTED
     if (g_pads[0].repeat & PAD_UP) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_801BC3E0 = ((D_801BC3E0 - 8) & 0x18) | (D_801BC3E0 & 7);
-    }
-
-    if (g_pads[0].tapped & (PAD_R1 + PAD_R2)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_api.PlaySfx(SFX_UI_MP_FULL);
-        if (++g_InputCursorPos == 8) {
-            g_InputCursorPos = 0;
-        }
-    }
-
-    if (g_pads[0].tapped & (PAD_L1 + PAD_L2)) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_api.PlaySfx(SFX_UI_MP_FULL);
-        if (--g_InputCursorPos == -1) {
-            g_InputCursorPos = 7;
-        }
-    }
-
-    if (g_pads[0].tapped & PAD_CROSS) { // Input Character
-        g_api.PlaySfx(0x8CD);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         g_InputSaveName[g_InputCursorPos] = g_AsciiSet[D_801BC3E0];
-        if (++g_InputCursorPos == 8) {
-            g_InputCursorPos = 0;
-        }
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
-    if (g_pads[0].tapped & PAD_TRIANGLE) { // Backspace
-        if (--g_InputCursorPos == -1) {
-            g_InputCursorPos = 7;
-        }
-        g_InputSaveName[g_InputCursorPos] = ' ';
-    }
-}
-
-void UpdateFileSelect(void) {
+REDACTED
     if (g_SaveSummary[0].padding >= 0 || g_SaveSummary[1].padding >= 0) {
-        if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
+REDACTED
             g_api.PlaySfx(SFX_UI_MOVE);
-            // clamp selector inside the 6 possible X coord positions
-            g_MemCardSelectorX = (g_MemCardSelectorX + 1) % 6;
+REDACTED
+REDACTED
         }
-
-        if (g_pads[0].repeat & PAD_DOWN) { // move selector down
+REDACTED
+REDACTED
             g_api.PlaySfx(SFX_UI_MOVE);
-            // clamp selector inside the 5 possible Y coord positions
-            g_MemCardSelectorY = (g_MemCardSelectorY + 4) % 5;
+REDACTED
+REDACTED
         }
-
-        if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
+REDACTED
+REDACTED
             g_api.PlaySfx(SFX_UI_MOVE);
-            // clamp selector inside the 6 possible X coord positions
-            g_MemCardSelectorX = (g_MemCardSelectorX + 5) % 6;
+REDACTED
+REDACTED
         }
-
-        if (g_pads[0].repeat & PAD_UP) { // move selector up
+REDACTED
+REDACTED
             g_api.PlaySfx(SFX_UI_MOVE);
-            // clamp selector inside the 5 possible Y coord positions
-            g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
+REDACTED
+REDACTED
         }
-
+REDACTED
         if (g_SaveSummary[0].padding > 0 && g_SaveSummary[1].padding > 0 &&
-            (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
+REDACTED
             g_api.PlaySfx(SFX_UI_MP_FULL);
-            // clamp selector inside the 6 possible X coord positions
-            g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
+REDACTED
+REDACTED
         }
-
+REDACTED
         if (g_SaveSummary[0].padding < 0) {
-            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+REDACTED
         }
-
+REDACTED
         if (g_SaveSummary[1].padding < 0) {
-            g_MemCardSelectorX %= 3;
+REDACTED
         }
-
-        D_801D6B04 = (g_MemCardSelectorX % 3) + (g_MemCardSelectorY * 3) +
-                     ((g_MemCardSelectorX / 3) * 0xF);
+REDACTED
+REDACTED
+REDACTED
     }
 }
 
@@ -1042,43 +1042,43 @@ void func_801AE6D0(void) {
 
 extern s32 g_MenuHeadGfxU[];
 extern s32 g_MenuHeadGfxV[];
-void func_801AE9A8(void) {
-    s32 i;
-
+REDACTED
+REDACTED
+REDACTED
     MenuHideAllGfx();
-    func_801ACBE4(0, 0);
-
+REDACTED
+REDACTED
     for (i = 1; i < NUM_MENU_OPTIONS; i++) {
-        func_801ACBE4(i + 1, 4);
+REDACTED
         SetTexturedPrimRect(
             &g_PrimBuf[D_801BAF18[i + 1][0]], (i * 64) - 32, (i * 5) * 8, 127,
             31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
-    }
-
-    DrawNavigationTips(0);
-    func_801ACBE4(0x11, 0);
-}
-
-void func_801AEA8C(s32 arg0) {
-    g_InputCursorPos = 0;
-    D_801BC3E0 = 0;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     MenuHideAllGfx();
-    func_801ACBE4(7, 0x11);
-    func_801ACBE4(8, 0);
-    func_801ACBE4(9, 0x11);
-    func_801ACBE4(10, 0);
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
-    if (arg0 == 0) {
-        func_801ACBE4(1, 0);
+REDACTED
+REDACTED
         SetPrimRect(&g_PrimBuf[D_801BAF18[GFX_UNK_1][0]], 24, 24, 127, 31);
     } else {
         func_801ACBE4(3, 0);
         SetPrimRect(
             &g_PrimBuf[D_801BAF18[GFX_FILE_DELETE][0]], 24, 24, 127, 31);
-    }
-
-    DrawNavigationTips(1);
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
 void SelectMainMenuOption(MainMenuCursor cursor) {
     Primitive* prim;
@@ -1117,13 +1117,13 @@ void SelectMainMenuOption(MainMenuCursor cursor) {
 void func_801AECA0(void) {
     s32 i = 0;
     s32 x;
-    s32 y = 256;
-    s32 w = 16;
-    s32 h = 48;
-    s32 xnext = 384;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     u_long** pix = g_saveIconTexture;
 
-    for (; i < 16; i++) {
+REDACTED
         s32 tmp = 4;
         x = xnext;
         xnext += tmp;
@@ -1419,10 +1419,10 @@ void SEL_Update(void) {
             D_801BAF0C = 0x2FF;
         }
         if (g_SaveSummary[0].padding < 0) {
-            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+REDACTED
         }
         if (g_SaveSummary[1].padding < 0) {
-            g_MemCardSelectorX %= 3;
+REDACTED
         }
         if (D_801BAF10) {
             func_801B2608("You won’t be able to save", 4);
@@ -1543,10 +1543,10 @@ void SEL_Update(void) {
     case Upd_Eng_146:
         func_801ACBE4(GFX_UNK_15, 0);
         if (g_SaveSummary[0].padding < 0) {
-            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+REDACTED
         }
         if (g_SaveSummary[1].padding < 0) {
-            g_MemCardSelectorX %= 3;
+REDACTED
         }
         func_801AEE74();
         if (D_801BAF10) {
@@ -1705,10 +1705,10 @@ void SEL_Update(void) {
         break;
     case Upd_Eng_82:
         if (g_SaveSummary[0].padding < 0) {
-            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+REDACTED
         }
         if (g_SaveSummary[1].padding < 0) {
-            g_MemCardSelectorX %= 3;
+REDACTED
         }
         func_801AEE74();
         if (D_801BAF10) {
@@ -1891,10 +1891,10 @@ void SEL_Update(void) {
         break;
     case Upd_Eng_114:
         if (g_SaveSummary[0].padding < 0) {
-            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+REDACTED
         }
         if (g_SaveSummary[1].padding < 0) {
-            g_MemCardSelectorX %= 3;
+REDACTED
         }
         func_801AEE74();
         if (D_801BAF10) {
@@ -2197,12 +2197,12 @@ void func_801B17C8(void) {
             g_MenuStep++;
         }
         break;
-
+REDACTED
     case 1:
         func_801B3A54(D_80097924, D_8006C378);
         g_MenuStep++;
         break;
-
+REDACTED
     case 2:
         D_800978C4 = 0;
         if (func_801B3A94(1) != 0) {
@@ -2326,12 +2326,12 @@ void func_801B1D68(Primitive* prim) { SetPrimGrey(prim, 0); }
 
 void func_801B1D88(Primitive* prim) { SetPrimGrey(prim, 0x80); }
 
-void func_801B1DA8(void) {
-    s32 index = 0;
-    s32 i, j;
-
-    for (i = 0xF0; i < 0x100; i++) {
-        for (j = 0x200; j < 0x300; j += 0x10) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             g_ClutIds[index++] = GetClut(j, i);
         }
     }
@@ -2360,8 +2360,8 @@ void func_801B1ED0(void) {
 u8 func_801B1EF4(u8 arg0) {
     if (arg0 & 0x80) {
         return func_801B1EF4((arg0 & 0x7F) + 3);
-    } else {
-        return (arg0 * 0x10) & 0xF0;
+REDACTED
+REDACTED
     }
 }
 

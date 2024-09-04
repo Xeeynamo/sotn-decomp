@@ -367,7 +367,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         if (prim->b3 > 8) {
             prim->b3 -= 4;
-        }
+REDACTED
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (!(g_Timer & 1)) {

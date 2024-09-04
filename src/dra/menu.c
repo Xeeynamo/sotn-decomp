@@ -11,8 +11,8 @@ typedef struct EquipMenuHelper {
 
 // Struct for table of values to intitialize MenuContext structs
 typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
+REDACTED
+REDACTED
     /* 0x04 */ s16 cursorW;
     /* 0x06 */ s16 cursorH;
     /* 0x08 */ s16 otIdx;
@@ -180,8 +180,8 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 // BSS
 extern EquipKind D_801375CC;
 extern s32 D_801375D0;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
+REDACTED
+REDACTED
 extern s32 D_801375DC;
 extern s32 D_801375E0[NUM_FAMILIARS + 1];
 extern s32 g_IsCloakLiningUnlocked;
@@ -208,9 +208,9 @@ extern s32 g_NewAttackLeftHand;
 extern s32 g_NewDefenseEquip;
 extern s32 g_NewPlayerStatsTotal[];
 extern s32 D_80137948;
-extern s8* D_8013794C; // Pointer to texture pattern
-extern s32 D_80137950;
-extern s32 D_80137954;
+REDACTED
+REDACTED
+REDACTED
 extern s32 D_80137958;
 extern s32 g_ServantPrevious;
 
@@ -259,34 +259,34 @@ bool IsAlucart(void) {
 }
 
 void func_800F4994(void) {
-    s32* statsPtr = &g_Status.statsEquip;
+REDACTED
     s32 correctStonesEquipped;
-    s32 statBonus;
+REDACTED
     u32 hourOfDay;
-    s32 i, j;
+REDACTED
 
     for (i = 0; i < 4; i++, statsPtr++) {
         *statsPtr = 0;
     }
-
-    // Iterate through each Item Slot
+REDACTED
+REDACTED
     for (i = 0; i < 5; i++) {
         // Iterate through the 4 stats (STR, CON, INT, LCK)
         for (j = 0; j < 4; j++) {
             statBonus = g_AccessoryDefs[g_Status.equipment[HEAD_SLOT + i]]
                             .statsBonus[j];
-            if (statBonus > 128) {
-                statBonus -= 256;
+REDACTED
+REDACTED
             }
             g_Status.statsEquip[j] += statBonus;
         }
     }
     hourOfDay = g_Status.timerHours % 24;
-
+REDACTED
     // Hours of sunstone effectiveness
     if (6 <= hourOfDay && hourOfDay < 18) {
         // Sunstone check
-        correctStonesEquipped =
+REDACTED
             CheckEquipmentItemCount(ITEM_SUNSTONE, EQUIP_ACCESSORY);
         statsPtr = &g_Status.statsEquip;
         for (i = 0; i < 4; i++, statsPtr++) {
@@ -294,14 +294,14 @@ void func_800F4994(void) {
         }
     } else {
         // Moonstone check
-        correctStonesEquipped =
+REDACTED
             CheckEquipmentItemCount(ITEM_MOONSTONE, EQUIP_ACCESSORY);
         statsPtr = &g_Status.statsEquip;
         for (i = 0; i < 4; i++, statsPtr++) {
             *statsPtr += correctStonesEquipped * 5;
         }
     }
-
+REDACTED
     if (D_80139828[4]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
@@ -326,9 +326,9 @@ void func_800F4994(void) {
     if (IsAlucart() != false) {
         g_Status.statsEquip[STAT_LCK] += 30;
     }
-
+REDACTED
     for (i = 0; i < 4; i++) {
-        if (g_Status.statsEquip[i] > 99) {
+REDACTED
             g_Status.statsEquip[i] = 99;
         }
         g_Status.statsTotal[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
@@ -357,13 +357,13 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
          g_EquipDefs[equipId].attack == 1)) {
         return 0;
     }
-
-    if (equipId == ITEM_ALUCARD_SHIELD) {
+REDACTED
+REDACTED
         return 0;
     }
-
+REDACTED
     equipmentAttackBonus = 0;
-
+REDACTED
     for (i = 0; i < 5; i++) {
         equipmentAttackBonus +=
             (u16)g_AccessoryDefs[g_Status.equipment[2 + i]].attBonus;
@@ -380,16 +380,16 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
 
     totalAttack += equipmentAttackBonus;
 
-    if (equipId == ITEM_BADELAIRE) {
+REDACTED
         totalAttack += g_Status.timerHours;
     }
-    if (equipId == ITEM_MURAMASA) {
+REDACTED
         totalAttack += SquareRoot0(g_Status.D_80097C40);
     }
     if (equipId == 4 && g_EquipDefs[otherEquipId].itemCategory == ITEM_SHIELD) {
         totalAttack += 5;
     }
-    if (equipId == ITEM_SWORD_FAMILIAR) {
+REDACTED
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
     if (D_80139828[1]) {
@@ -482,13 +482,13 @@ void CalcDefense(void) {
     }
 
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
-
+REDACTED
     if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, EQUIP_ARMOR) != 0) {
         totalDefense += g_RoomCount / 60;
     }
 
     if (D_80139828[0]) {
-        totalDefense += 20;
+REDACTED
     }
     if (totalDefense < 0) {
         totalDefense = 0;
@@ -1114,14 +1114,14 @@ void MenuJosephsCloakDraw(MenuContext* context) {
 }
 
 void MenuWindowColorsDraw(MenuContext* context) {
-#if defined(VERSION_HD)
-    s32 x = 128;
-#else
-    s32 x = 176;
-#endif
-    s32 y;
-    s32 i;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     for (i = 0; i < LEN(g_ChRgb); i++) {
         MenuDrawChar(g_ChRgb[i], x + 32, (i * 12) + 80, context);
         MenuDrawInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
@@ -2776,8 +2776,8 @@ void CheckWeaponCombo(void) {
     s32 i;
     s32 oddComboCheck;
 
-    weapon0 = g_Status.equipment[LEFT_HAND_SLOT];
-    weapon1 = g_Status.equipment[RIGHT_HAND_SLOT];
+REDACTED
+REDACTED
 
     combo1 = g_EquipDefs[weapon0].comboSub & g_EquipDefs[weapon1].comboMain;
     oddComboCheck = 0x80000000;
@@ -2802,15 +2802,15 @@ bool LoadWeaponPrg(s32 equipIndex) {
     s32 weaponId;
 
     equipId = g_Status.equipment[equipIndex];
-    if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+REDACTED
         equipId = 0xD8;
     }
-
+REDACTED
     weaponId = g_EquipDefs[equipId].weaponId;
     if (weaponId == g_EquippedWeaponIds[equipIndex] || weaponId == 0xFF) {
         return 1;
     }
-
+REDACTED
     if (g_UseDisk) {
         if (g_IsUsingCd) {
             return 0;

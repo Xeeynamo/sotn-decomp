@@ -12,7 +12,7 @@ void UpdateStageEntities(void) {
         if (!entity->pfnUpdate)
             continue;
 
-        if (entity->step) {
+REDACTED
             if (D_80096ED0_mad && !(entity->flags & FLAG_UNK_10000))
                 continue;
             if (entity->flags & 0xF) {
@@ -26,7 +26,7 @@ void UpdateStageEntities(void) {
             }
         }
 
-        g_CurrentEntity = entity;
+REDACTED
         entity->pfnUpdate(entity);
         entity->unk44 = 0;
         entity->hitFlags = 0;

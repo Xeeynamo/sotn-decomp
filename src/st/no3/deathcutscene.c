@@ -3,35 +3,35 @@
 void func_801BE544(void) {
     g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
     g_Dialogue.nextCharX = 0x182; // for all other cutscenes (so far)!
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 s32 func_801BE598(s32 textDialogue) {
-    Primitive* prim;
-    s16 firstPrimIndex;
-
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    g_Dialogue.primIndex[2] = firstPrimIndex;
-    if (firstPrimIndex == -1) {
-        g_Dialogue.primIndex[2] = 0;
-        return 0;
-    }
-    g_Dialogue.nextCharDialogue = textDialogue;
-    g_Dialogue.unk3C = 0;
-    g_Dialogue.primIndex[1] = -1;
-    g_Dialogue.primIndex[0] = -1;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     func_801BE544();
 
     //! FAKE:
     if (prim && prim) {
-    }
-
-    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[1] = prim->next;
 
@@ -49,24 +49,24 @@ s32 func_801BE598(s32 textDialogue) {
 
     prim->type = 4;
     prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 3;
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
-    prim->x0 = prim->x2 = 4;
-    prim->x1 = prim->x3 = 0xF8;
-    prim->priority = 0x1FD;
+REDACTED
+REDACTED
+REDACTED
     prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 1;
-    prim->x0 = 3;
-    prim->y0 = 0x2F;
-    prim->v0 = 0x4A;
-    prim->r0 = prim->g0 = prim->b0 = 0xFF;
-    prim->priority = 0x1FC;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     prim->drawMode = DRAW_HIDE;
     return 1;
 }
@@ -87,10 +87,10 @@ void func_801BE7BC(void) {
     func_801BE75C(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x16;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
+REDACTED
+REDACTED
     prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
+REDACTED
     prim->x0 = prim->x0 + 4;
     prim->v0 = g_Dialogue.nextCharY * 0xC;
     prim->u1 = 0xC0;
@@ -98,7 +98,7 @@ void func_801BE7BC(void) {
     prim->priority = 0x1FF;
     prim->drawMode = DRAW_DEFAULT;
 }
-
+REDACTED
 // Creates primitives for the actor name at the head of the dialogue
 void func_801BE870(u16 actorIndex, Entity* self) {
     Primitive* prim;
@@ -133,7 +133,7 @@ void func_801BE870(u16 actorIndex, Entity* self) {
 
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
-    g_Dialogue.primIndex[1] = primIndex;
+REDACTED
     actorName = D_80181ACC[actorIndex];
     x = 0x38;
     while (prim != NULL) {
@@ -151,55 +151,55 @@ void func_801BE870(u16 actorIndex, Entity* self) {
             prim->priority = 0x1FF;
             prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
-            prim->y0 = g_Dialogue.startY + 6;
+REDACTED
             prim = prim->next;
             x += FONT_GAP;
         }
     }
 }
-
-void func_801BE9F4(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_801BEA20(void) {
     Entity* entity;
     u16 startTimer;
     u8 entityIndex;
 
-    g_Dialogue.timer++;
+REDACTED
     // protect from overflows
-    if (g_Dialogue.timer > 0xFFFE) {
-        g_Dialogue.unk3C = 0;
+REDACTED
+REDACTED
         return;
     }
 
     while (true) {
         // Start the dialogue script only if the start timer has passed
-        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
-        if (g_Dialogue.timer < startTimer) {
+REDACTED
+REDACTED
             // Re-evaluate the condition at the next frame
-            g_Dialogue.unk40 -= 2;
+REDACTED
             return;
         }
 
-        switch (*g_Dialogue.unk40++) {
+REDACTED
         case 0:
-            entityIndex = *g_Dialogue.unk40++;
+REDACTED
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
 
-            entity->entityId = *g_Dialogue.unk40++;
+REDACTED
             entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
-            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             break;
         case 1:
-            entityIndex = *g_Dialogue.unk40++;
+REDACTED
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
             break;
@@ -216,36 +216,36 @@ void func_801BEA20(void) {
         }
     }
 }
-
+REDACTED
 void func_801BECCC(Entity* self) {
     if (g_pads[0].tapped == PAD_START) {
-        D_801D7D20 = 1;
+REDACTED
         g_api.FreePrimitives(self->primIndex);
         self->flags ^= FLAG_HAS_PRIMS;
         if (g_Dialogue.primIndex[1] != -1) {
             g_api.FreePrimitives(g_Dialogue.primIndex[1]);
-        }
+REDACTED
         if (g_Dialogue.primIndex[0] != -1) {
             g_api.FreePrimitives(g_Dialogue.primIndex[0]);
-        }
+REDACTED
         g_api.PlaySfx(SET_STOP_MUSIC);
         self->step = 1;
         self->step_s = 0;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 // Animates the portrait size of the actor by enlarging or shrinking it
 void func_801BEDAC(u8 ySteps) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
 
-    primIndex = g_Dialogue.nextCharY + 1;
+REDACTED
     while (primIndex >= 5) {
         primIndex -= 5;
     }
     if (g_CurrentEntity->step_s == 0) {
-        prim = g_Dialogue.prim[primIndex];
+REDACTED
         prim->v1 -= ySteps;
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
@@ -256,13 +256,13 @@ void func_801BEDAC(u8 ySteps) {
 
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
-            prim = g_Dialogue.prim[i];
+REDACTED
             prim->y0 -= ySteps;
         }
     }
-    g_Dialogue.portraitAnimTimer++;
+REDACTED
 }
-
+REDACTED
 void EntityDeathCutscene(Entity* self) {
     RECT rect;
     Primitive* prim;

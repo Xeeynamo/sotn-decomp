@@ -74,7 +74,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         prim->y3 = selfPosY - ((cosine * minus20) >> 0xC);
     }
 }
-
+REDACTED
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 void EntityStopWatch(Entity* self) {
     Primitive* prim;
@@ -451,34 +451,34 @@ void func_8012B78C(Entity* entity) {
             prim->priority = entity->zPriority;
             prim->drawMode =
                 DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->ext.generic.unk7E.modeU16 = 96;
-            entity->step++;
-        } else {
+REDACTED
+REDACTED
+REDACTED
             DestroyEntity(entity);
-            return;
-        }
-        break;
-
-    case 1:
-        if (++entity->ext.generic.unk7C.s > 5) {
-            entity->step++;
-        }
-        entity->ext.generic.unk7E.modeU16 -= 8;
-        break;
-
-    case 2:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         DestroyEntity(entity);
-        return;
-
-    default:
-        break;
-    }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     prim = &g_PrimBuf[entity->primIndex];
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            entity->ext.generic.unk7E.modeU8.unk0;
-}
-
+REDACTED
+REDACTED
+REDACTED
 // book rotates around player
 void EntitySubwpnBible(Entity* self) {
     Primitive* prim;
@@ -860,7 +860,7 @@ void func_8012C600(void) {
         }
     }
 }
-
+REDACTED
 bool WolfFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return false;
@@ -881,10 +881,10 @@ bool WolfFormFinished(void) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2400, 44), 0);
         PLAYER.velocityY >>= 1;
         return true;
-    }
-    return false;
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_8012C97C(void) {
     if (g_Entities[PLAYER_CHARACTER].step_s == 0) {
         return;
@@ -912,7 +912,7 @@ void func_8012C97C(void) {
         return;
     }
 
-    PLAYER.step_s = 9;
+REDACTED
     D_800B0914 = 0;
     SetPlayerAnim(0xEC);
     PLAYER.velocityY = 0;
@@ -943,12 +943,12 @@ void func_8012CA64(void) {
 void func_8012CB0C(void) {
     PLAYER.ext.player.anim = 0xDE;
     PLAYER.velocityY = 0;
-    D_800B0914 = 0;
+REDACTED
     PLAYER.animFrameIdx = 0;
     PLAYER.animFrameDuration = 0;
-    PLAYER.step_s = 7;
-}
-
+REDACTED
+REDACTED
+REDACTED
 void func_8012CB4C(void) {
     PLAYER.step_s = 2;
     if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
@@ -969,25 +969,25 @@ void func_8012CB4C(void) {
     }
 }
 
-void func_8012CC30(s32 arg0) {
-    if (arg0 == 0) {
-        D_80138444 = 1;
+REDACTED
+REDACTED
+REDACTED
         if (g_ButtonCombo[COMBO_QCF].buttonsCorrect == COMBO_COMPLETE &&
             IsRelicActive(RELIC_SKILL_OF_WOLF) &&
             CastSpell(SPELL_WOLF_CHARGE)) {
             CheckMoveDirection();
-            PLAYER.step_s = 2;
-            D_800B0914 = 4;
+REDACTED
+REDACTED
             SetSpeedX(0x50000);
             g_CurrentEntity->velocityY = 0;
             SetPlayerAnim(0xED);
             LearnSpell(4);
-        }
-    } else {
-        D_80138444 = 1;
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 void func_8012CCE4(void) {
     PLAYER.velocityY = FIX(-3.5);
     if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
@@ -1028,28 +1028,28 @@ void func_8012CCE4(void) {
     PLAYER.step_s = 4;
     D_80138430 += 0x80;
 }
-
-void func_8012CED4(void) {
+REDACTED
+REDACTED
     if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
         SetPlayerAnim(0xE7);
         D_800B0914 = 1;
     } else {
         SetPlayerAnim(0xE8);
         SetSpeedX(0x10000);
-        D_800B0914 = 0;
-        if (D_80138438 & 0x40) {
+REDACTED
+REDACTED
             PLAYER.animFrameIdx = 4;
             PLAYER.velocityX = 0;
             PLAYER.animFrameDuration = 1;
-        }
-    }
-    PLAYER.step_s = 5;
+REDACTED
+REDACTED
+REDACTED
     g_Player.D_80072F00[5] = 8;
     PLAYER.velocityY = 0;
-    D_80138430 -= 0x100;
-}
-
-void func_8012CFA8(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     SetPlayerAnim(0xEA);
     PLAYER.step_s = 6;
     D_800B0914 = 0;
@@ -1099,15 +1099,15 @@ void func_8012D024(void) {
         SetPlayerAnim(0xE9);
     }
 }
-
-void func_8012D178(void) {
-    s32 var_v0;
-
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     if (g_Player.padTapped & PAD_CROSS) {
-        func_8012CCE4();
+REDACTED
     } else if (!(g_Player.pl_vram_flag & 1)) {
-        func_8012CFA8();
-    } else {
+REDACTED
+REDACTED
 #if defined(VERSION_US)
         if (PLAYER.facingLeft != 0) {
             var_v0 = g_Player.padPressed & PAD_LEFT;
@@ -1124,9 +1124,9 @@ void func_8012D178(void) {
         } else if (g_GameTimer % 6 == 0) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 69), 0);
         }
-    }
-}
-
+REDACTED
+REDACTED
+REDACTED
 void func_8012D28C(bool exitEarly) {
     bool bitNotFound;
     s32 i;

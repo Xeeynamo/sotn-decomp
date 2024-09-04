@@ -19,9 +19,9 @@ void EntityBossFightManager(Entity* self) {
         bosses_defeated = g_api.TimeAttackController(
             TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_GET_RECORD);
         if (bosses_defeated) {
-            DestroyEntity(self);
-            return;
-        }
+REDACTED
+REDACTED
+REDACTED
         InitializeEntity(g_EInitGeneric);
         g_BossFlag = 0;
         newEnt = self + 1;
@@ -58,9 +58,9 @@ void EntityBossFightManager(Entity* self) {
             // the fight.
         xPos = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (0x220 < xPos && xPos < 0x340) {
-            g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
-        }
-        if (g_BossFlag & BOSS_FLAG_FIGHT_BEGIN) {
+REDACTED
+REDACTED
+REDACTED
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_VISITED);
             D_80097928 = 1;
@@ -114,16 +114,16 @@ void EntityBossFightManager(Entity* self) {
         }
         break;
     case 0xFF: // Unreachable debug state
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
+REDACTED
+REDACTED
             if (self->params) {
                 return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (!self->step_s) {
                 self->animCurFrame--;
@@ -136,53 +136,53 @@ void EntityBossFightManager(Entity* self) {
         break;
     }
 }
-
-// blocks that move to close slogra/gaibon room
-void EntityBossRoomBlock(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180D00);
-        self->animCurFrame = 8;
-
-    case 1:
-        if (g_BossFlag & 1) {
-            self->ext.GS_Props.timer = 16;
-            self->step++;
-        }
-        break;
-
-    case 2:
-        if (self->params == 0) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
             self->velocityX = FIX(1);
-        } else {
+REDACTED
             self->velocityX = FIX(-1);
-        }
-        MoveEntity();
+REDACTED
+REDACTED
         GetPlayerCollisionWith(self, 8, 8, 5);
         if (!(g_Timer & 3)) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
-        }
-        if (--self->ext.GS_Props.timer) {
-            break;
-        }
-        self->step++;
-        break;
-
-    case 3:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         GetPlayerCollisionWith(self, 8, 8, 5);
-        if (g_BossFlag & BOSS_FLAG_DOORS_OPEN) {
-            self->step++;
-        }
-        break;
-
-    case 4:
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        if (self->params != 0) {
+REDACTED
             self->velocityX = FIX(1);
-        } else {
+REDACTED
             self->velocityX = FIX(-1);
-        }
-        MoveEntity();
-        break;
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED

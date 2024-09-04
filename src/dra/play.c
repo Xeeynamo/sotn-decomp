@@ -50,15 +50,15 @@ RECT D_800A01C0[] = {
     {64, 0, 128, 0},      // unknown usage
 };
 
-void func_800E493C(void) {
-    if (g_Settings.isSoundMono == false) {
-        PlaySfx(SET_SOUNDMODE_STEREO);
-    } else {
-        PlaySfx(SET_SOUNDMODE_MONO);
-    }
-}
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
+REDACTED
 
-void func_800E4970(void) {
+REDACTED
     SetGameState(Game_NowLoading);
     g_GameStep = NowLoading_2;
     ClearBackbuffer();
@@ -368,10 +368,10 @@ void func_800E5358(void) {
         }
         prim->y2++;
         prim->y3++;
-    }
-}
-
-void func_800E5498(void) {
+REDACTED
+REDACTED
+REDACTED
+REDACTED
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     GpuBuffer* buffer = g_CurrentBuffer;
 
@@ -379,8 +379,8 @@ void func_800E5498(void) {
     setShadeTex(poly, false);
     SetPrimRect(poly, 0, 0, 256, 256);
     setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
-    func_801072BC(poly);
-    poly->tpage = 0x5A;
+REDACTED
+REDACTED
     poly->clut = g_ClutIds[0x15F];
     AddPrim(&buffer->ot[0x1FF], poly);
     g_GpuUsage.gt4++;

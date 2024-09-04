@@ -166,16 +166,16 @@ void func_8018E674(Entity* self) {
 }
 
 void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->params >> 0xC;
-    if (entity->step) {
+REDACTED
+REDACTED
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity* entityDropItem;
+REDACTED
             g_api.PlaySfx(SFX_CANDLE_HIT);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->params =
+REDACTED
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
