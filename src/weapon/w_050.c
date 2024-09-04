@@ -86,7 +86,7 @@ void EntityWeaponAttack(Entity* self) {
 
 extern u8 D_162000_8017B000[6][8];
 
-s16 func_162000_8017B784(Primitive* prim, s16 x, s16 y) {
+s32 func_162000_8017B784(Primitive* prim, s16 x, s16 y) {
     s16 size;
     u8* uvPtr;
 
@@ -273,7 +273,7 @@ s32 func_ptr_80170004(Entity* self) {
                        (D_162000_8017CBFC[i].y - y) * prim->g2)) /
                          15;
             prim->g2++;
-            if ((func_162000_8017B784(prim, prim_x, prim_y)) < 0) {
+            if (((s16)func_162000_8017B784(prim, prim_x, prim_y)) < 0) {
                 prim->drawMode |= DRAW_HIDE;
                 prim->g0++;
             } else {
@@ -486,7 +486,118 @@ void func_ptr_8017000C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_050", func_ptr_80170010);
+s32 func_ptr_80170010(Entity* self) {
+    const int PrimCount = 8;
+    Primitive* prim;
+    Point16 point;
+    s32 params;
+    s32 i;
+    s16 x, y;
+    s16 baseX, baseY;
+    s16 prim_x, prim_y;
+    s32 result;
+
+    if (PLAYER.ext.player.anim < 0x41 || PLAYER.ext.player.anim > 0x47 ||
+        !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    params = (self->params & 0x7F00) >> 8;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        if (params == 1) {
+            func_162000_8017BA38(self, &point, true);
+        } else {
+            func_162000_8017BA38(self, &point, false);
+        }
+
+        baseX = point.x;
+        baseY = point.y;
+
+        if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+            if ((PLAYER.ext.player.anim - 0x41) == 2 ||
+                (PLAYER.ext.player.anim - 0x41) == 3) {
+                self->posY.i.hi -= 1;
+            } else {
+                self->posY.i.hi -= 3;
+            }
+        }
+
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            prim_x = baseX * i / 8 + x;
+            prim_y = baseY * i / 8 + y;
+
+            prim_y += rand() % 10;
+            prim_x += rand() % 4;
+
+            D_162000_8017CBFC[i].x = prim_x;
+            D_162000_8017CBFC[i].y = prim_y;
+            prim->clut = 0x1B0;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (i * 2) + 1;
+            prim->g2 = 0;
+            prim->priority = PLAYER.zPriority;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+            if (params == 0) {
+                prim->drawMode =
+                    DRAW_UNK_200 | DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 |
+                    DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+            }
+            prim = prim->next;
+        }
+        self->ext.weapon.lifetime = 0x18;
+        self->step++;
+        break;
+
+    case 1:
+        if (--self->ext.weapon.lifetime == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < PrimCount; i++) {
+        switch (prim->g0) {
+        case 0:
+            if (--prim->g1 == 0) {
+                prim->g0++;
+            }
+            break;
+        case 1:
+            x = D_162000_8017CBFC[i].x;
+            y = D_162000_8017CBFC[i].y;
+            result = func_162000_8017B784(prim, x, y);
+            D_162000_8017CBFC[i].y--;
+            if (result < 0) {
+                prim->drawMode |= DRAW_HIDE;
+                prim->g0++;
+            } else {
+                prim->drawMode &= ~DRAW_HIDE;
+            }
+            break;
+        }
+        prim = prim->next;
+    }
+}
 
 static s32 func_ptr_80170014(Entity* self) {}
 
