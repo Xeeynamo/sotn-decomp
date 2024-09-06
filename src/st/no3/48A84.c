@@ -292,7 +292,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
             while (prim != NULL) {
                 if (prim->drawMode == DRAW_HIDE) {
                     if (self->ext.factory.unk7E & 1) {
-                        func_801CAD28(0x655);
+                        PlaySfxPositional(0x655);
                     }
 
                     if (self->facingLeft != 0) {
