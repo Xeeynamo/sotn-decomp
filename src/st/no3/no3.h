@@ -220,8 +220,6 @@ extern s32 D_801D7D54;
 extern s32 D_801D7D58;
 extern u32 D_801D7DD0;
 
-
-
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 // *** EntitySoulStealOrb properties START ***
