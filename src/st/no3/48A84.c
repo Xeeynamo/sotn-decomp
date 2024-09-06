@@ -285,27 +285,27 @@ void EntityStrongWargDeathBeams(Entity* self) {
         }
         break;
     case 1:
-        if ((self->ext.timer.t == 0) &&
-            (self->ext.strongWargDeathBeams.zPriority < 0x14)) {
+        if ((self->ext.strongWargDeathBeams.unk7C == 0) &&
+            (self->ext.strongWargDeathBeams.unk7E < 0x14)) {
             prim = &g_PrimBuf[self->primIndex];
 
             while (prim != NULL) {
                 if (prim->drawMode == DRAW_HIDE) {
-                    if (self->ext.strongWargDeathBeams.zPriority & 1) {
+                    if (self->ext.strongWargDeathBeams.unk7E & 1) {
                         PlaySfxPositional(SFX_EXPLODE_B);
                     }
 
                     if (self->facingLeft != 0) {
                         baseX = self->posX.i.hi -
                                 D_80183080[self->ext.strongWargDeathBeams
-                                               .zPriority &
+                                               .unk7E &
                                            0xF];
                         prim->x0 = prim->x2 = baseX + 0x10;
                         prim->x1 = prim->x3 = baseX - 0x10;
                     } else {
                         baseX = self->posX.i.hi +
                                 D_80183080[self->ext.strongWargDeathBeams
-                                               .zPriority &
+                                               .unk7E &
                                            0xF];
                         prim->x0 = prim->x2 = baseX - 0x10;
                         prim->x1 = prim->x3 = baseX + 0x10;
@@ -319,7 +319,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
 
                     prim->priority =
                         self->zPriority +
-                        D_801830A0[self->ext.strongWargDeathBeams.zPriority &
+                        D_801830A0[self->ext.strongWargDeathBeams.unk7E &
                                    0xF];
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
@@ -331,10 +331,10 @@ void EntityStrongWargDeathBeams(Entity* self) {
                 prim = prim->next;
             }
 
-            self->ext.timer.t = 4;
-            self->ext.strongWargDeathBeams.zPriority++;
+            self->ext.strongWargDeathBeams.unk7C = 4;
+            self->ext.strongWargDeathBeams.unk7E++;
         } else {
-            self->ext.timer.t--;
+            self->ext.strongWargDeathBeams.unk7C--;
         }
 
         prim = &g_PrimBuf[self->primIndex];
@@ -374,7 +374,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
         }
 
         if (hiddenPrimCount == 4 &&
-            self->ext.strongWargDeathBeams.zPriority > 0x13) {
+            self->ext.strongWargDeathBeams.unk7E > 0x13) {
             DestroyEntity(self);
             return;
         }
