@@ -277,9 +277,9 @@ void EntityStrongWargDeathBeams(Entity* self) {
         while (prim != NULL) {
             prim->tpage = temp_s1_u16 / 4;
             prim->clut = palette;
-            prim->u0 = prim->u1 = (temp_s1 & 1) << 7 | 0x21;
-            prim->v1 = prim->v3 = (temp_s1 & 2) << 6 | 0x59;
-            prim->v0 = prim->v2 = (temp_s1 & 2) << 6 | 0x7F;
+            prim->u0 = prim->u1 = ((temp_s1 & 1) << 7) + 0x21;
+            prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
+            prim->v0 = prim->v2 = ((temp_s1 & 2) << 6) + 0x7F;
             prim->u3 = prim->u2 = prim->u0 + 0x2D;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
