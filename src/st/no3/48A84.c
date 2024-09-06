@@ -296,17 +296,17 @@ void EntityStrongWargDeathBeams(Entity* self) {
                     }
 
                     if (self->facingLeft != 0) {
-                        baseX = self->posX.i.hi -
-                                D_80183080[self->ext.strongWargDeathBeams
-                                               .unk7E &
-                                           0xF];
+                        baseX =
+                            self->posX.i.hi -
+                            D_80183080[self->ext.strongWargDeathBeams.unk7E &
+                                       0xF];
                         prim->x0 = prim->x2 = baseX + 0x10;
                         prim->x1 = prim->x3 = baseX - 0x10;
                     } else {
-                        baseX = self->posX.i.hi +
-                                D_80183080[self->ext.strongWargDeathBeams
-                                               .unk7E &
-                                           0xF];
+                        baseX =
+                            self->posX.i.hi +
+                            D_80183080[self->ext.strongWargDeathBeams.unk7E &
+                                       0xF];
                         prim->x0 = prim->x2 = baseX - 0x10;
                         prim->x1 = prim->x3 = baseX + 0x10;
                     }
@@ -319,8 +319,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
 
                     prim->priority =
                         self->zPriority +
-                        D_801830A0[self->ext.strongWargDeathBeams.unk7E &
-                                   0xF];
+                        D_801830A0[self->ext.strongWargDeathBeams.unk7E & 0xF];
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
                     prim->p1 = (Random() & 3) + 0x10;
