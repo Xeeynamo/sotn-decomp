@@ -318,7 +318,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
                     prim->priority = self->zPriority + priorityOffset;
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
-                    prim->p1 = (Random(priorityOffset) & 3) + 0x10;
+                    prim->p1 = (Random() & 3) + 0x10;
                     prim->p2 = 0;
                     break;
                 }
