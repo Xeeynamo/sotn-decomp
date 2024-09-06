@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #14. Used by weapons:
 // Runesword
 #include "weapon_private.h"

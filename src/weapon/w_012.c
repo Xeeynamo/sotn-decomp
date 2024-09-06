@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #12. Used by weapons:
 // Chakram, Vorpal blade, Crissaegrim
 #include "weapon_private.h"

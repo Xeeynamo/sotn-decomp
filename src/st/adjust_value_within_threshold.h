@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue) {
     u8 absoluteDifference;
     s8 relativeDifference = targetValue - currentValue;

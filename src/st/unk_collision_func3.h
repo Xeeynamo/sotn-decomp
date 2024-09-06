@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 s32 UnkCollisionFunc3(u16* sensors) {
     Collider col;
     Collider colBack;

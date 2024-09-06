@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];

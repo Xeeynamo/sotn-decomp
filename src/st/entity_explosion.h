@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern u16 g_InitializeEntityData0[];
 extern s32 g_ExplosionYVelocities[];
 extern u8* g_ExplosionAnimations[];

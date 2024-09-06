@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
 s32 func_801B3164(void) {

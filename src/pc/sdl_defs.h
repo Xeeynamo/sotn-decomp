@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef SDL_DEFS_H
 #define SDL_DEFS_H
 typedef enum {

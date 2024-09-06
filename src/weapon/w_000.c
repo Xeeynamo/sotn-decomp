@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #0. Used by weapons:
 // Tyrfing, Namakura, Gladius, Scimitar, Cutlass, Saber, Falchion, Broadsword,
 // Bekatowa, Damascus sword, Hunter sword, Bastard sword, Talwar, Sword of

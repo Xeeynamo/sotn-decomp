@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #47. Used by weapons:
 // Dynamite
 #include "weapon_private.h"

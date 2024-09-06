@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 u8 UnkCollisionFunc4(s32 arg0) {
     Collider collider;
     u32 bits_67;

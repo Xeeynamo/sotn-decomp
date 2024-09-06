@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #44. Used by weapons:
 // Heart Refresh
 #include "weapon_private.h"
