@@ -247,7 +247,140 @@ INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityStrongWargWaveAttack);
 INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId2F);
 
 // beams that go up when strong warg dies
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityStrongWargDeathBeams);
+void EntityStrongWargDeathBeams(Entity* self) {
+    Primitive* prim;
+    s16 baseX;
+    u16 hiddenPrimCount;
+    u16 palette;
+    s32 primIndex;
+    s32 temp_s1;
+    u16 temp_s1_u16;
+
+    switch (self->step) {
+    case 0:
+        palette = self->palette + 4;
+        temp_s1 = self->unk5A + 3;
+        temp_s1_u16 = (u16)temp_s1;
+
+        InitializeEntity(g_eInitGeneric2);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[primIndex];
+
+        while (prim != NULL) {
+            prim->tpage = temp_s1_u16 / 4;
+            prim->clut = palette;
+            prim->u0 = prim->u1 = ((temp_s1 & 1) << 7) + 0x21;
+            prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
+            prim->v0 = prim->v2 = ((temp_s1 & 2) << 6) + 0x7F;
+            prim->u3 = prim->u2 = prim->u0 + 0x2D;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        break;
+    case 1:
+        if ((self->ext.strongWargDeathBeams.unk7C == 0) &&
+            (self->ext.strongWargDeathBeams.unk7E < 0x14)) {
+            prim = &g_PrimBuf[self->primIndex];
+
+            while (prim != NULL) {
+                if (prim->drawMode == DRAW_HIDE) {
+                    if (self->ext.strongWargDeathBeams.unk7E & 1) {
+                        PlaySfxPositional(SFX_EXPLODE_B);
+                    }
+
+                    if (self->facingLeft != 0) {
+                        baseX =
+                            self->posX.i.hi -
+                            D_80183080[self->ext.strongWargDeathBeams.unk7E &
+                                       0xF];
+                        prim->x0 = prim->x2 = baseX + 0x10;
+                        prim->x1 = prim->x3 = baseX - 0x10;
+                    } else {
+                        baseX =
+                            self->posX.i.hi +
+                            D_80183080[self->ext.strongWargDeathBeams.unk7E &
+                                       0xF];
+                        prim->x0 = prim->x2 = baseX - 0x10;
+                        prim->x1 = prim->x3 = baseX + 0x10;
+                    }
+
+                    prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                        self->posY.i.hi + 0x28;
+                    prim->b1 = prim->b3 = prim->g1 = prim->g3 = prim->r1 =
+                        prim->r3 = prim->b0 = prim->b2 = prim->g0 = prim->g2 =
+                            prim->r0 = prim->r2 = 0x40;
+
+                    prim->priority =
+                        self->zPriority +
+                        D_801830A0[self->ext.strongWargDeathBeams.unk7E & 0xF];
+                    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                     DRAW_UNK02 | DRAW_TRANSP;
+                    prim->p1 = (Random() & 3) + 0x10;
+                    prim->p2 = 0;
+                    break;
+                }
+
+                prim = prim->next;
+            }
+
+            self->ext.strongWargDeathBeams.unk7C = 4;
+            self->ext.strongWargDeathBeams.unk7E++;
+        } else {
+            self->ext.strongWargDeathBeams.unk7C--;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+        hiddenPrimCount = 0;
+
+        while (prim != NULL) {
+            if (prim->drawMode != DRAW_HIDE) {
+                prim->p2++;
+                prim->x0 = prim->x2 = prim->x2 + 1;
+                prim->x1 = prim->x3 = prim->x3 - 1;
+
+                if (prim->p2 > 8) {
+                    prim->r0 = prim->r1 = prim->r1 - 0x10;
+                    prim->g0 = prim->g1 = prim->g1 - 0x10;
+                    prim->b0 = prim->b1 = prim->b1 - 0x10;
+
+                    if (prim->r2) {
+                        prim->r2 = prim->r3 = prim->r3 - 0x14;
+                        prim->g2 = prim->g3 = prim->g3 - 0x14;
+                        prim->b2 = prim->b3 = prim->b3 - 0x14;
+                    }
+                } else {
+                    prim->r0 = prim->r2 = prim->r1 = prim->r3 = prim->r3 + 0x10;
+                    prim->g0 = prim->g2 = prim->g1 = prim->g3 = prim->g3 + 0x10;
+                    prim->b0 = prim->b2 = prim->b1 = prim->b3 = prim->b3 + 0x10;
+                }
+
+                prim->y0 = prim->y1 = prim->y1 - prim->p1;
+
+                if (prim->p2 > 0x10) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+            } else {
+                hiddenPrimCount++;
+            }
+            prim = prim->next;
+        }
+
+        if (hiddenPrimCount == 4 &&
+            self->ext.strongWargDeathBeams.unk7E > 0x13) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
                    u8 arg5, s16 xOfst) {

@@ -1725,6 +1725,11 @@ typedef struct {
     /* 0x88 */ u8 unk88;
 } ET_NZ0_311C0;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+} ET_StrongWargDeathBeams;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1865,6 +1870,7 @@ typedef union { // offset=0x7C
     ET_ZombieSpawner zombieSpawner;
     ET_Skeleton skeleton;
     ET_NZ0_311C0 nz0311c0;
+    ET_StrongWargDeathBeams strongWargDeathBeams;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field_name)                               \
