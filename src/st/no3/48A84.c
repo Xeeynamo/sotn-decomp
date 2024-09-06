@@ -360,7 +360,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
                 prim->y0 = prim->y1 = prim->y1 - prim->p1;
 
                 if (prim->p2 > 0x10) {
-                    prim->drawMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                 }
             } else {
                 hiddenPrimCount++;
