@@ -1700,7 +1700,7 @@ typedef struct {
     /* 80072EFC */ s32 D_80072EFC; // stun timer
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
     //  13 = invincibility, 14 = invincibility from consumables
-    /* 80072F00 */ s16 D_80072F00[16]; // poison timer
+    /* 80072F00 */ s16 timers[16]; // poison timer
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling

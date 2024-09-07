@@ -143,12 +143,12 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
         if (dataPtr[7] >= 0x7000) {
             switch ((u32)dataPtr[7]) {
             case 0x7000:
-                if (g_Player.D_80072F00[PL_T_POISON] == 0) {
+                if (!g_Player.timers[PL_T_POISON]) {
                     self->step++;
                 }
                 break;
             case 0x7001:
-                if (g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] == 0) {
+                if (!g_Player.timers[PL_T_INVINCIBLE_SCENE]) {
                     self->step++;
                 }
                 break;

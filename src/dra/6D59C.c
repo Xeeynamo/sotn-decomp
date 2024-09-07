@@ -340,9 +340,9 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 
     if (arg1 != 0) {
         if (arg1 < 4) {
-            g_Player.D_80072F00[15] = 4;
+            g_Player.timers[15] = 4;
         } else {
-            g_Player.D_80072F00[15] = arg1;
+            g_Player.timers[15] = arg1;
         }
     }
 }
@@ -383,11 +383,11 @@ void func_8010E168(s32 arg0, s16 arg1) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x15), 0);
-        if (arg1 >= g_Player.D_80072F00[13]) {
-            g_Player.D_80072F00[13] = arg1;
+        if (arg1 >= g_Player.timers[13]) {
+            g_Player.timers[13] = arg1;
         }
-    } else if (g_Player.D_80072F00[14] <= arg1) {
-        g_Player.D_80072F00[14] = arg1;
+    } else if (g_Player.timers[14] <= arg1) {
+        g_Player.timers[14] = arg1;
     }
 }
 
@@ -619,12 +619,12 @@ void func_8010E7AC(void) {
 
     PLAYER.velocityY = 0x20000;
     PLAYER.velocityX = 0;
-    g_Player.D_80072F00[6] = 8;
+    g_Player.timers[6] = 8;
 
     if (g_Player.unk04 & 1) {
-        g_Player.D_80072F00[5] = 8;
+        g_Player.timers[5] = 8;
     } else {
-        g_Player.D_80072F00[5] = 0;
+        g_Player.timers[5] = 0;
     }
 
     g_Player.unk44 = 0x10;
@@ -759,7 +759,7 @@ s32 func_8010EB5C(void) {
     }
     CreateEntFactoryFromEntity(
         g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
-    g_Player.D_80072F00[10] = 4;
+    g_Player.timers[10] = 4;
     if (PLAYER.step_s < 64) {
         anim = subWpn.anim;
         if (PLAYER.step == 0) {
@@ -964,7 +964,7 @@ block_45:
                 return 0;
             }
         } else {
-            if (g_Player.D_80072F00[1] != 0) {
+            if (g_Player.timers[1]) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(57, 1), 0);
                 goto block_70;
             }
@@ -1104,7 +1104,7 @@ block_45:
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         break;
     case 24: // Unknown, not a direct equippable item (but there are 2 of them)
         if (2 < PLAYER.step && PLAYER.step < 5) {
@@ -1179,7 +1179,7 @@ block_45:
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         break;
     case 5: // Lots of unknown things
         step = PLAYER.step;
@@ -1249,7 +1249,7 @@ block_45:
         break;
     case 135: // Unknown
         PlaySfx(SFX_UNK_6F0);
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;
     }
@@ -1277,7 +1277,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     SetPlayerAnim(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
     PlaySfx(SFX_UI_MP_FULL);
-    g_Player.D_80072F00[11] =
+    g_Player.timers[11] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x11), 0);
@@ -1292,7 +1292,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     SetPlayerAnim(0xDA);
     PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
     func_80118C28(0xC);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FC50(void) {
@@ -1303,7 +1303,7 @@ void func_8010FC50(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, 117, 0);
     SetPlayerAnim(0xF0);
     PlaySfx(NA_SE_VO_AL_PUNCH);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FCB8(void) {
@@ -1314,7 +1314,7 @@ void func_8010FCB8(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
     SetPlayerAnim(0xF1);
     PlaySfx(NA_SE_VO_AL_PUNCH);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FD24(void) {
@@ -1324,7 +1324,7 @@ void func_8010FD24(void) {
     func_8010E3E0();
     SetPlayerAnim(0xF1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x17), 0);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FD88(void) {

@@ -62,7 +62,7 @@ static void EntityWeaponAttack(Entity* self) {
         D_11C000_8017B540 %= 4;
         SetSpeedX(D_11C000_8017A85C[D_11C000_8017B540]);
         self->velocityY = -FIX(2.5);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         D_11C000_8017B540++;
         self->step++;
         break;

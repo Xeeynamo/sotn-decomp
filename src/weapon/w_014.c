@@ -109,7 +109,7 @@ void EntityWeaponAttack(Entity* self) {
 
         g_api.PlaySfxVolPan(SFX_WEAPON_ENERGY, 0x50, 0);
         g_api.PlaySfx(SFX_BONE_SWORD_SWISH_A);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         g_api.CreateEntFactoryFromEntity(
             self, ((g_HandId + 1) << 0xC) | 0x72, 0);
         self->step++;

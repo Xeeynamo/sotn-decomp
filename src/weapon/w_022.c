@@ -44,7 +44,7 @@ void EntityWeaponAttack(Entity* self) {
 
         g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
         DestroyEntityWeapon(1);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
 

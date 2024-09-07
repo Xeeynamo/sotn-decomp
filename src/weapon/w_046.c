@@ -261,7 +261,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->rotZ = temp_s3->unk4;
         self->ext.timer.t = temp_s3->unk3;
         self->ext.weapon.unk7E = 0;
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         self->step++;
     }
 
@@ -408,7 +408,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->ext.weapon_046.unk98 = 0x100;
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         self->step++;
         break;
     case 1:

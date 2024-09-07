@@ -95,10 +95,10 @@ bool func_801119C4(void) {
 }
 
 void func_80111CC0(void) {
-    if (g_Player.D_80072F00[1] != 0) {
+    if (g_Player.timers[1]) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
     }
-    if (g_Player.D_80072F00[0] != 0) {
+    if (g_Player.timers[0]) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x16), 0);
     }
 }

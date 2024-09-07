@@ -109,8 +109,8 @@ void func_80109328(void) {
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
     }
 
-    if (g_Player.D_80072F00[11] != 0) {
-        g_Player.D_80072F00[11] = 0;
+    if (g_Player.timers[11]) {
+        g_Player.timers[11] = 0;
         func_801092E8(0);
     }
     PLAYER.drawMode = DRAW_DEFAULT;
@@ -365,7 +365,7 @@ void func_80109A44(s32 isTransformed) {
         x = PLAYER.posX.i.hi + D_800ACED0[i].x;
         y = PLAYER.posY.i.hi + D_800ACED0[i].y;
         CheckCollision(x, y, &g_Player.colliders[i], 0);
-        if (g_Player.D_80072F00[7] &&
+        if (g_Player.timers[7] &&
             g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
             CheckCollision(x, y + 12, &sp10, 0);
             if (!(sp10.effects & EFFECT_SOLID)) {
@@ -495,10 +495,10 @@ void func_8010A3F0(void) {
     s32 temp = 0x38;
 
     if (D_8017A000.GetWeaponId() == temp && D_8017D000.GetWeaponId() == temp) {
-        if (g_Player.D_80072F00[11] == 0) {
+        if (!g_Player.timers[11]) {
             func_801092E8(1);
         }
-        g_Player.D_80072F00[11] = 0x20;
+        g_Player.timers[11] = 0x20;
         temp = g_Player.unk10 != 0;
         if (temp && g_Status.D_80097C40 < -1) {
             g_Status.D_80097C40++;
@@ -602,14 +602,14 @@ void EntityAlucard(void) {
                     g_CurrentEntity, FACTORY(0x19, var_s0 - 1), 0);
             }
             for (var_s0 = 0; var_s0 < 16; var_s0++) {
-                if (g_Player.D_80072F00[var_s0] != 0) {
+                if (g_Player.timers[var_s0]) {
                     switch (var_s0) {
                     case 2:
                         PLAYER.palette = g_Player.unk40;
                         break;
                     case 3:
                         PLAYER.palette = g_Player.pl_high_jump_timer;
-                        g_Player.D_80072F00[15] = 12;
+                        g_Player.timers[15] = 12;
                         break;
                     case 4: {
                         s32 temp_s1 = ((g_GameTimer & 0xF) << 8);
@@ -636,19 +636,19 @@ void EntityAlucard(void) {
                     case 0:
                         break;
                     }
-                    if (--g_Player.D_80072F00[var_s0] == 0) {
+                    if (!--g_Player.timers[var_s0]) {
                         switch (var_s0) {
                         case 0:
                             if (!(g_Player.unk0C & 0x8080)) {
-                                g_Player.D_80072F00[4] = 0xC;
-                                g_Player.D_80072F00[15] = 0xC;
+                                g_Player.timers[4] = 0xC;
+                                g_Player.timers[15] = 0xC;
                                 func_8010E168(1, 0xC);
                             }
                             continue;
                         case 1:
                             if (!(g_Player.unk0C & 0x8080)) {
-                                g_Player.D_80072F00[4] = 0xC;
-                                g_Player.D_80072F00[15] = 0xC;
+                                g_Player.timers[4] = 0xC;
+                                g_Player.timers[15] = 0xC;
                                 func_8010E168(1, 0xC);
                             }
                             continue;
@@ -658,8 +658,8 @@ void EntityAlucard(void) {
                         case 3:
                             PLAYER.palette = 0x8100;
                             if (!(g_Player.unk0C & 0xC080)) {
-                                g_Player.D_80072F00[4] = 0xC;
-                                g_Player.D_80072F00[15] = 0xC;
+                                g_Player.timers[4] = 0xC;
+                                g_Player.timers[15] = 0xC;
                                 func_8010E168(1, 0xC);
                             }
                             continue;
@@ -753,7 +753,7 @@ void EntityAlucard(void) {
 // HD and US test this in slightly different places leading to this and the
 // following ifdef.
 #if defined(VERSION_HD)
-            if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) {
+            if (g_Player.timers[13] | g_Player.timers[14]) {
                 goto specialmove;
             }
 #endif
@@ -764,8 +764,7 @@ void EntityAlucard(void) {
                     SetPlayerStep(Player_BossGrab);
                 } else {
 #if defined(VERSION_US)
-                    if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) ==
-                        0) {
+                    if (!(g_Player.timers[13] | g_Player.timers[14])) {
 #elif defined(VERSION_HD)
                     if (1) { // to make curly braces match
 #endif
@@ -795,7 +794,7 @@ void EntityAlucard(void) {
                                 g_Player.pl_high_jump_timer = 0x8166;
                                 g_Player.unk18 = damage.effects;
                                 func_8010E168(1, 0xC);
-                                g_Player.D_80072F00[3] = 6;
+                                g_Player.timers[3] = 6;
                                 PlaySfx(SFX_UNK_6E7);
                                 func_80118C84(1, 0);
                                 break;
@@ -807,7 +806,7 @@ void EntityAlucard(void) {
                                     g_CurrentEntity, FACTORY(0x2C, 0x58), 0);
                                 g_Player.pl_high_jump_timer = 0x8166;
                                 func_8010E168(1, 0xC);
-                                g_Player.D_80072F00[3] = 6;
+                                g_Player.timers[3] = 6;
                                 break;
                             case 3:
                                 g_Player.unk18 = damage.effects;
@@ -927,7 +926,7 @@ block_159:
 block_160:
     g_Player.prev_step = PLAYER.step;
     g_Player.prev_step_s = PLAYER.step_s;
-    D_800ACDF8 = (s32)g_Player.D_80072F00[11];
+    D_800ACDF8 = g_Player.timers[11];
     switch (PLAYER.step) {
     case Player_Stand:
         func_801120B4();
@@ -1161,25 +1160,25 @@ block_160:
         func_8010E168(1, 4);
         break;
     }
-    if (g_Player.D_80072F00[9] != 0) {
+    if (g_Player.timers[9]) {
         var_s0 |= 0x400;
     }
-    if (g_Player.D_80072F00[10] != 0) {
+    if (g_Player.timers[10]) {
         var_s0 |= 0x800;
     }
-    if (g_Player.D_80072F00[12] != 0) {
+    if (g_Player.timers[12]) {
         var_s0 |= 0x1000;
     }
-    if (g_Player.D_80072F00[0] != 0) {
+    if (g_Player.timers[0]) {
         var_s0 |= 0x28104000;
     }
-    if (g_Player.D_80072F00[1] != 0) {
+    if (g_Player.timers[1]) {
         var_s0 |= 0x28108000;
     }
     if (*D_80097448 != 0) {
         var_s0 |= 0x08020000;
     }
-    if (g_Player.D_80072F00[11] != 0) {
+    if (g_Player.timers[11]) {
         var_s0 |= 0x02000000;
     }
     g_Player.unk0C = var_s0;
@@ -1193,14 +1192,14 @@ block_160:
     if (var_s0 & 0x20000000) {
         g_Status.D_80097BF8 |= 1;
     }
-    if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) {
+    if (g_Player.timers[13] | g_Player.timers[14]) {
         g_Player.unk0C |= 0x100;
     }
     if ((g_Player.unk08 & 0x10000) && !(g_Player.unk0C & 0x50000)) {
         func_8010E168(1, 0xC);
         if (!(g_Player.unk0C & 0xC000)) {
-            g_Player.D_80072F00[4] = 0xC;
-            g_Player.D_80072F00[15] = 4;
+            g_Player.timers[4] = 0xC;
+            g_Player.timers[15] = 4;
             PLAYER.palette = 0x8100;
         }
     }

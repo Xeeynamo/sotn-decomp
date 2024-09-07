@@ -71,7 +71,7 @@ void EntityWeaponAttack(Entity* self) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
             }
         }
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
 
@@ -236,7 +236,7 @@ void func_ptr_8017000C(Entity* self) {
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
 

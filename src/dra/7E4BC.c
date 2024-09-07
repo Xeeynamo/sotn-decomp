@@ -1194,11 +1194,11 @@ void EntityPlayerPinkEffect(Entity* self) {
                 }
                 break;
             case 0x80:
-                g_Player.D_80072F00[0] = 2;
+                g_Player.timers[0] = 2;
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x81:
-                g_Player.D_80072F00[1] = 2;
+                g_Player.timers[1] = 2;
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x84:

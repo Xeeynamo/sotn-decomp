@@ -34,7 +34,7 @@ void EntityWeaponAttack(Entity* self) {
 
     animIndex = (self->params >> 8) & 0x7F;
 
-    if (g_Player.D_80072F00[11] != 0) {
+    if (g_Player.timers[11]) {
         animIndex = 2;
     }
 

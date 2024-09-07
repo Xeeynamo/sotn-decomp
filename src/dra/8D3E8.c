@@ -213,7 +213,7 @@ void func_8012D3E8(void) {
 void func_8012DBBC(void) {
     s32 vel_boost;
 
-    if ((g_Player.D_80072F00[5] != 0) && (g_Player.padTapped & PAD_CROSS)) {
+    if (g_Player.timers[5] && (g_Player.padTapped & PAD_CROSS)) {
         func_8012CCE4();
         return;
     }
@@ -278,7 +278,7 @@ void func_8012DBBC(void) {
 void func_8012DF04(void) {
     s32 velocityBoost;
 
-    if ((g_Player.D_80072F00[5] != 0) && (g_Player.padTapped & PAD_CROSS)) {
+    if (g_Player.timers[5] && (g_Player.padTapped & PAD_CROSS)) {
         func_8012CCE4();
         return;
     }
@@ -442,7 +442,7 @@ void func_8012E550(void) {
         if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < 4; i++) {
                 if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
-                    g_Player.D_80072F00[7] = 8;
+                    g_Player.timers[7] = 8;
                     func_8012CED4();
                     PLAYER.animFrameIdx = 4;
                     PLAYER.animFrameDuration = 1;

@@ -180,7 +180,7 @@ void PlayerStepJump(void) {
 }
 
 void func_80113148(void) {
-    if (g_Player.D_80072F00[5] != 0 && g_Player.padTapped & PAD_CROSS) {
+    if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         DecelerateX(0x1000);
@@ -207,7 +207,7 @@ void func_801131C4(void) {
         if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < 4; i++) {
                 if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
-                    g_Player.D_80072F00[7] = 8;
+                    g_Player.timers[7] = 8;
                     return;
                 }
             }
@@ -565,7 +565,7 @@ s32 func_80113D7C(s16 damageAmount) {
     func_80118C84(damage.damageTaken, 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
-        g_Player.D_80072F00[2] = 4;
+        g_Player.timers[2] = 4;
         g_Player.unk40 = 0x8166;
         sfx = g_SfxPainGrunts[(rand() & 1) + 3];
         PlaySfx(sfx);
@@ -699,7 +699,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             func_8010E3B8(FIX(-8));
             PLAYER.step_s = var_s0 + 2;
             PLAYER.ext.player.anim = 0x2E;
-            g_Player.D_80072F00[2] = 0x200;
+            g_Player.timers[2] = 0x200;
             PLAYER.facingLeft = PLAYER.entityRoomIndex;
             if (damage->damageKind == 4) {
                 sfxIndex = (rand() & 1) + 1;
@@ -791,17 +791,17 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             break;
         }
         g_Player.unk40 = 0x8166;
-        g_Player.D_80072F00[2] = 6;
+        g_Player.timers[2] = 6;
         PlaySfx(g_SfxPainGrunts[sfxIndex]);
         if (damage->effects & 0x100) {
-            g_Player.D_80072F00[1] =
+            g_Player.timers[1] =
                 GetStatusAilmentTimer(STATUS_AILMENT_CURSE, 0x400);
             g_Player.unk40 = 0x8165;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 2), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
             PlaySfx(NA_SE_VO_AL_WHAT);
         } else if (damage->effects & 0x80) {
-            g_Player.D_80072F00[0] =
+            g_Player.timers[0] =
                 GetStatusAilmentTimer(STATUS_AILMENT_POISON, 0xFFF);
             g_Player.unk40 = 0x8164;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x16), 0);
@@ -813,20 +813,20 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             g_Player.unk40 = 0x8160;
             if (damage->effects & 0x10000) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 19, 0);
-                g_Player.D_80072F00[2] = 10;
+                g_Player.timers[2] = 10;
             } else {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(17, 1), 0);
                 CreateEntFactoryFromEntity(g_CurrentEntity, 18, 0);
-                g_Player.D_80072F00[2] = 16;
+                g_Player.timers[2] = 16;
             }
         } else if (damage->effects & 0x4000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 45, 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x46), 0);
-            g_Player.D_80072F00[2] = 24;
+            g_Player.timers[2] = 24;
             g_Player.unk40 = 0x8102;
         } else if (damage->effects & 0x2000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 46, 0);
-            g_Player.D_80072F00[2] = 12;
+            g_Player.timers[2] = 12;
             g_Player.unk40 = 0x8169;
             PLAYER.ext.player.anim = 0x2E;
         } else {
@@ -834,14 +834,14 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 119, 0);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x68), 0);
-                g_Player.D_80072F00[2] = 8;
+                g_Player.timers[2] = 8;
                 g_Player.unk40 = 0x8168;
             }
             if (damage->effects & 0x800) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 113, 0);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x62), 0);
-                g_Player.D_80072F00[2] = 16;
+                g_Player.timers[2] = 16;
                 g_Player.unk40 = 0x8164;
             }
             if (damage->effects & 0x40) {
@@ -852,11 +852,11 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 if (damage->effects & 0x10000) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(21, 5), 0);
-                    g_Player.D_80072F00[2] = 10;
+                    g_Player.timers[2] = 10;
                 } else {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(20, 5), 0);
-                    g_Player.D_80072F00[2] = 16;
+                    g_Player.timers[2] = 16;
                 }
             } else if (!(damage->effects & 0xFAC0)) {
                 CreateEntFactoryFromEntity(
@@ -889,7 +889,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             func_801139CC(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
-            g_Player.D_80072F00[8] = 24;
+            g_Player.timers[8] = 24;
             PLAYER.step_s = 5;
             if (g_Player.prev_step_s == 0xF &&
                 (func_80113D7C(g_Player.damageTaken) != 0)) {
@@ -939,7 +939,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
 
         if (PLAYER.step_s == 0xF) {
-            g_Player.D_80072F00[8] = 8;
+            g_Player.timers[8] = 8;
             SetPlayerAnim(0x3F);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
@@ -952,7 +952,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             break;
         }
         PLAYER.velocityY = 0;
-        g_Player.D_80072F00[8] = 48;
+        g_Player.timers[8] = 48;
         PLAYER.velocityX /= 2;
         PlaySfx(SFX_STOMP_HARD_B);
         PLAYER.rotZ = 0x400;
@@ -964,7 +964,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 8), 0);
         break;
     case 3:
-        if (g_Player.D_80072F00[8] == 0) {
+        if (!g_Player.timers[8]) {
             SetSpeedX(FIX(0.75));
             if (func_8010FDF8(0x20280) != 0) {
                 return;
@@ -973,7 +973,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         break;
     case 5:
         DecelerateX(FIX(1.0 / 8));
-        if (g_Player.D_80072F00[8] != 0) {
+        if (g_Player.timers[8]) {
             if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_801139CC(0);
             }
@@ -998,7 +998,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         break;
     case 14:
         PLAYER.drawFlags |= 4;
-        if (g_Player.D_80072F00[8] <= 0) {
+        if (g_Player.timers[8] <= 0) {
             PLAYER.drawFlags &= ~4;
             PLAYER.rotZ = 0x800;
             PLAYER.velocityY = 0;
@@ -1048,9 +1048,9 @@ void func_80114DF4(s32 arg0) {
         func_80113E68();
         PLAYER.palette = 0x8161;
         PlaySfx(SFX_UNK_6EC);
-        g_Player.D_80072F00[2] = 0;
-        g_Player.D_80072F00[0] = 0;
-        g_Player.D_80072F00[1] = 0;
+        g_Player.timers[2] = 0;
+        g_Player.timers[0] = 0;
+        g_Player.timers[1] = 0;
         g_Player.unk5E = GetStatusAilmentTimer(STATUS_AILMENT_PETRIFIED, 8);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 3), 0);
         func_8010E168(1, 4);
