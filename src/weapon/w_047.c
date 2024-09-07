@@ -85,7 +85,7 @@ void EntityWeaponAttack(Entity* self) {
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->ext.weapon_047.unk7C = 0x80;
         D_14D000_8017B6A4 = 0;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         return;
     case 1:

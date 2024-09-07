@@ -72,15 +72,15 @@ void func_8015CAAC(s32 speed) {
     PLAYER.velocityX = speed;
 }
 
-void func_8015CAD4(s32 arg0, s16 arg1) {
-    if (arg0 == 0) {
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
+    if (!kind) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_CRASH_DAGGER, 0x15), 0);
-        if (arg1 >= g_Player.D_80072F00[PL_T_INVINCIBLE]) {
-            g_Player.D_80072F00[PL_T_INVINCIBLE] = arg1;
+        if (g_Player.timers[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
         }
-    } else if (g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE] <= arg1) {
-        g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE] = arg1;
+    } else if (g_Player.timers[PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.timers[PL_T_INVINCIBLE] = invincibilityFrames;
     }
 }
 
@@ -103,7 +103,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
     g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
     g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
     if (arg1 != 0) {
-        g_Player.D_80072F00[PL_T_15] = 4;
+        g_Player.timers[PL_T_15] = 4;
     }
 }
 
@@ -159,13 +159,13 @@ void RicSetStand(s32 velocityX) {
 }
 
 void RicSetWalk(s32 arg0) {
-    if ((g_Player.D_80072F00[PL_T_8] != 0) && (g_Player.unk7A == 0)) {
+    if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
         RicSetRun();
         return;
     }
-    g_Player.D_80072F00[PL_T_CURSE] = 8;
-    g_Player.D_80072F00[PL_T_8] = 12;
-    g_Player.D_80072F00[PL_T_CURSE] = 12;
+    g_Player.timers[PL_T_CURSE] = 8;
+    g_Player.timers[PL_T_8] = 12;
+    g_Player.timers[PL_T_CURSE] = 12;
     g_Player.unk44 = 0;
     RicSetStep(PL_S_WALK);
     RicSetAnimation(ric_anim_walk);
@@ -181,7 +181,7 @@ void RicSetRun(void) {
         RicSetStep(PL_S_RUN);
         RicSetAnimation(ric_anim_run);
         RicSetSpeedX(FIX(2.25));
-        g_Player.D_80072F00[PL_T_RUN] = 40;
+        g_Player.timers[PL_T_RUN] = 40;
         PLAYER.velocityY = 0;
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
@@ -209,13 +209,13 @@ block_6:
     }
     RicSetStep(PL_S_FALL);
     PLAYER.velocityY = 0x20000;
-    g_Player.D_80072F00[PL_T_5] = 8;
-    g_Player.D_80072F00[PL_T_6] = 8;
-    g_Player.D_80072F00[PL_T_CURSE] = 0;
-    g_Player.D_80072F00[PL_T_8] = 0;
+    g_Player.timers[PL_T_5] = 8;
+    g_Player.timers[PL_T_6] = 8;
+    g_Player.timers[PL_T_CURSE] = 0;
+    g_Player.timers[PL_T_8] = 0;
     if (g_Player.prev_step == PL_S_SLIDE) {
-        g_Player.D_80072F00[PL_T_6] = 0;
-        g_Player.D_80072F00[PL_T_5] = 0;
+        g_Player.timers[PL_T_6] = 0;
+        g_Player.timers[PL_T_5] = 0;
         PLAYER.animFrameIdx = 2;
         PLAYER.animFrameDuration = 0x10;
         PLAYER.velocityX /= 2;
@@ -259,7 +259,7 @@ void RicSetHighJump(void) {
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
     g_api.PlaySfx(SFX_GRUNT_C);
-    g_Player.D_80072F00[PL_T_12] = 4;
+    g_Player.timers[PL_T_12] = 4;
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }

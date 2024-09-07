@@ -214,7 +214,7 @@ void EntityBloodyZombie(Entity* self) {
     s16 facing;
     s32 animStatus;
 
-    if (self->unk44 && self->step & 1) {
+    if (self->hitParams && self->step & 1) {
         PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM);
         PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
         SetStep(BLOODY_ZOMBIE_TAKE_HIT);

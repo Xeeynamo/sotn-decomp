@@ -1033,7 +1033,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
         DestroyEntity(self);
         break;
     }
-    g_Player.D_80072F00[PL_T_3] = 16;
+    g_Player.timers[PL_T_3] = 16;
 }
 
 // Copy of DRA function

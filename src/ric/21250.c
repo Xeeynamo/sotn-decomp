@@ -29,7 +29,7 @@ s32 func_8015D250(s32 unused_arg) {
     }
 
     RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
-    g_Player.D_80072F00[PL_T_10] = 4;
+    g_Player.timers[PL_T_10] = 4;
 
     switch (PLAYER.step) {
     case PL_S_RUN:
@@ -51,7 +51,7 @@ s32 func_8015D250(s32 unused_arg) {
     }
     g_Player.unk46 = 3;
     PLAYER.step_s = 0x42;
-    g_Player.D_80072F00[PL_T_10] = 4;
+    g_Player.timers[PL_T_10] = 4;
     return 0;
 }
 
@@ -73,7 +73,7 @@ bool RicDoAttack(void) {
         }
         return true;
     }
-    poisoned = g_Player.D_80072F00[PL_T_POISON] != 0;
+    poisoned = g_Player.timers[PL_T_POISON] != 0;
     for (i = 16; i < 31; i++) {
         DestroyEntity(&g_Entities[i]);
     }
@@ -119,7 +119,7 @@ bool RicDoAttack(void) {
         }
         g_Player.unk46 = 1;
         PLAYER.step_s = 0x40;
-        g_Player.D_80072F00[PL_T_9] = 4;
+        g_Player.timers[PL_T_9] = 4;
         return true;
     }
     return false;
@@ -134,13 +134,13 @@ bool RicDoCrash(void) {
     if (subWpnID < 0) {
         return 0;
     }
-    if ((subWpnID == 3) && (g_Player.D_80072F00[PL_T_3] != 0)) {
+    if (subWpnID == PL_W_HOLYWATER && g_Player.timers[PL_T_3]) {
         return 0;
     }
-    if ((subWpnID == 6) && (g_unkGraphicsStruct.D_800973FC != 0)) {
+    if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.D_800973FC) {
         return 0;
     }
-    if (subWpn.blueprintNum != 0) {
+    if (subWpn.blueprintNum) {
         if (subWpnID == 1) {
             subWpnEnt = RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(subWpn.blueprintNum, 1), 0);
@@ -226,7 +226,7 @@ bool RicDoCrash(void) {
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
         break;
     }
-    g_Player.D_80072F00[PL_T_12] = 4;
+    g_Player.timers[PL_T_12] = 4;
     return 1;
 }
 
@@ -241,7 +241,7 @@ void RicSetSlide(void) {
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
     g_api.PlaySfx(0x707);
-    g_Player.D_80072F00[PL_T_12] = 4;
+    g_Player.timers[PL_T_12] = 4;
 }
 
 void RicSetSlideKick(void) {
@@ -253,7 +253,7 @@ void RicSetSlideKick(void) {
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
     g_api.PlaySfx(SFX_GRUNT_B);
-    g_Player.D_80072F00[PL_T_12] = 4;
+    g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_31, 0);
 }
 
@@ -263,7 +263,7 @@ void RicSetBladeDash(void) {
     g_CurrentEntity->velocityY = 0;
     RicSetSpeedX(FIX(5.5));
     g_Player.unk46 = 5;
-    g_Player.D_80072F00[PL_T_12] = 4;
+    g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_8015CC28();
     g_api.PlaySfx(SFX_GRUNT_C);
@@ -1120,7 +1120,7 @@ void RicSetSubweaponParams(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
 
-    if ((g_Player.D_80072F00[PL_T_INVINCIBLE]) != NULL) {
+    if (g_Player.timers[PL_T_INVINCIBLE_SCENE]) {
         attack = subwpn->attack * 2;
     } else {
         attack = subwpn->attack;

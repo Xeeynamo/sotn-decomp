@@ -162,7 +162,7 @@ static void EntityWeaponAttack(Entity* self) {
         if (self->animFrameDuration < 0) {
             // Tails: A small head pops up, and lightning strikes the coin
             if (self->anim == D_90000_8017A8D8) {
-                g_Player.D_80072F00[10] = 4;
+                g_Player.timers[10] = 4;
                 self->anim = D_90000_8017A8E8;
                 self->animFrameDuration = self->animFrameIdx = 0;
                 self->zPriority = 0x1B6;
@@ -175,7 +175,7 @@ static void EntityWeaponAttack(Entity* self) {
                 // Heads: A giant angelic figure appears, with a soul-steal
                 // effect. Not clear what part of the function triggers
                 // soul-steal.
-                g_Player.D_80072F00[12] = 4;
+                g_Player.timers[12] = 4;
                 self->drawFlags = FLAG_DRAW_UNK80;
                 self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                 self->posY.i.hi = 0;

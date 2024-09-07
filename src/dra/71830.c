@@ -19,7 +19,7 @@ void func_80111938(void) {
 
 void func_8011197C(void) {
     D_801396EA = 0;
-    PLAYER.unk44 = 0;
+    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = D_801396E4;
     PLAYER.drawFlags = D_801396E6;
     PLAYER.palette = D_801396E8;
@@ -95,10 +95,10 @@ bool func_801119C4(void) {
 }
 
 void func_80111CC0(void) {
-    if (g_Player.D_80072F00[1] != 0) {
+    if (g_Player.timers[1]) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
     }
-    if (g_Player.D_80072F00[0] != 0) {
+    if (g_Player.timers[0]) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x16), 0);
     }
 }

@@ -72,7 +72,7 @@ static void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(1);
         self->hitboxHeight = self->hitboxWidth = 4;
         g_api.PlaySfx(0x69E);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -171,7 +171,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->hitboxHeight = 12;
         self->hitboxWidth = 12;
         g_api.PlaySfx(SFX_WEAPON_SWISH_B);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -255,7 +255,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->hitboxHeight = self->hitboxWidth = 8;
         g_api.PlaySfx(0x6EE);
         self->ext.weapon.unk7E = 0x40;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         return;
     case 1:

@@ -321,7 +321,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->b0 = 0;
         SetSpeedX(FIX(8));
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         return;
     case 1:
@@ -544,7 +544,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->ext.axeCrash.unk98 = 0x7F;
         self->step++;
         break;
@@ -772,7 +772,7 @@ void EntityHolyWater(Entity* entity) {
         func_8011A290(entity);
         entity->hitboxHeight = 4;
         entity->hitboxWidth = 4;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         entity->step++;
         break;
 
@@ -1090,7 +1090,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         PlaySfx(SFX_UNK_6DF);
         PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
-        g_Player.D_80072F00[12] = 4;
+        g_Player.timers[12] = 4;
         break;
     case 1:
         self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
@@ -1476,7 +1476,7 @@ void EntityBatFireball(Entity* self) {
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -1763,7 +1763,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
@@ -2049,7 +2049,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim = fakeprim->next;
         }
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -2195,7 +2195,7 @@ void EntitySubwpnAgunea(Entity* self) {
             SetSpeedX(FIX(6));
             PlaySfx(SFX_WEAPON_SWISH_C);
             CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
-            g_Player.D_80072F00[10] = 4;
+            g_Player.timers[10] = 4;
             self->step++;
         }
         break;

@@ -281,6 +281,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 
+// document g_Player.unk0C
 #define PLAYER_STATUS_BAT_FORM 0x00000001
 #define PLAYER_STATUS_MIST_FORM 0x00000002
 #define PLAYER_STATUS_WOLF_FORM 0x00000004
@@ -821,7 +822,7 @@ typedef struct Entity {
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;
+    /* 0x44 */ u16 hitParams;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 hitFlags; // 1 = took hit
@@ -1699,7 +1700,7 @@ typedef struct {
     /* 80072EFC */ s32 D_80072EFC; // stun timer
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
     //  13 = invincibility, 14 = invincibility from consumables
-    /* 80072F00 */ s16 D_80072F00[16]; // poison timer
+    /* 80072F00 */ s16 timers[16]; // poison timer
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling

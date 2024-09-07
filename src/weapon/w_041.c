@@ -279,7 +279,7 @@ void EntityWeaponAttack(Entity* self) {
         self->velocityY = D_123000_8017A54C[D_123000_8017B208];
         D_123000_8017B208++;
         self->ext.weapon.lifetime = (rand() & 0xF) + 24;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
 

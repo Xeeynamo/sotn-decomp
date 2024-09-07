@@ -67,7 +67,7 @@ void EntityUnkId01(Entity* self) {
 
     AnimateEntity(D_80180574[params], self);
 
-    if (self->unk44 != 0) {
+    if (self->hitParams) {
         g_api.PlaySfx(SFX_CANDLE_HIT);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != 0) {
