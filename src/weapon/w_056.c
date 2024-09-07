@@ -101,8 +101,7 @@ void EntityWeaponAttack(Entity* self) {
         SetWeaponProperties(self, 0);
 
         if (self->attack >= 0x1E) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 56), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
         }
         self->step++;
     }

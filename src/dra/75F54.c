@@ -38,8 +38,8 @@ void func_80115F54(void) {
         PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5900, 44), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x600, 49), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x59), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(49, 6), 0);
         plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
         plDraw->r2 = plDraw->b2 = plDraw->g2 = 128;
         plDraw->r1 = plDraw->b1 = plDraw->g1 = 128;
@@ -139,8 +139,7 @@ void PlayerStepHellfire(void) {
     case 0:
         // Make factory with blueprint #33. Factory makes entities with ID 25.
         // This is EntityHellfireHandler.
-        if (CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 33), 0) ==
-            NULL) {
+        if (CreateEntFactoryFromEntity(g_CurrentEntity, 33, 0) == NULL) {
             func_8010E570(0);
         }
         SetPlayerAnim(1);
@@ -190,7 +189,7 @@ void PlayerStepHellfire(void) {
             g_Player.D_80072F00[12] = 4;
             // Make factory with blueprint 37. This creates entity with ID 28,
             // which is EntityExpandingCircle.
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 37), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 37, 0);
         }
         if (PLAYER.animFrameDuration < 0) {
             runFinishingBlock = 1;
@@ -214,8 +213,8 @@ void func_801166A4(void) {
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
         PLAYER.ext.player.anim = 0x33;
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5800, 44), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x58), 0);
         PLAYER.step_s++;
         break;
 
@@ -266,7 +265,7 @@ bool BatFormFinished(void) {
         g_Entities->palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2100, 44), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x21), 0);
         g_Entities->velocityY = g_Entities->velocityY >> 1;
         return true;
     }
@@ -426,8 +425,8 @@ void ControlBatForm(void) {
             SetPlayerAnim(0xC6);
             SetSpeedX(FIX(6));
             PLAYER.step_s = 3;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5c00, 44), 0);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 67), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5c), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 67, 0);
             g_WingSmashTimer = 0x40;
 #if defined(VERSION_US)
             g_WingSmashButtonCounter = 0;
@@ -435,13 +434,13 @@ void ControlBatForm(void) {
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_ECHO_OF_BAT))) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 103), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 103, 0);
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
             SetPlayerAnim(0xC9);
             PLAYER.step_s = 4;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 44), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 5), 0);
         }
     }
 
@@ -464,12 +463,12 @@ void ControlBatForm(void) {
             if (g_Player.unk66 == 0) {
 #if defined(VERSION_US)
                 if (CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0x2000, 44), 0) == NULL) {
+                        g_CurrentEntity, FACTORY(44, 0x20), 0) == NULL) {
                     return;
                 }
 #elif defined(VERSION_HD)
                 CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0x2000, 44), 0);
+                    g_CurrentEntity, FACTORY(44, 0x20), 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;
@@ -704,10 +703,10 @@ void ControlBatForm(void) {
                 PLAYER.velocityY = FIX(6);
             }
             if (g_GameTimer % 3 == 0) {
-                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 65), 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 65, 0);
                 if (g_Player.pl_vram_flag & 1) {
                     CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0x900, 69), 0);
+                        g_CurrentEntity, FACTORY(69, 9), 0);
                 }
                 if (g_Player.pl_vram_flag & 2) {
                     x_offset = 3;
@@ -717,7 +716,7 @@ void ControlBatForm(void) {
                     PLAYER.posY.i.hi -= 8;
                     PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
                     CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0x100, 4), 0);
+                        g_CurrentEntity, FACTORY(4, 1), 0);
                     PLAYER.posY.i.hi += 8;
                     PLAYER.posX.i.hi -= x_offset;
                 }
@@ -731,7 +730,7 @@ void ControlBatForm(void) {
         func_8011690C(0x180);
         if (PLAYER.animFrameDuration < 0) {
             // This actually creates the entity factory to produce the fireball
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 81), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 81, 0);
             SetSpeedX(FIX(-1.5));
             func_8011690C(0);
             SetPlayerAnim(0xC3);
@@ -967,7 +966,7 @@ void ControlMistForm(void) {
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;
         func_8010FAF4();
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 73), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 73, 0);
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = xSpeedOrtho;
         }
@@ -987,7 +986,7 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11CU);
         } else {
             func_800EA5E4(0x11FU);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 83), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 83, 0);
         }
         // Note that this means Power of Mist doesn't make mist infinite!
         // It just lasts 100,000 :)
@@ -1171,7 +1170,7 @@ void func_801182F8(void) {
         if (g_Entities[16].step == 5) {
             PLAYER.palette = 0x8100;
             func_8010FAF4();
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5b00, 44), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5b), 0);
             if (PLAYER.step_s != 0) {
                 func_8010E4D0();
                 return;
@@ -1209,9 +1208,9 @@ void func_80118640(void) {
 
 void func_80118670(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 40), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x16), 0);
         PlaySfx(SFX_UI_MP_FULL);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 112), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 112, 0);
     }
     if (PLAYER.animFrameDuration < 0) {
         func_8010E570(0);
@@ -1222,7 +1221,7 @@ void func_801186EC(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 61), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 0x15), 0);
             PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {

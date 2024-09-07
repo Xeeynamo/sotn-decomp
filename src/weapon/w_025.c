@@ -297,7 +297,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if ((self->ext.shield.unk80 % 10) == 0) {
             // Make a func_ptr_80170024 entity
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+                self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
         }
         break;
     case 3:
@@ -327,7 +327,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk80 % 10 == 0) {
             // Make a func_ptr_80170024 entity
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+                self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
         }
         break;
     case 4:
@@ -369,7 +369,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk80 % 10 == 0) {
             // Make a func_ptr_80170024 entity
             unusedEnt = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+                self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);
         }
         break;
     case 5:
@@ -384,7 +384,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (++self->ext.shield.unk80 == 0x40) {
             self->step += 1;
             // Blueprint 55 has child 39, EntityPlayerPinkEffect
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0xF00, 55), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(55, 15), 0);
         }
         break;
     case 7:

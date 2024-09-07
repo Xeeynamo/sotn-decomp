@@ -834,7 +834,7 @@ void func_80172C30(Entity* self) {
             if (g_Player.unk0C & 0x800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 81), 0);
+                g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
                 self->ext.bat.unkA8 = 1;
             }
         } else if (self->ext.bat.unkA8) {

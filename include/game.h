@@ -301,11 +301,15 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_UNK20000 0x20000
 #define PLAYER_STATUS_UNK40000 0x40000
 #define PLAYER_STATUS_UNK80000 0x80000
+#define PLAYER_STATUS_UNK100000 0x100000
+#define PLAYER_STATUS_UNK200000 0x200000
 #define PLAYER_STATUS_UNK400000 0x400000
 #define PLAYER_STATUS_UNK800000 0x800000
 #define PLAYER_STATUS_AXEARMOR 0x01000000
 #define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
 #define PLAYER_STATUS_UNK4000000 0x04000000
+#define NO_AFTERIMAGE 0x08000000
+#define PLAYER_STATUS_UNK10000000 0x10000000
 #define PLAYER_STATUS_UNK40000000 0x40000000
 #define PLAYER_STATUS_UNK80000000 0x80000000
 
@@ -335,6 +339,47 @@ extern u8 g_BmpCastleMap[0x20000];
 #define MENUCHAR(x) ((x) - 0x20) // 8x8 characters are ASCII offset by 0x20
 #define DIAG_EOL 0xFF            // end of line
 #define DIAG_EOS 0x00            // end of string
+
+// entityId: what entity to spawn based on the Entity Set
+// amount: How many entities to spawn in total
+// nPerCycle: how many entities to spawn at once without waiting for tCycle
+// isNonCritical: 'true' for particles, 'false' for gameplay related entities
+//   false: keep searching for a free entity slot every frame to make the entity
+//   true: when there are no entities available then just forgets about it
+// incParamsKind: the technique used to set the self->params to the new entity
+//   false: it is set from 0 to 'nPerCycle'
+//   true: it is set from 0 to 'amount'
+// tCycle: wait 'tCycle' frames per cycle until 'amount' of entities are made
+// kind: refer to `BlueprintKind` for a list of options
+// f: ???
+// tDelay: how many frames to wait before starting to make the first entity
+#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
+               tCycle, kind, f, tDelay)                                        \
+    {entityId,                                                                 \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (tCycle),                                                                 \
+     ((kind) & 15) | ((f) << 4),                                               \
+     tDelay}
+enum BlueprintKind {
+    B_DECOR,      // cannot collide with any other entity, used for decoration
+    B_WPN,        // can collide to stage items, like candles or enemies
+    B_WPN_UNIQUE, // same as above, but new entity replaces the prev. one
+    B_KIND_3,
+    B_KIND_4,
+    B_KIND_5,
+    B_KIND_6,
+    B_KIND_7,
+    B_KIND_8,
+    B_KIND_9,
+    B_KIND_10,
+    B_KIND_11,
+    B_KIND_12,
+    B_KIND_13,
+    B_KIND_14,
+    B_KIND_15,
+};
 
 #define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)

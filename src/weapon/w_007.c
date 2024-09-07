@@ -320,8 +320,7 @@ static void func_ptr_80170004(Entity* self) {
         self->ext.weapon.lifetime += 0x20;
         self->posY.val += self->velocityY; // ???
         if (!(self->ext.weapon.unk7E & 7)) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x40, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
         if (((--self->ext.weapon.unk7E << 0x10) == 0) ||
             (self->hitFlags != 0)) {

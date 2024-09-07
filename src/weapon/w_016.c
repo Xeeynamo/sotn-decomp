@@ -102,8 +102,7 @@ static void EntityWeaponAttack(Entity* self) {
         //  factory gets unkA8 = 0xE0 or 0xF0, putting it into the range of
         //  weapon functions. Then we use blueprint 0x3A, or 58, so child is E1
         //  or F1. This will make the entity in func_ptr_80170004.
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
     }
     self->ext.weapon.lifetime++;
 }
@@ -200,7 +199,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->velocityY = FIX(-1.0);
 
         if (!(D_74000_8017BD74 & 1)) {
-            factory = g_api.CreateEntFactoryFromEntity(self, 0xB0004U, 0);
+            factory = g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 11), 0);
             if (factory) {
                 if (g_HandId == 0) {
                     factory->entityId = 0xEF;
@@ -309,7 +308,7 @@ static s32 func_ptr_80170014(Entity* self) {
             self->ext.weapon.lifetime++;
             // Create factory with blueprint 31. Blueprint 31 has child entity
             // 2, which is func_8011B5A4.
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x900, 31), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(31, 9), 0);
         }
         return;
     case 2:

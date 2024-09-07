@@ -141,8 +141,7 @@ static void func_ptr_80170004(Entity* self) {
         self->velocityX += self->ext.weapon_006.unk84;
         self->velocityY += self->ext.weapon_006.unk88;
         if (!(self->ext.weapon_006.unk7C & 1)) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x40, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
         break;
     case 4:

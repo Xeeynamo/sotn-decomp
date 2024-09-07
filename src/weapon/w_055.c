@@ -45,8 +45,7 @@ void EntityWeaponAttack(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (animIndex == 1) {
             g_api.PlaySfx(SFX_UNK_69D);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x38, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
         }
         SetWeaponProperties(self, 0);
         self->step++;

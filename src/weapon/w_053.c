@@ -48,19 +48,16 @@ void EntityWeaponAttack(Entity* self) {
                 break;
             case 1:
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-                g_api.CreateEntFactoryFromEntity(
-                    self, ((g_HandId + 1) << 0xC) + FACTORY(0, 56), 0);
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
                 break;
             case 2:
                 break;
             case 3:
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-                g_api.CreateEntFactoryFromEntity(
-                    self, ((g_HandId + 1) << 0xC) + FACTORY(0xA00, 56), 0);
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 10), 0);
                 break;
             case 4:
-                g_api.CreateEntFactoryFromEntity(
-                    self, ((g_HandId + 1) << 0xC) + FACTORY(0x1400, 56), 0);
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0x14), 0);
                 break;
             }
             SetWeaponProperties(self, 0);
@@ -282,8 +279,7 @@ static void func_ptr_80170008(Entity* self) {
         SetSpeedX(FIX(8));
         self->velocityY = FIX(-0.5);
         if (self->params & 0x7F00) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0x2800, 0x38), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0x28), 0);
         }
         self->step++;
         break;
@@ -293,8 +289,7 @@ static void func_ptr_80170008(Entity* self) {
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15) / 32);
         if (PLAYER.animFrameIdx == 6) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0x1E00, 0x38), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0x1E), 0);
             self->step++;
         }
         break;
@@ -302,8 +297,7 @@ static void func_ptr_80170008(Entity* self) {
         self->drawMode = 0;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0x1E00, 0x38), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0x1E), 0);
         }
         if (PLAYER.animFrameIdx == 10) {
             SetSpeedX(FIX(-8));

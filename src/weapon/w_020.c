@@ -284,8 +284,8 @@ static void EntityWeaponAttack(Entity* self) {
         self->ext.karmacoin.unk92 -= 4;
         if (self->ext.karmacoin.unk92 < 0x28) {
             self->ext.karmacoin.unk92 = 0x28;
-            child = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x54, 0);
+            child =
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x54, 0), 0);
             self->step++;
         }
         self->ext.karmacoin.unk94 = self->ext.karmacoin.unk92;

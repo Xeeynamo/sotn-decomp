@@ -120,7 +120,7 @@ static s32 func_ptr_80170004(Entity* self) {
                 PLAYER.animFrameDuration = 0;
                 PLAYER.step_s = 1;
                 g_api.CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0, 0x57), 0);
+                    g_CurrentEntity, FACTORY(0x57, 0), 0);
                 return;
             }
             if (g_Player.padTapped & PAD_CROSS) {
@@ -195,7 +195,7 @@ static void func_ptr_80170008(Entity* self) {
         PLAYER.animFrameIdx = 0;
         PLAYER.animFrameDuration = 0;
         PLAYER.velocityX >>= 1;
-        g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0x57), 0);
+        g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x57, 0), 0);
         return;
     }
     if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk72 == 0)) {
@@ -210,8 +210,7 @@ static void func_ptr_80170008(Entity* self) {
     }
     if (!(g_GameTimer & 7)) {
         g_api.PlaySfx(SFX_STOMP_SOFT_A);
-        g_api.CreateEntFactoryFromEntity(
-            g_CurrentEntity, FACTORY(0x100, 0x45), 0);
+        g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x45, 1), 0);
     }
 }
 
@@ -270,7 +269,7 @@ static s32 func_ptr_8017000C(Entity* self) {
             PLAYER.animFrameIdx = 0;
             PLAYER.animFrameDuration = 0;
             g_api.CreateEntFactoryFromEntity(
-                g_CurrentEntity, FACTORY(0, 0x57), 0);
+                g_CurrentEntity, FACTORY(0x57, 0), 0);
         }
     } else if (PLAYER.animFrameDuration < 0) {
         PLAYER.ext.player.anim = 0xD0;
@@ -322,7 +321,7 @@ static s32 func_ptr_80170010(Entity* self) {
             D_13F000_8017B3B8 = 0x30;
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
             // Blueprint 0 makes child 2, func_8011B5A4
-            g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+            g_api.CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             return;
         }
         return;

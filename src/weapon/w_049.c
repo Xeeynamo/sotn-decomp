@@ -50,14 +50,11 @@ void EntityWeaponAttack(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
         if (animIndex == 1) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x5B, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x5B, 0), 0);
         }
         if (animIndex == 3) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x5F, 0);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x10040, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x5F, 0), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 1), 0);
         }
         SetWeaponProperties(self, 0);
         D_15B000_8017C8CC = 0;
@@ -74,13 +71,11 @@ void EntityWeaponAttack(Entity* self) {
     }
     if ((D_15B000_8017C8CC == 0) && (PLAYER.animFrameIdx == 1)) {
         if ((animIndex == PLAYER.animFrameIdx) || (animIndex == 3)) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x5D, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x5D, 0), 0);
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
         }
         if (animIndex == 2) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x1005D, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x5D, 1), 0);
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
         }
     }
@@ -179,8 +174,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->ext.weapon.unk7E -= 3;
         }
         if (--self->ext.weapon.lifetime == 0x18 && params == 0) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x40, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
         self->ext.weapon.unk80 = self->ext.weapon.unk80 - 0x20;
         if (self->ext.weapon.lifetime < 0x11) {
@@ -466,8 +460,7 @@ s32 func_ptr_80170010(Entity* self) {
     self->posX.i.hi = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
     self->posY.i.hi = baseY - (((rsin(angle) >> 4) * magnitude) >> 8);
     if (self->ext.weapon.lifetime % 7 == 0) {
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xC) | 0x65, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x65, 0), 0);
     }
 }
 

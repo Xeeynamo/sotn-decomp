@@ -64,7 +64,7 @@ static void EntityWeaponAttack(Entity* self) {
     if (!D_107000_8017BBE4 && PLAYER.animFrameIdx == 1 &&
         (animIndex - 1) < 2U) {
         g_api.CreateEntFactoryFromEntity(
-            self, 0x3a + ((g_HandId + 1) << 0xC) + ((--animIndex) << 0x10), 0);
+            self, WFACTORY(0x3a, 0) + (--animIndex << 0x10), 0);
     }
 
     D_107000_8017BBE4 = PLAYER.animFrameIdx;
@@ -312,8 +312,7 @@ s32 func_ptr_80170004(Entity* self) {
                     temp_s3 = self->posY.i.hi;
                     self->posX.i.hi = xVar;
                     self->posY.i.hi = yVar;
-                    g_api.CreateEntFactoryFromEntity(
-                        self, ((g_HandId + 1) << 0xC) | 64, 0);
+                    g_api.CreateEntFactoryFromEntity(self, WFACTORY(64, 0), 0);
                     self->posX.i.hi = temp_s0;
                     self->posY.i.hi = temp_s3;
                 }

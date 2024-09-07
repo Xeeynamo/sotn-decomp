@@ -16,14 +16,14 @@ void RicEntityTeleport(Entity* self) {
     s32 i;
     s32 result;
 
-    bool wasCase3 = false;
+    bool showParticles = false;
     bool var_s5 = false;
 
     upperParams = self->params & 0xFE00;
     FntPrint("pl_warp_flag:%02x\n", g_Player.unk1C);
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 36);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4 + LEN(D_80175000));
         if (self->primIndex == -1) {
             return;
         }
@@ -49,7 +49,7 @@ void RicEntityTeleport(Entity* self) {
             prim->drawMode = 0x31;
             prim = prim->next;
         }
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_80175000); i++) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
             yVar = rand();
             yVar = 0xE0 - (yVar & 0x3F);
@@ -62,7 +62,7 @@ void RicEntityTeleport(Entity* self) {
             prim->g0 = 0;
             prim->g1 = (rand() & 0x1F) + 1;
             prim->priority = 0x1F0;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim->g2 = 0;
             prim = prim->next;
         }
@@ -101,7 +101,7 @@ void RicEntityTeleport(Entity* self) {
         }
         break;
     case 3:
-        wasCase3 = true;
+        showParticles = true;
         self->ext.teleport.unk88 += 4;
         if (self->ext.teleport.unk88 >= 0x100) {
             self->ext.teleport.unk88 = 0x100;
@@ -199,8 +199,8 @@ void RicEntityTeleport(Entity* self) {
     prim->x0 = prim->x2 = xVar + selfUnk7C;
     func_80165DD8(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
-    if (wasCase3) {
-        for (i = 0; i < 32; i++) {
+    if (showParticles) {
+        for (i = 0; i < LEN(D_80175000); i++) {
             switch (prim->g0) {
             case 0:
                 if (--prim->g1 == 0) {
@@ -220,12 +220,11 @@ void RicEntityTeleport(Entity* self) {
             }
             prim = prim->next;
         }
-        return;
-    }
-
-    // Potential bug? Should probably be doing prim = prim->next, right?
-    for (i = 0; i < 32; i++) {
-        prim->drawMode |= DRAW_HIDE;
+    } else {
+        // Potential bug? Should probably be doing prim = prim->next, right?
+        for (i = 0; i < LEN(D_80175000); i++) {
+            prim->drawMode |= DRAW_HIDE;
+        }
     }
 }
 
@@ -472,7 +471,7 @@ void RicEntityWhip(Entity* self) {
             }
         } else if (self->ext.whip.unkA4 != 0) {
             if (!(lowerParams & 1)) {
-                RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                RicCreateEntFactoryFromEntity(self, BP_20, 0);
                 self->ext.whip.unkA4 = 0;
             }
         }
@@ -498,7 +497,7 @@ void RicEntityWhip(Entity* self) {
                 s32 a1;
                 Entity* a0;
                 if (upperParams == 0) {
-                    a1 = FACTORY(0, 18);
+                    a1 = 18;
                 } else {
                     a0 = self;
                 }
@@ -508,10 +507,10 @@ void RicEntityWhip(Entity* self) {
                 }
                 if (upperParams == 0) {
                     a0 = self;
-                    a1 = FACTORY(0, 18);
+                    a1 = FACTORY(BP_18, 0);
                 } else {
                     a0 = self;
-                    a1 = FACTORY(0x100, 18);
+                    a1 = FACTORY(BP_18, 1);
                 }
                 RicCreateEntFactoryFromEntity(a0, a1, 0);
             }
@@ -604,7 +603,7 @@ void RicEntityWhip(Entity* self) {
             case 6:
                 if (upperParams != 0) {
                     if (PLAYER.animFrameDuration == D_80155C78[lowerParams]) {
-                        RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                        RicCreateEntFactoryFromEntity(self, BP_20, 0);
                     }
                 }
                 if (lowerParams == (0x10 - PLAYER.animFrameDuration)) {
@@ -748,7 +747,7 @@ static s16 D_80155D08[] = {0x0013, 0x0014, 0x0016, 0x001A, 0x0018,
                            0x0015, 0x001B, 0x0017, 0x0019, 0x0000};
 static s16 D_80155D1C[] = {0x0013, 0x0014, 0x001A, 0x0016, 0x0018,
                            0x001B, 0x0015, 0x0019, 0x0017, 0x0000};
-void func_8016779C(Entity* entity) {
+void RicEntityArmBrandishWhip(Entity* entity) {
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
         return;
@@ -809,11 +808,11 @@ void func_80167964(Entity* entity) {
     }
 }
 
-void func_80167A58(Entity* self) {}
+void RicEntityNotImplemented1(Entity* self) {}
 
-void func_80167A60(Entity* self) {}
+void RicEntityNotImplemented2(Entity* self) {}
 
-void func_80167A68(Entity* self) {}
+void RicEntityNotImplemented3(Entity* self) {}
 
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
 // blueprint 40. Duplicate of DRA EntityHolyWaterBreakGlass.

@@ -66,8 +66,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     if (animIndex != 0 && PLAYER.animFrameIdx == 4 &&
         PLAYER.animFrameDuration == 1) {
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xC) | 0x38, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
     }
 }
 

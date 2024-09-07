@@ -81,13 +81,11 @@ void EntityWeaponAttack(Entity* self) {
 
         if ((((self->params >> 8) & 0x7F) == 2) &&
             !((u16)self->ext.weapon.lifetime & 1)) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 58), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(58, 0), 0);
         }
 
         if (((self->params >> 8) & 0x7F) == 3) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 80), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(80, 0), 0);
         }
 
         self->ext.weapon.lifetime++;
@@ -144,8 +142,7 @@ static void func_ptr_80170008(Entity* self) {
         self->velocityY = FIX(-1);
 
         if (!(D_6D000_8017BFC8 & 1)) {
-            factory =
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(0xB00, 4), 0);
+            factory = g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 11), 0);
             if (factory != NULL) {
                 if (g_HandId == 0) {
                     factory->entityId = 0xEF;
@@ -297,10 +294,8 @@ void func_ptr_8017000C(Entity* self) {
         g_api.CheckCollision(x, y, &collider, 0);
 
         if (collider.effects & 1) {
-            e = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 76), 0);
-            e = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0x1000, 78), 0);
+            e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(76, 0), 0);
+            e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(78, 16), 0);
             g_api.func_80102CD8(3);
             self->step++;
             self->velocityY = FIX(-6);
@@ -362,9 +357,7 @@ void func_ptr_8017000C(Entity* self) {
 
         if (self->ext.weapon.lifetime & 1) {
             e = g_api.CreateEntFactoryFromEntity(
-                self,
-                ((g_HandId + 1) << 0xC) + 0x4E +
-                    ((self->ext.weapon.unk7E + 16) << 16),
+                self, WFACTORY(0x4E, 0) + ((self->ext.weapon.unk7E + 16) << 16),
                 0);
             self->ext.weapon.unk7E++;
         }
@@ -380,8 +373,7 @@ void func_ptr_8017000C(Entity* self) {
         // no, seriously. the last three bits of weapon lifetime really need
         // to be zero. and don't trust that last comparison. i'm not joking.
         if ((self->ext.weapon.lifetime & 7) == 0) {
-            e = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 104), 0);
+            e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(104, 0), 0);
         }
 
         self->animCurFrame = 0;

@@ -143,8 +143,8 @@ static void EntityWeaponAttack(Entity* self) {
             self->step++;
         }
         if (!(g_GameTimer & 1)) {
-            unused = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x3A, 0);
+            unused =
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
         }
         var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
         self->ext.weapon.childPalette = self->palette + var_s2;
@@ -196,8 +196,8 @@ static void EntityWeaponAttack(Entity* self) {
         self->posX.val += rcos(self->ext.heavenSword.unk82) << 6;
         self->posY.val -= rsin(self->ext.heavenSword.unk82) << 6;
         if (!(g_GameTimer & 1)) {
-            unused = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x3A, 0);
+            unused =
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
         }
         var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
         self->ext.weapon.childPalette = self->palette + var_s2;

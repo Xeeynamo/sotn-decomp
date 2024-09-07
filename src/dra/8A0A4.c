@@ -224,7 +224,7 @@ void EntityStopWatch(Entity* self) {
     case 6:
         self->ext.stopwatch.t += 1;
         if (self->ext.stopwatch.t > 14) {
-            CreateEntFactoryFromEntity(self, FACTORY(0xE00, 4), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(4, 14), 0);
         label:
             self->step++;
         }
@@ -606,7 +606,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, FACTORY(0, 79), 0);
+        CreateEntFactoryFromEntity(self, 79, 0);
         if (g_GameTimer % 10 == 0) {
             PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }
@@ -879,7 +879,7 @@ bool WolfFormFinished(void) {
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         // Create factory for EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2400, 44), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x24), 0);
         PLAYER.velocityY >>= 1;
         return true;
     }
@@ -1123,7 +1123,7 @@ void func_8012D178(void) {
         } else if (g_Player.unk04 & 0x40) {
             func_8012CA64();
         } else if (g_GameTimer % 6 == 0) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 69), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
     }
 }
@@ -1165,7 +1165,7 @@ void func_8012D28C(bool exitEarly) {
     }
 
     SetSpeedX(FIX(1));
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x900, 4), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 9), 0);
     D_800B0914 = 0;
     // Finally make use of that bit to control if X is positive or negative.
     if (bitNotFound) {

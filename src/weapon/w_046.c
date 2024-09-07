@@ -266,12 +266,10 @@ static void EntityWeaponAttack(Entity* self) {
 
     if (maskedParams == 0) {
         if (self->ext.weapon.unk7E == 3) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x10032, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x32, 1), 0);
         }
         if (self->ext.weapon.unk7E == 6) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x20032, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x32, 2), 0);
         }
         if (++self->ext.factory.unk84 == 8) {
             g_api.PlaySfxVolPan(SFX_WEAPON_SWISH_A, 0x50, 0);

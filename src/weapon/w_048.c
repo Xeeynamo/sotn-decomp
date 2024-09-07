@@ -47,16 +47,11 @@ void EntityWeaponAttack(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
         if (animIndex != 0) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x00038, 0);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x1003A, 0);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x2003A, 0);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x3003A, 0);
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x00040, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 1), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 2), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 3), 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
         SetWeaponProperties(self, 0);
         D_154000_8017C3B4 = 0;
@@ -81,10 +76,10 @@ void EntityWeaponAttack(Entity* self) {
             var_s0 = 0x20;
         }
 
-        create(self, ((g_HandId + 1) << 0xC), ((var_s0 + 0) << 0x10) + 0x38);
-        create(self, ((g_HandId + 1) << 0xC), ((var_s0 + 1) << 0x10) + 0x3A);
-        create(self, ((g_HandId + 1) << 0xC), ((var_s0 + 2) << 0x10) + 0x3A);
-        create(self, ((g_HandId + 1) << 0xC), ((var_s0 + 3) << 0x10) + 0x3A);
+        create(self, ((g_HandId + 1) << 0xC), FACTORY(0x38, var_s0 + 0));
+        create(self, ((g_HandId + 1) << 0xC), FACTORY(0x3A, var_s0 + 1));
+        create(self, ((g_HandId + 1) << 0xC), FACTORY(0x3A, var_s0 + 2));
+        create(self, ((g_HandId + 1) << 0xC), FACTORY(0x3A, var_s0 + 3));
     }
     D_154000_8017C3B4 = PLAYER.animFrameIdx;
     self->drawFlags = PLAYER.drawFlags;

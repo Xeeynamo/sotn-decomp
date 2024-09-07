@@ -559,7 +559,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->step++;
             self->ext.shield.unk80 = 0x20;
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 44), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(44, 1), 0);
             D_170000_8017ABBC = 1;
         }
         self->ext.shield.unk96 += 12;

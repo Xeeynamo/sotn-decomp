@@ -415,8 +415,7 @@ s32 func_ptr_80170004(Entity* self) {
         return;
     }
     if (PLAYER.animFrameIdx == 1 && PLAYER.animFrameDuration == 1) {
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) * 4096) | 0x3E, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3E, 0), 0);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
@@ -513,9 +512,7 @@ static void func_ptr_80170008(Entity* self) {
     DecelerateX(0x2800);
     if (temp_s6 == 0) {
         u32 tmp = (g_HandId + 1) << 0xC;
-        flags = 0;
-        flags += (self->ext.weapon.unk7E + 1) << 0x10;
-        flags += 0x3E;
+        flags = FACTORY(0x3E, self->ext.weapon.unk7E + 1);
         g_api.CreateEntFactoryFromEntity(self, tmp + flags, 0);
     }
     prim = &g_PrimBuf[self->primIndex];

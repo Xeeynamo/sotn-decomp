@@ -81,8 +81,7 @@ void EntityWeaponAttack(Entity* self) {
     case 2:
         if (self->ext.weapon.lifetime % 8 == 0 &&
             self->ext.weapon.lifetime >= 9 &&
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 0x38), 0)) {
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0)) {
             g_api.func_80118C28(6);
             SetWeaponProperties(self, 0);
         }
@@ -105,7 +104,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->rotX == 64) {
             self->rotPivotX = 1;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0xC00, 4), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 12), 0);
         }
         if (self->rotX == 32) {
             self->palette = PAL_OVL(0x15F);

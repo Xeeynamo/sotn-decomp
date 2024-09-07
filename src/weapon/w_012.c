@@ -436,8 +436,7 @@ static s32 func_ptr_80170004(Entity* self) {
     }
 
     if (!(g_GameTimer & 3)) {
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xC) | 0x40, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
     }
     self->ext.weapon_012.unk9C++;
 }

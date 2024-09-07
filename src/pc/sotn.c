@@ -98,8 +98,6 @@ static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-extern FactoryBlueprint g_RicFactoryBlueprints[78];
-
 void func_801027C4(u32 arg0);
 
 bool InitGame(void) {
@@ -213,12 +211,6 @@ bool InitGame(void) {
     if (!FileAsString(InitBlueprintData, "assets/dra/factory_blueprint.json",
                       g_FactoryBlueprints)) {
         ERRORF("failed to init dra blueprint data");
-        return false;
-    }
-
-    if (!FileAsString(InitBlueprintData, "assets/ric/factory_blueprint.json",
-                      g_RicFactoryBlueprints)) {
-        ERRORF("failed to init ric blueprint data");
         return false;
     }
 

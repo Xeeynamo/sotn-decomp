@@ -270,7 +270,7 @@ static u16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
 static s32 velocity_x_80154C5C[] = {
     -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000};
 static u16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
-static AnimationFrame anim_80154C80[] = {
+static AnimationFrame anim_smoke_puff[] = {
     {1, FRAME(0x01, 0)},
     {1, FRAME(0x02, 0)},
     {1, FRAME(0x03, 0)},
@@ -296,29 +296,27 @@ static AnimationFrame anim_80154C80[] = {
     {1, FRAME(0x17, 0)},
     {1, FRAME(0x18, 0)},
     A_END};
-static u8 sensors1_80154CE4[] = {0x02, 0x09, 0x03, 0x0A, 0x01, 0x08, 0x04,
-                                 0x0B, 0x00, 0x07, 0x05, 0x0C, 0x06, 0x0D};
-static u8 sensors2_80154CF4[] = {
-    0x02, 0x09, 0x03, 0x0A, 0x04, 0x0B, 0x05, 0x0C, 0x06, 0x0D};
-void func_80160FC4(Entity* self) {
+static u8 sensors1_80154CE4[] = {2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13};
+static u8 sensors2_80154CF4[] = {2, 9, 3, 10, 4, 11, 5, 12, 6, 13};
+void RicEntitySmokePuff(Entity* self) {
     s16 posX;
     s32 i;
 
     s16 paramsLo = self->params & 0xFF;
     s16 paramsHi = self->params >> 8;
 
-    if ((g_Player.unk0C & 0x20000) && (paramsHi != 9)) {
+    if ((g_Player.unk0C & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
     case 0:
         self->animSet = 5;
-        self->anim = anim_80154C80;
+        self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = 0x30;
-        self->drawFlags = 0xB;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
         self->unk6C = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
@@ -441,7 +439,7 @@ static unkStr_8011E4BC D_80154D90 = {
 static unkStr_8011E4BC* D_80154DA0[] = {
     &D_80154D00, &D_80154D10, &D_80154D20, &D_80154D30, &D_80154D40,
     &D_80154D50, &D_80154D60, &D_80154D70, &D_80154D80, &D_80154D90};
-void func_8016147C(Entity* self) {
+void RicEntityHitByCutBlood(Entity* self) {
     byte stackpad[0x28];
     FakePrim* tilePrim;
     s16 randVar;
@@ -727,7 +725,7 @@ void func_80161C2C(Entity* self) {
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
-                self->anim = anim_80154C80;
+                self->anim = anim_smoke_puff;
                 self->palette = 0x8170;
             }
         }
@@ -757,14 +755,14 @@ void func_80161C2C(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->anim != anim_80154C80)) {
+        if ((self->animFrameIdx == 8) && (self->anim != anim_smoke_puff)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                RicCreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->anim == anim_80154C80)) {
+        if ((self->animFrameIdx == 16) && (self->anim == anim_smoke_puff)) {
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -790,11 +788,10 @@ void func_80161EF8(Entity* self) {
         self->velocityY = (rand() & 0x3FFF) - 0x10000;
         self->step++;
         break;
-
     case 1:
         if ((self->animFrameIdx == 6) &&
             (self->animFrameDuration == self->step) && (rand() & 1)) {
-            RicCreateEntFactoryFromEntity(self, FACTORY(0, 4), 0);
+            RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {
@@ -820,7 +817,7 @@ static Props_80161FF0 D_80154E5C[] = {
     {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
     {0, -0x40, FIX(0), +FIX(2.5), 0x0030, 0x19, 0x011A, 0, 0},
     {0, +0x40, FIX(0), -FIX(2.5), 0x0018, 0x19, 0x011B, 128, 0}};
-void func_80161FF0(Entity* self) {
+void RicEntityApplyMariaPowerAnim(Entity* self) {
     Primitive* prim;
 
     u16 posX = self->posX.i.hi;
@@ -1025,7 +1022,7 @@ static s16 D_80154EAC[] = {0x016E, 0x0161, 0x0160, 0x0162};
 // 0xFFFDAAAB = -FIX(5. / 3)
 static s32 D_80154EB4[] = {FIX(5. / 3), -FIX(5. / 3), FIX(1. / 3), -0xD555};
 static s32 D_80154EC4[] = {-FIX(2), -FIX(5. / 3), -FIX(3), -0x25555};
-void func_80162870(Entity* self) {
+void RicEntityMariaPowers(Entity* self) {
     Primitive* prim;
     s16 params;
 
@@ -1107,16 +1104,15 @@ void func_80162870(Entity* self) {
     prim->y2 = self->posY.i.hi + self->ext.et_80162870.unk80;
     prim->x3 = self->posX.i.hi + self->ext.et_80162870.unk7C;
     prim->y3 = self->posY.i.hi + self->ext.et_80162870.unk80;
-    return;
 }
 
-void func_80162C7C(Entity* self) {}
+void RicEntityNotImplemented4(Entity* self) {}
 
-static AnimationFrame anim_80154ED4[] = {
+static AnimationFrame anim_maria_walk[] = {
     {4, FRAME(1, 0)}, {4, FRAME(2, 0)}, {4, FRAME(3, 0)},
     {4, FRAME(4, 0)}, {4, FRAME(5, 0)}, {4, FRAME(6, 0)},
     {4, FRAME(7, 0)}, {4, FRAME(8, 0)}, A_LOOP_AT(0)};
-static AnimationFrame anim_80154EF8[] = {
+static AnimationFrame anim_maria_offering_powers[] = {
     {0x08, FRAME(0x09, 0)}, {0x08, FRAME(0x0D, 0)}, {0x40, FRAME(0x0A, 0)},
     {0x02, FRAME(0x0B, 0)}, {0x02, FRAME(0x0C, 0)}, {0x06, FRAME(0x0D, 0)},
     {0x07, FRAME(0x0E, 0)}, {0x06, FRAME(0x0F, 0)}, {0x05, FRAME(0x0E, 0)},
@@ -1128,7 +1124,7 @@ static AnimationFrame anim_80154EF8[] = {
     {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
     {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
     {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
-void func_80162C84(Entity* entity) {
+void RicEntityMaria(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 |
@@ -1138,7 +1134,7 @@ void func_80162C84(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = PAL_OVL(0x149);
         entity->animSet = ANIMSET_OVL(19);
-        RicSetAnimation(anim_80154ED4);
+        RicSetAnimation(anim_maria_walk);
         entity->velocityX = FIX(-1.75);
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
@@ -1160,10 +1156,10 @@ void func_80162C84(Entity* entity) {
             entity->ext.et_80161FF0.unk7E++;
         }
         if (entity->posX.i.hi < 0xE0) {
-            RicSetAnimation(anim_80154EF8);
+            RicSetAnimation(anim_maria_offering_powers);
             entity->velocityX = 0;
             entity->step++;
-            RicCreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
+            RicCreateEntFactoryFromEntity(entity, FACTORY(BP_SKID_SMOKE, 4), 0);
         }
         break;
     case 2:
@@ -1175,7 +1171,7 @@ void func_80162C84(Entity* entity) {
         break;
     case 3:
         if (!--entity->ext.et_80161FF0.unk7C) {
-            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 30), 0);
+            RicCreateEntFactoryFromEntity(entity, BP_MARIA_POWERS_INVOKED, 0);
             entity->step++;
         }
         break;
