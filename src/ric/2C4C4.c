@@ -1244,7 +1244,7 @@ void RicEntityCrashAxe(Entity* self) {
             prim->y2 = temp_s5 - (((rsin(var_s3) << 4) * twentyone) >> 0x10);
             prim->x3 = temp_s4 + (((rcos(var_v0) << 4) * twentyone) >> 0x10);
             prim->y3 = temp_s5 - (((rsin(var_v0) << 4) * twentyone) >> 0x10);
-            prim->drawMode &= 0xFFF7;
+            prim->drawMode &= ~DRAW_HIDE;
         } else if (self->ext.axeCrash.unk8B[sp10 + 4] != 0) {
             if (self->ext.axeCrash.unk8B[sp10 + 8] != 0) {
                 self->ext.axeCrash.unk8B[sp10 + 8] = 0;

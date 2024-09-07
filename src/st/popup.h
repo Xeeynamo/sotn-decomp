@@ -73,7 +73,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
+    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -241,7 +241,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
+    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
     prim = prim->next;
 
     prim->tpage = 0x1F;

@@ -176,7 +176,7 @@ void EntityStopWatch(Entity* self) {
                 prim->v0 = prim->v1 = 0x40;
                 prim->u1 = prim->u3 = x + 0x1E;
                 prim->v2 = prim->v3 = 0x49;
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             } else {
                 self->ext.stopwatch.unk8E = 0;
@@ -189,14 +189,14 @@ void EntityStopWatch(Entity* self) {
             prim->v0 = prim->v1 = 0x40;
             prim->u1 = prim->u3 = x + 0x1E;
             prim->v2 = prim->v3 = 0x49;
-            prim->drawMode &= 0xFFF7;
+            prim->drawMode &= ~DRAW_HIDE;
         }
         break;
     case 4:
         self->flags &= ~FLAG_UNK_40000;
         prim = &g_PrimBuf[self->primIndex];
         prim->priority = 0xC2;
-        prim->drawMode &= 0xFDFF;
+        prim->drawMode &= ~DRAW_UNK_200;
         prim = prim->next;
         prim->drawMode |= DRAW_HIDE;
         prim = prim->next;

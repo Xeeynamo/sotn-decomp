@@ -629,7 +629,7 @@ void RicEntityHitByCutBlood(Entity* self) {
                 tilePrim->posY.val =
                     (tilePrim->posY.val + tilePrim->velocityY.val);
                 if (--tilePrim->delay < 0) {
-                    tilePrim->drawMode |= 8;
+                    tilePrim->drawMode |= DRAW_HIDE;
                 }
                 break;
             case 4:

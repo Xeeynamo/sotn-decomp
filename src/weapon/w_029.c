@@ -321,7 +321,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (--self->ext.weapon.unk80 == 0) {
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
             g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(

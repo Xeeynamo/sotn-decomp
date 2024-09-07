@@ -229,7 +229,7 @@ void EntityStageNamePopup(Entity* self) {
                 prim->x1 = prim->x3 = 0x80;
                 prim->y0 = prim->y1 = 0xB1;
                 prim->y2 = prim->y3 = 0xB1;
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 self->step_s++;
             }
             break;
@@ -260,7 +260,8 @@ void EntityStageNamePopup(Entity* self) {
             }
             prim = self->ext.stpopup.unk88;
             for (i = 0; i < 2; i++) {
-                prim->drawMode = 0x75;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_TRANSP;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = self->ext.stpopup.unk90;
@@ -274,7 +275,8 @@ void EntityStageNamePopup(Entity* self) {
             }
             prim = self->ext.stpopup.unk88;
             for (i = 0; i < 2; i++) {
-                prim->drawMode = 0x35;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = self->ext.stpopup.unk90;
@@ -291,14 +293,15 @@ void EntityStageNamePopup(Entity* self) {
             }
             prim = self->ext.stpopup.prim;
             for (i = 0; i < 2; i++) {
-                prim->drawMode = 0x35;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = self->ext.stpopup.unk92;
                 prim = prim->next;
             }
             for (i = 0; i < 2; i++) {
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = self->ext.stpopup.unk92;
@@ -329,7 +332,7 @@ void EntityStageNamePopup(Entity* self) {
             prim = prim->next;
             prim = prim->next;
             for (i = 0; i < 2; i++) {
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = self->ext.stpopup.unk92;
@@ -375,7 +378,8 @@ void EntityStageNamePopup(Entity* self) {
                 prim->p1 = -((0x14 - i) * 4);
                 prim->p2 = Random() & 3;
                 prim->p3 = 0;
-                prim->drawMode = 0x35;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim = prim->next;
             }
 
@@ -404,7 +408,8 @@ void EntityStageNamePopup(Entity* self) {
                 prim->p1 = -((0x14 - i) * 4);
                 prim->p2 = Random() & 3;
                 prim->p3 = 0;
-                prim->drawMode = 0x35;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim = prim->next;
             }
 

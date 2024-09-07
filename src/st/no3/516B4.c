@@ -1329,7 +1329,7 @@ void EntityMermanWaterSplash(Entity* self) {
                 }
                 if (prim->y0 & 0xFF00) {
                     prim->p1 = 1;
-                    prim->drawMode |= 8;
+                    prim->drawMode |= DRAW_HIDE;
                 }
                 prim->x0 = sp.x0;
                 prim->x1 = sp.x1;

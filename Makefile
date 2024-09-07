@@ -138,6 +138,7 @@ clean:
 format: format-src format-tools format-symbols format-license
 
 format-src: bin/clang-format
+	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
 	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
@@ -151,7 +152,6 @@ format-src: bin/clang-format
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
         | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
-	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 format-tools:
 	black tools/*.py
 	black tools/splat_ext/*.py

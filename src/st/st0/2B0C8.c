@@ -319,7 +319,7 @@ void EntityStageTitleCard(Entity* self) {
 
     case 3:
         prim = self->ext.stageTitleCard.prim;
-        prim->drawMode |= 0x31;
+        prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
 
         prim = prim->next;
         prim->u1 = prim->u3 = 0x7F;

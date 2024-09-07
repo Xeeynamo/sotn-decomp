@@ -36,7 +36,7 @@ lazy_static! {
     };
 
     static ref REGEX: Regex = {
-        let pattern = r"([.>]drawMode\s*=\s*)((?:0x)?[A-Fa-f0-9]*)(?:;)";
+        let pattern = r"([.>]drawMode\s*(?:[&|]?)=\s*)((?:0x)?[A-Fa-f0-9]*)(?:;)";
         Regex::new(pattern).unwrap()
     };
 }
@@ -45,7 +45,7 @@ fn replace_enum(captures: &regex::Captures) -> String {
     if let Some(assignment) = captures.get(1).map(|m| m.as_str().to_string()) {
         if let Some(draw_mode) = captures.get(2).map(|m| m.as_str().to_string()) {
             // if it starts with 0x, hex string, otherwise int
-            let draw_mode_value: u16;
+            let mut draw_mode_value: u16;
             if draw_mode.starts_with("0x") {
                 if let Ok(v) = u16::from_str_radix(draw_mode.strip_prefix("0x").unwrap(), 16) {
                     draw_mode_value = v;
@@ -57,7 +57,15 @@ fn replace_enum(captures: &regex::Captures) -> String {
                 draw_mode_value = draw_mode.parse::<u16>().unwrap();
             }
 
-            let rvalue: String;
+            let invert: String;
+            if (draw_mode_value & 0x8000) != 0 {
+                invert = "~".to_string();
+                draw_mode_value = !draw_mode_value;
+            } else {
+                invert = "".to_string();
+            }
+
+            let mut rvalue: String;
             if draw_mode_value == 0 {
                 rvalue = "DRAW_DEFAULT".to_string();
             } else {
@@ -72,8 +80,11 @@ fn replace_enum(captures: &regex::Captures) -> String {
                     .map(|e| *e.unwrap())
                     .collect::<Vec<&str>>()
                     .join(" | ");
+                if u16::count_ones(draw_mode_value) > 1 && invert == "~" {
+                    rvalue = format!("({})", rvalue);
+                }
             }
-            return format!("{}{};", assignment.to_string(), rvalue);
+            return format!("{}{}{};", assignment.to_string(), invert, rvalue);
         }
     }
     captures
@@ -125,6 +136,30 @@ mod tests {
     fn test_draw_mode_flags() {
         let input_line = "self->drawMode = DRAW_TPAGE;";
         let expected_line = "self->drawMode = DRAW_TPAGE;";
+        let result = transform_line_draw_mode(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_draw_mode_set() {
+        let input_line = "self->drawMode |= 0x80;";
+        let expected_line = "self->drawMode |= DRAW_MENU;";
+        let result = transform_line_draw_mode(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_draw_mode_clear() {
+        let input_line = "self->drawMode &= 0xFF7F;";
+        let expected_line = "self->drawMode &= ~DRAW_MENU;";
+        let result = transform_line_draw_mode(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_draw_mode_clear_many() {
+        let input_line = "self->drawMode &= 0xFFCF;";
+        let expected_line = "self->drawMode &= ~(DRAW_TPAGE2 | DRAW_TPAGE);";
         let result = transform_line_draw_mode(input_line);
         assert_eq!(result, expected_line)
     }

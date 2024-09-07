@@ -5,7 +5,7 @@ void EntityIntenseExplosion(Entity* self) {
         self->palette = PAL_OVL(0x170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (self->params & 0xF0) {
             self->palette = PAL_OVL(0x195);
             self->drawMode = DRAW_TPAGE;
