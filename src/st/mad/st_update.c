@@ -29,7 +29,7 @@ void UpdateStageEntities(void) {
 
         g_CurrentEntity = entity;
         entity->pfnUpdate(entity);
-        entity->unk44 = 0;
+        entity->hitParams = 0;
         entity->hitFlags = 0;
     }
 }

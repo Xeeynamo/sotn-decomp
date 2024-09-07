@@ -476,13 +476,13 @@ void RicMain(void) {
     }
     if ((g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] |
          g_Player.D_80072F00[PL_T_INVINCIBLE]) ||
-        !PLAYER.unk44) {
+        !PLAYER.hitParams) {
         goto block_47;
     }
     playerStep = PLAYER.step;
     playerStepS = PLAYER.step_s;
-    damage.effects = PLAYER.unk44 & ~0x1F;
-    damage.damageKind = PLAYER.unk44 & 0x1F;
+    damage.effects = PLAYER.hitParams & ~0x1F;
+    damage.damageKind = PLAYER.hitParams & 0x1F;
     damage.damageTaken = PLAYER.hitPoints;
     isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
     damageKind = damage.damageKind;
@@ -655,7 +655,7 @@ block_48:
     }
     g_api.UpdateAnim(D_80155964, D_8015538C);
     PLAYER.hitboxState = 1;
-    PLAYER.unk44 = 0;
+    PLAYER.hitParams = 0;
     PLAYER.hitPoints = 0;
     g_Player.unk7A = 0;
     if (PLAYER.anim == D_801556C4) {
@@ -712,7 +712,7 @@ static void RicDebugEnter(void) {
 
 static void RicDebugExit(void) {
     g_IsRicDebugEnter = false;
-    PLAYER.unk44 = 0;
+    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = g_RicDebugCurFrame;
     PLAYER.drawFlags = g_RicDebugDrawFlags;
     PLAYER.palette = g_RicDebugPalette;

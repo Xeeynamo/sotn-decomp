@@ -79,7 +79,7 @@ void Update(void) {
                     process_entity:
                         g_CurrentEntity = e;
                         e->pfnUpdate(e);
-                        e->unk44 = 0;
+                        e->hitParams = 0;
                         e->hitFlags = 0;
                         continue;
                     }

@@ -44,7 +44,7 @@ void EntityBreakableNZ0(Entity* self) {
             }
         }
 
-        if (self->unk44) { // If destroyed
+        if (self->hitParams) { // If destroyed
             if (breakableType == 2) {
                 g_api.FreePrimitives(self->primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;

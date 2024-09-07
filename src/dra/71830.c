@@ -19,7 +19,7 @@ void func_80111938(void) {
 
 void func_8011197C(void) {
     D_801396EA = 0;
-    PLAYER.unk44 = 0;
+    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = D_801396E4;
     PLAYER.drawFlags = D_801396E6;
     PLAYER.palette = D_801396E8;

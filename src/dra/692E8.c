@@ -746,8 +746,8 @@ void EntityAlucard(void) {
             }
             if ((D_80097448[1] != 0) &&
                 (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
-                !(PLAYER.unk44 & 0x1F)) {
-                PLAYER.unk44 = 6;
+                !(PLAYER.hitParams & 0x1F)) {
+                PLAYER.hitParams = 6;
             }
 
 // HD and US test this in slightly different places leading to this and the
@@ -769,11 +769,11 @@ void EntityAlucard(void) {
 #elif defined(VERSION_HD)
                     if (1) { // to make curly braces match
 #endif
-                        if (PLAYER.unk44) {
+                        if (PLAYER.hitParams) {
                             var_s6 = PLAYER.step;
                             var_s7 = PLAYER.step_s;
                             var_s0 = HandleDamage(
-                                &damage, PLAYER.unk44, PLAYER.hitPoints, 0);
+                                &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
                             if ((g_Player.unk0C & 0x01000000) &&
                                 ((var_s0 == 1) || (var_s0 == 7) ||
                                  (var_s0 == 8))) {
@@ -1209,11 +1209,11 @@ block_160:
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-        PLAYER.unk44 = 0;
+        PLAYER.hitParams = 0;
         PLAYER.hitboxState = 0;
     } else {
         PLAYER.hitboxState = 1;
-        PLAYER.unk44 = 0;
+        PLAYER.hitParams = 0;
         PLAYER.hitPoints = 0;
     }
     g_Player.unk14 = 0;

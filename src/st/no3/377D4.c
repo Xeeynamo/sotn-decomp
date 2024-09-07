@@ -57,7 +57,7 @@ void EntityUnkId12(Entity* entity) {
             break;
         }
 
-        if (entity->unk44 != 0) {
+        if (entity->hitParams) {
             ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
@@ -96,7 +96,7 @@ void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-        if (entity->unk44) { // If the candle is destroyed
+        if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
             g_api.PlaySfx(SFX_CANDLE_HIT);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);

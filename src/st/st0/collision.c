@@ -159,7 +159,7 @@ void HitDetection(void) {
                 if ((*scratchpad_1 & miscVar3) &&
                     (!iterEnt1->unk6D[iterEnt2->enemyId])) {
                     if (*scratchpad_1 & 0x80) {
-                        iterEnt1->unk44 = iterEnt2->hitEffect;
+                        iterEnt1->hitParams = iterEnt2->hitEffect;
                         miscVar2 = 0xFF;
                         break;
                     } else {
@@ -192,7 +192,7 @@ void HitDetection(void) {
                                         iterEnt2->hitFlags = 2;
                                     }
                                 }
-                                iterEnt1->unk44 = i;
+                                iterEnt1->hitParams = i;
                                 miscVar2 = 0xFF;
                                 break;
                             } else {
@@ -230,9 +230,9 @@ void HitDetection(void) {
                     if (hitboxCheck1 >= hitboxCheck2) {
                         iterEnt2->ext.player.unkB8 = iterEnt1;
                         iterEnt2->hitFlags = 1;
-                        iterEnt2->unk44 = iterEnt1->attackElement;
+                        iterEnt2->hitParams = iterEnt1->attackElement;
                         iterEnt2->hitPoints = iterEnt1->attack;
-                        iterEnt1->unk44 = iterEnt2->hitEffect;
+                        iterEnt1->hitParams = iterEnt2->hitEffect;
                         miscVar2 = 0xFF;
                         iterEnt1->hitFlags = 0x80;
                     }
@@ -242,7 +242,7 @@ void HitDetection(void) {
         if (miscVar2) {
             if (iterEnt1->unk5C != NULL) {
                 entFrom5C = iterEnt1->unk5C;
-                entFrom5C->unk44 = (u16)iterEnt1->unk44;
+                entFrom5C->hitParams = (u16)iterEnt1->hitParams;
             } else {
                 entFrom5C = iterEnt1;
             }

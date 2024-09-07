@@ -395,7 +395,7 @@ static void EntityWeaponAttack(Entity* self) {
         return;
     case 4:
         if (--self->ext.food.timer == 0) {
-            PLAYER.unk44 = 0x81;
+            PLAYER.hitParams = 0x81;
             PLAYER.hitPoints = 0;
             PLAYER.hitboxState = 0;
             DestroyEntity(self);

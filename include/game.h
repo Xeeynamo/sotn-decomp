@@ -281,6 +281,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 
+// document g_Player.unk0C
 #define PLAYER_STATUS_BAT_FORM 0x00000001
 #define PLAYER_STATUS_MIST_FORM 0x00000002
 #define PLAYER_STATUS_WOLF_FORM 0x00000004
@@ -821,7 +822,7 @@ typedef struct Entity {
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;
+    /* 0x44 */ u16 hitParams;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 hitFlags; // 1 = took hit

@@ -61,7 +61,7 @@ void func_80191B44(Entity* entity) {
             break;
         }
 
-        if (entity->unk44 != 0) {
+        if (entity->hitParams) {
             ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
@@ -102,7 +102,7 @@ void EntityBreakable(Entity* entity) {
 
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
-        if (entity->unk44 != 0) {
+        if (entity->hitParams) {
             g_api.PlaySfx(SFX_CANDLE_HIT);
             temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_v0 != NULL) {

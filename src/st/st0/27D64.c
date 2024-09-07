@@ -106,7 +106,7 @@ void func_801A805C(Entity* self) {
 
     if (self->step != 0) {
         AnimateEntity(D_801806D0[params], self);
-        if (self->unk44 != 0) {
+        if (self->hitParams) {
             params_ = params - 2;
             if (params_ < 2) {
                 self->facingLeft = GetSideToPlayer() & 1;

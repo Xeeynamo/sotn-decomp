@@ -24,7 +24,7 @@ void EntityUnkId12(Entity* entity) {
             break;
         }
 
-        if (entity->unk44) {
+        if (entity->hitParams) {
             var_s0 = GetSideToPlayer();
             if (entity->ext.generic.unk7C.u) {
                 var_s0 &= 2;

@@ -55,7 +55,7 @@ void EntityOwl(Entity* self) {
         } else {
             self->posY.i.hi = otherEnt->posY.i.hi - 0x20;
         }
-        if (otherEnt->unk44) {
+        if (otherEnt->hitParams) {
             SetStep(2);
         }
         if (self->ext.owl.unk80 & 1) {
