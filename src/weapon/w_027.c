@@ -230,7 +230,8 @@ static void EntityWeaponShieldSpell(Entity* self) {
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 0x80;
         prim->priority = 0x1B4;
-        prim->drawMode = 0x75;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
@@ -403,7 +404,7 @@ static void func_ptr_80170024(Entity* self) {
             prim->tpage = 0x19;
             prim->clut = self->ext.medshieldlaser.childPalette;
             prim->priority = 0x1BC;
-            prim->drawMode = 0x39;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
         }
         self->ext.medshieldlaser.unkA0 = 0x300;
         self->ext.medshieldlaser.unk80 = 0;

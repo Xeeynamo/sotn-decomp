@@ -56,7 +56,7 @@ void func_8016D9C4(Entity* self) {
                 }
             }
             primLine->priority = 0xC2;
-            primLine->drawMode = 8;
+            primLine->drawMode = DRAW_HIDE;
             primLine->x0 = primLine->x1 = PLAYER.posX.i.hi;
             primLine->y0 = primLine->y1 = PLAYER.posY.i.hi - 0x1C;
             primLine->r0 = primLine->g0 = primLine->b0 = brightness;
@@ -183,7 +183,8 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
 
         for (i = 0; i < 0x10; i++) {
             prim->priority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->x0 = prim->x1 = 0x80;
             prim->y0 = prim->y1 = 0;
             prim = prim->next;
@@ -638,7 +639,7 @@ void func_8016F198(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->priority = 0xC2;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         self->step++;
@@ -760,7 +761,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
 
         prim = &g_PrimBuf[self->primIndex];
-        prim->drawMode = 0x37;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->priority = 0xC2;
         prim->u1 = prim->u3 = 0x3F;
         prim->tpage = 0x1A;
@@ -773,7 +775,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
 
         prim = prim->next;
-        prim->drawMode = 0x3F;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS |
+                         DRAW_UNK02 | DRAW_TRANSP;
         prim->priority = 0xC2;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
@@ -787,7 +790,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->drawMode = 0x47F;
+        prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0xB;
@@ -800,7 +804,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->drawMode = 0x47F;
+        prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0xB;
@@ -815,7 +820,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         for (i = 0; i < 16; i++) {
             prim = prim->next;
             prim->priority = PLAYER.zPriority + 3;
-            prim->drawMode = 0x3F;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x1A;
             prim->clut = 0x194;
             rand_uCoord = rand() % 5 * 0x10;
@@ -1198,7 +1204,7 @@ void RicEntityAguneaLightning(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC1;
-            prim->drawMode = 0x20C;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
@@ -1374,7 +1380,8 @@ void RicEntityAguneaCircle(Entity* self) {
             prim = prim->next;
         }
         if (self->ext.aguneaCrash.unk7C == 0) {
-            prim->drawMode = 0x235;
+            prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
             prim->u0 = prim->u2 = 0;
@@ -1468,7 +1475,8 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = self->zPriority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->u0 = ((rsin((s16)(i * 0x100)) << 5) >> 0xC) + 0x20;
             prim->v0 = -((rcos((s16)(i * 0x100)) << 5) >> 0xC) - 0x21;
             prim->u1 = ((rsin((s16)((i + 1) * 0x100)) << 5) >> 0xC) + 0x20;
@@ -1568,20 +1576,20 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             prim->u1 = prim->u3 = 0x98;
         }
         prim->priority = PLAYER.zPriority + 1;
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
 
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
 
         prim = prim->next;
 
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         if (self->params & 0xFF00) {
             RicCreateEntFactoryFromEntity(self, BP_66, 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
@@ -1968,7 +1976,7 @@ void RicEntitySubpwnBibleTrail(Entity* entity) {
         prim->y0 = prim->y1 = entity->posY.i.hi - 8;
         prim->y2 = prim->y3 = entity->posY.i.hi + 8;
         prim->priority = entity->zPriority;
-        prim->drawMode = 0x115;
+        prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         entity->ext.et_BibleSubwpn.unk7E = 0x60;
         entity->step++;
         break;
@@ -2028,7 +2036,7 @@ void RicEntitySubpwnBible(Entity* self) {
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
-        prim->drawMode = 0x108;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
         self->ext.et_BibleSubwpn.subweaponId = PL_W_BIBLE;
         RicSetSubweaponParams(self);

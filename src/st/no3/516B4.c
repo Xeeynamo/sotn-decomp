@@ -119,14 +119,16 @@ void EntitySplashWater(Entity* self) {
                 prim->clut = 0x162;
                 prim->tpage = 0x1A;
                 prim->priority = self->zPriority + 2;
-                prim->drawMode = 0x77;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
                 if (i % 2) {
                     prim->clut = 0x15F;
                     prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                         prim->b1 = 0;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                         prim->b3 = 96;
-                    prim->drawMode = 0x37;
+                    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                     DRAW_UNK02 | DRAW_TRANSP;
                     prim->priority += 2;
                 }
                 prim2 = prim;
@@ -266,11 +268,13 @@ void EntitySurfacingWater(Entity* self) {
                 128;
             prim->tpage = 0x1A;
             prim->priority = self->zPriority + 2;
-            prim->drawMode = 0x77;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             if (i != 0) {
                 prim->clut = 0x161;
                 prim->priority = self->zPriority + 4;
-                prim->drawMode = 0x77;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             }
             prim = prim->next;
         }
@@ -382,7 +386,8 @@ void EntitySideWaterSplash(Entity* self) {
                         prim->g1 = prim->b1 = 128;
                 prim->p1 = 0;
                 prim->priority = self->zPriority + 2;
-                prim->drawMode = 0x37;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
                 prim = prim->next;
             }
             params = self->params;
@@ -480,7 +485,8 @@ void EntitySmallWaterDrop(Entity* self) {
             prim->g0 = 96;
             prim->b0 = 128;
             prim->priority = self->zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
         var_v1 = D_801838F4[params * 2];
@@ -533,7 +539,8 @@ void EntityWaterDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
 
         while (1) {
-            prim->drawMode = 0x73;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim->priority = self->zPriority + 2;
 
             if (prim->next == NULL) {
@@ -771,7 +778,7 @@ void EntityMerman2(Entity* self) {
 
                 prim->y3 = prim->y2 = prim->y0 + 0x38;
                 prim->priority = self->zPriority;
-                prim->drawMode = 6;
+                prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             } else {
                 self->animCurFrame = 17;
                 DestroyEntity(self);
@@ -1091,7 +1098,7 @@ void EntityMerman2(Entity* self) {
                 prim->v3 = v0;
 
                 prim->priority = self->zPriority + 1;
-                prim->drawMode = 2;
+                prim->drawMode = DRAW_UNK02;
                 *(s16*)&prim->next->r2 = 0x28;
                 *(s16*)&prim->next->b2 = 0x30;
                 prim->next->b3 = 0x80;
@@ -1179,7 +1186,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             prim->next->x1 = (u16)entity->posX.i.hi;
             prim->next->y0 = (u16)entity->posY.i.hi;
             prim->priority = entity->zPriority - 4;
-            prim->drawMode = 6;
+            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         }
     }
 
@@ -1189,7 +1196,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         prim->next->b3 += 252;
         LOH(prim->next->u1) -= 128;
         if (prim->next->b3 < 16) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 
@@ -1272,7 +1279,8 @@ void EntityMermanWaterSplash(Entity* self) {
             prim->p3 = 1;
             prim->p2 = i % 2;
             prim->priority = self->zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
 
@@ -1369,7 +1377,7 @@ void EntityUnkId3D(Entity* self) {
         self->palette = 0x8162;
         self->drawMode = DRAW_TPAGE;
         self->palette = 0x8018;
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->unk6C = 0xA0;
         self->rotX = 0x100;
         self->rotY = 0x1A0;

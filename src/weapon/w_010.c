@@ -549,7 +549,7 @@ void func_ptr_80170024(Entity* self) {
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 0x80;
         prim->priority = 0x1BC;
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         for (i = 0; i < 16; i++) {
             prevPrim = prim;
             prim = prim->next;

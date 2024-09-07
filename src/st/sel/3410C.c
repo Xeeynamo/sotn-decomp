@@ -113,7 +113,7 @@ void HandleTitleScreen(void) {
                 prim->b0 = D_801BB014 * 3 / 4;
             }
             if (i == 15 || i == 16) {
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
         }
         if (D_801BB014 == 0x80) {
@@ -243,7 +243,7 @@ void HandleTitleScreen(void) {
         if (g_Timer & 0x1C) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
         g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
@@ -275,7 +275,7 @@ void HandleTitleScreen(void) {
             prim->drawMode = DRAW_COLORS;
             SetPrimGrey(prim, D_801BB014);
             if (i == 15 || i == 16) {
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
         }
         if (D_801BB014 == 0) {
@@ -484,7 +484,8 @@ void func_801B519C(void) {
             prim->v0 = prim->v1 = v01;
             prim->v2 = prim->v3 = 0x38 + uvOfst;
             prim->priority = 0x41;
-            prim->drawMode = 0x71;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
         self->step++;

@@ -88,7 +88,8 @@ void EntityBreakableNZ0(Entity* self) {
             prim->y0 = prim->y1 = top;
             prim->y2 = prim->y3 = bottom;
             prim->priority = self->zPriority;
-            prim->drawMode = 0x73;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
     }
 }

@@ -89,10 +89,10 @@ void EntityCutscenePhotographFire(Entity* entity) {
         if (entity->params) {
             entity->unk6C = 0x10;
             entity->zPriority = 0x1FB;
-            entity->drawMode = 0x50;
+            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
         } else {
             entity->zPriority = 0x1FE;
-            entity->drawMode = 0x30;
+            entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
     case 1:
         entity->posY.val -= FIX(1.0);

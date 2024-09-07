@@ -224,7 +224,7 @@ void func_801B690C(u8 ySteps, Entity* self) {
         prim->v0 = ySteps + prim->v0;
         if (prim->v1 == 0) {
             self->step_s++;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 

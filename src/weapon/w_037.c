@@ -274,9 +274,12 @@ s32 func_ptr_80170004(Entity* self) {
             prim->g1 = i + 1;
             prim->g2 = 0;
             prim->priority = PLAYER.zPriority + 4;
-            prim->drawMode = 0x339;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
             if (rand() & 1) {
-                prim->drawMode = 0x379;
+                prim->drawMode =
+                    DRAW_UNK_200 | DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 |
+                    DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
             }
             prim = prim->next;
             D_107000_8017BD28++;

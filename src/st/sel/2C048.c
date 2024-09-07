@@ -289,7 +289,7 @@ static void InitMainMenuUI(void) {
         prim->tpage = 0xD;
         prim->clut = 0x202;
         prim->priority = 0x10;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 
@@ -503,7 +503,7 @@ s32 func_801ACEC0(void) {
     s32 var_s0 = prim->r0;
 
     var_s0 += 0x10;
-    prim->drawMode = 0x51;
+    prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
 
     if (var_s0 > 255) {
         var_s0 = 255;
@@ -511,7 +511,7 @@ s32 func_801ACEC0(void) {
 
     SetPrimGrey(prim, var_s0);
     prim = prim->next;
-    prim->drawMode = 0x51;
+    prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
     SetPrimGrey(prim, var_s0);
 
     if (g_api.func_80131F68()) {

@@ -485,7 +485,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->animSet = ANIMSET_DRA(14);
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
-        entity->drawMode = 0x30;
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;

@@ -59,7 +59,7 @@ void EntityElevator(Entity* self) {
         prim->u1 = 0x20;
         prim->v1 = 0x48;
         prim->priority = 0x72;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim = prim->next;
         while (prim != NULL) {
             prim->type = PRIM_SPRT;
@@ -70,7 +70,7 @@ void EntityElevator(Entity* self) {
             prim->u1 = 8;
             prim->v1 = 0x40;
             prim->priority = 0x5F;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
         self->ext.elevator.elevatorTarget = g_ElevatorTarget;

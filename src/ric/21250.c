@@ -1252,9 +1252,12 @@ void RicEntityHitByHoly(Entity* entity) {
             prim->g1 = (rand() & 7) + 1;
             prim->g2 = 0;
             prim->priority = PLAYER.zPriority + 4;
-            prim->drawMode = 0x11B;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_UNK02 | DRAW_TRANSP;
             if (rand() & 1) {
-                prim->drawMode = 0x17B;
+                prim->drawMode =
+                    DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                    DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
             }
             prim = prim->next;
         }
@@ -1316,7 +1319,7 @@ void RicEntityHitByDark(Entity* entity) {
         entity->palette = 0x819F;
 
         if (D_80174FFC & 1) {
-            entity->drawMode = 0x70;
+            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
             entity->drawMode = DRAW_TPAGE;
         }

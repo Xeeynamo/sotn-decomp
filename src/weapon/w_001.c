@@ -183,7 +183,7 @@ static void func_ptr_80170008(Entity* self) {
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-4.5));
         self->palette = PAL_OVL(0x1B0);
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posX.val += self->velocityX * 6;
         self->posY.i.hi -= 0xD;
         if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {

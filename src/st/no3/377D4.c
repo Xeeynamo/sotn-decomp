@@ -171,7 +171,7 @@ void EntityShuttingWindow(Entity* self) {
             prim->v0 = 4;
             prim->v2 = prim->v3 = 0x7C;
             prim->priority = 0x5F;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
 
@@ -273,7 +273,7 @@ void EntityCastleDoor(Entity* self) {
             prim->tpage = 0xF;
             prim->clut = 0x41;
             prim->priority = 0x6A;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             //! FAKE:
             tilePos = prim->u2 = *var_a0++;
             prim->u0 = tilePos;
@@ -383,7 +383,7 @@ void EntityCastleDoor(Entity* self) {
         if (temp_s3 <= 0) {
             prim->drawMode = DRAW_HIDE;
         } else {
-            prim->drawMode = 6;
+            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         }
         prim = prim->next;
     }
@@ -585,7 +585,7 @@ void EntityUnkId1C(Entity* self, s16 primIndex) {
         prim->x0 = prim->x2 = temp_a1;
         prim->y0 = prim->y1 = temp_a2 - 56;
         prim->y2 = prim->y3 = temp_a2;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim = prim->next;
         temp_a1 += 64;
     }
@@ -625,7 +625,7 @@ void EntityTransparentWater(Entity* self) {
             prim->tpage = 0xF;
             prim->clut = 0x18;
             prim->priority = 0xB0;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         break;
@@ -683,12 +683,12 @@ void EntityTransparentWater(Entity* self) {
         prim->v2 = prim->v3 = temp_t1;
         prim->y0 = prim->y1 = temp_a0;
         prim->y2 = prim->y3 = temp_a0 + 0x3E;
-        prim->drawMode = 0x33;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
     }
 
     while (prim != NULL) {
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
@@ -941,7 +941,7 @@ void func_801B9C44(WeightSelect weight) {
         prim->x1 = prim->x3 = posX + 8;
         posY -= 32;
         prim->y0 = prim->y1 = posY;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim = prim->next;
     }
     posY -= 32;
@@ -1563,7 +1563,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         LOH(prim->next->r2) = 16;
         LOH(prim->next->b2) = 16;
         prim->priority = self->zPriority;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         self->step++;
 
     case 3:
@@ -1711,7 +1711,7 @@ void EntityDeathSkySwirl(Entity* self) {
     prim2 = prim->next;
     prim2 = func_801BB548(&D_8018134C, &D_80181354, &D_8018135C, &D_80181364,
                           prim, 3, prim2, 0x1F800000);
-    prim->drawMode = 8;
+    prim->drawMode = DRAW_HIDE;
     while (prim2 != NULL) {
         prim2->drawMode = DRAW_HIDE;
         prim2 = prim2->next;

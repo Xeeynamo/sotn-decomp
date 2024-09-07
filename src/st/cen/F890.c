@@ -106,7 +106,7 @@ void EntityPlatform(Entity* self) {
             prim->v0 = prim->v1 = 0xA1;
             prim->v2 = prim->v3 = 0xA7;
             prim->priority = 0x7F;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
         }
         break;
 
@@ -304,7 +304,8 @@ void EntityRoomDarkness(Entity* self) {
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 255;
             prim->priority = 0x88;
-            prim->drawMode = 0x57;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
             prim->x0 = prim->x2 = temp_t0;
             prim->x1 = prim->x3 = temp_a0;
@@ -314,7 +315,8 @@ void EntityRoomDarkness(Entity* self) {
                 255;
             prim->r2 = prim->r3 = prim->g2 = prim->g3 = prim->b2 = prim->b3 = 0;
             prim->priority = 0x88;
-            prim->drawMode = 0x57;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
         break;
 
@@ -367,7 +369,7 @@ s16 func_8019040C(Primitive* prim, s16 arg1) {
     prim->x2 = arg1;
     prim->x0 = arg1;
     ret += 0x20;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->v0 = prim->v1 = 0x50;
     prim->v2 = prim->v3 = 0x60;
     prim->y0 = prim->y1 = 0x2C;
@@ -389,7 +391,7 @@ s16 func_8019040C(Primitive* prim, s16 arg1) {
 s16 func_801904B8(Primitive* prim, s16 arg1) {
     prim->u0 = prim->u2 = 0x50;
     prim->u1 = prim->u3 = 0x60;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
     prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
     prim->y2 = prim->y3 = arg1;
@@ -536,7 +538,7 @@ void EntityElevatorStationary(Entity* self) {
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->y2 = prim->y3 = temp - 0x1F;
     prim->y0 = prim->y1 = temp - 0x2F;
     prim = prim->next;
@@ -661,7 +663,7 @@ void EntityMovingElevator(Entity* self) {
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->y2 = prim->y3 = temp - 0x1F;
     prim->y0 = prim->y1 = temp - 0x2F;
     prim = prim->next;

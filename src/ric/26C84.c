@@ -394,7 +394,8 @@ void func_801641A0(Entity* entity) {
             prim->tpage = 0x1A;
             prim->clut = 0x160;
             prim->priority = PLAYER.zPriority + 8;
-            prim->drawMode = 0x35;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
@@ -503,7 +504,9 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
             prim1->tpage = prim2->tpage = 0x1A;
             prim1->clut = prim2->clut = 0x15F;
             prim1->priority = prim2->priority = PLAYER.zPriority + 2;
-            prim1->drawMode = prim2->drawMode = 0x235;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                DRAW_TRANSP;
             prim2 = prim2->next;
             prim1 = prim1->next;
         }
@@ -709,9 +712,11 @@ void RicEntityHitByIce(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
-                prim->drawMode = 0x335;
+                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                                 DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             } else {
-                prim->drawMode = 0x315;
+                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_TRANSP;
             }
             prim->type = 3;
             prim->priority = PLAYER.zPriority + 2;
@@ -926,7 +931,8 @@ void RicEntityHitByLightning(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
-            prim->drawMode = 0x133;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
         if ((PLAYER.velocityY != 0) && (PLAYER.step != PL_S_DEAD)) {
@@ -1111,7 +1117,7 @@ void func_80165DD8(
 
 void func_80166024() {
     PLAYER.palette = 0x815E;
-    PLAYER.drawMode = 0x70;
+    PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
 }
 
 void func_80166044() {

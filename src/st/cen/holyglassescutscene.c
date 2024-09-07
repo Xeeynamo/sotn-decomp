@@ -435,7 +435,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 func_8018DF0C();
                 func_8018E180();
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 func_8018E238(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
@@ -645,7 +645,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
             self->step = 1;
             for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim != NULL;
                  prim = prim->next) {
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
             }
         }
         break;
@@ -681,7 +681,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 prim->x0 = prim->x1 = 0xF7;
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->x2 = D_801805F4[j];
                 prim->x3 = 0xF70;
 

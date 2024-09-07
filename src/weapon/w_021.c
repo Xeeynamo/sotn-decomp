@@ -99,7 +99,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
+    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -153,7 +153,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->drawMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->x0 = xpos;
             prim->y0 = 0xD4;
             prim = prim->next;
@@ -167,7 +167,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->drawMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->x0 = xpos;
             prim->y0 = 0xCC;
             prim = prim->next;
