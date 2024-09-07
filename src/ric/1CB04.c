@@ -486,7 +486,8 @@ void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 
 static s32 ric_hit_stun_timer;
-void RicHandleHit(s32 damageEffect, u32 damageKind, s16 prevStep) {
+void RicHandleHit(
+    s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     DamageParam damage;
     s32 xShift;
     s32 i;

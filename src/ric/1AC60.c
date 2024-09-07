@@ -1,14 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * File: 1AC60.c
- * Overlay: RIC
- * Description: Overlay for the character Richter.
- */
-
 #include "ric.h"
 #include "player.h"
 
 #include "../destroy_entity.h"
+
+void RicHandleStand(void);
+void RicHandleWalk(void);
+void RicHandleCrouch(void);
+void RicHandleFall(void);
+void RicHandleJump(void);
+void RicHandleRun(void);
+void RicHandleBossGrab(void);
+void RicHandleStandInAir(void);
+void RicHandleEnableFlameWhip(void);
+void RicHandleHydrostorm(void);
+void RicHandleGenericSubwpnCrash(void);
+void RicHandleThrowDaggers(void);
+void RicHandleDeadPrologue(void);
+void RicHandleSlide(void);
+void RicHandleSlideKick(void);
+void RicHandleHighJump(void);
+void RicSetDeadPrologue(void);
+void func_8015BCD0(void);
+int RicDoCrash(void);
+void DisableAfterImage(s32 resetAnims, s32 arg1);
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames);
+void RicHandleHit(
+    s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS);
+void RicHandleDead(
+    s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
