@@ -110,7 +110,7 @@ enum RicEntities {
     E_NOT_IMPLEMENTED_3,             // RicEntityNotImplemented3
     E_REVIVAL_COLUMN,                // RicEntityRevivalColumn
     E_APPLY_MARIA_POWER_ANIM,        // RicEntityApplyMariaPowerAnim
-    E_SLIDE_KICK,                    // func_E_SLIDE_KICK
+    E_SLIDE_KICK,                    // RicEntitySlideKick
     E_BLADE_DASH,                    // RicEntityBladeDash
     E_801623E0,                      // func_801623E0
     E_80162604,                      // func_80162604
