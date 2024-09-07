@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #23. Used by weapons:
 // Herald shield, Unknown#207
 #include "weapon_private.h"

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
 
 extern u16 D_80180660[];

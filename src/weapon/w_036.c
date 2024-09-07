@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #36. Used by weapons:
 // Takemitsu
 #include "weapon_private.h"

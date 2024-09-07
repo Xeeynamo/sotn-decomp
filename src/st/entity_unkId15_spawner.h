@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void EntityUnkId15Spawner(
     Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
 

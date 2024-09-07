@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #48. Used by weapons:
 // Thunderbrand, Unknown#178
 #include "weapon_private.h"

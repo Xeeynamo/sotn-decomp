@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * Custom Entity Subtypes
  */
@@ -259,6 +260,18 @@ typedef struct PACKED {
 } ET_WeaponUnk046;
 
 typedef struct {
+    s32 unk7C;
+    s32 : 32;
+    s32 unk84;
+    s32 unk88;
+    byte pad[32];
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
+} ET_WeaponUnk047;
+
+typedef struct {
     s16 timer;
     s16 unk7E;
     s32 unk80;
@@ -299,6 +312,20 @@ typedef struct {
 #endif
     u8 anim;
 } ET_WeaponUnk012;
+
+typedef struct {
+    s16 unk7C;
+    s16 : 16;
+    byte pad[28];
+    s16 unk9C;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
+} ET_WeaponUnk014;
 
 typedef struct PACKED {
     s16 unk7C;
@@ -1698,6 +1725,11 @@ typedef struct {
     /* 0x88 */ u8 unk88;
 } ET_NZ0_311C0;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+} ET_StrongWargDeathBeams;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1742,8 +1774,10 @@ typedef union { // offset=0x7C
     ET_Weapon weapon;
     ET_WeaponUnk006 weapon_006;
     ET_WeaponUnk012 weapon_012;
+    ET_WeaponUnk014 weapon_014;
     ET_WeaponUnk030 weapon_030;
     ET_WeaponUnk046 weapon_046;
+    ET_WeaponUnk047 weapon_047;
     ET_Shield shield;
     ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
@@ -1836,6 +1870,7 @@ typedef union { // offset=0x7C
     ET_ZombieSpawner zombieSpawner;
     ET_Skeleton skeleton;
     ET_NZ0_311C0 nz0311c0;
+    ET_StrongWargDeathBeams strongWargDeathBeams;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field_name)                               \
@@ -1844,8 +1879,10 @@ typedef union { // offset=0x7C
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk012, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk014, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk030, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk046, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk047, anim);
 SYNC_FIELD(ET_Player, ET_KarmaCoin, anim);
 SYNC_FIELD(ET_Player, ET_Sword, anim);
 SYNC_FIELD(ET_Player, ET_HeavenSword, anim);

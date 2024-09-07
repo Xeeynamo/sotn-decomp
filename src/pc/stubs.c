@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
 #include "dra.h"
 #include "memcard.h"

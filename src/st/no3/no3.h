@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
 #define OVL_EXPORT(x) NO3_##x
@@ -181,6 +182,8 @@ extern u16 D_80182628[];
 extern s32 D_80182638[];
 extern u8 D_8018267C[];
 extern ObjInit D_80182764[];
+extern u16 D_80183080[];
+extern u16 D_801830A0[];
 extern u8 D_8018383C[];
 extern s32 D_801838F4[];
 extern s16 D_80183858[];

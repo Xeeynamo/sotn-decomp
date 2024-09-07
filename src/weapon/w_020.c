@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #20. Used by weapons:
 // Karma Coin
 #include "weapon_private.h"

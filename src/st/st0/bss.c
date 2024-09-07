@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <types.h>
 
 u16 D_801C00B0[768];

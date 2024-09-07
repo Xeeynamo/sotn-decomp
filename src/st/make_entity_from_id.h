@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern PfnEntityUpdate PfnEntityUpdates[];
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);

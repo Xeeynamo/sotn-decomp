@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void EntityUnkId12(Entity* entity) {
     u16 var_s0;
     u16 params;

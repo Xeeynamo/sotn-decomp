@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 s32 UnkCollisionFunc2(s16* posX) {
     Collider collider;
     s16 temp2;

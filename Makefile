@@ -135,7 +135,7 @@ clean:
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
-format: format-src format-tools format-symbols
+format: format-src format-tools format-symbols format-license
 
 format-src: bin/clang-format
 	@# find explainer:
@@ -176,6 +176,13 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+format-license:
+	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/game.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/items.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
 
 # fast-format
 ff: MAKEFLAGS += --jobs
