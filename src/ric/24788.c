@@ -315,7 +315,7 @@ void RicEntitySmokePuff(Entity* self) {
         self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
         self->unk6C = 0x60;
         posX = pos_x_80154C50[paramsLo];
@@ -645,7 +645,7 @@ void RicEntityHitByCutBlood(Entity* self) {
                         tilePrim->velocityY.val >>= 1;
                     }
                     if (var_a2 == 0x18) {
-                        tilePrim->drawMode = 2;
+                        tilePrim->drawMode = DRAW_UNK02;
                     }
                 }
                 tilePrim->h = thickness;
@@ -845,7 +845,7 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
         prim->tpage = props->tpage;
         prim->clut = props->clut;
         prim->priority = PLAYER.zPriority + 8;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         self->velocityX = props->velocityX;
         self->velocityY = props->velocityY;
         self->posX.i.hi += props->xPos;
@@ -1050,7 +1050,7 @@ void RicEntityMariaPowers(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = D_80154EAC[params];
         prim->priority = PLAYER.zPriority - 16;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
         if (params == 3) {
             self->flags |= FLAG_UNK_04000000;
@@ -1067,7 +1067,8 @@ void RicEntityMariaPowers(Entity* self) {
             self->rotX = self->rotY = 0x100;
             self->ext.et_80162870.unk82 = 0x10;
             self->step++;
-            g_PrimBuf[self->primIndex].drawMode = 0x31;
+            g_PrimBuf[self->primIndex].drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         }
         break;
     case 2:

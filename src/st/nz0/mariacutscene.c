@@ -390,7 +390,7 @@ void EntityMariaCutscene(Entity* self) {
                 func_801B74CC();
                 func_801B7740();
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 func_801B77F8(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
@@ -602,7 +602,7 @@ void EntityMariaCutscene(Entity* self) {
             self->step = 1;
             for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim != NULL;
                  prim = prim->next) {
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
             }
         }
         break;
@@ -638,7 +638,7 @@ void EntityMariaCutscene(Entity* self) {
                 prim->x0 = prim->x1 = 0xF7;
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->x2 = D_801813DC[j];
                 prim->x3 = 0xF70;
 

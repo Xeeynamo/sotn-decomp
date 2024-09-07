@@ -174,7 +174,8 @@ void func_8018DB18(Entity* self) {
                 LOH(prim->next->b2) = facing;
                 prim->next->b3 = 16;
                 prim->priority = 0xB2;
-                prim->drawMode = 0x37;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
             }
         }
         break;

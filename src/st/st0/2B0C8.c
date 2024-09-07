@@ -47,7 +47,7 @@ void EntityStageTitleFadeout(Entity* self) {
         if (D_80180908 != 0) {
             prim = self->ext.stageTitleCard.prim;
             prim->r0 = prim->g0 = prim->b0 = 247;
-            prim->drawMode = 0x51;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -111,7 +111,8 @@ void EntityStageTitleFadeout(Entity* self) {
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0xF0;
             prim->priority = 0xB0;
-            prim->drawMode = 0x55;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim->r0 = prim->g0 = prim->b0 = 255;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -329,7 +330,7 @@ void EntityStageTitleCard(Entity* self) {
         prim->y2 = prim->y3 = 0x9A;
         prim->r0 = prim->g0 = prim->b0 = 0x80;
         prim->v0 = prim->v1 = prim->u0 = prim->u2 = 0;
-        prim->drawMode = 0x35;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -423,7 +424,8 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
             prim->g2 = (((randVar * 8) & 0x10) + 0x10);
             prim->b2 = (((randVar * 4) & 0x10) + 0x10);
             prim->priority = dracula->zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             if (i == 0) {
                 prim->drawMode = DRAW_HIDE;
             }
@@ -510,7 +512,8 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
             prim->y1_f32_velocity.val =
                 ((color * color * color) << 8) + 0x80000;
             prim->priority = dracula->zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             if (i == 0) {
                 prim->drawMode = DRAW_HIDE;
             }
@@ -620,7 +623,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         }
         step++;
         prim->priority = dracula->zPriority + 1;
-        prim->drawMode = 0x53;
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         dracula->ext.dracula.unk8C = 0;
         break;
     case 6:

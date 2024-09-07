@@ -421,7 +421,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->animCurFrame = 0x5A;
                     self->unk5A = 0x5E;
                     self->palette = 0x815F;
-                    self->drawMode = 0x30;
+                    self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                     self->drawFlags = 0xB;
                     self->unk6C = 0x10;
                     self->rotY = 0x400;
@@ -434,7 +434,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->rotX = self->rotY = self->rotY - 0x18;
                 if (self->rotY < 0x100) {
                     self->animCurFrame = 0;
-                    self->drawMode = 0;
+                    self->drawMode = DRAW_DEFAULT;
                     self->drawFlags = 0;
                     self->step_s++;
                 }
@@ -446,7 +446,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->palette = 0x815F;
                     self->drawFlags = 8;
                     self->unk6C = 0;
-                    self->drawMode = 0x30;
+                    self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                     self->step_s++;
                 }
                 break;
@@ -462,7 +462,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->animCurFrame = temp_s2->animCurFrame;
                 if (self->unk6C == 0) {
                     self->animCurFrame = 0;
-                    self->drawMode = 0;
+                    self->drawMode = DRAW_DEFAULT;
                     self->drawFlags = 0;
                     self->step_s++;
                 }
@@ -947,7 +947,7 @@ void func_801AF774(Entity* self) {
         sp18.ofs[1] = 0x100;
         SetDrawEnv(var_t0, &sp18);
         prim->priority = 0x9F;
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->priority = 0xA1;
         prim->drawMode = DRAW_UNK_800;
@@ -959,7 +959,7 @@ void func_801AF774(Entity* self) {
     case 3:
         prim = self->ext.et_801AF774.prim3;
         prim->drawMode =
-            DRAW_TPAGE | 0x20 | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         if (self->ext.et_801AF774.unk8E > 0) {
             func_801AF6D0();
         }
@@ -1042,7 +1042,7 @@ void func_801AF774(Entity* self) {
     case 4:
         prim = self->ext.et_801AF774.prim3;
         prim->drawMode =
-            DRAW_TPAGE | 0x20 | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
         D_801C2578 = 0;
         if (prim != NULL) {

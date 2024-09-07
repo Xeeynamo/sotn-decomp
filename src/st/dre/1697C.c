@@ -27,7 +27,8 @@ void EntityFadeToWhite1(Entity* self) {
 
     case 1:
         if (D_801A3F84 & 0x10) {
-            g_PrimBuf[self->primIndex].drawMode = 0x35;
+            g_PrimBuf[self->primIndex].drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             g_api.PlaySfx(SFX_FM_EXPLODE_A); // Fade to white
             self->step++;
         }
@@ -107,7 +108,8 @@ void EntityFadeToWhite2(Entity* self) {
 
     case 1:
         if (D_801A3F84 & 0x10) {
-            g_PrimBuf[self->primIndex].drawMode = 0x35;
+            g_PrimBuf[self->primIndex].drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             self->step++;
         }
         break;
@@ -120,7 +122,8 @@ void EntityFadeToWhite2(Entity* self) {
         if (prim->r0 > 252) {
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
-            prim->drawMode = 0x55;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             self->step++;
         }
         break;

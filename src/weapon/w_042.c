@@ -104,7 +104,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->anim = D_12A000_8017A684;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
@@ -286,7 +286,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->zPriority = self->ext.weapon.parent->zPriority + 2;
         self->anim = D_12A000_8017A684;
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posY.i.hi += 0x10;
         self->step++;
     } else if (self->animFrameDuration < 0) {

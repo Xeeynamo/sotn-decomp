@@ -282,7 +282,7 @@ void RicEntityCrashCrossBeam(Entity* self) {
         temp_a3 = vectors_ptr[2];
         prim->type = 4;
         gte_nclip();
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         gte_stopz(&nclip);
         if (nclip < 0) {
             continue;

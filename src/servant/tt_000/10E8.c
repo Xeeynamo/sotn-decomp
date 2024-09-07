@@ -324,7 +324,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->u1 = prim->u3 = D_80170608[index].texRight;
     prim->v2 = prim->v3 = D_80170608[index].texBottom;
     prim->priority = entity->zPriority + 1;
-    prim->drawMode = 0x102;
+    prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
 }
 
 void func_801718A0(Entity* entity) {

@@ -583,7 +583,7 @@ static void func_ptr_80170024(Entity* self) {
         prim->v3 = D_BA000_8017AADC[7] + uvOffset;
 
         prim->priority = 0;
-        prim->drawMode = 0x71;
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         // Factory 90 has child 9 which, for weapons, is func_ptr_80170024, so
         // I think this spawns another copy of the star? Not totally clear.
         g_api.CreateEntFactoryFromEntity(

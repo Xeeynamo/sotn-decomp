@@ -840,7 +840,9 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
             s->prim->v2 = s->prim->v3 = V_OFFSET + 0x3F;
             s->prim->tpage = TPAGE;
             s->prim->priority = PLAYER.zPriority - 6;
-            s->prim->drawMode = 0x13F;
+            s->prim->drawMode =
+                DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             s->helper->state++;
         case 1:
 #if defined(VERSION_US)
@@ -927,7 +929,8 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     s->prim->v2 = s->prim->v3 = V_OFFSET + 0x3F;
     s->prim->tpage = TPAGE;
     s->prim->priority = PLAYER.zPriority;
-    s->prim->drawMode = 0x335;
+    s->prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                        DRAW_COLORS | DRAW_TRANSP;
     s->helper->facingLeft = PLAYER.facingLeft;
     s->x = PLAYER.posX.i.hi;
     s->y = PLAYER.posY.i.hi;
@@ -1788,7 +1791,7 @@ void func_80130E94(Entity* self) {
     self->posX.val = var_s4 + rcos(var_s3) * var_s6 * 0x10;
     self->posY.val = var_s7 - rsin(var_s3) * var_s6 * 0x10;
     self->palette = PLAYER.palette;
-    self->drawMode = 0;
+    self->drawMode = DRAW_DEFAULT;
     self->drawFlags &= ~FLAG_DRAW_UNK8;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_UNK8;

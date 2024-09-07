@@ -568,7 +568,8 @@ void EntityBladeSword(Entity* self) {
             LOW(prim->x2) = LOW(prim->x0);
             LOW(prim->x3) = LOW(prim->x0);
             prim->priority = self->zPriority;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         }
 
     case 1:
@@ -603,9 +604,10 @@ void EntityBladeSword(Entity* self) {
             LOW(prim->x2) = LOW(prim2->x2);
             LOW(prim->x3) = LOW(prim2->x3);
             if (self->ext.et_801D1BB8.unk8D) {
-                prim->drawMode = 0x33;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             } else {
-                prim->drawMode = 0xA;
+                prim->drawMode = DRAW_HIDE | DRAW_UNK02;
             }
             prim = prim2;
         }
@@ -630,8 +632,8 @@ void EntityBladeSword(Entity* self) {
     prim->x1 = x1;
 
     if (self->ext.et_801D1BB8.unk8D) {
-        prim->drawMode = 0x33;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
     } else {
-        prim->drawMode = 0xA;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
     }
 }

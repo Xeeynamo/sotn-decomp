@@ -294,7 +294,7 @@ static void func_ptr_80170008(Entity* self) {
         }
         break;
     case 2:
-        self->drawMode = 0;
+        self->drawMode = DRAW_DEFAULT;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0x1E), 0);

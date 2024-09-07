@@ -40,13 +40,13 @@ void RicEntityTeleport(Entity* self) {
             prim->v0 = 0xF0;
             prim->type = 1;
             prim->priority = 0x1FD;
-            prim->drawMode = 0x39;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
             prim = prim->next;
         }
         for (i = 0; i < 2; i++) {
             prim->type = 3;
             prim->priority = 0x1F8;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
         for (i = 0; i < LEN(D_80175000); i++) {
@@ -455,7 +455,8 @@ void RicEntityWhip(Entity* self) {
             prim->b0 = prim->g0 = prim->r0 = 0x7F;
             prim->b1 = prim->g1 = prim->r1 = 0x1F;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x35;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         }
         self->step = 2;
         RicEntityWhip(self);
@@ -728,7 +729,7 @@ void RicEntityWhip(Entity* self) {
                            512)) >>
                  6) -
                 0x80;
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             self->drawFlags |= DRAW_HIDE;
         }
         self->palette = 0x8160;
@@ -861,7 +862,7 @@ void func_80167A70(Entity* self) {
                     fakeprim->velocityX.val = -velX;
                 }
                 fakeprim->velocityY.val = -((rand() * 2) + FIX(2.5));
-                fakeprim->drawMode = 0xA;
+                fakeprim->drawMode = DRAW_HIDE | DRAW_UNK02;
                 fakeprim->type = 1;
             } else {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 =
@@ -982,7 +983,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
             } else {
                 line->priority = PLAYER.zPriority - 2;
             }
-            line->drawMode = 0x31;
+            line->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             line = line->next;
         }
         if (self->params == 1) {

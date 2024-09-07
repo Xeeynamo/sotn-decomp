@@ -1184,7 +1184,7 @@ void EntityPinkBallProjectile(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180500);
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotY = 0;
         self->rotX = 0;

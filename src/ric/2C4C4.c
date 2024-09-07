@@ -208,7 +208,8 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
             prim->clut = 0x1B0;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x7F;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
             i++;
         }
@@ -432,7 +433,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         prim->x0 = prim->x2 = left;
         prim->x1 = prim->x3 = right;
     }
-    prim->drawMode = 0x31;
+    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
     prim->priority = self->zPriority;
     g_Player.D_80072F00[PL_T_3] = 2;
 }
@@ -501,7 +502,7 @@ void RicEntityRevivalColumn(Entity* self) {
     prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
     prim->tpage = 0x11C;
     if (g_Timer & 1) {
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
     } else {
         prim->drawMode = DRAW_HIDE;
     }
@@ -685,7 +686,7 @@ void func_80169C10(Entity* entity) {
             prim->b1 = 0;
             prim->priority = entity->zPriority;
             prim->priority = prim->priority + 4;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
         } else {
@@ -806,14 +807,14 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
             prim->tpage = 0x1A;
             prim->b0 = 0;
             priority = (temp_s0 + PLAYER.zPriority) - 0x20;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim->g3 = (temps0copy >> 2) + 4;
             prim->priority = priority;
             prim->r1++;
         } else {
             prim->g1 -= prim->g3;
             if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim->r0 = 0;
             }
         }
@@ -914,7 +915,8 @@ void RicEntitySubwpnAxe(Entity* self) {
             prim->v3 = 0x28;
             prim->priority = PLAYER.zPriority - 2;
             if (sp10 != 0) {
-                prim->drawMode = 0x13D;
+                prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
                 self->ext.subwpnAxe.unk8B[sp10] = 0;
                 self->ext.subwpnAxe.unk8B[sp10 + 4] = 0;
                 self->ext.subwpnAxe.unk8B[sp10 + 8] = 0;
@@ -1128,7 +1130,8 @@ void RicEntityCrashAxe(Entity* self) {
                 prim->v2 = prim->v3 = 0x28;
                 prim->priority = PLAYER.zPriority + 4;
                 if (sp10 != 0) {
-                    prim->drawMode = 0x13D;
+                    prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                     DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
                     self->ext.axeCrash.unk8B[sp10] = 0;
                     self->ext.axeCrash.unk8B[sp10 + 4] = 0;
                     self->ext.axeCrash.unk8B[sp10 + 8] = 0;
@@ -1556,7 +1559,8 @@ void RicEntitySubwpnReboundStone(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 0xFF;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             if (i != 0) {
                 prim->drawMode |= DRAW_HIDE;
             }
@@ -1839,7 +1843,7 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
         while (1) {
-            fakeprim->drawMode = 2;
+            fakeprim->drawMode = DRAW_UNK02;
             fakeprim->priority = PLAYER.zPriority - 1;
             if (fakeprim->next == NULL) {
                 fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
@@ -2006,7 +2010,8 @@ void RicEntitySubwpnAgunea(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim->type = 2;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x331;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_TRANSP;
             prim->r1 = 0x60;
             prim->g1 = 0;
             prim->b1 = 0x80;
@@ -2255,7 +2260,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
             yOffset = (var_s2 * rsin(temp_s2)) >> 0xC;
             temp_s3->x3 = xOffset + temp_s3->x2;
             temp_s3->y3 = temp_s3->y2 - yOffset;
-            temp_s3->drawMode = 6;
+            temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
             self->ext.et_801291C4.unk88--;
         }
         return;
@@ -2333,7 +2338,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
             entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
             entity->anim = D_80155EA8;
-            entity->drawMode = 0x30;
+            entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             entity->drawFlags = FLAG_DRAW_UNK8;
             entity->unk6C = 0x60;
             entity->hitboxWidth = 8;
@@ -2381,7 +2386,7 @@ void RicEntityCrashVibhuti(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = 0xFF;
             prim->w = prim->h = 1;
             prim->priority = PLAYER.zPriority + 8;
-            prim->drawMode = 0xA;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
             prim = prim->next;
         }
         crash_vibhuti_timer = 0;

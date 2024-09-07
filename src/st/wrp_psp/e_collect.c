@@ -459,7 +459,8 @@ void EntityPrizeDrop(Entity* self) {
                 prim->x1 = prim->x3 = self->posX.i.hi + 1;
                 prim->y0 = prim->y1 = self->posY.i.hi - 1;
                 prim->y2 = prim->y3 = self->posY.i.hi + 1;
-                prim->drawMode = 0x37;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
             }
             break;
         case 2:

@@ -195,7 +195,7 @@ void func_801C7654(Entity* entity) {
         InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
-        entity->drawMode = 0x70;
+        entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         entity->velocityX = rcos(entity->rotZ) * 0x10;
         entity->velocityY = rsin(entity->rotZ) * 0x10;
         break;

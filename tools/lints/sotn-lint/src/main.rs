@@ -4,10 +4,12 @@ use std::io::{BufRead, BufReader, Write};
 mod fixed;
 mod line_transformer;
 mod relics;
+mod drawmodes;
 
 use crate::line_transformer::LineTransformer;
 use fixed::FixedTransformer;
 use relics::RelicsTransformer;
+use drawmodes::DrawModeTransformer;
 use rayon::prelude::*;
 
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>) -> usize {
@@ -43,10 +45,12 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>)
 fn process_directory(dir_path: &str) {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
+    let draw_mode_transformer = DrawModeTransformer;
 
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
-        Box::new(relics_transformer)
+        Box::new(relics_transformer),
+        Box::new(draw_mode_transformer),
         ];
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");

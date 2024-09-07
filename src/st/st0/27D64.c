@@ -214,7 +214,7 @@ void func_801A8328(Entity* self) {
             LOH(prim->next->b2) = 0x10;
             prim->next->b3 = 0x80;
             prim->priority = self->zPriority;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             velX = ((Random() & 7) << 0xC) + 0x8000;
             self->velocityX = velX;
             if (self->facingLeft == 0) {

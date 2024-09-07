@@ -549,7 +549,7 @@ static void func_ptr_80170024(Entity* self) {
         prim->u1 = prim->u3 = 63;
         prim->v0 = prim->v1 = 192;
         prim->v2 = prim->v3 = 192 + 63;
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim->priority = 0x1BA;
 
         self->ext.shield.unk84 = self->ext.shield.unk86 = 0;

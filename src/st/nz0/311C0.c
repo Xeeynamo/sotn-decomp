@@ -1170,7 +1170,7 @@ void EntityRelicContainer(Entity* self) {
     case 0:
         InitializeEntity(D_80180CDC);
         if (self->params & 0x100) {
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
             self->zPriority = 0x6A;
             self->hitboxWidth = 8;

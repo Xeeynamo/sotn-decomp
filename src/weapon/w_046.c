@@ -232,7 +232,8 @@ static void EntityWeaponAttack(Entity* self) {
 
         prim->tpage = 0x19;
         prim->priority = PLAYER.zPriority + 2;
-        prim->drawMode = 0x335;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
 
         self->flags = 0x860000;
         temp = maskedParams & 0xFFFF;
