@@ -222,8 +222,7 @@ static void func_801572A8(bool arg0) {
         argX = PLAYER.posX.i.hi + D_801545F4[i].x;
         argY = PLAYER.posY.i.hi + D_801545F4[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colliders[i], 0);
-        if (g_Player.timers[PL_T_7] &&
-            (g_Player.colliders[i].effects & 0x40)) {
+        if (g_Player.timers[PL_T_7] && (g_Player.colliders[i].effects & 0x40)) {
             g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
             if (!(collider.effects & EFFECT_SOLID)) {
                 g_Player.colliders[i].effects = 0;
@@ -656,7 +655,7 @@ block_48:
         func_8015CB58(1, 4);
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
-         g_Player.timers[PL_T_INVINCIBLE]) {
+        g_Player.timers[PL_T_INVINCIBLE]) {
         g_Player.unk0C |= 0x100;
     }
     g_api.UpdateAnim(D_80155964, D_8015538C);
