@@ -567,6 +567,9 @@ block_48:
         break;
     }
     g_Player.unk08 = g_Player.unk0C;
+#ifdef VERSION_PC
+    var_s4 = 0;
+#endif
     switch (PLAYER.step) {
     case PL_S_STAND:
     case PL_S_WALK:
@@ -607,6 +610,9 @@ block_48:
     case PL_S_SLIDE:
     case PL_S_SLIDE_KICK:
         var_s4 = 0x20;
+        break;
+    case PL_S_RUN:
+    case PL_S_BLADEDASH:
         break;
     case PL_S_FLAME_WHIP:
     case PL_S_HYDROSTORM:
