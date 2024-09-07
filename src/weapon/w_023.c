@@ -576,7 +576,7 @@ static void func_ptr_80170024(Entity* self) {
         rotTransResult = RotTransPers4(
             vecs[0], vecs[1], vecs[2], vecs[3], &prim->x0, &prim->x1, &prim->x3,
             &prim->x2, &unused1, &unusedFlag);
-        prim->drawMode |= 8;
+        prim->drawMode |= DRAW_HIDE;
         if (0 < rotTransResult && rotTransResult <= 0x1BE) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =

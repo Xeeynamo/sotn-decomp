@@ -277,7 +277,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk82 >= 160) {
             prim->b3 = 6;
             prim = &g_PrimBuf[self->primIndex];
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
             self->ext.shield.unk80 = 4;
             // Blueprint 98 has child 9, which makes func_ptr_80170024.
             g_api.CreateEntFactoryFromEntity(

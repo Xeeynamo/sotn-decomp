@@ -115,7 +115,7 @@ void EntityRelicOrb(Entity* self) {
                     prim->u1 = prim->u3 = texSrcX | 0x0F;
                     prim->v0 = prim->v1 = texSrcY | 0x81;
                     prim->v2 = prim->v3 = texSrcY | 0x8F;
-                    prim->drawMode = 6;
+                    prim->drawMode = DRAW_COLORS | DRAW_UNK02;
                 }
                 prim->priority = 0x7E;
                 prim = prim->next;
@@ -183,7 +183,7 @@ void EntityRelicOrb(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 }
                 prim->priority = 0x1FD;
-                prim->drawMode = 0x11;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
             prim = prim->next;
         }
@@ -315,7 +315,7 @@ void EntityRelicOrb(Entity* self) {
 #else
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
 #endif
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         self->ext.relicOrb.unk7C++;
         if (self->ext.relicOrb.unk7C > 0x60) {
             DestroyEntity(self);
@@ -392,7 +392,8 @@ void EntityRelicOrb(Entity* self) {
                     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
                     prim->p1 = 0;
                     prim->priority = 0x7F;
-                    prim->drawMode = 0x37;
+                    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                     DRAW_UNK02 | DRAW_TRANSP;
                     break;
                 }
                 prim = prim->next;

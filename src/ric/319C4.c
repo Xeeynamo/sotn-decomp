@@ -148,7 +148,7 @@ void func_8016D9C4(Entity* self) {
                 self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
             if (primLine->preciseY.val < 0) {
                 primLine->delay = 0;
-                primLine->drawMode |= 8;
+                primLine->drawMode |= DRAW_HIDE;
                 self->ext.et_8016D9C4.unk90--;
             }
         }
@@ -498,7 +498,8 @@ void RicEntityCrashBible(Entity* self) {
         if (++self->ext.et_8016E9E4.unk82 >= 6) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x19F;
-            prim->drawMode |= 0x35;
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
             for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
                 prim->drawMode &= ~DRAW_HIDE;
@@ -1692,7 +1693,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 =
                 prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
-            prim->drawMode |= 4;
+            prim->drawMode |= DRAW_COLORS;
             g_api.PlaySfx(0x6A4);
             self->step++;
         }

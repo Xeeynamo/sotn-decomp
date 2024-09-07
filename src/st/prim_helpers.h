@@ -225,7 +225,7 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->p3 = 8;
     prim->next->p3 = 1;
     prim->next->type = PRIM_LINE_G2;
-    prim->next->drawMode = 0xA;
+    prim->next->drawMode = DRAW_HIDE | DRAW_UNK02;
 }
 
 #if !defined(VERSION_PSP)

@@ -467,7 +467,8 @@ void func_801CAE0C(Entity* self) { // BloodDrips
                 prim->b0 = 48;
                 prim->b1 = 16;
                 prim->priority = self->zPriority + 1;
-                prim->drawMode |= 0x37;
+                prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                  DRAW_UNK02 | DRAW_TRANSP;
                 prim = prim->next;
             }
         } else {

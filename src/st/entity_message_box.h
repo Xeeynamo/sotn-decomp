@@ -94,7 +94,7 @@ void EntityMessageBox(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 }
                 prim->priority = 0x1FC;
-                prim->drawMode = 0x11;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
         }
         self->step++;
@@ -189,7 +189,7 @@ void EntityMessageBox(Entity* self) {
         break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         self->ext.messageBox.duration++;
         if (self->ext.messageBox.duration > self->params) {
             DestroyEntity(self);
