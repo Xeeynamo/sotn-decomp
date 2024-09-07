@@ -283,7 +283,7 @@ Entity* CreateEntFactoryFromEntity(
 // variety. It is only responsible for creating child entities.
 void EntityEntFactory(Entity* self) {
     Entity* newEntity;
-    s16 unk96Copy;
+    s16 n;
     s16 i;
     u8 endIndex;
     s16 startIndex;
@@ -360,8 +360,8 @@ void EntityEntFactory(Entity* self) {
         self->ext.factory.unk9A = self->ext.factory.unk98;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    unk96Copy = self->ext.factory.unk96;
-    for (i = 0; i < unk96Copy; i++) {
+    n = self->ext.factory.unk96;
+    for (i = 0; i < n; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=

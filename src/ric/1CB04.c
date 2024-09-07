@@ -79,7 +79,7 @@ void RicHandleStand(void) {
             }
 
         case 64:
-            func_8015CB58(1, 1);
+            DisableAfterImage(1, 1);
             if (PLAYER.animFrameIdx < 3) {
                 RicCheckFacing();
                 if (g_Player.padPressed & PAD_DOWN) {
@@ -104,7 +104,7 @@ void RicHandleStand(void) {
             break;
 
         case 65:
-            func_8015CB58(1, 1);
+            DisableAfterImage(1, 1);
             if (g_Player.padPressed & PAD_SQUARE) {
                 break;
             }
@@ -113,7 +113,7 @@ void RicHandleStand(void) {
             break;
 
         case 66:
-            func_8015CB58(1, 1);
+            DisableAfterImage(1, 1);
             if (PLAYER.animFrameIdx < 3) {
                 RicCheckFacing();
             }
@@ -212,7 +212,7 @@ void RicHandleJump(void) {
         }
         return;
     case 0x40:
-        func_8015CB58(1, 1);
+        DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
             if (RicCheckFacing() != 0) {
                 if (g_Player.unk44 & 0x10) {
@@ -253,7 +253,7 @@ void RicHandleJump(void) {
         }
         return;
     case 0x41:
-        func_8015CB58(1, 1);
+        DisableAfterImage(1, 1);
         if (!(g_Player.padPressed & PAD_SQUARE)) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
@@ -261,7 +261,7 @@ void RicHandleJump(void) {
         }
         return;
     case 0x42:
-        func_8015CB58(1, 1);
+        DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
             if (RicCheckFacing() != 0) {
                 if (g_Player.unk44 & 0x10) {
@@ -401,7 +401,7 @@ void RicHandleCrouch(void) {
         }
         break;
     case 0x40:
-        func_8015CB58(1, 1);
+        DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
             RicCheckFacing();
             if (!(g_Player.padPressed & PAD_DOWN) && (!g_Player.unk72)) {
@@ -425,7 +425,7 @@ void RicHandleCrouch(void) {
         }
         break;
     case 0x41:
-        func_8015CB58(1, 1);
+        DisableAfterImage(1, 1);
         if (!(g_Player.padPressed & PAD_SQUARE)) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;

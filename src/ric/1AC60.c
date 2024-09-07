@@ -385,7 +385,7 @@ void RicMain(void) {
         case PL_T_6:
         case PL_T_7:
         case PL_T_8:
-        case PL_T_9:
+        case PL_T_ATTACK:
         case PL_T_10:
         case PL_T_RUN:
         case PL_T_12:
@@ -410,8 +410,8 @@ void RicMain(void) {
         case PL_T_INVINCIBLE_SCENE:
             g_Player.timers[PL_T_INVINCIBLE_SCENE] = 4;
             break;
-        case PL_T_15:
-            func_8015CB58(0, 0);
+        case PL_T_AFTERIMAGE_DISABLE:
+            DisableAfterImage(0, 0);
             break;
         }
         if (--g_Player.timers[i]) {
@@ -435,7 +435,7 @@ void RicMain(void) {
                 g_Player.unk44 &= ~0x10;
             }
             break;
-        case PL_T_15:
+        case PL_T_AFTERIMAGE_DISABLE:
             func_8015CC28();
             break;
         }
@@ -555,7 +555,7 @@ block_48:
     case PL_S_RUN:
         RicHandleRun();
         break;
-    case Player_SlideKick:
+    case PL_S_SLIDE_KICK:
         RicHandleSlideKick();
         break;
     case PL_S_BLADEDASH:
@@ -623,7 +623,7 @@ block_48:
         RicSetInvincibilityFrames(1, 16);
         break;
     }
-    if (g_Player.timers[PL_T_9]) {
+    if (g_Player.timers[PL_T_ATTACK]) {
         var_s4 |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[PL_T_10]) {
@@ -652,7 +652,7 @@ block_48:
         }
     }
     if (var_s4 & NO_AFTERIMAGE) {
-        func_8015CB58(1, 4);
+        DisableAfterImage(1, 4);
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
@@ -666,8 +666,7 @@ block_48:
     if (PLAYER.anim == D_801556C4) {
         PLAYER.palette = D_80154574[PLAYER.animFrameIdx];
     }
-    if ((PLAYER.anim == ric_ric_anim_stand_in_air) &&
-        (PLAYER.animFrameIdx == 4)) {
+    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
     if ((PLAYER.step == PL_S_DEAD) && (PLAYER.animFrameDuration < 0)) {

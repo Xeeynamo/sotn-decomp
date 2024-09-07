@@ -1952,7 +1952,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     }
 }
 
-void RicEntitySubpwnBibleTrail(Entity* entity) {
+void RicEntitySubwpnBibleTrail(Entity* entity) {
     Primitive* prim;
     s32 ret;
 
@@ -1997,7 +1997,7 @@ void RicEntitySubpwnBibleTrail(Entity* entity) {
             entity->ext.et_BibleSubwpn.unk7E;
 }
 
-void RicEntitySubpwnBible(Entity* self) {
+void RicEntitySubwpnBible(Entity* self) {
     Primitive* prim;
     s16 left;
     s16 top;

@@ -119,7 +119,7 @@ bool RicDoAttack(void) {
         }
         g_Player.unk46 = 1;
         PLAYER.step_s = 0x40;
-        g_Player.timers[PL_T_9] = 4;
+        g_Player.timers[PL_T_ATTACK] = 4;
         return true;
     }
     return false;
@@ -173,7 +173,7 @@ bool RicDoCrash(void) {
         break;
     case SUBWPN_AXE:
         RicSetStep(PL_S_STAND_IN_AIR);
-        RicSetAnimation(ric_ric_anim_stand_in_air);
+        RicSetAnimation(ric_anim_stand_in_air);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72) {
             PLAYER.velocityY = 0;
@@ -215,7 +215,7 @@ bool RicDoCrash(void) {
         break;
     case SUBWPN_CROSS:
         RicSetStep(PL_S_STAND_IN_AIR);
-        RicSetAnimation(ric_ric_anim_stand_in_air);
+        RicSetAnimation(ric_anim_stand_in_air);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72) {
             PLAYER.velocityY = 0;
@@ -1378,7 +1378,7 @@ void func_80161EF8(Entity* self);
 void RicEntityNotImplemented3(Entity* self);
 void RicEntityRevivalColumn(Entity* self);
 void RicEntityApplyMariaPowerAnim(Entity* self);
-void func_80160C38(Entity* self);
+void RicEntitySlideKick(Entity* self);
 void RicEntityBladeDash(Entity* self);
 void func_801623E0(Entity* self);
 void func_80162604(Entity* self);
@@ -1408,8 +1408,8 @@ void func_8016D9C4(Entity* self);
 void RicEntityCrashReboundStoneExplosion(Entity* self);
 void RicEntityCrashBible(Entity* self);
 void RicEntityCrashBibleBeam(Entity* self);
-void RicEntitySubpwnBible(Entity* self);
-void RicEntitySubpwnBibleTrail(Entity* self);
+void RicEntitySubwpnBible(Entity* self);
+void RicEntitySubwpnBibleTrail(Entity* self);
 void RicEntitySubwpnStopwatch(Entity* self);
 void RicEntitySubwpnStopwatchCircle(Entity* self);
 void func_801705EC(Entity* self);
@@ -1447,7 +1447,7 @@ static PfnEntityUpdate entity_functions[] = {
     RicEntityNotImplemented3,
     RicEntityRevivalColumn,
     RicEntityApplyMariaPowerAnim,
-    func_80160C38,
+    RicEntitySlideKick,
     RicEntityBladeDash,
     func_801623E0,
     func_80162604,
@@ -1477,8 +1477,8 @@ static PfnEntityUpdate entity_functions[] = {
     RicEntityCrashReboundStoneExplosion,
     RicEntityCrashBible,
     RicEntityCrashBibleBeam,
-    RicEntitySubpwnBible,
-    RicEntitySubpwnBibleTrail,
+    RicEntitySubwpnBible,
+    RicEntitySubwpnBibleTrail,
     RicEntitySubwpnStopwatch,
     RicEntitySubwpnStopwatchCircle,
     func_801705EC,
@@ -1594,7 +1594,7 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_REVIVAL_COLUMN, 1, 1, false, true, 0, B_KIND_3, 0, 0),
     B_MAKE(E_APPLY_MARIA_POWER_ANIM, 4, 1, false, true, 24, B_KIND_3, 0, 0),
     B_MAKE(E_SMOKE_PUFF, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_80160C38, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_SLIDE_KICK, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_BLADE_DASH, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_801623E0, 1, 1, true, true, 0, B_KIND_3, 0, 0),
     B_MAKE(E_80162604, 1, 1, true, true, 0, B_KIND_3, 0, 0),

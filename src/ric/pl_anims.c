@@ -104,7 +104,7 @@ AnimationFrame ric_anim_throw_daggers[] = {
 AnimationFrame D_80155638[] = {
     0x0002, 0x0836, 0x0002, 0x0837, 0x0002, 0x0428, 0x0002, 0x0429,
     0x0003, 0x042A, 0x0010, 0x042D, 0x0006, 0x042E, A_END};
-AnimationFrame ric_ric_anim_stand_in_air[] = {
+AnimationFrame ric_anim_stand_in_air[] = {
     {5, FRAME(19, 0)},  {1, FRAME(26, 0)},   {1, FRAME(25, 0)},
     {6, FRAME(125, 0)}, {32, FRAME(126, 0)}, A_LOOP_AT(4)};
 AnimationFrame ric_anim_run[] = {
