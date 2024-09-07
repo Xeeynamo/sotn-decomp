@@ -166,6 +166,38 @@ void handle_macros(const u8* keyb, u_long* pressed) {
         l.params = CROSS;
         CreateEntityFromLayout(temp, &l);
     }
+
+    // simulate hit with zero damage
+    // change PLAYER.hitParams to simulate different kind of hits
+    if (keyb[SDL_SCANCODE_2] && !previousKeyStates[SDL_SCANCODE_2]) {
+        Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
+        temp->posX.i.hi = 128;
+        temp->posY.i.hi = 128;
+        PLAYER.ext.player.unkB8 = temp;
+        PLAYER.hitParams = 3;
+    }
+
+    // simulate instant kill
+    if (keyb[SDL_SCANCODE_3] && !previousKeyStates[SDL_SCANCODE_2]) {
+        Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
+        temp->posX.i.hi = 128;
+        temp->posY.i.hi = 128;
+        PLAYER.ext.player.unkB8 = temp;
+        PLAYER.hitParams = 0x20;
+        PLAYER.hitPoints = g_Status.hp;
+    }
+
+    // simulate prologue kill
+    if (keyb[SDL_SCANCODE_4] && !previousKeyStates[SDL_SCANCODE_2]) {
+        Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
+        temp->posX.i.hi = 128;
+        temp->posY.i.hi = 128;
+        PLAYER.ext.player.unkB8 = temp;
+        PLAYER.hitParams = 0x20;
+        PLAYER.hitPoints = g_Status.hp;
+        g_Player.unk5C = 1;
+    }
+
     check_macro(SDL_SCANCODE_Y, TETRA_SPIRIT, keyb);
     check_macro(SDL_SCANCODE_U, DARK_METAMORPHOSIS, keyb);
     check_macro(SDL_SCANCODE_I, SUMMON_SPIRIT, keyb);
