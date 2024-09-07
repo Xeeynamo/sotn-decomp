@@ -72,15 +72,15 @@ void func_8015CAAC(s32 speed) {
     PLAYER.velocityX = speed;
 }
 
-void func_8015CAD4(s32 arg0, s16 arg1) {
-    if (arg0 == 0) {
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
+    if (!kind) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_CRASH_DAGGER, 0x15), 0);
-        if (arg1 >= g_Player.D_80072F00[PL_T_INVINCIBLE]) {
-            g_Player.D_80072F00[PL_T_INVINCIBLE] = arg1;
+        if (g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
+            g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
         }
-    } else if (g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE] <= arg1) {
-        g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE] = arg1;
+    } else if (g_Player.D_80072F00[PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.D_80072F00[PL_T_INVINCIBLE] = invincibilityFrames;
     }
 }
 

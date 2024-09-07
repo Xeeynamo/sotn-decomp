@@ -390,7 +390,7 @@ void RicMain(void) {
         case PL_T_10:
         case PL_T_RUN:
         case PL_T_12:
-        case PL_T_INVINCIBILITY_CONSUMABLE:
+        case PL_T_INVINCIBLE:
             break;
         case PL_T_2:
             PLAYER.palette = g_Player.unk40;
@@ -408,8 +408,8 @@ void RicMain(void) {
             playerDraw->enableColorBlend = 1;
             break;
         }
-        case PL_T_INVINCIBLE:
-            g_Player.D_80072F00[PL_T_INVINCIBLE] = 4;
+        case PL_T_INVINCIBLE_SCENE:
+            g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] = 4;
             break;
         case PL_T_15:
             func_8015CB58(0, 0);
@@ -427,8 +427,8 @@ void RicMain(void) {
         case PL_T_4:
             playerDraw->enableColorBlend = 0;
             break;
-        case PL_T_INVINCIBLE:
-            func_8015CAD4(1, 16);
+        case PL_T_INVINCIBLE_SCENE:
+            RicSetInvincibilityFrames(1, 16);
             break;
         case PL_T_6:
             if ((PLAYER.step == PL_S_FALL) && (PLAYER.anim != D_80155534)) {
@@ -474,8 +474,8 @@ void RicMain(void) {
         RicSetStep(PL_S_BOSS_GRAB);
         goto block_48;
     }
-    if ((g_Player.D_80072F00[PL_T_INVINCIBLE] |
-         g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE]) ||
+    if ((g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] |
+         g_Player.D_80072F00[PL_T_INVINCIBLE]) ||
         !PLAYER.unk44) {
         goto block_47;
     }
@@ -583,17 +583,17 @@ block_48:
         var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
         break;
     case PL_S_HIGHJUMP:
-        func_8015CAD4(1, 4);
+        RicSetInvincibilityFrames(1, 4);
         break;
     case PL_S_HIT:
         var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
     case PL_S_STAND_IN_AIR:
-        func_8015CAD4(1, 16);
+        RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_BOSS_GRAB:
         var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 |
                  PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40;
-        func_8015CAD4(1, 16);
+        RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_DEAD:
         var_s4 =
@@ -602,7 +602,7 @@ block_48:
             var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
                      PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
         }
-        func_8015CAD4(1, 16);
+        RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_SLIDE:
     case PL_S_SLIDE_KICK:
@@ -615,7 +615,7 @@ block_48:
     case PL_S_SUBWPN_CRASH:
     case PL_S_INIT:
         var_s4 = NO_AFTERIMAGE;
-        func_8015CAD4(1, 16);
+        RicSetInvincibilityFrames(1, 16);
         break;
     }
     if (g_Player.D_80072F00[PL_T_9]) {
@@ -637,10 +637,10 @@ block_48:
             if (g_Player.unk5C != 0) {
                 if (g_Status.hp < 2) {
                     RicSetDeadPrologue();
-                    func_8015CAD4(1, 16);
+                    RicSetInvincibilityFrames(1, 16);
                 }
             } else {
-                func_8015CAD4(1, 16);
+                RicSetInvincibilityFrames(1, 16);
                 g_Player.D_80072F00[PL_T_4] = 0x10;
                 PLAYER.palette = 0x8120;
             }
@@ -649,8 +649,8 @@ block_48:
     if (var_s4 & NO_AFTERIMAGE) {
         func_8015CB58(1, 4);
     }
-    if ((g_Player.D_80072F00[PL_T_INVINCIBLE] |
-         g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE]) != 0) {
+    if (g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] |
+         g_Player.D_80072F00[PL_T_INVINCIBLE]) {
         g_Player.unk0C |= 0x100;
     }
     g_api.UpdateAnim(D_80155964, D_8015538C);

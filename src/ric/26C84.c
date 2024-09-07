@@ -148,7 +148,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
                 }
                 break;
             case 0x7001:
-                if (g_Player.D_80072F00[PL_T_INVINCIBLE] == 0) {
+                if (g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] == 0) {
                     self->step++;
                 }
                 break;
@@ -366,7 +366,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
         prim = prim->next;
     }
     if (((upperParams & 0x3F) == 0) || ((upperParams & 0x3F) == 7)) {
-        func_8015CAD4(1, 10);
+        RicSetInvincibilityFrames(1, 10);
     }
 }
 

@@ -1120,7 +1120,7 @@ void RicSetSubweaponParams(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
 
-    if ((g_Player.D_80072F00[PL_T_INVINCIBLE]) != NULL) {
+    if (g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE]) {
         attack = subwpn->attack * 2;
     } else {
         attack = subwpn->attack;

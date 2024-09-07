@@ -1133,7 +1133,7 @@ void RicHandleDeadPrologue(void) {
         RicDecelerateX(0x2000);
         if (PLAYER.velocityX == 0) {
             RicSetAnimation(D_80155748);
-            g_Player.D_80072F00[PL_T_INVINCIBLE] = 4;
+            g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] = 4;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_MARIA, 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 9), 0);
@@ -1184,7 +1184,7 @@ void RicHandleDeadPrologue(void) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_39, 4), 0);
             PLAYER.palette = 0x813D;
-            g_Player.D_80072F00[PL_T_INVINCIBLE] = 0;
+            g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] = 0;
             PLAYER.step_s++;
         }
         if (g_Status.hp < g_Status.hpMax) {
@@ -1237,7 +1237,7 @@ void RicHandleDeadPrologue(void) {
             g_unkGraphicsStruct.unk20 = 0;
             RicSetFall();
             RicSetAnimation(D_801558DC);
-            g_Player.D_80072F00[PL_T_INVINCIBLE] = 4;
+            g_Player.D_80072F00[PL_T_INVINCIBLE_SCENE] = 4;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 9), 0);
         }
