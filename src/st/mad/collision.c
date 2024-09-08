@@ -434,7 +434,7 @@ void HitDetection(void) {
                             if (entFrom5C < otherEntity) {
                                 otherEntity->unk6D[miscVar3]++;
                             }
-                            if (!(iterEnt1->flags & FLAG_POS_PLAYER_LOCKED0)) {
+                            if (!(iterEnt1->flags & FLAG_UNK_400000)) {
                                 otherEntity->stunFrames = iterEnt2->stunFrames;
                             }
                             if ((!otherEntity->hitEffect) &&

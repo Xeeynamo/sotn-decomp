@@ -266,7 +266,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_POS_PLAYER_LOCKED 0x40000
 #define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
-#define FLAG_POS_PLAYER_LOCKED0 0x400000
+#define FLAG_UNK_400000 0x400000
 // When an entity used AllocPrimitives and their primIndex set.
 // At their destruction they need to free the prims with FreePrimitives.
 #define FLAG_HAS_PRIMS 0x800000
