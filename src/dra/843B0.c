@@ -29,8 +29,8 @@ void EntityTeleport(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 2; i++) {
             prim->x0 = 0xC0 * i;
@@ -291,7 +291,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
         func_8011A290(self);
         self->hitboxWidth = 4;
@@ -504,8 +504,8 @@ void EntitySubwpnThrownAxe(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-2));
         self->velocityY = FIX(-6);
@@ -762,7 +762,7 @@ void EntityHolyWater(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_08000000;
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
         entity->animSet = ANIMSET_DRA(9);
         entity->animCurFrame = 0x1D;
         entity->zPriority = PLAYER.zPriority - 2;
@@ -895,7 +895,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 prim->priority = PLAYER.zPriority + 2;
             }
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
         return;
@@ -977,7 +977,7 @@ void EntityHolyWaterFlame(Entity* self) {
                              DRAW_UNK02 | DRAW_COLORS | DRAW_HIDE;
             prim = prim->next;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->posY.i.hi = self->posY.i.hi - 0xA;
@@ -1182,7 +1182,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     if (self->step == 0) {
         self->primIndex = AllocPrimitives(PRIM_GT4, 64);
         if (self->primIndex != -1) {
-            self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             // entity lives for 192 frames
             self->ext.generic.unk7C.s = 192;
             self->step++;
@@ -1267,8 +1267,8 @@ void EntityHellfireHandler(Entity* self) {
             g_Player.unk5C = -1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->posY.i.hi = 120;
         // I think this is to make the yellow laser beam?
         // it ends up looking like the library card effect.
@@ -1405,7 +1405,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
         if (entity->params == 0) {
             PlaySfx(SFX_FIREBALL_SHOT_A);
         }
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
         entity->animSet = ANIMSET_DRA(9);
         entity->anim = D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1456,7 +1456,7 @@ void EntityBatFireball(Entity* self) {
     switch (self->step) {
     case 0:
         PlaySfx(SFX_QUICK_STUTTER_EXPLODE);
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->animSet = 9;
         self->anim = D_800B0798;
         self->zPriority = PLAYER.zPriority - 2;
@@ -1508,7 +1508,7 @@ void EntityHellfireBigFireball(Entity* entity) {
             PlaySfx(SFX_UNK_683);
         }
 
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
         if (entity->params != 0) {
             entity->posY.i.hi = entity->posY.i.hi + 16;
@@ -1594,7 +1594,8 @@ void EntityExpandingCircle(Entity* entity) {
             prim->priority = PLAYER.zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                            FLAG_HAS_PRIMS;
             entity->step++;
             break;
         }
@@ -1656,8 +1657,8 @@ void func_80127CC8(Entity* entity) {
             return;
         }
 
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
-                        FLAG_HAS_PRIMS;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = 192;
         prim->g0 = prim->g1 = prim->g2 = prim->g3 = 64;
@@ -1752,7 +1753,8 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->y0 = prim->y1 = playerY;
             prim->timer = 0x14;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->zPriority = PLAYER.zPriority + 2;
 
         facingLeft = PLAYER.facingLeft;
@@ -2011,7 +2013,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         func_8011A290(self);
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
@@ -2173,8 +2175,8 @@ void EntitySubwpnAgunea(Entity* self) {
             DestroyEntity(self);
             return;
         } else {
-            self->flags =
-                FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
             func_8011A290(self);
             self->hitboxHeight = 4;
@@ -2339,7 +2341,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
 
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
@@ -2551,8 +2553,9 @@ void func_80129864(Entity* self) {
         self->palette = PAL_OVL(0x19F);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->zPriority = 0x1C3;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->drawFlags = FLAG_DRAW_ROTZ;
         if (self->params & 0x7F00) {
             func_8011A328(self, 3);
@@ -2633,8 +2636,8 @@ void func_80129864(Entity* self) {
         }
         break;
     case 3:
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_100000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS |
+                      FLAG_UNK_100000 | FLAG_UNK_10000;
         s1 = rcos(self->ext.et_80129864.unk82) >> 8;
         self->ext.et_80129864.unk82 += 0x80;
         self->ext.et_80129864.unk80 += s1;
@@ -2746,8 +2749,8 @@ void EntitySummonSpirit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 3;
         self->ext.summonspirit.spawnTimer = 10;
         func_80118C28(13);
@@ -2812,8 +2815,8 @@ void EntitySummonSpirit(Entity* self) {
         }
         self->ext.summonspirit.timer = 0;
         // This just adds FLAG_HAS_PRIMS. Not sure why it wasn't an |=.
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->step++;
         break;
 

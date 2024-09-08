@@ -66,9 +66,10 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         if (self->primIndex != -1) {
-            self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+            self->flags =
+                FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         }
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -155,7 +156,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->animSet = ANIMSET_DRA(1);
         self->drawMode = DRAW_TPAGE;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->unk5A = 0;
         SetSpeedX(FIX(13.0));
         self->velocityY = FIX(-1.0 / 8.0);
@@ -217,8 +218,8 @@ static void func_ptr_80170008(Entity* self) {
             self->palette += 0x18;
             self->unk5A += 2;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_100000 | FLAG_UNK_40000 |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;

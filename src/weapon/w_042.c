@@ -83,7 +83,7 @@ static void EntityWeaponAttack(Entity* self) {
 
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->anim = D_12A000_8017A6B4;
         self->posY.i.hi -= 4;
 
@@ -154,7 +154,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
         self->facingLeft = (self->facingLeft + 1) & 1;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_12A000_8017A604;
         self->drawFlags |= 3;
@@ -231,7 +231,7 @@ static void func_ptr_80170008(Entity* self) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->posY.i.hi -= 0x10;
@@ -283,7 +283,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = self->ext.weapon.parent->zPriority + 2;
         self->anim = D_12A000_8017A684;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;

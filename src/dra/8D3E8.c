@@ -1019,8 +1019,8 @@ void func_8012F894(Entity* self) {
 #ifdef VERSION_HD
         self->zPriority = PLAYER.zPriority - 2;
 #endif
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
     animControl = 0;
@@ -1297,7 +1297,8 @@ void func_80130264(Entity* self) {
 #if defined(VERSION_HD)
         self->zPriority = PLAYER.zPriority;
 #endif
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotPivotX = 0;
         self->rotPivotY = 9;
@@ -1407,7 +1408,8 @@ void func_80130618(Entity* self) {
 #if defined(VERSION_HD)
         self->zPriority = PLAYER.zPriority - 2;
 #endif
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotPivotX = 1;
         self->rotPivotY = 8;
@@ -1525,8 +1527,8 @@ void func_801309B4(Entity* self) {
 #if defined(VERSION_HD)
         self->zPriority = PLAYER.zPriority + 2;
 #endif
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_100000 | FLAG_UNK_20000 |
-                      FLAG_UNK_40000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
+                      FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->animFrameDuration = 1;
         self->animFrameIdx = 4;
         self->anim = D_800B0ABC;
@@ -1541,8 +1543,8 @@ void func_801309B4(Entity* self) {
     self->facingLeft = PLAYER.facingLeft;
     self->posX.val = g_Entities[UNK_ENTITY_12].posX.val;
     self->posY.val = g_Entities[UNK_ENTITY_12].posY.val + FIX(4);
-    self->flags =
-        FLAG_UNK_04000000 | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+    self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 | FLAG_UNK_20000 |
+                  FLAG_POS_PLAYER_LOCKED;
 
     var_a1 = D_80138430 - 0x800;
     if (D_80138430 > 0x980) {
@@ -1686,7 +1688,8 @@ void func_80130E94(Entity* self) {
 #if defined(VERSION_HD)
         self->zPriority = PLAYER.zPriority - 3;
 #endif
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->ext.timer.t = 0x20;
         self->rotZ = D_80138430;
         self->step++;
@@ -1810,7 +1813,8 @@ void func_8013136C(Entity* self) {
         self->animSet = 0xF;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotPivotX = -8;
         self->step++;
@@ -2049,7 +2053,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->hitboxWidth = 0xC;
         self->posY.i.hi = 0x160;
         self->velocityY = FIX(-6);
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;

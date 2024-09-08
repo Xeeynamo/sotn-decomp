@@ -150,7 +150,7 @@ void RicInit(s16 initParam) {
         e->animSet = ANIMSET_OVL(0x10);
         e->unk5A = i + 1;
         e->palette = 0x8120;
-        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
+        e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
 

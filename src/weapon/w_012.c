@@ -238,7 +238,7 @@ static void EntityWeaponAttack(Entity* self) {
                     prim->r3 = 0x80;
             prim->drawMode |= DRAW_COLORS;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         SetWeaponProperties(self, 0);
         self->hitboxOffX = 0x2B;
         self->hitboxWidth = 0x1E;
@@ -337,7 +337,8 @@ static s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
         self->palette = 0x100;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         SetSpeedX(((rand() & FIX(0.25) - 1) * 2) | FIX(4.5));
         self->ext.weapon_012.unk7E = 0x1C;
         offsetY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
@@ -452,7 +453,8 @@ static void func_ptr_80170008(Entity* self) {
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->palette;
         self->drawFlags = self->ext.weapon.parent->drawFlags + FLAG_DRAW_UNK8;
         self->rotZ = self->ext.weapon.parent->rotZ;

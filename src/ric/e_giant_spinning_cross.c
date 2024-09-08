@@ -149,7 +149,8 @@ void RicEntityCrashCrossBeam(Entity* self) {
         self->hitboxWidth = 0xC;
         self->posY.i.hi = 0x160;
         self->velocityY = FIX(-6.0);
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;

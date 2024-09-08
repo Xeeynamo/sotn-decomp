@@ -27,8 +27,8 @@ void RicEntityTeleport(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 2; i++) {
             prim->x0 = 0xC0 * i;
@@ -756,8 +756,8 @@ void RicEntityArmBrandishWhip(Entity* entity) {
 
     entity->facingLeft = PLAYER.facingLeft;
     if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
-                        FLAG_UNK_10000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
         entity->animSet = ANIMSET_OVL(18);
         entity->unk5A = 0x46;
         entity->palette = 0x8120;
@@ -792,8 +792,8 @@ static s16 D_80155D30[] = {0x10, 0x18, 0x11, 0x19, 0x12, 0x1A, 0x13, 0x1B, 0x14,
 void func_80167964(Entity* entity) {
     if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
-            entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 |
-                            FLAG_UNK_04000000 | FLAG_UNK_10000;
+            entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
             g_Entities[D_80155D30[entity->animFrameDuration]].palette =
@@ -886,7 +886,7 @@ void func_80167A70(Entity* self) {
                 prim->priority = PLAYER.zPriority + 2;
             }
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
         break;
@@ -950,8 +950,8 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->ext.subweapon.subweaponId = PL_W_HYDROSTORM;
         RicSetSubweaponParams(self);
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         self->facingLeft = 0;
         while (line != NULL) {

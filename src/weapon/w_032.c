@@ -42,7 +42,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A = 0x66;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         if (self->params & 0x7F00) {
             self->zPriority = PLAYER.zPriority - 2;
         } else {

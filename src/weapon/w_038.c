@@ -41,7 +41,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
 
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         SetWeaponProperties(self, 0);
 
@@ -116,7 +116,7 @@ s32 func_ptr_80170004(Entity* self) {
             prim = prim->next;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;

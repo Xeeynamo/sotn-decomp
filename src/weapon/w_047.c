@@ -52,7 +52,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 6;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         if (rand() & 7) {
             self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x20);
             if (self->primIndex != -1) {
@@ -309,7 +309,7 @@ s32 func_ptr_80170004(Entity* self) {
                 self->animSet += 2;
             }
             self->anim = D_14D000_8017A528;
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->zPriority = PLAYER.zPriority + 2;
             speed = (rand() % 1535) + 0x100;
             self->velocityX = rcos((s32)speed) << 7;

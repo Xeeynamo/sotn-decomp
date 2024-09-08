@@ -22,7 +22,7 @@ void func_8016D9C4(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         primLine = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         for (i = 0; i < 4; i++) {
             primLine->preciseX.val = PLAYER.posX.val;
@@ -178,7 +178,7 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 0x10; i++) {
@@ -275,7 +275,7 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
 void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.timer.t = 0x14;
         entity->step++;
 
@@ -332,7 +332,8 @@ void RicEntityCrashBibleBeam(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         if (self->facingLeft) {
             self->ext.bibleBeam.unk7C = -16;
             self->ext.bibleBeam.unk7E = -2;
@@ -442,7 +443,8 @@ void RicEntityCrashBible(Entity* self) {
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->posX.val = PLAYER.posX.val;
         self->posY.val = PLAYER.posY.val;
         self->velocityY = FIX(-4);
@@ -636,7 +638,7 @@ void func_8016F198(Entity* self) {
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->priority = 0xC2;
@@ -759,7 +761,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode =
@@ -1078,7 +1081,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
 void func_80170548(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.generic.unkB0 = 0x1E;
         RicSetSubweaponParams(entity);
         entity->hitboxWidth = 8;
@@ -1098,7 +1101,7 @@ void func_801705EC(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.et_80161FF0.unk7E = 0;
         entity->step++;
     case 1:
@@ -1190,7 +1193,8 @@ void RicEntityAguneaLightning(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
             prim->tpage = 0x1A;
@@ -1321,7 +1325,8 @@ void RicEntityAguneaCircle(Entity* self) {
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         prim = &g_PrimBuf[self->primIndex];
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 0x20;
@@ -1470,7 +1475,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->tpage = 0x1A;
@@ -1562,8 +1567,8 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
@@ -1668,7 +1673,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        self->flags &= ~FLAG_UNK_40000;
+        self->flags &= ~FLAG_POS_PLAYER_LOCKED;
         prim->priority = 0xC2;
         prim->drawMode &= ~0x200;
         prim = prim->next;
@@ -1964,7 +1969,8 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
         prim->tpage = 0x1C;
         prim->clut = 0x19D;
@@ -2028,7 +2034,8 @@ void RicEntitySubwpnBible(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
@@ -2058,7 +2065,7 @@ void RicEntitySubwpnBible(Entity* self) {
         break;
     case 3:
         if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
-            self->flags &= ~FLAG_UNK_04000000;
+            self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
             g_api.PlaySfx(0x6B2);

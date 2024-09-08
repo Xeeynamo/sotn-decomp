@@ -43,7 +43,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
@@ -219,7 +219,7 @@ s32 func_ptr_80170004(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 80; i++) {
             prim->clut = 0x1B0;
@@ -318,7 +318,7 @@ void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCount; i++) {
             angle = i << 8;
@@ -415,7 +415,7 @@ void func_ptr_8017000C(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         offsetX = point.x;
@@ -511,7 +511,7 @@ s32 func_ptr_80170010(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         if (params == 1) {
             func_162000_8017BA38(self, &point, true);
         } else {

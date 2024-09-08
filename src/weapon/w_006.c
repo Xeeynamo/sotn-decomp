@@ -43,7 +43,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         SetWeaponProperties(self, 0);
@@ -104,7 +104,7 @@ static void func_ptr_80170004(Entity* self) {
         self->velocityY =
             (rand() & 0x1FFF) + D_2E000_8017ABF0[(u8)self->params];
         self->ext.weapon_006.unk88 = -(self->velocityY >> 4);
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_20000;
         self->rotZ = rand();
 
         if (!(self->params & ~0x8000)) {
@@ -240,7 +240,7 @@ static void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->velocityY = FIX(1.0 / 2.0);
         range = 24;
         posX = (rand() % range) - 0xC;

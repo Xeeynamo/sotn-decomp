@@ -1235,7 +1235,8 @@ void RicEntityHitByHoly(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        entity->flags =
+            FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         prim = &g_PrimBuf[entity->primIndex];
@@ -1312,7 +1313,8 @@ void RicEntityHitByDark(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1516,7 +1518,7 @@ void RicUpdatePlayerEntities(void) {
                 entity->pfnUpdate(entity);
                 entity = g_CurrentEntity;
                 if (entity->entityId) {
-                    if (!(entity->flags & FLAG_UNK_04000000) &&
+                    if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                         (entity->posX.i.hi < -32 || entity->posX.i.hi > 288 ||
                          entity->posY.i.hi < -16 || entity->posY.i.hi > 256)) {
                         DestroyEntity(entity);

@@ -49,8 +49,8 @@ void EntityWeaponAttack(Entity* self) {
         self->animCurFrame = 8;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         SetSpeedX(FIX(6));
         self->velocityY = FIX(1);
         offsetY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
@@ -237,7 +237,8 @@ s32 func_ptr_80170004(Entity* self) {
     angle = 0;
     if (self->step == 0) {
         self->facingLeft = self->ext.weapon.parent->facingLeft;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;

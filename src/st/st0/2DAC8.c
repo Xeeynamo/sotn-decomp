@@ -836,7 +836,7 @@ void func_801AF774(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = 0;
         self->drawMode |= (DRAW_TPAGE | 0x20);
-        self->flags &= ~FLAG_UNK_08000000;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         D_801C2578 = 1;
         self->ext.et_801AF774.unk90 = 1;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x5C);

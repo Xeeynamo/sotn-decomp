@@ -31,7 +31,7 @@ void EntityMessageBox(Entity* self) {
     case 0:
         InitializeEntity(g_InitializeData0);
         self->flags |= FLAG_UNK_10000;
-        self->flags ^= FLAG_UNK_08000000;
+        self->flags ^= FLAG_POS_CAMERA_LOCKED;
         if (!self->params) {
             self->params = 96; // default to 96 frames, or 1.5 seconds
         }
