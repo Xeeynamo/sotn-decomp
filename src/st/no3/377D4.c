@@ -1722,7 +1722,7 @@ void EntityUnkId29(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B18);
         self->zPriority = 0x2A;
-        self->flags &= ~FLAG_UNK_08000000;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->facingLeft = Random() & 1;
         g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
@@ -1735,7 +1735,7 @@ void EntityUnkId2A(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
-        entity->flags &= ~FLAG_UNK_08000000;
+        entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
         entity->animCurFrame = entity->params + 0x22;
         entity->posX.i.hi = D_8018139C[entity->params << 1];
         entity->posY.i.hi = D_8018139E[entity->params << 1];

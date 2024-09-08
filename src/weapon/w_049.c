@@ -45,7 +45,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
@@ -146,7 +146,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->anim = D_15B000_8017B074;
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = 1;
-        self->flags = FLAG_UNK_100000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->ext.weapon.unk80 = params * 512;
         self->rotZ = self->ext.weapon.unk80 - FIX(1.0 / 64);
@@ -233,7 +233,7 @@ void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 16; i++) {
@@ -366,7 +366,7 @@ void func_ptr_8017000C(Entity* self) {
         self->rotY = 0x80;
         self->rotX = self->rotY = (rand() & 0x3F) | 0x80;
         self->zPriority = PLAYER.zPriority + (rand() & 1) * 4;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (rand() % 3) {
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -426,7 +426,7 @@ s32 func_ptr_80170010(Entity* self) {
     switch (self->step) {
     case 0:
         self->facingLeft = 1;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->ext.weapon.unk80 = params * 512;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
@@ -446,7 +446,7 @@ s32 func_ptr_80170010(Entity* self) {
         break;
     case 2:
         self->ext.weapon.unk7E += 4;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         if (self->ext.weapon.unk7E >= 0x70) {
             DestroyEntity(self);
             return;
@@ -478,7 +478,7 @@ static s32 func_ptr_80170014(Entity* self) {
         }
         self->anim = D_15B000_8017B10C;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotX = self->rotY = 0x100;
         self->drawMode = DRAW_TPAGE | 0x20;

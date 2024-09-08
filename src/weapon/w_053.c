@@ -39,7 +39,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->unk5A += 2;
             }
             self->palette += anim->palette;
-            self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+            self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
             self->zPriority = PLAYER.zPriority - 2;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
@@ -158,7 +158,8 @@ s32 func_ptr_80170004(Entity* self) {
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-            self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            self->flags =
+                FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
 
             if ((params == 0) || (params == 0xA) || (params == 0x14) ||
                 (params == 0x1E) || (params > 0x27 && params <= 0x31)) {
@@ -274,7 +275,7 @@ static void func_ptr_80170008(Entity* self) {
         self->animSet = 1;
         self->drawMode = DRAW_TPAGE;
         self->unk5A = 0;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
 
         SetSpeedX(FIX(8));
         self->velocityY = FIX(-0.5);
@@ -384,7 +385,8 @@ void func_ptr_8017000C(Entity* self) {
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
 
-            self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            self->flags =
+                FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
 
             if (params == 0) {
                 SetWeaponProperties(self, 0);

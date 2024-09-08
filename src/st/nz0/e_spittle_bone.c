@@ -74,7 +74,7 @@ void EntitySpittleBone(Entity* self) {
             if (newEntity != NULL) {
                 MakeEntityFromId(E_SPITTLEBONE, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
-                newEntity->flags = FLAG_UNK_2000 | FLAG_UNK_08000000 |
+                newEntity->flags = FLAG_UNK_2000 | FLAG_POS_CAMERA_LOCKED |
                                    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
                 newEntity->palette = 0x20D;

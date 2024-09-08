@@ -43,7 +43,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
 
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         SetWeaponProperties(self, 0);
         self->step++;
@@ -241,7 +241,7 @@ s32 func_ptr_80170004(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         func_107000_8017B0AC(self, &basePoint, 0);
         // FAKE but makes register allocation work
         randy = basePoint.x;
@@ -347,7 +347,7 @@ static void func_ptr_80170008(Entity* self) {
         self->anim = D_107000_8017A798;
         self->animSet = 3;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         SetSpeedX(rand() + FIX(0.25));
         self->velocityY = -(rand() + FIX(1));
         self->step++;

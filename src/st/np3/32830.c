@@ -1575,7 +1575,7 @@ void func_801B5DE8(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x2A;
-        self->flags &= ~FLAG_UNK_08000000;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->facingLeft = Random() & 1;
         g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
@@ -1588,7 +1588,7 @@ void func_801B5E98(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x29;
-        self->flags &= ~FLAG_UNK_08000000;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = self->params + 0x22;
         self->posX.i.hi = D_80181220[self->params][0];
         self->posY.i.hi = D_80181220[self->params][1];

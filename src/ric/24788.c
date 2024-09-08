@@ -27,25 +27,25 @@ void RicEntityFactory(Entity* self) {
         self->ext.factory.unk9C = *data_idx & 0x7;      // index 4, lower 4 bits
         self->ext.factory.unkA4 = *data_idx++ >> 3;     // index 4, upper 4 bits
         self->ext.factory.unk9A = *data_idx;            // index 5
-        self->flags |= FLAG_UNK_04000000;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
         switch (self->ext.factory.unkA4) {
         case 0:
-            self->flags |= FLAG_UNK_08000000;
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
         case 4:
             self->flags |= FLAG_UNK_20000;
         case 2:
         case 9:
-            self->flags |= FLAG_UNK_40000;
+            self->flags |= FLAG_POS_PLAYER_LOCKED;
         case 3:
         case 7:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
         case 8:
-            self->flags |= FLAG_UNK_40000;
+            self->flags |= FLAG_POS_PLAYER_LOCKED;
             self->posX.val = self->ext.factory.parent->posX.val;
             self->posY.val = self->ext.factory.parent->posY.val;
             break;
@@ -165,7 +165,8 @@ void RicEntitySlideKick(Entity* entity) {
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->facingLeft = PLAYER.facingLeft;
         if (entity->step == 0) {
-            entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+            entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                            FLAG_KEEP_ALIVE_OFFCAMERA;
             entity->hitboxOffX = 0x14;
             entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
@@ -194,7 +195,8 @@ void func_80160D2C(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->facingLeft = PLAYER.facingLeft;
     if (self->step == 0) {
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+        self->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->hitboxOffX = 0x14;
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
@@ -228,7 +230,8 @@ void RicEntityBladeDash(Entity* self) {
         self->posY.i.hi = PLAYER.posY.i.hi;
         self->facingLeft = PLAYER.facingLeft;
         if (self->step == 0) {
-            self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+            self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                          FLAG_KEEP_ALIVE_OFFCAMERA;
             self->hitboxHeight = 20;
             self->hitboxWidth = 20;
             self->hitboxOffY = 0;
@@ -252,7 +255,8 @@ void func_80160F0C(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->facingLeft = PLAYER.facingLeft;
     if (self->step == 0) {
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+        self->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->hitboxOffX = 0xC;
         self->hitboxOffY = -0x1A;
         self->hitboxWidth = 12;
@@ -314,7 +318,7 @@ void RicEntitySmokePuff(Entity* self) {
         self->animSet = 5;
         self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
         self->unk6C = 0x60;
@@ -729,7 +733,7 @@ void func_80161C2C(Entity* self) {
                 self->palette = 0x8170;
             }
         }
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
         if (rand() % 4) {
             self->zPriority = PLAYER.zPriority + 2;
@@ -782,8 +786,8 @@ void func_80161EF8(Entity* self) {
     case 0:
         self->animSet = ANIMSET_DRA(2);
         self->anim = anim_80154E38;
-        self->flags =
-            FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 |
+                      FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority + 4;
         self->velocityY = (rand() & 0x3FFF) - 0x10000;
         self->step++;
@@ -852,7 +856,8 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + props->yPos;
         self->posY.i.hi = posY;
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->step++;
         break;
     case 1:
@@ -918,8 +923,8 @@ void func_801623E0(Entity* entity) {
         prim->clut = 0x13E;
         prim->priority = PLAYER.zPriority + 8;
         prim->drawMode = DRAW_DEFAULT;
-        entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
-                        FLAG_HAS_PRIMS;
+        entity->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         entity->step++;
         break;
 
@@ -971,8 +976,8 @@ void func_80162604(Entity* entity) {
             prim->clut = 0x162;
             prim->priority = PLAYER.zPriority - 4;
             prim->drawMode = DRAW_DEFAULT;
-            entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 |
-                            FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
+                            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
         } else {
@@ -1053,7 +1058,7 @@ void RicEntityMariaPowers(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
         if (params == 3) {
-            self->flags |= FLAG_UNK_04000000;
+            self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
         }
         g_api.PlaySfx(0x881);
         self->ext.et_80162870.unk82 = 12;
@@ -1128,8 +1133,8 @@ static AnimationFrame anim_maria_offering_powers[] = {
 void RicEntityMaria(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 |
-                        FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
+                        FLAG_UNK_10000 | FLAG_POS_CAMERA_LOCKED;
         entity->facingLeft = 1;
         entity->unk5A = 0x66;
         entity->zPriority = PLAYER.zPriority - 8;

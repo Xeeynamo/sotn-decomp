@@ -160,9 +160,9 @@ s16 D_800AD9B8[24][5] = {
 };
 
 // clang-format off
-#define UNK_FLAGS_GROUP_1 FLAG_HAS_PRIMS | FLAG_UNK_08000000
-#define UNK_FLAGS_GROUP_2 FLAG_HAS_PRIMS | FLAG_UNK_04000000
-#define UNK_FLAGS_GROUP_3 FLAG_HAS_PRIMS | FLAG_UNK_08000000 | FLAG_UNK_04000000
+#define UNK_FLAGS_GROUP_1 FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED
+#define UNK_FLAGS_GROUP_2 FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA
+#define UNK_FLAGS_GROUP_3 FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA
 static unkStr_8011E4BC D_800ADAA8 = { 8, 0x7F, 0x7F, 0x7F, 2, 2, 2, 51, 0,   UNK_FLAGS_GROUP_1};
 static unkStr_8011E4BC D_800ADAB8 = {16, 0x7F, 0x7F, 0x7F, 1, 1, 2, 51, 1,   UNK_FLAGS_GROUP_3};
 static unkStr_8011E4BC D_800ADAC8 = { 8, 0x7F, 0x7F, 0x7F, 1, 1, 2, 51, 0,   UNK_FLAGS_GROUP_1};
@@ -529,7 +529,7 @@ void func_8011EDA8(Entity* self) {
                 self->palette = 0x8170;
             }
         }
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
         if (rand() % 4) {
             self->zPriority = PLAYER.zPriority + 2;
@@ -580,7 +580,8 @@ void func_8011F074(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_08000000;
+        entity->flags =
+            FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
@@ -650,7 +651,7 @@ void EntityHitByLightning(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x3F);
         self->ext.hitbylightning.unk80 = rand();
@@ -790,7 +791,7 @@ void EntityHitByIce(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
@@ -924,8 +925,8 @@ void EntityHitByIce(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
             prim->drawMode |= DRAW_UNK02;
             prim->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);
-            self->flags |= FLAG_UNK_08000000;
-            self->flags &= ~(FLAG_UNK_20000 | FLAG_UNK_40000);
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            self->flags &= ~(FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED);
             if (--prim->v0 == 0) {
                 prim->drawMode |= DRAW_HIDE;
             }
@@ -972,8 +973,8 @@ void EntityTransparentWhiteCircle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim2 = prim1 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim1 = prim1->next;
@@ -1154,8 +1155,8 @@ void EntityPlayerPinkEffect(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_40000 | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         self->ext.timer.t = data_idx->unk0[0];
         if (data_idx->unk18 != 0x83) {
             PlaySfx(SFX_TRANSFORM);
@@ -1312,7 +1313,7 @@ void EntityPlayerDissolves(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_08000000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
         self->ext.dissolve.unk7C = 0;
         temp1 = D_800AE140;
         self->ext.dissolve.unk80 = rand() & 7;
@@ -1503,8 +1504,8 @@ void EntityLevelUpAnimation(Entity* self) {
             return;
         }
         PlaySfx(NA_SE_PL_MAX_HP_MP_INCREASED);
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 48;
@@ -1862,8 +1863,8 @@ void EntityMist(Entity* self) {
         for (j = 0; j < 16; j++) {
             prim = func_80121F58(1, j, prim, self->facingLeft);
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->step++;
         self->ext.mist.timer = 0;
         D_80138394 = 0;
@@ -2019,7 +2020,7 @@ void EntityMist(Entity* self) {
             for (j = 0; j < 16; j++) {
                 prim = func_80121F58(1, j, prim, self->facingLeft);
             }
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             xVar4 = PLAYER.posX.i.hi + self->ext.mist.xCurrent;
             yVar4 = PLAYER.posY.i.hi + self->ext.mist.yCurrent;
@@ -2180,7 +2181,7 @@ void UnknownEntId48(Entity* self) {
         self->enemyId = 4;
         self->hitboxHeight = 8;
         self->hitboxWidth = 8;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->step++;
     }
     if (params == 0) {
@@ -2237,7 +2238,8 @@ void func_80123A60(Entity* entity) {
     entity->posY.i.hi = player->posY.i.hi;
     if (entity->step == 0) {
         func_8011A328(entity, 0xB);
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->step++;
     }
 
@@ -2364,8 +2366,8 @@ void func_80123F78(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 | FLAG_UNK_04000000 |
-                        FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         if (PLAYER.animSet != 1) {
             DestroyEntity(entity);
             break;

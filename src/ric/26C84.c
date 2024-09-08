@@ -112,8 +112,8 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 8; i++) {
             D_80154F7C[i] = i << 9;
@@ -396,7 +396,8 @@ void func_801641A0(Entity* entity) {
             prim->priority = PLAYER.zPriority + 8;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                            FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
         } else {
@@ -483,8 +484,8 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_10000;
         prim2 = prim1 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim1 = prim1->next;
@@ -705,7 +706,7 @@ void RicEntityHitByIce(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
@@ -916,7 +917,7 @@ void RicEntityHitByLightning(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x3F);
         self->ext.hitbylightning.unk80 = rand();

@@ -40,7 +40,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (animIndex == 1) {
@@ -127,8 +127,8 @@ s32 func_ptr_80170004(Entity* self) {
             self->palette += 24;
             self->unk5A += 2;
         }
-        self->flags =
-            FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_100000 |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->anim = D_185000_8017B174;
         self->zPriority = PLAYER.zPriority + 4;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;

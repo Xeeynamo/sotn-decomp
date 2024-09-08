@@ -261,7 +261,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->anim = D_123000_8017A504;
         self->posY.i.hi -= 4;
 
@@ -325,7 +325,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->facingLeft++;
         self->facingLeft &= 1;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
 
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_123000_8017A4A4;

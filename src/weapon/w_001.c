@@ -77,7 +77,7 @@ s32 func_ptr_80170004(Entity* self) {
             prim = prim->next;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         SetWeaponProperties(self, 0);
         self->ext.weapon.lifetime = 128;
         self->hitboxWidth = 18;
@@ -176,7 +176,7 @@ extern AnimationFrame D_B000_8017AFC8[];
 static void func_ptr_80170008(Entity* self) {
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->animSet = 9;
         self->anim = D_B000_8017AFC8;
         self->zPriority = PLAYER.zPriority - 2;

@@ -206,7 +206,7 @@ void func_80109594() {
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
         e->palette = 0x8100;
-        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
+        e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
     primIndex = AllocPrimitives(PRIM_TILE, 8);

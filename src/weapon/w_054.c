@@ -57,7 +57,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
 
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0xC);
 

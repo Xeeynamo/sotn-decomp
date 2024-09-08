@@ -66,7 +66,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.weapon.lifetime = 128;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == 2) && (PLAYER.step_s != 2)) {
@@ -84,7 +84,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk80 = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 + FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED + FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);

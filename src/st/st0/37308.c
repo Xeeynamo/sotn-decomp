@@ -85,7 +85,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->palette = 0x8285;
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->unk6C = 0x40;
-        entity->flags &= ~FLAG_UNK_08000000;
+        entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
         if (entity->params) {
             entity->unk6C = 0x10;
             entity->zPriority = 0x1FB;

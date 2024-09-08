@@ -39,7 +39,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         SetWeaponProperties(self, 0);

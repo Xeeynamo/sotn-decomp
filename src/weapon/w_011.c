@@ -51,7 +51,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.timer.t = 0x80;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == Player_Crouch) && (PLAYER.step_s != 2)) {
@@ -69,7 +69,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->palette = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
@@ -206,7 +206,8 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk7D = 0;
         }
         self->posY.i.hi -= 8;
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
@@ -447,7 +448,7 @@ static void func_ptr_80170024(Entity* self) {
         self->palette = self->ext.shield.parent->palette;
         self->facingLeft = self->ext.shield.parent->facingLeft;
         if (self->params & 0x7F00) {
-            self->flags = FLAG_UNK_08000000;
+            self->flags = FLAG_POS_CAMERA_LOCKED;
             self->animCurFrame = self->ext.shield.parent->animCurFrame;
             self->drawFlags = FLAG_DRAW_UNK8;
             self->drawMode = DRAW_TPAGE;
@@ -457,7 +458,7 @@ static void func_ptr_80170024(Entity* self) {
             self->step = 4;
         } else {
             self->anim = D_51000_8017ABCC;
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
             SetWeaponProperties(self, 0);
             self->hitboxWidth = 8;

@@ -19,7 +19,7 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
         entity->entityId = entityId;
         entity->zPriority = entityParent->zPriority;
         entity->facingLeft = entityParent->facingLeft;
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->posX.val = entityParent->posX.val;
         entity->posY.val = entityParent->posY.val;
         // Not necessarily making batFamBlueTrail here, but
