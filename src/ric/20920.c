@@ -84,26 +84,26 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
     }
 }
 
-void func_8015CB58(s32 arg0, s32 arg1) {
+void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
     FntPrint("op disable\n");
-    if (arg0 != 0) {
+    if (resetAnims) {
         g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk1 = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
 
         prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
-        while (prim != NULL) {
+        while (prim) {
             prim->x1 = 0;
             prim = prim->next;
         }
     }
     g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
     g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
-    if (arg1 != 0) {
-        g_Player.timers[PL_T_15] = 4;
+    if (arg1) {
+        g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
 }
 

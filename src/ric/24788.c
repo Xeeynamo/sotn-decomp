@@ -10,7 +10,7 @@ static u8 entity_ranges[][2] = {
     {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
 void RicEntityFactory(Entity* self) {
     Entity* newEntity;
-    s16 unk96Copy;
+    s16 n;
     s16 i;
     u8 endIndex;
     s16 startIndex;
@@ -102,8 +102,8 @@ void RicEntityFactory(Entity* self) {
         self->ext.factory.unk9A = self->ext.factory.unk98;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    unk96Copy = self->ext.factory.unk96;
-    for (i = 0; i < unk96Copy; i++) {
+    n = self->ext.factory.unk96;
+    for (i = 0; i < n; i++) {
         // !FAKE, this should probably be &entity_ranges[unk9C] or similar,
         // instead of doing &entity_ranges followed by +=
         data_idx = entity_ranges;
@@ -157,7 +157,7 @@ void RicEntityFactory(Entity* self) {
     self->ext.factory.unk9A = self->ext.factory.unk98;
 }
 
-void func_80160C38(Entity* entity) {
+void RicEntitySlideKick(Entity* entity) {
     if (PLAYER.step != PL_S_SLIDE) {
         DestroyEntity(entity);
     } else {
