@@ -212,7 +212,7 @@ void func_80109594() {
     primIndex = AllocPrimitives(PRIM_TILE, 8);
     prim = &g_PrimBuf[primIndex];
     g_Entities[1].primIndex = primIndex;
-    g_Entities[1].flags |= 0x800000;
+    g_Entities[1].flags |= FLAG_HAS_PRIMS;
     for (i = 0; i < 6; i++) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;

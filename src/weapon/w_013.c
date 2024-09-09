@@ -348,7 +348,7 @@ static void func_ptr_80170008(Entity* self) {
             self->hitboxHeight = 4;
         }
         if (self->ext.heavenSword.unk82 > 0x30) {
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
         }
         if (self->ext.heavenSword.unk82 == 0x34) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);

@@ -128,7 +128,7 @@ void func_801B57D0(u16 params) {
     current = g_CurrentEntity;
     g_CurrentEntity->entityId = E_EXPLOSION;
     g_CurrentEntity->pfnUpdate = EntityExplosion;
-    g_CurrentEntity->drawFlags = 0;
+    g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
     current->params = params;
     current->animCurFrame = 0;
     g_CurrentEntity->step = 0;

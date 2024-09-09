@@ -501,7 +501,8 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.flag++;
                 self->palette = D_80180D30[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
-                    self->flags &= ~0xF;
+                    self->flags &=
+                        ~(FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1);
                     SetStep(4);
                 }
             }
@@ -514,7 +515,8 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(D_80181304, self) == 0) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
-                self->flags &= ~0xF;
+                self->flags &=
+                    ~(FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1);
                 // do-while needed on PSX but not PSP
                 do {
                     self->palette = D_80180D30[3];
@@ -620,7 +622,7 @@ void func_801B69E8(Entity* self) {
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
         self->entityId = 2;
         self->params = 0;
@@ -653,7 +655,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
         self->params = 1;
         return;

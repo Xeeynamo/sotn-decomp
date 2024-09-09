@@ -28,7 +28,9 @@ void EntityBloodSkeleton(Entity* self) {
         InitializeEntity(D_80180C40);
         self->facingLeft = (u32)Random() % 2;
         self->animCurFrame = 1;
-        self->flags &= 0x1FFFFFFF;
+        self->flags &=
+            ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
+              FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
         self->palette += self->params;
         break;
 
@@ -61,7 +63,7 @@ void EntityBloodSkeleton(Entity* self) {
     case BLOOD_SKELETON_DISASSEMBLE:
         if (AnimateEntity(D_80182638, self) == 0) {
             self->ext.generic.unk80.modeS16.unk0 = 0xF0;
-            self->flags &= ~0x100;
+            self->flags &= ~FLAG_DEAD;
             if (self->params != 0) {
                 self->ext.generic.unk80.modeS16.unk0 = 4;
             }
@@ -74,7 +76,7 @@ void EntityBloodSkeleton(Entity* self) {
         case 0:
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->rotZ = 0;
-                self->drawFlags |= 4;
+                self->drawFlags |= FLAG_DRAW_ROTZ;
                 PlaySfxPositional(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
                 self->step_s++;
                 return;
@@ -92,7 +94,7 @@ void EntityBloodSkeleton(Entity* self) {
             }
 
             if (self->ext.generic.unk80.modeS16.unk0 >= 9) {
-                self->drawFlags = 0;
+                self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->rotZ = 0;
                 self->step_s++;
             }

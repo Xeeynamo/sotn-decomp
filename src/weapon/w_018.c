@@ -88,7 +88,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->ext.weapon.lifetime--;
         if ((self->ext.weapon.lifetime) == 0) {
-            self->drawFlags = 3;
+            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotY = 256;
             self->rotX = 256;
             self->ext.weapon.lifetime = 14;

@@ -1361,7 +1361,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     case 3:
         if (self->step_s == 0) {
-            self->drawFlags |= 4;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
             switch (self->ext.wargpuff.unk88) {
             case 1:
                 if (self->ext.wargpuff.unk89 >= 0x4) {
@@ -1414,7 +1414,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->velocityY = FIX(-0.75);
             self->facingLeft = rnd & 1;
             self->rotX = 0xC0;
-            self->drawFlags |= 1;
+            self->drawFlags |= FLAG_DRAW_ROTX;
             self->step_s++;
         }
         MoveEntity();

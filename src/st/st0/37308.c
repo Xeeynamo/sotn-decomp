@@ -62,7 +62,7 @@ void EntityRoomForeground(Entity* entity) {
         }
         if (entity->params >= 5) {
             entity->rotZ = 0x800;
-            entity->drawFlags |= 4;
+            entity->drawFlags |= FLAG_DRAW_ROTZ;
         }
     }
     AnimateEntity(objInit->unk10, entity);

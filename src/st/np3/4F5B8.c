@@ -13,7 +13,7 @@ void EntityHammerWeapon(Entity* self) {
         InitializeEntity(D_80180B98);
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
 
     case 1:
         angle = *(u16*)&self->ext.stub[0x20];
@@ -522,7 +522,7 @@ void EntityGurkhaSword(Entity* self) {
         InitializeEntity(D_80180BB0);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         break;
 
     case 1:
@@ -589,7 +589,7 @@ void EntityGurkhaSword(Entity* self) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->drawFlags = 0;
+                self->drawFlags = FLAG_DRAW_DEFAULT;
             }
         }
         break;

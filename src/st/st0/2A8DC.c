@@ -176,7 +176,7 @@ void EntitySecretStairs(Entity* self) {
             break;
         }
         self->rotZ = -0x200;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         break;
 
     case 1:
@@ -189,7 +189,7 @@ void EntitySecretStairs(Entity* self) {
     case 2:
         self->rotZ += 0x10;
         if (self->rotZ == 0) {
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step++;
         }
         break;

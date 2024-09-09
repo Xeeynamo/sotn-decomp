@@ -1068,7 +1068,7 @@ void RicEntityMariaPowers(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (--self->ext.et_80162870.unk82 == 0) {
-            self->drawFlags = 3;
+            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = self->rotY = 0x100;
             self->ext.et_80162870.unk82 = 0x10;
             self->step++;

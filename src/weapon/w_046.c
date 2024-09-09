@@ -235,7 +235,7 @@ static void EntityWeaponAttack(Entity* self) {
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                          DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
 
-        self->flags = 0x860000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         temp = maskedParams & 0xFFFF;
         if (!temp) {
             SetWeaponProperties(self, 0);

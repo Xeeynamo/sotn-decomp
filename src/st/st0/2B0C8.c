@@ -687,7 +687,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         if (dracula->unk6C >= 0x80U) {
             step++;
             dracula->unk6C = 0x80U;
-            dracula->drawFlags = 0;
+            dracula->drawFlags = FLAG_DRAW_DEFAULT;
         }
         break;
     case 9:
@@ -735,7 +735,7 @@ s32 func_801AC458(s16 arg0) {
     case 2:
         e = &g_CurrentEntity[1];
         e->animCurFrame = 0;
-        e->drawFlags = 0;
+        e->drawFlags = FLAG_DRAW_DEFAULT;
         e->step = 1;
         ret = 0xFF;
         break;

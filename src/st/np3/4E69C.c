@@ -373,7 +373,7 @@ void EntityGurkhaBodyParts(Entity* self) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->drawFlags = 0;
+                self->drawFlags = FLAG_DRAW_DEFAULT;
             }
             return;
         }

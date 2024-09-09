@@ -1675,7 +1675,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->flags &= ~FLAG_POS_PLAYER_LOCKED;
         prim->priority = 0xC2;
-        prim->drawMode &= ~0x200;
+        prim->drawMode &= ~DRAW_UNK_200;
         prim = prim->next;
         prim->drawMode |= DRAW_HIDE;
         prim = prim->next;

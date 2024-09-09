@@ -11,7 +11,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     }
 
     entity = g_CurrentEntity;
-    entity->drawFlags = 0;
+    entity->drawFlags = FLAG_DRAW_DEFAULT;
     entity->entityId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->params = arg0;
