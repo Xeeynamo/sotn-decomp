@@ -45,8 +45,8 @@ segments:
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
-      - [0x1B144, rodata] # jtbl_8018B144
       - [0x1B100, .rodata, 1BEDC] # jtbl_8019B100 [1BEDC]
+      - [0x1B144, .rodata, 1C5CC] # jtbl_8018B144 [1C5CC]
       - [0x1B168, rodata] # jtbl_8019B168
       - [0x1B180, rodata] # jtbl_8019B180
       - [0x1B194, rodata] # jtbl_8019B194

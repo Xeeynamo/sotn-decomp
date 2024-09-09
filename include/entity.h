@@ -1214,6 +1214,18 @@ typedef struct {
     /* 0x80 */ s32 unk80;
 } ET_DemonSwitchWall;
 
+typedef struct {
+    /* 0x7C */ char pad_0[0x20];
+    /* 0x9C */ s16 rotZSpeed;
+} ET_BreakableBlock;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x8];
+    /* 0x84 */ s16 breakCount;
+    /* 0x86 */ char pad_86[0xE];
+    /* 0x94 */ s16 resetTimer;
+} ET_BreakableWall;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1326,4 +1338,6 @@ typedef union { // offset=0x7C
     ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
     ET_DemonSwitchWall demonSwitchWall;
+    ET_BreakableBlock breakableBlock;
+    ET_BreakableWall breakableWall;
 } Ext;

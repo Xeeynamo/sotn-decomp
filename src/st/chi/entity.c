@@ -23,7 +23,7 @@ void func_801A54C4(Entity*);
 void func_801A55B4(Entity*);
 void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
-void func_8019C5CC(Entity*);
+void EntityBreakableWall(Entity*);
 void func_8019C31C(Entity*);
 void func_8019B914(Entity*);
 void func_8019D1A8(Entity*);
@@ -70,7 +70,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A55B4,  // EntityUnkId15
     EntityDemonSwitchWall,
     EntityDemonSwitch,
-    func_8019C5CC,
+    EntityBreakableWall,
     func_8019C31C,
     func_8019B914,  // CEN.func_8018DB18
     func_8019CBA8,
@@ -412,13 +412,13 @@ u16 D_801808B4[] = {    // Room3_DemonSwitchWallTilesNoCollision
     0x01BF, 0x01BF, 0x01BF, 0x01BF,
 };
 
-u16 D_801808CC[] = {
+u16 Room5_BreakableWallTilesCollision[] = {
     0x0399, 0x039A, 0x0399, 0x039A, 0x039B, 0x039C, 0x039B, 0x039C,
     0x0399, 0x039A, 0x0399, 0x039A, 0x0106, 0x0108, 0x0106, 0x0108,
     0x010B, 0x010D, 0x010B, 0x010D, 0x0106, 0x0108, 0x0106, 0x0108,
 };
 
-s16 D_801808FC[] = {
+s16 Room5_BreakableRoomEntityData[] = {
     0x000D, 0x0012, 0xFFE8, 0x0000, 0x000D, 0x0012, 0xFFF8, 0x0800,
     0x000D, 0x0012, 0x0000, 0x0000, 0x000D, 0x0012, 0x0008, 0x0200,
     0x000D, 0x0012, 0x0018, 0x0800, 0x000C, 0x0006, 0x0014, 0x0100,

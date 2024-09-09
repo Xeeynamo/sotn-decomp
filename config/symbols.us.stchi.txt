@@ -7,7 +7,7 @@ Particle_FallingPebbleUpdate = 0x8019BD0C;
 EntityDemonSwitch = 0x8019BDF8;
 EntityDemonSwitchWall = 0x8019BEDC;
 // func_8019C31C
-// func_8019C5CC
+EntityBreakableWall = 0x8019C5CC;
 // func_8019CBA8
 // func_8019D0D8
 // func_8019D1A8
@@ -171,6 +171,9 @@ EntityInit_80180724 = 0x80180724;
 g_eRedDoorTiles = 0x80180768;
 
 Room3_DemonSwitchWallTilesCollision = 0x8018089C;
+Room5_BreakableWallTilesCollision = 0x801808CC;
+Room5_BreakableRoomEntityData = 0x801808FC;
+
 // Referenced in func_801A8EAC
 sprites_chi_4 = 0x80199340;
 
