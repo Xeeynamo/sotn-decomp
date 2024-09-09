@@ -29,7 +29,6 @@ typedef enum {
     /* 0x14 */ E_ID_14,
     /* 0x15 */ E_ID_15,
     /* 0x16 */ E_ID_16,
-    /* 0x17 */ E_ID_17,
     /* 0x18 */ E_ID_18,
     /* 0x19 */ E_ID_19,
     /* 0x1A */ E_ID_1A, // CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)?
@@ -52,6 +51,7 @@ typedef enum {
     /* 0x2B */ E_ID_2B,
     /* 0x2C */ E_ID_2C,
     /* 0x2D */ E_ID_2D,
+    /* 0x17 */ E_DEMON_SWITCH,
 } EntityIDs;
 
 extern PfnEntityUpdate PfnEntityUpdates[];

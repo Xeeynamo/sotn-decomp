@@ -323,13 +323,17 @@ void Particle_FallingPebbleUpdate(Primitive* prim)
 }
 
 extern EntityInit EntityInit_8018067C;
-
-// [Entity] Top of room 3, demon button?
-void func_8019BDF8(Entity* entity)
+// [Entity] Top of room 3, demon button
+void EntityDemonSwitch(Entity* entity)
 {
+    enum Step {
+        Init = 0,
+        Press = 1,
+    };
+
     switch (entity->step)
     {
-    case 0:
+    case Init:
             InitializeEntity(&EntityInit_8018067C);
             
             entity->animCurFrame = 3;
@@ -342,13 +346,16 @@ void func_8019BDF8(Entity* entity)
                 entity->animCurFrame = 4;
             }
             // fallthrough
-    case 1:
+    case Press:
         if (entity->unk44 == 7) {
-            g_api.PlaySfx(0x640);
+            g_api.PlaySfx(SFX_SWITCH_PRESSED);
             g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] = 1;
-            g_api.func_800F1FC4(0x50);
+            // Update the map "explored" state
+            // This is read from an array of data in DRA, and in
+            // this case results in exploring the room to the right
+            g_api.func_800F1FC4(CASTLE_FLAG_CHI_DEMON_BUTTON);
             entity->animCurFrame = 4;
-            entity->step++;
+            entity->step++; // Inactive
         }
         break;
     }

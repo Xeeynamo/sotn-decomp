@@ -22,7 +22,7 @@ void func_801A519C(Entity*);
 void func_801A54C4(Entity*);
 void func_801A55B4(Entity*);
 void func_8019BEDC(Entity*);
-void func_8019BDF8(Entity*);
+void EntityDemonSwitch(Entity*);
 void func_8019C5CC(Entity*);
 void func_8019C31C(Entity*);
 void func_8019B914(Entity*);
@@ -69,7 +69,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A54C4,  // EntityUnkId14
     func_801A55B4,  // EntityUnkId15
     func_8019BEDC,
-    func_8019BDF8,
+    EntityDemonSwitch,
     func_8019C5CC,
     func_8019C31C,
     func_8019B914,  // CEN.func_8018DB18
