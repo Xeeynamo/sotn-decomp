@@ -11,8 +11,7 @@ extern u16 Room5_BreakableWallTilesCollision[];
 extern u16 Room5_BreakableRoomEntityData[];
 
 // [Entity] Room 5, Middle/Bottom, Breakable Wall
-void EntityBreakableWall(Entity* self)
-{
+void EntityBreakableWall(Entity* self) {
     const int WallWidthTiles = 3;
     const int WallHeightTiles = 4;
     const int WallTotalTiles = WallWidthTiles * WallHeightTiles;

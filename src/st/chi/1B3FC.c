@@ -6,8 +6,6 @@
  * Description: Abandoned Mine
  */
 
-void InitializeEntity(u16 arg0[]);
-void AnimateEntity(s32, void*);
 extern s32 EntityInit_80180664;
 extern ObjInit2 D_80180740[];
 
@@ -96,7 +94,6 @@ void func_8019B4DC(Entity* entity) {
     }
 }
 
-void func_801A2684(void*);  // ReplaceBreakableWithItemDrop()
 extern s32 D_8007D858[];
 extern s32 EntityInit_80180610;
 extern s32 D_80180838[];
@@ -170,11 +167,8 @@ void func_8019B698(Entity* entity)
     }
 }
 
-void func_801ADF40(Primitive*); // UnkPrimHelper()
-
 // CEN.func_8018DB18 [Entity]
-void func_8019B914(Entity* entity)
-{
+void func_8019B914(Entity* entity) {
     Collider collider;
     Primitive* prim;
     s16 primIndex;
@@ -283,8 +277,7 @@ void func_8019B914(Entity* entity)
 }
 
 // "Falling pebble" particle for EntityDemonSwitchWall
-void Particle_FallingPebbleUpdate(Primitive* prim)
-{
+void Particle_FallingPebbleUpdate(Primitive* prim) {
     const int FallSpeed = 2;
     const int MaxScrolledY = 160;
 
@@ -324,8 +317,7 @@ void Particle_FallingPebbleUpdate(Primitive* prim)
 
 extern EntityInit EntityInit_8018067C;
 // [Entity] Top of room 3, demon button
-void EntityDemonSwitch(Entity* entity)
-{
+void EntityDemonSwitch(Entity* entity) {
     enum Step {
         Init = 0,
         Press = 1,

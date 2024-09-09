@@ -14,8 +14,7 @@ extern EntityInit EntityInit_8018067C;
 extern s16 Room3_DemonSwitchWallTilesCollision[];
 
 // [Entity] Room 3, Top, Demon Switch Wall
-void EntityDemonSwitchWall(Entity* self)
-{
+void EntityDemonSwitchWall(Entity* self) {
     enum Step {
         Init = 0,
         IdleClosed = 1,
@@ -212,11 +211,8 @@ void EntityDemonSwitchWall(Entity* self)
     }
 }
 
-extern EntityInit EntityInit_8018067C;
-
 // [Entity]
-void func_8019C31C(Entity* entity)
-{
+void func_8019C31C(Entity* entity) {
     Collider collider;
     s32 temp_a0_2;
     s32 temp_a0_3;
