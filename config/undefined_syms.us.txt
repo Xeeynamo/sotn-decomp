@@ -18,13 +18,14 @@ g_Camera            = 0x8007308C;
 g_CurrentRoom       = 0x800730A0;
 
 g_unkGraphicsStruct = 0x800973F8;
+D_80097448          = 0x80097448;
 D_80097488          = 0x80097488;
 g_pads              = 0x80097490;
 g_Status            = 0x80097964;
+D_80097C98          = 0x80097C98;
 
 D_801A0E5C          = 0x801A0E5C;
 D_801A4E6C          = 0x801A4E6C;
 D_801A6E7C          = 0x801A6E7C;
 
-D_8017D000          = 0x8017D000;
 D_8017D000          = 0x8017D000;
