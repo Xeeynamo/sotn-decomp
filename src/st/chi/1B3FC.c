@@ -282,70 +282,41 @@ void func_8019B914(Entity* entity)
     }
 }
 
-typedef struct UnkStruct1 {
-    s32 unk0;
-    s8 unk4;
-    u8 unk5;
-    u8 unk6;
-    u8 unk7;
-    u8 unk8;
-    u8 unk9;
-    u16 unkA;
-    s8 unkC;
-    s8 unkD;
-    u8 unkE;
-    u8 unkF;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    u8 unk1C;
-    u8 unk1D;
-    u8 unk1E;
-    s8 unk1F;
-    s32 unk20;
-    u8 unk24;
-    u8 unk25;
-    u16 unk26;
-    u8 unk28;
-    u8 unk29;
-    u8 unk2A;
-    u8 unk2B;
-    s32 unk2C;
-    s16 unk30;
-    u16 unk32;
-} UnkStruct1;
-
-void func_8019BD0C(struct UnkStruct1* arg0)
+// "Falling pebble" particle for EntityDemonSwitchWall
+void Particle_FallingPebbleUpdate(Primitive* prim)
 {
-    s8 temp_v0;
-    s16 adjustedA;
-    u8 adjusted1F;
-    u32 scrollY;
-    s32 adjustedScrollY;
+    const int FallSpeed = 2;
+    const int MaxScrolledY = 160;
 
-    switch (arg0->unk2B) {
-        case 1:
-            temp_v0 = (Random() & 1) + 1;
-            arg0->unkC = temp_v0;
-            arg0->unkD = temp_v0;
-            arg0->unk4 = 0x60;
-            arg0->unk5 = 0x80;
-            arg0->unk6 = 0x30;
-            arg0->unk26 = 0xA0;
-            arg0->unk32 = 2;
-            arg0->unk1F = (Random() & 0x1F) + 0x10;
-            arg0->unk2B = 2U;
+    s8 dims;
+    s16 newY;
+    u32 scrollY;
+    s32 newYScrolled;
+    u8 newTimer;
+
+    switch (prim->p3) {
+        case 1: // Init (and fallthru to Idle)
+            dims = (Random() & 1) + 1;
+            prim->u0 = dims;
+            prim->v0 = dims;
+            prim->r0 = 0x60;
+            prim->g0 = 0x80;
+            prim->b0 = 0x30;
+            prim->priority = 0xA0;
+            prim->drawMode = 2;
+            prim->p2 = (Random() & 0x1F) + 0x10;
+            prim->p3 = 2U;
             // fallthrough
-        case 2:
-            adjustedA = arg0->unkA + 2;
-            adjusted1F = arg0->unk1F - 1;
-            arg0->unkA = adjustedA;
+        case 2: // Idle
+            newY = prim->y0 + FallSpeed;
+            newTimer = prim->p2 - 1;
+            prim->y0 = newY;
             scrollY = g_Tilemap.scrollY.i.hi;
-            adjustedScrollY = scrollY + adjustedA;
-            arg0->unk1F = adjusted1F;
-            if (adjusted1F == 0 || adjustedScrollY > 160) {
-                arg0->unk32 = 8;
-                arg0->unk2B = 0U;
+            newYScrolled = scrollY + newY;
+            prim->p2 = newTimer;
+            if (newTimer == 0 || newYScrolled > MaxScrolledY) {
+                prim->drawMode = 8;
+                prim->p3 = 0U;  // Inactive
             }
             return;
     }

@@ -3,9 +3,9 @@
 // func_8019B4DC
 // func_8019B698
 // func_8019B914
-// func_8019BD0C
-// func_8019BDF8
-// func_8019BEDC
+Particle_FallingPebbleUpdate = 0x8019BD0C;
+EntityDemonSwitch = 0x8019BDF8;
+EntityDemonSwitchWall = 0x8019BEDC;
 // func_8019C31C
 // func_8019C5CC
 // func_8019CBA8
