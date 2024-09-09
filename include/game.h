@@ -736,7 +736,7 @@ typedef struct Entity {
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;
+    /* 0x44 */ u16 unk44;   // Used by CHI EntityDemonSwitch to detect the demon has hit it
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 hitFlags; // 1 = took hit

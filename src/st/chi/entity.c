@@ -21,7 +21,7 @@ void func_8019B4DC(Entity*);
 void func_801A519C(Entity*);
 void func_801A54C4(Entity*);
 void func_801A55B4(Entity*);
-void func_8019BEDC(Entity*);
+void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
 void func_8019C5CC(Entity*);
 void func_8019C31C(Entity*);
@@ -68,7 +68,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A519C,  // EntityUnkId13
     func_801A54C4,  // EntityUnkId14
     func_801A55B4,  // EntityUnkId15
-    func_8019BEDC,
+    EntityDemonSwitchWall,
     EntityDemonSwitch,
     func_8019C5CC,
     func_8019C31C,
@@ -402,12 +402,12 @@ s16 D_80180880[] = {
     -4, -4, 3, -6, 2, 9, -4, 12, 0, 2, 0, 15, 0, 31,
 };
 
-u16 D_8018089C[] = {
+u16 Room3_DemonSwitchWallTilesCollision[] = {
     0x039D, 0x03A0, 0x03A0, 0x039E, 0x03A0, 0x03A0, 0x03A0, 0x039F,
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
 };
 
-u16 D_801808B4[] = {
+u16 D_801808B4[] = {    // Room3_DemonSwitchWallTilesNoCollision
     0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
     0x01BF, 0x01BF, 0x01BF, 0x01BF,
 };

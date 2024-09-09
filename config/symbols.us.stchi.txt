@@ -170,6 +170,7 @@ EntityInit_80180718 = 0x80180718;
 EntityInit_80180724 = 0x80180724;
 g_eRedDoorTiles = 0x80180768;
 
+Room3_DemonSwitchWallTilesCollision = 0x8018089C;
 // Referenced in func_801A8EAC
 sprites_chi_4 = 0x80199340;
 

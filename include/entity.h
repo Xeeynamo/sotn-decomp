@@ -1208,6 +1208,12 @@ typedef struct {
     s16 unk9C;
 } ET_PlayerBlink;
 
+// CHI Room3, Top, Demon Switch Wall
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s32 unk80;
+} ET_DemonSwitchWall;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1319,4 +1325,5 @@ typedef union { // offset=0x7C
     ET_80123B40 et_80123B40;
     ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
+    ET_DemonSwitchWall demonSwitchWall;
 } Ext;
