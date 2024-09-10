@@ -501,8 +501,7 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.flag++;
                 self->palette = D_80180D30[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
-                    self->flags &=
-                        ~(FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1);
+                    self->flags &= ~0xF;
                     SetStep(4);
                 }
             }
@@ -515,8 +514,7 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(D_80181304, self) == 0) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
-                self->flags &=
-                    ~(FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1);
+                self->flags &= ~0xF;
                 // do-while needed on PSX but not PSP
                 do {
                     self->palette = D_80180D30[3];

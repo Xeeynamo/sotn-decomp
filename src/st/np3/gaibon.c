@@ -574,8 +574,7 @@ void EntityGaibon(Entity* self) {
                 self->palette = D_80180B68[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     D_801812CC = 1;
-                    self->flags &=
-                        ~(FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1);
+                    self->flags &= ~0xF;
                     SetStep(SLOGRA_GAIBON_RETREAT);
                 }
             }
@@ -636,8 +635,7 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(D_80181578, self) == 0) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
-                self->flags &=
-                    ~(FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1);
+                self->flags &= ~0xF;
                 self->palette = D_80180B68[3];
                 self->step_s++;
             }

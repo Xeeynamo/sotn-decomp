@@ -36,10 +36,13 @@ impl EnumValue for u64 where <u64 as FromStr>::Err: Debug { }
 //      self->field &= ~4;
 //      self->field &= 0xFFFB;
 //
+// If a constant contains bits which are not represented by
+// enum values, no transformation will be made.
 pub struct BitFlagLineTransformer<U: EnumValue> where <U as FromStr>::Err: Debug {
     enum_values: Vec<&'static (U, &'static str)>,
     regex: Regex,
     default_value: &'static str,
+    safe_mask: U,
 }
 
 impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
@@ -49,10 +52,14 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
         _enum_values.sort_by(|(a, _), (b, _)| b.cmp(a));
         let pattern = format!(r"([.>]{}\s*(?:[&|]?)=\s*)([~]?)((?:0x)?[A-Fa-f0-9]*)(?:;)", field_name.to_string());
         let regex = Regex::new(&pattern).unwrap();
+
+        let safe_mask: U = enum_values.iter().fold(U::zero(), |mask, (bit, _)| mask | *bit);
+
         Self {
             enum_values: _enum_values,
             regex: regex,
             default_value: default_value,
+            safe_mask: safe_mask,
         }
     }
 
@@ -84,6 +91,13 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
                     field_value = !field_value;
                 } else {
                     invert = "".to_string();
+                }
+
+                // there are bits present which are not enum values, so ignore
+                if !((field_value & !self.safe_mask).is_zero()) {
+                    return captures
+                        .get(0)
+                        .map_or_else(|| "".to_string(), |m| m.as_str().to_string());
                 }
 
                 let mut rvalue: String;

@@ -255,10 +255,6 @@ typedef enum {
 
 // Flags for entity->flags
 typedef enum {
-    FLAG_UNK_1 = 0x1,
-    FLAG_UNK_2 = 0x2,
-    FLAG_UNK_4 = 0x4,
-    FLAG_UNK_8 = 0x8,
     FLAG_UNK_10 = 0x10,
     FLAG_UNK_20 = 0x20,
     FLAG_UNK_40 = 0x40,

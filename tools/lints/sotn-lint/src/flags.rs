@@ -8,11 +8,7 @@ pub struct FlagsTransformer {
 }
 
 lazy_static! {
-    static ref FLAGS: [(u32, &'static str); 32] = [
-        (1 << 0, "FLAG_UNK_1"),
-        (1 << 1, "FLAG_UNK_2"),
-        (1 << 2, "FLAG_UNK_4"),
-        (1 << 3, "FLAG_UNK_8"),
+    static ref FLAGS: [(u32, &'static str); 28] = [
         (1 << 4, "FLAG_UNK_10"),
         (1 << 5, "FLAG_UNK_20"),
         (1 << 6, "FLAG_UNK_40"),
@@ -136,8 +132,16 @@ mod tests {
 
     #[test]
     fn test_flags_inverted_constant() {
-        let input_line = "self->flags &= ~4;";
-        let expected_line = "self->flags &= ~FLAG_UNK_4;";
+        let input_line = "self->flags &= ~256;";
+        let expected_line = "self->flags &= ~FLAG_DEAD;";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_flags_invalid_flags_ignored() {
+        let input_line = "self->flags = 0xf;";
+        let expected_line = "self->flags = 0xf;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

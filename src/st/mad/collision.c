@@ -442,8 +442,7 @@ void HitDetection(void) {
                                 otherEntity->hitEffect = otherEntity->palette;
                             }
                             otherEntity->nFramesInvincibility = miscVar2;
-                            otherEntity->flags |= FLAG_UNK_8 | FLAG_UNK_4 |
-                                                  FLAG_UNK_2 | FLAG_UNK_1;
+                            otherEntity->flags |= 0xF;
                             otherEntity = otherEntity->unk60;
                         } while ((otherEntity != NULL) &&
                                  (otherEntity != entFrom5C));
@@ -532,8 +531,7 @@ void HitDetection(void) {
                         otherEntity->hitEffect = otherEntity->palette;
                     }
                     otherEntity->nFramesInvincibility = miscVar2;
-                    otherEntity->flags |=
-                        FLAG_UNK_8 | FLAG_UNK_4 | FLAG_UNK_2 | FLAG_UNK_1;
+                    otherEntity->flags |= 0xF;
                     otherEntity = otherEntity->unk60;
                 } while (otherEntity != NULL && otherEntity != entFrom5C);
                 continue;
