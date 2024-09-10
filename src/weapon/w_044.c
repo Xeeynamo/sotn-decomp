@@ -114,6 +114,7 @@ extern s32 D_80097420;
 extern s32 D_138000_8017A260[];
 
 void EntityWeaponAttack(Entity* self) {
+    const int PrimCount = 17;
     bool doLastblock;
     Primitive* prim;
     s16 selfY;
@@ -137,15 +138,14 @@ void EntityWeaponAttack(Entity* self) {
     doLastblock = false;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(
-            PRIM_GT4, 17); // bug? loops iterate over 16 prims
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < (PrimCount - 1); i++) {
             if (i < 8) {
                 prim->u1 = prim->u3 = (7 - i) * 8 + 0x40;
                 prim->u0 = prim->u2 = prim->u1 + 7;
@@ -212,7 +212,7 @@ void EntityWeaponAttack(Entity* self) {
             g_api.func_80118C28(2);
 
             prim = &g_PrimBuf[self->primIndex];
-            for (i = 0; i < 16; i++) {
+            for (i = 0; i < (PrimCount - 1); i++) {
                 prim->u0 = prim->u2 = i * 8;
                 prim->u1 = prim->u3 = prim->u0 + 8;
                 prim->v0 = prim->v1 = vCoord + 0;
@@ -221,7 +221,8 @@ void EntityWeaponAttack(Entity* self) {
                 prim = prim->next;
             }
 
-            if (i == 0xF) { // ???
+            // BUG? this will always fail
+            if (i == 15) {
                 prim->u1--;
                 prim->u3--;
             }
@@ -266,7 +267,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < (PrimCount - 1); i++) {
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
@@ -288,7 +289,7 @@ void EntityWeaponAttack(Entity* self) {
     offset = 64;
     base = 192;
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < (PrimCount - 1); i++) {
         angle = D_138000_8017A260[i];
         sine = (rsin(angle) >> 5) * self->ext.weapon_044.unk94 / 256;
         prim->y0 = selfY + sine;
@@ -329,7 +330,7 @@ void EntityWeaponAttack(Entity* self) {
         prim->y3 = -(((rsin(0xE00) >> 8) * self->rotX) >> 8) + lastBlockYShift;
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-                self->rotY; // ???
+                self->rotY;
         prim->drawMode &= ~DRAW_HIDE;
     }
 }
