@@ -240,6 +240,29 @@ typedef struct PACKED {
     /* 0xAE */ s16 equipId;
 } ET_WeaponUnk030;
 
+typedef struct {
+    /* 0x7C */    s16 lifetime;
+    /* 0x7E */    s16 unk7E;
+    /* 0x80 */    s16 unk80;
+    /* 0x82 */    s16 unk82;
+    /* 0x84 */    struct Entity* some_ent;
+    /* 0x88 */    s16 childPalette;
+    /* 0x8A */    s16 unk8A;
+    /* 0x8C */    s32 : 32;
+    /* 0x90 */    s16 unk90;
+    /* 0x92 */    s16:16;
+    /* 0x94 */    s16 unk94;
+    /* 0x96 */    s16 : 16;
+    /* 0x98 */    s32 unk98;
+    /* 0x9C */    s32 accelerationX;
+    /* 0xA0 */    s32 accelerationY;
+    /* 0xA4 */    s32 unkA4;
+    /* 0xA8 */    s32 unkA8;
+    /* 0xAC */    u8 anim;
+    /* 0xAD */    u8 unkAD;
+    /* 0xAE */    s16 equipId;
+} ET_WeaponUnk044;
+
 typedef struct PACKED {
     s32 unk7C;
     s32 unk80;
@@ -1776,6 +1799,7 @@ typedef union { // offset=0x7C
     ET_WeaponUnk012 weapon_012;
     ET_WeaponUnk014 weapon_014;
     ET_WeaponUnk030 weapon_030;
+    ET_WeaponUnk044 weapon_044;
     ET_WeaponUnk046 weapon_046;
     ET_WeaponUnk047 weapon_047;
     ET_Shield shield;
