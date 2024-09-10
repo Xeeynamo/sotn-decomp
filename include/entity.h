@@ -240,7 +240,7 @@ typedef struct PACKED {
     /* 0xAE */ s16 equipId;
 } ET_WeaponUnk030;
 
-typedef struct {
+typedef struct PACKED {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
@@ -258,6 +258,9 @@ typedef struct {
     /* 0xA0 */ s32 accelerationY;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
+#ifdef VERSION_PC
+    /* 0xXX */ s32 : 32;
+#endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 equipId;
