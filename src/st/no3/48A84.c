@@ -59,7 +59,7 @@ void EntityRoomForeground(Entity* entity) {
         }
         if (entity->params >= 5) {
             entity->rotZ = 0x800;
-            entity->drawFlags |= 4;
+            entity->drawFlags |= FLAG_DRAW_ROTZ;
         }
     }
     AnimateEntity(objInit->unk10, entity);
@@ -81,7 +81,7 @@ void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
             newEnt->posY.i.hi = y;
             newEnt->ext.generic.unk94 = D_80182A48[i];
             newEnt->rotY = newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
-            newEnt->drawFlags = 3;
+            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             newEnt->zPriority = entity->zPriority + 1;
         }
     }
@@ -398,7 +398,7 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
             newEnt->posY.i.hi = y;
             newEnt->ext.generic.unk94 = D_801832E8[i];
             newEnt->rotY = newEnt->rotX = D_801832D8[D_801832E8[i] + arg5];
-            newEnt->drawFlags = 3;
+            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             newEnt->zPriority = entity->zPriority + 1;
         }
     }

@@ -836,7 +836,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp7c = D_8013AEBC[2];
             sp7a = D_8013AEBC[3];
             self->facingLeft = 0;
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             goto block_748;
         }
     } else {

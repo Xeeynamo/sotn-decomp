@@ -291,7 +291,7 @@ void func_801966B0(u16* sensors) {
     case 2:
         g_CurrentEntity->unk6C += 2;
         if (g_CurrentEntity->unk6C == 0xC0) {
-            g_CurrentEntity->drawFlags = 0;
+            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
             g_CurrentEntity->drawMode = DRAW_DEFAULT;
             g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
             g_CurrentEntity->step_s++;

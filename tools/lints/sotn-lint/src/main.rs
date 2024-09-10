@@ -3,13 +3,18 @@ use std::io::{BufRead, BufReader, Write};
 
 mod fixed;
 mod line_transformer;
+mod bit_flag_line_transformer;
 mod relics;
 mod drawmodes;
+mod flags;
+mod drawflags;
 
-use crate::line_transformer::LineTransformer;
+use line_transformer::LineTransformer;
 use fixed::FixedTransformer;
 use relics::RelicsTransformer;
 use drawmodes::DrawModeTransformer;
+use flags::FlagsTransformer;
+use drawflags::DrawFlagsTransformer;
 use rayon::prelude::*;
 
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>) -> usize {
@@ -30,13 +35,16 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>)
         lines.push(line_str);
     }
 
-    let mut file = File::create(file_path).expect("Unable to create file");
-    for (i, line) in lines.iter().enumerate() {
-        if lines[i] != original_lines[i] {
-            alterations += 1;
-            println!("{}: {} -> {}", i, original_lines[i], lines[i]);
+    if let Some(_) = original_lines.iter().zip(lines.iter()).position(|(a, b)| a != b) {
+
+        let mut file = File::create(file_path).expect("Unable to create file");
+        for (i, line) in lines.iter().enumerate() {
+            if lines[i] != original_lines[i] {
+                alterations += 1;
+                println!("{}: {} -> {}", i, original_lines[i], lines[i]);
+            }
+            writeln!(file, "{}", line).expect("Unable to write line to file");
         }
-        writeln!(file, "{}", line).expect("Unable to write line to file");
     }
 
     alterations
@@ -45,12 +53,16 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>)
 fn process_directory(dir_path: &str) {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
-    let draw_mode_transformer = DrawModeTransformer;
+    let draw_mode_transformer = DrawModeTransformer::new();
+    let flags_transformer = FlagsTransformer::new();
+    let draw_flags_transformer = DrawFlagsTransformer::new();
 
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
         Box::new(relics_transformer),
         Box::new(draw_mode_transformer),
+        Box::new(flags_transformer),
+        Box::new(draw_flags_transformer),
         ];
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");

@@ -710,7 +710,7 @@ s32 func_801B79D4(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (func_801B76F0(D_8018BC54)) {
-            entity->flags |= 0x800000;
+            entity->flags |= FLAG_HAS_PRIMS;
             entity->primIndex = (s32)g_Dialogue.prim[1];
             ++entity->step;
             func_801B786C(0);

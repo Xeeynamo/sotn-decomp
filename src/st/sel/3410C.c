@@ -472,7 +472,7 @@ void func_801B519C(void) {
         prim = &g_PrimBuf[primBufIndex];
         self->primIndex = primBufIndex;
         self->ext.prim = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         uvOfst = 0;
         while (prim) {
             v01 = 0x38 + uvOfst;

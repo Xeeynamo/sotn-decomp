@@ -329,7 +329,7 @@ s32 func_ptr_80170004(Entity* self) {
 
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_123000_8017A4A4;
-        self->drawFlags |= 3;
+        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         self->rotX = self->rotY = 0;
         self->step++;
         break;

@@ -127,7 +127,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_11C000_8017A724;
-        self->drawFlags |= 3;
+        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         self->rotY = 0;
         self->rotX = 0;
         self->rotPivotY = 0x16;

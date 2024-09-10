@@ -654,7 +654,7 @@ void EntityCavernDoorLever(Entity* entity) {
         InitializeEntity(D_80180AA8);
         entity->animCurFrame = 18;
         entity->rotZ = -0x200;
-        entity->drawFlags |= 4;
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
         CreateEntityFromEntity(E_ID_1E, entity, &entity[1]);
         if (g_CastleFlags[0x30] != 0) {
             entity->rotZ = 0;
@@ -1350,7 +1350,7 @@ void EntityFallingRock2(Entity* self) {
         self->animCurFrame = animFrame;
         self->animCurFrame += 31;
         self->zPriority = 0x9F;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         break;
 
     case 1:
@@ -1539,7 +1539,7 @@ void EntityFallingRock(Entity* self) {
         self->animCurFrame = animFrame + 31;
         self->rotY = 0x60;
         self->rotX = 0x60;
-        self->drawFlags |= 7;
+        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
@@ -1729,7 +1729,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     newEntity->posX.i.hi += -8 + (Random() & 15);
                     newEntity->params = 0x10;
                     newEntity->rotX = newEntity->rotY = 192;
-                    newEntity->drawFlags |= 3;
+                    newEntity->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
                 }
             }
         }

@@ -539,7 +539,7 @@ void RicEntitySubwpnCross(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         RicSetSpeedX(FIX(3.5625));
-        self->drawFlags = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotZ = 0xC00;
         self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
         RicSetSubweaponParams(self);

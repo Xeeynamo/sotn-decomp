@@ -875,7 +875,7 @@ void RicEntityHitByIce(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3;
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
             prim->drawMode |= DRAW_UNK02;
-            prim->drawMode &= ~0x300;
+            prim->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);
             if (--prim->v0 == 0) {
                 prim->drawMode |= DRAW_HIDE;
             }

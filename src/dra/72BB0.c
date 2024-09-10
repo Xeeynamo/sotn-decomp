@@ -488,7 +488,7 @@ void func_80113AAC(void) {
                 PLAYER.rotZ = 0x800;
                 PLAYER.rotPivotY = 2;
                 PLAYER.rotPivotX = 0;
-                PLAYER.drawFlags |= 4;
+                PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
                 PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
                 SetPlayerAnim(0x2B);
             } else {
@@ -514,7 +514,7 @@ void func_80113AAC(void) {
         break;
 
     case 2:
-        PLAYER.drawFlags |= 4;
+        PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
@@ -958,7 +958,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.rotZ = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
-        PLAYER.drawFlags |= 4;
+        PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
         SetPlayerAnim(0x2C);
         PLAYER.step_s = 0xE;
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 8), 0);
@@ -997,9 +997,9 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.animFrameDuration = 0;
         break;
     case 14:
-        PLAYER.drawFlags |= 4;
+        PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
         if (g_Player.timers[8] <= 0) {
-            PLAYER.drawFlags &= ~4;
+            PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
             PLAYER.rotZ = 0x800;
             PLAYER.velocityY = 0;
             PLAYER.velocityX /= -2;

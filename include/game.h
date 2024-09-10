@@ -78,21 +78,23 @@ typedef struct Prim {
 
 #include "primitive.h"
 
-#define DRAW_DEFAULT 0x00
-#define DRAW_TRANSP 0x01 // make it semi transparent
-#define DRAW_UNK02 0x02  // unknown
-#define DRAW_COLORS 0x04 // use color blending
-#define DRAW_HIDE 0x08   // do not render the primitive
-#define DRAW_TPAGE 0x10  // use custom tpage
-#define DRAW_TPAGE2 0x20 // use custom tpage
-#define DRAW_UNK_40 0x40
-#define DRAW_MENU 0x80       // render only if D_800973EC is set
-#define DRAW_UNK_100 0x100   // unknown
-#define DRAW_UNK_200 0x200   // unknown
-#define DRAW_UNK_400 0x400   // unknown
-#define DRAW_UNK_800 0x800   // unknown
-#define DRAW_UNK_1000 0x1000 // unknown
-#define DRAW_ABSPOS 0x2000   // use absolute coordinates with DRAW_MENU
+typedef enum {
+    DRAW_DEFAULT = 0x00,
+    DRAW_TRANSP = 0x01, // make it semi transparent
+    DRAW_UNK02 = 0x02,  // unknown
+    DRAW_COLORS = 0x04, // use color blending
+    DRAW_HIDE = 0x08,   // do not render the primitive
+    DRAW_TPAGE = 0x10,  // use custom tpage
+    DRAW_TPAGE2 = 0x20, // use custom tpage
+    DRAW_UNK_40 = 0x40,
+    DRAW_MENU = 0x80,       // render only if D_800973EC is set
+    DRAW_UNK_100 = 0x100,   // unknown
+    DRAW_UNK_200 = 0x200,   // unknown
+    DRAW_UNK_400 = 0x400,   // unknown
+    DRAW_UNK_800 = 0x800,   // unknown
+    DRAW_UNK_1000 = 0x1000, // unknown
+    DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU
+} DrawMode;
 
 #include "entity.h"
 
@@ -238,48 +240,53 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_FIRE 0x8000
 
 // Flags for entity->drawFlags
-#define FLAG_DRAW_DEFAULT 0x00
-#define FLAG_DRAW_ROTX 0x01
-#define FLAG_DRAW_ROTY 0x02
-#define FLAG_DRAW_ROTZ 0x04
-#define FLAG_DRAW_UNK8 0x08
-#define FLAG_DRAW_UNK10 0x10
-#define FLAG_DRAW_UNK20 0x20
-#define FLAG_DRAW_UNK40 0x40
-#define FLAG_DRAW_UNK80 0x80
-#define FLAG_DRAW_UNK100 0x100
+typedef enum {
+    FLAG_DRAW_DEFAULT = 0x00,
+    FLAG_DRAW_ROTX = 0x01,
+    FLAG_DRAW_ROTY = 0x02,
+    FLAG_DRAW_ROTZ = 0x04,
+    FLAG_DRAW_UNK8 = 0x08,
+    FLAG_DRAW_UNK10 = 0x10,
+    FLAG_DRAW_UNK20 = 0x20,
+    FLAG_DRAW_UNK40 = 0x40,
+    FLAG_DRAW_UNK80 = 0x80,
+    FLAG_DRAW_UNK100 = 0x100,
+} DrawFlag;
 
 // Flags for entity->flags
-#define FLAG_UNK_4 0x4
-#define FLAG_UNK_10 0x10
-// Signals that the entity should run its death routine
-#define FLAG_DEAD 0x100
-#define FLAG_UNK_200 0x200
-#define FLAG_UNK_400 0x400
-#define FLAG_UNK_800 0x800
-#define FLAG_UNK_1000 0x1000
-#define FLAG_UNK_2000 0x2000
-#define FLAG_UNK_4000 0x4000
-#define FLAG_UNK_8000 0x8000
-#define FLAG_UNK_10000 0x10000
-#define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
-#define FLAG_POS_PLAYER_LOCKED 0x40000
-#define FLAG_UNK_80000 0x80000
-#define FLAG_UNK_100000 0x100000
-#define FLAG_UNK_400000 0x400000
-// When an entity used AllocPrimitives and their primIndex set.
-// At their destruction they need to free the prims with FreePrimitives.
-#define FLAG_HAS_PRIMS 0x800000
-#define FLAG_UNK_00200000 0x00200000
-
-#define FLAG_NOT_AN_ENEMY 0x01000000
-#define FLAG_UNK_02000000 0x02000000
-#define FLAG_KEEP_ALIVE_OFFCAMERA 0x04000000
-#define FLAG_POS_CAMERA_LOCKED 0x08000000
-#define FLAG_UNK_10000000 0x10000000
-#define FLAG_UNK_20000000 0x20000000
-#define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
-#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
+typedef enum {
+    FLAG_UNK_10 = 0x10,
+    FLAG_UNK_20 = 0x20,
+    FLAG_UNK_40 = 0x40,
+    FLAG_UNK_80 = 0x80,
+    // Signals that the entity should run its death routine
+    FLAG_DEAD = 0x100,
+    FLAG_UNK_200 = 0x200,
+    FLAG_UNK_400 = 0x400,
+    FLAG_UNK_800 = 0x800,
+    FLAG_UNK_1000 = 0x1000,
+    FLAG_UNK_2000 = 0x2000,
+    FLAG_UNK_4000 = 0x4000,
+    FLAG_UNK_8000 = 0x8000,
+    FLAG_UNK_10000 = 0x10000,
+    FLAG_UNK_20000 = 0x20000, // func_8011A9D8 will destroy if not set
+    FLAG_POS_PLAYER_LOCKED = 0x40000,
+    FLAG_UNK_80000 = 0x80000,
+    FLAG_UNK_100000 = 0x100000,
+    FLAG_UNK_00200000 = 0x00200000,
+    FLAG_UNK_400000 = 0x400000,
+    // When an entity used AllocPrimitives and their primIndex set.
+    // At their destruction they need to free the prims with FreePrimitives.
+    FLAG_HAS_PRIMS = 0x800000,
+    FLAG_NOT_AN_ENEMY = 0x01000000,
+    FLAG_UNK_02000000 = 0x02000000,
+    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000,
+    FLAG_POS_CAMERA_LOCKED = 0x08000000,
+    FLAG_UNK_10000000 = 0x10000000,
+    FLAG_UNK_20000000 = 0x20000000,
+    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
+    FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
+} EntityFlag;
 
 // document g_Player.unk0C
 #define PLAYER_STATUS_BAT_FORM 0x00000001

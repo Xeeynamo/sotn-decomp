@@ -1149,7 +1149,7 @@ void RicHandleDeadPrologue(void) {
         if (D_801545AC != 0) {
             D_801545AC--;
             if ((D_801545AC) == 0) {
-                PLAYER.drawFlags = 0;
+                PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
                 PLAYER.rotY = 0x100;
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_MARIA_POWERS_APPLIED, 0);

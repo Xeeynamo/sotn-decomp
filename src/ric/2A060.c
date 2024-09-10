@@ -442,7 +442,8 @@ void RicEntityWhip(Entity* self) {
         self->zPriority = PLAYER.zPriority + 4;
         self->posX.val = var_s3;
         self->posY.val = var_s5;
-        self->flags = 0x04070000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         self->ext.whip.unk8C = 0x500;
         self->ext.whip.unk7C.val = self->posX.val;
         self->ext.whip.unk80.val = self->posY.val;
@@ -450,7 +451,7 @@ void RicEntityWhip(Entity* self) {
         self->ext.whip.unk9C = self->ext.whip.unk80.val;
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (self->primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[self->primIndex];
             prim->b0 = prim->g0 = prim->r0 = 0x7F;
             prim->b1 = prim->g1 = prim->r1 = 0x1F;

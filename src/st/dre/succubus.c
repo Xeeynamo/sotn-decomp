@@ -1192,13 +1192,13 @@ void EntityPinkBallProjectile(Entity* self) {
     case 1:
         self->rotX = self->rotY += 4;
         if (self->rotX > 256) {
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
         }
         AnimateEntity(D_80180794, self);
 
         entity = self->ext.succubus.real;
         if (entity->ext.succubus.unk85 != 0) {
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step++;
         }
         if (entity->flags & FLAG_DEAD) {
@@ -1257,7 +1257,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->animCurFrame = 0;
         var_s0 = D_801807F0[self->params];
         self->rotZ = var_s0;
-        self->drawFlags |= 1;
+        self->drawFlags |= FLAG_DRAW_ROTX;
         self->rotX = 0x100;
         CreateEntityFromEntity(E_SUCCUBUS_WING_SPIKE_TIP, self, &self[1]);
         self[1].facingLeft = self->facingLeft;

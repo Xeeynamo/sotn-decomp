@@ -2209,7 +2209,8 @@ void UnknownEntId49(Entity* self) {
         self->palette = PLAYER.palette;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
-        self->flags = 0x04060000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
     self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
@@ -2287,7 +2288,8 @@ void func_80123B40(Entity* self) {
             return;
         }
 
-        self->flags = 0x0C830000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->velocityY = FIX(-3.0);
         SetSpeedX(-0x1AAAA);
         self->ext.et_80123B40.unk28 = 0x80;
