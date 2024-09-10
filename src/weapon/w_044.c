@@ -228,12 +228,12 @@ void EntityWeaponAttack(Entity* self) {
 
             self->ext.weapon_044.unk82 += 8;
             self->posY.i.hi -= 8;
-            self->ext.timer.t = 32;
+            self->ext.weapon_044.lifetime = 32;
             self->step++;
         }
         break;
     case 3:
-        if (--self->ext.timer.t == 0) {
+        if (--self->ext.weapon_044.lifetime == 0) {
             self->rotX = 0;
             self->rotY = 0x80;
             self->ext.weapon_044.unk7E = 0xA;
