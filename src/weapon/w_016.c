@@ -133,7 +133,94 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170008);
+extern SpriteParts D_74000_8017A040[];
+
+void func_ptr_80170008(Entity* self) {
+    s32 angle;
+    s8 flag;
+
+    flag = (self->params & 0x7F00) != 0;
+
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_74000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 0x64;
+        self->palette = 0x11A;
+        if (g_HandId != 0) {
+            self->palette = 0x132;
+            self->unk5A = 0x66;
+            self->animSet += 2;
+        }
+        self->animCurFrame = 0xF;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->drawFlags = DRAW_COLORS;
+
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        if (PLAYER.step != Player_Crouch) {
+            self->posY.i.hi -= 8;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX - 20;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX + 20;
+        }
+        self->ext.weapon_016.unk7C = -0x20;
+        self->ext.weapon_016.unk80 = 0x48;
+        self->ext.weapon_016.unk7E = 0xA;
+        self->ext.weapon_016.unk84 = 0;
+        self->rotZ = 0x400;
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(true);
+        self->hitboxHeight = 0xC;
+        self->hitboxWidth = 0xC;
+        g_api.PlaySfx(0x69E);
+        if (flag != 0) {
+            g_api.PlaySfx(0x65B);
+        }
+        g_Player.timers[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        self->ext.weapon_016.unk7C += self->ext.weapon_016.unk7E;
+        self->rotZ -= 0x100;
+        angle = self->ext.weapon_016.unk7C;
+        self->velocityX = rcos(angle) * self->ext.weapon_016.unk80;
+        self->velocityY = -rsin(angle) * self->ext.weapon_016.unk80;
+        if (self->facingLeft) {
+            self->posX.val = self->posX.val - self->velocityX;
+        } else {
+            self->posX.val = self->posX.val + self->velocityX;
+        }
+        self->posY.val += self->velocityY;
+        if (self->ext.weapon_016.unk84 < 0x23) {
+            self->ext.weapon_016.unk7E += 2;
+        }
+        if (self->ext.weapon_016.unk84 > 0x23) {
+            self->ext.weapon_016.unk80 += 3;
+            if (self->ext.weapon_016.unk7E > 6) {
+                self->ext.weapon_016.unk7E -= 6;
+            }
+            if (self->ext.weapon_016.unk84 == 0x40) {
+                self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
+            }
+        }
+        if (self->ext.weapon_016.unk84 <= 0x7000) {
+            self->ext.weapon_016.unk84 += 1;
+        }
+        if ((u16)self->ext.weapon_016.unk84 & 1) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+        }
+        if (flag != 0) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x6E, 0);
+        }
+        break;
+    }
+}
 
 static void func_ptr_8017000C(Entity* self) {
     s16 temp_a0;

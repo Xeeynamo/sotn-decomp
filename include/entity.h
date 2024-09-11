@@ -353,6 +353,28 @@ typedef struct {
     u8 anim;
 } ET_WeaponUnk014;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s32 unk80;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+    struct Entity* parent;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 unkA4;
+    s32 unkA8;
+#ifdef VERSION_PC
+    s32 : 32;
+#endif
+    u8 anim;
+} ET_WeaponUnk016;
+
 typedef struct PACKED {
     s16 unk7C;
     s16 unk7E;
@@ -1801,6 +1823,7 @@ typedef union { // offset=0x7C
     ET_WeaponUnk006 weapon_006;
     ET_WeaponUnk012 weapon_012;
     ET_WeaponUnk014 weapon_014;
+    ET_WeaponUnk016 weapon_016;
     ET_WeaponUnk030 weapon_030;
     ET_WeaponUnk044 weapon_044;
     ET_WeaponUnk046 weapon_046;
@@ -1906,6 +1929,7 @@ typedef union { // offset=0x7C
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk012, anim);
+SYNC_FIELD(ET_Player, ET_WeaponUnk016, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk014, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk030, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk044, anim);
