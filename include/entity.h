@@ -1925,7 +1925,6 @@ typedef union { // offset=0x7C
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk012, anim);
-SYNC_FIELD(ET_Player, ET_WeaponUnk016, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk014, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk030, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk044, anim);
