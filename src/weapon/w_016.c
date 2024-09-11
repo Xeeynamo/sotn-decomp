@@ -155,7 +155,7 @@ void func_ptr_80170008(Entity* self) {
         self->animCurFrame = 0xF;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000;
+        self->flags =  FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->drawFlags = DRAW_COLORS;
 
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
@@ -204,7 +204,7 @@ void func_ptr_80170008(Entity* self) {
                 self->ext.weapon_016.unk7E -= 6;
             }
             if (self->ext.weapon_016.unk84 == 0x40) {
-                self->flags &= ~FLAG_UNK_04000000;
+                self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             }
         }
         if (self->ext.weapon_016.unk84 <= 0x7000) {
