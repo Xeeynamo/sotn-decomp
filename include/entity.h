@@ -368,9 +368,9 @@ typedef struct {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-    #ifdef VERSION_PC
-        /* 0xXX */ s32 : 32;
-    #endif
+#ifdef VERSION_PC
+    /* 0xXX */ s32 : 32;
+#endif
     u8 anim;
 } ET_WeaponUnk016;
 
