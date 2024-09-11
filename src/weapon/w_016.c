@@ -159,7 +159,7 @@ void func_ptr_80170008(Entity* self) {
         self->drawFlags = DRAW_COLORS;
 
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
-        if (PLAYER.step != 2) {
+        if (PLAYER.step != Player_Crouch) {
             self->posY.i.hi -= 8;
         }
         if (self->facingLeft) {
