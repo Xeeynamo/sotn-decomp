@@ -361,6 +361,9 @@ typedef struct {
     s32 : 32;
     s16 : 16;
     struct Entity* parent;
+#ifdef VERSION_PC
+    /* 0xXX */ s32 : 32;
+#endif
     s32 unk90;
     s32 unk94;
     s32 unk98;
@@ -368,9 +371,6 @@ typedef struct {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
-    /* 0xXX */ s32 : 32;
-#endif
     u8 anim;
 } ET_WeaponUnk016;
 
