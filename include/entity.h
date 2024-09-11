@@ -354,21 +354,21 @@ typedef struct {
 } ET_WeaponUnk014;
 
 typedef struct {
-               s16 unk7C;
-               s16 unk7E;
-               s32 unk80;
-               s16 unk84;
-               s32 : 32;
-               s16 : 16;
-               struct Entity* parent;
-               s32 unk90;
-               s32 unk94;
-               s32 unk98;
-               s32 accelerationX;
-               s32 accelerationY;
-               s32 unkA4;
-               s32 unkA8;
-               u8 anim;
+    s16 unk7C;
+    s16 unk7E;
+    s32 unk80;
+    s16 unk84;
+    s32 : 32;
+    s16 : 16;
+    struct Entity* parent;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 unkA4;
+    s32 unkA8;
+    u8 anim;
 } ET_WeaponUnk016;
 
 typedef struct PACKED {

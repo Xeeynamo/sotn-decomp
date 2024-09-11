@@ -140,7 +140,7 @@ void func_ptr_80170008(Entity* self) {
     s8 flag;
 
     flag = (self->params & 0x7F00) != 0;
-    
+
     switch (self->step) {
     case 0:
         SetSpriteBank1(D_74000_8017A040);
@@ -157,8 +157,8 @@ void func_ptr_80170008(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000;
         self->drawFlags = DRAW_COLORS;
-        
-        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;;
+
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         if (PLAYER.step != 2) {
             self->posY.i.hi -= 8;
         }
@@ -210,11 +210,13 @@ void func_ptr_80170008(Entity* self) {
         if (self->ext.weapon_016.unk84 <= 0x7000) {
             self->ext.weapon_016.unk84 += 1;
         }
-        if ((u16) self->ext.weapon_016.unk84 & 1) {
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+        if ((u16)self->ext.weapon_016.unk84 & 1) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
         }
         if (flag != 0) {
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xC) | 0x6E, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x6E, 0);
         }
         break;
     }
