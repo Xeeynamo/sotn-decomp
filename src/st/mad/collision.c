@@ -289,7 +289,7 @@ void HitDetection(void) {
                     g_CastleFlags[(miscVar1 >> 3) + 0x120] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
-                    !(entFrom5C->flags & FLAG_UNK_01000000)) {
+                    !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
                     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
                         g_api.FreePrimitives(
                             g_unkGraphicsStruct.BottomCornerTextPrims);
@@ -297,7 +297,7 @@ void HitDetection(void) {
                     }
                     BottomCornerText(
                         g_api.enemyDefs[entFrom5C->enemyId].name, 0);
-                    entFrom5C->flags |= FLAG_UNK_01000000;
+                    entFrom5C->flags |= FLAG_NOT_AN_ENEMY;
                 }
                 miscVar2 = 0;
                 if ((iterEnt1->hitboxState & 8) &&
@@ -342,7 +342,7 @@ void HitDetection(void) {
                             miscVar1 = 0;
                         }
                         if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
-                            !(entFrom5C->flags & FLAG_UNK_04000000) &&
+                            !(entFrom5C->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                             miscVar1) {
                             otherEntity =
                                 AllocEntity(&g_Entities[224], &g_Entities[256]);

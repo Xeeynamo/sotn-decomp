@@ -43,7 +43,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
         SetWeaponProperties(self, 0);
@@ -88,7 +88,7 @@ void func_ptr_8017000C(Entity* self) {
             self->palette += 0x18;
             self->unk5A += 2;
         }
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = 0xA;
         self->animCurFrame = 0x64;
         self->zPriority = PLAYER.zPriority + 2;
@@ -199,7 +199,7 @@ s32 func_ptr_80170010(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = 9;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
         self->rotX = self->rotY = 0x20;
         self->anim = D_D6000_8017A514;

@@ -322,7 +322,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -404,7 +404,7 @@ s32 func_ptr_80170004(Entity* self) {
             _a = 0;
         }
         D_169000_8017C0E0 = 0;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         SetWeaponProperties(self, 0);
         self->step++;
         break;
@@ -481,7 +481,7 @@ static void func_ptr_80170008(Entity* self) {
         if (color == 3) {
             prim->drawMode &= ~(FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40);
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         if (temp_s6 == 0) {
             self->ext.weapon.equipId =
                 self->ext.weapon.parent->ext.weapon.equipId;

@@ -35,7 +35,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_100000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED;
         self->anim = D_9E000_8017A77C;
 
         deltaX = (self->facingLeft) ? 32 : -32;
@@ -82,7 +82,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         SetSpeedX(FIX(5));
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);

@@ -662,7 +662,7 @@ void EntityMerman2(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN2_DYING)) {
         PlaySfxPositional(0x71D);
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         if (self->flags & FLAG_HAS_PRIMS) {
             g_api.FreePrimitives(self->primIndex);
             self->flags &= ~FLAG_HAS_PRIMS;
@@ -801,7 +801,7 @@ void EntityMerman2(Entity* self) {
                     newEntity->zPriority = self->zPriority;
                 }
                 self->rotZ = 0;
-                self->drawFlags |= 4;
+                self->drawFlags |= FLAG_DRAW_ROTZ;
                 self->step_s++;
             }
             break;
@@ -860,7 +860,10 @@ void EntityMerman2(Entity* self) {
                     g_api.FreePrimitives(self->primIndex);
                     self->hitboxHeight = 21;
                     self->flags &= ~FLAG_HAS_PRIMS;
-                    self->drawFlags &= 0xFB;
+                    self->drawFlags &=
+                        FLAG_DRAW_UNK80 | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                        FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                        FLAG_DRAW_ROTX;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                 }
             } else {
@@ -963,7 +966,7 @@ void EntityMerman2(Entity* self) {
                 }
                 self->ext.merman2.rotation = 1;
                 self->rotZ = 0;
-                self->drawFlags |= 4;
+                self->drawFlags |= FLAG_DRAW_ROTZ;
                 if (self->facingLeft != 0) {
                     self->velocityX = FIX(-6);
                 } else {
@@ -1032,7 +1035,10 @@ void EntityMerman2(Entity* self) {
             self->rotZ += 0xC0;
             if (self->rotZ > 0x1000) {
                 self->posY.i.hi -= 10;
-                self->drawFlags &= 0xFB;
+                self->drawFlags &=
+                    FLAG_DRAW_UNK80 | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                    FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                    FLAG_DRAW_ROTX;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
             if (func_801D2D40(0x1B)) {
@@ -1074,7 +1080,7 @@ void EntityMerman2(Entity* self) {
                 prim = &g_PrimBuf[primIndex];
                 self->primIndex = primIndex;
                 self->ext.merman2.prim = prim;
-                self->flags |= 0x800000;
+                self->flags |= FLAG_HAS_PRIMS;
                 UnkPolyFunc2(prim);
                 prim->tpage = 0x12;
                 prim->clut = 0x292;
@@ -1356,7 +1362,7 @@ void EntityFallingObject2(Entity* self) {
         InitializeEntity(D_80180B48);
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        self->flags |= 0x2000;
+        self->flags |= FLAG_UNK_2000;
         self->zPriority += 4;
     }
     MoveEntity();
@@ -1381,10 +1387,10 @@ void EntityUnkId3D(Entity* self) {
         self->unk6C = 0xA0;
         self->rotX = 0x100;
         self->rotY = 0x1A0;
-        self->drawFlags |= 3;
+        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         self->ext.generic.unk84.S8.unk1 = 0x11;
         self->ext.generic.unk84.S8.unk0 = self->params;
-        self->drawFlags |= 8;
+        self->drawFlags |= FLAG_DRAW_UNK8;
         break;
 
     case 1:
@@ -1437,8 +1443,8 @@ void EntityLargeFallingObject(Entity* self) {
         self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
         self->unk6C = 0x80;
-        self->drawFlags |= 8;
-        self->flags |= 0x2000;
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->flags |= FLAG_UNK_2000;
         return;
     }
     MoveEntity();

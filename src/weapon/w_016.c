@@ -41,7 +41,7 @@ static void EntityWeaponAttack(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
         fakePrim->drawMode = DRAW_HIDE;
         fakePrim->priority = 0;
@@ -114,7 +114,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.lifetime = 0x16;
@@ -237,7 +237,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->animCurFrame = 0x10;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = DRAW_COLORS;
         temp_a0 = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         self->posY.i.hi = temp_a0 - 6;
@@ -280,7 +280,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->animSet = 2;
         self->anim = D_74000_8017A5B0;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->velocityY = FIX(-1.0);
 
         if (!(D_74000_8017BD74 & 1)) {
@@ -331,7 +331,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->animCurFrame = 17;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->velocityY = FIX(-2.25) - (rand() & 0x7FFF); // -2.5 +- 0.25
         SetSpeedX((rand() & 0x7FFF) + FIX(1.25));         // 1.5 +- 0.25
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;

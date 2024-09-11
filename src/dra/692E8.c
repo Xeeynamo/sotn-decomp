@@ -206,13 +206,13 @@ void func_80109594() {
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
         e->palette = 0x8100;
-        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
+        e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
     primIndex = AllocPrimitives(PRIM_TILE, 8);
     prim = &g_PrimBuf[primIndex];
     g_Entities[1].primIndex = primIndex;
-    g_Entities[1].flags |= 0x800000;
+    g_Entities[1].flags |= FLAG_HAS_PRIMS;
     for (i = 0; i < 6; i++) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;

@@ -620,7 +620,7 @@ void func_801B69E8(Entity* self) {
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
         self->entityId = 2;
         self->params = 0;
@@ -653,7 +653,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
         self->params = 1;
         return;

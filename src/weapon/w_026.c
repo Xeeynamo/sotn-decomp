@@ -53,7 +53,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.timer.t = 0x80;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == Player_Crouch) && (PLAYER.step_s != 2)) {
@@ -71,7 +71,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->palette = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
@@ -235,7 +235,8 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk7D = 0;
         }
         self->posY.i.hi -= 8;
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
@@ -545,7 +546,7 @@ static void func_ptr_80170024(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->flags |= FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
                  prim = prim->next) {
                 prim->drawMode = DRAW_HIDE;
@@ -558,7 +559,7 @@ static void func_ptr_80170024(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->ext.shamanshieldstar.unk9C = 0xA0;
         self->ext.shamanshieldstar.unk9E = 0x60;
         self->ext.shamanshieldstar.unk80 = rand() % 15;

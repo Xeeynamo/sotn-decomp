@@ -55,7 +55,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->facingLeft = 0;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_100000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 4;
         self->anim = D_82000_8017A6A8;
         SetWeaponProperties(self, 1);
@@ -88,7 +88,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->ext.weapon.lifetime--;
         if ((self->ext.weapon.lifetime) == 0) {
-            self->drawFlags = 3;
+            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotY = 256;
             self->rotX = 256;
             self->ext.weapon.lifetime = 14;
@@ -148,7 +148,7 @@ s32 func_ptr_80170004(Entity* self) {
 
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->facingLeft = 0;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;

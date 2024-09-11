@@ -78,7 +78,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_100000;
         self->anim = D_90000_8017A850;
         SetSpeedX((rand() & 0x3FFF) + 0xE000);
         self->velocityY = FIX(-4.0);
@@ -182,7 +182,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->posX.i.hi = 0x80;
                 self->zPriority = 0x1BA;
                 self->animCurFrame = 0x1D;
-                self->flags &= ~(FLAG_UNK_08000000 | FLAG_UNK_100000);
+                self->flags &= ~(FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000);
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
                 g_api.func_80118C28(8);
@@ -438,7 +438,7 @@ static void func_ptr_80170008(Entity* self) {
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority;
 
         if (D_90000_8017C238 % 4 == 1) {

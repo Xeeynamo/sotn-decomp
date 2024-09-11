@@ -849,7 +849,7 @@ void EntityOwlKnight(Entity* self) {
             if (!(self->ext.owl.unk80 & 4)) {
                 self->step_s++;
             } else if (AnimateEntity(D_80182820) == 0) {
-                self->flags ^= FLAG_UNK_4;
+                self->flags ^= 0x4;
                 self->step_s++;
             }
             break;

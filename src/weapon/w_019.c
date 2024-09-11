@@ -55,7 +55,8 @@ void EntityWeaponAttack(Entity* self) {
 
         self->ext.weapon.unk7E = 0x7F;
         self->facingLeft = 0;
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority + 4;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
         self->rotX = self->rotY = 0x100;
@@ -88,7 +89,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         if (self->animFrameIdx == 5) {
             self->unk6C = 0x80;
-            self->flags &= ~FLAG_UNK_40000;
+            self->flags &= ~FLAG_POS_PLAYER_LOCKED;
             self->drawFlags |= FLAG_DRAW_UNK8;
             self->step++;
         }

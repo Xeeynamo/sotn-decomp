@@ -19,7 +19,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(0x12);
         self->animCurFrame = 0x23;
         self->zPriority = PLAYER.zPriority + 2;
@@ -213,7 +213,7 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
             prim = prim->next;
             i++;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.holywater.timer = 1;
         self->step += 1;
         break;
@@ -340,7 +340,8 @@ void RicEntitySubwpnCrashCross(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
         self->ext.crashcross.subweaponId = PL_W_CRASH_CROSS;
@@ -525,7 +526,8 @@ void RicEntitySubwpnCross(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
         // gets used by shadow, must align with that entity
         self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
         D_80175888++;
@@ -537,7 +539,7 @@ void RicEntitySubwpnCross(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         RicSetSpeedX(FIX(3.5625));
-        self->drawFlags = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotZ = 0xC00;
         self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
         RicSetSubweaponParams(self);
@@ -673,7 +675,7 @@ void func_80169C10(Entity* entity) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
             entity->velocityY = FIX(0.5);
             entity->posX.i.hi =
                 ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
@@ -711,7 +713,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         // the parent pointer is set in RicEntityFactory.
         // the value of unk84 is set in RicEntitySubwpnCross
         self->ext.crossBoomerang.unk84 =
@@ -775,7 +777,8 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.timer.t = 0xC0;
         self->step += 1;
         return;
@@ -893,8 +896,8 @@ void RicEntitySubwpnAxe(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         RicSetSpeedX(FIX(-2));
         self->velocityY = FIX(-6);
@@ -1116,8 +1119,8 @@ void RicEntityCrashAxe(Entity* self) {
             return;
         }
         sp10 = 0;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = 0;
         prim = &g_PrimBuf[self->primIndex];
         self->ext.axeCrash.unk7C = ((u8)self->params << 9) + 0xC00;
@@ -1185,7 +1188,7 @@ void RicEntityCrashAxe(Entity* self) {
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;
-            self->flags &= ~(FLAG_UNK_04000000 | FLAG_UNK_20000);
+            self->flags &= ~(FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000);
         }
         temp_s1 = self->ext.axeCrash.unk9C;
         self->ext.axeCrash.unk9C += 2;
@@ -1319,7 +1322,7 @@ void RicEntitySubwpnDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
         // Not sure what this unkB0 does, but it seems to be
         // a standard part of the Ext, and may not be entity specific.
@@ -1568,7 +1571,8 @@ void RicEntitySubwpnReboundStone(Entity* self) {
             prim->y0 = prim->y1 = playerY;
             prim->timer = 20;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->zPriority = PLAYER.zPriority + 2;
 
         facingLeft = PLAYER.facingLeft;
@@ -1826,7 +1830,7 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.subweapon.subweaponId = PL_W_VIBHUTI;
         RicSetSubweaponParams(self);
         self->hitboxWidth = self->hitboxHeight = 4;
@@ -1995,8 +1999,8 @@ void RicEntitySubwpnAgunea(Entity* self) {
             DestroyEntity(self);
             return;
         } else {
-            self->flags =
-                FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
             self->ext.agunea.subweaponId = PL_W_AGUNEA;
             RicSetSubweaponParams(self);
@@ -2146,7 +2150,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
 
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
@@ -2325,7 +2329,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
             entity->posX.val =
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk84;
             entity->posY.val =
@@ -2380,7 +2384,8 @@ void RicEntityCrashVibhuti(Entity* self) {
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 9; i++) {
             prim->r0 = prim->g0 = prim->b0 = 0xFF;
@@ -2461,7 +2466,7 @@ void RicEntityCrashVibhuti(Entity* self) {
 void RicEntityCrashReboundStoneParticles(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
         RicSetSubweaponParams(entity);
         entity->hitboxWidth = 4;

@@ -1417,15 +1417,15 @@ void RunMainEngine(void) {
 
             for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
                 ent_unk68 = ent->unk68;
-                if (ent_unk68 != 0) {
+                if (ent_unk68) {
                     ent->posX.val += ent_unk68 * D_801375B4 * 0x100;
                     ent->posY.val += ent_unk68 * D_801375B8 * 0x100;
                 } else {
-                    if (ent->flags & FLAG_UNK_08000000) {
+                    if (ent->flags & FLAG_POS_CAMERA_LOCKED) {
                         ent->posX.i.hi += D_801375B4;
                         ent->posY.i.hi += D_801375B8;
                     }
-                    if ((ent->flags & FLAG_UNK_40000) != 0) {
+                    if (ent->flags & FLAG_POS_PLAYER_LOCKED) {
                         ent->posX.val -= D_801375A4;
                         ent->posY.val -= D_801375A8;
                     }

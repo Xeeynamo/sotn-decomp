@@ -142,7 +142,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->animCurFrame = 1;
             self->hitboxState = 3;
             self->unk6C = 0x80;
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             SetStep(2);
         }
         break;
@@ -422,7 +422,8 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->unk5A = 0x5E;
                     self->palette = 0x815F;
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-                    self->drawFlags = 0xB;
+                    self->drawFlags =
+                        FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
                     self->unk6C = 0x10;
                     self->rotY = 0x400;
                     self->rotX = 0x400;
@@ -435,7 +436,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 if (self->rotY < 0x100) {
                     self->animCurFrame = 0;
                     self->drawMode = DRAW_DEFAULT;
-                    self->drawFlags = 0;
+                    self->drawFlags = FLAG_DRAW_DEFAULT;
                     self->step_s++;
                 }
                 break;
@@ -444,7 +445,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->animCurFrame = 1;
                     self->unk5A = 0x50;
                     self->palette = 0x815F;
-                    self->drawFlags = 8;
+                    self->drawFlags = FLAG_DRAW_UNK8;
                     self->unk6C = 0;
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                     self->step_s++;
@@ -463,7 +464,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 if (self->unk6C == 0) {
                     self->animCurFrame = 0;
                     self->drawMode = DRAW_DEFAULT;
-                    self->drawFlags = 0;
+                    self->drawFlags = FLAG_DRAW_DEFAULT;
                     self->step_s++;
                 }
                 break;
@@ -623,7 +624,7 @@ void EntityDraculaMegaFireball(Entity* self) {
             angle = self->rotZ;
             self->rotY = 0x80;
             self->rotX = 0x80;
-            self->drawFlags |= 7;
+            self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotZ = 0x1C0 - angle;
             if (self->facingLeft != 0) {
                 self->velocityX = rcos(angle) * 0x60;
@@ -836,7 +837,7 @@ void func_801AF774(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = 0;
         self->drawMode |= (DRAW_TPAGE | 0x20);
-        self->flags &= ~FLAG_UNK_08000000;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         D_801C2578 = 1;
         self->ext.et_801AF774.unk90 = 1;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x5C);

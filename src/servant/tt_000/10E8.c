@@ -261,7 +261,7 @@ void CreateBlueTrailEntity(Entity* parent) {
         entity->entityId = 0xDA;
         entity->zPriority = parent->zPriority;
         entity->facingLeft = parent->facingLeft;
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->posX.val = parent->posX.val;
         entity->posY.val = parent->posY.val;
         entity->ext.batFamBlueTrail.parent = parent;
@@ -365,7 +365,7 @@ void func_801719E0(Entity* self) {
                 return;
             }
             func_8017170C(self, 0);
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             self->ext.bat.unk84 = rand() % 4096;
@@ -382,7 +382,7 @@ void func_801719E0(Entity* self) {
                 return;
             }
             func_8017170C(self, 0);
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             if (!self->ext.bat.unk82) {
@@ -428,14 +428,14 @@ void func_801719E0(Entity* self) {
         self->ext.bat.unk8E = 0;
         switch (self->entityId) {
         case 0xD1:
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             if (!self->ext.bat.unk82) {
@@ -937,7 +937,7 @@ void BatFamiliarBlueTrail(Entity* self) {
             DestroyEntity(self);
             return;
         } else {
-            self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             D_80174B48 = &g_PrimBuf[self->primIndex];
             for (i = 0; i < nPrim; i++) {
                 D_80174B48->tpage = 0x1B;
@@ -1197,7 +1197,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
         if (D_8003C704 != 0) {
             D_80171090 = 99;
             DestroyEntity(entity);

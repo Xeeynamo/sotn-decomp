@@ -118,7 +118,7 @@ void UpdatePlayerEntities(void) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
-                if (!(entity->flags & FLAG_UNK_04000000) &&
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
                      entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
                     DestroyEntity(g_CurrentEntity);
@@ -193,7 +193,7 @@ void func_8011A870(void) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
-                if (!(entity->flags & FLAG_UNK_04000000) &&
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     (entity->posX.i.hi < -0x20 || entity->posX.i.hi > 0x120 ||
                      entity->posY.i.hi < -0x10 || entity->posY.i.hi > 0x100)) {
                     DestroyEntity(entity);
@@ -283,7 +283,7 @@ Entity* CreateEntFactoryFromEntity(
 // variety. It is only responsible for creating child entities.
 void EntityEntFactory(Entity* self) {
     Entity* newEntity;
-    s16 unk96Copy;
+    s16 n;
     s16 i;
     u8 endIndex;
     s16 startIndex;
@@ -300,13 +300,13 @@ void EntityEntFactory(Entity* self) {
         self->ext.factory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
         self->ext.factory.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
         self->ext.factory.unk9A = *data_idx;            // index 5
-        self->flags |= FLAG_UNK_04000000;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
         switch (self->ext.factory.unkA4) {
         case 0:
         case 6:
-            self->flags |= FLAG_UNK_08000000;
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
         case 4:
         case 5:
@@ -360,8 +360,8 @@ void EntityEntFactory(Entity* self) {
         self->ext.factory.unk9A = self->ext.factory.unk98;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    unk96Copy = self->ext.factory.unk96;
-    for (i = 0; i < unk96Copy; i++) {
+    n = self->ext.factory.unk96;
+    for (i = 0; i < n; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=
@@ -453,7 +453,7 @@ void EntityUnarmedAttack(Entity* entity) {
     }
 
     if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         GetEquipProperties(handId, &equip, 0);
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
@@ -484,7 +484,7 @@ void EntityDiveKickAttack(Entity* self) {
         return;
     }
 
-    self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+    self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
     self->facingLeft = PLAYER.facingLeft;
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->posX.i.hi = PLAYER.posX.i.hi;
@@ -514,7 +514,7 @@ void func_8011B480(Entity* entity) {
     if (PLAYER.step != 5 || PLAYER.step_s != 3) {
         DestroyEntity(entity);
     } else {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         entity->facingLeft = PLAYER.facingLeft;
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -533,7 +533,7 @@ void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         func_8011A328(entity, 5);
         entity->step++;
     }
@@ -558,7 +558,7 @@ void func_8011B5A4(Entity* self) {
         self->animSet = 5;
         self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = 0x8195;
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
@@ -680,9 +680,9 @@ void EntityUnkId24(Entity* self) {
         self->anim = D_800AD5FC;
 
         // Weird thing here where we have to set flags to the same value twice
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
 
         self->velocityY = FIX(-1);
         if (upperparams == 0) {
@@ -836,7 +836,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp7c = D_8013AEBC[2];
             sp7a = D_8013AEBC[3];
             self->facingLeft = 0;
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             goto block_748;
         }
     } else {
@@ -894,8 +894,8 @@ block_748:
 #endif
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (var_s1 = 0; var_s1 < 8; var_s1++) {
             D_800AD630[var_s1] = var_s1 << 9;
@@ -1428,8 +1428,8 @@ void EntityPlayerOutline(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         // This is just not a for-loop, that's weird
         for (i = 0; i < 1; i++) {
@@ -1648,8 +1648,8 @@ void EntityGravityBootBeam(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next) {
             prim->g0 = prim->r0 = 0;
@@ -1710,7 +1710,7 @@ void EntityWingSmashTrail(Entity* entity) {
         return;
     }
     if (entity->step == 0) {
-        entity->flags = FLAG_UNK_08000000;
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
         entity->animSet = PLAYER.animSet;
         entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;

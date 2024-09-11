@@ -34,7 +34,7 @@ void EntityWeaponAttack(Entity* self) {
         self->animCurFrame = D_6D000_8017A6B8[((self->params >> 8) & 0x7F)];
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
 
         SetSpeedX(FIX(8));
         if (((self->params >> 8) & 0x7F) == 3) {
@@ -113,7 +113,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.generic.unk7C.s = 10;
@@ -138,7 +138,7 @@ static void func_ptr_80170008(Entity* self) {
         self->animSet = 2;
         self->anim = D_6D000_8017A6C0;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->velocityY = FIX(-1);
 
         if (!(D_6D000_8017BFC8 & 1)) {
@@ -191,7 +191,7 @@ void func_ptr_8017000C(Entity* self) {
 
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
         self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 32);
 
@@ -409,7 +409,7 @@ s32 func_ptr_80170010(Entity* self) {
             self->unk5A = 0x67;
         }
         self->anim = D_6D000_8017A770;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (params >= 0x10) {
@@ -483,7 +483,7 @@ static s32 func_ptr_80170014(Entity* self) {
             self->unk5A = 103;
         }
         self->anim = D_6D000_8017A770;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE | 0x20;
         angle = ratan2(-self->ext.weapon.parent->velocityY,

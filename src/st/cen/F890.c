@@ -353,7 +353,7 @@ void EntityMaria(Entity* self) {
             return;
         }
         InitializeEntity(D_80180428);
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
         self->unk5A = 0x48;

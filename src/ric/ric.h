@@ -77,13 +77,13 @@ enum RicTimers {
     PL_T_6,
     PL_T_7,
     PL_T_8,
-    PL_T_9,
+    PL_T_ATTACK,
     PL_T_10,
     PL_T_RUN,
     PL_T_12,
     PL_T_INVINCIBLE_SCENE, // "dying" in the prologue
     PL_T_INVINCIBLE,
-    PL_T_15,
+    PL_T_AFTERIMAGE_DISABLE,
 };
 
 enum RicEntities {
@@ -110,7 +110,7 @@ enum RicEntities {
     E_NOT_IMPLEMENTED_3,             // RicEntityNotImplemented3
     E_REVIVAL_COLUMN,                // RicEntityRevivalColumn
     E_APPLY_MARIA_POWER_ANIM,        // RicEntityApplyMariaPowerAnim
-    E_80160C38,                      // func_80160C38
+    E_SLIDE_KICK,                    // RicEntitySlideKick
     E_BLADE_DASH,                    // RicEntityBladeDash
     E_801623E0,                      // func_801623E0
     E_80162604,                      // func_80162604
@@ -140,8 +140,8 @@ enum RicEntities {
     E_CRASH_REBOUND_STONE_EXPLOSION, // RicEntityCrashReboundStoneExplosion
     E_CRASH_BIBLE,                   // RicEntityCrashBible
     E_CRASH_BIBLE_BEAM,              // RicEntityCrashBibleBeam
-    E_SUBWPN_BIBLE,                  // RicEntitySubpwnBible
-    E_SUBWPN_BIBLE_TRAIL,            // RicEntitySubpwnBibleTrail
+    E_SUBWPN_BIBLE,                  // RicEntitySubwpnBible
+    E_SUBWPN_BIBLE_TRAIL,            // RicEntitySubwpnBibleTrail
     E_SUBWPN_STOPWATCH,              // RicEntitySubwpnStopwatch
     E_SUBWPN_STOPWATCH_CIRCLE,       // RicEntitySubwpnStopwatchCircle
     E_801705EC,                      // func_801705EC
@@ -364,7 +364,7 @@ extern AnimationFrame D_801555C8[];
 extern AnimationFrame D_801555E8[];
 extern AnimationFrame ric_anim_throw_daggers[];
 extern AnimationFrame D_80155638[];
-extern AnimationFrame ric_ric_anim_stand_in_air[];
+extern AnimationFrame ric_anim_stand_in_air[];
 extern AnimationFrame ric_anim_run[];
 extern AnimationFrame ric_anim_stun[];
 extern AnimationFrame D_8015569C[];

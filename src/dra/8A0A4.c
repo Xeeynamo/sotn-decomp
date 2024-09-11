@@ -20,8 +20,8 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++, prim = prim->next) {
             prim->tpage = 0x1A;
@@ -105,8 +105,8 @@ void EntityStopWatch(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
@@ -193,7 +193,7 @@ void EntityStopWatch(Entity* self) {
         }
         break;
     case 4:
-        self->flags &= ~FLAG_UNK_40000;
+        self->flags &= ~FLAG_POS_PLAYER_LOCKED;
         prim = &g_PrimBuf[self->primIndex];
         prim->priority = 0xC2;
         prim->drawMode &= ~DRAW_UNK_200;
@@ -437,7 +437,8 @@ void func_8012B78C(Entity* entity) {
         ret = AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = ret;
         if (entity->primIndex != -1) {
-            entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            entity->flags =
+                FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[entity->primIndex];
             prim->tpage = 0x1C;
             prim->clut = 0x19D;
@@ -511,7 +512,8 @@ void EntitySubwpnBible(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
@@ -541,7 +543,7 @@ void EntitySubwpnBible(Entity* self) {
         break;
     case 3:
         if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
-            self->flags &= ~FLAG_UNK_04000000;
+            self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
             PlaySfx(SFX_UNK_6B2);
@@ -645,7 +647,7 @@ void EntityBatEcho(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         prim = (Primitive*)&g_PrimBuf[self->primIndex];
         self->ext.batEcho.unk84 = prim;
         for (i = 0; i < 0x11; i++) {

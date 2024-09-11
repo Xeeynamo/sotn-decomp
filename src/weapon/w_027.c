@@ -69,7 +69,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.weapon.lifetime = 128;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == Player_Crouch) && (PLAYER.step_s != 2)) {
@@ -87,7 +87,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->palette = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
@@ -211,7 +211,8 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk7C = 0x80;
             self->ext.shield.unk7D = 0;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         self->posY.i.hi -= 8;
         self->zPriority = 0x1B6;
@@ -364,7 +365,7 @@ static void func_ptr_80170024(Entity* self) {
             self->ext.medshieldlaser.childPalette = 0x111;
             self->ext.medshieldlaser.unk7D = 0;
         }
-        self->flags |= FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         if ((self->params & 0xFF) != 0) {
             if (self->facingLeft) {
                 self->posX.i.hi -= 14;

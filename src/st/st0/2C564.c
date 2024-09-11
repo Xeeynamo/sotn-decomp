@@ -308,7 +308,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk94 = 0x40;
             self->ext.dracula.unk98 = 0;
             self->unk6C = 0x80;
-            self->drawFlags |= 8;
+            self->drawFlags |= FLAG_DRAW_UNK8;
             prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
             prim->x1 = prim->x3 = self->posX.i.hi;
@@ -575,7 +575,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 0:
         InitializeEntity(D_801805F8);
         entity->hitboxState = 0;
-        entity->drawFlags |= 4;
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
         break;
     case 1:
         if (AnimateEntity(D_801809B0, entity) == 0) {
@@ -668,7 +668,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
         break;
     case 2:
-        entity->drawFlags = 0;
+        entity->drawFlags = FLAG_DRAW_DEFAULT;
         if (AnimateEntity(D_80180A40, entity) == 0) {
             s32 i;
             for (i = 0; i < 8; i++) {

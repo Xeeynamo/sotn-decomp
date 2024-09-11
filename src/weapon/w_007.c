@@ -214,7 +214,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         SetWeaponProperties(self, 0);
@@ -273,7 +273,7 @@ static void func_ptr_80170004(Entity* self) {
             }
             self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = self->rotY = 0x10;
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->hitboxWidth = self->hitboxHeight = 9;
             self->attack = 1;
             self->attackElement = 0;
@@ -390,7 +390,7 @@ static void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->velocityY = FIX(3.0 / 4.0);
 
         range = 16;

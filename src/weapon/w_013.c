@@ -93,7 +93,8 @@ static void EntityWeaponAttack(Entity* self) {
         self->animCurFrame = 6;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         SetSpeedX(FIX(6));
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
         if (PLAYER.step != Player_Crouch) {
@@ -225,7 +226,8 @@ s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->ext.weapon.childPalette;
         self->drawFlags = self->ext.weapon.parent->drawFlags + FLAG_DRAW_UNK8;
         self->rotZ = self->ext.weapon.parent->rotZ;
@@ -260,7 +262,7 @@ static void func_ptr_80170008(Entity* self) {
         self->animCurFrame = 6;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_04000000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
         if (PLAYER.step != Player_Crouch) {
@@ -346,7 +348,7 @@ static void func_ptr_80170008(Entity* self) {
             self->hitboxHeight = 4;
         }
         if (self->ext.heavenSword.unk82 > 0x30) {
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
         }
         if (self->ext.heavenSword.unk82 == 0x34) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
@@ -432,7 +434,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->zPriority = self->ext.weapon.parent->zPriority;
-        self->flags = FLAG_UNK_04000000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         self->palette = self->ext.weapon.parent->palette + (self->params >> 8);
         self->drawFlags = self->ext.weapon.parent->drawFlags | FLAG_DRAW_UNK80;
         self->rotZ = self->ext.weapon.parent->rotZ;

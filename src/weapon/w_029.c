@@ -66,7 +66,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.weapon.lifetime = 128;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == 2) && (PLAYER.step_s != 2)) {
@@ -84,7 +84,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk80 = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 + FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED + FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
@@ -138,13 +138,13 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
         self->rotZ = self->rotZ + 0x80;
         if (--self->ext.weapon.lifetime < 16) {
-            self->drawFlags |= 0x80;
+            self->drawFlags |= FLAG_DRAW_UNK80;
         }
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
@@ -177,7 +177,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.unk80 = self->ext.weapon.parent->ext.weapon.unk80;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
-        self->flags = 0x08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_UNK10;
         self->unk6C = 0x80;
         self->ext.weapon.unk7E = 0x14;
@@ -234,7 +234,8 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk7D = 0;
         }
         self->posY.i.hi -= 8;
-        self->flags = 0x04810000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
@@ -299,7 +300,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->anim = D_CF000_8017AD24;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            self->flags |= 0x100000;
+            self->flags |= FLAG_UNK_100000;
             self->ext.weapon.unk80 = 0x20;
             self->palette = self->ext.weapon.childPalette;
             self->zPriority = 0x1B6;
@@ -398,7 +399,7 @@ static void func_ptr_80170024(Entity* self) {
             self->ext.weapon.childPalette = 0x110;
             self->ext.shield.unk7D = 0;
         }
-        self->flags |= 0x04800000;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->ext.shield.unk9C = 0x40;
 
         for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,

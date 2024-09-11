@@ -35,7 +35,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->ext.hpNumMove.unk8C = 0;
         self->ext.hpNumMove.unk8E = 2;
         self->ext.hpNumMove.unk90 = 8;
@@ -323,7 +324,8 @@ void EntityGuardText(Entity* self) {
     FntPrint("str_y:%02x", self->ext.guardText.str_y);
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->step++;
         return;
     case 1:
@@ -353,8 +355,8 @@ void EntityGuardText(Entity* self) {
             return;
         }
         // Would have been better to do |= FLAG_HAS_PRIMS
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         self->ext.guardText.timer = 0x38;
         self->ext.guardText.halfHeight = 0;
         self->ext.guardText.halfWidth = FIX_FRAC(self->ext.guardText.unk98) =
@@ -552,7 +554,7 @@ void func_80119D3C(Entity* entity) {
         entity->animCurFrame = 0xE;
         entity->animSet = ANIMSET_DRA(3);
         entity->ext.generic.unk80.modeS16.unk0 = 0x80;
-        entity->flags = FLAG_UNK_08000000;
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
         break;
 
     case 1:
@@ -640,7 +642,8 @@ void func_80119F70(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        entity->flags =
+            FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         prim = &g_PrimBuf[entity->primIndex];

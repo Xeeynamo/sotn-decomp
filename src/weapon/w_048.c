@@ -34,7 +34,7 @@ void EntityWeaponAttack(Entity* self) {
     if (self->step == 0) {
         SetSpriteBank1(D_154000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
-        self->palette = 0x110;
+        self->palette = PAL_DRA(0x110);
         self->unk5A = 0x64;
         if (g_HandId != 0) {
             self->animSet += 2;
@@ -42,7 +42,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
@@ -116,7 +116,165 @@ void func_154000_8017B810(Entity* ent, Point16* outPoint, bool arg2) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_048", func_ptr_80170004);
+extern u16 D_154000_8017AFE0[];
+
+s32 func_ptr_80170004(Entity* self) {
+    const int PrimCount = 10;
+    Primitive* prim;
+    s16 x, y;
+    s16 angle;
+    s16 newXPos, newYPos;
+    s16 xOffset, yOffset;
+    s16 scale;
+    s32 params;
+    Point16 point;
+    s32 i;
+    s32 red, green, blue;
+    s32 colorIndex;
+
+    if (PLAYER.ext.weapon.anim < 65 || PLAYER.ext.weapon.anim >= 72 ||
+        !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    params = ((self->params >> 8) & 0x7f);
+
+    if (params < 16) {
+        xOffset = 12;
+        if (PLAYER.facingLeft) {
+            xOffset = -xOffset;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + xOffset;
+        self->posY.i.hi = PLAYER.posY.i.hi - 26;
+        newXPos = self->posX.i.hi;
+        newYPos = self->posY.i.hi - 48;
+    } else {
+        if (params >= 32) {
+            func_154000_8017B810(self, &point, false);
+        } else {
+            func_154000_8017B810(self, &point, true);
+        }
+
+        newXPos = self->posX.i.hi + point.x;
+        newYPos = self->posY.i.hi + point.y;
+    }
+
+    self->facingLeft = PLAYER.facingLeft;
+
+    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        if (params < 16) {
+            self->posY.i.hi -= 3;
+            newYPos -= 3;
+        }
+        if ((PLAYER.ext.weapon.anim - 65) == 2 ||
+            (PLAYER.ext.weapon.anim - 65) == 3) {
+            self->posY.i.hi--;
+            newYPos--;
+        } else {
+            self->posY.i.hi -= 3;
+            newYPos -= 3;
+        }
+    }
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, PrimCount);
+
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        colorIndex = (params & 0xF);
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            red = D_154000_8017AFE0[colorIndex * 4];
+            blue = D_154000_8017AFE0[colorIndex * 4 + 1];
+            green = D_154000_8017AFE0[colorIndex * 4 + 2];
+
+            prim->r0 = (((red & 0xFFFF) * (10 - i)) / 10);
+            prim->b0 = (((blue & 0xFFFF) * (10 - i)) / 10);
+            prim->g0 = (((green & 0xFFFF) * (10 - i)) / 10);
+
+            prim->r1 = ((red & 0xFFFF) * (9 - i)) / 10;
+            prim->b1 = ((blue & 0xFFFF) * (9 - i)) / 10;
+            prim->g1 = ((green & 0xFFFF) * (9 - i)) / 10;
+
+#ifdef VERSION_PSP
+            prim->x2 = rand() & 0x7FFF;
+#else
+            prim->x2 = rand();
+#endif
+
+            prim->priority = PLAYER.zPriority + 4;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+        }
+
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+
+        SetWeaponProperties(self, 0);
+        self->enemyId = self->ext.weapon.parent->enemyId;
+
+        if (params < 16) {
+            self->hitboxOffX = 0;
+            self->hitboxOffY = -20;
+            self->hitboxWidth = 4;
+            self->hitboxHeight = 20;
+            self->ext.weapon.lifetime = 40;
+        } else {
+            if (params >= 32) {
+                if (!(params & 0xF)) {
+                    self->hitboxOffX = 32;
+                    self->hitboxOffY = 0;
+                    self->hitboxWidth = 32;
+                    self->hitboxHeight = 6;
+                } else {
+                    self->hitboxState = 0;
+                }
+            }
+            self->ext.weapon.lifetime = 6;
+        }
+        self->step++;
+        break;
+    case 1:
+        if (--self->ext.weapon.lifetime == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+    xOffset = newXPos - x;
+    yOffset = newYPos - y;
+
+    scale = 3;
+
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < PrimCount; i++) {
+        prim->x0 = x;
+        prim->y0 = y;
+        angle = prim->x2;
+        prim->x2 += 768;
+
+        prim->x1 = self->posX.i.hi + xOffset * (i + 1) / 10;
+        prim->x1 += (((rcos(angle) >> 4) * scale) >> 8);
+
+        prim->y1 = self->posY.i.hi + yOffset * (i + 1) / 10;
+        prim->y1 -= (((rsin(angle) >> 4) * scale) >> 8);
+
+        x = prim->x1;
+        y = prim->y1;
+
+        prim = prim->next;
+    }
+}
 
 void func_ptr_80170008(Entity* self) {
     Primitive* prim;
@@ -155,7 +313,7 @@ void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 16; i++) {
