@@ -155,7 +155,7 @@ void func_ptr_80170008(Entity* self) {
         self->animCurFrame = 0xF;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags =  FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->drawFlags = DRAW_COLORS;
 
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
