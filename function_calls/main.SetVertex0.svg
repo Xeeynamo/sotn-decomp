@@ -12,7 +12,7 @@
 <!-- main.SetVertex0 -->
 <g id="node1" class="node">
 <title>main.SetVertex0</title>
-<ellipse fill="red" stroke="black" cx="88.39" cy="-18" rx="88.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="88.39" cy="-18" rx="88.28" ry="18"/>
 <text text-anchor="middle" x="88.39" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetVertex0</text>
 </g>
 </g>

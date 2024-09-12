@@ -12,7 +12,7 @@
 <!-- main.SetVertexTri -->
 <g id="node1" class="node">
 <title>main.SetVertexTri</title>
-<ellipse fill="red" stroke="black" cx="95.54" cy="-18" rx="95.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="95.54" cy="-18" rx="95.58" ry="18"/>
 <text text-anchor="middle" x="95.54" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetVertexTri</text>
 </g>
 </g>
