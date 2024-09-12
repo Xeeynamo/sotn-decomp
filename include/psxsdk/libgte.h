@@ -105,6 +105,16 @@ extern long ratan2(long y, long x);
                      "lwc2	$1, 4( %0 )"                                        \
                      :                                                         \
                      : "r"(r0))
+#define gte_ldv1(r0)                                                           \
+    __asm__ volatile("lwc2	$2, 0( %0 );"                                       \
+                     "lwc2	$3, 4( %0 )"                                        \
+                     :                                                         \
+                     : "r"(r0))
+#define gte_ldv2(r0)                                                           \
+    __asm__ volatile("lwc2	$4, 0( %0 );"                                       \
+                     "lwc2	$5, 4( %0 )"                                        \
+                     :                                                         \
+                     : "r"(r0))
 
 // NOTE: These are not the official defines in the SDK.
 // They were identified by looking at functions which used them.

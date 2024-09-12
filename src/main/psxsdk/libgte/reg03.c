@@ -1,12 +1,17 @@
 #include "common.h"
+#include "psxsdk/libgte.h"
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetVertex0);
+void SetVertex0(SVECTOR* vector) { gte_ldv0(vector); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetVertex1);
+void SetVertex1(SVECTOR* vector) { gte_ldv1(vector); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetVertex2);
+void SetVertex2(SVECTOR* vector) { gte_ldv2(vector); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetVertexTri);
+void SetVertexTri(SVECTOR* vector1, SVECTOR* vector2, SVECTOR* vector3) {
+    gte_ldv0(vector1);
+    gte_ldv1(vector2);
+    gte_ldv2(vector3);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetRGBfifo);
 
