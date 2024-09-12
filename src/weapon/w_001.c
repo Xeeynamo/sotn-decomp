@@ -12,7 +12,234 @@ extern s32 g_HandId;
 #define g_Animset2 w_001_2
 #include "sfx.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_001", EntityWeaponAttack);
+extern WeaponAnimation D_B000_8017AF44[];
+extern s16 D_B000_8017AF94[];
+extern u8 D_B000_8017AFB0[];
+
+void EntityWeaponAttack(Entity* self) {
+    const int PrimCount = 4;
+    s16 params;
+    Primitive* prim;
+    WeaponAnimation* anim;
+    s32 phase;
+    s32 i;
+    s16 newX, newY;
+    s16 xOffset, yOffset;
+    s16 width;
+    s16 height;
+    s16 baseAngle;
+    s16 size;
+    s16 angle;
+
+    params = (self->params & 0x7FFF) >> 8;
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+    anim = &D_B000_8017AF44[params];
+
+    if (PLAYER.ext.player.anim < anim->frameStart ||
+        PLAYER.ext.player.anim >= (anim->frameStart + 7) || !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+
+        for (i = 0; i < PrimCount; i++) {
+            prim->clut = anim->palette;
+            prim->tpage = 0x1A;
+            prim->u0 = prim->u2 = 0x80;
+            prim->u1 = prim->u3 = 0xA0;
+
+            prim->v0 = prim->v1 = 0x80 + i * 4;
+            prim->v2 = prim->v3 = 0x80 + (i + 1) * 4;
+
+            prim->r0 = prim->g0 = prim->b0 = D_B000_8017AFB0[i * 2];
+            prim->r2 = prim->g2 = prim->b2 = D_B000_8017AFB0[(i * 2) + 1];
+            prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 = 0;
+
+            prim->priority = PLAYER.zPriority + 4;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+
+            prim = prim->next;
+        }
+
+        if (params == 4) {
+            g_api.PlaySfx(SFX_UNK_6EE);
+        }
+
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        SetWeaponProperties(self, 0);
+        self->step++;
+    }
+
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
+    if (PLAYER.animFrameDuration == 1 &&
+        PLAYER.animFrameIdx == anim->soundFrame) {
+        g_api.PlaySfx(anim->soundId);
+    }
+
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    phase = 0;
+
+    switch (self->ext.weapon.anim) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+        switch (params) {
+        case 0:
+            if (PLAYER.animFrameIdx == 2 || PLAYER.animFrameIdx == 3) {
+                phase = 1;
+            }
+            break;
+        case 1:
+        case 2:
+        case 3:
+            if (PLAYER.animFrameIdx == 3 || PLAYER.animFrameIdx == 2 ||
+                PLAYER.animFrameIdx == 4) {
+                phase = 1;
+            }
+            break;
+        }
+        break;
+
+    case 4:
+        switch (params) {
+        case 0:
+            if (PLAYER.animFrameIdx == 1 || PLAYER.animFrameIdx == 2) {
+                phase = 1;
+            }
+            break;
+        case 1:
+        case 2:
+        case 3:
+            if (PLAYER.animFrameIdx == 1 || PLAYER.animFrameIdx == 2 ||
+                PLAYER.animFrameIdx == 3) {
+                phase = 1;
+            }
+            break;
+        }
+        break;
+
+    case 5:
+        switch (params) {
+        case 0:
+            if (PLAYER.animFrameIdx == 1 || PLAYER.animFrameIdx == 2) {
+                phase = 2;
+            }
+            break;
+
+        case 1:
+        case 2:
+        case 3:
+            if (PLAYER.animFrameIdx == 1 || PLAYER.animFrameIdx == 2 ||
+                PLAYER.animFrameIdx == 3) {
+                phase = 2;
+            }
+            break;
+        }
+        break;
+    case 6:
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    if (phase == 0) {
+        for (i = 0; i < PrimCount; i++) {
+            prim->drawMode |= DRAW_HIDE;
+            prim = prim->next;
+        }
+    } else {
+        xOffset = D_B000_8017AF94[self->ext.weapon.anim * 2];
+        yOffset = D_B000_8017AF94[self->ext.weapon.anim * 2 + 1];
+        if (PLAYER.facingLeft) {
+            xOffset = -xOffset;
+        }
+
+        newX = PLAYER.posX.i.hi + xOffset;
+        newY = PLAYER.posY.i.hi + yOffset;
+
+        if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+            newY -= 3;
+        }
+
+        for (i = 0; i < PrimCount; i++) {
+            if (PLAYER.facingLeft == 0) {
+                prim->x0 = prim->x2 = newX + 16;
+                prim->x1 = prim->x3 = newX - ((rand() & 0xF) + 16);
+            } else {
+                prim->x0 = prim->x2 = newX - 16;
+                prim->x1 = prim->x3 = newX + ((rand() & 0xF) + 16);
+            }
+
+            prim->y0 = prim->y1 = -8 + newY + (i * 4);
+            prim->y2 = prim->y3 = prim->y0 + 4;
+
+            prim->drawMode &= ~DRAW_HIDE;
+            if (phase == 2) {
+                baseAngle = FIX(-1.0 / 128.0);
+                if (PLAYER.facingLeft) {
+                    baseAngle = -baseAngle;
+                }
+
+                width = prim->x0 - newX;
+                height = prim->y0 - newY;
+                size =
+                    SquareRoot12(((width * width) + (height * height)) << 12) >>
+                    12;
+                angle = baseAngle + ratan2(-height, width);
+                prim->x0 = newX + (((rcos(angle) >> 4) * size) >> 8);
+                prim->y0 = newY - (((rsin(angle) >> 4) * size) >> 8);
+
+                width = prim->x1 - newX;
+                height = prim->y1 - newY;
+                size =
+                    SquareRoot12(((width * width) + (height * height)) << 12) >>
+                    12;
+                angle = baseAngle + ratan2(-height, width);
+                prim->x1 = newX + (((rcos(angle) >> 4) * size) >> 8);
+                prim->y1 = newY - (((rsin(angle) >> 4) * size) >> 8);
+
+                width = prim->x2 - newX;
+                height = prim->y2 - newY;
+                size =
+                    SquareRoot12(((width * width) + (height * height)) << 12) >>
+                    12;
+                angle = baseAngle + ratan2(-height, width);
+                prim->x2 = newX + (((rcos(angle) >> 4) * size) >> 8);
+                prim->y2 = newY - (((rsin(angle) >> 4) * size) >> 8);
+
+                width = prim->x3 - newX;
+                height = prim->y3 - newY;
+                size =
+                    SquareRoot12(((width * width) + (height * height)) << 12) >>
+                    12;
+                angle = baseAngle + ratan2(-height, width);
+                prim->x3 = newX + (((rcos(angle) >> 4) * size) >> 8);
+                prim->y3 = newY - (((rsin(angle) >> 4) * size) >> 8);
+            }
+            prim = prim->next;
+        }
+    }
+
+    if (params == 4 && PLAYER.animFrameIdx == 2 &&
+        PLAYER.animFrameDuration == 1) {
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3E, 0), 0);
+    }
+}
 
 extern WeaponAnimation D_B000_8017AF44[];
 extern uvPair D_B000_8017AFB8[];
