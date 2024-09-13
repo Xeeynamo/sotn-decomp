@@ -6,10 +6,11 @@
  * Description: Abandoned Mine
  */
 
-// [Entity]
 extern EntityInit EntityInit_8018067C;
 extern u16 g_Tilemap_scrollX_i_hi;
 
+// [Entity]
+// PSP:func_psp_0924B458:Match
 void func_8019CBA8(Entity* self) {
     s32 tileIdx;        // s2
     s32 primIdx;        // s6

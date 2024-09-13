@@ -211,7 +211,7 @@ void EntityDemonSwitchWall(Entity* self) {
     }
 }
 
-// [Entity]
+// [Entity] Breakable Wall Debris
 void func_8019C31C(Entity* entity) {
     Collider collider;
     s32 temp_a0_2;
@@ -231,10 +231,10 @@ void func_8019C31C(Entity* entity) {
             temp_a0 = entity->params;
             entity->drawFlags = 4;
             entity->zPriority = 0x69;
-            entity->animCurFrame = (s16) temp_a0;
+            entity->animCurFrame = temp_a0;
             if (entity->rotZ & 1) {
                 entity->facingLeft = 1;
-                entity->rotZ = (u16) (entity->rotZ & 0xFFF0);
+                entity->rotZ = entity->rotZ & 0xFFF0;
             }
             temp_a0_2 = (Random() & 0xF) << 0xC;
             entity->velocityX = temp_a0_2;
@@ -250,28 +250,28 @@ void func_8019C31C(Entity* entity) {
             entity->ext.generic.unk9C.modeS16.unk0 = ((Random() & 3) + 1) * 32;
             return;
         case 1:
-            temp_v1_2 = (u16) entity->params;
+            temp_v1_2 = entity->params;
             if (temp_v1_2 & 0x100) {
-                entity->params = (s16) (temp_v1_2 & 0xFF);
-                entity->step = (u16) (entity->step + 1);
+                entity->params = temp_v1_2 & 0xFF;
+                entity->step = entity->step + 1;
                 return;
             }
             return;
         case 2:
             entity->rotZ += entity->ext.generic.unk9C.modeS16.unk0;
             MoveEntity();
-            entity->velocityY = (s32) (entity->velocityY + 0x2000);
-            g_api_CheckCollision((s32) entity->posX.i.hi, (s32) (s16) (entity->posY.i.hi + 6), &collider, 0);
+            entity->velocityY = entity->velocityY + 0x2000;
+            g_api_CheckCollision(entity->posX.i.hi, (s32) (s16) (entity->posY.i.hi + 6), &collider, 0);
             if (collider.effects & 1) {
-                entity->posY.i.hi = (u16) (entity->posY.i.hi + (u16) collider.unk18);
+                entity->posY.i.hi = entity->posY.i.hi + collider.unk18;
                 if (entity->animCurFrame >= 0xC) {
                     var_s2 = 0;
                     do {
                         temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                         var_s2 += 1;
                         if (temp_v0 != NULL) {
-                            CreateEntityFromEntity(0x19, entity, temp_v0);
-                            temp_v0->params = (s16) (((Random() & 3) + 9) | 0x100);
+                            CreateEntityFromEntity(E_ID_19, entity, temp_v0);
+                            temp_v0->params = ((Random() & 3) + 9) | 0x100;
                         }
                     } while (var_s2 < 2);
                     DestroyEntity(entity);
