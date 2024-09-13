@@ -108,7 +108,7 @@ void func_8019CBA8(Entity* self) {
         
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(6U, self, entity);
+            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
             entity->posX.i.hi += -8 + (Random() & 7) * 2;
             entity->posY.i.hi += 0x20;
             entity->params = 0x10;

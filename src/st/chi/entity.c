@@ -71,27 +71,27 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDemonSwitchWall,
     EntityDemonSwitch,
     EntityBreakableWall,
-    func_8019C31C,
-    func_8019B914,  // CEN.func_8018DB18
-    func_8019CBA8,
-    func_8019D1A8,
-    func_8019D9C8,
-    func_801A97C8,
-    func_801A9D40,
-    func_801A9E94,
-    func_801A813C,
-    func_801A8DE8,
-    func_801A8EAC,
-    func_801A93D4,
-    func_801A9588,
-    func_801AA020,
-    func_801AA390,
-    func_801AB0C0,
-    func_801AB7CC,
-    func_801AC074,
-    func_801AC730,
-    func_801ACB6C,
-    func_801ACEF4,
+    func_8019C31C,  // E_ID_19
+    func_8019B914,  // E_ID_1A - CEN.func_8018DB18
+    func_8019CBA8,  // E_ID_1B
+    func_8019D1A8,  // E_ID_1C
+    func_8019D9C8,  // E_ID_1D
+    func_801A97C8,  // E_ID_1E
+    func_801A9D40,  // E_ID_1F
+    func_801A9E94,  // E_ID_20
+    func_801A813C,  // E_ID_21
+    func_801A8DE8,  // E_ID_22
+    func_801A8EAC,  // E_ID_23
+    func_801A93D4,  // E_ID_24
+    func_801A9588,  // E_ID_25
+    func_801AA020,  // E_ID_26
+    func_801AA390,  // E_ID_27
+    func_801AB0C0,  // E_ID_28
+    func_801AB7CC,  // E_ID_29
+    func_801AC074,  // E_ID_2A
+    func_801AC730,  // E_ID_2B
+    func_801ACB6C,  // E_ID_2C
+    func_801ACEF4,  // E_ID_2D
 };
 
 EntityInit EntityInit_80180610 = {

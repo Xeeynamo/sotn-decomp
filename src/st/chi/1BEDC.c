@@ -157,7 +157,7 @@ void EntityDemonSwitchWall(Entity* self) {
 #ifdef VERSION_PSP
                 CreateEntityFromCurrentEntity(D_psp_0926BC50, newEntity);
 #else
-                CreateEntityFromCurrentEntity(0x15, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_15, newEntity);
 #endif
                 newEntity->posX.i.hi = xPos + (Random() & 0x1F);
                 newEntity->posY.i.hi = yPos;
@@ -281,7 +281,7 @@ void func_8019C31C(Entity* entity) {
                 if (temp_v1_3 <= 0x7FFF) {
                     temp_v0_2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (temp_v0_2 != NULL) {
-                        CreateEntityFromEntity(6, entity, temp_v0_2);
+                        CreateEntityFromEntity(E_INTENSE_EXPLOSION, entity, temp_v0_2);
                         temp_v0_2->params = 0xC010;
                     }
                     DestroyEntity(entity);

@@ -119,7 +119,7 @@ void func_8019B698(Entity* entity)
         entity->hitboxHeight = D_80180858[params];
         entity->animSet = D_80180868[params];
         DestroyEntity(newEntity);
-        CreateEntityFromEntity(0x11, entity, newEntity);
+        CreateEntityFromEntity(E_BACKGROUND_BLOCK, entity, newEntity);
         if (params != 0) {
             entity[1].posY.i.hi -= 32;
         } else {
@@ -134,14 +134,14 @@ void func_8019B698(Entity* entity)
         g_api_PlaySfx(SFX_WEAPON_62C);
         newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(2, newEntity);
+            CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
             newEntity->params = D_80180860[params] | 0x10;
         }
 
         for (ptr = &D_80180880, i = 0; i < 4; i++) {
             newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x1A, entity, newEntity);
+                CreateEntityFromEntity(E_ID_1A, entity, newEntity);
                 newEntity->posX.i.hi += *ptr++;
                 newEntity->posY.i.hi += *ptr++;
                 if (params != 0) {
@@ -155,7 +155,7 @@ void func_8019B698(Entity* entity)
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x1A, entity, newEntity);
+                    CreateEntityFromEntity(E_ID_1A, entity, newEntity);
                     newEntity->posX.i.hi += *ptr++;
                     newEntity->posY.i.hi += *ptr++;
                     newEntity->params = i + 4;
@@ -251,7 +251,7 @@ void func_8019B914(Entity* entity) {
             if (entity->velocityY > FIX(-0.625)) {
                 newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(6, entity, newEntity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, entity, newEntity);
                     newEntity->params = 16;
                 }
                 DestroyEntity(entity);

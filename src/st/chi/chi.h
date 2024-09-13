@@ -27,31 +27,31 @@ typedef enum {
     /* 0x12 */ E_ID_12,
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_ID_15,
-    /* 0x19 */ E_ID_19,
-    /* 0x1A */ E_ID_1A, // CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)?
-    /* 0x1B */ E_ID_1B,
-    /* 0x1C */ E_ID_1C,
-    /* 0x1D */ E_ID_1D,
-    /* 0x1E */ E_ID_1E,
-    /* 0x1F */ E_ID_1F,
-    /* 0x20 */ E_ID_20,
-    /* 0x21 */ E_ID_21,
-    /* 0x22 */ E_ID_22,
-    /* 0x23 */ E_ID_23,
-    /* 0x24 */ E_ID_24,
-    /* 0x25 */ E_ID_25,
-    /* 0x26 */ E_ID_26,
-    /* 0x27 */ E_ID_27,
-    /* 0x28 */ E_ID_28,
-    /* 0x29 */ E_ID_29,
-    /* 0x2A */ E_ID_2A,
-    /* 0x2B */ E_ID_2B,
-    /* 0x2C */ E_ID_2C,
-    /* 0x2D */ E_ID_2D,
+    /* 0x15 */ E_ID_15, // Created in func_8019BEDC
     /* 0x16 */ E_DEMON_SWITCH_WALL,
     /* 0x17 */ E_DEMON_SWITCH,
     /* 0x18 */ E_BREAKABLE_WALL,
+    /* 0x19 */ E_ID_19, //func_8019C31C - Created in func_8019C31C, EntityBreakableWall
+    /* 0x1A */ E_ID_1A, //func_8019B914 - CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)?
+    /* 0x1B */ E_ID_1B, //func_8019CBA8
+    /* 0x1C */ E_ID_1C, //func_8019D1A8
+    /* 0x1D */ E_ID_1D, //func_8019D9C8
+    /* 0x1E */ E_ID_1E, //func_801A97C8
+    /* 0x1F */ E_ID_1F, //func_801A9D40
+    /* 0x20 */ E_ID_20, //func_801A9E94
+    /* 0x21 */ E_ID_21, //func_801A813C
+    /* 0x22 */ E_ID_22, //func_801A8DE8
+    /* 0x23 */ E_ID_23, //func_801A8EAC
+    /* 0x24 */ E_ID_24, //func_801A93D4
+    /* 0x25 */ E_ID_25, //func_801A9588
+    /* 0x26 */ E_ID_26, //func_801AA020
+    /* 0x27 */ E_ID_27, //func_801AA390
+    /* 0x28 */ E_ID_28, //func_801AB0C0
+    /* 0x29 */ E_ID_29, //func_801AB7CC
+    /* 0x2A */ E_ID_2A, //func_801AC074
+    /* 0x2B */ E_ID_2B, //func_801AC730
+    /* 0x2C */ E_ID_2C, //func_801ACB6C
+    /* 0x2D */ E_ID_2D, //func_801ACEF4
 } EntityIDs;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
