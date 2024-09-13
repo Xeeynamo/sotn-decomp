@@ -46,7 +46,7 @@ segments:
       - [0x17B90, .data, sprites]
       - [0x1B100, .rodata, 1BEDC] # jtbl_8019B100 [1BEDC]
       - [0x1B144, .rodata, 1C5CC] # jtbl_8018B144 [1C5CC]
-      - [0x1B168, rodata] # jtbl_8019B168
+      - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, rodata] # jtbl_8019B180
       - [0x1B194, rodata] # jtbl_8019B194
       - [0x1B1AC, rodata]
@@ -74,6 +74,7 @@ segments:
       - [0x1B3FC, c]
       - [0x1BEDC, c]
       - [0x1C5CC, c]
+      - [0x1CBA8, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x1B100, rodata, 1B3FC]
