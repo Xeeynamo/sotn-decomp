@@ -12,7 +12,7 @@
 <!-- main.SetMAC123 -->
 <g id="node1" class="node">
 <title>main.SetMAC123</title>
-<ellipse fill="red" stroke="black" cx="92.29" cy="-18" rx="92.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="92.29" cy="-18" rx="92.08" ry="18"/>
 <text text-anchor="middle" x="92.29" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetMAC123</text>
 </g>
 </g>

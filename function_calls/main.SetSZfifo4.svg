@@ -12,7 +12,7 @@
 <!-- main.SetSZfifo4 -->
 <g id="node1" class="node">
 <title>main.SetSZfifo4</title>
-<ellipse fill="red" stroke="black" cx="85.14" cy="-18" rx="85.29" ry="18"/>
+<ellipse fill="green" stroke="black" cx="85.14" cy="-18" rx="85.29" ry="18"/>
 <text text-anchor="middle" x="85.14" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetSZfifo4</text>
 </g>
 </g>

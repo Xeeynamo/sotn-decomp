@@ -12,7 +12,7 @@
 <!-- main.SetIR123 -->
 <g id="node1" class="node">
 <title>main.SetIR123</title>
-<ellipse fill="red" stroke="black" cx="79.94" cy="-18" rx="79.89" ry="18"/>
+<ellipse fill="green" stroke="black" cx="79.94" cy="-18" rx="79.89" ry="18"/>
 <text text-anchor="middle" x="79.94" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetIR123</text>
 </g>
 </g>

@@ -12,7 +12,7 @@
 <!-- main.SetRii -->
 <g id="node1" class="node">
 <title>main.SetRii</title>
-<ellipse fill="red" stroke="black" cx="64.99" cy="-18" rx="64.99" ry="18"/>
+<ellipse fill="green" stroke="black" cx="64.99" cy="-18" rx="64.99" ry="18"/>
 <text text-anchor="middle" x="64.99" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetRii</text>
 </g>
 </g>
