@@ -8,29 +8,31 @@ void SetVertex1(SVECTOR* vector) { gte_ldv1(vector); }
 void SetVertex2(SVECTOR* vector) { gte_ldv2(vector); }
 
 void SetVertexTri(SVECTOR* vector1, SVECTOR* vector2, SVECTOR* vector3) {
-    gte_ldv0(vector1);
-    gte_ldv1(vector2);
-    gte_ldv2(vector3);
+    gte_ldv3(vector1, vector2, vector3);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetRGBfifo);
+void SetRGBfifo(u_char r, u_char g, u_char b) { gte_SetRGBfifo(r, g, b); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetIR123);
+void SetIR123(u32 arg0, u32 arg1, u32 arg3) { gte_SetIR123(arg0, arg1, arg3); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetIR0);
+void SetIR0(u32 arg0) { gte_lddp(arg0); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetSZfifo3);
+void SetSZfifo3(u32 arg0, u32 arg1, u32 arg3) { gte_ldsz3(arg0, arg1, arg3); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetSZfifo4);
+void SetSZfifo4(u32 arg0, u32 arg1, u32 arg3, u32 arg4) {
+    gte_ldsz4(arg0, arg1, arg3, arg4);
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetSXSYfifo);
+void SetSXSYfifo(u32 arg0, u32 arg1, u32 arg3) { gte_ldsxy3(arg0, arg1, arg3); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetRii);
+void SetRii(u32 arg0, u32 arg1, u32 arg3) { gte_SetRii(arg0, arg1, arg3); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetMAC123);
+void SetMAC123(u32 arg0, u32 arg1, u32 arg3) {
+    gte_SetMAC123(arg0, arg1, arg3);
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetData32);
+void SetData32(void) { __asm__("mtc2 $a0, $30"); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetDQA);
+void SetDQA(void) { __asm__("ctc2 $a0, $27"); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/reg03", SetDQB);
+void SetDQB(void) { __asm__("ctc2 $a0, $28"); }
