@@ -12,7 +12,11 @@ void UpdateStageEntities(void) {
             continue;
 
         if (entity->step) {
+            #ifdef VERSION_BETA
+            if (D_80096ED0_mad && !(entity->flags & FLAG_UNK_10000))
+            #else
             if (!(entity->flags & FLAG_UNK_10000))
+            #endif
                 continue;
             if (entity->flags & 0xF) {
                 iFramePalette = entity->nFramesInvincibility << 1;
