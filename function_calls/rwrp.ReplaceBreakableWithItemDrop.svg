@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="385.16,-45.91 388.96,-36.02 379.82,-41.38 385.16,-45.91"/>
 <text text-anchor="middle" x="383.96" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- wrp.EntityBreakable -->
+<!-- rwrp.EntityBreakable -->
 <g id="node4" class="node">
-<title>wrp.EntityBreakable</title>
-<g id="a_node4"><a xlink:href="wrp.EntityBreakable.svg" xlink:title="wrp.EntityBreakable">
-<ellipse fill="green" stroke="black" cx="252.39" cy="-378" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="252.39" y="-374.3" font-family="Times,serif" font-size="14.00">wrp.EntityBreakable</text>
+<title>rwrp.EntityBreakable</title>
+<g id="a_node4"><a xlink:href="rwrp.EntityBreakable.svg" xlink:title="rwrp.EntityBreakable">
+<ellipse fill="green" stroke="black" cx="252.39" cy="-378" rx="111.58" ry="18"/>
+<text text-anchor="middle" x="252.39" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityBreakable</text>
 </a>
 </g>
 </g>
-<!-- wrp.EntityBreakable&#45;&gt;rwrp.ReplaceBreakableWithItemDrop -->
+<!-- rwrp.EntityBreakable&#45;&gt;rwrp.ReplaceBreakableWithItemDrop -->
 <g id="edge3" class="edge">
-<title>wrp.EntityBreakable&#45;&gt;rwrp.ReplaceBreakableWithItemDrop</title>
+<title>rwrp.EntityBreakable&#45;&gt;rwrp.ReplaceBreakableWithItemDrop</title>
 <path fill="none" stroke="black" d="M252.39,-359.93C252.39,-328.97 252.39,-263.3 252.39,-226.13"/>
 <polygon fill="black" stroke="black" points="255.89,-226.02 252.39,-216.02 248.89,-226.02 255.89,-226.02"/>
 <text text-anchor="middle" x="247.39" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
