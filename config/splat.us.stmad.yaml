@@ -39,7 +39,7 @@ segments:
       - [0xB8, data]
       - [0x6DC, .data, collision]
       - [0x9D4, .data, e_red_door]
-      - [0x9EC, data]
+      - [0x9EC, .data, st_common]
       - [0xBEC, .data, e_collect]
       - [0xED8, data]
       - [0xEF8, .data, entity_relic_orb]
