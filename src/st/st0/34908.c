@@ -9,34 +9,11 @@
 
 #include "../unk_anim_func.h"
 
-// Absolute distance from g_CurrentEntity to the player in the X Axis
-s16 GetDistanceToPlayerX(void) {
-    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
+#include "../get_distance_to_player_x.h"
 
-    if (xDistance < 0) {
-        xDistance = -xDistance;
-    }
-    return xDistance;
-}
+#include "../get_distance_to_player_y.h"
 
-// Absolute distance from g_CurrentEntity to the player in the Y Axis
-s32 GetDistanceToPlayerY(void) {
-    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
-    }
-    return yDistance;
-}
-
-s32 GetSideToPlayer(void) {
-    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        side |= 2;
-    }
-    return side;
-}
+#include "../get_side_to_player.h"
 
 #include "../move_entity.h"
 
