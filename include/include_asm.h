@@ -20,7 +20,7 @@
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
             "\t.end\t" #NAME "\n"                                              \
-            ".popsection");
+            ".popsection")
 #else
 #define INCLUDE_ASM(FOLDER, NAME)                                              \
     __asm__(".pushsection .text\n"                                             \
@@ -31,8 +31,13 @@
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
             "\t.end\t" #NAME "\n"                                              \
-            ".popsection");
+            ".popsection")
 #endif
+
+#define INCLUDE_RODATA(FOLDER, NAME)                                           \
+    __asm__(".pushsection .rodata\n"                                           \
+            ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
+            ".popsection")
 
 #endif
 

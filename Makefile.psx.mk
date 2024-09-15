@@ -6,7 +6,8 @@ PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 PSX_OVLS		:= dra ric weapon
 PSX_KSTAGES		:= cen dre mad no3 np3 nz0 sel st0 wrp
 PSX_RSTAGES		:= rwrp
-PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES))
+PSX_BOSTAGES    := mar
+PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES))
 PSX_SERVANTS	:= tt_000
 PSX_US_TARGETS	:= main $(PSX_OVLS) $(PSX_ALLSTAGES) $(PSX_SERVANTS)
 PSX_HD_TARGETS	:= dra tt_000 stwrp
@@ -47,6 +48,9 @@ $(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/s
 $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
+$(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%_dirs
+	$(SPLAT) $<
+	$(GFXSTAGE) d disks/$(VERSION)/BOSS/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/boss/$*
 build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
@@ -89,6 +93,7 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
+	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/BOSS/MAR/MAR.BIN -o assets/boss/mar
 	$(SOTNASSETS) config extract config/assets.us.weapon.yaml
 extract_assets_hd: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
@@ -102,6 +107,7 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/st0 -o src/st/st0/
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 	$(SOTNASSETS) stage build_all -i assets/st/rwrp -o src/st/rwrp/
+	$(SOTNASSETS) stage build_all -i assets/boss/mar -o src/boss/mar/
 	$(SOTNASSETS) config build config/assets.$(VERSION).weapon.yaml
 build_assets_hd: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
