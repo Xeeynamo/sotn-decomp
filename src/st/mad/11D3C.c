@@ -37,7 +37,65 @@ u8 func_8019214C(void) {
 
 #include "../unk_collision_func3.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/11D3C", func_80192408);
+s32 func_80192408(u16* sensors, u16 arg1) {
+    Collider col[5];
+    s16 i;
+    u16 var_a0;
+    s16 x;
+    s16 y;
+    Collider* c;
+
+    MoveEntity();
+    FallEntity();
+    if (g_CurrentEntity->velocityY >= 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = i = g_CurrentEntity->posY.i.hi; // FAKE, no reason to set i.
+        c = col;
+        i = 0;
+        while (true) {
+            x += *sensors++;
+            y += *sensors++;
+            g_api.CheckCollision(x, y, c, 0);
+            if (++i >= 4) {
+                break;
+            }
+            c++;
+        }
+
+        var_a0 = true;
+        for (i = 0, c = col; i < 4; i++, c++) {
+            if (c->effects & EFFECT_UNK_8000) {
+                // i in [0, 1]
+                if (!(i >> 1)) {
+                    break;
+                }
+            } else if (c->effects & EFFECT_SOLID) {
+                if (i == 1 && !var_a0) {
+                    c = col; // fake?
+                    break;
+                }
+            } else if (i != 1) {
+                var_a0 = false;
+            }
+        }
+
+        for (i = 0; i < 4; i++) {
+            c = &col[i];
+            if (c->effects & EFFECT_SOLID) {
+                if (i == 1) {
+                    g_CurrentEntity->posY.i.hi += 4;
+                }
+                g_CurrentEntity->posY.i.hi += c->unk18;
+                g_CurrentEntity->velocityY = 0;
+                if (arg1) {
+                    g_CurrentEntity->velocityX = 0;
+                }
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 #include "../unk_collision_func2.h"
 
