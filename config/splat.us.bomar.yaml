@@ -38,7 +38,48 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0xA9EC, .rodata, us]
-      - [0xAC0C, c, us]
+      - [0x30C, data] # e_init
+      - [0x4E8, data] # st_common
+      - [0x568, data] # e_breakable
+      - [0x5D4, data] # AFC4
+      - [0x764, data] # st_update
+      - [0x790, data] # collision
+      - [0xB50, data] # e_red_door
+      - [0xB68, data] # st_common??
+      - [0xD68, data] # e_collect
+      - [0x1058, data] # e_misc
+      - [0x1174, .data, e_particles]
+      - [0x11F4, .data, e_room_fg]
+      - [0x1280, data] # 17FEC
+      - [0x12EC, data] # rooms
+      - [0x1308, data] # e_life_up
+      - [0x135C, data] # e_layout
+      - [0x1424, data]
+      - [0xA9EC, .rodata, AFC4]
+      - [0xAAB0, .rodata, e_red_door]
+      - [0xAAC8, .rodata, e_collect]
+      - [0xAB50, .rodata, e_misc]
+      - [0xAB9C, .rodata, e_stage_name]
+      - [0xABD0, .rodata, 17FEC]
+      - [0xABE8, .rodata, prim_helpers]
+      - [0xABF0, .rodata, e_life_up]
+      - [0xAC0C, c, st_debug]
+      - [0xAE90, c, e_breakable]
+      - [0xAFC4, c]
+      - [0xCF70, c, st_update]
+      - [0xD3A4, c, collision]
+      - [0xEB60, c, create_entity]
+      - [0xF6D8, c, e_red_door]
+      - [0x10388, c, st_common]
+      - [0x11838, c, e_collect]
+      - [0x12DA4, c, blit_char]
+      - [0x13054, c, e_misc]
+      - [0x16708, c, e_stage_name]
+      - [0x1738C, c, e_particles]
+      - [0x17BD0, c, e_room_fg]
+      - [0x17CBC, c, popup]
+      - [0x17FEC, c]
+      - [0x1911C, c, prim_helpers]
+      - [0x1994C, c, e_life_up]
       - [0x1A200, sbss]
   - [0x1AF70]

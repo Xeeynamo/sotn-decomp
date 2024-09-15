@@ -1,3 +1,5 @@
+g_InitializeData0 = 0x8018039C;
+g_eInitGeneric2 = 0x801803E4;
 EntityUnkId12 = 0x8018ACD4;
 EntityBreakable = 0x8018AE90;
 EntityMariaCutscene = 0x8018B850;
