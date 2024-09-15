@@ -95,7 +95,7 @@ u8 func_8019214C(void) {
 #include "unk_collision_func3.h"
 #endif
 
-#if defined(VERSION_BETA)
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
 s32 func_80192408(u16* sensors, u16 arg1) {
     Collider col[5];
     s16 i;
