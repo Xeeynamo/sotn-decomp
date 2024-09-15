@@ -96,22 +96,7 @@ extern s16 g_SineTable[];
 
 #include "../set_sub_step.h"
 
-void func_801B57D0(u16 params) {
-    Entity* current;
-
-    if (params == 0xFF) {
-        DestroyEntity(g_CurrentEntity);
-        return;
-    }
-    current = g_CurrentEntity;
-    g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = EntityExplosion;
-    g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
-    current->params = params;
-    current->animCurFrame = 0;
-    g_CurrentEntity->step = 0;
-    g_CurrentEntity->step_s = 0;
-}
+#include "../entity_explosion_spawn.h"
 
 #include "../init_entity.h"
 
