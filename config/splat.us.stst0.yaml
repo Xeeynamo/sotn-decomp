@@ -44,6 +44,7 @@ segments:
       - [0x830, data]
       - [0x990, data]
       - [0xAB0, data]
+      - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
       - [0x1990, .data, st_common]
@@ -91,9 +92,7 @@ segments:
       - [0x2C564, c] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
-      - [0x3186C, c, random]
-      - [0x3189C, c, update]
-      - [0x31B98, c, update_stage_entities]
+      - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]
       - [0x330E0, c, create_entity]
       - [0x33C58, c, e_red_door]
