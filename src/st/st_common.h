@@ -74,7 +74,7 @@ static s16 g_SineTable[] = {
 
 #include "fall_entity.h"
 
-#if defined(VERSION_BETA)
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
 u8 func_8019214C(void) {
     u8 unkState;
     Entity* entity;
