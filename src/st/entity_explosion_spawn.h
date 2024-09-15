@@ -3,7 +3,11 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
+#if defined VERSION_BETA
+        g_api.PlaySfx(arg1);
+#else
         PlaySfxPositional(arg1);
+#endif
     }
     if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);
