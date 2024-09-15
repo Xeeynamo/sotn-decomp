@@ -173,7 +173,6 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
