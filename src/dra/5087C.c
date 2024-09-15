@@ -59,15 +59,15 @@ RoomTeleport D_800A245C[] = {
     {16, 180, 0x0000, STAGE_NO4, STAGE_DRE},
     {496, 388, 0x0048, STAGE_ARE, STAGE_DAI},
     {16, 388, 16, STAGE_ARE, STAGE_NO2},
-    {16, 132, 0x0090, STAGE_NO3, STAGE_NO3},    // Entrance Forest Spawn Point
-    {16, 132, 0x0000, STAGE_MAD, STAGE_MAD},    // Debug Stage
+    {16, 132, 0x0090, STAGE_NO3, STAGE_NO3}, // Entrance Forest Spawn Point
+    {16, 132, 0x0000, STAGE_MAD, STAGE_MAD}, // Debug Stage
     {16, 644, 0x0000, STAGE_NP3, STAGE_NO0},
     {16, 132, 0x00A0, STAGE_NP3, STAGE_NO4},
     {752, 132, 0x0050, STAGE_NP3, STAGE_NZ0},
     {240, 132, 0x0018, STAGE_NP3, STAGE_WRP},
     {128, 164, 0x0128, STAGE_DRE, STAGE_NO4},
-    {448, 1716, 0x0058, 0x0000, STAGE_DAI},      // Unused?
-    {16, 132, 0x0028, 0x0000, STAGE_LIB},        // Library Card Destination
+    {448, 1716, 0x0058, 0x0000, STAGE_DAI}, // Unused?
+    {16, 132, 0x0028, 0x0000, STAGE_LIB},   // Library Card Destination
     {16, 132, 0x0038, 0x0000, STAGE_NO1},
     {16, 132, 128, 0x000C, STAGE_NZ0},
     {240, 132, 16, 0x0036, STAGE_CAT},
