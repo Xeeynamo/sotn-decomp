@@ -24,7 +24,7 @@ void CreateEntitiesToTheLeft(s16 posX) {
 #if !defined(VERSION_BETA)
     while (true) {
 #else
-    if(true){
+    if (true) {
 #endif
         if (g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X] == LAYOUT_OBJ_START ||
             posX > g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X]) {
