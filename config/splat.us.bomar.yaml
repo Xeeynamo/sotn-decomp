@@ -1,0 +1,44 @@
+options:
+  platform: psx
+  basename: bomar
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/MAR/MAR.BIN
+  asm_path: asm/us/boss/mar
+  asset_path: assets/boss/mar
+  src_path: src/boss/mar
+  ld_script_path: build/us/bomar.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.bomar.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.bomar.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.bomar.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: False
+sha1: 4cd6c07959db859f5bc19390a283f34df4bf1619
+segments:
+  - name: bomar
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0xA9EC, .rodata, us]
+      - [0xAC0C, c, us]
+      - [0x1A200, sbss]
+  - [0x1AF70]
