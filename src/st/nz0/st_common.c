@@ -1,7 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-static s16 D_80181978[] = {
+#include "../../destroy_entity.h"
+#include "../../destroy_entities_from_index.h"
+#include "../prevent_entity_from_respawning.h"
+#include "../animate_entity.h"
+
+#include "../unk_anim_func.h"
+
+#include "../get_distance_to_player_x.h"
+
+#include "../get_distance_to_player_y.h"
+
+#include "../get_side_to_player.h"
+
+#include "../move_entity.h"
+
+#include "../fall_entity.h"
+
+#include "../unk_collision_func3.h"
+
+#include "../unk_collision_func2.h"
+
+#include "../alloc_entity.h"
+
+static s16 g_SineTable[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC, 0x031F,
     0x0381, 0x03E3, 0x0444, 0x04A5, 0x0505, 0x0564, 0x05C2, 0x061F, 0x067C,
     0x06D7, 0x0732, 0x078B, 0x07E3, 0x083A, 0x088F, 0x08E4, 0x0937, 0x0988,
@@ -33,34 +56,9 @@ static s16 D_80181978[] = {
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
 
-#include "../../destroy_entity.h"
-#include "../../destroy_entities_from_index.h"
-#include "../prevent_entity_from_respawning.h"
-#include "../animate_entity.h"
+#include "../get_sine_scaled.h"
 
-#include "../unk_anim_func.h"
-
-#include "../get_distance_to_player_x.h"
-
-#include "../get_distance_to_player_y.h"
-
-#include "../get_side_to_player.h"
-
-#include "../move_entity.h"
-
-#include "../fall_entity.h"
-
-#include "../unk_collision_func3.h"
-
-#include "../unk_collision_func2.h"
-
-#include "../alloc_entity.h"
-
-extern s16 D_80181978[];
-
-s32 GetSineScaled(u8 arg0, s16 arg1) { return D_80181978[arg0] * arg1; }
-
-s16 GetSine(u8 arg0) { return D_80181978[arg0]; } // Unique
+#include "../get_sine.h"
 
 #include "../set_entity_velocity_from_angle.h"
 
