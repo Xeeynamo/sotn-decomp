@@ -48,8 +48,8 @@ segments:
       - [0xB68, data] # st_common??
       - [0xD68, data] # e_collect
       - [0x1058, data] # e_misc
-      - [0x1174, data] # e_particles
-      - [0x11F4, data] # e_room_fg
+      - [0x1174, .data, e_particles]
+      - [0x11F4, .data, e_room_fg]
       - [0x1280, data] # 17FEC
       - [0x12EC, data] # rooms
       - [0x1308, data] # e_life_up
