@@ -305,7 +305,7 @@ def get_splat_config(
         file_stuff = name
     elif is_boss(name):
         path_stuff = f"boss/{name}"
-        file_stuff = f"st{name}"
+        file_stuff = f"bo{name}"
     elif is_stage(name):
         path_stuff = f"st/{name}"
         file_stuff = f"st{name}"
@@ -402,6 +402,7 @@ def make_config_psx(ovl_path: str, version: str):
     if bss_off >= 0:
         subsegments.append(f"      - [0x{bss_off:X}, sbss]\n")
 
+    ovl_name = config["options"]["basename"]
     splat_config_path = get_splat_config_path(ovl_name, version)
     with open(splat_config_path, "w") as f:
         f.write(yaml.dump(config, Dumper=IndentDumper, sort_keys=False))
