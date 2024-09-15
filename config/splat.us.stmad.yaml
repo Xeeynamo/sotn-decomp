@@ -37,6 +37,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0xB8, data]
+      - [0x6B4, .data, st_update]
       - [0x6DC, .data, collision]
       - [0x9D4, .data, e_red_door]
       - [0x9EC, .data, st_common]
