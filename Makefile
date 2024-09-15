@@ -386,7 +386,6 @@ force_symbols:
 	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stdre.map --no-default > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stmad.map --no-default > config/symbols.us.stmad.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stno3.map --no-default > config/symbols.us.stno3.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map --no-default > config/symbols.us.stnp3.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map --no-default > config/symbols.us.stnz0.txt
