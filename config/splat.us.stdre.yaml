@@ -85,7 +85,7 @@ segments:
       - [0x173C4, c, collision]
       - [0x18B80, c, create_entity]
       - [0x196F8, c, e_red_door]
-      - [0x1A3A8, c]
+      - [0x1A3A8, c, st_common]
       - [0x1B858, c, e_collect]
       - [0x1CDC4, c, blit_char]
       - [0x1D074, c, entity_relic_orb]
