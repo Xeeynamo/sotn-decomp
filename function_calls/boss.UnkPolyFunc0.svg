@@ -12,7 +12,7 @@
 <!-- boss.UnkPolyFunc0 -->
 <g id="node1" class="node">
 <title>boss.UnkPolyFunc0</title>
-<ellipse fill="red" stroke="black" cx="102.04" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="102.04" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="102.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.UnkPolyFunc0</text>
 </g>
 </g>

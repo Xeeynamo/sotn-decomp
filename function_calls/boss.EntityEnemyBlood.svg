@@ -12,7 +12,7 @@
 <!-- boss.EntityEnemyBlood -->
 <g id="node1" class="node">
 <title>boss.EntityEnemyBlood</title>
-<ellipse fill="red" stroke="black" cx="713.09" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="713.09" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="713.09" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityEnemyBlood</text>
 </g>
 <!-- boss.DestroyEntity -->

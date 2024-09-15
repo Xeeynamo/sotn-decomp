@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntitySoulStealOrb</title>
 <g id="a_node3"><a xlink:href="boss.EntitySoulStealOrb.svg" xlink:title="boss.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="154.69" cy="-378" rx="125.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="154.69" cy="-378" rx="125.38" ry="18"/>
 <text text-anchor="middle" x="154.69" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntitySoulStealOrb</text>
 </a>
 </g>

@@ -12,7 +12,7 @@
 <!-- boss.FindFirstUnkPrim -->
 <g id="node1" class="node">
 <title>boss.FindFirstUnkPrim</title>
-<ellipse fill="red" stroke="black" cx="119.59" cy="-18" rx="119.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="119.59" cy="-18" rx="119.68" ry="18"/>
 <text text-anchor="middle" x="119.59" y="-14.3" font-family="Times,serif" font-size="14.00">boss.FindFirstUnkPrim</text>
 </g>
 </g>

@@ -12,7 +12,7 @@
 <!-- boss.UpdateAnimation -->
 <g id="node1" class="node">
 <title>boss.UpdateAnimation</title>
-<ellipse fill="red" stroke="black" cx="116.34" cy="-18" rx="116.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="116.34" cy="-18" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="116.34" y="-14.3" font-family="Times,serif" font-size="14.00">boss.UpdateAnimation</text>
 </g>
 </g>

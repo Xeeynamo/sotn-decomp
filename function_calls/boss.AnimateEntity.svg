@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.EntityRoomForeground</title>
 <g id="a_node6"><a xlink:href="boss.EntityRoomForeground.svg" xlink:title="boss.EntityRoomForeground">
-<ellipse fill="red" stroke="black" cx="1141.24" cy="-198" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1141.24" cy="-198" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="1141.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityRoomForeground</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>boss.EntitySoulStealOrb</title>
 <g id="a_node7"><a xlink:href="boss.EntitySoulStealOrb.svg" xlink:title="boss.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="1428.24" cy="-198" rx="125.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1428.24" cy="-198" rx="125.38" ry="18"/>
 <text text-anchor="middle" x="1428.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntitySoulStealOrb</text>
 </a>
 </g>

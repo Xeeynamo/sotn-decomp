@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.BottomCornerText</title>
 <g id="a_node3"><a xlink:href="boss.BottomCornerText.svg" xlink:title="boss.BottomCornerText">
-<ellipse fill="red" stroke="black" cx="310.79" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="310.79" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="310.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.BottomCornerText</text>
 </a>
 </g>

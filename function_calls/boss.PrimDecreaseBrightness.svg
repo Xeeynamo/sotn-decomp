@@ -12,7 +12,7 @@
 <!-- boss.PrimDecreaseBrightness -->
 <g id="node1" class="node">
 <title>boss.PrimDecreaseBrightness</title>
-<ellipse fill="red" stroke="black" cx="150.79" cy="-18" rx="150.57" ry="18"/>
+<ellipse fill="green" stroke="black" cx="150.79" cy="-18" rx="150.57" ry="18"/>
 <text text-anchor="middle" x="150.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.PrimDecreaseBrightness</text>
 </g>
 <!-- boss.func_us_80196538 -->

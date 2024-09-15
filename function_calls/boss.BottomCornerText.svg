@@ -12,7 +12,7 @@
 <!-- boss.BottomCornerText -->
 <g id="node1" class="node">
 <title>boss.BottomCornerText</title>
-<ellipse fill="red" stroke="black" cx="330.39" cy="-198" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="330.39" cy="-198" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="330.39" y="-194.3" font-family="Times,serif" font-size="14.00">boss.BottomCornerText</text>
 </g>
 <!-- dra.AllocPrimitives -->

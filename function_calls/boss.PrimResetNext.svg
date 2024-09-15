@@ -12,14 +12,14 @@
 <!-- boss.PrimResetNext -->
 <g id="node1" class="node">
 <title>boss.PrimResetNext</title>
-<ellipse fill="red" stroke="black" cx="105.94" cy="-18" rx="105.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="105.94" cy="-18" rx="105.88" ry="18"/>
 <text text-anchor="middle" x="105.94" y="-14.3" font-family="Times,serif" font-size="14.00">boss.PrimResetNext</text>
 </g>
 <!-- boss.UnkPolyFunc2 -->
 <g id="node2" class="node">
 <title>boss.UnkPolyFunc2</title>
 <g id="a_node2"><a xlink:href="boss.UnkPolyFunc2.svg" xlink:title="boss.UnkPolyFunc2">
-<ellipse fill="red" stroke="black" cx="105.94" cy="-198" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="105.94" cy="-198" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="105.94" y="-194.3" font-family="Times,serif" font-size="14.00">boss.UnkPolyFunc2</text>
 </a>
 </g>

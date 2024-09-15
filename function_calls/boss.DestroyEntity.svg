@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>boss.EntityEnemyBlood</title>
 <g id="a_node13"><a xlink:href="boss.EntityEnemyBlood.svg" xlink:title="boss.EntityEnemyBlood">
-<ellipse fill="red" stroke="black" cx="2906.79" cy="-378" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2906.79" cy="-378" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="2906.79" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityEnemyBlood</text>
 </a>
 </g>
@@ -387,7 +387,7 @@
 <g id="node25" class="node">
 <title>boss.EntitySoulStealOrb</title>
 <g id="a_node25"><a xlink:href="boss.EntitySoulStealOrb.svg" xlink:title="boss.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="6028.79" cy="-378" rx="125.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="6028.79" cy="-378" rx="125.38" ry="18"/>
 <text text-anchor="middle" x="6028.79" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntitySoulStealOrb</text>
 </a>
 </g>
