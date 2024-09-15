@@ -133,9 +133,9 @@ static s16 g_SineTable[] = {
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
 
-s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0 & 0xFF] * arg1; }
+#include "../get_sine_scaled.h"
 
-s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
+#include "../get_sine.h" 
 
 #include "../set_entity_velocity_from_angle.h"
 
