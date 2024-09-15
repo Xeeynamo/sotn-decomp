@@ -270,7 +270,7 @@ void func_8019C31C(Entity* entity) {
                         temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                         var_s2 += 1;
                         if (temp_v0 != NULL) {
-                            CreateEntityFromEntity(E_ID_19, entity, temp_v0);
+                            CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, entity, temp_v0);
                             temp_v0->params = ((Random() & 3) + 9) | 0x100;
                         }
                     } while (var_s2 < 2);

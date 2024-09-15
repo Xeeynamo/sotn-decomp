@@ -121,7 +121,7 @@ void EntityBreakableWall(Entity* self) {
             entity = self + 1;
             for (c = 0; c < 15; c++, entity++) {
                 DestroyEntity(entity);
-                CreateEntityFromEntity(E_ID_19, self, entity);
+                CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, self, entity);
 
                 entity->params = *pSrcTile++;
                 entity->posX.i.hi += *pSrcTile++;
