@@ -90,29 +90,7 @@ extern s16 g_SineTable[];
 
 #include "../get_angle_point_to_entity.h"
 
-// different from other versions
-u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
-    u16 temp_a2 = arg2 - arg1;
-    u16 ret;
-
-    if (temp_a2 & 0x800) {
-        ret = temp_a2 & 0x7FF;
-    } else {
-        ret = temp_a2;
-    }
-
-    if (ret > arg0) {
-        if (temp_a2 & 0x800) {
-            ret = arg1 - arg0;
-        } else {
-            ret = arg1 + arg0;
-        }
-
-        return ret;
-    }
-
-    return arg2;
-}
+#include "../get_normalized_angle.h"
 
 #include "../set_step.h"
 
