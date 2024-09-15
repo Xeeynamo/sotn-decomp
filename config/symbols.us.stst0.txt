@@ -10,7 +10,6 @@ g_eRedDoorTiles = 0x8018064C;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;
 UNK_Invincibility0 = 0x801815EC;
-g_SineTable = 0x80181990;
 g_collectXVelTable = 0x80181E3C;
 g_collectYVelTable = 0x80181E3E;
 g_eUnk14SpawnRots = 0x80181EA0;

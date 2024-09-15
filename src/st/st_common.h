@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #if !defined(VERSION_PSP)
 /*
 sine table. can be generated like:
