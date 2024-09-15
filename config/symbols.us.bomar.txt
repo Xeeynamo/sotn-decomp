@@ -97,3 +97,5 @@ UnkPolyFunc2 = 0x80199868;
 UnkPolyFunc0 = 0x801998BC;
 PrimDecreaseBrightness = 0x801998E8;
 EntityLifeUpSpawn = 0x8019994C;
+EntityClockRoomController = 0x80197FEC;
+g_Statues = 0x8019AF28;
