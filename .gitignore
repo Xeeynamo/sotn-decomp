@@ -19,6 +19,7 @@ disks/
 
 .vscode/settings.json
 .idea/
+.venv/
 tools/go
 
 !tools/sotn-debugmodule/sotn-debugmodule.ld

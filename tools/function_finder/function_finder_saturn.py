@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # tool to list functions by difficulty and decomp.me WIP links
 from pathlib import Path
