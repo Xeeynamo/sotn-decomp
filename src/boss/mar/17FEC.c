@@ -207,7 +207,81 @@ void EntityClockHands(Entity* self) {
     handShadow->rotZ = self->rotZ &= 0xFFF;
 }
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198688);
+extern u16 D_us_801812A8[];
+// todo: overlapping arrays
+extern s16 D_us_80181280[];
+extern s16 D_us_80181284[];
+
+// Birdcage doors on the clock Entity ID 0x18
+void EntityBirdcageDoor(Entity* self) {
+    u16 params = self->params;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_eInitGeneric2);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = D_us_801812A8[self->ext.birdcage.state & 1];
+        self->zPriority = 0x3C;
+        self->rotX = self->rotY = 0x100;
+        self->ext.birdcage.prevState = self->ext.birdcage.state;
+        self->unk6C = 0x80;
+        self->posX.i.hi = D_us_80181280[params] - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = D_us_80181284[params] - g_Tilemap.scrollY.i.hi;
+        break;
+
+    case 1:
+        if (self->ext.birdcage.prevState != self->ext.birdcage.state) {
+            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->ext.birdcage.timer = 64;
+            self->ext.birdcage.prevState = self->ext.birdcage.state;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 2:
+        self->rotX = self->rotY -= 2;
+        self->unk6C += 0xFF;
+        if (--self->ext.birdcage.timer == 0) {
+            self->ext.birdcage.timer = 64;
+            self->zPriority = 0;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 3:
+        self->posX.val += FIX(0.125);
+        if (--self->ext.birdcage.timer == 0) {
+            self->ext.birdcage.timer = 64;
+            self->animCurFrame = D_us_801812A8[self->ext.birdcage.state & 1];
+            self->posX.i.hi -= 8;
+            self->posY.i.hi += 8;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 4:
+        self->posY.val -= FIX(0.125);
+        if (--self->ext.birdcage.timer == 0) {
+            self->ext.birdcage.timer = 64;
+            self->zPriority = 0x3C;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 5:
+        self->rotX = self->rotY += 2;
+        self->unk6C += 1;
+        if (--self->ext.birdcage.timer == 0) {
+            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->step = 1;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_801988F8);
 
