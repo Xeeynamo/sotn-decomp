@@ -52,7 +52,7 @@ segments:
       - [0x11F4, .data, e_room_fg]
       - [0x1280, data] # 17FEC
       - [0x12EC, data] # rooms
-      - [0x1308, data] # e_life_up
+      - [0x1308, .data, e_life_up]
       - [0x135C, data] # e_layout
       - [0x1424, data]
       - [0xA9EC, .rodata, AFC4]
