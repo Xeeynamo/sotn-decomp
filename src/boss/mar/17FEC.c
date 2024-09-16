@@ -402,10 +402,159 @@ void EntityStatue(Entity* self) {
     entity->posX.i.hi = self->posX.i.hi;
 }
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198C74);
+extern u8 D_us_801812C4[];
+extern u8 D_us_801812D0[];
+extern u16 D_us_80181290[];
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198E84);
+// Gears that spin while the statues are moving Entity ID 0x1A
+void EntityStatueGear(Entity* self) {
+    u16 params = self->params;
+    Primitive* prim;
+    s16 primIndex;
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198F24);
+    switch (self->step) {
+    case 0:
+        if (self->step_s == 0) {
+            InitializeEntity(g_eInitGeneric2);
+            self->animSet = ANIMSET_OVL(1);
+            self->animCurFrame = 17;
+            self->zPriority = 0x80;
+            self->posX.i.hi += D_us_80181290[params];
+            self->posY.i.hi -= 44;
+            self->step = 0;
+            self->step_s++;
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        if (primIndex == -1) {
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[primIndex];
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->x0 = self->posX.i.hi - 6;
+        prim->y0 = self->posY.i.hi - 16;
+        prim->u0 = 12;
+        prim->v0 = 32;
+        prim->priority = 0x7F;
+        prim->blendMode = 0;
+        self->step++;
+        break;
+
+    case 1:
+        if (self->ext.statue.step == self->step) {
+            self->step = 2;
+            self->animFrameIdx = self->animCurFrame - 17;
+        }
+        if (self->ext.statue.step == 2) {
+            self->step = 3;
+            self->animFrameIdx = 20 - self->animCurFrame;
+        }
+        self->animFrameDuration = 0;
+        break;
+
+    case 2:
+        AnimateEntity(D_us_801812C4, self);
+        if (self->ext.statue.step == 0) {
+            self->step = 1;
+        }
+        break;
+
+    case 3:
+        AnimateEntity(D_us_801812D0, self);
+        if (self->ext.statue.step == 0) {
+            self->step = 1;
+        }
+        break;
+    }
+}
+
+extern s16 g_StoneDoorTiles[];
+
+void UpdateStoneDoorTiles(bool doorState) {
+    s32 tilePos;
+    s16 i, j;
+
+    for (tilePos = 0xC4, i = 0; i < 2; i++) {
+        for (j = 0; j < 8; j++) {
+            if (doorState) {
+                // Open stone doors
+                g_Tilemap.fg[tilePos] = 0x597;
+                tilePos++;
+            } else {
+                // Close stone doors
+                g_Tilemap.fg[tilePos] = g_StoneDoorTiles[j];
+                tilePos++;
+            }
+        }
+        tilePos += 8;
+    }
+}
+
+// todo overlapping?
+extern s16 D_us_80181294[];
+extern s16 D_us_80181298[];
+
+// Stone doors on the floor leading to CEN Entity ID 0x1B
+void EntityStoneDoor(Entity* self) {
+    u16 params = self->params;
+    const int centerCubeDoor = 0;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_eInitGeneric2);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = params + 27;
+        self->zPriority = 0x40;
+        if (g_CastleFlags[centerCubeDoor] == 0) {
+            self->posX.i.hi += D_us_80181294[params];
+            UpdateStoneDoorTiles(true);
+        } else {
+            self->posX.i.hi += D_us_80181298[params];
+            UpdateStoneDoorTiles(false);
+        }
+        self->posY.i.hi += 88;
+        self->ext.stoneDoor.flag = g_CastleFlags[centerCubeDoor];
+        break;
+
+    case 1:
+        if (self->ext.stoneDoor.flag == NULL) {
+            if (g_CastleFlags[centerCubeDoor]) {
+                self->ext.stoneDoor.unk80 = 0;
+                self->step++;
+            }
+        }
+        self->ext.stoneDoor.flag = g_CastleFlags[centerCubeDoor];
+        break;
+
+    case 2:
+        if ((self->ext.stoneDoor.unk80 % 32) == 0) {
+            PlaySfxPositional(0x607);
+        }
+
+        if (++self->ext.stoneDoor.unk80 % 2) {
+            if (params != 0) {
+                self->posX.i.hi++;
+            } else {
+                self->posX.i.hi--;
+            }
+            if (self->ext.stoneDoor.unk80 % 2) {
+                g_backbufferY = 1;
+            } else {
+                g_backbufferY = 0;
+            }
+        } else {
+            g_backbufferY = 0;
+        }
+
+        if (self->ext.stoneDoor.unk80 > 96) {
+            UpdateStoneDoorTiles(false);
+            g_backbufferY = 0;
+            self->step--;
+        }
+        break;
+    }
+}
 
 void func_us_80199114(void) {}
