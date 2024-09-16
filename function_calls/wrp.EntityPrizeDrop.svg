@@ -287,21 +287,37 @@
 <polygon fill="black" stroke="black" points="3501.29,-35.55 3510.7,-30.67 3500.3,-28.62 3501.29,-35.55"/>
 <text text-anchor="middle" x="3505.7" y="-34.47" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- wrp.EntityEquipItemDrop -->
+<!-- rwrp.EntityEquipItemDrop -->
 <g id="node19" class="node">
+<title>rwrp.EntityEquipItemDrop</title>
+<g id="a_node19"><a xlink:href="rwrp.EntityEquipItemDrop.svg" xlink:title="rwrp.EntityEquipItemDrop">
+<ellipse fill="green" stroke="black" cx="1726.44" cy="-378" rx="136.48" ry="18"/>
+<text text-anchor="middle" x="1726.44" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityEquipItemDrop</text>
+</a>
+</g>
+</g>
+<!-- rwrp.EntityEquipItemDrop&#45;&gt;wrp.EntityPrizeDrop -->
+<g id="edge18" class="edge">
+<title>rwrp.EntityEquipItemDrop&#45;&gt;wrp.EntityPrizeDrop</title>
+<path fill="none" stroke="black" d="M1740.15,-359.93C1765.46,-328.43 1819.6,-261.03 1849.16,-224.24"/>
+<polygon fill="black" stroke="black" points="1852.24,-226 1855.77,-216.02 1846.78,-221.62 1852.24,-226"/>
+<text text-anchor="middle" x="1735.15" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- wrp.EntityEquipItemDrop -->
+<g id="node20" class="node">
 <title>wrp.EntityEquipItemDrop</title>
-<g id="a_node19"><a xlink:href="wrp.EntityEquipItemDrop.svg" xlink:title="wrp.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="1869.44" cy="-378" rx="131.88" ry="18"/>
-<text text-anchor="middle" x="1869.44" y="-374.3" font-family="Times,serif" font-size="14.00">wrp.EntityEquipItemDrop</text>
+<g id="a_node20"><a xlink:href="wrp.EntityEquipItemDrop.svg" xlink:title="wrp.EntityEquipItemDrop">
+<ellipse fill="green" stroke="black" cx="2012.44" cy="-378" rx="131.88" ry="18"/>
+<text text-anchor="middle" x="2012.44" y="-374.3" font-family="Times,serif" font-size="14.00">wrp.EntityEquipItemDrop</text>
 </a>
 </g>
 </g>
 <!-- wrp.EntityEquipItemDrop&#45;&gt;wrp.EntityPrizeDrop -->
-<g id="edge18" class="edge">
+<g id="edge19" class="edge">
 <title>wrp.EntityEquipItemDrop&#45;&gt;wrp.EntityPrizeDrop</title>
-<path fill="none" stroke="black" d="M1869.44,-359.93C1869.44,-328.97 1869.44,-263.3 1869.44,-226.13"/>
-<polygon fill="black" stroke="black" points="1872.94,-226.02 1869.44,-216.02 1865.94,-226.02 1872.94,-226.02"/>
-<text text-anchor="middle" x="1864.44" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M1998.73,-359.93C1973.43,-328.43 1919.28,-261.03 1889.72,-224.24"/>
+<polygon fill="black" stroke="black" points="1892.1,-221.62 1883.11,-216.02 1886.65,-226 1892.1,-221.62"/>
+<text text-anchor="middle" x="1993.73" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>
