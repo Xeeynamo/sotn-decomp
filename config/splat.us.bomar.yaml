@@ -74,7 +74,7 @@ segments:
       - [0x11838, c, e_collect]
       - [0x12DA4, c, blit_char]
       - [0x13054, c, e_misc]
-      - [0x16708, c, e_stage_name]
+      - [0x16538, c, e_stage_name]
       - [0x1738C, c, e_particles]
       - [0x17BD0, c, e_room_fg]
       - [0x17CBC, c, popup]

@@ -10,5 +10,3 @@ void EntityUnkId14(Entity* self);
 void EntityUnkId15(Entity* self);
 
 #include "../../st/e_misc.h"
-
-INCLUDE_ASM("boss/mar/nonmatchings/e_misc", func_us_80196538);
