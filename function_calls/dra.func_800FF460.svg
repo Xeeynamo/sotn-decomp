@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>boss.HitDetection</title>
 <g id="a_node2"><a xlink:href="boss.HitDetection.svg" xlink:title="boss.HitDetection">
-<ellipse fill="red" stroke="black" cx="94.24" cy="-198" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="94.24" cy="-198" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="94.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.HitDetection</text>
 </a>
 </g>

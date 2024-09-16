@@ -12,14 +12,14 @@
 <!-- boss.CreateEntitiesBelow -->
 <g id="node1" class="node">
 <title>boss.CreateEntitiesBelow</title>
-<ellipse fill="red" stroke="black" cx="387.98" cy="-198" rx="130.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="387.98" cy="-198" rx="130.78" ry="18"/>
 <text text-anchor="middle" x="387.98" y="-194.3" font-family="Times,serif" font-size="14.00">boss.CreateEntitiesBelow</text>
 </g>
 <!-- boss.CreateEntityWhenInHorizontalRange -->
 <g id="node2" class="node">
 <title>boss.CreateEntityWhenInHorizontalRange</title>
 <g id="a_node2"><a xlink:href="boss.CreateEntityWhenInHorizontalRange.svg" xlink:title="boss.CreateEntityWhenInHorizontalRange">
-<ellipse fill="red" stroke="black" cx="207.98" cy="-18" rx="207.96" ry="18"/>
+<ellipse fill="green" stroke="black" cx="207.98" cy="-18" rx="207.96" ry="18"/>
 <text text-anchor="middle" x="207.98" y="-14.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityWhenInHorizontalRange</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.FindFirstEntityBelow</title>
 <g id="a_node3"><a xlink:href="boss.FindFirstEntityBelow.svg" xlink:title="boss.FindFirstEntityBelow">
-<ellipse fill="red" stroke="black" cx="568.98" cy="-18" rx="135.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="568.98" cy="-18" rx="135.38" ry="18"/>
 <text text-anchor="middle" x="568.98" y="-14.3" font-family="Times,serif" font-size="14.00">boss.FindFirstEntityBelow</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.UpdateRoomPosition</title>
 <g id="a_node4"><a xlink:href="boss.UpdateRoomPosition.svg" xlink:title="boss.UpdateRoomPosition">
-<ellipse fill="red" stroke="black" cx="387.98" cy="-378" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="387.98" cy="-378" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="387.98" y="-374.3" font-family="Times,serif" font-size="14.00">boss.UpdateRoomPosition</text>
 </a>
 </g>

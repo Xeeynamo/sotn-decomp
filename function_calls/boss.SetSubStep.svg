@@ -12,7 +12,7 @@
 <!-- boss.SetSubStep -->
 <g id="node1" class="node">
 <title>boss.SetSubStep</title>
-<ellipse fill="red" stroke="black" cx="89.69" cy="-18" rx="89.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="89.69" cy="-18" rx="89.88" ry="18"/>
 <text text-anchor="middle" x="89.69" y="-14.3" font-family="Times,serif" font-size="14.00">boss.SetSubStep</text>
 </g>
 </g>

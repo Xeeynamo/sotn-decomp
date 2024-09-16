@@ -12,14 +12,14 @@
 <!-- boss.func_us_801918BC -->
 <g id="node1" class="node">
 <title>boss.func_us_801918BC</title>
-<ellipse fill="red" stroke="black" cx="382.59" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="382.59" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="382.59" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_801918BC</text>
 </g>
 <!-- boss.FallEntity -->
 <g id="node2" class="node">
 <title>boss.FallEntity</title>
 <g id="a_node2"><a xlink:href="boss.FallEntity.svg" xlink:title="boss.FallEntity">
-<ellipse fill="red" stroke="black" cx="80.59" cy="-18" rx="80.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="80.59" cy="-18" rx="80.69" ry="18"/>
 <text text-anchor="middle" x="80.59" y="-14.3" font-family="Times,serif" font-size="14.00">boss.FallEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.MoveEntity</title>
 <g id="a_node3"><a xlink:href="boss.MoveEntity.svg" xlink:title="boss.MoveEntity">
-<ellipse fill="red" stroke="black" cx="268.59" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="268.59" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="268.59" y="-14.3" font-family="Times,serif" font-size="14.00">boss.MoveEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.func_us_80191838</title>
 <g id="a_node4"><a xlink:href="boss.func_us_80191838.svg" xlink:title="boss.func_us_80191838">
-<ellipse fill="red" stroke="black" cx="496.59" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="496.59" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="496.59" y="-14.3" font-family="Times,serif" font-size="14.00">boss.func_us_80191838</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.EntityEquipItemDrop</title>
 <g id="a_node6"><a xlink:href="boss.EntityEquipItemDrop.svg" xlink:title="boss.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="250.59" cy="-378" rx="135.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="250.59" cy="-378" rx="135.38" ry="18"/>
 <text text-anchor="middle" x="250.59" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>boss.EntityPrizeDrop</title>
 <g id="a_node7"><a xlink:href="boss.EntityPrizeDrop.svg" xlink:title="boss.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="514.59" cy="-378" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="514.59" cy="-378" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="514.59" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityPrizeDrop</text>
 </a>
 </g>

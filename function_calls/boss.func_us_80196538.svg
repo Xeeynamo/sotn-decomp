@@ -12,7 +12,7 @@
 <!-- boss.func_us_80196538 -->
 <g id="node1" class="node">
 <title>boss.func_us_80196538</title>
-<ellipse fill="red" stroke="black" cx="150.79" cy="-198" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="150.79" cy="-198" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="150.79" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_80196538</text>
 </g>
 <!-- boss.PrimDecreaseBrightness -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityStageNamePopup</title>
 <g id="a_node3"><a xlink:href="boss.EntityStageNamePopup.svg" xlink:title="boss.EntityStageNamePopup">
-<ellipse fill="red" stroke="black" cx="150.79" cy="-378" rx="146.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="150.79" cy="-378" rx="146.47" ry="18"/>
 <text text-anchor="middle" x="150.79" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityStageNamePopup</text>
 </a>
 </g>

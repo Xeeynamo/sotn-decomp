@@ -12,14 +12,14 @@
 <!-- boss.GetAngleBetweenEntitiesShifted -->
 <g id="node1" class="node">
 <title>boss.GetAngleBetweenEntitiesShifted</title>
-<ellipse fill="red" stroke="black" cx="188.48" cy="-198" rx="188.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-198" rx="188.47" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-194.3" font-family="Times,serif" font-size="14.00">boss.GetAngleBetweenEntitiesShifted</text>
 </g>
 <!-- boss.Ratan2Shifted -->
 <g id="node2" class="node">
 <title>boss.Ratan2Shifted</title>
 <g id="a_node2"><a xlink:href="boss.Ratan2Shifted.svg" xlink:title="boss.Ratan2Shifted">
-<ellipse fill="red" stroke="black" cx="188.48" cy="-18" rx="101.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-18" rx="101.28" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-14.3" font-family="Times,serif" font-size="14.00">boss.Ratan2Shifted</text>
 </a>
 </g>

@@ -12,7 +12,7 @@
 <!-- boss.UnkCollisionFunc2 -->
 <g id="node1" class="node">
 <title>boss.UnkCollisionFunc2</title>
-<ellipse fill="red" stroke="black" cx="208.49" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="208.49" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="208.49" y="-194.3" font-family="Times,serif" font-size="14.00">boss.UnkCollisionFunc2</text>
 </g>
 <!-- dra.CheckCollision -->

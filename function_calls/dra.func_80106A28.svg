@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.BlitChar</title>
 <g id="a_node3"><a xlink:href="boss.BlitChar.svg" xlink:title="boss.BlitChar">
-<ellipse fill="red" stroke="black" cx="73.44" cy="-378" rx="73.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="73.44" cy="-378" rx="73.39" ry="18"/>
 <text text-anchor="middle" x="73.44" y="-374.3" font-family="Times,serif" font-size="14.00">boss.BlitChar</text>
 </a>
 </g>

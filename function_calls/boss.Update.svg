@@ -12,7 +12,7 @@
 <!-- boss.Update -->
 <g id="node1" class="node">
 <title>boss.Update</title>
-<ellipse fill="red" stroke="black" cx="366.14" cy="-198" rx="68.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="366.14" cy="-198" rx="68.79" ry="18"/>
 <text text-anchor="middle" x="366.14" y="-194.3" font-family="Times,serif" font-size="14.00">boss.Update</text>
 </g>
 <!-- UnknownEntityFunction -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="366.14" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="366.14" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="366.14" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>

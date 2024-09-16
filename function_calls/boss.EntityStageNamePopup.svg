@@ -12,7 +12,7 @@
 <!-- boss.EntityStageNamePopup -->
 <g id="node1" class="node">
 <title>boss.EntityStageNamePopup</title>
-<ellipse fill="red" stroke="black" cx="537.05" cy="-198" rx="146.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="537.05" cy="-198" rx="146.47" ry="18"/>
 <text text-anchor="middle" x="537.05" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityStageNamePopup</text>
 </g>
 <!-- FntPrint -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="218.05" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="218.05" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="218.05" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node4"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="440.05" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="440.05" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="440.05" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.Random</title>
 <g id="a_node5"><a xlink:href="boss.Random.svg" xlink:title="boss.Random">
-<ellipse fill="red" stroke="black" cx="635.05" cy="-18" rx="72.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="635.05" cy="-18" rx="72.59" ry="18"/>
 <text text-anchor="middle" x="635.05" y="-14.3" font-family="Times,serif" font-size="14.00">boss.Random</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.func_us_80196538</title>
 <g id="a_node6"><a xlink:href="boss.func_us_80196538.svg" xlink:title="boss.func_us_80196538">
-<ellipse fill="red" stroke="black" cx="847.05" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="847.05" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="847.05" y="-14.3" font-family="Times,serif" font-size="14.00">boss.func_us_80196538</text>
 </a>
 </g>

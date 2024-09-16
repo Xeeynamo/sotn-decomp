@@ -12,7 +12,7 @@
 <!-- boss.UpdateStageEntities -->
 <g id="node1" class="node">
 <title>boss.UpdateStageEntities</title>
-<ellipse fill="red" stroke="black" cx="131.94" cy="-198" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="131.94" cy="-198" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="131.94" y="-194.3" font-family="Times,serif" font-size="14.00">boss.UpdateStageEntities</text>
 </g>
 <!-- UnknownEntityFunction -->

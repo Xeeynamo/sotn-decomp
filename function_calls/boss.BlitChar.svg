@@ -12,7 +12,7 @@
 <!-- boss.BlitChar -->
 <g id="node1" class="node">
 <title>boss.BlitChar</title>
-<ellipse fill="red" stroke="black" cx="244.19" cy="-198" rx="73.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="244.19" cy="-198" rx="73.39" ry="18"/>
 <text text-anchor="middle" x="244.19" y="-194.3" font-family="Times,serif" font-size="14.00">boss.BlitChar</text>
 </g>
 <!-- dra.func_80106A28 -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityMessageBox</title>
 <g id="a_node3"><a xlink:href="boss.EntityMessageBox.svg" xlink:title="boss.EntityMessageBox">
-<ellipse fill="red" stroke="black" cx="122.19" cy="-378" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="122.19" cy="-378" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="122.19" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityMessageBox</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.EntityRelicOrb</title>
 <g id="a_node4"><a xlink:href="boss.EntityRelicOrb.svg" xlink:title="boss.EntityRelicOrb">
-<ellipse fill="red" stroke="black" cx="366.19" cy="-378" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="366.19" cy="-378" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="366.19" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityRelicOrb</text>
 </a>
 </g>

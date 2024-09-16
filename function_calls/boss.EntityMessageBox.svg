@@ -12,7 +12,7 @@
 <!-- boss.EntityMessageBox -->
 <g id="node1" class="node">
 <title>boss.EntityMessageBox</title>
-<ellipse fill="red" stroke="black" cx="457.34" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="457.34" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="457.34" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityMessageBox</text>
 </g>
 <!-- ClearImage -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.BlitChar</title>
 <g id="a_node4"><a xlink:href="boss.BlitChar.svg" xlink:title="boss.BlitChar">
-<ellipse fill="red" stroke="black" cx="361.34" cy="-18" rx="73.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="361.34" cy="-18" rx="73.39" ry="18"/>
 <text text-anchor="middle" x="361.34" y="-14.3" font-family="Times,serif" font-size="14.00">boss.BlitChar</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node5"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="553.34" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="553.34" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="553.34" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node6"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="775.34" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="775.34" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="775.34" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>

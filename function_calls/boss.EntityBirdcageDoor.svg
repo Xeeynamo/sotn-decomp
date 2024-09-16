@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node2"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="103.99" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="103.99" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="103.99" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>

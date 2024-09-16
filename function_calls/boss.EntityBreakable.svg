@@ -12,14 +12,14 @@
 <!-- boss.EntityBreakable -->
 <g id="node1" class="node">
 <title>boss.EntityBreakable</title>
-<ellipse fill="red" stroke="black" cx="749.79" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="749.79" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="749.79" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityBreakable</text>
 </g>
 <!-- boss.AllocEntity -->
 <g id="node2" class="node">
 <title>boss.AllocEntity</title>
 <g id="a_node2"><a xlink:href="boss.AllocEntity.svg" xlink:title="boss.AllocEntity">
-<ellipse fill="red" stroke="black" cx="85.79" cy="-18" rx="85.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="85.79" cy="-18" rx="85.59" ry="18"/>
 <text text-anchor="middle" x="85.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AllocEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.AnimateEntity</title>
 <g id="a_node3"><a xlink:href="boss.AnimateEntity.svg" xlink:title="boss.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="291.79" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="291.79" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="291.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AnimateEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.CreateEntityFromCurrentEntity</title>
 <g id="a_node4"><a xlink:href="boss.CreateEntityFromCurrentEntity.svg" xlink:title="boss.CreateEntityFromCurrentEntity">
-<ellipse fill="red" stroke="black" cx="596.79" cy="-18" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="596.79" cy="-18" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="596.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityFromCurrentEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node5"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="903.79" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="903.79" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="903.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.ReplaceBreakableWithItemDrop</title>
 <g id="a_node6"><a xlink:href="boss.ReplaceBreakableWithItemDrop.svg" xlink:title="boss.ReplaceBreakableWithItemDrop">
-<ellipse fill="red" stroke="black" cx="1210.79" cy="-18" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1210.79" cy="-18" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="1210.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.ReplaceBreakableWithItemDrop</text>
 </a>
 </g>

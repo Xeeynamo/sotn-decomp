@@ -12,14 +12,14 @@
 <!-- boss.MakeExplosions -->
 <g id="node1" class="node">
 <title>boss.MakeExplosions</title>
-<ellipse fill="red" stroke="black" cx="337.79" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="337.79" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="337.79" y="-194.3" font-family="Times,serif" font-size="14.00">boss.MakeExplosions</text>
 </g>
 <!-- boss.AllocEntity -->
 <g id="node2" class="node">
 <title>boss.AllocEntity</title>
 <g id="a_node2"><a xlink:href="boss.AllocEntity.svg" xlink:title="boss.AllocEntity">
-<ellipse fill="red" stroke="black" cx="85.79" cy="-18" rx="85.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="85.79" cy="-18" rx="85.59" ry="18"/>
 <text text-anchor="middle" x="85.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AllocEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.CreateEntityFromEntity</title>
 <g id="a_node3"><a xlink:href="boss.CreateEntityFromEntity.svg" xlink:title="boss.CreateEntityFromEntity">
-<ellipse fill="red" stroke="black" cx="337.79" cy="-18" rx="148.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="337.79" cy="-18" rx="148.37" ry="18"/>
 <text text-anchor="middle" x="337.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityFromEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.Random</title>
 <g id="a_node4"><a xlink:href="boss.Random.svg" xlink:title="boss.Random">
-<ellipse fill="red" stroke="black" cx="576.79" cy="-18" rx="72.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="576.79" cy="-18" rx="72.59" ry="18"/>
 <text text-anchor="middle" x="576.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.Random</text>
 </a>
 </g>

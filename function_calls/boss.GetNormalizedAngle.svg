@@ -12,7 +12,7 @@
 <!-- boss.GetNormalizedAngle -->
 <g id="node1" class="node">
 <title>boss.GetNormalizedAngle</title>
-<ellipse fill="red" stroke="black" cx="131.29" cy="-18" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="131.29" cy="-18" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="131.29" y="-14.3" font-family="Times,serif" font-size="14.00">boss.GetNormalizedAngle</text>
 </g>
 <!-- boss.EntitySoulStealOrb -->

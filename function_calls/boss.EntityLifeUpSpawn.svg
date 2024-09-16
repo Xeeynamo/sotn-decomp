@@ -12,7 +12,7 @@
 <!-- boss.EntityLifeUpSpawn -->
 <g id="node1" class="node">
 <title>boss.EntityLifeUpSpawn</title>
-<ellipse fill="red" stroke="black" cx="1328.84" cy="-198" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1328.84" cy="-198" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="1328.84" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityLifeUpSpawn</text>
 </g>
 <!-- RotMatrix -->
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node10"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="1423.84" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1423.84" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="1423.84" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>boss.MoveEntity</title>
 <g id="a_node11"><a xlink:href="boss.MoveEntity.svg" xlink:title="boss.MoveEntity">
-<ellipse fill="red" stroke="black" cx="1634.84" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1634.84" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="1634.84" y="-14.3" font-family="Times,serif" font-size="14.00">boss.MoveEntity</text>
 </a>
 </g>

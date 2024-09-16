@@ -12,14 +12,14 @@
 <!-- boss.AnimateEntity -->
 <g id="node1" class="node">
 <title>boss.AnimateEntity</title>
-<ellipse fill="red" stroke="black" cx="1284.24" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1284.24" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="1284.24" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AnimateEntity</text>
 </g>
 <!-- boss.EntityBigRedFireball -->
 <g id="node2" class="node">
 <title>boss.EntityBigRedFireball</title>
 <g id="a_node2"><a xlink:href="boss.EntityBigRedFireball.svg" xlink:title="boss.EntityBigRedFireball">
-<ellipse fill="red" stroke="black" cx="133.24" cy="-198" rx="133.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="133.24" cy="-198" rx="133.48" ry="18"/>
 <text text-anchor="middle" x="133.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityBigRedFireball</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityBreakable</title>
 <g id="a_node3"><a xlink:href="boss.EntityBreakable.svg" xlink:title="boss.EntityBreakable">
-<ellipse fill="red" stroke="black" cx="395.24" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="395.24" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="395.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityBreakable</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.EntityExplosion</title>
 <g id="a_node4"><a xlink:href="boss.EntityExplosion.svg" xlink:title="boss.EntityExplosion">
-<ellipse fill="red" stroke="black" cx="632.24" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="632.24" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="632.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityExplosion</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.EntityPrizeDrop</title>
 <g id="a_node5"><a xlink:href="boss.EntityPrizeDrop.svg" xlink:title="boss.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="869.24" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="869.24" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="869.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityPrizeDrop</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>boss.InitializeUnkEntity</title>
 <g id="a_node9"><a xlink:href="boss.InitializeUnkEntity.svg" xlink:title="boss.InitializeUnkEntity">
-<ellipse fill="red" stroke="black" cx="1945.24" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1945.24" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="1945.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.InitializeUnkEntity</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>boss.func_us_8018AC0C</title>
 <g id="a_node10"><a xlink:href="boss.func_us_8018AC0C.svg" xlink:title="boss.func_us_8018AC0C">
-<ellipse fill="red" stroke="black" cx="2209.24" cy="-198" rx="123.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2209.24" cy="-198" rx="123.48" ry="18"/>
 <text text-anchor="middle" x="2209.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_8018AC0C</text>
 </a>
 </g>

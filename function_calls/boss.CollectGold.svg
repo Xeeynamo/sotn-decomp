@@ -12,7 +12,7 @@
 <!-- boss.CollectGold -->
 <g id="node1" class="node">
 <title>boss.CollectGold</title>
-<ellipse fill="red" stroke="black" cx="467.89" cy="-198" rx="88.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="467.89" cy="-198" rx="88.28" ry="18"/>
 <text text-anchor="middle" x="467.89" y="-194.3" font-family="Times,serif" font-size="14.00">boss.CollectGold</text>
 </g>
 <!-- boss.BottomCornerText -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="359.89" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="359.89" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="359.89" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.EntityPrizeDrop</title>
 <g id="a_node6"><a xlink:href="boss.EntityPrizeDrop.svg" xlink:title="boss.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="467.89" cy="-378" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="467.89" cy="-378" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="467.89" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityPrizeDrop</text>
 </a>
 </g>

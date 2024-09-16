@@ -12,14 +12,14 @@
 <!-- boss.CreateEntityWhenInHorizontalRange -->
 <g id="node1" class="node">
 <title>boss.CreateEntityWhenInHorizontalRange</title>
-<ellipse fill="red" stroke="black" cx="269.64" cy="-198" rx="207.96" ry="18"/>
+<ellipse fill="green" stroke="black" cx="269.64" cy="-198" rx="207.96" ry="18"/>
 <text text-anchor="middle" x="269.64" y="-194.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityWhenInHorizontalRange</text>
 </g>
 <!-- boss.CreateEntityFromLayout -->
 <g id="node2" class="node">
 <title>boss.CreateEntityFromLayout</title>
 <g id="a_node2"><a xlink:href="boss.CreateEntityFromLayout.svg" xlink:title="boss.CreateEntityFromLayout">
-<ellipse fill="red" stroke="black" cx="269.64" cy="-18" rx="151.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="269.64" cy="-18" rx="151.37" ry="18"/>
 <text text-anchor="middle" x="269.64" y="-14.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityFromLayout</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.CreateEntitiesAbove</title>
 <g id="a_node3"><a xlink:href="boss.CreateEntitiesAbove.svg" xlink:title="boss.CreateEntitiesAbove">
-<ellipse fill="red" stroke="black" cx="130.64" cy="-378" rx="130.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="130.64" cy="-378" rx="130.78" ry="18"/>
 <text text-anchor="middle" x="130.64" y="-374.3" font-family="Times,serif" font-size="14.00">boss.CreateEntitiesAbove</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.CreateEntitiesBelow</title>
 <g id="a_node4"><a xlink:href="boss.CreateEntitiesBelow.svg" xlink:title="boss.CreateEntitiesBelow">
-<ellipse fill="red" stroke="black" cx="409.64" cy="-378" rx="130.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="409.64" cy="-378" rx="130.78" ry="18"/>
 <text text-anchor="middle" x="409.64" y="-374.3" font-family="Times,serif" font-size="14.00">boss.CreateEntitiesBelow</text>
 </a>
 </g>

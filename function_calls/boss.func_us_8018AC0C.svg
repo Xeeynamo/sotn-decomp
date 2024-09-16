@@ -12,14 +12,14 @@
 <!-- boss.func_us_8018AC0C -->
 <g id="node1" class="node">
 <title>boss.func_us_8018AC0C</title>
-<ellipse fill="red" stroke="black" cx="214.04" cy="-198" rx="123.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="214.04" cy="-198" rx="123.48" ry="18"/>
 <text text-anchor="middle" x="214.04" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_8018AC0C</text>
 </g>
 <!-- boss.AnimateEntity -->
 <g id="node2" class="node">
 <title>boss.AnimateEntity</title>
 <g id="a_node2"><a xlink:href="boss.AnimateEntity.svg" xlink:title="boss.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="102.04" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="102.04" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="102.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AnimateEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node3"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="326.04" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="326.04" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="326.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>

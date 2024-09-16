@@ -12,14 +12,14 @@
 <!-- boss.EntityOlroxDrool -->
 <g id="node1" class="node">
 <title>boss.EntityOlroxDrool</title>
-<ellipse fill="red" stroke="black" cx="776.94" cy="-198" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="776.94" cy="-198" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="776.94" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityOlroxDrool</text>
 </g>
 <!-- boss.CheckColliderOffsets -->
 <g id="node2" class="node">
 <title>boss.CheckColliderOffsets</title>
 <g id="a_node2"><a xlink:href="boss.CheckColliderOffsets.svg" xlink:title="boss.CheckColliderOffsets">
-<ellipse fill="red" stroke="black" cx="131.94" cy="-18" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="131.94" cy="-18" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="131.94" y="-14.3" font-family="Times,serif" font-size="14.00">boss.CheckColliderOffsets</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="381.94" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="381.94" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="381.94" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.EntityUnkId14Spawner</title>
 <g id="a_node4"><a xlink:href="boss.EntityUnkId14Spawner.svg" xlink:title="boss.EntityUnkId14Spawner">
-<ellipse fill="red" stroke="black" cx="643.94" cy="-18" rx="144.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="643.94" cy="-18" rx="144.07" ry="18"/>
 <text text-anchor="middle" x="643.94" y="-14.3" font-family="Times,serif" font-size="14.00">boss.EntityUnkId14Spawner</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node5"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="909.94" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="909.94" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="909.94" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>

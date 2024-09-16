@@ -12,14 +12,14 @@
 <!-- boss.PreventEntityFromRespawning -->
 <g id="node1" class="node">
 <title>boss.PreventEntityFromRespawning</title>
-<ellipse fill="red" stroke="black" cx="242.24" cy="-18" rx="181.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="242.24" cy="-18" rx="181.17" ry="18"/>
 <text text-anchor="middle" x="242.24" y="-14.3" font-family="Times,serif" font-size="14.00">boss.PreventEntityFromRespawning</text>
 </g>
 <!-- boss.HitDetection -->
 <g id="node2" class="node">
 <title>boss.HitDetection</title>
 <g id="a_node2"><a xlink:href="boss.HitDetection.svg" xlink:title="boss.HitDetection">
-<ellipse fill="red" stroke="black" cx="94.24" cy="-198" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="94.24" cy="-198" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="94.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.HitDetection</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.ReplaceBreakableWithItemDrop</title>
 <g id="a_node3"><a xlink:href="boss.ReplaceBreakableWithItemDrop.svg" xlink:title="boss.ReplaceBreakableWithItemDrop">
-<ellipse fill="red" stroke="black" cx="391.24" cy="-198" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="391.24" cy="-198" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="391.24" y="-194.3" font-family="Times,serif" font-size="14.00">boss.ReplaceBreakableWithItemDrop</text>
 </a>
 </g>

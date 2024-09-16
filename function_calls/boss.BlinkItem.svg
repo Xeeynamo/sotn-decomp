@@ -12,14 +12,14 @@
 <!-- boss.BlinkItem -->
 <g id="node1" class="node">
 <title>boss.BlinkItem</title>
-<ellipse fill="red" stroke="black" cx="263.19" cy="-18" rx="79.89" ry="18"/>
+<ellipse fill="green" stroke="black" cx="263.19" cy="-18" rx="79.89" ry="18"/>
 <text text-anchor="middle" x="263.19" y="-14.3" font-family="Times,serif" font-size="14.00">boss.BlinkItem</text>
 </g>
 <!-- boss.EntityEquipItemDrop -->
 <g id="node2" class="node">
 <title>boss.EntityEquipItemDrop</title>
 <g id="a_node2"><a xlink:href="boss.EntityEquipItemDrop.svg" xlink:title="boss.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="135.19" cy="-198" rx="135.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="135.19" cy="-198" rx="135.38" ry="18"/>
 <text text-anchor="middle" x="135.19" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityRelicOrb</title>
 <g id="a_node3"><a xlink:href="boss.EntityRelicOrb.svg" xlink:title="boss.EntityRelicOrb">
-<ellipse fill="red" stroke="black" cx="392.19" cy="-198" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="392.19" cy="-198" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="392.19" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityRelicOrb</text>
 </a>
 </g>

@@ -12,14 +12,14 @@
 <!-- boss.GetSideToPlayer -->
 <g id="node1" class="node">
 <title>boss.GetSideToPlayer</title>
-<ellipse fill="red" stroke="black" cx="215.99" cy="-18" rx="112.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="215.99" cy="-18" rx="112.38" ry="18"/>
 <text text-anchor="middle" x="215.99" y="-14.3" font-family="Times,serif" font-size="14.00">boss.GetSideToPlayer</text>
 </g>
 <!-- boss.EntityRedDoor -->
 <g id="node2" class="node">
 <title>boss.EntityRedDoor</title>
 <g id="a_node2"><a xlink:href="boss.EntityRedDoor.svg" xlink:title="boss.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="103.99" cy="-198" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="103.99" cy="-198" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="103.99" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityRedDoor</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityUnkId12</title>
 <g id="a_node3"><a xlink:href="boss.EntityUnkId12.svg" xlink:title="boss.EntityUnkId12">
-<ellipse fill="red" stroke="black" cx="328.99" cy="-198" rx="103.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="328.99" cy="-198" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="328.99" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityUnkId12</text>
 </a>
 </g>

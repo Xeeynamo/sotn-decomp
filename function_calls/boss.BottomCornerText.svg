@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.CollectGold</title>
 <g id="a_node3"><a xlink:href="boss.CollectGold.svg" xlink:title="boss.CollectGold">
-<ellipse fill="red" stroke="black" cx="88.39" cy="-378" rx="88.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="88.39" cy="-378" rx="88.28" ry="18"/>
 <text text-anchor="middle" x="88.39" y="-374.3" font-family="Times,serif" font-size="14.00">boss.CollectGold</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.EntityEquipItemDrop</title>
 <g id="a_node4"><a xlink:href="boss.EntityEquipItemDrop.svg" xlink:title="boss.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="330.39" cy="-378" rx="135.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="330.39" cy="-378" rx="135.38" ry="18"/>
 <text text-anchor="middle" x="330.39" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.HitDetection</title>
 <g id="a_node5"><a xlink:href="boss.HitDetection.svg" xlink:title="boss.HitDetection">
-<ellipse fill="red" stroke="black" cx="577.39" cy="-378" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="577.39" cy="-378" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="577.39" y="-374.3" font-family="Times,serif" font-size="14.00">boss.HitDetection</text>
 </a>
 </g>

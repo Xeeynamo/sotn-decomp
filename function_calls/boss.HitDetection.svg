@@ -12,14 +12,14 @@
 <!-- boss.HitDetection -->
 <g id="node1" class="node">
 <title>boss.HitDetection</title>
-<ellipse fill="red" stroke="black" cx="1613.79" cy="-198" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1613.79" cy="-198" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="1613.79" y="-194.3" font-family="Times,serif" font-size="14.00">boss.HitDetection</text>
 </g>
 <!-- boss.AllocEntity -->
 <g id="node2" class="node">
 <title>boss.AllocEntity</title>
 <g id="a_node2"><a xlink:href="boss.AllocEntity.svg" xlink:title="boss.AllocEntity">
-<ellipse fill="red" stroke="black" cx="85.79" cy="-18" rx="85.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="85.79" cy="-18" rx="85.59" ry="18"/>
 <text text-anchor="middle" x="85.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AllocEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.CreateEntityFromEntity</title>
 <g id="a_node4"><a xlink:href="boss.CreateEntityFromEntity.svg" xlink:title="boss.CreateEntityFromEntity">
-<ellipse fill="red" stroke="black" cx="597.79" cy="-18" rx="148.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="597.79" cy="-18" rx="148.37" ry="18"/>
 <text text-anchor="middle" x="597.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityFromEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node5"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="863.79" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="863.79" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="863.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.PreventEntityFromRespawning</title>
 <g id="a_node6"><a xlink:href="boss.PreventEntityFromRespawning.svg" xlink:title="boss.PreventEntityFromRespawning">
-<ellipse fill="red" stroke="black" cx="1162.79" cy="-18" rx="181.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1162.79" cy="-18" rx="181.17" ry="18"/>
 <text text-anchor="middle" x="1162.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.PreventEntityFromRespawning</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>boss.Random</title>
 <g id="a_node7"><a xlink:href="boss.Random.svg" xlink:title="boss.Random">
-<ellipse fill="red" stroke="black" cx="1434.79" cy="-18" rx="72.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1434.79" cy="-18" rx="72.59" ry="18"/>
 <text text-anchor="middle" x="1434.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.Random</text>
 </a>
 </g>

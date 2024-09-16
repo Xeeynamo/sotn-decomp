@@ -12,14 +12,14 @@
 <!-- boss.CreateEntityFromEntity -->
 <g id="node1" class="node">
 <title>boss.CreateEntityFromEntity</title>
-<ellipse fill="red" stroke="black" cx="319.34" cy="-198" rx="148.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="319.34" cy="-198" rx="148.37" ry="18"/>
 <text text-anchor="middle" x="319.34" y="-194.3" font-family="Times,serif" font-size="14.00">boss.CreateEntityFromEntity</text>
 </g>
 <!-- boss.DestroyEntity -->
 <g id="node2" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="319.34" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="319.34" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="319.34" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityUnkId13</title>
 <g id="a_node3"><a xlink:href="boss.EntityUnkId13.svg" xlink:title="boss.EntityUnkId13">
-<ellipse fill="red" stroke="black" cx="103.34" cy="-378" rx="103.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="103.34" cy="-378" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="103.34" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityUnkId13</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.HitDetection</title>
 <g id="a_node4"><a xlink:href="boss.HitDetection.svg" xlink:title="boss.HitDetection">
-<ellipse fill="red" stroke="black" cx="319.34" cy="-378" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="319.34" cy="-378" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="319.34" y="-374.3" font-family="Times,serif" font-size="14.00">boss.HitDetection</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.MakeExplosions</title>
 <g id="a_node5"><a xlink:href="boss.MakeExplosions.svg" xlink:title="boss.MakeExplosions">
-<ellipse fill="red" stroke="black" cx="542.34" cy="-378" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="542.34" cy="-378" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="542.34" y="-374.3" font-family="Times,serif" font-size="14.00">boss.MakeExplosions</text>
 </a>
 </g>

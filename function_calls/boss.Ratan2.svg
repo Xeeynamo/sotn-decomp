@@ -12,7 +12,7 @@
 <!-- boss.Ratan2 -->
 <g id="node1" class="node">
 <title>boss.Ratan2</title>
-<ellipse fill="red" stroke="black" cx="67.59" cy="-198" rx="67.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="67.59" cy="-198" rx="67.69" ry="18"/>
 <text text-anchor="middle" x="67.59" y="-194.3" font-family="Times,serif" font-size="14.00">boss.Ratan2</text>
 </g>
 <!-- ratan2 -->

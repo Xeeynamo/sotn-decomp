@@ -12,14 +12,14 @@
 <!-- boss.EntityUnkId15Spawner -->
 <g id="node1" class="node">
 <title>boss.EntityUnkId15Spawner</title>
-<ellipse fill="red" stroke="black" cx="144.29" cy="-198" rx="144.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="144.29" cy="-198" rx="144.07" ry="18"/>
 <text text-anchor="middle" x="144.29" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityUnkId15Spawner</text>
 </g>
 <!-- boss.AllocEntity -->
 <g id="node2" class="node">
 <title>boss.AllocEntity</title>
 <g id="a_node2"><a xlink:href="boss.AllocEntity.svg" xlink:title="boss.AllocEntity">
-<ellipse fill="red" stroke="black" cx="144.29" cy="-18" rx="85.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="144.29" cy="-18" rx="85.59" ry="18"/>
 <text text-anchor="middle" x="144.29" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AllocEntity</text>
 </a>
 </g>

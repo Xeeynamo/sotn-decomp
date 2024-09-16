@@ -12,14 +12,14 @@
 <!-- boss.SetStep -->
 <g id="node1" class="node">
 <title>boss.SetStep</title>
-<ellipse fill="red" stroke="black" cx="410.19" cy="-18" rx="71.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="410.19" cy="-18" rx="71.49" ry="18"/>
 <text text-anchor="middle" x="410.19" y="-14.3" font-family="Times,serif" font-size="14.00">boss.SetStep</text>
 </g>
 <!-- boss.EntityEquipItemDrop -->
 <g id="node2" class="node">
 <title>boss.EntityEquipItemDrop</title>
 <g id="a_node2"><a xlink:href="boss.EntityEquipItemDrop.svg" xlink:title="boss.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="135.19" cy="-198" rx="135.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="135.19" cy="-198" rx="135.38" ry="18"/>
 <text text-anchor="middle" x="135.19" y="-194.3" font-family="Times,serif" font-size="14.00">boss.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.func_us_80191B74</title>
 <g id="a_node4"><a xlink:href="boss.func_us_80191B74.svg" xlink:title="boss.func_us_80191B74">
-<ellipse fill="red" stroke="black" cx="672.19" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="672.19" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="672.19" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_80191B74</text>
 </a>
 </g>

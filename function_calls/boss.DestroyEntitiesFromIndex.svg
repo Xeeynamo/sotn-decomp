@@ -12,14 +12,14 @@
 <!-- boss.DestroyEntitiesFromIndex -->
 <g id="node1" class="node">
 <title>boss.DestroyEntitiesFromIndex</title>
-<ellipse fill="red" stroke="black" cx="158.59" cy="-198" rx="158.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="158.59" cy="-198" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="158.59" y="-194.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntitiesFromIndex</text>
 </g>
 <!-- boss.DestroyEntity -->
 <g id="node2" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="158.59" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="158.59" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="158.59" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>

@@ -12,7 +12,7 @@
 <!-- boss.CheckColliderOffsets -->
 <g id="node1" class="node">
 <title>boss.CheckColliderOffsets</title>
-<ellipse fill="red" stroke="black" cx="131.94" cy="-198" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="131.94" cy="-198" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="131.94" y="-194.3" font-family="Times,serif" font-size="14.00">boss.CheckColliderOffsets</text>
 </g>
 <!-- dra.CheckCollision -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityOlroxDrool</title>
 <g id="a_node3"><a xlink:href="boss.EntityOlroxDrool.svg" xlink:title="boss.EntityOlroxDrool">
-<ellipse fill="red" stroke="black" cx="131.94" cy="-378" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="131.94" cy="-378" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="131.94" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityOlroxDrool</text>
 </a>
 </g>

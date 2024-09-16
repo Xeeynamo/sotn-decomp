@@ -12,14 +12,14 @@
 <!-- boss.UnkCollisionFunc5 -->
 <g id="node1" class="node">
 <title>boss.UnkCollisionFunc5</title>
-<ellipse fill="red" stroke="black" cx="178.59" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="178.59" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="178.59" y="-194.3" font-family="Times,serif" font-size="14.00">boss.UnkCollisionFunc5</text>
 </g>
 <!-- boss.FallEntity -->
 <g id="node2" class="node">
 <title>boss.FallEntity</title>
 <g id="a_node2"><a xlink:href="boss.FallEntity.svg" xlink:title="boss.FallEntity">
-<ellipse fill="red" stroke="black" cx="80.59" cy="-18" rx="80.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="80.59" cy="-18" rx="80.69" ry="18"/>
 <text text-anchor="middle" x="80.59" y="-14.3" font-family="Times,serif" font-size="14.00">boss.FallEntity</text>
 </a>
 </g>

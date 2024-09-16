@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityLifeUpSpawn</title>
 <g id="a_node3"><a xlink:href="boss.EntityLifeUpSpawn.svg" xlink:title="boss.EntityLifeUpSpawn">
-<ellipse fill="red" stroke="black" cx="126.09" cy="-378" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.09" cy="-378" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="126.09" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityLifeUpSpawn</text>
 </a>
 </g>

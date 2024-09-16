@@ -12,7 +12,7 @@
 <!-- boss.UnkEntityFunc0 -->
 <g id="node1" class="node">
 <title>boss.UnkEntityFunc0</title>
-<ellipse fill="red" stroke="black" cx="255.19" cy="-198" rx="111.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="255.19" cy="-198" rx="111.28" ry="18"/>
 <text text-anchor="middle" x="255.19" y="-194.3" font-family="Times,serif" font-size="14.00">boss.UnkEntityFunc0</text>
 </g>
 <!-- rcos -->

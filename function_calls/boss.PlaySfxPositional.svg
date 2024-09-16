@@ -12,7 +12,7 @@
 <!-- boss.PlaySfxPositional -->
 <g id="node1" class="node">
 <title>boss.PlaySfxPositional</title>
-<ellipse fill="red" stroke="black" cx="391.74" cy="-198" rx="115.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="391.74" cy="-198" rx="115.08" ry="18"/>
 <text text-anchor="middle" x="391.74" y="-194.3" font-family="Times,serif" font-size="14.00">boss.PlaySfxPositional</text>
 </g>
 <!-- dra.PlaySfxVolPan -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.EntityExplosionSpawn</title>
 <g id="a_node3"><a xlink:href="boss.EntityExplosionSpawn.svg" xlink:title="boss.EntityExplosionSpawn">
-<ellipse fill="red" stroke="black" cx="139.74" cy="-378" rx="139.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="139.74" cy="-378" rx="139.98" ry="18"/>
 <text text-anchor="middle" x="139.74" y="-374.3" font-family="Times,serif" font-size="14.00">boss.EntityExplosionSpawn</text>
 </a>
 </g>

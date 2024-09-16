@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>boss.AnimateEntity</title>
 <g id="a_node2"><a xlink:href="boss.AnimateEntity.svg" xlink:title="boss.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="102.04" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="102.04" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="102.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.AnimateEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>boss.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="boss.DestroyEntity.svg" xlink:title="boss.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="322.04" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="322.04" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="322.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.DestroyEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>boss.GetAngleBetweenEntities</title>
 <g id="a_node4"><a xlink:href="boss.GetAngleBetweenEntities.svg" xlink:title="boss.GetAngleBetweenEntities">
-<ellipse fill="red" stroke="black" cx="595.04" cy="-18" rx="154.87" ry="18"/>
+<ellipse fill="green" stroke="black" cx="595.04" cy="-18" rx="154.87" ry="18"/>
 <text text-anchor="middle" x="595.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.GetAngleBetweenEntities</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>boss.GetNormalizedAngle</title>
 <g id="a_node5"><a xlink:href="boss.GetNormalizedAngle.svg" xlink:title="boss.GetNormalizedAngle">
-<ellipse fill="red" stroke="black" cx="899.04" cy="-18" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="899.04" cy="-18" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="899.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.GetNormalizedAngle</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>boss.InitializeEntity</title>
 <g id="a_node6"><a xlink:href="boss.InitializeEntity.svg" xlink:title="boss.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="1152.04" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1152.04" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="1152.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.InitializeEntity</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>boss.MoveEntity</title>
 <g id="a_node7"><a xlink:href="boss.MoveEntity.svg" xlink:title="boss.MoveEntity">
-<ellipse fill="red" stroke="black" cx="1363.04" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1363.04" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="1363.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.MoveEntity</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>boss.Random</title>
 <g id="a_node8"><a xlink:href="boss.Random.svg" xlink:title="boss.Random">
-<ellipse fill="red" stroke="black" cx="1543.04" cy="-18" rx="72.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1543.04" cy="-18" rx="72.59" ry="18"/>
 <text text-anchor="middle" x="1543.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.Random</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>boss.UnkEntityFunc0</title>
 <g id="a_node9"><a xlink:href="boss.UnkEntityFunc0.svg" xlink:title="boss.UnkEntityFunc0">
-<ellipse fill="red" stroke="black" cx="1745.04" cy="-18" rx="111.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1745.04" cy="-18" rx="111.28" ry="18"/>
 <text text-anchor="middle" x="1745.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.UnkEntityFunc0</text>
 </a>
 </g>

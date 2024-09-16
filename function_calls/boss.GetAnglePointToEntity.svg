@@ -12,21 +12,21 @@
 <!-- boss.GetAnglePointToEntity -->
 <g id="node1" class="node">
 <title>boss.GetAnglePointToEntity</title>
-<ellipse fill="red" stroke="black" cx="141.04" cy="-198" rx="141.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="141.04" cy="-198" rx="141.07" ry="18"/>
 <text text-anchor="middle" x="141.04" y="-194.3" font-family="Times,serif" font-size="14.00">boss.GetAnglePointToEntity</text>
 </g>
-<!-- boss.Ratan2Shifted -->
+<!-- ratan2 -->
 <g id="node2" class="node">
-<title>boss.Ratan2Shifted</title>
-<g id="a_node2"><a xlink:href="boss.Ratan2Shifted.svg" xlink:title="boss.Ratan2Shifted">
-<ellipse fill="red" stroke="black" cx="141.04" cy="-18" rx="101.28" ry="18"/>
-<text text-anchor="middle" x="141.04" y="-14.3" font-family="Times,serif" font-size="14.00">boss.Ratan2Shifted</text>
+<title>ratan2</title>
+<g id="a_node2"><a xlink:href="ratan2.svg" xlink:title="ratan2">
+<ellipse fill="lightblue" stroke="black" cx="141.04" cy="-18" rx="41.69" ry="18"/>
+<text text-anchor="middle" x="141.04" y="-14.3" font-family="Times,serif" font-size="14.00">ratan2</text>
 </a>
 </g>
 </g>
-<!-- boss.GetAnglePointToEntity&#45;&gt;boss.Ratan2Shifted -->
+<!-- boss.GetAnglePointToEntity&#45;&gt;ratan2 -->
 <g id="edge1" class="edge">
-<title>boss.GetAnglePointToEntity&#45;&gt;boss.Ratan2Shifted</title>
+<title>boss.GetAnglePointToEntity&#45;&gt;ratan2</title>
 <path fill="none" stroke="black" d="M141.04,-179.93C141.04,-148.97 141.04,-83.3 141.04,-46.13"/>
 <polygon fill="black" stroke="black" points="144.54,-46.02 141.04,-36.02 137.54,-46.02 144.54,-46.02"/>
 <text text-anchor="middle" x="136.04" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>

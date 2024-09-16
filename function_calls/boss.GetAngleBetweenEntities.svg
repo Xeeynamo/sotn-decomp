@@ -12,7 +12,7 @@
 <!-- boss.GetAngleBetweenEntities -->
 <g id="node1" class="node">
 <title>boss.GetAngleBetweenEntities</title>
-<ellipse fill="red" stroke="black" cx="154.69" cy="-198" rx="154.87" ry="18"/>
+<ellipse fill="green" stroke="black" cx="154.69" cy="-198" rx="154.87" ry="18"/>
 <text text-anchor="middle" x="154.69" y="-194.3" font-family="Times,serif" font-size="14.00">boss.GetAngleBetweenEntities</text>
 </g>
 <!-- ratan2 -->
