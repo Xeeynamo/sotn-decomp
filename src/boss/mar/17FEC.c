@@ -175,7 +175,37 @@ void EntityClockRoomController(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198574);
+// Entity ID 0x17
+void EntityClockHands(Entity* self) {
+    Entity* handShadow = &self[5];
+    u16 params = self->params;
+
+    if (self->step == 0) {
+        InitializeEntity(g_eInitGeneric2);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = params + 25;
+        self->zPriority = 0x3F - params;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+
+        // Create hand shadows
+        CreateEntityFromCurrentEntity(E_DUMMY_1D, handShadow);
+        handShadow->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTZ;
+        handShadow->blendMode = 0x10;
+        handShadow->animSet = ANIMSET_OVL(1);
+        handShadow->animCurFrame = params + 25;
+        handShadow->zPriority = 0x3F - params;
+        handShadow->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        handShadow->posY.i.hi += 4;
+    }
+
+    self->rotZ = (self->ext.clockRoom.hand * 0x1000) / 3600;
+    if (params != 0) {
+        self->rotZ += 0x400;
+    }
+
+    handShadow->rotZ = self->rotZ &= 0xFFF;
+}
 
 INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198688);
 
