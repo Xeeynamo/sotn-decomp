@@ -38,7 +38,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0x30C, data] # e_init
+      - [0x310, data] # e_init
       - [0x4E8, data] # st_common
       - [0x568, data] # e_breakable
       - [0x5D4, data] # AFC4
@@ -47,7 +47,7 @@ segments:
       - [0xB50, data] # e_red_door
       - [0xB68, data] # st_common??
       - [0xD68, data] # e_collect
-      - [0x1058, data] # e_misc
+      - [0x1058, .data, e_misc]
       - [0x1174, .data, e_particles]
       - [0x11F4, .data, e_room_fg]
       - [0x1280, data] # 17FEC

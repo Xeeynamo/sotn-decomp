@@ -2,6 +2,7 @@
 
 // params: message box duration
 // ext.messageBox.label: box size and text to render
+extern u16 g_InitializeData0[];
 void EntityMessageBox(Entity* self) {
     const u16 VramX = 0;
     const u16 VramY = 0x180;

@@ -134,7 +134,6 @@ u8 g_UnkEntityAnimData[] = {
 
 #include "make_explosions.h"
 
-extern u8 g_bigRedFireballAnim[];
 u16 g_UnkRecursPrimVecOrder[] = {
     0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "entity_big_red_fireball.h"

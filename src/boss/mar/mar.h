@@ -2,7 +2,8 @@
 #ifndef MAR_H
 #define MAR_H
 
-extern u16 g_Statues[];
+#include <stage.h>
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -22,7 +23,9 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
 
-    /* 0x16 */ E_CLOCKROOM_CONTROLLER = 0x16,
+    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x15 */ E_ID_15,
+    /* 0x16 */ E_CLOCKROOM_CONTROLLER,
     /* 0x17 */ E_CLOCK_HANDS,
     /* 0x18 */ E_BIRDCAGE_DOOR,
     /* 0x19 */ E_STATUE,
@@ -39,5 +42,6 @@ typedef enum Statues {
 
 extern u16 g_eInitGeneric2[];
 extern s32 D_800973FC;
+extern u16 g_Statues[];
 
 #endif
