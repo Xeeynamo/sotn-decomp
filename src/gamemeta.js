@@ -30,7 +30,7 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "tt_000"
+                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "tt_000"
             ]
         },
         {
@@ -93,6 +93,10 @@ const gameMetadata = {
         "strwrp": {
             "name": "ST/RWRP/RWRP.BIN",
             "desc": "Warp rooms (reverse)"
+        },
+        "bomar": {
+            "name": "BOSS/MAR/MAR.BIN",
+            "desc": "Maria cutscene (clock room)"
         },
         "tt_000": {
             "name": "SERVANT/TT_000.BIN",
