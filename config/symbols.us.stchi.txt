@@ -6,7 +6,7 @@
 Particle_FallingPebbleUpdate = 0x8019BD0C;
 EntityDemonSwitch = 0x8019BDF8;
 EntityDemonSwitchWall = 0x8019BEDC;
-// func_8019C31C
+EntityBreakableWallDebris = 0x8019C31C;
 EntityBreakableWall = 0x8019C5CC;
 // func_8019CBA8
 // func_8019D0D8

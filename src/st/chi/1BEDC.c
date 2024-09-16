@@ -211,8 +211,8 @@ void EntityDemonSwitchWall(Entity* self) {
     }
 }
 
-// [Entity] Breakable Wall Debris
-void func_8019C31C(Entity* entity) {
+// [Entity] Room 5, Bottom, Breakable Wall Debris
+void EntityBreakableWallDebris(Entity* entity) {
     Collider collider;
     s32 temp_a0_2;
     s32 temp_a0_3;
@@ -246,7 +246,6 @@ void func_8019C31C(Entity* entity) {
             if (entity->animCurFrame < 0xB) {
                 entity->velocityY = temp_a0_3 + 0xFFFF0000;
             }
-            //temp_a0_3 
             entity->ext.generic.unk9C.modeS16.unk0 = ((Random() & 3) + 1) * 32;
             return;
         case 1:

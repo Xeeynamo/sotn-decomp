@@ -24,7 +24,7 @@ void func_801A55B4(Entity*);
 void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
 void EntityBreakableWall(Entity*);
-void func_8019C31C(Entity*);
+void EntityBreakableWallDebris(Entity*);
 void func_8019B914(Entity*);
 void func_8019D1A8(Entity*);
 void func_8019CBA8(Entity*);
@@ -71,7 +71,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDemonSwitchWall,
     EntityDemonSwitch,
     EntityBreakableWall,
-    func_8019C31C,  // E_ID_19
+    EntityBreakableWallDebris,
     func_8019B914,  // E_ID_1A - CEN.func_8018DB18
     func_8019CBA8,  // E_ID_1B
     func_8019D1A8,  // E_ID_1C
