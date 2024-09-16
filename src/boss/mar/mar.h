@@ -4,6 +4,8 @@
 
 #include <stage.h>
 
+#define OVL_EXPORT(x) MAR_##x
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,

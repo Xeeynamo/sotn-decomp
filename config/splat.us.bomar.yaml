@@ -37,7 +37,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0xCC, .data, header] # layers
+      - [0xF4, .data, header]
+      - [0x168, .data, e_laydef] # layout entries header
       - [0x310, .data, e_init]
       - [0x4E8, .data, st_debug]
       - [0x568, .data, e_breakable]
@@ -51,10 +54,14 @@ segments:
       - [0x1174, .data, e_particles]
       - [0x11F4, .data, e_room_fg]
       - [0x1280, data] # 17FEC
-      - [0x12EC, data] # rooms
+      - [0x12EC, .data, rooms]
       - [0x1308, .data, e_life_up]
-      - [0x135C, data] # e_layout
+      - [0x135C, .data, e_layout] # layout entries data
       - [0x1424, data]
+      - [0x5300, .data, tile_data] # tile data
+      - [0x5700, .data, tile_data] # tile definitions
+      - [0x9710, .data, sprites]
+      - [0xA9D4, data]
       - [0xA9EC, .rodata, AFC4]
       - [0xAAB0, .rodata, e_red_door]
       - [0xAAC8, .rodata, e_collect]
