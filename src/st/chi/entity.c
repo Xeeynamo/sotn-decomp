@@ -26,7 +26,7 @@ void EntityDemonSwitch(Entity*);
 void EntityBreakableWall(Entity*);
 void EntityBreakableWallDebris(Entity*);
 void func_8019B914(Entity*);
-void func_8019D1A8(Entity*);
+void EntityFallingStairs(Entity*);
 void func_8019CBA8(Entity*);
 void func_8019D9C8(Entity*);
 void func_801A97C8(Entity*);
@@ -74,7 +74,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityBreakableWallDebris,
     func_8019B914,  // E_ID_1A - CEN.func_8018DB18
     func_8019CBA8,  // E_ID_1B
-    func_8019D1A8,  // E_ID_1C
+    EntityFallingStairs,
     func_8019D9C8,  // E_ID_1D
     func_801A97C8,  // E_ID_1E
     func_801A9D40,  // E_ID_1F
@@ -429,25 +429,25 @@ s16 Room5_BreakableRoomEntityData[] = {
     0x000B, 0xFFEC, 0x0010, 0xFE40,
 };
 
-u16 D_80180974[] = {
+u16 Room3_FallingStairsNotFallenTileIndices[] = {
     0x022B, 0x022C, 0x0239, 0x023A, 0x023B, 0x023C, 0x0247, 0x0248,
     0x0249, 0x024A, 0x0255, 0x0256, 0x0257, 0x0258, 0x0259, 0x0265,
     0x0266, 0x0000,
 };
 
-u16 D_80180998[] = {
+u16 Room3_FallingStairsFallenTileIndices[] = {
     0x028B, 0x028C, 0x0299, 0x029A, 0x029B, 0x029C, 0x02A7, 0x02A8,
     0x02A9, 0x02AA, 0x02B5, 0x02B6, 0x02B7, 0x02B8, 0x02B9, 0x02C5,
     0x02C6, 0x0000,
 };
 
-u16 D_801809BC[] = {
+u16 Room3_FallingStairsNotFallenTileValues[] = {
     0x01F9, 0x0224, 0x01F9, 0x0207, 0x0243, 0x0225, 0x01F9, 0x01E7,
     0x0244, 0x0226, 0x0229, 0x01E7, 0x0243, 0x01B5, 0x0226, 0x024B,
     0x0226, 0x0000,
 };
 
-u16 D_801809E0[] = {
+u16 Room3_FallingStairsFallenTileValues[] = {
     0x01C4, 0x0222,
 };
 

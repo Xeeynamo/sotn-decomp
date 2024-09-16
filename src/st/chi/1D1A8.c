@@ -6,101 +6,130 @@
  * Description: Abandoned Mine
  */
 
-void func_8019D0D8(Primitive*);                        // extern
+void func_8019D0D8(Primitive*);
 extern EntityInit EntityInit_8018067C;
-extern s16 D_80180974;
-extern s16 D_80180998;
-extern s16 D_801809BC;
-extern s16 D_801809E0;
+extern s16 Room3_FallingStairsNotFallenTileIndices;
+extern s16 Room3_FallingStairsFallenTileIndices;
+extern s16 Room3_FallingStairsNotFallenTileValues;
+extern s16 Room3_FallingStairsFallenTileValues;
 
-// [Entity] ???
+// [Entity] Room 3, Entry (All Entrances), Falling Stairs
 // PSP:func_psp_0924D948:Match
-void func_8019D1A8(Entity* self)
+void EntityFallingStairs(Entity* self)
 {
+    const s32 NotFallenPosX = 207;
+    const s32 NotFallenPosY = 575;
+    const s32 RoomPosX = 0x50;  //TODO: Compile-time macro?
+    const s32 RoomPosY = 0x200; //TODO: Compile-time macro?
+    const s32 RightSideHitHeight = 0x29F;
+
+    enum Step {
+        Init = 0,
+        Idle_Unfallen = 1,
+        TriggerBreak = 2,
+        Falling = 3,
+        TriggerLand = 4,
+    };
+
+    enum FallingStep {
+        RotateClockwise = 0,
+        RotateCounterClockwise = 1,
+    };
+
     Primitive* prim;    // s0
-    s32 var_s1;         // s1
-    s16* var_a1;        // s2
-    s16* var_a2;        // s3
-    s32 primIdx;        // s4
-    s32 temp_s5;        // s5
+    s32 i;              // s1
+    s16* pDstTileIdx;   // s2
+    s16* pSrcTile;      // s3
+    s32 yPos;           // s4
+    s32 xPos;           // s5
     Entity* entity;     // s6
     Entity* player;     // s7
     s32 scrolledY;      // s8
-    s32 temp_s0_4;      // 0x30(sp)
-    s32 temp_0x34;      // 0x34(sp)
-    s32 temp_0x38;      // 0x38(sp)
+    s32 primIdx;        // 0x30(sp)
+    s32 selfPosY;       // 0x34(sp)
+    s32 selfPosX;       // 0x38(sp)
     s32 scrolledX;      // 0x3c(sp)
     
     scrolledX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
     scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
     
     switch (self->step) {
-        case 0:
-            if (g_CastleFlags[0x52]) {
+        case Init:
+            if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STAIRS]) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = 0xCF - g_Tilemap.scrollX.i.hi;
-            self->posY.i.hi = 0x23F - g_Tilemap.scrollY.i.hi;
+
+            // Change position to be prepared for stairs falling
+            self->posX.i.hi = NotFallenPosX - g_Tilemap.scrollX.i.hi;
+            self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
             InitializeEntity(&EntityInit_8018067C);
             
-            self->drawFlags |= 4;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
             self->animCurFrame = 0;
-            var_a1 = &D_80180974;
-            var_a2 = &D_801809BC;
-            for (var_s1 = 0; var_s1 < 0x11; var_s1++, var_a1++, var_a2++) {
-                g_Tilemap.fg[*var_a1] = *var_a2;
+
+            // Change tileset to show UNfallen stairs
+            pDstTileIdx = &Room3_FallingStairsNotFallenTileIndices;
+            pSrcTile = &Room3_FallingStairsNotFallenTileValues;
+            for (i = 0; i < 0x11; i++, pDstTileIdx++, pSrcTile++) {
+                g_Tilemap.fg[*pDstTileIdx] = *pSrcTile;
             }
             
-            var_a1 = &D_80180998;
-            var_a2 = &D_801809E0;
-            for (var_s1 = 0; var_s1 < 0xF; var_s1++, var_a1++) {
-                g_Tilemap.fg[*var_a1] = 0;
+            // Change tileset to hide fallen stairs
+            pDstTileIdx = &Room3_FallingStairsFallenTileIndices;
+            pSrcTile = &Room3_FallingStairsFallenTileValues;
+            for (i = 0; i < 0xF; i++, pDstTileIdx++) {
+                g_Tilemap.fg[*pDstTileIdx] = 0; // Most tiles are blank
             }
-            for (var_s1 = 0; var_s1 < 2; var_s1++, var_a1++, var_a2++) {
-                g_Tilemap.fg[*var_a1] = *var_a2;
+            for (i = 0; i < 2; i++, pDstTileIdx++, pSrcTile++) {
+                g_Tilemap.fg[*pDstTileIdx] = *pSrcTile; // These two tiles have graphics
             }
 
             // Fallthrough
-        case 1:
+        case Idle_Unfallen:
             player = &PLAYER;
-            temp_s5 = player->posX.i.hi;
-            primIdx = player->posY.i.hi;
-            scrolledX = temp_s5 + g_Tilemap.scrollX.i.hi;
-            scrolledY = primIdx + g_Tilemap.scrollY.i.hi;
-            scrolledX -= 0x50;
-            scrolledY -= 0x200;
+            xPos = player->posX.i.hi;
+            yPos = player->posY.i.hi;
+            scrolledX = xPos + g_Tilemap.scrollX.i.hi;
+            scrolledY = yPos + g_Tilemap.scrollY.i.hi;
+            scrolledX -= RoomPosX;
+            scrolledY -= RoomPosY;
             if ((scrolledX < 0x70U) &&
                 (scrolledY < 0x40U) &&
-                (g_Player.pl_vram_flag & 1)) {
+                (g_Player.pl_vram_flag & 1)) {  // Touching the ground
                 self->step++;
             }
             break;
-        case 2:
+
+        case TriggerBreak:
             self->animCurFrame = 0x23;
-            var_a1 = &D_80180974;
-            for (var_s1 = 0; var_s1 < 0x11; var_s1++, var_a1++) {
-                g_Tilemap.fg[*var_a1] = 0;
+
+            // Clear out all tiles in unfallen state
+            pDstTileIdx = &Room3_FallingStairsNotFallenTileIndices;
+            for (i = 0; i < 0x11; i++, pDstTileIdx++) {
+                g_Tilemap.fg[*pDstTileIdx] = 0;
             }
             
-            g_api.func_80102CD8(1);
-            g_api.PlaySfx(0x644);
+            g_api.func_80102CD8(1); // Not sure what this does. Removing it doesn't make an obvious difference
+            g_api.PlaySfx(NA_SE_SECRET_STAIRS);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+
+            // Spawn a long dust cloud
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0x13;
                 entity->params |= 0xC000;
             }
-            temp_s0_4 = g_api.func_800EDB58(0x11, 0x60);    // 0x11 = Primitive Type, 0x60 = Count
-            if (temp_s0_4 != -1) {
+            primIdx = g_api.func_800EDB58(PRIM_TILE_ALT, 96);
+            if (primIdx != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
-                self->primIndex = temp_s0_4;
-                prim = &g_PrimBuf[temp_s0_4];
+                self->primIndex = primIdx;
+                prim = &g_PrimBuf[primIdx];
                 self->ext.prim = prim;
                 
                 prim->x0 = self->posX.i.hi;
                 prim->y0 = self->posY.i.hi - 0x18;
-                prim->drawMode = 0xA;
+                prim->drawMode = DRAW_HIDE | DRAW_UNK02;
                 prim = prim->next;
                 while (prim != NULL) {
                     prim->p3 = 0;
@@ -110,23 +139,24 @@ void func_8019D1A8(Entity* self)
                     prim->v0 = 1;
                     prim->u0 = 1;
                     prim->priority = 0xC0;
-                    prim->drawMode = 8;
-                    self->ext.et_chi_8019D1A8.prim = prim;
+                    prim->drawMode = DRAW_HIDE;
+                    self->ext.fallingStairs.prim = prim;
                     prim = prim->next;
                 }
                 
+                // Show some dust particles
                 prim = self->ext.prim;
-                temp_s5 = prim->x0;
-                primIdx = prim->y0;
-                for (var_s1 = 0; var_s1 < 8; var_s1++) {
+                xPos = prim->x0;
+                yPos = prim->y0;
+                for (i = 0; i < 8; i++) {
                     prim = self->ext.prim;
                     prim = prim->next;
                     prim = FindFirstUnkPrim(prim);
                     if (prim != NULL) {
                         prim->p3 = 1;
                         prim->p2 = 0;
-                        prim->x0 = temp_s5 + ((Random() & 4)) - 2;
-                        prim->y0 = primIdx + (Random() & 0x1F);
+                        prim->x0 = xPos + ((Random() & 4)) - 2;
+                        prim->y0 = yPos + (Random() & 0x1F);
                     }
                 }
             } else {
@@ -134,87 +164,100 @@ void func_8019D1A8(Entity* self)
             }
             self->step++;
             break;
-        case 3:
+
+        case Falling:
             switch (self->step_s) {
-                case 0:
+                case RotateClockwise:
                     MoveEntity();
                     self->rotZ += 0x12;
                     self->velocityY += 0x4000;
                     scrolledY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
                     if (self->ext.prim != NULL) {
                         prim = self->ext.prim;
-                        temp_s5 = prim->x0;
-                        primIdx = prim->y0;
-                        for (var_s1 = 0; var_s1 < 3; var_s1++) {
+                        xPos = prim->x0;
+                        yPos = prim->y0;
+
+                        // Show some additional dust particles
+                        for (i = 0; i < 3; i++) {
                             prim = self->ext.prim;
                             prim = prim->next;
                             prim = FindFirstUnkPrim(prim);
                             if (prim != NULL) {
                                 prim->p3 = 1;
                                 prim->p2 = 0;
-                                prim->x0 = temp_s5 + (Random() & 7) - 3;
-                                prim->y0 = primIdx + (Random() & 0x1F);
+                                prim->x0 = xPos + (Random() & 7) - 3;
+                                prim->y0 = yPos + (Random() & 0x1F);
                             }
                         }
                     }
-                    if (scrolledY > 0x29F) {
-                        self->posY.i.hi = 0x29F - g_Tilemap.scrollY.i.hi;
-                        g_api.PlaySfx(0x655);
+
+                    // Check for if right side hit the ledge below
+                    if (scrolledY > RightSideHitHeight) {
+                        self->posY.i.hi = RightSideHitHeight - g_Tilemap.scrollY.i.hi;
+                        g_api.PlaySfx(NA_SE_SECRET_STAIRS_THUMP);
                         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+
+                        // Spawn a short dust cloud
                         if (entity != NULL) {
                             CreateEntityFromEntity(E_EXPLOSION, self, entity);
                             entity->params = 0x11;
                             entity->params |= 0xC000;
                         }
+
+                        // Show some dust particles
                         if (self->ext.prim != NULL) {
-                            temp_s5 = self->posX.i.hi;
-                            primIdx = self->posY.i.hi;
-                            for (var_s1 = 0; var_s1 < 8; var_s1++) {
+                            xPos = self->posX.i.hi;
+                            yPos = self->posY.i.hi;
+                            for (i = 0; i < 8; i++) {
                                 prim = self->ext.prim;
                                 prim = FindFirstUnkPrim(prim->next);
                                 if (prim != NULL) {
                                     prim->p3 = 1;
                                     prim->p2 = 0;
-                                    prim->x0 = (temp_s5 + (Random() & 7)) - 3;
-                                    prim->y0 = primIdx + (Random() & 3);
+                                    prim->x0 = (xPos + (Random() & 7)) - 3;
+                                    prim->y0 = yPos + (Random() & 3);
                                 }
                             }
                         }
                         self->step_s++;
                     }
                     break;
-                case 1:
-                    self->rotZ -= self->ext.et_chi_8019D1A8.unk84;
+
+                case RotateCounterClockwise:
+                    self->rotZ -= self->ext.fallingStairs.rotateAccel;
                     
                     // This line works better in PSP, but the uncommented line is better in PSX
-                    //self->ext.et_chi_8019D1A8.unk84++;
-                    self->ext.et_chi_8019D1A8.unk84 = self->ext.et_chi_8019D1A8.unk84 + 1;
+                    //self->ext.fallingStairs.rotateAccel++;
+                    self->ext.fallingStairs.rotateAccel = self->ext.fallingStairs.rotateAccel + 1;
                     
-                    temp_s5 = 0x74 - g_Tilemap.scrollX.i.hi;
-                    primIdx = 0x2C0 - g_Tilemap.scrollY.i.hi;
+                    xPos = 0x74 - g_Tilemap.scrollX.i.hi;
+                    yPos = 0x2C0 - g_Tilemap.scrollY.i.hi;
                     if (self->rotZ < 0) {
-                        self->rotZ = 0;
-                        g_api.PlaySfx(0x655);
+                        self->rotZ = 0; // Don't over-rotate
+                        g_api.PlaySfx(NA_SE_SECRET_STAIRS_THUMP);
                         g_api.func_80102CD8(1);
                         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+
+                        // Spawn a dust cloud
                         if (entity != NULL) {
                             CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
                             entity->params = 0x10;
                             entity->params |= 0xC000;
-                            entity->posX.i.hi = temp_s5;
-                            entity->posY.i.hi = primIdx;
+                            entity->posX.i.hi = xPos;
+                            entity->posY.i.hi = yPos;
                         }
+
+                        // Show some dust particles
                         if (self->ext.prim != NULL) {
-                            for (var_s1 = 0; var_s1 < 8; var_s1++) {
+                            for (i = 0; i < 8; i++) {
                                 prim = self->ext.prim;
                                 prim = prim->next;
                                 prim = FindFirstUnkPrim(prim);
                                 if (prim != NULL) {
                                     prim->p3 = 1;
                                     prim->p2 = 0;
-                                    // s8
-                                    prim->x0 = (temp_s5 + (Random() & 7)) - 3;
-                                    prim->y0 = primIdx + (Random() & 3);
+                                    prim->x0 = (xPos + (Random() & 7)) - 3;
+                                    prim->y0 = yPos + (Random() & 3);
                                 }
                             }
                         }
@@ -223,27 +266,30 @@ void func_8019D1A8(Entity* self)
                     break;
             }
 
-            temp_0x38 = self->posX.i.hi;
-            temp_0x34 = self->posY.i.hi - 0x1F;
+            // Ensure the player stays above the stairs
+            selfPosX = self->posX.i.hi;
+            selfPosY = self->posY.i.hi - 0x1F;
             player = &PLAYER;
-            temp_s5 = temp_0x38 - player->posX.i.hi;
-            if (temp_s5 < 0x80U) {
-                primIdx = (temp_0x34 + ((temp_s5 * rsin(0x100 - self->rotZ)) >> 0xC)) - (player->posY.i.hi + 0x18);
-                if (primIdx <= 0) {
-                    player->posY.i.hi += primIdx + 1;
-                    g_Player.pl_vram_flag |= 0x41;
+            xPos = selfPosX - player->posX.i.hi;
+            if (xPos < 0x80U) {
+                yPos = (selfPosY + ((xPos * rsin(0x100 - self->rotZ)) >> 0xC)) - (player->posY.i.hi + 0x18);
+                if (yPos <= 0) {
+                    player->posY.i.hi += yPos + 1;
+                    g_Player.pl_vram_flag |= 0x41;  // Grounded. What does 0x40 mean?
                 }
             }
             break;
-        case 4:
-            var_a1 = &D_80180998;
-            var_a2 = &D_801809BC;
-            for (var_s1 = 0; var_s1 < 0x10; var_s1++, var_a1++, var_a2++) {
-                g_Tilemap.fg[*var_a1] = *var_a2;
+
+        case TriggerLand:
+            // Update tilemap to show fallen stairs
+            pDstTileIdx = &Room3_FallingStairsFallenTileIndices;
+            pSrcTile = &Room3_FallingStairsNotFallenTileValues;
+            for (i = 0; i < 0x10; i++, pDstTileIdx++, pSrcTile++) {
+                g_Tilemap.fg[*pDstTileIdx] = *pSrcTile; // All except the last tile are in front of nothing
             }
-            g_Tilemap.fg[*var_a1] = 0x1BA;
+            g_Tilemap.fg[*pDstTileIdx] = 0x1BA; // This is the only tile that overlaps existing graphics
             self->animCurFrame = 0;
-            g_CastleFlags[0x52] = 1;
+            g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STAIRS] = 1;
             self->step++;
             break;
     }
@@ -251,6 +297,7 @@ void func_8019D1A8(Entity* self)
         prim = self->ext.prim;
         prim = prim->next;
         
+        // Update dust particles
         while (prim != NULL) {
             if (prim->p3) {
                 func_8019D0D8(prim);
@@ -258,7 +305,7 @@ void func_8019D1A8(Entity* self)
             prim = prim->next;
         }
     
-        prim = self->ext.et_chi_8019D1A8.prim;
+        prim = self->ext.fallingStairs.prim;
         prim->v0 = 0;
         prim->u0 = 0;
         prim->y0 = 0;

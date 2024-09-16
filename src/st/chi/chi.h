@@ -34,8 +34,8 @@ typedef enum {
     /* 0x1A */ E_ID_1A, //func_8019B914 - CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)?
     /* 0x19 */ E_BREAKABLE_WALL_DEBRIS, // Created in EntityBreakableWallDebris, EntityBreakableWall
     /* 0x1B */ E_ID_1B, //func_8019CBA8
-    /* 0x1C */ E_ID_1C, //func_8019D1A8
-    /* 0x1D */ E_ID_1D, //func_8019D9C8
+    /* 0x1C */ E_FALLING_STAIRS,
+    /* 0x1D */ E_FALLING_STEP,
     /* 0x1E */ E_ID_1E, //func_801A97C8
     /* 0x1F */ E_ID_1F, //func_801A9D40
     /* 0x20 */ E_ID_20, //func_801A9E94

@@ -1228,10 +1228,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x8];
-    /* 0x84 */ s16 unk84;
+    /* 0x84 */ s16 rotateAccel;
     /* 0x86 */ char pad_86[0x2];
     /* 0x88 */ Primitive* prim;
-} ET_CHI_8019D1A8;
+} ET_FallingStairs;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -1347,5 +1347,5 @@ typedef union { // offset=0x7C
     ET_DemonSwitchWall demonSwitchWall;
     ET_BreakableBlock breakableBlock;
     ET_BreakableWall breakableWall;
-    ET_CHI_8019D1A8 et_chi_8019D1A8;;
+    ET_FallingStairs fallingStairs;
 } Ext;

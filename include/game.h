@@ -1699,6 +1699,7 @@ extern s32 g_IsTimeAttackUnlocked;
 enum CASTLE_FLAGS {
     CASTLE_FLAG_CHI_DEMON_BUTTON = 0x50,
     CASTLE_FLAG_CHI_BREAKABLE_WALL = 0x51,
+    CASTLE_FLAG_CHI_FALLING_STAIRS = 0x52,
 };
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
