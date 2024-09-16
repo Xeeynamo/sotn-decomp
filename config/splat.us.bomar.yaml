@@ -38,7 +38,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0x310, data] # e_init
+      - [0x310, .data, e_init]
       - [0x4E8, .data, st_debug]
       - [0x568, .data, e_breakable]
       - [0x5D4, data] # AFC4

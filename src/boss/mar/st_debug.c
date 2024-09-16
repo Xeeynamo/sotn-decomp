@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-extern ObjInit2 D_us_801804B4[];
+extern ObjInit2 D_80180C10[];
 extern u16 g_eInitGeneric2[];
 void func_us_8018AC0C(Entity* self) {
-    ObjInit2* objInit = &D_us_801804B4[self->params];
+    ObjInit2* objInit = &D_80180C10[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
