@@ -210,6 +210,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
 
     let pairs: Vec<SrcAsmPair> = vec![
         SrcAsmPair {
+            asm_dir: String::from("../../asm/us/boss/mar/nonmatchings/"),
+            src_dir: String::from("../../src/boss/mar/"),
+            overlay_name: String::from("MAR"),
+            include_asm: get_all_include_asm("../../src/boss/mar/"),
+            path_matcher: "/mar/".to_string(),
+        },
+        SrcAsmPair {
             asm_dir: String::from("../../asm/us/dra/nonmatchings/"),
             src_dir: String::from("../../src/dra/"),
             overlay_name: String::from("DRA"),
@@ -402,7 +409,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
                     writeln!(
                         output_file,
                         "| {:<4.2} | {:<8} | {:<35} | {:<2} ",
-                        function.similarity, decompiled, function.name, function.file
+                        function.similarity, decompiled, function.name, function.file.strip_prefix("../../").unwrap()
                     )
                     .expect("Error writing to file");
                 }
