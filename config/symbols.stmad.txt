@@ -60,7 +60,6 @@ EntityIntenseExplosion = 0x801964E4;
 EntitySoulStealOrb = 0x801982BC;
 EntityEnemyBlood = 0x80198650;
 EntityRoomForeground = 0x80198B00;
-UNK_Invincibility0 = 0x801806B4;
 g_InitializeEntityData0 = 0x80180508;
 g_InitializeData0 = 0x801804FC;
 UnkPrimHelper = 0x80198FA0;

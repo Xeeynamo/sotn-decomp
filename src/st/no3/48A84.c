@@ -179,7 +179,62 @@ void func_801CC90C(Entity* arg0) {
 // stronger version of warg with jump and flame attack
 INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityStrongWarg);
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId30);
+void EntityUnkId30(Entity* self) {
+    Entity* entity;
+    u16 animCurFrame;
+    u16* hitboxPtr;
+
+    entity = self - 1;
+    if (self->step == 0) {
+        if (self->params != 0) {
+            InitializeEntity(D_80180B30);
+            self->hitboxState = 0;
+        } else {
+            if (entity->params != 0) {
+                InitializeEntity(D_80180B30);
+            } else {
+                InitializeEntity(D_80180B24);
+            }
+        }
+        self->animCurFrame = 0;
+        self->hitPoints = 32767;
+    }
+    self->posX.i.hi = entity->posX.i.hi;
+    self->posY.i.hi = entity->posY.i.hi;
+    self->facingLeft = entity->facingLeft;
+    animCurFrame = entity->animCurFrame;
+
+    if (animCurFrame != 0) {
+        if (self->params != 0) {
+            if (animCurFrame < 63) {
+                animCurFrame = 0;
+            } else {
+                animCurFrame -= 56;
+            }
+            hitboxPtr = &D_80182E1C[animCurFrame * 8];
+        } else {
+            if (entity->params != 0) {
+                if (animCurFrame >= 86 || animCurFrame >= 57) {
+                    animCurFrame -= 57;
+                } else {
+                    animCurFrame = 13;
+                }
+            } else {
+                if (animCurFrame >= 96) {
+                    animCurFrame -= 48;
+                } else {
+                    animCurFrame -= 1;
+                }
+            }
+            hitboxPtr = &D_80182A4C[animCurFrame * 8];
+        }
+        hitboxPtr += 4;
+        self->hitboxOffX = *hitboxPtr++;
+        self->hitboxOffY = *hitboxPtr++;
+        self->hitboxWidth = *hitboxPtr++;
+        self->hitboxHeight = *hitboxPtr++;
+    }
+}
 
 INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId31);
 

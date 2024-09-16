@@ -71,6 +71,19 @@ def apply_psx_stage(config, version, name):
     config["objdump_executable"] = "mipsel-linux-gnu-objdump"
 
 
+def apply_psx_boss(config, version, name):
+    config["baseimg"] = f"disks/{version}/" + (f"BOSS/{name}/{name}.BIN").upper()
+    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
+    config["mapfile"] = f"build/{version}/bo{name}.map"
+    config["source_directories"] = [
+        f"src/boss/{name}",
+        f"src/boss/{name}_psp",
+        "include",
+        f"asm/{version}/boss/{name}",
+    ]
+    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
+
+
 def apply_saturn(config, name):
     config["arch"] = "sh2"
     config["baseimg"] = f"disks/saturn" + (f"/{name}.PRG").upper()
@@ -88,6 +101,12 @@ def apply(config, args):
         name = args.overlay or "dra"
         if name.startswith("st/"):
             apply_psx_stage(config, version, name[3:])
+        elif name.startswith("st"):
+            apply_psx_stage(config, version, name[2:])
+        elif name.startswith("bo/"):
+            apply_psx_boss(config, version, name[3:])
+        elif name.startswith("bo"):
+            apply_psx_boss(config, version, name[2:])
         elif name.startswith("tt_"):
             apply_psx_servant(config, version, name)
         elif name.startswith("w_"):

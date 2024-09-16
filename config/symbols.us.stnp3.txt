@@ -1,6 +1,5 @@
 g_GfxBanks = 0x801806DC;
 g_TrapDoorFlag = 0x80181104;
-g_SineTable = 0x80181A50;
 g_eUnk14SpawnRots = 0x80181FA4;
 unk15_rot = 0x80181FB4;
 unk15_yVel = 0x80181FC4;

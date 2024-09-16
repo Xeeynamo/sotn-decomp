@@ -59,7 +59,7 @@ segments:
       - [0x2610, data] # bloody skeleton
       - [0x26B8, data] # magically sealed door
       - [0x272C, .data, rooms]
-      - [0x2830, data, D_80182830]
+      - [0x2830, .data, e_life_up]
       - [0x2884, .data, e_layout] # layout entries data
       - [0x3B0C, data]
       - [0x16A5C, .data, tile_data] # tile data
@@ -91,7 +91,7 @@ segments:
       - [0x308E8, .rodata, e_magically_sealed_door]
       - [0x30900, .rodata, e_stage_name]
       - [0x30934, .rodata, prim_helpers]
-      - [0x3093C, .rodata, lifeupspawn]
+      - [0x3093C, .rodata, e_life_up]
       - [0x30958, c]
       - [0x30EEC, c, e_breakable]
       - [0x311C0, c]
@@ -126,7 +126,7 @@ segments:
       - [0x47CF0, c, e_magically_sealed_door]
       - [0x48ADC, c, e_stage_name]
       - [0x49930, c, prim_helpers]
-      - [0x4A160, c, lifeupspawn]
+      - [0x4A160, c, e_life_up]
       - [0x4AA14, .bss, create_entity]
       - [0x4AA24, .bss, bss]
       - [0x4B740, .bss, e_collect]

@@ -54,12 +54,6 @@ map_parser.add_argument(
     help="Do not include Splat default symbols that starts with D_ or func_",
 )
 
-args = parser.parse_args()
-if args.version == None:
-    args.version = os.getenv("VERSION")
-    if args.version == None:
-        args.version = "us"
-
 
 def is_splat_symbol_name(name):
     return (
@@ -379,6 +373,11 @@ def print_map_symbols(map_file_name, no_default):
 
 
 if __name__ == "__main__":
+    args = parser.parse_args()
+    if args.version == None:
+        args.version = os.getenv("VERSION")
+        if args.version == None:
+            args.version = "us"
     if args.command == "sort":
         sort("config/")
     elif args.command == "cross":
