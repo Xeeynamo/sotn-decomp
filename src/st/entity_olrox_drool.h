@@ -5,6 +5,7 @@
 
 extern u32 g_olroxDroolCollOffsets[];
 
+extern u16 g_InitializeEntityData0[];
 void EntityOlroxDrool(Entity* self) {
     s16 primIndex;
     Primitive* prim;

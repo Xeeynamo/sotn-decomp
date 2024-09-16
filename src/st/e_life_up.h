@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "nz0.h"
+SVECTOR D_80182830 = {-8, -8, 0};
+SVECTOR D_80182838 = {8, -8, 0};
+SVECTOR D_80182840 = {-8, 8, 0};
+SVECTOR D_80182848 = {8, 8, 0};
+u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
+                    0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
+                    0x17, 0x19, 0x1A, 0x1B, 0x1C, 0x1D};
+SVECTOR D_8018287C = {0, 0, 0};
 
-// particle effect that spawns life up item
+extern u16 g_EInitGeneric[];
 void EntityLifeUpSpawn(Entity* self) {
     s32 count_low_x1;
     Collider collider;

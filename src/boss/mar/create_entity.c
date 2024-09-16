@@ -1,33 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-// clang-format off
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", CreateEntityFromLayout);
+// TODO: import BSS and use create_entity.h
+extern u16* g_LayoutObjHorizontal;
+extern u16* g_LayoutObjVertical;
+extern u8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
 
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", CreateEntityWhenInHorizontalRange);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", func_us_8018ED3C);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", FindFirstEntityAbove);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", FindFirstEntityBelow);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", CreateEntitiesAbove);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", CreateEntitiesBelow);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", func_us_8018F108);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", func_us_8018F154);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", func_us_8018F1AC);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", func_us_8018F2A8);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", InitRoomEntities);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", UpdateRoomPosition);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", CreateEntityFromCurrentEntity);
-
-INCLUDE_ASM("boss/mar/nonmatchings/create_entity", CreateEntityFromEntity);
+#include "../../st/st_private.h"
+#include "../../st/create_entity_from_layout.h"
+#include "../../st/create_entity_in_range.h"
+#include "../../st/find_entity_horizontal.h"
+#include "../../st/create_entities_horizontal.h"
+#include "../../st/find_entity_vertical.h"
+#include "../../st/create_entities_vertical.h"
+#include "../../st/init_room_entities.h"
+#include "../../st/update_room_position.h"
+#include "../../st/create_entity_from_entity.h"
