@@ -1,6 +1,7 @@
 D_80180A60 = 0x801803B4;
 D_80180608 = 0x80180744;
 g_StoneDoorTiles = 0x801812DC;
+CutsceneRun = 0x8018B4A0;
 EntityMariaCutscene = 0x8018B850;
 DestroyEntity = 0x80190388;
 AnimateEntity = 0x801904B8;
@@ -11,4 +12,6 @@ g_LayoutObjHorizontal = 0x8019A260;
 g_LayoutObjVertical = 0x8019A264;
 g_LayoutObjPosHorizontal = 0x8019A268;
 g_LayoutObjPosVertical = 0x8019A26C;
+g_Dialogue = 0x8019AE74;
+g_CutsceneFlags = 0x8019AF20;
 g_Statues = 0x8019AF28;

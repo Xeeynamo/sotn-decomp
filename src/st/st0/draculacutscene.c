@@ -171,58 +171,7 @@ void func_801A8E34(s32 arg0) {
     g_Dialogue.unk3C = 1;
 }
 
-void func_801A8E60(void) {
-    Entity* entity;
-    u16 startTimer;
-    u8 entityIndex;
-
-    g_Dialogue.timer++;
-    // protect from overflows
-    if (g_Dialogue.timer > 0xFFFE) {
-        g_Dialogue.unk3C = 0;
-        return;
-    }
-
-    while (true) {
-        // Start the dialogue script only if the start timer has passed
-        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
-        if (g_Dialogue.timer < startTimer) {
-            // Re-evaluate the condition at the next frame
-            g_Dialogue.unk40 -= 2;
-            return;
-        }
-
-        switch (*g_Dialogue.unk40++) {
-        case 0:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
-            DestroyEntity(entity);
-
-            entity->entityId = *g_Dialogue.unk40++;
-            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
-            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
-            break;
-        case 1:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
-            DestroyEntity(entity);
-            break;
-        case 2:
-            if (!((D_801C257C >> *g_Dialogue.unk40) & 1)) {
-                g_Dialogue.unk40--;
-                return;
-            }
-            D_801C257C &= ~(1 << *g_Dialogue.unk40++);
-            break;
-        case 3:
-            D_801C257C |= 1 << *g_Dialogue.unk40++;
-            break;
-        }
-    }
-}
+#include "../../st/cutscene.h"
 
 // Animates the portrait size of the actor by enlarging or shrinking it
 void func_801A910C(u8 ySteps) {
@@ -282,14 +231,14 @@ void EntityDraculaCutscene(Entity* self) {
         self->step_s = 0;
     }
     if ((self->step) && (g_Dialogue.unk3C != 0)) {
-        func_801A8E60();
+        CutsceneRun();
     }
 
     switch (self->step) {
     case 0:
         if (func_801A89D8(D_801829D8) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS;
-            D_801C257C = 0;
+            g_CutsceneFlags = 0;
             D_801C2580 = 0;
             D_801C24C8 = 0;
             D_8003C704 = 1;
@@ -511,15 +460,15 @@ void EntityDraculaCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((D_801C257C >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
-                D_801C257C &= ~(1 << *g_Dialogue.nextCharDialogue);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             case 17:
-                D_801C257C |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;

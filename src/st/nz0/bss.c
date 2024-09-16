@@ -27,6 +27,6 @@ u32 D_801CB6C0;
 u16 D_801CB6C4;
 u16 D_801CB6C6;
 u32 D_801CB6C8[27];
-u16 g_mariaCutsceneFlags;
+u16 g_CutsceneFlags;
 u16 D_801CB736[3];
 u32 D_801CB73C;

@@ -23,7 +23,7 @@ void EntityRoomTransition2(Entity* self) {
         g_Player.padSim = PAD_RIGHT;
         D_8003C8B8 = 0;
         g_Player.D_80072EFC = 1;
-        D_801D7DD0 |= 0x100;
+        g_CutsceneFlags |= 0x100;
         break;
 
     case 1:
@@ -33,14 +33,14 @@ void EntityRoomTransition2(Entity* self) {
             g_Player.padSim = PAD_RIGHT;
         } else {
             g_Player.padSim = 0;
-            D_801D7DD0 |= 0x80;
+            g_CutsceneFlags |= 0x80;
             self->step++;
         }
         g_Player.D_80072EFC = 1;
         break;
 
     case 2:
-        if (D_801D7DD0 & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             g_api.InitStatsAndGear(1);
             g_api.PlaySfx(SE_DEATH_SWIPES);
             for (localVar = 0; localVar < 6; localVar++) {
@@ -59,7 +59,7 @@ void EntityRoomTransition2(Entity* self) {
         break;
 
     case 3:
-        if (D_801D7DD0 & 0x40 && !(--self->ext.roomTransition2.timer)) {
+        if (g_CutsceneFlags & 0x40 && !(--self->ext.roomTransition2.timer)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
                 prim = &g_PrimBuf[localVar];
@@ -289,7 +289,7 @@ void EntityDeath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (D_801D7DD0 & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
                 InitializeEntity(g_eInitGeneric2);
@@ -385,7 +385,7 @@ void EntityDeath(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.death.unk7C += 4;
         if (self->ext.death.unk7C == 96) {
-            D_801D7DD0 |= 1;
+            g_CutsceneFlags |= 1;
         }
 
         if (self->ext.death.unk7C == 128) {
@@ -424,7 +424,7 @@ void EntityDeath(Entity* self) {
 
     case 6:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 2) {
+        if (g_CutsceneFlags & 2) {
             SetStep(7);
         }
         break;
@@ -439,14 +439,14 @@ void EntityDeath(Entity* self) {
             newEntity->ext.death.unk7C = 1;
         }
 
-        if (D_801D7DD0 & 4) {
+        if (g_CutsceneFlags & 4) {
             SetStep(9);
         }
         break;
 
     case 8:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 4) {
+        if (g_CutsceneFlags & 4) {
             SetStep(9);
         }
         break;
@@ -457,14 +457,14 @@ void EntityDeath(Entity* self) {
         }
         newEntity->ext.death.unk7C = 1;
 
-        if (D_801D7DD0 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(11);
         }
         break;
 
     case 10:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(11);
         }
         break;
@@ -475,14 +475,14 @@ void EntityDeath(Entity* self) {
         }
         newEntity->ext.death.unk7C = 1;
 
-        if (D_801D7DD0 & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(13);
         }
         break;
 
     case 12:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(13);
         }
         break;
@@ -504,7 +504,7 @@ void EntityDeath(Entity* self) {
     case 15:
         if (AnimateEntity(D_80181B70, self) == 0) {
             SetStep(16);
-            D_801D7DD0 |= 0x20;
+            g_CutsceneFlags |= 0x20;
         }
         break;
 
@@ -554,7 +554,7 @@ void EntityDeath(Entity* self) {
         self->ext.death.moveTimer++;
 
         if (self->posY.i.hi < -32) {
-            D_801D7DD0 |= 0x40;
+            g_CutsceneFlags |= 0x40;
             DestroyEntity(self);
             DestroyEntity(&self[1]);
         }

@@ -3,7 +3,7 @@
 #include "game.h"
 #include "sfx.h"
 
-extern u32 D_8019D424;
+extern u32 g_CutsceneFlags;
 extern s32 D_8019D428;
 
 // tile layout
@@ -172,7 +172,7 @@ void EntityPlatform(Entity* self) {
             player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
             self->step++;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
-            D_8019D424 |= 1;
+            g_CutsceneFlags |= 1;
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
             func_8018F8EC(0);
         }
@@ -192,7 +192,7 @@ void EntityPlatform(Entity* self) {
             if (player->facingLeft == 0) {
                 g_Player.padSim = PAD_LEFT;
             }
-            D_8019D424 |= 4;
+            g_CutsceneFlags |= 4;
             self->step++;
         }
         func_8018F890(0x200);
@@ -203,7 +203,7 @@ void EntityPlatform(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
 
-        if (D_8019D424 & 8) {
+        if (g_CutsceneFlags & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
             g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
@@ -213,7 +213,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 6:
-        if (D_8019D424 & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
         }
@@ -321,7 +321,7 @@ void EntityRoomDarkness(Entity* self) {
         break;
 
     case 1:
-        if (D_8019D424 & 4) {
+        if (g_CutsceneFlags & 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =

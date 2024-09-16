@@ -147,7 +147,7 @@ extern u32 D_80181CF0[];
 extern s8 D_801A7B7C;
 extern Point32 D_801BEB64[];
 extern s32 D_801C2578;
-extern u32 D_801C257C;
+extern u32 g_CutsceneFlags;
 extern s32 D_801C2578;
 
 // *** EntityDracula properties END ***
@@ -195,7 +195,7 @@ extern s16 D_80180798[];
 extern const char D_801829D8[];
 extern s32 D_801C24C8;
 extern s32 D_801C2504;
-extern u32 D_801C257C;
+extern u32 g_CutsceneFlags;
 extern s32 D_801C2580;
 
 extern Dialogue g_Dialogue;
