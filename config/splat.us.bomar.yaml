@@ -40,7 +40,7 @@ segments:
       - [0x0, data]
       - [0x310, data] # e_init
       - [0x4E8, .data, st_debug]
-      - [0x568, data] # e_breakable
+      - [0x568, .data, e_breakable]
       - [0x5D4, data] # AFC4
       - [0x764, data] # st_update
       - [0x790, .data, collision]
