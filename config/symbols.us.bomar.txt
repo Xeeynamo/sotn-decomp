@@ -1,5 +1,6 @@
 g_InitializeData0 = 0x8018039C;
 g_eInitGeneric2 = 0x801803E4;
+g_StoneDoorTiles = 0x801812DC;
 EntityUnkId12 = 0x8018ACD4;
 EntityBreakable = 0x8018AE90;
 EntityMariaCutscene = 0x8018B850;
@@ -91,6 +92,8 @@ EntityClockRoomController = 0x80197FEC;
 EntityClockHands = 0x80198574;
 EntityBirdcageDoor = 0x80198688;
 EntityStatue = 0x80198944;
+EntityStatueGear = 0x80198C74;
+EntityStoneDoor = 0x80198F24;
 UnkPolyFunc2 = 0x80199868;
 PrimDecreaseBrightness = 0x801998E8;
 EntityLifeUpSpawn = 0x8019994C;
