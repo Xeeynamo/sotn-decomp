@@ -350,8 +350,7 @@ def get_splat_config(
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
             "include_macro_inc": False,
-        },
-        "sha1": get_sha1(input),
+        }
     }
 
 
@@ -409,6 +408,7 @@ def make_config_psx(ovl_path: str, version: str):
         f.write(yaml.dump(config, Dumper=IndentDumper, sort_keys=False))
         # now writes the rest manually because the default yaml formatting is horrifying
         text = [
+            f"sha1: {get_sha1(ovl_path)}\n",
             f"segments:\n",
             f"  - name: {ovl_name}\n",
             f"    type: code\n",
@@ -455,6 +455,7 @@ def make_config_psp(ovl_path: str, version: str):
                 f"    .set noat      /* allow manual use of $at */\n",
                 f"    .set noreorder /* don't insert nops after branches */\n",
                 f'    .include "macro.inc"\n',
+                f"sha1: {get_sha1(ovl_path)}\n",
                 f"segments:\n",
                 f"  - [0x0, bin, mwo_header]\n",
                 f'  - name: {config["options"]["basename"]}\n',
