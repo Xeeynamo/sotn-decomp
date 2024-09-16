@@ -124,7 +124,7 @@ CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
 all: build check
 build: build_$(VERSION)
-build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp mar tt_000
 build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
 clean:
 	git clean -fdx assets/
@@ -173,6 +173,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
+	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
@@ -281,6 +282,12 @@ $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 $(BUILD_DIR)/F_RWRP.BIN:
 	$(GFXSTAGE) e assets/st/rwrp $@
 
+mar: $(BUILD_DIR)/MAR.BIN $(BUILD_DIR)/F_MAR.BIN
+$(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_MAR.BIN:
+	$(GFXSTAGE) e assets/boss/mar $@
+
 tt_000: $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
@@ -299,6 +306,8 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+bo%_dirs:
+	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
@@ -317,6 +326,8 @@ $(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files
 	$(call link,stsel,$@)
 $(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
+$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
+	$(call link,bo$*,$@)
 
 # Weapon overlays
 WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
@@ -386,7 +397,6 @@ force_symbols:
 	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stdre.map --no-default > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stmad.map --no-default > config/symbols.us.stmad.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stno3.map --no-default > config/symbols.us.stno3.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map --no-default > config/symbols.us.stnp3.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map --no-default > config/symbols.us.stnz0.txt
@@ -394,6 +404,7 @@ force_symbols:
 	$(PYTHON) ./tools/symbols.py map build/us/stst0.map --no-default > config/symbols.us.stst0.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map --no-default > config/symbols.us.stwrp.txt
 	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map --no-default > config/symbols.us.strwrp.txt
+	$(PYTHON) ./tools/symbols.py map build/us/bomar.map --no-default > config/symbols.us.bomar.txt
 	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map --no-default > config/symbols.us.tt_000.txt
 
 context:
@@ -426,6 +437,8 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
+	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
+	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
@@ -500,7 +513,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
+.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies

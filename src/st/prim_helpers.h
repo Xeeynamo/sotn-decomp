@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "game.h"
+#include <game.h>
 
 #if !defined(VERSION_PSP)
 const SVECTOR g_UnkPrimHelperRot = {0, 0, 0};

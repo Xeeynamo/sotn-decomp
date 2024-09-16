@@ -366,6 +366,7 @@ if __name__ == "__main__":
     progress["stst0"] = DecompProgressStats("stst0", "st/st0")
     progress["stwrp"] = DecompProgressStats("stwrp", "st/wrp")
     progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
+    progress["bomar"] = DecompProgressStats("bomar", "boss/mar")
     progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
 
     hydrate_previous_metrics(progress, args.version)
