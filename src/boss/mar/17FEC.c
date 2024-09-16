@@ -283,9 +283,124 @@ void EntityBirdcageDoor(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_801988F8);
+void UpdateStatueTiles(s32 tilePos, s32 tile) {
+    u32 i;
 
-INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198944);
+    for (i = 0; i < 6; i++) {
+        g_Tilemap.fg[tilePos] = tile;
+        tilePos++;
+        g_Tilemap.fg[tilePos] = tile;
+        tilePos += 15;
+    }
+}
+
+extern u16 D_us_80181288[];
+extern u16 D_us_8018128C[];
+extern s32 D_us_801812A0[];
+
+// Entity ID 0x19
+void EntityStatue(Entity* self) {
+    Entity* entity = &self[2];
+    Entity* statueGear = &self[11];
+    u16 params = self->params;
+    u16* temp_a0;
+    u16* fakeVar;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_eInitGeneric2);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = params + 10;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 32;
+        self->zPriority = 0x40;
+
+        if (g_Statues[params] == 0) {
+            self->posX.i.hi += D_us_80181288[params];
+            if (self->params != 0) {
+                UpdateStatueTiles(2, 0x597);
+            } else {
+                UpdateStatueTiles(12, 0x597);
+            }
+        } else {
+            self->posX.i.hi += D_us_8018128C[params];
+            if (self->params != 0) {
+                UpdateStatueTiles(2, 0);
+            } else {
+                UpdateStatueTiles(12, 0);
+            }
+        }
+
+        self->ext.statue.step = g_Statues[params];
+        self->posY.i.hi -= 58;
+
+        // Create shadow for the statue
+        CreateEntityFromCurrentEntity(E_DUMMY_1D, entity);
+        entity->animSet = ANIMSET_OVL(1);
+        entity->animCurFrame = params + 10;
+        entity->zPriority = 0x3F;
+        entity->drawFlags = FLAG_DRAW_UNK8;
+        entity->blendMode = 0x10;
+        entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->posY.i.hi += 8;
+        break;
+
+    case 1:
+        //! FAKE
+        fakeVar = g_Statues;
+        temp_a0 = fakeVar;
+        temp_a0 += params;
+        if (*temp_a0 != self->ext.statue.step) {
+            self->ext.statue.step = *temp_a0;
+            if (self->ext.statue.step == 0) {
+                statueGear->ext.statue.step = 2;
+            } else {
+                statueGear->ext.statue.step = 1;
+            }
+            self->hitboxState = 2;
+            self->step++;
+            PlaySfxPositional(0x609);
+        }
+        break;
+
+    case 2:
+        GetPlayerCollisionWith(self, 0x10, 0x20, 0x13);
+        if (self->step_s == 0) {
+            if (self->ext.statue.step != 0) {
+                if (self->params != 0) {
+                    UpdateStatueTiles(2, 0);
+                } else {
+                    UpdateStatueTiles(12, 0);
+                }
+            }
+            self->ext.statue.timer = 96;
+            self->step_s++;
+        }
+
+        if (self->ext.statue.step != 0) {
+            self->posX.val += D_us_801812A0[params];
+        } else {
+            self->posX.val -= D_us_801812A0[params];
+        }
+
+        if (--self->ext.statue.timer == 0) {
+            if (self->ext.statue.step == 0) {
+                if (self->params != 0) {
+                    UpdateStatueTiles(2, 0x597);
+                } else {
+                    UpdateStatueTiles(12, 0x597);
+                }
+            }
+            statueGear->ext.statue.step = 0;
+            self->hitboxState = 0;
+            self->step_s = 0;
+            self->step--;
+        }
+        break;
+    }
+    entity->posX.i.hi = self->posX.i.hi;
+}
 
 INCLUDE_ASM("boss/mar/nonmatchings/17FEC", func_us_80198C74);
 
