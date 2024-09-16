@@ -63,37 +63,21 @@
 <polygon fill="black" stroke="black" points="439.31,-44.88 444.83,-35.83 434.87,-39.47 439.31,-44.88"/>
 <text text-anchor="middle" x="439.83" y="-39.63" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- rwrp.EntityPrizeDrop -->
-<g id="node5" class="node">
-<title>rwrp.EntityPrizeDrop</title>
-<g id="a_node5"><a xlink:href="rwrp.EntityPrizeDrop.svg" xlink:title="rwrp.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="130.34" cy="-378" rx="111.58" ry="18"/>
-<text text-anchor="middle" x="130.34" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityPrizeDrop</text>
-</a>
-</g>
-</g>
-<!-- rwrp.EntityPrizeDrop&#45;&gt;wrp.CollectHeartVessel -->
-<g id="edge4" class="edge">
-<title>rwrp.EntityPrizeDrop&#45;&gt;wrp.CollectHeartVessel</title>
-<path fill="none" stroke="black" d="M141.66,-359.93C162.45,-328.57 206.84,-261.6 231.3,-224.71"/>
-<polygon fill="black" stroke="black" points="234.46,-226.28 237.06,-216.02 228.62,-222.42 234.46,-226.28"/>
-<text text-anchor="middle" x="136.66" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
-</g>
 <!-- wrp.EntityPrizeDrop -->
-<g id="node6" class="node">
+<g id="node5" class="node">
 <title>wrp.EntityPrizeDrop</title>
-<g id="a_node6"><a xlink:href="wrp.EntityPrizeDrop.svg" xlink:title="wrp.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="367.34" cy="-378" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="367.34" y="-374.3" font-family="Times,serif" font-size="14.00">wrp.EntityPrizeDrop</text>
+<g id="a_node5"><a xlink:href="wrp.EntityPrizeDrop.svg" xlink:title="wrp.EntityPrizeDrop">
+<ellipse fill="green" stroke="black" cx="248.34" cy="-378" rx="107.48" ry="18"/>
+<text text-anchor="middle" x="248.34" y="-374.3" font-family="Times,serif" font-size="14.00">wrp.EntityPrizeDrop</text>
 </a>
 </g>
 </g>
 <!-- wrp.EntityPrizeDrop&#45;&gt;wrp.CollectHeartVessel -->
-<g id="edge5" class="edge">
+<g id="edge4" class="edge">
 <title>wrp.EntityPrizeDrop&#45;&gt;wrp.CollectHeartVessel</title>
-<path fill="none" stroke="black" d="M355.93,-359.93C334.97,-328.57 290.2,-261.6 265.53,-224.71"/>
-<polygon fill="black" stroke="black" points="268.19,-222.38 259.72,-216.02 262.37,-226.27 268.19,-222.38"/>
-<text text-anchor="middle" x="350.93" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M248.34,-359.93C248.34,-328.97 248.34,-263.3 248.34,-226.13"/>
+<polygon fill="black" stroke="black" points="251.84,-226.02 248.34,-216.02 244.84,-226.02 251.84,-226.02"/>
+<text text-anchor="middle" x="243.34" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>
