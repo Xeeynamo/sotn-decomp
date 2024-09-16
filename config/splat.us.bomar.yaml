@@ -43,7 +43,7 @@ segments:
       - [0x568, data] # e_breakable
       - [0x5D4, data] # AFC4
       - [0x764, data] # st_update
-      - [0x790, data] # collision
+      - [0x790, .data, collision]
       - [0xB50, data] # e_red_door
       - [0xB68, data] # st_common
       - [0xD68, data] # e_collect
