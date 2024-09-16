@@ -1778,6 +1778,21 @@ typedef struct {
     /* 0x7E */ s16 unk7E;
 } ET_StrongWargDeathBeams;
 
+typedef struct {
+    /* 0x7C */ s32 hand;
+    /* 0x80 */ char pad_80[0x4];
+    /* 0x84 */ u16 bellTimer;
+    /* 0x86 */ u16 bellDuration;
+    /* 0x88 */ char pad_88[0x2];
+    /* 0x8A */ u16 unk8A; // might belong to another struct
+} ET_ClockRoom;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 prevState;
+    /* 0x80 */ u16 state;
+} ET_Birdcage;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1921,6 +1936,8 @@ typedef union { // offset=0x7C
     ET_Skeleton skeleton;
     ET_NZ0_311C0 nz0311c0;
     ET_StrongWargDeathBeams strongWargDeathBeams;
+    ET_ClockRoom clockRoom;
+    ET_Birdcage birdcage;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field_name)                               \
