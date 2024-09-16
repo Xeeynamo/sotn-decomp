@@ -63,8 +63,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0x2000;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(D_801A3F84 & 1)) {
-                D_801A3F84 |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 288) {
@@ -79,7 +79,7 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         func_801961DC(0x20);
-        if (D_801A3F84 & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
         }
         break;
@@ -88,8 +88,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0x2000;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(D_801A3F84 & 1)) {
-                D_801A3F84 |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 352) {
@@ -104,7 +104,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 5: // Conversation with fake lisa
         g_Player.D_80072EFC = 1;
-        if (D_801A3F84 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(6);
         }
         break;
@@ -120,7 +120,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 7:
         g_Player.D_80072EFC = 1;
-        if (D_801A3F84 & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(8);
         }
         break;
@@ -174,7 +174,7 @@ void EntityUnkId23(Entity* self) {
                     g_Player.padSim = PAD_R2;
                 }
             }
-        } else if ((g_Player.pl_vram_flag & 1) && (D_801A3F84 & 2)) {
+        } else if ((g_Player.pl_vram_flag & 1) && (g_CutsceneFlags & 2)) {
             diff = player->posX.i.hi - ent->posX.i.hi;
             if (diff < -0x50) {
                 g_Player.padSim = PAD_RIGHT;
@@ -220,8 +220,8 @@ void EntityUnkId23(Entity* self) {
     case 4:
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
-        D_801A3F84 |= 1;
-        if (D_801A3F84 & 0x20) {
+        g_CutsceneFlags |= 1;
+        if (g_CutsceneFlags & 0x20) {
             self->step++;
         }
         break;

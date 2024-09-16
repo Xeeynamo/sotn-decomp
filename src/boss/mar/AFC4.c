@@ -13,7 +13,7 @@ INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B2F0);
 
 INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B474);
 
-INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B4A0);
+#include "../../st/cutscene.h"
 
 INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B74C);
 

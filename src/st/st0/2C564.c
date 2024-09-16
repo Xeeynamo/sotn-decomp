@@ -75,22 +75,23 @@ void EntityDracula(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (D_801C257C & 0x10) {
+            if (g_CutsceneFlags & 0x10) {
                 SetSubStep(1);
             }
             break;
 
         case 1:
-            if ((AnimateEntity(D_80180A0C, self) == 0) && (D_801C257C & 0x20)) {
+            if ((AnimateEntity(D_80180A0C, self) == 0) &&
+                (g_CutsceneFlags & 0x20)) {
                 SetSubStep(2);
             }
             break;
 
         case 2:
             if (AnimateEntity(D_80180A20, self) == 0) {
-                D_801C257C |= 0x100;
+                g_CutsceneFlags |= 0x100;
             }
-            if (D_801C257C & 0x40) {
+            if (g_CutsceneFlags & 0x40) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }

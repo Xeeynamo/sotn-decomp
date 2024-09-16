@@ -169,58 +169,52 @@ void func_80194C24(s32 arg0) {
     g_Dialogue.unk3C = 1;
 }
 
-void func_80194C50(void) {
+void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
-    u8 entityIndex;
-    Dialogue* ptr;
 
     g_Dialogue.timer++;
     // protect from overflows
-    if (g_Dialogue.timer > 0xFFFE) {
+    if (g_Dialogue.timer >= 0xFFFF) {
         g_Dialogue.unk3C = 0;
         return;
     }
-
     while (true) {
         // Start the dialogue script only if the start timer has passed
-        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
+        startTimer = *g_Dialogue.unk40++ << 8;
+        startTimer |= *g_Dialogue.unk40++;
         if (g_Dialogue.timer < startTimer) {
             // Re-evaluate the condition at the next frame
             g_Dialogue.unk40 -= 2;
             return;
         }
-
         switch (*g_Dialogue.unk40++) {
         case 0:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            entity =
+                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
             DestroyEntity(entity);
             entity->entityId = *g_Dialogue.unk40++;
             entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
             entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
+            entity->posX.i.hi |= *g_Dialogue.unk40++;
             entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+            entity->posY.i.hi |= *g_Dialogue.unk40++;
             break;
-
         case 1:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            entity =
+                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
             DestroyEntity(entity);
             break;
-
         case 2:
-            if (!((D_801A3F84 >> *g_Dialogue.unk40) & 1)) {
+            if (!((g_CutsceneFlags >> *g_Dialogue.unk40) & 1)) {
                 g_Dialogue.unk40 -= 3;
                 g_Dialogue.timer--;
                 return;
             }
-            D_801A3F84 &= ~(1 << *g_Dialogue.unk40++);
+            g_CutsceneFlags &= ~(1 << *g_Dialogue.unk40++);
             break;
-
         case 3:
-            D_801A3F84 |= 1 << *g_Dialogue.unk40++;
+            g_CutsceneFlags |= 1 << *g_Dialogue.unk40++;
             break;
         }
     }
@@ -301,7 +295,7 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if ((self->step != 0) && (g_Dialogue.unk3C != 0)) {
-            func_80194C50();
+            CutsceneRun();
         }
     }
     switch (self->step) {
@@ -320,7 +314,7 @@ void EntitySuccubusCutscene(Entity* self) {
         }
         if (bit_shifty) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            D_801A3F84 = 0;
+            g_CutsceneFlags = 0;
             D_801A3F88 = 0;
             D_801A3ED4 = 0;
             D_8003C704 = 1;
@@ -540,15 +534,15 @@ void EntitySuccubusCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((D_801A3F84 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
-                D_801A3F84 &= ~(1 << *g_Dialogue.nextCharDialogue);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             case 17:
-                D_801A3F84 |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
@@ -577,17 +571,17 @@ void EntitySuccubusCutscene(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case 21:
-                D_801A3F84 = 0;
+                g_CutsceneFlags = 0;
                 D_801A3ED4 = 0;
                 D_801A3F88 = 0;
                 continue;
             case 22:
-                D_801A3F84 &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
                 continue;
             case 23:
                 return;
             case 24:
-                if (!((D_801A3F84 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     *g_Dialogue.nextCharDialogue--;
                     return;
                 }
