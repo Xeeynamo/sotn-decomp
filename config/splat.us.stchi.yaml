@@ -82,19 +82,11 @@ segments:
       - [0x1E1A0, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
-#      - [0x1B100, rodata, 1B3FC]
-#      - [0x1B144, rodata, 1C5CC]
-#      - [0x1B168, rodata, 1CBA8]
-#      - [0x1B194, rodata, 1E2A8]
+#      - [0x1B194, rodata, 1E2A8] # Not actually 1E2A8, looks like it's for EntityRedDoor
 #      - [0x1B1F4, rodata, 22CAC]
 #      - [0x1B280, rodata, 2813C]
 #      - [0x1B304, rodata, 2B7CC]
 #      - [0x1B3C0, rodata, 2D2BC]
-#      - [0x1B3FC, asm]
-#      - [0x1C5CC, asm]
-#      - [0x1CBA8, asm]
-#      - [0x1DEA4, asm] # update
-#      - [0x1E1A0, asm] # update_stage_entities
 #      - [0x1E2A8, asm] # collision
 #      - [0x22CAC, asm]
 #      - [0x2813C, asm]

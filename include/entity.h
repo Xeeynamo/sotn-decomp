@@ -1219,6 +1219,7 @@ typedef struct {
     /* 0x9C */ s16 rotZSpeed;
 } ET_BreakableBlock;
 
+// CHI Room5, Bottom, Breakable Wall
 typedef struct {
     /* 0x7C */ char pad_7C[0x8];
     /* 0x84 */ s16 breakCount;

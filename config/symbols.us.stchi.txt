@@ -1,20 +1,8 @@
 // *** Functions ***
-// func_8019B3FC
-// func_8019B4DC
-// func_8019B698
 // func_8019B914
-Particle_FallingPebbleUpdate = 0x8019BD0C;
-EntityDemonSwitch = 0x8019BDF8;
-EntityDemonSwitchWall = 0x8019BEDC;
-EntityBreakableWallDebris = 0x8019C31C;
-EntityBreakableWall = 0x8019C5CC;
 // func_8019CBA8
 // func_8019D0D8    // Falling Stairs Dust Particles
-EntityFallingStairs = 0x8019D1A8;
-EntityFallingStep = 0x8019D9C8;
 Random = 0x8019DE74;
-//Update = 0x8019DEA4;
-UpdateStageEntities = 0x8019E1A0;
 //HitDetection = 0x8019E2A8;
 //EntityDamageDisplay = 0x8019F3C0;
 CreateEntityFromLayout = 0x8019FA64;
@@ -170,9 +158,6 @@ EntityInit_80180718 = 0x80180718;
 EntityInit_80180724 = 0x80180724;
 g_eRedDoorTiles = 0x80180768;
 
-Room3_DemonSwitchWallTilesCollision = 0x8018089C;
-Room5_BreakableWallTilesCollision = 0x801808CC;
-Room5_BreakableRoomEntityData = 0x801808FC;
 
 // Referenced in func_801A8EAC
 sprites_chi_4 = 0x80199340;

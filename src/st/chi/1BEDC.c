@@ -17,7 +17,8 @@ u16 Room3_DemonSwitchWallTilesCollision[] = {
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
 };
 
-u16 D_801808B4[] = {    // Room3_DemonSwitchWallTilesNoCollision
+// Never directly referenced. Accessed by overflowing from above array
+u16 Room3_DemonSwitchWallTilesNoCollision[] = {
     0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
     0x01BF, 0x01BF, 0x01BF, 0x01BF,
 };
