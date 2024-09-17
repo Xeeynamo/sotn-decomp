@@ -77,6 +77,8 @@ segments:
       - [0x1C5CC, c]
       - [0x1CBA8, c]
       - [0x1D1A8, c]
+      - [0x1DEA4, c]
+      - [0x1E1A0, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x1B100, rodata, 1B3FC]
