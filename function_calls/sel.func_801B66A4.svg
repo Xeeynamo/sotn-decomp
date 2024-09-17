@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="99.44" cy="-198" rx="99.38" ry="18"/>
 <text text-anchor="middle" x="99.44" y="-194.3" font-family="Times,serif" font-size="14.00">sel.func_801B66A4</text>
 </g>
-<!-- sel.func_801B6648 -->
+<!-- sel.CutsceneUnk3 -->
 <g id="node2" class="node">
-<title>sel.func_801B6648</title>
-<g id="a_node2"><a xlink:href="sel.func_801B6648.svg" xlink:title="sel.func_801B6648">
-<ellipse fill="green" stroke="black" cx="99.44" cy="-18" rx="98.58" ry="18"/>
-<text text-anchor="middle" x="99.44" y="-14.3" font-family="Times,serif" font-size="14.00">sel.func_801B6648</text>
+<title>sel.CutsceneUnk3</title>
+<g id="a_node2"><a xlink:href="sel.CutsceneUnk3.svg" xlink:title="sel.CutsceneUnk3">
+<ellipse fill="green" stroke="black" cx="99.44" cy="-18" rx="94.78" ry="18"/>
+<text text-anchor="middle" x="99.44" y="-14.3" font-family="Times,serif" font-size="14.00">sel.CutsceneUnk3</text>
 </a>
 </g>
 </g>
-<!-- sel.func_801B66A4&#45;&gt;sel.func_801B6648 -->
+<!-- sel.func_801B66A4&#45;&gt;sel.CutsceneUnk3 -->
 <g id="edge1" class="edge">
-<title>sel.func_801B66A4&#45;&gt;sel.func_801B6648</title>
+<title>sel.func_801B66A4&#45;&gt;sel.CutsceneUnk3</title>
 <path fill="none" stroke="black" d="M99.44,-179.93C99.44,-148.97 99.44,-83.3 99.44,-46.13"/>
 <polygon fill="black" stroke="black" points="102.94,-46.02 99.44,-36.02 95.94,-46.02 102.94,-46.02"/>
 <text text-anchor="middle" x="94.44" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
