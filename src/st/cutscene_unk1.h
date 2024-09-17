@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void CutsceneUnk1(void) {
     g_Dialogue.nextLineX = 2;
     g_Dialogue.nextCharX = 2;

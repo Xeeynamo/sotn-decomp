@@ -8,7 +8,8 @@
 
 #include "../cutscene_unk1.h"
 
-s32 func_801A89D8(const char* textDialogue) {
+// not an exact duplicate
+s32 CutsceneUnk2(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -228,7 +229,7 @@ void EntityDraculaCutscene(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (func_801A89D8(D_801829D8) & 0xFF) {
+        if (CutsceneUnk2(D_801829D8) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS;
             g_CutsceneFlags = 0;
             D_801C2580 = 0;

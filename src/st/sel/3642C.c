@@ -3,7 +3,7 @@
 
 #include "../cutscene_unk1.h"
 
-u8 func_801B6480(const char* textDialogue) {
+u8 CutsceneUnk2(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -241,7 +241,7 @@ void func_801B69F8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (func_801B6480(D_8018B304)) {
+        if (CutsceneUnk2(D_8018B304)) {
             D_801BC350 = D_801D6B00 = D_801BC3E8 = 0;
             D_8003C704 = 1;
             entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;

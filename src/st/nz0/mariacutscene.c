@@ -5,75 +5,9 @@
 // No function in NZ0 calls anything in there, nor does anything in here call
 // any NZ0 functions, besides the ones in this file.
 
-void CutsceneUnk1(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
-s32 func_801B7520(s32 textDialogue) {
-    Primitive* prim;
-    s16 firstPrimIndex;
-
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    g_Dialogue.primIndex[2] = firstPrimIndex;
-    if (firstPrimIndex == -1) {
-        g_Dialogue.primIndex[2] = 0;
-        return 0;
-    }
-    g_Dialogue.nextCharDialogue = textDialogue;
-    g_Dialogue.unk3C = 0;
-    g_Dialogue.primIndex[1] = -1;
-    g_Dialogue.primIndex[0] = -1;
-    CutsceneUnk1();
-
-    if (prim && prim) { // !FAKE
-    }
-
-    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[1] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[2] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[3] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[4] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[5] = prim->next;
-
-    prim->type = 4;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 3;
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
-    prim->x0 = prim->x2 = 4;
-    prim->x1 = prim->x3 = 0xF8;
-    prim->priority = 0x1FD;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 1;
-    prim->x0 = 3;
-    prim->y0 = 0x2F;
-    prim->v0 = 0x4A;
-    prim->r0 = prim->g0 = prim->b0 = 0xFF;
-    prim->priority = 0x1FC;
-    prim->drawMode = DRAW_HIDE;
-    return 1;
-}
+#include "../cutscene_unk2.h"
 
 void func_801B76E4(s16 arg0) {
     RECT rect;
@@ -241,7 +175,7 @@ void EntityMariaCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (func_801B7520(D_80183B0C) & 0xFF) {
+        if (CutsceneUnk2(D_80183B0C) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_801CB73C = 0;
