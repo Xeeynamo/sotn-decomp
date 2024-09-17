@@ -22,5 +22,3 @@ INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B74C);
 INCLUDE_ASM("boss/mar/nonmatchings/AFC4", EntityMariaCutscene);
 
 INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018C90C);
-
-INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018CA94);
