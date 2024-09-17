@@ -73,11 +73,7 @@ void func_80194AA0(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_80194C24(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
+#include "../cutscene_unk6.h"
 
 void CutsceneRun(void) {
     Entity* entity;
@@ -407,7 +403,7 @@ void EntitySuccubusCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_80194C24((u8*)bit_shifty);
+                CutsceneUnk6((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;

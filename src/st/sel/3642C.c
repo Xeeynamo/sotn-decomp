@@ -171,11 +171,7 @@ void func_801B675C(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_801B68E0(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
+#include "../cutscene_unk6.h"
 
 void func_801B690C(u8 ySteps, Entity* self) {
     s32 primIndex = g_Dialogue.nextCharY + 1;
@@ -384,7 +380,7 @@ void func_801B69F8(Entity* entity) {
                 i |= g_Dialogue.nextCharDialogue++[0];
                 i <<= 4;
                 i |= g_Dialogue.nextCharDialogue++[0];
-                func_801B68E0(i);
+                CutsceneUnk6(i);
                 continue;
             case 13:
                 continue;

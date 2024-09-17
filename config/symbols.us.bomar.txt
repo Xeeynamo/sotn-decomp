@@ -4,6 +4,7 @@ g_StoneDoorTiles = 0x801812DC;
 CutsceneUnk1 = 0x8018AFC4;
 CutsceneUnk2 = 0x8018B018;
 CutsceneUnk4 = 0x8018B238;
+CutsceneUnk6 = 0x8018B474;
 CutsceneRun = 0x8018B4A0;
 EntityMariaCutscene = 0x8018B850;
 DestroyEntity = 0x80190388;
