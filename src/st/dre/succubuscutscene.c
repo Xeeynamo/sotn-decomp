@@ -206,7 +206,7 @@ void EntitySuccubusCutscene(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[212]) || (g_PlayableCharacter != PLAYER_ALUCARD) ||
+        if ((g_CastleFlags[SUCC_CS_DONE]) || (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             if (!self->params) {
                 DestroyEntity(self);
@@ -227,7 +227,7 @@ void EntitySuccubusCutscene(Entity* self) {
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
         }
-        if ((g_CastleFlags[212] != 0) ||
+        if ((g_CastleFlags[SUCC_CS_DONE] != 0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             D_801A3ED4 = 1;
@@ -654,7 +654,7 @@ void EntitySuccubusCutscene(Entity* self) {
 
     case 7:
         if (self->params) {
-            g_CastleFlags[212] = 1;
+            g_CastleFlags[SUCC_CS_DONE] = 1;
             g_Settings.D_8003CB04 |= 0x2000;
         } else {
             g_Settings.D_8003CB04 |= 0x1000;

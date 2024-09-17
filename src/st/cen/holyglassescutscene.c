@@ -232,7 +232,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if (g_CastleFlags[216] != 0) {
+        if (g_CastleFlags[HG_CS_DONE] != 0) {
             DestroyEntity(self);
             return;
         }
@@ -667,7 +667,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
 
     case 7:
         DestroyEntity(self);
-        g_CastleFlags[216] = 1;
+        g_CastleFlags[HG_CS_DONE] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_GET_HOLYGLASSES, TIMEATTACK_SET_RECORD);
         D_8003C704 = 0;
