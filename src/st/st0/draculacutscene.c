@@ -71,23 +71,7 @@ s32 CutsceneUnk2(const char* textDialogue) {
 
 #include "../cutscene_unk3.h"
 
-void func_801A8BF8(void) {
-    Primitive* prim;
-
-    CutsceneUnk3(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x10;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 const char* D_80180828[] = {_S("Richter"), _S("Dracula")};
 
@@ -261,7 +245,7 @@ void EntityDraculaCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801A8BF8();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -323,7 +307,7 @@ void EntityDraculaCutscene(Entity* self) {
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80180794[i];
                 CutsceneUnk1();
-                func_801A8BF8();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
                 func_801A8CB0(i, self);
