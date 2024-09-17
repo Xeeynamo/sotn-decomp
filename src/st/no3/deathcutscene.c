@@ -175,7 +175,8 @@ void EntityDeathCutscene(Entity* self) {
     switch (self->step) {
     case 0:
         CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
-        if ((g_CastleFlags[CASTLE_FLAG_53]) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
+        if ((g_CastleFlags[CASTLE_FLAG_53]) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             g_Entities[192].params = 0;
             return;

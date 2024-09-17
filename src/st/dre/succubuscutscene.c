@@ -206,7 +206,8 @@ void EntitySuccubusCutscene(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[SUCC_CS_DONE]) || (g_PlayableCharacter != PLAYER_ALUCARD) ||
+        if ((g_CastleFlags[SUCC_CS_DONE]) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             if (!self->params) {
                 DestroyEntity(self);

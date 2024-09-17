@@ -180,7 +180,8 @@ void HandlePlay(void) {
         func_800EDAE4();
         func_801024DC();
         if (g_CastleFlags[CASTLE_FLAG_19] & 0x80) {
-            g_CastleFlags[CASTLE_FLAG_19] = g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
+            g_CastleFlags[CASTLE_FLAG_19] =
+                g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;

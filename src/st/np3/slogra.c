@@ -87,8 +87,7 @@ void EntitySlogra(Entity* self) {
 
     switch (self->step) {
     case SLOGRA_INIT:
-        if (g_CastleFlags[SG_KILL_ALCH] ||
-            g_CastleFlags[SG_RETR_ENTR]) {
+        if (g_CastleFlags[SG_KILL_ALCH] || g_CastleFlags[SG_RETR_ENTR]) {
             DestroyEntity(self);
             return;
         }
