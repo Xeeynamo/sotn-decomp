@@ -6,8 +6,6 @@
  * Description: Abandoned Mine
  */
 
-INCLUDE_ASM("st/chi/nonmatchings/1E1A0", func_8019E1A0);    // UpdateStageEntities()
-//#include "../update_stage_entities.h"
 
 // POSSIBLE FILE BREAK
 
@@ -2030,3 +2028,4 @@ void UnkPolyFunc0(Primitive* prim) {
 }
 INCLUDE_ASM("st/chi/nonmatchings/1E1A0", func_801AE70C);    // PrimDecreaseBrightness()
 //#include "../prim_helpers.h"
+#include "../update_stage_entities.h"

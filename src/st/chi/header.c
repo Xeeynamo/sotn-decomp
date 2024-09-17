@@ -5,8 +5,8 @@ extern signed short* spriteBanks[];
 extern void* Cluts[];
 extern MyRoomDef rooms_layers[];
 extern GfxBank gfxBanks[];
-void func_8019E1A0();               // UpdateStageEntities()
-void func_8019E2A8();               // HitDetection()
+void UpdateStageEntities();
+void func_8019E2A8();   // HitDetection()
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -19,7 +19,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .objLayoutHorizontal = NULL,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
-    .UpdateStageEntities = func_8019E1A0,
+    .UpdateStageEntities = UpdateStageEntities,
 };
 
 #include "sprite_banks.h"
