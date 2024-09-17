@@ -28,7 +28,7 @@ void EntityBreakableWallDebris(Entity*);
 void func_8019B914(Entity*);
 void EntityFallingStairs(Entity*);
 void func_8019CBA8(Entity*);
-void func_8019D9C8(Entity*);
+void EntityFallingStep(Entity*);
 void func_801A97C8(Entity*);
 void func_801A9D40(Entity*);
 void func_801A9E94(Entity*);
@@ -75,7 +75,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_8019B914,  // E_ID_1A - CEN.func_8018DB18
     func_8019CBA8,  // E_ID_1B
     EntityFallingStairs,
-    func_8019D9C8,  // E_ID_1D
+    EntityFallingStep,
     func_801A97C8,  // E_ID_1E
     func_801A9D40,  // E_ID_1F
     func_801A9E94,  // E_ID_20

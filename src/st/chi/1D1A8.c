@@ -314,7 +314,170 @@ void EntityFallingStairs(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/1D1A8", func_8019D9C8);    // [Entity]
+// [Entity] Room 8, Middle, Falling Step
+// PSP:func_psp_0924E4D8:Match
+void EntityFallingStep(Entity* self) {
+    const s32 TilePos = 0x20D;
+    const s32 TileInitVal = 0x233;
+    const s32 TriggerBoxX = 0xC8;
+    const s32 TriggerBoxY = 0x1D0;
+    const u32 TriggerBoxW = 0x18;
+    const u32 TriggerBoxH = 0x40;
+
+    enum Step {
+        Init = 0,
+        WaitForTrigger = 1,
+        BreakAway = 2,
+        Falling = 3,
+    };
+
+    Primitive* prim;
+    s32 posX;
+    s32 posY;
+    s32 i;
+    s32 scrolledY;
+    Entity* entity;
+    s32 primIdx;
+    Entity* player;
+    s32 scrolledX;
+    Collider collider;
+
+    switch (self->step) {
+    case Init:
+        if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STEP]) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(&EntityInit_8018067C);
+        self->animCurFrame = 0;
+        self->drawFlags |= 4;
+        g_Tilemap.fg[TilePos] = TileInitVal;
+        // Fallthrough
+    case WaitForTrigger:
+        player = &PLAYER;
+        posX = player->posX.i.hi;
+        posY = player->posY.i.hi;
+        scrolledX = posX + g_Tilemap.scrollX.i.hi;
+        scrolledY = posY + g_Tilemap.scrollY.i.hi;
+        scrolledX -= TriggerBoxX;
+        scrolledY -= TriggerBoxY;
+        if ((scrolledX < TriggerBoxW) &&
+            (scrolledY < TriggerBoxH) &&
+            (g_Player.pl_vram_flag & 1)) {
+            g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STEP] = 1;
+            self->step++;
+        }
+        break;
+        
+    case BreakAway:
+        self->animCurFrame = 0x24;
+        g_Tilemap.fg[TilePos] = 0;
+        g_api.PlaySfx(NA_SE_SECRET_STAIRS);
+        primIdx = g_api.func_800EDB58(PRIM_TILE_ALT, 96);
+        if (primIdx != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            prim = &g_PrimBuf[primIdx];
+            self->ext.prim = prim;
+            
+            prim->x0 = self->posX.i.hi + 8;
+            prim->y0 = self->posY.i.hi - 8;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->p3 = 0;
+                prim->r0 = 0x60;
+                prim->g0 = 0x60;
+                prim->b0 = 0x20;
+                prim->u0 = prim->v0 = 1;
+                prim->priority = 0xC0;
+                prim->drawMode = DRAW_HIDE;
+                self->ext.fallingStairs.prim = prim;
+                prim = prim->next;
+            }
+            self->ext.fallingStairs.primBatchCount = 32;
+        } else {
+            self->ext.fallingStairs.primBatchCount = 0;
+            self->ext.prim = NULL;
+        }
+        self->step++;
+        break;
+        
+    case Falling:
+        MoveEntity();
+        self->rotZ -= 0x20;
+        self->velocityY += 0x4000;
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi + 9;
+        g_api.CheckCollision(posX, posY, &collider, 0);
+        if (collider.effects & 1) {
+            scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+
+            // Check for lowest possible position
+            if (scrolledY > 0x3C0) {
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(6, self, entity);
+                    entity->params = 0x10;
+                }
+                DestroyEntity(self);
+                return;
+            }
+            posY = self->posY.i.hi += collider.unk18;
+            self->velocityY = -self->velocityY / 3;
+            if (self->velocityX == 0) {
+                self->velocityX = -0xC000;
+            } else {
+                if (self->velocityX > 0) {
+                    posX += 0xC;
+                } else {
+                    posX -= 0xC;
+                }
+    
+                posY -= 2;
+                g_api.CheckCollision(posX, posY, &collider, 0);
+                if (collider.effects & 1) {
+                    self->velocityX = -self->velocityX;
+                }
+            }
+        }
+        
+        // Initialize a batch of 2 primitives
+        if (self->ext.fallingStairs.primBatchCount != 0) {
+            self->ext.fallingStairs.primBatchCount--;
+            prim = self->ext.prim;
+            posX = prim->x0;
+            posY = prim->y0;
+
+            for (i = 0; i < 2; i++) {
+                prim = self->ext.prim;
+                prim = prim->next;
+                prim = FindFirstUnkPrim(prim);
+                if (prim != NULL) {
+                    prim->p3 = 1;
+                    prim->p2 = 0;
+                    prim->x0 = (posX + (Random() & 7)) - 3;
+                    prim->y0 = posY + (Random() & 0xF);
+                }
+            }
+        }
+    }
+    
+    if (self->ext.prim != NULL) {
+        prim = self->ext.prim;
+        prim = prim->next;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_8019D0D8(prim);
+            }
+            prim = prim->next;
+        }
+        prim = self->ext.fallingStairs.prim;
+        prim->u0 = prim->v0 = 0;
+        prim->x0 = prim->y0 = 0;
+        prim->drawMode = 2;
+    }
+}
 
 #include "../random.h"
 

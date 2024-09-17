@@ -1226,8 +1226,10 @@ typedef struct {
     /* 0x94 */ s16 resetTimer;
 } ET_BreakableWall;
 
+// CHI Falling Stairs
 typedef struct {
-    /* 0x7C */ char pad_7C[0x8];
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s32 primBatchCount;
     /* 0x84 */ s16 rotateAccel;
     /* 0x86 */ char pad_86[0x2];
     /* 0x88 */ Primitive* prim;

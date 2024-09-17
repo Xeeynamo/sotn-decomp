@@ -11,7 +11,7 @@ EntityBreakableWall = 0x8019C5CC;
 // func_8019CBA8
 // func_8019D0D8    // Falling Stairs Dust Particles
 EntityFallingStairs = 0x8019D1A8;
-// func_8019D9C8
+EntityFallingStep = 0x8019D9C8;
 Random = 0x8019DE74;
 //Update = 0x8019DEA4;
 //UpdateStageEntities = 0x8019E1A0;
