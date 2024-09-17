@@ -9,20 +9,12 @@
 
 #include "../cutscene_unk2.h"
 
-void func_801B76E4(s16 arg0) {
-    RECT rect;
-
-    rect.y = (arg0 * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
+#include "../cutscene_unk3.h"
 
 void func_801B7740(void) {
     Primitive* prim;
 
-    func_801B76E4(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
     prim->clut = g_Dialogue.clutIndex;

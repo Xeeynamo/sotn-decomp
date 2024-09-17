@@ -5,20 +5,12 @@
 
 #include "../cutscene_unk2.h"
 
-void func_8019498C(s16 yOffset) {
-    RECT rect;
-
-    rect.y = (yOffset * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
+#include "../cutscene_unk3.h"
 
 void func_801949E8(void) {
     Primitive* prim;
 
-    func_8019498C(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
     prim->clut = g_Dialogue.clutIndex;

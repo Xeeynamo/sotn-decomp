@@ -50,20 +50,12 @@ static const char _pad[4] = "";
 
 #include "../cutscene_unk2.h"
 
-void func_8018E124(s16 arg0) {
-    RECT rect;
-
-    rect.y = (arg0 * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
+#include "../cutscene_unk3.h"
 
 void func_8018E180(void) {
     Primitive* prim;
 
-    func_8018E124(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
     prim->clut = g_Dialogue.clutIndex;

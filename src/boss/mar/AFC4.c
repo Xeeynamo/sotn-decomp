@@ -7,7 +7,7 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_unk2.h"
 
-INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B1DC);
+#include "../../st/cutscene_unk3.h"
 
 INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B238);
 
