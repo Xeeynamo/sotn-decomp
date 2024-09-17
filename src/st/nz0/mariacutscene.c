@@ -5,7 +5,7 @@
 // No function in NZ0 calls anything in there, nor does anything in here call
 // any NZ0 functions, besides the ones in this file.
 
-void func_801B74CC(void) {
+void CutsceneUnk1(void) {
     g_Dialogue.nextLineX = 2;
     g_Dialogue.nextCharX = 2;
     g_Dialogue.nextCharY = 0;
@@ -29,7 +29,7 @@ s32 func_801B7520(s32 textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_801B74CC();
+    CutsceneUnk1();
 
     if (prim && prim) { // !FAKE
     }
@@ -336,7 +336,7 @@ void EntityMariaCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_801813D8[i];
-                func_801B74CC();
+                CutsceneUnk1();
                 func_801B7740();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;

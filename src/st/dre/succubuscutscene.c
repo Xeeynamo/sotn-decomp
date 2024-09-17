@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
 
-void func_80194774(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
 s32 func_801947C8(s32 textDialogue) {
     Primitive* prim;
@@ -25,7 +17,7 @@ s32 func_801947C8(s32 textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_80194774();
+    CutsceneUnk1();
 
     if (prim && prim) { // !FAKE
     }
@@ -412,7 +404,7 @@ void EntitySuccubusCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_801808A0[i];
-                func_80194774();
+                CutsceneUnk1();
                 func_801949E8();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;

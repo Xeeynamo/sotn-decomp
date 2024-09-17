@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
-void func_801B642C(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
 u8 func_801B6480(const char* textDialogue) {
     Primitive* prim;
@@ -25,7 +17,7 @@ u8 func_801B6480(const char* textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_801B642C();
+    CutsceneUnk1();
 
     //! FAKE:
     if (prim && prim) {
@@ -338,7 +330,7 @@ void func_801B69F8(Entity* entity) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80180838[j];
-                func_801B642C();
+                CutsceneUnk1();
                 func_801B66A4();
                 prim->priority = 0x1FE;
                 prim->blendMode = 0;

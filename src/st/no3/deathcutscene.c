@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
-void func_801BE544(void) {
+// similar but not an exact duplicate
+void CutsceneUnk1(void) {
     g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
     g_Dialogue.nextCharX = 0x182; // for all other cutscenes (so far)!
     g_Dialogue.nextCharY = 0;
@@ -25,7 +26,7 @@ s32 func_801BE598(s32 textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_801BE544();
+    CutsceneUnk1();
 
     //! FAKE:
     if (prim && prim) {
@@ -338,7 +339,7 @@ void EntityDeathCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80181A38[i];
-                func_801BE544();
+                CutsceneUnk1();
                 func_801BE7BC();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
