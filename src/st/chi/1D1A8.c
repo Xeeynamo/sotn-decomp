@@ -19,16 +19,18 @@ void EntityFallingStairs(Entity* self)
 {
     const s32 NotFallenPosX = 207;
     const s32 NotFallenPosY = 575;
-    const s32 RoomPosX = 0x50;  //TODO: Compile-time macro?
-    const s32 RoomPosY = 0x200; //TODO: Compile-time macro?
+    const s32 TriggerBoxX = 0x50;
+    const s32 TriggerBoxY = 0x200;
+    const u32 TriggerBoxW = 0x70;
+    const u32 TriggerBoxH = 0x40;
     const s32 RightSideHitHeight = 0x29F;
 
     enum Step {
         Init = 0,
-        Idle_Unfallen = 1,
-        TriggerBreak = 2,
+        WaitForTrigger = 1,
+        BreakAway = 2,
         Falling = 3,
-        TriggerLand = 4,
+        Land = 4,
     };
 
     enum FallingStep {
@@ -36,23 +38,23 @@ void EntityFallingStairs(Entity* self)
         RotateCounterClockwise = 1,
     };
 
-    Primitive* prim;    // s0
-    s32 i;              // s1
-    s16* pDstTileIdx;   // s2
-    s16* pSrcTile;      // s3
-    s32 yPos;           // s4
-    s32 xPos;           // s5
-    Entity* entity;     // s6
-    Entity* player;     // s7
-    s32 scrolledY;      // s8
-    s32 primIdx;        // 0x30(sp)
-    s32 selfPosY;       // 0x34(sp)
-    s32 selfPosX;       // 0x38(sp)
-    s32 scrolledX;      // 0x3c(sp)
-    
+    Primitive* prim;
+    s32 i;
+    s16* pDstTileIdx;
+    s16* pSrcTile;
+    s32 yPos;
+    s32 xPos;
+    Entity* entity;
+    Entity* player;
+    s32 scrolledY;
+    s32 primIdx;
+    s32 selfPosY;
+    s32 selfPosX;
+    s32 scrolledX;
+
     scrolledX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
     scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-    
+
     switch (self->step) {
         case Init:
             if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STAIRS]) {
@@ -64,7 +66,7 @@ void EntityFallingStairs(Entity* self)
             self->posX.i.hi = NotFallenPosX - g_Tilemap.scrollX.i.hi;
             self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
             InitializeEntity(&EntityInit_8018067C);
-            
+
             self->drawFlags |= FLAG_DRAW_ROTZ;
             self->animCurFrame = 0;
 
@@ -74,7 +76,7 @@ void EntityFallingStairs(Entity* self)
             for (i = 0; i < 0x11; i++, pDstTileIdx++, pSrcTile++) {
                 g_Tilemap.fg[*pDstTileIdx] = *pSrcTile;
             }
-            
+
             // Change tileset to hide fallen stairs
             pDstTileIdx = &Room3_FallingStairsFallenTileIndices;
             pSrcTile = &Room3_FallingStairsFallenTileValues;
@@ -86,22 +88,22 @@ void EntityFallingStairs(Entity* self)
             }
 
             // Fallthrough
-        case Idle_Unfallen:
+        case WaitForTrigger:
             player = &PLAYER;
             xPos = player->posX.i.hi;
             yPos = player->posY.i.hi;
             scrolledX = xPos + g_Tilemap.scrollX.i.hi;
             scrolledY = yPos + g_Tilemap.scrollY.i.hi;
-            scrolledX -= RoomPosX;
-            scrolledY -= RoomPosY;
-            if ((scrolledX < 0x70U) &&
-                (scrolledY < 0x40U) &&
+            scrolledX -= TriggerBoxX;
+            scrolledY -= TriggerBoxY;
+            if ((scrolledX < TriggerBoxW) &&
+                (scrolledY < TriggerBoxH) &&
                 (g_Player.pl_vram_flag & 1)) {  // Touching the ground
                 self->step++;
             }
             break;
 
-        case TriggerBreak:
+        case BreakAway:
             self->animCurFrame = 0x23;
 
             // Clear out all tiles in unfallen state
@@ -109,7 +111,7 @@ void EntityFallingStairs(Entity* self)
             for (i = 0; i < 0x11; i++, pDstTileIdx++) {
                 g_Tilemap.fg[*pDstTileIdx] = 0;
             }
-            
+
             g_api.func_80102CD8(1); // Not sure what this does. Removing it doesn't make an obvious difference
             g_api.PlaySfx(NA_SE_SECRET_STAIRS);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -126,7 +128,7 @@ void EntityFallingStairs(Entity* self)
                 self->primIndex = primIdx;
                 prim = &g_PrimBuf[primIdx];
                 self->ext.prim = prim;
-                
+
                 prim->x0 = self->posX.i.hi;
                 prim->y0 = self->posY.i.hi - 0x18;
                 prim->drawMode = DRAW_HIDE | DRAW_UNK02;
@@ -143,7 +145,7 @@ void EntityFallingStairs(Entity* self)
                     self->ext.fallingStairs.prim = prim;
                     prim = prim->next;
                 }
-                
+
                 // Show some dust particles
                 prim = self->ext.prim;
                 xPos = prim->x0;
@@ -225,11 +227,11 @@ void EntityFallingStairs(Entity* self)
 
                 case RotateCounterClockwise:
                     self->rotZ -= self->ext.fallingStairs.rotateAccel;
-                    
+
                     // This line works better in PSP, but the uncommented line is better in PSX
                     //self->ext.fallingStairs.rotateAccel++;
                     self->ext.fallingStairs.rotateAccel = self->ext.fallingStairs.rotateAccel + 1;
-                    
+
                     xPos = 0x74 - g_Tilemap.scrollX.i.hi;
                     yPos = 0x2C0 - g_Tilemap.scrollY.i.hi;
                     if (self->rotZ < 0) {
@@ -280,7 +282,7 @@ void EntityFallingStairs(Entity* self)
             }
             break;
 
-        case TriggerLand:
+        case Land:
             // Update tilemap to show fallen stairs
             pDstTileIdx = &Room3_FallingStairsFallenTileIndices;
             pSrcTile = &Room3_FallingStairsNotFallenTileValues;
@@ -296,7 +298,7 @@ void EntityFallingStairs(Entity* self)
     if (self->ext.prim != NULL) {
         prim = self->ext.prim;
         prim = prim->next;
-        
+
         // Update dust particles
         while (prim != NULL) {
             if (prim->p3) {
@@ -304,7 +306,7 @@ void EntityFallingStairs(Entity* self)
             }
             prim = prim->next;
         }
-    
+
         prim = self->ext.fallingStairs.prim;
         prim->v0 = 0;
         prim->u0 = 0;
