@@ -11,7 +11,16 @@ extern s32 D_psp_0926BC50;
 #endif
 
 extern EntityInit EntityInit_8018067C;
-extern s16 Room3_DemonSwitchWallTilesCollision[];
+
+u16 Room3_DemonSwitchWallTilesCollision[] = {
+    0x039D, 0x03A0, 0x03A0, 0x039E, 0x03A0, 0x03A0, 0x03A0, 0x039F,
+    0x03A0, 0x03A0, 0x03A0, 0x03A0,
+};
+
+u16 D_801808B4[] = {    // Room3_DemonSwitchWallTilesNoCollision
+    0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
+    0x01BF, 0x01BF, 0x01BF, 0x01BF,
+};
 
 // [Entity] Room 3, Top, Demon Switch Wall
 void EntityDemonSwitchWall(Entity* self) {

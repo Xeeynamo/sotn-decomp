@@ -1,19 +1,6 @@
 #include "game.h"
 #include "stage.h"
 
-//TODO: START 1BEDC.c
-
-u16 Room3_DemonSwitchWallTilesCollision[] = {
-    0x039D, 0x03A0, 0x03A0, 0x039E, 0x03A0, 0x03A0, 0x03A0, 0x039F,
-    0x03A0, 0x03A0, 0x03A0, 0x03A0,
-};
-
-u16 D_801808B4[] = {    // Room3_DemonSwitchWallTilesNoCollision
-    0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
-    0x01BF, 0x01BF, 0x01BF, 0x01BF,
-};
-
-//TODO: END 1BEDC.c
 //TODO: START 1C5CC.c
 
 u16 Room5_BreakableWallTilesCollision[] = {

@@ -38,7 +38,8 @@ segments:
       - [0x298, data] # gfxbanks
       - [0x3B4, .data, e_laydef] # layout entries header
       - [0x55C, .data, entity]
-      - [0x89C, .data, func_data]
+      - [0x89C, .data, 1BEDC]
+      - [0x8CC, .data, func_data]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
