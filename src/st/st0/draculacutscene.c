@@ -6,17 +6,10 @@
 
 #include "st0.h"
 
-void func_801A8984(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
-s32 func_801A89D8(const char* textDialogue) {
+// not an exact duplicate
+s32 CutsceneUnk2(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -30,7 +23,7 @@ s32 func_801A89D8(const char* textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_801A8984();
+    CutsceneUnk1();
 
     if (prim && prim) { // !FAKE
     }
@@ -76,20 +69,12 @@ s32 func_801A89D8(const char* textDialogue) {
     return 1;
 }
 
-void func_801A8B9C(s16 yOffset) {
-    RECT rect;
-
-    rect.y = (yOffset * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
+#include "../cutscene_unk3.h"
 
 void func_801A8BF8(void) {
     Primitive* prim;
 
-    func_801A8B9C(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
     prim->clut = g_Dialogue.clutIndex;
@@ -236,7 +221,7 @@ void EntityDraculaCutscene(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (func_801A89D8(D_801829D8) & 0xFF) {
+        if (CutsceneUnk2(D_801829D8) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS;
             g_CutsceneFlags = 0;
             D_801C2580 = 0;
@@ -337,7 +322,7 @@ void EntityDraculaCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80180794[i];
-                func_801A8984();
+                CutsceneUnk1();
                 func_801A8BF8();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;

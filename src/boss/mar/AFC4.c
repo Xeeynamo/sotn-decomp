@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018AFC4);
+extern Dialogue g_Dialogue;
 
-INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B018);
+#include "../../st/cutscene_unk1.h"
 
-INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B1DC);
+#include "../../st/cutscene_unk2.h"
+
+#include "../../st/cutscene_unk3.h"
 
 INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018B238);
 

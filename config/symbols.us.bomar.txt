@@ -1,6 +1,9 @@
 D_80180A60 = 0x801803B4;
 D_80180608 = 0x80180744;
 g_StoneDoorTiles = 0x801812DC;
+CutsceneUnk1 = 0x8018AFC4;
+CutsceneUnk2 = 0x8018B018;
+CutsceneUnk3 = 0x8018B1DC;
 CutsceneRun = 0x8018B4A0;
 EntityMariaCutscene = 0x8018B850;
 DestroyEntity = 0x80190388;

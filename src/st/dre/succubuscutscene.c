@@ -1,90 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
 
-void func_80194774(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
-s32 func_801947C8(s32 textDialogue) {
-    Primitive* prim;
-    s16 firstPrimIndex;
+#include "../cutscene_unk2.h"
 
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    g_Dialogue.primIndex[2] = firstPrimIndex;
-    if (firstPrimIndex == -1) {
-        g_Dialogue.primIndex[2] = 0;
-        return 0;
-    }
-    g_Dialogue.nextCharDialogue = textDialogue;
-    g_Dialogue.unk3C = 0;
-    g_Dialogue.primIndex[1] = -1;
-    g_Dialogue.primIndex[0] = -1;
-    func_80194774();
-
-    if (prim && prim) { // !FAKE
-    }
-
-    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[1] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[2] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[3] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[4] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[5] = prim->next;
-
-    prim->type = 4;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 3;
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
-    prim->x0 = prim->x2 = 4;
-    prim->x1 = prim->x3 = 0xF8;
-    prim->priority = 0x1FD;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 1;
-    prim->x0 = 3;
-    prim->y0 = 0x2F;
-    prim->v0 = 0x4A;
-    prim->r0 = prim->g0 = prim->b0 = 0xFF;
-    prim->priority = 0x1FC;
-    prim->drawMode = DRAW_HIDE;
-    return 1;
-}
-
-void func_8019498C(s16 yOffset) {
-    RECT rect;
-
-    rect.y = (yOffset * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
+#include "../cutscene_unk3.h"
 
 void func_801949E8(void) {
     Primitive* prim;
 
-    func_8019498C(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
     prim->clut = g_Dialogue.clutIndex;
@@ -308,9 +234,9 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if (self->params) {
-            bit_shifty = func_801947C8(D_80181B65) & 0xFF;
+            bit_shifty = CutsceneUnk2(D_80181B65) & 0xFF;
         } else {
-            bit_shifty = func_801947C8(D_801816C8) & 0xFF;
+            bit_shifty = CutsceneUnk2(D_801816C8) & 0xFF;
         }
         if (bit_shifty) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
@@ -412,7 +338,7 @@ void EntitySuccubusCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_801808A0[i];
-                func_80194774();
+                CutsceneUnk1();
                 func_801949E8();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
