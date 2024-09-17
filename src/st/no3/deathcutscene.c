@@ -14,7 +14,7 @@ void CutsceneUnk1(void) {
 
 #include "../cutscene_unk2.h"
 
-void func_801BE75C(s16 yOffset) {
+void CutsceneUnk3(s16 yOffset) {
     RECT rect;
 
     rect.x = 384;
@@ -24,10 +24,10 @@ void func_801BE75C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_801BE7BC(void) {
+void CutsceneUnk4(void) {
     Primitive* prim;
 
-    func_801BE75C(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x16;
     prim->clut = g_Dialogue.clutIndex;
@@ -101,11 +101,7 @@ void func_801BE870(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_801BE9F4(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
+#include "../cutscene_unk6.h"
 
 #include "../cutscene.h"
 
@@ -219,7 +215,7 @@ void EntityDeathCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801BE7BC();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -281,7 +277,7 @@ void EntityDeathCutscene(Entity* self) {
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80181A38[i];
                 CutsceneUnk1();
-                func_801BE7BC();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
                 func_801BE870(i, self);
@@ -365,7 +361,7 @@ void EntityDeathCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_801BE9F4((u8*)bit_shifty);
+                CutsceneUnk6((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;

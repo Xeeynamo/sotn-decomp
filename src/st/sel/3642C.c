@@ -67,23 +67,7 @@ u8 CutsceneUnk2(const char* textDialogue) {
 
 #include "../cutscene_unk3.h"
 
-void func_801B66A4(void) {
-    Primitive* prim;
-
-    CutsceneUnk3(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x10;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 u8 D_80180824[] = {
     0x00,
@@ -187,11 +171,7 @@ void func_801B675C(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_801B68E0(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
+#include "../cutscene_unk6.h"
 
 void func_801B690C(u8 ySteps, Entity* self) {
     s32 primIndex = g_Dialogue.nextCharY + 1;
@@ -263,7 +243,7 @@ void func_801B69F8(Entity* entity) {
                 if (++g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801B66A4();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY < 4) {
                         continue;
@@ -323,7 +303,7 @@ void func_801B69F8(Entity* entity) {
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80180838[j];
                 CutsceneUnk1();
-                func_801B66A4();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->blendMode = 0;
                 func_801B675C(j, entity);
@@ -400,7 +380,7 @@ void func_801B69F8(Entity* entity) {
                 i |= g_Dialogue.nextCharDialogue++[0];
                 i <<= 4;
                 i |= g_Dialogue.nextCharDialogue++[0];
-                func_801B68E0(i);
+                CutsceneUnk6(i);
                 continue;
             case 13:
                 continue;

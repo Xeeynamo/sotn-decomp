@@ -11,23 +11,7 @@
 
 #include "../cutscene_unk3.h"
 
-void func_801B7740(void) {
-    Primitive* prim;
-
-    CutsceneUnk3(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x10;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 // Creates primitives for the actor name at the head of the dialogue
 void func_801B77F8(u16 actorIndex, Entity* self) {
@@ -88,11 +72,7 @@ void func_801B77F8(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_801B797C(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
+#include "../cutscene_unk6.h"
 
 #include "../cutscene.h"
 
@@ -201,7 +181,7 @@ void EntityMariaCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801B7740();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -263,7 +243,7 @@ void EntityMariaCutscene(Entity* self) {
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_801813D8[i];
                 CutsceneUnk1();
-                func_801B7740();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
                 func_801B77F8(i, self);
@@ -347,7 +327,7 @@ void EntityMariaCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_801B797C((u8*)bit_shifty);
+                CutsceneUnk6((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;
