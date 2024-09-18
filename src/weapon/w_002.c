@@ -7,6 +7,7 @@
 #include "w_002_2.h"
 #define g_Animset w_002_1
 #define g_Animset2 w_002_2
+#include "sfx.h"
 
 static u16 clut0[] = {
     0x0000, 0x1484, 0x8000, 0x0449, 0x2570, 0x3A33, 0x148F, 0x30D3, 0x217A,
@@ -80,7 +81,7 @@ static u8* anim0[] = {
     D_12000_8017AAA4, D_12000_8017AAA4, D_12000_8017AAC0, D_12000_8017AADC,
     D_12000_8017AAF8, D_12000_8017AB10, D_12000_8017AB28};
 static WeaponAnimation D_12000_8017ABC4[] = {
-    anim0, hitboxes, 0, SFX_UNK_689, 0x48, 0x03, 0};
+    anim0, hitboxes, 0, SFX_WEAPON_SCRAPE_ECHO, 0x48, 0x03, 0};
 static u16* g_WeaponCluts[] = {clut0};
 static s32 g_HandId = HAND_ID;
 

@@ -604,7 +604,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.shield.unk9C += self->ext.shield.unk9E;
             if (((xShift ^ self->ext.shield.unk9C) & 0x1000) &&
                 (self->params & 0x100)) {
-                g_api.PlaySfx(SFX_UNK_689);
+                g_api.PlaySfx(SFX_WEAPON_SCRAPE_ECHO);
             }
 
             fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
