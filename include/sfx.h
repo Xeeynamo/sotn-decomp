@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define SFX_UNK_6B1 0x6B1
 #define SFX_UNK_6BA 0x6BA
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
@@ -252,7 +251,6 @@ enum SfxModes {
 
 // STAGE DRE
 #define NA_SE_SU_FLAPPING_WINGS 0x6C6
-#define NA_SE_SU_PETAL_ATTACK 0x6B0
 #define NA_SE_SU_CREATE_CLONES 0x6D5
 #define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
@@ -492,8 +490,8 @@ enum Sfx {
     SFX_UI_ALERT_TINK,
     SFX_FROZEN_SHARD_APPEAR,
     SFX_GUARD_TINK,
-    SFX_FROZEN_SHADE_DEATH, // 0x6B0
-    SFX_TRANSFORM_3X,       // Karma Coin and shields
+    SFX_GLASS_SHARDS, // 0x6B0 (Succubus, Frozen Shade, Shamen Shield)
+    SFX_TRANSFORM_3X, // Karma Coin and shields
     SFX_BIBLE_SCRAPE,
     SFX_UNK_TICK,
     SFX_UNK_RATTLE,

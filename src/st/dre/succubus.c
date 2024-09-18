@@ -517,7 +517,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             if ((self->ext.succubus.timer % 64) == 0) {
-                PlaySfxPositional(NA_SE_SU_PETAL_ATTACK);
+                PlaySfxPositional(SFX_GLASS_SHARDS);
             }
             if (--self->ext.succubus.timer == 0) {
                 SetStep(SUCCUBUS_FLY);
