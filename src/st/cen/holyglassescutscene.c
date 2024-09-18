@@ -52,23 +52,7 @@ static const char _pad[4] = "";
 
 #include "../cutscene_unk3.h"
 
-void func_8018E180(void) {
-    Primitive* prim;
-
-    CutsceneUnk3(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x10;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 // Creates primitives for the actor name at the head of the dialogue
 void func_8018E238(u16 actorIndex, Entity* self) {
@@ -129,11 +113,7 @@ void func_8018E238(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_8018E3BC(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
+#include "../cutscene_unk6.h"
 
 void CutsceneRun(void) {
     Entity* entity;
@@ -290,7 +270,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_8018E180();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -352,7 +332,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_801805EC[i];
                 CutsceneUnk1();
-                func_8018E180();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
                 func_8018E238(i, self);
@@ -436,7 +416,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_8018E3BC((u8*)bit_shifty);
+                CutsceneUnk6((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;
