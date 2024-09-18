@@ -284,11 +284,6 @@ enum SfxModes {
 #define SE_WPN_PENTAGRAM 0x6E4
 
 // UNUSED SOUNDS
-
-#define SE_UNK_TE1_6B3 0x6B3
-#define SE_UNK_TE2_6B4 0x6B4
-#define SE_UNK_TE2_6B6 0x6B6
-#define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
 // The VAB IDs appear in large chunks so all sounds proceeding

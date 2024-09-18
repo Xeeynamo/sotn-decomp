@@ -80,7 +80,7 @@ bool RicDoAttack(void) {
     if (RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_WHIP, poisoned), 0)) {
         if (poisoned) {
-            g_api.PlaySfx(0x6B5);
+            g_api.PlaySfx(SFX_RIC_FLAME_WHIP);
         } else {
             g_api.PlaySfx(0x706);
         }
