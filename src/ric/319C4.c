@@ -1630,13 +1630,13 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.et_801719A4.unk84.val += 0xFFFF0000;
         if (self->ext.et_801719A4.unk84.val <= 0x100000) {
             self->ext.et_801719A4.unk7C = 5;
-            g_api.PlaySfx(0x6A1);
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->step++;
         }
         break;
     case 3:
         if (++self->ext.et_801719A4.unk7E >= 0x51) {
-            g_api.PlaySfx(0x6A1);
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->ext.et_801719A4.unk7E = 0;
             self->ext.et_801719A4.unk90 = 1;
             if (--self->ext.et_801719A4.unk7C < 0) {

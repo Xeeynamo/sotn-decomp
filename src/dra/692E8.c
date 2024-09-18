@@ -874,7 +874,7 @@ void EntityAlucard(void) {
                                   (PLAYER.step_s != 8)))) {
                                 func_80109328();
                                 SetPlayerStep(Player_MorphMist);
-                                PlaySfx(SFX_UNK_6A0);
+                                PlaySfx(SFX_TRANSFORM_LOW);
                                 goto block_159;
                             }
                             if ((g_Player.padTapped & PAD_R1) &&
@@ -896,7 +896,7 @@ void EntityAlucard(void) {
                                     }
                                     func_80109328();
                                     SetPlayerStep(Player_MorphBat);
-                                    PlaySfx(SFX_UNK_6A0);
+                                    PlaySfx(SFX_TRANSFORM_LOW);
                                     goto block_160;
                                 }
                             }

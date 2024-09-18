@@ -151,14 +151,14 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.unk84.val += FIX(-1);
         if (self->ext.stopwatch.unk84.val <= FIX(16)) {
             self->ext.stopwatch.t = 5;
-            PlaySfx(NA_SE_EV_CLOCK_TICK);
+            PlaySfx(SFX_CLOCK_TICK);
             self->step++;
         }
         break;
     case 3:
         self->ext.stopwatch.unk7E += 1;
         if (self->ext.stopwatch.unk7E > 80) {
-            PlaySfx(NA_SE_EV_CLOCK_TICK);
+            PlaySfx(SFX_CLOCK_TICK);
             self->ext.stopwatch.unk7E = 0;
             self->ext.stopwatch.unk8C = 1;
             self->ext.stopwatch.t -= 1;

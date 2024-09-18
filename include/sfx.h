@@ -193,9 +193,7 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6A0 0x6A0
 #define SFX_UNK_6A3 0x6A3
-#define NA_SE_EV_CLOCK_TICK 0x6A1
 #define REBOUND_STONE_BOUNCE 0x6A4
 #define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
@@ -456,14 +454,14 @@ enum Sfx {
     SFX_CANDLE_HIT_WHOOSH_A,
     SFX_CANDLE_HIT_WHOOSH_B,
     SFX_QUICK_STUTTER_EXPLODE_A, // 0x680
-    SFX_RARE_FM_IMPACT,          // RARE overlay
+    SFX_RARE_FM_IMPACT,          // RARE overlay only
     SFX_KARMA_COIN_JINGLE,
     SFX_QUICK_STUTTER_EXPLODE_B,
     SFX_FM_STUTTER_EXPLODE,
     SFX_GUNSHOT_HIGH,
     SFX_UI_ERROR,
     SFX_LEVEL_UP,
-    SFX_DEBUG_SELECT,
+    SFX_DEBUG_SELECT, // Low Heartbeat sfx used for Debug menu
     SFX_WEAPON_SCRAPE_ECHO,
     SFX_GLASS_BREAK_WHOOSH,
     SFX_DRA_GLASS_BREAK, // "What is a man?!" wine glass shatter
@@ -483,11 +481,11 @@ enum Sfx {
     SFX_STUTTER_EXPLODE_C,
     SFX_FM_EXPLODE_GLASS_ECHO,
     SFX_BAT_WING_SWISHES,
-    SFX_BAT_SCREECH_SWISH,
+    SFX_BAT_SCREECH_SWISH, // Bat Death
     SFX_MAGIC_SWITCH,
     SFX_THROW_WEAPON_SWISHES,
     SFX_THROW_WEAPON_MAGIC,
-    SFX_TRANSFORM_LOW, // 0x6A0
+    SFX_TRANSFORM_LOW, // 0x6A0 (Alucard Bat/Mist Transform)
     SFX_CLOCK_TICK,
     SFX_DEATH_SWISH,
     SFX_WATER_DAMAGE_SWISHES,
@@ -504,7 +502,7 @@ enum Sfx {
     SFX_FROZEN_SHARD_APPEAR,
     SFX_GUARD_TINK,
     SFX_FROZEN_SHADE_DEATH, // 0x6B0
-    SFX_TRANSFORM_3X,
+    SFX_TRANSFORM_3X,       // Karma Coin and shields
     SFX_BIBLE_SCRAPE,
     SFX_UNK_TICK,
     SFX_UNK_RATTLE,
