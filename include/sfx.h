@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_BREAK_GLASS 0x68B
 #define NA_SE_EN_GAIBON_FLAP_WINGS 0x68D
 #define NA_SE_EN_SLOGRA_SPEAR_PROJECTILE 0x690
 #define NA_SE_EN_GAIBON_FLAME 0x691
@@ -476,7 +475,7 @@ enum Sfx {
     SFX_DEBUG_SELECT,
     SFX_WEAPON_SCRAPE_ECHO,
     SFX_GLASS_BREAK_WHOOSH,
-    SFX_DRA_GLASS_BREAK,
+    SFX_DRA_GLASS_BREAK, // "What is a man?!" wine glass shatter
     SFX_WING_FLAP_A,
     SFX_WING_FLAP_B,
     SFX_HEALTH_PICKUP,

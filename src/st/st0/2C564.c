@@ -663,7 +663,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->rotZ += 0x20;
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi >= 205) {
-            g_api.PlaySfx(NA_SE_BREAK_GLASS);
+            g_api.PlaySfx(SFX_DRA_GLASS_BREAK); // "What is a man?!"
             entity->posY.i.hi = 204;
             SetStep(2);
         }
