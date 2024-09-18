@@ -1455,7 +1455,7 @@ void EntityBatFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        PlaySfx(SFX_QUICK_STUTTER_EXPLODE);
+        PlaySfx(SFX_QUICK_STUTTER_EXPLODE_A);
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->animSet = 9;
         self->anim = D_800B0798;
