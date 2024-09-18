@@ -106,9 +106,11 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
-        run: pip3 install requests tabulate
+        run: |
+            python3 -m venv .venv
+            .venv/bin/pip install requests tabulate
       - name: Generate duplicates and function report
-        run: python3 tools/function_finder/function_finder_saturn.py > gh-functions-saturn/functions_saturn.md
+        run: .venv/bin/python3 tools/function_finder/function_finder_saturn.py > gh-functions-saturn/functions_saturn.md
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'

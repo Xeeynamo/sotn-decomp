@@ -236,7 +236,121 @@ void EntityUnkId30(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId31);
+void EntityUnkId31(Entity* self) {
+    Entity* entity;
+    u16* hitboxPtr;
+    u16 animFrameIdx;
+    u16 animCurFrame;
+    s16 i;
+
+    entity = self - 2;
+    if (self->step == 0) {
+        InitializeEntity(D_80180B24);
+        self->zPriority++;
+        CreateEntityFromCurrentEntity(E_ID_30, self + 1);
+        (self + 1)->params = 1;
+    }
+    if (self->ext.prim) {
+        animFrameIdx = (self->animFrameIdx - 1) * 2;
+        if (entity->step_s == 1) {
+            hitboxPtr = D_80182FC8 + animFrameIdx;
+        } else {
+            hitboxPtr = D_80182FE8 + animFrameIdx;
+        }
+
+        if (self->facingLeft) {
+            self->posX.i.hi = entity->posX.i.hi - *hitboxPtr++;
+        } else {
+            self->posX.i.hi = entity->posX.i.hi + *hitboxPtr++;
+        }
+        self->posY.i.hi = entity->posY.i.hi + *hitboxPtr++;
+    } else {
+        self->posX.i.hi = entity->posX.i.hi;
+        self->posY.i.hi = entity->posY.i.hi;
+    }
+    self->facingLeft = entity->facingLeft;
+    animCurFrame = entity->animCurFrame;
+    if (self->flags & FLAG_DEAD) {
+        hitboxPtr = D_80182F9C;
+        PlaySfxPositional(0x684);
+
+        for (i = 0; i < 3; i++) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity) {
+                CreateEntityFromCurrentEntity(E_ID_32, entity);
+                if (self->facingLeft != 0) {
+                    entity->posX.i.hi -= *hitboxPtr++;
+                } else {
+                    entity->posX.i.hi += *hitboxPtr++;
+                }
+                entity->posY.i.hi += *hitboxPtr++;
+                entity->params = i;
+                entity->facingLeft = self->facingLeft;
+            }
+        }
+
+        hitboxPtr = D_80182FA8;
+        for (i = 0; i < 8; i++) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+
+            if (!entity) {
+                break;
+            }
+
+            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+            entity->params = ((self->zPriority + 1) << 8) + 1;
+            if (self->facingLeft != 0) {
+                entity->posX.i.hi -= *hitboxPtr++;
+            } else {
+                entity->posX.i.hi += *hitboxPtr++;
+            }
+            entity->posY.i.hi += *hitboxPtr++;
+        }
+
+        DestroyEntity(self);
+        DestroyEntity(self + 1);
+        return;
+    }
+
+    if (!self->ext.prim) {
+        if (animCurFrame >= 86) {
+            animCurFrame -= 10;
+        } else if (animCurFrame > 72) {
+            animCurFrame -= 3;
+        } else if (animCurFrame < 57) {
+            animCurFrame = 49;
+        } else {
+            animCurFrame -= 6;
+        }
+
+        if (animCurFrame != 78) {
+            if ((entity->step == 3) && ((u8)entity->ext.timer.t != 0)) {
+                self->animCurFrame = animCurFrame + 58;
+            } else {
+                self->animCurFrame = animCurFrame;
+            }
+        }
+    } else {
+        animCurFrame = self->animCurFrame;
+    }
+
+    if (animCurFrame > 81) {
+        animCurFrame -= 62;
+    } else if (animCurFrame > 75) {
+        animCurFrame -= 59;
+    } else if (animCurFrame > 62) {
+        animCurFrame -= 56;
+    } else if (animCurFrame > 50) {
+        animCurFrame -= 50;
+    } else {
+        animCurFrame -= 49;
+    }
+    hitboxPtr = &D_80182E1C[animCurFrame * 8];
+    self->hitboxOffX = *hitboxPtr++;
+    self->hitboxOffY = *hitboxPtr++;
+    self->hitboxWidth = *hitboxPtr++;
+    self->hitboxHeight = *hitboxPtr++;
+}
 
 // some sort of explosion
 INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityExplosion3);
