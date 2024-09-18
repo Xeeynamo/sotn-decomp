@@ -70,9 +70,6 @@ jobs:
         run: cat dependencies/* | tar -zxf -
       - name: Extract dependencies
         run: make extract_disk
-      - name: Install PSP-specific dependencies
-        if: matrix.version == 'pspeu'
-        run: pip3 install -r tools/requirements-python.txt
       - name: Split game data
         run: make -j extract
       - name: Build binaries
@@ -84,7 +81,7 @@ jobs:
         run: |
           make force_symbols
           make force_extract
-          ./tools/analyze_calls.py --ultradry
+          .venv/bin/python3 ./tools/analyze_calls.py --ultradry
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder
@@ -130,9 +127,6 @@ jobs:
         run: cat dependencies/* | tar -zxf -
       - name: Extract dependencies
         run: make extract_disk
-      - name: Install PSP-specific dependencies
-        if: matrix.version == 'pspeu'
-        run: pip3 install -r tools/requirements-python.txt
       - name: Split game data
         run: make -j extract
       - name: Obtain built binaries
@@ -141,7 +135,7 @@ jobs:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Generate and send progress report
-        run: python3 tools/progress.py --version ${{ matrix.version }}
+        run: . .venv/bin/python3 tools/progress.py --version ${{ matrix.version }}
 
   generate-duplicates-report:
     strategy:
@@ -188,14 +182,14 @@ jobs:
           python-version: '3.x'
       - name: Install secondary pre-requirements
         run: |
-            pip3 install -r tools/requirements-python.txt & \
+            make python-dependencies & \
             (sudo apt-get update && sudo apt-get install graphviz) & \
             wait
       - name: Generate function calls chart
         run: |
             make force_symbols
             make force_extract
-            python3 tools/analyze_calls.py
+            .venv/bin/python3 tools/analyze_calls.py
             git clean -fdx asm/
       - name: Generate function report
         run: |
@@ -203,7 +197,7 @@ jobs:
             rm -rf build/us/main.ld
             rm -rf build/us/weapon.ld
             make -j extract
-            python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
+            .venv/bin/python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
             rm -rf gh-duplicates/function_calls/ || true
             mv function_calls gh-duplicates/
             mv function_graphs.md gh-duplicates
@@ -267,14 +261,14 @@ jobs:
           python-version: '3.x'
       - name: Install secondary pre-requirements
         run: |
-            pip3 install -r tools/requirements-python.txt & \
+            make python-dependencies &
             (sudo apt-get update && sudo apt-get install graphviz) & \
             wait
       - name: Generate function report
         run: |
             make clean && make -j extract
             find asm -print
-            python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
+            .venv/bin/python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'
