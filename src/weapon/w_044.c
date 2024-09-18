@@ -6,6 +6,7 @@
 #include "w_044_2.h"
 #define g_Animset w_044_1
 #define g_Animset2 w_044_2
+#include "sfx.h"
 
 static u16 D_138000_8017A040[] = {
     COLOR16(0, 0, 0, 0),    COLOR16(31, 0, 0, 1),   COLOR16(24, 16, 4, 1),
@@ -187,7 +188,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon_044.unk90 = 0;
         self->ext.weapon_044.unk82 = 0x40;
         self->posY.i.hi = 64;
-        g_api.PlaySfx(SFX_UNK_6B1);
+        g_api.PlaySfx(SFX_TRANSFORM_3X);
         g_unkGraphicsStruct.unk20 = 2;
         self->step++;
         break;

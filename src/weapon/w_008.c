@@ -10,6 +10,7 @@ extern s32 g_HandId;
 #include "w_008_2.h"
 #define g_Animset w_008_1
 #define g_Animset2 w_008_2
+#include "sfx.h"
 
 extern SpriteParts D_3C000_8017A040[];
 extern s8 D_3C000_8017A9F8;
@@ -306,7 +307,7 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             self->ext.shield.unk80 = 0x20;
-            g_api.PlaySfx(SFX_UNK_6B1);
+            g_api.PlaySfx(SFX_TRANSFORM_3X);
             self->step++;
         }
         break;
