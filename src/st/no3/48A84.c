@@ -274,7 +274,7 @@ void EntityUnkId31(Entity* self) {
     animCurFrame = entity->animCurFrame;
     if (self->flags & FLAG_DEAD) {
         hitboxPtr = D_80182F9C;
-        PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
+        PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
 
         for (i = 0; i < 3; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
