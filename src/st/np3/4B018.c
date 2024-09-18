@@ -15,7 +15,7 @@ void EntityOwl(Entity* self) {
     s16 angle;
 
     if (1 < self->step && self->step < 9 && !(g_Timer & 0xF)) {
-        PlaySfxPositional(0x68C);
+        PlaySfxPositional(SFX_WING_FLAP_A);
     }
     if (self->ext.owl.unk80 & 0x20) {
         if (!(self->flags & FLAG_DEAD)) {
