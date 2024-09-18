@@ -113,7 +113,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->hitboxHeight = 32;
         self->hitboxState = 2;
 
-        cond = g_CastleFlags[129] != 0;
+        cond = g_CastleFlags[CASTLE_FLAG_129] != 0;
         tileLayoutPtr = &D_80180E54 + (-cond & 0xC);
 
         tilePos = 0x260;
@@ -124,7 +124,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             tileLayoutPtr += 2;
         }
 
-        if (g_CastleFlags[129] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_129] != 0) {
             DestroyEntity(self);
             break;
         }
@@ -157,7 +157,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->step++;
 
         if (self->ext.nz0311c0.unk84 == 3) {
-            g_CastleFlags[129] = 1;
+            g_CastleFlags[CASTLE_FLAG_129] = 1;
             g_api.func_800F1FC4(0x81);
 
             for (i = 0; i < 8; i++) {
@@ -192,7 +192,7 @@ void EntityBottomSecretRoomFloor(
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;
-        flag = (g_CastleFlags[130] != 0);
+        flag = (g_CastleFlags[CASTLE_FLAG_130] != 0);
         tileLayoutPtr = &D_80180E94 + (-flag & 0x6);
 
         tilePos = 0x2E7;
@@ -203,7 +203,7 @@ void EntityBottomSecretRoomFloor(
             tilePos += 0x10;
         }
 
-        if (g_CastleFlags[130] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_130] != 0) {
             DestroyEntity(self);
             break;
         }
@@ -236,7 +236,7 @@ void EntityBottomSecretRoomFloor(
         self->step++;
 
         if (self->ext.nz0311c0.unk84 == 3) {
-            g_CastleFlags[130] = 1;
+            g_CastleFlags[CASTLE_FLAG_130] = 1;
             g_api.func_800F1FC4(0x82);
             DestroyEntity(self);
         }
@@ -752,20 +752,20 @@ void EntityCannonWall(Entity* self) {
     case 0:
         InitializeEntity(g_EInitGeneric);
 
-        cond = g_CastleFlags[131] != 0;
+        cond = g_CastleFlags[CASTLE_FLAG_131] != 0;
         tileLayoutPtr = (-cond & 6) + &D_80180ED4[0];
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr;
             tilePos += 0x10;
         }
 
-        if (g_CastleFlags[131] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_131] != 0) {
             DestroyEntity(self);
         }
         break;
 
     case 1:
-        i = g_CastleFlags[131] != 0; // TODO: !FAKE:
+        i = g_CastleFlags[CASTLE_FLAG_131] != 0; // TODO: !FAKE:
         if (i) {
             self->step++;
         }

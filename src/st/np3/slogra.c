@@ -48,8 +48,6 @@ typedef enum {
 } SlograDyingSubSteps;
 
 void EntitySlogra(Entity* self) {
-    const int RetreatedInEntrance = 57;
-    const int KilledInAlchLab = 132;
     Entity* newEntity;
     s32 hitPoints;
     u8* animation;
@@ -89,8 +87,7 @@ void EntitySlogra(Entity* self) {
 
     switch (self->step) {
     case SLOGRA_INIT:
-        if (g_CastleFlags[KilledInAlchLab] ||
-            g_CastleFlags[RetreatedInEntrance]) {
+        if (g_CastleFlags[SG_KILL_ALCH] || g_CastleFlags[SG_RETR_ENTR]) {
             DestroyEntity(self);
             return;
         }
@@ -357,7 +354,7 @@ void EntitySlogra(Entity* self) {
             }
             self->ext.GS_Props.timer = 64;
             PlaySfxPositional(SFX_STUTTER_EXPLODE_A);
-            g_CastleFlags[RetreatedInEntrance] |= 1;
+            g_CastleFlags[SG_RETR_ENTR] |= 1;
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:

@@ -499,7 +499,6 @@ extern s16 D_us_80181298[];
 // Stone doors on the floor leading to CEN Entity ID 0x1B
 void EntityStoneDoor(Entity* self) {
     u16 params = self->params;
-    const int centerCubeDoor = 0;
 
     switch (self->step) {
     case 0:
@@ -507,7 +506,7 @@ void EntityStoneDoor(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;
-        if (g_CastleFlags[centerCubeDoor] == 0) {
+        if (g_CastleFlags[CLOCK_ROOM_DOORS] == 0) {
             self->posX.i.hi += D_us_80181294[params];
             UpdateStoneDoorTiles(true);
         } else {
@@ -515,17 +514,17 @@ void EntityStoneDoor(Entity* self) {
             UpdateStoneDoorTiles(false);
         }
         self->posY.i.hi += 88;
-        self->ext.stoneDoor.flag = g_CastleFlags[centerCubeDoor];
+        self->ext.stoneDoor.flag = g_CastleFlags[CLOCK_ROOM_DOORS];
         break;
 
     case 1:
         if (self->ext.stoneDoor.flag == NULL) {
-            if (g_CastleFlags[centerCubeDoor]) {
+            if (g_CastleFlags[CLOCK_ROOM_DOORS]) {
                 self->ext.stoneDoor.unk80 = 0;
                 self->step++;
             }
         }
-        self->ext.stoneDoor.flag = g_CastleFlags[centerCubeDoor];
+        self->ext.stoneDoor.flag = g_CastleFlags[CLOCK_ROOM_DOORS];
         break;
 
     case 2:

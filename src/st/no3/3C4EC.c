@@ -88,7 +88,7 @@ void EntityCastleDoorTransition(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (g_CastleFlags[52]) {
+        if (g_CastleFlags[CASTLE_FLAG_52]) {
             DestroyEntity(entity);
             return;
         }

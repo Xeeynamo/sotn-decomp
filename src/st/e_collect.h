@@ -373,7 +373,8 @@ void EntityPrizeDrop(Entity* self) {
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
-                g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
+                g_CastleFlags[(index >> 3) + COLLECT_FLAGS_START] |=
+                    1 << (index & 7);
             }
 #endif
         }
@@ -669,7 +670,8 @@ void EntityEquipItemDrop(Entity* self) {
         index = self->ext.equipItemDrop.castleFlag;
         if (index) {
             index--;
-            g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
+            g_CastleFlags[(index >> 3) + COLLECT_FLAGS_START] |=
+                1 << (index & 7);
         }
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);

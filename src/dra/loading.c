@@ -493,7 +493,7 @@ void HandleNowLoading(void) {
         }
         if (g_StageId == STAGE_NO3 && g_PlayableCharacter != PLAYER_ALUCARD) {
             D_8006C374 = 0x11;
-            g_CastleFlags[0x34] = 1;
+            g_CastleFlags[CASTLE_FLAG_52] = 1;
         }
         D_800978C4 = 1;
         SetGameState(Game_Play);
