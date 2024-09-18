@@ -135,7 +135,7 @@ jobs:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Generate and send progress report
-        run: . .venv/bin/python3 tools/progress.py --version ${{ matrix.version }}
+        run: .venv/bin/python3 tools/progress.py --version ${{ matrix.version }}
 
   generate-duplicates-report:
     strategy:
