@@ -135,7 +135,7 @@ void EntityStopWatch(Entity* self) {
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
 
         CreateEntFactoryFromEntity(self, 0x4B, 0);
-        PlaySfx(SFX_UNK_6AD);
+        PlaySfx(SFX_UI_ALERT_TINK);
         g_unkGraphicsStruct.D_800973FC = 1;
         goto label;
     case 1:

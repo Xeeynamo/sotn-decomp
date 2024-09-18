@@ -392,7 +392,7 @@ s32 HandleSaveMenu(s32 arg0) {
             if (D_80137E4C == 6) {
                 PlaySfx(SFX_START_SLAM_B);
             } else {
-                PlaySfx(SE_UI_OVERWRITE_MSG);
+                PlaySfx(SFX_UI_ALERT_TINK);
             }
             if (D_80137E4C == 6) {
 #if defined(VERSION_US)
@@ -526,7 +526,7 @@ s32 HandleSaveMenu(s32 arg0) {
         return 0;
     } else if (arg0 == 1) {
         if (temp_t0 == 0) {
-            PlaySfx(SE_UI_OVERWRITE_MSG);
+            PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
 #if defined(VERSION_US)
             func_800F9D88("  Select the slot．", 0, 1);
@@ -603,7 +603,7 @@ s32 HandleSaveMenu(s32 arg0) {
         }
     } else {
         if (temp_t0 == 0) {
-            PlaySfx(SE_UI_OVERWRITE_MSG);
+            PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
             if (arg0 == 2) {
 #if defined(VERSION_US)

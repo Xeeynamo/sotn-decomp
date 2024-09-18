@@ -284,7 +284,7 @@ static void func_ptr_80170004(Entity* self) {
             self->hitEffect = 1;
             self->entityRoomIndex = 0;
             g_api.func_80118894(self);
-            g_api.PlaySfx(SFX_UNK_6AD);
+            g_api.PlaySfx(SFX_UI_ALERT_TINK);
             self->step++;
             return;
         }

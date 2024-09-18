@@ -3,8 +3,6 @@
 #include <sfx.h>
 #include <psxsdk/libc.h>
 
-#define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
-
 #ifndef VERSION_PSP
 s32 D_801748D8[0x80];
 Collider D_80174AD8;
@@ -695,7 +693,7 @@ void func_80172120(Entity* self) {
     case 2:
         self->ext.bat.unk8C++;
         if (self->ext.bat.unk8C == 1) {
-            g_api.PlaySfx(SFX_BAT_NOTIFY);
+            g_api.PlaySfx(SFX_UI_ALERT_TINK);
             func_8017170C(self, 1);
         } else if (self->ext.bat.unk8C > 30) {
             self->ext.bat.unk8C = 0;

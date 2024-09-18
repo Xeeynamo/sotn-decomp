@@ -1612,7 +1612,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
         self->ext.et_801719A4.subweaponId = PL_W_STOPWATCH;
         RicSetSubweaponParams(self);
-        g_api.PlaySfx(0x6AD);
+        g_api.PlaySfx(SFX_UI_ALERT_TINK);
         if (self->ext.et_801719A4.unk94 < 2) {
             g_unkGraphicsStruct.D_800973FC = 1;
         }

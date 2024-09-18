@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define SFX_UNK_6B1 0x6B1
 #define SFX_UNK_6BA 0x6BA
@@ -281,9 +280,6 @@ enum SfxModes {
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2
-
-// UI SOUNDS
-#define SE_UI_OVERWRITE_MSG 0x6AD
 
 // DRA
 #define SFX_UNK_6B2 0x6B2
