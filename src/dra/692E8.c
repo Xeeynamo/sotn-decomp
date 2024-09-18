@@ -846,7 +846,7 @@ void EntityAlucard(void) {
                                 }
                                 D_800ACDFC = 0x20;
                                 if (damage.damageTaken != 0) {
-                                    PlaySfx(SFX_UNK_6A3);
+                                    PlaySfx(SFX_WATER_DAMAGE_SWISHES);
                                 }
                                 break;
                             }

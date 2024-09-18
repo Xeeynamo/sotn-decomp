@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6A3 0x6A3
 #define REBOUND_STONE_BOUNCE 0x6A4
 #define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
