@@ -52,6 +52,8 @@ typedef enum EntityIDs {
     /* 0x15 */ E_ID_15 = 0x15,
     /* 0x17 */ E_BG_LIGHTNING = 0x17,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
+    /* 0x30 */ E_ID_30 = 0x30,
+    /* 0x32 */ E_ID_32 = 0x32,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
     /* 0x37 */ E_SIDE_WATER_SPLASH,
@@ -88,6 +90,10 @@ extern s16 D_80182A38[];
 extern u8 D_80182A48[];
 extern u16 D_80182A4C[];
 extern u16 D_80182E1C[];
+extern u16 D_80182F9C[];
+extern u16 D_80182FA8[];
+extern u16 D_80182FC8[];
+extern u16 D_80182FE8[];
 extern u16 D_80180AD0[];
 extern u16 g_EInitGeneric[];
 extern u16 D_80180AF4[];
