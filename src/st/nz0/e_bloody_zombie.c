@@ -436,7 +436,7 @@ void EntityBloodyZombie(Entity* self) {
             }
             self->ext.generic.unk80.modeS16.unk0 = 64;
             self->animCurFrame = 0;
-            PlaySfxPositional(NA_SE_EN_EXPLOSIVE_DEATH);
+            PlaySfxPositional(SFX_STUTTER_EXPLODE_LOW);
             self->step++;
         }
         break;

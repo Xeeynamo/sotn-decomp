@@ -71,7 +71,7 @@ static void EntityWeaponAttack(Entity* self) {
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(1);
         self->hitboxHeight = self->hitboxWidth = 4;
-        g_api.PlaySfx(0x69E);
+        g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
         g_Player.timers[10] = 4;
         self->step++;
         break;
@@ -176,7 +176,7 @@ void func_ptr_80170008(Entity* self) {
         DestroyEntityWeapon(true);
         self->hitboxHeight = 0xC;
         self->hitboxWidth = 0xC;
-        g_api.PlaySfx(0x69E);
+        g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
         if (flag != 0) {
             g_api.PlaySfx(0x65B);
         }

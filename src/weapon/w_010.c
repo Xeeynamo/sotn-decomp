@@ -580,7 +580,7 @@ void func_ptr_80170024(Entity* self) {
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x10;
         self->ext.shield.unkA0 = 0x20;
-        g_api.PlaySfx(SFX_UNK_69D);
+        g_api.PlaySfx(SFX_MAGIC_SWITCH);
         self->step += 1;
         break;
     case 1:
@@ -604,7 +604,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.shield.unk9C += self->ext.shield.unk9E;
             if (((xShift ^ self->ext.shield.unk9C) & 0x1000) &&
                 (self->params & 0x100)) {
-                g_api.PlaySfx(SFX_UNK_689);
+                g_api.PlaySfx(SFX_WEAPON_SCRAPE_ECHO);
             }
 
             fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];

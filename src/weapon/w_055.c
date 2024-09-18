@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_055_2.h"
 #define g_Animset w_055_1
 #define g_Animset2 w_055_2
+#include "sfx.h"
 
 extern WeaponAnimation D_185000_8017B0AC[];
 extern u8 D_185000_8017B0B8[];
@@ -44,7 +45,7 @@ void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (animIndex == 1) {
-            g_api.PlaySfx(SFX_UNK_69D);
+            g_api.PlaySfx(SFX_MAGIC_SWITCH);
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
         }
         SetWeaponProperties(self, 0);

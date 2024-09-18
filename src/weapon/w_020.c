@@ -154,9 +154,9 @@ static void EntityWeaponAttack(Entity* self) {
         if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
             if (self->anim == D_90000_8017A8C8) {
-                g_api.PlaySfx(SFX_KARMA_COIN);
+                g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
             } else {
-                g_api.PlaySfx(SFX_KARMA_COIN);
+                g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
             }
         }
         if (self->animFrameDuration < 0) {
@@ -186,7 +186,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
                 g_api.func_80118C28(8);
-                g_api.PlaySfx(SFX_KARMA_COIN_HEADS);
+                g_api.PlaySfx(SFX_TRANSFORM_3X);
                 prim = &g_PrimBuf[self->primIndex];
                 prim->r0 = prim->g0 = prim->b0 = 0x5F;
                 prim->r1 = prim->g1 = prim->b1 = 0x5F;

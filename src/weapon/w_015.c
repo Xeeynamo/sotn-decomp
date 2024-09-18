@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_015_2.h"
 #define g_Animset w_015_1
 #define g_Animset2 w_015_2
+#include "sfx.h"
 
 extern SpriteParts D_6D000_8017A2B0[];
 extern s16 D_6D000_8017A6B8[];
@@ -242,7 +243,7 @@ void func_ptr_8017000C(Entity* self) {
 
     case 1:
         if (!(g_GameTimer & 7)) {
-            g_api.PlaySfx(SFX_UNK_6A3);
+            g_api.PlaySfx(SFX_WATER_DAMAGE_SWISHES);
         }
         self->animCurFrame = 13;
         self->posX.val += self->velocityX;

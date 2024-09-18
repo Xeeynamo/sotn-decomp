@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_030_2.h"
 #define g_Animset w_030_1
 #define g_Animset2 w_030_2
+#include "sfx.h"
 
 extern AnimationFrame D_D6000_8017A514[];
 extern AnimationFrame D_D6000_8017A548[];
@@ -107,7 +108,7 @@ void func_ptr_8017000C(Entity* self) {
             self->facingLeft = 0;
             self->drawFlags = DRAW_COLORS;
             self->step = 2;
-            g_api.PlaySfx(SFX_UNK_6BA);
+            g_api.PlaySfx(SFX_FAST_SWORD_SWISHES);
             self->ext.weapon.unk80 = rand();
             self->ext.weapon.lifetime = ((u8)self->params * 4) + 0x30;
             D_D6000_8017CC44++;

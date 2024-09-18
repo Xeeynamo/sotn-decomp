@@ -7,6 +7,7 @@
 #include "w_007_2.h"
 #define g_Animset w_007_1
 #define g_Animset2 w_007_2
+#include "sfx.h"
 
 static u16 D_35000_8017A884[] = {
     COLOR16(0, 0, 0, 0),    COLOR16(4, 4, 5, 0),    COLOR16(0, 0, 0, 1),
@@ -162,10 +163,10 @@ static u16* D_35000_8017AC0C[] = {
 };
 
 static WeaponAnimation D_35000_8017AC28[] = {
-    {D_35000_8017AC0C, D_35000_8017AB58, 0x000F, SFX_UNK_689, 0x48, 0x03,
-     0x0000},
-    {D_35000_8017AC0C, D_35000_8017AB58, 0x000F, SFX_UNK_689, 0x48, 0x03,
-     0x0000}};
+    {D_35000_8017AC0C, D_35000_8017AB58, 0x000F, SFX_WEAPON_SCRAPE_ECHO, 0x48,
+     0x03, 0x0000},
+    {D_35000_8017AC0C, D_35000_8017AB58, 0x000F, SFX_WEAPON_SCRAPE_ECHO, 0x48,
+     0x03, 0x0000}};
 
 static u16 D_35000_8017AC48[] = {
     0x0028, 0xFFF2, 0x0028, 0xFFF2, 0x0028, 0x0004, 0x0024,
@@ -283,7 +284,7 @@ static void func_ptr_80170004(Entity* self) {
             self->hitEffect = 1;
             self->entityRoomIndex = 0;
             g_api.func_80118894(self);
-            g_api.PlaySfx(SFX_UNK_6AD);
+            g_api.PlaySfx(SFX_UI_ALERT_TINK);
             self->step++;
             return;
         }

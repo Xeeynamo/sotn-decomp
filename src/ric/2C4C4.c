@@ -64,7 +64,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         }
         if ((collision_result & 1) || (self->hitFlags != 0)) {
             g_api.CreateEntFactoryFromEntity(self, 0x28U, 0);
-            g_api.PlaySfx(0x68A);
+            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
             self->ext.holywater.timer = 0x50;
             self->animSet = 0;
             self->hitboxState = 0;
@@ -545,7 +545,7 @@ void RicEntitySubwpnCross(Entity* self) {
         RicSetSubweaponParams(self);
         self->hitboxHeight = self->hitboxWidth = 8;
         self->posY.i.hi -= 8;
-        g_api.PlaySfx(0x69F);
+        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
         self->step++;
         break;
     case 1:
@@ -1394,7 +1394,7 @@ void RicEntitySubwpnDagger(Entity* self) {
                 self->posX.i.hi += var_s1;
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
                 self->posX.i.hi -= var_s1;
-                g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+                g_api.PlaySfx(SFX_UI_TINK);
                 self->step++;
                 return;
             }
@@ -1747,7 +1747,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
             g_api.CreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
-            g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+            g_api.PlaySfx(SFX_UI_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||

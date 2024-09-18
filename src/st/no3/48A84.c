@@ -43,6 +43,8 @@
 
 #include "../entity_enemy_blood.h"
 
+#include "sfx.h"
+
 void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &D_80182764[entity->params];
 
@@ -272,7 +274,7 @@ void EntityUnkId31(Entity* self) {
     animCurFrame = entity->animCurFrame;
     if (self->flags & FLAG_DEAD) {
         hitboxPtr = D_80182F9C;
-        PlaySfxPositional(0x684);
+        PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
 
         for (i = 0; i < 3; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);

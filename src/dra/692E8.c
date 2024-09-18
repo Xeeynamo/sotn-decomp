@@ -579,7 +579,7 @@ void EntityAlucard(void) {
                 func_800FE8F0();
                 func_80118C84(g_Player.unk58, 1);
                 if (g_Player.unk56 == 1) {
-                    PlaySfx(SE_HEALTH_REGAINED);
+                    PlaySfx(SFX_HEALTH_PICKUP);
                     if (!(g_Player.unk0C & 0x80)) {
                         CreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
@@ -846,7 +846,7 @@ void EntityAlucard(void) {
                                 }
                                 D_800ACDFC = 0x20;
                                 if (damage.damageTaken != 0) {
-                                    PlaySfx(SFX_UNK_6A3);
+                                    PlaySfx(SFX_WATER_DAMAGE_SWISHES);
                                 }
                                 break;
                             }
@@ -874,7 +874,7 @@ void EntityAlucard(void) {
                                   (PLAYER.step_s != 8)))) {
                                 func_80109328();
                                 SetPlayerStep(Player_MorphMist);
-                                PlaySfx(SFX_UNK_6A0);
+                                PlaySfx(SFX_TRANSFORM_LOW);
                                 goto block_159;
                             }
                             if ((g_Player.padTapped & PAD_R1) &&
@@ -896,7 +896,7 @@ void EntityAlucard(void) {
                                     }
                                     func_80109328();
                                     SetPlayerStep(Player_MorphBat);
-                                    PlaySfx(SFX_UNK_6A0);
+                                    PlaySfx(SFX_TRANSFORM_LOW);
                                     goto block_160;
                                 }
                             }

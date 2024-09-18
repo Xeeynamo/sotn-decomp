@@ -183,7 +183,7 @@ static WeaponAnimation g_SoundEvents[] = {
     {g_Anim1, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, 0x6A8, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
 };
 

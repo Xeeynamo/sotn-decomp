@@ -1612,7 +1612,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
         self->ext.et_801719A4.subweaponId = PL_W_STOPWATCH;
         RicSetSubweaponParams(self);
-        g_api.PlaySfx(0x6AD);
+        g_api.PlaySfx(SFX_UI_ALERT_TINK);
         if (self->ext.et_801719A4.unk94 < 2) {
             g_unkGraphicsStruct.D_800973FC = 1;
         }
@@ -1630,13 +1630,13 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.et_801719A4.unk84.val += 0xFFFF0000;
         if (self->ext.et_801719A4.unk84.val <= 0x100000) {
             self->ext.et_801719A4.unk7C = 5;
-            g_api.PlaySfx(0x6A1);
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->step++;
         }
         break;
     case 3:
         if (++self->ext.et_801719A4.unk7E >= 0x51) {
-            g_api.PlaySfx(0x6A1);
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->ext.et_801719A4.unk7E = 0;
             self->ext.et_801719A4.unk90 = 1;
             if (--self->ext.et_801719A4.unk7C < 0) {
@@ -1699,7 +1699,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
                 prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
             prim->drawMode |= DRAW_COLORS;
-            g_api.PlaySfx(0x6A4);
+            g_api.PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;
@@ -2068,7 +2068,7 @@ void RicEntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            g_api.PlaySfx(0x6B2);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }

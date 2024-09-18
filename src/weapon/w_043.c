@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_043_2.h"
 #define g_Animset w_043_1
 #define g_Animset2 w_043_2
+#include "sfx.h"
 
 extern AnimationFrame D_131000_8017AF40[];
 extern SpriteParts D_131000_8017A040[];
@@ -231,7 +232,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
     } else {
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 0xB)) {
-            g_api.PlaySfx(SE_WPN_ALUCARD_SWORD_SWING);
+            g_api.PlaySfx(SFX_ALUCARD_SWORD_SWISH);
         }
         if ((u16)self->animCurFrame - 0x24U < 6) {
             self->hitboxHeight = 8;

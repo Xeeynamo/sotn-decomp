@@ -163,7 +163,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->posX.val += scale * self->velocityX;
         self->posY.val += (scale + 2) * self->velocityY;
 
-        g_api.PlaySfx(SFX_UNK_69D);
+        g_api.PlaySfx(SFX_MAGIC_SWITCH);
         self->ext.weapon.lifetime = 6;
         self->step++;
         break;

@@ -217,7 +217,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_FIRE_PROJECTILE:
             if (AnimateEntity(D_8018108C, self) == 0) {
-                PlaySfxPositional(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
+                PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
@@ -400,7 +400,7 @@ void EntitySlogra(Entity* self) {
                 self->ext.GS_Props.nearDeath = 1;
             }
             self->ext.GS_Props.timer = 64;
-            PlaySfxPositional(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
+            PlaySfxPositional(SFX_STUTTER_EXPLODE_A);
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:

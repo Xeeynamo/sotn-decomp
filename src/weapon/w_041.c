@@ -356,7 +356,7 @@ s32 func_ptr_80170004(Entity* self) {
             }
             self->ext.weapon.some_ent =
                 func_123000_8017A994(self, self->ext.weapon.unk80, 0x280);
-            g_api.PlaySfx(0x69B);
+            g_api.PlaySfx(SFX_BAT_WING_SWISHES);
             g_api.PlaySfx(SFX_BAT_SCREECH);
             self->ext.weapon.lifetime = 0x16;
             self->ext.weapon.unk82 = 0x80;

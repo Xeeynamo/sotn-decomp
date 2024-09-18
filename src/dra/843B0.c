@@ -355,7 +355,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->posX.i.hi += var_s5;
                 CreateEntFactoryFromEntity(self, 10, 0);
                 self->posX.i.hi -= var_s5;
-                PlaySfx(REBOUND_STONE_BOUNCE);
+                PlaySfx(SFX_UI_TINK);
                 self->step++;
                 return;
             }
@@ -800,7 +800,7 @@ void EntityHolyWater(Entity* entity) {
 
         temp2 = temp & 1;
         if (temp2 != 0) {
-            PlaySfx(SFX_UNK_69A);
+            PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
             CreateEntFactoryFromEntity(entity, 59, 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
@@ -1455,7 +1455,7 @@ void EntityBatFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        PlaySfx(SFX_QUICK_STUTTER_EXPLODE);
+        PlaySfx(SFX_QUICK_STUTTER_EXPLODE_A);
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->animSet = 9;
         self->anim = D_800B0798;
@@ -1505,7 +1505,7 @@ void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params != 0) {
-            PlaySfx(SFX_UNK_683);
+            PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
         }
 
         entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
@@ -1929,7 +1929,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
             CreateEntFactoryFromEntity(self, 10, 0);
-            PlaySfx(REBOUND_STONE_BOUNCE);
+            PlaySfx(SFX_UI_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||

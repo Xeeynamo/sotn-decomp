@@ -135,7 +135,7 @@ void EntityStopWatch(Entity* self) {
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
 
         CreateEntFactoryFromEntity(self, 0x4B, 0);
-        PlaySfx(SFX_UNK_6AD);
+        PlaySfx(SFX_UI_ALERT_TINK);
         g_unkGraphicsStruct.D_800973FC = 1;
         goto label;
     case 1:
@@ -151,14 +151,14 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.unk84.val += FIX(-1);
         if (self->ext.stopwatch.unk84.val <= FIX(16)) {
             self->ext.stopwatch.t = 5;
-            PlaySfx(NA_SE_EV_CLOCK_TICK);
+            PlaySfx(SFX_CLOCK_TICK);
             self->step++;
         }
         break;
     case 3:
         self->ext.stopwatch.unk7E += 1;
         if (self->ext.stopwatch.unk7E > 80) {
-            PlaySfx(NA_SE_EV_CLOCK_TICK);
+            PlaySfx(SFX_CLOCK_TICK);
             self->ext.stopwatch.unk7E = 0;
             self->ext.stopwatch.unk8C = 1;
             self->ext.stopwatch.t -= 1;
@@ -217,7 +217,7 @@ void EntityStopWatch(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
 
-            PlaySfx(REBOUND_STONE_BOUNCE);
+            PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;
@@ -546,7 +546,7 @@ void EntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            PlaySfx(SFX_UNK_6B2);
+            PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }

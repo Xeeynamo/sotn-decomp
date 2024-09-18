@@ -108,7 +108,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_IDLE:
         AnimateEntity(D_80181250, self);
         if (!self->animFrameDuration && self->animFrameIdx == 1) {
-            PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+            PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if (self->hitFlags) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
@@ -150,7 +150,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_80181250, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (!(--self->ext.GS_Props.timer)) {
@@ -165,7 +165,7 @@ void EntityGaibon(Entity* self) {
                 SetStep(4);
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             break;
         }
@@ -207,7 +207,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_80181298, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             // Reuse of speedLimit variable, unrelated to speed
             speedLimit = 0xF;
@@ -246,7 +246,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             break;
         }
@@ -421,7 +421,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(D_801812AC, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
@@ -442,7 +442,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(D_801812AC, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             if (GetSideToPlayer() & 1) {
                 self->velocityX -= FIX(5.0 / 128);
@@ -525,7 +525,7 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_DYING_TURN_INTO_BONES:
             if (!(self->ext.GS_Props.timer & 7)) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAME);
+                PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, other);

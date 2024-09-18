@@ -15,7 +15,7 @@ void EntityOwl(Entity* self) {
     s16 angle;
 
     if (1 < self->step && self->step < 9 && !(g_Timer & 0xF)) {
-        PlaySfxPositional(0x68C);
+        PlaySfxPositional(SFX_WING_FLAP_A);
     }
     if (self->ext.owl.unk80 & 0x20) {
         if (!(self->flags & FLAG_DEAD)) {
@@ -382,7 +382,7 @@ void EntityOwl(Entity* self) {
         break;
     case 10:
         if (!(--self->ext.owl.unk82) || (KNIGHT->entityId == 0)) {
-            PlaySfxPositional(0x683);
+            PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);

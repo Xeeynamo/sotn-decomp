@@ -342,14 +342,14 @@ static void EntityWeaponShieldSpell(Entity* self) {
             unusedEnt = g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xE) + 92, 0);
             self->ext.shield.unk80 = 0;
-            g_api.PlaySfx(SFX_UNK_6B0);
+            g_api.PlaySfx(SFX_GLASS_SHARDS);
             D_BA000_8017CC3C = 0;
             self->step++;
         }
         break;
     case 4:
         if (D_BA000_8017CC3C % 22 == 0) {
-            g_api.PlaySfx(SFX_UNK_6B0);
+            g_api.PlaySfx(SFX_GLASS_SHARDS);
         }
         D_BA000_8017CC3C++;
         self->ext.shield.unk82 += 8;
@@ -378,7 +378,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 5:
         if (D_BA000_8017CC3C % 22 == 0) {
-            g_api.PlaySfx(SFX_UNK_6B0);
+            g_api.PlaySfx(SFX_GLASS_SHARDS);
         }
         D_BA000_8017CC3C++;
         self->ext.shield.unk90 -= 10;
@@ -390,7 +390,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 6:
         if (D_BA000_8017CC3C % 22 == 0) {
-            g_api.PlaySfx(SFX_UNK_6B0);
+            g_api.PlaySfx(SFX_GLASS_SHARDS);
         }
         D_BA000_8017CC3C++;
         if (++self->ext.shield.unk80 == 0x30) {
@@ -399,7 +399,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 7:
         if (D_BA000_8017CC3C % 22 == 0) {
-            g_api.PlaySfx(SFX_UNK_6B0);
+            g_api.PlaySfx(SFX_GLASS_SHARDS);
         }
         D_BA000_8017CC3C++;
         self->ext.shield.unk90 += 4;

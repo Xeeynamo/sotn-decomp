@@ -516,7 +516,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             if ((self->ext.succubus.timer % 64) == 0) {
-                PlaySfxPositional(NA_SE_SU_PETAL_ATTACK);
+                PlaySfxPositional(SFX_GLASS_SHARDS);
             }
             if (--self->ext.succubus.timer == 0) {
                 SetStep(SUCCUBUS_FLY);
@@ -841,7 +841,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_SPIKE_ATTACK_1:
             if (AnimateEntity(D_80180748, self) == 0) {
                 self->ext.succubus.unk85 = true;
-                PlaySfxPositional(NA_VO_SU_CRYSTAL_2);
+                PlaySfxPositional(SFX_GUARD_TINK);
                 PlaySfxPositional(NA_VO_SU_GRUNT_3);
                 self->ext.succubus.timer = 64;
                 SetSubStep(2);

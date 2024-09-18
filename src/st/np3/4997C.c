@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
+#include "sfx.h"
 
 void EntityBat(Entity* entity) {
     Entity* newEntity;
@@ -12,7 +13,7 @@ void EntityBat(Entity* entity) {
             CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
             newEntity->params = 1;
         }
-        PlaySfxPositional(0x69C);
+        PlaySfxPositional(SFX_BAT_SCREECH_SWISH);
         DestroyEntity(entity);
         return;
     }

@@ -674,7 +674,7 @@ void EntityHitByLightning(Entity* self) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
-        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         PlaySfx(SFX_THUNDER_B);
         self->step++;
         break;
@@ -829,7 +829,7 @@ void EntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         self->step++;
         break;
     case 1:
@@ -1503,7 +1503,7 @@ void EntityLevelUpAnimation(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        PlaySfx(NA_SE_PL_MAX_HP_MP_INCREASED);
+        PlaySfx(SFX_LEVEL_UP); // Max HP & MP
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000 | FLAG_UNK_10000;
         CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);

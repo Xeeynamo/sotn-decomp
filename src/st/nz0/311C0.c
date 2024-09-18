@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 // bust with red eyes that can have a candle on it
 void EntityRedEyeBust(Entity* self) {
@@ -448,7 +449,7 @@ void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
 
         if (self->ext.nz0311c0.unk88 != var_v1) {
             self->ext.nz0311c0.unk88 = var_v1;
-            PlaySfxPositional(0x69D);
+            PlaySfxPositional(SFX_MAGIC_SWITCH);
         }
     }
 
@@ -672,7 +673,7 @@ void EntityCannon(Entity* self) {
     case 1:
         if (D_80180ED0[0] != 0) {
             g_api.func_80102CD8(1);
-            g_api.PlaySfx(0x6AC);
+            g_api.PlaySfx(SFX_CANNON_EXPLODE);
             self->velocityX = FIX(8);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
@@ -1080,7 +1081,7 @@ void EntityFloorSpikes(Entity* self) {
         }
     }
     if (self->ext.nz0311c0.unk88 != 0) {
-        PlaySfxPositional(0x69D);
+        PlaySfxPositional(SFX_MAGIC_SWITCH);
         self->ext.nz0311c0.unk88 = 0;
     }
     prim = self->ext.prim;
