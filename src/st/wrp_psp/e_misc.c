@@ -5,41 +5,8 @@ extern u16 g_HeartDropArray[];
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityRelicOrb);
 
-void EntityHeartDrop(Entity* self) {
-    u16 index;
-    u8 value;
-    PfnEntityUpdate update;
-
-    if (!self->step) {
-        index = self->ext.heartDrop.unkB4 = self->params + 0x118;
-        value = g_CastleFlags[(index >> 3) + HEART_FLAGS_START] >> (index & 7);
-        if (value & 1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        index -= 0x118;
-        index = g_HeartDropArray[index];
-        if (index < 128) {
-            self->ext.heartDrop.update = EntityPrizeDrop;
-        } else {
-            self->ext.heartDrop.update = EntityEquipItemDrop;
-            index -= 128;
-        }
-        self->params = index + 0x8000;
-    } else {
-        index = self->ext.heartDrop.unkB4;
-        if (self->step < 5) {
-            if (self->hitFlags) {
-                g_CastleFlags[(index >> 3) + HEART_FLAGS_START] |=
-                    1 << (index & 7);
-                self->step = 5;
-            }
-        }
-    }
-    update = self->ext.heartDrop.update;
-    update(self);
-}
+#define HEART_DROP_CASTLE_FLAG 280
+#include "../entity_heart_drop.h"
 
 u16 g_InitializeData0[];
 void BlitChar(char*, s32, s32, s32);
