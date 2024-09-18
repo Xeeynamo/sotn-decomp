@@ -580,7 +580,7 @@ void func_ptr_80170024(Entity* self) {
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0x10;
         self->ext.shield.unkA0 = 0x20;
-        g_api.PlaySfx(SFX_UNK_69D);
+        g_api.PlaySfx(SFX_MAGIC_SWITCH);
         self->step += 1;
         break;
     case 1:

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
+#include "sfx.h"
 
 Entity* RicGetFreeEntity(s16 start, s16 end);
 Entity* RicGetFreeEntityReverse(s16 start, s16 end);
@@ -1080,7 +1081,7 @@ void RicEntityMariaPowers(Entity* self) {
         self->rotX = self->rotY = self->ext.et_80162870.unk82 * 0x10;
         if (--self->ext.et_80162870.unk82 == 0) {
             self->animCurFrame = 0;
-            g_api.PlaySfx(0x69D);
+            g_api.PlaySfx(SFX_MAGIC_SWITCH);
             self->velocityY = FIX(-9);
             self->step++;
         }

@@ -674,7 +674,7 @@ void EntityHitByLightning(Entity* self) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
-        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         PlaySfx(SFX_THUNDER_B);
         self->step++;
         break;
@@ -829,7 +829,7 @@ void EntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         self->step++;
         break;
     case 1:

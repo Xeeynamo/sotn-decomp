@@ -70,7 +70,7 @@ void EntityWeaponAttack(Entity* self) {
         if (animIndex == PLAYER.animFrameIdx) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x44, 0), 0);
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
-            g_api.PlaySfx(SFX_UNK_69D);
+            g_api.PlaySfx(SFX_MAGIC_SWITCH);
         }
         hand = (g_HandId + 1) << 0xC;
         temp = FACTORY(0x61, animIndex);
