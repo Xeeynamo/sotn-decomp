@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 
 # Parses game assets based on a config file. Config file needs to be in tools/splat_ext

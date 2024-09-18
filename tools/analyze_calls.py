@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # Performs analysis of every function in the asm directory. For each function, finds
 # all functions called by this one, and all functions that call this one.

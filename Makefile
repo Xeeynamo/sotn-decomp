@@ -49,6 +49,9 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
 MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 
+VENV_PATH       ?= .venv
+export PATH     := $(VENV_PATH)/bin:$(PATH)
+
 # Tooling
 PYTHON          := python3
 SPLAT           := splat split
@@ -452,10 +455,15 @@ extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(ALLEGREX_AS)
+python-dependencies:
+	# the python setup cannot depend on the virtualenv
+	# because it may not be set up yet
+	[ -d $(VENV_PATH) ] || python3 -m venv $(VENV_PATH)
+	pip install -r $(TOOLS_DIR)/requirements-python.txt
+
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(ALLEGREX_AS) python-dependencies
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
-	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
@@ -516,4 +524,4 @@ include tools/tools.mk
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
-.PHONY: update-dependencies
+.PHONY: update-dependencies python-dendencies
