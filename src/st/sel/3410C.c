@@ -228,13 +228,13 @@ void HandleTitleScreen(void) {
         return;
     case 4:
         if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
-            g_api.PlaySfx(0x688);
+            g_api.PlaySfx(SFX_DEBUG_SELECT);
             if (++D_800987B4 >= 2) {
                 D_800987B4 = 0;
             }
         }
         if (g_pads[0].tapped & (PAD_UP | PAD_LEFT)) {
-            g_api.PlaySfx(0x688);
+            g_api.PlaySfx(SFX_DEBUG_SELECT);
             if (--D_800987B4 < 0) {
                 D_800987B4 = 1;
             }

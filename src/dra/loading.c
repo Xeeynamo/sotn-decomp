@@ -180,19 +180,19 @@ void HandleNowLoading(void) {
         break;
     case 1:
         if (g_pads[0].repeat & PAD_RIGHT) {
-            PlaySfx(SE_UI_DEBUG_SELECT);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 += 1;
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            PlaySfx(SE_UI_DEBUG_SELECT);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 += 8;
         }
         if (g_pads[0].repeat & PAD_LEFT) {
-            PlaySfx(SE_UI_DEBUG_SELECT);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 1;
         }
         if (g_pads[0].repeat & PAD_UP) {
-            PlaySfx(SE_UI_DEBUG_SELECT);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 8;
         }
         if (D_800987B4 >= 0x3F) {

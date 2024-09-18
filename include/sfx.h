@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
 #define SFX_UNK_689 0x689
 #define NA_SE_BREAK_GLASS 0x68B
 #define NA_SE_EN_GAIBON_FLAP_WINGS 0x68D
@@ -297,7 +296,6 @@ enum SfxModes {
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_DEBUG_SELECT 0x688
 #define SE_UI_OVERWRITE_SELECT 0x6A4
 #define SE_UI_OVERWRITE_MSG 0x6AD
 
