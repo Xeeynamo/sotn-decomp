@@ -579,7 +579,7 @@ void EntityAlucard(void) {
                 func_800FE8F0();
                 func_80118C84(g_Player.unk58, 1);
                 if (g_Player.unk56 == 1) {
-                    PlaySfx(SE_HEALTH_REGAINED);
+                    PlaySfx(SFX_HEALTH_PICKUP);
                     if (!(g_Player.unk0C & 0x80)) {
                         CreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
