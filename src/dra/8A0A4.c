@@ -546,7 +546,7 @@ void EntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            PlaySfx(SFX_UNK_6B2);
+            PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }

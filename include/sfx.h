@@ -278,7 +278,6 @@ enum SfxModes {
 #define SE_BOSS_DEFEATED 0x7D2
 
 // DRA
-#define SFX_UNK_6B2 0x6B2
 #define SFX_UNK_6F7 0x6F7
 
 // WEAPON SOUNDS

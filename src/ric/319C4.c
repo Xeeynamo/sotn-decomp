@@ -2068,7 +2068,7 @@ void RicEntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            g_api.PlaySfx(0x6B2);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }
