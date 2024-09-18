@@ -42,7 +42,7 @@ void EntityRoomTransition2(Entity* self) {
     case 2:
         if (g_CutsceneFlags & 0x20) {
             g_api.InitStatsAndGear(1);
-            g_api.PlaySfx(SE_DEATH_SWIPES);
+            g_api.PlaySfx(SFX_DEATH_SWISH);
             for (localVar = 0; localVar < 6; localVar++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity == NULL) {
