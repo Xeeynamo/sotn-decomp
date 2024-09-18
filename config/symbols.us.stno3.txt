@@ -15,6 +15,7 @@ g_eBreakableExplosionTypes = 0x80180E78;
 g_eBreakableanimSets = 0x80180E80;
 g_eBreakableDrawModes = 0x80180E90;
 g_TrapDoorFlag = 0x8018123C;
+g_HeartDropArray = 0x80181C8C;
 g_eUnk14SpawnRots = 0x80182618;
 unk15_rot = 0x80182628;
 unk15_yVel = 0x80182638;
