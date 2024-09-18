@@ -800,7 +800,7 @@ void EntityHolyWater(Entity* entity) {
 
         temp2 = temp & 1;
         if (temp2 != 0) {
-            PlaySfx(SFX_UNK_69A);
+            PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
             CreateEntFactoryFromEntity(entity, 59, 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
