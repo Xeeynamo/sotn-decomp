@@ -1394,7 +1394,7 @@ void RicEntitySubwpnDagger(Entity* self) {
                 self->posX.i.hi += var_s1;
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
                 self->posX.i.hi -= var_s1;
-                g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+                g_api.PlaySfx(SFX_UI_TINK);
                 self->step++;
                 return;
             }
@@ -1747,7 +1747,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
             g_api.CreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
-            g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+            g_api.PlaySfx(SFX_UI_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||

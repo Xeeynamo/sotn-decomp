@@ -355,7 +355,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->posX.i.hi += var_s5;
                 CreateEntFactoryFromEntity(self, 10, 0);
                 self->posX.i.hi -= var_s5;
-                PlaySfx(REBOUND_STONE_BOUNCE);
+                PlaySfx(SFX_UI_TINK);
                 self->step++;
                 return;
             }
@@ -1929,7 +1929,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
             CreateEntFactoryFromEntity(self, 10, 0);
-            PlaySfx(REBOUND_STONE_BOUNCE);
+            PlaySfx(SFX_UI_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||

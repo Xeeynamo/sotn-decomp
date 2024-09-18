@@ -217,7 +217,7 @@ void EntityStopWatch(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
 
-            PlaySfx(REBOUND_STONE_BOUNCE);
+            PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;

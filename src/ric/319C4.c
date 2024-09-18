@@ -1699,7 +1699,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
                 prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
             prim->drawMode |= DRAW_COLORS;
-            g_api.PlaySfx(0x6A4);
+            g_api.PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;

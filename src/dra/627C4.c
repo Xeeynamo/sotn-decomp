@@ -568,13 +568,13 @@ s32 HandleSaveMenu(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80097924 != 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80097924 = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80097924 == 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80097924 = 1;
             }
@@ -669,13 +669,13 @@ s32 HandleSaveMenu(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80137E6C != 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80137E6C = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80137E6C == 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80137E6C = 1;
             }

@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define REBOUND_STONE_BOUNCE 0x6A4
 #define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define SFX_UNK_6B1 0x6B1
@@ -284,7 +283,6 @@ enum SfxModes {
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_OVERWRITE_SELECT 0x6A4
 #define SE_UI_OVERWRITE_MSG 0x6AD
 
 // DRA
@@ -488,7 +486,7 @@ enum Sfx {
     SFX_CLOCK_TICK,
     SFX_DEATH_SWISH,
     SFX_WATER_DAMAGE_SWISHES,
-    SFX_UI_TINK,
+    SFX_UI_TINK, // Also Rebound Stone Bounce
     SFX_SKULL_KNOCK_A,
     SFX_SKULL_KNOCK_B,
     SFX_SKULL_KNOCK_C,
