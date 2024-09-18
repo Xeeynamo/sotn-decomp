@@ -1,4 +1,4 @@
-extern u16 D_80180608[];
+extern u16 g_HeartDropArray[];
 
 void EntityHeartDrop(Entity* self) {
     u16 index;
@@ -15,7 +15,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= HEART_DROP_CASTLE_FLAG;
-        index = D_80180608[index];
+        index = g_HeartDropArray[index];
         if (index < 128) {
             self->ext.heartDrop.update = EntityPrizeDrop;
         } else {

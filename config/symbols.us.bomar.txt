@@ -1,5 +1,5 @@
 D_80180A60 = 0x801803B4;
-D_80180608 = 0x80180744;
+g_HeartDropArray = 0x80180744;
 g_StoneDoorTiles = 0x801812DC;
 CutsceneUnk1 = 0x8018AFC4;
 CutsceneUnk2 = 0x8018B018;

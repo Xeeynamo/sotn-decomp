@@ -5,7 +5,7 @@
 #include "sfx.h"
 
 extern s32 D_80097408[];
-extern s32 D_80180608[];
+extern s32 g_HeartDropArray[];
 extern s16 PLAYER_posY_i_hi;
 s16 GetDistanceToPlayerX();
 
@@ -339,27 +339,27 @@ void EntityRWarpRoom(Entity* self) {
 
     prim = self->ext.warpRoom.primBg;
     for (i = 0; i < 16; i++) {
-        angle = D_80180608[(i + 0) % 16];
+        angle = g_HeartDropArray[(i + 0) % 16];
         prim->r0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 5) % 16];
+        angle = g_HeartDropArray[(i + 5) % 16];
         prim->g0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 10) % 16];
+        angle = g_HeartDropArray[(i + 10) % 16];
         prim->b0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 1) % 16];
+        angle = g_HeartDropArray[(i + 1) % 16];
         prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 6) % 16];
+        angle = g_HeartDropArray[(i + 6) % 16];
         prim->g1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 11) % 16];
+        angle = g_HeartDropArray[(i + 11) % 16];
         prim->b1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             WarpBackgroundBrightness;
-        D_80180608[i] += 0x20;
+        g_HeartDropArray[i] += 0x20;
         prim = prim->next;
     }
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
 
-extern u16 D_80180608[];
+extern u16 g_HeartDropArray[];
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityRelicOrb);
 
@@ -19,7 +19,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= 0x118;
-        index = D_80180608[index];
+        index = g_HeartDropArray[index];
         if (index < 128) {
             self->ext.heartDrop.update = EntityPrizeDrop;
         } else {
