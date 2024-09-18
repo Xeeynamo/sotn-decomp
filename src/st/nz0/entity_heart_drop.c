@@ -3,4 +3,3 @@
 
 #define HEART_DROP_CASTLE_FLAG 248
 #include "../entity_heart_drop.h"
-
