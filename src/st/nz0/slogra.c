@@ -400,7 +400,7 @@ void EntitySlogra(Entity* self) {
                 self->ext.GS_Props.nearDeath = 1;
             }
             self->ext.GS_Props.timer = 64;
-            PlaySfxPositional(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
+            PlaySfxPositional(SFX_STUTTER_EXPLODE_A);
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:

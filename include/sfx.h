@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_SLOGRA_DEATH_EXPLOSION 0x697
 #define SFX_UNK_69A 0x69A
 #define SFX_UNK_69D 0x69D
 #define SFX_UNK_6A0 0x6A0

@@ -6,7 +6,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-#define SE_WARG_DEATH_EXPLODE 0x697
 #define SE_BAT_DEATH 0x69C
 #define SE_DEATH_SWIPES 0x6A2
 // #define 0x6C7
