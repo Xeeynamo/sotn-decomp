@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6BA 0x6BA
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
@@ -493,7 +492,7 @@ enum Sfx {
     SFX_LOW_CLOCK_TICK,
     SFX_UNK_LOW_CLOCK_TICK,
     SFX_UNK_METAL_TING,
-    SFX_FAST_SWORD_SWISHES,
+    SFX_FAST_SWORD_SWISHES, // Sword of Dawn
 };
 
 #endif
