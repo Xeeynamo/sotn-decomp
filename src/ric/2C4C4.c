@@ -545,7 +545,7 @@ void RicEntitySubwpnCross(Entity* self) {
         RicSetSubweaponParams(self);
         self->hitboxHeight = self->hitboxWidth = 8;
         self->posY.i.hi -= 8;
-        g_api.PlaySfx(0x69F);
+        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
         self->step++;
         break;
     case 1:
