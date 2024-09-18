@@ -175,7 +175,8 @@ void EntityDeathCutscene(Entity* self) {
     switch (self->step) {
     case 0:
         CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
-        if ((g_CastleFlags[53]) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
+        if ((g_CastleFlags[CASTLE_FLAG_53]) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             g_Entities[192].params = 0;
             return;
@@ -612,7 +613,7 @@ void EntityDeathCutscene(Entity* self) {
         break;
 
     case 7:
-        g_CastleFlags[53] = 1;
+        g_CastleFlags[CASTLE_FLAG_53] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
         D_8003C704 = 0;

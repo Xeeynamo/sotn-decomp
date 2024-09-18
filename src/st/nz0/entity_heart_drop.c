@@ -8,7 +8,7 @@ void EntityHeartDrop(Entity* self) {
 
     if (!self->step) {
         index = self->ext.heartDrop.unkB4 = self->params + 0xF8;
-        value = g_CastleFlags[(index >> 3) + 0x100] >> (index & 7);
+        value = g_CastleFlags[(index >> 3) + HEART_FLAGS_START] >> (index & 7);
         if (value & 1) {
             DestroyEntity(self);
             return;
@@ -27,7 +27,8 @@ void EntityHeartDrop(Entity* self) {
         index = self->ext.heartDrop.unkB4;
         if (self->step < 5) {
             if (self->hitFlags) {
-                g_CastleFlags[(index >> 3) + 0x100] |= 1 << (index & 7);
+                g_CastleFlags[(index >> 3) + HEART_FLAGS_START] |=
+                    1 << (index & 7);
                 self->step = 5;
             }
         }

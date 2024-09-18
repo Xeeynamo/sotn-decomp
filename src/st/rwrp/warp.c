@@ -152,7 +152,7 @@ void EntityRWarpRoom(Entity* self) {
         prim->drawMode = DRAW_HIDE;
 
         WarpBackgroundAmplitiude = 0x100;
-        g_CastleFlags[0xD1] |= 1 << self->params;
+        g_CastleFlags[CASTLE_FLAG_209] |= 1 << self->params;
         D_80180648 = 0;
         moveX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
@@ -234,7 +234,7 @@ void EntityRWarpRoom(Entity* self) {
             if (temp > LEN(WarpRoomCoords) - 1) {
                 temp = 0;
             }
-            if (g_CastleFlags[0xD1] & (1 << temp)) {
+            if (g_CastleFlags[CASTLE_FLAG_209] & (1 << temp)) {
                 break;
             }
         }

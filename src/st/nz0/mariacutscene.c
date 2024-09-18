@@ -142,7 +142,7 @@ void EntityMariaCutscene(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[133] != 0) ||
+        if ((g_CastleFlags[CASTLE_FLAG_133] != 0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             return;
@@ -578,7 +578,7 @@ void EntityMariaCutscene(Entity* self) {
 
     case 7:
         DestroyEntity(self);
-        g_CastleFlags[133] = 1;
+        g_CastleFlags[CASTLE_FLAG_133] = 1;
         D_8003C704 = 0;
         g_Settings.D_8003CB04 |= 0x100;
         break;
