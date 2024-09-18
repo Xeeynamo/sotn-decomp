@@ -81,7 +81,6 @@ typedef enum {
 extern s32 D_80180660; // clones counter
 
 void EntitySuccubus(Entity* self) {
-    const int SeenCutscene = 212;
     u8* clonesShootOrder;
     s32 sideToPlayer;
     Entity* entity;
@@ -113,7 +112,7 @@ void EntitySuccubus(Entity* self) {
         CreateEntityFromCurrentEntity(E_SUCCUBUS_WING_OVERLAY, &self[1]);
 
     case SUCCUBUS_CS_1: // Disguised as Lisa
-        if (g_CastleFlags[SeenCutscene] || (g_DemoMode != Demo_None)) {
+        if (g_CastleFlags[SUCC_CS_DONE] || (g_DemoMode != Demo_None)) {
             self->facingLeft = 0;
             self->posX.i.hi = 416 - g_Tilemap.scrollX.i.hi;
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;

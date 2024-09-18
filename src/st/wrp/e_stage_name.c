@@ -17,7 +17,7 @@ void EntityStageNamePopup(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_CastleFlags[2]) {
+        if (g_CastleFlags[CASTLE_FLAG_2]) {
             DestroyEntity(self);
             return;
         }
@@ -238,7 +238,7 @@ void EntityStageNamePopup(Entity* self) {
         break;
     case 32:
         if (!--self->ext.stpopupj.unk80) {
-            g_CastleFlags[2] = 1;
+            g_CastleFlags[CASTLE_FLAG_2] = 1;
             self->step_s = 0;
             self->step = 0x12;
         }
