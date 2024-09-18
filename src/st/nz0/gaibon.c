@@ -525,7 +525,7 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_DYING_TURN_INTO_BONES:
             if (!(self->ext.GS_Props.timer & 7)) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_FLAME);
+                PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, other);
