@@ -1,7 +1,3 @@
-#ifndef CASTLE_FLAG_BANK
-#define CASTLE_FLAG_BANK 0
-#endif
-
 extern u16 D_80180608[];
 
 void EntityHeartDrop(Entity* self) {
@@ -11,14 +7,14 @@ void EntityHeartDrop(Entity* self) {
 
     if (!self->step) {
         index = self->ext.heartDrop.unkB4 =
-            self->params + 0x118 + CASTLE_FLAG_BANK;
+            self->params + HEART_DROP_CASTLE_FLAG;
         value = g_CastleFlags[(index >> 3) + HEART_FLAGS_START] >> (index & 7);
         if (value & 1) {
             DestroyEntity(self);
             return;
         }
 
-        index -= 0x118 + CASTLE_FLAG_BANK;
+        index -= HEART_DROP_CASTLE_FLAG;
         index = D_80180608[index];
         if (index < 128) {
             self->ext.heartDrop.update = EntityPrizeDrop;
