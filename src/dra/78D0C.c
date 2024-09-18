@@ -424,7 +424,7 @@ void EntityGuardText(Entity* self) {
             self->ext.guardText.str_x = self->ext.guardText.unk98;
             self->ext.guardText.timer = 0x60;
             self->ext.guardText.angle = 0;
-            PlaySfx(0x6AF);
+            PlaySfx(SFX_GUARD_TINK);
             self->step++;
         }
         break;
