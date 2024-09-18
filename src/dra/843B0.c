@@ -1505,7 +1505,7 @@ void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params != 0) {
-            PlaySfx(SFX_UNK_683);
+            PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
         }
 
         entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;

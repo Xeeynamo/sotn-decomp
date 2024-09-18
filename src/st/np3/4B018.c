@@ -382,7 +382,7 @@ void EntityOwl(Entity* self) {
         break;
     case 10:
         if (!(--self->ext.owl.unk82) || (KNIGHT->entityId == 0)) {
-            PlaySfxPositional(0x683);
+            PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);

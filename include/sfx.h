@@ -303,7 +303,6 @@ enum SfxModes {
 #define SE_UI_OVERWRITE_MSG 0x6AD
 
 // DRA
-#define SFX_UNK_683 0x683
 #define SE_HEALTH_REGAINED 0x68E
 #define SFX_UNK_6B2 0x6B2
 #define SFX_UNK_6F7 0x6F7
