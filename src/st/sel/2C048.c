@@ -1326,7 +1326,7 @@ void SEL_Update(void) {
                 g_GameEngineStep = Upd_Eng_FileDelete;
                 break;
             default:
-                g_api.PlaySfx(SE_UI_ERROR);
+                g_api.PlaySfx(SFX_UI_ERROR);
                 break;
             }
         }
@@ -1514,7 +1514,7 @@ void SEL_Update(void) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 g_GameEngineStep = Upd_Eng_0x10;
             } else {
-                g_api.PlaySfx(0x686);
+                g_api.PlaySfx(SFX_UI_ERROR);
             }
         }
         break;
@@ -1589,7 +1589,7 @@ void SEL_Update(void) {
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
@@ -1754,7 +1754,7 @@ void SEL_Update(void) {
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
@@ -1788,7 +1788,7 @@ void SEL_Update(void) {
                         g_GameEngineStep++;
                     }
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
@@ -1940,7 +1940,7 @@ void SEL_Update(void) {
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }

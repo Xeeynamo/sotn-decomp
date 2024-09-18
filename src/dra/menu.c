@@ -3164,10 +3164,10 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
                 g_IsSelectingEquipment++;
                 PlaySfx(SFX_UI_CONFIRM);
             } else {
-                PlaySfx(SE_UI_ERROR);
+                PlaySfx(SFX_UI_ERROR);
             }
         } else if (func_800FB1EC(itemId) != false) {
-            PlaySfx(SE_UI_ERROR);
+            PlaySfx(SFX_UI_ERROR);
         } else {
             goto block_36;
         }
@@ -3182,11 +3182,11 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
                     g_IsSelectingEquipment = 0;
                     PlaySfx(SFX_UI_CONFIRM);
                 } else {
-                    PlaySfx(SE_UI_ERROR);
+                    PlaySfx(SFX_UI_ERROR);
                 }
             } while (0);
         } else if (var_s6 != 0) {
-            PlaySfx(SE_UI_ERROR);
+            PlaySfx(SFX_UI_ERROR);
         } else {
             PlaySfx(SFX_UI_CONFIRM);
             if (count[itemId] > 0) {
@@ -3614,7 +3614,7 @@ block_4:
                 break;
             }
             if (g_MenuStep == MENU_STEP_OPENED) {
-                PlaySfx(SE_UI_ERROR);
+                PlaySfx(SFX_UI_ERROR);
                 break;
             }
             MenuHide(MENU_DG_MAIN);
@@ -3697,7 +3697,7 @@ block_4:
                 break;
             }
             if (g_MenuStep == MENU_STEP_SYSTEM) {
-                PlaySfx(SE_UI_ERROR);
+                PlaySfx(SFX_UI_ERROR);
             } else {
                 PlaySfx(SFX_UI_CONFIRM);
             }
@@ -3720,7 +3720,7 @@ block_4:
 #elif defined(VERSION_HD)
                 ShowText("すべてのボタンを割り当ててください。", 2);
 #endif
-                PlaySfx(SE_UI_ERROR);
+                PlaySfx(SFX_UI_ERROR);
             }
         }
         break;
