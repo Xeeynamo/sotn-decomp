@@ -808,7 +808,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 1), 0);
             PlaySfx(NA_SE_VO_AL_WHAT);
         } else if (damage->effects & 0x8000) {
-            PlaySfx(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
+            PlaySfx(SFX_FM_EXPLODE_SWISHES);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x45), 0);
             g_Player.unk40 = 0x8160;
             if (damage->effects & 0x10000) {

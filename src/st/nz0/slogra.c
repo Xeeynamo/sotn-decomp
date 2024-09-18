@@ -217,7 +217,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_FIRE_PROJECTILE:
             if (AnimateEntity(D_8018108C, self) == 0) {
-                PlaySfxPositional(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
+                PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
