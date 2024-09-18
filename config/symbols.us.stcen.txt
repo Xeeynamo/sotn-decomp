@@ -1,3 +1,4 @@
+g_HeartDropArray = 0x801805D8;
 g_eUnk14SpawnRots = 0x80181110;
 unk15_rot = 0x80181120;
 unk15_yVel = 0x80181130;
