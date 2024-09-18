@@ -2,7 +2,7 @@
 #include "dre.h"
 #include "sfx.h"
 
-extern s32 D_80180660;
+extern s32 g_HeartDropArray;
 
 void EntityUnkId1C(Entity* self) {
     Entity* newEntity;
@@ -10,14 +10,14 @@ void EntityUnkId1C(Entity* self) {
     s8* hitbox;
     s32 i;
 
-    if (D_80180660 == 0) {
+    if (g_HeartDropArray == 0) {
         self->flags |= FLAG_DEAD;
     }
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != 5) {
-            if (D_80180660 != 0) {
-                D_80180660--;
+            if (g_HeartDropArray != 0) {
+                g_HeartDropArray--;
             }
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
