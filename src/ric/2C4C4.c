@@ -64,7 +64,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         }
         if ((collision_result & 1) || (self->hitFlags != 0)) {
             g_api.CreateEntFactoryFromEntity(self, 0x28U, 0);
-            g_api.PlaySfx(0x68A);
+            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
             self->ext.holywater.timer = 0x50;
             self->animSet = 0;
             self->hitboxState = 0;
