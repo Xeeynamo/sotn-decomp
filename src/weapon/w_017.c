@@ -26,10 +26,10 @@ typedef struct {
     /* 0x24 */ u8 pad[8];
 } PrimWeapon017; /* size = 0x2C */
 
-extern Point16 D_7B000_8017A260[3];
-extern SVECTOR D_7B000_8017B0F4[];
-extern SVECTOR D_7B000_8017B10C[];
-extern PrimWeapon017 D_7B000_8017B3F4[];
+extern Point16 D_7B000_8017A260[]; // sizeof(Point16) * 3 * (PrimCount - 1)
+extern SVECTOR D_7B000_8017B0F4[]; // sizeof(SVECTOR) * 4 * (PrimCount - 1)
+extern SVECTOR D_7B000_8017B10C[]; // sizeof(SVECTOR) * 4 * (PrimCount - 1)
+extern PrimWeapon017 D_7B000_8017B3F4[]; // sizeof(PrimWeapon017) * (PrimCount - 1)
 
 void EntityWeaponAttack(Entity* self) {
     const int PrimCount = 25;
@@ -41,8 +41,7 @@ void EntityWeaponAttack(Entity* self) {
     s32 i, j;
     s16 x, y;
     u16 clut;
-    u16 vOffset;
-    u16 uOffset;
+    u16 vOffset, uOffset;
 
     SVECTOR vector;
     VECTOR vec32;
@@ -78,7 +77,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         g_api.func_80118C28(4);
-        g_api.PlaySfx(0x6E4);
+        g_api.PlaySfx(SE_WPN_PENTAGRAM);
         g_api.func_80102CD8(3);
         SetWeaponProperties(self, 0);
         self->ext.weapon.lifetime = 24;
@@ -117,12 +116,10 @@ void EntityWeaponAttack(Entity* self) {
         prim->u1 = prim->u3 = uOffset + 0x7F;
         prim->v0 = prim->v1 = (s32)vOffset;
         prim->v2 = prim->v3 = vOffset + 0x7F;
-
         prim->x0 = prim->x2 = 0x40;
         prim->x1 = prim->x3 = 0xC0;
         prim->y0 = prim->y1 = 0x28;
         prim->y2 = prim->y3 = 0xA8;
-
         prim->priority = 0x1BA;
         prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
 
@@ -130,7 +127,7 @@ void EntityWeaponAttack(Entity* self) {
             prim->drawMode = DRAW_DEFAULT;
         }
 
-        prim->type = 4;
+        prim->type = PRIM_GT4;
         prim = prim->next;
 
         vectors = D_7B000_8017B0F4;
@@ -250,11 +247,10 @@ void EntityWeaponAttack(Entity* self) {
         TransMatrix(&matrix, &vec32);
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
-
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
+        
         otz = 0;
-
         result = RotAverageNclip3(
             &vectors[0], &vectors[1], &vectors[2], (long*)&prim->x0,
             (long*)&prim->x1, (long*)&prim->x2, &inter, &otz, &flags);
@@ -267,13 +263,9 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         prim->drawMode |= DRAW_HIDE;
-
         if (otz > 0 && otz <= FIX(446.0 / 65536.0)) {
-
             if ((self->params & 0x7F00) == 0) {
-
                 prim->clut = clut + ((g_GameTimer >> 1) & 1);
-
                 if (result < 0) {
                     prim->clut += 2;
                 }
@@ -281,9 +273,8 @@ void EntityWeaponAttack(Entity* self) {
 
             prim->priority = 0x1BA;
             prim->drawMode &= ~DRAW_HIDE;
-            prim->type = 5;
+            prim->type = PRIM_GT3;
         }
-
         prim = prim->next;
     }
 }
