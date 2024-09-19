@@ -153,6 +153,9 @@ extern const char* D_80181ACC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
+extern s16 D_801832EC[];
+extern s16 D_801836BC[];
+extern u16 D_80180B9C;
 
 // *** EntityDeath Animations *** //
 extern u8 D_80181B04[];
