@@ -3,7 +3,7 @@
 
 #include "../entity_relic_orb.h"
 
-#define HEART_DROP_CASTLE_FLAG 48
+#define HEART_DROP_CASTLE_FLAG 0x30
 #include "../entity_heart_drop.h"
 
 #include "../entity_message_box.h"
