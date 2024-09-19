@@ -43,7 +43,8 @@ segments:
       - [0x974, .data, 1D1A8]
       - [0x9E4, .data, func_data1]
       - [0xA4C, .data, collision]
-      - [0xDFC, .data, func_data2]
+      - [0xDFC, .data, entity_damage_display]
+      - [0xE0C, .data, func_data2]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
@@ -85,6 +86,7 @@ segments:
       - [0x1DEA4, c]
       - [0x1E1A0, c]
       - [0x1E2A8, c, collision]
+      - [0x1F3C0, c, entity_damage_display]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x1B194, rodata, 1E2A8] # Not actually 1E2A8, looks like it's for EntityRedDoor

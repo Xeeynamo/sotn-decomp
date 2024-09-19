@@ -158,7 +158,7 @@ EntityInit EntityInit_80180664 = {
     .enemyId = 3,
 };
 
-EntityInit EntityInit_80180670 = {
+EntityInit g_eDamageDisplayInit = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
