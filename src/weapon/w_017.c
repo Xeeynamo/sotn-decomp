@@ -29,7 +29,8 @@ typedef struct {
 extern Point16 D_7B000_8017A260[]; // sizeof(Point16) * 3 * (PrimCount - 1)
 extern SVECTOR D_7B000_8017B0F4[]; // sizeof(SVECTOR) * 4 * (PrimCount - 1)
 extern SVECTOR D_7B000_8017B10C[]; // sizeof(SVECTOR) * 4 * (PrimCount - 1)
-extern PrimWeapon017 D_7B000_8017B3F4[]; // sizeof(PrimWeapon017) * (PrimCount - 1)
+extern PrimWeapon017
+    D_7B000_8017B3F4[]; // sizeof(PrimWeapon017) * (PrimCount - 1)
 
 void EntityWeaponAttack(Entity* self) {
     const int PrimCount = 25;
@@ -249,7 +250,7 @@ void EntityWeaponAttack(Entity* self) {
         SetTransMatrix(&matrix);
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
-        
+
         otz = 0;
         result = RotAverageNclip3(
             &vectors[0], &vectors[1], &vectors[2], (long*)&prim->x0,
