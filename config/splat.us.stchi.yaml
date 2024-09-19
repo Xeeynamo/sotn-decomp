@@ -94,7 +94,6 @@ segments:
 #      - [0x1B280, rodata, 2813C]
 #      - [0x1B304, rodata, 2B7CC]
 #      - [0x1B3C0, rodata, 2D2BC]
-#      - [0x1E2A8, asm] # collision
 #      - [0x22CAC, asm]
 #      - [0x2813C, asm]
 #      - [0x2B7CC, asm]

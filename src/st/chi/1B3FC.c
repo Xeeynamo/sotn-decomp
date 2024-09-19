@@ -164,7 +164,7 @@ void EntityUnkId01(Entity* entity) {
     }
 }
 
-// CEN.func_8018DB18 [Entity]
+// CEN.func_8018DB18 [Entity] E_ID_1A
 void func_8019B914(Entity* entity) {
     Collider collider;
     Primitive* prim;

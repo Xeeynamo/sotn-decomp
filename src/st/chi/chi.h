@@ -27,12 +27,12 @@ typedef enum {
     /* 0x12 */ E_ID_12,
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_ID_15, // Created in func_8019BEDC
+    /* 0x15 */ E_ID_15, // Created in EntityDemonSwitchWall
     /* 0x16 */ E_DEMON_SWITCH_WALL,
     /* 0x17 */ E_DEMON_SWITCH,
     /* 0x18 */ E_BREAKABLE_WALL,
-    /* 0x1A */ E_ID_1A, //func_8019B914 - CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)?
     /* 0x19 */ E_BREAKABLE_WALL_DEBRIS, // Created in EntityBreakableWallDebris, EntityBreakableWall
+    /* 0x1A */ E_ID_1A, //func_8019B914 - CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)? - Created in EntityUnkId01
     /* 0x1B */ E_ID_1B, //func_8019CBA8
     /* 0x1C */ E_FALLING_STAIRS,
     /* 0x1D */ E_FALLING_STEP,

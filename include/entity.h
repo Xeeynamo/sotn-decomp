@@ -1214,6 +1214,7 @@ typedef struct {
     /* 0x80 */ s32 unk80;
 } ET_DemonSwitchWall;
 
+//TODO: Are these next 2 structs the same one?
 typedef struct {
     /* 0x7C */ char pad_0[0x20];
     /* 0x9C */ s16 rotZSpeed;
