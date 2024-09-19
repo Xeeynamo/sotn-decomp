@@ -70,7 +70,7 @@ extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
 extern s16 g_collectXVelTable[];
 extern s16 g_collectYVelTable[];
-extern u16 D_80180F5C[];
+extern u16 g_HeartDropArray[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern ObjInit D_801810F4[];

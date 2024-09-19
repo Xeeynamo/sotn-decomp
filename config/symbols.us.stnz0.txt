@@ -3,6 +3,7 @@ g_CallElevator = 0x80180EEC;
 g_BossFlag = 0x80181010;
 g_ElevatorTarget = 0x801813A4;
 g_ElevatorTargetPos = 0x801813A8;
+g_HeartDropArray = 0x801813B0;
 g_eUnk14SpawnRots = 0x80181ECC;
 unk15_rot = 0x80181EDC;
 unk15_yVel = 0x80181EEC;

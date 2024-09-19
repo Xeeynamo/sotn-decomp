@@ -10,7 +10,9 @@ u32 g_CutsceneFlags;
 u32 D_8019D428;
 
 // Bizarre variable - u8 here, but u16 in EntityHeartDrop
-u8 D_801805D8[] = {0, 64, 0, 0};
+// Possible that since EntityHeartDrop is not used in CEN, that data
+// is reused here for the holy glasses cutscene? Very unusual.
+u8 g_HeartDropArray[] = {0, 64, 0, 0};
 static u8 D_801805DC[] = {0, 0, 0, 0};
 
 // clut
@@ -313,7 +315,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 i = *g_Dialogue.nextCharDialogue++;
                 nextChar2 = *g_Dialogue.nextCharDialogue++;
                 prim = g_Dialogue.prim[5];
-                uCoord = D_801805D8[nextChar2 & 1];
+                uCoord = g_HeartDropArray[nextChar2 & 1];
                 vCoord = D_801805DC[nextChar2 & 1];
                 prim->clut = D_801805E0[i];
                 prim->tpage = 0x90;
