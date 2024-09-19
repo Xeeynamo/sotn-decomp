@@ -9,8 +9,7 @@
 extern s32 EntityInit_80180664;
 extern ObjInit2 D_80180740[];
 
-// EntityBackgroundBlock
-void func_8019B3FC(Entity* entity) {
+void EntityBackgroundBlock(Entity* entity) {
     ObjInit2* objInit = &D_80180740[entity->params];
     if (entity->step == 0) {
         InitializeEntity(&EntityInit_80180664);
@@ -36,8 +35,7 @@ extern u8 D_80180798[];
 extern u8 D_801807A0[];
 extern u16 D_801807A8[];
 
-// EntityUnkId12
-void func_8019B4DC(Entity* entity) {
+void EntityUnkId12(Entity* entity) {
     s32 temp_v0;
     u16* temp_v0_2;
     u16 temp_s1 = entity->params;
@@ -104,8 +102,7 @@ extern u8 D_80180878[];
 extern u16 D_80180880;
 
 // EntityUnkId01
-void func_8019B698(Entity* entity)
-{
+void EntityUnkId01(Entity* entity) {
     u16* ptr;
     s32 i;
     u16 params = entity->params >> 0xC;

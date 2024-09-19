@@ -1,7 +1,7 @@
 #include "game.h"
 #include "stage.h"
 
-void func_8019B698(Entity*);
+void EntityUnkId01(Entity*);
 void func_801A3520(Entity*);
 void func_801A2CAC(Entity*);
 void EntityDamageDisplay(Entity*);
@@ -16,8 +16,8 @@ void func_801A4A28(Entity*);
 void func_801A77DC(Entity*);
 void func_801A4B50(Entity*);
 void EntityDummy(Entity*);
-void func_8019B3FC(Entity*);
-void func_8019B4DC(Entity*);
+void EntityBackgroundBlock(Entity*);
+void EntityUnkId12(Entity*);
 void func_801A519C(Entity*);
 void func_801A54C4(Entity*);
 void func_801A55B4(Entity*);
@@ -47,7 +47,7 @@ void func_801ACB6C(Entity*);
 void func_801ACEF4(Entity*);
 
 PfnEntityUpdate PfnEntityUpdates[] = {
-    func_8019B698,  // EntityUnkId01
+    EntityUnkId01,  // EntityUnkId01
     func_801A3520,  // EntityExplosion
     func_801A2CAC,  // EntityPrizeDrop
     EntityDamageDisplay,
@@ -63,8 +63,8 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A4B50,  // EntityMessageBox
     EntityDummy,
     EntityDummy,
-    func_8019B3FC,  // EntityBackgroundBlock
-    func_8019B4DC,  // EntityUnkId12
+    EntityBackgroundBlock,
+    EntityUnkId12,  // EntityUnkId12
     func_801A519C,  // EntityUnkId13
     func_801A54C4,  // EntityUnkId14
     func_801A55B4,  // EntityUnkId15
