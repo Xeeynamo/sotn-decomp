@@ -10,23 +10,20 @@ extern s32 g_HandId;
 #define g_Animset w_017_1
 #define g_Animset2 w_017_2
 
-typedef union {
-    struct {
-        /* 0x00 */ s32 x0;
-        /* 0x04 */ s32 y0;
-        /* 0x08 */ s32 x1;
-        /* 0x0C */ s32 y1;
-        /* 0x10 */ s32 x2;
-        /* 0x14 */ s32 y2;
-        /* 0x18 */ s16 u0;
-        /* 0x1A */ s16 v0;
-        /* 0x1C */ s16 u1;
-        /* 0x1E */ s16 v1;
-        /* 0x20 */ s16 u2;
-        /* 0x22 */ s16 v2;
-    } pairs3216;
-    s16 point16[0x16];
-    SVECTOR vectors[5];
+typedef struct {
+    /* 0x00 */ s32 x0;
+    /* 0x04 */ s32 y0;
+    /* 0x08 */ s32 x1;
+    /* 0x0C */ s32 y1;
+    /* 0x10 */ s32 x2;
+    /* 0x14 */ s32 y2;
+    /* 0x18 */ s16 u0;
+    /* 0x1A */ s16 v0;
+    /* 0x1C */ s16 u1;
+    /* 0x1E */ s16 v1;
+    /* 0x20 */ s16 u2;
+    /* 0x22 */ s16 v2;
+    /* 0x24 */ u8 pad[8];
 } PrimWeapon017; /* size = 0x2C */
 
 extern Point16 D_7B000_8017A260[3];
@@ -35,7 +32,6 @@ extern SVECTOR D_7B000_8017B10C[];
 extern PrimWeapon017 D_7B000_8017B3F4[];
 
 void EntityWeaponAttack(Entity* self) {
-
     const int PrimCount = 25;
     PrimWeapon017* dest;
     Point16* coords;
@@ -55,7 +51,6 @@ void EntityWeaponAttack(Entity* self) {
     s32 flag;
     long inter;
     long otz;
-
     long flags;
     s32 result;
 
@@ -118,9 +113,9 @@ void EntityWeaponAttack(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x19;
         prim->clut = clut;
-        prim->u0 = prim->u2 = uOffset;
+        prim->u0 = prim->u2 = (s32)uOffset;
         prim->u1 = prim->u3 = uOffset + 0x7F;
-        prim->v0 = prim->v1 = vOffset;
+        prim->v0 = prim->v1 = (s32)vOffset;
         prim->v2 = prim->v3 = vOffset + 0x7F;
 
         prim->x0 = prim->x2 = 0x40;
@@ -176,25 +171,24 @@ void EntityWeaponAttack(Entity* self) {
 
             for (i = 0; i < (PrimCount - 1); i++) {
                 s16 angle;
-                dest->pairs3216.x0 = vectors->vx << 0x10;
-                dest->pairs3216.x1 = vectors->vy << 0x10;
-                dest->pairs3216.x2 = vectors->vz << 0x10;
+                dest->x0 = vectors->vx << 0x10;
+                dest->x1 = vectors->vy << 0x10;
+                dest->x2 = vectors->vz << 0x10;
 
                 angle = ((rand() % 0x2AA) + ((i / 4) * 0x2AA));
-                dest->pairs3216.y0 = rcos(angle) * 0x10;
-                dest->pairs3216.y1 = -rsin(angle) * 0x10;
-                dest->pairs3216.y2 = rcos(angle + 0x600) * 0x40;
+                dest->y0 = rcos(angle) * 0x10;
+                dest->y1 = -rsin(angle) * 0x10;
+                dest->y2 = rcos(angle + 0x600) * 0x40;
 
                 if (i & 1) {
-                    dest->pairs3216.y2 = -dest->pairs3216.y2;
+                    dest->y2 = -dest->y2;
                 }
 
-                dest->pairs3216.u0 = dest->pairs3216.u1 = dest->pairs3216.u2 =
-                    0;
+                dest->u0 = dest->u1 = dest->u2 = 0;
 
-                dest->pairs3216.v0 = (rand() % 160) - 0x50;
-                dest->pairs3216.v1 = (rand() % 160) - 0x50;
-                dest->pairs3216.v2 = (rand() % 160) - 0x50;
+                dest->v0 = (rand() % 160) - 0x50;
+                dest->v1 = (rand() % 160) - 0x50;
+                dest->v2 = (rand() % 160) - 0x50;
 
                 vectors += 4;
                 dest++;
@@ -208,13 +202,13 @@ void EntityWeaponAttack(Entity* self) {
         flag = 1;
         dest = D_7B000_8017B3F4;
         for (i = 0; i < (PrimCount - 1); i++) {
-            dest->pairs3216.x0 += dest->pairs3216.y0;
-            dest->pairs3216.x1 += dest->pairs3216.y1;
-            dest->pairs3216.x2 += dest->pairs3216.y2;
+            dest->x0 += dest->y0;
+            dest->x1 += dest->y1;
+            dest->x2 += dest->y2;
 
-            dest->pairs3216.u0 += dest->pairs3216.v0;
-            dest->pairs3216.u1 += dest->pairs3216.v1;
-            dest->pairs3216.u2 += dest->pairs3216.v2;
+            dest->u0 += dest->v0;
+            dest->u1 += dest->v1;
+            dest->u2 += dest->v2;
 
             dest++;
         }
@@ -243,15 +237,14 @@ void EntityWeaponAttack(Entity* self) {
         vectors = &D_7B000_8017B0F4[j * 4];
         dest = &D_7B000_8017B3F4[j];
 
-        vector.vx = dest->pairs3216.u0;
-        vector.vz = dest->pairs3216.u2;
-        vector.vy = dest->pairs3216.u1;
+        vector.vx = dest->u0;
+        vector.vz = dest->u2;
+        vector.vy = dest->u1;
         vec32.vx = 0;
         vec32.vy = 0;
-        vec32.vz = dest->pairs3216.x2 >> 16;
+        vec32.vz = dest->x2 >> 16;
 
-        SetGeomOffset((dest->pairs3216.x0 >> 16) + 0x80,
-                      (dest->pairs3216.x1 >> 16) + 0x68);
+        SetGeomOffset((dest->x0 >> 16) + 0x80, (dest->x1 >> 16) + 0x68);
 
         RotMatrix(&vector, &matrix);
         TransMatrix(&matrix, &vec32);
