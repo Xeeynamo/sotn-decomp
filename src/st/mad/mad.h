@@ -75,7 +75,7 @@ extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern ObjInit D_801810F4[];
 extern u16 g_InitializeEntityData0[];
-extern u8 D_80181010[];
+extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollEnemyLookup[];
 // extern u8 g_testCollLuckCutoff[];
 // extern u8 g_testColluCoords[];

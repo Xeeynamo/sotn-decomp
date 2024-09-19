@@ -21,6 +21,7 @@ unk15_yVel = 0x80180FCC;
 g_Rooms = 0x80181130;
 g_eRedDoorTiles = 0x80180594;
 g_olroxDroolCollOffsets = 0x80181008;
+g_UnkEntityAnimData = 0x80181010;
 g_UnkRecursPrimVecOrder = 0x80181020;
 g_UnkRecursPrim2Inds = 0x80181040;
 g_pStrObjLayout0 = 0x801811D4;
