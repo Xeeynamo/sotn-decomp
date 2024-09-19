@@ -87,7 +87,6 @@ segments:
       - [0x11D3C, c, st_common]
       - [0x1344C, c, e_collect]
       - [0x149C0, c, e_misc]
-      - [0x15520, c]
       - [0x17B94, c]
       - [0x18FA0, c, prim_helpers]
       - [0x197D8, .bss, create_entity]
