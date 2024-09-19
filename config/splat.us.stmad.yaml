@@ -44,7 +44,7 @@ segments:
       - [0xBEC, .data, e_collect]
       - [0xED8, data]
       - [0xEF8, .data, e_misc]
-      - [0xFAC, data]
+      - [0x1068, data]
       - [0x1130, data, g_Rooms]
       - [0x11D4, data] # assets/st/mad/0.objlayout
       # - [0x11E8, data] # assets/st/mad/1.objlayout
