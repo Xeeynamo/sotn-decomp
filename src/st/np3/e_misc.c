@@ -3,4 +3,3 @@
 
 #define HEART_DROP_CASTLE_FLAG 0x30
 #include "../e_misc.h"
-

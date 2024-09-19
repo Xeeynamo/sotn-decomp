@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
+#include "../entity_relic_orb.h"
+#define HEART_DROP_CASTLE_FLAG 0xF8
+#include "../entity_heart_drop.h"
+
+#include "../entity_message_box.h"
+
 #include "../check_coll_offsets.h"
 
 #include "../entity_unkId13.h"
