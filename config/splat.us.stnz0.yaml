@@ -46,8 +46,7 @@ segments:
       - [0x1960, .data, e_red_door]
       - [0x1978, .data, st_common]
       - [0x1B78, .data, e_collect]
-      - [0x1E68, .data, entity_relic_orb]
-      - [0x1ECC, data]
+      - [0x1E68, .data, e_misc]
       - [0x1F80, .data, e_particles]
       - [0x2000, .data, e_room_fg]
       - [0x208C, .data, e_bone_scimitar]
@@ -79,8 +78,8 @@ segments:
       - [0x30740, .rodata, e_collect] # CollectGold text
       - [0x30790, .rodata, e_collect] # EntityPrizeDrop
       - [0x307B0, .rodata, e_collect] # EntityEquipItemDrop
-      - [0x307C8, .rodata, entity_relic_orb]
-      - [0x30800, .rodata, entity_message_box]
+      - [0x307C8, .rodata, e_misc]
+      - [0x30800, .rodata, e_misc]
       - [0x30814, .rodata, e_bone_scimitar]
       - [0x30834, .rodata, e_axe_knight]
       - [0x30858, .rodata, e_bloody_zombie]
@@ -109,10 +108,7 @@ segments:
       - [0x3C8EC, c, st_common]
       - [0x3D848, c, e_collect]
       - [0x3F308, c, blit_char]
-      - [0x3F5B8, c, entity_relic_orb]
-      - [0x40088, c, entity_heart_drop]
-      - [0x401B0, c, entity_message_box]
-      - [0x4070C, c]
+      - [0x3F5B8, c, e_misc]
       - [0x42AA8, c, e_particles]
       - [0x432EC, c, e_room_fg]
       - [0x433d8, c, popup]
