@@ -53,8 +53,8 @@ segments:
       - [0x20AC, .data, e_red_door]
       - [0x20C4, .data, st_common]
       - [0x22C4, .data, e_collect]
-      - [0x25B4, .data, entity_relic_orb]
-      - [0x2618, data]
+      - [0x25B4, .data, e_misc]
+      - [0x26D0, data]
       - [0x3180, data]
       - [0x3870, data]
       - [0x39A0, data]
@@ -84,9 +84,9 @@ segments:
       - [0x37590, .rodata, e_collect] # CollectGold text
       - [0x375E0, .rodata, e_collect] # EntityPrizeDrop
       - [0x37600, .rodata, e_collect] # EntityEquipItemDrop
-      - [0x37618, .rodata, entity_relic_orb]
-      - [0x37650, .rodata, entity_message_box]
-      - [0x37664, .rodata, 48A84] # EntityStageNamePopup
+      - [0x37618, .rodata, e_misc]
+      - [0x37650, .rodata, e_misc]
+      - [0x37664, .rodata, 4AFF0] # EntityStageNamePopup
       - [0x37698, rodata]
       - [0x376E8, rodata]
       - [0x37738, .rodata, 516B4]
@@ -107,10 +107,8 @@ segments:
       - [0x44C64, c, st_common]
       - [0x45BC0, c, e_collect]
       - [0x47680, c, blit_char]
-      - [0x47930, c, entity_relic_orb]
-      - [0x48400, c, entity_heart_drop]
-      - [0x48528, c, entity_message_box]
-      - [0x48A84, c]
+      - [0x47930, c, e_misc]
+      - [0x4AFF0, c]
       - [0x50A2C, c, player_water_effect]
       - [0x516B4, c]
       - [0x53F38, c]
