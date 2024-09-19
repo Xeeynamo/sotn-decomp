@@ -35,30 +35,30 @@ extern SVECTOR D_7B000_8017B10C[];
 extern PrimWeapon017 D_7B000_8017B3F4[];
 
 void EntityWeaponAttack(Entity* self) {
-    
+
     const int PrimCount = 25;
     PrimWeapon017* dest;
     Point16* coords;
     SVECTOR* vectors;
     Primitive* prim;
-    
+
     s32 i, j;
     s16 x, y;
     u16 clut;
     u16 vOffset;
     u16 uOffset;
-    
+
     SVECTOR vector;
     VECTOR vec32;
     MATRIX matrix;
-    
+
     s32 flag;
     long inter;
     long otz;
 
     long flags;
     s32 result;
-    
+
     if (g_HandId != 0) {
         clut = 0x128;
         vOffset = 0x80;
@@ -72,7 +72,7 @@ void EntityWeaponAttack(Entity* self) {
     } else {
         uOffset = 0;
     }
-    
+
     flag = 0;
     switch (self->step) {
     case 0:
@@ -81,7 +81,7 @@ void EntityWeaponAttack(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        
+
         g_api.func_80118C28(4);
         g_api.PlaySfx(0x6E4);
         g_api.func_80102CD8(3);
@@ -113,32 +113,31 @@ void EntityWeaponAttack(Entity* self) {
         x = self->posX.i.hi = 0x80;
         y = self->posY.i.hi = 0x68;
 
-        self->flags = 0x4800000;
-    
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x19;
         prim->clut = clut;
-        prim->u0 = prim->u2 = (s32) uOffset;
+        prim->u0 = prim->u2 = uOffset;
         prim->u1 = prim->u3 = uOffset + 0x7F;
-        prim->v0 = prim->v1 = (s32) vOffset;
+        prim->v0 = prim->v1 = vOffset;
         prim->v2 = prim->v3 = vOffset + 0x7F;
-        
+
         prim->x0 = prim->x2 = 0x40;
         prim->x1 = prim->x3 = 0xC0;
         prim->y0 = prim->y1 = 0x28;
         prim->y2 = prim->y3 = 0xA8;
-        
+
         prim->priority = 0x1BA;
         prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
-        
-        
+
         if (self->params & 0x7F00) {
             prim->drawMode = DRAW_DEFAULT;
         }
 
         prim->type = 4;
         prim = prim->next;
-        
+
         vectors = D_7B000_8017B0F4;
         coords = D_7B000_8017A260;
 
@@ -174,7 +173,7 @@ void EntityWeaponAttack(Entity* self) {
 
             vectors = D_7B000_8017B10C;
             dest = D_7B000_8017B3F4;
-            
+
             for (i = 0; i < (PrimCount - 1); i++) {
                 s16 angle;
                 dest->pairs3216.x0 = vectors->vx << 0x10;
@@ -185,12 +184,13 @@ void EntityWeaponAttack(Entity* self) {
                 dest->pairs3216.y0 = rcos(angle) * 0x10;
                 dest->pairs3216.y1 = -rsin(angle) * 0x10;
                 dest->pairs3216.y2 = rcos(angle + 0x600) * 0x40;
-            
+
                 if (i & 1) {
                     dest->pairs3216.y2 = -dest->pairs3216.y2;
                 }
 
-                dest->pairs3216.u0 = dest->pairs3216.u1 = dest->pairs3216.u2 = 0;
+                dest->pairs3216.u0 = dest->pairs3216.u1 = dest->pairs3216.u2 =
+                    0;
 
                 dest->pairs3216.v0 = (rand() % 160) - 0x50;
                 dest->pairs3216.v1 = (rand() % 160) - 0x50;
@@ -235,64 +235,52 @@ void EntityWeaponAttack(Entity* self) {
     if (flag == 0) {
         return;
     }
-    
+
     prim->drawMode |= DRAW_HIDE;
     prim = prim->next;
-    
-    for (j = 0; j < (PrimCount - 1); j++) {        
+
+    for (j = 0; j < (PrimCount - 1); j++) {
         vectors = &D_7B000_8017B0F4[j * 4];
         dest = &D_7B000_8017B3F4[j];
-        
+
         vector.vx = dest->pairs3216.u0;
         vector.vz = dest->pairs3216.u2;
         vector.vy = dest->pairs3216.u1;
         vec32.vx = 0;
         vec32.vy = 0;
         vec32.vz = dest->pairs3216.x2 >> 16;
-        
-        SetGeomOffset((dest->pairs3216.x0 >> 16) + 0x80, 
+
+        SetGeomOffset((dest->pairs3216.x0 >> 16) + 0x80,
                       (dest->pairs3216.x1 >> 16) + 0x68);
-        
+
         RotMatrix(&vector, &matrix);
         TransMatrix(&matrix, &vec32);
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
-        
+
         SetRotMatrix(&matrix);
         SetTransMatrix(&matrix);
         otz = 0;
-        
-        result = RotAverageNclip3(&vectors[0],
-                                  &vectors[1],
-                                  &vectors[2],
-                                  (long*) &prim->x0, 
-                                  (long*) &prim->x1,
-                                  (long*) &prim->x2,
-                                  &inter,
-                                  &otz,
-                                  &flags);
-        
+
+        result = RotAverageNclip3(
+            &vectors[0], &vectors[1], &vectors[2], (long*)&prim->x0,
+            (long*)&prim->x1, (long*)&prim->x2, &inter, &otz, &flags);
+
         if (result < 0) {
             otz = 0;
-            RotAverageNclip3(&vectors[0],
-                             &vectors[2],
-                             &vectors[1],
-                             (long*) &prim->x0,
-                             (long*) &prim->x2,
-                             (long*) &prim->x1,
-                             &inter,
-                             &otz,
-                             &flags);
+            RotAverageNclip3(
+                &vectors[0], &vectors[2], &vectors[1], (long*)&prim->x0,
+                (long*)&prim->x2, (long*)&prim->x1, &inter, &otz, &flags);
         }
 
         prim->drawMode |= DRAW_HIDE;
-        
+
         if (otz > 0 && otz <= FIX(446.0 / 65536.0)) {
-            
+
             if ((self->params & 0x7F00) == 0) {
-                
+
                 prim->clut = clut + ((g_GameTimer >> 1) & 1);
-                
+
                 if (result < 0) {
                     prim->clut += 2;
                 }
@@ -302,11 +290,9 @@ void EntityWeaponAttack(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
             prim->type = 5;
         }
-            
-        prim = prim->next;
-        
-    }
 
+        prim = prim->next;
+    }
 }
 
 s32 func_ptr_80170004(Entity* self) {}
