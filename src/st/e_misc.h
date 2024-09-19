@@ -144,13 +144,12 @@ u16 g_UnkRecursPrimVecOrder[] = {
 
 #include "unk_recursive_primfunc_1.h"
 
-u16 g_UnkRecursPrim2Inds[] = {
-    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 
+u16 g_UnkRecursPrim2Inds[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8,
 #if !defined(STAGE_IS_NZ0)
-    0, 0,
+                              0, 0,
 #endif
 #if defined(VERSION_BETA)
-    0, 0
+                              0, 0
 #endif
 };
 
