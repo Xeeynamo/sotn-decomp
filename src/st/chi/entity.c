@@ -4,7 +4,7 @@
 void func_8019B698(Entity*);
 void func_801A3520(Entity*);
 void func_801A2CAC(Entity*);
-void func_8019F3C0(Entity*);
+void EntityDamageDisplay(Entity*);
 void func_801A0654(Entity*);
 void func_801A5F54(Entity*);
 void func_801A7448(Entity*);
@@ -50,7 +50,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_8019B698,  // EntityUnkId01
     func_801A3520,  // EntityExplosion
     func_801A2CAC,  // EntityPrizeDrop
-    func_8019F3C0,  // EntityDamageDisplay
+    EntityDamageDisplay,
     func_801A0654,  // EntityRedDoor
     func_801A5F54,  // EntityIntenseExplosion
     func_801A7448,  // EntitySoulStealOrb
