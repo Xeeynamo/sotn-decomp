@@ -11,7 +11,6 @@ g_eBreakableHitboxes = 0x80180664;
 g_eBreakableExplosionTypes = 0x8018066C;
 g_eBreakableanimSets = 0x80180674;
 g_eBreakableDrawModes = 0x80180684;
-g_HeartDropArray = 0x80180F5C;
 g_eUnk14SpawnRots = 0x80180FAC;
 unk14_yVel = 0x80180FE4;
 unk14_startFrame = 0x80180FFC;
