@@ -6,11 +6,11 @@ extern void* Cluts[];
 extern MyRoomDef rooms_layers[];
 extern GfxBank gfxBanks[];
 void UpdateStageEntities();
-void func_8019E2A8();   // HitDetection()
+void HitDetection();
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
-    .HitDetection = func_8019E2A8,
+    .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
