@@ -3,8 +3,6 @@
 // func_8019CBA8
 // func_8019D0D8    // Falling Stairs Dust Particles
 Random = 0x8019DE74;
-//HitDetection = 0x8019E2A8;
-//EntityDamageDisplay = 0x8019F3C0;
 CreateEntityFromLayout = 0x8019FA64;
 CreateEntityWhenInVerticalRange = 0x8019FB28;
 CreateEntityWhenInHorizontalRange = 0x8019FC40;
@@ -125,6 +123,7 @@ UnkPolyFunc0 = 0x801AE6E0;
 //PrimDecreaseBrightness = 0x801AE70C;
 
 // *** Data ***
+//TODO: Migrate this
 gfxBanks = 0x80180364;
 
 // *** sbss ***
@@ -132,8 +131,7 @@ g_LayoutObjHorizontal = 0x801AE770;
 g_LayoutObjVertical = 0x801AE774;
 g_LayoutObjPosHorizontal = 0x801AE778;
 g_LayoutObjPosVertical = 0x801AE77C;
-
-// *** TEMP ***
+g_ItemIconSlots = 0x801AF3E8;
 
 // ASM-only data is referencing these values, so these
 // are temporarily here until it's decompiled into .c files
@@ -142,7 +140,6 @@ EntityInit_80180628 = 0x80180628;
 EntityInit_80180640 = 0x80180640;
 EntityInit_8018064C = 0x8018064C;
 EntityInit_80180664 = 0x80180664;
-g_eDamageDisplayInit = 0x80180670;
 EntityInit_8018067C = 0x8018067C;
 EntityInit_80180688 = 0x80180688;
 EntityInit_80180694 = 0x80180694;
@@ -157,7 +154,6 @@ EntityInit_8018070C = 0x8018070C;
 EntityInit_80180718 = 0x80180718;
 EntityInit_80180724 = 0x80180724;
 g_eRedDoorTiles = 0x80180768;
-
 
 // Referenced in func_801A8EAC
 sprites_chi_4 = 0x80199340;
