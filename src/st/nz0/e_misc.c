@@ -2,4 +2,4 @@
 #include "nz0.h"
 
 #define HEART_DROP_CASTLE_FLAG 0xF8
-#include "../entity_heart_drop.h"
+#include "../e_misc.h"

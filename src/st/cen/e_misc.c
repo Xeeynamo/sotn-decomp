@@ -2,4 +2,4 @@
 #include "cen.h"
 
 #define HEART_DROP_CASTLE_FLAG 0xC0
-#include "../entity_heart_drop.h"
+#include "../e_misc.h"

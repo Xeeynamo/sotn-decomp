@@ -51,7 +51,7 @@ segments:
       - [0x1A50, .data, st_common]
       - [0x1C50, .data, e_collect]
       - [0x1F40, .data, e_misc] # EntityRelicOrb
-      - [0x1FA4, data]
+      - [0x205C, data]
       - [0x22B0, data]
       - [0x23D0, data]
       - [0x2400, data]

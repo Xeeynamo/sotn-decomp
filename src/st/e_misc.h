@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
 
 #include "entity_relic_orb.h"
 
 #include "entity_heart_drop.h"
 
+#if !defined(VERSION_BETA)
 #include "entity_message_box.h"
+#endif
 
 #include "check_coll_offsets.h"
 
@@ -90,6 +91,49 @@ u8 g_UnkEntityAnimData[] = {
 
 #include "initialize_unk_entity.h"
 
+#if defined(VERSION_BETA)
+void func_801966B0(u16* sensors) {
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->hitboxState = 0;
+        g_CurrentEntity->zPriority -= 0x10;
+        g_CurrentEntity->drawFlags |= DRAW_HIDE;
+        g_CurrentEntity->unk6C = 0;
+        g_CurrentEntity->step_s++;
+        break;
+    case 1:
+        if (UnkCollisionFunc3(sensors) & 1) {
+            g_CurrentEntity->animCurFrame = 1;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 2:
+        g_CurrentEntity->unk6C += 2;
+        if (g_CurrentEntity->unk6C == 0xC0) {
+            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
+            g_CurrentEntity->step_s++;
+            D_80199DE8 = 64;
+        }
+        break;
+    case 3:
+        if (D_80199DE8 & 1) {
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+        } else {
+            g_CurrentEntity->palette = PAL_OVL(0x19F);
+        }
+        if (!--D_80199DE8) {
+            g_CurrentEntity->hitboxState = 3;
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+            SetStep(1);
+        }
+        break;
+    }
+}
+#endif
+
 #include "make_entity_from_id.h"
 
 #include "make_explosions.h"
@@ -100,8 +144,14 @@ u16 g_UnkRecursPrimVecOrder[] = {
 
 #include "unk_recursive_primfunc_1.h"
 
-u16 g_UnkRecursPrim2Inds[] = {
-    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
+u16 g_UnkRecursPrim2Inds[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8,
+#if !defined(STAGE_IS_NZ0)
+                              0, 0,
+#endif
+#if defined(VERSION_BETA)
+                              0, 0
+#endif
+};
 
 #include "unk_recursive_primfunc_2.h"
 
