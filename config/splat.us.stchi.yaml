@@ -44,7 +44,7 @@ segments:
       - [0x9E4, .data, func_data1]
       - [0xA4C, .data, collision]
       - [0xDFC, .data, entity_damage_display]
-      - [0xE0C, .data, func_data2]
+      - [0x1154, .data, func_data2]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
