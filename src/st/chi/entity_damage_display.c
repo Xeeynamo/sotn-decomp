@@ -237,7 +237,16 @@ void func_801A1BA4(s32 arg0, s16 arg1) {
 // [Duplicate]
 u8 func_801A1C10(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1C48);    // [Duplicate]
+// [Duplicate]
+u8 func_801A1C48(Entity* arg0, Entity* arg1) {
+    u16 x;
+    u16 y;
+
+    x = arg1->posX.i.hi - arg0->posX.i.hi;
+    y = arg1->posY.i.hi - arg0->posY.i.hi;
+
+    return func_801A1C10(x, y);
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1C90);    // [Duplicate]
 
