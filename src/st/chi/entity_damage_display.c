@@ -249,7 +249,7 @@ u8 func_801A1C48(Entity* arg0, Entity* arg1) {
 }
 
 // [Duplicate]
-// [Duplicate of func_801A1E24]
+// [Almost duplicate of func_801A1E24 - x/y are swapped]
 u16 func_801A1C90(s16 x, s16 y) {
     x -= g_CurrentEntity->posX.i.hi;
     y -= g_CurrentEntity->posY.i.hi;
@@ -264,7 +264,14 @@ u16 func_801A1C90(s16 x, s16 y) {
 u16 func_801A1DBC(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 #include "../get_angle_between_entities.h"
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1E24);    // [Duplicate]
+// [Duplicate]
+// [Almost duplicate of func_801A1C90 - x/y are swapped]
+u16 func_801A1E24(s16 x, s16 y) {
+    x -= g_CurrentEntity->posX.i.hi;
+    y -= g_CurrentEntity->posY.i.hi;
+
+    return ratan2(y, x);
+}
 #include "../get_normalized_angle.h"
 
 #include "../set_step.h"
