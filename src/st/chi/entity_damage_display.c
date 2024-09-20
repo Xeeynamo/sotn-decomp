@@ -234,7 +234,8 @@ void func_801A1BA4(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_801A1B5C((arg0 - 0x40) & 0xFF, arg1);
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1C10);    // [Duplicate]
+// [Duplicate]
+u8 func_801A1C10(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1C48);    // [Duplicate]
 
