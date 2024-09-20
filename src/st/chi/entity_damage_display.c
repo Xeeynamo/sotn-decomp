@@ -382,7 +382,29 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 }
 //#include "../replace_breakable_with_item_drop.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A273C);    // [Duplicate]
+// [Duplicate]
+// func_801A273C
+void func_801A273C(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->velocityY >= 0) {
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
+        entity->velocityX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+
+    if (entity->velocityY < FIX(0.25)) {
+        entity->velocityY += FIX(0.125);
+    }
+}
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A27C0);    // [Duplicate]
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A291C);    // CollectHeart()
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A299C);    // CollectGold()
