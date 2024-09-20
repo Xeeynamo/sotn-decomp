@@ -277,7 +277,30 @@ u16 func_801A1E24(s16 x, s16 y) {
 #include "../set_step.h"
 #include "../set_sub_step.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1F08);    // EntityExplosionSpawn()
+// [Duplicate]
+// [Migrate to common file once func_801A3520 is EntityExplosion?]
+// func_801A1F08
+void func_801A3520(void);
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
+    Entity* entity;
+
+    if (arg1 != 0) {
+        PlaySfxWithPosArgs(arg1);
+    }
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+    entity = g_CurrentEntity;
+    entity->drawFlags = 0;
+    entity->entityId = 2;
+    //entity->pfnUpdate = EntityExplosion;
+    entity->pfnUpdate = func_801A3520;
+    entity->params = arg0;
+    entity->animCurFrame = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 //#include "../entity_explosion_spawn.h"
 
 #include "../init_entity.h"
