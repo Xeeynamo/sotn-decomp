@@ -483,7 +483,7 @@
 <g id="node31" class="node">
 <title>w_017.EntityWeaponAttack</title>
 <g id="a_node31"><a xlink:href="w_017.EntityWeaponAttack.svg" xlink:title="w_017.EntityWeaponAttack">
-<ellipse fill="red" stroke="black" cx="7632.09" cy="-198" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="7632.09" cy="-198" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="7632.09" y="-194.3" font-family="Times,serif" font-size="14.00">w_017.EntityWeaponAttack</text>
 </a>
 </g>
