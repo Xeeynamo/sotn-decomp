@@ -226,11 +226,13 @@ s16 D_80180E24[] = {
 };
 // [Duplicate]
 s32 func_801A1B5C(u8 arg0, s16 arg1) { return D_80180E24[arg0] * arg1; }
-
 // [Duplicate]
 s16 func_801A1B88(u8 arg0) { return D_80180E24[arg0]; }
-
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1BA4);    // [Duplicate]
+// [Duplicate]
+void func_801A1BA4(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_801A1B5C(arg0 & 0xFF, arg1);
+    g_CurrentEntity->velocityY = func_801A1B5C((arg0 - 0x40) & 0xFF, arg1);
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1C10);    // [Duplicate]
 
