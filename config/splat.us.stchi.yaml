@@ -55,7 +55,7 @@ segments:
       - [0x1B144, .rodata, 1C5CC] # jtbl_8018B144 [1C5CC]
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, .rodata, 1D1A8] # jtbl_8019B180 [1D1A8]
-      - [0x1B194, rodata] # jtbl_8019B194
+      - [0x1B194, .rodata, entity_damage_display] # jtbl_8019B194 [EntityRedDoor]
       - [0x1B1AC, rodata]
       - [0x1B1F4, rodata]
       - [0x1B1FC, rodata] # jtbl_8019B1FC

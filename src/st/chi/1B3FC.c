@@ -6,13 +6,13 @@
  * Description: Abandoned Mine
  */
 
-extern s32 EntityInit_80180664;
+extern s32 g_eInitGeneric2;
 extern ObjInit2 D_80180740[];
 
 void EntityBackgroundBlock(Entity* entity) {
     ObjInit2* objInit = &D_80180740[entity->params];
     if (entity->step == 0) {
-        InitializeEntity(&EntityInit_80180664);
+        InitializeEntity(&g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.u;

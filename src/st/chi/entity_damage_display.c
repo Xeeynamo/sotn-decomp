@@ -16,9 +16,7 @@ u16 g_eDamageDisplayClut[] = {
 
 #include "../create_entity.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A05DC);    // EntityIsNearPlayer2()
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A0654);    // EntityRedDoor()
-//#include "../e_red_door.h"
+#include "../e_red_door.h"
 
 #include "../entity.h"
 

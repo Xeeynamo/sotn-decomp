@@ -5,7 +5,7 @@ void EntityUnkId01(Entity*);
 void func_801A3520(Entity*);
 void func_801A2CAC(Entity*);
 void EntityDamageDisplay(Entity*);
-void func_801A0654(Entity*);
+void EntityRedDoor(Entity*);
 void func_801A5F54(Entity*);
 void func_801A7448(Entity*);
 void func_801A7C8C(Entity*);
@@ -51,7 +51,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A3520,  // EntityExplosion
     func_801A2CAC,  // EntityPrizeDrop
     EntityDamageDisplay,
-    func_801A0654,  // EntityRedDoor
+    EntityRedDoor,
     func_801A5F54,  // EntityIntenseExplosion
     func_801A7448,  // EntitySoulStealOrb
     func_801A7C8C,  // EntityRoomForeground
@@ -150,7 +150,7 @@ EntityInit EntityInit_80180658 = {
     .enemyId = 1,
 };
 
-EntityInit EntityInit_80180664 = {
+EntityInit g_eInitGeneric2 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
