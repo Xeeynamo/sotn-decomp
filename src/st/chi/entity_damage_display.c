@@ -227,7 +227,8 @@ s16 D_80180E24[] = {
 // [Duplicate]
 s32 func_801A1B5C(u8 arg0, s16 arg1) { return D_80180E24[arg0] * arg1; }
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1B88);    // [Duplicate]
+// [Duplicate]
+s16 func_801A1B88(u8 arg0) { return D_80180E24[arg0]; }
 
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1BA4);    // [Duplicate]
 
