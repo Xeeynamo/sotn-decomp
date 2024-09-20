@@ -24,6 +24,7 @@ options:
     - ".rodata"
     - ".text"
     - ".bss"
+sha1: b8dcd64f95d197d3f59ab3e46f67897ecdc477cb
 segments:
   - name: f_000
     type: grey4

@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: a919a53a760107972049bfdeadde33376428eace
 segments:
   - name: stsel
     type: code

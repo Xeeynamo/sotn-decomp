@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 3ae1425d694b0e4d65c6bb71d5a91f1769aec30c
 segments:
   - name: stwrp
     type: code

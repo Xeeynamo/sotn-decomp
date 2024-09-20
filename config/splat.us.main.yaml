@@ -22,6 +22,7 @@ options:
     - ".text"
     - ".data"
     - ".bss"
+sha1: 54828d4e44ea9575f2a0917ff63def42a304abff
 segments:
   - [0x800, header]
   - name: main

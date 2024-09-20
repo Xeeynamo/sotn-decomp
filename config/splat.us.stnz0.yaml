@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: b10b9c2be721cf9cbed3aa94be468ba9e23bc68b
 segments:
   - name: stnz0
     type: code

@@ -24,6 +24,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: ea268a06a7eb7cd99928ba40e774577c4a1c504d
 segments:
   - name: dra
     type: code
