@@ -3,7 +3,9 @@
 // Pentagram, Bat Pentagram
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
+//  = {D_7B000_8017A040, D_7B000_8017A040};
 extern s32 g_HandId;
+//  = HAND_ID;
 #include "shared.h"
 #include "w_017_1.h"
 #include "w_017_2.h"
@@ -26,16 +28,140 @@ typedef struct {
     /* 0x24 */ u8 pad[8];
 } PrimWeapon017; /* size = 0x2C */
 
-extern Point16 D_7B000_8017A260[]; // sizeof(Point16) * 3 * (PrimCount - 1)
-extern SVECTOR D_7B000_8017B0F4[]; // sizeof(SVECTOR) * 4 * (PrimCount - 1)
-extern SVECTOR D_7B000_8017B10C[]; // sizeof(SVECTOR) * 4 * (PrimCount - 1)
-extern PrimWeapon017
-    D_7B000_8017B3F4[]; // sizeof(PrimWeapon017) * (PrimCount - 1)
+extern s16 D_7B000_8017A040[];
+//  = {
+//     COLOR16(0, 0, 0, 0),    COLOR16(27, 10, 0, 0),  COLOR16(27, 12, 2, 0),
+//     COLOR16(28, 15, 5, 0),  COLOR16(28, 18, 8, 0),  COLOR16(29, 20, 11, 0),
+//     COLOR16(29, 23, 14, 0), COLOR16(30, 26, 17, 0), COLOR16(2, 2, 1, 0),
+//     COLOR16(5, 4, 1, 0),    COLOR16(9, 7, 2, 0),    COLOR16(14, 10, 2, 0),
+//     COLOR16(18, 13, 3, 0),  COLOR16(22, 16, 3, 0),  COLOR16(27, 20, 4, 0),
+//     COLOR16(3, 1, 13, 0),   COLOR16(0, 0, 0, 0),    COLOR16(27, 10, 0, 0),
+//     COLOR16(27, 12, 2, 0),  COLOR16(28, 15, 5, 0),  COLOR16(28, 18, 8, 0),
+//     COLOR16(29, 20, 11, 0), COLOR16(29, 23, 14, 0), COLOR16(30, 26, 17, 0),
+//     COLOR16(2, 2, 1, 0),    COLOR16(5, 4, 1, 0),    COLOR16(9, 7, 2, 0),
+//     COLOR16(14, 10, 2, 0),  COLOR16(18, 13, 3, 0),  COLOR16(22, 16, 3, 0),
+//     COLOR16(27, 20, 4, 0),  COLOR16(8, 0, 20, 0),   COLOR16(0, 0, 0, 0),
+//     COLOR16(13, 5, 8, 0),   COLOR16(14, 5, 9, 0),   COLOR16(15, 6, 10, 0),
+//     COLOR16(16, 7, 12, 0),  COLOR16(17, 8, 13, 0),  COLOR16(18, 9, 14, 0),
+//     COLOR16(19, 10, 16, 0), COLOR16(3, 3, 1, 0),    COLOR16(6, 5, 1, 0),
+//     COLOR16(10, 8, 2, 0),   COLOR16(15, 11, 2, 0),  COLOR16(19, 14, 3, 0),
+//     COLOR16(23, 17, 3, 0),  COLOR16(28, 21, 4, 0),  COLOR16(1, 1, 3, 0),
+//     COLOR16(0, 0, 0, 0),    COLOR16(13, 5, 8, 0),   COLOR16(14, 5, 9, 0),
+//     COLOR16(15, 6, 10, 0),  COLOR16(16, 7, 12, 0),  COLOR16(17, 8, 13, 0),
+//     COLOR16(18, 9, 14, 0),  COLOR16(19, 10, 16, 0), COLOR16(3, 3, 1, 0),
+//     COLOR16(6, 5, 1, 0),    COLOR16(10, 8, 2, 0),   COLOR16(15, 11, 2, 0),
+//     COLOR16(19, 14, 3, 0),  COLOR16(23, 17, 3, 0),  COLOR16(28, 21, 4, 0),
+//     COLOR16(3, 0, 13, 0),   COLOR16(0, 0, 0, 0),    COLOR16(27, 10, 0, 0),
+//     COLOR16(27, 12, 2, 0),  COLOR16(28, 15, 5, 0),  COLOR16(28, 18, 8, 0),
+//     COLOR16(29, 20, 11, 0), COLOR16(29, 23, 14, 0), COLOR16(30, 26, 17, 0),
+//     COLOR16(2, 2, 1, 0),    COLOR16(5, 4, 1, 0),    COLOR16(9, 7, 2, 0),
+//     COLOR16(14, 10, 2, 0),  COLOR16(18, 13, 3, 0),  COLOR16(22, 16, 3, 0),
+//     COLOR16(27, 20, 4, 0),  COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 0),
+//     COLOR16(27, 10, 0, 0),  COLOR16(27, 12, 2, 0),  COLOR16(28, 15, 5, 0),
+//     COLOR16(28, 18, 8, 0),  COLOR16(29, 20, 11, 0), COLOR16(29, 23, 14, 0),
+//     COLOR16(30, 26, 17, 0), COLOR16(2, 2, 1, 0),    COLOR16(5, 4, 1, 0),
+//     COLOR16(9, 7, 2, 0),    COLOR16(14, 10, 2, 0),  COLOR16(18, 13, 3, 0),
+//     COLOR16(22, 16, 3, 0),  COLOR16(27, 20, 4, 0),  COLOR16(0, 0, 0, 0),
+//     COLOR16(0, 0, 0, 0),    COLOR16(13, 5, 8, 0),   COLOR16(14, 5, 9, 0),
+//     COLOR16(15, 6, 10, 0),  COLOR16(16, 7, 12, 0),  COLOR16(17, 8, 13, 0),
+//     COLOR16(18, 9, 14, 0),  COLOR16(19, 10, 16, 0), COLOR16(3, 3, 1, 0),
+//     COLOR16(6, 5, 1, 0),    COLOR16(10, 8, 2, 0),   COLOR16(15, 11, 2, 0),
+//     COLOR16(19, 14, 3, 0),  COLOR16(23, 17, 3, 0),  COLOR16(28, 21, 4, 0),
+//     COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 0),    COLOR16(13, 5, 8, 0),
+//     COLOR16(14, 5, 9, 0),   COLOR16(15, 6, 10, 0),  COLOR16(16, 7, 12, 0),
+//     COLOR16(17, 8, 13, 0),  COLOR16(18, 9, 14, 0),  COLOR16(19, 10, 16, 0),
+//     COLOR16(3, 3, 1, 0),    COLOR16(6, 5, 1, 0),    COLOR16(10, 8, 2, 0),
+//     COLOR16(15, 11, 2, 0),  COLOR16(19, 14, 3, 0),  COLOR16(23, 17, 3, 0),
+//     COLOR16(28, 21, 4, 0),  COLOR16(0, 0, 0, 0),    COLOR16(0, 0, 0, 0),
+//     COLOR16(0, 2, 0, 0),    COLOR16(0, 4, 0, 0),    COLOR16(0, 6, 0, 0),
+//     COLOR16(0, 8, 0, 0),    COLOR16(0, 10, 0, 0),   COLOR16(0, 12, 0, 0),
+//     COLOR16(0, 14, 0, 0),   COLOR16(0, 16, 0, 0),   COLOR16(0, 18, 0, 0),
+//     COLOR16(0, 20, 0, 0),   COLOR16(0, 22, 0, 0),   COLOR16(0, 24, 0, 0),
+//     COLOR16(0, 26, 0, 0),   COLOR16(0, 28, 0, 0),   COLOR16(0, 20, 0, 0),
+//     COLOR16(0, 0, 0, 0),    COLOR16(0, 2, 0, 0),    COLOR16(0, 4, 0, 0),
+//     COLOR16(0, 6, 0, 0),    COLOR16(0, 8, 0, 0),    COLOR16(0, 10, 0, 0),
+//     COLOR16(0, 12, 0, 0),   COLOR16(0, 14, 0, 0),   COLOR16(0, 16, 0, 0),
+//     COLOR16(0, 18, 0, 0),   COLOR16(0, 20, 0, 0),   COLOR16(0, 22, 0, 0),
+//     COLOR16(0, 24, 0, 0),   COLOR16(0, 26, 0, 0),   COLOR16(0, 28, 0, 0),
+//     COLOR16(0, 20, 0, 0),   COLOR16(0, 0, 0, 0),    COLOR16(0, 2, 0, 0),
+//     COLOR16(0, 4, 0, 0),    COLOR16(0, 6, 0, 0),    COLOR16(0, 8, 0, 0),
+//     COLOR16(0, 10, 0, 0),   COLOR16(0, 12, 0, 0),   COLOR16(0, 14, 0, 0),
+//     COLOR16(0, 16, 0, 0),   COLOR16(0, 18, 0, 0),   COLOR16(0, 20, 0, 0),
+//     COLOR16(0, 22, 0, 0),   COLOR16(0, 24, 0, 0),   COLOR16(0, 26, 0, 0),
+//     COLOR16(0, 28, 0, 0),   COLOR16(0, 18, 0, 0),   COLOR16(0, 0, 0, 0),
+//     COLOR16(0, 2, 0, 0),    COLOR16(0, 4, 0, 0),    COLOR16(0, 6, 0, 0),
+//     COLOR16(0, 8, 0, 0),    COLOR16(0, 10, 0, 0),   COLOR16(0, 12, 0, 0),
+//     COLOR16(0, 14, 0, 0),   COLOR16(0, 16, 0, 0),   COLOR16(0, 18, 0, 0),
+//     COLOR16(0, 20, 0, 0),   COLOR16(0, 22, 0, 0),   COLOR16(0, 24, 0, 0),
+//     COLOR16(0, 26, 0, 0),   COLOR16(0, 28, 0, 0),   COLOR16(0, 16, 0, 0),
+//     COLOR16(0, 0, 0, 0),    COLOR16(0, 2, 0, 0),    COLOR16(0, 4, 0, 0),
+//     COLOR16(0, 6, 0, 0),    COLOR16(0, 8, 0, 0),    COLOR16(0, 10, 0, 0),
+//     COLOR16(0, 12, 0, 0),   COLOR16(0, 14, 0, 0),   COLOR16(0, 16, 0, 0),
+//     COLOR16(0, 18, 0, 0),   COLOR16(0, 20, 0, 0),   COLOR16(0, 22, 0, 0),
+//     COLOR16(0, 24, 0, 0),   COLOR16(0, 26, 0, 0),   COLOR16(0, 28, 0, 0),
+//     COLOR16(0, 14, 0, 0),   COLOR16(0, 0, 0, 0),    COLOR16(0, 2, 0, 0),
+//     COLOR16(0, 4, 0, 0),    COLOR16(0, 6, 0, 0),    COLOR16(0, 8, 0, 0),
+//     COLOR16(0, 10, 0, 0),   COLOR16(0, 12, 0, 0),   COLOR16(0, 14, 0, 0),
+//     COLOR16(0, 16, 0, 0),   COLOR16(0, 18, 0, 0),   COLOR16(0, 20, 0, 0),
+//     COLOR16(0, 22, 0, 0),   COLOR16(0, 24, 0, 0),   COLOR16(0, 26, 0, 0),
+//     COLOR16(0, 28, 0, 0),   COLOR16(0, 12, 0, 0),   COLOR16(0, 0, 0, 0),
+//     COLOR16(0, 2, 0, 0),    COLOR16(0, 4, 0, 0),    COLOR16(0, 6, 0, 0),
+//     COLOR16(0, 8, 0, 0),    COLOR16(0, 10, 0, 0),   COLOR16(0, 12, 0, 0),
+//     COLOR16(0, 14, 0, 0),   COLOR16(0, 16, 0, 0),   COLOR16(0, 18, 0, 0),
+//     COLOR16(0, 20, 0, 0),   COLOR16(0, 22, 0, 0),   COLOR16(0, 24, 0, 0),
+//     COLOR16(0, 26, 0, 0),   COLOR16(0, 28, 0, 0),   COLOR16(0, 10, 0, 0),
+//     COLOR16(0, 0, 0, 0),    COLOR16(0, 2, 0, 0),    COLOR16(0, 4, 0, 0),
+//     COLOR16(0, 6, 0, 0),    COLOR16(0, 8, 0, 0),    COLOR16(0, 10, 0, 0),
+//     COLOR16(0, 12, 0, 0),   COLOR16(0, 14, 0, 0),   COLOR16(0, 16, 0, 0),
+//     COLOR16(0, 18, 0, 0),   COLOR16(0, 20, 0, 0),   COLOR16(0, 22, 0, 0),
+//     COLOR16(0, 24, 0, 0),   COLOR16(0, 26, 0, 0),   COLOR16(0, 28, 0, 0),
+//     COLOR16(0, 8, 0, 0),    COLOR16(0, 0, 0, 0),    COLOR16(0, 2, 0, 0),
+//     COLOR16(0, 4, 0, 0),    COLOR16(0, 6, 0, 0),    COLOR16(0, 8, 0, 0),
+//     COLOR16(0, 10, 0, 0),   COLOR16(0, 12, 0, 0),   COLOR16(0, 14, 0, 0),
+//     COLOR16(0, 16, 0, 0),   COLOR16(0, 18, 0, 0),   COLOR16(0, 20, 0, 0),
+//     COLOR16(0, 22, 0, 0),   COLOR16(0, 24, 0, 0),   COLOR16(0, 26, 0, 0),
+//     COLOR16(0, 28, 0, 0),   COLOR16(0, 6, 0, 0)};
+
+extern Point16 D_7B000_8017A260[24][3];
+//  = {
+//     {{0x40, 0x40}, {0x50, 0x20}, {0x60, 0x40}}, // 0
+//     {{0x50, 0x20}, {0x60, 0x09}, {0x77, 0x20}}, // 1
+//     {{0x50, 0x20}, {0x77, 0x20}, {0x60, 0x40}}, // 2
+//     {{0x60, 0x40}, {0x77, 0x20}, {0x7f, 0x40}}, // 3
+//     {{0x40, 0x40}, {0x30, 0x20}, {0x50, 0x20}}, // 4
+//     {{0x30, 0x20}, {0x20, 0x09}, {0x40, 0x00}}, // 5
+//     {{0x30, 0x20}, {0x40, 0x00}, {0x50, 0x20}}, // 6
+//     {{0x50, 0x20}, {0x40, 0x00}, {0x60, 0x09}}, // 7
+//     {{0x40, 0x40}, {0x20, 0x40}, {0x30, 0x20}}, // 8
+//     {{0x20, 0x40}, {0x00, 0x40}, {0x09, 0x20}}, // 9
+//     {{0x20, 0x40}, {0x09, 0x20}, {0x30, 0x20}}, // 10
+//     {{0x30, 0x20}, {0x09, 0x20}, {0x20, 0x09}}, // 11
+//     {{0x40, 0x40}, {0x30, 0x60}, {0x20, 0x40}}, // 12
+//     {{0x30, 0x60}, {0x20, 0x77}, {0x09, 0x60}}, // 13
+//     {{0x30, 0x60}, {0x09, 0x60}, {0x20, 0x40}}, // 14
+//     {{0x20, 0x40}, {0x09, 0x60}, {0x00, 0x40}}, // 15
+//     {{0x40, 0x40}, {0x50, 0x60}, {0x30, 0x60}}, // 16
+//     {{0x50, 0x60}, {0x60, 0x77}, {0x40, 0x7f}}, // 17
+//     {{0x50, 0x60}, {0x40, 0x7f}, {0x30, 0x60}}, // 18
+//     {{0x30, 0x60}, {0x40, 0x7f}, {0x20, 0x77}}, // 19
+//     {{0x40, 0x40}, {0x60, 0x40}, {0x50, 0x60}}, // 20
+//     {{0x60, 0x40}, {0x7f, 0x40}, {0x77, 0x60}}, // 21
+//     {{0x60, 0x40}, {0x77, 0x60}, {0x50, 0x60}}, // 22
+//     {{0x50, 0x60}, {0x77, 0x60}, {0x60, 0x77}}, // 23
+// };
+
+extern Point16 unused_8017A380[];
+//  = {
+//     {0x60, 0x48}, {0x20, 0x40}, {0x80, 0x48}, {0x20, 0x40},
+//     {0, 0},       {0x1, 0},     {0, 0},       {-1, 0}};
+
+extern SVECTOR D_7B000_8017B0F4[LEN(D_7B000_8017A260) * 4];
+extern PrimWeapon017 D_7B000_8017B3F4[LEN(D_7B000_8017A260)];
 
 void EntityWeaponAttack(Entity* self) {
     const int PrimCount = 25;
     PrimWeapon017* dest;
-    Point16* coords;
+    Point16* tri_point;
     SVECTOR* vectors;
     Primitive* prim;
 
@@ -84,19 +210,19 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.lifetime = 24;
 
         vectors = D_7B000_8017B0F4;
-        coords = D_7B000_8017A260;
+        tri_point = D_7B000_8017A260;
 
         for (i = 0; i < (PrimCount - 1); i++) {
-            x = (coords[0].x + coords[1].x + coords[2].x) / 3;
-            y = (coords[0].y + coords[1].y + coords[2].y) / 3;
+            x = (tri_point[0].x + tri_point[1].x + tri_point[2].x) / 3;
+            y = (tri_point[0].y + tri_point[1].y + tri_point[2].y) / 3;
 
             for (j = 0; j < 3; j++) {
-                vectors->vx = coords->x - x;
-                vectors->vy = coords->y - y;
+                vectors->vx = tri_point->x - x;
+                vectors->vy = tri_point->y - y;
                 vectors->vz = 0;
 
                 vectors++;
-                coords++;
+                tri_point++;
             }
 
             vectors->vx = x - 0x40;
@@ -132,18 +258,18 @@ void EntityWeaponAttack(Entity* self) {
         prim = prim->next;
 
         vectors = D_7B000_8017B0F4;
-        coords = D_7B000_8017A260;
+        tri_point = D_7B000_8017A260;
 
         for (i = 0; i < (PrimCount - 1); i++) {
-            prim->u0 = coords[0].x + uOffset;
-            prim->v0 = coords[0].y + vOffset;
-            prim->u1 = coords[1].x + uOffset;
-            prim->v1 = coords[1].y + vOffset;
-            prim->u2 = coords[2].x + uOffset;
-            prim->v2 = coords[2].y + vOffset;
+            prim->u0 = tri_point[0].x + uOffset;
+            prim->v0 = tri_point[0].y + vOffset;
+            prim->u1 = tri_point[1].x + uOffset;
+            prim->v1 = tri_point[1].y + vOffset;
+            prim->u2 = tri_point[2].x + uOffset;
+            prim->v2 = tri_point[2].y + vOffset;
 
             vectors += 4;
-            coords += 3;
+            tri_point += 3;
 
             prim->clut = clut;
             prim->tpage = 0x19;
@@ -164,7 +290,7 @@ void EntityWeaponAttack(Entity* self) {
         if (--self->ext.weapon.lifetime == 0) {
             self->hitboxState = 0;
 
-            vectors = D_7B000_8017B10C;
+            vectors = &D_7B000_8017B0F4[3];
             dest = D_7B000_8017B3F4;
 
             for (i = 0; i < (PrimCount - 1); i++) {
