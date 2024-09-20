@@ -8,24 +8,27 @@
 const char* g_RelicOrbTexts[] = {
     "を入手した"
 };
-u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
-u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
+s16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
+s16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+s16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
 
 extern u16 g_InitializeData0[];
 extern u16 D_801C00B0[0x600];
 
 void BlinkItem(Entity* entity, u16 blinkFlag);
-void func_801B7308(Entity* self) {
+void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
     const int MaxItemSlots = LEN(g_ItemIconSlots);
 
     u16 relicId;
+#if defined(VERSION_PSP)
+    u16 isObtainedTextStored;
+#else
     bool isObtainedTextStored;
-    Equipment* relic;
+#endif
     RECT rect;
     Primitive* prim;
     const char* msg;
@@ -33,12 +36,15 @@ void func_801B7308(Entity* self) {
     s16 iconSlot;
     s32 i;
     u8* chPix;
+    u16 var_s8;
     u16 msgLen;
-    
 
     // unnamed variables
     u8* var_v0_5;
     u16 var_s2;
+    #if defined(VERSION_PSP)
+    const char sp34[0x100];
+    #endif
 
     u16 vramX;
     u16* chPixSrc;
@@ -47,15 +53,16 @@ void func_801B7308(Entity* self) {
     s16 left, top, right, bottom;
 
     relicId = self->params & 0x7FFF;
-    if (self->step > 0 && self->step < 5 && self->hitFlags != 0) {
+    if (self->step && self->step < 5 && self->hitFlags) {
         self->step = 5;
     }
 
     switch (self->step) {
-    case 0: //asm 88
+    case 0:
+
         InitializeEntity(g_InitializeData0);
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
-            if (g_ItemIconSlots[iconSlot] == 0) {
+            if (!g_ItemIconSlots[iconSlot]) {
                 break;
             }
         }
@@ -70,12 +77,9 @@ void func_801B7308(Entity* self) {
             self->step = 0;
             return;
         }
-
-        self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
-
-        relic = &g_api.equipDefs[relicId];
-        g_api.LoadEquipIcon(relic->icon, relic->iconPalette, iconSlot);
+        self->primIndex = primIndex;
+        g_api.LoadEquipIcon(g_api.equipDefs[relicId].icon, g_api.equipDefs[relicId].iconPalette, iconSlot);
         prim = &g_PrimBuf[primIndex];
         for (i = 0; prim != NULL; i++) {
             if (i != 0) {
@@ -95,9 +99,10 @@ void func_801B7308(Entity* self) {
             prim->priority = 0xC0;
             prim = prim->next;
         }
+
         break;
-    
-    case 5: // asm 224
+
+    case 5:
         g_api.PlaySfx(0x618);
 
         g_Status.relics[relicId] = 3;
@@ -114,15 +119,16 @@ void func_801B7308(Entity* self) {
         for (i = 0; prim != NULL; prim = prim->next, i++) {
             if (i == 0) {
                 prim->type = PRIM_SPRT;
-                prim->y0 = 0xA0;
-                prim->u1 = 0xF0;
-                prim->clut = 0x1F8;
-                prim->priority = 0x1FE;
                 prim->tpage = 0x10;
                 prim->x0 = 0x10;
+                prim->y0 = 0xA0;
                 prim->u0 = 0;
                 prim->v0 = 0;
+                prim->u1 = 0xF0;
                 prim->v1 = 0x10;
+                prim->clut = 0x1F8;
+                prim->priority = 0x1FE;
+                
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0x80;
@@ -144,7 +150,7 @@ void func_801B7308(Entity* self) {
         self->step++;
         break;
 
-    case 6: // asm 3a8
+    case 6:
         msgLen = 0;
         isObtainedTextStored = false;
         vramX = 0;
@@ -176,22 +182,21 @@ void func_801B7308(Entity* self) {
         self->ext.relicOrb.unk7C = 0;
         self->step++;
         break;
-
-    case 7: //asm 4b4
+    case 7:
         // Animates the blue/green rectangle for the Obtain text bg
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
         for (i = 0; prim != NULL; prim = prim->next, i++) {
             if (i == 0) {
-                prim->x2 = prim->x2 - 3;
-                prim->x3 = prim->x3 + 3;
-                prim->y0 = prim->y1 = prim->y1 - 4;
-                prim->y2 = prim->y3 = prim->y3 + 2;
+                prim->x2 -= 3;
+                prim->x3 += 3;
+                prim->y0 = prim->y1 -= 4;
+                prim->y2 = prim->y3 += 2;
             } else {
-                prim->x0 = prim->x0 - 3;
-                prim->x1 = prim->x1 + 3;
-                prim->y0 = prim->y1 = prim->y1 - 2;
-                prim->y2 = prim->y3 = prim->y3 + 4;
+                prim->x0 -= 3;
+                prim->x1 += 3;
+                prim->y0 = prim->y1 -= 2;
+                prim->y2 = prim->y3 += 4;
             }
         }
 
@@ -201,7 +206,7 @@ void func_801B7308(Entity* self) {
         }
         break;
 
-    case 8: //asm 56c
+    case 8:
         var_s2 = self->ext.relicOrb.unk7C;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
@@ -213,7 +218,7 @@ void func_801B7308(Entity* self) {
                 prim->x3 = 0x98 - (var_s2 * 0x78) / 7;
                 prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[var_s2] + 0xA7;
                 prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[var_s2] + 0xA7;
-                prim->b2 = prim->b3 = prim->b3 - 0x10;
+                prim->b2 = prim->b3 -= 0x10;
             } else {
                 prim->x0 = 0x68 + (var_s2 * 0x78) / 7;
                 prim->x1 = 0x98 - (var_s2 * 0x78) / 7;
@@ -221,17 +226,17 @@ void func_801B7308(Entity* self) {
                 prim->x2 = 0x80 + (var_s2 + 1) * 0xC;
                 prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[var_s2] + 0xA7;
                 prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[var_s2] + 0xA7;
-                prim->g0 = prim->g1 = prim->g1 - 0x10;
+                prim->g0 = prim->g1 -= 0x10;
             }
         }
 
         if (++self->ext.relicOrb.unk7C == 8) {
-            self->ext.relicOrb.unk7C = 0;
             self->step++;
+            self->ext.relicOrb.unk7C = 0;
         }
         break;
 
-    case 9: //asm 6ec
+    case 9:
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
         prim->drawMode = DRAW_DEFAULT;
