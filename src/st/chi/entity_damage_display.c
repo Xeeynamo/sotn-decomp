@@ -405,7 +405,46 @@ void func_801A273C(void) {
         entity->velocityY += FIX(0.125);
     }
 }
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A27C0);    // [Duplicate]
+// [Duplicate]
+// func_801A27C0
+void func_801A27C0(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        func_801A273C();
+    }
+}
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A291C);    // CollectHeart()
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A299C);    // CollectGold()
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A2A78);    // CollectSubweapon()
