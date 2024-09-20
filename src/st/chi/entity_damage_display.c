@@ -343,7 +343,43 @@ s32 func_801A20C0(u16* hitSensors, s16 sensorCount) {
 #include "../check_field_collision.h"
 #include "../get_player_collision_with.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A2684);    // ReplaceBreakableWithItemDrop()
+// [Duplicate]
+// [Migrate to common file once func_801A2CAC is EntityPrizeDrop and func_801A36C0 is EntityEquipItemDrop?]
+// func_801A2684
+void func_801A2CAC(void);
+void func_801A36C0(void);
+
+void ReplaceBreakableWithItemDrop(Entity* self) {
+    u16 params;
+
+    PreventEntityFromRespawning(self);
+
+#if STAGE != STAGE_ST0
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
+        DestroyEntity(self);
+        return;
+    }
+#endif
+
+    params = self->params &= 0xFFF;
+
+    if (params < 0x80) {
+        self->entityId = E_PRIZE_DROP;
+        //self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
+        self->pfnUpdate = (PfnEntityUpdate)func_801A2CAC;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
+    } else {
+        self->entityId = E_EQUIP_ITEM_DROP;
+        //self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
+        self->pfnUpdate = (PfnEntityUpdate)func_801A36C0;
+        params -= 0x80;
+    }
+
+    self->params = params;
+    self->unk6D[0] = 0x10;
+    self->step = 0;
+}
 //#include "../replace_breakable_with_item_drop.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A273C);    // [Duplicate]
