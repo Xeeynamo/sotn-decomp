@@ -260,7 +260,8 @@ u16 func_801A1C90(s16 x, s16 y) {
 #include "../adjust_value_within_threshold.h"
 #include "../unk_entity_func0.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1DBC);    // [Duplicate]
+// [Duplicate]
+u16 func_801A1DBC(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 #include "../get_angle_between_entities.h"
 INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1E24);    // [Duplicate]
