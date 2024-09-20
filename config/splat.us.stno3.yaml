@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 5d06216b895ab5ff892c88b0d9eff67ff16e2bd1
 segments:
   - name: stno3
     type: code

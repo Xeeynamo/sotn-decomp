@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: e42976f45b47d1c4912a198ae486b77ee6d77c9c
 segments:
   - name: stdre
     type: code

@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: d076912661e67a38afae0a1b5044ab5f10bcfb39
 segments:
   - name: ric
     type: code
