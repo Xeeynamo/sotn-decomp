@@ -248,7 +248,14 @@ u8 func_801A1C48(Entity* arg0, Entity* arg1) {
     return func_801A1C10(x, y);
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/entity_damage_display", func_801A1C90);    // [Duplicate]
+// [Duplicate]
+// [Duplicate of func_801A1E24]
+u16 func_801A1C90(s16 x, s16 y) {
+    x -= g_CurrentEntity->posX.i.hi;
+    y -= g_CurrentEntity->posY.i.hi;
+
+    return func_801A1C10(x, y);
+}
 
 #include "../adjust_value_within_threshold.h"
 #include "../unk_entity_func0.h"
