@@ -980,9 +980,11 @@ def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
         right_matchings_path = f"asm/us/{make_dst_path(ovl_name)}/matchings"
     elif is_stage(ovl_name) or is_boss(ovl_name):
         # pick NZ0 as the most complete overlay to cross-reference symbols
-        right_matchings_path = f"asm/us/{make_dst_path("nz0")}/matchings"
+        right_matchings_path = f"asm/us/{make_dst_path('nz0')}/matchings"
     else:
-        yowarning(f"cannot use any overlay similar to {version}/{ovl_name} to cross-reference")
+        yowarning(
+            f"cannot find a similar overlay to {version}/{ovl_name} to cross-reference"
+        )
         return
 
     left_nonmatchings_path = os.path.join(get_asm_path(splat_config), "nonmatchings")
