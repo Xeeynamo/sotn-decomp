@@ -58,13 +58,13 @@ void EntityRelicOrb(Entity* self) {
     const char sp34[0x100];
 #endif
 
-    // The unk7C variable matches different other variables
-    // in different versions. We use this as a hack to match everywhere.
-    #if STAGE == STAGE_ST0
-    #define orbUnk7C temp
-    #else
-    #define orbUnk7C var_s2
-    #endif
+// The unk7C variable matches different other variables
+// in different versions. We use this as a hack to match everywhere.
+#if STAGE == STAGE_ST0
+#define orbUnk7C temp
+#else
+#define orbUnk7C var_s2
+#endif
 
 #if defined(VERSION_BETA) || STAGE == STAGE_ST0
     u16 vramX;
@@ -303,31 +303,31 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
 #else
-        msgLen = 0;
-        temp = false;
-        msg = g_RelicOrbTexts[0];
-        chPix = g_Pix[0];
-        var_v0_5 = (u8*)chPix;
-        for (i = 0; i < 0xC00; i++) {
-            *var_v0_5++ = 0;
-        }
+    msgLen = 0;
+    temp = false;
+    msg = g_RelicOrbTexts[0];
+    chPix = g_Pix[0];
+    var_v0_5 = (u8*)chPix;
+    for (i = 0; i < 0xC00; i++) {
+        *var_v0_5++ = 0;
+    }
 
-        msgLen = 0;
-        while (true) {
-            if (*msg == 0) {
-                if (temp) {
-                    break;
-                }
-                msg = g_api.relicDefs[relicId].name;
-                temp = true;
-            } else {
-                msg = BlitChar(msg, &msgLen, chPix, 0xC0);
+    msgLen = 0;
+    while (true) {
+        if (*msg == 0) {
+            if (temp) {
+                break;
             }
+            msg = g_api.relicDefs[relicId].name;
+            temp = true;
+        } else {
+            msg = BlitChar(msg, &msgLen, chPix, 0xC0);
         }
+    }
 
-        LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
-        self->ext.relicOrb.unk7C = 0;
-        self->ext.relicOrb.unk7E = msgLen;
+    LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
+    self->ext.relicOrb.unk7C = 0;
+    self->ext.relicOrb.unk7E = msgLen;
 #endif
         self->step++;
         break;
@@ -363,7 +363,11 @@ void EntityRelicOrb(Entity* self) {
         orbUnk7C = self->ext.relicOrb.unk7C;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
+#if STAGE == STAGE_ST0
         for (i = 0; prim != NULL; prim = prim->next, i++) {
+#else
+        for (i = 0; i < 3; prim = prim->next, i++) {
+#endif
             if (i == 0) {
                 prim->x1 = 0x80 - (orbUnk7C + 1) * 0xC;
                 prim->x0 = 0x80 + (orbUnk7C + 1) * 0xC;
@@ -434,10 +438,10 @@ void EntityRelicOrb(Entity* self) {
                     prim->b3 = 128;
         }
 #else
-        BlinkItem(self, g_Timer);
-        prim = &g_PrimBuf[self->primIndex];
+    BlinkItem(self, g_Timer);
+    prim = &g_PrimBuf[self->primIndex];
 #endif
-    #if STAGE != STAGE_ST0
+#if STAGE != STAGE_ST0
         // Animates the four sparkles while the relic is floating
         for (i = 0; i < 3; i++) { // Skip the first three primitives
             prim = prim->next;
