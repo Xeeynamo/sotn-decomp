@@ -160,6 +160,7 @@ void EntityRelicOrb(Entity* self) {
         break;
 #endif
     case 5:
+#if STAGE != STAGE_ST0
         g_api.func_800FE044(relicId, 0x2000);
 #if !defined(VERSION_BETA)
         msg = g_api.relicDefs[relicId].name;
@@ -168,7 +169,11 @@ void EntityRelicOrb(Entity* self) {
         }
 #endif
         self->flags |= FLAG_UNK_10000;
+#else
+        g_api.PlaySfx(SFX_UNK_618);
 
+        g_Status.relics[relicId] = 3;
+#endif
         // Reserve space in the VRAM to store the pre-render texture with the
         // "obtained" relic message
         rect.x = 0;
