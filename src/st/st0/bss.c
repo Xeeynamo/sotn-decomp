@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <types.h>
 
-u16 D_801C00B0[768];
+u16 msgBoxTpage[768];
 u32 D_801C06B0[4];
 u32 D_801C06C0[1346];
 u16 D_801C1BC8;

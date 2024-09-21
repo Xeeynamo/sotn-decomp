@@ -18,7 +18,7 @@ u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
 extern u16 g_InitializeData0[];
-extern u16 D_801997E8[0x600];
+extern u16 msgBoxTpage[0x600];
 
 void BlinkItem(Entity* entity, u16 blinkFlag);
 void EntityRelicOrb(Entity* self) {
@@ -269,11 +269,11 @@ void EntityRelicOrb(Entity* self) {
                 ch = (ch << 8) | *msg++;
                 chPixSrc = g_api_func_80106A28(ch, 1);
                 if (chPixSrc != NULL) {
-                    chPixDst = &D_801997E8[msgLen * 0x30];
+                    chPixDst = &msgBoxTpage[msgLen * 0x30];
                     for (i = 0; i < 0x30; i++) {
                         *chPixDst++ = *chPixSrc++;
                     }
-                    LoadTPage(&D_801997E8[msgLen * 0x30], 0, 0, vramX, 0x100,
+                    LoadTPage(&msgBoxTpage[msgLen * 0x30], 0, 0, vramX, 0x100,
                               0xC, 0x10);
                     vramX += 3;
                     msgLen++;

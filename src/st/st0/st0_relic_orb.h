@@ -17,7 +17,8 @@ u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
-extern u16 D_801C00B0[0x600];
+extern u16 g_InitializeData0[];
+extern u16 msgBoxTpage[0x600];
 
 void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
@@ -159,11 +160,11 @@ void EntityRelicOrb(Entity* self) {
                 ch = (ch << 8) | *msg++;
                 chPixSrc = g_api.func_80106A28(ch, 1);
                 if (chPixSrc != NULL) {
-                    chPixDst = &D_801C00B0[msgLen * 0x30];
+                    chPixDst = &msgBoxTpage[msgLen * 0x30];
                     for (i = 0; i < 0x30; i++) {
                         *chPixDst++ = *chPixSrc++;
                     }
-                    LoadTPage(&D_801C00B0[msgLen * 0x30], 0, 0, vramX, 0x100,
+                    LoadTPage(&msgBoxTpage[msgLen * 0x30], 0, 0, vramX, 0x100,
                               0xC, 0x10);
                     vramX += 3;
                     msgLen++;
