@@ -215,9 +215,9 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if (self->params) {
-            bit_shifty = CutsceneUnk2(D_80181B65) & 0xFF;
+            bit_shifty = CutsceneUnk2(D_80181B65);
         } else {
-            bit_shifty = CutsceneUnk2(D_801816C8) & 0xFF;
+            bit_shifty = CutsceneUnk2(D_801816C8);
         }
         if (bit_shifty) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;

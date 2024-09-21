@@ -238,7 +238,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (CutsceneUnk2(D_801813F0) & 0xFF) {
+        if (CutsceneUnk2(D_801813F0)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             D_8003C704 = 1;
             g_CutsceneFlags = 0;
