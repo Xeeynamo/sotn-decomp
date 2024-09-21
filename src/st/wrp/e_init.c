@@ -2,7 +2,7 @@
 #include "wrp.h"
 #include "../st_private.h"
 
-void func_80186FD0(Entity*);
+void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
@@ -17,7 +17,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityEquipItemDrop, EntityRelicOrb,       EntityHeartDrop,
     EntityEnemyBlood,    EntityMessageBox,     EntityDummy,
     EntityDummy,
-    func_80186FD0, // unused
+    EntityBackgroundBlock, // unused
     EntityUnkId12, // unused? looks debugging stuff
     EntityUnkId13,       EntityUnkId14,        EntityUnkId15,
     EntityWarpRoom,      EntityWarpSmallRocks,

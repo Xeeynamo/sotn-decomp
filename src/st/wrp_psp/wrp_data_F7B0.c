@@ -7,7 +7,7 @@ u16 g_eRedDoorTiles[][8] = {
 };
 
 void EntityDamageDisplay(Entity*);
-void func_80186FD0(Entity*);
+void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityWarpRoom(Entity*);
@@ -31,7 +31,7 @@ PfnEntityUpdate D_psp_09246E30[] = {
     /* 418 */ (PfnEntityUpdate)EntityMessageBox,
     /* 41C */ (PfnEntityUpdate)EntityDummy,
     /* 420 */ (PfnEntityUpdate)EntityDummy,
-    /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
+    /* 424 */ (PfnEntityUpdate)EntityBackgroundBlock, // unused
     /* 428 */ (PfnEntityUpdate)EntityUnkId12, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)EntityUnkId13,
     /* 430 */ (PfnEntityUpdate)EntityUnkId14,

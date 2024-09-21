@@ -25,7 +25,7 @@ extern ObjInit D_801804E0[];
 extern u16 g_eInitGeneric2[];
 extern u16 g_EntityUnkId12Init[];
 
-void func_80186FD0(Entity* self) {
+void EntityBackgroundBlock(Entity* self) {
     ObjInit* objInit = &D_801804E0[self->params];
     if (!self->step) {
         InitializeEntity(g_eInitGeneric2);
