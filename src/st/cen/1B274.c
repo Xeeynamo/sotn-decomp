@@ -5,7 +5,7 @@
 
 #include "../entity_enemy_blood.h"
 
-void EntityUnkId08(Entity* entity) {
+void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &D_8018125C[entity->params];
 
     if (entity->step == 0) {
