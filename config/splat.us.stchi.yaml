@@ -57,8 +57,8 @@ segments:
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, .rodata, 1D1A8] # jtbl_8019B180 [1D1A8]
       - [0x1B194, .rodata, entity_damage_display] # jtbl_8019B194 [EntityRedDoor]
-      - [0x1B1AC, rodata]
-      - [0x1B1F4, rodata]
+      - [0x1B1AC, .rodata, 2291C] # CollectGold strings
+      - [0x1B1F8, rodata]
       - [0x1B1FC, rodata] # jtbl_8019B1FC
       - [0x1B21C, rodata] # jtbl_8019B21C
       - [0x1B234, rodata]
@@ -91,7 +91,6 @@ segments:
       - [0x2291C, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
-#      - [0x1B1F4, rodata, 22CAC]
 #      - [0x1B280, rodata, 2813C]
 #      - [0x1B304, rodata, 2B7CC]
 #      - [0x1B3C0, rodata, 2D2BC]
