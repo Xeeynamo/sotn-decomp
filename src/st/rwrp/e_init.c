@@ -11,29 +11,29 @@ void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate PfnEntityUpdates[] = {
-    /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
-    /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
-    /* 3EC */ (PfnEntityUpdate)EntityPrizeDrop,
-    /* 3F0 */ (PfnEntityUpdate)EntityDamageDisplay,
-    /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
-    /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
-    /* 3FC */ (PfnEntityUpdate)EntitySoulStealOrb,
-    /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
-    /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
-    /* 408 */ (PfnEntityUpdate)EntityEquipItemDrop,
-    /* 40C */ (PfnEntityUpdate)EntityRelicOrb,
-    /* 410 */ (PfnEntityUpdate)EntityHeartDrop,
-    /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
-    /* 418 */ (PfnEntityUpdate)EntityMessageBox,
-    /* 41C */ (PfnEntityUpdate)EntityDummy,
-    /* 420 */ (PfnEntityUpdate)EntityDummy,
-    /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
-    /* 428 */ (PfnEntityUpdate)EntityUnkId12, // unused? looks debugging stuff
-    /* 42C */ (PfnEntityUpdate)EntityUnkId13,
-    /* 430 */ (PfnEntityUpdate)EntityUnkId14,
-    /* 434 */ (PfnEntityUpdate)EntityUnkId15,
-    /* 438 */ (PfnEntityUpdate)EntityRWarpRoom,
-    /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
+    EntityBreakable,
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
+    EntityRedDoor,
+    EntityIntenseExplosion,
+    EntitySoulStealOrb,
+    EntityRoomForeground,
+    EntityStageNamePopup,
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
+    EntityEnemyBlood,
+    EntityMessageBox,
+    EntityDummy,
+    EntityDummy,
+    func_80186FD0, // unused
+    EntityUnkId12, // unused? looks debugging stuff
+    EntityUnkId13,
+    EntityUnkId14,
+    EntityUnkId15,
+    EntityRWarpRoom,
+    EntityWarpSmallRocks,
 };
 
 // *** Group here all the Entity Init ***
