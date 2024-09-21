@@ -68,6 +68,13 @@ void EntityRelicOrb(Entity* self) {
 
     switch (self->step) {
     case 0:
+    #if STAGE != STAGE_ST0
+        // If the relic was previously obtained, do not spawn it.
+        if (g_Status.relics[relicId] & RELIC_FLAG_FOUND) {
+            DestroyEntity(self);
+            return;
+        }
+    #endif
         InitializeEntity(g_InitializeData0);
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
             if (!g_ItemIconSlots[iconSlot]) {
