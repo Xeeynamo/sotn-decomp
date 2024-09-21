@@ -184,7 +184,11 @@ void EntityRelicOrb(Entity* self) {
         ClearImage(&rect, 0, 0, 0);
 
         prim = &g_PrimBuf[self->primIndex];
+#if STAGE == STAGE_ST0
         for (i = 0; prim != NULL; prim = prim->next, i++) {
+#else
+        for (i = 0; i < 3; prim = prim->next, i++) {
+#endif
             if (i == 0) {
                 prim->type = PRIM_SPRT;
                 prim->tpage = 0x10;
@@ -194,11 +198,17 @@ void EntityRelicOrb(Entity* self) {
                 prim->v0 = 0;
                 prim->u1 = 0xF0;
                 prim->v1 = 0x10;
+#if STAGE == STAGE_ST0
                 prim->clut = 0x1F8;
+#else
+                prim->clut = 0x1A1;
+#endif
                 prim->priority = 0x1FE;
-
                 prim->drawMode = DRAW_HIDE;
             } else {
+#if STAGE != STAGE_ST0
+                prim->type = PRIM_G4;
+#endif
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0x80;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 = 0xA7;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -287,31 +297,31 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7C = 0;
 #else
 
-        msgLen = 0;
-        temp = false;
-        msg = g_RelicOrbTexts[0];
-        chPix = g_Pix[0];
-        var_v0_5 = (u8*)chPix;
-        for (i = 0; i < 0xC00; i++) {
-            *var_v0_5++ = 0;
-        }
+    msgLen = 0;
+    temp = false;
+    msg = g_RelicOrbTexts[0];
+    chPix = g_Pix[0];
+    var_v0_5 = (u8*)chPix;
+    for (i = 0; i < 0xC00; i++) {
+        *var_v0_5++ = 0;
+    }
 
-        msgLen = 0;
-        while (true) {
-            if (*msg == 0) {
-                if (temp) {
-                    break;
-                }
-                msg = g_api.relicDefs[relicId].name;
-                temp = true;
-            } else {
-                msg = BlitChar(msg, &msgLen, chPix, 0xC0);
+    msgLen = 0;
+    while (true) {
+        if (*msg == 0) {
+            if (temp) {
+                break;
             }
+            msg = g_api.relicDefs[relicId].name;
+            temp = true;
+        } else {
+            msg = BlitChar(msg, &msgLen, chPix, 0xC0);
         }
+    }
 
-        LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
-        self->ext.relicOrb.unk7C = 0;
-        self->ext.relicOrb.unk7E = msgLen;
+    LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
+    self->ext.relicOrb.unk7C = 0;
+    self->ext.relicOrb.unk7E = msgLen;
 #endif
         self->step++;
         break;
