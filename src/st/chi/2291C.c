@@ -122,7 +122,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 // [Duplicate]
 // func_801A2B90
 #include "../collect_heart_vessel.h"
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C34);    // CollectLifeVessel()
+// [Duplicate]
+// func_801A2C34
+void CollectLifeVessel(void) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.func_800FE044(5, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
 INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C84);    // DestroyCurrentEntity()
 
 // POSSIBLE FILE BREAK
