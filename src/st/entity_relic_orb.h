@@ -22,6 +22,11 @@ extern u16 msgBoxTpage[0x600];
 
 void BlinkItem(Entity* entity, u16 blinkFlag);
 void EntityRelicOrb(Entity* self) {
+#if STAGE == STAGE_ST0
+    const int PrimCount = 3;
+#else
+    const int PrimCount = 7;
+#endif
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
@@ -87,7 +92,7 @@ void EntityRelicOrb(Entity* self) {
             return;
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
             self->step = 0;
             return;
