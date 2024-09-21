@@ -236,7 +236,7 @@ void EntityRelicOrb(Entity* self) {
                 msg = g_RelicOrbTexts[0];
             } else {
                 ch = (ch << 8) | *msg++;
-                chPixSrc = g_api_func_80106A28(ch, 1);
+                chPixSrc = g_api.func_80106A28(ch, 1);
                 if (chPixSrc != NULL) {
                     chPixDst = &D_801997E8[msgLen * 0x30];
                     for (i = 0; i < 0x30; i++) {
