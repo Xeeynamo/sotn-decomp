@@ -57,8 +57,8 @@ GetPlayerCollisionWith = 0x801A2340;
 // func_801A273C
 // func_801A27C0
 CollectHeart = 0x801A291C;
-//CollectSubweapon = 0x801A2A78;
 CollectGold = 0x801A299C;
+CollectSubweapon = 0x801A2A78;
 //CollectHeartVessel = 0x801A2B90;
 //CollectLifeVessel = 0x801A2C34;
 //DestroyCurrentEntity = 0x801A2C84;

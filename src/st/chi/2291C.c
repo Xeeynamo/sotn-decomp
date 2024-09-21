@@ -9,17 +9,17 @@
 //TODO: Use ../e_collect.h
 
 // Used in func_801A2A78
-u8 D_80181154[] = {
-    0x05, 0x6E, 0x05, 0x6F, 0x05, 0x70, 0x05, 0x71, 0x00, 0x00, 0x00, 0x00, 0x01, 0x8F, 0x00, 0x00,
-    0xFC, 0xFC, 0x04, 0xFC, 0xFC, 0x04, 0x04, 0x04, 0x80, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00,
-    0x04, 0x00, 0x03, 0x00, 0x06, 0x00, 0x05, 0x00, 0x07, 0x00, 0x08, 0x00, 0x09, 0x00, 0x00, 0x00
+u16 D_80181154[] = {
+    0x6E05, 0x6F05, 0x7005, 0x7105, 0x0000, 0x0000, 0x8F01, 0x0000,
+    0xFCFC, 0xFC04, 0x04FC, 0x0404, 0x0080, 0x0000, 0x0001, 0x0002,
+    0x0004, 0x0003, 0x0006, 0x0005, 0x0007, 0x0008, 0x0009, 0x0000
 };
 
 // Used in func_80xA2A78
 // Used in func_801A2CAC
-u8 D_80181184[] = {
-    0x00, 0x00, 0x0E, 0x00, 0x0F, 0x00, 0x11, 0x00, 0x10, 0x00, 0x13, 0x00, 0x12, 0x00, 0x14, 0x00,
-    0x15, 0x00, 0x16, 0x00
+u16 D_80181184[] = {
+    0x0000, 0x000E, 0x000F, 0x0011, 0x0010, 0x0013, 0x0012, 0x0014,
+    0x0015, 0x0016
 };
 
 const char* g_goldCollectTexts[] = {
@@ -85,7 +85,40 @@ u8 D_80181300[] = {
 // [Duplicate]
 // func_801A299C
 #include "../collect_gold.h"
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2A78);    // CollectSubweapon()
+// [Duplicate]
+// func_801A2A78
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80181154[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D[0] = 0x10;
+    } else {
+        subWeapon = D_80181184[subWeapon];
+        g_CurrentEntity->unk6D[0] = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
+        g_CurrentEntity->velocityY = FIX(-2.5);
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facingLeft != 1) {
+            g_CurrentEntity->velocityX = FIX(-2);
+            return;
+        }
+        g_CurrentEntity->velocityX = FIX(2);
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2B90);    // CollectHeartVessel()
 INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C34);    // CollectLifeVessel()
 INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C84);    // DestroyCurrentEntity()
