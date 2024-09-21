@@ -129,7 +129,9 @@ void CollectLifeVessel(void) {
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C84);    // DestroyCurrentEntity()
+// [Duplicate]
+// func_801A2C84
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 // POSSIBLE FILE BREAK
 
