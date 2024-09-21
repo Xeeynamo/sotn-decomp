@@ -3,14 +3,18 @@
 import argparse
 import concurrent.futures
 import hashlib
+import itertools
 import os
 import re
 import shutil
 import subprocess
 from typing import Callable
 import yaml
+import signal
 import struct
 import sys
+import threading
+import time
 
 from symbols import sort_symbols_from_file
 
@@ -35,12 +39,74 @@ def yowarning(s: str):
 
 
 def omgpanic(s: str):
+    spinner_stop(False)
     print(f"\033[1;31;m{s}\033[m", file=sys.stderr)
     exit(1)
 
 
 def align(n: int, alignment: int):
     return int((n + alignment - 1) / alignment) * alignment
+
+
+##### TTY UTILITY
+
+GREEN = "\033[92m"
+RED = "\033[91m"
+RESET = "\033[0m"
+BOLD = "\033[1m"
+
+spinner_running = False
+spinner_thread = None
+spinner_chars = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+spinner_msg = ""
+
+
+def tty_hide_cursor():
+    sys.stdout.write("\033[?25l")
+    sys.stdout.flush()
+
+
+def tty_show_cursor():
+    sys.stdout.write("\033[?25h")
+    sys.stdout.flush()
+
+
+def spinner_task():
+    global spinner_running, spinner_msg
+    tty_hide_cursor()
+    for char in itertools.cycle(spinner_chars):
+        if not spinner_running:
+            break
+        sys.stdout.write(f"\r{GREEN}{BOLD}{char}{RESET} {spinner_msg}")
+        sys.stdout.flush()
+        time.sleep(0.05)
+    sys.stdout.write("\r")  # Clear the spinner line
+    tty_show_cursor()
+
+
+def spinner_start(msg: str):
+    global spinner_running, spinner_thread, spinner_msg
+    if spinner_running == True:
+        spinner_stop(True)
+    spinner_msg = msg
+    spinner_running = True
+    spinner_thread = threading.Thread(target=spinner_task, args=())
+    spinner_thread.start()
+
+
+def spinner_stop(success: bool):
+    global spinner_running, spinner_thread, spinner_msg
+    if spinner_running == False:
+        return
+    spinner_running = False
+    spinner_thread.join()
+
+    # Show result with checkmark or cross
+    if success:
+        sys.stdout.write(f"{GREEN}{BOLD}✔{RESET} {spinner_msg}\n")
+    else:
+        sys.stdout.write(f"{RED}{BOLD}✖{RESET} {spinner_msg}\n")
+    sys.stdout.flush()
 
 
 ##### MIPS PARSING AND PATTERN SEARCH
@@ -345,7 +411,7 @@ def get_splat_config(
             "use_legacy_include_asm": False,
             "migrate_rodata_to_functions": True,
             "asm_jtbl_label_macro": "jlabel",
-            "symbol_name_format": f"{version}_$VRAM",
+            "symbol_name_format": f"{ver}_$VRAM",
             "section_order": section_order,
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
@@ -530,8 +596,6 @@ def find_dups(threshold, dir1, dir2) -> dict[str, str]:
         right = items[1].strip()
         if len(left) == 0 or len(right) == 0:
             continue
-        if right.find("func_") >= 0:  # ignore unnamed functions
-            continue
         pairs[left] = right
     return pairs
 
@@ -686,7 +750,7 @@ def get_symbol_table(splat_config, table):
     return [int(line, 16) for line in table]
 
 
-def add_symbol(splat_config, name: str, offset: int):
+def add_symbol(splat_config, version: str, name: str, offset: int):
     if offset == 0:
         return
 
@@ -712,110 +776,111 @@ def add_symbol(splat_config, name: str, offset: int):
             f.writelines(lines)
 
 
-def hydrate_stage_export_table_symbols(splat_config, export_table):
-    add_symbol(splat_config, "UpdateStageEntities", export_table[0])
-    add_symbol(splat_config, "TestCollisions", export_table[1])
-    add_symbol(splat_config, "UpdateTilemap", export_table[2])
-    add_symbol(splat_config, "InitRoomEntities", export_table[3])
-    add_symbol(splat_config, "g_Rooms", export_table[4])
-    add_symbol(splat_config, "g_SpriteBanks", export_table[5])
-    add_symbol(splat_config, "g_Cluts", export_table[6])
-    # add_symbol(splat_config, "NULL", export_table[7]) # ??????
-    add_symbol(splat_config, "g_TileLayers", export_table[8])
-    add_symbol(splat_config, "g_EntityGfxs", export_table[9])
-    add_symbol(splat_config, "UpdateStageEntitiesAlt", export_table[10])
-    add_symbol(splat_config, "g_SpriteBank1", export_table[11])
+def hydrate_stage_export_table_symbols(splat_config, version: str, export_table):
+    add_symbol(splat_config, version, "UpdateStageEntities", export_table[0])
+    add_symbol(splat_config, version, "TestCollisions", export_table[1])
+    add_symbol(splat_config, version, "UpdateTilemap", export_table[2])
+    add_symbol(splat_config, version, "InitRoomEntities", export_table[3])
+    add_symbol(splat_config, version, "g_Rooms", export_table[4])
+    add_symbol(splat_config, version, "g_SpriteBanks", export_table[5])
+    add_symbol(splat_config, version, "g_Cluts", export_table[6])
+    # add_symbol(splat_config, version, "NULL", export_table[7]) # ??????
+    add_symbol(splat_config, version, "g_TileLayers", export_table[8])
+    add_symbol(splat_config, version, "g_EntityGfxs", export_table[9])
+    add_symbol(splat_config, version, "UpdateStageEntitiesAlt", export_table[10])
+    add_symbol(splat_config, version, "g_SpriteBank1", export_table[11])
     if len(export_table) <= 12:
         return
-    add_symbol(splat_config, "g_SpriteBank2", export_table[12])
-    # add_symbol(splat_config, "unk34", export_table[13])
-    # add_symbol(splat_config, "unk38", export_table[14])
-    # add_symbol(splat_config, "unk3C", export_table[15])
+    add_symbol(splat_config, version, "g_SpriteBank2", export_table[12])
+    # add_symbol(splat_config, version, "unk34", export_table[13])
+    # add_symbol(splat_config, version, "unk38", export_table[14])
+    # add_symbol(splat_config, version, "unk3C", export_table[15])
 
 
-def hydrate_stage_entity_table_symbols(splat_config, export_table):
+def hydrate_stage_entity_table_symbols(splat_config, version: str, export_table):
     if len(export_table) > 15 and export_table[14] != export_table[15]:
         yowarning(
             f"cannot make assumption of 'EntityDummy' at 0x{export_table[14]:08X}\n"
             "entity symbols will not be hydrated."
         )
         return
-    add_symbol(splat_config, "EntityBreakable", export_table[0])
-    add_symbol(splat_config, "EntityExplosion", export_table[1])
-    add_symbol(splat_config, "EntityPrizeDrop", export_table[2])
-    add_symbol(splat_config, "EntityDamageDisplay", export_table[3])
-    add_symbol(splat_config, "EntityRedDoor", export_table[4])
-    add_symbol(splat_config, "EntityIntenseExplosion", export_table[5])
-    add_symbol(splat_config, "EntitySoulStealOrb", export_table[6])
-    add_symbol(splat_config, "EntityRoomForeground", export_table[7])
-    add_symbol(splat_config, "EntityStageNamePopup", export_table[8])
-    add_symbol(splat_config, "EntityEquipItemDrop", export_table[9])
-    add_symbol(splat_config, "EntityRelicOrb", export_table[10])
-    add_symbol(splat_config, "EntityHeartDrop", export_table[11])
-    add_symbol(splat_config, "EntityEnemyBlood", export_table[12])
-    add_symbol(splat_config, "EntityMessageBox", export_table[13])
-    add_symbol(splat_config, "EntityDummy", export_table[14])
+    add_symbol(splat_config, version, "EntityBreakable", export_table[0])
+    add_symbol(splat_config, version, "EntityExplosion", export_table[1])
+    add_symbol(splat_config, version, "EntityPrizeDrop", export_table[2])
+    add_symbol(splat_config, version, "EntityDamageDisplay", export_table[3])
+    add_symbol(splat_config, version, "EntityRedDoor", export_table[4])
+    add_symbol(splat_config, version, "EntityIntenseExplosion", export_table[5])
+    add_symbol(splat_config, version, "EntitySoulStealOrb", export_table[6])
+    add_symbol(splat_config, version, "EntityRoomForeground", export_table[7])
+    add_symbol(splat_config, version, "EntityStageNamePopup", export_table[8])
+    add_symbol(splat_config, version, "EntityEquipItemDrop", export_table[9])
+    add_symbol(splat_config, version, "EntityRelicOrb", export_table[10])
+    add_symbol(splat_config, version, "EntityHeartDrop", export_table[11])
+    add_symbol(splat_config, version, "EntityEnemyBlood", export_table[12])
+    add_symbol(splat_config, version, "EntityMessageBox", export_table[13])
+    add_symbol(splat_config, version, "EntityDummy", export_table[14])
 
 
-def hydrate_servant_symbols(splat_config, export_table):
+def hydrate_servant_symbols(splat_config, version: str, export_table):
     # TODO give a meaningful name to this stuff
-    # add_symbol(splat_config, "Init", export_table[0])
-    # add_symbol(splat_config, "Update", export_table[1])
-    # add_symbol(splat_config, "Unk08", export_table[2])
-    # add_symbol(splat_config, "Unk0C", export_table[3])
-    # add_symbol(splat_config, "Unk10", export_table[4])
-    # add_symbol(splat_config, "Unk14", export_table[5])
-    # add_symbol(splat_config, "Unk18", export_table[6])
-    # add_symbol(splat_config, "Unk1C", export_table[7])
-    # add_symbol(splat_config, "Unk20", export_table[8])
-    # add_symbol(splat_config, "Unk24", export_table[9])
-    # add_symbol(splat_config, "Unk28", export_table[10])
-    # add_symbol(splat_config, "Unk2C", export_table[11])
-    # add_symbol(splat_config, "Unk30", export_table[12])
-    # add_symbol(splat_config, "Unk34", export_table[13])
-    # add_symbol(splat_config, "Unk38", export_table[14])
-    # add_symbol(splat_config, "Unk3C", export_table[15])
+    # add_symbol(splat_config, version, "Init", export_table[0])
+    # add_symbol(splat_config, version, "Update", export_table[1])
+    # add_symbol(splat_config, version, "Unk08", export_table[2])
+    # add_symbol(splat_config, version, "Unk0C", export_table[3])
+    # add_symbol(splat_config, version, "Unk10", export_table[4])
+    # add_symbol(splat_config, version, "Unk14", export_table[5])
+    # add_symbol(splat_config, version, "Unk18", export_table[6])
+    # add_symbol(splat_config, version, "Unk1C", export_table[7])
+    # add_symbol(splat_config, version, "Unk20", export_table[8])
+    # add_symbol(splat_config, version, "Unk24", export_table[9])
+    # add_symbol(splat_config, version, "Unk28", export_table[10])
+    # add_symbol(splat_config, version, "Unk2C", export_table[11])
+    # add_symbol(splat_config, version, "Unk30", export_table[12])
+    # add_symbol(splat_config, version, "Unk34", export_table[13])
+    # add_symbol(splat_config, version, "Unk38", export_table[14])
+    # add_symbol(splat_config, version, "Unk3C", export_table[15])
     return
 
 
-def hydrate_weapon_symbols(splat_config, export_table):
-    add_symbol(splat_config, "EntityWeaponAttack", export_table[0])
-    add_symbol(splat_config, "func_ptr_80170004", export_table[1])
-    add_symbol(splat_config, "func_ptr_80170008", export_table[2])
-    add_symbol(splat_config, "func_ptr_8017000C", export_table[3])
-    add_symbol(splat_config, "func_ptr_80170010", export_table[4])
-    add_symbol(splat_config, "func_ptr_80170014", export_table[5])
-    add_symbol(splat_config, "GetWeaponId", export_table[6])
-    add_symbol(splat_config, "LoadWeaponPalette", export_table[7])
-    add_symbol(splat_config, "EntityWeaponShieldSpell", export_table[8])
-    add_symbol(splat_config, "func_ptr_80170024", export_table[9])
-    add_symbol(splat_config, "func_ptr_80170028", export_table[10])
-    add_symbol(splat_config, "WeaponUnused2C", export_table[11])
-    add_symbol(splat_config, "WeaponUnused30", export_table[12])
-    add_symbol(splat_config, "WeaponUnused34", export_table[13])
-    add_symbol(splat_config, "WeaponUnused38", export_table[14])
-    add_symbol(splat_config, "WeaponUnused3C", export_table[15])
+def hydrate_weapon_symbols(splat_config, version: str, export_table):
+    add_symbol(splat_config, version, "EntityWeaponAttack", export_table[0])
+    add_symbol(splat_config, version, "func_ptr_80170004", export_table[1])
+    add_symbol(splat_config, version, "func_ptr_80170008", export_table[2])
+    add_symbol(splat_config, version, "func_ptr_8017000C", export_table[3])
+    add_symbol(splat_config, version, "func_ptr_80170010", export_table[4])
+    add_symbol(splat_config, version, "func_ptr_80170014", export_table[5])
+    add_symbol(splat_config, version, "GetWeaponId", export_table[6])
+    add_symbol(splat_config, version, "LoadWeaponPalette", export_table[7])
+    add_symbol(splat_config, version, "EntityWeaponShieldSpell", export_table[8])
+    add_symbol(splat_config, version, "func_ptr_80170024", export_table[9])
+    add_symbol(splat_config, version, "func_ptr_80170028", export_table[10])
+    add_symbol(splat_config, version, "WeaponUnused2C", export_table[11])
+    add_symbol(splat_config, version, "WeaponUnused30", export_table[12])
+    add_symbol(splat_config, version, "WeaponUnused34", export_table[13])
+    add_symbol(splat_config, version, "WeaponUnused38", export_table[14])
+    add_symbol(splat_config, version, "WeaponUnused3C", export_table[15])
 
 
-def hydrate_psp_symbols(splat_config):
+def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
     need_to_update_symbols = False
-    print("getting the export table...")
+    spinner_start("getting the export table")
     ovl_name = splat_config["options"]["basename"]
     table = get_symbol_table(splat_config, get_symbol_of_export_table(splat_config))
+    spinner_stop(True)
     if table != None:
         if is_stage(ovl_name):
-            print("adding stage symbols...")
-            hydrate_stage_export_table_symbols(splat_config, table)
+            spinner_start("adding stage symbols")
+            hydrate_stage_export_table_symbols(splat_config, version, table)
         elif is_servant(ovl_name):
-            print("adding servant symbols...")
-            hydrate_servant_symbols(splat_config, table)
+            spinner_start("adding servant symbols")
+            hydrate_servant_symbols(splat_config, version, table)
         elif is_weapon(ovl_name):
-            print("adding weapon symbols...")
-            hydrate_weapon_symbols(splat_config, table)
+            spinner_start("adding weapon symbols")
+            hydrate_weapon_symbols(splat_config, version, table)
         need_to_update_symbols = True
 
     if is_stage(ovl_name):
-        print("getting the entity stage table...")
+        spinner_start("getting the entity stage table")
         entity_table_symbol = get_symbol_of_entity_table(splat_config)
         if entity_table_symbol != None:
             entity_table = get_symbol_table(splat_config, entity_table_symbol)
@@ -825,11 +890,11 @@ def hydrate_psp_symbols(splat_config):
     if need_to_update_symbols == True:
         # disassemble once more to update the symbols
         need_to_update_symbols = False
-        print("updating all symbols...")
+        spinner_start("updating all symbols")
         split(splat_config_path, True)
 
 
-def hydrate_psx_duplicate_symbols(splat_config):
+def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
     """
     Hydrate the symbol list by comparing the extracted functions with those already detected
     in other overlays.
@@ -838,27 +903,43 @@ def hydrate_psx_duplicate_symbols(splat_config):
     the duplicate detection tool to hydrate the targeted overlay symbol list.
     """
 
+    spinner_start("disassembling matched functions")
     make("force_symbols")
-    samples = ["dra", "ric", "stsel", "stdre", "stnp3", "stnz0", "stst0", "stwrp"]
+    # cross-reference only what makes sense to cross-reference
+    if ovl_name == "dra":
+        samples = ["dra"]
+        dup_paths = ["dra"]
+    elif ovl_name == "ric":
+        samples = ["ric"]
+        dup_paths = ["ric"]
+    elif ovl_name == "stsel":
+        samples = ["stsel"]
+        dup_paths = ["st/sel"]
+    elif is_servant(ovl_name):
+        samples = [ovl_name]
+        dup_paths = [f"servant/{ovl_name}"]
+    else:
+        samples = ["stdre", "stnp3", "stnz0", "stst0", "stwrp"]
+        dup_paths = ["st/dre", "st/np3", "st/nz0", "st/st0", "st/wrp"]
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(
             lambda name: split(get_splat_config_path(name, "us"), True), samples
         )
     git("checkout", "config/")
 
+    spinner_start("finding duplicates across overlays")
     left_asm_path = os.path.join(get_asm_path(splat_config), "nonmatchings")
     sym_prefix = get_symbol_prefix(splat_config)
     t = 0.9
-    dups = (
-        find_dups(t, left_asm_path, f"asm/us/dra/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/ric/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/st/sel/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/st/dre/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/st/np3/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/st/nz0/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/st/st0/matchings")
-        | find_dups(t, left_asm_path, f"asm/us/st/wrp/matchings")
-    )
+
+    dups = find_dups(t, left_asm_path, f"asm/us/{dup_paths[0]}/matchings")
+    for dup_path in dup_paths[1:]:
+        dups |= find_dups(t, left_asm_path, f"asm/us/{dup_path}/matchings")
+    if len(dups) == 0:
+        return
+
+    spinner_start("adding cross-referenced function names")
     found = 0
     added = set()
     for left, right in dups.items():
@@ -873,7 +954,7 @@ def hydrate_psx_duplicate_symbols(splat_config):
 
         found += 1
         offset = int(left.split(func_prefix)[1], 16)
-        add_symbol(splat_config, right, offset)
+        add_symbol(splat_config, version, right, offset)
     return found
 
 
@@ -896,22 +977,20 @@ def assert_sotn_decomp_cwd():
     omgpanic("re-run this script from sotn-decomp root directory")
 
 
-if __name__ == "__main__":
+def handle_interrupt(signum, frame):
+    spinner_stop(False)
+    exit(1)
+
+
+def make_config(ovl_name: str, version: str):
     assert_sotn_decomp_cwd()
-    args = parser.parse_args()
-    if args.version == None:
-        args.version = os.getenv("VERSION")
-        if args.version == None:
-            args.version = "us"
-    version = args.version
-    overlay = args.input
-    ovl_input = make_ovl_path(overlay, version)
+    ovl_input = make_ovl_path(ovl_name, version)
 
     if is_psp(version):
-        print("generating psp splat config...")
+        spinner_start("generating psp splat config")
         splat_config_path = make_config_psp(ovl_input, version)
     else:
-        print("generating psx splat config...")
+        spinner_start("generating psx splat config")
         splat_config_path = make_config_psx(ovl_input, version)
     with open(splat_config_path) as f:
         splat_config = yaml.load(f, Loader=yaml.SafeLoader)
@@ -919,21 +998,37 @@ if __name__ == "__main__":
         if not os.path.exists(symbol_path):
             with open(symbol_path, "w") as f:
                 f.write("")
-    print(f"splitting {splat_config_path}...")
+    spinner_start(f"splitting {splat_config_path}")
     split(splat_config_path, False)
 
     src_path = get_src_path(splat_config)
-    print(f"adjusting files at {src_path}...")
+    spinner_start(f"adjusting files at {src_path}")
     for c_file in list_all_files(src_path):
         adjust_include_asm(c_file, version)
 
     if is_psp(version):
-        hydrate_psp_symbols(splat_config)
+        hydrate_psp_symbols(splat_config_path, splat_config, version)
     else:
-        print(f"finding duplicates (will take a while)...")
-        found = hydrate_psx_duplicate_symbols(splat_config)
+        found = hydrate_psx_duplicate_symbols(splat_config, ovl_name, version)
         if found > 0:
-            print(f"cross-referenced {found} symbols, splitting again...")
+            spinner_start(f"cross-referenced {found} symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
-    print("Done! 🫡")
+    spinner_stop(True)  # done 🫡
+
+
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, handle_interrupt)
+    args = parser.parse_args()
+    if args.version == None:
+        args.version = os.getenv("VERSION")
+        if args.version == None:
+            args.version = "us"
+    try:
+        make_config(args.input, args.version)
+        spinner_stop(True)
+    except KeyboardInterrupt:
+        spinner_stop(False)
+    except Exception as e:
+        spinner_stop(False)
+        raise e
