@@ -355,7 +355,7 @@ void EntityRelicOrb(Entity* self) {
         var_s2 = self->ext.relicOrb.unk7C;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 3; prim = prim->next, i++) {
             if (i == 0) {
                 prim->x1 = 0x80 - (var_s2 + 1) * 0xC;
                 prim->x0 = 0x80 + (var_s2 + 1) * 0xC;
@@ -373,7 +373,6 @@ void EntityRelicOrb(Entity* self) {
                 prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[var_s2] + 0xA7;
                 prim->g0 = prim->g1 -= 0x10;
             }
-            prim = prim->next;
         }
 
         if (++self->ext.relicOrb.unk7C == 8) {
