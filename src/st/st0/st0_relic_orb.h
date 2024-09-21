@@ -403,10 +403,102 @@ void EntityRelicOrb(Entity* self) {
     }
 
     if (self->step < 2) {
+#if STAGE == STAGE_ST0
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - 7;
         prim->x1 = prim->x3 = prim->x0 + 14;
         prim->y0 = prim->y1 = self->posY.i.hi - 7;
         prim->y2 = prim->y3 = prim->y0 + 14;
+#elif defined(VERSION_BETA)
+        // This is just the function BlinkItem inlined
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = self->posX.i.hi - 7;
+        prim->x1 = prim->x3 = prim->x0 + 14;
+        prim->y0 = prim->y1 = self->posY.i.hi - 7;
+        prim->y2 = prim->y3 = prim->y0 + 14;
+
+        if (g_Timer & RENDERFLAGS_NOSHADOW) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 255;
+        } else {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 128;
+        }
+#else
+        BlinkItem(self, g_Timer);
+        prim = &g_PrimBuf[self->primIndex];
+#endif
+    #if STAGE != STAGE_ST0
+        // Animates the four sparkles while the relic is floating
+        for (i = 0; i < 3; i++) { // Skip the first three primitives
+            prim = prim->next;
+        }
+
+        if (!self->ext.relicOrb.sparkleCycle) {
+            for (i = 0; i < 4; i++) {
+                if (prim->drawMode == DRAW_HIDE) {
+                    prim->tpage = 0x1A;
+                    prim->clut = 0x1B1;
+                    prim->u0 = prim->u2 = 0;
+                    prim->u1 = prim->u3 = 0x10;
+                    prim->v0 = prim->v1 = 0x50;
+                    prim->v2 = prim->v3 = 0x60;
+
+                    var_s8 = self->ext.relicOrb.sparkleAnim & 7;
+                    iconSlot = self->posX.i.hi;
+                    iconSlot += g_RelicOrbSparkleX[var_s8];
+                    prim->x0 = prim->x2 = iconSlot - 6;
+                    prim->x1 = prim->x3 = iconSlot + 6;
+
+                    iconSlot = self->posY.i.hi;
+                    iconSlot += g_RelicOrbSparkleY[var_s8];
+                    prim->y0 = prim->y1 = iconSlot - 6;
+                    prim->y2 = prim->y3 = iconSlot + 6;
+
+                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                    prim->p1 = 0;
+                    prim->priority = 0x7F;
+                    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                     DRAW_UNK02 | DRAW_TRANSP;
+                    break;
+                }
+                prim = prim->next;
+            }
+
+            self->ext.relicOrb.sparkleCycle = 4;
+            self->ext.relicOrb.sparkleAnim++;
+        } else {
+            self->ext.relicOrb.sparkleCycle--;
+        }
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 3; i++) {
+        prim = prim->next;
+    }
+
+    for (; prim != NULL; prim = prim->next) {
+        if (prim->drawMode != DRAW_HIDE) {
+            if (prim->p1 & 3) {
+                prim->y0 = prim->y1--;
+                prim->y2 = prim->y3--;
+            } else {
+                prim->y2 = prim->y3 -= 2;
+                prim->x0 = prim->x2++;
+                prim->x1 = prim->x3--;
+            }
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 6;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 -= 6;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 -= 6;
+            prim->p1++;
+            if (prim->p1 > 0x10) {
+                prim->drawMode = DRAW_HIDE;
+            }
+        }
+#endif
     }
 }

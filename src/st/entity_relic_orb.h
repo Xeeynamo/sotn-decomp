@@ -404,23 +404,19 @@ void EntityRelicOrb(Entity* self) {
     }
 
     if (self->step < 2) {
-#if defined(VERSION_BETA)
+#if STAGE == STAGE_ST0
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = self->posX.i.hi - 7;
+        prim->x1 = prim->x3 = prim->x0 + 14;
+        prim->y0 = prim->y1 = self->posY.i.hi - 7;
+        prim->y2 = prim->y3 = prim->y0 + 14;
+#elif defined(VERSION_BETA)
         // This is just the function BlinkItem inlined
         prim = &g_PrimBuf[self->primIndex];
-
-        left = self->posX.i.hi - 7;
-        right = self->posX.i.hi + 7;
-        prim->x2 = left;
-        prim->x0 = left;
-        prim->x3 = right;
-        prim->x1 = right;
-
-        top = self->posY.i.hi - 7;
-        bottom = self->posY.i.hi + 7;
-        prim->y1 = top;
-        prim->y0 = top;
-        prim->y3 = bottom;
-        prim->y2 = bottom;
+        prim->x0 = prim->x2 = self->posX.i.hi - 7;
+        prim->x1 = prim->x3 = prim->x0 + 14;
+        prim->y0 = prim->y1 = self->posY.i.hi - 7;
+        prim->y2 = prim->y3 = prim->y0 + 14;
 
         if (g_Timer & RENDERFLAGS_NOSHADOW) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
@@ -435,7 +431,7 @@ void EntityRelicOrb(Entity* self) {
         BlinkItem(self, g_Timer);
         prim = &g_PrimBuf[self->primIndex];
 #endif
-
+    #if STAGE != STAGE_ST0
         // Animates the four sparkles while the relic is floating
         for (i = 0; i < 3; i++) { // Skip the first three primitives
             prim = prim->next;
@@ -504,5 +500,6 @@ void EntityRelicOrb(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
             }
         }
+#endif
     }
 }
