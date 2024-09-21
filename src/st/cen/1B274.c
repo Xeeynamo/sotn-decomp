@@ -24,7 +24,7 @@ void EntityUnkId08(Entity* entity) {
             entity->drawFlags = (u8)(entity->drawFlags | FLAG_DRAW_ROTZ);
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }
 
 #include "../popup.h"

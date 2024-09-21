@@ -18,7 +18,7 @@ void func_801A7D64(Entity* self) {
             self->flags = obj->unkC;
         }
     }
-    AnimateEntity(obj->unk10, self);
+    AnimateEntity(obj->animFrames, self);
 }
 
 bool func_801A7E2C(Entity* self) {

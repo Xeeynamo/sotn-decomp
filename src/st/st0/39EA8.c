@@ -27,7 +27,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->drawFlags |= FLAG_DRAW_ROTZ;
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }
 
 #include "../popup.h"

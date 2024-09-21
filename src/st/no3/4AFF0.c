@@ -28,7 +28,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->drawFlags |= FLAG_DRAW_ROTZ;
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }
 
 void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,

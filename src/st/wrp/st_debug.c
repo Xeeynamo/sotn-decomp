@@ -45,7 +45,7 @@ void func_80186FD0(Entity* self) {
         }
     }
 
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 #include "../entity_unk_id12.h"

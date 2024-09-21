@@ -145,7 +145,7 @@ ObjInit D_80180490 = {
     .palette = PAL_DRA(0),
     .drawFlags = DRAW_DEFAULT,
     .unkC = NULL,
-    .unk10 = &D_8018048C,
+    .animFrames = &D_8018048C,
 };
 
 u16 g_eRedDoorTiles[][8] = {

@@ -7,7 +7,7 @@ static u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
 static u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
 static u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
-static ObjInit D_80181134[] = {
+static ObjInit eRoomForegroundInit[] = {
     {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_80181120},
     {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_80181128},
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, D_8018112C},
@@ -17,13 +17,13 @@ static ObjInit D_80181134[] = {
 };
 
 #else
-extern ObjInit D_80181134[];
+extern ObjInit eRoomForegroundInit[];
 
 #endif
 
 extern u16 g_eInitGeneric2[];
 void EntityRoomForeground(Entity* entity) {
-    ObjInit* objInit = &D_80181134[entity->params];
+    ObjInit* objInit = &eRoomForegroundInit[entity->params];
 
     if (!entity->step) {
         InitializeEntity(g_eInitGeneric2);
@@ -41,5 +41,5 @@ void EntityRoomForeground(Entity* entity) {
             entity->rotZ = 0x800;
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }

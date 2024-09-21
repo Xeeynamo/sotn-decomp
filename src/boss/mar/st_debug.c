@@ -19,7 +19,7 @@ void func_us_8018AC0C(Entity* self) {
         }
     }
 
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 static u8 g_EntityUnkId12Hitbox[] = {

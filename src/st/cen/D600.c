@@ -31,7 +31,7 @@ void EntityBackgroundBlock(Entity* self) {
             self->rotX = 0x200;
         }
     }
-    AnimateEntity(obj->unk10, self);
+    AnimateEntity(obj->animFrames, self);
 }
 
 extern u16 g_EntityUnkId12TilemapProps[];
