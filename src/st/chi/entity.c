@@ -94,6 +94,8 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801ACEF4,  // E_ID_2D
 };
 
+//TODO: Used in EntityUnkId01
+//TODO: Used in func_8018DB18
 EntityInit EntityInit_80180610 = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
@@ -102,6 +104,10 @@ EntityInit EntityInit_80180610 = {
     .enemyId = 0,
 };
 
+//TODO: Used in func_801A2D84
+//TODO: Used in func_801A3740
+//TODO: Used in func_801A3FDC
+//TODO: (More were unlisted)
 EntityInit EntityInit_8018061C = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
@@ -110,6 +116,10 @@ EntityInit EntityInit_8018061C = {
     .enemyId = 1,
 };
 
+//TODO: Used in func_801A3520
+//TODO: Used in func_801A56A8
+//TODO: Used in func_801A5F54
+//TODO: (More were unlisted)
 EntityInit EntityInit_80180628 = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
@@ -118,6 +128,7 @@ EntityInit EntityInit_80180628 = {
     .enemyId = 2,
 };
 
+//TODO: No match, no errors
 EntityInit EntityInit_80180634 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -126,6 +137,8 @@ EntityInit EntityInit_80180634 = {
     .enemyId = 4,
 };
 
+//TODO: Used in func_801A941C
+//TODO: Used in func_801AD2BC
 EntityInit EntityInit_80180640 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -134,6 +147,7 @@ EntityInit EntityInit_80180640 = {
     .enemyId = 5,
 };
 
+//TODO: Used in func_801A519C
 EntityInit EntityInit_8018064C = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -142,6 +156,7 @@ EntityInit EntityInit_8018064C = {
     .enemyId = 2,
 };
 
+//TODO: Used in EntityUnkId12
 EntityInit EntityInit_80180658 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -150,6 +165,9 @@ EntityInit EntityInit_80180658 = {
     .enemyId = 1,
 };
 
+//TODO: Used in func_801A7C8C
+//TODO: Used in EntityBackgroundBlock
+//TODO: Used in EntityRedDoor
 EntityInit g_eInitGeneric2 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -158,6 +176,7 @@ EntityInit g_eInitGeneric2 = {
     .enemyId = 3,
 };
 
+//TODO: Used in EntityDamageDisplay
 EntityInit g_eDamageDisplayInit = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -166,6 +185,8 @@ EntityInit g_eDamageDisplayInit = {
     .enemyId = 3,
 };
 
+//TODO: Used in EntityDemonSwitchWall
+//TODO: Used in EntityBreakableWallDebris
 EntityInit EntityInit_8018067C = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
@@ -174,6 +195,9 @@ EntityInit EntityInit_8018067C = {
     .enemyId = 5,
 };
 
+//TODO: Used in func_801A813C
+//TODO: Used in func_801A8DE8
+//TODO: (More were unlisted)
 EntityInit EntityInit_80180688 = {
     .animSet = ANIMSET_OVL(3),
     .animCurFrame = 1,
@@ -182,6 +206,7 @@ EntityInit EntityInit_80180688 = {
     .enemyId = 221,
 };
 
+//TODO: Used in func_801A8EAC
 EntityInit EntityInit_80180694 = {
     .animSet = ANIMSET_OVL(3),
     .animCurFrame = 0,
@@ -190,6 +215,7 @@ EntityInit EntityInit_80180694 = {
     .enemyId = 222,
 };
 
+//TODO: Used in func_801A9588
 EntityInit EntityInit_801806A0 = {
     .animSet = ANIMSET_OVL(4),
     .animCurFrame = 0,
@@ -198,6 +224,8 @@ EntityInit EntityInit_801806A0 = {
     .enemyId = 223,
 };
 
+//TODO: Used in func_801A97C8
+//TODO: Used in func_801A9D40
 EntityInit EntityInit_801806AC = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
@@ -206,6 +234,7 @@ EntityInit EntityInit_801806AC = {
     .enemyId = 225,
 };
 
+//TODO: No match, no errors
 EntityInit EntityInit_801806B8 = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
@@ -214,6 +243,7 @@ EntityInit EntityInit_801806B8 = {
     .enemyId = 5,
 };
 
+//TODO: Used in func_801A9E94
 EntityInit EntityInit_801806C4 = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
@@ -222,6 +252,7 @@ EntityInit EntityInit_801806C4 = {
     .enemyId = 226,
 };
 
+//TODO: Used in func_801AA0F0
 EntityInit EntityInit_801806D0 = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -230,6 +261,7 @@ EntityInit EntityInit_801806D0 = {
     .enemyId = 157,
 };
 
+//TODO: No match, no errors
 EntityInit EntityInit_801806DC = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -238,6 +270,7 @@ EntityInit EntityInit_801806DC = {
     .enemyId = 158,
 };
 
+//TODO: Used in func_801AA404
 EntityInit EntityInit_801806E8 = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -246,6 +279,7 @@ EntityInit EntityInit_801806E8 = {
     .enemyId = 159,
 };
 
+//TODO: Used in func_801AB0C0
 EntityInit EntityInit_801806F4 = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -254,6 +288,7 @@ EntityInit EntityInit_801806F4 = {
     .enemyId = 160,
 };
 
+//TODO: Used in func_801AB844
 EntityInit EntityInit_80180700 = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
@@ -262,6 +297,8 @@ EntityInit EntityInit_80180700 = {
     .enemyId = 161,
 };
 
+//TODO: Used in func_801AC124
+//TODO: Used in func_801ACEF4
 EntityInit EntityInit_8018070C = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
@@ -270,6 +307,7 @@ EntityInit EntityInit_8018070C = {
     .enemyId = 162,
 };
 
+//TODO: Used in func_801AC7A0
 EntityInit EntityInit_80180718 = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
@@ -278,6 +316,7 @@ EntityInit EntityInit_80180718 = {
     .enemyId = 163,
 };
 
+//TODO: Used in func_801ACB6C
 EntityInit EntityInit_80180724 = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 55,

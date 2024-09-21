@@ -17,6 +17,7 @@ u16 Room3_DemonSwitchWallTilesCollision[] = {
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
 };
 
+//TODO: Combine this and above into multidimensional array
 // Never directly referenced. Accessed by overflowing from above array
 u16 Room3_DemonSwitchWallTilesNoCollision[] = {
     0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,

@@ -154,7 +154,6 @@ EntityInit_8018070C = 0x8018070C;
 EntityInit_80180718 = 0x80180718;
 EntityInit_80180724 = 0x80180724;
 g_eRedDoorTiles = 0x80180768;
-c_HeartPrizes = 0x80181250;
 
 // Referenced in func_801A8EAC
 sprites_chi_4 = 0x80199340;
