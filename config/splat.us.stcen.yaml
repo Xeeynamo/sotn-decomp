@@ -49,6 +49,7 @@ segments:
       - [0x10AC, .data, e_misc]
       - [0x1110, .data, e_misc]
       - [0x11C8, data]
+      - [0x1248, data]
       - [0x12D4, .data, rooms]
       - [0x1300, .data, e_layout] # layout entries data
       - [0x13F0, data]
@@ -78,6 +79,7 @@ segments:
       - [0x16F30, c, e_misc]
       - [0x1A5F0, c, e_stage_name]
       - [0x1B274, c]
+      - [0x1BAB8, c]
       - [0x1BED4, c, prim_helpers]
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
