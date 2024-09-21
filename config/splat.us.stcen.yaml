@@ -39,7 +39,7 @@ segments:
       - [0x134, .data, header] # gfxbanks
       - [0x1EC, .data, e_laydef] # layout entries header
       - [0x394, .data, e_init]
-      - [0x4D4, .data, D600]
+      - [0x4D4, .data, st_debug]
       - [0x554, .data, D89C]
       - [0x5D8, .data, holyglassescutscene]
       - [0x68C, .data, F890]
@@ -68,7 +68,7 @@ segments:
       - [0xD5B0, .rodata, e_misc]
       - [0xD5C4, .rodata, e_stage_name] # EntityStageNamePopup
       - [0xD5F8, .rodata, prim_helpers]
-      - [0xD600, c]
+      - [0xD600, c, st_debug]
       - [0xD89C, c]
       - [0xDF0C, c, holyglassescutscene]
       - [0xF890, c]

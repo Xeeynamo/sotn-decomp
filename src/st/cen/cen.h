@@ -57,7 +57,7 @@ extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_8018047C[]; // EntityElevator
 
-extern ObjInit D_80180490[];
+extern ObjInit g_eBackgroundBlockInit[];
 extern u16* D_80180574[];
 extern u8 D_80180594[];
 extern u8 D_8018059C[];

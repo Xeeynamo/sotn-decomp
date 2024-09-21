@@ -138,7 +138,7 @@ EntityInit D_8018047C = {
 static u32 JUNK_80180488 = 0x00FF0140;
 static u32 D_8018048C = 0x00FF0740;
 
-ObjInit D_80180490 = {
+ObjInit g_eBackgroundBlockInit = {
     .animSet = ANIMSET_OVL(2),
     .zPriority = 129,
     .unk5A = 0,
