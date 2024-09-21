@@ -67,6 +67,7 @@ segments:
       - [0xD5C4, .rodata, e_stage_name] # EntityStageNamePopup
       - [0xD5F8, .rodata, prim_helpers]
       - [0xD600, c]
+      - [0xD89C, c]
       - [0xDF0C, c, holyglassescutscene]
       - [0xF890, c]
       - [0x10E4C, c, st_update]

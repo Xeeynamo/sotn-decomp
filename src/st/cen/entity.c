@@ -2,7 +2,7 @@
 #include "game.h"
 #include "stage.h"
 
-void EntityUnkId01(Entity*);
+void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
@@ -31,7 +31,7 @@ void EntityUnkId1B(Entity*);
 void EntityMovingElevator(Entity*);
 
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityUnkId01,         EntityExplosion,
+    EntityBreakable,       EntityExplosion,
     EntityPrizeDrop,       EntityDamageDisplay,
     EntityRedDoor,         EntityIntenseExplosion,
     EntitySoulStealOrb,    EntityRoomForeground,

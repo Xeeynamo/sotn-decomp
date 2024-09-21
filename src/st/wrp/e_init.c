@@ -11,29 +11,16 @@ void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityBreakable,
-    EntityExplosion,
-    EntityPrizeDrop,
-    EntityDamageDisplay,
-    EntityRedDoor,
-    EntityIntenseExplosion,
-    EntitySoulStealOrb,
-    EntityRoomForeground,
-    EntityStageNamePopup,
-    EntityEquipItemDrop,
-    EntityRelicOrb,
-    EntityHeartDrop,
-    EntityEnemyBlood,
-    EntityMessageBox,
-    EntityDummy,
+    EntityBreakable,     EntityExplosion,      EntityPrizeDrop,
+    EntityDamageDisplay, EntityRedDoor,        EntityIntenseExplosion,
+    EntitySoulStealOrb,  EntityRoomForeground, EntityStageNamePopup,
+    EntityEquipItemDrop, EntityRelicOrb,       EntityHeartDrop,
+    EntityEnemyBlood,    EntityMessageBox,     EntityDummy,
     EntityDummy,
     func_80186FD0, // unused
     EntityUnkId12, // unused? looks debugging stuff
-    EntityUnkId13,
-    EntityUnkId14,
-    EntityUnkId15,
-    EntityWarpRoom,
-    EntityWarpSmallRocks,
+    EntityUnkId13,       EntityUnkId14,        EntityUnkId15,
+    EntityWarpRoom,      EntityWarpSmallRocks,
 };
 
 u16 g_eBreakableInit[] = {
