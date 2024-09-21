@@ -3,7 +3,7 @@
 #include "st0.h"
 #include "sfx.h"
 
-#include "st0_relic_orb.h"
+#include "../entity_relic_orb.h"
 
 #include "../check_coll_offsets.h"
 
