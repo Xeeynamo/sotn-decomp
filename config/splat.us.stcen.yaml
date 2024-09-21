@@ -70,6 +70,7 @@ segments:
       - [0xD5F8, .rodata, prim_helpers]
       - [0xD600, c, st_debug]
       - [0xD89C, c]
+      - [0xDB18, c]
       - [0xDF0C, c, holyglassescutscene]
       - [0xF890, c]
       - [0x10E4C, c, st_update] # Matching with WRP from here on
