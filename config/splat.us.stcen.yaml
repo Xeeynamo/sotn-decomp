@@ -40,7 +40,7 @@ segments:
       - [0x1EC, .data, e_laydef] # layout entries header
       - [0x394, .data, e_init]
       - [0x4D4, .data, st_debug]
-      - [0x554, .data, D89C]
+      - [0x554, .data, e_breakable]
       - [0x5D8, .data, holyglassescutscene]
       - [0x68C, .data, F890]
       - [0x7B8, .data, st_update]
@@ -69,11 +69,11 @@ segments:
       - [0xD5C4, .rodata, e_stage_name] # EntityStageNamePopup
       - [0xD5F8, .rodata, prim_helpers]
       - [0xD600, c, st_debug]
-      - [0xD89C, c]
+      - [0xD89C, c, e_breakable]
       - [0xDB18, c]
       - [0xDF0C, c, holyglassescutscene]
       - [0xF890, c]
-      - [0x10E4C, c, st_update] # Matching with WRP from here on
+      - [0x10E4C, c, st_update]
       - [0x11280, c, collision]
       - [0x12A3C, c, create_entity]
       - [0x135B4, c, e_red_door]

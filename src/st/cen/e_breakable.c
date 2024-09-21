@@ -63,7 +63,8 @@ void EntityBreakable(Entity* self) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != 0) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
-            newEntity->params = g_eBreakableExplosionTypes[breakableType] | 0x10;
+            newEntity->params =
+                g_eBreakableExplosionTypes[breakableType] | 0x10;
         }
 
         for (ptr = &xyOffsets, i = 0; i < 4; i++) {

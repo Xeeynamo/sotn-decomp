@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-
 extern ObjInit g_eBackgroundBlockInit[];
 extern u16 g_eInitGeneric2[];
 

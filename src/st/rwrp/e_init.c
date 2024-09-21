@@ -11,16 +11,16 @@ void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityBreakable,     EntityExplosion,      EntityPrizeDrop,
-    EntityDamageDisplay, EntityRedDoor,        EntityIntenseExplosion,
-    EntitySoulStealOrb,  EntityRoomForeground, EntityStageNamePopup,
-    EntityEquipItemDrop, EntityRelicOrb,       EntityHeartDrop,
-    EntityEnemyBlood,    EntityMessageBox,     EntityDummy,
+    EntityBreakable,       EntityExplosion,      EntityPrizeDrop,
+    EntityDamageDisplay,   EntityRedDoor,        EntityIntenseExplosion,
+    EntitySoulStealOrb,    EntityRoomForeground, EntityStageNamePopup,
+    EntityEquipItemDrop,   EntityRelicOrb,       EntityHeartDrop,
+    EntityEnemyBlood,      EntityMessageBox,     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock, // unused
-    EntityUnkId12, // unused? looks debugging stuff
-    EntityUnkId13,       EntityUnkId14,        EntityUnkId15,
-    EntityRWarpRoom,     EntityWarpSmallRocks,
+    EntityUnkId12,         // unused? looks debugging stuff
+    EntityUnkId13,         EntityUnkId14,        EntityUnkId15,
+    EntityRWarpRoom,       EntityWarpSmallRocks,
 };
 
 // *** Group here all the Entity Init ***
