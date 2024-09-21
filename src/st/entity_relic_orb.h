@@ -2,7 +2,7 @@
 #include "stage.h"
 
 const char* g_RelicOrbTexts[] = {
-#if defined(VERSION_BETA) || STAGE == STAGE_ST0
+#if !defined(VERSION_US) || STAGE == STAGE_ST0
     "を入手した"
 #else
     "Obtained ",
@@ -420,7 +420,7 @@ void EntityRelicOrb(Entity* self) {
         prim->x1 = prim->x3 = prim->x0 + 14;
         prim->y0 = prim->y1 = self->posY.i.hi - 7;
         prim->y2 = prim->y3 = prim->y0 + 14;
-#elif defined(VERSION_BETA)
+#elif !defined(VERSION_US)
         // This is just the function BlinkItem inlined
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - 7;
