@@ -58,6 +58,14 @@ void EntityRelicOrb(Entity* self) {
     const char sp34[0x100];
 #endif
 
+    // The unk7C variable matches different other variables
+    // in different versions. We use this as a hack to match everywhere.
+    #if STAGE == STAGE_ST0
+    #define orbUnk7C temp
+    #else
+    #define orbUnk7C var_s2
+    #endif
+
 #if defined(VERSION_BETA) || STAGE == STAGE_ST0
     u16 vramX;
     u16* chPixSrc;
@@ -352,25 +360,25 @@ void EntityRelicOrb(Entity* self) {
         break;
 
     case 8:
-        var_s2 = self->ext.relicOrb.unk7C;
+        orbUnk7C = self->ext.relicOrb.unk7C;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
         for (i = 0; i < 3; prim = prim->next, i++) {
             if (i == 0) {
-                prim->x1 = 0x80 - (var_s2 + 1) * 0xC;
-                prim->x0 = 0x80 + (var_s2 + 1) * 0xC;
-                prim->x2 = 0x68 + (var_s2 * 0x78) / 7;
-                prim->x3 = 0x98 - (var_s2 * 0x78) / 7;
-                prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[var_s2] + 0xA7;
-                prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[var_s2] + 0xA7;
+                prim->x1 = 0x80 - (orbUnk7C + 1) * 0xC;
+                prim->x0 = 0x80 + (orbUnk7C + 1) * 0xC;
+                prim->x2 = 0x68 + (orbUnk7C * 0x78) / 7;
+                prim->x3 = 0x98 - (orbUnk7C * 0x78) / 7;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[orbUnk7C] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[orbUnk7C] + 0xA7;
                 prim->b2 = prim->b3 -= 0x10;
             } else {
-                prim->x0 = 0x68 + (var_s2 * 0x78) / 7;
-                prim->x1 = 0x98 - (var_s2 * 0x78) / 7;
-                prim->x3 = 0x80 - (var_s2 + 1) * 0xC;
-                prim->x2 = 0x80 + (var_s2 + 1) * 0xC;
-                prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[var_s2] + 0xA7;
-                prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[var_s2] + 0xA7;
+                prim->x0 = 0x68 + (orbUnk7C * 0x78) / 7;
+                prim->x1 = 0x98 - (orbUnk7C * 0x78) / 7;
+                prim->x3 = 0x80 - (orbUnk7C + 1) * 0xC;
+                prim->x2 = 0x80 + (orbUnk7C + 1) * 0xC;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[orbUnk7C] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[orbUnk7C] + 0xA7;
                 prim->g0 = prim->g1 -= 0x10;
             }
         }
