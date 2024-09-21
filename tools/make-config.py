@@ -16,7 +16,7 @@ import sys
 import threading
 import time
 
-from symbols import sort_symbols_from_file
+from symbols import get_non_matching_symbols, sort_symbols_from_file
 
 parser = argparse.ArgumentParser(
     description="Make files inside config/ for a PSP overlay"
@@ -321,6 +321,18 @@ def make_ovl_path(ovl_name: str, version: str) -> str:
     omgpanic(f"'{ovl_name}' not recognized for '{version}' version")
 
 
+def make_dst_path(ovl_name: str) -> str:
+    if is_weapon(ovl_name):
+        return f"weapon/{ovl_name}"
+    if is_servant(ovl_name):
+        return f"servant/{ovl_name}"
+    if is_boss(ovl_name):
+        return f"boss/{ovl_name}"
+    if is_stage(ovl_name):
+        return f"st/{ovl_name}"
+    return ovl_name
+
+
 ##### SPLAT CONFIG UTILITIES
 
 
@@ -366,21 +378,12 @@ def get_splat_config(
     ver: str,
     name: str,
 ):
-    filename = input.split("/")[-1]
-    if is_weapon(name):
-        path_stuff = f"weapon/{name}"
-        file_stuff = name
-    elif is_servant(name):
-        path_stuff = f"servant/{name}"
-        file_stuff = name
-    elif is_boss(name):
-        path_stuff = f"boss/{name}"
+    path_stuff = make_dst_path(name)
+    if is_boss(name):
         file_stuff = f"bo{name}"
     elif is_stage(name):
-        path_stuff = f"st/{name}"
         file_stuff = f"st{name}"
     else:
-        path_stuff = name
         file_stuff = name
 
     platform = "psx"
@@ -967,6 +970,57 @@ def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
     return found
 
 
+def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
+    """
+    leverage symbols.py cross <matching> <nonmatching> to find symbols in data and bss
+    """
+
+    if version != "us":
+        # assume the equivalent overlay in the US version is already decompiled
+        right_matchings_path = f"asm/us/{make_dst_path(ovl_name)}/matchings"
+    elif is_stage(ovl_name) or is_boss(ovl_name):
+        # pick NZ0 as the most complete overlay to cross-reference symbols
+        right_matchings_path = f"asm/us/{make_dst_path("nz0")}/matchings"
+    else:
+        yowarning(f"cannot use any overlay similar to {version}/{ovl_name} to cross-reference")
+        return
+
+    left_nonmatchings_path = os.path.join(get_asm_path(splat_config), "nonmatchings")
+    left_func_paths = list_all_files(left_nonmatchings_path)
+    left_func_path_set = {}
+    for func_path in left_func_paths:
+        file_name = os.path.basename(func_path)
+        if file_name.startswith("D_"):
+            continue
+        left_func_path_set[file_name] = func_path
+
+    # the functions to cross-reference need to exist on both the overlays to compare
+    func_paths_to_cross_reference = {}
+    for func_path in list_all_files(right_matchings_path):
+        if os.path.basename(func_path) in left_func_path_set:
+            func_paths_to_cross_reference[os.path.basename(func_path)] = func_path
+
+    spinner_start(f"cross-referencing {len(func_paths_to_cross_reference)} functions")
+    syms = dict()
+    for func_name in func_paths_to_cross_reference:
+        match_func_path = func_paths_to_cross_reference[func_name]
+        with open(match_func_path, "r") as asm_ref_file:
+            cross_func_path = left_func_path_set[func_name]
+            with open(cross_func_path, "r") as asm_cross_file:
+                err, new_syms = get_non_matching_symbols(
+                    asm_ref_file.readlines(), asm_cross_file.readlines()
+                )
+                if err != "ok":
+                    continue
+        for sym in new_syms:
+            syms[sym] = new_syms[sym]
+
+    spinner_start("adding cross-referenced symbol names")
+    for sym in syms:
+        add_symbol(splat_config, version, sym, syms[sym])
+    return len(syms)
+
+
 def assert_sotn_decomp_cwd():
     """
     Ensure the tool is running from the sotn-decomp root directory.
@@ -1020,7 +1074,12 @@ def make_config(ovl_name: str, version: str):
     else:
         found = hydrate_psx_duplicate_symbols(splat_config, ovl_name, version)
         if found > 0:
-            spinner_start(f"cross-referenced {found} symbols, splitting again")
+            spinner_start(f"renamed {found} functions, splitting again")
+            shutil.rmtree(get_asm_path(splat_config))
+            split(splat_config_path, False)
+        found = hydrate_psx_cross_ref_symbols(splat_config, ovl_name, version)
+        if found > 0:
+            spinner_start(f"renamed {found} data/bss symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
     spinner_stop(True)  # done 🫡
