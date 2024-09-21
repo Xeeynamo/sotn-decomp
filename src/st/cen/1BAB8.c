@@ -21,5 +21,3 @@ void EntityRoomForeground(Entity* entity) {
     }
     AnimateEntity(objInit->animFrames, entity);
 }
-
-#include "../popup.h"

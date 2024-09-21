@@ -80,6 +80,7 @@ segments:
       - [0x1A5F0, c, e_stage_name]
       - [0x1B274, c]
       - [0x1BAB8, c]
+      - [0x1BBA4, c]
       - [0x1BED4, c, prim_helpers]
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
