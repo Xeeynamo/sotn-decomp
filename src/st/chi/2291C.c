@@ -119,7 +119,9 @@ void CollectSubweapon(u16 subWeaponIdx) {
     }
     DestroyEntity(g_CurrentEntity);
 }
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2B90);    // CollectHeartVessel()
+// [Duplicate]
+// func_801A2B90
+#include "../collect_heart_vessel.h"
 INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C34);    // CollectLifeVessel()
 INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2C84);    // DestroyCurrentEntity()
 
