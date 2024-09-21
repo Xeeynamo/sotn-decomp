@@ -2,7 +2,7 @@
 #include "stage.h"
 
 const char* g_RelicOrbTexts[] = {
-#if !defined(VERSION_US) || STAGE == STAGE_ST0
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
     "を入手した"
 #else
     "Obtained ",
