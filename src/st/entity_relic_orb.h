@@ -66,7 +66,7 @@ void EntityRelicOrb(Entity* self) {
 #define orbUnk7C var_s2
 #endif
 
-#if defined(VERSION_BETA) || STAGE == STAGE_ST0
+#if !defined(VERSION_US) || STAGE == STAGE_ST0
     u16 vramX;
     u16* chPixSrc;
     u16* chPixDst;
@@ -272,7 +272,7 @@ void EntityRelicOrb(Entity* self) {
         BlitChar(&sp34[0], 0, 12, 0x100);
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
-#elif defined(VERSION_BETA) || STAGE == STAGE_ST0
+#elif !defined(VERSION_US) || STAGE == STAGE_ST0
         msgLen = 0;
         temp = false;
         vramX = 0;
@@ -395,7 +395,7 @@ void EntityRelicOrb(Entity* self) {
 
     case 9:
         prim = &g_PrimBuf[self->primIndex];
-#if defined(VERSION_BETA) || STAGE == STAGE_ST0
+#if !defined(VERSION_US) || STAGE == STAGE_ST0
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
 #else
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
@@ -420,7 +420,7 @@ void EntityRelicOrb(Entity* self) {
         prim->x1 = prim->x3 = prim->x0 + 14;
         prim->y0 = prim->y1 = self->posY.i.hi - 7;
         prim->y2 = prim->y3 = prim->y0 + 14;
-#elif !defined(VERSION_US)
+#elif defined(VERSION_BETA)
         // This is just the function BlinkItem inlined
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - 7;
