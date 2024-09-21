@@ -113,6 +113,9 @@ void EntityRelicOrb(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         for (i = 0; prim != NULL; i++) {
             if (i != 0) {
+#if STAGE == STAGE_ST0
+                prim->type = PRIM_G4;
+#endif
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->tpage = 0x1A;
@@ -123,15 +126,25 @@ void EntityRelicOrb(Entity* self) {
                 // Pulls iconSlot & 0b11000
                 prim->v0 = prim->v1 = ((iconSlot & 24) << 1) + 0x81;
                 prim->v2 = prim->v3 = prim->v0 + 14;
+#if STAGE != STAGE_ST0
                 prim->drawMode = DRAW_COLORS | DRAW_UNK02;
+#else
+                prim->drawMode = DRAW_UNK02;
+#endif
             }
+#if STAGE == STAGE_ST0
+            prim->priority = 0xC0;
+#else
             prim->priority = 0x7E;
+#endif
             prim = prim->next;
         }
+#if STAGE != STAGE_ST0
         self->posY.i.lo = 0x8000;
         self->velocityY = FIX(0.25);
         self->ext.relicOrb.floatTimer = 64;
         self->ext.relicOrb.yFloatSpeed = -FIX(0.0078125);
+#endif
         break;
 
     case 1:
