@@ -25,16 +25,16 @@ void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
-#if defined(VERSION_BETA)
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
     const int MaxItemSlots = LEN(g_ItemIconSlots);
 #else
     const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
 #endif
     u16 relicId;
-#if defined(VERSION_PSP)
-    u16 isObtainedTextStored;
+#if defined(VERSION_PSP) || STAGE == STAGE_ST0
+    u16 temp;
 #else
-    bool isObtainedTextStored;
+    bool temp;
 #endif
     RECT rect;
     Primitive* prim;
@@ -195,7 +195,7 @@ void EntityRelicOrb(Entity* self) {
 #if defined(VERSION_PSP)
         msgLen = 0;
         var_s2 = 0;
-        isObtainedTextStored = false;
+        temp = false;
         msg = g_api.relicDefs[relicId].name;
         switch (D_PSP_8B42058) {
         case 1:
@@ -228,7 +228,7 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7C = 0;
 #elif defined(VERSION_US)
         msgLen = 0;
-        isObtainedTextStored = false;
+        temp = false;
         msg = g_RelicOrbTexts[0];
         chPix = g_Pix[0];
         var_v0_5 = (u8*)chPix;
@@ -239,11 +239,11 @@ void EntityRelicOrb(Entity* self) {
         msgLen = 0;
         while (true) {
             if (*msg == 0) {
-                if (isObtainedTextStored) {
+                if (temp) {
                     break;
                 }
                 msg = g_api.relicDefs[relicId].name;
-                isObtainedTextStored = true;
+                temp = true;
             } else {
                 msg = BlitChar(msg, &msgLen, chPix, 0xC0);
             }
@@ -254,16 +254,16 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7E = msgLen;
 #else
         msgLen = 0;
-        isObtainedTextStored = false;
+        temp = false;
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
         while (true) {
             ch = *msg++;
             if (ch == 0) {
-                if (isObtainedTextStored) {
+                if (temp) {
                     break;
                 }
-                isObtainedTextStored = true;
+                temp = true;
                 msg = g_RelicOrbTexts[0];
             } else {
                 ch = (ch << 8) | *msg++;

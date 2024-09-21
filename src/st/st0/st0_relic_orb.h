@@ -20,15 +20,22 @@ u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 extern u16 g_InitializeData0[];
 extern u16 msgBoxTpage[0x600];
 
+void BlinkItem(Entity* entity, u16 blinkFlag);
 void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
     const int MaxItemSlots = LEN(g_ItemIconSlots);
-
+#else
+    const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
+#endif
     u16 relicId;
+#if defined(VERSION_PSP) || STAGE == STAGE_ST0
     u16 temp;
-
+#else
+    bool temp;
+#endif
     RECT rect;
     Primitive* prim;
     const char* msg;
