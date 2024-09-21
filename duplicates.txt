@@ -954,8 +954,8 @@
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/no3/nonmatchings/4AFF0/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/np3/nonmatchings/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/nz0/nonmatchings/e_room_fg/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/rwrp/nonmatchings/wrp/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/st0/nonmatchings/37308/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/wrp/nonmatchings/e_room_fg/EntityRoomForeground.s 
 | 0.92 | true     | func_80186FD0                       | asm/us/st/wrp/nonmatchings/st_debug/func_80186FD0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Ratan2                              | asm/us/boss/mar/nonmatchings/st_common/Ratan2.s 
@@ -1741,8 +1741,8 @@
 | 1.00 | true     | BottomCornerText                    | asm/us/st/no3/nonmatchings/4AFF0/BottomCornerText.s 
 | 1.00 | true     | BottomCornerText                    | asm/us/st/np3/nonmatchings/popup/BottomCornerText.s 
 | 1.00 | true     | BottomCornerText                    | asm/us/st/nz0/nonmatchings/popup/BottomCornerText.s 
+| 1.00 | true     | BottomCornerText                    | asm/us/st/rwrp/nonmatchings/wrp/popup/BottomCornerText.s 
 | 1.00 | true     | BottomCornerText                    | asm/us/st/st0/nonmatchings/37308/BottomCornerText.s 
-| 1.00 | true     | BottomCornerText                    | asm/us/st/wrp/nonmatchings/popup/BottomCornerText.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | PrimDecreaseBrightness              | asm/us/boss/mar/nonmatchings/prim_helpers/PrimDecreaseBrightness.s 
 | 1.00 | true     | PrimDecreaseBrightness              | asm/us/st/cen/nonmatchings/prim_helpers/PrimDecreaseBrightness.s 
