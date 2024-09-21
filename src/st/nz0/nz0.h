@@ -211,7 +211,6 @@ extern const u8 D_80181388[];
 extern s32 g_ElevatorTarget;
 extern s16 g_ElevatorTargetPos[];
 extern u16 g_HeartDropArray[];
-extern const char* D_8018146C[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
