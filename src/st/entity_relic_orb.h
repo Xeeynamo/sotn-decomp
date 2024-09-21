@@ -63,7 +63,6 @@ void EntityRelicOrb(Entity* self) {
     u16* chPixSrc;
     u16* chPixDst;
     u16 ch;
-    s16 left, top, right, bottom;
 #endif
 
     relicId = self->params & 0x7FFF;
