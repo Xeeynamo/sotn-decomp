@@ -296,32 +296,31 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
 #else
-
-    msgLen = 0;
-    temp = false;
-    msg = g_RelicOrbTexts[0];
-    chPix = g_Pix[0];
-    var_v0_5 = (u8*)chPix;
-    for (i = 0; i < 0xC00; i++) {
-        *var_v0_5++ = 0;
-    }
-
-    msgLen = 0;
-    while (true) {
-        if (*msg == 0) {
-            if (temp) {
-                break;
-            }
-            msg = g_api.relicDefs[relicId].name;
-            temp = true;
-        } else {
-            msg = BlitChar(msg, &msgLen, chPix, 0xC0);
+        msgLen = 0;
+        temp = false;
+        msg = g_RelicOrbTexts[0];
+        chPix = g_Pix[0];
+        var_v0_5 = (u8*)chPix;
+        for (i = 0; i < 0xC00; i++) {
+            *var_v0_5++ = 0;
         }
-    }
 
-    LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
-    self->ext.relicOrb.unk7C = 0;
-    self->ext.relicOrb.unk7E = msgLen;
+        msgLen = 0;
+        while (true) {
+            if (*msg == 0) {
+                if (temp) {
+                    break;
+                }
+                msg = g_api.relicDefs[relicId].name;
+                temp = true;
+            } else {
+                msg = BlitChar(msg, &msgLen, chPix, 0xC0);
+            }
+        }
+
+        LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
+        self->ext.relicOrb.unk7C = 0;
+        self->ext.relicOrb.unk7E = msgLen;
 #endif
         self->step++;
         break;
@@ -329,7 +328,11 @@ void EntityRelicOrb(Entity* self) {
         // Animates the blue/green rectangle for the Obtain text bg
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
+#if STAGE == STAGE_ST0
         for (i = 0; prim != NULL; prim = prim->next, i++) {
+#else
+        for (i = 0; i < 2; prim = prim->next, i++) {
+#endif
             if (i == 0) {
                 prim->x2 -= 3;
                 prim->x3 += 3;

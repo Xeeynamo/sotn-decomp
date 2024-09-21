@@ -296,7 +296,6 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
 #else
-
         msgLen = 0;
         temp = false;
         msg = g_RelicOrbTexts[0];
@@ -329,7 +328,11 @@ void EntityRelicOrb(Entity* self) {
         // Animates the blue/green rectangle for the Obtain text bg
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
-        for (i = 0; i < 2; i++) {
+#if STAGE == STAGE_ST0
+        for (i = 0; prim != NULL; prim = prim->next, i++) {
+#else
+        for (i = 0; i < 2; prim = prim->next, i++) {
+#endif
             if (i == 0) {
                 prim->x2 -= 3;
                 prim->x3 += 3;
@@ -341,7 +344,6 @@ void EntityRelicOrb(Entity* self) {
                 prim->y0 = prim->y1 -= 2;
                 prim->y2 = prim->y3 += 4;
             }
-            prim = prim->next;
         }
 
         if (++self->ext.relicOrb.unk7C == 8) {
