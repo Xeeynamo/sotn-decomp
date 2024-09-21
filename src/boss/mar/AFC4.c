@@ -647,44 +647,4 @@ void EntityMariaCutscene(Entity* self) {
     }
 }
 
-extern u16 D_80180A60[];
-extern u16 D_us_8019AF2A[];
-
-void func_us_8018C90C(Entity* self) {
-    Entity* player = &PLAYER;
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180A60);
-        D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
-        g_Player.padSim = PAD_RIGHT;
-        g_Player.D_80072EFC = 1;
-        break;
-
-    case 1:
-        if (PLAYER.posX.i.hi >= 33 && !(g_CutsceneFlags & 1)) {
-            g_CutsceneFlags |= 1;
-        }
-        if (player->posX.i.hi >= 177) {
-            g_Player.padSim = PAD_LEFT;
-            self->step++;
-        } else {
-            g_Player.padSim = PAD_RIGHT;
-        }
-        g_Player.D_80072EFC = 1;
-        break;
-
-    case 2:
-        if (g_CutsceneFlags & 2) {
-            D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
-            }
-            DestroyEntity(self);
-            D_us_8019AF2A[0] ^= 1;
-        }
-        g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
-        break;
-    }
-}
+INCLUDE_ASM("boss/mar/nonmatchings/AFC4", func_us_8018C90C);
