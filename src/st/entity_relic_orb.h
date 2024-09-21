@@ -73,13 +73,13 @@ void EntityRelicOrb(Entity* self) {
 
     switch (self->step) {
     case 0:
-    #if STAGE != STAGE_ST0
+#if STAGE != STAGE_ST0
         // If the relic was previously obtained, do not spawn it.
         if (g_Status.relics[relicId] & RELIC_FLAG_FOUND) {
             DestroyEntity(self);
             return;
         }
-    #endif
+#endif
         InitializeEntity(g_InitializeData0);
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
             if (!g_ItemIconSlots[iconSlot]) {
@@ -99,12 +99,17 @@ void EntityRelicOrb(Entity* self) {
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
+#if STAGE == STAGE_ST0
+        g_api.LoadEquipIcon(g_api.equipDefs[relicId].icon,
+                            g_api.equipDefs[relicId].iconPalette, iconSlot);
+#else
         self->ext.relicOrb.iconSlot = iconSlot;
 #if !defined(VERSION_BETA)
         g_ItemIconSlots[iconSlot] = 0x10;
 #endif
         g_api.LoadEquipIcon(g_api.relicDefs[relicId].icon,
                             g_api.relicDefs[relicId].iconPalette, iconSlot);
+#endif
         prim = &g_PrimBuf[primIndex];
         for (i = 0; prim != NULL; i++) {
             if (i != 0) {
