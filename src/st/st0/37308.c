@@ -18,7 +18,7 @@ void EntityRelicOrb(Entity* self) {
     const int MaxItemSlots = LEN(g_ItemIconSlots);
 
     u16 relicId;
-    u16 isObtainedTextStored;
+    u16 temp;
 
     RECT rect;
     Primitive* prim;
@@ -43,7 +43,6 @@ void EntityRelicOrb(Entity* self) {
 
     switch (self->step) {
     case 0:
-
         InitializeEntity(g_InitializeData0);
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
             if (!g_ItemIconSlots[iconSlot]) {
@@ -88,7 +87,7 @@ void EntityRelicOrb(Entity* self) {
         break;
 
     case 5:
-        g_api.PlaySfx(0x618);
+        g_api.PlaySfx(SFX_UNK_618);
 
         g_Status.relics[relicId] = 3;
 
@@ -137,20 +136,20 @@ void EntityRelicOrb(Entity* self) {
 
     case 6:
         msgLen = 0;
-        isObtainedTextStored = false;
+        temp = false;
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
         while (true) {
             ch = *msg++;
             if (ch == 0) {
-                if (isObtainedTextStored) {
+                if (temp) {
                     break;
                 }
-                isObtainedTextStored = true;
+                temp = true;
                 msg = g_RelicOrbTexts[0];
             } else {
                 ch = (ch << 8) | *msg++;
-                chPixSrc = g_api_func_80106A28(ch, 1);
+                chPixSrc = g_api.func_80106A28(ch, 1);
                 if (chPixSrc != NULL) {
                     chPixDst = &D_801C00B0[msgLen * 0x30];
                     for (i = 0; i < 0x30; i++) {
@@ -192,29 +191,25 @@ void EntityRelicOrb(Entity* self) {
         break;
 
     case 8:
-        isObtainedTextStored = self->ext.relicOrb.unk7C;
+        temp = self->ext.relicOrb.unk7C;
         prim = &g_PrimBuf[self->primIndex];
         prim = prim->next;
         for (i = 0; prim != NULL; prim = prim->next, i++) {
             if (i == 0) {
-                prim->x1 = 0x80 - (isObtainedTextStored + 1) * 0xC;
-                prim->x0 = 0x80 + (isObtainedTextStored + 1) * 0xC;
-                prim->x2 = 0x68 + (isObtainedTextStored * 0x78) / 7;
-                prim->x3 = 0x98 - (isObtainedTextStored * 0x78) / 7;
-                prim->y0 = prim->y1 =
-                    g_RelicOrbTextBg1SY[isObtainedTextStored] + 0xA7;
-                prim->y2 = prim->y3 =
-                    g_RelicOrbTextBg1EY[isObtainedTextStored] + 0xA7;
+                prim->x1 = 0x80 - (temp + 1) * 0xC;
+                prim->x0 = 0x80 + (temp + 1) * 0xC;
+                prim->x2 = 0x68 + (temp * 0x78) / 7;
+                prim->x3 = 0x98 - (temp * 0x78) / 7;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[temp] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[temp] + 0xA7;
                 prim->b2 = prim->b3 -= 0x10;
             } else {
-                prim->x0 = 0x68 + (isObtainedTextStored * 0x78) / 7;
-                prim->x1 = 0x98 - (isObtainedTextStored * 0x78) / 7;
-                prim->x3 = 0x80 - (isObtainedTextStored + 1) * 0xC;
-                prim->x2 = 0x80 + (isObtainedTextStored + 1) * 0xC;
-                prim->y0 = prim->y1 =
-                    g_RelicOrbTextBg2SY[isObtainedTextStored] + 0xA7;
-                prim->y2 = prim->y3 =
-                    g_RelicOrbTextBg2EY[isObtainedTextStored] + 0xA7;
+                prim->x0 = 0x68 + (temp * 0x78) / 7;
+                prim->x1 = 0x98 - (temp * 0x78) / 7;
+                prim->x3 = 0x80 - (temp + 1) * 0xC;
+                prim->x2 = 0x80 + (temp + 1) * 0xC;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[temp] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[temp] + 0xA7;
                 prim->g0 = prim->g1 -= 0x10;
             }
         }
