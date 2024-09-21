@@ -255,7 +255,38 @@ void EntityRelicOrb(Entity* self) {
         BlitChar(&sp34[0], 0, 12, 0x100);
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
-#elif defined(VERSION_US)
+#elif defined(VERSION_BETA) || STAGE == STAGE_ST0
+        msgLen = 0;
+        temp = false;
+        vramX = 0;
+        msg = g_api.relicDefs[relicId].name;
+        while (true) {
+            ch = *msg++;
+            if (ch == 0) {
+                if (temp) {
+                    break;
+                }
+                temp = true;
+                msg = g_RelicOrbTexts[0];
+            } else {
+                ch = (ch << 8) | *msg++;
+                chPixSrc = g_api.func_80106A28(ch, 1);
+                if (chPixSrc != NULL) {
+                    chPixDst = &msgBoxTpage[msgLen * 0x30];
+                    for (i = 0; i < 0x30; i++) {
+                        *chPixDst++ = *chPixSrc++;
+                    }
+                    LoadTPage(&msgBoxTpage[msgLen * 0x30], 0, 0, vramX, 0x100,
+                              0xC, 0x10);
+                    vramX += 3;
+                    msgLen++;
+                }
+            }
+        }
+        self->ext.relicOrb.unk7E = msgLen;
+        self->ext.relicOrb.unk7C = 0;
+#else
+
         msgLen = 0;
         temp = false;
         msg = g_RelicOrbTexts[0];
@@ -281,40 +312,9 @@ void EntityRelicOrb(Entity* self) {
         LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
         self->ext.relicOrb.unk7C = 0;
         self->ext.relicOrb.unk7E = msgLen;
-#else
-        msgLen = 0;
-        temp = false;
-        vramX = 0;
-        msg = g_api.relicDefs[relicId].name;
-        while (true) {
-            ch = *msg++;
-            if (ch == 0) {
-                if (temp) {
-                    break;
-                }
-                temp = true;
-                msg = g_RelicOrbTexts[0];
-            } else {
-                ch = (ch << 8) | *msg++;
-                chPixSrc = g_api_func_80106A28(ch, 1);
-                if (chPixSrc != NULL) {
-                    chPixDst = &msgBoxTpage[msgLen * 0x30];
-                    for (i = 0; i < 0x30; i++) {
-                        *chPixDst++ = *chPixSrc++;
-                    }
-                    LoadTPage(&msgBoxTpage[msgLen * 0x30], 0, 0, vramX, 0x100,
-                              0xC, 0x10);
-                    vramX += 3;
-                    msgLen++;
-                }
-            }
-        }
-        self->ext.relicOrb.unk7E = msgLen;
-        self->ext.relicOrb.unk7C = 0;
 #endif
         self->step++;
         break;
-
     case 7:
         // Animates the blue/green rectangle for the Obtain text bg
         prim = &g_PrimBuf[self->primIndex];

@@ -219,6 +219,43 @@ void EntityRelicOrb(Entity* self) {
         break;
 
     case 6:
+        // This case creates the texture "Obtained RELIC_NAME" and stores it
+        // in the VRAM
+#if defined(VERSION_PSP)
+        msgLen = 0;
+        var_s2 = 0;
+        temp = false;
+        msg = g_api.relicDefs[relicId].name;
+        switch (D_PSP_8B42058) {
+        case 1:
+        default:
+            D_psp_0924BC60 = &D_psp_09246640;
+            break;
+        case 2:
+            D_psp_0924BC60 = &D_psp_09246650;
+            break;
+        case 3:
+            D_psp_0924BC60 = &D_psp_09246660;
+            break;
+        case 4:
+            D_psp_0924BC60 = &D_psp_09246668;
+            break;
+        case 5:
+            D_psp_0924BC60 = &D_psp_09246678;
+            break;
+        }
+
+        if (D_PSP_8B42058 != 4) {
+            func_890C6FC(&sp34, &D_psp_09246688, D_psp_0924BC60, msg);
+        } else {
+            func_890C6FC(&sp34, &D_psp_09246688, msg, D_psp_0924BC60);
+        }
+        // Presumably this is a strlen call?
+        msgLen = func_890CAE0(sp34);
+        BlitChar(&sp34[0], 0, 12, 0x100);
+        self->ext.relicOrb.unk7E = msgLen;
+        self->ext.relicOrb.unk7C = 0;
+#elif defined(VERSION_BETA) || STAGE == STAGE_ST0
         msgLen = 0;
         temp = false;
         vramX = 0;
@@ -248,6 +285,34 @@ void EntityRelicOrb(Entity* self) {
         }
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
+#else
+
+        msgLen = 0;
+        temp = false;
+        msg = g_RelicOrbTexts[0];
+        chPix = g_Pix[0];
+        var_v0_5 = (u8*)chPix;
+        for (i = 0; i < 0xC00; i++) {
+            *var_v0_5++ = 0;
+        }
+
+        msgLen = 0;
+        while (true) {
+            if (*msg == 0) {
+                if (temp) {
+                    break;
+                }
+                msg = g_api.relicDefs[relicId].name;
+                temp = true;
+            } else {
+                msg = BlitChar(msg, &msgLen, chPix, 0xC0);
+            }
+        }
+
+        LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
+        self->ext.relicOrb.unk7C = 0;
+        self->ext.relicOrb.unk7E = msgLen;
+#endif
         self->step++;
         break;
     case 7:
