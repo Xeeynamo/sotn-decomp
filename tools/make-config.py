@@ -379,6 +379,11 @@ def make_config_psx(ovl_path: str, version: str):
     jtbl_addr = get_gnu_c_first_jtbl_addr(ovl_data[text_off:bss_off])
     if jtbl_addr > 0:
         rodata_off = jtbl_addr - vram
+        # sometimes text_off can be a fluke (e.g. HD RIC), we might need to re-calculate the offset
+        # we know it is the case if the found rodata offset starts after the found text offset
+        if jtbl_addr > text_off:
+            text_off = estimate_gnu_c_function_begin(ovl_data[rodata_off:], False)
+            text_off += rodata_off
     else:
         rodata_off = -1
     file_size = os.stat(ovl_path).st_size
