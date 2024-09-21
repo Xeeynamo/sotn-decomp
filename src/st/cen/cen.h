@@ -58,12 +58,12 @@ extern u16 g_eInitGeneric2[];
 extern u16 D_8018047C[]; // EntityElevator
 
 extern ObjInit D_80180490[];
-extern s32 D_80180574[];
-extern s8 D_80180594[];
+extern u16* D_80180574[];
+extern u8 D_80180594[];
 extern u8 D_8018059C[];
-extern s16 D_801805A4[];
-extern s8 D_801805B4[];
-extern u16 D_801805BC;
+extern u16 D_801805A4[];
+extern u8 D_801805B4[];
+extern s16 D_801805BC[];
 extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
 extern s8 c_HeartPrizes[];
