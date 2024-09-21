@@ -146,7 +146,19 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.yFloatSpeed = -FIX(0.0078125);
 #endif
         break;
-
+#if STAGE != STAGE_ST0
+    case 1:
+        // The relic floats in the air
+        self->velocityY += self->ext.relicOrb.yFloatSpeed;
+        if (!--self->ext.relicOrb.floatTimer) {
+            self->ext.relicOrb.floatTimer = 64;
+            self->ext.relicOrb.yFloatSpeed = -self->ext.relicOrb.yFloatSpeed;
+        }
+        MoveEntity();
+        iconSlot = self->ext.relicOrb.iconSlot;
+        g_ItemIconSlots[iconSlot] = 0x10;
+        break;
+#endif
     case 5:
         g_api.PlaySfx(SFX_UNK_618);
 

@@ -146,7 +146,7 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.yFloatSpeed = -FIX(0.0078125);
 #endif
         break;
-
+#if STAGE != STAGE_ST0
     case 1:
         // The relic floats in the air
         self->velocityY += self->ext.relicOrb.yFloatSpeed;
@@ -158,7 +158,7 @@ void EntityRelicOrb(Entity* self) {
         iconSlot = self->ext.relicOrb.iconSlot;
         g_ItemIconSlots[iconSlot] = 0x10;
         break;
-
+#endif
     case 5:
         g_api.func_800FE044(relicId, 0x2000);
 #if !defined(VERSION_BETA)
