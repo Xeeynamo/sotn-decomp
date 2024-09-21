@@ -385,14 +385,18 @@ void EntityRelicOrb(Entity* self) {
 
     case 9:
         prim = &g_PrimBuf[self->primIndex];
-#if defined(VERSION_US) && !defined(VERSION_PSP)
-        prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
-#else
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
+#else
+        prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
 #endif
         prim->drawMode = DRAW_DEFAULT;
         self->ext.relicOrb.unk7C++;
+#if STAGE == STAGE_ST0
+        if (self->ext.relicOrb.unk7C > 0x100) {
+#else
         if (self->ext.relicOrb.unk7C > 0x60) {
+#endif
             DestroyEntity(self);
             return;
         }
