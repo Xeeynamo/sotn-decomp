@@ -1,42 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
-#include "../check_coll_offsets.h"
-
-#include "../entity_unkId13.h"
-
-#include "../entity_unkId14_spawner.h"
-
-#include "../entity_unkId15_spawner.h"
-
-#include "../entity_unkId14.h"
-
-#include "../entity_unkId15.h"
-
-#include "../entity_olrox_drool.h"
-
-#include "../unk_collision_func5.h"
-
-#include "../unk_collision_func4.h"
-
-#include "../entity_intense_explosion.h"
-
-#include "../initialize_unk_entity.h"
-
-#include "../make_entity_from_id.h"
-
-#include "../make_explosions.h"
-
-#include "../entity_big_red_fireball.h"
-
-#include "../unk_recursive_primfunc_1.h"
-
-#include "../unk_recursive_primfunc_2.h"
-
-#include "../clut_lerp.h"
-
-#include "../play_sfx_positional.h"
-
 #include "../e_stage_name.h"
 
 #include "../entity_soul_steal_orb.h"
@@ -179,7 +143,7 @@ void func_801CC90C(Entity* arg0) {
 }
 
 // stronger version of warg with jump and flame attack
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityStrongWarg);
+INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityStrongWarg);
 
 void EntityUnkId30(Entity* self) {
     Entity* entity;
@@ -355,7 +319,7 @@ void EntityUnkId31(Entity* self) {
 }
 
 // some sort of explosion
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityExplosion3);
+INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityExplosion3);
 
 void func_801CE740(Entity* self) {
     Primitive* prim = &g_PrimBuf[self->primIndex];
@@ -413,9 +377,9 @@ void func_801CE740(Entity* self) {
 }
 
 // flame-like attack on ground from strong warg
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityStrongWargWaveAttack);
+INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityStrongWargWaveAttack);
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId2F);
+INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityUnkId2F);
 
 // beams that go up when strong warg dies
 void EntityStrongWargDeathBeams(Entity* self) {
@@ -643,9 +607,68 @@ void func_801CF6D8(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityWarg);
+INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityWarg);
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId4B);
+// func_psp_09254348
+void EntityUnkId4B(Entity* self) {
+    u16 lastAnimFrame;
+    Entity* previous;
+    s16* hitboxPtr;
+
+    previous = self - 1;
+
+    if (!self->step) {
+        InitializeEntity(&D_80180B9C);
+        self->animCurFrame = 0;
+        self->hitPoints = 0x7FFF;
+    }
+
+    self->posX.i.hi = previous->posX.i.hi;
+    self->posY.i.hi = previous->posY.i.hi;
+    self->facingLeft = previous->facingLeft;
+    lastAnimFrame = previous->animCurFrame;
+
+    if (lastAnimFrame) {
+
+        if (self->params) {
+
+            if (lastAnimFrame >= 109) {
+                lastAnimFrame -= 108;
+            } else if (lastAnimFrame >= 82) {
+                lastAnimFrame -= 62;
+            } else if (lastAnimFrame >= 76) {
+                lastAnimFrame -= 59;
+            } else if (lastAnimFrame >= 63) {
+                lastAnimFrame -= 56;
+            } else if (lastAnimFrame >= 51) {
+                lastAnimFrame -= 50;
+            } else {
+                lastAnimFrame -= 49;
+            }
+            hitboxPtr = &D_801836BC[lastAnimFrame * 8];
+
+        } else {
+            if (previous->params) {
+                if (lastAnimFrame >= 86 || lastAnimFrame >= 57) {
+                    lastAnimFrame -= 57;
+                } else {
+                    lastAnimFrame = 13;
+                }
+            } else if (lastAnimFrame >= 96) {
+                lastAnimFrame -= 48;
+            } else {
+                lastAnimFrame -= 1;
+            }
+            hitboxPtr = &D_801832EC[lastAnimFrame * 8];
+        }
+
+        hitboxPtr = hitboxPtr + 4;
+        self->hitboxOffX = *hitboxPtr++;
+        self->hitboxOffY = *hitboxPtr++;
+        self->hitboxWidth = *hitboxPtr++;
+        self->hitboxHeight = *hitboxPtr;
+    }
+}
 
 // A single "puff" of the warg explosion animation, transparent
 void EntityWargExplosionPuffTransparent(Entity* entity) {

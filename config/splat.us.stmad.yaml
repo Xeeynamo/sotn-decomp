@@ -27,6 +27,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: adb3303e1ea707c63dfa978511a88cab4f61970a
 segments:
   - name: stmad
     type: code
@@ -43,8 +44,8 @@ segments:
       - [0x9EC, .data, st_common]
       - [0xBEC, .data, e_collect]
       - [0xED8, data]
-      - [0xEF8, .data, entity_relic_orb]
-      - [0xF5C, data]
+      - [0xEF8, .data, e_misc]
+      - [0x1068, data]
       - [0x1130, data, g_Rooms]
       - [0x11D4, data] # assets/st/mad/0.objlayout
       # - [0x11E8, data] # assets/st/mad/1.objlayout
@@ -76,7 +77,7 @@ segments:
       - [0xD7CC, .rodata, e_red_door] # EntityRedDoor
       - [0xD83C, .rodata, e_collect]
       - [0xD85C, .rodata, e_collect] # EntityEquipItemDrop
-      - [0xD874, .rodata, entity_relic_orb]
+      - [0xD874, .rodata, e_misc]
       - [0xD8AC, rodata]
       - [0xD8C0, .rodata, prim_helpers]
       - [0xD8C8, c]
@@ -86,8 +87,8 @@ segments:
       - [0x110A8, c, e_red_door]
       - [0x11D3C, c, st_common]
       - [0x1344C, c, e_collect]
-      - [0x149C0, c, entity_relic_orb]
-      - [0x15520, c]
+      - [0x149C0, c, e_misc]
+      - [0x17B94, c]
       - [0x18FA0, c, prim_helpers]
       - [0x197D8, .bss, create_entity]
       - [0x197ED, .bss, bss]

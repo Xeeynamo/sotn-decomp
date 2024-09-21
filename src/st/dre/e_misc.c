@@ -2,4 +2,4 @@
 #include "dre.h"
 
 #define HEART_DROP_CASTLE_FLAG 0x118
-#include "../entity_heart_drop.h"
+#include "../e_misc.h"
