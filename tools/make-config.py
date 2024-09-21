@@ -205,6 +205,10 @@ def is_psp(version: str) -> bool:
     return version.startswith("psp")
 
 
+def is_hd(version: str) -> bool:
+    return version == "hd"
+
+
 def is_weapon(ovl_name: str) -> bool:
     return ovl_name.startswith("w0_") or ovl_name.startswith("w1_")
 
@@ -234,8 +238,8 @@ def is_stage(ovl_name: str) -> bool:
 def make_ovl_path(ovl_name: str, version: str) -> str:
     if is_psp(version):
         return f"disks/{version}/PSP_GAME/USRDIR/res/ps/PSPBIN/{ovl_name.lower()}.bin"
-    elif version == "hd":
-        return f"disks/{version}/PSP_GAME/USRDIR/res/ps/hdbin/{ovl_name.lower()}.bin"
+    elif is_hd(version):
+        return f"disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/{ovl_name.lower()}.bin"
     elif version == "saturn":
         omgpanic("saturn version not implemented")
     if is_servant(ovl_name):
