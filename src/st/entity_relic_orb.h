@@ -53,7 +53,7 @@ void EntityRelicOrb(Entity* self) {
     const char sp34[0x100];
 #endif
 
-#if !defined(VERSION_US)
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
     u16 vramX;
     u16* chPixSrc;
     u16* chPixDst;

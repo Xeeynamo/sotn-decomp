@@ -46,11 +46,20 @@ void EntityRelicOrb(Entity* self) {
     u16 var_s8;
     u16 msgLen;
 
+    // unnamed variables
+    u8* var_v0_5;
+    u16 var_s2;
+#if defined(VERSION_PSP)
+    const char sp34[0x100];
+#endif
+
+#if defined(VERSION_BETA) || STAGE == STAGE_ST0
     u16 vramX;
     u16* chPixSrc;
     u16* chPixDst;
     u16 ch;
     s16 left, top, right, bottom;
+#endif
 
     relicId = self->params & 0x7FFF;
     if (self->step && self->step < 5 && self->hitFlags) {
