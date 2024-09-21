@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="146.89" cy="-18" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="146.89" y="-14.3" font-family="Times,serif" font-size="14.00">no3.PrimDecreaseBrightness</text>
 </g>
-<!-- no3.func_801CAE20 -->
+<!-- no3.StageNamePopupHelper -->
 <g id="node2" class="node">
-<title>no3.func_801CAE20</title>
-<g id="a_node2"><a xlink:href="no3.func_801CAE20.svg" xlink:title="no3.func_801CAE20">
-<ellipse fill="green" stroke="black" cx="146.89" cy="-198" rx="104.78" ry="18"/>
-<text text-anchor="middle" x="146.89" y="-194.3" font-family="Times,serif" font-size="14.00">no3.func_801CAE20</text>
+<title>no3.StageNamePopupHelper</title>
+<g id="a_node2"><a xlink:href="no3.StageNamePopupHelper.svg" xlink:title="no3.StageNamePopupHelper">
+<ellipse fill="green" stroke="black" cx="146.89" cy="-198" rx="145.67" ry="18"/>
+<text text-anchor="middle" x="146.89" y="-194.3" font-family="Times,serif" font-size="14.00">no3.StageNamePopupHelper</text>
 </a>
 </g>
 </g>
-<!-- no3.func_801CAE20&#45;&gt;no3.PrimDecreaseBrightness -->
+<!-- no3.StageNamePopupHelper&#45;&gt;no3.PrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>no3.func_801CAE20&#45;&gt;no3.PrimDecreaseBrightness</title>
+<title>no3.StageNamePopupHelper&#45;&gt;no3.PrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M146.89,-179.93C146.89,-148.97 146.89,-83.3 146.89,-46.13"/>
 <polygon fill="black" stroke="black" points="150.39,-46.02 146.89,-36.02 143.39,-46.02 150.39,-46.02"/>
 <text text-anchor="middle" x="141.89" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>

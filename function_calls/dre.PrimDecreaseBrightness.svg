@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="145.59" cy="-18" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="145.59" y="-14.3" font-family="Times,serif" font-size="14.00">dre.PrimDecreaseBrightness</text>
 </g>
-<!-- dre.func_801A0564 -->
+<!-- dre.StageNamePopupHelper -->
 <g id="node2" class="node">
-<title>dre.func_801A0564</title>
-<g id="a_node2"><a xlink:href="dre.func_801A0564.svg" xlink:title="dre.func_801A0564">
-<ellipse fill="green" stroke="black" cx="145.59" cy="-198" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="145.59" y="-194.3" font-family="Times,serif" font-size="14.00">dre.func_801A0564</text>
+<title>dre.StageNamePopupHelper</title>
+<g id="a_node2"><a xlink:href="dre.StageNamePopupHelper.svg" xlink:title="dre.StageNamePopupHelper">
+<ellipse fill="green" stroke="black" cx="145.59" cy="-198" rx="143.77" ry="18"/>
+<text text-anchor="middle" x="145.59" y="-194.3" font-family="Times,serif" font-size="14.00">dre.StageNamePopupHelper</text>
 </a>
 </g>
 </g>
-<!-- dre.func_801A0564&#45;&gt;dre.PrimDecreaseBrightness -->
+<!-- dre.StageNamePopupHelper&#45;&gt;dre.PrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>dre.func_801A0564&#45;&gt;dre.PrimDecreaseBrightness</title>
+<title>dre.StageNamePopupHelper&#45;&gt;dre.PrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M145.59,-179.93C145.59,-148.97 145.59,-83.3 145.59,-46.13"/>
 <polygon fill="black" stroke="black" points="149.09,-46.02 145.59,-36.02 142.09,-46.02 149.09,-46.02"/>
 <text text-anchor="middle" x="140.59" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>

@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="152.09" cy="-18" rx="152.17" ry="18"/>
 <text text-anchor="middle" x="152.09" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.PrimDecreaseBrightness</text>
 </g>
-<!-- wrp.func_801917BC -->
+<!-- rwrp.StageNamePopupHelper -->
 <g id="node2" class="node">
-<title>wrp.func_801917BC</title>
-<g id="a_node2"><a xlink:href="wrp.func_801917BC.svg" xlink:title="wrp.func_801917BC">
-<ellipse fill="green" stroke="black" cx="152.09" cy="-198" rx="104.78" ry="18"/>
-<text text-anchor="middle" x="152.09" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.func_801917BC</text>
+<title>rwrp.StageNamePopupHelper</title>
+<g id="a_node2"><a xlink:href="rwrp.StageNamePopupHelper.svg" xlink:title="rwrp.StageNamePopupHelper">
+<ellipse fill="green" stroke="black" cx="152.09" cy="-198" rx="150.57" ry="18"/>
+<text text-anchor="middle" x="152.09" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.StageNamePopupHelper</text>
 </a>
 </g>
 </g>
-<!-- wrp.func_801917BC&#45;&gt;rwrp.PrimDecreaseBrightness -->
+<!-- rwrp.StageNamePopupHelper&#45;&gt;rwrp.PrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>wrp.func_801917BC&#45;&gt;rwrp.PrimDecreaseBrightness</title>
+<title>rwrp.StageNamePopupHelper&#45;&gt;rwrp.PrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M152.09,-179.93C152.09,-148.97 152.09,-83.3 152.09,-46.13"/>
 <polygon fill="black" stroke="black" points="155.59,-46.02 152.09,-36.02 148.59,-46.02 155.59,-46.02"/>
 <text text-anchor="middle" x="147.09" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>

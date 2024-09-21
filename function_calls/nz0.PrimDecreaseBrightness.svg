@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="146.24" cy="-18" rx="146.47" ry="18"/>
 <text text-anchor="middle" x="146.24" y="-14.3" font-family="Times,serif" font-size="14.00">nz0.PrimDecreaseBrightness</text>
 </g>
-<!-- nz0.func_801C8ADC -->
+<!-- nz0.StageNamePopupHelper -->
 <g id="node2" class="node">
-<title>nz0.func_801C8ADC</title>
-<g id="a_node2"><a xlink:href="nz0.func_801C8ADC.svg" xlink:title="nz0.func_801C8ADC">
-<ellipse fill="green" stroke="black" cx="146.24" cy="-198" rx="105.08" ry="18"/>
-<text text-anchor="middle" x="146.24" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.func_801C8ADC</text>
+<title>nz0.StageNamePopupHelper</title>
+<g id="a_node2"><a xlink:href="nz0.StageNamePopupHelper.svg" xlink:title="nz0.StageNamePopupHelper">
+<ellipse fill="green" stroke="black" cx="146.24" cy="-198" rx="144.87" ry="18"/>
+<text text-anchor="middle" x="146.24" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.StageNamePopupHelper</text>
 </a>
 </g>
 </g>
-<!-- nz0.func_801C8ADC&#45;&gt;nz0.PrimDecreaseBrightness -->
+<!-- nz0.StageNamePopupHelper&#45;&gt;nz0.PrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>nz0.func_801C8ADC&#45;&gt;nz0.PrimDecreaseBrightness</title>
+<title>nz0.StageNamePopupHelper&#45;&gt;nz0.PrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M146.24,-179.93C146.24,-148.97 146.24,-83.3 146.24,-46.13"/>
 <polygon fill="black" stroke="black" points="149.74,-46.02 146.24,-36.02 142.74,-46.02 149.74,-46.02"/>
 <text text-anchor="middle" x="141.24" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>

@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="150.79" cy="-18" rx="150.57" ry="18"/>
 <text text-anchor="middle" x="150.79" y="-14.3" font-family="Times,serif" font-size="14.00">boss.PrimDecreaseBrightness</text>
 </g>
-<!-- boss.func_us_80196538 -->
+<!-- boss.StageNamePopupHelper -->
 <g id="node2" class="node">
-<title>boss.func_us_80196538</title>
-<g id="a_node2"><a xlink:href="boss.func_us_80196538.svg" xlink:title="boss.func_us_80196538">
-<ellipse fill="green" stroke="black" cx="150.79" cy="-198" rx="120.78" ry="18"/>
-<text text-anchor="middle" x="150.79" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_80196538</text>
+<title>boss.StageNamePopupHelper</title>
+<g id="a_node2"><a xlink:href="boss.StageNamePopupHelper.svg" xlink:title="boss.StageNamePopupHelper">
+<ellipse fill="green" stroke="black" cx="150.79" cy="-198" rx="149.47" ry="18"/>
+<text text-anchor="middle" x="150.79" y="-194.3" font-family="Times,serif" font-size="14.00">boss.StageNamePopupHelper</text>
 </a>
 </g>
 </g>
-<!-- boss.func_us_80196538&#45;&gt;boss.PrimDecreaseBrightness -->
+<!-- boss.StageNamePopupHelper&#45;&gt;boss.PrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>boss.func_us_80196538&#45;&gt;boss.PrimDecreaseBrightness</title>
+<title>boss.StageNamePopupHelper&#45;&gt;boss.PrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M150.79,-179.93C150.79,-148.97 150.79,-83.3 150.79,-46.13"/>
 <polygon fill="black" stroke="black" points="154.29,-46.02 150.79,-36.02 147.29,-46.02 154.29,-46.02"/>
 <text text-anchor="middle" x="145.79" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
