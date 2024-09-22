@@ -22,7 +22,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->flags = obj->unkC;
         }
     }
-    AnimateEntity(obj->unk10, entity);
+    AnimateEntity(obj->animFrames, entity);
 }
 
 // Different from other overlays, but identical to the one in Weapon 21.

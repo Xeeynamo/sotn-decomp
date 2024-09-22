@@ -149,7 +149,6 @@ extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
 extern s32 D_801819EC[];
-extern const char* D_80181ACC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
@@ -255,5 +254,6 @@ extern s32 D_801D7DD4;
 extern u16 D_801D7D60;
 extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
+extern u16 D_80180B3C[];
 
 extern Dialogue g_Dialogue;

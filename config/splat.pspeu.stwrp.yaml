@@ -90,7 +90,7 @@ segments:
       - [0xF3A0, data] # D_psp_09246A20
       - [0xF440, data] # D_psp_09246AC0
       - [0xF450, data] # D_psp_09246AD0
-      - [0xF460, data] # D_80181134
+      - [0xF460, data] # eRoomForegroundInit
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0

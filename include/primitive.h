@@ -6,6 +6,10 @@
 #define PRIMITIVE_H
 #include "common.h"
 
+typedef enum {
+    PRIORITY_DIALOGUE = 0x1FE,
+} PrimitivePriority;
+
 #define blendMode drawMode // maintained to easily migrate existing scratches
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;

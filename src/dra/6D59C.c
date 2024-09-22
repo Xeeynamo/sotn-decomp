@@ -318,12 +318,12 @@ void func_8010DF70(void) {
     }
 }
 
-void func_8010DFF0(s32 arg0, s32 arg1) {
+void func_8010DFF0(s32 resetAnims, s32 arg1) {
     Primitive* prim;
     s32 i;
 
-    if (arg0 != 0) {
-        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk1 = 1;
+    if (resetAnims) {
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
@@ -335,10 +335,10 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk0 = 1;
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 10;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 10;
 
-    if (arg1 != 0) {
+    if (arg1) {
         if (arg1 < 4) {
             g_Player.timers[15] = 4;
         } else {

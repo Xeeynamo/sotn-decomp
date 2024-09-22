@@ -110,7 +110,7 @@ void func_8018E5AC(Entity* self) {
             self->flags = temp_v0;
         }
     }
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 void func_8018E674(Entity* self) {
