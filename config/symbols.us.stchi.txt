@@ -62,7 +62,7 @@ CollectSubweapon = 0x801A2A78;
 CollectHeartVessel = 0x801A2B90;
 CollectLifeVessel = 0x801A2C34;
 DestroyCurrentEntity = 0x801A2C84;
-//EntityPrizeDrop = 0x801A2CAC;
+EntityPrizeDrop = 0x801A2CAC;
 //EntityExplosion = 0x801A3520;
 BlinkItem = 0x801A361C;
 //EntityEquipItemDrop = 0x801A36C0;
@@ -135,7 +135,7 @@ g_ItemIconSlots = 0x801AF3E8;
 
 // ASM-only data is referencing these values, so these
 // are temporarily here until it's decompiled into .c files
-EntityInit_8018061C = 0x8018061C;
+g_InitializeData0 = 0x8018061C;
 EntityInit_80180628 = 0x80180628;
 EntityInit_80180640 = 0x80180640;
 EntityInit_8018064C = 0x8018064C;
