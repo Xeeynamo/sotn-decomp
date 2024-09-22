@@ -23,7 +23,7 @@ void func_801B0958(Entity* self) {
             self->flags = objInit->unkC;
         }
     }
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 bool func_801B0A20(Entity* self) {

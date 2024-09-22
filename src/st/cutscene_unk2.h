@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-s32 CutsceneUnk2(s32 textDialogue) {
+u8 CutsceneUnk2(s32 textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 

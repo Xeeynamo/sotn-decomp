@@ -1,25 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
 
-extern ObjInit2 D_80180C10[];
+extern ObjInit g_eBackgroundBlockInit[];
 extern u16 g_eInitGeneric2[];
-void func_us_8018AC0C(Entity* self) {
-    ObjInit2* objInit = &D_80180C10[self->params];
 
-    if (self->step == 0) {
+void EntityBackgroundBlock(Entity* self) {
+    ObjInit* objInit = &g_eBackgroundBlockInit[self->params];
+    if (!self->step) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->unk5A = LOH(objInit->facingLeft); // bug?
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
+
+        if (objInit->unkC) {
             self->flags = objInit->unkC;
+        }
+
+        if (self->params == 1) {
+            self->rotX = self->rotY = 0x0200;
         }
     }
 
     AnimateEntity(objInit->animFrames, self);
 }
 
-#include "../../st/entity_unk_id12.h"
+#include "entity_unk_id12.h"

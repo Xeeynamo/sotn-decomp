@@ -26,7 +26,7 @@ void EntityCavernDoorVase(Entity* self) {
         }
     }
 
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 void EntityUnkId12(Entity* entity) {

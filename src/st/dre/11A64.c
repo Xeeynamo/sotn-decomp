@@ -31,7 +31,7 @@ void EntityUnkId11(Entity* entity) {
         }
     }
 
-    AnimateEntity(obj->unk10, entity);
+    AnimateEntity(obj->animFrames, entity);
 }
 
 void func_80191B44(Entity* entity) {

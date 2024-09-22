@@ -98,7 +98,7 @@ void EntityDeathCutscene(Entity* self) {
             return;
         }
         g_Entities[192].params = 0x100;
-        if (CutsceneUnk2(D_80184CE0) & 0xFF) {
+        if (CutsceneUnk2(D_80184CE0)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_801D7DD4 = 0;

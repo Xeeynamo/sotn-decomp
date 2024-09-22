@@ -38,7 +38,9 @@ segments:
       - [0xDC, .data, header] # layers
       - [0x134, .data, header] # gfxbanks
       - [0x1EC, .data, e_laydef] # layout entries header
-      - [0x394, .data, entity]
+      - [0x394, .data, e_init]
+      - [0x4D4, .data, st_debug]
+      - [0x554, .data, e_breakable]
       - [0x5D8, .data, holyglassescutscene]
       - [0x68C, .data, F890]
       - [0x7B8, .data, st_update]
@@ -48,14 +50,15 @@ segments:
       - [0xDBC, .data, e_collect]
       - [0x10AC, .data, e_misc]
       - [0x1110, .data, e_misc]
-      - [0x11C8, data]
+      - [0x11C8, .data, e_particles]
+      - [0x1248, .data, e_room_fg]
       - [0x12D4, .data, rooms]
       - [0x1300, .data, e_layout] # layout entries data
       - [0x13F0, data]
       - [0x69EC, .data, tile_data] # tile data
       - [0x81EC, .data, tile_data] # tile definitions
       - [0xC60C, .data, sprites]
-      - [0xD414, .rodata, entity]
+      - [0xD414, .rodata, e_init]
       - [0xD42C, .rodata, holyglassescutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
@@ -65,7 +68,9 @@ segments:
       - [0xD5B0, .rodata, e_misc]
       - [0xD5C4, .rodata, e_stage_name] # EntityStageNamePopup
       - [0xD5F8, .rodata, prim_helpers]
-      - [0xD600, c]
+      - [0xD600, c, st_debug]
+      - [0xD89C, c, e_breakable]
+      - [0xDB18, c]
       - [0xDF0C, c, holyglassescutscene]
       - [0xF890, c]
       - [0x10E4C, c, st_update]
@@ -74,10 +79,12 @@ segments:
       - [0x135B4, c, e_red_door]
       - [0x14264, c, st_common]
       - [0x15714, c, e_collect]
-      - [0x16C90, c, blit_char]
-      - [0x16F30, c, e_misc]
+      - [0x16C90, c, blit_char] 
+      - [0x16F30, c, e_misc] 
       - [0x1A5F0, c, e_stage_name]
-      - [0x1B274, c]
+      - [0x1B274, c, e_particles]
+      - [0x1BAB8, c, e_room_fg]
+      - [0x1BBA4, c, popup]
       - [0x1BED4, c, prim_helpers]
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
