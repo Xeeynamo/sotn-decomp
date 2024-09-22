@@ -79,7 +79,7 @@ EntityUnkId15 = 0x801A55B4;
 EntityOlroxDrool = 0x801A56A8;
 // func_801A58D8
 // func_801A59D4
-//EntityIntenseExplosion = 0x801A5F54;
+EntityIntenseExplosion = 0x801A5F54;
 // func_801A6054
 // func_801A6120
 // func_801A61E8

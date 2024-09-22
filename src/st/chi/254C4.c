@@ -314,8 +314,9 @@ u8 func_801A59D4(s32 arg0) {
     return bits_01;
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A5F54);    // EntityIntenseExplosion()
-//#include "../entity_intense_explosion.h"
+// [Duplicate]
+// func_801A5F54
+#include "../entity_intense_explosion.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A6054);    // [Duplicate]
 
