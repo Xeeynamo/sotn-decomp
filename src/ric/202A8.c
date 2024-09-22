@@ -6,9 +6,11 @@ void RicHandleHighJump(void) {
     bool loadAnim = 0;
     s32 temp;
 
+#if defined(VERSION_US)
     FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
+#endif
     g_Player.pl_high_jump_timer++;
 
     switch (PLAYER.step_s) {

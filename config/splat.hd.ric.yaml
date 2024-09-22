@@ -50,7 +50,7 @@ segments:
       - [0x1AC2C, c, 1AC60_hd]
       - [0x1CB28, c, 1CB04_hd]
       - [0x1FCD8, c, 1FCD0_hd]
-      - [0x202B0, c, 202A8_hd]
+      - [0x202B0, c, 202A8]
       - [0x208E8, c, 20920_hd]
       - [0x211C8, c, 21250_hd]
       - [0x246C4, c, 24788_hd]

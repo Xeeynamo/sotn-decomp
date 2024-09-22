@@ -2,9 +2,9 @@
 
 INCLUDE_ASM("ric/nonmatchings/20920_hd", RicSetAnimation);
 
-INCLUDE_ASM("ric/nonmatchings/20920_hd", DecelerateY);
+INCLUDE_ASM("ric/nonmatchings/20920_hd", RicDecelerateX);
 
-INCLUDE_ASM("ric/nonmatchings/20920_hd", func_hd_8015C94C);
+INCLUDE_ASM("ric/nonmatchings/20920_hd", DecelerateY);
 
 INCLUDE_ASM("ric/nonmatchings/20920_hd", RicCheckFacing);
 
