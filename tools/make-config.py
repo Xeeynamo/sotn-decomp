@@ -762,15 +762,43 @@ def get_symbol_table(splat_config, table):
     return [int(line, 16) for line in table]
 
 
+def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
+    with open(symbol_file_name, "r") as f:
+        lines = f.readlines()
+    symbol_already_in_the_list = False
+    for i in range(len(lines)):
+        if f"0x{offset:08X}" in lines[i]:
+            symbol_already_in_the_list = True
+            if not lines[i].startswith("func_"):
+                return
+            if not lines[i].startswith("D_"):
+                return
+            if name.startswith("func_"):
+                return
+            if name.startswith("D_"):
+                return
+            # replace the existing default splat symbol with the good name
+            lines[i] = f"{name} = 0x{offset:08X}"
+            with open(symbol_file_name, "w") as f:
+                f.writelines(lines)
+            return
+    if not symbol_already_in_the_list:
+        with open(symbol_file_name, "a") as f:
+            f.write(f"{name} = 0x{offset:08X};\n")
+
+
 def add_symbol(splat_config, version: str, name: str, offset: int):
     if offset == 0:
+        return
+    # do not add symbols that belongs to the shared area
+    base_addr = splat_config["segments"][0]["vram"]
+    if offset < base_addr:
         return
 
     # add symbol to the overlay symbol list
     symbol_file_name = splat_config["options"]["symbol_addrs_path"][1]
     sym_prefix = get_symbol_prefix(splat_config)
-    with open(symbol_file_name, "a") as f:
-        f.write(f"{name} = 0x{offset:08X};\n")
+    add_symbol_unique(symbol_file_name, name, offset)
     sort_symbols_from_file(symbol_file_name)
 
     # do a find & replace on the extracted C code
