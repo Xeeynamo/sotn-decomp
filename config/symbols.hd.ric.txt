@@ -297,3 +297,4 @@ g_RicDebugPalette = 0x801758A8;
 g_IsRicDebugEnter = 0x801758AA;
 D_80175958 = 0x801758AC;
 D_801759D8 = 0x8017592C;
+entity_ranges = 0x80154C40;
