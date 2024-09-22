@@ -8,6 +8,135 @@
 
 //TODO: Use ../e_collect.h
 
+// [Duplicate]
+// func_801A273C
+void func_801A273C(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->velocityY >= 0) {
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
+        entity->velocityX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+
+    if (entity->velocityY < FIX(0.25)) {
+        entity->velocityY += FIX(0.125);
+    }
+}
+// [Duplicate]
+// func_801A27C0
+void func_801A27C0(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        func_801A273C();
+    }
+}
+
+s16 D_80181024[] = {
+    0x0E01, 0x0000, 0x0302, 0x0406, 0x0505, 0x0605, 0x0704, 0x0803,
+    0x0904, 0x0A05, 0x0B05, 0x0C06, 0x0307, 0x0406, 0x0505, 0x0605,
+    0x0704, 0x0803, 0x0904, 0x0A05, 0x0B05, 0x0C06, 0x0D02, 0x0000,
+    0x1404, 0x1507, 0x1606, 0x1703, 0x1803, 0x1906, 0x1502, 0x0000,
+    0x1A01, 0x0000, 0x1B01, 0x0000, 0x1C01, 0x0000, 0x1D01, 0x0000,
+    0x1E01, 0x0000, 0x1F01, 0x0000, 0x2001, 0x0000, 0x2101, 0x0000,
+    0x2202, 0x2302, 0x2402, 0x2502, 0x2602, 0x2702, 0x2802, 0x2902,
+    0x0000, 0x0000, 0x0F1A, 0x1006, 0x1104, 0x1202, 0x1104, 0x1006,
+    0x0000, 0x0000, 0x1301, 0x0000, 0x2A05, 0x2B05, 0x2C05, 0x2D05,
+    0x2E05, 0x2F05, 0x3005, 0x3105, 0x0000, 0x0000, 0x3205, 0x3305,
+    0x3405, 0x3505, 0x3605, 0x3705, 0x3805, 0x3905, 0x0000, 0x0000,
+    0x3A05, 0x3B05, 0x3C05, 0x3D05, 0x3E05, 0x3F05, 0x4005, 0x4105,
+    0x0000, 0x0000, 0x4205, 0x4305, 0x4405, 0x4505, 0x4605, 0x4705,
+    0x4805, 0x4905, 0x0000, 0x0000, 0x4A05, 0x4B05, 0x4C05, 0x4D05,
+    0x4E05, 0x4F05, 0x5005, 0x5105, 0x0000, 0x0000, 0x5205, 0x5305,
+    0x5405, 0x5505, 0x5605, 0x5705, 0x5805, 0x5905, 0x0000, 0x0000,
+    0x5A05, 0x5B05, 0x5C05, 0x5D05, 0x5E05, 0x5F05, 0x6005, 0x6105,
+    0x0000, 0x0000, 0x6205, 0x6305, 0x6405, 0x6505, 0x6605, 0x6705,
+    0x6805, 0x6905, 0x0000, 0x0000, 0x6A05, 0x6B05, 0x6C05, 0x6D05 
+};
+// static u8 D_80180C94[] = {0x01, 0x0E, 0x00};
+// static u8 D_80180C98[] = {
+//     0x02, 0x03, 0x06, 0x04, 0x05, 0x05, 0x05, 0x06, 0x04, 0x07, 0x03,
+//     0x08, 0x04, 0x09, 0x05, 0x0A, 0x05, 0x0B, 0x06, 0x0C, 0x07, 0x03,
+//     0x06, 0x04, 0x05, 0x05, 0x05, 0x06, 0x04, 0x07, 0x03, 0x08, 0x04,
+//     0x09, 0x05, 0x0A, 0x05, 0x0B, 0x06, 0x0C, 0x02, 0x0D, 0x00};
+// static u8 D_80180CC4[] = {0x04, 0x14, 0x07, 0x15, 0x06, 0x16, 0x03, 0x17,
+//                           0x03, 0x18, 0x06, 0x19, 0x02, 0x15, 0x00, 0x00};
+// static u8 D_80180CD4[] = {0x01, 0x1A, 0x00, 0x00};
+// static u8 D_80180CD8[] = {0x01, 0x1B, 0x00, 0x00};
+// static u8 D_80180CDC[] = {0x01, 0x1C, 0x00, 0x00};
+// static u8 D_80180CE0[] = {0x01, 0x1D, 0x00, 0x00};
+// static u8 D_80180CE4[] = {0x01, 0x1E, 0x00, 0x00};
+// static u8 D_80180CE8[] = {0x01, 0x1F, 0x00, 0x00};
+// static u8 D_80180CEC[] = {0x01, 0x20, 0x00, 0x00};
+// static u8 D_80180CF0[] = {0x01, 0x21, 0x00, 0x00};
+// static u8 D_80180CF4[] = {0x02, 0x22, 0x02, 0x23, 0x02, 0x24, 0x02, 0x25, 0x02,
+//                           0x26, 0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x00, 0x00};
+// static u8 D_80180D08[] = {0x1A, 0x0F, 0x06, 0x10, 0x04, 0x11, 0x02,
+//                           0x12, 0x04, 0x11, 0x06, 0x10, 0x00, 0x00};
+// static u8 D_80180D18[] = {0x01, 0x13, 0x00, 0x00};
+// static u8 D_80180D1C[] = {0x05, 0x2A, 0x05, 0x2B, 0x05, 0x2C, 0x05, 0x2D, 0x05,
+//                           0x2E, 0x05, 0x2F, 0x05, 0x30, 0x05, 0x31, 0x00, 0x00};
+// static u8 D_80180D30[] = {0x05, 0x32, 0x05, 0x33, 0x05, 0x34, 0x05, 0x35, 0x05,
+//                           0x36, 0x05, 0x37, 0x05, 0x38, 0x05, 0x39, 0x00, 0x00};
+// static u8 D_80180D44[] = {0x05, 0x3A, 0x05, 0x3B, 0x05, 0x3C, 0x05, 0x3D, 0x05,
+//                           0x3E, 0x05, 0x3F, 0x05, 0x40, 0x05, 0x41, 0x00, 0x00};
+// static u8 D_80180D58[] = {0x05, 0x42, 0x05, 0x43, 0x05, 0x44, 0x05, 0x45, 0x05,
+//                           0x46, 0x05, 0x47, 0x05, 0x48, 0x05, 0x49, 0x00, 0x00};
+// static u8 D_80180D6C[] = {0x05, 0x4A, 0x05, 0x4B, 0x05, 0x4C, 0x05, 0x4D, 0x05,
+//                           0x4E, 0x05, 0x4F, 0x05, 0x50, 0x05, 0x51, 0x00, 0x00};
+// static u8 D_80180D80[] = {0x05, 0x52, 0x05, 0x53, 0x05, 0x54, 0x05, 0x55, 0x05,
+//                           0x56, 0x05, 0x57, 0x05, 0x58, 0x05, 0x59, 0x00, 0x00};
+// static u8 D_80180D94[] = {0x05, 0x5A, 0x05, 0x5B, 0x05, 0x5C, 0x05, 0x5D, 0x05,
+//                           0x5E, 0x05, 0x5F, 0x05, 0x60, 0x05, 0x61, 0x00, 0x00};
+// static u8 D_80180DA8[] = {0x05, 0x62, 0x05, 0x63, 0x05, 0x64, 0x05, 0x65, 0x05,
+//                           0x66, 0x05, 0x67, 0x05, 0x68, 0x05, 0x69, 0x00, 0x00};
+// static u8 D_80180DBC[] = {0x05, 0x6A, 0x05, 0x6B, 0x05, 0x6C, 0x05, 0x6D};
+// static u16 D_80180DC4[] = {0x6E05, 0x6F05, 0x7005, 0x7105, 0};
+// static u8 D_80180DD0[] = {
+//     0x01, 0x8F, 0x00, 0x00, 0xFC, 0xFC, 0x04, 0xFC, 0xFC, 0x04, 0x04, 0x04,
+//     0x80, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x03, 0x00,
+//     0x06, 0x00, 0x05, 0x00, 0x07, 0x00, 0x08, 0x00, 0x09, 0x00, 0x00};
+
 // Used in func_801A2A78
 u16 D_80181154[] = {
     0x6E05, 0x6F05, 0x7005, 0x7105, 0x0000, 0x0000, 0x8F01, 0x0000,
@@ -34,13 +163,13 @@ u32 c_GoldPrizes[] = {
     0x000007D0, 0x00001388
 };
 // Used in func_801A2CAC
-u8 D_801811E8[] = {
-    0x24, 0x10, 0x18, 0x80, 0x28, 0x10, 0x18, 0x80, 0x54, 0x10, 0x18, 0x80, 0x64, 0x10, 0x18, 0x80,
-    0x68, 0x10, 0x18, 0x80, 0x6C, 0x10, 0x18, 0x80, 0x70, 0x10, 0x18, 0x80, 0x74, 0x10, 0x18, 0x80,
-    0x78, 0x10, 0x18, 0x80, 0x7C, 0x10, 0x18, 0x80, 0x80, 0x10, 0x18, 0x80, 0x84, 0x10, 0x18, 0x80,
-    0x98, 0x10, 0x18, 0x80, 0xA8, 0x10, 0x18, 0x80, 0xE8, 0x10, 0x18, 0x80, 0xD4, 0x10, 0x18, 0x80,
-    0xAC, 0x10, 0x18, 0x80, 0xC0, 0x10, 0x18, 0x80, 0xFC, 0x10, 0x18, 0x80, 0x10, 0x11, 0x18, 0x80,
-    0x24, 0x11, 0x18, 0x80, 0x38, 0x11, 0x18, 0x80, 0x4C, 0x11, 0x18, 0x80, 0x60, 0x11, 0x18, 0x80
+u8* D_801811E8[] = {
+    0x80181024, 0x80181028, 0x80181054, 0x80181064,
+    0x80181068, 0x8018106C, 0x80181070, 0x80181074,
+    0x80181078, 0x8018107C, 0x80181080, 0x80181084,
+    0x80181098, 0x801810A8, 0x801810E8, 0x801810D4,
+    0x801810AC, 0x801810C0, 0x801810FC, 0x80181110,
+    0x80181124, 0x80181138, 0x8018114C, 0x80181160
 };
 
 // Used in func_801A2CAC
@@ -135,51 +264,276 @@ void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 // POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A2CAC);    // EntityPrizeDrop()
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A3520);    // EntityExplosion()
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", EntityPrizeDrop);    // EntityPrizeDrop()
+#else
+// [Duplicate]
+// func_801A2CAC
+
+
+
+extern u16 g_InitializeData0[];
+
+
+
+void EntityPrizeDrop(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s16 primIndex;
+    s16 var_a2;
+    u16 itemId;
+    s16 temp_a0;
+
+    itemId = self->params & 0x7FFF;
+    if (self->step != 0) {
+        AnimateEntity(D_801811E8[itemId], self);
+    }
+    if (self->step - 2 < 3U && self->hitFlags != 0) {
+        self->step = 5;
+    }
+    self->palette = 0;
+    if ((u8)self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
+        self->palette = PAL_OVL(0x15F);
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_InitializeData0);
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        self->drawMode = DRAW_DEFAULT;
+        if (itemId >= 0x18) {
+            self->params = 0;
+            itemId = 0;
+        }
+        if (itemId > 13 && itemId < 23 &&
+            itemId == D_80181184[g_Status.subWeapon]) {
+            self->params = itemId = 1;
+        }
+        if (itemId == 0 || itemId == 2) {
+            self->hitboxWidth = 4;
+        }
+        break;
+
+    case 1:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
+            DestroyEntity(self);
+        } else {
+            self->step++;
+            if (LOH(self->ext.generic.unk94) != 0) {
+                temp_a0 = LOH(self->ext.generic.unk94) - 1;
+                g_unkGraphicsStruct.g_zEntityCenter.S16 =
+                    g_unkGraphicsStruct.g_zEntityCenter.S16;
+                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+            }
+        }
+        if (itemId == 0) {
+            self->ext.generic.unk84.unk = -0x10000;
+            self->ext.generic.unk88.S16.unk0 = 0x800;
+        }
+        break;
+
+    case 2:
+        if (self->velocityY < 0) {
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
+            if (collider.effects & EFFECT_NOTHROUGH) {
+                self->velocityY = 0;
+            }
+        }
+        MoveEntity();
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
+        if (itemId != 0) {
+            if (collider.effects & EFFECT_NOTHROUGH && self->velocityY > 0) {
+                self->velocityX = 0;
+                self->velocityY = 0;
+                self->posY.i.hi += collider.unk18;
+                self->ext.generic.unk80.modeS8.unk0 = 0xF0;
+                self->step++;
+            } else {
+                FallEntity();
+            }
+            CheckFieldCollision(D_80181248, 2);
+        } else if (collider.effects & EFFECT_NOTHROUGH) {
+            self->posY.i.hi += collider.unk18;
+            self->ext.generic.unk80.modeS8.unk0 = 0x60;
+            self->step++;
+        } else {
+            func_801A273C();
+        }
+        break;
+
+    case 3:
+        func_801A27C0(itemId);
+        if (!(self->params & 0x8000) &&
+            --self->ext.generic.unk80.modeS8.unk0 == 0) {
+            self->ext.generic.unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        func_801A27C0(itemId);
+        if (--self->ext.generic.unk80.modeS8.unk0) {
+            if (self->ext.generic.unk80.modeS8.unk0 & 2) {
+                self->animCurFrame = 0;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 5:
+        if (itemId == 0 || itemId == 1) {
+            CollectHeart(itemId);
+        } else if (itemId < 12) {
+            CollectGold(itemId);
+        } else if (itemId == 12) {
+            CollectHeartVessel();
+        } else if (itemId < 14) {
+            DestroyCurrentEntity();
+        } else if (itemId < 23) {
+            CollectSubweapon(itemId);
+        } else if (itemId == 23) {
+            CollectLifeVessel();
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 6:
+    case 7:
+        switch (self->step_s) {
+        case 0:
+            self->animCurFrame = 0;
+            if (itemId > 13 && itemId < 23) {
+                if (itemId == D_80181184[g_Status.subWeapon]) {
+                    self->params = itemId = 1;
+                }
+            }
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (primIndex != -1) {
+                self->primIndex = primIndex;
+                self->flags |= FLAG_HAS_PRIMS;
+                prim = &g_PrimBuf[primIndex];
+                prim->tpage = 0x1A;
+                prim->clut = 0x170;
+                prim->v2 = prim->v3 = 0x20;
+                prim->u1 = prim->u3 = 0x20;
+                prim->v0 = prim->v1 = 0;
+                prim->u0 = prim->u2 = 0;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                prim->drawMode = DRAW_HIDE;
+                prim->priority = self->zPriority + 1;
+                self->step_s++;
+            }
+            break;
+
+        case 1:
+            MoveEntity();
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
+            if (collider.effects & EFFECT_NOTHROUGH && self->velocityY > 0) {
+                self->velocityX = 0;
+                self->velocityY = 0;
+                self->posY.i.hi += collider.unk18;
+                self->step_s++;
+            } else {
+                FallEntity();
+            }
+            CheckFieldCollision(D_80181248, 2);
+            self->animCurFrame = 0;
+            if (self->ext.generic.unk88.S16.unk2 != 0) {
+                self->ext.generic.unk88.S16.unk2--;
+            } else {
+                prim = &g_PrimBuf[self->primIndex];
+                prim->x0 = prim->x2 = self->posX.i.hi - 1;
+                prim->x1 = prim->x3 = self->posX.i.hi + 1;
+                prim->y0 = prim->y1 = self->posY.i.hi - 1;
+                prim->y2 = prim->y3 = self->posY.i.hi + 1;
+                prim->drawMode = 0x37;
+            }
+            break;
+
+        case 2:
+            func_801A27C0(itemId);
+            prim = &g_PrimBuf[self->primIndex];
+            self->ext.generic.unk88.S16.unk2++;
+            if (self->ext.generic.unk88.S16.unk2 < 0x11) {
+                var_a2 = self->ext.generic.unk88.S16.unk2;
+                self->animCurFrame = 0;
+            } else {
+                var_a2 = 0x20 - self->ext.generic.unk88.S16.unk2;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->r3 - 8;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->g3 - 8;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 8;
+            }
+            prim->x0 = prim->x2 = self->posX.i.hi - var_a2;
+            prim->x1 = prim->x3 = self->posX.i.hi + var_a2;
+            prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
+            prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
+            if (self->ext.generic.unk88.S16.unk2 == 0x20) {
+                g_api.FreePrimitives(self->primIndex);
+                self->ext.generic.unk80.modeS8.unk0 = 0xD0;
+                self->step = 3;
+                self->step_s = 0;
+                self->flags &= ~FLAG_HAS_PRIMS;
+            }
+            break;
+        }
+
+        break;
+    }
+}
+#endif
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A3520);    // EntityExplosion()
 //#include "../entity_explosion.h"
 #include "../blink_item.h"
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A36C0);    // EntityEquipItemDrop()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A36C0);    // EntityEquipItemDrop()
 //#include "../e_collect.h"
 
 #include "../blit_char.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A3F58);    // EntityRelicOrb()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A3F58);    // EntityRelicOrb()
 //#include "../entity_relic_orb.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A4A28);    // EntityHeartDrop()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A4A28);    // EntityHeartDrop()
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A4B50);    // EntityMessageBox()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A4B50);    // EntityMessageBox()
 //#include "../entity_message_box.h"
 
 #include "../check_coll_offsets.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A519C);    // EntityUnkId13()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A519C);    // EntityUnkId13()
 //#include "../entity_unkId13.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A52AC);    // EntityUnkId14Spawner()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A52AC);    // EntityUnkId14Spawner()
 //#include "../entity_unkId14_spawner.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A53DC);    // EntityUnkId15Spawner()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A53DC);    // EntityUnkId15Spawner()
 //#include "../entity_unkId15_spawner.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A54C4);    // EntityUnkId14()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A54C4);    // EntityUnkId14()
 //#include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A55B4);    // EntityUnkId15()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A55B4);    // EntityUnkId15()
 //#include "../entity_unkId15.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A56A8);    // EntityOlroxDrool()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A56A8);    // EntityOlroxDrool()
 //#include "../entity_olrox_drool.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A58D8);    // [Duplicate]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A58D8);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A59D4);    // [Duplicate]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A59D4);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A5F54);    // EntityIntenseExplosion()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A5F54);    // EntityIntenseExplosion()
 //#include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A6054);    // [Duplicate]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A6054);    // [Duplicate]
 
 // [Duplicate]
 void func_801A6120(u16 entityId, Entity* src, Entity* dst)
@@ -203,71 +557,71 @@ void func_801A6120(u16 entityId, Entity* src, Entity* dst)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A61E8);    // [Duplicate]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A61E8);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A62A0);    // EntityBigRedFireball()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A62A0);    // EntityBigRedFireball()
 //#include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A6478);    // UnkRecursivePrimFunc1()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A6478);    // UnkRecursivePrimFunc1()
 //#include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A6A58);    // UnkRecursivePrimFunc2()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A6A58);    // UnkRecursivePrimFunc2()
 //#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 
 #include "../play_sfx_with_pos_args.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A7448);    // EntitySoulStealOrb()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A7448);    // EntitySoulStealOrb()
 //#include "../entity_soul_steal_orb.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A77DC);    // EntityEnemyBlood()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A77DC);    // EntityEnemyBlood()
 //#include "../entity_enemy_blood.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A7C8C);    // EntityRoomForeground()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A7C8C);    // EntityRoomForeground()
 //#include "../e_room_fg.h"
 
 #include "../bottom_corner_text.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A80A8);
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A80A8);
 
 // POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A813C);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A813C);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A8DE8);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A8DE8);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A8EAC);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A8EAC);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A93D4);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A93D4);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A9588);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A9588);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A97C8);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A97C8);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A9D40);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A9D40);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801A9E94);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801A9E94);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AA020);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AA020);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AA390);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AA390);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AB0C0);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AB0C0);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AB548);
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AB548);
 
 // POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AB7CC);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AB7CC);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AC074);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AC074);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AC730);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AC730);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801ACB6C);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801ACB6C);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801ACEF4);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801ACEF4);    // [Entity]
 
 s32 func_801AE70C(Primitive* prim, u8 arg1);
 void StageNamePopupHelper(Primitive* prim)  // [Duplicate]
@@ -325,7 +679,7 @@ void StageNamePopupHelper(Primitive* prim)  // [Duplicate]
 // POSSIBLE FILE BREAK
 
 //#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AD2BC);    // EntityStageNamePopup()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AD2BC);    // EntityStageNamePopup()
 //#else
 // /*?*/ void func_801AD0EC(?*);                                // extern
 // extern u8 D_8003BE40;
@@ -968,8 +1322,8 @@ INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AD2BC);    // EntityStageNamePo
 
 //NOTE: The remaining functions are all contained in "../prim_helpers.h" but
 //      UnkPrimHelper and PrimDecreaseBrightness don't match.
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801ADF40);    // UnkPrimHelper()
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE328);    // UpdateAnimation()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801ADF40);    // UnkPrimHelper()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE328);    // UpdateAnimation()
 s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
     s16 sp0;
     s16 tempUv;
@@ -1015,7 +1369,7 @@ s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
     --prim->p2;
     return (retVal | 1) & 0xFF;
 }
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE478);    // FindFirstUnkPrim()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE478);    // FindFirstUnkPrim()
 Primitive* FindFirstUnkPrim(Primitive* poly) {
     while (poly != NULL) {
         if (poly->p3 != 0) {
@@ -1026,7 +1380,7 @@ Primitive* FindFirstUnkPrim(Primitive* poly) {
     }
     return NULL;
 }
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE4A8);    // FindFirstUnkPrim2()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE4A8);    // FindFirstUnkPrim2()
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index) {
 
     Primitive* ret;
@@ -1051,7 +1405,7 @@ Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index) {
     }
     return NULL;
 }
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE524);    // PrimToggleVisibility()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE524);    // PrimToggleVisibility()
 Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
     Primitive* prim;
     s8 isVisible;
@@ -1081,7 +1435,7 @@ Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
 
     return prim;
 }
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE5AC);    // PrimResetNext()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE5AC);    // PrimResetNext()
 void PrimResetNext(Primitive* prim) {
     prim->p1 = 0;
     prim->p2 = 0;
@@ -1106,7 +1460,7 @@ void PrimResetNext(Primitive* prim) {
     prim->next->y2 = 0;
 }
 //TODO: Find first "init not started" prim?
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE68C);    // UnkPolyFunc2()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE68C);    // UnkPolyFunc2()
 void UnkPolyFunc2(Primitive* prim) {
     PrimResetNext(prim);
     prim->p3 = 8;
@@ -1114,7 +1468,7 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->next->type = PRIM_LINE_G2;
     prim->next->drawMode = 0xA;
 }
-//INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE6E0);    // UnkPolyFunc0()
+//INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE6E0);    // UnkPolyFunc0()
 void UnkPolyFunc0(Primitive* prim) {
     prim->p3 = 0;
     prim->drawMode = DRAW_HIDE;
@@ -1122,5 +1476,5 @@ void UnkPolyFunc0(Primitive* prim) {
     prim->next->type = PRIM_GT4;
     prim->next->drawMode = DRAW_HIDE;
 }
-INCLUDE_ASM("st/chi/nonmatchings/2291C", func_801AE70C);    // PrimDecreaseBrightness()
+INCLUDE_ASM("st/chi/nonmatchings/e_collect", func_801AE70C);    // PrimDecreaseBrightness()
 //#include "../prim_helpers.h"

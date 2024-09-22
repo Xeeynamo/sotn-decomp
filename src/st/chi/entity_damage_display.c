@@ -204,25 +204,6 @@ s16 D_80180E24[] = {
     0xF71C, 0xF771, 0xF7C6, 0xF81D, 0xF875, 0xF8CE, 0xF929, 0xF984,
     0xF9E1, 0xFA3E, 0xFA9C, 0xFAFB, 0xFB5B, 0xFBBC, 0xFC1D, 0xFC7F,
     0xFCE1, 0xFD44, 0xFDA7, 0xFE0B, 0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
-    0x0E01, 0x0000, 0x0302, 0x0406, 0x0505, 0x0605, 0x0704, 0x0803,
-    0x0904, 0x0A05, 0x0B05, 0x0C06, 0x0307, 0x0406, 0x0505, 0x0605,
-    0x0704, 0x0803, 0x0904, 0x0A05, 0x0B05, 0x0C06, 0x0D02, 0x0000,
-    0x1404, 0x1507, 0x1606, 0x1703, 0x1803, 0x1906, 0x1502, 0x0000,
-    0x1A01, 0x0000, 0x1B01, 0x0000, 0x1C01, 0x0000, 0x1D01, 0x0000,
-    0x1E01, 0x0000, 0x1F01, 0x0000, 0x2001, 0x0000, 0x2101, 0x0000,
-    0x2202, 0x2302, 0x2402, 0x2502, 0x2602, 0x2702, 0x2802, 0x2902,
-    0x0000, 0x0000, 0x0F1A, 0x1006, 0x1104, 0x1202, 0x1104, 0x1006,
-    0x0000, 0x0000, 0x1301, 0x0000, 0x2A05, 0x2B05, 0x2C05, 0x2D05,
-    0x2E05, 0x2F05, 0x3005, 0x3105, 0x0000, 0x0000, 0x3205, 0x3305,
-    0x3405, 0x3505, 0x3605, 0x3705, 0x3805, 0x3905, 0x0000, 0x0000,
-    0x3A05, 0x3B05, 0x3C05, 0x3D05, 0x3E05, 0x3F05, 0x4005, 0x4105,
-    0x0000, 0x0000, 0x4205, 0x4305, 0x4405, 0x4505, 0x4605, 0x4705,
-    0x4805, 0x4905, 0x0000, 0x0000, 0x4A05, 0x4B05, 0x4C05, 0x4D05,
-    0x4E05, 0x4F05, 0x5005, 0x5105, 0x0000, 0x0000, 0x5205, 0x5305,
-    0x5405, 0x5505, 0x5605, 0x5705, 0x5805, 0x5905, 0x0000, 0x0000,
-    0x5A05, 0x5B05, 0x5C05, 0x5D05, 0x5E05, 0x5F05, 0x6005, 0x6105,
-    0x0000, 0x0000, 0x6205, 0x6305, 0x6405, 0x6505, 0x6605, 0x6705,
-    0x6805, 0x6905, 0x0000, 0x0000, 0x6A05, 0x6B05, 0x6C05, 0x6D05 
 };
 // [Duplicate]
 s32 func_801A1B5C(u8 arg0, s16 arg1) { return D_80180E24[arg0] * arg1; }
@@ -343,12 +324,12 @@ s32 func_801A20C0(u16* hitSensors, s16 sensorCount) {
 #include "../check_field_collision.h"
 #include "../get_player_collision_with.h"
 
-// [Duplicate]
-// [Migrate to common file once func_801A2CAC is EntityPrizeDrop and func_801A36C0 is EntityEquipItemDrop?]
-// func_801A2684
-void func_801A2CAC(void);
+void EntityPrizeDrop(Entity*);
 void func_801A36C0(void);
 
+// [Duplicate]
+// [Migrate to common file once func_801A36C0 is EntityEquipItemDrop?]
+// func_801A2684
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 params;
 
@@ -365,8 +346,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     if (params < 0x80) {
         self->entityId = E_PRIZE_DROP;
-        //self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
-        self->pfnUpdate = (PfnEntityUpdate)func_801A2CAC;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
@@ -381,67 +361,3 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 //#include "../replace_breakable_with_item_drop.h"
-
-// [Duplicate]
-// func_801A273C
-void func_801A273C(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    if (entity->velocityY >= 0) {
-        temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
-        entity->ext.generic.unk84.unk = temp_v1;
-        entity->velocityX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
-        }
-        entity = g_CurrentEntity;
-    }
-
-    if (entity->velocityY < FIX(0.25)) {
-        entity->velocityY += FIX(0.125);
-    }
-}
-// [Duplicate]
-// func_801A27C0
-void func_801A27C0(u16 arg0) {
-    Collider collider;
-
-    if (g_CurrentEntity->velocityX < 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
-        if (collider.effects & EFFECT_NOTHROUGH) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
-
-    if (arg0) {
-        if (!(collider.effects & EFFECT_NOTHROUGH)) {
-            MoveEntity();
-            FallEntity();
-            return;
-        }
-
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-
-        if (collider.effects & EFFECT_QUICKSAND) {
-            g_CurrentEntity->posY.val += FIX(0.125);
-            return;
-        }
-
-        g_CurrentEntity->posY.i.hi += collider.unk18;
-        return;
-    }
-
-    if (!(collider.effects & EFFECT_NOTHROUGH)) {
-        MoveEntity();
-        func_801A273C();
-    }
-}

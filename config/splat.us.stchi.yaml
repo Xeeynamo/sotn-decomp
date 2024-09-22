@@ -44,7 +44,7 @@ segments:
       - [0x9E4, .data, func_data1]
       - [0xA4C, .data, collision]
       - [0xAAC, .data, entity_damage_display]
-      - [0x1154, .data, 2291C]
+      - [0x1154, .data, e_collect]
       - [0x1314, .data, func_data2]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
@@ -57,9 +57,9 @@ segments:
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, .rodata, 1D1A8] # jtbl_8019B180 [1D1A8]
       - [0x1B194, .rodata, entity_damage_display] # jtbl_8019B194 [EntityRedDoor]
-      - [0x1B1AC, .rodata, 2291C] # CollectGold strings
+      - [0x1B1AC, .rodata, e_collect] # CollectGold strings
       - [0x1B1F8, rodata]
-      - [0x1B1FC, rodata] # jtbl_8019B1FC
+      - [0x1B1FC, rodata, e_collect] # jtbl_8019B1FC [EntityPrizeDrop]
       - [0x1B21C, rodata] # jtbl_8019B21C
       - [0x1B234, rodata]
       - [0x1B244, rodata] # jtbl_8019B244
@@ -88,7 +88,8 @@ segments:
       - [0x1E1A0, c]
       - [0x1E2A8, c, collision]
       - [0x1F3C0, c, entity_damage_display]
-      - [0x2291C, c]
+      - [0x2273C, c, e_collect]
+      #- [0x2291C, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x1B280, rodata, 2813C]
