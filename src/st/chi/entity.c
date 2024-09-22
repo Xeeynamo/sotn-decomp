@@ -18,7 +18,7 @@ void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
-void func_801A519C(Entity*);
+void EntityUnkId13(Entity*);
 void func_801A54C4(Entity*);
 void func_801A55B4(Entity*);
 void EntityDemonSwitchWall(Entity*);
@@ -65,7 +65,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityBackgroundBlock,
     EntityUnkId12,
-    func_801A519C,  // EntityUnkId13
+    EntityUnkId13,
     func_801A54C4,  // EntityUnkId14
     func_801A55B4,  // EntityUnkId15
     EntityDemonSwitchWall,
@@ -148,8 +148,9 @@ EntityInit EntityInit_80180640 = {
     .enemyId = 5,
 };
 
-//TODO: Used in func_801A519C
-EntityInit EntityInit_8018064C = {
+//TODO: Used in EntityUnkId13
+// D_8018064C
+EntityInit g_InitDataEnt13 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,

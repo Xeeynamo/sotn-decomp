@@ -56,8 +56,9 @@ void func_801A4A28(Entity* self) {
 
 #include "../check_coll_offsets.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A519C);    // EntityUnkId13()
-//#include "../entity_unkId13.h"
+// [Duplicate]
+// func_801A519C
+#include "../entity_unkId13.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A52AC);    // EntityUnkId14Spawner()
 //#include "../entity_unkId14_spawner.h"
