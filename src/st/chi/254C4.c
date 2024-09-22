@@ -318,7 +318,38 @@ u8 func_801A59D4(s32 arg0) {
 // func_801A5F54
 #include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A6054);    // [Duplicate]
+u8 D_801813DC[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x04, 0x06, 0xFF, 0x00, 0x00, 0x00 
+};
+
+// [Duplicate]
+// func_801A6054
+void func_801A6054(Entity* entity) {
+    if (!entity->step) {
+        InitializeEntity(g_InitializeEntityData0);
+        entity->unk6C = 0xF0;
+        entity->rotX = 0x1A0;
+        entity->rotY = 0x1A0;
+        entity->animSet = ANIMSET_DRA(8);
+        entity->animCurFrame = 1;
+        entity->zPriority += 0x10;
+
+        if (entity->params != 0) {
+            entity->palette = entity->params;
+        } else {
+            entity->palette = 0x8160;
+        }
+
+        entity->step++;
+        return;
+    }
+
+    MoveEntity();
+
+    if (!AnimateEntity(D_801813DC, entity)) {
+        DestroyEntity(entity);
+    }
+}
 
 // [Duplicate]
 void func_801A6120(u16 entityId, Entity* src, Entity* dst)
