@@ -405,6 +405,8 @@ def get_elf_symbols(elf_file_name) -> dict:
             continue
         if name.startswith("_") and name.endswith("_c"):
             continue
+        if "_compiled" in name:
+            continue
         if name.startswith("__pad"):
             continue
         if name.endswith("_END"):
