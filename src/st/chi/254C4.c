@@ -402,15 +402,22 @@ extern u8 g_bigRedFireballAnim[];
 // D_801813EC
 u16 g_UnkRecursPrimVecOrder[] = {
     0x0000, 0x0001, 0x0003, 0x0004, 0x0001, 0x0002, 0x0004, 0x0005,
-    0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008 
+    0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008
 };
 
 // [Duplicate]
 // func_801A6478
 #include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A6A58);    // UnkRecursivePrimFunc2()
-//#include "../unk_recursive_primfunc_2.h"
+// D_8018140C
+u16 g_UnkRecursPrim2Inds[] = {
+    0x0000, 0x0001, 0x0003, 0x0004, 0x0001, 0x0002, 0x0004, 0x0005,
+    0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008 
+};
+
+// [Duplicate]
+// func_801A6A58
+#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 

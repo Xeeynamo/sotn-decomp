@@ -85,7 +85,7 @@ EntityIntenseExplosion = 0x801A5F54;
 // func_801A61E8
 EntityBigRedFireball = 0x801A62A0;
 UnkRecursivePrimFunc1 = 0x801A6478;
-//UnkRecursivePrimFunc2 = 0x801A6A58;
+UnkRecursivePrimFunc2 = 0x801A6A58;
 ClutLerp = 0x801A7158;
 PlaySfxWithPosArgs = 0x801A7350;
 //EntitySoulStealOrb = 0x801A7448;
