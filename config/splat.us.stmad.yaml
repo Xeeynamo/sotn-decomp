@@ -27,6 +27,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: adb3303e1ea707c63dfa978511a88cab4f61970a
 segments:
   - name: stmad
     type: code

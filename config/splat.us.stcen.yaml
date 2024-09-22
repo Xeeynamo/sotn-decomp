@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 42226b6d9ed24448eed61b3c6cd2949e96bebab6
 segments:
   - name: stcen
     type: code
