@@ -88,8 +88,11 @@ segments:
       - [0x37618, .rodata, e_misc]
       - [0x37650, .rodata, e_misc]
       - [0x37664, .rodata, 4AFF0] # EntityStageNamePopup
-      - [0x37698, rodata]
-      - [0x376E8, rodata]
+      - [0x37698, rodata] # EntityStrongWarg
+      - [0x376D0, rodata] # EntityStrongWargWaveAttack
+      - [0x376E8, rodata] # EntityUnkId2F
+      - [0x376FC, rodata] # D_801B76FC
+      - [0x37704, rodata] # EntityWarg
       - [0x37738, .rodata, 516B4]
       - [0x3775C, .rodata, 53F38]
       - [0x37784, .rodata, e_bone_scimitar]
