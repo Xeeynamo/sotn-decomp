@@ -6,8 +6,10 @@
  * Description: Abandoned Mine
  */
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A3F58);    // EntityRelicOrb()
-//#include "../entity_relic_orb.h"
+// [Duplicate]
+// func_801A3F58
+extern u16 g_InitializeData0[];
+#include "../entity_relic_orb.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A4A28);    // EntityHeartDrop()
 

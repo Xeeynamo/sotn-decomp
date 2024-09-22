@@ -11,7 +11,7 @@ void func_801A7448(Entity*);
 void func_801A7C8C(Entity*);
 void func_801AD2BC(Entity*);
 void EntityEquipItemDrop(Entity*);
-void func_801A3F58(Entity*);
+void EntityRelicOrb(Entity*);
 void func_801A4A28(Entity*);
 void func_801A77DC(Entity*);
 void func_801A4B50(Entity*);
@@ -57,7 +57,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A7C8C,  // EntityRoomForeground
     func_801AD2BC,  // EntityStageNamePopup
     EntityEquipItemDrop,
-    func_801A3F58,  // EntityRelicOrb
+    EntityRelicOrb,
     func_801A4A28,  // EntityHeartDrop
     func_801A77DC,  // EntityEnemyBlood
     func_801A4B50,  // EntityMessageBox
