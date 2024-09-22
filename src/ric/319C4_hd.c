@@ -33,9 +33,3 @@ INCLUDE_ASM("ric/nonmatchings/319C4_hd", RicEntitySubwpnStopwatch);
 INCLUDE_ASM("ric/nonmatchings/319C4_hd", RicEntitySubwpnBibleTrail);
 
 INCLUDE_ASM("ric/nonmatchings/319C4_hd", RicEntitySubwpnBible);
-
-INCLUDE_ASM("ric/nonmatchings/319C4_hd", RicEntityCrashCrossBeam);
-
-INCLUDE_RODATA("ric/nonmatchings/319C4_hd", D_80156C50);
-
-INCLUDE_RODATA("ric/nonmatchings/319C4_hd", D_80156C58);
