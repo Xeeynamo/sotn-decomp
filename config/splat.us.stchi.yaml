@@ -48,6 +48,8 @@ segments:
       - [0x1314, .data, 23F58] # EntityRelicOrb
       - [0x1378, .data, 23F58] # EntityUnkId14Spawner
       - [0x1388, .data, func_data2]
+      - [0x13B0, .data, 254C4] # EntityUnkId14
+      - [0x13D4, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
@@ -91,6 +93,7 @@ segments:
       - [0x1F3C0, c, entity_damage_display]
       - [0x2273C, c, e_collect]
       - [0x23F58, c]
+      - [0x254C4, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x1B280, rodata, 2813C]
