@@ -110,6 +110,7 @@ segments:
       - [0x47680, c, blit_char]
       - [0x47930, c, e_misc]
       - [0x4AFF0, c]
+      - [0x4ED60, c]
       - [0x50A2C, c, player_water_effect]
       - [0x516B4, c]
       - [0x53F38, c]
