@@ -352,6 +352,7 @@ void func_801A6054(Entity* entity) {
 }
 
 // [Duplicate]
+// func_801A6120
 void func_801A6120(u16 entityId, Entity* src, Entity* dst)
 {
     DestroyEntity(dst);
