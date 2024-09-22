@@ -275,7 +275,6 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     entity = g_CurrentEntity;
     entity->drawFlags = 0;
     entity->entityId = 2;
-    //entity->pfnUpdate = EntityExplosion;
     entity->pfnUpdate = EntityExplosion;
     entity->params = arg0;
     entity->animCurFrame = 0;

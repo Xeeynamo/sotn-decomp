@@ -652,6 +652,7 @@ void EntityEquipItemDrop(Entity* self) {
         BlinkItem(self, self->ext.generic.unk7C.u);
     }
 }
+//TODO: I think the above SHOULD all match e_collect.h, but e_collect.h contains D_######## (and func_########?) symbol names that need to be named better
 //#include "../e_collect.h"
 
 #include "../blit_char.h"
