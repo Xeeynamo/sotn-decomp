@@ -151,12 +151,12 @@ void EntityMessageBox(Entity* self) {
                 chjp = (*str++ | (chjp << 8));
                 srcJpPix = g_api.func_80106A28(chjp, 1);
                 if (srcJpPix) {
-                    dstJpPix = &D_801997E8[nCh * FontLen];
+                    dstJpPix = &msgBoxTpage[nCh * FontLen];
                     for (i = 0; i < FontLen; i++) {
                         *dstJpPix++ = *srcJpPix++;
                     }
                     LoadTPage(
-                        &D_801997E8[nCh * FontLen], 0, 0, x, y, FontW, FontH);
+                        &msgBoxTpage[nCh * FontLen], 0, 0, x, y, FontW, FontH);
                     x += 3;
                     nCh++;
                 }

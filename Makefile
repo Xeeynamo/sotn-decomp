@@ -440,21 +440,20 @@ force_extract:
 	rm -rf src/
 	mv src_tmp src
 
-# Rewrites symbol list from a successful build
-force_symbols:
-	$(PYTHON) ./tools/symbols.py map build/us/dra.map --no-default > config/symbols.us.dra.txt
-	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stdre.map --no-default > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stno3.map --no-default > config/symbols.us.stno3.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map --no-default > config/symbols.us.stnp3.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map --no-default > config/symbols.us.stnz0.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stsel.map --no-default > config/symbols.us.stsel.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stst0.map --no-default > config/symbols.us.stst0.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map --no-default > config/symbols.us.stwrp.txt
-	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map --no-default > config/symbols.us.strwrp.txt
-	$(PYTHON) ./tools/symbols.py map build/us/bomar.map --no-default > config/symbols.us.bomar.txt
-	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map --no-default > config/symbols.us.tt_000.txt
+force_symbols: ##@ Extract a full list of symbols from a successful build
+	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stnp3.elf > config/symbols.us.stnp3.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stsel.elf > config/symbols.us.stsel.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	$(M2CTX) $(SOURCE)
