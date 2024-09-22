@@ -37,7 +37,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s32*, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
-void func_8010DFF0(s32 arg0, s32 arg1);
+void func_8010DFF0(s32 resetAnims, s32 arg1);
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);

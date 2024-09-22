@@ -89,7 +89,7 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 
     FntPrint("op disable\n");
     if (resetAnims) {
-        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk1 = 1;
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
@@ -100,8 +100,8 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
             prim = prim->next;
         }
     }
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 0xA;
     if (arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
