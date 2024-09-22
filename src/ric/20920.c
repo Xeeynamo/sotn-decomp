@@ -84,6 +84,9 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
     }
 }
 
+#ifdef VERSION_HD
+INCLUDE_ASM("ric/nonmatchings/20920", func_hd_8015CB20);
+#else
 void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
@@ -106,6 +109,7 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
 }
+#endif
 
 void func_8015CC28(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
@@ -158,6 +162,19 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
+#ifdef VERSION_HD
+void RicSetRun(void) {
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_RUN);
+    RicSetAnimation(ric_anim_run);
+    RicSetSpeedX(FIX(2.25));
+    g_Player.timers[PL_T_RUN] = 40;
+    PLAYER.velocityY = 0;
+    RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
+}
+#endif
+
 void RicSetWalk(s32 arg0) {
     if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
         RicSetRun();
@@ -173,6 +190,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
+#ifdef VERSION_US
 void RicSetRun(void) {
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
@@ -187,6 +205,7 @@ void RicSetRun(void) {
             g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
     }
 }
+#endif
 
 void RicSetFall(void) {
     /**
