@@ -45,5 +45,6 @@ typedef enum Statues {
 extern u16 g_eInitGeneric2[];
 extern s32 D_800973FC;
 extern u16 g_Statues[];
+extern u16 D_80180A60[];
 
 #endif
