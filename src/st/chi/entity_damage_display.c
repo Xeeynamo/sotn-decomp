@@ -325,7 +325,7 @@ s32 func_801A20C0(u16* hitSensors, s16 sensorCount) {
 #include "../get_player_collision_with.h"
 
 void EntityPrizeDrop(Entity*);
-void func_801A36C0(void);
+void EntityEquipItemDrop(Entity*);
 
 // [Duplicate]
 // [Migrate to common file once func_801A36C0 is EntityEquipItemDrop?]
@@ -351,8 +351,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
         self->animFrameIdx = 0;
     } else {
         self->entityId = E_EQUIP_ITEM_DROP;
-        //self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
-        self->pfnUpdate = (PfnEntityUpdate)func_801A36C0;
+        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
         params -= 0x80;
     }
 

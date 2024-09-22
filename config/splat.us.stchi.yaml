@@ -59,7 +59,7 @@ segments:
       - [0x1B194, .rodata, entity_damage_display] # jtbl_8019B194 [EntityRedDoor]
       - [0x1B1AC, .rodata, e_collect] # CollectGold strings
       - [0x1B1FC, .rodata, e_collect] # jtbl_8019B1FC [EntityPrizeDrop]
-      - [0x1B21C, rodata] # jtbl_8019B21C
+      - [0x1B21C, .rodata, e_collect] # jtbl_8019B21C [EntityEquipItemDrop]
       - [0x1B234, rodata]
       - [0x1B244, rodata] # jtbl_8019B244
       - [0x1B26C, rodata] # jtbl_8019B26C
