@@ -954,8 +954,8 @@
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/no3/nonmatchings/4AFF0/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/np3/nonmatchings/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/nz0/nonmatchings/e_room_fg/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/rwrp/nonmatchings/wrp/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/st0/nonmatchings/39EA8/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/wrp/nonmatchings/e_room_fg/EntityRoomForeground.s 
 | 0.92 | true     | EntityBackgroundBlock               | asm/us/st/wrp/nonmatchings/st_debug/EntityBackgroundBlock.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Ratan2                              | asm/us/boss/mar/nonmatchings/st_common/Ratan2.s 
@@ -1154,8 +1154,8 @@
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/np3/nonmatchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer2                 | asm/us/st/nz0/nonmatchings/e_magically_sealed_door/EntityIsNearPlayer2.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/nz0/nonmatchings/e_red_door/EntityIsNearPlayer.s 
+| 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/rwrp/nonmatchings/wrp/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/st0/nonmatchings/e_red_door/EntityIsNearPlayer.s 
-| 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/wrp/nonmatchings/e_red_door/EntityIsNearPlayer.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | AnimateEntity                       | asm/us/boss/mar/nonmatchings/st_common/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | asm/us/st/cen/nonmatchings/st_common/AnimateEntity.s 
@@ -1326,8 +1326,8 @@
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/no3/nonmatchings/e_red_door/EntityRedDoor.s 
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/np3/nonmatchings/e_red_door/EntityRedDoor.s 
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/nz0/nonmatchings/e_red_door/EntityRedDoor.s 
+| 0.99 | true     | EntityRedDoor                       | asm/us/st/rwrp/nonmatchings/wrp/e_red_door/EntityRedDoor.s 
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/st0/nonmatchings/e_red_door/EntityRedDoor.s 
-| 0.99 | true     | EntityRedDoor                       | asm/us/st/wrp/nonmatchings/e_red_door/EntityRedDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | FindFirstUnkPrim                    | asm/us/boss/mar/nonmatchings/prim_helpers/FindFirstUnkPrim.s 
 | 1.00 | true     | FindFirstUnkPrim                    | asm/us/st/cen/nonmatchings/prim_helpers/FindFirstUnkPrim.s 
@@ -1926,7 +1926,7 @@
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/no3/nonmatchings/4AFF0/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/np3/nonmatchings/e_stage_name/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/nz0/nonmatchings/e_stage_name/EntityStageNamePopup.s 
-| 0.99 | true     | EntityStageNamePopup                | asm/us/st/wrp/nonmatchings/e_stage_name/EntityStageNamePopup.s 
+| 0.99 | true     | EntityStageNamePopup                | asm/us/st/rwrp/nonmatchings/wrp/e_stage_name/EntityStageNamePopup.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | StageNamePopupHelper                | asm/us/boss/mar/nonmatchings/e_stage_name/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/cen/nonmatchings/e_misc/StageNamePopupHelper.s 
@@ -1934,7 +1934,7 @@
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/no3/nonmatchings/e_misc/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/np3/nonmatchings/e_misc/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/nz0/nonmatchings/e_stage_name/StageNamePopupHelper.s 
-| 1.00 | true     | StageNamePopupHelper                | asm/us/st/wrp/nonmatchings/e_stage_name/StageNamePopupHelper.s 
+| 1.00 | true     | StageNamePopupHelper                | asm/us/st/rwrp/nonmatchings/wrp/e_stage_name/StageNamePopupHelper.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityUnkId12                       | asm/us/boss/mar/nonmatchings/st_debug/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/cen/nonmatchings/st_debug/EntityUnkId12.s 
@@ -2032,6 +2032,12 @@
 | 1.00 | true     | SetSZfifo3                          | asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetSZfifo3.s 
 | 1.00 | true     | NormalClip                          | asm/us/main/nonmatchings/psxsdk/libgte/smp_05/NormalClip.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF7C.s 
@@ -2043,12 +2049,6 @@
 | 1.00 | true     | CdSetDebug                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 0.93 | true     | SetMenuDisplayBuffer                | asm/us/dra/nonmatchings/42398/SetMenuDisplayBuffer.s 
 | 1.00 | true     | SetStageDisplayBuffer               | asm/us/dra/nonmatchings/42398/SetStageDisplayBuffer.s 
@@ -2359,9 +2359,6 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/nonmatchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/nonmatchings/2C048/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -2460,6 +2457,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_cs.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SquareRoot0                         | asm/us/main/nonmatchings/psxsdk/libgte/msc01/SquareRoot0.s 
 | 0.90 | true     | SquareRoot12                        | asm/us/main/nonmatchings/psxsdk/libgte/msc09/SquareRoot12.s 
