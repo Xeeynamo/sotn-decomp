@@ -70,15 +70,19 @@ u16 g_eUnk14SpawnRots[] = {
 void EntityUnkId14(Entity*);
 #include "../entity_unkId14_spawner.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A53DC);    // EntityUnkId15Spawner()
-//#include "../entity_unkId15_spawner.h"
+// [Duplicate]
+// func_801A53DC
+void EntityUnkId15(Entity*);
+#include "../entity_unkId15_spawner.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/23F58", EntityUnkId14);    // EntityUnkId14()
 // [Duplicate]
 // func_801A54C4
 //#include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A55B4);    // EntityUnkId15()
+INCLUDE_ASM("st/chi/nonmatchings/23F58", EntityUnkId15);    // EntityUnkId15()
+// [Duplicate]
+// func_801A55B4
 //#include "../entity_unkId15.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A56A8);    // EntityOlroxDrool()

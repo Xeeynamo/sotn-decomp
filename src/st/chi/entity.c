@@ -20,7 +20,7 @@ void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
-void func_801A55B4(Entity*);
+void EntityUnkId15(Entity*);
 void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
 void EntityBreakableWall(Entity*);
@@ -67,7 +67,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId12,
     EntityUnkId13,
     EntityUnkId14,
-    func_801A55B4,  // EntityUnkId15
+    EntityUnkId15,
     EntityDemonSwitchWall,
     EntityDemonSwitch,
     EntityBreakableWall,
