@@ -373,7 +373,24 @@ void func_801A6120(u16 entityId, Entity* src, Entity* dst)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A61E8);    // [Duplicate]
+// [Duplicate]
+// func_801A61E8
+void func_801A61E8(void) {
+    Entity* entity;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s32 i;
+
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, g_CurrentEntity, entity);
+            entity->ext.generic.unk84.U8.unk1 = 6 - i;
+            entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
+            entity->ext.generic.unk84.U8.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A62A0);    // EntityBigRedFireball()
 //#include "../entity_big_red_fireball.h"
