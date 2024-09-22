@@ -2,7 +2,7 @@
 #include "stage.h"
 
 void EntityUnkId01(Entity*);
-void func_801A3520(Entity*);
+void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
 void EntityRedDoor(Entity*);
@@ -48,7 +48,7 @@ void func_801ACEF4(Entity*);
 
 PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId01,  // EntityUnkId01
-    func_801A3520,  // EntityExplosion
+    EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
     EntityRedDoor,
@@ -120,7 +120,8 @@ EntityInit g_InitializeData0 = {
 //TODO: Used in func_801A56A8
 //TODO: Used in func_801A5F54
 //TODO: (More were unlisted)
-EntityInit EntityInit_80180628 = {
+// D_80180628
+EntityInit g_InitializeEntityData0 = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
     .unk5A = 0,

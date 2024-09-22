@@ -261,7 +261,7 @@ u16 func_801A1E24(s16 x, s16 y) {
 // [Duplicate]
 // [Migrate to common file once func_801A3520 is EntityExplosion?]
 // func_801A1F08
-void func_801A3520(void);
+void EntityExplosion(Entity*);
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
@@ -276,7 +276,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     entity->drawFlags = 0;
     entity->entityId = 2;
     //entity->pfnUpdate = EntityExplosion;
-    entity->pfnUpdate = func_801A3520;
+    entity->pfnUpdate = EntityExplosion;
     entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
