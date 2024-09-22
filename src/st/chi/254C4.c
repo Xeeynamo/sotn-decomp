@@ -319,7 +319,7 @@ u8 func_801A59D4(s32 arg0) {
 #include "../entity_intense_explosion.h"
 
 u8 D_801813DC[] = {
-    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x04, 0x06, 0xFF, 0x00, 0x00, 0x00 
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x04, 0x06, 0xFF, 0x00, 0x00, 0x00
 };
 
 // [Duplicate]
@@ -393,8 +393,11 @@ void func_801A61E8(void) {
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A62A0);    // EntityBigRedFireball()
-//#include "../entity_big_red_fireball.h"
+extern u8 g_bigRedFireballAnim[];
+
+// [Duplicate]
+// func_801A62A0
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A6478);    // UnkRecursivePrimFunc1()
 //#include "../unk_recursive_primfunc_1.h"
