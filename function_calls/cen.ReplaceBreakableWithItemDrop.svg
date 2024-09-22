@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="367.43,-45.98 371.03,-36.02 362,-41.56 367.43,-45.98"/>
 <text text-anchor="middle" x="366.03" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- cen.EntityUnkId01 -->
+<!-- cen.EntityBreakable -->
 <g id="node4" class="node">
-<title>cen.EntityUnkId01</title>
-<g id="a_node4"><a xlink:href="cen.EntityUnkId01.svg" xlink:title="cen.EntityUnkId01">
-<ellipse fill="green" stroke="black" cx="239.89" cy="-378" rx="98.58" ry="18"/>
-<text text-anchor="middle" x="239.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityUnkId01</text>
+<title>cen.EntityBreakable</title>
+<g id="a_node4"><a xlink:href="cen.EntityBreakable.svg" xlink:title="cen.EntityBreakable">
+<ellipse fill="green" stroke="black" cx="239.89" cy="-378" rx="105.08" ry="18"/>
+<text text-anchor="middle" x="239.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityBreakable</text>
 </a>
 </g>
 </g>
-<!-- cen.EntityUnkId01&#45;&gt;cen.ReplaceBreakableWithItemDrop -->
+<!-- cen.EntityBreakable&#45;&gt;cen.ReplaceBreakableWithItemDrop -->
 <g id="edge3" class="edge">
-<title>cen.EntityUnkId01&#45;&gt;cen.ReplaceBreakableWithItemDrop</title>
+<title>cen.EntityBreakable&#45;&gt;cen.ReplaceBreakableWithItemDrop</title>
 <path fill="none" stroke="black" d="M239.89,-359.93C239.89,-328.97 239.89,-263.3 239.89,-226.13"/>
 <polygon fill="black" stroke="black" points="243.39,-226.02 239.89,-216.02 236.39,-226.02 243.39,-226.02"/>
 <text text-anchor="middle" x="234.89" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
