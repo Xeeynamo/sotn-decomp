@@ -50,7 +50,8 @@ segments:
       - [0x1388, .data, 254C4] # EntityUnkId15, EntityUnkId14
       - [0x13D4, .data, 254C4] # EntityOlroxDrool
       - [0x13DC, .data, 254C4] # func_801A6054
-      - [0x13EC, .data, func_data3]
+      - [0x13EC, .data, 254C4] # UnkRecursivePrimFunc1
+      - [0x140C, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
