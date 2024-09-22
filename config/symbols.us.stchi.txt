@@ -76,7 +76,7 @@ EntityUnkId14Spawner = 0x801A52AC;
 EntityUnkId15Spawner = 0x801A53DC;
 EntityUnkId14 = 0x801A54C4;
 EntityUnkId15 = 0x801A55B4;
-//EntityOlroxDrool = 0x801A56A8;
+EntityOlroxDrool = 0x801A56A8;
 // func_801A58D8
 // func_801A59D4
 //EntityIntenseExplosion = 0x801A5F54;

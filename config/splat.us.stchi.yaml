@@ -48,7 +48,8 @@ segments:
       - [0x1314, .data, 23F58] # EntityRelicOrb
       - [0x1378, .data, 23F58] # EntityUnkId14Spawner
       - [0x1388, .data, 254C4] # EntityUnkId15, EntityUnkId14
-      - [0x13D4, .data, func_data3]
+      - [0x13D4, .data, 254C4] # EntityOlroxDrool
+      - [0x13DC, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]

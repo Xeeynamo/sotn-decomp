@@ -117,7 +117,7 @@ EntityInit g_InitializeData0 = {
 };
 
 //TODO: Used in func_801A3520
-//TODO: Used in func_801A56A8
+//TODO: Used in EntityOlroxDrool
 //TODO: Used in func_801A5F54
 //TODO: (More were unlisted)
 // D_80180628

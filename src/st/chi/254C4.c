@@ -8,13 +8,13 @@
 
 // D_80181388
 s16 unk15_rot[] = {
-    0x0030, 0x0050, 0x0080, 0x00B0, 0x00D0, 0x0100, 0x0100, 0x0000 
+    0x0030, 0x0050, 0x0080, 0x00B0, 0x00D0, 0x0100, 0x0100, 0x0000
 };
 
 // D_80181398
 s32 unk15_yVel[] = {
     0x00000400, 0x00002400, 0x00003C00, 0x00006000,
-    0x00007800, 0x0000C000 
+    0x00007800, 0x0000C000
 };
 
 // D_801813B0
@@ -41,7 +41,77 @@ u16 unk14_lifetime[] = {
 // func_801A55B4
 #include "../entity_unkId15.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A56A8);    // EntityOlroxDrool()
+extern u16 g_InitializeEntityData0[];
+
+// D_801813D4
+u32 g_olroxDroolCollOffsets[] = {
+    0x00000000, 0x000000FF
+};
+
+// [Duplicate]
+// [Almost duplicate of ../entity_olrox_drool.h, but this one checks the return of CheckColliderOffsets with & 0xFF]
+// func_801A56A8
+void EntityOlroxDrool(Entity* self) {
+    s16 primIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_InitializeEntityData0);
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex == -1) {
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->hitboxState = 0;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->x0 = prim->x1 = self->posX.i.hi;
+            prim->y0 = prim->y1 = self->posY.i.hi;
+            prim->r0 = 64;
+            prim->r1 = 0;
+            prim->g0 = 64;
+            prim->g1 = 0;
+            prim->b0 = 255;
+            prim->b1 = 16;
+            prim->priority = self->zPriority + 1;
+            prim->drawMode |= (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS +
+                               DRAW_UNK02 + DRAW_TRANSP);
+            prim = prim->next;
+        }
+        break;
+
+    case 1:
+        prim = self->ext.prim;
+        if (CheckColliderOffsets(g_olroxDroolCollOffsets, 0) & 0xFF) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                // When hitting the ground, a sizzling effect is made
+                EntityUnkId14Spawner(self, 1, 2, 0, 0, 3, 0);
+                self->step_s = 1;
+            }
+        } else {
+            self->velocityY += FIX(0.015625);
+            self->posY.val += self->velocityY;
+            if ((prim->y0 - prim->y1) > 8) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->primIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+//TODO: Can't quite use this include due to tiny difference
 //#include "../entity_olrox_drool.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A58D8);    // [Duplicate]
