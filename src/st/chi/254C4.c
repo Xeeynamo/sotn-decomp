@@ -6,30 +6,40 @@
  * Description: Abandoned Mine
  */
 
+// D_80181388
+s16 unk15_rot[] = {
+    0x0030, 0x0050, 0x0080, 0x00B0, 0x00D0, 0x0100, 0x0100, 0x0000 
+};
+
+// D_80181398
+s32 unk15_yVel[] = {
+    0x00000400, 0x00002400, 0x00003C00, 0x00006000,
+    0x00007800, 0x0000C000 
+};
+
 // D_801813B0
 s32 unk14_yVel[] = {
     0x00000800, 0x00002800, 0x00004800, 0x00007000,
-    0x0000E000, 0x00012000 
+    0x0000E000, 0x00012000
 };
 
 // D_801813C8
 u8 unk14_startFrame[] = {
-    0x01, 0x09, 0x15, 0x2B 
+    0x01, 0x09, 0x15, 0x2B
 };
 
 // D_801813CC
 u16 unk14_lifetime[] = {
-    0x0010, 0x0018, 0x002A, 0x002F 
+    0x0010, 0x0018, 0x002A, 0x002F
 };
 
 // [Duplicate]
 // func_801A54C4
 #include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", EntityUnkId15);    // EntityUnkId15()
 // [Duplicate]
 // func_801A55B4
-//#include "../entity_unkId15.h"
+#include "../entity_unkId15.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A56A8);    // EntityOlroxDrool()
 //#include "../entity_olrox_drool.h"
