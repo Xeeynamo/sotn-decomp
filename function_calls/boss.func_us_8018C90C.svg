@@ -12,7 +12,7 @@
 <!-- boss.func_us_8018C90C -->
 <g id="node1" class="node">
 <title>boss.func_us_8018C90C</title>
-<ellipse fill="red" stroke="black" cx="211.09" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="211.09" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="211.09" y="-194.3" font-family="Times,serif" font-size="14.00">boss.func_us_8018C90C</text>
 </g>
 <!-- boss.DestroyEntity -->
