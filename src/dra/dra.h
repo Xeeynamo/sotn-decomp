@@ -553,7 +553,7 @@ void func_801092E8(s32);
 void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
-void func_8010DFF0(s32, s32);
+void func_8010DFF0(s32 resetAnims, s32 arg1);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
 s32 func_8010E334(s32 xStart, s32 xEnd);
