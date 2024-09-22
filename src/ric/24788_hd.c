@@ -26,6 +26,6 @@ INCLUDE_ASM("ric/nonmatchings/24788_hd", func_80162604);
 
 INCLUDE_ASM("ric/nonmatchings/24788_hd", RicEntityMariaPowers);
 
-void func_hd_80162BB8(void) {}
+void RicEntityNotImplemented4(void) {}
 
 INCLUDE_ASM("ric/nonmatchings/24788_hd", RicEntityMaria);

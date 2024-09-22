@@ -50,9 +50,9 @@ INCLUDE_ASM("ric/nonmatchings/21250_hd", RicEntityHitByHoly);
 
 INCLUDE_ASM("ric/nonmatchings/21250_hd", RicEntityHitByDark);
 
-void func_hd_801602F0(void) {}
+void RicEntityDummy(void) {}
 
-void func_hd_801602F8(void) {}
+void func_801603BC(void) {}
 
 INCLUDE_ASM("ric/nonmatchings/21250_hd", RicUpdatePlayerEntities);
 
