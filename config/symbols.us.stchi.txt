@@ -72,9 +72,9 @@ EntityRelicOrb = 0x801A3F58;
 //EntityMessageBox = 0x801A4B50;
 CheckColliderOffsets = 0x801A50AC;
 //EntityUnkId13 = 0x801A519C;
-//EntityUnkId14Spawner = 0x801A52AC;
+EntityUnkId14Spawner = 0x801A52AC;
 //EntityUnkId15Spawner = 0x801A53DC;
-//EntityUnkId14 = 0x801A54C4;
+EntityUnkId14 = 0x801A54C4;
 //EntityUnkId15 = 0x801A55B4;
 //EntityOlroxDrool = 0x801A56A8;
 // func_801A58D8

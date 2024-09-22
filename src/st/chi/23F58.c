@@ -60,13 +60,22 @@ void func_801A4A28(Entity* self) {
 // func_801A519C
 #include "../entity_unkId13.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A52AC);    // EntityUnkId14Spawner()
-//#include "../entity_unkId14_spawner.h"
+// [Duplicate]
+// func_801A52AC
+
+//D_80181378
+u16 g_eUnk14SpawnRots[] = {
+    0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0000 
+};
+void EntityUnkId14(Entity*);
+#include "../entity_unkId14_spawner.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A53DC);    // EntityUnkId15Spawner()
 //#include "../entity_unkId15_spawner.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A54C4);    // EntityUnkId14()
+INCLUDE_ASM("st/chi/nonmatchings/23F58", EntityUnkId14);    // EntityUnkId14()
+// [Duplicate]
+// func_801A54C4
 //#include "../entity_unkId14.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A55B4);    // EntityUnkId15()
