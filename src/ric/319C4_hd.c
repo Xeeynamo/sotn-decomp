@@ -14,9 +14,9 @@ INCLUDE_ASM("ric/nonmatchings/319C4_hd", func_8016F198);
 
 INCLUDE_ASM("ric/nonmatchings/319C4_hd", RicEntityCrashStopwatchDoneSparkle);
 
-INCLUDE_ASM("ric/nonmatchings/319C4_hd", func_hd_8017049C);
+INCLUDE_ASM("ric/nonmatchings/319C4_hd", func_80170548);
 
-INCLUDE_ASM("ric/nonmatchings/319C4_hd", func_hd_80170540);
+INCLUDE_ASM("ric/nonmatchings/319C4_hd", func_801705EC);
 
 INCLUDE_ASM("ric/nonmatchings/319C4_hd", GetAguneaLightningAngle);
 
