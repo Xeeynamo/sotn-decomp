@@ -149,7 +149,6 @@ extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
 extern s32 D_801819EC[];
-extern const char* D_80181ACC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];

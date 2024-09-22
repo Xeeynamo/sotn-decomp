@@ -4,6 +4,7 @@ g_BossFlag = 0x80181010;
 g_ElevatorTarget = 0x801813A4;
 g_ElevatorTargetPos = 0x801813A8;
 g_HeartDropArray = 0x801813B0;
+g_ActorNames = 0x8018146C;
 g_eBlueDoorUV = 0x801826B8;
 g_eBlueDoorTiles = 0x801826D0;
 EntityWargExplosionPuffOpaque = 0x801B3C38;

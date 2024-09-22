@@ -106,93 +106,40 @@ u16 D_80180838[] = {
     0x0034, 0x0041, 0x0029, 0x0048,
 };
 
-const char* g_DiagActors[] = {
+const char* g_ActorNames[] = {
     _S("Alucard"),
     _S("Maria"),
     _S("Richter"),
 };
 
-// Creates primitives for the actor name at the head of the dialogue
-void func_801B675C(u16 actorIndex, Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-    s32 x;
-    u16 chCount;
-    const char* actorName;
-    char ch;
-
-    actorName = g_DiagActors[actorIndex];
-    chCount = 0;
-    while (true) {
-        ch = *actorName++;
-        if (ch == DIAG_EOL) {
-            ch = *actorName++;
-            if (ch == DIAG_EOS) {
-                break;
-            }
-        }
-        if (ch == MENUCHAR(' ')) {
-            continue;
-        }
-        chCount++;
-    }
-
-    // Create chCount amount of sprites based on the actor name's letter count
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
-    if (primIndex == -1) {
-        DestroyEntity(self);
-        return;
-    }
-
-    // Fill prims to render the actor name on screen
-    prim = &g_PrimBuf[primIndex];
-    g_Dialogue.primIndex[1] = primIndex;
-    actorName = g_DiagActors[actorIndex];
-    x = 0x38;
-    while (prim != NULL) {
-        ch = *actorName++;
-        if (ch == MENUCHAR(' ')) {
-            x += FONT_SPACE;
-        } else {
-            prim->type = PRIM_SPRT;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->u0 = (ch & 0x0F) * FONT_W;
-            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
-            prim->v1 = FONT_H;
-            prim->u1 = FONT_W;
-            prim->priority = 0x1FF;
-            prim->drawMode = DRAW_HIDE;
-            prim->x0 = x;
-            prim->y0 = g_Dialogue.startY + 6;
-            prim = prim->next;
-            x += FONT_GAP;
-        }
-    }
-}
+#include "../cutscene_avatar.h"
 
 #include "../cutscene_unk6.h"
 
-void func_801B690C(u8 ySteps, Entity* self) {
+// n.b.! unlike the stage version of this function, a `self`
+// parameter is used to store the substep instead of
+// `g_CurrentEntity`., entity
+static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
+    const int PrimCount = 5;
     s32 primIndex = g_Dialogue.nextCharY + 1;
     Primitive* prim;
     s32 i;
 
-    while (primIndex >= 5) {
-        primIndex -= 5;
+    while (primIndex >= PrimCount) {
+        primIndex -= PrimCount;
     }
 
     if (self->step_s == 0) {
         prim = g_Dialogue.prim[primIndex];
-        prim->v1 -= ySteps;
         prim->v0 = ySteps + prim->v0;
+        prim->v1 -= ySteps;
         if (prim->v1 == 0) {
             self->step_s++;
             prim->drawMode = DRAW_HIDE;
         }
     }
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < PrimCount; i++) {
         if (i != primIndex) {
             prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
@@ -306,7 +253,7 @@ void func_801B69F8(Entity* entity) {
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->blendMode = 0;
-                func_801B675C(j, entity);
+                DrawCutsceneAvatar(j, entity);
                 g_Dialogue.portraitAnimTimer = 6;
                 entity->step = 3;
                 return;
@@ -487,7 +434,7 @@ void func_801B69F8(Entity* entity) {
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
-        func_801B690C(2, entity);
+        ScaleCutsceneAvatar(2, entity);
         if (g_Dialogue.portraitAnimTimer >= 6) {
             entity->step -= 1;
         }

@@ -15,6 +15,7 @@ g_eBreakableExplosionTypes = 0x80180E78;
 g_eBreakableanimSets = 0x80180E80;
 g_eBreakableDrawModes = 0x80180E90;
 g_TrapDoorFlag = 0x8018123C;
+g_ActorNames = 0x80181ACC;
 g_HeartDropArray = 0x80181C8C;
 g_ESoulStealOrbAngles = 0x801826D0;
 g_ESoulStealOrbSprt = 0x801826E0;
