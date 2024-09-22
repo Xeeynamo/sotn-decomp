@@ -2,7 +2,70 @@
 #include "no3.h"
 #include "sfx.h"
 
-INCLUDE_ASM("st/no3/nonmatchings/4ED60", EntityUnkId2F);
+// func_psp_0924D030
+void EntityUnkId2F(Entity* self) {
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B3C);
+        self->attack /= 2;
+        self->ext.timer.t = 8;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 0;
+
+        break;
+    case 1:
+        self->posY.i.hi -= 4;
+        self->hitboxHeight += 2;
+        if (self->facingLeft) {
+            self->posX.i.hi += 6;
+        } else {
+            self->posX.i.hi -= 6;
+        }
+        self->hitboxWidth += 2;
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 20;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (self->hitboxHeight < 192) {
+            self->posY.i.hi -= 4;
+            self->hitboxHeight += 2;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi += 1;
+        } else {
+            self->posX.i.hi -= 1;
+        }
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 16;
+            self->step++;
+        }
+        break;
+    case 3:
+        self->posY.i.hi += 4;
+        self->hitboxHeight -= 2;
+        if (self->facingLeft) {
+            self->posX.i.hi += 1;
+        } else {
+            self->posX.i.hi -= 1;
+        }
+        self->hitboxWidth -= 1;
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 32;
+            self->hitboxState = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        if (!--self->ext.timer.t) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // beams that go up when strong warg dies
 void EntityStrongWargDeathBeams(Entity* self) {

@@ -255,5 +255,6 @@ extern s32 D_801D7DD4;
 extern u16 D_801D7D60;
 extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
+extern u16 D_80180B3C[];
 
 extern Dialogue g_Dialogue;
