@@ -47,7 +47,7 @@ void func_801ACB6C(Entity*);
 void func_801ACEF4(Entity*);
 
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityUnkId01,  // EntityUnkId01
+    EntityUnkId01,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -64,7 +64,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock,
-    EntityUnkId12,  // EntityUnkId12
+    EntityUnkId12,
     func_801A519C,  // EntityUnkId13
     func_801A54C4,  // EntityUnkId14
     func_801A55B4,  // EntityUnkId15
