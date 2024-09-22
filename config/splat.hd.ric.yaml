@@ -1,0 +1,62 @@
+options:
+  platform: psx
+  basename: ric
+  base_path: ..
+  build_path: build/hd
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/ric.bin
+  asm_path: asm/hd/ric
+  asset_path: assets/ric
+  src_path: src/ric
+  ld_script_path: build/hd/ric.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.ric.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.ric.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.hd.ric.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: hd_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+sha1: 1dcd6b881e2c0906854c3d53839dfb4ae0d359d6
+segments:
+  - name: ric
+    type: code
+    start: 0
+    vram:  0x8013C000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x1A46C, .rodata, 1AC60_hd]
+      - [0x1A46C, .rodata, 1CB04_hd]
+      - [0x1A7C0, .rodata, 1FCD0_hd]
+      - [0x1A7D8, .rodata, 21250_hd]
+      - [0x1A8E4, .rodata, 24788_hd]
+      - [0x1A9B4, .rodata, 26C84_hd]
+      - [0x1A9F4, .rodata, 2A060_hd]
+      - [0x1AA88, .rodata, 2C4C4_hd]
+      - [0x1AB04, .rodata, 319C4_hd]
+      - [0x1AC2C, c, 1AC60_hd]
+      - [0x1CB28, c, 1CB04_hd]
+      - [0x1FCD8, c, 1FCD0_hd]
+      - [0x202B0, c, 202A8_hd]
+      - [0x208E8, c, 20920_hd]
+      - [0x211C8, c, 21250_hd]
+      - [0x246C4, c, 24788_hd]
+      - [0x26DD8, c, 26C84_hd]
+      - [0x29F9C, c, 2A060_hd]
+      - [0x2C42C, c, 2C4C4_hd]
+      - [0x31918, c, 319C4_hd]
+      - [0x37AB8, sbss]
+  - [0x399AC]
