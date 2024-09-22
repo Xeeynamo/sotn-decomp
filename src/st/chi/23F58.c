@@ -50,8 +50,9 @@ void func_801A4A28(Entity* self) {
     self->ext.generic.unkB8.unkFuncB8(self);
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/23F58", func_801A4B50);    // EntityMessageBox()
-//#include "../entity_message_box.h"
+// [Duplicate]
+// func_801A4B50
+#include "../entity_message_box.h"
 
 #include "../check_coll_offsets.h"
 

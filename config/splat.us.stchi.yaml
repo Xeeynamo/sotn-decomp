@@ -63,7 +63,7 @@ segments:
       - [0x1B21C, .rodata, e_collect] # jtbl_8019B21C [EntityEquipItemDrop]
       - [0x1B234, .rodata, 23F58] # EntityRelicOrb string
       - [0x1B244, .rodata, 23F58] # jtbl_8019B244 [EntityRelicOrb]
-      - [0x1B26C, rodata] # jtbl_8019B26C
+      - [0x1B26C, .rodata, 23F58] # jtbl_8019B26C [EntityMessageBox]
       - [0x1B280, rodata]
       - [0x1B290, rodata] # jtbl_8019B290
       - [0x1B2A8, rodata] # jtbl_8019B2A8
