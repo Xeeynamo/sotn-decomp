@@ -84,13 +84,12 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
     }
 }
 
-#ifdef VERSION_HD
-INCLUDE_ASM("ric/nonmatchings/20920", DisableAfterImage);
-#else
 void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
+#if defined(VERSION_US)
     FntPrint("op disable\n");
+#endif
     if (resetAnims) {
         g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
@@ -109,7 +108,6 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
 }
-#endif
 
 void func_8015CC28(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
