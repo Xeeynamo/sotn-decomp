@@ -85,7 +85,7 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 }
 
 #ifdef VERSION_HD
-INCLUDE_ASM("ric/nonmatchings/20920", func_hd_8015CB20);
+INCLUDE_ASM("ric/nonmatchings/20920", DisableAfterImage);
 #else
 void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
