@@ -148,7 +148,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx $(SRC_DIR)/weapon
-	git clean -fdx config/
+	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
