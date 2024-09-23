@@ -153,7 +153,6 @@ static s32 g_HandId = HAND_ID;
 
 extern SVECTOR D_7B000_8017B0F4[LEN(D_7B000_8017A260)][4];
 extern PrimWeapon017 D_7B000_8017B3F4[LEN(D_7B000_8017A260)];
-extern u8 unused_pad[6124];
 
 void EntityWeaponAttack(Entity* self) {
     PrimWeapon017* dest;
