@@ -943,7 +943,7 @@ g_PrevScrollX = 0x80073074;
 g_EvSwCardNew = 0x80073078;
 g_PrevScrollY = 0x8007307C;
 PadIdentifier = 0x80073080;
-g_Tilemap = 0x80073084; // size=0x54
+g_Tilemap = 0x80073084;
 g_Tilemap_tileDef = 0x80073088;
 g_Tilemap_scrollX_i_hi = 0x8007308E;
 g_Tilemap_scrollY_i_hi = 0x80073092;

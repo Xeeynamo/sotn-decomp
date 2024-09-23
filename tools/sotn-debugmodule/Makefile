@@ -33,7 +33,7 @@ $(BUILD_DIR)/$(MODULE_NAME).bin: $(BUILD_DIR)/$(MODULE_NAME).elf
 	printf '\x00' | dd of=$@ bs=1 seek=40959 count=1 conv=notrunc
 
 $(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/inject.o $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/menu.o $(BUILD_DIR)/tools/%/fontmanager.o $(BUILD_DIR)/tools/%/debug_flags.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o $(BUILD_DIR)/tools/%/flag_checker.o
-	$(LD) -o $@ -Map $*.map -T $*.ld -T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \$^
+	$(LD) -o $@ -Map $*.map -T $*.ld -T $(CONFIG_DIR)/symbols.$(VERSION).txt \$^
 
 $(BUILD_DIR)/tools/$(MODULE_NAME)/%.o: $(BUILD_DIR)/tools/$(MODULE_NAME)/%.c
 	$(CC) $(CC_FLAGS) -o $@ $<
