@@ -375,6 +375,9 @@ static void CheckHighJumpInput(void) {
 static bool RicDebug(void);
 void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
 
+#ifdef VERSION_HD
+INCLUDE_ASM("ric/nonmatchings/1AC60", RicMain);
+#else
 void RicMain(void) {
     DamageParam damage;
     s32 temp_s0;
@@ -724,6 +727,7 @@ block_48:
     g_CurrentEntity->nFramesInvincibility = 0;
     func_8015C6D4();
 }
+#endif
 
 static void RicDebugOff() { g_IsRicDebugEnter = false; }
 
