@@ -96,6 +96,7 @@ extern u16 g_eInitGeneric2[];
 extern u16 D_80180B18[];
 extern u16 D_80180B24[];
 extern u16 D_80180B30[];
+extern u16 D_80180B3C;
 extern u16 D_80180B48[];
 extern u16 D_80180B54[];
 extern u16 D_80180B6C[];
@@ -237,6 +238,41 @@ extern s32 D_801D7D58;
 extern u32 g_CutsceneFlags;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
+
+// *** EntityStrongWarg properties START ***
+
+extern Entity D_8007A958;
+extern Entity D_8007D858;
+extern u8 D_801827DC;
+extern u8 D_801827EC;
+extern u8 D_801827FC;
+extern u8 D_8018280C;
+extern u8 D_8018281C;
+extern u8 D_80182824;
+extern u8 D_80182848;
+extern u8 D_80182850;
+extern u8 D_80182858;
+extern u8 D_80182868;
+extern u8 D_80182878;
+extern u8 D_80182884;
+extern u8 D_80182890;
+extern u8 D_801828A8;
+extern u8 D_801828D8;
+extern u8 D_80182900;
+extern u8 D_80182928;
+extern u8 D_80182944;
+extern u8 D_8018295C;
+extern u8 D_80182964;
+extern u8 D_8018296C;
+extern u8 D_80182980;
+extern u8 D_80182990;
+extern u8 D_801829B4;
+extern s32 D_801829D4;
+extern u16 D_801829DC;
+extern s32 D_801829EC;
+extern s32 D_80182A04;
+
+// *** EntityStrongWarg properties END ***
 
 // *** EntitySoulStealOrb properties START ***
 

@@ -1755,6 +1755,11 @@ typedef struct {
 } ET_StrongWargDeathBeams;
 
 typedef struct {
+    s32 unk7C;
+    struct Entity* ent;
+} ET_StrongWarg;
+
+typedef struct {
     /* 0x7C */ s32 hand;
     /* 0x80 */ char pad_80[0x4];
     /* 0x84 */ u16 bellTimer;
@@ -1885,6 +1890,7 @@ typedef union { // offset=0x7C
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
     ET_WargExplosionPuffOpaque wargpuff;
+    ET_StrongWarg strongWarg;
     ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;

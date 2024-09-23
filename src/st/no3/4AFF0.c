@@ -142,8 +142,601 @@ void func_801CC90C(Entity* arg0) {
     }
 }
 
-// stronger version of warg with jump and flame attack
-INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityStrongWarg);
+void EntityStrongWarg(Entity* self) {
+    Entity* s0;
+    Entity* s4;
+    EnemyDef* s5;
+    s16* s6;
+    Collider collider;
+    u16 s1;
+    s32 s2;
+    u8 s3;
+
+    s1 = self->step;
+    if (self->flags & 0x100) {
+        if (!self->params) {
+            if (s1 != 0xB) {
+                self->velocityX = 0;
+                self->velocityY = 0;
+                SetStep(0xB);
+            }
+        } else {
+            s0 = (self + 1);
+            self->params = 0;
+            self->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
+            s0->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
+            self->flags |= FLAG_UNK_400000 | FLAG_UNK_400;
+            s0->flags |= FLAG_UNK_400000;
+            self->enemyId = s0->enemyId = 0x94;
+            s0->flags = self->flags;
+            s5 = &g_api.enemyDefs[148];
+            self->hitPoints = s5->hitPoints;
+            s0->attack = self->attack;
+            s0->attack = self->attack;
+            s0->unk60 = self;
+
+            for (s2 = 0; s2 < 11; s2++) {
+                self->unk6D[s2] = 0x10;
+                s0->unk6D[s2] = 0x10;
+            }
+
+            if (s1 != 4) {
+                SetStep(4);
+                SetSubStep(1);
+                self->velocityY = FIX(-5.0);
+                if (self->facingLeft) {
+                    self->velocityX = FIX(-1.5);
+                } else {
+                    self->velocityX = FIX(1.5);
+                }
+            }
+        }
+    } else if (self->hitFlags & 0xF) {
+        if (self->ext.factory.unk86 >= 0x10) {
+            self->ext.factory.unk86 /= 2;
+        }
+        if ((s1 == 2 || s1 == 3) && !self->params) {
+            SetStep(0xA);
+        }
+    }
+
+    s1 = self->step;
+    switch (s1) {
+    case 0:
+        s0 = self + 1;
+        self->unk60 = s0;
+        // PSP version: 0x20
+        CreateEntityFromCurrentEntity(0x30, s0);
+        s0->unk5C = self;
+        if (self->params) {
+            InitializeEntity(&D_80180B30);
+            self->animCurFrame = 0x32;
+            s4 = self + 2;
+            s0->unk60 = s4;
+            s0 = s4;
+            // PSP version: 0x21
+            CreateEntityFromCurrentEntity(0x31, s0);
+            s0->unk5C = self;
+            s0->unk60 = self;
+        } else {
+            InitializeEntity(&D_80180B24);
+        }
+        s0->unk60 = self;
+        self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
+        if (self->facingLeft) {
+            self->posX.i.hi -= 0x20;
+        } else {
+            self->posX.i.hi += 0x20;
+        }
+        self->ext.factory.unk86 = 0x80;
+        break;
+
+    case 1:
+        if (UnkCollisionFunc3(&D_801829DC) & 1) {
+            SetStep(2);
+        }
+        break;
+    case 2:
+        if (self->params) {
+            AnimateEntity(&D_80182824, self);
+        } else {
+            AnimateEntity(&D_8018281C, self);
+        }
+        if ((GetDistanceToPlayerX() < 0x80) || (self->hitFlags)) {
+            SetStep(3);
+        }
+        break;
+    case 3:
+        func_801CC90C(self);
+        s1 = GetDistanceToPlayerX();
+        if (self->ext.factory.unk80) {
+            --self->ext.factory.unk80;
+            self->animFrameDuration = 0;
+            break;
+        }
+
+        if (!(self->ext.strongWarg.unk7C & 0xFF)) {
+            if (self->params) {
+                s3 = AnimateEntity(&D_801827EC, self);
+            } else {
+                s3 = AnimateEntity(&D_801827DC, self);
+            }
+            if (!s3 || s3 & 0x80) {
+                s3 = (self->animFrameIdx - 1);
+                if (self->facingLeft) {
+                    self->velocityX = *(&D_801829EC + s3);
+                } else {
+                    self->velocityX = -*(&D_801829EC + s3);
+                }
+            }
+            if (s1 < 0x50) {
+                self->ext.stub[0] = 1;
+                self->animFrameIdx = 7 - self->animFrameIdx;
+                self->ext.factory.unk80 = 0x10;
+            }
+        } else {
+            if (self->params) {
+                s3 = AnimateEntity(&D_8018280C, self);
+            } else {
+                s3 = AnimateEntity(&D_801827FC, self);
+            }
+
+            if (s3 != 1) {
+                s3 = self->animFrameIdx - 1;
+                if (self->facingLeft) {
+                    self->velocityX = -*(&D_80182A04 + s3);
+                } else {
+                    self->velocityX = *(&D_80182A04 + s3);
+                }
+            }
+
+            if (s1 >= 0x79) {
+                self->ext.stub[0] = 0;
+                self->animFrameIdx = 7 - self->animFrameIdx;
+                self->ext.factory.unk80 = 0x10;
+            }
+        }
+
+        UnkCollisionFunc2(&D_801829D4);
+        if (self->ext.factory.unk82) {
+            --self->ext.factory.unk82;
+            break;
+        }
+
+        if ((self->facingLeft == GetSideToPlayer()) & 1) {
+            if (self->params) {
+                SetStep(4);
+            } else {
+                SetStep(5);
+            }
+        } else if (s1 < 0x48) {
+            SetStep(4);
+        } else {
+            if (self->facingLeft) {
+                g_api.CheckCollision(
+                    self->posX.i.hi - 0x38, self->posY.i.hi, &collider, 0);
+            } else {
+                g_api.CheckCollision(
+                    self->posX.i.hi + 0x38, self->posY.i.hi, &collider, 0);
+            }
+
+            if ((!self->ext.factory.unk86) ||
+                (collider.effects & 1 && collider.effects & 2)) {
+                func_801CC6F8(self);
+            }
+        }
+
+        break;
+    case 4:
+        func_801CC90C(self);
+        switch (self->step_s) {
+        case 0:
+            if (self->params) {
+                s3 = AnimateEntity(&D_80182850, self);
+            } else {
+                s3 = AnimateEntity(&D_80182848, self);
+            }
+            if (!s3) {
+                SetSubStep(1);
+                self->velocityY = FIX(-5.0);
+                if (self->facingLeft) {
+                    self->velocityX = FIX(-3.0);
+                } else {
+                    self->velocityX = FIX(3.0);
+                }
+            }
+            break;
+        case 1:
+            if (self->params) {
+                AnimateEntity(&D_80182868, self);
+            } else {
+                AnimateEntity(&D_80182858, self);
+            }
+            if (self->velocityX) {
+                if (self->velocityX < 0) {
+                    s1 = (self->posX.i.hi - 0x30);
+                    if (s1 + g_Tilemap.scrollX.i.hi < 0x30) {
+                        self->posX.val -= self->velocityX;
+                        self->velocityX = 0;
+                    }
+                } else {
+                    s1 = (self->posX.i.hi + 0x30);
+                    if (s1 + g_Tilemap.scrollX.i.hi > g_Tilemap.width - 0x30) {
+                        self->posX.val -= self->velocityX;
+                        self->velocityX = 0;
+                    }
+                }
+
+                if (self->velocityX) {
+                    g_api.CheckCollision(s1, self->posY.i.hi, &collider, 0);
+                    if ((collider.effects & 1) && (collider.effects & 2)) {
+                        self->posX.val -= self->velocityX;
+                        self->velocityX = 0;
+                    }
+                }
+            }
+            s2 = self->velocityX;
+
+            if (UnkCollisionFunc3(&D_801829DC) & 1) {
+                self->velocityX = s2;
+
+                if (!s2) {
+                    if (self->facingLeft) {
+                        func_801CC5A4(self, 4, 1, -16, 38, 1, -4);
+                        func_801CC5A4(self, 4, 1, 2, 38, 1, 4);
+                    } else {
+                        func_801CC5A4(self, 4, 1, -2, 38, 1, -4);
+                        func_801CC5A4(self, 4, 1, 16, 38, 1, 4);
+                    }
+                }
+
+                SetSubStep(2);
+            }
+            break;
+        case 2:
+            s2 = self->velocityX;
+            if (s2) {
+                if (s2 < 0) {
+                    s2 += 0x3000;
+                    EntityUnkId14Spawner(
+                        self, 1, 1, -16, 38, ((Random() & 3) + 1), -4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 10, 38, ((Random() & 3) + 1), -4);
+                } else {
+                    s2 -= 0x3000;
+                    EntityUnkId14Spawner(
+                        self, 1, 1, -10, 38, ((Random() & 3) + 1), 4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 16, 38, ((Random() & 3) + 1), 4);
+                }
+                self->velocityX = s2;
+            }
+            UnkCollisionFunc2(&D_801829D4);
+
+            if (self->params) {
+                s3 = AnimateEntity(&D_80182884, self);
+            } else {
+                s3 = AnimateEntity(&D_80182878, self);
+            }
+
+            if (!s3) {
+                func_801CC820(self);
+            }
+        }
+        break;
+    case 5:
+        func_801CC90C(self);
+        if (!AnimateEntity(&D_80182890, self)) {
+            self->facingLeft ^= 1;
+            self->animCurFrame = 0xE;
+            func_801CC820(self);
+        }
+        break;
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            AnimateEntity(&D_801828D8, self);
+            if (!--self->ext.factory.unk80) {
+                SetSubStep(1);
+            }
+            break;
+        case 1:
+            s0 = self + 1;
+            s3 = AnimateEntity(&D_801828A8, self);
+
+            if (self->velocityX) {
+                if (self->velocityX < 0) {
+                    self->velocityX += FIX(0.5);
+                } else {
+                    self->velocityX -= FIX(0.5);
+                }
+            } else {
+                s0->attackElement = self->attackElement;
+                s0->attack = self->attack;
+            }
+
+            if ((s3 & 0x80) && (self->animFrameIdx == 7)) {
+                if (self->facingLeft) {
+                    self->velocityX = FIX(8.0);
+                } else {
+                    self->velocityX = FIX(-8.0);
+                }
+                PlaySfxPositional(0x783);
+                s5 = &g_api.enemyDefs[149];
+                s0->attackElement = s5->attackElement;
+                s0->attack = s5->attack;
+            }
+
+            UnkCollisionFunc2(&D_801829D4);
+
+            if (!s3) {
+                func_801CC820(self);
+            }
+        }
+        break;
+    case 7:
+        func_801CC90C(self);
+        AnimateEntity(&D_801828D8, self);
+        break;
+    case 8:
+        if (!AnimateEntity(&D_80182900, self)) {
+            func_801CC820(self);
+        }
+        break;
+    case 9:
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateEntity(&D_80182928, self)) {
+                SetSubStep(1);
+                self->ext.factory.unk80 = 0;
+            }
+            break;
+        case 1:
+            if (!AnimateEntity(&D_80182944, self)) {
+                func_801CC820(self);
+                break;
+            }
+
+            if (self->animCurFrame == 0x14) {
+                if (self->ext.factory.unk80 == 0) {
+                    s0 = AllocEntity(&D_8007A958, &D_8007A958 + 0x20);
+                    if (s0 != NULL) {
+                        // PSP version 0x1E
+                        CreateEntityFromCurrentEntity(0x2E, s0);
+                        s0->facingLeft = self->facingLeft;
+                        s0->posY.i.hi += 0x28;
+                        if (self->facingLeft) {
+                            s0->posX.i.hi += 0x40;
+                        } else {
+                            s0->posX.i.hi -= 0x40;
+                        }
+                    }
+                }
+
+                self->ext.factory.unk80 += 1;
+            }
+        }
+        break;
+    case 10:
+        func_801CC90C(self);
+        switch (self->step_s) {
+        case 0:
+            SetSubStep(1);
+            PlaySfxPositional(0x781);
+            if (self->facingLeft) {
+                self->velocityX = FIX(-2.0);
+            } else {
+                self->velocityX = FIX(2.0);
+            }
+            break;
+        case 1:
+            UnkCollisionFunc2(&D_801829D4);
+            if (self->velocityX != 0) {
+                if (self->facingLeft) {
+                    self->velocityX += FIX(0.125);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, -32, 38, ((Random() & 3) + 1), -4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 2, 38, ((Random() & 3) + 1), -4);
+                } else {
+                    self->velocityX -= FIX(0.125);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, -2, 38, ((Random() & 3) + 1), 4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 32, 38, ((Random() & 3) + 1), 4);
+                }
+            }
+            if (!AnimateEntity(&D_8018295C, self)) {
+                SetSubStep(2);
+            }
+            break;
+        case 2:
+            if (!AnimateEntity(&D_80182964, self)) {
+                func_801CC820(self);
+            }
+            break;
+        }
+        break;
+    case 11:
+        switch (self->step_s) {
+        case 0:
+            if (UnkCollisionFunc3(&D_801829DC) & 1) {
+                self->drawFlags = FLAG_DRAW_UNK8;
+                self->unk6C = 0x80;
+                self->ext.factory.unk80 = 0;
+                SetSubStep(1);
+                self->ext.factory.unk80++;
+                s0 = AllocEntity(&D_8007D858, (&D_8007D858 + 0x20));
+                if (s0 != NULL) {
+                    // PSP version 0x23
+                    CreateEntityFromCurrentEntity(0x33, s0);
+                    s0->unk5A = self->unk5A;
+                    if (self->hitEffect) {
+                        s0->palette = self->hitEffect;
+                    } else {
+                        s0->palette = self->palette;
+                    }
+                }
+            }
+            break;
+        case 1:
+            AnimateEntity(&D_80182900, self);
+            self->ext.factory.unk80 += 1;
+            self->unk6C -= 2;
+            if (self->unk6C == 0x40) {
+                PlaySfxPositional(0x780);
+            }
+            if (!self->unk6C) {
+                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+                self->palette = 0x15F;
+                self->unk6C = 0x80;
+                self->step_s += 1;
+            }
+            break;
+        case 2:
+            AnimateEntity(&D_80182900, self);
+            self->unk6C -= 2;
+            if (!self->unk6C) {
+                DestroyEntity(self);
+                DestroyEntity(self + 1);
+                return;
+            }
+            break;
+        }
+        break;
+    case 12:
+        s0 = self + 2;
+        s4 = self + 3;
+        switch (self->step_s) {
+        case 0:
+            s0->animFrameDuration = 0;
+            s0->animFrameIdx = 0;
+            s0->ext.strongWarg.unk7C = 1;
+
+            if (!(Random() & 7)) {
+                AnimateEntity(&D_8018296C, s0);
+                AnimateEntity(&D_80182980, self);
+                self->step_s += 1;
+            } else {
+                AnimateEntity(&D_80182990, s0);
+                AnimateEntity(&D_801829B4, self);
+                self->step_s += 2;
+            }
+            self->animCurFrame = 0x32;
+            break;
+        case 1:
+            s1 = AnimateEntity(&D_8018296C, s0);
+            AnimateEntity(&D_80182980, self);
+            if (self->velocityX != 0) {
+                if (self->velocityX < 0) {
+                    self->velocityX += FIX(0.5);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
+                } else {
+                    self->velocityX -= FIX(0.5);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
+                }
+            } else {
+                s4->hitboxState = 0;
+                s4->attackElement = self->attackElement;
+                s4->attack = self->attack;
+            }
+
+            if ((s1 & 0x80) && (s0->animFrameIdx == 5)) {
+                if (self->facingLeft) {
+                    self->velocityX = FIX(4.0);
+                } else {
+                    self->velocityX = FIX(-4.0);
+                }
+
+                PlaySfxPositional(0x6C7);
+                s5 = &g_api.enemyDefs[152];
+                s4->hitboxState = s5->hitboxState;
+                s4->attackElement = s5->attackElement;
+                s4->attack = (s5->attack * 3) / 2;
+            }
+
+            UnkCollisionFunc2(&D_801829D4);
+            if (!s1) {
+                func_801CC820(self);
+                s0->ext.strongWarg.unk7C = 0;
+            }
+            break;
+        case 2:
+            s1 = AnimateEntity(&D_80182990, s0);
+            AnimateEntity(&D_801829B4, self);
+            if (self->velocityX != 0) {
+                if (self->velocityX < 0) {
+                    self->velocityX += FIX(0.5);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
+                } else {
+                    self->velocityX -= FIX(0.5);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
+                    EntityUnkId14Spawner(
+                        self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
+                }
+            } else {
+                s4->hitboxState = 0;
+                s4->attackElement = self->attackElement;
+                s4->attack = self->attack;
+            }
+            s3 = s0->animFrameIdx;
+            if ((s1 & 0x80) && ((s3 == 5) || (s3 == 9) || (s3 == 0xD))) {
+                if (self->facingLeft) {
+                    self->velocityX = FIX(4.0);
+                } else {
+                    self->velocityX = FIX(-4.0);
+                }
+                PlaySfxPositional(0x6C7);
+                s5 = &g_api.enemyDefs[152];
+                s4->hitboxState = s5->hitboxState;
+                s4->attackElement = s5->attackElement;
+                s4->attack = s5->attack;
+            }
+
+            UnkCollisionFunc2(&D_801829D4);
+            if (!s1) {
+                func_801CC820(self);
+                s0->ext.strongWarg.unk7C = 0;
+            }
+        }
+        break;
+    }
+
+    s1 = self->animCurFrame;
+    if (s1) {
+        if (self->params) {
+            if (s1 >= 0x56) {
+                s1 -= 0x39;
+            } else if (s1 >= 0x39) {
+                s1 -= 0x39;
+            } else {
+                s1 = 0xD;
+            }
+        } else {
+            if (s1 >= 0x60) {
+                s1 -= 0x30;
+            } else {
+                --s1;
+            }
+        }
+
+        s6 = &(D_80182A4C)[s1 * 0x8];
+        self->hitboxOffX = *s6++;
+        self->hitboxOffY = *s6++;
+        self->hitboxWidth = *s6++;
+        self->hitboxHeight = *s6;
+    }
+}
 
 void EntityUnkId30(Entity* self) {
     Entity* entity;
