@@ -141,7 +141,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001
+build_us: main dra weapon ric cen dre mad no0 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001
 build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -295,6 +295,12 @@ $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_MAD.BIN:
 	$(GFXSTAGE) e assets/st/mad $@
+
+no0: $(BUILD_DIR)/NO0.BIN $(BUILD_DIR)/F_NO0.BIN
+$(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO0.BIN:
+	$(GFXSTAGE) e assets/st/no0 $@
 
 no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
@@ -621,7 +627,11 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
+<<<<<<< HEAD
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001
+=======
+.PHONY: main, dra, ric, cen, dre, mad, no0, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
+>>>>>>> bc788e33 (make this branch checkout itself)
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies

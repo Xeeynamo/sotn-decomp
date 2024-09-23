@@ -1,5 +1,5 @@
 echo "Start by making sure repo is clean and good"
-git checkout master
+git checkout no0_still_failing
 git restore .
 
 echo "Delete any extracted no0 files from previous runs"
