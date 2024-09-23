@@ -14,7 +14,7 @@ INCLUDE_ASM("ric/nonmatchings/1AC60_hd", CheckBladeDashInput);
 
 INCLUDE_ASM("ric/nonmatchings/1AC60_hd", CheckHighJumpInput);
 
-INCLUDE_ASM("ric/nonmatchings/1AC60_hd", func_hd_80157BC8);
+INCLUDE_ASM("ric/nonmatchings/1AC60_hd", RicMain);
 
 INCLUDE_ASM("ric/nonmatchings/1AC60_hd", RicDebugOff);
 

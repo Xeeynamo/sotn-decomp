@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
   symbol_name_format: hd_$VRAM
   section_order:
     - .data
@@ -37,13 +38,17 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, pl_header]
+      - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 32]
+      - [0x170AC, .data, spriteparts]
+      - [0x18568, .data, d_18568]
+      - [0x18688, assets, subweapondefs, D_80154688]
       - [0x188F4, .data, 21250]
       - [0x1895C, .data, 21250] # entity table
       - [0x18A6C, .data, 21250] # blueprints
       - [0x18C40, .data, 24788]
       - [0x18F7C, .data, 26C84]
-      - [0x1938C, data] # pl_anims
+      - [0x1938C, .data, pl_anims]
       - [0x199AC, .data, 2A060]
       - [0x19D94, .data, 2C4C4]
       - [0x19EE0, .data, 319C4]
