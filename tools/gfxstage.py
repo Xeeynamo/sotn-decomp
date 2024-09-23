@@ -231,18 +231,14 @@ def decode(input_file: str, output_base: str, pal_idx: int):
             copy_pal(img.data, i * 0x10 + 0xF, src[clut_indices[0xF] + 0x40 * i :])
         img.write(output_file)
 
-    print("And now we are decoding.")
-    print("Args for decode:", input_file, output_base, pal_idx)
     with open(input_file, "rb") as f_in:
         src_data = f_in.read()
-    print(len(src_data), hex(len(src_data)))
+
     max_tilesets = 8 if len(src_data) == 0x40000 else 6
 
     if pal_idx is None or pal_idx < 0:
-        print("greypal")
         pal = generate_grey_palette()
     else:
-        print("specificpal")
         pal = decode_palette(src_data[get_clut_pos_start(pal_idx) :])
 
     for i in range(0, 4):
@@ -270,13 +266,10 @@ parser.add_argument(
 )
 
 if __name__ == "__main__":
-    print("Here goes gfxstage!")
     args = parser.parse_args()
     if args.mode == "e":
-        print("It's in mode E")
         err = encode(args.input, args.output)
         if err != None:
             sys.stderr.write(f"ERROR: {err}")
     elif args.mode == "d":
-        print("It's in mode D")
         decode(args.input, args.output, args.pal)
