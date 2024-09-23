@@ -1809,6 +1809,11 @@ typedef struct {
     /* 0x80 */ u8 unk80;
 } ET_DisableAfterImage;
 
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ u16 unk7E;
+} ET_EntityExplosion3;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1957,6 +1962,7 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
+    ET_EntityExplosion3 entityExplosion3;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field_name)                               \
