@@ -504,7 +504,22 @@ void EntityRoomForeground(Entity* entity) {
 
 #include "../bottom_corner_text.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A80A8);
+// func_801A80A8
+void func_801A80A8()
+{
+    Entity* entity;
+
+    if (!(g_Timer & 0xF)) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_ID_21, g_CurrentEntity, entity);
+            entity->facingLeft = g_CurrentEntity->facingLeft;
+            entity->zPriority = g_CurrentEntity->zPriority - 1;
+            entity->params = g_CurrentEntity->animCurFrame;
+            entity->step = 0x20;
+        }
+    }
+}
 
 // POSSIBLE FILE BREAK
 
