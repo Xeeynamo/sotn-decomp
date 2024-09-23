@@ -296,6 +296,12 @@ $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 $(BUILD_DIR)/F_MAD.BIN:
 	$(GFXSTAGE) e assets/st/mad $@
 
+no0: $(BUILD_DIR)/NO0.BIN $(BUILD_DIR)/F_NO0.BIN
+$(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO0.BIN:
+	$(GFXSTAGE) e assets/st/no0 $@
+
 no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 	$(OBJCOPY) -O binary $< $@
@@ -623,6 +629,7 @@ include tools/tools.mk
 .PHONY: format, ff, format-src, format-tools, format-symbols
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001
 =======
 .PHONY: main, dra, ric, cen, dre, mad, no0, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
@@ -630,6 +637,9 @@ include tools/tools.mk
 =======
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
 >>>>>>> 2f17c01f (fix dra symbols)
+=======
+.PHONY: main, dra, ric, cen, dre, mad, no0, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
+>>>>>>> 620538f2 (debug statements in gfxstage)
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies
