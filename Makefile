@@ -205,6 +205,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
