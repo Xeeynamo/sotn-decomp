@@ -137,9 +137,11 @@ bool RicDoCrash(void) {
     if (subWpnID == PL_W_HOLYWATER && g_Player.timers[PL_T_3]) {
         return 0;
     }
+#if defined(VERSION_US)
     if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.D_800973FC) {
         return 0;
     }
+#endif
     if (subWpn.blueprintNum) {
         if (subWpnID == 1) {
             subWpnEnt = RicCreateEntFactoryFromEntity(
@@ -327,7 +329,11 @@ bool RicCheckInput(s32 checks) {
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                 } else if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
-                    if ((g_Player.unk44 & 0x10) && (g_Player.unk7A == 0)) {
+                    if (g_Player.unk44 & 0x10
+#if defined(VERSION_US)
+                        && !g_Player.unk7A
+#endif
+                    ) {
                         RicSetRun();
                     } else {
                         RicSetWalk(0);
@@ -1570,6 +1576,11 @@ void RicUpdatePlayerEntities(void) {
     }
 }
 
+#if defined(VERSION_US)
+#define MAYBE false
+#elif defined(VERSION_HD)
+#define MAYBE true
+#endif
 FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_SMOKE_PUFF, 5, 1, true, true, 2, B_DECOR, 0, 0),
     B_MAKE(E_SMOKE_PUFF, 3, 1, true, true, 4, B_DECOR, 2, 0),
@@ -1581,26 +1592,26 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_SUBWPN_HOLY_WATER_FLAME, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_80161C2C, 6, 1, true, true, 12, B_KIND_8, 3, 0),
     B_MAKE(E_80161C2C, 128, 1, true, true, 3, B_KIND_8, 3, 8),
-    B_MAKE(E_WHIP, 15, 15, false, true, 0, B_KIND_10, 1, 0),
+    B_MAKE(E_WHIP, 15, 15, MAYBE, true, 0, B_KIND_10, 1, 0),
     B_MAKE(E_HIT_BY_CUT_BLOOD, 72, 1, true, true, 2, B_KIND_3, 1, 0),
-    B_MAKE(E_CRASH_HYDROSTORM, 48, 1, false, true, 6, B_WPN, 1, 48),
-    B_MAKE(E_CRASH_CROSS_ROTATING, 1, 1, false, true, 0, B_KIND_9, 0, 0),
+    B_MAKE(E_CRASH_HYDROSTORM, 48, 1, MAYBE, true, 6, B_WPN, 1, 48),
+    B_MAKE(E_CRASH_CROSS_ROTATING, 1, 1, MAYBE, true, 0, B_KIND_9, 0, 0),
     B_MAKE(E_CRASH_CROSS_BEAM, 6, 1, true, true, 24, B_KIND_9, 0, 0),
-    B_MAKE(E_NOT_IMPLEMENTED_1, 16, 16, false, true, 0, B_KIND_8, 1, 0),
+    B_MAKE(E_NOT_IMPLEMENTED_1, 16, 16, MAYBE, true, 0, B_KIND_8, 1, 0),
     B_MAKE(E_NOT_IMPLEMENTED_2, 15, 15, true, true, 0, B_KIND_8, 1, 0),
-    B_MAKE(E_ARM_BRANDISH_WHIP, 1, 1, false, true, 0, B_KIND_12, 1, 0),
+    B_MAKE(E_ARM_BRANDISH_WHIP, 1, 1, MAYBE, true, 0, B_KIND_12, 1, 0),
     B_MAKE(E_80167964, 1, 1, true, true, 0, B_KIND_8, 0, 0),
     B_MAKE(E_SUBWPN_AXE, 1, 1, true, true, 0, B_KIND_9, 1, 8),
     B_MAKE(E_80161EF8, 1, 1, true, true, 0, B_DECOR, 4, 0),
     B_MAKE(E_NOT_IMPLEMENTED_3, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_REVIVAL_COLUMN, 1, 1, false, true, 0, B_KIND_3, 0, 0),
-    B_MAKE(E_APPLY_MARIA_POWER_ANIM, 4, 1, false, true, 24, B_KIND_3, 0, 0),
+    B_MAKE(E_REVIVAL_COLUMN, 1, 1, MAYBE, true, 0, B_KIND_3, 0, 0),
+    B_MAKE(E_APPLY_MARIA_POWER_ANIM, 4, 1, MAYBE, true, 24, B_KIND_3, 0, 0),
     B_MAKE(E_SMOKE_PUFF, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_SLIDE_KICK, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_BLADE_DASH, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_801623E0, 1, 1, true, true, 0, B_KIND_3, 0, 0),
     B_MAKE(E_80162604, 1, 1, true, true, 0, B_KIND_3, 0, 0),
-    B_MAKE(E_MARIA, 1, 1, false, true, 0, B_KIND_5, 0, 0),
+    B_MAKE(E_MARIA, 1, 1, MAYBE, true, 0, B_KIND_5, 0, 0),
     B_MAKE(E_MARIA_POWERS, 4, 1, true, true, 4, B_KIND_3, 0, 0),
     B_MAKE(E_80160D2C, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_NOT_IMPLEMENTED_4, 1, 1, true, true, 0, B_DECOR, 0, 0),
@@ -1612,10 +1623,10 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 8),
     B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 12),
     B_MAKE(E_80167A70, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_CRASH_AXE, 8, 8, false, true, 0, B_WPN, 1, 32),
+    B_MAKE(E_CRASH_AXE, 8, 8, MAYBE, true, 0, B_WPN, 1, 32),
     B_MAKE(E_HIT_BY_CUT_BLOOD, 3, 1, true, true, 3, B_DECOR, 0, 0),
     B_MAKE(E_SUBWPN_DAGGER, 1, 1, true, true, 0, B_KIND_9, 1, 8),
-    B_MAKE(E_SUBWPN_DAGGER, 128, 1, false, true, 4, B_KIND_14, 4, 8),
+    B_MAKE(E_SUBWPN_DAGGER, 128, 1, MAYBE, true, 4, B_KIND_14, 4, 8),
     B_MAKE(E_80160F0C, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_HIT_BY_CUT_BLOOD, 12, 1, true, true, 2, B_KIND_8, 3, 0),
     B_MAKE(E_HIT_BY_ICE, 1, 1, true, true, 0, B_DECOR, 0, 0),
@@ -1625,20 +1636,20 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_SUBWPN_AGUNEA, 1, 1, true, true, 0, B_WPN, 1, 4),
     B_MAKE(E_SUBWPN_AGUNEA_HIT_ENEMY, 1, 1, true, true, 0, B_DECOR, 1, 0),
     B_MAKE(E_80161C2C, 72, 1, true, true, 2, B_KIND_3, 1, 16),
-    B_MAKE(E_CRASH_VIBHUTI, 1, 1, false, true, 0, B_DECOR, 0, 18),
+    B_MAKE(E_CRASH_VIBHUTI, 1, 1, MAYBE, true, 0, B_DECOR, 0, 18),
     B_MAKE(E_CRASH_VIBHUTI_CLOUD, 1, 1, true, true, 0, B_KIND_6, 0, 0),
-    B_MAKE(E_CRASH_REBOUND_STONE, 1, 1, false, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_CRASH_REBOUND_STONE, 1, 1, MAYBE, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_8016D9C4, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_CRASH_REBOUND_STONE_EXPLOSION, 1, 1, false, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_CRASH_BIBLE, 1, 1, false, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_CRASH_REBOUND_STONE_EXPLOSION, 1, 1, MAYBE, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_CRASH_BIBLE, 1, 1, MAYBE, true, 0, B_WPN, 0, 0),
     B_MAKE(E_CRASH_BIBLE_BEAM, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_SUBWPN_BIBLE, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_SUBWPN_BIBLE_TRAIL, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_SUBWPN_STOPWATCH, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_SUBWPN_STOPWATCH_CIRCLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_801705EC, 1, 1, false, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_801705EC, 1, 1, MAYBE, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_8016F198, 2, 1, true, true, 2, B_DECOR, 0, 0),
-    B_MAKE(E_AGUNEA_CIRCLE, 1, 1, false, true, 0, B_WPN, 0, 20),
+    B_MAKE(E_AGUNEA_CIRCLE, 1, 1, MAYBE, true, 0, B_WPN, 0, 20),
     B_MAKE(E_AGUNEA_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(
         E_CRASH_REBOUND_STONE_PARTICLES, 1, 1, true, true, 0, B_KIND_3, 0, 0),
