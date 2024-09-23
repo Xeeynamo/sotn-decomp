@@ -6,6 +6,13 @@ echo "Delete any extracted no0 files from previous runs"
 rm config/*no0*
 rm -rf src/st/no0
 
+echo "Get the master makefiles in place to build the project without no0"
+rm Makefile
+rm Makefile.psx.mk
+
+cp Makefile_master Makefile
+cp Makefile.psx_master.mk Makefile.psx.mk
+
 echo "Make the project like normal"
 make clean
 make extract -j
