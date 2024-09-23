@@ -442,9 +442,7 @@ s16 g_ESoulStealOrbSprt[] = {
 
 // D_8018149C
 u8 g_ESoulStealOrbAnim[] = {
-    0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00,
-    0x40, 0x01, 0xFF, 0x00, 0x40, 0x02, 0xFF, 0x00, 0x40, 0x02, 0xFF, 0x00, 0x40, 0x01, 0xFF, 0x00,
-    0x40, 0x03, 0xFF, 0x00
+    0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00
 };
 
 // [Duplicate]
@@ -455,7 +453,53 @@ u8 g_ESoulStealOrbAnim[] = {
 // func_801A77DC
 #include "../entity_enemy_blood.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/254C4", func_801A7C8C);    // EntityRoomForeground()
+#if !defined(VERSION_PSP)
+static u8 D_801814AC[] = {0x40, 0x01, 0xFF, 0x00};
+static u8 D_801814B0[] = {0x40, 0x02, 0xFF, 0x00};
+static u8 D_801814B4[] = {0x40, 0x02, 0xFF, 0x00};
+static u8 D_801814B8[] = {0x40, 0x01, 0xFF, 0x00};
+static u8 D_801814BC[] = {0x40, 0x03, 0xFF, 0x00};
+static ObjInit2 D_801814C0[] = {
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814AC},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814B4},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814B8},
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814B0},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814BC},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814B8},
+};
+
+#else
+extern ObjInit2 D_801814C0[];
+
+#endif
+
+extern u16 g_eInitGeneric2[];
+
+// [Duplicate]
+// [Need to remove D_######## symbol names before using common include]
+// func_801A7C8C
+void EntityRoomForeground(Entity* entity) {
+    ObjInit2* objInit = &D_801814C0[entity->params];
+
+    if (!entity->step) {
+        InitializeEntity(g_eInitGeneric2);
+        entity->animSet = objInit->animSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.u;
+        entity->palette = objInit->palette;
+        entity->drawFlags = objInit->drawFlags;
+        entity->drawMode = objInit->drawMode;
+        if (objInit->unkC != 0) {
+            entity->flags = objInit->unkC;
+        }
+        if (entity->params > 4) {
+            entity->drawFlags |= DRAW_COLORS;
+            entity->rotZ = 0x800;
+        }
+    }
+    AnimateEntity(objInit->unk10, entity);
+}
+//TODO: Can't use this include yet, as it still contains D_######## symbol names
 //#include "../e_room_fg.h"
 
 #include "../bottom_corner_text.h"

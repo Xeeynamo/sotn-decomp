@@ -8,7 +8,7 @@ void EntityDamageDisplay(Entity*);
 void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
-void func_801A7C8C(Entity*);
+void EntityRoomForeground(Entity*);
 void func_801AD2BC(Entity*);
 void EntityEquipItemDrop(Entity*);
 void EntityRelicOrb(Entity*);
@@ -54,7 +54,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityRedDoor,
     EntityIntenseExplosion,
     EntitySoulStealOrb,
-    func_801A7C8C,  // EntityRoomForeground
+    EntityRoomForeground,
     func_801AD2BC,  // EntityStageNamePopup
     EntityEquipItemDrop,
     EntityRelicOrb,
