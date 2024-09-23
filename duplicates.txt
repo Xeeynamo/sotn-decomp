@@ -934,19 +934,6 @@
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/st0/nonmatchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/wrp/nonmatchings/e_misc/EntityOlroxDrool.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityRoomForeground                | asm/us/boss/mar/nonmatchings/e_room_fg/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/cen/nonmatchings/e_room_fg/EntityRoomForeground.s 
-| 0.92 | true     | EntityBackgroundBlock               | asm/us/st/cen/nonmatchings/st_debug/EntityBackgroundBlock.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/dre/nonmatchings/20734/EntityRoomForeground.s 
-| 0.92 | true     | EntityUnkId11                       | asm/us/st/dre/nonmatchings/succubus/EntityUnkId11.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/no3/nonmatchings/4AFF0/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/np3/nonmatchings/e_room_fg/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/nz0/nonmatchings/e_room_fg/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/rwrp/nonmatchings/wrp/e_room_fg/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/st0/nonmatchings/39EA8/EntityRoomForeground.s 
-| 1.00 | true     | EntityRoomForeground                | asm/us/st/wrp/nonmatchings/e_room_fg/EntityRoomForeground.s 
-| 0.92 | true     | EntityBackgroundBlock               | asm/us/st/wrp/nonmatchings/st_debug/EntityBackgroundBlock.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/boss/mar/nonmatchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/cen/nonmatchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/dre/nonmatchings/e_collect/DestroyCurrentEntity.s 
@@ -958,6 +945,18 @@
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/rwrp/nonmatchings/wrp/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/st0/nonmatchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | UnusedDestroyCurrentEntity          | asm/us/st/st0/nonmatchings/e_collect/UnusedDestroyCurrentEntity.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityRoomForeground                | asm/us/boss/mar/nonmatchings/e_room_fg/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/cen/nonmatchings/e_room_fg/EntityRoomForeground.s 
+| 0.92 | true     | EntityBackgroundBlock               | asm/us/st/cen/nonmatchings/st_debug/EntityBackgroundBlock.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/dre/nonmatchings/20734/EntityRoomForeground.s 
+| 0.92 | true     | EntityUnkId11                       | asm/us/st/dre/nonmatchings/succubus/EntityUnkId11.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/no3/nonmatchings/4AFF0/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/np3/nonmatchings/e_room_fg/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/nz0/nonmatchings/e_room_fg/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/st0/nonmatchings/39EA8/EntityRoomForeground.s 
+| 1.00 | true     | EntityRoomForeground                | asm/us/st/wrp/nonmatchings/e_room_fg/EntityRoomForeground.s 
+| 0.92 | true     | EntityBackgroundBlock               | asm/us/st/wrp/nonmatchings/st_debug/EntityBackgroundBlock.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Ratan2                              | asm/us/boss/mar/nonmatchings/st_common/Ratan2.s 
 | 0.92 | true     | _SsSndPlay                          | asm/us/main/nonmatchings/psxsdk/libsnd/play/_SsSndPlay.s 
@@ -1155,8 +1154,8 @@
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/np3/nonmatchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer2                 | asm/us/st/nz0/nonmatchings/e_magically_sealed_door/EntityIsNearPlayer2.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/nz0/nonmatchings/e_red_door/EntityIsNearPlayer.s 
+| 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/rwrp/nonmatchings/wrp/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/st0/nonmatchings/e_red_door/EntityIsNearPlayer.s 
-| 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/wrp/nonmatchings/e_red_door/EntityIsNearPlayer.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | AnimateEntity                       | asm/us/boss/mar/nonmatchings/st_common/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | asm/us/st/cen/nonmatchings/st_common/AnimateEntity.s 
@@ -1327,8 +1326,8 @@
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/no3/nonmatchings/e_red_door/EntityRedDoor.s 
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/np3/nonmatchings/e_red_door/EntityRedDoor.s 
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/nz0/nonmatchings/e_red_door/EntityRedDoor.s 
+| 0.99 | true     | EntityRedDoor                       | asm/us/st/rwrp/nonmatchings/wrp/e_red_door/EntityRedDoor.s 
 | 0.99 | true     | EntityRedDoor                       | asm/us/st/st0/nonmatchings/e_red_door/EntityRedDoor.s 
-| 0.99 | true     | EntityRedDoor                       | asm/us/st/wrp/nonmatchings/e_red_door/EntityRedDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | FindFirstUnkPrim                    | asm/us/boss/mar/nonmatchings/prim_helpers/FindFirstUnkPrim.s 
 | 1.00 | true     | FindFirstUnkPrim                    | asm/us/st/cen/nonmatchings/prim_helpers/FindFirstUnkPrim.s 
