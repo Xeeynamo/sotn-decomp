@@ -319,7 +319,127 @@ void EntityUnkId31(Entity* self) {
 }
 
 // some sort of explosion
-INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityExplosion3);
+void EntityExplosion3(Entity* entity) {
+    Entity* newEntity;
+    u32* ptr32;
+    u8* ptr;
+    Point16* point;
+    Primitive* prim;
+    u16 params;
+    s32 xOffset;
+    s32 yOffset;
+    s16 primIndex;
+    u16 angle;
+    s16 posX;
+    s16 posY;
+    u16 newX;
+    u16 newY;
+
+    params = entity->params;
+    if (!entity->step) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex != -1) {
+            InitializeEntity(D_80180B3C);
+            entity->flags |= FLAG_UNK_2000;
+            entity->hitboxState = 0;
+            prim = &g_PrimBuf[primIndex];
+            entity->flags |= FLAG_HAS_PRIMS;
+            entity->primIndex = primIndex;
+            primIndex = entity->unk5A + 3;
+            prim->tpage = primIndex >> 2;
+            prim->clut = entity->palette + 1;
+
+            ptr = &D_80183028[params * 4];
+            prim->u0 = prim->u2 = *ptr++ + ((primIndex & 1) << 7);
+            prim->u1 = prim->u3 = *ptr++ + ((primIndex & 1) << 7);
+            prim->v0 = prim->v1 = *ptr++ + ((primIndex & 2) << 6);
+            prim->v2 = prim->v3 = *ptr + ((primIndex & 2) << 6);
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+            prim->b0 = prim->b2 = prim->b1 = prim->b3 = 0x80;
+
+            prim->priority = entity->zPriority + 1;
+            prim->drawMode = DRAW_UNK02;
+        } else {
+            DestroyEntity(entity);
+            return;
+        }
+
+        entity->ext.entityExplosion3.timer = 0;
+        ptr32 = &D_80183034[params * 2];
+        if (entity->facingLeft) {
+            entity->velocityX = -*ptr32++;
+        } else {
+            entity->velocityX = *ptr32++;
+        }
+        entity->velocityY = *ptr32;
+    }
+
+    posX = entity->posX.i.hi;
+    posY = entity->posY.i.hi;
+    point = &D_80183054[params];
+    prim = &g_PrimBuf[entity->primIndex];
+    entity->ext.entityExplosion3.unk7E += D_8018304C[params];
+    newX = point->x;
+    newY = point->y;
+    angle = newX + entity->ext.entityExplosion3.unk7E;
+    xOffset = rcos(angle) * newY;
+    if (xOffset < 0) {
+        xOffset += 0xFFF;
+    }
+    xOffset = xOffset >> 12;
+    if (entity->facingLeft != 0) {
+        prim->x3 = posX - xOffset;
+        prim->x0 = posX + xOffset;
+    } else {
+        prim->x0 = posX - xOffset;
+        prim->x3 = posX + xOffset;
+    }
+    yOffset = rsin(angle) * newY;
+    if (yOffset < 0) {
+        yOffset += 0xFFF;
+    }
+    prim->y0 = posY - (yOffset >> 12);
+    prim->y3 = posY + (yOffset >> 12);
+
+    angle = entity->ext.entityExplosion3.unk7E - newX;
+    xOffset = rcos(angle) * newY;
+    if (xOffset < 0) {
+        xOffset += 0xFFF;
+    }
+    xOffset = xOffset >> 12;
+    if (entity->facingLeft != 0) {
+        prim->x1 = posX - xOffset;
+        prim->x2 = posX + xOffset;
+    } else {
+        prim->x1 = posX + xOffset;
+        prim->x2 = posX - xOffset;
+    }
+
+    yOffset = rsin(angle) * newY;
+    if (yOffset < 0) {
+        yOffset += 0xFFF;
+    }
+    prim->y1 = posY + (yOffset >> 12);
+    prim->y2 = posY - (yOffset >> 12);
+    FallEntity();
+    MoveEntity();
+    if (entity->ext.entityExplosion3.timer & 1) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity) {
+            CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+            point = &D_80183060[(Random() & 7)];
+            newEntity->posX.i.hi += point->x;
+            newEntity->posY.i.hi += point->y;
+            newEntity->params = 1;
+        }
+    }
+    entity->ext.entityExplosion3.timer++;
+    if (entity->ext.entityExplosion3.timer >= 32) {
+        CreateEntityFromCurrentEntity(2, entity);
+        entity->params = 1;
+    }
+}
 
 void func_801CE740(Entity* self) {
     Primitive* prim = &g_PrimBuf[self->primIndex];

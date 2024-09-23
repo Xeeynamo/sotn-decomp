@@ -156,6 +156,14 @@ extern s16 D_801832EC[];
 extern s16 D_801836BC[];
 extern u16 D_80180B9C;
 
+// *** EntityExplosion3 *** //
+extern u16 D_80180B3C[];
+extern u8 D_80183028[];
+extern u32 D_80183034[];
+extern u16 D_8018304C[];
+extern Point16 D_80183054[];
+extern Point16 D_80183060[];
+
 // *** EntityDeath Animations *** //
 extern u8 D_80181B04[];
 extern u8 D_80181B28[];
