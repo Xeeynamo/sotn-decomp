@@ -89,7 +89,7 @@ UnkRecursivePrimFunc2 = 0x801A6A58;
 ClutLerp = 0x801A7158;
 PlaySfxWithPosArgs = 0x801A7350;
 EntitySoulStealOrb = 0x801A7448;
-//EntityEnemyBlood = 0x801A77DC;
+EntityEnemyBlood = 0x801A77DC;
 //EntityRoomForeground = 0x801A7C8C;
 BottomCornerText = 0x801A7D78;
 // func_801A80A8

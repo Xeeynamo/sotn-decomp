@@ -53,6 +53,7 @@ segments:
       - [0x13EC, .data, 254C4] # UnkRecursivePrimFunc1
       - [0x140C, .data, 254C4] # UnkRecursivePrimFunc2
       - [0x142C, .data, 254C4] # EntitySoulStealOrb
+      - [0x14AC, .data, 254C4] # EntityEnemyBlood
       - [0x14C0, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
