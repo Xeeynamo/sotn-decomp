@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/us", func_us_801C1854);
@@ -264,8 +265,7 @@ INCLUDE_ASM("st/no0/nonmatchings/us", func_us_801CE058);
 
 INCLUDE_ASM("st/no0/nonmatchings/us", func_us_801CE0F8);
 
-void func_us_801CE2D8(void) {
-}
+void func_us_801CE2D8(void) {}
 
 INCLUDE_ASM("st/no0/nonmatchings/us", func_us_801CE2E0);
 
