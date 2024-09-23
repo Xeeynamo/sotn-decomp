@@ -4,7 +4,7 @@ PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 
 # configuration
 PSX_OVLS		:= dra ric weapon
-PSX_KSTAGES		:= cen dre mad no0 no3 np3 nz0 sel st0 wrp
+PSX_KSTAGES		:= cen dre mad no3 np3 nz0 sel st0 wrp
 PSX_RSTAGES		:= rwrp
 PSX_BOSTAGES    := mar
 PSX_RBOSTAGES	:= rbo3
