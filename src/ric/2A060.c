@@ -996,7 +996,6 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->step++;
         break;
-
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
@@ -1029,8 +1028,12 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->ext.subweapon.timer++;
         break;
-
     case 2:
+#if defined(VERSION_HD)
+        if (self->params == 0x28) {
+            g_Player.unk4E = 1;
+        }
+#endif
         DestroyEntity(self);
         break;
     }

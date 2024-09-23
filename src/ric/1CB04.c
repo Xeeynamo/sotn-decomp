@@ -141,13 +141,14 @@ void RicHandleWalk(void) {
 }
 
 void RicHandleRun(void) {
+#ifdef VERSION_US
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
         return;
     }
+#endif
     g_Player.timers[PL_T_8] = 8;
     g_Player.timers[PL_T_CURSE] = 8;
-
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH)) {
         RicDecelerateX(0x2000);

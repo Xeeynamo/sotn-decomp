@@ -795,6 +795,11 @@ def add_symbol(splat_config, version: str, name: str, offset: int):
     if offset < base_addr:
         return
 
+    # do not add symbols that belongs to the shared area
+    base_addr = splat_config["segments"][0]["vram"]
+    if offset < base_addr:
+        return
+
     # add symbol to the overlay symbol list
     symbol_file_name = splat_config["options"]["symbol_addrs_path"][1]
     sym_prefix = get_symbol_prefix(splat_config)
