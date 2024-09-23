@@ -30,5 +30,13 @@ rm Makefile.psx.mk
 cp no0_Makefile Makefile
 cp no0_Makefile.psx.mk Makefile.psx.mk
 
-echo "Run the Make command"
-make -j
+echo "add config"
+git add config/
+echo "now make the clean"
+make clean
+echo "and next make extract"
+make extract
+echo "now we will build"
+make build
+echo "and then expected???"
+make expected
