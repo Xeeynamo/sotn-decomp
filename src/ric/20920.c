@@ -87,7 +87,9 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
+#if defined(VERSION_US)
     FntPrint("op disable\n");
+#endif
     if (resetAnims) {
         g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
@@ -158,6 +160,19 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
+#ifdef VERSION_HD
+void RicSetRun(void) {
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_RUN);
+    RicSetAnimation(ric_anim_run);
+    RicSetSpeedX(FIX(2.25));
+    g_Player.timers[PL_T_RUN] = 40;
+    PLAYER.velocityY = 0;
+    RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
+}
+#endif
+
 void RicSetWalk(s32 arg0) {
     if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
         RicSetRun();
@@ -173,6 +188,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
+#ifdef VERSION_US
 void RicSetRun(void) {
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
@@ -187,6 +203,7 @@ void RicSetRun(void) {
             g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
     }
 }
+#endif
 
 void RicSetFall(void) {
     /**

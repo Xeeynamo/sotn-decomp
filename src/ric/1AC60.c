@@ -393,6 +393,9 @@ void RicMain(void) {
     g_Player.unk4C = 0;
     g_Player.unk72 = func_80156DE4();
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
+#if defined(VERSION_HD)
+    FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
+#endif
     for (i = 0; i < LEN(g_Player.timers); i++) {
         if (!g_Player.timers[i]) {
             continue;
@@ -469,58 +472,66 @@ void RicMain(void) {
     }
     g_Player.padTapped =
         (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
-    if (PLAYER.step == PL_S_DEAD) {
-        goto block_47;
-    }
-    // Reuse the i variable here even though we aren't iterating
-    i = GetTeleportToOtherCastle();
-    if (i != TELEPORT_CHECK_NONE) {
-        func_8015CC70(i);
-    }
-    // Richter must use step #32 for something else, look into it!
-    if (PLAYER.step == PL_S_INIT) {
-        goto block_48;
-    }
-    if (g_DebugPlayer && RicDebug()) {
-        return;
-    }
-    if (g_Player.unk60 >= 2) {
-        goto block_47;
-    }
-    if (g_Player.unk60 == 1) {
-        playerStep = PLAYER.step;
-        playerStepS = PLAYER.step_s;
-        RicSetStep(PL_S_BOSS_GRAB);
-        goto block_48;
-    }
-    if ((g_Player.timers[PL_T_INVINCIBLE_SCENE] |
-         g_Player.timers[PL_T_INVINCIBLE]) ||
-        !PLAYER.hitParams) {
-        goto block_47;
-    }
-    playerStep = PLAYER.step;
-    playerStepS = PLAYER.step_s;
-    damage.effects = PLAYER.hitParams & ~0x1F;
-    damage.damageKind = PLAYER.hitParams & 0x1F;
-    damage.damageTaken = PLAYER.hitPoints;
-    isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
-    damageKind = damage.damageKind;
-    damageEffects = damage.effects;
-    if (isDamageTakenDeadly) {
-        if (!g_Player.unk5C) {
-            RicSetStep(PL_S_DEAD);
-        } else {
-            g_Status.hp = 1;
-            RicSetStep(PL_S_HIT);
+    if (PLAYER.step != PL_S_DEAD) {
+        // Reuse the i variable here even though we aren't iterating
+        i = GetTeleportToOtherCastle();
+        if (i != TELEPORT_CHECK_NONE) {
+            func_8015CC70(i);
+        }
+        // Richter must use step #32 for something else, look into it!
+        if (PLAYER.step != PL_S_INIT) {
+            if (g_DebugPlayer && RicDebug()) {
+                return;
+            }
+            if (
+#if defined(VERSION_HD)
+                !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
+                  g_Player.timers[PL_T_INVINCIBLE]) &&
+#endif
+                g_Player.unk60 < 2) {
+                if (g_Player.unk60 == 1) {
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
+                    RicSetStep(PL_S_BOSS_GRAB);
+#if defined(VERSION_HD)
+                    goto check_input_combo;
+#endif
+                } else if (
+#if defined(VERSION_US)
+                    !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
+                      g_Player.timers[PL_T_INVINCIBLE]) &&
+#endif
+                    PLAYER.hitParams) {
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
+                    damage.effects = PLAYER.hitParams & ~0x1F;
+                    damage.damageKind = PLAYER.hitParams & 0x1F;
+                    damage.damageTaken = PLAYER.hitPoints;
+                    isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
+                    damageKind = damage.damageKind;
+                    damageEffects = damage.effects;
+                    if (isDamageTakenDeadly) {
+                        if (!g_Player.unk5C) {
+                            RicSetStep(PL_S_DEAD);
+                        } else {
+                            g_Status.hp = 1;
+                            RicSetStep(PL_S_HIT);
+                        }
+                    } else {
+                        RicSetStep(PL_S_HIT);
+                    }
+                } else {
+                    goto check_input_combo;
+                }
+            } else {
+                goto check_input_combo;
+            }
         }
     } else {
-        RicSetStep(PL_S_HIT);
+    check_input_combo:
+        CheckBladeDashInput();
+        CheckHighJumpInput();
     }
-    goto block_48;
-block_47:
-    CheckBladeDashInput();
-    CheckHighJumpInput();
-block_48:
     g_Player.prev_step = PLAYER.step;
     g_Player.prev_step_s = PLAYER.step_s;
     switch (PLAYER.step) {
@@ -613,8 +624,12 @@ block_48:
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_BOSS_GRAB:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 |
-                 PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40;
+        var_s4 =
+#if defined(VERSION_US)
+            NO_AFTERIMAGE |
+#endif
+            PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000 |
+            PLAYER_STATUS_UNK40;
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_DEAD:
@@ -689,8 +704,15 @@ block_48:
     if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
-    if ((PLAYER.step == PL_S_DEAD) && (PLAYER.animFrameDuration < 0)) {
-        PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
+    if (PLAYER.step == PL_S_DEAD) {
+        if (PLAYER.animFrameDuration < 0) {
+            PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
+        }
+#if defined(VERSION_HD)
+        PLAYER.posX.val += PLAYER.velocityX;
+        PLAYER.posY.val += PLAYER.velocityY;
+        return;
+#endif
     }
     if (g_Player.unk0C & 0x50) {
         return;

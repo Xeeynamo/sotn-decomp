@@ -148,7 +148,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx $(SRC_DIR)/weapon
-	git clean -fdx config/
+	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
@@ -205,6 +205,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
