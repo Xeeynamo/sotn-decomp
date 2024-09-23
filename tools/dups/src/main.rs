@@ -240,7 +240,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/servant/tt_000/nonmatchings/"),
             src_dir: String::from("../../src/servant/tt_000"),
-            overlay_name: String::from("RIC"),
+            overlay_name: String::from("TT_000"),
             include_asm: get_all_include_asm("../../src/servant/tt_000"),
             path_matcher: "/tt_000/".to_string(),
         },
