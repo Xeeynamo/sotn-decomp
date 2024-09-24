@@ -193,7 +193,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
 #define NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES 0x6CB
@@ -248,7 +247,6 @@ enum SfxModes {
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_SE_SU_FLAPPING_WINGS 0x6C6
 #define NA_SE_SU_CREATE_CLONES 0x6D5
 #define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
@@ -480,7 +478,7 @@ enum Sfx {
     SFX_SEED_SPIT,
     SFX_CANNON_EXPLODE,
     SFX_UI_ALERT_TINK,
-    SFX_TINK_JINGLE,  // Frozen Shade Shards, NO1 Telescope jingle
+    SFX_TINK_JINGLE, // Frozen Shade Shards, NO1 Telescope jingle
     SFX_GUARD_TINK,
     SFX_GLASS_SHARDS, // 0x6B0 (Succubus, Frozen Shade, Shamen Shield)
     SFX_TRANSFORM_3X, // Karma Coin and shields

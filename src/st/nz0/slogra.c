@@ -205,7 +205,7 @@ void EntitySlogra(Entity* self) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_SPEAR_SLASH);
+            PlaySfxPositional(SFX_BOSS_WING_FLAP);
         }
         break;
 

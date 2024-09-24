@@ -318,7 +318,7 @@ void EntitySuccubus(Entity* self) {
 
         AnimateEntity(D_801806C4, self);
         if ((self->animFrameIdx == 3) && (self->animFrameDuration == 0)) {
-            PlaySfxPositional(NA_SE_SU_FLAPPING_WINGS);
+            PlaySfxPositional(SFX_BOSS_WING_FLAP);
         }
 
         posY = self->posY.i.hi - self->ext.succubus.yOffset;
@@ -357,7 +357,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_FLY_1:
             AnimateEntity(D_801806E8, self);
             if ((self->animFrameIdx == 3) && (self->animFrameDuration == 0)) {
-                PlaySfxPositional(NA_SE_SU_FLAPPING_WINGS);
+                PlaySfxPositional(SFX_BOSS_WING_FLAP);
             }
 
             MoveEntity();
@@ -449,7 +449,7 @@ void EntitySuccubus(Entity* self) {
             }
             AnimateEntity(D_801806E8, self);
             if ((self->animFrameIdx == 3) && (self->animFrameDuration == 0)) {
-                PlaySfxPositional(NA_SE_SU_FLAPPING_WINGS);
+                PlaySfxPositional(SFX_BOSS_WING_FLAP);
             }
             MoveEntity();
             if (--self->ext.succubus.timer == 0) {
