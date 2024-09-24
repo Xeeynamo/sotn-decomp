@@ -1,3 +1,6 @@
+#include "no3.h"
+#include "sfx.h"
+
 void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
                    u8 arg5, s16 xOfst) {
     s32 i;
@@ -706,6 +709,8 @@ void EntityStrongWarg(Entity* self) {
     }
 }
 
+const u32 padding = 0;
+
 void EntityUnkId30(Entity* self) {
     Entity* entity;
     u16 animCurFrame;
@@ -1058,4 +1063,4 @@ void func_801CE740(Entity* self) {
 }
 
 // flame-like attack on ground from strong warg
-INCLUDE_ASM("st/no3/nonmatchings/4AFF0", EntityStrongWargWaveAttack);
+INCLUDE_ASM("st/no3/nonmatchings/4CA54", EntityStrongWargWaveAttack);
