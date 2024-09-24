@@ -61,7 +61,17 @@ void func_us_801728F4(void) {}
 
 void func_us_801728FC(void) {}
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172904);
+extern s32 D_us_8017381C;
+
+void func_us_80172904(Entity* entity)
+{
+    switch (entity->params) {
+    case 15:
+        D_us_8017381C = 1;
+        break;
+    }
+    DestroyEntity(entity);
+}
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017293C);
 
