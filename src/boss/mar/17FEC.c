@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 #include "mar.h"
+#include "sfx.h"
 
 void EntityClockRoomController(Entity* self) {
     PlayerStatus* status = &g_Status;
