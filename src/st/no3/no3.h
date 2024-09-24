@@ -263,5 +263,12 @@ extern u16 D_801D7D60;
 extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
+extern s16 D_80181808[];
+extern s16 D_80181870[];
+extern u16 D_801819A0[];
+extern u8 D_80181940[];
+extern s16 D_80181958[];
+extern u8 D_80181988[];
+extern u16 D_80180AD0[];
 
 extern Dialogue g_Dialogue;

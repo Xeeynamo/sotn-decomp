@@ -326,7 +326,230 @@ void EntityUnkId52(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3/nonmatchings/3C4EC", EntityCastleBridge);
+// func_psp_0923F328
+void EntityCastleBridge(Entity* self) {
+
+#define priorities D_801819A0
+#define uvOffsets D_80181958
+#define pages D_80181988
+#define uvs D_80181940
+
+    const u32 primCount = 24;
+
+    MATRIX* matrix;
+    Primitive* prim;
+    SVECTOR* vector;
+    VECTOR* rotatedVector;
+    s16* positionsPtr;
+    s16* size;
+
+    s16 xOffset;
+    // self stored at    sp 0x40
+    s16 yOffset;      // sp 0x3E
+    s16 sinZ;         // sp 0x3C
+    s16 cosZ;         // sp 0x3A
+    Tilemap* tilemap; // sp 0x34
+    Entity* player;   // sp 0x30
+
+    u8* uv;
+    s32 primIndex;
+
+    tilemap = &g_Tilemap;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AD0);
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, primCount);
+
+        if (primIndex == 0) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+
+        for (primIndex = 0; prim != NULL; primIndex++) {
+            uv = &uvs[uvOffsets[primIndex]];
+
+            prim->u0 = prim->u2 = *uv++;
+            prim->u1 = prim->u3 = *uv++;
+            prim->v0 = prim->v1 = *uv++;
+            prim->v2 = prim->v3 = *uv;
+
+            prim->tpage = pages[primIndex];
+            prim->clut = 0x66;
+            prim->priority = priorities[primIndex];
+            prim->drawMode = DRAW_UNK02;
+
+            prim = prim->next;
+        }
+
+        self->rotZ = 0;
+        break;
+    case 1:
+        if (tilemap->scrollX.i.hi > 3904) {
+            self->step++;
+            g_api.PlaySfx(0x7A5);
+        }
+        break;
+    case 2:
+
+        if (self->rotZ < 1024) {
+            self->rotZ += 4;
+        }
+
+        player = &PLAYER;
+        sinZ = rsin(self->rotZ); // the result is a signed(?) fixed point 12 bit
+                                 // fractional number where 4096 == 1.0
+        cosZ = rcos(self->rotZ);
+
+        // the operation (sinZ * 12) >> 12 gives an integer between -12 and 12
+        // based on the y coordinate of the rotated vector i am guessing that
+        // 4563 is some tilemap offset?
+        xOffset = (((sinZ * 12) >> 12) + 4563) -
+                  (player->posX.i.hi + tilemap->scrollX.i.hi);
+
+        // divide by zero check
+        if (xOffset >= 0 && cosZ != 0) {
+
+            // sinZ / cosZ is suspiciously like a tangent
+            xOffset = 172 - ((cosZ * 12) >> 12) - ((xOffset * sinZ) / cosZ);
+
+            if (xOffset > 0 && xOffset < 160) {
+                switch (self->step_s) {
+                case 0:
+                    if (player->velocityY < 0) {
+                        self->step_s++;
+                    }
+                    break;
+                case 1:
+                    if (player->velocityY >= 0 &&
+                        (xOffset < player->posY.i.hi + 30)) {
+                        player->posY.i.hi = xOffset - 30;
+                        g_api.PlaySfx(0x64B);
+                        g_Player.pl_vram_flag |= 0x41;
+                        self->step_s++;
+                    }
+                    break;
+                case 2:
+                    player->posY.i.hi = xOffset - 30;
+                    g_Player.pl_vram_flag |= 0x41;
+                    break;
+                }
+            }
+        }
+        break;
+    }
+
+    vector = (SVECTOR*)SP(0);
+    rotatedVector = (VECTOR*)SP(8);
+    size = (s16*)SP(0x18);
+    // identity matrix
+    matrix = (MATRIX*)SP(0x20);
+    matrix->m[0][0] = matrix->m[1][1] = matrix->m[2][2] = 0x1000; // pain.
+    matrix->m[0][1] = matrix->m[0][2] = matrix->m[1][0] = matrix->m[1][2] =
+        matrix->m[2][0] = matrix->m[2][1] = 0;
+
+    matrix = RotMatrixZ(self->rotZ, matrix);
+    SetRotMatrix(matrix);
+    positionsPtr = D_80181808;
+    xOffset = 4563 - tilemap->scrollX.i.hi;
+    vector->vz = 0;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (primIndex = 0; primIndex < 11; primIndex++) {
+        if (primIndex < 2) {
+            vector->vx = *positionsPtr++;
+            vector->vy = *positionsPtr++;
+            ApplyRotMatrix(vector, rotatedVector);
+
+            prim->x0 = (s16)rotatedVector->vx + xOffset;
+            prim->y0 = (s16)rotatedVector->vy + 168;
+
+            vector->vx = *positionsPtr++;
+            vector->vy = *positionsPtr++;
+            ApplyRotMatrix(vector, rotatedVector);
+
+            prim->x2 = (s16)rotatedVector->vx + xOffset;
+            prim->y2 = (s16)rotatedVector->vy + 168;
+        } else {
+            // size |= 1;
+            size = (s16*)SP(0x18);
+            prim->x0 = *size++;
+            prim->y0 = *size++;
+            prim->x2 = *size++;
+            prim->y2 = *size++;
+        }
+
+        size = (s16*)SP(0x18);
+        vector->vx = *positionsPtr++;
+        vector->vy = *positionsPtr++;
+
+        ApplyRotMatrix(vector, rotatedVector);
+        prim->x1 = *size++ = (s16)rotatedVector->vx + xOffset;
+        prim->y1 = *size++ = (s16)rotatedVector->vy + 168;
+
+        vector->vx = *positionsPtr++;
+        vector->vy = *positionsPtr++;
+        ApplyRotMatrix(vector, rotatedVector);
+
+        prim->x3 = *size++ = (s16)rotatedVector->vx + xOffset;
+        prim->y3 = *size++ = (s16)rotatedVector->vy + 168;
+        prim = prim->next;
+    }
+
+    matrix->m[0][0] = matrix->m[1][1] = matrix->m[2][2] = 0x1000;
+    matrix->m[0][1] = matrix->m[0][2] = matrix->m[1][0] = matrix->m[1][2] =
+        matrix->m[2][0] = matrix->m[2][1] = 0;
+
+    vector->vx = -328;
+    vector->vy = -18;
+
+    ApplyRotMatrix(vector, rotatedVector);
+
+    xOffset = (s16)rotatedVector->vx + xOffset;
+    yOffset = (s16)rotatedVector->vy + 168;
+    matrix = RotMatrixZ(
+        ratan2(-352 - rotatedVector->vy, -(rotatedVector->vx - 128)), matrix);
+    SetRotMatrix(matrix);
+
+    positionsPtr = D_80181870;
+    while (prim != NULL) {
+        vector->vx = *positionsPtr++;
+        vector->vy = *positionsPtr++;
+        ApplyRotMatrix(vector, rotatedVector);
+        prim->x0 = (s16)rotatedVector->vx + xOffset;
+        prim->y0 = (s16)rotatedVector->vy + yOffset;
+
+        vector->vx = *positionsPtr++;
+        vector->vy = *positionsPtr++;
+        ApplyRotMatrix(vector, rotatedVector);
+        prim->x1 = (s16)rotatedVector->vx + xOffset;
+        prim->y1 = (s16)rotatedVector->vy + yOffset;
+
+        vector->vx = *positionsPtr++;
+        vector->vy = *positionsPtr++;
+        ApplyRotMatrix(vector, rotatedVector);
+        prim->x2 = (s16)rotatedVector->vx + xOffset;
+        prim->y2 = (s16)rotatedVector->vy + yOffset;
+
+        vector->vx = *positionsPtr++;
+        vector->vy = *positionsPtr++;
+        ApplyRotMatrix(vector, rotatedVector);
+        prim->x3 = (s16)rotatedVector->vx + xOffset;
+        prim->y3 = (s16)rotatedVector->vy + yOffset;
+
+        prim = prim->next;
+    }
+
+#undef priorities
+#undef offsets
+#undef pages
+#undef vertices
+}
 
 // ID 0x55
 void EntityBackgroundTrees(Entity* self) {
