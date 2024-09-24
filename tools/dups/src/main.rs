@@ -245,6 +245,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             path_matcher: "/tt_000/".to_string(),
         },
         SrcAsmPair {
+            asm_dir: String::from("../../asm/us/servant/tt_001/nonmatchings/"),
+            src_dir: String::from("../../src/servant/tt_001"),
+            overlay_name: String::from("TT_001"),
+            include_asm: get_all_include_asm("../../src/servant/tt_001"),
+            path_matcher: "/tt_001/".to_string(),
+        },
+        SrcAsmPair {
             asm_dir: String::from("../../asm/us/st/cen/nonmatchings/"),
             src_dir: String::from("../../src/st/cen/"),
             overlay_name: String::from("CEN"),
