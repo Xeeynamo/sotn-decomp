@@ -30,7 +30,7 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "tt_000"
+                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "tt_000", "tt_001"
             ]
         },
         {
@@ -101,6 +101,10 @@ const gameMetadata = {
         "tt_000": {
             "name": "SERVANT/TT_000.BIN",
             "desc": "Familiar Bat"
+        },
+        "tt_001": {
+            "name": "SERVANT/TT_001.BIN",
+            "desc": "Familiar Ghost"
         },
     }
 };
