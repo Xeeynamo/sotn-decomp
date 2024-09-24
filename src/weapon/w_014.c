@@ -64,7 +64,7 @@ void EntityWeaponAttack(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         }
         self->velocityX += PLAYER.velocityX;
-        self->ext.weapon_014.unk7C = 0x16;
+        self->ext.weapon.lifetime = 0x16;
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 4;
@@ -121,11 +121,11 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (--self->ext.weapon_014.unk7C < 7) {
+        if (--self->ext.weapon.lifetime < 7) {
             DecelerateX(FIX(14));
         }
-        if (self->ext.weapon_014.unk7C == 0) {
-            self->ext.weapon_014.unk7C = 8;
+        if (self->ext.weapon.lifetime == 0) {
+            self->ext.weapon.lifetime = 8;
             SetSpeedX(-FIX(3));
             self->step++;
         }
@@ -133,7 +133,7 @@ void EntityWeaponAttack(Entity* self) {
     case 2:
         self->drawFlags &= ~FLAG_DRAW_ROTZ;
         self->posX.val += self->velocityX;
-        if (--self->ext.weapon_014.unk7C == 0) {
+        if (--self->ext.weapon.lifetime == 0) {
             self->step++;
         }
         break;
