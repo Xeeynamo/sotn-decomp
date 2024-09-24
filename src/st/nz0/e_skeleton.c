@@ -132,7 +132,7 @@ void EntitySkeleton(Entity* self) {
                 ((u16)self->posY.i.hi <= 240)) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) { // Spawn bone
-                    PlaySfxPositional(NA_SE_EN_SKELETON_THROW_BONE);
+                    PlaySfxPositional(SFX_BONE_THROW);
                     CreateEntityFromCurrentEntity(
                         E_SKELETON_THROWN_BONE, newEntity);
                     if (self->facingLeft) {

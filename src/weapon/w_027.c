@@ -576,7 +576,7 @@ static void func_ptr_80170028(Entity* self) {
 
     if (self->hitFlags != 0) {
         if (++self->ext.medshieldlaser.unkA2 >= 6) {
-            self->ext.medshieldlaser.parent->ext.weapon.unk90 = 0;
+            self->ext.medshieldlaser.parent->ext.medshieldlaser.target = NULL;
         }
         self->hitFlags = 0;
     }
