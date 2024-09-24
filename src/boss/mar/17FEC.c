@@ -235,7 +235,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -246,7 +246,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -258,7 +258,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->posX.i.hi -= 8;
             self->posY.i.hi += 8;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -268,7 +268,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0x3C;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
