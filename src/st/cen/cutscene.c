@@ -34,22 +34,57 @@ static s16 D_801805F4[] = {
     0x1B, 0x34, 0x41, 0x35, 0x08, 0x0E, 0x4D, 0x11, 0x34, 0x41, 0x29, 0x48,
 };
 
+#if !defined(VERSION_HD)
+
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 static const char _pad[4] = "";
 
+#endif
+
+extern s32 D_8019D374;
+extern Dialogue g_Dialogue;
+
+extern u32 g_CutsceneFlags;
+extern u32 D_8019D428;
+
+#if !defined(VERSION_HD)
 #include "../cutscene_unk1.h"
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk1);
+#endif
 
+#if !defined(VERSION_HD)
 #include "../set_cutscene_script.h"
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", SetCutsceneScript);
+#endif
 
+#if !defined(VERSION_HD)
 #include "../cutscene_unk3.h"
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk3);
+#endif
 
+#if !defined(VERSION_HD)
 #include "../cutscene_unk4.h"
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk4);
+#endif
 
+#if !defined(VERSION_HD)
 #include "../cutscene_actor_name.h"
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", DrawCutsceneActorName);
+#endif
 
+#if !defined(VERSION_HD)
 #include "../set_cutscene_end.h"
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", SetCutsceneEnd);
+#endif
 
+#if !defined(VERSION_HD)
 static void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
@@ -101,9 +136,15 @@ static void CutsceneRun(void) {
         }
     }
 }
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneRun);
+#endif
 
+#ifndef VERSION_HD
 #include "../cutscene_scale_avatar.h"
+#endif
 
+#if !defined(VERSION_HD)
 extern u8 OVL_EXPORT(cutscene_data)[];
 void OVL_EXPORT(EntityCutscene)(Entity* self) {
     RECT rect;
@@ -580,3 +621,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         break;
     }
 }
+#else
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", EntityHolyGlassesCutscene);
+#endif
