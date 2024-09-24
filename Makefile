@@ -247,7 +247,7 @@ check: config/check.$(VERSION).sha patch $(CHECK_FILES)
             color = 196;   \
         system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
         printf " ]\n"; \
-    }' | column --separator '\t' --table
+    }' | column --separator $$'\t' --table
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
