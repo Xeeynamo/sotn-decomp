@@ -348,7 +348,7 @@ class sotn_function:
 
         filepath_split = self.asm_filename.split("/")
         self.overlay = filepath_split[2]
-        if self.overlay == "st":
+        if self.overlay in ["st","boss"]:
             self.overlay = filepath_split[3]
         if self.overlay == "weapon":
             self.overlay = filepath_split[4]
@@ -417,7 +417,7 @@ if __name__ == "__main__":
     # 1: Create baseline function objects for every .s file
     functions = [
         sotn_function(s.stem, str(s))
-        for s in Path("asm").rglob("*.s")
+        for s in Path("asm/us").rglob("*.s")
         if "nonmatchings" in str(s)
     ]
     if len(functions) == 0:
