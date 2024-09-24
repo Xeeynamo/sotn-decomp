@@ -138,7 +138,21 @@ s32 func_us_80172B50(s32 arg0, s32 arg1) {
     return arg0;
 }
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172B88);
+Entity* func_us_80172B88(s32 rangeIndex, s32 entityId) {
+    volatile u32 pad; // fake?
+    s16 start = D_80170EE4[rangeIndex].start;
+    s16 end = D_80170EE4[rangeIndex].end;
+    Entity* entity = &g_Entities[start];
+    s32 i;
+
+    for (i = start; end >= i; i++, entity++) {
+        if (entity->entityId == entityId) {
+            return entity;
+        }
+    }
+
+    return NULL;
+}
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C08);
 
