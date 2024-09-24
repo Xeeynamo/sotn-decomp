@@ -90,7 +90,7 @@ def split_c_files(overlay_name, new_segments, do_overwrite):
                 # Create our new file
                 output_buffer = [file_header]
                 output_filename = dest_file
-        output_buffer.append(line.replace(f"us",output_filename))
+        output_buffer.append(line.replace("nonmatchings/us",f"nonmatchings/{output_filename}"))
     # Flush the last one
     with open(overlay_dir + output_filename + ".c", 'w') as f:
         f.write("\n".join(output_buffer))
