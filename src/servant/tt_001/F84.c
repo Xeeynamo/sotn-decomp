@@ -2,6 +2,8 @@
 #include "common.h"
 #include <servant.h>
 
+
+
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
@@ -63,7 +65,7 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172904);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017293C);
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172AE4);
+#include "../../destroy_entity.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172B50);
 
