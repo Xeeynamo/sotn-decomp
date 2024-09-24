@@ -122,7 +122,21 @@ u32 Tt001UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
 
 #include "../../destroy_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172B50);
+s32 func_us_80172B50(s32 arg0, s32 arg1) {
+    if (arg0 < 0) {
+        arg0 += arg1;
+        if (arg0 > 0) {
+            arg0 = 0;
+        }
+    } else {
+        arg0 -= arg1;
+        if (arg0 < 0) {
+            arg0 = 0;
+        }
+    }
+
+    return arg0;
+}
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172B88);
 
