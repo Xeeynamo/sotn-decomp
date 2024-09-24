@@ -10,7 +10,7 @@ PSX_BOSTAGES    := mar
 PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES))
 PSX_SERVANTS	:= tt_000 tt_001
 PSX_US_TARGETS	:= main $(PSX_OVLS) $(PSX_ALLSTAGES) $(PSX_SERVANTS)
-PSX_HD_TARGETS	:= dra ric tt_000 stwrp
+PSX_HD_TARGETS	:= dra ric tt_000 stcen stwrp
 
 # immovable
 PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt

@@ -142,7 +142,7 @@ extract: extract_$(VERSION)
 build: ##@ build game files
 build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp mar tt_000 tt_001
-build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
+build_hd: dra $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/WRP.BIN tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
@@ -207,6 +207,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
@@ -246,7 +247,7 @@ check: config/check.$(VERSION).sha patch $(CHECK_FILES)
             color = 196;   \
         system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
         printf " ]\n"; \
-    }' | column --separator '\t' --table
+    }' | column --separator $$'\t' --table
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)

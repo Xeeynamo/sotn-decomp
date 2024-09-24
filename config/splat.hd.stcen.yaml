@@ -1,0 +1,47 @@
+options:
+  platform: psx
+  basename: stcen
+  base_path: ..
+  build_path: build/hd
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
+  asm_path: asm/hd/st/cen
+  asset_path: assets/st/cen
+  src_path: src/st/cen
+  ld_script_path: build/hd/stcen.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.stcen.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.stcen.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.hd.stcen.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: hd_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+sha1: 32698a322586d2fd4249467c99f5102faff44f30
+segments:
+  - name: stcen
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x48C, .data, e_room_fg]
+      - [0x4A4, data]
+      - [0xD434, .rodata, hd]
+      - [0xD5E8, c, e_room_fg]
+      - [0xD6C8, c, hd]
+      - [0x1BDA0, sbss]
+  - [0x1CB04]
