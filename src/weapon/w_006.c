@@ -92,18 +92,18 @@ static void func_ptr_80170004(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->drawFlags = DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         self->rotX = self->rotY = 0x40;
-        self->ext.weapon_006.unk80 = 0x40;
+        self->ext.weapon_006.velocityZ = 0x40;
 
         SetSpeedX(rand() - FIX(4));
 
         if (self->facingLeft == 0) {
-            self->ext.weapon_006.unk84 = FIX(15.0 / 64);
+            self->ext.weapon_006.accelerationX = FIX(15.0 / 64);
         } else {
-            self->ext.weapon_006.unk84 = -FIX(15.0 / 64);
+            self->ext.weapon_006.accelerationX = -FIX(15.0 / 64);
         }
         self->velocityY =
             (rand() & 0x1FFF) + D_2E000_8017ABF0[(u8)self->params];
-        self->ext.weapon_006.unk88 = -(self->velocityY >> 4);
+        self->ext.weapon_006.accelerationY = -(self->velocityY >> 4);
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_20000;
         self->rotZ = rand();
 
@@ -123,13 +123,13 @@ static void func_ptr_80170004(Entity* self) {
         self->rotY = self->rotX;
         if (self->velocityX == 0) {
             self->zPriority = PLAYER.zPriority + 2;
-            self->ext.weapon_006.unk7E = 0x18;
+            self->ext.weapon_006.lifetime = 0x18;
             self->step++;
         }
         break;
     case 2:
-        self->ext.weapon_006.unk80 += 8;
-        if (--self->ext.weapon_006.unk7E == 0) {
+        self->ext.weapon_006.velocityZ += 8;
+        if (--self->ext.weapon_006.lifetime == 0) {
             g_api.PlaySfx(SFX_TRANSFORM);
             self->step++;
         }
@@ -138,14 +138,14 @@ static void func_ptr_80170004(Entity* self) {
         self->rotX += 2;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityX += self->ext.weapon_006.unk84;
-        self->velocityY += self->ext.weapon_006.unk88;
+        self->velocityX += self->ext.weapon_006.accelerationX;
+        self->velocityY += self->ext.weapon_006.accelerationY;
         if (!(self->ext.weapon_006.unk7C & 1)) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x40, 0), 0);
         }
         break;
     case 4:
-        if (--self->ext.weapon_006.unk7E == 0) {
+        if (--self->ext.weapon_006.lifetime == 0) {
             DestroyEntity(self);
             return;
         }
@@ -154,7 +154,7 @@ static void func_ptr_80170004(Entity* self) {
 
     if (self->step != 4) {
         self->rotY = self->rotX;
-        self->rotZ = self->rotZ + self->ext.weapon_006.unk80;
+        self->rotZ = self->rotZ + self->ext.weapon_006.velocityZ;
         data = D_2E000_8017ABD4[(self->ext.weapon_006.unk7C >> 1) % 14];
         if (self->params & 0x8000) {
             self->palette = data + 0x12E;
@@ -168,7 +168,7 @@ static void func_ptr_80170004(Entity* self) {
         if (self->hitFlags != 0) {
             self->palette = PAL_OVL(0x15F);
             self->drawMode = DRAW_TPAGE;
-            self->ext.weapon_006.unk7E = 8;
+            self->ext.weapon_006.lifetime = 8;
             self->step = 4;
         }
         if (self->ext.weapon_006.unk7C % 10 == 0 && !(self->params & ~0x8000)) {

@@ -678,7 +678,7 @@ void EntityOwlKnight(Entity* self) {
             self->velocityX = 0;
         }
         if (self->animFrameDuration == 0 && self->animFrameIdx == 7) {
-            PlaySfxPositional(0x6C7);
+            PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(SFX_SCRAPE_B);
             self->velocityX = FIX(-3);
             if (self->ext.owl.unk80 & 0x10) {
@@ -702,7 +702,7 @@ void EntityOwlKnight(Entity* self) {
             self->velocityX = 0;
         }
         if (self->animFrameDuration == 0 && self->animFrameIdx == 5) {
-            PlaySfxPositional(0x6C7);
+            PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-6.0);
             if (self->facingLeft) {
@@ -959,7 +959,7 @@ void EntityOwlKnight(Entity* self) {
                 self->velocityX = 0;
             }
             if (self->animFrameDuration == 0 && self->animFrameIdx == 5) {
-                PlaySfxPositional(0x6C7);
+                PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
                 PlaySfxPositional(0x793);
                 self->velocityX = FIX(-8.0);
                 if (self->facingLeft) {
