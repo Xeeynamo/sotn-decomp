@@ -368,6 +368,7 @@ if __name__ == "__main__":
     progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
     progress["bomar"] = DecompProgressStats("bomar", "boss/mar")
     progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
+    progress["tt_001"] = DecompProgressStats("tt_001", "servant/tt_001")
 
     hydrate_previous_metrics(progress, args.version)
     progress = remove_not_existing_overlays(progress)

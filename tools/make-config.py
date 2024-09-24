@@ -795,6 +795,11 @@ def add_symbol(splat_config, version: str, name: str, offset: int):
     if offset < base_addr:
         return
 
+    # do not add symbols that belongs to the shared area
+    base_addr = splat_config["segments"][0]["vram"]
+    if offset < base_addr:
+        return
+
     # add symbol to the overlay symbol list
     symbol_file_name = splat_config["options"]["symbol_addrs_path"][1]
     sym_prefix = get_symbol_prefix(splat_config)
@@ -977,7 +982,7 @@ def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
     for dup_path in dup_paths[1:]:
         dups |= find_dups(t, left_asm_path, f"asm/us/{dup_path}/matchings")
     if len(dups) == 0:
-        return
+        return 0
 
     spinner_start("adding cross-referenced function names")
     found = 0
@@ -1013,7 +1018,7 @@ def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
         yowarning(
             f"cannot find a similar overlay to {version}/{ovl_name} to cross-reference"
         )
-        return
+        return 0
 
     left_nonmatchings_path = os.path.join(get_asm_path(splat_config), "nonmatchings")
     left_func_paths = list_all_files(left_nonmatchings_path)

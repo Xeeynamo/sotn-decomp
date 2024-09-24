@@ -356,7 +356,7 @@ segments:
     subsegments:
       - [0x7B040, animset, w_017_1]
       - [0x7B040, animset, w_017_2]
-      - [0x7B040, data, w_017]
+      - [0x7B040, .data, w_017]
       - [0x7B3AC, c, w_017]
       - [0x7C0F4, sbss, w_017]
   - name: f_018
