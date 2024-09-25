@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 Entity* SearchForEntityInRange(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
     s16 start = g_EntityRanges[rangeIndex].start;

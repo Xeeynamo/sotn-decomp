@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 s32 AccumulateTowardZero(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
         arg0 += arg1;

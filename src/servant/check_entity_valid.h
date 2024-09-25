@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 s32 CheckEntityValid(Entity* entity) {
     if (entity->hitboxState == 0)
         return 0;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s32 ret;
