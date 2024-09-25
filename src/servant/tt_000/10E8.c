@@ -35,7 +35,7 @@ s16 D_80174C0C[16];
 s32 D_80174C2C;
 FamiliarStats D_80174C30;
 Point16 D_80174C3C[4][16];
-s32 D_80174D3C;
+s32 g_IsServantDestroyed;
 s32 D_80174D40;
 s32 _unused[26];
 
@@ -54,13 +54,13 @@ void func_80173C0C(void);
 void func_80173C14(void);
 void func_80173C1C(void);
 void func_80173C24(void);
-void func_80173C2C(Entity* self);
+void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
     func_80171ED4, func_80172120, func_80172C30,        func_8017339C,
     func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
     func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
-    func_80173C14, func_80173C1C, func_80173C24,        func_80173C2C,
+    func_80173C14, func_80173C1C, func_80173C24,        DestroyServantEntity,
 };
 #endif
 
@@ -98,10 +98,9 @@ extern s16 D_80174C0C[16];
 extern s32 D_80174C2C;
 extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
-extern s32 D_80174D3C;
+extern s32 g_IsServantDestroyed;
 extern s32 D_80174D40;
 
-void DestroyEntity(Entity* entity);
 void ProcessEvent(Entity* self, bool resetEvent);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
@@ -190,24 +189,7 @@ Entity* func_8017110C(Entity* self) {
     return NULL;
 }
 
-s32 func_801713C8(Entity* entity) {
-    if (entity->hitboxState == 0)
-        return 0;
-    if (entity->posX.i.hi < -16)
-        return 0;
-    if (entity->posX.i.hi > 272)
-        return 0;
-    if (entity->posY.i.hi > 240)
-        return 0;
-    if (entity->posY.i.hi < 0)
-        return 0;
-    if (entity->hitPoints >= 0x7000)
-        return 0;
-    if (entity->hitPoints <= 0)
-        return 0;
-
-    return 1;
-}
+#include "../check_entity_valid.h"
 
 #ifndef VERSION_PSP
 bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
@@ -548,7 +530,7 @@ void func_80171ED4(s32 arg0) {
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
-    D_80174D3C = 0;
+    g_IsServantDestroyed = 0;
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
@@ -559,7 +541,7 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
 #else
 void func_80172120(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (D_80174D3C != 0) {
+    if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (D_8003C708.flags & 0x20) {
@@ -732,7 +714,7 @@ void func_80172120(Entity* self) {
             SquareRoot12(
                 (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
             12;
-        if (!func_801713C8(self->ext.bat.target) || D_80174B2C < 8) {
+        if (!CheckEntityValid(self->ext.bat.target) || D_80174B2C < 8) {
             self->ext.bat.unk8C = 0;
             self->step++;
             func_801710E8(self, D_8017054C);
@@ -791,7 +773,7 @@ void func_80172C30(Entity* self) {
     }
 
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (D_80174D3C != 0) {
+    if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     switch (self->step) {
@@ -1058,96 +1040,17 @@ void func_80173C1C(void) {}
 
 void func_80173C24(void) {}
 
-void func_80173C2C(Entity* entity) {
-    switch (entity->params) {
-    case 15:
-        D_80174D3C = 1;
-        break;
-    }
-    DestroyEntity(entity);
-}
+#include "../destroy_servant_entity.h"
 
 #ifndef VERSION_PSP
-u32 Tt000UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
-    AnimationFrame* animFrame;
-    s32 ret;
-
-    ret = 0;
-    if (self->animFrameDuration == -1) {
-        ret = -1;
-    } else if (self->animFrameDuration == 0) {
-        self->animFrameDuration = self->anim[self->animFrameIdx].duration;
-    } else if (--self->animFrameDuration == 0) {
-        self->animFrameIdx++;
-        animFrame = &self->anim[self->animFrameIdx];
-        // Effectively a switch statement, but breaks if I actually use one.
-        if (animFrame->duration == 0) {
-            self->animFrameIdx = animFrame->unk2;
-            self->animFrameDuration = self->anim[self->animFrameIdx].duration;
-            ret = 0;
-        } else if (animFrame->duration == 0xFFFF) {
-            self->animFrameIdx--;
-            self->animFrameDuration = -1;
-            ret = -1;
-        } else if (animFrame->duration == 0xFFFE) {
-            self->anim = frames[animFrame->unk2];
-            self->animFrameIdx = 0;
-            ret = -2;
-            self->animFrameDuration = self->anim->duration;
-        } else {
-            self->animFrameDuration = animFrame->duration;
-        }
-    }
-    if (frameProps != NULL) {
-        // This is ugly - theoretically the type for frameProps should be
-        // FrameProperty* but anything besides this where we assign this big
-        // expression fails.
-        frameProps =
-            &frameProps[(self->anim[self->animFrameIdx].unk2 >> 9) << 2];
-        self->hitboxOffX = *frameProps++;
-        self->hitboxOffY = *frameProps++;
-        self->hitboxWidth = *frameProps++;
-        self->hitboxHeight = *frameProps++;
-    }
-    self->animCurFrame = self->anim[self->animFrameIdx].unk2 & 0x1FF;
-    return ret;
-}
+#include "../servant_update_anim.h"
 #endif
 
 #include "../../destroy_entity.h"
 
 #ifndef VERSION_PSP
-s32 func_80173E78(s32 arg0, s32 arg1) {
-    if (arg0 < 0) {
-        arg0 += arg1;
-        if (arg0 > 0) {
-            arg0 = 0;
-        }
-    } else {
-        arg0 -= arg1;
-        if (arg0 < 0) {
-            arg0 = 0;
-        }
-    }
-
-    return arg0;
-}
-
-Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
-    volatile u32 pad; // fake?
-    s16 start = D_80171094[rangeIndex].start;
-    s16 end = D_80171094[rangeIndex].end;
-    Entity* entity = &g_Entities[start];
-    s32 i;
-
-    for (i = start; end >= i; i++, entity++) {
-        if (entity->entityId == entityId) {
-            return entity;
-        }
-    }
-
-    return NULL;
-}
+#include "../accumulate_toward_zero.h"
+#include "../search_for_entity_in_range.h"
 #endif
 
 s16 func_80173F30(Entity* entity, s16 x, s16 y) {
