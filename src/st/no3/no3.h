@@ -263,5 +263,13 @@ extern u16 D_801D7D60;
 extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
+extern s16 D_80181808[];
+
+extern u16 g_EntityCastleBridgePriorities[];
+extern u8 g_EntityCastleBridgeUVs[];
+extern s16 g_EntityCastleBridgeUVOffsets[];
+extern u8 g_EntityCastleBridgePages[];
+extern u16 D_80180AD0[];
+extern s16 D_80181870[];
 
 extern Dialogue g_Dialogue;
