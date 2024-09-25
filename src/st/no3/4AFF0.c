@@ -30,4 +30,3 @@ void EntityRoomForeground(Entity* entity) {
     }
     AnimateEntity(objInit->animFrames, entity);
 }
-

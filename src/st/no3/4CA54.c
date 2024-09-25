@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 #include "sfx.h"
 
@@ -118,14 +119,14 @@ void EntityStrongWarg(Entity* self) {
     EnemyDef* enemyDefPtr;
     s16* hitboxPtr;
     Collider collider;
-    u16 s1;
-    s32 i;
+    u16 var_s1;
+    s32 var_s2;
     u8 frameIdx;
 
-    s1 = self->step;
+    var_s1 = self->step;
     if (self->flags & 0x100) {
         if (!self->params) {
-            if (s1 != 0xB) {
+            if (var_s1 != 0xB) {
                 self->velocityX = 0;
                 self->velocityY = 0;
                 SetStep(0xB);
@@ -145,12 +146,12 @@ void EntityStrongWarg(Entity* self) {
             ent_s0->attack = self->attack;
             ent_s0->unk60 = self;
 
-            for (i = 0; i < 11; i++) {
-                self->unk6D[i] = 0x10;
-                ent_s0->unk6D[i] = 0x10;
+            for (var_s2 = 0; var_s2 < 11; var_s2++) {
+                self->unk6D[var_s2] = 0x10;
+                ent_s0->unk6D[var_s2] = 0x10;
             }
 
-            if (s1 != 4) {
+            if (var_s1 != 4) {
                 SetStep(4);
                 SetSubStep(1);
                 self->velocityY = FIX(-5.0);
@@ -165,13 +166,13 @@ void EntityStrongWarg(Entity* self) {
         if (self->ext.factory.unk86 >= 0x10) {
             self->ext.factory.unk86 /= 2;
         }
-        if ((s1 == 2 || s1 == 3) && !self->params) {
+        if ((var_s1 == 2 || var_s1 == 3) && !self->params) {
             SetStep(0xA);
         }
     }
 
-    s1 = self->step;
-    switch (s1) {
+    var_s1 = self->step;
+    switch (var_s1) {
     case 0:
         ent_s0 = self + 1;
         self->unk60 = ent_s0;
@@ -218,7 +219,7 @@ void EntityStrongWarg(Entity* self) {
         break;
     case 3:
         func_801CC90C(self);
-        s1 = GetDistanceToPlayerX();
+        var_s1 = GetDistanceToPlayerX();
         if (self->ext.factory.unk80) {
             --self->ext.factory.unk80;
             self->animFrameDuration = 0;
@@ -239,7 +240,7 @@ void EntityStrongWarg(Entity* self) {
                     self->velocityX = -*(&D_801829EC + frameIdx);
                 }
             }
-            if (s1 < 0x50) {
+            if (var_s1 < 0x50) {
                 self->ext.stub[0] = 1;
                 self->animFrameIdx = 7 - self->animFrameIdx;
                 self->ext.factory.unk80 = 0x10;
@@ -260,7 +261,7 @@ void EntityStrongWarg(Entity* self) {
                 }
             }
 
-            if (s1 >= 0x79) {
+            if (var_s1 >= 0x79) {
                 self->ext.stub[0] = 0;
                 self->animFrameIdx = 7 - self->animFrameIdx;
                 self->ext.factory.unk80 = 0x10;
@@ -279,7 +280,7 @@ void EntityStrongWarg(Entity* self) {
             } else {
                 SetStep(5);
             }
-        } else if (s1 < 0x48) {
+        } else if (var_s1 < 0x48) {
             SetStep(4);
         } else {
             if (self->facingLeft) {
@@ -324,33 +325,34 @@ void EntityStrongWarg(Entity* self) {
             }
             if (self->velocityX) {
                 if (self->velocityX < 0) {
-                    s1 = (self->posX.i.hi - 0x30);
-                    if (s1 + g_Tilemap.scrollX.i.hi < 0x30) {
+                    var_s1 = (self->posX.i.hi - 0x30);
+                    if (var_s1 + g_Tilemap.scrollX.i.hi < 0x30) {
                         self->posX.val -= self->velocityX;
                         self->velocityX = 0;
                     }
                 } else {
-                    s1 = (self->posX.i.hi + 0x30);
-                    if (s1 + g_Tilemap.scrollX.i.hi > g_Tilemap.width - 0x30) {
+                    var_s1 = (self->posX.i.hi + 0x30);
+                    if (var_s1 + g_Tilemap.scrollX.i.hi >
+                        g_Tilemap.width - 0x30) {
                         self->posX.val -= self->velocityX;
                         self->velocityX = 0;
                     }
                 }
 
                 if (self->velocityX) {
-                    g_api.CheckCollision(s1, self->posY.i.hi, &collider, 0);
+                    g_api.CheckCollision(var_s1, self->posY.i.hi, &collider, 0);
                     if ((collider.effects & 1) && (collider.effects & 2)) {
                         self->posX.val -= self->velocityX;
                         self->velocityX = 0;
                     }
                 }
             }
-            i = self->velocityX;
+            var_s2 = self->velocityX;
 
             if (UnkCollisionFunc3(&D_801829DC) & 1) {
-                self->velocityX = i;
+                self->velocityX = var_s2;
 
-                if (!i) {
+                if (!var_s2) {
                     if (self->facingLeft) {
                         func_801CC5A4(self, 4, 1, -16, 38, 1, -4);
                         func_801CC5A4(self, 4, 1, 2, 38, 1, 4);
@@ -364,22 +366,22 @@ void EntityStrongWarg(Entity* self) {
             }
             break;
         case 2:
-            i = self->velocityX;
-            if (i) {
-                if (i < 0) {
-                    i += 0x3000;
+            var_s2 = self->velocityX;
+            if (var_s2) {
+                if (var_s2 < 0) {
+                    var_s2 += 0x3000;
                     EntityUnkId14Spawner(
                         self, 1, 1, -16, 38, ((Random() & 3) + 1), -4);
                     EntityUnkId14Spawner(
                         self, 1, 1, 10, 38, ((Random() & 3) + 1), -4);
                 } else {
-                    i -= 0x3000;
+                    var_s2 -= 0x3000;
                     EntityUnkId14Spawner(
                         self, 1, 1, -10, 38, ((Random() & 3) + 1), 4);
                     EntityUnkId14Spawner(
                         self, 1, 1, 16, 38, ((Random() & 3) + 1), 4);
                 }
-                self->velocityX = i;
+                self->velocityX = var_s2;
             }
             UnkCollisionFunc2(&D_801829D4);
 
@@ -595,7 +597,7 @@ void EntityStrongWarg(Entity* self) {
             self->animCurFrame = 0x32;
             break;
         case 1:
-            s1 = AnimateEntity(&D_8018296C, ent_s0);
+            var_s1 = AnimateEntity(&D_8018296C, ent_s0);
             AnimateEntity(&D_80182980, self);
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
@@ -617,7 +619,7 @@ void EntityStrongWarg(Entity* self) {
                 ent_s4->attack = self->attack;
             }
 
-            if ((s1 & 0x80) && (ent_s0->animFrameIdx == 5)) {
+            if ((var_s1 & 0x80) && (ent_s0->animFrameIdx == 5)) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(4.0);
                 } else {
@@ -632,13 +634,13 @@ void EntityStrongWarg(Entity* self) {
             }
 
             UnkCollisionFunc2(&D_801829D4);
-            if (!s1) {
+            if (!var_s1) {
                 func_801CC820(self);
                 ent_s0->ext.strongWarg.unk7C = 0;
             }
             break;
         case 2:
-            s1 = AnimateEntity(&D_80182990, ent_s0);
+            var_s1 = AnimateEntity(&D_80182990, ent_s0);
             AnimateEntity(&D_801829B4, self);
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
@@ -660,7 +662,7 @@ void EntityStrongWarg(Entity* self) {
                 ent_s4->attack = self->attack;
             }
             frameIdx = ent_s0->animFrameIdx;
-            if ((s1 & 0x80) &&
+            if ((var_s1 & 0x80) &&
                 ((frameIdx == 5) || (frameIdx == 9) || (frameIdx == 0xD))) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(4.0);
@@ -675,7 +677,7 @@ void EntityStrongWarg(Entity* self) {
             }
 
             UnkCollisionFunc2(&D_801829D4);
-            if (!s1) {
+            if (!var_s1) {
                 func_801CC820(self);
                 ent_s0->ext.strongWarg.unk7C = 0;
             }
@@ -683,25 +685,25 @@ void EntityStrongWarg(Entity* self) {
         break;
     }
 
-    s1 = self->animCurFrame;
-    if (s1) {
+    var_s1 = self->animCurFrame;
+    if (var_s1) {
         if (self->params) {
-            if (s1 >= 0x56) {
-                s1 -= 0x39;
-            } else if (s1 >= 0x39) {
-                s1 -= 0x39;
+            if (var_s1 >= 0x56) {
+                var_s1 -= 0x39;
+            } else if (var_s1 >= 0x39) {
+                var_s1 -= 0x39;
             } else {
-                s1 = 0xD;
+                var_s1 = 0xD;
             }
         } else {
-            if (s1 >= 0x60) {
-                s1 -= 0x30;
+            if (var_s1 >= 0x60) {
+                var_s1 -= 0x30;
             } else {
-                --s1;
+                --var_s1;
             }
         }
 
-        hitboxPtr = &(D_80182A4C)[s1 * 0x8];
+        hitboxPtr = &(D_80182A4C)[var_s1 * 0x8];
         self->hitboxOffX = *hitboxPtr++;
         self->hitboxOffY = *hitboxPtr++;
         self->hitboxWidth = *hitboxPtr++;
