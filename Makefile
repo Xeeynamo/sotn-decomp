@@ -141,7 +141,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp mar tt_000 tt_001
+build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001
 build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -217,6 +217,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
+	./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
@@ -341,6 +342,12 @@ $(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
 $(BUILD_DIR)/F_MAR.BIN:
 	$(GFXSTAGE) e assets/boss/mar $@
 
+rbo3: $(BUILD_DIR)/RBO3.BIN $(BUILD_DIR)/F_RBO3.BIN
+$(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_RBO3.BIN:
+	$(GFXSTAGE) e assets/boss/rbo3 $@
+
 tt_000: $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
@@ -462,6 +469,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
 
@@ -498,6 +506,8 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
 	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
+	cp $(BUILD_DIR)/RBO3.BIN $(DISK_DIR)/BOSS/RBO3/RBO3.BIN
+	cp $(BUILD_DIR)/F_RBO3.BIN $(DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 	cp $(BUILD_DIR)/TT_001.BIN $(DISK_DIR)/SERVANT/TT_001.BIN
 disk: disk_prepare
@@ -611,7 +621,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000, tt_001
+.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies
