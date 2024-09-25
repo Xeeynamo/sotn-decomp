@@ -52,21 +52,8 @@ void func_us_801728FC(void) {}
 
 #include "../../destroy_entity.h"
 
-s32 func_us_80172B50(s32 arg0, s32 arg1) {
-    if (arg0 < 0) {
-        arg0 += arg1;
-        if (arg0 > 0) {
-            arg0 = 0;
-        }
-    } else {
-        arg0 -= arg1;
-        if (arg0 < 0) {
-            arg0 = 0;
-        }
-    }
-
-    return arg0;
-}
+#ifndef VERSION_PSP
+#include "../accumulate_toward_zero.h"
 
 Entity* func_us_80172B88(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
@@ -83,6 +70,7 @@ Entity* func_us_80172B88(s32 rangeIndex, s32 entityId) {
 
     return NULL;
 }
+#endif
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C08);
 

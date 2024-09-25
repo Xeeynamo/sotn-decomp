@@ -1050,21 +1050,7 @@ void func_80173C24(void) {}
 #include "../../destroy_entity.h"
 
 #ifndef VERSION_PSP
-s32 func_80173E78(s32 arg0, s32 arg1) {
-    if (arg0 < 0) {
-        arg0 += arg1;
-        if (arg0 > 0) {
-            arg0 = 0;
-        }
-    } else {
-        arg0 -= arg1;
-        if (arg0 < 0) {
-            arg0 = 0;
-        }
-    }
-
-    return arg0;
-}
+#include "../accumulate_toward_zero.h"
 
 Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?

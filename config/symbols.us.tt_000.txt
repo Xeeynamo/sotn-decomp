@@ -1,3 +1,4 @@
 CheckEntityValid = 0x801713C8;
 IsServantDestroyed = 0x80174D3C;
 DestroyServantEntity = 0x80173C2C;
+AccumulateTowardZero = 0x80173E78;
