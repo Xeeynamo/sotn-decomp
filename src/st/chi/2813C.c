@@ -44,12 +44,12 @@ u8 D_80181600[] = {
     0x04, 0x02, 0x05, 0x01, 0x05, 0x02, 0x06, 0x01, 0x06, 0x02, 0xFF, 0x00 
 };
 
-// E_ID_21
+// E_SALEM_WITCH
 // func_801A813C
 // https://decomp.me/scratch/XsSqC
 // PSP:func_psp_09238760:Match
 // PSP:https://decomp.me/scratch/HLIBl
-void func_801A813C(Entity* self)
+void EntitySalemWitch(Entity* self)
 {
     Entity* entity;
     Collider collider;

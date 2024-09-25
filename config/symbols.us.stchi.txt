@@ -93,7 +93,7 @@ EntityEnemyBlood = 0x801A77DC;
 EntityRoomForeground = 0x801A7C8C;
 BottomCornerText = 0x801A7D78;
 // func_801A80A8
-// func_801A813C
+EntitySalemWitch = 0x801A813C;
 // func_801A8DE8
 // func_801A8EAC
 // func_801A93D4

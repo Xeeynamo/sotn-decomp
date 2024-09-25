@@ -32,7 +32,7 @@ void EntityFallingStep(Entity*);
 void func_801A97C8(Entity*);
 void func_801A9D40(Entity*);
 void func_801A9E94(Entity*);
-void func_801A813C(Entity*);
+void EntitySalemWitch(Entity*);
 void func_801A8DE8(Entity*);
 void func_801A8EAC(Entity*);
 void func_801A93D4(Entity*);
@@ -79,7 +79,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A97C8,  // E_ID_1E
     func_801A9D40,  // E_ID_1F
     func_801A9E94,  // E_ID_20
-    func_801A813C,  // E_ID_21
+    EntitySalemWitch,
     func_801A8DE8,  // E_ID_22
     func_801A8EAC,  // E_ID_23
     func_801A93D4,  // E_ID_24

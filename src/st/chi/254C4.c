@@ -512,7 +512,7 @@ void func_801A80A8()
     if (!(g_Timer & 0xF)) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID_21, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_SALEM_WITCH, g_CurrentEntity, entity);
             entity->facingLeft = g_CurrentEntity->facingLeft;
             entity->zPriority = g_CurrentEntity->zPriority - 1;
             entity->params = g_CurrentEntity->animCurFrame;
