@@ -1132,6 +1132,10 @@ def make_config(ovl_name: str, version: str):
             spinner_start(f"renamed {found} data/bss symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
+    
+    # automatically stage new files in config/ so make clean will not nuke them
+    git("add", splat_config_path, splat_config["options"]["symbol_addrs_path"][1])
+
     spinner_stop(True)  # done 🫡
 
 
