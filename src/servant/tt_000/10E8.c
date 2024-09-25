@@ -1051,22 +1051,7 @@ void func_80173C24(void) {}
 
 #ifndef VERSION_PSP
 #include "../accumulate_toward_zero.h"
-
-Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
-    volatile u32 pad; // fake?
-    s16 start = g_EntityRanges[rangeIndex].start;
-    s16 end = g_EntityRanges[rangeIndex].end;
-    Entity* entity = &g_Entities[start];
-    s32 i;
-
-    for (i = start; end >= i; i++, entity++) {
-        if (entity->entityId == entityId) {
-            return entity;
-        }
-    }
-
-    return NULL;
-}
+#include "../search_for_entity_in_range.h"
 #endif
 
 s16 func_80173F30(Entity* entity, s16 x, s16 y) {

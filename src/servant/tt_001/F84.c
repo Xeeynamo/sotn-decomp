@@ -54,22 +54,7 @@ void func_us_801728FC(void) {}
 
 #ifndef VERSION_PSP
 #include "../accumulate_toward_zero.h"
-
-Entity* func_us_80172B88(s32 rangeIndex, s32 entityId) {
-    volatile u32 pad; // fake?
-    s16 start = g_EntityRanges[rangeIndex].start;
-    s16 end = g_EntityRanges[rangeIndex].end;
-    Entity* entity = &g_Entities[start];
-    s32 i;
-
-    for (i = start; end >= i; i++, entity++) {
-        if (entity->entityId == entityId) {
-            return entity;
-        }
-    }
-
-    return NULL;
-}
+#include "../search_for_entity_in_range.h"
 #endif
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C08);

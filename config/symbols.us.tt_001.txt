@@ -4,3 +4,4 @@ g_IsServantDestroyed = 0x8017381C;
 DestroyServantEntity = 0x80172904;
 AccumulateTowardZero = 0x80172B50;
 g_EntityRanges = 0x80170EE4;
+SearchForEntityInRange = 0x80172B88;
