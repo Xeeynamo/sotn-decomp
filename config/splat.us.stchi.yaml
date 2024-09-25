@@ -54,7 +54,8 @@ segments:
       - [0x140C, .data, 254C4] # UnkRecursivePrimFunc2
       - [0x142C, .data, 254C4] # EntitySoulStealOrb
       - [0x14AC, .data, 254C4] # EntityEnemyBlood
-      - [0x1538, .data, func_data3]
+      - [0x1538, .data, 2813C] # func_801A813C
+      - [0x162C, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
@@ -72,7 +73,7 @@ segments:
       - [0x1B234, .rodata, 23F58] # EntityRelicOrb string
       - [0x1B244, .rodata, 23F58] # jtbl_8019B244 [EntityRelicOrb]
       - [0x1B26C, .rodata, 23F58] # jtbl_8019B26C [EntityMessageBox]
-      - [0x1B280, rodata]
+      - [0x1B280, .rodata, 2813C] # func_801A813C string
       - [0x1B290, .rodata, 2813C] # jtbl_8019B290 [func_801A813C]
       - [0x1B2A4, rodata] # NULL?
       - [0x1B2A8, rodata] # jtbl_8019B2A8
