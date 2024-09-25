@@ -62,10 +62,12 @@ extern Sprite D_80170608[];
 extern s32 D_80170658[][5];
 extern u16 D_80170720[];
 extern s32 D_80171090;
-extern EntitySearch D_80171094[];
+extern EntitySearch g_EntityRanges[];
 
 #ifdef VERSION_PSP
 extern ServantDesc D_8D1DC40;
 #endif
+
+void DestroyEntity(Entity* entity);
 
 #endif

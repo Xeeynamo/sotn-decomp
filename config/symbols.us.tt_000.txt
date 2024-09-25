@@ -1,0 +1,2 @@
+CheckEntityValid = 0x801713C8;
+g_IsServantDestroyed = 0x80174D3C;

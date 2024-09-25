@@ -348,7 +348,7 @@ class sotn_function:
 
         filepath_split = self.asm_filename.split("/")
         self.overlay = filepath_split[2]
-        if self.overlay in ["st", "boss"]:
+        if self.overlay in ["st", "boss", "servant"]:
             self.overlay = filepath_split[3]
         if self.overlay == "weapon":
             self.overlay = filepath_split[4]
