@@ -655,7 +655,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->animCurFrame = 18;
         entity->rotZ = -0x200;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
-        CreateEntityFromEntity(E_ID_1E, entity, &entity[1]);
+        CreateEntityFromEntity(E_CAVERN_DOOR_LEVER_UNK0, entity, &entity[1]);
         if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
             entity->rotZ = 0;
         }
@@ -817,7 +817,7 @@ void EntityCavernDoor(Entity* self) {
         if (entity == NULL) {
             break;
         }
-        CreateEntityFromEntity(6, self, entity);
+        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
         entity->posY.i.hi = 156;
         entity->posX.i.hi += -8 + (Random() & 15);
         entity->zPriority = self->zPriority + 2;

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "st0.h"
 #include <stage.h>
 
 static u16 g_testCollEnemyLookup[] = {
@@ -419,11 +420,11 @@ void HitDetection(void) {
                                 miscVar3 -= 0x80;
                                 // Create an EntityEquipItemDrop
                                 CreateEntityFromEntity(
-                                    10, iterEnt1, otherEntity);
+                                    E_EQUIP_ITEM_DROP, iterEnt1, otherEntity);
                             } else {
                                 // Create an EntityPrizeDrop
                                 CreateEntityFromEntity(
-                                    3, iterEnt1, otherEntity);
+                                    E_PRIZE_DROP, iterEnt1, otherEntity);
                             }
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned

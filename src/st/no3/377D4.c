@@ -747,7 +747,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->animCurFrame = 18;
         entity->rotZ = -0x200;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
-        CreateEntityFromEntity(0x1E, entity, &entity[1]);
+        CreateEntityFromEntity(E_CAVERN_DOOR_LEVER_UNK0, entity, &entity[1]);
         if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
             entity->rotZ = 0;
         }
@@ -900,7 +900,7 @@ void EntityCavernDoor(Entity* self) {
         if (entity == NULL) {
             break;
         }
-        CreateEntityFromEntity(6, self, entity);
+        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
         entity->posY.i.hi = 156;
         entity->posX.i.hi += -8 + (Random() & 15);
         entity->zPriority = self->zPriority + 2;
@@ -1331,7 +1331,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
@@ -1444,7 +1444,7 @@ void EntityFallingRock2(Entity* self) {
             if (self->velocityY > FIX(4.0)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(2, self, newEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     newEntity->params = 0x11;
                     if (animFrame == 0) {
                         newEntity->params = 0x13;
@@ -1639,7 +1639,7 @@ void EntityFallingRock(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(6, self, newEntity);
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
                 newEntity->params = 0x10;
                 if (animFrame == 0) {
                     newEntity->params = 0x13;
@@ -1868,7 +1868,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(6, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (Random() & 0xF);
                     newEntity->params = 0x10;

@@ -423,7 +423,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     PlaySfxPositional(SFX_EXPLODE_B);
-                    CreateEntityFromEntity(0x54, self, other);
+                    CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
