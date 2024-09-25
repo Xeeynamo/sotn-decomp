@@ -956,8 +956,8 @@
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/np3/nonmatchings/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/nz0/nonmatchings/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/rwrp/nonmatchings/wrp/e_room_fg/EntityRoomForeground.s 
-| 0.92 | true     | EntityBackgroundBlock               | asm/us/st/rwrp/nonmatchings/wrp/st_debug/EntityBackgroundBlock.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/st0/nonmatchings/39EA8/EntityRoomForeground.s 
+| 0.92 | true     | EntityBackgroundBlock               | asm/us/st/wrp/nonmatchings/st_debug/EntityBackgroundBlock.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Ratan2                              | asm/us/boss/mar/nonmatchings/st_common/Ratan2.s 
 | 0.92 | true     | _SsSndPlay                          | asm/us/main/nonmatchings/psxsdk/libsnd/play/_SsSndPlay.s 
@@ -1187,8 +1187,8 @@
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/no3/nonmatchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/np3/nonmatchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/nz0/nonmatchings/collision/EntityDamageDisplay.s 
-| 1.00 | true     | EntityDamageDisplay                 | asm/us/st/rwrp/nonmatchings/wrp/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/st0/nonmatchings/collision/EntityDamageDisplay.s 
+| 1.00 | true     | EntityDamageDisplay                 | asm/us/st/wrp/nonmatchings/collision/EntityDamageDisplay.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/boss/mar/nonmatchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/cen/nonmatchings/create_entity/CreateEntityFromCurrentEntity.s 
@@ -1667,8 +1667,8 @@
 | 1.00 | true     | Random                              | asm/us/st/no3/nonmatchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/np3/nonmatchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/nz0/nonmatchings/st_update/Random.s 
-| 1.00 | true     | Random                              | asm/us/st/rwrp/nonmatchings/wrp/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/st0/nonmatchings/st_update/Random.s 
+| 1.00 | true     | Random                              | asm/us/st/wrp/nonmatchings/st_update/Random.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Update                              | asm/us/boss/mar/nonmatchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/cen/nonmatchings/st_update/Update.s 
@@ -1677,8 +1677,8 @@
 | 1.00 | true     | Update                              | asm/us/st/no3/nonmatchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/np3/nonmatchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/nz0/nonmatchings/st_update/Update.s 
-| 1.00 | true     | Update                              | asm/us/st/rwrp/nonmatchings/wrp/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/st0/nonmatchings/st_update/Update.s 
+| 1.00 | true     | Update                              | asm/us/st/wrp/nonmatchings/st_update/Update.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityWeaponAttack                  | asm/us/weapon/nonmatchings/w_008/EntityWeaponAttack.s 
 | 1.00 | true     | EntityWeaponAttack                  | asm/us/weapon/nonmatchings/w_009/EntityWeaponAttack.s 
@@ -1707,7 +1707,7 @@
 | 1.00 | true     | HitDetection                        | asm/us/st/no3/nonmatchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/np3/nonmatchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/nz0/nonmatchings/collision/HitDetection.s 
-| 1.00 | true     | HitDetection                        | asm/us/st/rwrp/nonmatchings/wrp/collision/HitDetection.s 
+| 1.00 | true     | HitDetection                        | asm/us/st/wrp/nonmatchings/collision/HitDetection.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectGold                         | asm/us/boss/mar/nonmatchings/e_collect/CollectGold.s 
 | 1.00 | true     | CollectGold                         | asm/us/st/cen/nonmatchings/e_collect/CollectGold.s 
@@ -1787,8 +1787,8 @@
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/no3/nonmatchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/np3/nonmatchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/nz0/nonmatchings/st_update/UpdateStageEntities.s 
-| 1.00 | true     | UpdateStageEntities                 | asm/us/st/rwrp/nonmatchings/wrp/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/st0/nonmatchings/st_update/UpdateStageEntities.s 
+| 1.00 | true     | UpdateStageEntities                 | asm/us/st/wrp/nonmatchings/st_update/UpdateStageEntities.s 
 -------------------------------------------------------------------------------
 | 0.90 | true     | SetReverbDepth                      | asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
 | 1.00 | true     | func_801073C0                       | asm/us/dra/nonmatchings/cd/func_801073C0.s 
@@ -1862,7 +1862,7 @@
 | 1.00 | true     | BlitChar                            | asm/us/st/no3/nonmatchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/np3/nonmatchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/nz0/nonmatchings/blit_char/BlitChar.s 
-| 1.00 | true     | BlitChar                            | asm/us/st/wrp/nonmatchings/blit_char/BlitChar.s 
+| 1.00 | true     | BlitChar                            | asm/us/st/rwrp/nonmatchings/wrp/blit_char/BlitChar.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BlinkItem                           | asm/us/boss/mar/nonmatchings/e_collect/BlinkItem.s 
 | 1.00 | true     | BlinkItem                           | asm/us/st/cen/nonmatchings/e_collect/BlinkItem.s 
@@ -1934,7 +1934,7 @@
 | 1.00 | true     | func_8018E674                       | asm/us/st/mad/nonmatchings/D8C8/func_8018E674.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/no3/nonmatchings/377D4/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/np3/nonmatchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/rwrp/nonmatchings/wrp/st_debug/EntityUnkId12.s 
+| 1.00 | true     | EntityUnkId12                       | asm/us/st/wrp/nonmatchings/st_debug/EntityUnkId12.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_8018AC0C                    | asm/us/boss/mar/nonmatchings/st_debug/func_us_8018AC0C.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/mad/nonmatchings/17B94/EntityRoomForeground.s 
@@ -1987,7 +1987,7 @@
 | 1.00 | true     | EntityBreakable                     | asm/us/st/mad/nonmatchings/D8C8/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/st/no3/nonmatchings/377D4/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/st/np3/nonmatchings/e_breakable/EntityBreakable.s 
-| 1.00 | true     | EntityBreakable                     | asm/us/st/rwrp/nonmatchings/wrp/e_breakable/EntityBreakable.s 
+| 1.00 | true     | EntityBreakable                     | asm/us/st/wrp/nonmatchings/e_breakable/EntityBreakable.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_8018AB00                       | asm/us/boss/mar/nonmatchings/e_collect/D_us_8018AB00.s 
 | 1.00 | true     | D_us_8018AB08                       | asm/us/boss/mar/nonmatchings/e_collect/D_us_8018AB08.s 
