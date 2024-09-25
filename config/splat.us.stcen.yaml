@@ -54,7 +54,16 @@ segments:
       - [0x1248, .data, e_room_fg]
       - [0x12D4, .data, rooms]
       - [0x1300, .data, e_layout] # layout entries data
-      - [0x13F0, data]
+      - [0x13F0, .data, cutscene_data]
+      - [0x1658, cmp, D_80181658]
+      - [0x199C, cmp, D_8018199C]
+      - [0x3A40, cmp, D_80183A40]
+      - [0x4B70, cmp, D_80184B70]
+      - [0x5830, cmp, D_80185830]
+      - [0x658C, raw, D_8018658C]
+      - [0x678C, raw, D_8018678C]
+      - [0x698C, raw, D_8018698C]
+      - [0x69AC, raw, D_801869AC]
       - [0x69EC, .data, tile_data] # tile data
       - [0x81EC, .data, tile_data] # tile definitions
       - [0xC60C, .data, sprites]
