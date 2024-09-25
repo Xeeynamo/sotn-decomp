@@ -190,24 +190,7 @@ Entity* func_8017110C(Entity* self) {
     return NULL;
 }
 
-s32 func_801713C8(Entity* entity) {
-    if (entity->hitboxState == 0)
-        return 0;
-    if (entity->posX.i.hi < -16)
-        return 0;
-    if (entity->posX.i.hi > 272)
-        return 0;
-    if (entity->posY.i.hi > 240)
-        return 0;
-    if (entity->posY.i.hi < 0)
-        return 0;
-    if (entity->hitPoints >= 0x7000)
-        return 0;
-    if (entity->hitPoints <= 0)
-        return 0;
-
-    return 1;
-}
+#include "../check_entity_valid.h"
 
 #ifndef VERSION_PSP
 bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
@@ -732,7 +715,7 @@ void func_80172120(Entity* self) {
             SquareRoot12(
                 (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
             12;
-        if (!func_801713C8(self->ext.bat.target) || D_80174B2C < 8) {
+        if (!CheckEntityValid(self->ext.bat.target) || D_80174B2C < 8) {
             self->ext.bat.unk8C = 0;
             self->step++;
             func_801710E8(self, D_8017054C);

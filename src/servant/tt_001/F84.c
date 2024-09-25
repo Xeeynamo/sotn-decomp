@@ -2,30 +2,11 @@
 #include "common.h"
 #include <servant.h>
 
-
-
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
 
-s32 func_us_801714F4(Entity* entity) {
-    if (entity->hitboxState == 0)
-        return 0;
-    if (entity->posX.i.hi < -16)
-        return 0;
-    if (entity->posX.i.hi > 272)
-        return 0;
-    if (entity->posY.i.hi > 240)
-        return 0;
-    if (entity->posY.i.hi < 0)
-        return 0;
-    if (entity->hitPoints >= 0x7000)
-        return 0;
-    if (entity->hitPoints <= 0)
-        return 0;
-
-    return 1;
-}
+#include "../check_entity_valid.h"
 
 void func_us_80171560(void) {}
 
