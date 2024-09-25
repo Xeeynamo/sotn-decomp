@@ -361,7 +361,7 @@ void EntityStatue(Entity* self) {
             }
             self->hitboxState = 2;
             self->step++;
-            PlaySfxPositional(0x609);
+            PlaySfxPositional(SFX_STONE_MOVE_C);
         }
         break;
 
@@ -530,7 +530,7 @@ void EntityStoneDoor(Entity* self) {
 
     case 2:
         if ((self->ext.stoneDoor.unk80 % 32) == 0) {
-            PlaySfxPositional(0x607);
+            PlaySfxPositional(SFX_STONE_MOVE_A);
         }
 
         if (++self->ext.stoneDoor.unk80 % 2) {
