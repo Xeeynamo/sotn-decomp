@@ -1,2 +1,3 @@
 CheckEntityValid = 0x801713C8;
-IsServentDestroyed = 0x80174D3C;
+IsServantDestroyed = 0x80174D3C;
+DestroyServantEntity = 0x80173C2C;

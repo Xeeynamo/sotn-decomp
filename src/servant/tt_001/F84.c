@@ -2,6 +2,8 @@
 #include "common.h"
 #include <servant.h>
 
+extern s32 IsServantDestroyed;
+
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
@@ -42,17 +44,7 @@ void func_us_801728F4(void) {}
 
 void func_us_801728FC(void) {}
 
-extern s32 IsServentDestroyed;
-
-void func_us_80172904(Entity* entity)
-{
-    switch (entity->params) {
-    case 15:
-        IsServentDestroyed = 1;
-        break;
-    }
-    DestroyEntity(entity);
-}
+#include "../destroy_servant_entity.h"
 
 #ifndef VERSION_PSP
 u32 Tt001UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
