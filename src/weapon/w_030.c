@@ -13,7 +13,14 @@ extern s32 g_HandId;
 
 extern AnimationFrame D_D6000_8017A514[];
 extern AnimationFrame D_D6000_8017A548[];
+extern AnimationFrame* D_D6000_8017A628[];
+extern FrameProperty D_D6000_8017A554;
 extern WeaponAnimation D_D6000_8017A5E4[];
+extern u8 D_D6000_8017A640[];
+extern s32 D_D6000_8017A648[];
+extern u8 D_D6000_8017A650[];
+extern u8 D_D6000_8017A658[];
+extern u16 D_D6000_8017A660[];
 extern s16 D_D6000_8017A66C[16];
 extern s32 D_D6000_8017CC44;
 
@@ -70,7 +77,373 @@ static void EntityWeaponAttack(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_030", func_ptr_80170004);
 
-INCLUDE_ASM("weapon/nonmatchings/w_030", func_ptr_80170008);
+void func_ptr_80170008(Entity* self) {
+    s32 smallOffset;
+    s32 largeOffset;
+    s32 clut;
+    u16 effect;
+    s16 offsetY;
+    s32 temp_s4;
+    u16 s0;
+    s32 var_v1;
+    u8 left;
+    s16 a0;
+
+    Collider collider;
+    Primitive* prim;
+    s16 posX, posY;
+    s16 randRes;
+    s32 i;
+    s32 velX;
+    bool stopAnimationUpdate;
+    u32 step;
+    s32 temp;
+
+    temp_s4 = (self->params & 0xF00) >> 8;
+    temp = self->params & 0x1000;
+    stopAnimationUpdate = false;
+    step = self->step;
+
+    if (step < 7 && self->hitFlags) {
+        self->hitFlags = 0;
+        self->ext.weapon_030.unk7E = 0x18;
+        self->step = 7;
+        if (--self->ext.weapon_030.unkA4 > 0) {
+            self->step = 8;
+        }
+    }
+
+    switch (self->step) {
+    case 0:
+        s0 = temp_s4;
+        if (self->ext.weapon_030.parent->ext.weapon_030.unk84 != (s0 + 1)) {
+            return;
+        }
+
+        randRes = rand() & 1;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 14);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        left = 0;
+        clut = 0x110;
+        self->palette = *(D_D6000_8017A640 + s0) + ((u16)randRes | 0x8110);
+        if (temp) {
+            self->palette = *(D_D6000_8017A660 + s0);
+        }
+        self->unk5A = 0x64;
+        if (g_HandId != 0) {
+            left = 0x80;
+            clut = 0x128;
+            self->palette += 0x18;
+            self->unk5A += 2;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+
+        for (i = 0; i < 1; i++) {
+            prim->u0 = prim->u2 = 0xE0;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = left;
+            prim->v2 = prim->v3 = left + 0x5F;
+            prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
+            prim->x1 = prim->x3 = self->posX.i.hi + 0x10;
+            prim->tpage = 0x19;
+            prim->clut = clut + 2;
+            prim->priority = PLAYER.zPriority + 10;
+            prim->drawMode = DRAW_UNK02;
+            prim = prim->next;
+        }
+
+        for (i = 0; i < 8; i++) {
+            prim->u0 = prim->u2 = 0xE0;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = left + 0x60;
+            prim->v2 = prim->v3 = left + 0x7F;
+            prim->tpage = 0x19;
+            prim->clut = clut + 2;
+            prim->priority = PLAYER.zPriority + 12;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->animSet = 0xA;
+        a0 = temp_s4;
+        self->anim = D_D6000_8017A628[a0];
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = (self->ext.weapon_030.parent->facingLeft + 1) & 1;
+        self->ext.weapon_030.unk86 = D_D6000_8017A650[a0] + randRes;
+        self->ext.weapon_030.unk90 = self->ext.weapon_030.unkA0 = -0x1000;
+        self->ext.weapon_030.unk88 = self->ext.weapon_030.unk9C = -0x100;
+        if (a0 == 1) {
+            self->ext.weapon_030.unkA4 = 3;
+        }
+        g_api.func_80102CD8(4);
+        g_api.PlaySfx(0x654);
+        self->step++;
+        break;
+    case 1:
+        stopAnimationUpdate = 1;
+        self->ext.weapon_030.unk88 += 0x18;
+        self->ext.weapon_030.unk9C += 0x10;
+        if (self->ext.weapon_030.unk88 > 0x60) {
+            self->ext.weapon_030.unk88 = 0x60;
+        }
+        if (self->ext.weapon_030.unk9C > 0x80) {
+            self->ext.weapon_030.unk9C = 0x80;
+        }
+        self->ext.weapon_030.unk90 += self->ext.weapon_030.unk88;
+        self->ext.weapon_030.unkA0 += self->ext.weapon_030.unk9C;
+        if (self->ext.weapon_030.unk90 > 0) {
+            self->ext.weapon_030.unk90 = 0;
+        }
+        if (self->ext.weapon_030.unkA0 > 0) {
+            self->ext.weapon_030.unkA0 = 0;
+        }
+        if ((self->ext.weapon_030.unk90 | self->ext.weapon_030.unkA0) == 0) {
+            self->attack = 4;
+            self->attackElement = ELEMENT_HIT;
+            self->hitboxState = 2;
+            self->nFramesInvincibility = 4;
+            self->stunFrames = 4;
+            self->hitEffect = 1;
+            self->entityRoomIndex = 0;
+            g_api.func_80118894(self);
+            self->posY.i.hi++;
+            a0 = temp_s4;
+            if (a0 == 5) {
+                self->posY.i.hi++;
+            }
+            self->step = D_D6000_8017A658[a0];
+            if (a0 < 2) {
+                SetSpeedX(D_D6000_8017A648[a0]);
+            }
+        }
+        break;
+    case 2:
+        if (self->animFrameDuration == 1 && self->animFrameIdx == 2) {
+            g_api.PlaySfx(0x6C9);
+        }
+        if (self->animFrameDuration == 1 && self->animFrameIdx == 5) {
+            g_api.PlaySfx(0x627);
+            g_api.CreateEntFactoryFromEntity(
+                self, 0x46 + ((g_HandId + 1) << 0xC) + ((temp_s4 - 2) << 0x10),
+                0);
+        }
+        if (self->animFrameDuration < 0) {
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            if ((--self->ext.weapon_030.unk86 << 0x10) == 0) {
+                self->ext.weapon_030.unk7E = 0x18;
+                self->step = 7;
+            }
+        }
+        break;
+    case 3:
+        posX = self->posX.i.hi;
+
+        if (posX + g_Tilemap.scrollX.i.hi < g_Tilemap.x ||
+            g_Tilemap.width < posX + g_Tilemap.scrollX.i.hi) {
+            self->ext.weapon_030.unk7E = 0x18;
+            self->hitFlags = 0;
+            self->step = 7;
+            return;
+        }
+
+        self->posY.i.hi += 4;
+
+        g_api.CheckCollision(posX, (s16)(self->posY.i.hi + 0x18), &collider, 0);
+
+        if (collider.effects & 1) {
+            self->posY.i.hi = self->posY.i.hi + collider.unk18;
+            velX = self->velocityX;
+            effect = collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                                         EFFECT_UNK_2000 | EFFECT_UNK_1000);
+
+            if (velX > 0) {
+                if (effect == EFFECT_UNK_8000) {
+                    if (velX * 0xA < 0) {
+                        velX = (velX * 0xA + 0xF) >> 4;
+                    } else {
+                        velX = (velX * 0xA) >> 4;
+                    }
+                }
+                if (effect == (EFFECT_UNK_8000 | EFFECT_UNK_1000)) {
+                    if (velX * 0xD < 0) {
+                        velX = (velX * 0xD + 0xF) >> 4;
+                    } else {
+                        velX = (velX * 0xD) >> 4;
+                    }
+                }
+            } else {
+                if (effect == (EFFECT_UNK_8000 | EFFECT_UNK_4000)) {
+                    if (velX * 0xA < 0) {
+                        velX = (velX * 0xA + 0xF) >> 4;
+                    } else {
+                        velX = (velX * 0xA) >> 4;
+                    }
+                }
+                if (effect ==
+                    (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_1000)) {
+                    if (velX * 0xD < 0) {
+                        velX = (velX * 0xD + 0xF) >> 4;
+                    } else {
+                        velX = (velX * 0xD) >> 4;
+                    }
+                }
+            }
+
+            self->posX.val += velX;
+        } else {
+            self->step = 4;
+            self->velocityY = 0;
+        }
+
+        goto label;
+    case 4:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(0.15625);
+
+        if (self->velocityY > FIX(8.0)) {
+            self->velocityY = FIX(8.0);
+        }
+
+        g_api.CheckCollision(
+            self->posX.i.hi, (s16)(self->posY.i.hi + 0x19), &collider, 0);
+
+        if (collider.effects & 1) {
+            self->ext.weapon_030.unk7E = 0x18;
+            self->step = 3;
+        }
+
+    label:
+        offsetY = 8;
+        if (self->velocityX < 0) {
+            offsetY = -8;
+        }
+
+        posX = self->posX.i.hi + offsetY;
+        posY = self->posY.i.hi;
+
+        g_api.CheckCollision(posX, (s16)(posY + 10), &collider, 0);
+        if (collider.effects & 2) {
+            self->ext.weapon_030.unk7E = 0x18;
+            self->step = 7;
+        }
+        g_api.CheckCollision(posX, (s16)(posY - 6), &collider, 0);
+        if (collider.effects & 2) {
+            self->ext.weapon_030.unk7E = 0x18;
+            self->step = 7;
+        }
+        break;
+    case 5:
+        if (self->ext.weapon_030.unk7C == 0) {
+            if (--self->ext.weapon_030.unk86 < 0) {
+                self->ext.weapon_030.unk7E = 0x18;
+                self->step = 7;
+                break;
+            }
+
+            randRes = (rand() & 1);
+
+            for (i = 0; i < randRes + 2; i++) {
+                g_api.CreateEntFactoryFromEntity(
+                    self, ((g_HandId + 1) << 0xC) + 0x20046, 0);
+            }
+
+            self->ext.weapon_030.unk7C = (rand() & 0x1F) + 0x50;
+            if (self->ext.weapon_030.unk86 == 0) {
+                self->ext.weapon_030.unk7C = 0x60;
+            }
+        }
+        self->ext.weapon_030.unk7C--;
+        break;
+    case 6:
+        if (((s32*)self)[0x14] == 0x10004) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x6A, 0);
+        }
+        if (self->animFrameDuration < 0) {
+            self->ext.weapon_030.unk7E = 0x18;
+            self->step = 7;
+        }
+        break;
+    case 7:
+    case 8:
+        stopAnimationUpdate = true;
+        self->drawFlags |= FLAG_DRAW_UNK80;
+        if (--self->ext.weapon_030.unk7E == 0) {
+            if (self->step == 7) {
+                DestroyEntity(self);
+                return;
+            }
+            self->step = 3;
+            self->drawFlags &= FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                               FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 |
+                               FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            break;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < 1; i++) {
+        if (g_GameTimer & 1) {
+            var_v1 = self->ext.weapon_030.unk90;
+        } else {
+            var_v1 = self->ext.weapon_030.unkA0;
+        }
+        prim->y0 = prim->y1 = self->posY.i.hi + 0x19 + ((var_v1 * 6) >> 8);
+        prim->y2 = prim->y3 = self->posY.i.hi + 0x19;
+        prim->x0 = self->posX.i.hi - 0x10 - (rand() & 0xF);
+        if (!(g_GameTimer & 7)) {
+            prim->x2 = prim->x2 - 1;
+            prim->x3 = prim->x3 + 1;
+        }
+        prim = prim->next;
+    }
+
+    for (i = 0; i < 8; i++) {
+        if ((g_GameTimer & 7) == i) {
+            smallOffset = rand() & 7;
+            largeOffset = smallOffset + 0xA;
+            prim->x0 = prim->x2 =
+                self->posX.i.hi + (rand() % 32) - 0x1A - smallOffset;
+            prim->y1 = prim->y0 =
+                self->posY.i.hi - (rand() % 24) - largeOffset + 0x19;
+            prim->x1 = prim->x3 = prim->x0 + largeOffset * 2;
+            prim->y2 = prim->y3 = prim->y0 + largeOffset * 2;
+            if (self->ext.weapon_030.unk90 >= -0x480) {
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 = 0x180;
+            } else {
+                prim->drawMode = DRAW_UNK02;
+            }
+        }
+
+        if (g_GameTimer & 1) {
+            prim->y0--;
+            prim->y1--;
+            prim->y2--;
+            prim->y3--;
+        }
+
+        if (!((i ^ g_GameTimer) & 1)) {
+            prim->drawMode = DRAW_HIDE;
+        } else {
+            prim->drawMode = DRAW_UNK02;
+        }
+        prim = prim->next;
+    }
+
+    if (!stopAnimationUpdate) {
+        g_api.UpdateAnim(&D_D6000_8017A554, NULL);
+    }
+}
 
 void func_ptr_8017000C(Entity* self) {
     s16 result;
