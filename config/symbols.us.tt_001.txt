@@ -1,3 +1,4 @@
 DestroyEntity = 0x80172AE4;
 D_80170EE4 = 0x80170EE4;
 CheckEntityValid = 0x801714F4;
+IsServentDestroyed = 0x8017381C;

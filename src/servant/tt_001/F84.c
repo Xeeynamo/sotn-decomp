@@ -42,13 +42,13 @@ void func_us_801728F4(void) {}
 
 void func_us_801728FC(void) {}
 
-extern s32 D_us_8017381C;
+extern s32 IsServentDestroyed;
 
 void func_us_80172904(Entity* entity)
 {
     switch (entity->params) {
     case 15:
-        D_us_8017381C = 1;
+        IsServentDestroyed = 1;
         break;
     }
     DestroyEntity(entity);

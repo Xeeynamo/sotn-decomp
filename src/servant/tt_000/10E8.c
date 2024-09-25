@@ -35,7 +35,7 @@ s16 D_80174C0C[16];
 s32 D_80174C2C;
 FamiliarStats D_80174C30;
 Point16 D_80174C3C[4][16];
-s32 D_80174D3C;
+s32 IsServentDestroyed;
 s32 D_80174D40;
 s32 _unused[26];
 
@@ -98,7 +98,7 @@ extern s16 D_80174C0C[16];
 extern s32 D_80174C2C;
 extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
-extern s32 D_80174D3C;
+extern s32 IsServentDestroyed;
 extern s32 D_80174D40;
 
 void DestroyEntity(Entity* entity);
@@ -531,7 +531,7 @@ void func_80171ED4(s32 arg0) {
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
-    D_80174D3C = 0;
+    IsServentDestroyed = 0;
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
@@ -542,7 +542,7 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
 #else
 void func_80172120(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (D_80174D3C != 0) {
+    if (IsServentDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (D_8003C708.flags & 0x20) {
@@ -774,7 +774,7 @@ void func_80172C30(Entity* self) {
     }
 
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (D_80174D3C != 0) {
+    if (IsServentDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     switch (self->step) {
@@ -1044,7 +1044,7 @@ void func_80173C24(void) {}
 void func_80173C2C(Entity* entity) {
     switch (entity->params) {
     case 15:
-        D_80174D3C = 1;
+        IsServentDestroyed = 1;
         break;
     }
     DestroyEntity(entity);
