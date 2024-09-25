@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include "sfx.h"
 
 // pushes alucard to the right
 void EntityPushAlucard(Entity* entity) {
@@ -328,12 +329,6 @@ void EntityUnkId52(Entity* self) {
 
 // func_psp_0923F328
 void EntityCastleBridge(Entity* self) {
-
-#define priorities D_801819A0
-#define uvOffsets D_80181958
-#define pages D_80181988
-#define uvs D_80181940
-
     const u32 primCount = 24;
 
     MATRIX* matrix;
@@ -372,16 +367,16 @@ void EntityCastleBridge(Entity* self) {
         prim = &g_PrimBuf[primIndex];
 
         for (primIndex = 0; prim != NULL; primIndex++) {
-            uv = &uvs[uvOffsets[primIndex]];
+            uv = &EntityCastleBridgeUVs[EntityCastleBridgeUVOffsets[primIndex]];
 
             prim->u0 = prim->u2 = *uv++;
             prim->u1 = prim->u3 = *uv++;
             prim->v0 = prim->v1 = *uv++;
             prim->v2 = prim->v3 = *uv;
 
-            prim->tpage = pages[primIndex];
+            prim->tpage = EntityCastleBridgePages[primIndex];
             prim->clut = 0x66;
-            prim->priority = priorities[primIndex];
+            prim->priority = EntityCastleBridgePriorities[primIndex];
             prim->drawMode = DRAW_UNK02;
 
             prim = prim->next;
@@ -392,7 +387,7 @@ void EntityCastleBridge(Entity* self) {
     case 1:
         if (tilemap->scrollX.i.hi > 3904) {
             self->step++;
-            g_api.PlaySfx(0x7A5);
+            g_api.PlaySfx(SE_CASTLE_GATE_RISE);
         }
         break;
     case 2:
@@ -429,7 +424,7 @@ void EntityCastleBridge(Entity* self) {
                     if (player->velocityY >= 0 &&
                         (xOffset < player->posY.i.hi + 30)) {
                         player->posY.i.hi = xOffset - 30;
-                        g_api.PlaySfx(0x64B);
+                        g_api.PlaySfx(SFX_STOMP_SOFT_A);
                         g_Player.pl_vram_flag |= 0x41;
                         self->step_s++;
                     }
@@ -476,7 +471,6 @@ void EntityCastleBridge(Entity* self) {
             prim->x2 = (s16)rotatedVector->vx + xOffset;
             prim->y2 = (s16)rotatedVector->vy + 168;
         } else {
-            // size |= 1;
             size = (s16*)SP(0x18);
             prim->x0 = *size++;
             prim->y0 = *size++;
@@ -544,11 +538,6 @@ void EntityCastleBridge(Entity* self) {
 
         prim = prim->next;
     }
-
-#undef priorities
-#undef offsets
-#undef pages
-#undef vertices
 }
 
 // ID 0x55
