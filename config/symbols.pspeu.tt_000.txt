@@ -1,6 +1,6 @@
 func_801710E8 = 0x092e7680;
 func_8017110C = 0x092e76c8;
-func_801713C8 = 0x092e7a78;
+CheckEntityValid = 0x092e7a78;
 func_80171560 = 0x092e7b80;
 CreateBlueTrailEntity = 0x092e7b90;
 func_8017160C = 0x092e7c68;

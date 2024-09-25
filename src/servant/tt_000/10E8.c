@@ -54,7 +54,6 @@ void func_80173C0C(void);
 void func_80173C14(void);
 void func_80173C1C(void);
 void func_80173C24(void);
-void DestroyEntity(Entity* entity);
 void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
