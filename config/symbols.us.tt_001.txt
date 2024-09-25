@@ -1,6 +1,6 @@
 DestroyEntity = 0x80172AE4;
-D_80170EE4 = 0x80170EE4;
 CheckEntityValid = 0x801714F4;
-IsServantDestroyed = 0x8017381C;
+g_IsServantDestroyed = 0x8017381C;
 DestroyServantEntity = 0x80172904;
 AccumulateTowardZero = 0x80172B50;
+g_EntityRanges = 0x80170EE4;

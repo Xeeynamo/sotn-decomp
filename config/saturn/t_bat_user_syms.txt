@@ -1,1 +1,1 @@
-_IsServantDestroyed = 0x060D1DFC;
+_g_IsServantDestroyed = 0x060D1DFC;

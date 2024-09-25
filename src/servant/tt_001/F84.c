@@ -2,7 +2,7 @@
 #include "common.h"
 #include <servant.h>
 
-extern s32 IsServantDestroyed;
+extern s32 g_IsServantDestroyed;
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
@@ -57,8 +57,8 @@ void func_us_801728FC(void) {}
 
 Entity* func_us_80172B88(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
-    s16 start = D_80170EE4[rangeIndex].start;
-    s16 end = D_80170EE4[rangeIndex].end;
+    s16 start = g_EntityRanges[rangeIndex].start;
+    s16 end = g_EntityRanges[rangeIndex].end;
     Entity* entity = &g_Entities[start];
     s32 i;
 

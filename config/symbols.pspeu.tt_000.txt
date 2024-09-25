@@ -75,6 +75,6 @@ g_CurrentServant = 0x092ed808;
 g_CurrentRoomX = 0x092ed810;
 g_CurrentRoomY = 0x092ed818;
 D_80174D40 = 0x092ED820;
-IsServantDestroyed = 0x092ED828;
+g_IsServantDestroyed = 0x092ED828;
 D_80174C3C = 0x092ED830;
 D_80174C30 = 0x092ed930;

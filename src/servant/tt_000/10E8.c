@@ -35,7 +35,7 @@ s16 D_80174C0C[16];
 s32 D_80174C2C;
 FamiliarStats D_80174C30;
 Point16 D_80174C3C[4][16];
-s32 IsServantDestroyed;
+s32 g_IsServantDestroyed;
 s32 D_80174D40;
 s32 _unused[26];
 
@@ -99,7 +99,7 @@ extern s16 D_80174C0C[16];
 extern s32 D_80174C2C;
 extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
-extern s32 IsServantDestroyed;
+extern s32 g_IsServantDestroyed;
 extern s32 D_80174D40;
 
 void ProcessEvent(Entity* self, bool resetEvent);
@@ -531,7 +531,7 @@ void func_80171ED4(s32 arg0) {
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
-    IsServantDestroyed = 0;
+    g_IsServantDestroyed = 0;
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
@@ -542,7 +542,7 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
 #else
 void func_80172120(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (IsServantDestroyed != 0) {
+    if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (D_8003C708.flags & 0x20) {
@@ -774,7 +774,7 @@ void func_80172C30(Entity* self) {
     }
 
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (IsServantDestroyed != 0) {
+    if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     switch (self->step) {
@@ -1054,8 +1054,8 @@ void func_80173C24(void) {}
 
 Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
-    s16 start = D_80171094[rangeIndex].start;
-    s16 end = D_80171094[rangeIndex].end;
+    s16 start = g_EntityRanges[rangeIndex].start;
+    s16 end = g_EntityRanges[rangeIndex].end;
     Entity* entity = &g_Entities[start];
     s32 i;
 

@@ -26,7 +26,7 @@ void f60D101C() {}
 void f60D1028() {}
 void f60D1034() {}
 
-extern s32 IsServantDestroyed; // 0x060D1DFCh
+extern s32 g_IsServantDestroyed; // 0x060D1DFCh
 
 void DestroyEntity(Entity*); // func_0600FFB8h
 
@@ -34,7 +34,7 @@ void DestroyEntity(Entity*); // func_0600FFB8h
 // SAT: func_060D1040
 void DestroyServantEntity(Entity* entity) {
     if (entity->params == 0xF) {
-        IsServantDestroyed = 1;
+        g_IsServantDestroyed = 1;
     }
     func_0600FFB8(entity); // DestroyEntity
 }
