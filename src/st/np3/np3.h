@@ -29,7 +29,7 @@ typedef enum {
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
-    /* 0x28 */ E_801B5DE8,
+    /* 0x28 */ E_LIGHTNING_THUNDER,
     /* 0x29 */ E_801B5E98,
     /* 0x2D */ E_SPLASH_WATER = 0x2D,
     /* 0x2E */ E_SURFACING_WATER,
@@ -65,7 +65,7 @@ typedef enum {
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,
-    /* 0x52 */ E_801B8CC0,
+    /* 0x52 */ E_GAIBON_IDLE,
     /* 0x53 */ E_GAIBON_SMALL_FIREBALL,
     /* 0x54 */ E_GAIBON_BIG_FIREBALL,
     /* 0x55 */ E_HAMMER, // the enemy named "Hammer", Gurkha's friend

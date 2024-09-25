@@ -21,6 +21,7 @@ void func_801B2830(Entity* self) {
     }
 }
 
+// Maybe related to no3 EntityBackgroundLightning
 void func_801B28E4(Entity* self) {
     Entity* newEntity;
     s32 animFrame;
@@ -42,7 +43,7 @@ void func_801B28E4(Entity* self) {
         case 0:
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_801B5DE8, newEntity);
+                CreateEntityFromCurrentEntity(E_LIGHTNING_THUNDER, newEntity);
                 random0to3 = Random() & 3;
                 newEntity->posX.i.hi = D_80180EA4[random0to3][0];
                 newEntity->posY.i.hi = D_80180EA4[random0to3][1];
