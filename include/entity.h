@@ -1237,6 +1237,18 @@ typedef struct {
     /* 0x88 */ Primitive* prim;
 } ET_FallingStairs;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ char pad_86[1];
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ char pad_88[4];
+    /* 0x8C */ s32 unk8C;
+} ET_CHI_801A813C;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1352,4 +1364,5 @@ typedef union { // offset=0x7C
     ET_BreakableBlock breakableBlock;
     ET_BreakableWall breakableWall;
     ET_FallingStairs fallingStairs;
+    ET_CHI_801A813C chi801a813c;
 } Ext;
