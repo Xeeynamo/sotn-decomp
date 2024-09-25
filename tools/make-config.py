@@ -1016,7 +1016,9 @@ def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
         compiled_overlay = f"build/us/{ovl_full_name}.elf"
         if not os.path.isfile(compiled_overlay):
             spinner_stop(False)
-            yowarning(f"overlay {compiled_overlay} not built, symbols will not be cross-referenced.")
+            yowarning(
+                f"overlay {compiled_overlay} not built, symbols will not be cross-referenced."
+            )
             return
         config_us_path = get_splat_config_path(ovl_full_name, "us")
         symbols_us_path = f"config/symbols.us.{ovl_full_name}.txt"
@@ -1132,7 +1134,7 @@ def make_config(ovl_name: str, version: str):
             spinner_start(f"renamed {found} data/bss symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
-    
+
     # automatically stage new files in config/ so make clean will not nuke them
     git("add", splat_config_path, splat_config["options"]["symbol_addrs_path"][1])
 
