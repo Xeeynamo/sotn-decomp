@@ -37,7 +37,7 @@ const gameMetadata = {
             "id": "hd",
             "name": "Debug JP build (from PSP hdbin)",
             "overlays": [
-                "dra", "tt_000"
+                "dra", "ric", "tt_000"
             ]
         },
     ],
