@@ -367,16 +367,17 @@ void EntityCastleBridge(Entity* self) {
         prim = &g_PrimBuf[primIndex];
 
         for (primIndex = 0; prim != NULL; primIndex++) {
-            uv = &EntityCastleBridgeUVs[EntityCastleBridgeUVOffsets[primIndex]];
+            uv = &g_EntityCastleBridgeUVs
+                     [g_EntityCastleBridgeUVOffsets[primIndex]];
 
             prim->u0 = prim->u2 = *uv++;
             prim->u1 = prim->u3 = *uv++;
             prim->v0 = prim->v1 = *uv++;
             prim->v2 = prim->v3 = *uv;
 
-            prim->tpage = EntityCastleBridgePages[primIndex];
+            prim->tpage = g_EntityCastleBridgePages[primIndex];
             prim->clut = 0x66;
-            prim->priority = EntityCastleBridgePriorities[primIndex];
+            prim->priority = g_EntityCastleBridgePriorities[primIndex];
             prim->drawMode = DRAW_UNK02;
 
             prim = prim->next;
