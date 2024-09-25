@@ -5,6 +5,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 typedef enum {
     BLOOD_SKELETON_INIT,
@@ -18,7 +19,7 @@ void EntityBloodSkeleton(Entity* self) {
     u8* animation;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 3)) {
-        PlaySfxPositional(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
+        PlaySfxPositional(SFX_RED_SKEL_COLLAPSE);
         self->hitboxState = 0;
         SetStep(BLOOD_SKELETON_DISASSEMBLE);
     }
@@ -77,7 +78,7 @@ void EntityBloodSkeleton(Entity* self) {
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->rotZ = 0;
                 self->drawFlags |= FLAG_DRAW_ROTZ;
-                PlaySfxPositional(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
+                PlaySfxPositional(SFX_RED_SKEL_REBUILD);
                 self->step_s++;
                 return;
             }

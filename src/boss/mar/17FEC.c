@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 #include "mar.h"
+#include "sfx.h"
 
 void EntityClockRoomController(Entity* self) {
     PlayerStatus* status = &g_Status;
@@ -235,7 +236,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -246,7 +247,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -258,7 +259,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->posX.i.hi -= 8;
             self->posY.i.hi += 8;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -268,7 +269,7 @@ void EntityBirdcageDoor(Entity* self) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0x3C;
             self->step++;
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         break;
 
@@ -360,7 +361,7 @@ void EntityStatue(Entity* self) {
             }
             self->hitboxState = 2;
             self->step++;
-            PlaySfxPositional(0x609);
+            PlaySfxPositional(SFX_STONE_MOVE_C);
         }
         break;
 
@@ -529,7 +530,7 @@ void EntityStoneDoor(Entity* self) {
 
     case 2:
         if ((self->ext.stoneDoor.unk80 % 32) == 0) {
-            PlaySfxPositional(0x607);
+            PlaySfxPositional(SFX_STONE_MOVE_A);
         }
 
         if (++self->ext.stoneDoor.unk80 % 2) {

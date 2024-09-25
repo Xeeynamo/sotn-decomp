@@ -178,7 +178,7 @@ void func_ptr_80170008(Entity* self) {
         self->hitboxWidth = 0xC;
         g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
         if (flag != 0) {
-            g_api.PlaySfx(0x65B);
+            g_api.PlaySfx(SFX_FM_EXPLODE_B);
         }
         g_Player.timers[10] = 4;
         self->step++;
