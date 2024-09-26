@@ -1,5 +1,5 @@
-Unk28 = 0x80170028;
-Unk2C = 0x8017002C;
+Unk28 = 0x80170028; // type:func
+Unk2C = 0x8017002C; // type:func
 g_EntityRanges = 0x80170EE4;
 CheckEntityValid = 0x801714F4;
 DestroyEntity = 0x80172AE4;
