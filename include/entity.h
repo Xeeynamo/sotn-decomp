@@ -1755,7 +1755,7 @@ typedef struct {
 } ET_StrongWargDeathBeams;
 
 typedef struct {
-    /* 0x7C */ s32 unk7C;
+    /* 0x7C */ Multi unk7C;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;

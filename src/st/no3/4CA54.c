@@ -226,7 +226,7 @@ void EntityStrongWarg(Entity* self) {
             break;
         }
 
-        if (!(self->ext.strongWarg.unk7C & 0xFF)) {
+        if (!(self->ext.strongWarg.unk7C.unk & 0xFF)) {
             if (self->params) {
                 frameIdx = AnimateEntity(&D_801827EC, self);
             } else {
@@ -241,7 +241,7 @@ void EntityStrongWarg(Entity* self) {
                 }
             }
             if (var_s1 < 0x50) {
-                self->ext.stub[0] = 1;
+                self->ext.strongWarg.unk7C.U8.unk0 = 1;
                 self->animFrameIdx = 7 - self->animFrameIdx;
                 self->ext.strongWarg.unk80 = 0x10;
             }
@@ -262,7 +262,7 @@ void EntityStrongWarg(Entity* self) {
             }
 
             if (var_s1 >= 0x79) {
-                self->ext.stub[0] = 0;
+                self->ext.strongWarg.unk7C.U8.unk0 = 0;
                 self->animFrameIdx = 7 - self->animFrameIdx;
                 self->ext.strongWarg.unk80 = 0x10;
             }
@@ -585,7 +585,7 @@ void EntityStrongWarg(Entity* self) {
         case 0:
             ent_s0->animFrameDuration = 0;
             ent_s0->animFrameIdx = 0;
-            ent_s0->ext.strongWarg.unk7C = 1;
+            ent_s0->ext.strongWarg.unk7C.unk = 1;
 
             if (!(Random() & 7)) {
                 AnimateEntity(&D_8018296C, ent_s0);
@@ -638,7 +638,7 @@ void EntityStrongWarg(Entity* self) {
             UnkCollisionFunc2(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
-                ent_s0->ext.strongWarg.unk7C = 0;
+                ent_s0->ext.strongWarg.unk7C.unk = 0;
             }
             break;
         case 2:
@@ -681,7 +681,7 @@ void EntityStrongWarg(Entity* self) {
             UnkCollisionFunc2(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
-                ent_s0->ext.strongWarg.unk7C = 0;
+                ent_s0->ext.strongWarg.unk7C.unk = 0;
             }
         }
         break;
