@@ -505,7 +505,7 @@ void EntityRoomForeground(Entity* entity) {
 #include "../bottom_corner_text.h"
 
 // func_801A80A8
-void func_801A80A8()
+void SalemWitchTrySpawnShadow()
 {
     Entity* entity;
 
@@ -516,7 +516,7 @@ void func_801A80A8()
             entity->facingLeft = g_CurrentEntity->facingLeft;
             entity->zPriority = g_CurrentEntity->zPriority - 1;
             entity->params = g_CurrentEntity->animCurFrame;
-            entity->step = 0x20;
+            entity->step = 0x20;    // Shadow_Init
         }
     }
 }

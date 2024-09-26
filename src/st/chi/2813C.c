@@ -182,7 +182,7 @@ void EntitySalemWitch(Entity* self)
             }
             
             MoveEntity();
-            func_801A80A8();    // Shadow?
+            SalemWitchTrySpawnShadow();
 
             // Move in circles
             idleCircleAngle = self->ext.salemWitch.idleCircleTimer += IdleCircleSpeed;
@@ -235,7 +235,7 @@ void EntitySalemWitch(Entity* self)
             }
 
             MoveEntity();
-            func_801A80A8(); // Shadow?
+            SalemWitchTrySpawnShadow();
 
             // Slow down
             self->velocityX -= self->velocityX / DecelerateSlow;
@@ -255,7 +255,7 @@ void EntitySalemWitch(Entity* self)
                     // fallthrough
                 case Attack_MoveToPosition:
                     MoveEntity();
-                    func_801A80A8();    // Shadow?
+                    SalemWitchTrySpawnShadow();
 
                     // Detect target movement position
                     entity = &PLAYER;
@@ -339,7 +339,7 @@ void EntitySalemWitch(Entity* self)
                 
                 case Attack_ReevaluateMove:
                     MoveEntity();
-                    func_801A80A8(); // Shadow?
+                    SalemWitchTrySpawnShadow();
 
                     // Slow down x movement
                     self->velocityX -= self->velocityX / DecelerateSlow;
@@ -352,7 +352,7 @@ void EntitySalemWitch(Entity* self)
                 
                 case Attack_Perform:
                     MoveEntity();
-                    func_801A80A8(); // Shadow?
+                    SalemWitchTrySpawnShadow();
 
                     // Slow down x movement
                     self->velocityX -= self->velocityX / DecelerateSlow;
@@ -470,7 +470,7 @@ void EntitySalemWitch(Entity* self)
                     // fallthrough
                 case Hurt_Wait:
                     MoveEntity();
-                    func_801A80A8(); // Shadow?
+                    SalemWitchTrySpawnShadow();
 
                     // Slow down movement
                     self->velocityX -= self->velocityX / DecelerateFast;
