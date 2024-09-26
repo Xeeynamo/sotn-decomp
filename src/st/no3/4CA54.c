@@ -292,7 +292,7 @@ void EntityStrongWarg(Entity* self) {
             }
 
             if ((!self->ext.strongWarg.unk86) ||
-                (collider.effects & 1 && collider.effects & 2)) {
+                (collider.effects & EFFECT_SOLID && collider.effects & EFFECT_UNK_0002)) {
                 func_801CC6F8(self);
             }
         }
@@ -341,7 +341,7 @@ void EntityStrongWarg(Entity* self) {
 
                 if (self->velocityX) {
                     g_api.CheckCollision(var_s1, self->posY.i.hi, &collider, 0);
-                    if ((collider.effects & 1) && (collider.effects & 2)) {
+                    if ((collider.effects & EFFECT_SOLID) && (collider.effects & EFFECT_UNK_0002)) {
                         self->posX.val -= self->velocityX;
                         self->velocityX = 0;
                     }
@@ -626,7 +626,7 @@ void EntityStrongWarg(Entity* self) {
                     self->velocityX = FIX(-4.0);
                 }
 
-                PlaySfxPositional(0x6C7);
+                PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
                 enemyDefPtr = &g_api.enemyDefs[152];
                 ent_s4->hitboxState = enemyDefPtr->hitboxState;
                 ent_s4->attackElement = enemyDefPtr->attackElement;
@@ -669,7 +669,7 @@ void EntityStrongWarg(Entity* self) {
                 } else {
                     self->velocityX = FIX(-4.0);
                 }
-                PlaySfxPositional(0x6C7);
+                PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
                 enemyDefPtr = &g_api.enemyDefs[152];
                 ent_s4->hitboxState = enemyDefPtr->hitboxState;
                 ent_s4->attackElement = enemyDefPtr->attackElement;
