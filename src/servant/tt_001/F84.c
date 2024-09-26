@@ -23,16 +23,12 @@ typedef struct {
 } ServantDesc_Brk1;
 
 typedef struct {
-    void (*Unk28)(Entity* self);
-} ServantDesc_Brk2;
-
-typedef struct {
-    void (*Unk2C)(/*?*/);
+    
     void (*Unk30)(/*?*/);
     void (*Unk34)(/*?*/);
     void (*Unk38)(/*?*/);
     void (*Unk3C)(Entity* self);
-} ServantDesc_Brk3;
+} ServantDesc_Brk2;
 
 void func_us_80171624(s32 arg0);
 void func_us_80171864(Entity* self);
@@ -55,9 +51,12 @@ ServantDesc_Brk1 g_ServantDesc_Brk1 = {
     func_us_80171624, func_us_80171864, func_us_801720A4, func_us_801720AC,
     func_us_801720B4, func_us_801720BC, func_us_801720C4, func_us_801720CC,
     func_us_801720D4, func_us_801720DC};
-ServantDesc_Brk2 g_ServantDesc_Brk2 = {func_us_801720E4};
-ServantDesc_Brk3 g_ServantDesc_Brk3 = {
-    func_us_8017246C, func_us_801728EC, func_us_801728F4, func_us_801728FC,
+
+void (*Unk28)(Entity* self) = &func_us_801720E4;
+void (*Unk2C)(/*?*/) = &func_us_8017246C;
+
+ServantDesc_Brk2 g_ServantDesc_Brk2 = {
+    func_us_801728EC, func_us_801728F4, func_us_801728FC,
     DestroyServantEntity};
 #endif
 
