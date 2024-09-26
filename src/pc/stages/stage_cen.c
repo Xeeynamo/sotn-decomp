@@ -17,11 +17,6 @@ u8 D_80181658[836];
 u8 D_8018199C[8356];
 u8 D_80185830[3420];
 
-void (*og_InitRoomEntities)(s32 objLayoutId);
-void MyInitRoomEntities(s32 objLayoutId) {
-    og_InitRoomEntities(objLayoutId);
-}
-
 void InitStageCEN(Overlay* o) {
     LoadReset();
     LOAD_ASSET("assets/st/cen/D_8018658C.bin", D_8018658C);
@@ -34,6 +29,4 @@ void InitStageCEN(Overlay* o) {
     LOAD_ASSET("assets/st/cen/D_8018199C.bin", D_8018199C);
     LOAD_ASSET("assets/st/cen/D_80185830.bin", D_80185830);
     memcpy(o, &CEN_Overlay, sizeof(Overlay));
-    og_InitRoomEntities = CEN_Overlay.InitRoomEntities;
-    CEN_Overlay.InitRoomEntities = MyInitRoomEntities;
 }
