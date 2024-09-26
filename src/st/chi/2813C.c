@@ -11,7 +11,7 @@ extern EntityInit EntityInit_80180688;
 // D_80181538
 u8 AnimFrames_TurnAround[] = {
     0x01, 0x01, 0x01, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x03, 0x01, 0x03, 0x02,
-    0x03, 0x01, 0x04, 0x02, 0x04, 0x01, 0x05, 0x02, 0x05, 0x01, 0x06, 0x02, 0x01, 0x01, 0xFF, 0x00 
+    0x03, 0x01, 0x04, 0x02, 0x04, 0x01, 0x05, 0x02, 0x05, 0x01, 0x06, 0x02, 0x01, 0x01, 0xFF, 0x00
 };
 
 // D_80181558
@@ -20,7 +20,7 @@ u8 AnimFrames_CurseHandMovements[] = {
     0x01, 0x0D, 0x01, 0x0E, 0x01, 0x0F, 0x01, 0x10, 0x01, 0x11, 0x03, 0x12, 0x01, 0x13, 0x02, 0x14,
     0x01, 0x15, 0x01, 0x16, 0x01, 0x07, 0x02, 0x08, 0x02, 0x09, 0x07, 0x0A, 0x01, 0x09, 0x01, 0x08,
     0x01, 0x12, 0x01, 0x11, 0x01, 0x10, 0x01, 0x11, 0x01, 0x10, 0x01, 0x11, 0x01, 0x10, 0x01, 0x0F,
-    0xFF, 0x00, 0x00, 0x00 
+    0xFF, 0x00, 0x00, 0x00
 };
 
 // D_8018159C
@@ -28,26 +28,26 @@ u8 AnimFrames_CurseKanjiFlash[] = {
     0x01, 0x0E, 0x01, 0x0D, 0x01, 0x0C, 0x06, 0x0B, 0x03, 0x0C, 0x01, 0x0D, 0x02, 0x16, 0x01, 0x15,
     0x01, 0x14, 0x01, 0x13, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x03, 0x09, 0x01, 0x21, 0x01, 0x22,
     0x0C, 0x09, 0x01, 0x23, 0x01, 0x24, 0x0C, 0x09, 0x01, 0x25, 0x01, 0x26, 0x0C, 0x09, 0x01, 0x27,
-    0x01, 0x28, 0xFF, 0x00 
+    0x01, 0x28, 0xFF, 0x00
 };
 
 // D_801815D0
 u8 AnimFrames_CurseReset[] = {
     0x01, 0x0D, 0x01, 0x15, 0x01, 0x17, 0x01, 0x18, 0x03, 0x19, 0x30, 0x18, 0x06, 0x15, 0x06, 0x0D,
-    0x20, 0x01, 0xFF, 0x00 
+    0x20, 0x01, 0xFF, 0x00
 };
 
 // D_801815E4
 u8 AnimFrames_TriboltHandsUp[] = {
     0x01, 0x01, 0x01, 0x02, 0x01, 0x01, 0x01, 0x02, 0x01, 0x01, 0x01, 0x02, 0x04, 0x1A, 0x04, 0x1B,
-    0x03, 0x1C, 0x03, 0x1D, 0x03, 0x1E, 0x03, 0x1F, 0x10, 0x20, 0xFF, 0x00 
+    0x03, 0x1C, 0x03, 0x1D, 0x03, 0x1E, 0x03, 0x1F, 0x10, 0x20, 0xFF, 0x00
 };
 
 // D_80181600
 u8 AnimFrames_TriboltReset[] = {
     0x01, 0x20, 0x03, 0x1F, 0x03, 0x1E, 0x03, 0x1D, 0x03, 0x1C, 0x01, 0x01, 0x01, 0x02, 0x01, 0x01,
     0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x03, 0x02, 0x03, 0x01, 0x03, 0x02, 0x04, 0x01,
-    0x04, 0x02, 0x05, 0x01, 0x05, 0x02, 0x06, 0x01, 0x06, 0x02, 0xFF, 0x00 
+    0x04, 0x02, 0x05, 0x01, 0x05, 0x02, 0x06, 0x01, 0x06, 0x02, 0xFF, 0x00
 };
 
 // [Find/create/use enum/const for E_EXPLOSION spawn params?]
@@ -164,13 +164,13 @@ void EntitySalemWitch(Entity* self)
             entity->zPriority = self->zPriority - 1;
             SetStep(WaitToAggro);
             break;
-        
+
         case WaitToAggro:
             if ((GetDistanceToPlayerX() < 0xA0) && (GetDistanceToPlayerY() < 0x70)) {
                 SetStep(Idle);
             }
             break;
-        
+
         case Idle:
             // Reset on entry
             if (!self->step_s) {
@@ -180,7 +180,7 @@ void EntitySalemWitch(Entity* self)
                 self->animCurFrame = AnimFrameIdle;
                 self->step_s += 1;
             }
-            
+
             MoveEntity();
             SalemWitchTrySpawnShadow();
 
@@ -189,14 +189,14 @@ void EntitySalemWitch(Entity* self)
             idleCircleAngle &= 0xFFF;
             self->velocityX = rcos(idleCircleAngle) * IdleCircleSize;
             self->velocityY = rsin(idleCircleAngle) * IdleCircleSize;
-            
+
             // Slowly drift up/down
             if (self->ext.salemWitch.isDriftDirectionUp) {
                 self->velocityY += IdleDriftSpeed;
             } else {
                 self->velocityY -= IdleDriftSpeed;
             }
-            
+
             // Check for valid targeting circumstances (every 0.85s)
             if (!(self->ext.salemWitch.idleCircleTimer & 0x3FF)) {
                 entity = &PLAYER;
@@ -227,7 +227,7 @@ void EntitySalemWitch(Entity* self)
                 SetStep(TurnAround);
             }
             break;
-        
+
         case TurnAround:
             if (!self->step_s) {
                 self->facingLeft ^= 1;  // Turn around
@@ -244,7 +244,7 @@ void EntitySalemWitch(Entity* self)
                 SetStep(Idle);
             }
             break;
-        
+
         case Attack:
             switch (self->step_s) {
                 case Attack_Init:
@@ -336,7 +336,7 @@ void EntitySalemWitch(Entity* self)
                         SetStep(TurnAround);
                     }
                 break;
-                
+
                 case Attack_ReevaluateMove:
                     MoveEntity();
                     SalemWitchTrySpawnShadow();
@@ -349,7 +349,7 @@ void EntitySalemWitch(Entity* self)
                         SetSubStep(Attack_MoveToPosition);
                     }
                     break;
-                
+
                 case Attack_Perform:
                     MoveEntity();
                     SalemWitchTrySpawnShadow();
@@ -368,7 +368,7 @@ void EntitySalemWitch(Entity* self)
                     break;
             }
             break;
-        
+
         case Attack_Curse:
             self->ext.salemWitch.timer++;
             switch (self->step_s) {
@@ -384,7 +384,7 @@ void EntitySalemWitch(Entity* self)
                         SetSubStep(Attack_Curse_Charge);
                     }
                     break;
-                
+
                 case Attack_Curse_Charge:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
                         PlaySfxWithPosArgs(NA_SE_EN_ELECTRIC_ZAP);
@@ -393,7 +393,7 @@ void EntitySalemWitch(Entity* self)
                         SetSubStep(Attack_Curse_SpawnProjectileAndReset);
                     }
                     break;
-                
+
                 case Attack_Curse_SpawnProjectileAndReset:
                     if (!AnimateEntity(AnimFrames_CurseReset, self)) {
                         SetStep(Idle);
@@ -415,7 +415,7 @@ void EntitySalemWitch(Entity* self)
                     break;
             }
             break;
-        
+
         case Attack_Tribolt:
             switch (self->step_s) {
                 case Attack_Tribolt_Init:
@@ -427,7 +427,7 @@ void EntitySalemWitch(Entity* self)
                         SetSubStep(Attack_Tribolt_SpawnProjectile);
                     }
                     break;
-                
+
                 case Attack_Tribolt_SpawnProjectile:
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
@@ -443,7 +443,7 @@ void EntitySalemWitch(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case Attack_Tribolt_Reset:
                     if (!AnimateEntity(AnimFrames_TriboltReset, self)) {
                         SetStep(Idle);
@@ -451,7 +451,7 @@ void EntitySalemWitch(Entity* self)
                     break;
             }
             break;
-        
+
         case Hurt:
             switch (self->step_s) {
                 case Hurt_Init:
@@ -481,7 +481,7 @@ void EntitySalemWitch(Entity* self)
                     break;
             }
             break;
-        
+
         case Death:
             switch (self->step_s) {
                 case Death_Init:
@@ -513,7 +513,7 @@ void EntitySalemWitch(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case Death_Explode:
                     PlaySfxWithPosArgs(NA_SE_FIRE_BURST);
 
@@ -527,7 +527,7 @@ void EntitySalemWitch(Entity* self)
                     return;
             }
             break;
-        
+
         case Shadow_Init:
             InitializeEntity(&EntityInit_80180688);
             self->flags |= 0x2000;
@@ -543,7 +543,7 @@ void EntitySalemWitch(Entity* self)
                 DestroyEntity(self);
             }
             return;
-        
+
         case Debug:
             FntPrint("charal %x\n", self->animCurFrame);
             if (g_pads[1].pressed & PAD_SQUARE) {
@@ -578,7 +578,39 @@ void EntitySalemWitch(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A8DE8);    // [Entity]
+s32 AnimateEntity(u8*, Entity*);
+
+extern EntityInit EntityInit_80180688;
+extern u8 D_8018162C[];
+
+// func_801A8DE8
+// PSP:func_psp_092399B0:No match
+// PSP:https://decomp.me/scratch/Oqz9t
+void func_801A8DE8(Entity* self)
+{
+    Entity* entity;
+
+    if (!self->step) {
+        InitializeEntity(&EntityInit_80180688);
+        self->flags |= FLAG_UNK_2000;
+        self->hitboxState = 0;
+        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
+    }
+    
+    AnimateEntity(D_8018162C, self);
+    entity = self - 1;
+    self->facingLeft = entity->facingLeft;
+    self->posX.val = entity->posX.val;
+    if (self->facingLeft) {
+        self->posX.val += FIX(6);
+    } else {
+        self->posX.val -= FIX(6);
+    }
+    self->posY.val = entity->posY.val + FIX(2);
+    if (entity->entityId != E_SALEM_WITCH) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A8EAC);    // [Entity] Salem Witch Curse
 
