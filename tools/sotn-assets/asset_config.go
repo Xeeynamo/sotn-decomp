@@ -35,6 +35,7 @@ type assetEntry struct {
 	start    int
 	end      int
 	assetDir string
+	srcDir   string
 	name     string
 	args     []string
 	ramBase  psx.Addr
@@ -72,6 +73,23 @@ var extractHandlers = map[string]func(assetEntry) error{
 		}
 		return os.WriteFile(outPath, content, 0644)
 	},
+	"cutscene": func(e assetEntry) error {
+		if e.start == e.end {
+			return fmt.Errorf("cutscene cannot be 0 bytes")
+		}
+		r := bytes.NewReader(e.data)
+		script, err := parseCutsceneAsC(r, e.ramBase, e.ramBase.Sum(e.start))
+		if err != nil {
+			return err
+		}
+		outPath := path.Join(e.srcDir, fmt.Sprintf("%s.h", e.name))
+		dir := filepath.Dir(outPath)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			fmt.Printf("failed to create directory %s: %v\n", dir, err)
+			return err
+		}
+		return os.WriteFile(outPath, []byte(script), 0644)
+	},
 }
 
 var buildHandlers = map[string]func(assetBuildEntry) error{
@@ -105,39 +123,13 @@ func parseArgs(entry []string) (offset int64, kind string, args []string, err er
 func readConfig(path string) (*assetConfig, error) {
 	yamlFile, err := os.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("Error reading YAML file: %v", err)
+		return nil, fmt.Errorf("error reading YAML file: %v", err)
 	}
 	var data assetConfig
 	if err = yaml.Unmarshal(yamlFile, &data); err != nil {
-		return nil, fmt.Errorf("Error unmarshalling YAML file: %v", err)
+		return nil, fmt.Errorf("error unmarshalling YAML file: %v", err)
 	}
 	return &data, nil
-}
-
-func enqueueExtractAssetEntry(
-	eg *errgroup.Group,
-	handler func(assetEntry) error,
-	assetDir string,
-	name string,
-	data []byte,
-	start int,
-	end int,
-	args []string,
-	ramBase psx.Addr) {
-	eg.Go(func() error {
-		if err := handler(assetEntry{
-			data:     data,
-			start:    start,
-			end:      end,
-			assetDir: assetDir,
-			ramBase:  ramBase,
-			name:     name,
-			args:     args,
-		}); err != nil {
-			return fmt.Errorf("unable to extract asset %q: %v", name, err)
-		}
-		return nil
-	})
 }
 
 func extractAssetFile(file assetFileEntry) error {
@@ -174,7 +166,21 @@ func extractAssetFile(file assetFileEntry) error {
 				}
 				start := int(off) - segment.Start
 				end := start + size
-				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
+				eg.Go(func() error {
+					if err := handler(assetEntry{
+						data:     data,
+						start:    start,
+						end:      end,
+						assetDir: file.AssetDir,
+						srcDir:   file.SourceDir,
+						ramBase:  segment.Vram,
+						name:     name,
+						args:     args,
+					}); err != nil {
+						return fmt.Errorf("unable to extract asset %q: %v", name, err)
+					}
+					return nil
+				})
 			}
 			off = off2
 			kind = kind2
@@ -182,25 +188,6 @@ func extractAssetFile(file assetFileEntry) error {
 		}
 	}
 	return eg.Wait()
-}
-
-func enqueueBuildAssetEntry(
-	eg *errgroup.Group,
-	handler func(assetBuildEntry) error,
-	assetDir,
-	sourceDir,
-	name string) {
-	eg.Go(func() error {
-		err := handler(assetBuildEntry{
-			assetDir: assetDir,
-			srcDir:   sourceDir,
-			name:     name,
-		})
-		if err != nil {
-			return fmt.Errorf("unable to build asset %q: %v", name, err)
-		}
-		return nil
-	})
 }
 
 func extractFromConfig(c *assetConfig) error {
@@ -236,7 +223,17 @@ func buildAssetFile(file assetFileEntry) error {
 					name = args[0]
 					args = args[1:]
 				}
-				enqueueBuildAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name)
+				eg.Go(func() error {
+					err := handler(assetBuildEntry{
+						assetDir: file.AssetDir,
+						srcDir:   file.SourceDir,
+						name:     name,
+					})
+					if err != nil {
+						return fmt.Errorf("unable to build asset %q: %v", name, err)
+					}
+					return nil
+				})
 			}
 		}
 	}
