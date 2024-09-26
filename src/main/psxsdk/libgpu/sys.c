@@ -306,7 +306,7 @@ extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     p->code[1] = get_tw(tw);
 }
 
-extern void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
+void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
     RECT clip_rect;
     s32 offset;
     u16 calc_clip_height;
