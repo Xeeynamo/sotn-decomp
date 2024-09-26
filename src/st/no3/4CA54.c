@@ -177,7 +177,7 @@ void EntityStrongWarg(Entity* self) {
         ent_s0 = self + 1;
         self->unk60 = ent_s0;
         // PSP version: 0x20
-        CreateEntityFromCurrentEntity(0x30, ent_s0);
+        CreateEntityFromCurrentEntity(E_ID_30, ent_s0);
         ent_s0->unk5C = self;
         if (self->params) {
             InitializeEntity(&D_80180B30);
@@ -186,7 +186,7 @@ void EntityStrongWarg(Entity* self) {
             ent_s0->unk60 = ent_s4;
             ent_s0 = ent_s4;
             // PSP version: 0x21
-            CreateEntityFromCurrentEntity(0x31, ent_s0);
+            CreateEntityFromCurrentEntity(E_ID_31, ent_s0);
             ent_s0->unk5C = self;
             ent_s0->unk60 = self;
         } else {
@@ -474,7 +474,7 @@ void EntityStrongWarg(Entity* self) {
                     ent_s0 = AllocEntity(&D_8007A958, &D_8007A958 + 0x20);
                     if (ent_s0 != NULL) {
                         // PSP version 0x1E
-                        CreateEntityFromCurrentEntity(0x2E, ent_s0);
+                        CreateEntityFromCurrentEntity(E_ID_2E, ent_s0);
                         ent_s0->facingLeft = self->facingLeft;
                         ent_s0->posY.i.hi += 0x28;
                         if (self->facingLeft) {
@@ -541,7 +541,7 @@ void EntityStrongWarg(Entity* self) {
                 ent_s0 = AllocEntity(&D_8007D858, (&D_8007D858 + 0x20));
                 if (ent_s0 != NULL) {
                     // PSP version 0x23
-                    CreateEntityFromCurrentEntity(0x33, ent_s0);
+                    CreateEntityFromCurrentEntity(E_ID_33, ent_s0);
                     ent_s0->unk5A = self->unk5A;
                     if (self->hitEffect) {
                         ent_s0->palette = self->hitEffect;
