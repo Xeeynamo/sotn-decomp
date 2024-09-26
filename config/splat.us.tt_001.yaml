@@ -37,7 +37,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, F84]
+      - [0x40, data]
       - [0xEFC, .rodata, F84]
       - [0xF84, c, F84]
       - [0x35B0, sbss]

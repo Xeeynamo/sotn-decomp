@@ -1,5 +1,6 @@
+g_ServantDesc_Brk2 = 0x80170028;
+g_ServantDesc_Brk3 = 0x8017002C;
 g_EntityRanges = 0x80170EE4;
 CheckEntityValid = 0x801714F4;
-DestroyServantEntity = 0x80172904;
 DestroyEntity = 0x80172AE4;
 g_IsServantDestroyed = 0x8017381C;
