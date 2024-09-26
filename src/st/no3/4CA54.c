@@ -292,7 +292,8 @@ void EntityStrongWarg(Entity* self) {
             }
 
             if ((!self->ext.strongWarg.unk86) ||
-                (collider.effects & EFFECT_SOLID && collider.effects & EFFECT_UNK_0002)) {
+                (collider.effects & EFFECT_SOLID &&
+                 collider.effects & EFFECT_UNK_0002)) {
                 func_801CC6F8(self);
             }
         }
@@ -341,7 +342,8 @@ void EntityStrongWarg(Entity* self) {
 
                 if (self->velocityX) {
                     g_api.CheckCollision(var_s1, self->posY.i.hi, &collider, 0);
-                    if ((collider.effects & EFFECT_SOLID) && (collider.effects & EFFECT_UNK_0002)) {
+                    if ((collider.effects & EFFECT_SOLID) &&
+                        (collider.effects & EFFECT_UNK_0002)) {
                         self->posX.val -= self->velocityX;
                         self->velocityX = 0;
                     }
