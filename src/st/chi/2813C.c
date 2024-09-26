@@ -8,12 +8,14 @@
 
 extern EntityInit EntityInit_80180688;
 
-u8 D_80181538[] = {
+// D_80181538
+u8 AnimFrames_TurnAround[] = {
     0x01, 0x01, 0x01, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x03, 0x01, 0x03, 0x02,
     0x03, 0x01, 0x04, 0x02, 0x04, 0x01, 0x05, 0x02, 0x05, 0x01, 0x06, 0x02, 0x01, 0x01, 0xFF, 0x00 
 };
 
-u8 D_80181558[] = {
+// D_80181558
+u8 AnimFrames_CurseHandMovements[] = {
     0x02, 0x01, 0x02, 0x02, 0x01, 0x01, 0x01, 0x02, 0x01, 0x01, 0x01, 0x02, 0x06, 0x0B, 0x02, 0x0C,
     0x01, 0x0D, 0x01, 0x0E, 0x01, 0x0F, 0x01, 0x10, 0x01, 0x11, 0x03, 0x12, 0x01, 0x13, 0x02, 0x14,
     0x01, 0x15, 0x01, 0x16, 0x01, 0x07, 0x02, 0x08, 0x02, 0x09, 0x07, 0x0A, 0x01, 0x09, 0x01, 0x08,
@@ -21,29 +23,34 @@ u8 D_80181558[] = {
     0xFF, 0x00, 0x00, 0x00 
 };
 
-u8 D_8018159C[] = {
+// D_8018159C
+u8 AnimFrames_CurseKanjiFlash[] = {
     0x01, 0x0E, 0x01, 0x0D, 0x01, 0x0C, 0x06, 0x0B, 0x03, 0x0C, 0x01, 0x0D, 0x02, 0x16, 0x01, 0x15,
     0x01, 0x14, 0x01, 0x13, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x03, 0x09, 0x01, 0x21, 0x01, 0x22,
     0x0C, 0x09, 0x01, 0x23, 0x01, 0x24, 0x0C, 0x09, 0x01, 0x25, 0x01, 0x26, 0x0C, 0x09, 0x01, 0x27,
     0x01, 0x28, 0xFF, 0x00 
 };
 
-u8 D_801815D0[] = {
+// D_801815D0
+u8 AnimFrames_CurseReset[] = {
     0x01, 0x0D, 0x01, 0x15, 0x01, 0x17, 0x01, 0x18, 0x03, 0x19, 0x30, 0x18, 0x06, 0x15, 0x06, 0x0D,
     0x20, 0x01, 0xFF, 0x00 
 };
 
-u8 D_801815E4[] = {
+// D_801815E4
+u8 AnimFrames_TriboltHandsUp[] = {
     0x01, 0x01, 0x01, 0x02, 0x01, 0x01, 0x01, 0x02, 0x01, 0x01, 0x01, 0x02, 0x04, 0x1A, 0x04, 0x1B,
     0x03, 0x1C, 0x03, 0x1D, 0x03, 0x1E, 0x03, 0x1F, 0x10, 0x20, 0xFF, 0x00 
 };
 
-u8 D_80181600[] = {
+// D_80181600
+u8 AnimFrames_TriboltReset[] = {
     0x01, 0x20, 0x03, 0x1F, 0x03, 0x1E, 0x03, 0x1D, 0x03, 0x1C, 0x01, 0x01, 0x01, 0x02, 0x01, 0x01,
     0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x03, 0x02, 0x03, 0x01, 0x03, 0x02, 0x04, 0x01,
     0x04, 0x02, 0x05, 0x01, 0x05, 0x02, 0x06, 0x01, 0x06, 0x02, 0xFF, 0x00 
 };
 
+// [Find/create/use enum/const for E_EXPLOSION spawn params?]
 // E_SALEM_WITCH
 // func_801A813C
 // https://decomp.me/scratch/XsSqC
@@ -51,231 +58,356 @@ u8 D_80181600[] = {
 // PSP:https://decomp.me/scratch/HLIBl
 void EntitySalemWitch(Entity* self)
 {
+    // Movement
+    const int IdleCircleSpeed = 32;
+    const int IdleCircleSize = 8;
+    const int IdleDriftSpeed = FIX(0.125);
+    const int DecelerateSlow = 16;
+    const int DecelerateFast = 32;
+    const int VelocityAlmostStopped = FIX(0.125);
+    const int KnockbackSpeed = FIX(1);
+    // Attack
+    const int AttackPrepYSpeed = FIX(0.5);
+    const int AttackPrepXAccel = FIX(0.046875);
+    const int AttackPrepXMaxSpeed = FIX(1.25);
+    const int AttackPrepWallDetectThreshold = 0x18;
+    // Curse
+    const int CurseReevaluateThreshold = 0x60;
+    const int CurseProjectileSpawnAnimFrameIdx = 5;
+    const int CurseProjectileOffsetX = 0x18;
+    // Tribolt
+    const int TriboltReevaluateThreshold = 0x40;
+    const int TriboltTargetYPos = 0x50;
+    const int TriboltProjectileOffsetY = -0x20;
+    // Anim Frames
+    const int AnimFrameIdle = 1;
+    const int AnimFrameFlyForward = 3;
+    const int AnimFramePause = 4;
+    const int AnimFrameFlyBack = 5;
+    const int AnimFrameHurt = 6;
+    // State Pause Durations
+    const int TriboltChargeDuration = 0x40;     // Time from spawning projectiles until returning to Idle state
+    const int HurtDuration = 0x18;              // Time from being hit until returning to Idle state
+    const int DeathDuration = 0x10;             // Time from losing last HP before the fire particles explosion
+    // Shadow
+    const int ShadowDuration = 0x60;            // Initial value set on timer for shadow
+    const int ShadowTickSpeed = 4;              // Amount removed from timer per update
+    const int ShadowDestroyThreshold = 0x20;    // When timer is below this, destroy shadow
+
+    enum Step {
+        Init            = 0x0,
+        WaitToAggro     = 0x3,
+        Idle            = 0x5,
+        TurnAround      = 0x4,
+        Attack          = 0x7,
+        Attack_Curse    = 0x6,
+        Attack_Tribolt  = 0x8,
+        Hurt            = 0xA,
+        Death           = 0x10,
+        Shadow_Init     = 0x20,
+        Shadow_Wait     = 0x21,
+        Debug           = 0xFF,
+    };
+
+    enum Attack_Substep {
+        Attack_Init             = 0,
+        Attack_MoveToPosition   = 1,
+        Attack_ReevaluateMove   = 2,
+        Attack_Perform          = 3,
+    };
+
+    enum Attack_Curse_Substep {
+        Attack_Curse_Init                       = 0,
+        Attack_Curse_Cast                       = 1,
+        Attack_Curse_Charge                     = 2,
+        Attack_Curse_SpawnProjectileAndReset    = 3,
+    };
+
+    enum Attack_Tribolt_Substep {
+        Attack_Tribolt_Init             = 0,
+        Attack_Tribolt_HandsUp          = 1,
+        Attack_Tribolt_SpawnProjectile  = 2,
+        Attack_Tribolt_Wait             = 3,
+        Attack_Tribolt_Reset            = 4,
+    };
+
+    enum Hurt_Substep {
+        Hurt_Init = 0,
+        Hurt_Wait = 1,
+    };
+
+    enum Death_Substep {
+        Death_Init = 0,
+        Death_Wait = 1,
+        Death_Explode = 2,
+    };
+
     Entity* entity;
     Collider collider;
-    s32 var_s0;
-    s16 temp_v0;
-    s32 temp_bool;
-    s32 var_v0;
+    s32 xPos;
+    s16 idleCircleAngle;
+    s32 isToRightOfPlayer;
+    s32 yPos;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {
-        SetStep(0xA);
+        SetStep(Hurt);
     }
-    if ((self->flags & 0x100) && (self->step < 0x10)) {
-        SetStep(0x10);
+    if ((self->flags & FLAG_DEAD) && (self->step < Death)) {
+        SetStep(Death);
     }
     switch (self->step) {
-        case 0x0:
+        case Init:
             InitializeEntity(&EntityInit_80180688);
             self->hitboxOffY = 0xA;
             entity = self + 1;
-            CreateEntityFromCurrentEntity(0x22, entity);
+            CreateEntityFromCurrentEntity(E_ID_22, entity);
             entity->zPriority = self->zPriority - 1;
-            SetStep(3);
+            SetStep(WaitToAggro);
             break;
         
-        case 0x3:
+        case WaitToAggro:
             if ((GetDistanceToPlayerX() < 0xA0) && (GetDistanceToPlayerY() < 0x70)) {
-                SetStep(5);
+                SetStep(Idle);
             }
             break;
         
-        case 0x5:
+        case Idle:
+            // Reset on entry
             if (!self->step_s) {
                 self->velocityX = 0;
                 self->velocityY = 0;
-                self->ext.chi801a813c.unk87 = 0;
-                self->animCurFrame = 1;
+                self->ext.salemWitch.isDriftDirectionUp = false;
+                self->animCurFrame = AnimFrameIdle;
                 self->step_s += 1;
             }
             
             MoveEntity();
-            func_801A80A8();
-            temp_v0 = self->ext.chi801a813c.unk82 += 0x20;
-            temp_v0 &= 0xFFF;
-            self->velocityX = rcos(temp_v0) * 8;
-            self->velocityY = rsin(temp_v0) * 8;
+            func_801A80A8();    // Shadow?
+
+            // Move in circles
+            idleCircleAngle = self->ext.salemWitch.idleCircleTimer += IdleCircleSpeed;
+            idleCircleAngle &= 0xFFF;
+            self->velocityX = rcos(idleCircleAngle) * IdleCircleSize;
+            self->velocityY = rsin(idleCircleAngle) * IdleCircleSize;
             
-            if (self->ext.chi801a813c.unk87) {
-                self->velocityY += 0x2000;
+            // Slowly drift up/down
+            if (self->ext.salemWitch.isDriftDirectionUp) {
+                self->velocityY += IdleDriftSpeed;
             } else {
-                self->velocityY -= 0x2000;
+                self->velocityY -= IdleDriftSpeed;
             }
             
-            if (!(self->ext.chi801a813c.unk82 & 0x3FF)) {
-                entity = &g_Entities[0];
+            // Check for valid targeting circumstances (every 0.85s)
+            if (!(self->ext.salemWitch.idleCircleTimer & 0x3FF)) {
+                entity = &PLAYER;
+                // Close and facing opposite (presumably, engaging)
                 if (GetDistanceToPlayerX() < 0x68 && (entity->facingLeft != self->facingLeft)) {
-                    self->ext.chi801a813c.unk84 = 1;
-                    SetStep(7);
+                    self->ext.salemWitch.thinksPlayerIsEngaging = true;
+                    SetStep(Attack);
                 }
+                // Far and facing same (presumably, retreating)
                 if ((GetDistanceToPlayerX() > 0x58) && (entity->facingLeft == self->facingLeft)) {
-                    self->ext.chi801a813c.unk84 = 0;
-                    SetStep(7);
+                    self->ext.salemWitch.thinksPlayerIsEngaging = false;
+                    SetStep(Attack);
                 }
             }
-            if (!(self->ext.chi801a813c.unk82 & 0xFFF)) {
-                if (self->posY.i.hi < 0x60) {
-                    self->ext.chi801a813c.unk87 = 1;
+
+            // Check to reverse drift direction (every 2.1s)
+            if (!(self->ext.salemWitch.idleCircleTimer & 0xFFF)) {
+                if (self->posY.i.hi < 0x60) {   // If too close to top of screen
+                    self->ext.salemWitch.isDriftDirectionUp = true;
                 } else {
-                    self->ext.chi801a813c.unk87 = 0;
+                    self->ext.salemWitch.isDriftDirectionUp = false;
                 }
             }
-            temp_bool = GetSideToPlayer() & 1;
-            if (self->facingLeft != temp_bool) {
-                SetStep(4);
+
+            // Turn to face player if necessary
+            isToRightOfPlayer = GetSideToPlayer() & 1;
+            if (self->facingLeft != isToRightOfPlayer) {
+                SetStep(TurnAround);
             }
             break;
         
-        case 0x4:
+        case TurnAround:
             if (!self->step_s) {
-                self->facingLeft ^= 1;
+                self->facingLeft ^= 1;  // Turn around
                 self->step_s++;
             }
+
             MoveEntity();
-            func_801A80A8();
-            self->velocityX -= self->velocityX / 16;
-            self->velocityY -= self->velocityY / 16;
-            if (!AnimateEntity(D_80181538, self)) {
-                SetStep(5);
+            func_801A80A8(); // Shadow?
+
+            // Slow down
+            self->velocityX -= self->velocityX / DecelerateSlow;
+            self->velocityY -= self->velocityY / DecelerateSlow;
+            if (!AnimateEntity(AnimFrames_TurnAround, self)) {
+                SetStep(Idle);
             }
             break;
         
-        case 0x7:
+        case Attack:
             switch (self->step_s) {
-                case 0:
+                case Attack_Init:
                     self->velocityY = 0;
-                    self->ext.chi801a813c.unk80 = (Random() & 0x1F) + 0x10;
+                    // Move to position for a random amount of time between ~0.25s and ~0.75s
+                    self->ext.salemWitch.timer = (Random() & 0x1F) + 0x10;
                     self->step_s++;
                     // fallthrough
-                case 1:
+                case Attack_MoveToPosition:
                     MoveEntity();
-                    func_801A80A8();
-                    entity = &g_Entities[0];
-                    if (self->ext.chi801a813c.unk85) {
-                        self->ext.chi801a813c.unk8C = entity->posY.i.hi;
-                        var_s0 = 0x60;
+                    func_801A80A8();    // Shadow?
+
+                    // Detect target movement position
+                    entity = &PLAYER;
+                    if (self->ext.salemWitch.willCurseNextAttack) {
+                        // Curse: Try to vertically align with player
+                        self->ext.salemWitch.targetYPos = entity->posY.i.hi;
+                        xPos = CurseReevaluateThreshold;
                     } else {
-                        self->ext.chi801a813c.unk8C = 0x50;
-                        var_s0 = 0x40;
+                        // Tribolt: Try to get a bit more vertically central
+                        self->ext.salemWitch.targetYPos = TriboltTargetYPos;
+                        xPos = TriboltReevaluateThreshold;
                     }
-                    var_v0 = self->posY.i.hi - self->ext.chi801a813c.unk8C;
-                    if (var_v0 > 0) {
-                        self->velocityY = -0x8000;
+                    yPos = self->posY.i.hi - self->ext.salemWitch.targetYPos;
+
+                    // Vertical movement
+                    if (yPos > 0) {
+                        self->velocityY = -AttackPrepYSpeed;
                     } else {
-                        self->velocityY = 0x8000;
+                        self->velocityY = AttackPrepYSpeed;
                     }
-                    if (self->ext.chi801a813c.unk84) {
-                        self->animCurFrame = 5;
+
+                    // Set up visuals to match horizontal movement
+                    if (self->ext.salemWitch.thinksPlayerIsEngaging) {
+                        self->animCurFrame = AnimFrameFlyBack;
                     } else {
-                        self->animCurFrame = 3;
+                        self->animCurFrame = AnimFrameFlyForward;
                     }
-                    if (self->facingLeft ^ self->ext.chi801a813c.unk84) {
-                        self->velocityX -= 0xC00;
-                        if (self->velocityX <= -0x14000) {
-                            self->velocityX = -0x14000;
+
+                    // Calculate horizontal movement
+                    if (self->facingLeft ^ self->ext.salemWitch.thinksPlayerIsEngaging) {
+                        // Move left
+                        self->velocityX -= AttackPrepXAccel;
+                        if (self->velocityX <= -AttackPrepXMaxSpeed) {
+                            self->velocityX = -AttackPrepXMaxSpeed;
                         }
                     } else {
-                        self->velocityX += 0xC00;
-                        if (self->velocityX >= 0x14000) {
-                            self->velocityX = 0x14000;
+                        // Move right
+                        self->velocityX += AttackPrepXAccel;
+                        if (self->velocityX >= AttackPrepXMaxSpeed) {
+                            self->velocityX = AttackPrepXMaxSpeed;
                         }
                     }
-                    if (!self->ext.chi801a813c.unk84 &&
-                        GetDistanceToPlayerX() < var_s0) {
-                        SetSubStep(2);
+
+                    // Retreating and close
+                    if (!self->ext.salemWitch.thinksPlayerIsEngaging &&
+                        GetDistanceToPlayerX() < xPos) {
+                        SetSubStep(Attack_ReevaluateMove);
                     }
-                    if (self->ext.chi801a813c.unk84) {
-                        if (var_s0 < GetDistanceToPlayerX()) {
-                            SetSubStep(2);
+
+                    // Engaging and far
+                    if (self->ext.salemWitch.thinksPlayerIsEngaging) {
+                        if (xPos < GetDistanceToPlayerX()) {
+                            SetSubStep(Attack_ReevaluateMove);
                         }
                     }
-                    var_s0 = self->posX.i.hi;
-                    var_v0 = self->posY.i.hi;
+
+                    // Detect if movement put self near a wall
+                    xPos = self->posX.i.hi;
+                    yPos = self->posY.i.hi;
                     if (self->velocityX > 0) {
-                        var_s0 += 0x18;
+                        xPos += AttackPrepWallDetectThreshold;
                     }
                     if (self->velocityX < 0) {
-                        var_s0 -= 0x18;
+                        xPos -= AttackPrepWallDetectThreshold;
                     }
-                    g_api.CheckCollision(var_s0, var_v0, &collider, 0);
-                    if (collider.effects & 1) {
-                        self->ext.chi801a813c.unk80 = 1;
+                    g_api.CheckCollision(xPos, yPos, &collider, 0);
+                    // If so, short-circuit the "random amount of time" calculated in prev substep
+                    if (collider.effects & EFFECT_SOLID) {
+                        self->ext.salemWitch.timer = 1;
                     }
-                    if (!--self->ext.chi801a813c.unk80) {
-                        SetSubStep(3);
+                    if (!--self->ext.salemWitch.timer) {
+                        SetSubStep(Attack_Perform);
                     }
-                    temp_bool = GetSideToPlayer() & 1;
-                    if (self->facingLeft != temp_bool) {
-                        SetStep(4);
+
+                    // Turn to face player if necessary
+                    isToRightOfPlayer = GetSideToPlayer() & 1;
+                    if (self->facingLeft != isToRightOfPlayer) {
+                        SetStep(TurnAround);
                     }
                 break;
                 
-                case 2:
+                case Attack_ReevaluateMove:
                     MoveEntity();
-                    func_801A80A8();
-                    self->velocityX -= self->velocityX / 16;
-                    self->animCurFrame = 4;
-                    if (abs(self->velocityX) < 0x2000) {
-                        self->ext.chi801a813c.unk84 ^= 1;
-                        SetSubStep(1);
+                    func_801A80A8(); // Shadow?
+
+                    // Slow down x movement
+                    self->velocityX -= self->velocityX / DecelerateSlow;
+                    self->animCurFrame = AnimFramePause;
+                    if (abs(self->velocityX) < VelocityAlmostStopped) {
+                        self->ext.salemWitch.thinksPlayerIsEngaging ^= 1;
+                        SetSubStep(Attack_MoveToPosition);
                     }
                     break;
                 
-                case 3:
+                case Attack_Perform:
                     MoveEntity();
-                    func_801A80A8();
-                    self->velocityX -= self->velocityX / 16;
-                    self->animCurFrame = 4;
-                    if (abs(self->velocityX) < 0x2000) {
-                        if (self->ext.chi801a813c.unk85) {
-                            SetStep(6);
+                    func_801A80A8(); // Shadow?
+
+                    // Slow down x movement
+                    self->velocityX -= self->velocityX / DecelerateSlow;
+                    self->animCurFrame = AnimFramePause;
+                    if (abs(self->velocityX) < VelocityAlmostStopped) {
+                        if (self->ext.salemWitch.willCurseNextAttack) {
+                            SetStep(Attack_Curse);
                         } else {
-                            SetStep(8);
+                            SetStep(Attack_Tribolt);
                         }
-                        self->ext.chi801a813c.unk85 ^= 1;
+                        self->ext.salemWitch.willCurseNextAttack ^= 1;  // Toggle between attacks
                     }
                     break;
             }
             break;
         
-        case 0x6:
-            self->ext.chi801a813c.unk80++;
+        case Attack_Curse:
+            self->ext.salemWitch.timer++;
             switch (self->step_s) {
-                case 0:
-                    PlaySfxWithPosArgs(0x736);
+                case Attack_Curse_Init:
+                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_ATTACK);
                     self->step_s++;
                     // fallthrough
-                case 1:
-                    if (!(self->ext.chi801a813c.unk80 & 0xF)) {
-                        PlaySfxWithPosArgs(0x624);
+                case Attack_Curse_Cast:
+                    if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
+                        PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_HAND_MOVEMENT);
                     }
-                    if (!AnimateEntity(D_80181558, self)) {
-                        SetSubStep(2);
-                    }
-                    break;
-                
-                case 2:
-                    if (!(self->ext.chi801a813c.unk80 & 0xF)) {
-                        PlaySfxWithPosArgs(0x614);
-                    }
-                    if (!AnimateEntity(D_8018159C, self)) {
-                        SetSubStep(3);
+                    if (!AnimateEntity(AnimFrames_CurseHandMovements, self)) {
+                        SetSubStep(Attack_Curse_Charge);
                     }
                     break;
                 
-                case 3:
-                    if (!AnimateEntity(D_801815D0, self)) {
-                        SetStep(5);
+                case Attack_Curse_Charge:
+                    if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
+                        PlaySfxWithPosArgs(NA_SE_EN_ELECTRIC_ZAP);
                     }
-                    if (!self->animFrameDuration && self->animFrameIdx == 5) {
-                        PlaySfxWithPosArgs(0x663);
+                    if (!AnimateEntity(AnimFrames_CurseKanjiFlash, self)) {
+                        SetSubStep(Attack_Curse_SpawnProjectileAndReset);
+                    }
+                    break;
+                
+                case Attack_Curse_SpawnProjectileAndReset:
+                    if (!AnimateEntity(AnimFrames_CurseReset, self)) {
+                        SetStep(Idle);
+                    }
+                    if (!self->animFrameDuration &&
+                        self->animFrameIdx == CurseProjectileSpawnAnimFrameIdx) {
+                        PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_CURSE_LAUNCH);
                         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (entity != NULL) {
-                            CreateEntityFromEntity(0x23U, self, entity);
+                            CreateEntityFromEntity(E_ID_23, self, entity);
                             if (self->facingLeft) {
-                                entity->posX.i.hi -= 0x18;
+                                entity->posX.i.hi -= CurseProjectileOffsetX;
                             } else {
-                                entity->posX.i.hi += 0x18;
+                                entity->posX.i.hi += CurseProjectileOffsetX;
                             }
                             entity->facingLeft = self->facingLeft;
                         }
@@ -284,98 +416,111 @@ void EntitySalemWitch(Entity* self)
             }
             break;
         
-        case 0x8:
+        case Attack_Tribolt:
             switch (self->step_s) {
-                case 0:
-                    PlaySfxWithPosArgs(0x736);
+                case Attack_Tribolt_Init:
+                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_ATTACK);
                     self->step_s++;
                     // fallthrough
-                case 1:
-                    if (!AnimateEntity(D_801815E4, self)) {
-                        SetSubStep(2);
+                case Attack_Tribolt_HandsUp:
+                    if (!AnimateEntity(AnimFrames_TriboltHandsUp, self)) {
+                        SetSubStep(Attack_Tribolt_SpawnProjectile);
                     }
                     break;
                 
-                case 2:
+                case Attack_Tribolt_SpawnProjectile:
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(0x24U, self, entity);
+                        CreateEntityFromEntity(E_ID_24, self, entity);
                         entity->zPriority = self->zPriority + 1;
-                        entity->posY.i.hi -= 0x20;
+                        entity->posY.i.hi += TriboltProjectileOffsetY;
                     }
-                    self->ext.chi801a813c.unk80 = 0x40;
+                    self->ext.salemWitch.timer = TriboltChargeDuration;
                     self->step_s++;
                     // fallthrough
-                case 3:
-                    if (!--self->ext.chi801a813c.unk80) {
+                case Attack_Tribolt_Wait:
+                    if (!--self->ext.salemWitch.timer) {
                         self->step_s++;
                     }
                     break;
                 
-                case 4:
-                    if (!AnimateEntity(D_80181600, self)) {
-                        SetStep(5);
+                case Attack_Tribolt_Reset:
+                    if (!AnimateEntity(AnimFrames_TriboltReset, self)) {
+                        SetStep(Idle);
                     }
                     break;
             }
             break;
         
-        case 0xA:
+        case Hurt:
             switch (self->step_s) {
-                case 0:
+                case Hurt_Init:
+                    // Knockback
                     if (self->facingLeft) {
-                        self->velocityX = 0x10000;
+                        self->velocityX = KnockbackSpeed;
                     } else {
-                        self->velocityX = -0x10000;
+                        self->velocityX = -KnockbackSpeed;
                     }
                     self->velocityY = 0;
-                    self->ext.chi801a813c.unk80 = 0x18;
-                    self->animCurFrame = 6;
-                    PlaySfxWithPosArgs(0x737);
+
+                    self->ext.salemWitch.timer = HurtDuration;
+                    self->animCurFrame = AnimFrameHurt;
+                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_HURT);
                     self->step_s++;
                     // fallthrough
-                case 1:
+                case Hurt_Wait:
                     MoveEntity();
-                    func_801A80A8();
-                    self->velocityX -= self->velocityX / 32;
-                    self->velocityY -= self->velocityY / 32;
-                    if (!--self->ext.chi801a813c.unk80) {
-                        SetStep(5);
+                    func_801A80A8(); // Shadow?
+
+                    // Slow down movement
+                    self->velocityX -= self->velocityX / DecelerateFast;
+                    self->velocityY -= self->velocityY / DecelerateFast;
+                    if (!--self->ext.salemWitch.timer) {
+                        SetStep(Idle);
                     }
                     break;
             }
             break;
         
-        case 0x10:
+        case Death:
             switch (self->step_s) {
-                case 0:
+                case Death_Init:
+                    // Death for the shadow too
                     entity = self + 1;
-                    entity->step = 0x10;
+                    entity->step = Death;
+
                     self->hitboxState = 0;
+
+                    // Knockback
                     if (self->facingLeft) {
-                        self->velocityX = 0x10000;
+                        self->velocityX = KnockbackSpeed;
                     } else {
-                        self->velocityX = -0x10000;
+                        self->velocityX = -KnockbackSpeed;
                     }
                     self->velocityY = 0;
-                    self->ext.chi801a813c.unk80 = 0x10;
-                    self->animCurFrame = 6;
-                    PlaySfxWithPosArgs(0x738);
+
+                    self->ext.salemWitch.timer = DeathDuration;
+                    self->animCurFrame = AnimFrameHurt;
+                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_DEATH);
                     self->step_s++;
                     // fallthrough
-                case 1:
+                case Death_Wait:
                     MoveEntity();
-                    self->velocityX -= self->velocityX / 32;
-                    if (!--self->ext.chi801a813c.unk80) {
+
+                    // Slow down x movement
+                    self->velocityX -= self->velocityX / DecelerateFast;
+                    if (!--self->ext.salemWitch.timer) {
                         self->step_s++;
                     }
                     break;
                 
-                case 2:
-                    PlaySfxWithPosArgs(0x65B);
+                case Death_Explode:
+                    PlaySfxWithPosArgs(NA_SE_FIRE_BURST);
+
+                    // Fire particles
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(2U, self, entity);
+                        CreateEntityFromEntity(E_EXPLOSION, self, entity);
                         entity->params = 2;
                     }
                     DestroyEntity(self);
@@ -383,59 +528,61 @@ void EntitySalemWitch(Entity* self)
             }
             break;
         
-        case 0x20:
+        case Shadow_Init:
             InitializeEntity(&EntityInit_80180688);
             self->flags |= 0x2000;
             self->hitboxState = 0;
             self->animCurFrame = self->params;
-            self->drawMode = 0x30;
-            self->drawFlags = 8;
-            self->unk6C = 0x60;
+            self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->unk6C = ShadowDuration;
             // fallthrough
-        case 0x21:
-            self->unk6C -= 4;
-            if ((u8) self->unk6C < 0x20) {
+        case Shadow_Wait:
+            self->unk6C -= ShadowTickSpeed;
+            if (self->unk6C < ShadowDestroyThreshold) {
                 DestroyEntity(self);
             }
             return;
         
-        case 0xFF:
+        case Debug:
             FntPrint("charal %x\n", self->animCurFrame);
             if (g_pads[1].pressed & PAD_SQUARE) {
                 if (self->params) {
                     break;
                 } else {
                     self->animCurFrame++;
-                    self->params |= 1;
+                    self->params |= true;
                 }
             } else {
-                self->params = 0;
+                self->params = false;
             }
             if (g_pads[1].pressed & PAD_CIRCLE) {
                 if (!self->step_s) {
                     self->animCurFrame--;
-                    self->step_s |= 1;
+                    self->step_s |= true;
                 }
             } else {
-                self->step_s = 0;
+                self->step_s = false;
             }
             break;
     }
-    var_s0 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+
+    // Clamp x position to always be on screen
+    xPos = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
     if (self->velocityX > 0) {
-        if (g_Tilemap.width < var_s0) {
+        if (g_Tilemap.width < xPos) {
             self->posX.i.hi = g_Tilemap.width - g_Tilemap.scrollX.i.hi;
         }
-    } else if (var_s0 < g_Tilemap.x) {
+    } else if (xPos < g_Tilemap.x) {
         self->posX.i.hi = g_Tilemap.x - g_Tilemap.scrollX.i.hi;
     }
 }
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A8DE8);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A8EAC);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A8EAC);    // [Entity] Salem Witch Curse
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A93D4);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A93D4);    // [Entity] Salem Witch Tribolt
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A9588);    // [Entity]
 

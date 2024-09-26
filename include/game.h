@@ -246,7 +246,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_DRAW_ROTX 0x01
 #define FLAG_DRAW_ROTY 0x02
 #define FLAG_DRAW_ROTZ 0x04
-#define FLAG_DRAW_UNK8 0x08
+#define FLAG_DRAW_UNK8 0x08 // Salem Witch uses this for shadows. Looks like semi-transparency?
 #define FLAG_DRAW_UNK10 0x10
 #define FLAG_DRAW_UNK20 0x20
 #define FLAG_DRAW_UNK40 0x40
@@ -754,7 +754,7 @@ typedef struct Entity {
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68;
     /* 0x6A */ u16 hitEffect;
-    /* 0x6C */ u8 unk6C;
+    /* 0x6C */ u8 unk6C;    // Salem Witch uses this as a timer to destroy its shadows
     /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
