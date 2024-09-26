@@ -68,6 +68,7 @@ extern EntitySearch g_EntityRanges[];
 extern ServantDesc D_8D1DC40;
 #endif
 
+void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 
 #endif

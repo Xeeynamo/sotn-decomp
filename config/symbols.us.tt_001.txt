@@ -1,5 +1,12 @@
+g_Events = 0x801705B0;
 g_EntityRanges = 0x80170EE4;
+g_EventQueue = 0x80170EEC;
+g_CurrentServant = 0x80170EF0;
+g_CurrentRoomX = 0x80170EF4;
+g_CurrentRoomY = 0x80170EF8;
 CheckEntityValid = 0x801714F4;
 DestroyServantEntity = 0x80172904;
 DestroyEntity = 0x80172AE4;
+ProcessEvent = 0x80172EE8;
+CreateEventEntity = 0x801732BC;
 g_IsServantDestroyed = 0x8017381C;

@@ -65,9 +65,9 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172CC0);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172EE8);
+#include "../process_event.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_801732BC);
+INCLUDE_ASM("servant/tt_001/nonmatchings/F84", CreateEventEntity);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173378);
 
