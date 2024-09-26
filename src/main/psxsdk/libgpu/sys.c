@@ -306,8 +306,62 @@ extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     p->code[1] = get_tw(tw);
 }
 
-extern void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env);
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", SetDrawEnv);
+extern void SetDrawEnv(DR_ENV* dr_env0, DRAWENV* env) {
+    RECT temp;
+    s32 var_t0;
+    u16 var_v1;
+    DR_ENV* dr_env;
+    
+    dr_env = dr_env0;
+
+    dr_env->code[0] = get_cs(env->clip.x, env->clip.y);
+    dr_env->code[1] = get_ce(env->clip.w + env->clip.x - 1, env->clip.y + env->clip.h - 1);
+    dr_env->code[2] = get_ofs(env->ofs[0], env->ofs[1]);
+    dr_env->code[3] = get_mode(env->dfe, env->dtd, env->tpage);
+    dr_env->code[4] = get_tw(&env->tw);
+    dr_env->code[5] = 0xE6000000;
+    
+    var_t0 = 7;
+    if (env->isbg != 0) {
+        temp.x = env->clip.x;
+        temp.y = env->clip.y;
+        temp.w = env->clip.w;
+        temp.h = env->clip.h;
+        temp.w = CLAMP(temp.w, 0, 1023);
+        
+        if (temp.h >= 0) {
+            if ((D_8002C26C != 0 && temp.h >= 1024) ||
+                (D_8002C26C == 0 && temp.h >= 512)) {
+                if (D_8002C26C != 0) {
+                    var_v1 = 1023;
+                } else {
+                    var_v1 = 511;
+                }
+            } else {
+                var_v1 = temp.h;
+            }
+        } else {
+            var_v1 = 0;
+        }
+            
+        temp.h = var_v1;
+        if ((temp.x & 0x3F) || (temp.w & 0x3F)) {
+            temp.x -= env->ofs[0];
+            temp.y -= env->ofs[1];
+            *((s32*)dr_env + var_t0++) = 0x60000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0 ;
+            *((s32*)dr_env + var_t0++) = *(s32*)&temp.x;
+            *((s32*)dr_env + var_t0++) = *(s32*)&temp.w;
+            temp.x += env->ofs[0];
+            temp.y += env->ofs[1];
+        } else {
+            *((s32*)dr_env + var_t0++) = 0x02000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
+            *((s32*)dr_env + var_t0++) = *(s32*)&temp.x;
+            *((s32*)dr_env + var_t0++) = *(s32*)&temp.w;
+        }
+    }
+
+    setlen(dr_env, var_t0 - 1);
+}
 
 int get_mode(int dfe, int dtd, int tpage) {
     if (D_8002C26C) {
