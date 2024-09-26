@@ -70,5 +70,6 @@ extern ServantDesc D_8D1DC40;
 
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
+void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 
 #endif

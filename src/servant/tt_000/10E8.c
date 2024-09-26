@@ -100,8 +100,6 @@ extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
 extern s32 g_IsServantDestroyed;
 extern s32 D_80174D40;
-
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
