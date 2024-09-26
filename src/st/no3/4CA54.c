@@ -163,8 +163,8 @@ void EntityStrongWarg(Entity* self) {
             }
         }
     } else if (self->hitFlags & 0xF) {
-        if (self->ext.factory.unk86 >= 0x10) {
-            self->ext.factory.unk86 /= 2;
+        if (self->ext.strongWarg.unk86 >= 0x10) {
+            self->ext.strongWarg.unk86 /= 2;
         }
         if ((var_s1 == 2 || var_s1 == 3) && !self->params) {
             SetStep(0xA);
@@ -199,7 +199,7 @@ void EntityStrongWarg(Entity* self) {
         } else {
             self->posX.i.hi += 0x20;
         }
-        self->ext.factory.unk86 = 0x80;
+        self->ext.strongWarg.unk86 = 0x80;
         break;
 
     case 1:
@@ -220,8 +220,8 @@ void EntityStrongWarg(Entity* self) {
     case 3:
         func_801CC90C(self);
         var_s1 = GetDistanceToPlayerX();
-        if (self->ext.factory.unk80) {
-            --self->ext.factory.unk80;
+        if (self->ext.strongWarg.unk80) {
+            --self->ext.strongWarg.unk80;
             self->animFrameDuration = 0;
             break;
         }
@@ -243,7 +243,7 @@ void EntityStrongWarg(Entity* self) {
             if (var_s1 < 0x50) {
                 self->ext.stub[0] = 1;
                 self->animFrameIdx = 7 - self->animFrameIdx;
-                self->ext.factory.unk80 = 0x10;
+                self->ext.strongWarg.unk80 = 0x10;
             }
         } else {
             if (self->params) {
@@ -264,13 +264,13 @@ void EntityStrongWarg(Entity* self) {
             if (var_s1 >= 0x79) {
                 self->ext.stub[0] = 0;
                 self->animFrameIdx = 7 - self->animFrameIdx;
-                self->ext.factory.unk80 = 0x10;
+                self->ext.strongWarg.unk80 = 0x10;
             }
         }
 
         UnkCollisionFunc2(&D_801829D4);
-        if (self->ext.factory.unk82) {
-            --self->ext.factory.unk82;
+        if (self->ext.strongWarg.unk82) {
+            --self->ext.strongWarg.unk82;
             break;
         }
 
@@ -291,7 +291,7 @@ void EntityStrongWarg(Entity* self) {
                     self->posX.i.hi + 0x38, self->posY.i.hi, &collider, 0);
             }
 
-            if ((!self->ext.factory.unk86) ||
+            if ((!self->ext.strongWarg.unk86) ||
                 (collider.effects & 1 && collider.effects & 2)) {
                 func_801CC6F8(self);
             }
@@ -408,7 +408,7 @@ void EntityStrongWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             AnimateEntity(&D_801828D8, self);
-            if (!--self->ext.factory.unk80) {
+            if (!--self->ext.strongWarg.unk80) {
                 SetSubStep(1);
             }
             break;
@@ -460,7 +460,7 @@ void EntityStrongWarg(Entity* self) {
         case 0:
             if (!AnimateEntity(&D_80182928, self)) {
                 SetSubStep(1);
-                self->ext.factory.unk80 = 0;
+                self->ext.strongWarg.unk80 = 0;
             }
             break;
         case 1:
@@ -470,7 +470,7 @@ void EntityStrongWarg(Entity* self) {
             }
 
             if (self->animCurFrame == 0x14) {
-                if (self->ext.factory.unk80 == 0) {
+                if (self->ext.strongWarg.unk80 == 0) {
                     ent_s0 = AllocEntity(&D_8007A958, &D_8007A958 + 0x20);
                     if (ent_s0 != NULL) {
                         // PSP version 0x1E
@@ -485,7 +485,7 @@ void EntityStrongWarg(Entity* self) {
                     }
                 }
 
-                self->ext.factory.unk80 += 1;
+                self->ext.strongWarg.unk80 += 1;
             }
         }
         break;
@@ -535,9 +535,9 @@ void EntityStrongWarg(Entity* self) {
             if (UnkCollisionFunc3(&D_801829DC) & 1) {
                 self->drawFlags = FLAG_DRAW_UNK8;
                 self->unk6C = 0x80;
-                self->ext.factory.unk80 = 0;
+                self->ext.strongWarg.unk80 = 0;
                 SetSubStep(1);
-                self->ext.factory.unk80++;
+                self->ext.strongWarg.unk80++;
                 ent_s0 = AllocEntity(&D_8007D858, (&D_8007D858 + 0x20));
                 if (ent_s0 != NULL) {
                     // PSP version 0x23
@@ -553,7 +553,7 @@ void EntityStrongWarg(Entity* self) {
             break;
         case 1:
             AnimateEntity(&D_80182900, self);
-            self->ext.factory.unk80 += 1;
+            self->ext.strongWarg.unk80 += 1;
             self->unk6C -= 2;
             if (self->unk6C == 0x40) {
                 PlaySfxPositional(0x780);
