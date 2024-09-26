@@ -101,7 +101,7 @@ void EntityGaibon(Entity* self) {
         InitializeEntity(D_80180D30);
         other = self + 1;
         // func_801B69E8
-        CreateEntityFromCurrentEntity(68, other);
+        CreateEntityFromCurrentEntity(E_GAIBON_UNK0, other);
         other->zPriority = (self->zPriority + 4);
         SetStep(GAIBON_IDLE);
         break;

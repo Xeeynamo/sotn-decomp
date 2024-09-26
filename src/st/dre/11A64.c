@@ -106,7 +106,7 @@ void EntityBreakable(Entity* entity) {
             g_api.PlaySfx(SFX_CANDLE_HIT);
             temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_v0 != NULL) {
-                CreateEntityFromCurrentEntity(2, temp_v0);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, temp_v0);
                 temp_v0->params = g_eBreakableExplosionTypes[temp_s0];
             }
             ReplaceBreakableWithItemDrop(entity);

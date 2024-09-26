@@ -125,7 +125,8 @@ void EntityMerman(Entity* self) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK0, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_MERMAN_JUMP_WATER, self, newEntity);
                     newEntity->posY.i.hi -= 20;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -157,7 +158,7 @@ void EntityMerman(Entity* self) {
                 self->palette = self->ext.merman.palette;
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK1, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
                     newEntity->velocityX = D_80182418[self->animFrameIdx];
                 }
@@ -233,7 +234,7 @@ void EntityMerman(Entity* self) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK2, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN_SPIT_FIRE, self, newEntity);
                     if (self->facingLeft != 0) {
                         newEntity->posX.i.hi += 12;
                     } else {
@@ -360,7 +361,7 @@ void EntityMerman(Entity* self) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_MERMAN_UNK3, self, newEntity);
+                        CreateEntityFromEntity(E_MERMAN_DYING, self, newEntity);
                         newEntity->params = 2;
                     }
                 }
@@ -394,7 +395,7 @@ void EntityMermanFireball(Entity* self) {
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID_15, self, entity);
+            CreateEntityFromEntity(E_FIREBALL, self, entity);
             entity->ext.generic.unk94 = 4;
             entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             entity->zPriority = self->zPriority + 8;

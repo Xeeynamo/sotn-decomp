@@ -31,14 +31,15 @@ typedef enum {
     /* 0x12 */ E_ID_12,
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_ID_15,
+    /* 0x15 */ E_FIREBALL,
     /* 0x16 */ E_ID_16,
     /* 0x17 */ E_PLATFORM,
     /* 0x18 */ E_MARIA,
     /* 0x19 */ E_ROOM_DARKNESS,
-    /* 0x1A */ E_ELEVATOR_STATIONARY,
-    /* 0x1B */ E_ID_1B,
+    /* 0x1A */ E_ELEVATOR_STATIONARY_UNUSED,
+    /* 0x1B */ E_ELEVATOR_STATIONARY,
     /* 0x1C */ E_MOVING_ELEVATOR,
+    /* 0x80 */ E_BREAKABLE_UNK0 = 0x80,
 } EntityIDs;
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);

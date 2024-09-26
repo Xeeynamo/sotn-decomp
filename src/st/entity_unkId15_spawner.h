@@ -10,7 +10,7 @@ void EntityUnkId15Spawner(
     for (i = 0; i < count; i++) {
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            newEntity->entityId = E_ID_15;
+            newEntity->entityId = E_FIREBALL;
             newEntity->pfnUpdate = EntityUnkId15;
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;

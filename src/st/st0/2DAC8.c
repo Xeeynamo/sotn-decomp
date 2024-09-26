@@ -117,7 +117,7 @@ void EntityDraculaFinalForm(Entity* self) {
             var_s1 = self + 1;
             self->animCurFrame = 0;
             for (i = 1; i < 4; i++, temp_s2++, var_s1++) {
-                CreateEntityFromCurrentEntity(32, temp_s2);
+                CreateEntityFromCurrentEntity(E_DRACULA_UNK20, temp_s2);
                 selfzPriority = self->zPriority;
                 var_s1->params = i;
                 var_s1->unk60 = temp_s2 - 1;
@@ -251,7 +251,7 @@ void EntityDraculaFinalForm(Entity* self) {
         case 1:
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_s2 != NULL) {
-                CreateEntityFromEntity(33, self, temp_s2);
+                CreateEntityFromEntity(E_DRACULA_UNK21, self, temp_s2);
                 temp_s2->posX.i.hi = temp_s2->posX.i.hi;
                 temp_s2->posY.i.hi = temp_s2->posY.i.hi;
                 temp_s2->facingLeft = self->facingLeft;
@@ -287,7 +287,7 @@ void EntityDraculaFinalForm(Entity* self) {
             temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (temp_s2 != NULL) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                CreateEntityFromEntity(33, self, temp_s2);
+                CreateEntityFromEntity(E_DRACULA_UNK21, self, temp_s2);
                 temp_s2->posX.i.hi = (xShift + temp_s2->posX.i.hi);
                 temp_s2->posY.i.hi = (temp_s2->posY.i.hi - 4);
                 temp_s2->rotZ = *temp_s1;
@@ -330,7 +330,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (temp_s2 != NULL) {
                     g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
-                    CreateEntityFromEntity(34, self, temp_s2);
+                    CreateEntityFromEntity(E_DRACULA_FIREBALL, self, temp_s2);
                     temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1);
                     temp_s2->zPriority = (self->zPriority + 1);
                 }
@@ -367,7 +367,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_api.PlaySfx(0x856);
                 temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (temp_s2 != NULL) {
-                    CreateEntityFromEntity(46, self, temp_s2);
+                    CreateEntityFromEntity(E_DRACULA_UNK2F, self, temp_s2);
                     if (self->facingLeft != 0) {
                         temp_s2->posX.i.hi += 40;
                     } else {
@@ -537,7 +537,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 5:
-            CreateEntityFromCurrentEntity(44, self + 1);
+            CreateEntityFromCurrentEntity(E_DRACULA_UNK2C, self + 1);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
@@ -579,7 +579,7 @@ void EntityDraculaFinalForm(Entity* self) {
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84].x;
             if (temp_s2 != NULL) {
-                CreateEntityFromEntity(2, self, temp_s2);
+                CreateEntityFromEntity(E_EXPLOSION, self, temp_s2);
                 temp_s2->params = 3;
                 temp_s2->zPriority = (self->zPriority + 1);
                 temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1++);
@@ -697,7 +697,7 @@ void EntityDraculaRainAttack(Entity* self) {
             for (i = 0; i < 4; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x22, self, newEntity);
+                    CreateEntityFromEntity(E_DRACULA_FIREBALL, self, newEntity);
                     newEntity->params = 1;
                     newEntity->posY.i.hi += 12;
                 }
@@ -1037,7 +1037,7 @@ void func_801AF774(Entity* self) {
         if ((self->ext.et_801AF774.unk90 != 0) &&
             (self->ext.et_801AF774.unk8E < 0x10)) {
             self->ext.et_801AF774.unk90 = 0;
-            CreateEntityFromCurrentEntity(0x23, self + 1);
+            CreateEntityFromCurrentEntity(E_DRACULA_UNK23, self + 1);
         }
         return;
     case 4:

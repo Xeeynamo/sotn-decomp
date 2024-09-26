@@ -36,7 +36,7 @@ typedef enum {
     E_DUMMY_0F,
     E_DUMMY_10,
     E_ID_14 = 0x14,
-    E_ID_15
+    E_FIREBALL
 } EntityIDs;
 
 void CreateEntitiesToTheRight(s16);
