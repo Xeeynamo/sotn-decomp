@@ -2,9 +2,9 @@
 #include "cen.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern signed short* spriteBanks[];
-extern void* Cluts[];
-extern MyRoomDef rooms_layers[];
+static signed short* spriteBanks[];
+static void* Cluts[];
+static MyRoomDef rooms_layers[];
 static GfxBank* gfxBanks[];
 void UpdateStageEntities();
 
@@ -43,51 +43,36 @@ static void* Cluts[] = {
 
 static u32 D_8019C704[24];
 
-static GfxBank D_80180134 = {
-    .kind = GFX_BANK_NONE,
-    .entries =
-        {
-            GFX_ENTRY(0, 0, 0, 0, NULL),
-        },
+static u_long* D_80180134[] = {
+    GFX_BANK_NONE,
+    GFX_ENTRY(0, 0, 0, 0, NULL),
+    GFX_TERMINATE(),
 };
-static u_long D_80180134_TERM = GFX_TERMINATE();
 
-extern u_long* D_80183A40;
-extern u_long* D_80184B70;
-
-static GfxBank D_80180148 = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, &D_80183A40),
-            GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, &D_80184B70),
-        },
+extern u8 D_80183A40[];
+extern u8 D_80184B70[];
+static u_long* D_80180148[] = {
+    GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80183A40),
+    GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, D_80184B70),
+    GFX_TERMINATE(),
 };
-static u_long D_80180148_TERM = GFX_TERMINATE();
 
-extern u_long* D_80181658;
-extern u_long* D_8018199C;
-
-static GfxBank D_80180168 = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x0040, 0x0080, 0x0080, &D_80181658),
-            GFX_ENTRY(0x100, 0x60, 0x80, 0x80, &D_8018199C),
-        },
+extern u8 D_80181658[];
+extern u8 D_8018199C[];
+static u_long* D_80180168[] = {
+    GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80181658),
+    GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_8018199C),
+    GFX_TERMINATE(),
 };
-static u_long D_80180168_TERM = GFX_TERMINATE();
 
-extern u_long* D_80185830;
-
-static GfxBank D_80180188 = {
-    .kind = GFX_BANK_COMPRESSED,
-    .entries =
-        {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, &D_80185830),
-        },
+extern u8 D_80185830[];
+static u_long* D_80180188[] = {
+    GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80185830),
+    GFX_TERMINATE(),
 };
-static u_long D_80180188_TERM = GFX_TERMINATE();
 
 static GfxBank* gfxBanks[] = {
     &D_80180134, &D_80180148, &D_80180188, &D_80180134, &D_80180134,
