@@ -271,8 +271,8 @@ extern u8 D_80182990;
 extern u8 D_801829B4;
 extern s32 D_801829D4;
 extern u16 D_801829DC;
-extern s32 D_801829EC;
-extern s32 D_80182A04;
+extern s32 D_801829EC[];
+extern s32 D_80182A04[];
 
 // *** EntityStrongWarg properties END ***
 

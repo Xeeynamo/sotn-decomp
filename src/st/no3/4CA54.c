@@ -235,9 +235,9 @@ void EntityStrongWarg(Entity* self) {
             if (!frameIdx || frameIdx & 0x80) {
                 frameIdx = (self->animFrameIdx - 1);
                 if (self->facingLeft) {
-                    self->velocityX = *(&D_801829EC + frameIdx);
+                    self->velocityX = D_801829EC[frameIdx];
                 } else {
-                    self->velocityX = -*(&D_801829EC + frameIdx);
+                    self->velocityX = -D_801829EC[frameIdx];
                 }
             }
             if (var_s1 < 0x50) {
@@ -255,9 +255,9 @@ void EntityStrongWarg(Entity* self) {
             if (frameIdx != 1) {
                 frameIdx = self->animFrameIdx - 1;
                 if (self->facingLeft) {
-                    self->velocityX = -*(&D_80182A04 + frameIdx);
+                    self->velocityX = -D_80182A04[frameIdx];
                 } else {
-                    self->velocityX = *(&D_80182A04 + frameIdx);
+                    self->velocityX = D_80182A04[frameIdx];
                 }
             }
 
