@@ -47,8 +47,11 @@ typedef enum EntityIDs {
     /* 0x15 */ E_ID_15 = 0x15,
     /* 0x17 */ E_BG_LIGHTNING = 0x17,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
+    /* 0x2E */ E_ID_2E = 0x2E,
     /* 0x30 */ E_ID_30 = 0x30,
-    /* 0x32 */ E_ID_32 = 0x32,
+    /* 0x31 */ E_ID_31,
+    /* 0x32 */ E_ID_32,
+    /* 0x33 */ E_ID_33,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
     /* 0x37 */ E_SIDE_WATER_SPLASH,
@@ -237,6 +240,41 @@ extern s32 D_801D7D58;
 extern u32 g_CutsceneFlags;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
+
+// *** EntityStrongWarg properties START ***
+
+extern Entity D_8007A958;
+extern Entity D_8007D858;
+extern u8 D_801827DC;
+extern u8 D_801827EC;
+extern u8 D_801827FC;
+extern u8 D_8018280C;
+extern u8 D_8018281C;
+extern u8 D_80182824;
+extern u8 D_80182848;
+extern u8 D_80182850;
+extern u8 D_80182858;
+extern u8 D_80182868;
+extern u8 D_80182878;
+extern u8 D_80182884;
+extern u8 D_80182890;
+extern u8 D_801828A8;
+extern u8 D_801828D8;
+extern u8 D_80182900;
+extern u8 D_80182928;
+extern u8 D_80182944;
+extern u8 D_8018295C;
+extern u8 D_80182964;
+extern u8 D_8018296C;
+extern u8 D_80182980;
+extern u8 D_80182990;
+extern u8 D_801829B4;
+extern s32 D_801829D4;
+extern u16 D_801829DC;
+extern s32 D_801829EC[];
+extern s32 D_80182A04[];
+
+// *** EntityStrongWarg properties END ***
 
 // *** EntitySoulStealOrb properties START ***
 
