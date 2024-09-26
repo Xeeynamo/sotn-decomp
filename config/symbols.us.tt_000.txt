@@ -1,2 +1,3 @@
 CheckEntityValid = 0x801713C8;
+CalculateAngleToEntity = 0x80173F30;
 g_IsServantDestroyed = 0x80174D3C;

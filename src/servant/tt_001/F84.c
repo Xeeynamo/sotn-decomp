@@ -57,7 +57,7 @@ void func_us_801728FC(void) {}
 #include "../search_for_entity_in_range.h"
 #endif
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C08);
+#include "../calculate_angle_to_entity.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C4C);
 

@@ -7,6 +7,6 @@ g_CurrentRoomY = 0x80170EF8;
 CheckEntityValid = 0x801714F4;
 DestroyServantEntity = 0x80172904;
 DestroyEntity = 0x80172AE4;
+CalculateAngleToEntity = 0x80172C08;
 ProcessEvent = 0x80172EE8;
-CreateEventEntity = 0x801732BC;
 g_IsServantDestroyed = 0x8017381C;

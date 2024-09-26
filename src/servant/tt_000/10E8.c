@@ -531,7 +531,6 @@ void func_80171ED4(s32 arg0) {
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
-s16 func_80173F30(Entity* entity, s16 x, s16 y);
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -603,7 +602,7 @@ void func_80172120(Entity* self) {
                 self->facingLeft = PLAYER.facingLeft;
             }
         }
-        D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
+        D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
         D_80174B10 =
             func_80173F74(D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
         self->ext.bat.unk86 = D_80174B10;
@@ -691,7 +690,7 @@ void func_80172120(Entity* self) {
     case 3:
         D_80174B1C = self->ext.bat.target->posX.i.hi;
         D_80174B20 = self->ext.bat.target->posY.i.hi;
-        D_80174B0C = func_80173F30(self, D_80174B1C, D_80174B20);
+        D_80174B0C = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
         D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
                                    D_80170658[D_80174C30.level / 10][1]);
         self->ext.bat.unk86 = D_80174B10;
@@ -718,7 +717,7 @@ void func_80172120(Entity* self) {
         }
         break;
     case 4:
-        D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
+        D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
         D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86, 0x10);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
@@ -1050,17 +1049,7 @@ void func_80173C24(void) {}
 #include "../search_for_entity_in_range.h"
 #endif
 
-s16 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 angle;
-    s16 diffy;
-    s16 diffx;
-
-    diffx = x - entity->posX.i.hi;
-    diffy = y - entity->posY.i.hi;
-    angle = ratan2(-diffy, diffx) & 0xFFF;
-
-    return angle;
-}
+#include "../calculate_angle_to_entity.h"
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
     s16 diff = abs(x2 - x1);
