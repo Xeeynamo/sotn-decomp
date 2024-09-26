@@ -59,7 +59,7 @@ void func_us_801728FC(void) {}
 
 #include "../calculate_angle_to_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C4C);
+#include "../get_target_position_with_distance_buffer.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172CC0);
 

@@ -530,7 +530,8 @@ void func_80171ED4(s32 arg0) {
     g_IsServantDestroyed = 0;
 }
 
-s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
+s16 GetTargetPositionWithDistanceBuffer(
+    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -603,8 +604,8 @@ void func_80172120(Entity* self) {
             }
         }
         D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
-        D_80174B10 =
-            func_80173F74(D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
+        D_80174B10 = GetTargetPositionWithDistanceBuffer(
+            D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
         self->ext.bat.unk86 = D_80174B10;
         D_80174B04 = D_80174AFC - self->posX.i.hi;
         D_80174B08 = D_80174B00 - self->posY.i.hi;
@@ -691,8 +692,9 @@ void func_80172120(Entity* self) {
         D_80174B1C = self->ext.bat.target->posX.i.hi;
         D_80174B20 = self->ext.bat.target->posY.i.hi;
         D_80174B0C = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
-        D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
-                                   D_80170658[D_80174C30.level / 10][1]);
+        D_80174B10 = GetTargetPositionWithDistanceBuffer(
+            D_80174B0C, self->ext.bat.unk86,
+            D_80170658[D_80174C30.level / 10][1]);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
         self->velocityY = -(rsin(D_80174B10) << 2 << 4);
@@ -718,7 +720,8 @@ void func_80172120(Entity* self) {
         break;
     case 4:
         D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
-        D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86, 0x10);
+        D_80174B10 = GetTargetPositionWithDistanceBuffer(
+            D_80174B0C, self->ext.bat.unk86, 0x10);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
         self->velocityY = -(rsin(D_80174B10) << 2 << 4);
@@ -1051,27 +1054,7 @@ void func_80173C24(void) {}
 
 #include "../calculate_angle_to_entity.h"
 
-s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
-    s16 diff = abs(x2 - x1);
-    if (minDistance > diff) {
-        minDistance = diff;
-    }
-
-    if (x2 < x1) {
-        if (diff < 0x800) {
-            x2 += minDistance;
-        } else {
-            x2 -= minDistance;
-        }
-    } else {
-        if (diff < 0x800) {
-            x2 -= minDistance;
-        } else {
-            x2 += minDistance;
-        }
-    }
-    return x2 & 0xFFF;
-}
+#include "../get_target_position_with_distance_buffer.h"
 
 #ifndef VERSION_PSP
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
