@@ -102,13 +102,7 @@ extern s32 g_IsServantDestroyed;
 extern s32 D_80174D40;
 #endif
 
-void func_801710E8(Entity* entity, AnimationFrame* anim) {
-    if (entity->anim != anim) {
-        entity->anim = anim;
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-    }
-}
+#include "../set_entity_animation.h"
 
 Entity* func_8017110C(Entity* self) {
     const int EntitySearchCount = 128;
@@ -344,7 +338,7 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, D_801704A8);
+            SetEntityAnimation(self, D_801704A8);
             self->ext.bat.unk84 = rand() % 4096;
             self->ext.bat.unk86 = 0;
             self->ext.bat.unk88 = 0xC;
@@ -361,7 +355,7 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, D_801704A8);
+            SetEntityAnimation(self, D_801704A8);
             if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
@@ -407,14 +401,14 @@ void func_801719E0(Entity* self) {
         case 0xD1:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, D_801704A8);
+            SetEntityAnimation(self, D_801704A8);
             self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, D_801704A8);
+            SetEntityAnimation(self, D_801704A8);
             if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
@@ -635,11 +629,11 @@ void func_80172120(Entity* self) {
             self->ext.bat.unk8A = 0x80;
         }
         if (self->velocityY > FIX(1.0)) {
-            func_801710E8(self, D_801705EC);
+            SetEntityAnimation(self, D_801705EC);
         } else if (D_80174B14 < 60) {
-            func_801710E8(self, D_801704A8);
+            SetEntityAnimation(self, D_801704A8);
         } else if (D_80174B14 > 100) {
-            func_801710E8(self, D_80170514);
+            SetEntityAnimation(self, D_80170514);
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -655,7 +649,7 @@ void func_80172120(Entity* self) {
         if (D_80174B2C < 0x18) {
             if (self->ext.bat.unk8E) {
                 self->ext.bat.unk8E = 0;
-                func_801710E8(self, D_8017054C);
+                SetEntityAnimation(self, D_8017054C);
             }
             self->ext.bat.unk8C++;
             if (self->ext.bat.unk8C > D_80170658[D_80174C30.level / 10][0]) {
@@ -683,7 +677,7 @@ void func_80172120(Entity* self) {
             self->hitboxHeight = 5;
             g_api.func_8011A3AC(self, 15, 1, &D_80174C30);
             self->ext.bat.unk86 = 0xC00;
-            func_801710E8(self, D_801705EC);
+            SetEntityAnimation(self, D_801705EC);
             CreateBlueTrailEntity(self);
             self->step++;
         }
@@ -715,7 +709,7 @@ void func_80172120(Entity* self) {
         if (!CheckEntityValid(self->ext.bat.target) || D_80174B2C < 8) {
             self->ext.bat.unk8C = 0;
             self->step++;
-            func_801710E8(self, D_8017054C);
+            SetEntityAnimation(self, D_8017054C);
         }
         break;
     case 4:
@@ -797,14 +791,14 @@ void func_80172C30(Entity* self) {
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
             if (self->ext.bat.unk8E) {
-                func_801710E8(self, D_8017054C);
+                SetEntityAnimation(self, D_8017054C);
                 self->ext.bat.unk8E = false;
             }
         } else {
             if (self->velocityY > FIX(1)) {
-                func_801710E8(self, D_801705EC);
+                SetEntityAnimation(self, D_801705EC);
             } else {
-                func_801710E8(self, D_801704A8);
+                SetEntityAnimation(self, D_801704A8);
             }
             self->ext.bat.unk8E = true;
         }
@@ -862,7 +856,7 @@ void func_80172C30(Entity* self) {
             D_80174C3C[self->ext.bat.unk82][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
             D_80174C3C[self->ext.bat.unk82][0].y = rand() % 256;
-            func_801710E8(self, D_801704A8);
+            SetEntityAnimation(self, D_801704A8);
         }
         break;
     case 3:
