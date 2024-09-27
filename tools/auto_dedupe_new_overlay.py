@@ -136,7 +136,7 @@ def split_rodata(overlay_name, new_segments, do_overwrite):
                     for i,line in enumerate(asmlines):
                         if "glabel jtbl" in line:
                             nextline = asmlines[i+1]
-                            jtbl_addr = nextline.split()[1]
+                            jtbl_addr = "0x" + nextline.split()[1]
                             yaml_rodata_lines.append(f"      - [{jtbl_addr}, .rodata, {seg[1]}]")
 
 
