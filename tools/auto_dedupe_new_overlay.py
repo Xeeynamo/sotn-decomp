@@ -14,7 +14,14 @@ file_start_funcs = {"Random"                 : "st_update",
                     "CreateEntityFromLayout" : "create_entity",
                     "EntityIsNearPlayer"     : "e_red_door",
                     "DestroyEntity"          : "st_common",
-                    "func_8018CAB0"          : "e_collect"}
+                    "func_8018CAB0"          : "e_collect",
+                    "BlitChar"               : "blit_char",
+                    "EntityRelicOrb"         : "e_misc",
+                    "StageNamePopupHelper"   : "e_stage_name",
+                    "EntitySoulStealOrb"     : "e_particles",
+                    "EntityRoomForeground"   : "e_room_fg",
+                    "BottomCornerText"       : "popup",
+                    "UnkPrimHelper"          : "prim_helpers"}
 
 #Given a symbol name and a set of symbol lines, get the numerical value of the symbol
 def get_symbol_offset(symname, symbols):
