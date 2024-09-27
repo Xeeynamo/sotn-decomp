@@ -73,7 +73,9 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
 #include "../is_movement_allowed.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173490);
+#ifndef VERSION_PSP
+#include "../check_all_entities_valid.h"
+#endif
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017353C);
 
