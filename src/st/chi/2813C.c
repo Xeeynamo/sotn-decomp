@@ -160,7 +160,7 @@ void EntitySalemWitch(Entity* self)
             InitializeEntity(&EntityInit_80180688);
             self->hitboxOffY = 0xA;
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_ID_22, entity);
+            CreateEntityFromCurrentEntity(E_SALEM_WITCH_GLOW, entity);
             entity->zPriority = self->zPriority - 1;
             SetStep(WaitToAggro);
             break;
@@ -578,15 +578,16 @@ void EntitySalemWitch(Entity* self)
     }
 }
 
-s32 AnimateEntity(u8*, Entity*);
+// D_8018162C
+u8 AnimFrames_Twinkle[] = {
+    0x02, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x00, 0x00, 0x00, 0x00 
+};
 
-extern EntityInit EntityInit_80180688;
-extern u8 D_8018162C[];
-
+// E_SALEM_WITCH_GLOW
 // func_801A8DE8
 // PSP:func_psp_092399B0:No match
 // PSP:https://decomp.me/scratch/Oqz9t
-void func_801A8DE8(Entity* self)
+void EntitySalemWitchGlow(Entity* self)
 {
     Entity* entity;
 
@@ -597,7 +598,8 @@ void func_801A8DE8(Entity* self)
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
     }
     
-    AnimateEntity(D_8018162C, self);
+    AnimateEntity(AnimFrames_Twinkle, self);
+
     entity = self - 1;
     self->facingLeft = entity->facingLeft;
     self->posX.val = entity->posX.val;
@@ -607,6 +609,7 @@ void func_801A8DE8(Entity* self)
         self->posX.val -= FIX(6);
     }
     self->posY.val = entity->posY.val + FIX(2);
+    
     if (entity->entityId != E_SALEM_WITCH) {
         DestroyEntity(self);
     }
