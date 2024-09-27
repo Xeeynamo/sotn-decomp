@@ -47,20 +47,20 @@ def get_file_splits(overlay_name):
 def write_file_splits_to_yaml(overlay_name, new_segments, do_overwrite):
     yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
     # initially open for reading. Then we'll mess with it, and open for writing.
-    with open(yaml_filename,'r+') as f:
+    with open(yaml_filename,'r') as f:
         raw_yaml_lines = f.read().splitlines()
-        outlines = []
-        for line in raw_yaml_lines:
-            if ", c," not in line:
-                outlines.append(line)
-            else:
-                # now we output the lines which list the C segments
-                # Start with the first block of C, before our first identified segment.
-                first_line = line.replace("us", "first_c_file")
-                outlines.append(first_line)
-                for seg in new_segments:
-                    addr, filename, _ = seg
-                    outlines.append(f"      - [{addr}, c, {filename}]")
+    outlines = []
+    for line in raw_yaml_lines:
+        if ", c," not in line:
+            outlines.append(line)
+        else:
+            # now we output the lines which list the C segments
+            # Start with the first block of C, before our first identified segment.
+            first_line = line.replace("us", "first_c_file")
+            outlines.append(first_line)
+            for seg in new_segments:
+                addr, filename, _ = seg
+                outlines.append(f"      - [{addr}, c, {filename}]")
     out_filename = yaml_filename if do_overwrite else "config/test_splat.yaml"
     with open(out_filename,'w') as f:
         f.write("\n".join(outlines))
@@ -97,7 +97,50 @@ def split_c_files(overlay_name, new_segments, do_overwrite):
     if do_overwrite:
         os.remove(c_file_in)
 
-    
+def get_symbol_addr(symbol_name, overlay_name):
+    with open("build/us/st" + overlay_name + ".map") as f:
+        symlines = f.read().splitlines()
+    for line in symlines:
+        if symbol_name in line:
+            lineparts = line.split()
+            address = int(lineparts[0],16)
+            # change from ram offset to rom offset
+            address -= 0x80180000
+            return f"0x{address:X}"
+
+def split_rodata(overlay_name, new_segments, do_overwrite):
+    # Get the rodata and create splat segments
+    # Do this by searching for INCLUDE_RODATA in the c files, and make the rodata parse to that file
+    overlay_dir = f"src/st/{overlay_name}/"
+    yaml_rodata_lines = []
+    for seg in new_segments:
+        c_file = overlay_dir + seg[1] + ".c"
+        with open(c_file) as f:
+            c_lines = f.read().splitlines()
+        for line in c_lines:
+            match = re.search(r'INCLUDE_RODATA\("[^"]+",\s*(\w+)\);', line)
+            if match:
+                # Found a line. Need to add rodata line to yaml.
+                # To do that, we need the rodata address.
+                rodata_name = match.group(1)
+                addr = get_symbol_addr(rodata_name, overlay_name)
+                yaml_rodata_lines.append(f"      - [{addr}, .rodata, {seg[1]}]")
+    # Now we have the yaml rodata lines. open the yaml file and write the lines into it.
+    yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
+    # initially open for reading. Then we'll mess with it, and open for writing.
+    with open(yaml_filename,'r') as f:
+        raw_yaml_lines = f.read().splitlines()
+    outlines = []
+    for line in raw_yaml_lines:
+        if ".rodata," not in line:
+            outlines.append(line)
+        else:
+            first_line = line.replace("us", "first_c_file")
+            outlines.append(first_line)
+            for roline in yaml_rodata_lines:
+                outlines.append(roline)
+    with open("rodata_yaml.yaml",'w') as f:
+        f.write("\n".join(outlines))
 parser = argparse.ArgumentParser(description="Perform initial splitting out of files for new overlays")
 
 parser.add_argument(
@@ -115,3 +158,4 @@ if __name__ == "__main__":
     splits = get_file_splits(args.ovl)
     write_file_splits_to_yaml(args.ovl, splits, args.cowabunga)
     split_c_files(args.ovl, splits, args.cowabunga)
+    split_rodata(args.ovl, splits, args.cowabunga)
