@@ -55,6 +55,7 @@ extern u16 g_InitializeData0[];
 extern u16 D_80180428[];
 extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_8018047C[]; // EntityElevator
 
 extern ObjInit g_eBackgroundBlockInit[];
@@ -71,10 +72,6 @@ extern u16 g_ESoulStealOrbAngles[];
 extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit D_8018125C[];
-
-extern u16 g_InitializeEntityData0[];
-
-// For EntityHolyGlassesCutscene
-extern const char D_801813F0[];
+extern u8 g_CutsceneScript[];
 
 #endif
