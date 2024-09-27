@@ -4,6 +4,8 @@
 
 extern s32 g_IsServantDestroyed;
 
+INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F60);
+
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
@@ -78,5 +80,3 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 #endif
 
 #include "../servant_unk0.h"
-
-INCLUDE_RODATA("servant/tt_001/nonmatchings/F84", func_us_80170F60);
