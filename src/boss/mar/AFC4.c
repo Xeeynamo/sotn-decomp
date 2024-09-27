@@ -77,7 +77,7 @@ void EntityMariaCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (CutsceneUnk2(D_us_80181424) & 0xFF) {
+        if (SetCutsceneScript(D_us_80181424) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_us_8019AF2C = 0;

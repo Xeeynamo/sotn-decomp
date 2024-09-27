@@ -154,7 +154,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (CutsceneUnk2(g_CutsceneScript)) {
+        if (SetCutsceneScript(g_CutsceneScript)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             D_8003C704 = 1;
             g_CutsceneFlags = 0;
