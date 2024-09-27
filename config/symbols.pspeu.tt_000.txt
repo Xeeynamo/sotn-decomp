@@ -1,4 +1,4 @@
-func_801710E8 = 0x092e7680;
+SetEntityAnimation = 0x092e7680;
 func_8017110C = 0x092e76c8;
 CheckEntityValid = 0x092e7a78;
 func_80171560 = 0x092e7b80;
