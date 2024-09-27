@@ -43,6 +43,7 @@ def get_file_splits(overlay_name):
         symbollines = f.readlines()
     file_splits = []
     file_last_func = ""
+    force_next_func_split = False
     for line in clines:
         match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
         if match:
@@ -58,10 +59,16 @@ def get_file_splits(overlay_name):
                     file_last_func = ""
                 file_splits.append([f"0x{split_location:X}", filename, function_name])
             elif function_name == file_last_func:
-                print("FOUND LAST FUNC")
+                force_next_func_split = True
+            elif force_next_func_split:
+                split_location = get_symbol_offset(function_name, symbollines)
+                # change from ram offset to rom offset
+                split_location -= 0x80180000
+                file_splits.append([f"0x{split_location:X}", f"{split_location:X}", function_name])
+                force_next_func_split = False
     return file_splits
 
-def write_file_splits_to_yaml(overlay_name, new_segments, do_overwrite):
+def write_file_splits_to_yaml(overlay_name, new_segments):
     yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
     # initially open for reading. Then we'll mess with it, and open for writing.
     with open(yaml_filename,'r') as f:
@@ -78,10 +85,9 @@ def write_file_splits_to_yaml(overlay_name, new_segments, do_overwrite):
             for seg in new_segments:
                 addr, filename, _ = seg
                 outlines.append(f"      - [{addr}, c, {filename}]")
-    out_filename = yaml_filename if do_overwrite else "config/test_splat.yaml"
-    with open(out_filename,'w') as f:
+    with open(yaml_filename,'w') as f:
         f.write("\n".join(outlines))
-def split_c_files(overlay_name, new_segments, do_overwrite):
+def split_c_files(overlay_name, new_segments):
     seg_dict = {s[2]:s[1] for s in new_segments}
     c_file_in = f"src/st/{overlay_name}/us.c"
 
@@ -111,8 +117,7 @@ def split_c_files(overlay_name, new_segments, do_overwrite):
     # Flush the last one
     with open(overlay_dir + output_filename + ".c", 'w') as f:
         f.write("\n".join(output_buffer))
-    if do_overwrite:
-        os.remove(c_file_in)
+    os.remove(c_file_in)
 
 def get_symbol_addr(symbol_name, overlay_name):
     with open("build/us/st" + overlay_name + ".map") as f:
@@ -125,7 +130,7 @@ def get_symbol_addr(symbol_name, overlay_name):
             address -= 0x80180000
             return f"0x{address:X}"
 
-def split_rodata(overlay_name, new_segments, do_overwrite):
+def split_rodata(overlay_name, new_segments):
     # Get the rodata and create splat segments
     # Do this by searching for INCLUDE_RODATA in the c files, and make the rodata parse to that file
     overlay_dir = f"src/st/{overlay_name}/"
@@ -180,15 +185,10 @@ parser.add_argument(
     "ovl",
     help="Name of overlay (for example, no0)",
 )
-parser.add_argument(
-    "--cowabunga",
-    action="store_true",
-    help="Actually overwrite/delete files",
-)
 
 if __name__ == "__main__":
     args = parser.parse_args()
     splits = get_file_splits(args.ovl)
-    write_file_splits_to_yaml(args.ovl, splits, args.cowabunga)
-    split_c_files(args.ovl, splits, args.cowabunga)
-    split_rodata(args.ovl, splits, args.cowabunga)
+    write_file_splits_to_yaml(args.ovl, splits)
+    split_c_files(args.ovl, splits)
+    split_rodata(args.ovl, splits)
