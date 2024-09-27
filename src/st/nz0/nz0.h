@@ -323,8 +323,8 @@ extern SVECTOR D_80182838;
 extern SVECTOR D_80182840;
 extern SVECTOR D_80182848;
 
-// For EntityMariaCutscene
-extern s32 D_801CB684;
+// For NZ0_CutsceneExec
+extern s32 skip_cutscene;
 extern s32 D_801CB73C;
 extern u8 D_801813C8[];
 extern u8 D_801813CC[];

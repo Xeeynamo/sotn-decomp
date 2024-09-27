@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-u8 SetCutsceneScript(const char* script) {
+static u8 SetCutsceneScript(const char* script) {
     Primitive* prim;
     s16 firstPrimIndex;
 

@@ -22,7 +22,7 @@ void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
-void EntityHolyGlassesCutscene(Entity*);
+void CEN_CutsceneExec(Entity*);
 void EntityPlatform(Entity*);
 void EntityMaria(Entity*);
 void EntityRoomDarkness(Entity*);
@@ -41,7 +41,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,           EntityDummy,
     EntityBackgroundBlock, EntityUnkId12,
     EntityUnkId13,         EntityUnkId14,
-    EntityUnkId15,         EntityHolyGlassesCutscene,
+    EntityUnkId15,         CEN_CutsceneExec,
     EntityPlatform,        EntityMaria,
     EntityRoomDarkness,    EntityElevatorStationary,
     EntityUnkId1B,         EntityMovingElevator,

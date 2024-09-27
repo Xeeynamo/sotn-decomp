@@ -4,7 +4,7 @@
 
 STATIC_PAD_BSS(3072);
 
-s32 D_us_8019AE70;
+s32 skip_cutscene;
 Dialogue g_Dialogue;
 s32 D_us_8019AEB8[26];
 s32 g_CutsceneFlags;

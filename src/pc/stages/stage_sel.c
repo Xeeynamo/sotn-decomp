@@ -87,7 +87,7 @@ s32 D_801BC340;
 s32 g_StreamDiscStatus;
 s32 D_801BC348;
 s32 D_801BC34C;
-s32 D_801BC350;
+s32 skip_cutscene;
 Dialogue g_Dialogue;
 u32 D_801BC398[16];
 s32 g_MemCardSelectorX;
@@ -135,5 +135,5 @@ void func_801B9C80(void) {
     // reset D_8003C728 to signal the end of video playback
     D_8003C728 = 0;
 }
-void func_801B69F8(Entity* e) { NOT_IMPLEMENTED; }
+void SEL_CutsceneExec(Entity* e) { NOT_IMPLEMENTED; }
 void func_801B79D4(Entity* e) { NOT_IMPLEMENTED; }

@@ -73,7 +73,7 @@ segments:
       - [0x30618, .rodata, gaibon] # EntityGaibon .rodata, 33FCC
       - [0x3063C, .rodata, e_elevator] # func_801B7034
       - [0x3064C, rodata]
-      - [0x30664, .rodata, mariacutscene]
+      - [0x30664, .rodata, cutscene]
       - [0x306E8, .rodata, maria]
       - [0x30728, .rodata, e_red_door]
       - [0x30740, .rodata, e_collect] # CollectGold text
@@ -100,7 +100,7 @@ segments:
       - [0x35778, c, gaibon]
       - [0x36DE4, c]
       - [0x37034, c, e_elevator]
-      - [0x374CC, c, mariacutscene]
+      - [0x374CC, c, cutscene]
       - [0x38E0C, c, maria]
       - [0x394D4, c, st_update]
       - [0x39908, c, collision]

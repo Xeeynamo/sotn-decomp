@@ -178,7 +178,7 @@ extern u8 D_801824CC[];
 
 extern s8 D_801A7BDC;
 extern Point32 D_801BEB64[];
-extern s32 D_801C24C8;
+extern s32 skip_cutscene;
 extern s16 D_801C24D4;
 extern s16 D_801C24D6;
 extern s16 D_801C24D8;
@@ -199,7 +199,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-// For EntityDraculaCutscene
+// For ST0_CutsceneExec
 extern u8 D_80180784[];
 extern u8 D_80180788[];
 extern u16 D_8018078C[];
@@ -207,7 +207,7 @@ extern u16 D_80180790[];
 extern u16 D_80180794[];
 extern s16 D_80180798[];
 extern const char D_801829D8[];
-extern s32 D_801C24C8;
+extern s32 skip_cutscene;
 extern s32 D_801C2504;
 extern u32 g_CutsceneFlags;
 extern s32 D_801C2580;

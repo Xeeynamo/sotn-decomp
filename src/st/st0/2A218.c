@@ -22,7 +22,7 @@ void EntityCutscene(Entity* self) {
     self->posX.i.hi = player->posX.i.hi;
     self->posY.i.hi = player->posY.i.hi - 1;
 
-    if ((self->step != 14) && (D_801C24C8 != 0) && (D_801C2580 != 0) &&
+    if ((self->step != 14) && skip_cutscene && (D_801C2580 != 0) &&
         (self->step >= 5)) {
         self->step = 15;
         self->animSet = ANIMSET_DRA(0);

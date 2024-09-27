@@ -75,7 +75,7 @@ void EntityElevator(Entity*);
 void func_801B6DE4(Entity*);
 void EntityLifeUpSpawn(Entity*);
 void EntityMagicallySealedDoor(Entity*);
-void EntityMariaCutscene(Entity*);
+void NZ0_CutsceneExec(Entity*);
 void EntityMaria(Entity*);
 void func_801B8E0C(Entity*);
 
@@ -154,7 +154,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801B6DE4,
     EntityLifeUpSpawn,
     EntityMagicallySealedDoor,
-    EntityMariaCutscene,
+    NZ0_CutsceneExec,
     EntityMaria,
     func_801B8E0C,
 };

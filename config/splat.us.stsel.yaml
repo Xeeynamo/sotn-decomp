@@ -41,7 +41,7 @@ segments:
       - [0x4D0, .data, 3410C]
       - [0x4E0, .data, banks]
       - [0x728, data]
-      - [0x824, .data, 3642C]
+      - [0x824, .data, cutscene]
       - [0x8DC, .data, save_mgr_pre]
       - [0x8E4, palette, memcard_0]
       - [0x904, palette, memcard_1]
@@ -108,8 +108,8 @@ segments:
       - [0x27B98, .rodata, 3410C] # TestCollision
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
       - [0x27BF8, .rodata, 3585C]
-      - [0x27CD4, .rodata, 3642C] # g_DiagActors strings
-      - [0x27CF4, .rodata, 3642C] # func_801B69F8 jtbl
+      - [0x27CD4, .rodata, cutscene] # g_DiagActors strings
+      - [0x27CF4, .rodata, cutscene] # SEL_CutsceneExec jtbl
       - [0x27D78, .rodata, save_mgr]
       - [0x28040, .rodata, config_us] # equip strings
       - [0x29B18, .rodata, config_us] # accessories strings
@@ -123,7 +123,7 @@ segments:
       - [0x33164, c, 33164]
       - [0x3410C, c, 3410C]
       - [0x3585C, c, 3585C]
-      - [0x3642C, c, 3642C]
+      - [0x3642C, c, cutscene]
       - [0x380F0, c, save_mgr]
       - [0x39744, c, stream]
       - [0x3AB70, asm, handwritten/func_801BAB70]

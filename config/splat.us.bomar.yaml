@@ -44,7 +44,7 @@ segments:
       - [0x310, .data, e_init]
       - [0x4E8, .data, st_debug]
       - [0x568, .data, e_breakable]
-      - [0x5D4, data] # AFC4
+      - [0x5D4, data, cutscene]
       - [0x764, .data, st_update]
       - [0x790, .data, collision]
       - [0xB50, .data, e_red_door]
@@ -62,7 +62,7 @@ segments:
       - [0x5700, .data, tile_data] # tile definitions
       - [0x9710, .data, sprites]
       - [0xA9D4, data]
-      - [0xA9EC, .rodata, AFC4]
+      - [0xA9EC, .rodata, cutscene]
       - [0xAA70, .rodata, CA94]
       - [0xAAB0, .rodata, e_red_door]
       - [0xAAC8, .rodata, e_collect]
@@ -73,7 +73,7 @@ segments:
       - [0xABF0, .rodata, e_life_up]
       - [0xAC0C, c, st_debug]
       - [0xAE90, c, e_breakable]
-      - [0xAFC4, c]
+      - [0xAFC4, c, cutscene]
       - [0xCA94, c]
       - [0xCF70, c, st_update]
       - [0xD3A4, c, collision]

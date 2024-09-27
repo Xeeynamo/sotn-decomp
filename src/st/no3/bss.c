@@ -3,7 +3,7 @@
 
 STATIC_PAD_BSS(3072);
 
-u32 D_801D7D20;
+u32 skip_cutscene;
 u32 g_Dialogue;
 u16 D_801D7D28;
 u16 D_801D7D2A;

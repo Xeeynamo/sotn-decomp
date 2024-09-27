@@ -19,7 +19,7 @@ void EntityCSMoveAlucard(Entity* self) {
     s16 posX;
 
     FntPrint("step %x\n", self->step);
-    if ((D_801A3ED4 != 0) && (self->step < 8)) {
+    if (skip_cutscene && (self->step < 8)) {
         SetStep(8);
     }
 

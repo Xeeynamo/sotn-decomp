@@ -148,8 +148,7 @@ static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-// Strong resemblence to NZ0 EntityMariaCutscene and others
-void func_801B69F8(Entity* entity) {
+void SEL_CutsceneExec(Entity* entity) {
     Primitive* prim;
     s32 i;
     s32 j;
@@ -161,7 +160,7 @@ void func_801B69F8(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (SetCutsceneScript(D_8018B304)) {
-            D_801BC350 = D_801D6B00 = D_801BC3E8 = 0;
+            skip_cutscene = D_801D6B00 = D_801BC3E8 = 0;
             D_8003C704 = 1;
             entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
@@ -170,7 +169,7 @@ void func_801B69F8(Entity* entity) {
         break;
     case 1:
         while (1) {
-            if ((g_Dialogue.nextCharTimer != 0) && (D_801BC350 == 0)) {
+            if ((g_Dialogue.nextCharTimer != 0) && !skip_cutscene) {
                 --g_Dialogue.nextCharTimer;
                 return;
             }
@@ -180,7 +179,7 @@ void func_801B69F8(Entity* entity) {
                 entity->step = 7;
                 return;
             case 1:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -206,12 +205,12 @@ void func_801B69F8(Entity* entity) {
                 continue;
             case 3:
                 g_Dialogue.nextCharTimer = g_Dialogue.nextCharDialogue++[0];
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 return;
             case 4: {
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -224,7 +223,7 @@ void func_801B69F8(Entity* entity) {
             case 5: {
                 s16 temp_a0;
                 s16 temp_a1;
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     g_Dialogue.nextCharDialogue += 2;
                     continue;
                 }
@@ -259,7 +258,7 @@ void func_801B69F8(Entity* entity) {
                 return;
             }
             case 6:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -273,7 +272,7 @@ void func_801B69F8(Entity* entity) {
                 entity->step = 4;
                 return;
             case 7:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     g_Dialogue.nextCharDialogue += 2;
                     continue;
                 }
@@ -292,14 +291,14 @@ void func_801B69F8(Entity* entity) {
                 entity->step_s = 0;
                 return;
             case 8:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
                 entity->step = 6;
                 return;
             case 9:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     g_Dialogue.nextCharDialogue += 2;
                     continue;
                 }
@@ -308,13 +307,13 @@ void func_801B69F8(Entity* entity) {
                     g_Dialogue.nextCharDialogue++[0] | (nextChar << 4));
                 continue;
             case 10:
-                if (D_801BC350 != 0 || g_api.func_80131F68() != false) {
+                if (skip_cutscene != 0 || g_api.func_80131F68() != false) {
                     continue;
                 }
                 --g_Dialogue.nextCharDialogue;
                 return;
             case 11:
-                if (D_801BC350 != 0 || g_api.func_80131F68() != true) {
+                if (skip_cutscene != 0 || g_api.func_80131F68() != true) {
                     continue;
                 }
                 --g_Dialogue.nextCharDialogue;
@@ -375,7 +374,7 @@ void func_801B69F8(Entity* entity) {
                 g_Dialogue.unk3C = 0;
                 continue;
             case 19:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     g_Dialogue.nextCharDialogue += 5;
                 } else {
                     i = g_Dialogue.nextCharDialogue++[0];
@@ -397,7 +396,7 @@ void func_801B69F8(Entity* entity) {
                     g_Dialogue.nextCharDialogue++[0] | (nextChar << 4));
                 continue;
             case 21:
-                D_801D6B00 = D_801BC350 = D_801BC3E8 = 0;
+                D_801D6B00 = skip_cutscene = D_801BC3E8 = 0;
                 continue;
             case 22:
                 D_801BC3E8 &= ~(1 << g_Dialogue.nextCharDialogue++[0]);
@@ -412,7 +411,7 @@ void func_801B69F8(Entity* entity) {
                 ++g_Dialogue.nextCharDialogue;
                 continue;
             default:
-                if (D_801BC350 != 0) {
+                if (skip_cutscene) {
                     ++g_Dialogue.nextCharDialogue;
                     continue;
                 }

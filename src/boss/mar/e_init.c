@@ -30,7 +30,7 @@ void EntityStatueGear(Entity* self);
 void EntityStoneDoor(Entity* self);
 void func_us_80199114(Entity* self);
 void EntityDummy(Entity* self);
-void EntityMariaCutscene(Entity* self);
+void MAR_CutsceneExec(Entity* self);
 void func_us_8018C90C(Entity* self);
 void func_us_8018CA94(Entity* self);
 
@@ -49,7 +49,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityClockHands,     EntityBirdcageDoor,
     EntityStatue,         EntityStatueGear,
     EntityStoneDoor,      func_us_80199114,
-    EntityDummy,          EntityMariaCutscene,
+    EntityDummy,          MAR_CutsceneExec,
     func_us_8018C90C,     func_us_8018CA94,
 };
 
