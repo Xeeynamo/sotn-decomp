@@ -100,9 +100,6 @@ extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
 extern s32 g_IsServantDestroyed;
 extern s32 D_80174D40;
-
-void ProcessEvent(Entity* self, bool resetEvent);
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
@@ -533,8 +530,8 @@ void func_80171ED4(s32 arg0) {
     g_IsServantDestroyed = 0;
 }
 
-s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
-s16 func_80173F30(Entity* entity, s16 x, s16 y);
+s16 GetTargetPositionWithDistanceBuffer(
+    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -606,9 +603,9 @@ void func_80172120(Entity* self) {
                 self->facingLeft = PLAYER.facingLeft;
             }
         }
-        D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
-        D_80174B10 =
-            func_80173F74(D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
+        D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
+        D_80174B10 = GetTargetPositionWithDistanceBuffer(
+            D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
         self->ext.bat.unk86 = D_80174B10;
         D_80174B04 = D_80174AFC - self->posX.i.hi;
         D_80174B08 = D_80174B00 - self->posY.i.hi;
@@ -694,9 +691,10 @@ void func_80172120(Entity* self) {
     case 3:
         D_80174B1C = self->ext.bat.target->posX.i.hi;
         D_80174B20 = self->ext.bat.target->posY.i.hi;
-        D_80174B0C = func_80173F30(self, D_80174B1C, D_80174B20);
-        D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
-                                   D_80170658[D_80174C30.level / 10][1]);
+        D_80174B0C = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
+        D_80174B10 = GetTargetPositionWithDistanceBuffer(
+            D_80174B0C, self->ext.bat.unk86,
+            D_80170658[D_80174C30.level / 10][1]);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
         self->velocityY = -(rsin(D_80174B10) << 2 << 4);
@@ -721,8 +719,9 @@ void func_80172120(Entity* self) {
         }
         break;
     case 4:
-        D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
-        D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86, 0x10);
+        D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
+        D_80174B10 = GetTargetPositionWithDistanceBuffer(
+            D_80174B0C, self->ext.bat.unk86, 0x10);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
         self->velocityY = -(rsin(D_80174B10) << 2 << 4);
@@ -1053,39 +1052,9 @@ void func_80173C24(void) {}
 #include "../search_for_entity_in_range.h"
 #endif
 
-s16 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 angle;
-    s16 diffy;
-    s16 diffx;
+#include "../calculate_angle_to_entity.h"
 
-    diffx = x - entity->posX.i.hi;
-    diffy = y - entity->posY.i.hi;
-    angle = ratan2(-diffy, diffx) & 0xFFF;
-
-    return angle;
-}
-
-s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
-    s16 diff = abs(x2 - x1);
-    if (minDistance > diff) {
-        minDistance = diff;
-    }
-
-    if (x2 < x1) {
-        if (diff < 0x800) {
-            x2 += minDistance;
-        } else {
-            x2 -= minDistance;
-        }
-    } else {
-        if (diff < 0x800) {
-            x2 -= minDistance;
-        } else {
-            x2 += minDistance;
-        }
-    }
-    return x2 & 0xFFF;
-}
+#include "../get_target_position_with_distance_buffer.h"
 
 #ifndef VERSION_PSP
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
@@ -1167,111 +1136,4 @@ void func_80174038(Entity* entity) {
 }
 #endif
 
-extern ServantEvent g_Events[];
-extern ServantEvent* g_EventQueue;
-extern u32 g_CurrentServant;
-extern s32 g_CurrentRoomX;
-extern s32 g_CurrentRoomY;
-
-// Trigger an event under certain specific set of conditions
-void ProcessEvent(Entity* self, bool resetEvent) {
-    ServantEvent* evt;
-    ServantEvent* queue;
-    s32 cameraX;
-    s32 cameraY;
-    s32 i;
-
-    if (resetEvent) {
-        g_CurrentRoomY = 0;
-        g_CurrentRoomX = 0;
-        g_CurrentServant = 0;
-        return;
-    }
-
-    cameraX = g_Tilemap.scrollX.i.hi;
-    cameraY = g_Tilemap.scrollY.i.hi;
-    // Ensures the following block is only evaluated once per room
-    if (g_CurrentServant != g_Servant || g_CurrentRoomX != g_Tilemap.left ||
-        g_CurrentRoomY != g_Tilemap.top) {
-        g_CurrentServant = g_Servant;
-        g_CurrentRoomX = g_Tilemap.left;
-        g_CurrentRoomY = g_Tilemap.top;
-        queue = g_EventQueue;
-        for (i = 1; g_Events[i].roomX != -1; i++) {
-            evt = &g_Events[i];
-            // Filter by familiar
-            if (evt->servantId != -1 && evt->servantId != g_CurrentServant) {
-                continue;
-            }
-
-#if defined(VERSION_US)
-            if (evt->roomX < 0) {
-                if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-                    continue;
-                }
-                goto block_13;
-            }
-            if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-            block_13:
-#elif defined(VERSION_HD) || defined(VERSION_PSP)
-            if (evt->roomX >= 0 ||
-                (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
-#endif
-                if (abs(evt->roomX) != g_CurrentRoomX ||
-                    evt->roomY != g_CurrentRoomY) {
-                    continue;
-                }
-
-                if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
-                    (evt->condition == -1 ||
-                     (!(evt->condition & 0x80000000) ||
-                      !g_CastleFlags[evt->condition & 0xFFFF]) &&
-                         (!(evt->condition & CHECK_RELIC_FLAG) ||
-                          !(g_Status.relics[evt->condition & 0xFFFF] &
-                            RELIC_FLAG_FOUND)))) {
-                    evt->timer = 0;
-                    if (evt->delay == 0) {
-                        CreateEventEntity(self, evt->entityId, evt->params);
-                        if (evt->unk2C) {
-                            continue;
-                        }
-                    }
-                }
-                if (evt->delay > 0) {
-                    evt->timer = evt->delay - 1;
-                }
-                queue->next = evt;
-                queue = evt;
-            }
-        }
-        queue->next = NULL;
-    } else {
-        queue = g_EventQueue;
-        while (queue->next != NULL) {
-            if (!evt->delay) {
-            }
-            if (queue->next->cameraX == cameraX &&
-                queue->next->cameraY == cameraY &&
-                (queue->next->condition == -1 ||
-                 (!(queue->next->condition & 0x80000000) ||
-                  !g_CastleFlags[queue->next->condition & 0xFFFF]) &&
-                     (!(queue->next->condition & CHECK_RELIC_FLAG) ||
-                      !(g_Status.relics[queue->next->condition & 0xFFFF] &
-                        1)))) {
-                if (queue->next->timer > 0) {
-                    queue->next->timer--;
-                } else {
-                    CreateEventEntity(
-                        self, queue->next->entityId, queue->next->params);
-                    if (queue->next->unk2C) {
-                        queue->next = queue->next->next;
-                        continue;
-                    } else {
-                        queue->next->timer = queue->next->delay;
-                    }
-                }
-            }
-            queue = queue->next;
-        }
-    }
-}
+#include "../process_event.h"

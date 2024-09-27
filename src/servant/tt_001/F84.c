@@ -57,17 +57,17 @@ void func_us_801728FC(void) {}
 #include "../search_for_entity_in_range.h"
 #endif
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C08);
+#include "../calculate_angle_to_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C4C);
+#include "../get_target_position_with_distance_buffer.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172CC0);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172EE8);
+#include "../process_event.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_801732BC);
+#include "../create_event_entity.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173378);
 
