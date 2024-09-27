@@ -8,20 +8,23 @@ import re
 import os
 
 # functions which appear at the start of our deduplicated files in existing stages.
-# If you have "Random": "st_update" that means "Random" is the first function in the st_update.c file.
-file_start_funcs = {"Random"                 : "st_update",
-                    "HitDetection"           : "collision",
-                    "CreateEntityFromLayout" : "create_entity",
-                    "EntityIsNearPlayer"     : "e_red_door",
-                    "DestroyEntity"          : "st_common",
-                    "func_8018CAB0"          : "e_collect",
-                    "BlitChar"               : "blit_char",
-                    "EntityRelicOrb"         : "e_misc",
-                    "StageNamePopupHelper"   : "e_stage_name",
-                    "EntitySoulStealOrb"     : "e_particles",
-                    "EntityRoomForeground"   : "e_room_fg",
-                    "BottomCornerText"       : "popup",
-                    "UnkPrimHelper"          : "prim_helpers"}
+# If you have "Random": ["st_update"] that means "Random" is the first function in the st_update.c file.
+# Optionally, you can include a final function, like this:
+# "StageNamePopupHelper"   : ["e_stage_name", "EntityStageNamePopup"],
+# Maybe the dictionary should be changed so the file name is the key, but eh.
+file_start_funcs = {"Random"                 : ["st_update"],
+                    "HitDetection"           : ["collision"],
+                    "CreateEntityFromLayout" : ["create_entity"],
+                    "EntityIsNearPlayer"     : ["e_red_door"],
+                    "DestroyEntity"          : ["st_common"],
+                    "func_8018CAB0"          : ["e_collect"],
+                    "BlitChar"               : ["blit_char"],
+                    "EntityRelicOrb"         : ["e_misc"],
+                    "StageNamePopupHelper"   : ["e_stage_name", "EntityStageNamePopup"],
+                    "EntitySoulStealOrb"     : ["e_particles"],
+                    "EntityRoomForeground"   : ["e_room_fg"],
+                    "BottomCornerText"       : ["popup"],
+                    "UnkPrimHelper"          : ["prim_helpers"]}
 
 #Given a symbol name and a set of symbol lines, get the numerical value of the symbol
 def get_symbol_offset(symname, symbols):
@@ -39,6 +42,7 @@ def get_file_splits(overlay_name):
     with open(f"config/symbols.us.st{overlay_name}.txt") as f:
         symbollines = f.readlines()
     file_splits = []
+    file_last_func = ""
     for line in clines:
         match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
         if match:
@@ -47,8 +51,14 @@ def get_file_splits(overlay_name):
                 split_location = get_symbol_offset(function_name, symbollines)
                 # change from ram offset to rom offset
                 split_location -= 0x80180000
-                filename = file_start_funcs[function_name]
+                filename = file_start_funcs[function_name][0]
+                if len(file_start_funcs[function_name]) == 2:
+                    file_last_func = file_start_funcs[function_name][1]
+                else:
+                    file_last_func = ""
                 file_splits.append([f"0x{split_location:X}", filename, function_name])
+            elif function_name == file_last_func:
+                print("FOUND LAST FUNC")
     return file_splits
 
 def write_file_splits_to_yaml(overlay_name, new_segments, do_overwrite):
