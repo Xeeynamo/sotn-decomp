@@ -131,11 +131,14 @@ def split_rodata(overlay_name, new_segments, do_overwrite):
             match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
             if match:
                 funcname = match.group(1)
-                with open(f"asm/us/st/{overlay_name}/nonmatchings/{seg[1]}/{funcname}.s") as asmfile:
+                with open(f"asm/us/st/{overlay_name}/nonmatchings/us/{funcname}.s") as asmfile:
                     asmlines = asmfile.read().splitlines()
-                    for line in asmlines:
-                        if "jtbl" in line:
-                            print(line)
+                    for i,line in enumerate(asmlines):
+                        if "glabel jtbl" in line:
+                            nextline = asmlines[i+1]
+                            jtbl_addr = nextline.split()[1]
+                            yaml_rodata_lines.append(f"      - [{jtbl_addr}, .rodata, {seg[1]}]")
+
 
     # Now we have the yaml rodata lines. open the yaml file and write the lines into it.
     yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
