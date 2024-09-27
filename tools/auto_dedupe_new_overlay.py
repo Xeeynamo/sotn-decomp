@@ -139,7 +139,7 @@ def split_rodata(overlay_name, new_segments, do_overwrite):
             outlines.append(first_line)
             for roline in yaml_rodata_lines:
                 outlines.append(roline)
-    with open("rodata_yaml.yaml",'w') as f:
+    with open(yaml_filename,'w') as f:
         f.write("\n".join(outlines))
 parser = argparse.ArgumentParser(description="Perform initial splitting out of files for new overlays")
 
