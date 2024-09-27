@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
+func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([]string, error) {
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return []string{}, fmt.Errorf("unable to read cutscene: %w", err)
 	}
@@ -15,28 +15,27 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
 	read1 := func(r io.ReadSeeker) byte {
 		b := make([]byte, 1)
 		_, _ = r.Read(b)
+		length -= 1
 		return b[0]
 	}
 	read2 := func(r io.ReadSeeker) int {
 		b := make([]byte, 2)
 		_, _ = r.Read(b)
+		length -= 2
 		return int(b[1]) | (int(b[0]) << 4)
 	}
 	read4 := func(r io.ReadSeeker) int {
 		b := make([]byte, 4)
 		_, _ = r.Read(b)
+		length -= 4
 		return int(b[3]) | (int(b[2]) << 4) | (int(b[1]) << 8) | (int(b[0]) << 12) | 0x80100000
 	}
 	script := make([]string, 0)
-	loop := true
-	for loop {
+	for length > 0 {
 		op := read1(r)
 		switch op {
 		case 0:
 			script = append(script, "END_CUTSCENE()")
-			script = append(script, "0xFF")
-			script = append(script, "0xFF")
-			loop = false
 		case 1:
 			script = append(script, "LINE_BREAK()")
 		case 2:
@@ -66,7 +65,7 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
 			script = append(script, "SCRIPT_UNKNOWN_13()")
 		case 14:
 			script = append(script, fmt.Sprintf(
-				"SCRIPT_UNKNOWN_14(0x%08X, 0x%08X)", read4(r), read4(r)))
+				"SCRIPT_UNKNOWN_14(0x%08X, 0x%08X, 0x%08X)", read4(r), read4(r), read4(r)))
 		case 15:
 			script = append(script, fmt.Sprintf(
 				"SCRIPT_UNKNOWN_15(0x%08X)", read4(r)))
@@ -83,19 +82,21 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
 			script = append(script, fmt.Sprintf("SCRIPT_UNKNOWN_20(0x%X)", read2(r)))
 		case 0x27:
 			script = append(script, "'\\''")
+		case 0xFF:
+			script = append(script, "0xFF")
 		default:
-			if op >= 0x20 && op <= 0x7e {
+			if op >= 0x20 && op <= 0x7E {
 				script = append(script, fmt.Sprintf("'%s'", string([]byte{op})))
 			} else {
-				return script, fmt.Errorf("unknown op 0x%02X", op)
+				script = append(script, fmt.Sprintf("0x%02X", op))
 			}
 		}
 	}
 	return script, nil
 }
 
-func parseCutsceneAsC(r io.ReadSeeker, baseAddr, addr psx.Addr) (string, error) {
-	script, err := readCutscene(r, baseAddr, addr)
+func parseCutsceneAsC(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) (string, error) {
+	script, err := readCutscene(r, baseAddr, addr, length)
 	if err != nil {
 		return "", err
 	}
