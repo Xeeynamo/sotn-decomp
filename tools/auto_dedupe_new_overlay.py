@@ -139,7 +139,8 @@ def split_rodata(overlay_name, new_segments, do_overwrite):
                             jtbl_addr = "0x" + nextline.split()[1]
                             yaml_rodata_lines.append(f"      - [{jtbl_addr}, .rodata, {seg[1]}]")
 
-
+    # yaml rodata comes from multiple places. Sort the lines to make splat in right order.
+    yaml_rodata_lines.sort()
     # Now we have the yaml rodata lines. open the yaml file and write the lines into it.
     yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
     # initially open for reading. Then we'll mess with it, and open for writing.
