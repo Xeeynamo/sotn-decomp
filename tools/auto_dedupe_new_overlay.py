@@ -125,6 +125,18 @@ def split_rodata(overlay_name, new_segments, do_overwrite):
                 rodata_name = match.group(1)
                 addr = get_symbol_addr(rodata_name, overlay_name)
                 yaml_rodata_lines.append(f"      - [{addr}, .rodata, {seg[1]}]")
+
+            # We have now extracted the rodata from any INCLUDE_RODATA lines. Now also do any jump tables in any functions.
+        for line in c_lines:
+            match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
+            if match:
+                funcname = match.group(1)
+                with open(f"asm/us/st/{overlay_name}/nonmatchings/{seg[1]}/{funcname}.s") as asmfile:
+                    asmlines = asmfile.read().splitlines()
+                    for line in asmlines:
+                        if "jtbl" in line:
+                            print(line)
+
     # Now we have the yaml rodata lines. open the yaml file and write the lines into it.
     yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
     # initially open for reading. Then we'll mess with it, and open for writing.
