@@ -17,6 +17,16 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
 		_, _ = r.Read(b)
 		return b[0]
 	}
+	read2 := func(r io.ReadSeeker) int {
+		b := make([]byte, 2)
+		_, _ = r.Read(b)
+		return int(b[1]) | (int(b[0]) << 4)
+	}
+	read4 := func(r io.ReadSeeker) int {
+		b := make([]byte, 4)
+		_, _ = r.Read(b)
+		return int(b[3]) | (int(b[2]) << 4) | (int(b[1]) << 8) | (int(b[0]) << 12) | 0x80100000
+	}
 	script := make([]string, 0)
 	loop := true
 	for loop {
@@ -44,13 +54,22 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
 		case 8:
 			script = append(script, "CLOSE_DIALOG()")
 		case 9:
-			script = append(script, fmt.Sprintf("PLAY_SOUND(0x%02X, 0x%02X)", read1(r), read1(r)))
+			script = append(script, fmt.Sprintf("PLAY_SOUND(0x%X)", read2(r)))
 		case 10:
 			script = append(script, "WAIT_FOR_SOUND()")
 		case 11:
 			script = append(script, "SCRIPT_UNKNOWN_11()")
+		case 12:
+			script = append(script, fmt.Sprintf(
+				"SCRIPT_UNKNOWN_12(0x%08X)", read4(r)))
 		case 13:
 			script = append(script, "SCRIPT_UNKNOWN_13()")
+		case 14:
+			script = append(script, fmt.Sprintf(
+				"SCRIPT_UNKNOWN_14(0x%08X, 0x%08X)", read4(r), read4(r)))
+		case 15:
+			script = append(script, fmt.Sprintf(
+				"SCRIPT_UNKNOWN_15(0x%08X)", read4(r)))
 		case 16:
 			script = append(script, fmt.Sprintf("WAIT_FOR_FLAG(%d)", read1(r)))
 		case 17:
@@ -59,10 +78,9 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]string, error) {
 			script = append(script, "SCRIPT_UNKOWN_18()")
 		case 19:
 			script = append(script, fmt.Sprintf(
-				"LOAD_PORTRAIT(0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X)",
-				read1(r), read1(r), read1(r), read1(r), read1(r)))
+				"LOAD_PORTRAIT(0x%08X, %d)", read4(r), read1(r)))
 		case 20:
-			script = append(script, fmt.Sprintf("SCRIPT_UNKNOWN_20(0x%02X, 0x%02X)", read1(r), read1(r)))
+			script = append(script, fmt.Sprintf("SCRIPT_UNKNOWN_20(0x%X)", read2(r)))
 		case 0x27:
 			script = append(script, "'\\''")
 		default:
@@ -81,5 +99,5 @@ func parseCutsceneAsC(r io.ReadSeeker, baseAddr, addr psx.Addr) (string, error) 
 	if err != nil {
 		return "", err
 	}
-	return strings.ReplaceAll(strings.Join(script, ",\n"), "',\n'", "','"), nil
+	return "// clang-format off\n" + strings.ReplaceAll(strings.Join(script, ",\n"), "',\n'", "','"), nil
 }

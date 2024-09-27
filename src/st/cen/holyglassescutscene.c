@@ -395,7 +395,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                     bit_shifty += 0x100000;
                     nextChar2 = g_Dialogue.nextCharDialogue++[0];
                     LoadTPage((u_long*)bit_shifty, 1, 0, D_801805E8[nextChar2],
-                              0x100, 0x30, 0x48);
+                              0x100, 48, 72);
                 }
                 continue;
             case CSOP_SCRIPT_UNKNOWN_20:
