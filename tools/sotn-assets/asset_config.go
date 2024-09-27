@@ -132,6 +132,34 @@ func readConfig(path string) (*assetConfig, error) {
 	return &data, nil
 }
 
+func enqueueExtractAssetEntry(
+	eg *errgroup.Group,
+	handler func(assetEntry) error,
+	assetDir string,
+	srcDir string,
+	name string,
+	data []byte,
+	start int,
+	end int,
+	args []string,
+	ramBase psx.Addr) {
+	eg.Go(func() error {
+		if err := handler(assetEntry{
+			data:     data,
+			start:    start,
+			end:      end,
+			assetDir: assetDir,
+			srcDir:   srcDir,
+			ramBase:  ramBase,
+			name:     name,
+			args:     args,
+		}); err != nil {
+			return fmt.Errorf("unable to extract asset %q: %v", name, err)
+		}
+		return nil
+	})
+}
+
 func extractAssetFile(file assetFileEntry) error {
 	var eg errgroup.Group
 	data, err := os.ReadFile(file.Target)
@@ -166,21 +194,7 @@ func extractAssetFile(file assetFileEntry) error {
 				}
 				start := int(off) - segment.Start
 				end := start + size
-				eg.Go(func() error {
-					if err := handler(assetEntry{
-						data:     data,
-						start:    start,
-						end:      end,
-						assetDir: file.AssetDir,
-						srcDir:   file.SourceDir,
-						ramBase:  segment.Vram,
-						name:     name,
-						args:     args,
-					}); err != nil {
-						return fmt.Errorf("unable to extract asset %q: %v", name, err)
-					}
-					return nil
-				})
+				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram)
 			}
 			off = off2
 			kind = kind2
@@ -188,6 +202,25 @@ func extractAssetFile(file assetFileEntry) error {
 		}
 	}
 	return eg.Wait()
+}
+
+func enqueueBuildAssetEntry(
+	eg *errgroup.Group,
+	handler func(assetBuildEntry) error,
+	assetDir,
+	sourceDir,
+	name string) {
+	eg.Go(func() error {
+		err := handler(assetBuildEntry{
+			assetDir: assetDir,
+			srcDir:   sourceDir,
+			name:     name,
+		})
+		if err != nil {
+			return fmt.Errorf("unable to build asset %q: %v", name, err)
+		}
+		return nil
+	})
 }
 
 func extractFromConfig(c *assetConfig) error {
@@ -223,17 +256,7 @@ func buildAssetFile(file assetFileEntry) error {
 					name = args[0]
 					args = args[1:]
 				}
-				eg.Go(func() error {
-					err := handler(assetBuildEntry{
-						assetDir: file.AssetDir,
-						srcDir:   file.SourceDir,
-						name:     name,
-					})
-					if err != nil {
-						return fmt.Errorf("unable to build asset %q: %v", name, err)
-					}
-					return nil
-				})
+				enqueueBuildAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name)
 			}
 		}
 	}
