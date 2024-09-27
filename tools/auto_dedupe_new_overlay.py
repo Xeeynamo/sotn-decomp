@@ -26,12 +26,6 @@ file_start_funcs = {"Random"                 : ["st_update"],
                     "BottomCornerText"       : ["popup"],
                     "UnkPrimHelper"          : ["prim_helpers"]}
 
-#Given a symbol name and a set of symbol lines, get the numerical value of the symbol
-def get_symbol_offset(symname, symbols):
-    for sym in symbols:
-        name, addr = sym.split(" = ")
-        if name == symname:
-            return int(addr[2:-2], 16) # trim 0x and ;\n
 def get_file_splits(overlay_name):
     print(overlay_name)
 
@@ -49,22 +43,18 @@ def get_file_splits(overlay_name):
         if match:
             function_name = match.group(1)
             if function_name in file_start_funcs:
-                split_location = get_symbol_offset(function_name, symbollines)
-                # change from ram offset to rom offset
-                split_location -= 0x80180000
                 filename = file_start_funcs[function_name][0]
                 if len(file_start_funcs[function_name]) == 2:
                     file_last_func = file_start_funcs[function_name][1]
                 else:
                     file_last_func = ""
-                file_splits.append([f"0x{split_location:X}", filename, function_name])
+                split_location = get_symbol_addr(function_name, overlay_name)
+                file_splits.append([f"0x{split_location}", filename, function_name])
             elif function_name == file_last_func:
                 force_next_func_split = True
             elif force_next_func_split:
-                split_location = get_symbol_offset(function_name, symbollines)
-                # change from ram offset to rom offset
-                split_location -= 0x80180000
-                file_splits.append([f"0x{split_location:X}", f"{split_location:X}", function_name])
+                split_location = get_symbol_addr(function_name, overlay_name)
+                file_splits.append([f"0x{split_location}", f"{split_location}", function_name])
                 force_next_func_split = False
     return file_splits
 
@@ -119,6 +109,9 @@ def split_c_files(overlay_name, new_segments):
         f.write("\n".join(output_buffer))
     os.remove(c_file_in)
 
+# Looks in the .map file to find the location of a symbol.
+# Returns address as a string, representing hex location in the ROM (not RAM!)
+# Might return "4ADC8" for example.
 def get_symbol_addr(symbol_name, overlay_name):
     with open("build/us/st" + overlay_name + ".map") as f:
         symlines = f.read().splitlines()
@@ -128,7 +121,7 @@ def get_symbol_addr(symbol_name, overlay_name):
             address = int(lineparts[0],16)
             # change from ram offset to rom offset
             address -= 0x80180000
-            return f"0x{address:X}"
+            return f"{address:X}"
 
 def split_rodata(overlay_name, new_segments):
     # Get the rodata and create splat segments
@@ -146,7 +139,7 @@ def split_rodata(overlay_name, new_segments):
                 # To do that, we need the rodata address.
                 rodata_name = match.group(1)
                 addr = get_symbol_addr(rodata_name, overlay_name)
-                yaml_rodata_lines.append(f"      - [{addr}, .rodata, {seg[1]}]")
+                yaml_rodata_lines.append(f"      - [0x{addr}, .rodata, {seg[1]}]")
 
             # We have now extracted the rodata from any INCLUDE_RODATA lines. Now also do any jump tables in any functions.
         for line in c_lines:
