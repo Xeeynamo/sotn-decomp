@@ -10,4 +10,5 @@ DestroyEntity = 0x80172AE4;
 CalculateAngleToEntity = 0x80172C08;
 GetTargetPositionWithDistanceBuffer = 0x80172C4C;
 ProcessEvent = 0x80172EE8;
+ServantUnk0 = 0x8017353C;
 g_IsServantDestroyed = 0x8017381C;

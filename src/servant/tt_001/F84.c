@@ -77,6 +77,6 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 #include "../check_all_entities_valid.h"
 #endif
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017353C);
+#include "../servant_unk0.h"
 
 INCLUDE_RODATA("servant/tt_001/nonmatchings/F84", func_us_80170F60);

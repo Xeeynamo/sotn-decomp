@@ -517,7 +517,7 @@ void func_80171ED4(s32 arg0) {
     } else {
         e->entityId = 0xD1;
         if (D_8003C708.flags & 0x20) {
-            e->posX.val = func_80174864() ? 0xC00000 : 0x400000;
+            e->posX.val = ServantUnk0() ? 0xC00000 : 0x400000;
             e->posY.val = 0xA00000;
         } else {
             e->posX.val =
@@ -542,7 +542,7 @@ void func_80172120(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (D_8003C708.flags & 0x20) {
-        switch (func_80174864()) {
+        switch (ServantUnk0()) {
         case 0:
             D_80174B04 = 0x40;
             break;

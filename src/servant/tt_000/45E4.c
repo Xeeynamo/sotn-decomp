@@ -11,26 +11,7 @@
 #include "../check_all_entities_valid.h"
 #endif
 
-s32 func_80174864(void) {
-    if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO) {
-        if (D_8003C708.flags == 0x22) {
-            return 1;
-        }
-        if (D_8003C708.flags == 0x20) {
-            return 0;
-        }
-        return 2;
-    } else {
-        if (D_8003C708.flags == 0x22) {
-            return 0;
-        }
-
-        if (D_8003C708.flags == 0x20) {
-            return 1;
-        }
-        return 2;
-    }
-}
+#include "../servant_unk0.h"
 
 #ifdef VERSION_PSP
 void func_092EC220(void) {
