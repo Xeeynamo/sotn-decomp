@@ -4,7 +4,7 @@
 
 extern s32 g_IsServantDestroyed;
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F60);
+#include "../set_entity_animation.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
