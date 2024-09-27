@@ -170,7 +170,7 @@ void EntityGaibon(Entity* self) {
             (g_CastleFlags[SG_RETR_ENTR] == 0)) {
             InitializeEntity(D_80180B68);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            CreateEntityFromCurrentEntity(E_801B8CC0, self + 1);
+            CreateEntityFromCurrentEntity(E_GAIBON_IDLE, self + 1);
             (self + 1)->zPriority = self->zPriority + 4;
             SetStep(GAIBON_IDLE);
             break;
@@ -423,7 +423,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     PlaySfxPositional(SFX_EXPLODE_B);
-                    CreateEntityFromEntity(0x54, self, other);
+                    CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;

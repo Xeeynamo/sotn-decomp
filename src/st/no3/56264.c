@@ -10,7 +10,7 @@ void EntityBat(Entity* entity) {
     if (entity->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, entity, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
             newEntity->params = 1;
         }
         PlaySfxPositional(SFX_BAT_SCREECH_SWISH);

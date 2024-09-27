@@ -21,6 +21,7 @@ void func_801B2830(Entity* self) {
     }
 }
 
+// Maybe related to no3 EntityBackgroundLightning
 void func_801B28E4(Entity* self) {
     Entity* newEntity;
     s32 animFrame;
@@ -42,7 +43,7 @@ void func_801B28E4(Entity* self) {
         case 0:
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_801B5DE8, newEntity);
+                CreateEntityFromCurrentEntity(E_LIGHTNING_THUNDER, newEntity);
                 random0to3 = Random() & 3;
                 newEntity->posX.i.hi = D_80180EA4[random0to3][0];
                 newEntity->posY.i.hi = D_80180EA4[random0to3][1];
@@ -655,7 +656,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->animCurFrame = 18;
         entity->rotZ = -0x200;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
-        CreateEntityFromEntity(E_ID_1E, entity, &entity[1]);
+        CreateEntityFromEntity(E_CAVERN_DOOR_LEVER_UNK0, entity, &entity[1]);
         if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
             entity->rotZ = 0;
         }
@@ -817,7 +818,7 @@ void EntityCavernDoor(Entity* self) {
         if (entity == NULL) {
             break;
         }
-        CreateEntityFromEntity(6, self, entity);
+        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
         entity->posY.i.hi = 156;
         entity->posX.i.hi += -8 + (Random() & 15);
         entity->zPriority = self->zPriority + 2;

@@ -25,10 +25,24 @@ typedef enum {
     E_DUMMY_0F,
     E_DUMMY_10,
     E_ID_14 = 0x14,
-    E_ID_15,
+    E_FIREBALL,
+    E_DRACULA_UNK1B = 0x1B,
+    E_DRACULA_UNK1C,
+    E_DRACULA_UNK1D,
+    E_DRACULA_METEOR,
+    E_DRACULA_UNK1F,
+    E_DRACULA_UNK20,
+    E_DRACULA_UNK21,
+    E_DRACULA_FIREBALL,
+    E_DRACULA_UNK23,
+    E_ID_24,
     E_ID_26 = 0x26,
     E_SECRET_BUTTON = 0x28,
-    E_SECRET_STAIRS = 0x29,
+    E_SECRET_STAIRS,
+    E_DRACULA_UNK2B = 0x2B,
+    E_DRACULA_UNK2C,
+    E_DRACULA_UNK2E,
+    E_DRACULA_UNK2F
 } EntityIDs;
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);

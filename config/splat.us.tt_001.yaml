@@ -39,6 +39,6 @@ segments:
     subsegments:
       - [0x0, data]
       - [0xEFC, .rodata, F84]
-      - [0xF84, c, F84]
+      - [0xF60, c, F84]
       - [0x35B0, sbss]
   - [0xA000]

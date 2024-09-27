@@ -301,7 +301,7 @@ void EntityDeath(Entity* self) {
                 self->ext.death.unk7C = 0;
                 self->flags |= FLAG_HAS_PRIMS;
                 DestroyEntity(newEntity);
-                CreateEntityFromCurrentEntity(E_ID_5B, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_5B, newEntity);
                 prim = &g_PrimBuf[primIndex];
 
                 for (i = 0; prim != NULL; i++) {
@@ -363,7 +363,7 @@ void EntityDeath(Entity* self) {
         if (!(self->rotZ & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_5E, newEntity);
                 newEntity->rotZ = self->rotZ;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -545,7 +545,7 @@ void EntityDeath(Entity* self) {
         if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_5E, newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
@@ -592,7 +592,7 @@ void EntityUnkId5B(Entity* entity) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_5E, newEntity);
                 newEntity->animCurFrame = entity->animCurFrame;
                 newEntity->params = 1;
                 break;

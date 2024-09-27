@@ -264,7 +264,7 @@ void EntityBloodyZombie(Entity* self) {
         if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x49, self, newEntity);
+                CreateEntityFromEntity(E_BLOOD_DRIPS, self, newEntity);
                 if (self->facingLeft != 0) {
                     newEntity->posX.i.hi += 16;
                 } else {
@@ -295,7 +295,7 @@ void EntityBloodyZombie(Entity* self) {
         if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x49, self, newEntity);
+                CreateEntityFromEntity(E_BLOOD_DRIPS, self, newEntity);
                 if (self->facingLeft != 0) {
                     newEntity->posX.i.hi += 18;
                 } else {
@@ -325,7 +325,7 @@ void EntityBloodyZombie(Entity* self) {
             // Splat blood
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x4A, self, newEntity);
+                CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
                 newEntity->facingLeft = GetSideToPlayer() & 1;
             }
             self->step_s++;
@@ -356,7 +356,7 @@ void EntityBloodyZombie(Entity* self) {
                 PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x4A, self, newEntity);
+                    CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
                     newEntity->facingLeft = self->ext.generic.unk84.U8.unk0;
                     if (self->facingLeft != 0) {
                         newEntity->posX.i.hi -= 4;

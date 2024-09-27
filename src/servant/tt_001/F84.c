@@ -4,6 +4,8 @@
 
 extern s32 g_IsServantDestroyed;
 
+INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F60);
+
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
@@ -57,22 +59,24 @@ void func_us_801728FC(void) {}
 #include "../search_for_entity_in_range.h"
 #endif
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C08);
+#include "../calculate_angle_to_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172C4C);
+#include "../get_target_position_with_distance_buffer.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172CC0);
+#ifndef VERSION_PSP
+#include "../calculate_distance.h"
+#endif
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172EE8);
+#include "../process_event.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_801732BC);
+#include "../create_event_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173378);
+#include "../is_movement_allowed.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173490);
+#ifndef VERSION_PSP
+#include "../check_all_entities_valid.h"
+#endif
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017353C);
-
-INCLUDE_RODATA("servant/tt_001/nonmatchings/F84", func_us_80170F60);
+#include "../servant_unk0.h"

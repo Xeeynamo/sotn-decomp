@@ -279,7 +279,8 @@ void HitDetection(void) {
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (otherEntity != NULL) {
                         // EntitySoulStealOrb
-                        CreateEntityFromEntity(7, iterEnt1, otherEntity);
+                        CreateEntityFromEntity(
+                            E_SOUL_STEAL_ORB, iterEnt1, otherEntity);
                     }
                 }
                 miscVar1 = g_testCollEnemyLookup[entFrom5C->enemyId];
@@ -416,7 +417,7 @@ void HitDetection(void) {
                             if (otherEntity != NULL) {
                                 // EntityEnemyBlood
                                 CreateEntityFromEntity(
-                                    13, iterEnt1, otherEntity);
+                                    E_ENEMY_BLOOD, iterEnt1, otherEntity);
                                 if (xCoord > iterEnt1->posX.i.hi) {
                                     otherEntity->params = 1;
                                 }
@@ -513,11 +514,11 @@ void HitDetection(void) {
                                 miscVar3 -= 0x80;
                                 // Create an EntityEquipItemDrop
                                 CreateEntityFromEntity(
-                                    10, iterEnt1, otherEntity);
+                                    E_EQUIP_ITEM_DROP, iterEnt1, otherEntity);
                             } else {
                                 // Create an EntityPrizeDrop
                                 CreateEntityFromEntity(
-                                    3, iterEnt1, otherEntity);
+                                    E_PRIZE_DROP, iterEnt1, otherEntity);
                             }
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned

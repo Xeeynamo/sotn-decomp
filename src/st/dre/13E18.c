@@ -83,7 +83,8 @@ void EntityUnkId1C(Entity* self) {
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x1D, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_SUCCUBUS_PINK_BALL_PROJECTILE, self, newEntity);
                     newEntity->params = i;
                     if (i != 0) {
                         newEntity->posX.i.hi -= 2;

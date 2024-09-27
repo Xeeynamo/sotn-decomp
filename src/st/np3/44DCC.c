@@ -629,7 +629,7 @@ s32 func_801C6458(s16 yOffset) {
             newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(
-                    E_MERMAN_UNK0, g_CurrentEntity, newEntity);
+                    E_MERMAN_JUMP_WATER, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yOffset;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
@@ -795,7 +795,8 @@ void EntityMerman2(Entity* self) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK0, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_MERMAN_JUMP_WATER, self, newEntity);
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -844,7 +845,7 @@ void EntityMerman2(Entity* self) {
             if (self->velocityY < 0) {
                 newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN2_UNK0, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN2_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
                     newEntity->zPriority = self->zPriority + 1;
                 }
@@ -948,7 +949,8 @@ void EntityMerman2(Entity* self) {
                 for (offset = 0; i < 3; i++, offset += 8) {
                     newEntity = AllocEntity(newEntity2, newEntity2 + 32);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_MERMAN2_UNK2, self, newEntity);
+                        CreateEntityFromEntity(
+                            E_MERMAN2_SPIT_FIRE, self, newEntity);
                         if (self->facingLeft != 0) {
                             newEntity->posX.i.hi += 8 + offset;
                         } else {
@@ -1134,7 +1136,8 @@ void EntityMerman2(Entity* self) {
                 } else {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_MERMAN2_UNK3, self, newEntity);
+                        CreateEntityFromEntity(
+                            E_MERMAN2_DYING, self, newEntity);
                         newEntity->facingLeft = self->facingLeft;
                         newEntity->params = prim->clut;
                         newEntity->zPriority = self->zPriority;
@@ -1476,10 +1479,12 @@ void EntityMermanSpawner(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[170]);
                 if (newEntity != 0) {
                     if (Random() & 1) {
-                        CreateEntityFromCurrentEntity(0x32, newEntity);
+                        CreateEntityFromCurrentEntity(
+                            E_MERMAN_SPAWNER_32, newEntity);
                         newEntity->params = Random() & 1;
                     } else {
-                        CreateEntityFromCurrentEntity(0x39, newEntity);
+                        CreateEntityFromCurrentEntity(
+                            E_MERMAN_SPAWNER_39, newEntity);
                     }
                     newEntity->posX.i.hi = temp_s0_2 - g_Tilemap.scrollX.i.hi;
                     newEntity->posY.i.hi = temp2 - g_Tilemap.scrollY.i.hi;

@@ -70,7 +70,7 @@ void EntityBreakable(Entity* self) {
         for (ptr = &xyOffsets, i = 0; i < 4; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromEntity(0x80, self, newEntity);
+                CreateEntityFromEntity(E_BREAKABLE_UNK0, self, newEntity);
                 newEntity->posX.i.hi += *ptr;
                 ptr++;
                 newEntity->posY.i.hi = newEntity->posY.i.hi + *ptr;
@@ -86,7 +86,7 @@ void EntityBreakable(Entity* self) {
             for (j = 0; j < 3; j++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(0x80, self, newEntity);
+                    CreateEntityFromEntity(E_BREAKABLE_UNK0, self, newEntity);
                     newEntity->posX.i.hi += *ptr;
                     ptr++;
                     newEntity->posY.i.hi += *ptr;

@@ -58,7 +58,7 @@ void EntitySubWeaponContainer(Entity* self) {
         if (!(g_Timer & 0xF)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_func_801C77B8, self, newEntity);
+                CreateEntityFromEntity(E_LIQUID_BUBBLES, self, newEntity);
                 rnd = (Random() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
@@ -88,7 +88,7 @@ void EntitySubWeaponContainer(Entity* self) {
         while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_func_801C7538, self, newEntity);
+                CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->posX;
                 newEntity->posY.i.hi += glassPieceTBL->posY;
                 newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
@@ -104,7 +104,7 @@ void EntitySubWeaponContainer(Entity* self) {
             newEntity = AllocEntity(
                 &g_Entities[UNK_ENTITY_51], &g_Entities[UNK_ENTITY_100]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_func_801C7654, self, newEntity);
+                CreateEntityFromEntity(E_FALLING_LIQUID, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
