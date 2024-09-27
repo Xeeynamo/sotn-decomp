@@ -60,6 +60,12 @@ segments:
       - [0x14AC, data]
       - [0x1608, .data, e_layout] # layout entries data
       - [0x16C0, data]
+      - [0x16C8, .data, cutscene_data]
+      - [0x1D08, data]
+      - [0x800C, raw, cutscene_alucard]
+      - [0x8D8C, raw, cutscene_mother]
+      - [0x9B0C, raw, cutscene_succubus]
+      - [0xA88C, data]
       - [0xB548, .data, tile_data] # tile data
       - [0xBD48, .data, tile_data] # tile definitions
       - [0x10168, .data, sprites]

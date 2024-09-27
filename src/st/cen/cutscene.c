@@ -153,7 +153,7 @@ void CEN_CutsceneExec(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(g_CutsceneScript)) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             D_8003C704 = 1;
             g_CutsceneFlags = 0;

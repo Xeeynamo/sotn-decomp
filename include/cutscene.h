@@ -43,8 +43,8 @@ typedef enum {
 #define WAIT_FOR_SOUND() CSOP_WAIT_FOR_SOUND
 #define SCRIPT_UNKNOWN_11() CSOP_UNK_11
 #define SCRIPT_UNKNOWN_12(x) CSOP_SCRIPT_UNKNOWN_12, script_word(x)
-#define SCRIPT_UNKNOWN_14(x, y)                                                \
-    CSOP_SCRIPT_UNKNOWN_14, script_word(x), script_word(y)
+#define SCRIPT_UNKNOWN_14(x, y, z)                                             \
+    CSOP_SCRIPT_UNKNOWN_14, script_word(x), script_word(y), script_word(z)
 #define SCRIPT_UNKNOWN_15(x) CSOP_SCRIPT_UNKNOWN_15, script_word(x)
 #define WAIT_FOR_FLAG(x) CSOP_WAIT_FOR_FLAG, x
 #define SET_FLAG(x) CSOP_SET_FLAG, x

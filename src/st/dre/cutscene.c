@@ -133,9 +133,9 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if (self->params) {
-            ptr = SetCutsceneScript(D_80181B65);
+            ptr = SetCutsceneScript(OVL_EXPORT(cutscene_data) + 0x49D);
         } else {
-            ptr = SetCutsceneScript(D_801816C8);
+            ptr = SetCutsceneScript(OVL_EXPORT(cutscene_data));
         }
         if (ptr) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
