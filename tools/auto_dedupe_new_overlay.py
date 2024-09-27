@@ -76,7 +76,7 @@ def split_c_files(overlay_name, new_segments, do_overwrite):
     file_header = '// SPDX-License-Identifier: AGPL-3.0-or-later\n#include "common.h"\n'
     output_buffer = []
     overlay_dir = f"src/st/{overlay_name}/"
-    output_filename = "first_c_file.c"
+    output_filename = "first_c_file"
     for line in c_file_lines:
         match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
         if match:
