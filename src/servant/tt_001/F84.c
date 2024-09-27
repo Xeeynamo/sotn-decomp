@@ -61,7 +61,9 @@ void func_us_801728FC(void) {}
 
 #include "../get_target_position_with_distance_buffer.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172CC0);
+#ifndef VERSION_PSP
+#include "../calculate_distance.h"
+#endif
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
@@ -69,10 +71,12 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
 #include "../create_event_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173378);
+#include "../is_movement_allowed.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173490);
+#ifndef VERSION_PSP
+#include "../check_all_entities_valid.h"
+#endif
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017353C);
+#include "../servant_unk0.h"
 
 INCLUDE_RODATA("servant/tt_001/nonmatchings/F84", func_us_80170F60);

@@ -517,7 +517,7 @@ void func_80171ED4(s32 arg0) {
     } else {
         e->entityId = 0xD1;
         if (D_8003C708.flags & 0x20) {
-            e->posX.val = func_80174864() ? 0xC00000 : 0x400000;
+            e->posX.val = ServantUnk0() ? 0xC00000 : 0x400000;
             e->posY.val = 0xA00000;
         } else {
             e->posX.val =
@@ -542,7 +542,7 @@ void func_80172120(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (D_8003C708.flags & 0x20) {
-        switch (func_80174864()) {
+        switch (ServantUnk0()) {
         case 0:
             D_80174B04 = 0x40;
             break;
@@ -827,7 +827,7 @@ void func_80172C30(Entity* self) {
             SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
                          << 0xC) >>
             0xC;
-        if (func_801746A0(0) || D_80174B34 >= 0x19) {
+        if (IsMovementAllowed(0) || D_80174B34 >= 0x19) {
             for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
                 D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
                     D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].x;
@@ -1057,13 +1057,8 @@ void func_80173C24(void) {}
 #include "../get_target_position_with_distance_buffer.h"
 
 #ifndef VERSION_PSP
-s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
-    s32 diffX = x - entity->posX.i.hi;
-    s32 diffY = y - entity->posY.i.hi;
 
-    return SquareRoot12((SQ(diffX) + SQ(diffY)) << 12) >> 12;
-}
-
+#include "../calculate_distance.h"
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
