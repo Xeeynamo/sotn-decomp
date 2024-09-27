@@ -9,7 +9,7 @@
 #include "../cutscene_unk1.h"
 
 // not an exact duplicate
-u8 CutsceneUnk2(const char* textDialogue) {
+u8 SetCutsceneScript(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -117,7 +117,7 @@ void EntityDraculaCutscene(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (CutsceneUnk2(D_801829D8)) {
+        if (SetCutsceneScript(D_801829D8)) {
             self->flags |= FLAG_HAS_PRIMS;
             g_CutsceneFlags = 0;
             D_801C2580 = 0;

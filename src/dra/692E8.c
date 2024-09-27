@@ -1293,8 +1293,8 @@ block_160:
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
         u32 unk0C_var = (g_Player.unk0C / 2) & 2;
-        arg0->unk14 = D_800ACED0[4].x - unk0C_var;
-        arg0->unk1C = D_800ACED0[4].y + unk0C_var;
+        arg0->unk14 = D_800ACEE0[0].x - unk0C_var;
+        arg0->unk1C = D_800ACEE0[0].y + unk0C_var;
         arg0->unk18 = D_800ACED0[1].y - 1;
         arg0->unk20 = D_800ACEC0[1].y + 1;
     } else {
