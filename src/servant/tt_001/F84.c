@@ -61,7 +61,9 @@ void func_us_801728FC(void) {}
 
 #include "../get_target_position_with_distance_buffer.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172CC0);
+#ifndef VERSION_PSP
+#include "../calculate_distance.h"
+#endif
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 

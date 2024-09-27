@@ -1057,13 +1057,8 @@ void func_80173C24(void) {}
 #include "../get_target_position_with_distance_buffer.h"
 
 #ifndef VERSION_PSP
-s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
-    s32 diffX = x - entity->posX.i.hi;
-    s32 diffY = y - entity->posY.i.hi;
 
-    return SquareRoot12((SQ(diffX) + SQ(diffY)) << 12) >> 12;
-}
-
+#include "../calculate_distance.h"
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
