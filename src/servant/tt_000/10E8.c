@@ -827,7 +827,7 @@ void func_80172C30(Entity* self) {
             SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
                          << 0xC) >>
             0xC;
-        if (func_801746A0(0) || D_80174B34 >= 0x19) {
+        if (IsMovementAllowed(0) || D_80174B34 >= 0x19) {
             for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
                 D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
                     D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].x;

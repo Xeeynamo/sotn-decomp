@@ -71,7 +71,7 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
 #include "../create_event_entity.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173378);
+#include "../is_movement_allowed.h"
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80173490);
 
