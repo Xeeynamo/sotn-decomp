@@ -7,7 +7,7 @@
 
 #include "../cutscene_unk1.h"
 
-#include "../cutscene_unk2.h"
+#include "../set_cutscene_script.h"
 
 #include "../cutscene_unk3.h"
 

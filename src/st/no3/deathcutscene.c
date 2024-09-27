@@ -12,7 +12,7 @@ void CutsceneUnk1(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-#include "../cutscene_unk2.h"
+#include "../set_cutscene_script.h"
 
 void CutsceneUnk3(s16 yOffset) {
     RECT rect;

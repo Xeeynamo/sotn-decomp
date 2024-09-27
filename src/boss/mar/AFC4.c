@@ -7,7 +7,7 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_unk1.h"
 
-#include "../../st/cutscene_unk2.h"
+#include "../../st/set_cutscene_script.h"
 
 #include "../../st/cutscene_unk3.h"
 
