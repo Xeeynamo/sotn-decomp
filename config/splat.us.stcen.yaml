@@ -57,6 +57,8 @@ segments:
       - [0x13F0, .data, cutscene_data]
       - [0x1658, cmp, D_80181658]
       - [0x199C, cmp, D_8018199C]
+      - [0x1F40, raw, cutscene_alucard]
+      - [0x2CC0, raw, cutscene_maria]
       - [0x3A40, cmp, D_80183A40]
       - [0x4B70, cmp, D_80184B70]
       - [0x5830, cmp, D_80185830]
