@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-static u8 SetCutsceneScript(const char* script) {
+static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -15,7 +15,7 @@ static u8 SetCutsceneScript(const char* script) {
         g_Dialogue.primIndex[2] = 0;
         return 0;
     }
-    g_Dialogue.nextCharDialogue = script;
+    g_Dialogue.scriptCur = script;
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;

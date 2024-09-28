@@ -81,7 +81,7 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 g_Dialogue.nextCharTimer--;
                 return;
             }
-            nextChar = *g_Dialogue.nextCharDialogue++;
+            nextChar = *g_Dialogue.scriptCur++;
             switch (nextChar) {
             case 0:
                 self->step = 7;
@@ -114,10 +114,10 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 self->step++;
                 return;
             case 2:
-                g_Dialogue.unk17 = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.unk17 = *g_Dialogue.scriptCur++;
                 continue;
             case 3:
-                g_Dialogue.nextCharTimer = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
                 if (skip_cutscene) {
                     continue;
                 }
@@ -134,12 +134,12 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 return;
             case 5:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue += 2;
+                    g_Dialogue.scriptCur += 2;
                     continue;
                 }
                 // fake reuse of i?
-                i = *g_Dialogue.nextCharDialogue++;
-                nextChar2 = *g_Dialogue.nextCharDialogue++;
+                i = *g_Dialogue.scriptCur++;
+                nextChar2 = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
                 uCoord = D_801813C8[nextChar2 & 1];
                 vCoord = D_801813CC[nextChar2 & 1];
@@ -182,12 +182,12 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 return;
             case 7:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue++;
-                    g_Dialogue.nextCharDialogue++;
+                    g_Dialogue.scriptCur++;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
-                g_Dialogue.startX = *g_Dialogue.nextCharDialogue++;
-                g_Dialogue.startY = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.startX = *g_Dialogue.scriptCur++;
+                g_Dialogue.startY = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
                 prim->y0 = prim->y1 = g_Dialogue.startY;
@@ -209,13 +209,13 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 return;
             case 9:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue++;
-                    g_Dialogue.nextCharDialogue++;
+                    g_Dialogue.scriptCur++;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
-                nextChar = *g_Dialogue.nextCharDialogue++;
+                nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
-                nextChar |= *g_Dialogue.nextCharDialogue++;
+                nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
             case 10:
@@ -225,7 +225,7 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 if (g_api.func_80131F68() != false) {
                     continue;
                 }
-                *g_Dialogue.nextCharDialogue--;
+                *g_Dialogue.scriptCur--;
                 return;
             case 11:
                 if (skip_cutscene) {
@@ -234,87 +234,87 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 if (g_api.func_80131F68() != true) {
                     continue;
                 }
-                *g_Dialogue.nextCharDialogue--;
+                *g_Dialogue.scriptCur--;
                 return;
             case 12:
-                ptr = (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 SetCutsceneEnd((u8*)ptr);
                 continue;
             case 13:
                 continue;
             case 14:
-                ptr = (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr += (u16)0x100000;
-                g_Dialogue.nextCharDialogue += *(u16*)ptr << 2;
+                g_Dialogue.scriptCur += *(u16*)ptr << 2;
 
-                ptr = (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue;
-                g_Dialogue.nextCharDialogue = (u8*)ptr + 0x100000;
+                ptr |= (u_long)*g_Dialogue.scriptCur;
+                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
                 continue;
 
             case 15:
-                ptr = (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= (u_long)*g_Dialogue.nextCharDialogue;
-                g_Dialogue.nextCharDialogue = (u8*)ptr + 0x100000;
+                ptr |= (u_long)*g_Dialogue.scriptCur;
+                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
                 continue;
 
             case 16:
-                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
-                    g_Dialogue.nextCharDialogue--;
+                if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
+                    g_Dialogue.scriptCur--;
                     return;
                 }
-                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
-                *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur);
+                *g_Dialogue.scriptCur++;
                 continue;
             case 17:
-                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
                 continue;
             case 19:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue += 5;
+                    g_Dialogue.scriptCur += 5;
                 } else {
-                    ptr = (u_long)*g_Dialogue.nextCharDialogue++;
+                    ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
+                    ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr += 0x100000;
-                    nextChar2 = g_Dialogue.nextCharDialogue++[0];
+                    nextChar2 = g_Dialogue.scriptCur++[0];
                     LoadTPage((u32*)ptr, 1, 0, D_801813D4[nextChar2], 0x100,
                               0x30, 0x48);
                 }
                 continue;
             case 20:
-                nextChar = *g_Dialogue.nextCharDialogue++;
+                nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
-                nextChar |= *g_Dialogue.nextCharDialogue++;
+                nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
             case 21:
@@ -323,16 +323,16 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 D_801CB73C = 0;
                 continue;
             case 22:
-                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur++);
                 continue;
             case 23:
                 return;
             case 24:
-                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
-                    *g_Dialogue.nextCharDialogue--;
+                if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
+                    *g_Dialogue.scriptCur--;
                     return;
                 }
-                *g_Dialogue.nextCharDialogue++;
+                *g_Dialogue.scriptCur++;
                 continue;
             default:
                 if (skip_cutscene) {

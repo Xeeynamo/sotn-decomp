@@ -97,7 +97,7 @@ void MAR_CutsceneExec(Entity* self) {
                 return;
             }
 
-            nextChar = *g_Dialogue.nextCharDialogue++;
+            nextChar = *g_Dialogue.scriptCur++;
             switch (nextChar) {
             case 0:
                 self->step = 7;
@@ -132,11 +132,11 @@ void MAR_CutsceneExec(Entity* self) {
                 return;
 
             case 2:
-                g_Dialogue.unk17 = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.unk17 = *g_Dialogue.scriptCur++;
                 continue;
 
             case 3:
-                g_Dialogue.nextCharTimer = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
                 if (skip_cutscene) {
                     continue;
                 }
@@ -155,13 +155,13 @@ void MAR_CutsceneExec(Entity* self) {
 
             case 5:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue += 2;
+                    g_Dialogue.scriptCur += 2;
                     continue;
                 }
 
                 // fake reuse of i?
-                i = *g_Dialogue.nextCharDialogue++;
-                nextChar2 = *g_Dialogue.nextCharDialogue++;
+                i = *g_Dialogue.scriptCur++;
+                nextChar2 = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
                 x = D_us_801805D4[nextChar2 & 1];
                 y = D_us_801805D8[nextChar2 & 1];
@@ -206,12 +206,12 @@ void MAR_CutsceneExec(Entity* self) {
 
             case 7:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue++;
-                    g_Dialogue.nextCharDialogue++;
+                    g_Dialogue.scriptCur++;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
-                g_Dialogue.startX = *g_Dialogue.nextCharDialogue++;
-                g_Dialogue.startY = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.startX = *g_Dialogue.scriptCur++;
+                g_Dialogue.startY = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
                 prim->y0 = prim->y1 = g_Dialogue.startY;
@@ -234,13 +234,13 @@ void MAR_CutsceneExec(Entity* self) {
 
             case 9:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue++;
-                    g_Dialogue.nextCharDialogue++;
+                    g_Dialogue.scriptCur++;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
-                nextChar = *g_Dialogue.nextCharDialogue++;
+                nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
-                nextChar |= *g_Dialogue.nextCharDialogue++;
+                nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
 
@@ -251,7 +251,7 @@ void MAR_CutsceneExec(Entity* self) {
                 if (g_api.func_80131F68() != false) {
                     continue;
                 }
-                *g_Dialogue.nextCharDialogue--;
+                *g_Dialogue.scriptCur--;
                 return;
 
             case 11:
@@ -261,17 +261,17 @@ void MAR_CutsceneExec(Entity* self) {
                 if (g_api.func_80131F68() != true) {
                     continue;
                 }
-                *g_Dialogue.nextCharDialogue--;
+                *g_Dialogue.scriptCur--;
                 return;
 
             case 12:
-                ptr = *g_Dialogue.nextCharDialogue++;
+                ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 SetCutsceneEnd(ptr);
                 continue;
 
@@ -279,49 +279,49 @@ void MAR_CutsceneExec(Entity* self) {
                 continue;
 
             case 14:
-                ptr = *g_Dialogue.nextCharDialogue++;
+                ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 // This needs help. Casting the const to short is good.
                 ptr += (u16)0x100000;
-                g_Dialogue.nextCharDialogue += *(u16*)ptr << 2;
+                g_Dialogue.scriptCur += *(u16*)ptr << 2;
 
-                ptr = *g_Dialogue.nextCharDialogue++;
+                ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue;
-                g_Dialogue.nextCharDialogue = (const char*)ptr + 0x100000;
+                ptr |= *g_Dialogue.scriptCur;
+                g_Dialogue.scriptCur = (const char*)ptr + 0x100000;
                 continue;
 
             case 15:
-                ptr = *g_Dialogue.nextCharDialogue++;
+                ptr = *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue++;
+                ptr |= *g_Dialogue.scriptCur++;
                 ptr <<= 4;
-                ptr |= *g_Dialogue.nextCharDialogue;
-                g_Dialogue.nextCharDialogue = (const char*)ptr + 0x100000;
+                ptr |= *g_Dialogue.scriptCur;
+                g_Dialogue.scriptCur = (const char*)ptr + 0x100000;
                 continue;
 
             case 16:
-                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
-                    g_Dialogue.nextCharDialogue--;
+                if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
+                    g_Dialogue.scriptCur--;
                     return;
                 }
-                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
-                *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur);
+                *g_Dialogue.scriptCur++;
                 continue;
 
             case 17:
-                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                 continue;
 
             case 18:
@@ -330,26 +330,26 @@ void MAR_CutsceneExec(Entity* self) {
 
             case 19:
                 if (skip_cutscene) {
-                    g_Dialogue.nextCharDialogue += 5;
+                    g_Dialogue.scriptCur += 5;
                 } else {
-                    ptr = *g_Dialogue.nextCharDialogue++;
+                    ptr = *g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= *g_Dialogue.nextCharDialogue++;
+                    ptr |= *g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= *g_Dialogue.nextCharDialogue++;
+                    ptr |= *g_Dialogue.scriptCur++;
                     ptr <<= 4;
-                    ptr |= *g_Dialogue.nextCharDialogue++;
+                    ptr |= *g_Dialogue.scriptCur++;
                     ptr += 0x100000;
-                    nextChar2 = g_Dialogue.nextCharDialogue++[0];
+                    nextChar2 = g_Dialogue.scriptCur++[0];
                     LoadTPage((u_long*)ptr, 1, 0, D_us_801805E4[nextChar2],
                               0x100, 0x30, 0x48);
                 }
                 continue;
 
             case 20:
-                nextChar = *g_Dialogue.nextCharDialogue++;
+                nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
-                nextChar |= *g_Dialogue.nextCharDialogue++;
+                nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
 
@@ -360,23 +360,23 @@ void MAR_CutsceneExec(Entity* self) {
                 continue;
 
             case 22:
-                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur++);
                 continue;
 
             case 23:
                 return;
 
             case 24:
-                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
-                    *g_Dialogue.nextCharDialogue--;
+                if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
+                    *g_Dialogue.scriptCur--;
                     return;
                 }
-                *g_Dialogue.nextCharDialogue++;
+                *g_Dialogue.scriptCur++;
                 continue;
             }
 
             if (skip_cutscene) {
-                g_Dialogue.nextCharDialogue++;
+                g_Dialogue.scriptCur++;
                 continue;
             }
             g_Dialogue.nextCharTimer = g_Dialogue.unk17;
