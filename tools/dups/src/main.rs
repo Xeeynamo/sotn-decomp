@@ -342,6 +342,10 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         let mut funcs = Vec::new();
         process_directory(&dir, &mut funcs);
 
+        // add matchings dir as well to get decompiled funcs
+        let matchings = dir.replace("nonmatchings", "matchings");
+        process_directory(&matchings, &mut funcs);
+
         // sort functions by vram address
         funcs.sort_by_key(|function| {
             function
