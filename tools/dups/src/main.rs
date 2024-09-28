@@ -120,8 +120,6 @@ Finds duplicates in two asm directories and prints them out in order to identify
 
 Usage:
 
-make force_extract
-
 Do a 2-way compare with ordering
 cargo run --release -- --dir ../../asm/us/st/nz0/nonmatchings/ --dir ../../asm/us/st/np3/nonmatchings/ --threshold .94
 
@@ -341,6 +339,10 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         let dir = pair.asm_dir;
         let mut funcs = Vec::new();
         process_directory(&dir, &mut funcs);
+
+        // add matchings dir as well to get decompiled funcs
+        let matchings = dir.replace("nonmatchings", "matchings");
+        process_directory(&matchings, &mut funcs);
 
         // sort functions by vram address
         funcs.sort_by_key(|function| {

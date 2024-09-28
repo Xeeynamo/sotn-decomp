@@ -34,7 +34,46 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
 
 void func_us_80171560(Entity* self) {}
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171568);
+#if defined(VERSION_PSP)
+void func_psp_092EA460(Entity* self, s32 entityId, s32 params) {
+#else
+Entity* func_us_80171568(Entity* self, s32 entityId) {
+#endif
+    Entity* entity;
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        entity = &g_Entities[i + 5];
+        if (!entity->entityId) {
+            break;
+        }
+    }
+
+    if (!entity->entityId) {
+        DestroyEntity(entity);
+#if defined(VERSION_PSP)
+        entity->entityId = entityId;
+#else
+        if (entityId == 0) {
+            entity->entityId = 0xDA;
+        } else {
+            entity->entityId = 0xDB;
+        }
+#endif
+        entity->zPriority = self->zPriority;
+        entity->facingLeft = self->facingLeft;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->posX.val = self->posX.val;
+        entity->posY.val = self->posY.val;
+        entity->ext.factory.parent = self;
+#if defined(VERSION_PSP)
+        entity->params = params;
+#else
+        return entity;
+#endif
+    }
+    // BUG? There is a fall-through case here with no return value on PSX
+}
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171624);
 
