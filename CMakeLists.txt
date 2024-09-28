@@ -253,7 +253,7 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/33164.c
     src/st/sel/3410C.c
     src/st/sel/3585C.c
-    src/st/sel/3642C.c
+    src/st/sel/cutscene.c
 )
 
 set(SOURCE_FILES_STAGE_CEN
