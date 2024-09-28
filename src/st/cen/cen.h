@@ -73,6 +73,5 @@ extern u16 g_ESoulStealOrbAngles[];
 extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit D_8018125C[];
-extern u8 OVL_EXPORT(cutscene_data)[];
 
 #endif

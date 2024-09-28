@@ -68,7 +68,8 @@ static void func_801BECCC(Entity* self) {
 
 #include "../cutscene_scale_avatar.h"
 
-void NO3_CutsceneExec(Entity* self) {
+extern u8 OVL_EXPORT(cutscene_data)[];
+void OVL_EXPORT(CutsceneExec)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -99,7 +100,7 @@ void NO3_CutsceneExec(Entity* self) {
             return;
         }
         g_Entities[192].params = 0x100;
-        if (SetCutsceneScript(D_80184CE0)) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_801D7DD4 = 0;

@@ -19,7 +19,7 @@ static const char* g_ActorNames[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
 
 #include "../cutscene_unk6.h"
 
-void DRE_CutsceneExec(void) {
+static void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
 
@@ -92,7 +92,8 @@ void func_80194F14(Entity* self) {
 // dialogue with mother opens as alucard walks right ID 20
 // Same pattern as a lot of other cutscenes, main differences
 // are related to the self->params if-else statements.
-void EntitySuccubusCutscene(Entity* self) {
+extern u8 OVL_EXPORT(cutscene_data)[];
+void OVL_EXPORT(CutsceneExec)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -119,7 +120,7 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if ((self->step != 0) && (g_Dialogue.unk3C != 0)) {
-            DRE_CutsceneExec();
+            CutsceneRun();
         }
     }
     switch (self->step) {

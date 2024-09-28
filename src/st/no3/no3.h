@@ -300,7 +300,6 @@ extern s32 skip_cutscene;
 extern u32 g_CutsceneFlags;
 extern s32 D_801D7DD4;
 extern u16 D_801D7D60;
-extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
 extern s16 D_80181808[];
