@@ -35,6 +35,15 @@ files:
         assets:
           - [0x3B0C, cutscene, cutscene_data]
           - [0x3CB8, skip]
+  - target: disks/us/ST/ST0/ST0.BIN
+    asset_path: assets/st/st0
+    src_path: src/st/st0
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x29D8, cutscene, cutscene_data]
+          - [0x2C4C, skip]
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon

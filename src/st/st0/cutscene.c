@@ -78,7 +78,8 @@ const char* g_ActorNames[] = {_S("Richter"), _S("Dracula")};
 
 #include "../cutscene_scale_avatar.h"
 
-void ST0_CutsceneExec(Entity* self) {
+extern u8 OVL_EXPORT(cutscene_data)[];
+void OVL_EXPORT(CutsceneExec)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -112,7 +113,7 @@ void ST0_CutsceneExec(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (SetCutsceneScript(D_801829D8)) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
             self->flags |= FLAG_HAS_PRIMS;
             g_CutsceneFlags = 0;
             D_801C2580 = 0;

@@ -206,7 +206,6 @@ extern u16 D_8018078C[];
 extern u16 D_80180790[];
 extern u16 D_80180794[];
 extern s16 D_80180798[];
-extern const char D_801829D8[];
 extern s32 skip_cutscene;
 extern s32 D_801C2504;
 extern u32 g_CutsceneFlags;
