@@ -14,7 +14,7 @@ extern s32 g_HandId;
 extern AnimationFrame D_D6000_8017A514[];
 extern AnimationFrame D_D6000_8017A548[];
 extern AnimationFrame* D_D6000_8017A628[];
-extern FrameProperty D_D6000_8017A554;
+extern FrameProperty D_D6000_8017A554[];
 extern WeaponAnimation D_D6000_8017A5E4[];
 extern u8 D_D6000_8017A640[];
 extern s32 D_D6000_8017A648[];
@@ -129,9 +129,9 @@ void func_ptr_80170008(Entity* self) {
 
         left = 0;
         clut = 0x110;
-        self->palette = *(D_D6000_8017A640 + s0) + ((u16)randRes | 0x8110);
+        self->palette = D_D6000_8017A640[s0] + ((u16)randRes | 0x8110);
         if (temp) {
-            self->palette = *(D_D6000_8017A660 + s0);
+            self->palette = D_D6000_8017A660[s0];
         }
         self->unk5A = 0x64;
         if (g_HandId != 0) {
@@ -182,7 +182,7 @@ void func_ptr_80170008(Entity* self) {
             self->ext.weapon_030.unkA4 = 3;
         }
         g_api.func_80102CD8(4);
-        g_api.PlaySfx(0x654);
+        g_api.PlaySfx(SFX_EXPLODE_A);
         self->step++;
         break;
     case 1:
@@ -225,10 +225,10 @@ void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         if (self->animFrameDuration == 1 && self->animFrameIdx == 2) {
-            g_api.PlaySfx(0x6C9);
+            g_api.PlaySfx(SFX_CREAK);
         }
         if (self->animFrameDuration == 1 && self->animFrameIdx == 5) {
-            g_api.PlaySfx(0x627);
+            g_api.PlaySfx(SFX_ARROW_SHOT_C);
             g_api.CreateEntFactoryFromEntity(
                 self, 0x46 + ((g_HandId + 1) << 0xC) + ((temp_s4 - 2) << 0x10),
                 0);
@@ -236,7 +236,7 @@ void func_ptr_80170008(Entity* self) {
         if (self->animFrameDuration < 0) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            if ((--self->ext.weapon_030.unk86 << 0x10) == 0) {
+            if (--self->ext.weapon_030.unk86 == 0) {
                 self->ext.weapon_030.unk7E = 0x18;
                 self->step = 7;
             }
@@ -257,7 +257,7 @@ void func_ptr_80170008(Entity* self) {
 
         g_api.CheckCollision(posX, (s16)(self->posY.i.hi + 0x18), &collider, 0);
 
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi = self->posY.i.hi + collider.unk18;
             velX = self->velocityX;
             effect = collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
@@ -351,8 +351,7 @@ void func_ptr_80170008(Entity* self) {
             randRes = (rand() & 1);
 
             for (i = 0; i < randRes + 2; i++) {
-                g_api.CreateEntFactoryFromEntity(
-                    self, ((g_HandId + 1) << 0xC) + 0x20046, 0);
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x46, 2), 0);
             }
 
             self->ext.weapon_030.unk7C = (rand() & 0x1F) + 0x50;
@@ -363,9 +362,8 @@ void func_ptr_80170008(Entity* self) {
         self->ext.weapon_030.unk7C--;
         break;
     case 6:
-        if (((s32*)self)[0x14] == 0x10004) {
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x6A, 0);
+        if (self->animFrameIdx == 4 && self->animFrameDuration == 1) {
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x6A, 0), 0);
         }
         if (self->animFrameDuration < 0) {
             self->ext.weapon_030.unk7E = 0x18;
@@ -441,7 +439,7 @@ void func_ptr_80170008(Entity* self) {
     }
 
     if (!stopAnimationUpdate) {
-        g_api.UpdateAnim(&D_D6000_8017A554, NULL);
+        g_api.UpdateAnim(D_D6000_8017A554, NULL);
     }
 }
 
