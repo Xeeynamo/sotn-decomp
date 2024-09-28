@@ -120,8 +120,6 @@ Finds duplicates in two asm directories and prints them out in order to identify
 
 Usage:
 
-make force_extract
-
 Do a 2-way compare with ordering
 cargo run --release -- --dir ../../asm/us/st/nz0/nonmatchings/ --dir ../../asm/us/st/np3/nonmatchings/ --threshold .94
 
