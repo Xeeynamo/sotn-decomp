@@ -179,8 +179,8 @@ void func_us_80171864(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (D_8003C704 == 0) {
-            self->ext.ghost.unkA4 = func_us_80171284(self);
-            if (self->ext.ghost.unkA4) {
+            self->ext.ghost.unkA2 = func_us_80171284(self);
+            if (self->ext.ghost.unkA2) {
                 self->step++;
                 break;
             }
@@ -196,13 +196,13 @@ void func_us_80171864(Entity* self) {
         if (D_8003C704) {
             self->step = 1;
         }
-        if (!CheckEntityValid(self->ext.ghost.unkA4)) {
+        if (!CheckEntityValid(self->ext.ghost.unkA2)) {
             self->step = 1;
             break;
         }
 
-        D_us_801737C4 = self->ext.ghost.unkA4->posX.i.hi;
-        D_us_801737C8 = self->ext.ghost.unkA4->posY.i.hi;
+        D_us_801737C4 = self->ext.ghost.unkA2->posX.i.hi;
+        D_us_801737C8 = self->ext.ghost.unkA2->posY.i.hi;
         if (self->velocityX > 0) {
             self->facingLeft = 1;
         }
@@ -220,7 +220,7 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk86++;
             temp_v1 = *(&D_us_80170508 + ((D_us_80173810.level / 10) * 3));
             if (self->ext.ghost.unk86 == (temp_v1 - 0x1E)) {
-                self->ext.ghost.unk94 = func_us_80171568(self, 0);
+                self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (temp_v1 < self->ext.ghost.unk86) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
@@ -231,9 +231,9 @@ void func_us_80171864(Entity* self) {
             }
         } else {
             self->ext.ghost.unk86 = 0;
-            if (self->ext.ghost.unk94->entityId == 0xDA) {
-                self->ext.ghost.unk94->params = 1;
-                D_us_80170028(self->ext.ghost.unk94);
+            if (self->ext.ghost.unk92->entityId == 0xDA) {
+                self->ext.ghost.unk92->params = 1;
+                D_us_80170028(self->ext.ghost.unk92);
             }
         }
         self->posX.val += self->velocityX;
@@ -241,9 +241,9 @@ void func_us_80171864(Entity* self) {
         break;
     case 4:
         if (!(g_Player.unk0C & 0x01000001)) {
-            if (self->ext.ghost.unk98->entityId == 0xDB) {
-                self->ext.ghost.unk98->params = 1;
-                D_us_8017002C(self->ext.ghost.unk98);
+            if (self->ext.ghost.unk96->entityId == 0xDB) {
+                self->ext.ghost.unk96->params = 1;
+                D_us_8017002C(self->ext.ghost.unk96);
             }
             self->step = 1;
             break;
@@ -282,7 +282,7 @@ void func_us_80171864(Entity* self) {
         case 7:
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 == 1) {
-                self->ext.ghost.unk98 = func_us_80171568(self, 1);
+                self->ext.ghost.unk96 = func_us_80171568(self, 1);
             } else if (self->ext.ghost.unk86 >= 0x3D) {
                 self->ext.ghost.unk86 = 0;
                 self->step++;
