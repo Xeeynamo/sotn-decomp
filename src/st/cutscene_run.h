@@ -1,0 +1,55 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include <stage.h>
+
+extern Dialogue g_Dialogue;
+extern u32 g_CutsceneFlags;
+extern PfnEntityUpdate PfnEntityUpdates[];
+void CutsceneRun(void) {
+    Entity* entity;
+    u16 startTimer;
+
+    g_Dialogue.timer++;
+    // protect from overflows
+    if (g_Dialogue.timer >= 0xFFFF) {
+        g_Dialogue.unk3C = 0;
+        return;
+    }
+    while (true) {
+        // Start the dialogue script only if the start timer has passed
+        startTimer = *g_Dialogue.unk40++ << 8;
+        startTimer |= *g_Dialogue.unk40++;
+        if (g_Dialogue.timer < startTimer) {
+            // Re-evaluate the condition at the next frame
+            g_Dialogue.unk40 -= 2;
+            return;
+        }
+        switch (*g_Dialogue.unk40++) {
+        case 0:
+            entity =
+                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
+            DestroyEntity(entity);
+            entity->entityId = *g_Dialogue.unk40++;
+            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
+            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posX.i.hi |= *g_Dialogue.unk40++;
+            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posY.i.hi |= *g_Dialogue.unk40++;
+            break;
+        case 1:
+            entity =
+                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
+            DestroyEntity(entity);
+            break;
+        case 2:
+            if (!((g_CutsceneFlags >> *g_Dialogue.unk40) & 1)) {
+                g_Dialogue.unk40--;
+                return;
+            }
+            g_CutsceneFlags &= ~(1 << *g_Dialogue.unk40++);
+            break;
+        case 3:
+            g_CutsceneFlags |= 1 << *g_Dialogue.unk40++;
+            break;
+        }
+    }
+}
