@@ -31,14 +31,15 @@ typedef enum {
     /* 0x12 */ E_ID_12,
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_ID_15,
+    /* 0x15 */ E_FIREBALL,
     /* 0x16 */ E_ID_16,
     /* 0x17 */ E_PLATFORM,
     /* 0x18 */ E_MARIA,
     /* 0x19 */ E_ROOM_DARKNESS,
-    /* 0x1A */ E_ELEVATOR_STATIONARY,
-    /* 0x1B */ E_ID_1B,
+    /* 0x1A */ E_ELEVATOR_STATIONARY_UNUSED,
+    /* 0x1B */ E_ELEVATOR_STATIONARY,
     /* 0x1C */ E_MOVING_ELEVATOR,
+    /* 0x80 */ E_BREAKABLE_UNK0 = 0x80,
 } EntityIDs;
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
@@ -55,6 +56,7 @@ extern u16 g_InitializeData0[];
 extern u16 D_80180428[];
 extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_8018047C[]; // EntityElevator
 
 extern ObjInit g_eBackgroundBlockInit[];
@@ -71,10 +73,6 @@ extern u16 g_ESoulStealOrbAngles[];
 extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit D_8018125C[];
-
-extern u16 g_InitializeEntityData0[];
-
-// For EntityHolyGlassesCutscene
-extern const char D_801813F0[];
+extern u8 g_CutsceneScript[];
 
 #endif

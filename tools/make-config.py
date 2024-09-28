@@ -16,7 +16,7 @@ import sys
 import threading
 import time
 
-from symbols import get_non_matching_symbols, sort_symbols_from_file
+from symbols import get_non_matching_symbols, print_elf_symbols, sort_symbols_from_file
 
 parser = argparse.ArgumentParser(
     description="Make files inside config/ for a PSP overlay"
@@ -333,6 +333,14 @@ def make_dst_path(ovl_name: str) -> str:
     return ovl_name
 
 
+def make_ovl_fullname(ovl_name: str) -> str:
+    if is_boss(ovl_name):
+        return f"bo{ovl_name}"
+    elif is_stage(ovl_name):
+        return f"st{ovl_name}"
+    return ovl_name
+
+
 ##### SPLAT CONFIG UTILITIES
 
 
@@ -379,13 +387,7 @@ def get_splat_config(
     name: str,
 ):
     path_stuff = make_dst_path(name)
-    if is_boss(name):
-        file_stuff = f"bo{name}"
-    elif is_stage(name):
-        file_stuff = f"st{name}"
-    else:
-        file_stuff = name
-
+    file_stuff = make_ovl_fullname(name)
     platform = "psx"
     asm_path = f"asm/{ver}/{path_stuff}"
     bss_is_no_load = False
@@ -1010,6 +1012,21 @@ def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
 
     if version != "us":
         # assume the equivalent overlay in the US version is already decompiled
+        ovl_full_name = make_ovl_fullname(ovl_name)
+        compiled_overlay = f"build/us/{ovl_full_name}.elf"
+        if not os.path.isfile(compiled_overlay):
+            spinner_stop(False)
+            yowarning(
+                f"overlay {compiled_overlay} not built, symbols will not be cross-referenced."
+            )
+            return
+        config_us_path = get_splat_config_path(ovl_full_name, "us")
+        symbols_us_path = f"config/symbols.us.{ovl_full_name}.txt"
+        spinner_start(f"splitting {config_us_path}")
+        with open(symbols_us_path, "w") as f:
+            print_elf_symbols(f, compiled_overlay, False)
+        split(config_us_path, True)
+        git("checkout", symbols_us_path)
         right_matchings_path = f"asm/us/{make_dst_path(ovl_name)}/matchings"
     elif is_stage(ovl_name) or is_boss(ovl_name):
         # pick NZ0 as the most complete overlay to cross-reference symbols
@@ -1117,6 +1134,10 @@ def make_config(ovl_name: str, version: str):
             spinner_start(f"renamed {found} data/bss symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
+
+    # automatically stage new files in config/ so make clean will not nuke them
+    git("add", splat_config_path, splat_config["options"]["symbol_addrs_path"][1])
+
     spinner_stop(True)  # done 🫡
 
 

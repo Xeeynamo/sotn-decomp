@@ -44,33 +44,38 @@ typedef enum EntityIDs {
 
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x14 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_ID_15 = 0x15,
+    /* 0x15 */ E_FIREBALL = 0x15,
     /* 0x17 */ E_BG_LIGHTNING = 0x17,
+    /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
+    /* 0x2E */ E_ID_2E = 0x2E,
     /* 0x30 */ E_ID_30 = 0x30,
-    /* 0x32 */ E_ID_32 = 0x32,
+    /* 0x31 */ E_ID_31,
+    /* 0x32 */ E_ID_32,
+    /* 0x33 */ E_ID_33,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
-    /* 0x3A */ E_ID_3A,
-    /* 0x3B */ E_MERMAN_UNK0,
+    /* 0x3A */ E_MERMAN_SPAWNER_3A,
+    /* 0x3B */ E_MERMAN_JUMP_WATER,
     /* 0x3C */ E_MERMAN2_UNK1,
     /* 0x3D */ E_MEDIUM_WATER_SPLASH,
-    /* 0x3E */ E_MERMAN2_UNK2,
-    /* 0x3F */ E_MERMAN2_UNK3,
-    /* 0x40 */ E_MERMAN2_UNK0,
-    /* 0x41 */ E_ID_41,
-    /* 0x42 */ E_MERMAN_UNK2,
-    /* 0x43 */ E_MERMAN_UNK1,
-    /* 0x44 */ E_MERMAN_UNK3,
+    /* 0x3E */ E_MERMAN2_SPIT_FIRE,
+    /* 0x3F */ E_MERMAN2_DYING,
+    /* 0x40 */ E_MERMAN2_JUMP_AIR,
+    /* 0x41 */ E_MERMAN_SPAWNER_41,
+    /* 0x42 */ E_MERMAN_SPIT_FIRE,
+    /* 0x43 */ E_MERMAN_JUMP_AIR,
+    /* 0x44 */ E_MERMAN_DYING,
     /* 0x47 */ E_BONE_SCIMITAR_HEAD = 0x47,
     /* 0x4C */ E_ZOMBIE = 0x4C,
     /* 0x59 */ E_ID_59 = 0x59,
-    /* 0x5B */ E_ID_5B = 0x5B,
+    /* 0x5B */ E_DEATH_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
-    /* 0x5E */ E_ID_5E,
+    /* 0x5E */ E_DEATH_5E,
+    /* 0x60 */ E_FLYING_OWL_UNK60 = 0x60,
     /* 0x62 */ E_WARG_EXP_OPAQUE = 0x62,
 } EntityIDs;
 
@@ -238,6 +243,41 @@ extern u32 g_CutsceneFlags;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
+// *** EntityStrongWarg properties START ***
+
+extern Entity D_8007A958;
+extern Entity D_8007D858;
+extern u8 D_801827DC;
+extern u8 D_801827EC;
+extern u8 D_801827FC;
+extern u8 D_8018280C;
+extern u8 D_8018281C;
+extern u8 D_80182824;
+extern u8 D_80182848;
+extern u8 D_80182850;
+extern u8 D_80182858;
+extern u8 D_80182868;
+extern u8 D_80182878;
+extern u8 D_80182884;
+extern u8 D_80182890;
+extern u8 D_801828A8;
+extern u8 D_801828D8;
+extern u8 D_80182900;
+extern u8 D_80182928;
+extern u8 D_80182944;
+extern u8 D_8018295C;
+extern u8 D_80182964;
+extern u8 D_8018296C;
+extern u8 D_80182980;
+extern u8 D_80182990;
+extern u8 D_801829B4;
+extern s32 D_801829D4;
+extern u16 D_801829DC;
+extern s32 D_801829EC[];
+extern s32 D_80182A04[];
+
+// *** EntityStrongWarg properties END ***
+
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 g_ESoulStealOrbAngles[];
@@ -263,5 +303,13 @@ extern u16 D_801D7D60;
 extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
+extern s16 D_80181808[];
+
+extern u16 g_EntityCastleBridgePriorities[];
+extern u8 g_EntityCastleBridgeUVs[];
+extern s16 g_EntityCastleBridgeUVOffsets[];
+extern u8 g_EntityCastleBridgePages[];
+extern u16 D_80180AD0[];
+extern s16 D_80181870[];
 
 extern Dialogue g_Dialogue;

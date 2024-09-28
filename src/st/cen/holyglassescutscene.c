@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
-#include "game.h"
+#include <cutscene.h>
 
 static u8 __unused[0xC00];
 static s32 D_8019D374;
@@ -50,7 +50,7 @@ static const char _pad[4] = "";
 
 #include "../cutscene_unk1.h"
 
-#include "../cutscene_unk2.h"
+#include "../set_cutscene_script.h"
 
 #include "../cutscene_unk3.h"
 
@@ -124,7 +124,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
     s16 vCoord;
     u16 nextChar;
     s32 nextChar2;
-    s32 bit_shifty;
+    u32 bit_shifty;
 
     if (self->step != 0) {
         if ((D_8019D428 != 0) && (D_8019D374 == 0) &&
@@ -154,7 +154,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (CutsceneUnk2(D_801813F0)) {
+        if (SetCutsceneScript(g_CutsceneScript)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             D_8003C704 = 1;
             g_CutsceneFlags = 0;
@@ -173,10 +173,10 @@ void EntityHolyGlassesCutscene(Entity* self) {
             }
             nextChar = *g_Dialogue.nextCharDialogue++;
             switch (nextChar) {
-            case 0:
+            case CSOP_END_CUTSCENE:
                 self->step = 7;
                 return;
-            case 1:
+            case CSOP_LINE_BREAK:
                 if (D_8019D374 != 0) {
                     continue;
                 }
@@ -203,10 +203,10 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 self->step_s = 0;
                 self->step++;
                 return;
-            case 2:
+            case CSOP_SET_SPEED:
                 g_Dialogue.unk17 = *g_Dialogue.nextCharDialogue++;
                 continue;
-            case 3:
+            case CSOP_SET_WAIT:
                 g_Dialogue.nextCharTimer = *g_Dialogue.nextCharDialogue++;
                 if (D_8019D374 != 0) {
                     continue;
@@ -222,7 +222,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                     prim = prim->next;
                 }
                 return;
-            case 5:
+            case CSOP_SET_PORTRAIT:
                 if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue += 2;
                     continue;
@@ -257,7 +257,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;
-            case 6:
+            case CSOP_NEXT_DIALOG:
                 if (D_8019D374 != 0) {
                     continue;
                 }
@@ -270,7 +270,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 4;
                 return;
-            case 7:
+            case CSOP_SET_POS:
                 if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue++;
                     g_Dialogue.nextCharDialogue++;
@@ -289,15 +289,14 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 self->step = 5;
                 self->step_s = 0;
                 return;
-
-            case 8:
+            case CSOP_CLOSE_DIALOG:
                 if (D_8019D374 != 0) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
                 self->step = 6;
                 return;
-            case 9:
+            case CSOP_PLAY_SOUND:
                 if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue++;
                     g_Dialogue.nextCharDialogue++;
@@ -308,7 +307,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 nextChar |= *g_Dialogue.nextCharDialogue++;
                 g_api.PlaySfx(nextChar);
                 continue;
-            case 10:
+            case CSOP_WAIT_FOR_SOUND:
                 if (D_8019D374 != 0) {
                     continue;
                 }
@@ -317,7 +316,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 }
                 *g_Dialogue.nextCharDialogue--;
                 return;
-            case 11:
+            case CSOP_UNK_11:
                 if (D_8019D374 != 0) {
                     continue;
                 }
@@ -358,7 +357,6 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue;
                 g_Dialogue.nextCharDialogue = (u8*)bit_shifty + 0x100000;
                 continue;
-
             case 15:
                 bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
@@ -369,8 +367,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue;
                 g_Dialogue.nextCharDialogue = (u8*)bit_shifty + 0x100000;
                 continue;
-
-            case 16:
+            case CSOP_WAIT_FOR_FLAG:
                 if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
@@ -384,7 +381,7 @@ void EntityHolyGlassesCutscene(Entity* self) {
             case 18:
                 g_Dialogue.unk3C = 0;
                 continue;
-            case 19:
+            case CSOP_LOAD_PORTRAIT:
                 if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue += 5;
                 } else {
@@ -397,11 +394,11 @@ void EntityHolyGlassesCutscene(Entity* self) {
                     bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                     bit_shifty += 0x100000;
                     nextChar2 = g_Dialogue.nextCharDialogue++[0];
-                    LoadTPage((u32*)bit_shifty, 1, 0, D_801805E8[nextChar2],
+                    LoadTPage((u_long*)bit_shifty, 1, 0, D_801805E8[nextChar2],
                               0x100, 0x30, 0x48);
                 }
                 continue;
-            case 20:
+            case CSOP_SCRIPT_UNKNOWN_20:
                 nextChar = *g_Dialogue.nextCharDialogue++;
                 nextChar <<= 4;
                 nextChar |= *g_Dialogue.nextCharDialogue++;

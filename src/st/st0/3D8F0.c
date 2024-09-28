@@ -261,7 +261,7 @@ void func_801BD8F0(Entity* self) {
             if (var_s8 > 14) {
                 self->ext.GS_Props.pickupFlag = 0;
                 sp44 = self + 1;
-                CreateEntityFromCurrentEntity(0x24, sp44);
+                CreateEntityFromCurrentEntity(E_ID_24, sp44);
             }
         }
         if (var_s8 == 15 * 15) {
@@ -270,7 +270,7 @@ void func_801BD8F0(Entity* self) {
         break;
     case 7:
         sp44 = self + 1;
-        CreateEntityFromCurrentEntity(0x24, sp44);
+        CreateEntityFromCurrentEntity(E_ID_24, sp44);
         DestroyEntity(self);
     }
 }

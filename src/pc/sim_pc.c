@@ -182,6 +182,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 }
 
 void InitStageDummy(Overlay* o);
+void InitStageCEN(Overlay* o);
 void InitStageWrp(Overlay* o);
 void InitStageSel(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);

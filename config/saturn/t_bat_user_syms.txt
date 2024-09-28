@@ -1,1 +1,1 @@
-_D_80174D3C = 0x060D1DFC;
+_g_IsServantDestroyed = 0x060D1DFC;

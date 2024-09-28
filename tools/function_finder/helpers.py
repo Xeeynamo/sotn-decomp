@@ -72,7 +72,10 @@ def find_scratches(name, platform, local_asm=None, use_local=False):
 
         score = result["score"]
         max_score = result["max_score"]
-        percent = (max_score - score) / max_score
+        if max_score > 0:
+            percent = (max_score - score) / max_score
+        else:
+            percent = 0
 
         if percent > best_percent:
             best_percent = percent

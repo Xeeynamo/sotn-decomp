@@ -12,7 +12,7 @@ void CutsceneUnk1(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-#include "../cutscene_unk2.h"
+#include "../set_cutscene_script.h"
 
 void CutsceneUnk3(s16 yOffset) {
     RECT rect;
@@ -98,7 +98,7 @@ void EntityDeathCutscene(Entity* self) {
             return;
         }
         g_Entities[192].params = 0x100;
-        if (CutsceneUnk2(D_80184CE0)) {
+        if (SetCutsceneScript(D_80184CE0)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_801D7DD4 = 0;
