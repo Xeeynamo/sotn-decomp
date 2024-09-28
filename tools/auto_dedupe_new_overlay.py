@@ -27,8 +27,6 @@ file_start_funcs = {"Random"                 : ["st_update"],
                     "UnkPrimHelper"          : ["prim_helpers"]}
 
 def get_file_splits(overlay_name):
-    print(overlay_name)
-
     with open(f"src/st/{overlay_name}/us.c") as f:
         clines = f.readlines()
     with open(f"config/splat.us.st{overlay_name}.yaml") as f:
@@ -116,8 +114,10 @@ def get_symbol_addr(symbol_name, overlay_name):
     with open("build/us/st" + overlay_name + ".map") as f:
         symlines = f.read().splitlines()
     for line in symlines:
-        if symbol_name in line:
-            lineparts = line.split()
+        lineparts = line.split()
+        if len(lineparts) != 2:
+            continue
+        if symbol_name == lineparts[1]:
             address = int(lineparts[0],16)
             # change from ram offset to rom offset
             address -= 0x80180000
