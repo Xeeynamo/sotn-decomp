@@ -148,7 +148,7 @@ static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-void SEL_CutsceneExec(Entity* entity) {
+void SEL_EntityCutscene(Entity* entity) {
     Primitive* prim;
     s32 i;
     s32 j;

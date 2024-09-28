@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "game.h"
 #include "stage.h"
+#define OVL_EXPORT(x) CEN_##x
 
 void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
@@ -22,7 +23,7 @@ void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
-void CEN_CutsceneExec(Entity*);
+void OVL_EXPORT(EntityCutscene)(Entity*);
 void EntityPlatform(Entity*);
 void EntityMaria(Entity*);
 void EntityRoomDarkness(Entity*);
@@ -41,7 +42,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,           EntityDummy,
     EntityBackgroundBlock, EntityUnkId12,
     EntityUnkId13,         EntityUnkId14,
-    EntityUnkId15,         CEN_CutsceneExec,
+    EntityUnkId15,         OVL_EXPORT(EntityCutscene),
     EntityPlatform,        EntityMaria,
     EntityRoomDarkness,    EntityElevatorStationary,
     EntityUnkId1B,         EntityMovingElevator,

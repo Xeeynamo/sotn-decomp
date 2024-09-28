@@ -93,7 +93,7 @@ void func_80194F14(Entity* self) {
 // Same pattern as a lot of other cutscenes, main differences
 // are related to the self->params if-else statements.
 extern u8 OVL_EXPORT(cutscene_data)[];
-void OVL_EXPORT(CutsceneExec)(Entity* self) {
+void OVL_EXPORT(EntityCutscene)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;

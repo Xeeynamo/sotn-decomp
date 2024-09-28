@@ -79,7 +79,7 @@ const char* g_ActorNames[] = {_S("Richter"), _S("Dracula")};
 #include "../cutscene_scale_avatar.h"
 
 extern u8 OVL_EXPORT(cutscene_data)[];
-void OVL_EXPORT(CutsceneExec)(Entity* self) {
+void OVL_EXPORT(EntityCutscene)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;

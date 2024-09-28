@@ -199,7 +199,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-// For ST0_CutsceneExec
+// For ST0_EntityCutscene
 extern u8 D_80180784[];
 extern u8 D_80180788[];
 extern u16 D_8018078C[];

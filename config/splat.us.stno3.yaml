@@ -80,7 +80,7 @@ segments:
       - [0x37414, .rodata, 3C4EC]
       - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, rodata]
-      - [0x37458, .rodata, cutscene] # NO3_CutsceneExec
+      - [0x37458, .rodata, cutscene] # NO3_EntityCutscene
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
       - [0x37514, .rodata, 3FF00] # EntityDeath

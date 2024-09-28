@@ -109,7 +109,7 @@ segments:
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
       - [0x27BF8, .rodata, 3585C]
       - [0x27CD4, .rodata, cutscene] # g_DiagActors strings
-      - [0x27CF4, .rodata, cutscene] # SEL_CutsceneExec jtbl
+      - [0x27CF4, .rodata, cutscene] # SEL_EntityCutscene jtbl
       - [0x27D78, .rodata, save_mgr]
       - [0x28040, .rodata, config_us] # equip strings
       - [0x29B18, .rodata, config_us] # accessories strings

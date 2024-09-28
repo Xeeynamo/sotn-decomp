@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
+#include "mar.h"
 
 void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
@@ -30,7 +30,7 @@ void EntityStatueGear(Entity* self);
 void EntityStoneDoor(Entity* self);
 void func_us_80199114(Entity* self);
 void EntityDummy(Entity* self);
-void MAR_CutsceneExec(Entity* self);
+void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_us_8018C90C(Entity* self);
 void func_us_8018CA94(Entity* self);
 
@@ -49,7 +49,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityClockHands,     EntityBirdcageDoor,
     EntityStatue,         EntityStatueGear,
     EntityStoneDoor,      func_us_80199114,
-    EntityDummy,          MAR_CutsceneExec,
+    EntityDummy,          OVL_EXPORT(EntityCutscene),
     func_us_8018C90C,     func_us_8018CA94,
 };
 

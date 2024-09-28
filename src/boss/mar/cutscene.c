@@ -33,7 +33,7 @@ extern u16 D_us_801805E8[];
 extern s16 D_us_801805F0[];
 
 extern u8 OVL_EXPORT(cutscene_data)[];
-void OVL_EXPORT(CutsceneExec)(Entity* self) {
+void OVL_EXPORT(EntityCutscene)(Entity* self) {
     const int PrimCount = 72;
     Primitive* prim;
 #if defined(VERSION_PC) || defined(VERSION_PSP)

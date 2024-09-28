@@ -135,5 +135,5 @@ void func_801B9C80(void) {
     // reset D_8003C728 to signal the end of video playback
     D_8003C728 = 0;
 }
-void SEL_CutsceneExec(Entity* e) { NOT_IMPLEMENTED; }
+void SEL_EntityCutscene(Entity* e) { NOT_IMPLEMENTED; }
 void func_801B79D4(Entity* e) { NOT_IMPLEMENTED; }

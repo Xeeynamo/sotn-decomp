@@ -70,7 +70,7 @@ segments:
       - [0x1E6D0, .data, tile_data] # tile definitions
       - [0x226E0, .data, sprites]
       - [0x27984, .rodata, 27D64]
-      - [0x279E8, .rodata, cutscene] # ST0_CutsceneExec
+      - [0x279E8, .rodata, cutscene] # ST0_EntityCutscene
       - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs

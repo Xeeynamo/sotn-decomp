@@ -288,7 +288,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 extern SVECTOR D_801B73E0;
 
-// For NO3_CutsceneExec
+// For NO3_EntityCutscene
 extern u8 D_80181A28[];
 extern u8 D_80181A2C[];
 extern u16 D_80181A30[];

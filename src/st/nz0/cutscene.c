@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-// This file consists of NZ0_CutsceneExec, and all the functions it calls.
+// This file consists of NZ0_EntityCutscene, and all the functions it calls.
 // No function in NZ0 calls anything in there, nor does anything in here call
 // any NZ0 functions, besides the ones in this file.
 
@@ -23,7 +23,7 @@
 
 // cutscene where alucard and maria discuss castle changing
 extern u8 OVL_EXPORT(cutscene_data)[];
-void OVL_EXPORT(CutsceneExec)(Entity* self) {
+void OVL_EXPORT(EntityCutscene)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;

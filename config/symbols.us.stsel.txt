@@ -1,6 +1,6 @@
 SEL_g_EntityGfxs = 0x80180760;
 g_Streams = 0x8018B2EC;
-SEL_CutsceneExec = 0x801B69F8;
+SEL_EntityCutscene = 0x801B69F8;
 StreamDiskIsReady = 0x801B9744;
 StreamNextVlc = 0x801B988C;
 func_801BAB70 = 0x801BAB70;
