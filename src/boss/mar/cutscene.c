@@ -31,9 +31,9 @@ extern u16 D_us_801805DC[];
 extern u16 D_us_801805E4[];
 extern u16 D_us_801805E8[];
 extern s16 D_us_801805F0[];
-extern const char D_us_80181424[];
 
-void MAR_CutsceneExec(Entity* self) {
+extern u8 OVL_EXPORT(cutscene_data)[];
+void OVL_EXPORT(CutsceneExec)(Entity* self) {
     const int PrimCount = 72;
     Primitive* prim;
 #if defined(VERSION_PC) || defined(VERSION_PSP)
@@ -78,7 +78,7 @@ void MAR_CutsceneExec(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(D_us_80181424) & 0xFF) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data)) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_us_8019AF2C = 0;

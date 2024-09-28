@@ -57,4 +57,3 @@ EntityClockTower3D = 0x801BB2AC;
 EntityCutscenePhotograph = 0x801BB764;
 EntityCutscenePhotographFire = 0x801BC4D0;
 EntityBackgroundVortex = 0x801BE1B4;
-skip_cutscene = 0x801C24C8;

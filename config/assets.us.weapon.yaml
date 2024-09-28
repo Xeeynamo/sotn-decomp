@@ -44,6 +44,15 @@ files:
         assets:
           - [0x29D8, cutscene, cutscene_data]
           - [0x2C4C, skip]
+  - target: disks/us/BOSS/MAR/MAR.BIN
+    asset_path: assets/boss/mar
+    src_path: src/boss/mar
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x1424, cutscene, cutscene_data]
+          - [0x15DC, skip]
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon

@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
   symbol_name_format: us_$VRAM
   section_order:
     - .data
@@ -57,7 +58,11 @@ segments:
       - [0x12EC, .data, rooms]
       - [0x1308, .data, e_life_up]
       - [0x135C, .data, e_layout] # layout entries data
-      - [0x1424, data]
+      - [0x1424, .data, cutscene_data]
+      - [0x15DC, data]
+      - [0x15F0, raw, cutscene_alucard]
+      - [0x2370, raw, cutscene_maria]
+      - [0x30F0, data]
       - [0x5300, .data, tile_data] # tile data
       - [0x5700, .data, tile_data] # tile definitions
       - [0x9710, .data, sprites]
