@@ -156,6 +156,16 @@ def split_rodata(overlay_name, new_segments):
 
     # yaml rodata comes from multiple places. Sort the lines to make splat in right order.
     yaml_rodata_lines.sort()
+    # We need to have only one rodata segment per file. This was found in testing.
+    deduped_yaml_rodata = []
+    curr_rodata_seg = ""
+    for line in yaml_rodata_lines:
+        seg = line.split(",")[-1]
+        if seg != curr_rodata_seg:
+            deduped_yaml_rodata.append(line)
+            curr_rodata_seg = seg
+    yaml_rodata_lines = deduped_yaml_rodata
+
     # Now we have the yaml rodata lines. open the yaml file and write the lines into it.
     yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
     # initially open for reading. Then we'll mess with it, and open for writing.
