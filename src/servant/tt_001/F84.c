@@ -41,7 +41,7 @@ INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171624);
 void func_us_80171864(Entity* self) {
     s32 temp_v1;
     s32 temp_v0;
-    
+
     g_api.func_8011A3AC(self, 0, 0, &D_us_80173810);
     if (g_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
@@ -50,22 +50,21 @@ void func_us_80171864(Entity* self) {
     self->hitboxHeight = 0;
     if (self->step < 2) {
         if (D_8003C708.flags & 0x20) {
-            switch(ServantUnk0()){
-                case 0:
-                    D_us_801737D8 = 0x40;
-                    break;
-                case 1:
-                    D_us_801737D8 = 0xC0;
-                    break;
-                case 2:
-                    if (self->posX.i.hi >= 0x81) {
-                        temp_v1 = 0xC0;
-                    }
-                    else {
-                        temp_v1 = 0x40;
-                    }
-                    D_us_801737D8 = temp_v1;
-                    break;
+            switch (ServantUnk0()) {
+            case 0:
+                D_us_801737D8 = 0x40;
+                break;
+            case 1:
+                D_us_801737D8 = 0xC0;
+                break;
+            case 2:
+                if (self->posX.i.hi >= 0x81) {
+                    temp_v1 = 0xC0;
+                } else {
+                    temp_v1 = 0x40;
+                }
+                D_us_801737D8 = temp_v1;
+                break;
             }
             D_us_801737DC = 0xA0;
         } else {
@@ -76,61 +75,61 @@ void func_us_80171864(Entity* self) {
             }
             D_us_801737DC = PLAYER.posY.i.hi - 0x20;
         }
-    } 
+    }
     D_us_801737C4 = D_us_801737D8;
     D_us_801737C8 = D_us_801737DC + (rsin(self->ext.ghost.unk80) >> 0xA);
-    self->ext.ghost.unk80 = ((u16) self->ext.ghost.unk80 + 0x20) & 0xFFF;
-    switch (self->step) {                             
-    case 0:                                         
-        self->ext.ghost.unk7E = (s16) self->params;
-        self->flags = 0x0C020000;
-        self->drawMode = 0x30;
-        self->drawFlags = 8;
+    self->ext.ghost.unk80 = ((u16)self->ext.ghost.unk80 + 0x20) & 0xFFF;
+    switch (self->step) {
+    case 0:
+        self->ext.ghost.unk7E = (s16)self->params;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_UNK8;
         SetEntityAnimation(self, &D_us_801704A8);
         self->ext.ghost.unk84 = 0x200;
-        self->ext.ghost.unk88 = 0x80; 
+        self->ext.ghost.unk88 = 0x80;
         self->ext.ghost.unk8A = -1;
         self->step++;
         break;
     case 1:
-        if (g_Player.unk0C & 0x01000001) 
-        {
+        if (g_Player.unk0C & 0x01000001) {
             self->step = 4;
             self->ext.ghost.unk8C = 0;
             break;
         }
         if (D_8003C708.flags & 0x20) {
-            if(PLAYER.posX.i.hi >= self->posX.i.hi)
+            if (PLAYER.posX.i.hi >= self->posX.i.hi)
                 self->facingLeft = 1;
             else
                 self->facingLeft = 0;
         } else {
-            if (PLAYER.facingLeft == self->facingLeft) { 
-                if (abs((s32)D_us_801737C4 - self->posX.i.hi) <= 0){ 
+            if (PLAYER.facingLeft == self->facingLeft) {
+                if (abs((s32)D_us_801737C4 - self->posX.i.hi) <= 0) {
                     self->facingLeft = !PLAYER.facingLeft;
-                        
 
                 } else { // 3e0
-                    if (self->facingLeft && D_us_801737C4 < self->posX.i.hi) { 
-                            if(PLAYER.facingLeft)
-                                temp_v0 = 0;
-                            else
-                                temp_v0 = 1;
-                            self->facingLeft = (u16) temp_v0;
-                    } else if(!self->facingLeft) {
+                    if (self->facingLeft && D_us_801737C4 < self->posX.i.hi) {
+                        if (PLAYER.facingLeft)
+                            temp_v0 = 0;
+                        else
+                            temp_v0 = 1;
+                        self->facingLeft = (u16)temp_v0;
+                    } else if (!self->facingLeft) {
                         if (D_us_801737C4 > self->posX.i.hi) {
-                            if(PLAYER.facingLeft)
+                            if (PLAYER.facingLeft)
                                 temp_v0 = 0;
                             else
                                 temp_v0 = 1;
-                            self->facingLeft = (u16) temp_v0;
+                            self->facingLeft = (u16)temp_v0;
                         }
                     }
-                }  
+                }
             } else {
-                if (self->facingLeft && self->posX.i.hi - D_us_801737C4 >= 0x20) { 
+                if (self->facingLeft &&
+                    self->posX.i.hi - D_us_801737C4 >= 0x20) {
                     self->facingLeft = PLAYER.facingLeft;
-                } else if(!self->facingLeft) {
+                } else if (!self->facingLeft) {
                     if (D_us_801737C4 - self->posX.i.hi >= 0x20) {
                         self->facingLeft = PLAYER.facingLeft;
                     }
@@ -171,7 +170,8 @@ void func_us_80171864(Entity* self) {
         if (self->velocityX < 0) {
             self->facingLeft = 0;
         }
-        D_us_801737CC = func_us_80170F84(self, (s16) D_us_801737C4, D_us_801737C8);
+        D_us_801737CC =
+            func_us_80170F84(self, (s16)D_us_801737C4, D_us_801737C8);
         if (self->step == 2) {
             if (D_us_801737CC < 8) {
                 self->ext.ghost.unk86 = 0;
@@ -184,7 +184,9 @@ void func_us_80171864(Entity* self) {
                 self->ext.ghost.unk94 = func_us_80171568(self, 0);
             } else if (temp_v1 < self->ext.ghost.unk86) {
                 self->ext.ghost.unk86 = 0;
-                g_api.func_8011A3AC(self, *(&D_us_8017050C + ((D_us_80173810.level / 10) * 3)), 1, &D_us_80173810);
+                g_api.func_8011A3AC(
+                    self, *(&D_us_8017050C + ((D_us_80173810.level / 10) * 3)),
+                    1, &D_us_80173810);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
             }
@@ -251,14 +253,14 @@ void func_us_80171864(Entity* self) {
         break;
     case 5:
         if (g_Player.unk0C & 0x01000001) {
-            if (self->velocityY > (s32) 0xFFFE8000) {
-                self->velocityY -= 0x4000;
+            if (self->velocityY > (s32)0xFFFE8000) {
+                self->velocityY -= FIX(0.25);
             }
             self->posY.val += self->velocityY;
             if (self->posY.i.hi < -0x10) {
                 self->velocityY = 0;
-                self->posX.val = 0x800000;
-                self->posY.val = -0x100000;
+                self->posX.val = FIX(128.0);
+                self->posY.val = FIX(-16.0);
                 self->step++;
             }
         } else {
@@ -269,9 +271,8 @@ void func_us_80171864(Entity* self) {
         if (!(g_Player.unk0C & 0x01000001)) {
             self->step = 1;
         } else {
-            self->posX.val = 0x800000;
-            self->posY.val = -0x100000;
-            
+            self->posX.val = FIX(128.0);
+            self->posY.val = FIX(-16.0);
         }
         break;
     }
@@ -280,7 +281,7 @@ void func_us_80171864(Entity* self) {
         temp_v0 = self->ext.ghost.unk8A;
         self->ext.ghost.unk8A = -temp_v0;
     }
-    self->unk6C = (u8) self->ext.ghost.unk88;
+    self->unk6C = (u8)self->ext.ghost.unk88;
     ProcessEvent(self, 0);
     func_us_80171560(self);
     g_api.UpdateAnim(NULL, &D_us_80170500);

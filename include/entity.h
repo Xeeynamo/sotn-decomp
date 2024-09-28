@@ -669,20 +669,20 @@ typedef struct {
 } ET_BatEcho;
 
 typedef struct {
-   byte pad_0[0x2];
-   /* 0x7E */ s16 unk7E;
-   /* 0x80 */ s16 unk80;
-   /* 0x82 6*/ s16 unk82;
+    byte pad_0[0x2];
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 6*/ s16 unk82;
     /* 0x84 8*/ s16 unk84;
     /* 0x86 a*/ s16 unk86;
     /* 0x88 c*/ s16 unk88;
     /* 0x8A e*/ s16 unk8A;
-   /* 0x8C */ s16 unk8C;
-   byte pad_2[0x04];
-   /* 0x94 */ struct Entity* unk94;
-   /* 0x98 */ struct Entity* unk98;
-   byte pad_1C[0x6];
-   /* 0xA4 */ struct Entity* unkA4;
+    /* 0x8C */ s16 unk8C;
+    byte pad_2[0x04];
+    /* 0x94 */ struct Entity* unk94;
+    /* 0x98 */ struct Entity* unk98;
+    byte pad_1C[0x6];
+    /* 0xA4 */ struct Entity* unkA4;
 } ET_Ghost;
 
 typedef struct {
