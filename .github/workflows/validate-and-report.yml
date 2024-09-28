@@ -191,12 +191,6 @@ jobs:
             make force_extract
             .venv/bin/python3 tools/analyze_calls.py
             git clean -fdx asm/
-      - name: Generate duplicates report
-        run: |
-          make force_symbols
-          make force_extract
-          cd tools/dups
-          cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Generate function report
         run: |
             git checkout config/
@@ -207,6 +201,12 @@ jobs:
             rm -rf gh-duplicates/function_calls/ || true
             mv function_calls gh-duplicates/
             mv function_graphs.md gh-duplicates
+      - name: Generate duplicates report
+        run: |
+          make force_symbols
+          make force_extract
+          cd tools/dups
+          cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'
