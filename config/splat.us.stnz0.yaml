@@ -61,7 +61,11 @@ segments:
       - [0x272C, .data, rooms]
       - [0x2830, .data, e_life_up]
       - [0x2884, .data, e_layout] # layout entries data
-      - [0x3B0C, data]
+      - [0x3B0C, .data, cutscene_data]
+      - [0x3CB8, data]
+      - [0x13BA4, raw, cutscene_maria]
+      - [0x14924, raw, cutscene_alucard]
+      - [0x156A4, data]
       - [0x16A5C, .data, tile_data] # tile data
       - [0x20A5C, .data, tile_data] # tile definitions
       - [0x26E8C, .data, sprites]

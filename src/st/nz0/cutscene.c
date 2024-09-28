@@ -22,7 +22,8 @@
 #include "../cutscene_scale_avatar.h"
 
 // cutscene where alucard and maria discuss castle changing
-void NZ0_CutsceneExec(Entity* self) {
+extern u8 OVL_EXPORT(cutscene_data)[];
+void OVL_EXPORT(CutsceneExec)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -63,7 +64,7 @@ void NZ0_CutsceneExec(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (SetCutsceneScript(D_80183B0C)) {
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_801CB73C = 0;
