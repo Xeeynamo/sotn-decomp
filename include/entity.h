@@ -669,6 +669,23 @@ typedef struct {
 } ET_BatEcho;
 
 typedef struct {
+   byte pad_0[0x2];
+   /* 0x7E */ s16 unk7E;
+   /* 0x80 */ s16 unk80;
+   /* 0x82 6*/ s16 unk82;
+    /* 0x84 8*/ s16 unk84;
+    /* 0x86 a*/ s16 unk86;
+    /* 0x88 c*/ s16 unk88;
+    /* 0x8A e*/ s16 unk8A;
+   /* 0x8C */ s16 unk8C;
+   byte pad_2[0x04];
+   /* 0x94 */ struct Entity* unk94;
+   /* 0x98 */ struct Entity* unk98;
+   byte pad_1C[0x6];
+   /* 0xA4 */ struct Entity* unkA4;
+} ET_Ghost;
+
+typedef struct {
     /* 0x7C */ char pad_0[0xC];
     /* 0x88 */ u16 unk88;
     /* 0x8A */ char pad_8A[0x3];
@@ -1864,6 +1881,7 @@ typedef union { // offset=0x7C
     ET_Bat bat;
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_BatEcho batEcho;
+    ET_Ghost ghost;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
