@@ -58,7 +58,7 @@ static const char _pad[4] = "";
 
 #include "../cutscene_avatar.h"
 
-#include "../cutscene_unk6.h"
+#include "../set_cutscene_end.h"
 
 static void CutsceneRun(void) {
     Entity* entity;
@@ -72,41 +72,41 @@ static void CutsceneRun(void) {
     }
     while (true) {
         // Start the dialogue script only if the start timer has passed
-        startTimer = *g_Dialogue.unk40++ << 8;
-        startTimer |= *g_Dialogue.unk40++;
+        startTimer = *g_Dialogue.scriptEnd++ << 8;
+        startTimer |= *g_Dialogue.scriptEnd++;
         if (g_Dialogue.timer < startTimer) {
             // Re-evaluate the condition at the next frame
-            g_Dialogue.unk40 -= 2;
+            g_Dialogue.scriptEnd -= 2;
             return;
         }
-        switch (*g_Dialogue.unk40++) {
+        switch (*g_Dialogue.scriptEnd++) {
         case 0:
-            entity =
-                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
+            entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +
+                     STAGE_ENTITY_START;
             DestroyEntity(entity);
-            entity->entityId = *g_Dialogue.unk40++;
+            entity->entityId = *g_Dialogue.scriptEnd++;
             entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi |= *g_Dialogue.unk40++;
-            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi |= *g_Dialogue.unk40++;
+            entity->posX.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
+            entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
+            entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
+            entity->posY.i.hi |= *g_Dialogue.scriptEnd++;
             entity->posX.i.hi -= g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi -= g_Tilemap.scrollY.i.hi;
             break;
         case 1:
-            entity =
-                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
+            entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +
+                     STAGE_ENTITY_START;
             DestroyEntity(entity);
             break;
         case 2:
-            if (!((g_CutsceneFlags >> *g_Dialogue.unk40) & 1)) {
-                g_Dialogue.unk40--;
+            if (!((g_CutsceneFlags >> *g_Dialogue.scriptEnd) & 1)) {
+                g_Dialogue.scriptEnd--;
                 return;
             }
-            g_CutsceneFlags &= ~(1 << *g_Dialogue.unk40++);
+            g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptEnd++);
             break;
         case 3:
-            g_CutsceneFlags |= 1 << *g_Dialogue.unk40++;
+            g_CutsceneFlags |= 1 << *g_Dialogue.scriptEnd++;
             break;
         }
     }
@@ -325,7 +325,7 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 }
                 *g_Dialogue.nextCharDialogue--;
                 return;
-            case CSOP_SCRIPT_UNKNOWN_12:
+            case CSOP_SET_END:
                 ptr = (u_long)*g_Dialogue.nextCharDialogue++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
@@ -333,7 +333,7 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
-                CutsceneUnk6((u8*)ptr);
+                SetCutsceneEnd((u8*)ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_13:
                 continue;

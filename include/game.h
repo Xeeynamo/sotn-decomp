@@ -1465,7 +1465,7 @@ typedef struct {
     /* 0x30 */ s32 primIndex[3];             // primIndices: unk, actorName, unk
     /* 0x3C */ u16 unk3C;                    // maybe it is a begin flag?
     /* 0x3E */ u16 timer;                    // global timer
-    /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
+    /* 0x40 */ u8* scriptEnd;                // pointer to the end of the script
 } Dialogue;                                  // size = 0x44
 
 typedef struct {

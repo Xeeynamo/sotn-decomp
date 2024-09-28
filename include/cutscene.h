@@ -13,7 +13,7 @@ typedef enum {
     CSOP_PLAY_SOUND,
     CSOP_WAIT_FOR_SOUND,
     CSOP_UNK_11,
-    CSOP_SCRIPT_UNKNOWN_12,
+    CSOP_SET_END,
     CSOP_SCRIPT_UNKNOWN_13,
     CSOP_SCRIPT_UNKNOWN_14,
     CSOP_SCRIPT_UNKNOWN_15,
@@ -42,7 +42,7 @@ typedef enum {
 #define PLAY_SOUND(id) CSOP_PLAY_SOUND, script_half(id)
 #define WAIT_FOR_SOUND() CSOP_WAIT_FOR_SOUND
 #define SCRIPT_UNKNOWN_11() CSOP_UNK_11
-#define SCRIPT_UNKNOWN_12(x) CSOP_SCRIPT_UNKNOWN_12, script_word(x)
+#define SET_END(x) CSOP_SET_END, script_word(x)
 #define SCRIPT_UNKNOWN_14(x, y, z)                                             \
     CSOP_SCRIPT_UNKNOWN_14, script_word(x), script_word(y), script_word(z)
 #define SCRIPT_UNKNOWN_15(x) CSOP_SCRIPT_UNKNOWN_15, script_word(x)

@@ -16,7 +16,7 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_avatar.h"
 
-#include "../../st/cutscene_unk6.h"
+#include "../../st/set_cutscene_end.h"
 
 #include "../../st/cutscene_run.h"
 
@@ -272,7 +272,7 @@ void MAR_CutsceneExec(Entity* self) {
                 ptr |= *g_Dialogue.nextCharDialogue++;
                 ptr <<= 4;
                 ptr |= *g_Dialogue.nextCharDialogue++;
-                CutsceneUnk6(ptr);
+                SetCutsceneEnd(ptr);
                 continue;
 
             case 13:

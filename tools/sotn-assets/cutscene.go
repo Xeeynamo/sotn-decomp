@@ -60,7 +60,7 @@ func readCutscene(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([]strin
 			script = append(script, "SCRIPT_UNKNOWN_11()")
 		case 12:
 			script = append(script, fmt.Sprintf(
-				"SCRIPT_UNKNOWN_12(0x%08X)", read4(r)))
+				"SET_END(0x%08X)", read4(r)))
 		case 13:
 			script = append(script, "SCRIPT_UNKNOWN_13()")
 		case 14:

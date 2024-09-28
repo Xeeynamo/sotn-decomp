@@ -114,7 +114,7 @@ const char* g_ActorNames[] = {
 
 #include "../cutscene_avatar.h"
 
-#include "../cutscene_unk6.h"
+#include "../set_cutscene_end.h"
 
 // n.b.! unlike the stage version of this function, a `self`
 // parameter is used to store the substep instead of
@@ -326,7 +326,7 @@ void SEL_CutsceneExec(Entity* entity) {
                 i |= g_Dialogue.nextCharDialogue++[0];
                 i <<= 4;
                 i |= g_Dialogue.nextCharDialogue++[0];
-                CutsceneUnk6(i);
+                SetCutsceneEnd(i);
                 continue;
             case 13:
                 continue;

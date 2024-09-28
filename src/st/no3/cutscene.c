@@ -45,7 +45,7 @@ static void CutsceneUnk4(void) {
 
 #include "../cutscene_avatar.h"
 
-#include "../cutscene_unk6.h"
+#include "../set_cutscene_end.h"
 
 #include "../cutscene_run.h"
 
@@ -271,7 +271,7 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 }
                 *g_Dialogue.nextCharDialogue--;
                 return;
-            case CSOP_SCRIPT_UNKNOWN_12:
+            case CSOP_SET_END:
                 ptr = (u_long)*g_Dialogue.nextCharDialogue++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
@@ -279,7 +279,7 @@ void OVL_EXPORT(CutsceneExec)(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.nextCharDialogue++;
-                CutsceneUnk6((u8*)ptr);
+                SetCutsceneEnd((u8*)ptr);
                 continue;
             case CSOP_SCRIPT_UNKNOWN_13:
                 continue;
