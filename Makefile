@@ -627,19 +627,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001
-=======
-.PHONY: main, dra, ric, cen, dre, mad, no0, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
->>>>>>> bc788e33 (make this branch checkout itself)
-=======
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
->>>>>>> 2f17c01f (fix dra symbols)
-=======
-.PHONY: main, dra, ric, cen, dre, mad, no0, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
->>>>>>> 620538f2 (debug statements in gfxstage)
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies
