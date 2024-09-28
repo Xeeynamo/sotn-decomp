@@ -90,7 +90,7 @@ def get_asm_files(asm_path):
     return files
 
 def find_wip(o):
-    result = find_scratches(o[1], "ps1", o[7], True)
+    result = find_scratches(o[1], "ps1", o[8], True)
 
     if result:
         return {"link": result[0], "percent": result[1]}
@@ -182,8 +182,8 @@ if __name__ == "__main__":
 
     if dups_text is not None:
         for i, o in enumerate(output):
-            full_match = rf'1.00.+{o[1]}.+{o[0]}';
-            partial_match = rf'0.\d\d.+{o[1]}.+{o[0]}';
+            full_match = rf'1.00.+\s{o[1]}\s.+{o[0]}';
+            partial_match = rf'0.\d\d.+\s{o[1]}\s.+{o[0]}';
 
             if re.search(full_match, dups_text) is not None:
                 o[5] = f"[Full]({base_url}/duplicates.txt#:~:text={o[1]})"
