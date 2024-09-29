@@ -6,6 +6,7 @@ g_CurrentServant = 0x80170EF0;
 g_CurrentRoomX = 0x80170EF4;
 g_CurrentRoomY = 0x80170EF8;
 SetEntityAnimation = 0x80170F60;
+UpdateEntityVelocityTowardsTarget = 0x80170F84;
 CheckEntityValid = 0x801714F4;
 DestroyServantEntity = 0x80172904;
 DestroyEntity = 0x80172AE4;
