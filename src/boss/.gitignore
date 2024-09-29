@@ -6,3 +6,4 @@ layers.h
 sprite_banks.h
 tilemap_*.h
 tiledef_*.h
+cutscene_data.h

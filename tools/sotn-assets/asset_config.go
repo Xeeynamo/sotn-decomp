@@ -78,7 +78,7 @@ var extractHandlers = map[string]func(assetEntry) error{
 			return fmt.Errorf("cutscene cannot be 0 bytes")
 		}
 		r := bytes.NewReader(e.data)
-		script, err := parseCutsceneAsC(r, e.ramBase, e.ramBase.Sum(e.start))
+		script, err := parseCutsceneAsC(r, e.ramBase, e.ramBase.Sum(e.start), e.end - e.start)
 		if err != nil {
 			return err
 		}

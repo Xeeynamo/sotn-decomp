@@ -120,7 +120,7 @@ extern s32 D_801826AC;
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
-extern s16 D_80180CE8[];
+extern u16 D_80180CE8[];
 extern u16 D_80180D00[];
 
 // *** EntitySlogra properties START ***
@@ -227,7 +227,7 @@ extern s16 D_801824DC[];
 extern u8 D_801824E2[];
 extern u16 D_801824E4[];
 extern u8 D_80181F30[];
-extern u8 D_80180CF4[];
+extern u16 D_80180CF4[];
 extern s32 D_80182600[];
 extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
@@ -323,16 +323,15 @@ extern SVECTOR D_80182838;
 extern SVECTOR D_80182840;
 extern SVECTOR D_80182848;
 
-// For EntityMariaCutscene
-extern s32 D_801CB684;
-extern s32 D_801CB73C;
+// For NZ0_EntityCutscene
+extern s32 g_SkipCutscene;
+extern s32 g_IsCutsceneDone;
 extern u8 D_801813C8[];
 extern u8 D_801813CC[];
 extern u16 D_801813D0[];
 extern u16 D_801813D4[];
 extern u16 D_801813D8[];
 extern s16 D_801813DC[];
-extern const char D_80183B0C[];
 extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
@@ -358,7 +357,7 @@ extern u16 g_eBlueDoorTiles[2][8];
 extern char D_80182710[];
 
 // for func_801B0AA4
-extern u16 D_80180C10;
+extern u16 D_80180C10[];
 extern u8 D_80180DBC[];
 extern u8 D_80180DC0[];
 extern u16 D_80180DC4[];

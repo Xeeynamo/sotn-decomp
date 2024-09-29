@@ -1386,7 +1386,8 @@ void RicEntitySubwpnDagger(Entity* self) {
             }
             g_api.CheckCollision(
                 self->posX.i.hi + var_s1, self->posY.i.hi, &collider, 0);
-            if ((self->hitFlags == 2) || (collider.effects & 3)) {
+            if ((self->hitFlags == 2) ||
+                (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002))) {
                 self->ext.subweapon.timer = 64;
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;

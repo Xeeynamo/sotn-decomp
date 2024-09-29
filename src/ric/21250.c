@@ -863,7 +863,7 @@ void func_8015EE28(void) {
     argX = *xPosPtr + D_801545E4[0].x;
     argY = (*yPosPtr + D_801545E4[0].y) - 10;
     g_api.CheckCollision(argX, argY, &collider, 0);
-    if ((collider.effects & 1) != 0) {
+    if ((collider.effects & EFFECT_SOLID) != 0) {
         return;
     }
     for (i = 2; i < 4; i++) {
@@ -891,7 +891,7 @@ void func_8015EE28(void) {
                 argX = var_a1 + (*xPosPtr + D_801545E4[i].x);
                 argY = *yPosPtr + D_801545E4[i].y;
                 g_api.CheckCollision(argX, argY, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     *vram_ptr |= temp_fp;
                     if (!(*vram_ptr & 1)) {
                         *yPosPtr += collider.unk20;
@@ -902,7 +902,7 @@ void func_8015EE28(void) {
                 argX = var_a1 + (*xPosPtr + D_801545E4[i].x);
                 argY = *yPosPtr + D_801545E4[i].y + g_Player.colliders2[i].unk8;
                 g_api.CheckCollision(argX, argY, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     if (!(*vram_ptr & 1)) {
                         *yPosPtr +=
                             collider.unk20 + g_Player.colliders2[i].unk8;
@@ -956,7 +956,7 @@ void func_8015F414(void) {
             argX = *xPosPtr + D_80154604[i].x + g_Player.colliders3[i].unk4 - 1;
             argY = *yPosPtr + D_80154604[i].y;
             g_api.CheckCollision(argX, argY, &collider, 0);
-            if ((collider.effects & 1) == 0) {
+            if ((collider.effects & EFFECT_SOLID) == 0) {
                 *vram_ptr |= 4;
                 *xPosPtr += g_Player.colliders3[i].unk4;
                 return;
@@ -1030,7 +1030,7 @@ void func_8015F680(void) {
             argX = *xPosPtr + D_80154604[i].x + g_Player.colliders3[i].unkC + 1;
             argY = *yPosPtr + D_80154604[i].y;
             g_api.CheckCollision(argX, argY, &collider, 0);
-            if ((collider.effects & 1) == 0) {
+            if ((collider.effects & EFFECT_SOLID) == 0) {
                 *vram_ptr |= 8;
                 *xPosPtr += g_Player.colliders3[i].unkC;
                 return;

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-void CutsceneUnk4(void) {
+static void CutsceneUnk4(void) {
     Primitive* prim;
 
     CutsceneUnk3(g_Dialogue.nextCharY);

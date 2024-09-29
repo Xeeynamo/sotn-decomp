@@ -334,7 +334,7 @@ void EntityOwl(Entity* self) {
                 xVar = self->posX.i.hi;
                 yVar = self->posY.i.hi + 0x10;
                 g_api.CheckCollision(xVar, yVar, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     self->posY.i.hi = self->posY.i.hi + collider.unk18;
                     self->step_s++;
                     if (KNIGHT->posX.i.hi > self->posX.i.hi) {

@@ -4,7 +4,6 @@
 #include "sfx.h"
 
 extern u32 g_CutsceneFlags;
-extern s32 D_8019D428;
 
 // tile layout
 static s16 D_8018068C[] = {
