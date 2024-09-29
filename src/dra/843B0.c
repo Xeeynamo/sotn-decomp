@@ -756,76 +756,69 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     return 0;
 }
 
-void EntityHolyWater(Entity* entity) {
-    s16 temp3;
-    s32 temp;
-    s32 temp2;
+void EntityHolyWater(Entity* self) {
+    s16 xOffset;
+    s32 collisionFlags = 0;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->flags = FLAG_POS_CAMERA_LOCKED;
-        entity->animSet = ANIMSET_DRA(9);
-        entity->animCurFrame = 0x1D;
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->posY.i.hi += 8;
-        SetSpeedX(0x14000);
-        entity->velocityY = FIX(-3.125);
-        func_8011A290(entity);
-        entity->hitboxHeight = 4;
-        entity->hitboxWidth = 4;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
+        self->animSet = ANIMSET_DRA(9);
+        self->animCurFrame = 0x1D;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->posY.i.hi += 8;
+        SetSpeedX(FIX(1.25));
+        self->velocityY = FIX(-3.125);
+        func_8011A290(self);
+        self->hitboxWidth = self->hitboxHeight = 4;
         g_Player.timers[10] = 4;
-        entity->step++;
+        self->step++;
         break;
 
     case 1:
-        entity->posY.val += entity->velocityY;
-        if (entity->velocityY <= 0x3FFFF) {
-            entity->velocityY += FIX(0.21875);
+        self->posY.val += self->velocityY;
+        if (self->velocityY < FIX(4)) {
+            self->velocityY += FIX(28.0 / 128);
         }
 
-        temp = CheckHolyWaterCollision(0, 0);
-        entity->posX.val += entity->velocityX;
-
-        if (entity->velocityX < 0) {
-            temp3 = -4;
-        } else {
-            temp3 = 4;
+        collisionFlags = CheckHolyWaterCollision(0, 0);
+        self->posX.val += self->velocityX;
+        xOffset = 4;
+        if (self->velocityX < 0) {
+            xOffset = -xOffset;
         }
-        temp |= func_80125B6C(-7, temp3);
+        collisionFlags |= func_80125B6C(-7, xOffset);
 
-        if (temp & 2) {
-            temp = 1;
-        } else {
-            temp2 = 1;
+        if (collisionFlags & 2) {
+            collisionFlags = 1;
         }
 
-        temp2 = temp & 1;
-        if (temp2 != 0) {
+        if (collisionFlags & 1) {
             PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
-            CreateEntFactoryFromEntity(entity, 59, 0);
-            entity->ext.generic.unk7C.s = 0x10;
-            entity->animSet = ANIMSET_DRA(0);
-            entity->step = 2;
+            // Factory 59 has child 40, EntityHolyWaterBreakGlass
+            CreateEntFactoryFromEntity(self, FACTORY(59, 0), 0);
+            self->animSet = ANIMSET_DRA(0);
+            self->ext.holywater.timer = 16;
+            self->step = 2;
         }
         break;
 
     case 2:
-        if (!(entity->ext.generic.unk7C.s & 3)) {
-            CreateEntFactoryFromEntity(entity, FACTORY(28, D_8013841C),
-                                       entity->ext.generic.unkB2 << 9);
+        if (!(self->ext.holywater.timer & 3)) {
+            // Factory 28 has child 23, EntityHolyWaterFlame
+            CreateEntFactoryFromEntity(
+                self, FACTORY(28, D_8013841C), self->ext.holywater.unkB2 << 9);
             D_8013841C++;
         }
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
-            entity->ext.generic.unk7C.s = 4;
-            entity->step++;
+        if (--self->ext.holywater.timer == 0) {
+            self->ext.holywater.timer = 4;
+            self->step++;
         }
         break;
 
     case 3:
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
-            DestroyEntity(entity);
+        if (--self->ext.holywater.timer == 0) {
+            DestroyEntity(self);
         }
         break;
     }

@@ -77,7 +77,7 @@ typedef struct ET_Generic {
     /* 0xAE */ s8 unkAE;
     /* 0xAF */ s8 : 8;
     /* 0xB0 */ s16 unkB0;
-    /* 0xB2 */ s16 unkB2;
+    /* 0xB2 */ s16 : 16;
     /* 0xB4 */ s32 : 32;
     union {
         /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
@@ -1311,6 +1311,7 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 subweaponId;
+    /* 0xB2 */ s16 unkB2;
 } ET_Subweapon;
 typedef struct {
     s16 timer;
@@ -1330,6 +1331,7 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 subweaponId;
+    /* 0xB2 */ s16 unkB2;
 } ET_HolyWater;
 typedef struct {
     u16 unk7C;
