@@ -1,73 +1,85 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no3.h"
+#include "st0.h"
+#include <cutscene.h>
 
-// similar but not an exact duplicate
-void CutsceneUnk1(void) {
-    g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
-    g_Dialogue.nextCharX = 0x182; // for all other cutscenes (so far)!
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
-#include "../cutscene_unk2.h"
-
-void CutsceneUnk3(s16 yOffset) {
-    RECT rect;
-
-    rect.x = 384;
-    rect.y = (yOffset * 12) + 256;
-    rect.w = 64;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
-
-void CutsceneUnk4(void) {
+static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
+    s16 firstPrimIndex;
 
-    CutsceneUnk3(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x16;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
+    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    g_Dialogue.primIndex[2] = firstPrimIndex;
+    if (firstPrimIndex == -1) {
+        g_Dialogue.primIndex[2] = 0;
+        return 0;
+    }
+    g_Dialogue.scriptCur = script;
+    g_Dialogue.unk3C = 0;
+    g_Dialogue.primIndex[1] = -1;
+    g_Dialogue.primIndex[0] = -1;
+    CutsceneUnk1();
+
+    if (prim && prim) { // !FAKE
+    }
+
+    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
+
+    prim->drawMode = DRAW_HIDE;
+    prim = g_Dialogue.prim[1] = prim->next;
+
+    prim->drawMode = DRAW_HIDE;
+    prim = g_Dialogue.prim[2] = prim->next;
+
+    prim->drawMode = DRAW_HIDE;
+    prim = g_Dialogue.prim[3] = prim->next;
+
+    prim->drawMode = DRAW_HIDE;
+    prim = g_Dialogue.prim[4] = prim->next;
+
+    prim->drawMode = DRAW_HIDE;
+    prim = g_Dialogue.prim[5] = prim->next;
+
+    prim->type = 4;
+    prim->drawMode = DRAW_HIDE;
+
+    prim = prim->next;
+    prim->type = 3;
+    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
+    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
+    prim->x0 = prim->x2 = 4;
+    prim->x1 = prim->x3 = 0xF8;
+    prim->priority = 0x1FD;
+    prim->drawMode = DRAW_HIDE;
+
+    prim = prim->next;
+    prim->type = 1;
+    prim->x0 = 3;
+    prim->y0 = 0x2F;
+    prim->v0 = 0x4A;
+    prim->r0 = prim->g0 = prim->b0 = 0xFF;
+    prim->priority = 0x1FC;
+    prim->drawMode = DRAW_HIDE;
+    return 1;
 }
+
+#include "../cutscene_unk3.h"
+
+#include "../cutscene_unk4.h"
+
+const char* g_ActorNames[] = {_S("Richter"), _S("Dracula")};
 
 #include "../cutscene_avatar.h"
 
-#include "../cutscene_unk6.h"
+#include "../set_cutscene_end.h"
 
-#include "../cutscene.h"
-
-void func_801BECCC(Entity* self) {
-    if (g_pads[0].tapped == PAD_START) {
-        D_801D7D20 = 1;
-        g_api.FreePrimitives(self->primIndex);
-        self->flags ^= FLAG_HAS_PRIMS;
-        if (g_Dialogue.primIndex[1] != -1) {
-            g_api.FreePrimitives(g_Dialogue.primIndex[1]);
-        }
-        if (g_Dialogue.primIndex[0] != -1) {
-            g_api.FreePrimitives(g_Dialogue.primIndex[0]);
-        }
-        g_api.PlaySfx(SET_STOP_MUSIC);
-        self->step = 1;
-        self->step_s = 0;
-    }
-}
+#include "../cutscene_run.h"
 
 #include "../cutscene_scale_avatar.h"
 
-void EntityDeathCutscene(Entity* self) {
+extern u8 OVL_EXPORT(cutscene_data)[];
+void OVL_EXPORT(EntityCutscene)(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -77,51 +89,60 @@ void EntityDeathCutscene(Entity* self) {
     s16 vCoord;
     u16 nextChar;
     s32 nextChar2;
-    s32 bit_shifty;
+    u_long ptr;
 
-    if (self->step != 0) {
-        if ((D_801D7DD4 != 0) && (D_801D7D20 == 0) &&
-            ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 4))) {
-            func_801BECCC(self);
+    if ((D_801C2580 != 0) && !skip_cutscene &&
+        ((g_Settings.D_8003CB04 & 1) || (g_IsTimeAttackUnlocked != 0)) &&
+        (g_pads[0].tapped == PAD_START)) {
+        skip_cutscene = 1;
+        g_api.FreePrimitives(self->primIndex);
+        self->flags &= ~FLAG_HAS_PRIMS;
+        if (g_Dialogue.primIndex[1] != -1) {
+            g_api.FreePrimitives(g_Dialogue.primIndex[1]);
         }
-        if ((self->step != 0) && (D_801D7D60 != 0)) {
-            CutsceneRun();
+        if (g_Dialogue.primIndex[0] != -1) {
+            g_api.FreePrimitives(g_Dialogue.primIndex[0]);
         }
+        g_api.PlaySfx(0x80);
+        self->step = 1;
+        self->step_s = 0;
     }
+    if (self->step && (g_Dialogue.unk3C != 0)) {
+        CutsceneRun();
+    }
+
     switch (self->step) {
     case 0:
-        CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
-        if ((g_CastleFlags[CASTLE_FLAG_53]) ||
-            (g_PlayableCharacter != PLAYER_ALUCARD)) {
-            DestroyEntity(self);
-            g_Entities[192].params = 0;
-            return;
-        }
-        g_Entities[192].params = 0x100;
-        if (CutsceneUnk2(D_80184CE0)) {
-            self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
+            self->flags |= FLAG_HAS_PRIMS;
             g_CutsceneFlags = 0;
-            D_801D7DD4 = 0;
-            D_801D7D20 = 0;
+            D_801C2580 = 0;
+            skip_cutscene = 0;
             D_8003C704 = 1;
             self->primIndex = g_Dialogue.primIndex[2];
-            self->step++;
+            self->step += 1;
+            if (g_DemoMode != Demo_None) {
+                skip_cutscene = 1;
+                D_801C2580 = 1;
+                g_api.FreePrimitives(self->primIndex);
+                self->flags &= ~FLAG_HAS_PRIMS;
+            }
         }
         break;
     case 1:
         // this is a huge While-loop! Don't miss it!
         while (1) {
-            if ((g_Dialogue.nextCharTimer != 0) && (D_801D7D20 == 0)) {
+            if ((g_Dialogue.nextCharTimer != 0) && !skip_cutscene) {
                 g_Dialogue.nextCharTimer--;
                 return;
             }
-            nextChar = *g_Dialogue.nextCharDialogue++;
+            nextChar = *g_Dialogue.scriptCur++;
             switch (nextChar) {
             case 0:
                 self->step = 7;
                 return;
             case 1:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -148,16 +169,16 @@ void EntityDeathCutscene(Entity* self) {
                 self->step++;
                 return;
             case 2:
-                g_Dialogue.unk17 = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.unk17 = *g_Dialogue.scriptCur++;
                 continue;
             case 3:
-                g_Dialogue.nextCharTimer = *g_Dialogue.nextCharDialogue++;
-                if (D_801D7D20 != 0) {
+                g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
+                if (skip_cutscene) {
                     continue;
                 }
                 return;
             case 4:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -167,18 +188,18 @@ void EntityDeathCutscene(Entity* self) {
                 }
                 return;
             case 5:
-                if (D_801D7D20 != 0) {
-                    g_Dialogue.nextCharDialogue += 2;
+                if (skip_cutscene) {
+                    g_Dialogue.scriptCur += 2;
                     continue;
                 }
                 // fake reuse of i?
-                i = *g_Dialogue.nextCharDialogue++;
-                nextChar2 = *g_Dialogue.nextCharDialogue++;
+                i = *g_Dialogue.scriptCur++;
+                nextChar2 = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
-                uCoord = D_80181A28[nextChar2 & 1];
-                vCoord = D_80181A2C[nextChar2 & 1];
-                prim->clut = D_80181A30[i];
-                prim->tpage = 0x94; // Weird, this is 0x90 in other cutscenes
+                uCoord = D_80180784[nextChar2 & 1]; // a1
+                vCoord = D_80180788[nextChar2 & 1]; // a2
+                prim->clut = D_8018078C[i];
+                prim->tpage = 0x90;
                 if (nextChar2 & 0x80) {
                     prim->u0 = prim->u2 = uCoord + 0x2F;
                     prim->u1 = prim->u3 = uCoord;
@@ -192,7 +213,7 @@ void EntityDeathCutscene(Entity* self) {
                     g_Dialogue.startX - 0x1E;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
-                g_Dialogue.clutIndex = D_80181A38[i];
+                g_Dialogue.clutIndex = D_80180794[i];
                 CutsceneUnk1();
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
@@ -202,7 +223,7 @@ void EntityDeathCutscene(Entity* self) {
                 self->step = 3;
                 return;
             case 6:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 for (prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
@@ -215,13 +236,13 @@ void EntityDeathCutscene(Entity* self) {
                 self->step = 4;
                 return;
             case 7:
-                if (D_801D7D20 != 0) {
-                    g_Dialogue.nextCharDialogue++;
-                    g_Dialogue.nextCharDialogue++;
+                if (skip_cutscene) {
+                    g_Dialogue.scriptCur++;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
-                g_Dialogue.startX = *g_Dialogue.nextCharDialogue++;
-                g_Dialogue.startY = *g_Dialogue.nextCharDialogue++;
+                g_Dialogue.startX = *g_Dialogue.scriptCur++;
+                g_Dialogue.startY = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
                 prim->y0 = prim->y1 = g_Dialogue.startY;
@@ -235,147 +256,134 @@ void EntityDeathCutscene(Entity* self) {
                 return;
 
             case 8:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
                 self->step = 6;
                 return;
             case 9:
-                if (D_801D7D20 != 0) {
-                    g_Dialogue.nextCharDialogue++;
-                    g_Dialogue.nextCharDialogue++;
+                if (skip_cutscene) {
+                    g_Dialogue.scriptCur++;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
-                nextChar = *g_Dialogue.nextCharDialogue++;
+                nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
-                nextChar |= *g_Dialogue.nextCharDialogue++;
+                nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
             case 10:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 if (g_api.func_80131F68() != false) {
                     continue;
                 }
-                *g_Dialogue.nextCharDialogue--;
+                *g_Dialogue.scriptCur--;
                 return;
             case 11:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 if (g_api.func_80131F68() != true) {
                     continue;
                 }
-                *g_Dialogue.nextCharDialogue--;
+                *g_Dialogue.scriptCur--;
                 return;
             case 12:
-                bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                CutsceneUnk6((u8*)bit_shifty);
+                ptr = (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                SetCutsceneEnd((u8*)ptr);
                 continue;
             case 13:
                 continue;
             case 14:
-                bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty += (u16)0x100000;
-                g_Dialogue.nextCharDialogue += *(u16*)bit_shifty << 2;
+                ptr = (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                // This needs help. Casting the const to short is good.
+                ptr += (u16)0x100000;
+                g_Dialogue.scriptCur += *(u16*)ptr << 2;
 
-                bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue;
-                g_Dialogue.nextCharDialogue = (u8*)bit_shifty + 0x100000;
+                ptr = (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur;
+                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
                 continue;
 
-            case 15:
-                bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                bit_shifty <<= 4;
-                bit_shifty |= (s32)*g_Dialogue.nextCharDialogue;
-                g_Dialogue.nextCharDialogue = (u8*)bit_shifty + 0x100000;
+            case 15: // c64
+                ptr = (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur++;
+                ptr <<= 4;
+                ptr |= (u_long)*g_Dialogue.scriptCur;
+                g_Dialogue.scriptCur = (u8*)ptr + 0x100000;
                 continue;
 
             case 16:
-                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
-                    g_Dialogue.nextCharDialogue--;
+                if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
+                    g_Dialogue.scriptCur--;
                     return;
                 }
-                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
-                *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur);
+                *g_Dialogue.scriptCur++;
                 continue;
             case 17:
-                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.scriptCur++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
                 continue;
             case 19:
-                if (D_801D7D20 != 0) {
-                    g_Dialogue.nextCharDialogue += 5;
+                if (skip_cutscene) {
+                    g_Dialogue.scriptCur += 5;
                 } else {
-                    bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
-                    bit_shifty <<= 4;
-                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                    bit_shifty <<= 4;
-                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                    bit_shifty <<= 4;
-                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                    bit_shifty += 0x100000;
-                    nextChar2 = g_Dialogue.nextCharDialogue++[0];
-                    LoadTPage((u32*)bit_shifty, 1, 0, D_80181A34[nextChar2],
-                              0x100, 0x30, 0x48);
+                    ptr = (u_long)*g_Dialogue.scriptCur++;  // 8e4
+                    ptr <<= 4;                              // 918
+                    ptr |= (u_long)*g_Dialogue.scriptCur++; // 91c
+                    ptr <<= 4;                              // 920
+                    ptr |= (u_long)*g_Dialogue.scriptCur++; // 924
+                    ptr <<= 4;                              // 928
+                    ptr |= (u_long)*g_Dialogue.scriptCur++; // 92c
+                    ptr += 0x100000;                        //
+                    nextChar2 = g_Dialogue.scriptCur++[0];
+                    LoadTPage((u32*)ptr, 1, 0, D_80180790[nextChar2], 0x100,
+                              0x30, 0x48);
                 }
                 continue;
             case 20:
-                nextChar = *g_Dialogue.nextCharDialogue++;
+                nextChar = *g_Dialogue.scriptCur++;
                 nextChar <<= 4;
-                nextChar |= *g_Dialogue.nextCharDialogue++;
+                nextChar |= *g_Dialogue.scriptCur++;
                 g_api.PlaySfx(nextChar);
                 continue;
-            case 21:
-                g_CutsceneFlags = 0;
-                D_801D7D20 = 0;
-                D_801D7DD4 = 0;
-                continue;
-            case 22:
-                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
-                continue;
-            case 23:
-                return;
-            case 24:
-                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
-                    *g_Dialogue.nextCharDialogue--;
-                    return;
-                }
-                *g_Dialogue.nextCharDialogue++;
-                continue;
+            // Note: Other cutscenes have Case 21-24 here, this one is missing
+            // it.
             default:
-                if (D_801D7D20 != 0) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharTimer = g_Dialogue.unk17;
             }
             break; // This breaks the big while-loop!
         }
+        // End of while loop, comes at a58
         if (nextChar == 0x20) {
             g_Dialogue.nextCharX += 2;
             return;
@@ -384,8 +392,7 @@ void EntityDeathCutscene(Entity* self) {
         rect.y = ((u32)(nextChar & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
-        // Other cutscenes have + 0x180 here
-        vCoord = (g_Dialogue.nextCharY * 0xC) + 0x100;
+        vCoord = (g_Dialogue.nextCharY * 0xC) + 0x180;
         MoveImage(&rect, g_Dialogue.nextCharX, vCoord);
         g_Dialogue.nextCharX += 2;
         break;
@@ -402,6 +409,10 @@ void EntityDeathCutscene(Entity* self) {
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
         prim->y2 = prim->y3 += 6;
+        // This block is in case 4 for other cutscenes, case 3 for this one
+        if (prim->x1 >= (g_Dialogue.startX - 2)) {
+            prim->x1 = prim->x3 = g_Dialogue.startX - 3;
+        }
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
             self->step = 1;
@@ -417,9 +428,6 @@ void EntityDeathCutscene(Entity* self) {
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
         prim->y2 = prim->y3 -= 6;
-        if (prim->x1 >= (g_Dialogue.startX - 2)) {
-            prim->x1 = prim->x3 = g_Dialogue.startX - 3;
-        }
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
             self->step = 1;
@@ -429,7 +437,7 @@ void EntityDeathCutscene(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            D_801D7DD4 = 1;
+            D_801C2580 = 1;
             primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0x48);
             if (primIndex == -1) {
                 DestroyEntity(self);
@@ -444,14 +452,14 @@ void EntityDeathCutscene(Entity* self) {
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
-                prim->x2 = D_80181A3C[j];
+                prim->x2 = D_80180798[j];
                 prim->x3 = 0xF70;
 
                 j++;
             }
             self->step_s++;
             return;
-        case 1:
+        case 1: /* switch 3 */
             for (j = 0, prim = &g_PrimBuf[g_Dialogue.primIndex[0]];
                  prim != NULL; prim = prim->next) {
                 prim->x3 -= prim->x2;
@@ -529,11 +537,8 @@ void EntityDeathCutscene(Entity* self) {
         break;
 
     case 7:
-        g_CastleFlags[CASTLE_FLAG_53] = 1;
-        g_api.TimeAttackController(
-            TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
         D_8003C704 = 0;
-        g_Settings.D_8003CB04 |= 4;
+        g_Settings.D_8003CB04 |= 1;
         DestroyEntity(self);
         break;
     }

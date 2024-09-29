@@ -19,6 +19,7 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: True
   section_order:
     - ".data"
     - ".rodata"
@@ -46,7 +47,7 @@ segments:
       - [0x650, data]
       - [0x660, data]
       - [0x770, data]
-      - [0x938, .data, succubuscutscene]
+      - [0x938, .data, cutscene]
       - [0x944, data]
       - [0x97C, .data, st_update]
       - [0x9A8, .data, collision]
@@ -60,14 +61,20 @@ segments:
       - [0x14AC, data]
       - [0x1608, .data, e_layout] # layout entries data
       - [0x16C0, data]
+      - [0x16C8, .data, cutscene_data]
+      - [0x1D08, data]
+      - [0x800C, raw, cutscene_alucard]
+      - [0x8D8C, raw, cutscene_mother]
+      - [0x9B0C, raw, cutscene_succubus]
+      - [0xA88C, data]
       - [0xB548, .data, tile_data] # tile data
       - [0xBD48, .data, tile_data] # tile definitions
       - [0x10168, .data, sprites]
       - [0x1171C, .rodata, 11A64]
       - [0x11728, .rodata, succubus] # EntitySuccubus
-      - [0x11808, .rodata, succubuscutscene]
-      - [0x1181C, .rodata, succubuscutscene] #D_80180938, names
-      - [0x1183C, .rodata, succubuscutscene] #EntitySuccubusCutscene
+      - [0x11808, .rodata, cutscene]
+      - [0x1181C, .rodata, cutscene] #D_80180938, names
+      - [0x1183C, .rodata, cutscene] #DRE_EntityCutscene
       - [0x118C0, .rodata, 161DC] #EntityCSMoveAlucard, string and jumps
       - [0x118F8, .rodata, 161DC] # EntityUnkId23
       - [0x11910, .rodata, 1697C] # EntityFadeToWhite
@@ -79,7 +86,7 @@ segments:
       - [0x11A5C, .rodata, prim_helpers]
       - [0x11A64, c]
       - [0x11A64, c, succubus]
-      - [0x14774, c, succubuscutscene]
+      - [0x14774, c, cutscene]
       - [0x161DC, c]
       - [0x1697C, c]
       - [0x16F90, c, st_update]

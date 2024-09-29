@@ -236,7 +236,7 @@ extern u8 D_80183C84[];
 extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
-extern s32 D_801D7D20;
+extern s32 skip_cutscene;
 extern s32 D_801D7D54;
 extern s32 D_801D7D58;
 extern u32 g_CutsceneFlags;
@@ -288,7 +288,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 extern SVECTOR D_801B73E0;
 
-// For EntityDeathCutscene
+// For NO3_EntityCutscene
 extern u8 D_80181A28[];
 extern u8 D_80181A2C[];
 extern u16 D_80181A30[];
@@ -296,11 +296,10 @@ extern u16 D_80181A34[];
 extern u16 D_80181A38[];
 extern s16 D_80181A3C[];
 extern const char D_801813F0[];
-extern s32 D_801D7D20;
+extern s32 skip_cutscene;
 extern u32 g_CutsceneFlags;
 extern s32 D_801D7DD4;
 extern u16 D_801D7D60;
-extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
 extern s16 D_80181808[];

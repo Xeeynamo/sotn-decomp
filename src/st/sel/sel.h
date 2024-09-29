@@ -189,7 +189,7 @@ extern s32 D_801BC340;
 extern s32 g_StreamDiskIsReady;
 extern s32 D_801BC348;
 extern s32 D_801BC34C;
-extern s32 D_801BC350;
+extern s32 skip_cutscene;
 extern Dialogue g_Dialogue;
 extern u32 D_801BC398[16];
 extern s32 g_MemCardSelectorX;

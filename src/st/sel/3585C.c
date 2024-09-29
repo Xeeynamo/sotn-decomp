@@ -383,7 +383,7 @@ void func_801B60D4(void) {
     case 3:
         ent4 = &g_Entities[4];
         func_801B5A7C();
-        func_801B69F8(ent4);
+        SEL_EntityCutscene(ent4);
         func_801B4C68();
         func_801B519C();
         func_801B4D78();

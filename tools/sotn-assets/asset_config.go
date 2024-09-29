@@ -35,6 +35,7 @@ type assetEntry struct {
 	start    int
 	end      int
 	assetDir string
+	srcDir   string
 	name     string
 	args     []string
 	ramBase  psx.Addr
@@ -72,6 +73,23 @@ var extractHandlers = map[string]func(assetEntry) error{
 		}
 		return os.WriteFile(outPath, content, 0644)
 	},
+	"cutscene": func(e assetEntry) error {
+		if e.start == e.end {
+			return fmt.Errorf("cutscene cannot be 0 bytes")
+		}
+		r := bytes.NewReader(e.data)
+		script, err := parseCutsceneAsC(r, e.ramBase, e.ramBase.Sum(e.start), e.end - e.start)
+		if err != nil {
+			return err
+		}
+		outPath := path.Join(e.srcDir, fmt.Sprintf("%s.h", e.name))
+		dir := filepath.Dir(outPath)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			fmt.Printf("failed to create directory %s: %v\n", dir, err)
+			return err
+		}
+		return os.WriteFile(outPath, []byte(script), 0644)
+	},
 }
 
 var buildHandlers = map[string]func(assetBuildEntry) error{
@@ -105,11 +123,11 @@ func parseArgs(entry []string) (offset int64, kind string, args []string, err er
 func readConfig(path string) (*assetConfig, error) {
 	yamlFile, err := os.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("Error reading YAML file: %v", err)
+		return nil, fmt.Errorf("error reading YAML file: %v", err)
 	}
 	var data assetConfig
 	if err = yaml.Unmarshal(yamlFile, &data); err != nil {
-		return nil, fmt.Errorf("Error unmarshalling YAML file: %v", err)
+		return nil, fmt.Errorf("error unmarshalling YAML file: %v", err)
 	}
 	return &data, nil
 }
@@ -118,6 +136,7 @@ func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
 	handler func(assetEntry) error,
 	assetDir string,
+	srcDir string,
 	name string,
 	data []byte,
 	start int,
@@ -130,6 +149,7 @@ func enqueueExtractAssetEntry(
 			start:    start,
 			end:      end,
 			assetDir: assetDir,
+			srcDir:   srcDir,
 			ramBase:  ramBase,
 			name:     name,
 			args:     args,
@@ -174,7 +194,7 @@ func extractAssetFile(file assetFileEntry) error {
 				}
 				start := int(off) - segment.Start
 				end := start + size
-				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
+				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram)
 			}
 			off = off2
 			kind = kind2

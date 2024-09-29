@@ -253,7 +253,41 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/33164.c
     src/st/sel/3410C.c
     src/st/sel/3585C.c
-    src/st/sel/3642C.c
+    src/st/sel/cutscene.c
+)
+
+set(SOURCE_FILES_STAGE_CEN
+    src/pc/stages/stage_cen.c
+    src/st/cen/header.c
+    src/st/cen/e_laydef.c
+    src/st/cen/e_init.c
+    src/st/cen/rooms.c
+    src/st/cen/e_layout.c
+    src/st/cen/cutscene_data.c
+    src/st/cen/tile_data.c
+    src/st/cen/sprites.c
+    src/st/cen/st_debug.c
+    src/st/cen/e_breakable.c
+    src/st/cen/DB18.c
+    src/st/cen/cutscene.c
+    src/st/cen/F890.c
+    src/st/cen/st_update.c
+    src/st/cen/collision.c
+    src/st/cen/create_entity.c
+    src/st/cen/e_red_door.c
+    src/st/cen/st_common.c
+    src/st/cen/e_collect.c
+    src/st/cen/blit_char.c
+    src/st/cen/e_misc.c
+    src/st/cen/e_stage_name.c
+    src/st/cen/e_particles.c
+    src/st/cen/e_room_fg.c
+    src/st/cen/popup.c
+    src/st/cen/prim_helpers.c
+    src/st/cen/header.c
+    src/st/cen/create_entity.c
+    src/st/cen/cutscene.c
+    src/st/cen/e_collect.c
 )
 
 set(SOURCE_FILES_STAGE_WRP

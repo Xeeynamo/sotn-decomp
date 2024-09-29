@@ -19,6 +19,7 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: True
   section_order:
     - ".data"
     - ".rodata"
@@ -40,7 +41,7 @@ segments:
       - [0x4BC, data]
       - [0x580, data]
       - [0x770, data]
-      - [0x828, .data, draculacutscene] # "Richter, Dracula"
+      - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, data]
       - [0x990, data]
       - [0xAB0, data]
@@ -55,9 +56,13 @@ segments:
       - [0x2060, .data, rooms]
       - [0x2084, data]
       - [0x26B8, .data, e_layout] # layout entries data
-      - [0x29D8, data]
+      - [0x29D8, .data, cutscene_data]
+      - [0x2C4C, data]
       #- [0x3D1C, cmp]
       - [0x487C, data]
+      - [0xF130, raw, cutscene_richter]
+      - [0xFEB0, raw, cutscene_dracula]
+      - [0x10C30, data]
       #- [0x17F80, cmp]
       - [0x187BC, data]
       #- [0x1A40C, cmp]
@@ -66,7 +71,7 @@ segments:
       - [0x1E6D0, .data, tile_data] # tile definitions
       - [0x226E0, .data, sprites]
       - [0x27984, .rodata, 27D64]
-      - [0x279E8, .rodata, draculacutscene] # EntityDraculaCutscene
+      - [0x279E8, .rodata, cutscene] # ST0_EntityCutscene
       - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
@@ -88,7 +93,7 @@ segments:
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
       - [0x27D64, c]
-      - [0x28984, c, draculacutscene]
+      - [0x28984, c, cutscene]
       - [0x2A218, c]
       - [0x2A8DC, c]
       - [0x2B0C8, c]

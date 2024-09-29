@@ -5,6 +5,8 @@
 #include "../pc.h"
 #include <stage.h>
 
+#define LOAD_ASSET(path, dst) FileReadToBuf(path, dst, 0, sizeof(dst))
+
 // load a rooms.layers.json file and all its dependencies to the returned
 // pre-allocated RoomDef array. Returns NULL in case of a failure.
 RoomDef* LoadRoomsLayers(const char* filePath);

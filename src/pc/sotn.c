@@ -50,20 +50,33 @@ u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 // list of exposed API
 void FreePrimitives(s32 index);
 s32 AllocPrimitives(u8 primType, s32 count);
+void func_80102CD8(s32 start);
+void SetSpeedX(s32 speed);
+Entity* GetFreeEntity(s16 start, s16 end);
+void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
 void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+void func_801027C4(u32 arg0);
+void func_800EB758(s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
 bool func_80131F68(void);
+DR_ENV* func_800EDB08(Primitive* prim);
 u16* func_80106A28(u32 arg0, u16 kind);
+void func_80118894(Entity* self);
+Entity* func_80118970(void);
+s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
+u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s8* frameProps, AnimationFrame** frames);
+void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddToInventory(u16 itemId, s32 itemCategory);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
+void func_8010BF64(Unkstruct_8010BF64* arg0);
 void func_800F2288(s32 arg0);
 bool CalcPlayerDamage(DamageParam* damage);
 void DebugInputWait(const char* msg);
@@ -98,8 +111,6 @@ static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-void func_801027C4(u32 arg0);
-
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -110,11 +121,11 @@ bool InitGame(void) {
     api.FreePrimitives = FreePrimitives;
     api.AllocPrimitives = AllocPrimitives;
     api.CheckCollision = CheckCollision;
-    api.func_80102CD8 = NULL;
+    api.func_80102CD8 = func_80102CD8;
     api.UpdateAnim = UpdateAnim;
-    api.SetSpeedX = NULL;
-    api.GetFreeEntity = NULL;
-    api.GetEquipProperties = NULL;
+    api.SetSpeedX = SetSpeedX;
+    api.GetFreeEntity = GetFreeEntity;
+    api.GetEquipProperties = GetEquipProperties;
     api.func_800EA5E4 = func_800EA5E4;
     api.LoadGfxAsync = LoadGfxAsync;
     api.PlaySfx = PlaySfx;
@@ -122,18 +133,18 @@ bool InitGame(void) {
     api.func_800EA538 = func_800EA538;
     api.g_pfn_800EA5AC = func_800EA5AC;
     api.func_801027C4 = func_801027C4;
-    api.func_800EB758 = NULL;
+    api.func_800EB758 = func_800EB758;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
     api.func_80131F68 = func_80131F68;
-    api.func_800EDB08 = NULL;
+    api.func_800EDB08 = func_800EDB08;
     api.func_80106A28 = func_80106A28;
-    api.func_80118894 = NULL;
+    api.func_80118894 = func_80118894;
     api.enemyDefs = g_EnemyDefs;
-    api.func_80118970 = NULL;
-    api.func_80118B18 = NULL;
-    api.UpdateUnarmedAnim = NULL;
+    api.func_80118970 = func_80118970;
+    api.func_80118B18 = func_80118B18;
+    api.UpdateUnarmedAnim = UpdateUnarmedAnim;
     api.PlayAnimation = PlayAnimation;
-    api.func_80118C28 = NULL;
+    api.func_80118C28 = func_80118C28;
     api.func_8010E168 = func_8010E168;
     api.func_8010DFF0 = func_8010DFF0;
     api.DealDamage = NULL;
@@ -152,7 +163,7 @@ bool InitGame(void) {
     api.SetVolumeCommand22_23 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
-    api.func_8010BF64 = NULL;
+    api.func_8010BF64 = func_8010BF64;
     api.func_800F1FC4 = NULL;
     api.func_800F2288 = func_800F2288;
     api.func_8011A3AC = func_8011A3AC;
