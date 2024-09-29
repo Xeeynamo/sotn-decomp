@@ -3,47 +3,58 @@
 
 void Update(void);
 void HitDetection(void);
-void CreateEntityWhenInHorizontalRange(LayoutEntity*);
-void func_8018A520(s16);
 void UpdateRoomPosition(void);
-void PrizeDropFall(void);
 void InitRoomEntities(s32 objLayoutId);
-void PlaySfxPositional(u16);
-void BottomCornerText(u8*, u8);
-
-extern MyRoomDef rooms_layers[];
+void UpdateStageEntities(void);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 static s16** spriteBanks[];
-extern void* g_Cluts[];
-extern RoomDef g_TileLayers[];
-extern void* OVL_EXPORT(g_EntityGfxs)[];
-void UpdateStageEntities(void);
+static u_long* cluts[];
+static MyRoomDef rooms_layers[];
+static GfxBank* gfxBanks[];
 
-static Overlay OVL_EXPORT(Overlay) = {
+Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = spriteBanks,
-    .cluts = g_Cluts,
+    .cluts = cluts,
     .objLayoutHorizontal = NULL,
     .tileLayers = rooms_layers,
-    .gfxBanks = OVL_EXPORT(g_EntityGfxs),
+    .gfxBanks = gfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
 };
 
 #include "sprite_banks.h"
 
 extern u16 D_80181D08[16];
-void* D_801800A0[] = {
+u_long* D_801800A0[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
     PAL_BULK(0x2000, D_80181D08),
     PAL_TERMINATE(),
 };
-void* g_Cluts[] = {
-    /* 0x0B4 */ D_801800A0,
-};
+static u_long* cluts[] = {D_801800A0};
 
 #include "layers.h"
+
+static u_long* D_801801B8[] = {
+    GFX_BANK_NONE,
+    GFX_ENTRY(0, 0, 0, 0, NULL),
+    GFX_TERMINATE(),
+};
+
+extern u8 D_80181420[];
+extern u8 D_80181764[];
+static u_long* D_801801CC[] = {
+    GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80181420),
+    GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_80181764),
+    GFX_TERMINATE(),
+};
+static GfxBank* gfxBanks[] = {
+    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
+    D_801801CC, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
+    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
+    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8};

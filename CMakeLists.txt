@@ -302,7 +302,7 @@ set(SOURCE_FILES_STAGE_CEN
 
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
-    src/st/wrp/d_1b8.c
+    src/st/wrp/header.c
     src/st/wrp/e_laydef.c
     src/st/wrp/e_init.c
     src/st/wrp/st_debug.c

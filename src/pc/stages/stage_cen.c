@@ -6,8 +6,6 @@
 #include "stage_loader.h"
 #include "cen.h"
 
-extern Overlay OVL_EXPORT(Overlay);
-
 u16 D_8018658C[0x80];
 u16 D_8018678C[0x80];
 u16 D_8018698C[0x10];
@@ -18,6 +16,7 @@ u8 D_80181658[836];
 u8 D_8018199C[8356];
 u8 D_80185830[3420];
 
+extern Overlay OVL_EXPORT(Overlay);
 void InitStageCEN(Overlay* o) {
     LoadReset();
     LOAD_ASSET("assets/st/cen/D_8018658C.bin", D_8018658C);
