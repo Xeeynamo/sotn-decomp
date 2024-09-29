@@ -6,8 +6,8 @@
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
 extern s32 D_us_80170500;
-extern s32 D_us_80170508;
-extern s32 D_us_8017050C;
+extern s32 D_us_80170508[];
+extern s32 D_us_8017050C[];
 extern s16 D_us_801737C4;
 extern s16 D_us_801737C8;
 extern s32 D_us_801737CC;
@@ -266,7 +266,7 @@ void func_us_80171864(Entity* self) {
         break;
     case 2:
     case 3:
-        if (g_Player.unk0C & 
+        if (g_Player.unk0C &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
             self->ext.ghost.unk8C = 0;
@@ -288,8 +288,8 @@ void func_us_80171864(Entity* self) {
         if (self->velocityX < 0) {
             self->facingLeft = 0;
         }
-        D_us_801737CC =
-            UpdateEntityVelocityTowardsTarget(self, (s16)D_us_801737C4, D_us_801737C8);
+        D_us_801737CC = UpdateEntityVelocityTowardsTarget(
+            self, (s16)D_us_801737C4, D_us_801737C8);
         if (self->step == 2) {
             if (D_us_801737CC < 8) {
                 self->ext.ghost.unk86 = 0;
@@ -297,14 +297,14 @@ void func_us_80171864(Entity* self) {
             }
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
-            temp_v1 = *(&D_us_80170508 + ((D_us_80173810.level / 10) * 3));
+            temp_v1 = D_us_80170508[((D_us_80173810.level / 10) * 3)];
             if (self->ext.ghost.unk86 == (temp_v1 - 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (temp_v1 < self->ext.ghost.unk86) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
-                    self, *(&D_us_8017050C + ((D_us_80173810.level / 10) * 3)),
-                    1, &D_us_80173810);
+                    self, D_us_8017050C[((D_us_80173810.level / 10) * 3)], 1,
+                    &D_us_80173810);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
             }
@@ -319,8 +319,8 @@ void func_us_80171864(Entity* self) {
         self->posY.val += self->velocityY;
         break;
     case 4:
-        if (!(g_Player.unk0C & 
-            (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
+        if (!(g_Player.unk0C &
+              (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             if (self->ext.ghost.unk96->entityId == 0xDB) {
                 self->ext.ghost.unk96->params = 1;
                 g_ServantDesc.Unk2C(self->ext.ghost.unk96);
@@ -371,8 +371,9 @@ void func_us_80171864(Entity* self) {
         }
         break;
     case 5:
-        if (g_Player.unk0C & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
-            if (self->velocityY > (s32)0xFFFE8000) {
+        if (g_Player.unk0C &
+            (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
+            if (self->velocityY > FIX(-1.5)) {
                 self->velocityY -= FIX(0.25);
             }
             self->posY.val += self->velocityY;
@@ -387,7 +388,8 @@ void func_us_80171864(Entity* self) {
         }
         break;
     case 6:
-        if (!(g_Player.unk0C & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
+        if (!(g_Player.unk0C &
+              (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             self->step = 1;
         } else {
             self->posX.val = FIX(128.0);
