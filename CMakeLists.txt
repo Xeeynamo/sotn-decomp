@@ -253,7 +253,7 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/33164.c
     src/st/sel/3410C.c
     src/st/sel/3585C.c
-    src/st/sel/3642C.c
+    src/st/sel/cutscene.c
 )
 
 set(SOURCE_FILES_STAGE_CEN
@@ -269,7 +269,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/st_debug.c
     src/st/cen/e_breakable.c
     src/st/cen/DB18.c
-    src/st/cen/holyglassescutscene.c
+    src/st/cen/cutscene.c
     src/st/cen/F890.c
     src/st/cen/st_update.c
     src/st/cen/collision.c
@@ -286,7 +286,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/prim_helpers.c
     src/st/cen/header.c
     src/st/cen/create_entity.c
-    src/st/cen/holyglassescutscene.c
+    src/st/cen/cutscene.c
     src/st/cen/e_collect.c
 )
 

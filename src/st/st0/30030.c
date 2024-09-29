@@ -468,14 +468,14 @@ void PrologueScroll(void) {
     }
 }
 
-u8 func_801B101C(const char* msg) {
+u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
 
     D_801C24E4[0] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
     if (D_801C24E4[0] != -1) {
         g_Dialogue.nextCharX = 0x200;
-        g_Dialogue.nextCharDialogue = msg;
+        g_Dialogue.scriptCur = script;
         g_Dialogue.startY = 0x216;
         g_Dialogue.nextLineX = 0;
         g_Dialogue.nextCharY = 0;

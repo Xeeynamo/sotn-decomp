@@ -80,7 +80,7 @@ void EntityGaibon(Entity* self) {
     s32 yVar;
     s32 xVar;
 
-    if ((self->step) && (!self->ext.GS_Props.nearDeath) &&
+    if (self->step && (!self->ext.GS_Props.nearDeath) &&
         self->hitPoints < g_api.enemyDefs[0xFE].hitPoints / 2) {
         self->ext.GS_Props.grabedAscending = 0;
         self->ext.GS_Props.nearDeath = 1;

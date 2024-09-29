@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
   symbol_name_format: us_$VRAM
   disassemble_all: True
   section_order:
@@ -45,7 +46,7 @@ segments:
       - [0x310, .data, e_init]
       - [0x4E8, .data, st_debug]
       - [0x568, .data, e_breakable]
-      - [0x5D4, data] # AFC4
+      - [0x5D4, data, cutscene]
       - [0x764, .data, st_update]
       - [0x790, .data, collision]
       - [0xB50, .data, e_red_door]
@@ -58,12 +59,16 @@ segments:
       - [0x12EC, .data, rooms]
       - [0x1308, .data, e_life_up]
       - [0x135C, .data, e_layout] # layout entries data
-      - [0x1424, data]
+      - [0x1424, .data, cutscene_data]
+      - [0x15DC, data]
+      - [0x15F0, raw, cutscene_alucard]
+      - [0x2370, raw, cutscene_maria]
+      - [0x30F0, data]
       - [0x5300, .data, tile_data] # tile data
       - [0x5700, .data, tile_data] # tile definitions
       - [0x9710, .data, sprites]
       - [0xA9D4, data]
-      - [0xA9EC, .rodata, AFC4]
+      - [0xA9EC, .rodata, cutscene]
       - [0xAA70, .rodata, CA94]
       - [0xAAB0, .rodata, e_red_door]
       - [0xAAC8, .rodata, e_collect]
@@ -74,7 +79,7 @@ segments:
       - [0xABF0, .rodata, e_life_up]
       - [0xAC0C, c, st_debug]
       - [0xAE90, c, e_breakable]
-      - [0xAFC4, c]
+      - [0xAFC4, c, cutscene]
       - [0xCA94, c]
       - [0xCF70, c, st_update]
       - [0xD3A4, c, collision]

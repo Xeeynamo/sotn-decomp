@@ -126,7 +126,7 @@ void EntitySuccubus(Entity* self) {
         break;
 
     case SUCCUBUS_CS_2: // Disguised as Lisa
-        if (D_801A3ED4 != 0) {
+        if (skip_cutscene) {
             SetSubStep(4);
         }
         switch (self->step_s) {
@@ -169,7 +169,7 @@ void EntitySuccubus(Entity* self) {
 
     // Sets Succubus in position
     case SUCCUBUS_CS_3:
-        if ((D_801A3ED4 == 0) || (self->step_s == 0)) {
+        if (!skip_cutscene || (self->step_s == 0)) {
             switch (self->step_s) {
             case 0:
                 self->facingLeft = 0;

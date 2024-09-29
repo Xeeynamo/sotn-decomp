@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stage_loader.h"
+#include "cen.h"
 
-extern Overlay CEN_Overlay;
+extern Overlay OVL_EXPORT(Overlay);
 
 u16 D_8018658C[0x80];
 u16 D_8018678C[0x80];
@@ -28,5 +29,5 @@ void InitStageCEN(Overlay* o) {
     LOAD_ASSET("assets/st/cen/D_80181658.bin", D_80181658);
     LOAD_ASSET("assets/st/cen/D_8018199C.bin", D_8018199C);
     LOAD_ASSET("assets/st/cen/D_80185830.bin", D_80185830);
-    memcpy(o, &CEN_Overlay, sizeof(Overlay));
+    memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-void CutsceneUnk3(s16 arg0) {
+static void CutsceneUnk3(s16 arg0) {
     RECT rect;
 
     rect.y = (arg0 * 12) + 384;

@@ -42,7 +42,7 @@ segments:
       - [0x394, .data, e_init]
       - [0x4D4, .data, st_debug]
       - [0x554, .data, e_breakable]
-      - [0x5D8, .data, holyglassescutscene]
+      - [0x5D8, .data, cutscene]
       - [0x68C, .data, F890]
       - [0x7B8, .data, st_update]
       - [0x7E4, .data, collision]
@@ -58,6 +58,8 @@ segments:
       - [0x13F0, .data, cutscene_data]
       - [0x1658, cmp, D_80181658]
       - [0x199C, cmp, D_8018199C]
+      - [0x1F40, raw, cutscene_alucard]
+      - [0x2CC0, raw, cutscene_maria]
       - [0x3A40, cmp, D_80183A40]
       - [0x4B70, cmp, D_80184B70]
       - [0x5830, cmp, D_80185830]
@@ -69,7 +71,7 @@ segments:
       - [0x81EC, .data, tile_data] # tile definitions
       - [0xC60C, .data, sprites]
       - [0xD414, .rodata, e_init]
-      - [0xD42C, .rodata, holyglassescutscene]
+      - [0xD42C, .rodata, cutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
       - [0xD540, .rodata, e_collect] # EntityPrizeDrop
@@ -81,7 +83,7 @@ segments:
       - [0xD600, c, st_debug]
       - [0xD89C, c, e_breakable]
       - [0xDB18, c]
-      - [0xDF0C, c, holyglassescutscene]
+      - [0xDF0C, c, cutscene]
       - [0xF890, c]
       - [0x10E4C, c, st_update]
       - [0x11280, c, collision]
@@ -98,6 +100,6 @@ segments:
       - [0x1BED4, c, prim_helpers]
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
-      - [0x1C774, .bss, holyglassescutscene]
+      - [0x1C774, .bss, cutscene]
       - [0x1C7C0, .bss, e_collect]
   - [0x1D46C]

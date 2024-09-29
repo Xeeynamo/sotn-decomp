@@ -67,7 +67,11 @@ segments:
       - [0x3C44, data]
       - [0x3CC4, .data, rooms]
       - [0x3DC8, .data, e_layout] # layout entries data
-      - [0x4CE0, data]
+      - [0x4CE0, .data, cutscene_data]
+      - [0x4E60, data]
+      - [0x11B88, raw, cutscene_alucard]
+      - [0x12908, raw, cutscene_death]
+      - [0x13688, data]
       - [0x18838, .data, tile_data] # tile data
       - [0x26638, .data, tile_data] # tile definitions
       - [0x2EA68, .data, sprites]
@@ -77,7 +81,7 @@ segments:
       - [0x37414, .rodata, 3C4EC]
       - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, rodata]
-      - [0x37458, .rodata, deathcutscene] # EntityDeathCutscene
+      - [0x37458, .rodata, cutscene] # NO3_EntityCutscene
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
       - [0x37514, .rodata, 3FF00] # EntityDeath
@@ -103,7 +107,7 @@ segments:
       - [0x377D4, c]
       - [0x3C4EC, c]
       - [0x3E134, c]
-      - [0x3E544, c, deathcutscene]
+      - [0x3E544, c, cutscene]
       - [0x3FF00, c]
       - [0x4184C, c, st_update]
       - [0x41C80, c, collision]

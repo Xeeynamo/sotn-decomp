@@ -16,39 +16,39 @@ void CutsceneRun(void) {
     }
     while (true) {
         // Start the dialogue script only if the start timer has passed
-        startTimer = *g_Dialogue.unk40++ << 8;
-        startTimer |= *g_Dialogue.unk40++;
+        startTimer = *g_Dialogue.scriptEnd++ << 8;
+        startTimer |= *g_Dialogue.scriptEnd++;
         if (g_Dialogue.timer < startTimer) {
             // Re-evaluate the condition at the next frame
-            g_Dialogue.unk40 -= 2;
+            g_Dialogue.scriptEnd -= 2;
             return;
         }
-        switch (*g_Dialogue.unk40++) {
+        switch (*g_Dialogue.scriptEnd++) {
         case 0:
-            entity =
-                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
+            entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +
+                     STAGE_ENTITY_START;
             DestroyEntity(entity);
-            entity->entityId = *g_Dialogue.unk40++;
+            entity->entityId = *g_Dialogue.scriptEnd++;
             entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi |= *g_Dialogue.unk40++;
-            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi |= *g_Dialogue.unk40++;
+            entity->posX.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
+            entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
+            entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
+            entity->posY.i.hi |= *g_Dialogue.scriptEnd++;
             break;
         case 1:
-            entity =
-                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
+            entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +
+                     STAGE_ENTITY_START;
             DestroyEntity(entity);
             break;
         case 2:
-            if (!((g_CutsceneFlags >> *g_Dialogue.unk40) & 1)) {
-                g_Dialogue.unk40--;
+            if (!((g_CutsceneFlags >> *g_Dialogue.scriptEnd) & 1)) {
+                g_Dialogue.scriptEnd--;
                 return;
             }
-            g_CutsceneFlags &= ~(1 << *g_Dialogue.unk40++);
+            g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptEnd++);
             break;
         case 3:
-            g_CutsceneFlags |= 1 << *g_Dialogue.unk40++;
+            g_CutsceneFlags |= 1 << *g_Dialogue.scriptEnd++;
             break;
         }
     }
