@@ -243,7 +243,7 @@ extern u32 g_CutsceneFlags;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
-// *** EntityStrongWarg properties START ***
+// *** EntityFireWarg properties START ***
 
 extern Entity D_8007A958;
 extern Entity D_8007D858;
@@ -276,7 +276,7 @@ extern u16 D_801829DC;
 extern s32 D_801829EC[];
 extern s32 D_80182A04[];
 
-// *** EntityStrongWarg properties END ***
+// *** EntityFireWarg properties END ***
 
 // *** EntitySoulStealOrb properties START ***
 
