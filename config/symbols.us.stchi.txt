@@ -95,7 +95,7 @@ BottomCornerText = 0x801A7D78;
 SalemWitchTrySpawnShadow = 0x801A80A8;
 EntitySalemWitch = 0x801A813C;
 EntitySalemWitchGlow = 0x801A8DE8;
-// func_801A8EAC
+EntitySalemWitchCurse = 0x801A8EAC;
 // func_801A93D4
 // func_801A9588
 // func_801A97C8

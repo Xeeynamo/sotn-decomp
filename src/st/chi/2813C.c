@@ -403,7 +403,7 @@ void EntitySalemWitch(Entity* self)
                         PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_CURSE_LAUNCH);
                         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (entity != NULL) {
-                            CreateEntityFromEntity(E_ID_23, self, entity);
+                            CreateEntityFromEntity(E_SALEM_WITCH_CURSE, self, entity);
                             if (self->facingLeft) {
                                 entity->posX.i.hi -= CurseProjectileOffsetX;
                             } else {
@@ -615,14 +615,22 @@ void EntitySalemWitchGlow(Entity* self)
     }
 }
 
-extern u8 D_80181638[];
+u8 D_80181638[] = {
+    0x01, 0x2D, 0x01, 0x2E, 0x01, 0x2F, 0x01, 0x30, 0x01, 0x31, 0x01, 0x32, 0x01, 0x33, 0x01, 0x34,
+    0x01, 0x35, 0x01, 0x36, 0x01, 0x37, 0x01, 0x38, 0x01, 0x39, 0x01, 0x3A, 0x01, 0x3B, 0x01, 0x3C,
+    0x00, 0x00, 0x00, 0x00, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06,
+    0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E,
+    0x00, 0x00, 0x00, 0x00 
+};
+
 extern EntityInit EntityInit_80180694;
 extern signed short* sprites_chi_4[];
 
+// E_SALEM_WITCH_CURSE
 // func_801A8EAC
 // PSP:func_psp_09239AC8:Match
 // PSP:https://decomp.me/scratch/AGNPO
-void func_801A8EAC(Entity* self)
+void EntitySalemWitchCurse(Entity* self)
 {
     Primitive* prim;    // s0
     s32 primIdx;        // s2

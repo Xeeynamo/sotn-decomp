@@ -41,7 +41,7 @@ typedef enum {
     /* 0x20 */ E_ID_20, //func_801A9E94
     /* 0x21 */ E_SALEM_WITCH,
     /* 0x22 */ E_SALEM_WITCH_GLOW,
-    /* 0x23 */ E_ID_23, //func_801A8EAC - Salem Witch Curse
+    /* 0x23 */ E_SALEM_WITCH_CURSE,
     /* 0x24 */ E_ID_24, //func_801A93D4 - Salem Witch Tribolt
     /* 0x25 */ E_ID_25, //func_801A9588
     /* 0x26 */ E_ID_26, //func_801AA020

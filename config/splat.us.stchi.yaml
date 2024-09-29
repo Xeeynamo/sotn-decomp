@@ -56,7 +56,8 @@ segments:
       - [0x14AC, .data, 254C4] # EntityEnemyBlood
       - [0x1538, .data, 2813C] # func_801A813C
       - [0x162C, .data, 2813C] # func_801A8DE8
-      - [0x1638, .data, func_data3]
+      - [0x1638, .data, 2813C] # EntitySalemWitchCurse
+      - [0x167C, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]

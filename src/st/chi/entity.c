@@ -34,7 +34,7 @@ void func_801A9D40(Entity*);
 void func_801A9E94(Entity*);
 void EntitySalemWitch(Entity*);
 void EntitySalemWitchGlow(Entity*);
-void func_801A8EAC(Entity*);
+void EntitySalemWitchCurse(Entity*);
 void func_801A93D4(Entity*);
 void func_801A9588(Entity*);
 void func_801AA020(Entity*);
@@ -81,7 +81,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801A9E94,  // E_ID_20
     EntitySalemWitch,
     EntitySalemWitchGlow,
-    func_801A8EAC,  // E_ID_23
+    EntitySalemWitchCurse,
     func_801A93D4,  // E_ID_24
     func_801A9588,  // E_ID_25
     func_801AA020,  // E_ID_26
