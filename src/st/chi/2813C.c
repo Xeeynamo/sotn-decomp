@@ -580,12 +580,12 @@ void EntitySalemWitch(Entity* self)
 
 // D_8018162C
 u8 AnimFrames_Twinkle[] = {
-    0x02, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x00, 0x00, 0x00, 0x00 
+    0x02, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x00, 0x00, 0x00, 0x00
 };
 
 // E_SALEM_WITCH_GLOW
 // func_801A8DE8
-// PSP:func_psp_092399B0:No match
+// PSP:func_psp_092399B0:Match
 // PSP:https://decomp.me/scratch/Oqz9t
 void EntitySalemWitchGlow(Entity* self)
 {
@@ -597,7 +597,7 @@ void EntitySalemWitchGlow(Entity* self)
         self->hitboxState = 0;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
     }
-    
+
     AnimateEntity(AnimFrames_Twinkle, self);
 
     entity = self - 1;
@@ -609,13 +609,160 @@ void EntitySalemWitchGlow(Entity* self)
         self->posX.val -= FIX(6);
     }
     self->posY.val = entity->posY.val + FIX(2);
-    
+
     if (entity->entityId != E_SALEM_WITCH) {
         DestroyEntity(self);
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A8EAC);    // [Entity] Salem Witch Curse
+extern u8 D_80181638[];
+extern EntityInit EntityInit_80180694;
+extern signed short* sprites_chi_4[];
+
+// func_801A8EAC
+// PSP:func_psp_09239AC8:Match
+// PSP:https://decomp.me/scratch/AGNPO
+void func_801A8EAC(Entity* self)
+{
+    Primitive* prim;    // s0
+    s32 primIdx;        // s2
+    s16* temp_v1_10;    // s1
+
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_80180694);
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+            if (self->facingLeft) {
+                self->velocityX = 0xFFFC0000 | 0x8000;
+            } else {
+                self->velocityX = 0x30000 | 0x8000;
+            }
+            primIdx = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+            if (primIdx == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            prim = &g_PrimBuf[primIdx];
+            self->ext.prim = prim;
+            while (prim != NULL) {
+                prim->tpage = 0x12;
+                prim->clut = 0x2EB;
+                prim->p3 = 0;
+                prim->priority = self->zPriority + 1;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        case 1:
+            MoveEntity();
+            AnimateEntity(&D_80181638, self);
+            
+            prim = self->ext.prim;
+            prim->x0 = prim->x2 = self->posX.i.hi - 8;
+            prim->x1 = prim->x3 = self->posX.i.hi + 8;
+            prim->y0 = prim->y1 = self->posY.i.hi - 8;
+            prim->y2 = prim->y3 = self->posY.i.hi + 8;
+            if (!prim->p2) {
+                prim->p1 += 1;
+                if (prim->p1 > 7) {
+                    prim->p1 = 1;
+                }
+                temp_v1_10 = sprites_chi_4[prim->p1];
+                temp_v1_10 += 0x8;
+                if (self->facingLeft) {
+                    prim->u2 = prim->u3 = *temp_v1_10++;
+                    prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
+                    prim->u0 = prim->u1 = *temp_v1_10++;
+                    prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
+                } else {
+                    prim->u2 = prim->u3 = *temp_v1_10++;
+                    prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
+                    prim->u0 = prim->u1 = *temp_v1_10++;
+                    prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
+                }
+                prim->p2 = 1;
+            } else {
+                prim->p2 -= 1;
+            }
+            prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE | DRAW_TPAGE2;
+            if (Random() & 1) {
+                prim = self->ext.prim;
+                prim = prim->next;
+                prim = FindFirstUnkPrim(prim);
+                if (prim != NULL) {
+                    prim->p3 = 1;
+                    prim->p1 = 8;
+                    prim->p2 = 0;
+                    prim->r0 = prim->g0
+                        = prim->b0 = prim->r1
+                        = prim->g1 = prim->b1
+                        = prim->r2 = prim->g2
+                        = prim->b2 = prim->r3
+                        = prim->g3 = prim->b3
+                        = 0x60;
+                    prim->x0 = prim->x2 = self->posX.i.hi - 8;
+                    prim->x1 = prim->x3 = self->posX.i.hi + 8;
+                    prim->y0 = prim->y1 = self->posY.i.hi - 8;
+                    prim->y2 = prim->y3 = self->posY.i.hi + 8;
+                }
+            }
+            prim = self->ext.prim;
+            prim = prim->next;
+            while (prim != NULL) {
+                if (prim->p3) {
+                    prim->r0 -= 4;
+                    if (!prim->r0) {
+                        prim->p3 = 0;
+                        prim->drawMode = 8;
+                        prim = prim->next;
+                        continue;
+                    }
+                    
+                    prim->g0 = prim->b0 = prim->r0;
+                    prim->r1 = prim->g1
+                        = prim->b1 = prim->r2
+                        = prim->g2 = prim->b2
+                        = prim->r3 = prim->g3
+                        = prim->b3 = prim->r0;
+                    if (!prim->p2) {
+                        prim->x0 = --prim->x2;
+                        prim->x1 = ++prim->x3;
+                        prim->y0 = --prim->y1;
+                        prim->y2 = ++prim->y3;
+                        prim->p1++;
+                        if (prim->p1 > 0xE) {
+                            prim->p3 = 0;
+                            prim->drawMode = 8;
+                            prim = prim->next;
+                            continue;
+                        }
+                        
+                        temp_v1_10 = sprites_chi_4[prim->p1];
+                        temp_v1_10 += 0x8;
+                        if (self->facingLeft) {
+                            prim->u2 = prim->u3 = *temp_v1_10++;
+                            prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
+                            prim->u0 = prim->u1 = *temp_v1_10++;
+                            prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
+                        } else {
+                            prim->u2 = prim->u3 = *temp_v1_10++;
+                            prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
+                            prim->u0 = prim->u1 = *temp_v1_10++;
+                            prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
+                        }
+                        prim->p2 = 1;
+                    } else {
+                        prim->p2 -= 1;
+                    }
+                    prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
+                }
+                prim = prim->next;
+            }
+            return;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A93D4);    // [Entity] Salem Witch Tribolt
 
