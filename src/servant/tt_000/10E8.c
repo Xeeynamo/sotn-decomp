@@ -1025,7 +1025,11 @@ void BatFamiliarBlueTrail(Entity* self) {
     }
 }
 
+#ifndef VERSION_PSP
 void func_80173C0C(Entity* self) {}
+#else
+void func_80173C0C(void) {}
+#endif
 
 void func_80173C14(void) {}
 
