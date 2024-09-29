@@ -1574,7 +1574,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         x = prim3->x1;
         y = prim3->y0;
         g_api.CheckCollision(x, (s16)(y + 8), &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posX.i.hi = x;
             self->posY.i.hi = y - 4;
             self->step++;

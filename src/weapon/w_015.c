@@ -267,7 +267,7 @@ void func_ptr_8017000C(Entity* self) {
         x = self->posX.i.hi + xOffset;
         y = self->posY.i.hi + yOffset;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & 2) {
+        if (collider.effects & EFFECT_UNK_0002) {
             if (xOffset < 0) {
                 self->posX.i.hi += collider.unkC;
             } else {
@@ -282,7 +282,7 @@ void func_ptr_8017000C(Entity* self) {
         y = self->posY.i.hi + yOffset;
         g_api.CheckCollision(x, y, &collider, 0);
 
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += 1 + collider.unk20;
             self->velocityY = FIX(1);
             self->velocityX = self->velocityX / 2;
@@ -294,7 +294,7 @@ void func_ptr_8017000C(Entity* self) {
         y = self->posY.i.hi + yOffset;
         g_api.CheckCollision(x, y, &collider, 0);
 
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(76, 0), 0);
             e = g_api.CreateEntFactoryFromEntity(self, WFACTORY(78, 16), 0);
             g_api.func_80102CD8(3);
