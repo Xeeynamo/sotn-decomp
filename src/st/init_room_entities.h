@@ -7,7 +7,7 @@
  *   - objLayoutId - the room to initialize
  */
 void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = g_pStObjLayoutHorizontal[objLayoutId];
+    u16* pObjLayoutStart = OBJ_LAYOUT_HORIZONTAL[objLayoutId];
     Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
@@ -15,7 +15,7 @@ void InitRoomEntities(s32 objLayoutId) {
     u16* temp_v1;
 
     g_LayoutObjHorizontal = pObjLayoutStart;
-    g_LayoutObjVertical = g_pStObjLayoutVertical[objLayoutId];
+    g_LayoutObjVertical = OBJ_LAYOUT_VERTICAL[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
         g_LayoutObjHorizontal = pObjLayoutStart + 1;

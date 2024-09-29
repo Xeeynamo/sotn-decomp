@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
 #include "dra.h"
+#include "stage.h"
 #include "dra_bss.h"
 #include "servant.h"
 
@@ -14,6 +15,8 @@ GameApi g_ApiInit = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 PfnEntityUpdate* PfnEntityUpdates;
+LayoutEntity** g_pStObjLayoutHorizontal;
+LayoutEntity** g_pStObjLayoutVertical;
 
 ServantDesc D_80170000;
 

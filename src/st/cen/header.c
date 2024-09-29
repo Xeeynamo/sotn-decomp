@@ -38,7 +38,7 @@ static u_long* D_801800A0[] = {
     PAL_BULK(0x2080, D_8018678C),  PAL_BULK(0x2100, D_8018698C),
     PAL_BULK(0x2230, D_801869AC),  PAL_TERMINATE(),
 };
-static u_long* OVL_EXPORT(cluts)[] = {D_801800A0};
+u_long* OVL_EXPORT(cluts)[] = {D_801800A0};
 
 #include "layers.h"
 

@@ -2,21 +2,23 @@
 #include "wrp.h"
 #include <sfx.h>
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_PC)
 static u32 g_HeartDropArray[] = {
     0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
     0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
 };
-extern u32 D_80180648; // SBSS
-extern s32 D_psp_0924BC90;
-
 #else
 // this is supposed to be u16, not u32.
 // the game devs probably put the wrong type.
 extern u32 g_HeartDropArray[16];
+#endif
+
+#if defined(VERSION_PSP)
+extern u32 D_80180648; // SBSS
+extern s32 D_psp_0924BC90;
+#else
 static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
-
 #endif
 
 static WarpCoord WarpRoomCoords[] = {

@@ -29,20 +29,6 @@ typedef struct {
     MyLayer* bg;
 } MyRoomDef;
 
-#if defined(VERSION_PSP)
-// A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity** g_pStObjLayoutHorizontal;
-// A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity** g_pStObjLayoutVertical;
-
-#else
-// A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-// A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* g_pStObjLayoutVertical[];
-
-#endif
-
 extern u16 g_ItemIconSlots[32];
 
 /*

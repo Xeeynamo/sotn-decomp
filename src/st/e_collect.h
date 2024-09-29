@@ -105,7 +105,7 @@ static s16 D_80180EB8[] = {-6, 4, 0, -8};
 // Note that this array is in rodata. Other overlays have it in data.
 static const s8 c_HeartPrizes[2][2];
 #else
-static s8 c_HeartPrizes[] = {1, 5};
+s8 c_HeartPrizes[] = {1, 5};
 #endif
 
 static s32 g_ExplosionYVelocities[] = {

@@ -48,6 +48,12 @@ u8 D_80192E2C[3448];
 u8 D_801956A4[1432];
 
 extern AbbreviatedOverlay OVL_EXPORT(Overlay);
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 void InitStageNZ0(Overlay* o) {
     LoadReset();
     LOAD_ASSET("assets/st/nz0/D_80195C3C.bin", D_80195C3C);
@@ -90,4 +96,7 @@ void InitStageNZ0(Overlay* o) {
     LOAD_ASSET("assets/st/nz0/D_80192E2C.bin", D_80192E2C);
     LOAD_ASSET("assets/st/nz0/D_801956A4.bin", D_801956A4);
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(AbbreviatedOverlay));
+    // PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
+    g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }
