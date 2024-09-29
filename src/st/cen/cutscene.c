@@ -34,10 +34,7 @@ static s16 D_801805F4[] = {
     0x1B, 0x34, 0x41, 0x35, 0x08, 0x0E, 0x4D, 0x11, 0x34, 0x41, 0x29, 0x48,
 };
 
-static const char* g_ActorNames[] = {
-    _S("Alucard"),
-    _S("Maria"),
-};
+static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 static const char _pad[4] = "";
 

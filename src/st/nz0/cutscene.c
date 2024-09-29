@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
+static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
+
 // This file consists of NZ0_EntityCutscene, and all the functions it calls.
 // No function in NZ0 calls anything in there, nor does anything in here call
 // any NZ0 functions, besides the ones in this file.

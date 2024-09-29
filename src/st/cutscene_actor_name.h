@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern const char* g_ActorNames[];
+extern const char* actor_names[];
 
 // Creates primitives for the actor name at the head of the dialogue
 static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
@@ -10,7 +10,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     const char* actorName;
     char ch;
 
-    actorName = g_ActorNames[actorIndex];
+    actorName = actor_names[actorIndex];
     chCount = 0;
     while (true) {
         ch = *actorName++;
@@ -36,7 +36,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
     g_Dialogue.primIndex[1] = primIndex;
-    actorName = g_ActorNames[actorIndex];
+    actorName = actor_names[actorIndex];
     x = 0x38;
     while (prim != NULL) {
         ch = *actorName++;

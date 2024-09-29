@@ -68,7 +68,7 @@ static u8 SetCutsceneScript(u8* script) {
 
 #include "../cutscene_unk4.h"
 
-const char* g_ActorNames[] = {_S("Richter"), _S("Dracula")};
+static const char* actor_names[] = {_S("Richter"), _S("Dracula")};
 
 #include "../cutscene_actor_name.h"
 

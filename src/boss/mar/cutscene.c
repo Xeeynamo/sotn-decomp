@@ -5,6 +5,7 @@
 #include "mar.h"
 
 extern Dialogue g_Dialogue;
+static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 #include "../../st/cutscene_unk1.h"
 

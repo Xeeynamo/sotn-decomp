@@ -13,7 +13,7 @@
 // This array is in Data, but the strings within it are rodata. That rodata
 // lives between the jump tables in this file, so we have to import the rodata,
 // and also the data.
-static const char* g_ActorNames[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
+static const char* actor_names[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
 
 #include "../cutscene_actor_name.h"
 

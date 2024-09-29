@@ -106,11 +106,7 @@ u16 D_80180838[] = {
     0x0034, 0x0041, 0x0029, 0x0048,
 };
 
-const char* g_ActorNames[] = {
-    _S("Alucard"),
-    _S("Maria"),
-    _S("Richter"),
-};
+static const char* actor_names[] = {_S("Alucard"), _S("Maria"), _S("Richter")};
 
 #include "../cutscene_actor_name.h"
 

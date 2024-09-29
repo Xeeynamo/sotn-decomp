@@ -2,6 +2,8 @@
 #include "no3.h"
 #include <cutscene.h>
 
+static const char* actor_names[] = {_S("Alucard"), _S("Death")};
+
 // similar but not an exact duplicate
 static void CutsceneUnk1(void) {
     g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
