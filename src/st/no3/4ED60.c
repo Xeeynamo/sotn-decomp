@@ -118,17 +118,15 @@ void EntityFireWargDeathBeams(Entity* self) {
                     }
 
                     if (self->facingLeft != 0) {
-                        baseX =
-                            self->posX.i.hi -
-                            D_80183080[self->ext.fireWargDeathBeams.unk7E &
-                                       0xF];
+                        baseX = self->posX.i.hi -
+                                D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                           0xF];
                         prim->x0 = prim->x2 = baseX + 0x10;
                         prim->x1 = prim->x3 = baseX - 0x10;
                     } else {
-                        baseX =
-                            self->posX.i.hi +
-                            D_80183080[self->ext.fireWargDeathBeams.unk7E &
-                                       0xF];
+                        baseX = self->posX.i.hi +
+                                D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                           0xF];
                         prim->x0 = prim->x2 = baseX - 0x10;
                         prim->x1 = prim->x3 = baseX + 0x10;
                     }
@@ -194,8 +192,7 @@ void EntityFireWargDeathBeams(Entity* self) {
             prim = prim->next;
         }
 
-        if (hiddenPrimCount == 4 &&
-            self->ext.fireWargDeathBeams.unk7E > 0x13) {
+        if (hiddenPrimCount == 4 && self->ext.fireWargDeathBeams.unk7E > 0x13) {
             DestroyEntity(self);
             return;
         }

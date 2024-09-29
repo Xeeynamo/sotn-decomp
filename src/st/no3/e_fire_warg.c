@@ -1067,7 +1067,7 @@ void func_801CE740(Entity* self) {
     }
 }
 
-const u32 rodata_padding = 0; //remove when wave attack decompiled
+const u32 rodata_padding = 0; // remove when wave attack decompiled
 
 // flame-like attack on ground from strong warg
 INCLUDE_ASM("st/no3/nonmatchings/e_fire_warg", EntityFireWargWaveAttack);
