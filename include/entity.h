@@ -1755,15 +1755,20 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
-} ET_StrongWargDeathBeams;
+} ET_FireWargDeathBeams;
 
 typedef struct {
-    /* 0x7C */ Multi unk7C;
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ s32 : 24;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
-} ET_StrongWarg;
+} ET_FireWarg;
+
+typedef struct {
+    /* 0x7C */ bool unk7C;
+} ET_FireWargHelper;
 
 typedef struct {
     /* 0x7C */ s32 hand;
@@ -1896,7 +1901,8 @@ typedef union { // offset=0x7C
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
     ET_WargExplosionPuffOpaque wargpuff;
-    ET_StrongWarg strongWarg;
+    ET_FireWarg fireWarg;
+    ET_FireWargHelper fireWargHelper;
     ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;
@@ -1943,7 +1949,7 @@ typedef union { // offset=0x7C
     ET_ZombieSpawner zombieSpawner;
     ET_Skeleton skeleton;
     ET_NZ0_311C0 nz0311c0;
-    ET_StrongWargDeathBeams strongWargDeathBeams;
+    ET_FireWargDeathBeams fireWargDeathBeams;
     ET_ClockRoom clockRoom;
     ET_Birdcage birdcage;
     ET_Statue statue;
