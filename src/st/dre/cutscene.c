@@ -15,7 +15,7 @@
 // and also the data.
 static const char* g_ActorNames[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
 
-#include "../cutscene_avatar.h"
+#include "../cutscene_actor_name.h"
 
 #include "../set_cutscene_end.h"
 
@@ -242,7 +242,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
-                DrawCutsceneAvatar(i, self);
+                DrawCutsceneActorName(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;

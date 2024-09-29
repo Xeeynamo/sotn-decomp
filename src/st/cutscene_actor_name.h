@@ -2,7 +2,7 @@
 extern const char* g_ActorNames[];
 
 // Creates primitives for the actor name at the head of the dialogue
-static void DrawCutsceneAvatar(u16 actorIndex, Entity* self) {
+static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     Primitive* prim;
     s16 primIndex;
     s32 x;

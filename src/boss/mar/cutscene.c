@@ -14,7 +14,7 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_unk4.h"
 
-#include "../../st/cutscene_avatar.h"
+#include "../../st/cutscene_actor_name.h"
 
 #include "../../st/set_cutscene_end.h"
 
@@ -185,7 +185,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 CutsceneUnk4();
                 prim->priority = PRIORITY_DIALOGUE;
                 prim->drawMode = DRAW_DEFAULT;
-                DrawCutsceneAvatar(i & 0xFFFF, self);
+                DrawCutsceneActorName(i & 0xFFFF, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;

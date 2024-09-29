@@ -112,7 +112,7 @@ const char* g_ActorNames[] = {
     _S("Richter"),
 };
 
-#include "../cutscene_avatar.h"
+#include "../cutscene_actor_name.h"
 
 #include "../set_cutscene_end.h"
 
@@ -252,7 +252,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->blendMode = 0;
-                DrawCutsceneAvatar(j, entity);
+                DrawCutsceneActorName(j, entity);
                 g_Dialogue.portraitAnimTimer = 6;
                 entity->step = 3;
                 return;
