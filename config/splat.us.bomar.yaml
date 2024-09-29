@@ -46,7 +46,9 @@ segments:
       - [0x310, .data, e_init]
       - [0x4E8, .data, st_debug]
       - [0x568, .data, e_breakable]
-      - [0x5D4, data, cutscene]
+      - [0x5D4, data]
+      - [0x680, .data, cutscene]
+      - [0x688, data]
       - [0x764, .data, st_update]
       - [0x790, .data, collision]
       - [0xB50, .data, e_red_door]
@@ -67,7 +69,7 @@ segments:
       - [0x5300, .data, tile_data] # tile data
       - [0x5700, .data, tile_data] # tile definitions
       - [0x9710, .data, sprites]
-      - [0xA9D4, data]
+      - [0xA9D4, .rodata, cutscene] # actor names
       - [0xA9EC, .rodata, cutscene]
       - [0xAA70, .rodata, CA94]
       - [0xAAB0, .rodata, e_red_door]

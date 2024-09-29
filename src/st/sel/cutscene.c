@@ -106,13 +106,9 @@ u16 D_80180838[] = {
     0x0034, 0x0041, 0x0029, 0x0048,
 };
 
-const char* g_ActorNames[] = {
-    _S("Alucard"),
-    _S("Maria"),
-    _S("Richter"),
-};
+static const char* actor_names[] = {_S("Alucard"), _S("Maria"), _S("Richter")};
 
-#include "../cutscene_avatar.h"
+#include "../cutscene_actor_name.h"
 
 #include "../set_cutscene_end.h"
 
@@ -160,7 +156,7 @@ void SEL_EntityCutscene(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (SetCutsceneScript(D_8018B304)) {
-            skip_cutscene = D_801D6B00 = D_801BC3E8 = 0;
+            g_SkipCutscene = D_801D6B00 = D_801BC3E8 = 0;
             D_8003C704 = 1;
             entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
@@ -169,7 +165,7 @@ void SEL_EntityCutscene(Entity* entity) {
         break;
     case 1:
         while (1) {
-            if ((g_Dialogue.nextCharTimer != 0) && !skip_cutscene) {
+            if ((g_Dialogue.nextCharTimer != 0) && !g_SkipCutscene) {
                 --g_Dialogue.nextCharTimer;
                 return;
             }
@@ -179,7 +175,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 entity->step = 7;
                 return;
             case 1:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -205,12 +201,12 @@ void SEL_EntityCutscene(Entity* entity) {
                 continue;
             case 3:
                 g_Dialogue.nextCharTimer = g_Dialogue.scriptCur++[0];
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 return;
             case 4: {
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -223,7 +219,7 @@ void SEL_EntityCutscene(Entity* entity) {
             case 5: {
                 s16 temp_a0;
                 s16 temp_a1;
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
                 }
@@ -252,13 +248,13 @@ void SEL_EntityCutscene(Entity* entity) {
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->blendMode = 0;
-                DrawCutsceneAvatar(j, entity);
+                DrawCutsceneActorName(j, entity);
                 g_Dialogue.portraitAnimTimer = 6;
                 entity->step = 3;
                 return;
             }
             case 6:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -272,7 +268,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 entity->step = 4;
                 return;
             case 7:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
                 }
@@ -291,14 +287,14 @@ void SEL_EntityCutscene(Entity* entity) {
                 entity->step_s = 0;
                 return;
             case 8:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
                 entity->step = 6;
                 return;
             case 9:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
                 }
@@ -306,13 +302,13 @@ void SEL_EntityCutscene(Entity* entity) {
                 g_api.PlaySfx(g_Dialogue.scriptCur++[0] | (nextChar << 4));
                 continue;
             case 10:
-                if (skip_cutscene != 0 || g_api.func_80131F68() != false) {
+                if (g_SkipCutscene != 0 || g_api.func_80131F68() != false) {
                     continue;
                 }
                 --g_Dialogue.scriptCur;
                 return;
             case 11:
-                if (skip_cutscene != 0 || g_api.func_80131F68() != true) {
+                if (g_SkipCutscene != 0 || g_api.func_80131F68() != true) {
                     continue;
                 }
                 --g_Dialogue.scriptCur;
@@ -372,7 +368,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 g_Dialogue.unk3C = 0;
                 continue;
             case 19:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 5;
                 } else {
                     i = g_Dialogue.scriptCur++[0];
@@ -393,7 +389,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 g_api.PlaySfx(g_Dialogue.scriptCur++[0] | (nextChar << 4));
                 continue;
             case 21:
-                D_801D6B00 = skip_cutscene = D_801BC3E8 = 0;
+                D_801D6B00 = g_SkipCutscene = D_801BC3E8 = 0;
                 continue;
             case 22:
                 D_801BC3E8 &= ~(1 << g_Dialogue.scriptCur++[0]);
@@ -408,7 +404,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 ++g_Dialogue.scriptCur;
                 continue;
             default:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     ++g_Dialogue.scriptCur;
                     continue;
                 }

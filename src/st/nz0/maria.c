@@ -53,7 +53,7 @@ void EntityMaria(Entity* self) {
     Primitive* prim;
     s32 i;
 
-    if (skip_cutscene && (self->step < 12)) {
+    if (g_SkipCutscene && (self->step < 12)) {
         if (!(g_CutsceneFlags & 1)) {
             g_CutsceneFlags |= 1;
         }

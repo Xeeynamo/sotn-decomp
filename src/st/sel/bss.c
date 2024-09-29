@@ -53,7 +53,7 @@ u32 D_801BC340;
 u32 g_StreamDiskIsReady;
 u32 D_801BC348;
 u32 D_801BC34C;
-u32 skip_cutscene;
+u32 g_SkipCutscene;
 u32 g_Dialogue;
 u16 D_801BC358;
 u16 D_801BC35A;

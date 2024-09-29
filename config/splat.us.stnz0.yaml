@@ -43,6 +43,8 @@ segments:
       - [0xDBC, data]
       - [0xDE4, .data, e_breakable]
       - [0xE54, data]
+      - [0x146C, .data, cutscene]
+      - [0x1474, data]
       - [0x1574, .data, st_update]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
@@ -77,7 +79,7 @@ segments:
       - [0x305FC, .rodata, slogra] # EntitySlogra
       - [0x30618, .rodata, gaibon] # EntityGaibon .rodata, 33FCC
       - [0x3063C, .rodata, e_elevator] # func_801B7034
-      - [0x3064C, rodata]
+      - [0x3064C, .rodata, cutscene] # actor names
       - [0x30664, .rodata, cutscene]
       - [0x306E8, .rodata, maria]
       - [0x30728, .rodata, e_red_door]

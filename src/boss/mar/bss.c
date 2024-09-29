@@ -2,9 +2,9 @@
 
 #include <stage.h>
 
-STATIC_PAD_BSS(3072);
+STATIC_PAD_BSS(0xC00);
 
-s32 skip_cutscene;
+s32 g_SkipCutscene;
 Dialogue g_Dialogue;
 s32 D_us_8019AEB8[26];
 s32 g_CutsceneFlags;

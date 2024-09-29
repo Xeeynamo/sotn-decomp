@@ -131,7 +131,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern s32 skip_cutscene;
+extern s32 g_SkipCutscene;
 extern Primitive* D_801A3EF0[];
 extern s32 D_801A3F08;
 extern s32 D_801A3F0C;
@@ -145,9 +145,9 @@ extern u16 D_80180894[];
 extern u16 D_8018089C[];
 extern u16 D_801808A0[];
 extern s16 D_801808A8[];
-extern s32 skip_cutscene;
+extern s32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
-extern s32 D_801A3F88;
+extern s32 g_IsCutsceneDone;
 
 extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard
 
