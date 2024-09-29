@@ -312,12 +312,12 @@ s32 func_801CE120(Entity* self, s32 facing) {
     }
 
     g_api.CheckCollision(x, y - 6, &collider, 0);
-    if (collider.effects & 1) {
+    if (collider.effects & EFFECT_SOLID) {
         ret |= 2;
     }
 
     g_api.CheckCollision(x, y + 6, &collider, 0);
-    if (!(collider.effects & 1)) {
+    if (!(collider.effects & EFFECT_SOLID)) {
         ret |= 4;
     }
 
