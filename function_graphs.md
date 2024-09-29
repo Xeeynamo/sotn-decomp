@@ -3054,6 +3054,7 @@
 - [✅ GetTargetPositionWithDistanceBuffer](function_calls/tt_000.GetTargetPositionWithDistanceBuffer.svg?raw=1)
 - [✅ IsMovementAllowed](function_calls/tt_000.IsMovementAllowed.svg?raw=1)
 - [✅ ProcessEvent](function_calls/tt_000.ProcessEvent.svg?raw=1)
+- [✅ ProcessSfxState](function_calls/tt_000.ProcessSfxState.svg?raw=1)
 - [✅ SearchForEntityInRange](function_calls/tt_000.SearchForEntityInRange.svg?raw=1)
 - [✅ ServantUnk0](function_calls/tt_000.ServantUnk0.svg?raw=1)
 - [✅ ServantUpdateAnim](function_calls/tt_000.ServantUpdateAnim.svg?raw=1)
@@ -3079,7 +3080,6 @@
 - [✅ func_80173C14](function_calls/tt_000.func_80173C14.svg?raw=1)
 - [✅ func_80173C1C](function_calls/tt_000.func_80173C1C.svg?raw=1)
 - [✅ func_80173C24](function_calls/tt_000.func_80173C24.svg?raw=1)
-- [✅ func_80174038](function_calls/tt_000.func_80174038.svg?raw=1)
 # tt_001
 - [✅ AccumulateTowardZero](function_calls/tt_001.AccumulateTowardZero.svg?raw=1)
 - [✅ CalculateAngleToEntity](function_calls/tt_001.CalculateAngleToEntity.svg?raw=1)
@@ -3092,6 +3092,7 @@
 - [✅ GetTargetPositionWithDistanceBuffer](function_calls/tt_001.GetTargetPositionWithDistanceBuffer.svg?raw=1)
 - [✅ IsMovementAllowed](function_calls/tt_001.IsMovementAllowed.svg?raw=1)
 - [✅ ProcessEvent](function_calls/tt_001.ProcessEvent.svg?raw=1)
+- [✅ ProcessSfxState](function_calls/tt_001.ProcessSfxState.svg?raw=1)
 - [✅ SearchForEntityInRange](function_calls/tt_001.SearchForEntityInRange.svg?raw=1)
 - [✅ ServantUnk0](function_calls/tt_001.ServantUnk0.svg?raw=1)
 - [✅ ServantUpdateAnim](function_calls/tt_001.ServantUpdateAnim.svg?raw=1)
@@ -3115,7 +3116,6 @@
 - [✅ func_us_801728EC](function_calls/tt_001.func_us_801728EC.svg?raw=1)
 - [✅ func_us_801728F4](function_calls/tt_001.func_us_801728F4.svg?raw=1)
 - [✅ func_us_801728FC](function_calls/tt_001.func_us_801728FC.svg?raw=1)
-- [❌ func_us_80172D10](function_calls/tt_001.func_us_80172D10.svg?raw=1)
 # w_000
 - [✅ DecelerateX](function_calls/w_000.DecelerateX.svg?raw=1)
 - [✅ DecelerateY](function_calls/w_000.DecelerateY.svg?raw=1)
