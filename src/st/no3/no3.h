@@ -243,8 +243,6 @@ extern s32 D_801D7D54;
 extern s32 D_801D7D58;
 extern u32 g_CutsceneFlags;
 
-extern PfnEntityUpdate PfnEntityUpdates[];
-
 // *** EntityFireWarg properties START ***
 
 extern Entity D_8007A958;

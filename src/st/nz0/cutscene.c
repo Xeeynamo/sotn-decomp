@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "../pfn_entity_update.h"
 
 static u8 D_801813C8[] = {0x00, 0x40, 0x00, 0x00};
 static u8 D_801813CC[] = {0x00, 0x00, 0x00, 0x00};

@@ -10,7 +10,7 @@ void EntityGreyPuff(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
-PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,       EntityExplosion,         EntityPrizeDrop,
     EntityDamageDisplay,   EntityRedDoor,           EntityIntenseExplosion,
     EntitySoulStealOrb,    EntityRoomForeground,    EntityStageNamePopup,

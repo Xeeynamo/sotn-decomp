@@ -43,12 +43,6 @@ extern LayoutEntity* g_pStObjLayoutVertical[];
 
 #endif
 
-#if defined(VERSION_PSP)
-extern PfnEntityUpdate* PfnEntityUpdates;
-#else
-extern PfnEntityUpdate PfnEntityUpdates[];
-#endif
-
 extern u16 g_ItemIconSlots[32];
 
 /*

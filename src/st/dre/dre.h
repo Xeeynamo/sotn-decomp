@@ -103,7 +103,6 @@ extern u16 g_InitializeEntityData0[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_801804F4[];
 extern s8 c_HeartPrizes[];
-extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_801804E8[];
 extern u16 D_8018050C[];
 extern u16 D_80180528[];

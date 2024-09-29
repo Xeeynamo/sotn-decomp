@@ -1,7 +1,7 @@
 g_pStTilesetDebug = 0x80180290;
 MAD_gfxBanks = 0x801802A4;
 g_pStObjLayoutHorizontal = 0x801802F4;
-PfnEntityUpdates = 0x8018049C;
+MAD_EntityUpdates = 0x8018049C;
 g_eBreakableInit = 0x801804F0;
 g_InitDataEnt13 = 0x8018052C;
 g_eInitGeneric2 = 0x80180544;

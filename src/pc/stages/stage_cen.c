@@ -17,6 +17,8 @@ u8 D_8018199C[8356];
 u8 D_80185830[3420];
 
 extern Overlay OVL_EXPORT(Overlay);
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 void InitStageCEN(Overlay* o) {
     LoadReset();
     LOAD_ASSET("assets/st/cen/D_8018658C.bin", D_8018658C);
@@ -29,4 +31,5 @@ void InitStageCEN(Overlay* o) {
     LOAD_ASSET("assets/st/cen/D_8018199C.bin", D_8018199C);
     LOAD_ASSET("assets/st/cen/D_80185830.bin", D_80185830);
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    // PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
 }
