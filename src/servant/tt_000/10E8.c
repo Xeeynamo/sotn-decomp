@@ -1051,78 +1051,8 @@ void func_80173C24(void) {}
 #include "../get_target_position_with_distance_buffer.h"
 
 #ifndef VERSION_PSP
-
 #include "../calculate_distance.h"
-void func_80174038(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
-        if (D_8003C704 != 0) {
-            D_80171090 = 99;
-            DestroyEntity(entity);
-            return;
-        }
-        if (g_api.CdSoundCommandQueueEmpty() != 0) {
-            g_api.PlaySfx(SET_UNK_10);
-            entity->step++;
-        }
-        break;
-
-    case 1:
-        if (g_api.func_80133950() != 0) {
-            entity->step++;
-        }
-        break;
-    case 2:
-        g_api.PlaySfx(entity->params);
-        entity->step++;
-        break;
-
-    case 3:
-        if (g_api.func_80131F68() != 0) {
-            entity->step++;
-        }
-        break;
-
-    case 4:
-        if (g_api.func_80131F68() == 0) {
-            entity->step++;
-        }
-        break;
-
-    case 5:
-        if ((*(s32*)&D_8003C708.flags & 0x60) != 0) {
-            D_80171090 = 99;
-            DestroyEntity(entity);
-            return;
-        }
-        if (g_api.CdSoundCommandQueueEmpty() != 0) {
-            g_api.PlaySfx(SET_UNK_11);
-            entity->step++;
-        }
-        break;
-
-    case 6:
-        if (g_api.func_80133950() != 0) {
-            D_80171090 = 99;
-            DestroyEntity(entity);
-            return;
-        }
-        break;
-
-    case 7:
-        g_api.PlaySfx(SET_STOP_MUSIC);
-        entity->step = 4;
-        break;
-
-    case 8:
-        D_80171090 = 99;
-        DestroyEntity(entity);
-        return;
-    }
-
-    D_80171090 = entity->step;
-}
+#include "../play_sfx.h"
 #endif
 
 #include "../process_event.h"

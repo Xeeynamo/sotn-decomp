@@ -61,7 +61,7 @@ extern AnimationFrame* D_801705F4[];
 extern Sprite D_80170608[];
 extern s32 D_80170658[][5];
 extern u16 D_80170720[];
-extern s32 D_80171090;
+extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 
 s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);

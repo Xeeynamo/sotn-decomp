@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
+#include <sfx.h>
 #include <servant.h>
 
 extern s32 g_IsServantDestroyed;
@@ -104,9 +105,8 @@ void func_us_801728FC(void) {}
 
 #ifndef VERSION_PSP
 #include "../calculate_distance.h"
+#include "../play_sfx.h"
 #endif
-
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80172D10);
 
 #include "../process_event.h"
 

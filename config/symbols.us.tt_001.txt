@@ -1,4 +1,5 @@
 g_Events = 0x801705B0;
+g_PlaySfxStep = 0x80170EE0;
 g_EntityRanges = 0x80170EE4;
 g_EventQueue = 0x80170EEC;
 g_CurrentServant = 0x80170EF0;
