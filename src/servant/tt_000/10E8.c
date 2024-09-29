@@ -1025,7 +1025,7 @@ void BatFamiliarBlueTrail(Entity* self) {
     }
 }
 
-void func_80173C0C(void) {}
+void func_80173C0C(Entity* self) {}
 
 void func_80173C14(void) {}
 
