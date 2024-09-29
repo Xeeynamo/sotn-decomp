@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="302.92,-46.38 305.12,-36.02 296.94,-42.75 302.92,-46.38"/>
 <text text-anchor="middle" x="300.12" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- mar.EntityMariaCutscene -->
+<!-- mar.MAR_EntityCutscene -->
 <g id="node4" class="node">
-<title>mar.EntityMariaCutscene</title>
-<g id="a_node4"><a xlink:href="mar.EntityMariaCutscene.svg" xlink:title="mar.EntityMariaCutscene">
+<title>mar.MAR_EntityCutscene</title>
+<g id="a_node4"><a xlink:href="mar.MAR_EntityCutscene.svg" xlink:title="mar.MAR_EntityCutscene">
 <ellipse fill="green" stroke="black" cx="207.44" cy="-378" rx="129.98" ry="18"/>
-<text text-anchor="middle" x="207.44" y="-374.3" font-family="Times,serif" font-size="14.00">mar.EntityMariaCutscene</text>
+<text text-anchor="middle" x="207.44" y="-374.3" font-family="Times,serif" font-size="14.00">mar.MAR_EntityCutscene</text>
 </a>
 </g>
 </g>
-<!-- mar.EntityMariaCutscene&#45;&gt;mar.SetCutsceneScript -->
+<!-- mar.MAR_EntityCutscene&#45;&gt;mar.SetCutsceneScript -->
 <g id="edge3" class="edge">
-<title>mar.EntityMariaCutscene&#45;&gt;mar.SetCutsceneScript</title>
+<title>mar.MAR_EntityCutscene&#45;&gt;mar.SetCutsceneScript</title>
 <path fill="none" stroke="black" d="M207.44,-359.93C207.44,-328.97 207.44,-263.3 207.44,-226.13"/>
 <polygon fill="black" stroke="black" points="210.94,-226.02 207.44,-216.02 203.94,-226.02 210.94,-226.02"/>
 <text text-anchor="middle" x="202.44" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

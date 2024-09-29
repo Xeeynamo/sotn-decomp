@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="294.65,-46.4 296.76,-36.02 288.63,-42.82 294.65,-46.4"/>
 <text text-anchor="middle" x="291.76" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- cen.EntityHolyGlassesCutscene -->
+<!-- cen.CEN_EntityCutscene -->
 <g id="node4" class="node">
-<title>cen.EntityHolyGlassesCutscene</title>
-<g id="a_node4"><a xlink:href="cen.EntityHolyGlassesCutscene.svg" xlink:title="cen.EntityHolyGlassesCutscene">
-<ellipse fill="green" stroke="black" cx="200.89" cy="-378" rx="158.67" ry="18"/>
-<text text-anchor="middle" x="200.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityHolyGlassesCutscene</text>
+<title>cen.CEN_EntityCutscene</title>
+<g id="a_node4"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
+<ellipse fill="green" stroke="black" cx="200.89" cy="-378" rx="127.28" ry="18"/>
+<text text-anchor="middle" x="200.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>
 </g>
-<!-- cen.EntityHolyGlassesCutscene&#45;&gt;cen.DrawCutsceneAvatar -->
+<!-- cen.CEN_EntityCutscene&#45;&gt;cen.DrawCutsceneAvatar -->
 <g id="edge3" class="edge">
-<title>cen.EntityHolyGlassesCutscene&#45;&gt;cen.DrawCutsceneAvatar</title>
+<title>cen.CEN_EntityCutscene&#45;&gt;cen.DrawCutsceneAvatar</title>
 <path fill="none" stroke="black" d="M200.89,-359.93C200.89,-328.97 200.89,-263.3 200.89,-226.13"/>
 <polygon fill="black" stroke="black" points="204.39,-226.02 200.89,-216.02 197.39,-226.02 204.39,-226.02"/>
 <text text-anchor="middle" x="195.89" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

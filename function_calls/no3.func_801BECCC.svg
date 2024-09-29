@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="244.5,-46.48 246.17,-36.02 238.34,-43.16 244.5,-46.48"/>
 <text text-anchor="middle" x="241.17" y="-39.82" font-family="Times,serif" font-size="14.00">3</text>
 </g>
-<!-- no3.EntityDeathCutscene -->
+<!-- no3.NO3_EntityCutscene -->
 <g id="node4" class="node">
-<title>no3.EntityDeathCutscene</title>
-<g id="a_node4"><a xlink:href="no3.EntityDeathCutscene.svg" xlink:title="no3.EntityDeathCutscene">
-<ellipse fill="green" stroke="black" cx="159.34" cy="-378" rx="129.98" ry="18"/>
-<text text-anchor="middle" x="159.34" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityDeathCutscene</text>
+<title>no3.NO3_EntityCutscene</title>
+<g id="a_node4"><a xlink:href="no3.NO3_EntityCutscene.svg" xlink:title="no3.NO3_EntityCutscene">
+<ellipse fill="green" stroke="black" cx="159.34" cy="-378" rx="128.08" ry="18"/>
+<text text-anchor="middle" x="159.34" y="-374.3" font-family="Times,serif" font-size="14.00">no3.NO3_EntityCutscene</text>
 </a>
 </g>
 </g>
-<!-- no3.EntityDeathCutscene&#45;&gt;no3.func_801BECCC -->
+<!-- no3.NO3_EntityCutscene&#45;&gt;no3.func_801BECCC -->
 <g id="edge3" class="edge">
-<title>no3.EntityDeathCutscene&#45;&gt;no3.func_801BECCC</title>
+<title>no3.NO3_EntityCutscene&#45;&gt;no3.func_801BECCC</title>
 <path fill="none" stroke="black" d="M159.34,-359.93C159.34,-328.97 159.34,-263.3 159.34,-226.13"/>
 <polygon fill="black" stroke="black" points="162.84,-226.02 159.34,-216.02 155.84,-226.02 162.84,-226.02"/>
 <text text-anchor="middle" x="154.34" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
