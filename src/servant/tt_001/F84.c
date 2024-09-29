@@ -6,7 +6,68 @@ extern s32 g_IsServantDestroyed;
 
 #include "../set_entity_animation.h"
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80170F84);
+s32 UpdateEntityVelocityTowardsTarget(s32 unused, s32 targetX, s32 targetY) {
+    // AngleToTarget
+    D_us_801735B8 = CalculateAngleToEntity(g_CurrentEntity, targetX, targetY);
+    // BufferedTargetPosition
+    D_us_801735BC = GetTargetPositionWithDistanceBuffer(
+        D_us_801735B8, g_CurrentEntity->ext.factory.unk82,
+        g_CurrentEntity->ext.factory.unk84);
+    g_CurrentEntity->ext.factory.unk82 = D_us_801735BC;
+    // DeltaX
+    D_us_801735B0 = targetX - g_CurrentEntity->posX.i.hi;
+    // DeltaY
+    D_us_801735B4 = targetY - g_CurrentEntity->posY.i.hi;
+    // DistanceToTarget
+    D_us_801735C0 =
+        SquareRoot12(
+            ((D_us_801735B0 * D_us_801735B0) + (D_us_801735B4 * D_us_801735B4))
+            << 0xC) >>
+        0xC;
+
+    switch (g_CurrentEntity->step) {
+    case 2:
+        g_CurrentEntity->velocityX = rcos(D_us_801735BC) * D_us_801735C0 * 2;
+        g_CurrentEntity->velocityY = -(rsin(D_us_801735BC) * D_us_801735C0 * 2);
+        break;
+    case 3:
+        g_CurrentEntity->velocityX = rcos(D_us_801735BC) * D_us_801735C0 * 8;
+        g_CurrentEntity->velocityY = -(rsin(D_us_801735BC) * D_us_801735C0 * 8);
+        break;
+    default:
+        g_CurrentEntity->velocityX = (rcos(D_us_801735BC) * D_us_801735C0) >> 2;
+        g_CurrentEntity->velocityY =
+            -((rsin(D_us_801735BC) * D_us_801735C0) >> 2);
+        break;
+    }
+
+    // Clamp velocity so it cannot go too low/high
+    if (g_CurrentEntity->velocityX > 0 &&
+        g_CurrentEntity->velocityX < FIX(0.25)) {
+        g_CurrentEntity->velocityX = FIX(0.25);
+    } else if (g_CurrentEntity->velocityX < 0 &&
+               g_CurrentEntity->velocityX > FIX(-0.25)) {
+        g_CurrentEntity->velocityX = FIX(-0.25);
+    }
+
+    if (g_CurrentEntity->velocityY > 0 &&
+        g_CurrentEntity->velocityY < FIX(0.25)) {
+        g_CurrentEntity->velocityY = FIX(0.25);
+    } else if (g_CurrentEntity->velocityY < 0 &&
+               g_CurrentEntity->velocityY > FIX(-0.25)) {
+        g_CurrentEntity->velocityY = FIX(-0.25);
+    }
+
+    if (D_us_801735C0 > 0x100) {
+        g_CurrentEntity->velocityX =
+            (targetX - g_CurrentEntity->posX.i.hi) << 0xE;
+        g_CurrentEntity->velocityY =
+            (targetY - g_CurrentEntity->posY.i.hi) << 0xE;
+    }
+
+    // Return the distance between entity and target
+    return D_us_801735C0;
+}
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
 

@@ -64,6 +64,21 @@ extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch g_EntityRanges[];
 
+// ******
+// tt_001
+// ******
+
+// DeltaX
+extern s16 D_us_801735B0;
+// DeltaY
+extern s16 D_us_801735B4;
+// AngleToTarget
+extern s16 D_us_801735B8;
+// BufferedTargetPosition
+extern s16 D_us_801735BC;
+// DistanceToTarget
+extern s16 D_us_801735C0;
+
 s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 
 #ifdef VERSION_PSP
