@@ -398,7 +398,8 @@ void func_us_80171864(Entity* self) {
         break;
     }
     self->ext.ghost.unk88 += self->ext.ghost.unk8A;
-    if ((s16)(self->ext.ghost.unk88 - 0x21) >= 0x5Fu) {
+    if (!(self->ext.ghost.unk88 >= 0x21 &&
+          self->ext.ghost.unk88 < 0x5F + 0x21)) {
         temp_v0 = self->ext.ghost.unk8A;
         self->ext.ghost.unk8A = -temp_v0;
     }
