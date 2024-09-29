@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="138.04,-46.02 134.54,-36.02 131.04,-46.02 138.04,-46.02"/>
 <text text-anchor="middle" x="129.54" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- no3.EntityStrongWarg -->
+<!-- no3.EntityFireWarg -->
 <g id="node3" class="node">
-<title>no3.EntityStrongWarg</title>
-<g id="a_node3"><a xlink:href="no3.EntityStrongWarg.svg" xlink:title="no3.EntityStrongWarg">
-<ellipse fill="red" stroke="black" cx="134.54" cy="-378" rx="115.88" ry="18"/>
-<text text-anchor="middle" x="134.54" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityStrongWarg</text>
+<title>no3.EntityFireWarg</title>
+<g id="a_node3"><a xlink:href="no3.EntityFireWarg.svg" xlink:title="no3.EntityFireWarg">
+<ellipse fill="red" stroke="black" cx="134.54" cy="-378" rx="102.88" ry="18"/>
+<text text-anchor="middle" x="134.54" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityFireWarg</text>
 </a>
 </g>
 </g>
-<!-- no3.EntityStrongWarg&#45;&gt;no3.func_801CC90C -->
+<!-- no3.EntityFireWarg&#45;&gt;no3.func_801CC90C -->
 <g id="edge2" class="edge">
-<title>no3.EntityStrongWarg&#45;&gt;no3.func_801CC90C</title>
+<title>no3.EntityFireWarg&#45;&gt;no3.func_801CC90C</title>
 <path fill="none" stroke="black" d="M134.54,-359.93C134.54,-328.97 134.54,-263.3 134.54,-226.13"/>
 <polygon fill="black" stroke="black" points="138.04,-226.02 134.54,-216.02 131.04,-226.02 138.04,-226.02"/>
 <text text-anchor="middle" x="129.54" y="-348.73" font-family="Times,serif" font-size="14.00">5</text>

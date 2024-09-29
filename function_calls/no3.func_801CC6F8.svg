@@ -79,37 +79,37 @@
 <polygon fill="black" stroke="black" points="721.55,-43.67 727.71,-35.06 717.52,-37.95 721.55,-43.67"/>
 <text text-anchor="middle" x="722.71" y="-38.86" font-family="Times,serif" font-size="14.00">4</text>
 </g>
-<!-- no3.EntityStrongWarg -->
+<!-- no3.EntityFireWarg -->
 <g id="node6" class="node">
-<title>no3.EntityStrongWarg</title>
-<g id="a_node6"><a xlink:href="no3.EntityStrongWarg.svg" xlink:title="no3.EntityStrongWarg">
-<ellipse fill="red" stroke="black" cx="378.54" cy="-378" rx="115.88" ry="18"/>
-<text text-anchor="middle" x="378.54" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityStrongWarg</text>
+<title>no3.EntityFireWarg</title>
+<g id="a_node6"><a xlink:href="no3.EntityFireWarg.svg" xlink:title="no3.EntityFireWarg">
+<ellipse fill="red" stroke="black" cx="385.54" cy="-378" rx="102.88" ry="18"/>
+<text text-anchor="middle" x="385.54" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityFireWarg</text>
 </a>
 </g>
 </g>
-<!-- no3.EntityStrongWarg&#45;&gt;no3.func_801CC6F8 -->
+<!-- no3.EntityFireWarg&#45;&gt;no3.func_801CC6F8 -->
 <g id="edge5" class="edge">
-<title>no3.EntityStrongWarg&#45;&gt;no3.func_801CC6F8</title>
-<path fill="none" stroke="black" d="M389.95,-359.93C410.92,-328.57 455.69,-261.6 480.35,-224.71"/>
-<polygon fill="black" stroke="black" points="483.51,-226.27 486.16,-216.02 477.69,-222.38 483.51,-226.27"/>
-<text text-anchor="middle" x="384.95" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<title>no3.EntityFireWarg&#45;&gt;no3.func_801CC6F8</title>
+<path fill="none" stroke="black" d="M396.28,-359.93C416.01,-328.57 458.15,-261.6 481.36,-224.71"/>
+<polygon fill="black" stroke="black" points="484.47,-226.34 486.83,-216.02 478.54,-222.62 484.47,-226.34"/>
+<text text-anchor="middle" x="391.28" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- no3.func_801CC820 -->
 <g id="node7" class="node">
 <title>no3.func_801CC820</title>
 <g id="a_node7"><a xlink:href="no3.func_801CC820.svg" xlink:title="no3.func_801CC820">
-<ellipse fill="green" stroke="black" cx="616.54" cy="-378" rx="103.98" ry="18"/>
-<text text-anchor="middle" x="616.54" y="-374.3" font-family="Times,serif" font-size="14.00">no3.func_801CC820</text>
+<ellipse fill="green" stroke="black" cx="610.54" cy="-378" rx="103.98" ry="18"/>
+<text text-anchor="middle" x="610.54" y="-374.3" font-family="Times,serif" font-size="14.00">no3.func_801CC820</text>
 </a>
 </g>
 </g>
 <!-- no3.func_801CC820&#45;&gt;no3.func_801CC6F8 -->
 <g id="edge6" class="edge">
 <title>no3.func_801CC820&#45;&gt;no3.func_801CC6F8</title>
-<path fill="none" stroke="black" d="M605.13,-359.93C584.16,-328.57 539.39,-261.6 514.72,-224.71"/>
-<polygon fill="black" stroke="black" points="517.38,-222.38 508.91,-216.02 511.56,-226.27 517.38,-222.38"/>
-<text text-anchor="middle" x="600.13" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M599.7,-359.93C579.79,-328.57 537.28,-261.6 513.86,-224.71"/>
+<polygon fill="black" stroke="black" points="516.65,-222.58 508.34,-216.02 510.74,-226.33 516.65,-222.58"/>
+<text text-anchor="middle" x="594.7" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>
