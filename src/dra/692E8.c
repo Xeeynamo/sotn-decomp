@@ -1587,7 +1587,7 @@ void func_8010C9F4(void) {
             continue;
         }
         if ((g_Player.unk0C & 2) && (collider.effects & EFFECT_MIST_ONLY)) {
-            collider.effects &= ~3;
+            collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
         }
         temp_s0 = g_Player.colliders2[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
