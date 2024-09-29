@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="218.38" cy="-18" rx="218.26" ry="18"/>
 <text text-anchor="middle" x="218.38" y="-14.3" font-family="Times,serif" font-size="14.00">tt_001.GetTargetPositionWithDistanceBuffer</text>
 </g>
-<!-- tt_001.func_us_80170F84 -->
+<!-- tt_001.UpdateEntityVelocityTowardsTarget -->
 <g id="node2" class="node">
-<title>tt_001.func_us_80170F84</title>
-<g id="a_node2"><a xlink:href="tt_001.func_us_80170F84.svg" xlink:title="tt_001.func_us_80170F84">
-<ellipse fill="red" stroke="black" cx="218.38" cy="-198" rx="129.98" ry="18"/>
-<text text-anchor="middle" x="218.38" y="-194.3" font-family="Times,serif" font-size="14.00">tt_001.func_us_80170F84</text>
+<title>tt_001.UpdateEntityVelocityTowardsTarget</title>
+<g id="a_node2"><a xlink:href="tt_001.UpdateEntityVelocityTowardsTarget.svg" xlink:title="tt_001.UpdateEntityVelocityTowardsTarget">
+<ellipse fill="green" stroke="black" cx="218.38" cy="-198" rx="211.76" ry="18"/>
+<text text-anchor="middle" x="218.38" y="-194.3" font-family="Times,serif" font-size="14.00">tt_001.UpdateEntityVelocityTowardsTarget</text>
 </a>
 </g>
 </g>
-<!-- tt_001.func_us_80170F84&#45;&gt;tt_001.GetTargetPositionWithDistanceBuffer -->
+<!-- tt_001.UpdateEntityVelocityTowardsTarget&#45;&gt;tt_001.GetTargetPositionWithDistanceBuffer -->
 <g id="edge1" class="edge">
-<title>tt_001.func_us_80170F84&#45;&gt;tt_001.GetTargetPositionWithDistanceBuffer</title>
+<title>tt_001.UpdateEntityVelocityTowardsTarget&#45;&gt;tt_001.GetTargetPositionWithDistanceBuffer</title>
 <path fill="none" stroke="black" d="M218.38,-179.93C218.38,-148.97 218.38,-83.3 218.38,-46.13"/>
 <polygon fill="black" stroke="black" points="221.88,-46.02 218.38,-36.02 214.88,-46.02 221.88,-46.02"/>
 <text text-anchor="middle" x="213.38" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
