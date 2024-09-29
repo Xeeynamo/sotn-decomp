@@ -13,7 +13,7 @@ extern u8 D_us_80180718[];
 extern u8 D_us_80180724[];
 extern u8 D_us_80180738[];
 extern u32 g_CutsceneFlags;
-extern s32 skip_cutscene;
+extern s32 g_SkipCutscene;
 
 void func_us_8018CA94(Entity* self) {
     Entity* player;
@@ -24,7 +24,7 @@ void func_us_8018CA94(Entity* self) {
     tilemap = &g_Tilemap;
     player = &PLAYER;
 
-    if (skip_cutscene && self->step < 12) {
+    if (g_SkipCutscene && self->step < 12) {
         SetStep(12);
     }
 

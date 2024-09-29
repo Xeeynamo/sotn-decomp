@@ -74,4 +74,9 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit D_8018125C[];
 
+extern s32 g_SkipCutscene;
+extern Dialogue g_Dialogue;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
+
 #endif

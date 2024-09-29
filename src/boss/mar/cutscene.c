@@ -22,7 +22,7 @@ extern Dialogue g_Dialogue;
 
 #include "../../st/cutscene_scale_avatar.h"
 
-extern s32 skip_cutscene;
+extern s32 g_SkipCutscene;
 extern s32 D_us_8019AF2C;
 extern s32 D_8003CB04;
 extern u8 D_us_801805D4[];
@@ -52,10 +52,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     u_long ptr;
 
     if (self->step) {
-        if ((D_us_8019AF2C != 0) && !skip_cutscene &&
-            ((D_8003CB04 & 0x80) || (g_IsTimeAttackUnlocked != 0)) &&
+        if ((D_us_8019AF2C != 0) && !g_SkipCutscene &&
+            ((D_8003CB04 & 0x80) || g_IsTimeAttackUnlocked) &&
             (g_pads[0].tapped & PAD_START)) {
-            skip_cutscene = 1;
+            g_SkipCutscene = 1;
             g_api.FreePrimitives(self->primIndex);
             self->flags ^= FLAG_HAS_PRIMS;
             if (g_Dialogue.primIndex[1] != -1) {
@@ -82,7 +82,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
             D_us_8019AF2C = 0;
-            skip_cutscene = 0;
+            g_SkipCutscene = 0;
             D_8003C704 = 1;
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
@@ -92,7 +92,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case 1:
         // this is a huge While-loop! Don't miss it!
         while (1) {
-            if ((g_Dialogue.nextCharTimer != 0) && !skip_cutscene) {
+            if ((g_Dialogue.nextCharTimer != 0) && !g_SkipCutscene) {
                 g_Dialogue.nextCharTimer--;
                 return;
             }
@@ -104,7 +104,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 1:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -137,13 +137,13 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
             case 3:
                 g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 return;
 
             case 4:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -154,7 +154,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 5:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
                 }
@@ -191,7 +191,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 6:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 for (prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
@@ -205,7 +205,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 7:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
                     g_Dialogue.scriptCur++;
                     continue;
@@ -225,7 +225,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 8:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
@@ -233,7 +233,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 9:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
                     g_Dialogue.scriptCur++;
                     continue;
@@ -245,7 +245,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
 
             case 10:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 if (g_api.func_80131F68() != false) {
@@ -255,7 +255,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             case 11:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     continue;
                 }
                 if (g_api.func_80131F68() != true) {
@@ -329,7 +329,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
 
             case 19:
-                if (skip_cutscene) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 5;
                 } else {
                     ptr = *g_Dialogue.scriptCur++;
@@ -355,7 +355,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
             case 21:
                 g_CutsceneFlags = 0;
-                skip_cutscene = 0;
+                g_SkipCutscene = 0;
                 D_us_8019AF2C = 0;
                 continue;
 
@@ -375,7 +375,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
             }
 
-            if (skip_cutscene) {
+            if (g_SkipCutscene) {
                 g_Dialogue.scriptCur++;
                 continue;
             }
