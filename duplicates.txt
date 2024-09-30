@@ -3346,9 +3346,9 @@
 | 1.00 | true     | SsStart                             | asm/us/main/nonmatchings/psxsdk/libsnd/ssstart/SsStart.s 
 | 1.00 | true     | SsUtReverbOn                        | asm/us/main/nonmatchings/psxsdk/libsnd/ut_ron/SsUtReverbOn.s 
 | 1.00 | true     | func_8015CC50                       | asm/us/ric/matchings/20920/func_8015CC50.s 
-| 1.00 | true     | func_8015D9B4                       | asm/us/ric/matchings/21250/func_8015D9B4.s 
+| 1.00 | true     | func_8015D9B4                       | asm/us/ric/matchings/211D0/func_8015D9B4.s 
 | 1.00 | true     | RicSetDebug                         | asm/us/ric/nonmatchings/20920/RicSetDebug.s 
-| 1.00 | true     | RicSetDeadPrologue                  | asm/us/ric/nonmatchings/21250/RicSetDeadPrologue.s 
+| 1.00 | true     | RicSetDeadPrologue                  | asm/us/ric/nonmatchings/211D0/RicSetDeadPrologue.s 
 | 1.00 | true     | func_801B1D88                       | asm/us/st/sel/matchings/2C048/func_801B1D88.s 
 | 1.00 | true     | func_801B1D88                       | asm/us/st/sel/nonmatchings/2C048/func_801B1D88.s 
 -------------------------------------------------------------------------------
@@ -3500,8 +3500,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E2438                       | asm/us/dra/matchings/42398/func_800E2438.s 
 | 1.00 | true     | DebugInputWait                      | asm/us/dra/nonmatchings/42398/DebugInputWait.s 
-| 1.00 | true     | func_8015E420                       | asm/us/ric/matchings/21250/func_8015E420.s 
-| 1.00 | true     | DebugInputWait                      | asm/us/ric/nonmatchings/21250/DebugInputWait.s 
+| 1.00 | true     | func_8015E420                       | asm/us/ric/matchings/211D0/func_8015E420.s 
+| 1.00 | true     | DebugInputWait                      | asm/us/ric/nonmatchings/211D0/DebugInputWait.s 
 | 1.00 | true     | func_4A000_8017B100                 | asm/us/weapon/nonmatchings/w_010/func_4A000_8017B100.s 
 | 1.00 | true     | func_82000_8017AB80                 | asm/us/weapon/nonmatchings/w_018/func_82000_8017AB80.s 
 | 1.00 | true     | func_C1000_8017B194                 | asm/us/weapon/nonmatchings/w_027/func_C1000_8017B194.s 
@@ -3509,8 +3509,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E2398                       | asm/us/dra/matchings/42398/func_800E2398.s 
 | 1.00 | true     | DebugShowWaitInfo                   | asm/us/dra/nonmatchings/42398/DebugShowWaitInfo.s 
-| 1.00 | true     | func_8015E380                       | asm/us/ric/matchings/21250/func_8015E380.s 
-| 1.00 | true     | DebugShowWaitInfo                   | asm/us/ric/nonmatchings/21250/DebugShowWaitInfo.s 
+| 1.00 | true     | func_8015E380                       | asm/us/ric/matchings/211D0/func_8015E380.s 
+| 1.00 | true     | DebugShowWaitInfo                   | asm/us/ric/nonmatchings/211D0/DebugShowWaitInfo.s 
 | 1.00 | true     | func_4A000_8017B060                 | asm/us/weapon/nonmatchings/w_010/func_4A000_8017B060.s 
 | 1.00 | true     | func_82000_8017AAE0                 | asm/us/weapon/nonmatchings/w_018/func_82000_8017AAE0.s 
 | 1.00 | true     | func_C1000_8017B0F4                 | asm/us/weapon/nonmatchings/w_027/func_C1000_8017B0F4.s 
@@ -3853,6 +3853,11 @@
 | 1.00 | true     | func_8010D010                       | asm/us/dra/nonmatchings/692E8/func_8010D010.s 
 | 0.97 | true     | func_8010D2C8                       | asm/us/dra/nonmatchings/692E8/func_8010D2C8.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_8010EADC                       | asm/us/dra/matchings/6D59C/func_8010EADC.s 
+| 1.00 | true     | CheckSubwpnChainLimit               | asm/us/dra/nonmatchings/6D59C/CheckSubwpnChainLimit.s 
+| 1.00 | true     | func_8015D1D0                       | asm/us/ric/matchings/211D0/func_8015D1D0.s 
+| 1.00 | true     | RicCheckSubwpnChainLimit            | asm/us/ric/nonmatchings/211D0/RicCheckSubwpnChainLimit.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/6D59C/func_8010DA2C.s 
 | 1.00 | true     | func_8010DA2C                       | asm/us/dra/nonmatchings/6D59C/func_8010DA2C.s 
 | 1.00 | true     | func_8015C920                       | asm/us/ric/matchings/20920/func_8015C920.s 
@@ -3867,11 +3872,6 @@
 | 1.00 | true     | func_8010E3B8                       | asm/us/dra/nonmatchings/6D59C/func_8010E3B8.s 
 | 1.00 | true     | func_8015CAAC                       | asm/us/ric/matchings/20920/func_8015CAAC.s 
 | 1.00 | true     | func_8015CAAC                       | asm/us/ric/nonmatchings/20920/func_8015CAAC.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_8010EADC                       | asm/us/dra/matchings/6D59C/func_8010EADC.s 
-| 1.00 | true     | func_8010EADC                       | asm/us/dra/nonmatchings/6D59C/func_8010EADC.s 
-| 1.00 | true     | func_8015D1D0                       | asm/us/ric/matchings/20920/func_8015D1D0.s 
-| 1.00 | true     | func_8015D1D0                       | asm/us/ric/nonmatchings/20920/func_8015D1D0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010FC50                       | asm/us/dra/matchings/6D59C/func_8010FC50.s 
 | 0.96 | true     | func_8010FCB8                       | asm/us/dra/matchings/6D59C/func_8010FCB8.s 
@@ -3905,13 +3905,13 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8011879C                       | asm/us/dra/matchings/75F54/func_8011879C.s 
 | 1.00 | true     | GetFreeEntity                       | asm/us/dra/nonmatchings/75F54/GetFreeEntity.s 
-| 1.00 | true     | func_8015F8F8                       | asm/us/ric/matchings/21250/func_8015F8F8.s 
-| 1.00 | true     | RicGetFreeEntity                    | asm/us/ric/nonmatchings/21250/RicGetFreeEntity.s 
+| 1.00 | true     | func_8015F8F8                       | asm/us/ric/matchings/211D0/func_8015F8F8.s 
+| 1.00 | true     | RicGetFreeEntity                    | asm/us/ric/nonmatchings/211D0/RicGetFreeEntity.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80118810                       | asm/us/dra/matchings/75F54/func_80118810.s 
 | 1.00 | true     | GetFreeEntityReverse                | asm/us/dra/nonmatchings/75F54/GetFreeEntityReverse.s 
-| 1.00 | true     | func_8015F96C                       | asm/us/ric/matchings/21250/func_8015F96C.s 
-| 1.00 | true     | RicGetFreeEntityReverse             | asm/us/ric/nonmatchings/21250/RicGetFreeEntityReverse.s 
+| 1.00 | true     | func_8015F96C                       | asm/us/ric/matchings/211D0/func_8015F96C.s 
+| 1.00 | true     | RicGetFreeEntityReverse             | asm/us/ric/nonmatchings/211D0/RicGetFreeEntityReverse.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80118614                       | asm/us/dra/matchings/75F54/func_80118614.s 
 | 0.92 | true     | func_80118640                       | asm/us/dra/matchings/75F54/func_80118640.s 
@@ -3920,13 +3920,13 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80118C28                       | asm/us/dra/matchings/75F54/func_80118C28.s 
 | 1.00 | true     | func_80118C28                       | asm/us/dra/nonmatchings/75F54/func_80118C28.s 
-| 1.00 | true     | func_8015FA5C                       | asm/us/ric/matchings/21250/func_8015FA5C.s 
-| 1.00 | true     | func_8015FA5C                       | asm/us/ric/nonmatchings/21250/func_8015FA5C.s 
+| 1.00 | true     | func_8015FA5C                       | asm/us/ric/matchings/211D0/func_8015FA5C.s 
+| 1.00 | true     | func_8015FA5C                       | asm/us/ric/nonmatchings/211D0/func_8015FA5C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80119F70                       | asm/us/dra/matchings/78D0C/func_80119F70.s 
 | 1.00 | true     | func_80119F70                       | asm/us/dra/nonmatchings/78D0C/func_80119F70.s 
-| 0.97 | true     | func_8015FEA8                       | asm/us/ric/matchings/21250/func_8015FEA8.s 
-| 0.97 | true     | RicEntityHitByHoly                  | asm/us/ric/nonmatchings/21250/RicEntityHitByHoly.s 
+| 0.97 | true     | func_8015FEA8                       | asm/us/ric/matchings/211D0/func_8015FEA8.s 
+| 0.97 | true     | RicEntityHitByHoly                  | asm/us/ric/nonmatchings/211D0/RicEntityHitByHoly.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8011BD48                       | asm/us/dra/matchings/7A4D0/func_8011BD48.s 
 | 1.00 | true     | func_8011BD48                       | asm/us/dra/nonmatchings/7A4D0/func_8011BD48.s 
@@ -3950,8 +3950,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8011F074                       | asm/us/dra/matchings/7E4BC/func_8011F074.s 
 | 1.00 | true     | func_8011F074                       | asm/us/dra/nonmatchings/7E4BC/func_8011F074.s 
-| 1.00 | true     | func_801601DC                       | asm/us/ric/matchings/21250/func_801601DC.s 
-| 1.00 | true     | RicEntityHitByDark                  | asm/us/ric/nonmatchings/21250/RicEntityHitByDark.s 
+| 1.00 | true     | func_801601DC                       | asm/us/ric/matchings/211D0/func_801601DC.s 
+| 1.00 | true     | RicEntityHitByDark                  | asm/us/ric/nonmatchings/211D0/RicEntityHitByDark.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80124164                       | asm/us/dra/matchings/7E4BC/func_80124164.s 
 | 1.00 | true     | func_80124164                       | asm/us/dra/nonmatchings/7E4BC/func_80124164.s 
@@ -4253,15 +4253,15 @@
 | 0.91 | true     | RicHandleGenericSubwpnCrash         | asm/us/ric/nonmatchings/1CB04/RicHandleGenericSubwpnCrash.s 
 | 1.00 | true     | RicHandleHydrostorm                 | asm/us/ric/nonmatchings/1CB04/RicHandleHydrostorm.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015F414                       | asm/us/ric/matchings/21250/func_8015F414.s 
-| 0.96 | true     | func_8015F680                       | asm/us/ric/matchings/21250/func_8015F680.s 
-| 1.00 | true     | func_8015F414                       | asm/us/ric/nonmatchings/21250/func_8015F414.s 
-| 0.96 | true     | func_8015F680                       | asm/us/ric/nonmatchings/21250/func_8015F680.s 
+| 1.00 | true     | func_8015F414                       | asm/us/ric/matchings/211D0/func_8015F414.s 
+| 0.96 | true     | func_8015F680                       | asm/us/ric/matchings/211D0/func_8015F680.s 
+| 1.00 | true     | func_8015F414                       | asm/us/ric/nonmatchings/211D0/func_8015F414.s 
+| 0.96 | true     | func_8015F680                       | asm/us/ric/nonmatchings/211D0/func_8015F680.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8016D920                       | asm/us/ric/matchings/2C4C4/func_8016D920.s 
 | 1.00 | true     | func_80170548                       | asm/us/ric/matchings/319C4/func_80170548.s 
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/nonmatchings/2C4C4/RicEntityCrashReboundStoneParticles.s 
-| 1.00 | true     | func_80170548                       | asm/us/ric/nonmatchings/319C4/func_80170548.s 
+| 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/nonmatchings/319C4/RicEntityStopwatchCrashLightning.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80173E78                       | asm/us/servant/tt_000/matchings/10E8/func_80173E78.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/nonmatchings/10E8/AccumulateTowardZero.s 
@@ -7082,56 +7082,56 @@
 | 1.00 | true     | func_8015CC70                       | asm/us/ric/matchings/20920/func_8015CC70.s 
 | 1.00 | true     | func_8015CC70                       | asm/us/ric/nonmatchings/20920/func_8015CC70.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015DBB0                       | asm/us/ric/matchings/21250/func_8015DBB0.s 
-| 1.00 | true     | RicCheckInput                       | asm/us/ric/nonmatchings/21250/RicCheckInput.s 
+| 1.00 | true     | func_8015DBB0                       | asm/us/ric/matchings/211D0/func_8015DBB0.s 
+| 1.00 | true     | RicCheckInput                       | asm/us/ric/nonmatchings/211D0/RicCheckInput.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801606BC                       | asm/us/ric/matchings/21250/func_801606BC.s 
-| 1.00 | true     | RicCreateEntFactoryFromEntity       | asm/us/ric/nonmatchings/21250/RicCreateEntFactoryFromEntity.s 
+| 1.00 | true     | func_801606BC                       | asm/us/ric/matchings/211D0/func_801606BC.s 
+| 1.00 | true     | RicCreateEntFactoryFromEntity       | asm/us/ric/nonmatchings/211D0/RicCreateEntFactoryFromEntity.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015D3CC                       | asm/us/ric/matchings/21250/func_8015D3CC.s 
-| 1.00 | true     | RicDoAttack                         | asm/us/ric/nonmatchings/21250/RicDoAttack.s 
+| 1.00 | true     | func_8015D3CC                       | asm/us/ric/matchings/211D0/func_8015D3CC.s 
+| 1.00 | true     | RicDoAttack                         | asm/us/ric/nonmatchings/211D0/RicDoAttack.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015D678                       | asm/us/ric/matchings/21250/func_8015D678.s 
-| 1.00 | true     | RicDoCrash                          | asm/us/ric/nonmatchings/21250/RicDoCrash.s 
+| 1.00 | true     | func_8015D678                       | asm/us/ric/matchings/211D0/func_8015D678.s 
+| 1.00 | true     | RicDoCrash                          | asm/us/ric/nonmatchings/211D0/RicDoCrash.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015DB04                       | asm/us/ric/matchings/21250/func_8015DB04.s 
-| 1.00 | true     | RicSetBladeDash                     | asm/us/ric/nonmatchings/21250/RicSetBladeDash.s 
+| 1.00 | true     | func_8015DB04                       | asm/us/ric/matchings/211D0/func_8015DB04.s 
+| 1.00 | true     | RicSetBladeDash                     | asm/us/ric/nonmatchings/211D0/RicSetBladeDash.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015D9D4                       | asm/us/ric/matchings/21250/func_8015D9D4.s 
-| 1.00 | true     | RicSetSlide                         | asm/us/ric/nonmatchings/21250/RicSetSlide.s 
+| 1.00 | true     | func_8015D9D4                       | asm/us/ric/matchings/211D0/func_8015D9D4.s 
+| 1.00 | true     | RicSetSlide                         | asm/us/ric/nonmatchings/211D0/RicSetSlide.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015DA60                       | asm/us/ric/matchings/21250/func_8015DA60.s 
-| 1.00 | true     | RicSetSlideKick                     | asm/us/ric/nonmatchings/21250/RicSetSlideKick.s 
+| 1.00 | true     | func_8015DA60                       | asm/us/ric/matchings/211D0/func_8015DA60.s 
+| 1.00 | true     | RicSetSlideKick                     | asm/us/ric/nonmatchings/211D0/RicSetSlideKick.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015FAB8                       | asm/us/ric/matchings/21250/func_8015FAB8.s 
-| 1.00 | true     | RicSetSubweaponParams               | asm/us/ric/nonmatchings/21250/RicSetSubweaponParams.s 
+| 1.00 | true     | func_8015FAB8                       | asm/us/ric/matchings/211D0/func_8015FAB8.s 
+| 1.00 | true     | RicSetSubweaponParams               | asm/us/ric/nonmatchings/211D0/RicSetSubweaponParams.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801603C4                       | asm/us/ric/matchings/21250/func_801603C4.s 
-| 1.00 | true     | RicUpdatePlayerEntities             | asm/us/ric/nonmatchings/21250/RicUpdatePlayerEntities.s 
+| 1.00 | true     | func_801603C4                       | asm/us/ric/matchings/211D0/func_801603C4.s 
+| 1.00 | true     | RicUpdatePlayerEntities             | asm/us/ric/nonmatchings/211D0/RicUpdatePlayerEntities.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015D250                       | asm/us/ric/matchings/21250/func_8015D250.s 
-| 1.00 | true     | func_8015D250                       | asm/us/ric/nonmatchings/21250/func_8015D250.s 
+| 1.00 | true     | func_8015D250                       | asm/us/ric/matchings/211D0/func_8015D250.s 
+| 1.00 | true     | func_8015D250                       | asm/us/ric/nonmatchings/211D0/func_8015D250.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015E484                       | asm/us/ric/matchings/21250/func_8015E484.s 
-| 1.00 | true     | func_8015E484                       | asm/us/ric/nonmatchings/21250/func_8015E484.s 
+| 1.00 | true     | func_8015E484                       | asm/us/ric/matchings/211D0/func_8015E484.s 
+| 1.00 | true     | func_8015E484                       | asm/us/ric/nonmatchings/211D0/func_8015E484.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015E7B4                       | asm/us/ric/matchings/21250/func_8015E7B4.s 
-| 1.00 | true     | func_8015E7B4                       | asm/us/ric/nonmatchings/21250/func_8015E7B4.s 
+| 1.00 | true     | func_8015E7B4                       | asm/us/ric/matchings/211D0/func_8015E7B4.s 
+| 1.00 | true     | func_8015E7B4                       | asm/us/ric/nonmatchings/211D0/func_8015E7B4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015E800                       | asm/us/ric/matchings/21250/func_8015E800.s 
-| 1.00 | true     | func_8015E800                       | asm/us/ric/nonmatchings/21250/func_8015E800.s 
+| 1.00 | true     | func_8015E800                       | asm/us/ric/matchings/211D0/func_8015E800.s 
+| 1.00 | true     | func_8015E800                       | asm/us/ric/nonmatchings/211D0/func_8015E800.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015EE28                       | asm/us/ric/matchings/21250/func_8015EE28.s 
-| 1.00 | true     | func_8015EE28                       | asm/us/ric/nonmatchings/21250/func_8015EE28.s 
+| 1.00 | true     | func_8015EE28                       | asm/us/ric/matchings/211D0/func_8015EE28.s 
+| 1.00 | true     | func_8015EE28                       | asm/us/ric/nonmatchings/211D0/func_8015EE28.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015F9F0                       | asm/us/ric/matchings/21250/func_8015F9F0.s 
-| 1.00 | true     | func_8015F9F0                       | asm/us/ric/nonmatchings/21250/func_8015F9F0.s 
+| 1.00 | true     | func_8015F9F0                       | asm/us/ric/matchings/211D0/func_8015F9F0.s 
+| 1.00 | true     | func_8015F9F0                       | asm/us/ric/nonmatchings/211D0/func_8015F9F0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015FB84                       | asm/us/ric/matchings/21250/func_8015FB84.s 
-| 1.00 | true     | func_8015FB84                       | asm/us/ric/nonmatchings/21250/func_8015FB84.s 
+| 1.00 | true     | func_8015FB84                       | asm/us/ric/matchings/211D0/func_8015FB84.s 
+| 1.00 | true     | func_8015FB84                       | asm/us/ric/nonmatchings/211D0/func_8015FB84.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015FDB0                       | asm/us/ric/matchings/21250/func_8015FDB0.s 
-| 1.00 | true     | func_8015FDB0                       | asm/us/ric/nonmatchings/21250/func_8015FDB0.s 
+| 1.00 | true     | func_8015FDB0                       | asm/us/ric/matchings/211D0/func_8015FDB0.s 
+| 1.00 | true     | func_8015FDB0                       | asm/us/ric/nonmatchings/211D0/func_8015FDB0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80161FF0                       | asm/us/ric/matchings/24788/func_80161FF0.s 
 | 1.00 | true     | RicEntityApplyMariaPowerAnim        | asm/us/ric/nonmatchings/24788/RicEntityApplyMariaPowerAnim.s 
