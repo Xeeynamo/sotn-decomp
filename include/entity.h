@@ -1249,6 +1249,11 @@ typedef struct {
     /* 0x8C */ s32 targetYPos;
 } ET_SalemWitch;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 unk80;
+} ET_SalemWitchTribolt;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1365,4 +1370,5 @@ typedef union { // offset=0x7C
     ET_BreakableWall breakableWall;
     ET_FallingStairs fallingStairs;
     ET_SalemWitch salemWitch;
+    ET_SalemWitchTribolt salemWitchTribolt;
 } Ext;

@@ -814,12 +814,12 @@ u8 AnimFrames_TriboltCharge[] = {
     0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0x02, 0x07, 0x02, 0x08,
     0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10,
     0x02, 0x11, 0x02, 0x12, 0x02, 0x13, 0x02, 0x14, 0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18,
-    0xFF, 0x00, 0x00, 0x00 
+    0xFF, 0x00, 0x00, 0x00
 };
 
 // D_801816B0
 u8 AnimFrames_TriboltBurst[] = {
-    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0xFF, 0x00, 0x00, 0x00 
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0xFF, 0x00, 0x00, 0x00
 };
 
 extern EntityInit EntityInit_80180640;
@@ -897,7 +897,77 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A9588);    // [Entity]
+extern Entity D_8007D858;
+extern u8 D_801816C0[];
+extern u8 D_801816D0[];
+extern u16 EntityInit_801806A0;
+
+// E_ID_25
+// func_801A9588
+void func_801A9588(Entity* self)
+{
+    Entity* temp_v0_2;
+    s16 temp_v0;
+    s16 temp_v1_2;
+    s16 var_s0;
+    s32 temp_s0;
+    u16 temp_v1;
+
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_801806A0);
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
+            self->rotX = 0x80;
+            temp_s0 = self->params - 1;
+            self->rotZ = GetAngleBetweenEntities(self, g_Entities) + ((temp_s0) << 9) + 0x400;
+            self->ext.salemWitchTribolt.unk80 = 0x40;
+            // fallthrough
+        case 1:
+            MoveEntity();
+            AnimateEntity(&D_801816C0, self);
+            temp_v1_2 = self->ext.salemWitchTribolt.unk80;
+            temp_s0 = self->params - 1;
+            if (temp_v1_2 != 0) {
+                self->ext.salemWitchTribolt.unk80 = temp_v1_2 - 1;
+                temp_v0 = self->rotZ - (temp_s0 * 0x10);
+                var_s0 = temp_v0 - 0x400;
+                self->rotZ = temp_v0;
+            } else {
+                var_s0 = (self->rotZ + (temp_s0 << 9)) - 0x400;
+            }
+            self->velocityX = rcos((s32) var_s0) * 0x30;
+            self->velocityY = rsin((s32) var_s0) * 0x30;
+            if (Random() & 1) {
+                temp_v0_2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (temp_v0_2 != NULL) {
+                    CreateEntityFromEntity(E_ID_25, self, temp_v0_2);
+                    temp_v0_2->animSet = self->animSet;
+                    temp_v0_2->rotZ = self->rotZ;
+                    temp_v0_2->rotX = self->rotX;
+                    temp_v0_2->params = self->animCurFrame;
+                    temp_v0_2->zPriority = self->zPriority + 1;
+                    temp_v0_2->step = 8;
+                }
+            }
+            break;
+
+        case 8:
+            InitializeEntity(&EntityInit_801806A0);
+            self->drawMode = 0x30;
+            self->drawFlags = 0xD;
+            self->animCurFrame = (s16) self->params;
+            self->hitboxState = 0;
+            self->unk6C = 0x60;
+            self->animFrameIdx = (u16) self->animCurFrame;
+            // fallthrough
+        case 9:
+            self->unk6C += 0xFC;
+            if (AnimateEntity(&D_801816D0, self) == 0) {
+                DestroyEntity(self);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A97C8);    // [Entity]
 
