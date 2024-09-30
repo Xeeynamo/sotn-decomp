@@ -190,8 +190,7 @@ void HitDetection(void) {
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->ext.generic.unkB8 =
-                                        iterEnt1;
+                                    iterEnt2->ext.generic.unkB8 = iterEnt1;
                                     // reminder: iterEnt1->hitboxState
                                     if (miscVar1 & 8) {
                                         iterEnt2->hitFlags = 3;
