@@ -58,7 +58,8 @@ segments:
       - [0x162C, .data, 2813C] # EntitySalemWitchGlow
       - [0x1638, .data, 2813C] # EntitySalemWitchCurse
       - [0x167C, .data, 2813C] # EntitySalemWitchTriboltLaunch
-      - [0x16C0, .data, func_data3]
+      - [0x16C0, .data, 2813C] # EntitySalemWitchTriboltProjectile
+      - [0x16EC, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]

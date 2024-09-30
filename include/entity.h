@@ -1251,7 +1251,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
 } ET_SalemWitchTribolt;
 
 typedef union { // offset=0x7C
