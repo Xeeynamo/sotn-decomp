@@ -40,9 +40,9 @@ segments:
       - [0x170AC, .data, spriteparts]
       - [0x18568, .data, d_18568]
       - [0x18688, assets, subweapondefs, D_80154688]
-      - [0x188F4, .data, 21250]
-      - [0x1895C, .data, 21250] # entity table
-      - [0x18A6C, .data, 21250] # blueprints
+      - [0x188F4, .data, 211D0]
+      - [0x1895C, .data, 211D0] # entity table
+      - [0x18A6C, .data, 211D0] # blueprints
       - [0x18C40, .data, 24788]
       - [0x18ED4, .data, 24788] # RicEntityMaria
       - [0x18F7C, .data, 26C84]
@@ -57,7 +57,7 @@ segments:
       - [0x1A7A8, .rodata, 1FCD0]
       - [0x1A7C0, .rodata, 202A8]
       - [0x1A800, .rodata, 20920]
-      - [0x1A80C, .rodata, 21250]
+      - [0x1A80C, .rodata, 211D0]
       - [0x1A918, .rodata, 24788]
       - [0x1A9D0, .rodata, 24788] # RicEntityMaria
       - [0x1A9E8, .rodata, 26C84] # EntityPlayerBlinkWhite
@@ -76,7 +76,7 @@ segments:
       - [0x1FCD0, c, 1FCD0]
       - [0x202A8, c, 202A8]
       - [0x20920, c, 20920]
-      - [0x21250, c, 21250]
+      - [0x211D0, c, 211D0]
       - [0x24788, c, 24788]
       - [0x26C84, c, 26C84]
       - [0x2A060, c, 2A060]
@@ -85,7 +85,7 @@ segments:
       - [0x359A4, c, 319C4]
       - [0x3728C, c, e_giant_spinning_cross]
       - [0x37B64, .bss, 1CB04]
-      - [0x37F80, .bss, 21250]
+      - [0x37F80, .bss, 211D0]
       - [0x38000, .bss, 2A060]
       - [0x38088, .bss, 2C4C4]
       - [0x39894, .bss, 319C4]

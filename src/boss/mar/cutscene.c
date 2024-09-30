@@ -576,7 +576,7 @@ void func_us_8018C90C(Entity* self) {
     case 0:
         InitializeEntity(D_80180A60);
         D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
+        g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_RIGHT;
         g_Player.D_80072EFC = 1;
         break;
@@ -596,8 +596,8 @@ void func_us_8018C90C(Entity* self) {
         if (g_CutsceneFlags & 2) {
             D_8003C8B8 = 1;
 
-            if (g_unkGraphicsStruct.unk0) {
-                g_unkGraphicsStruct.unk0 = 0;
+            if (g_unkGraphicsStruct.pauseEnemies) {
+                g_unkGraphicsStruct.pauseEnemies = false;
             }
 
             DestroyEntity(self);

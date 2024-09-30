@@ -87,7 +87,7 @@ void EntityStopWatch(Entity* self) {
     s32 d;
     s16 offsetX, offsetY;
 
-    if (g_unkGraphicsStruct.unk0) {
+    if (g_unkGraphicsStruct.pauseEnemies) {
         g_unkGraphicsStruct.D_800973FC = 0;
         if (self->step && (self->step < 4)) {
             self->step = 4;
@@ -96,7 +96,7 @@ void EntityStopWatch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_unkGraphicsStruct.unk0) {
+        if (g_unkGraphicsStruct.pauseEnemies) {
             DestroyEntity(self);
             return;
         }

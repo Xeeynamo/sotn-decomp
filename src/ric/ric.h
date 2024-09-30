@@ -152,7 +152,7 @@ enum RicEntities {
     E_HIT_BY_DARK,                   // RicEntityHitByDark
     E_HIT_BY_HOLY,                   // RicEntityHitByHoly
     E_CRASH_STOPWATCH_DONE_PARTICLE, // RicEntityCrashStopwatchDoneSparkle
-    E_80170548,                      // func_80170548
+    E_CRASH_STOPWATCH_LIGHTNING,     // RicEntityStopwatchCrashLightning
     E_TELEPORT,                      // RicEntityTeleport
     E_DUMMY_66,                      // RicEntityDummy
     NUM_ENTITIES,
@@ -232,7 +232,7 @@ enum RicBlueprints {
     BP_HIT_BY_DARK,
     BP_HIT_BY_HOLY,
     BP_AGUNEA_THUNDER,
-    BP_73,
+    BP_CRASH_STOPWATCH_LIGHTNING,
     BP_SMOKE_PUFF_2,
     BP_SKID_SMOKE_2,
     BP_SKID_SMOKE_3,
