@@ -2028,3 +2028,5 @@ SYNC_FIELD(ET_Subweapon, ET_Agunea, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_AguneaCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_GiantSpinningCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrashCross, subweaponId);
+
+SYNC_FIELD(ET_Generic, ET_Player, unkB8)
