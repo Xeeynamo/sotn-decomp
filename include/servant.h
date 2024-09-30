@@ -15,7 +15,7 @@ typedef struct {
     void (*Unk20)(/*?*/);
     void (*Unk24)(/*?*/);
     void (*Unk28)(Entity* self);
-    void (*Unk2C)(/*?*/);
+    void (*Unk2C)(Entity* self);
     void (*Unk30)(/*?*/);
     void (*Unk34)(/*?*/);
     void (*Unk38)(/*?*/);

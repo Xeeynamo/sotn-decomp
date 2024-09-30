@@ -50,7 +50,7 @@ void func_801733BC(void);
 void func_801733C4(void);
 void func_801733CC(void);
 void BatFamiliarBlueTrail(Entity* self);
-void func_80173C0C(void);
+void func_80173C0C(Entity* self);
 void func_80173C14(void);
 void func_80173C1C(void);
 void func_80173C24(void);
@@ -1025,7 +1025,11 @@ void BatFamiliarBlueTrail(Entity* self) {
     }
 }
 
+#ifndef VERSION_PSP
+void func_80173C0C(Entity* self) {}
+#else
 void func_80173C0C(void) {}
+#endif
 
 void func_80173C14(void) {}
 
