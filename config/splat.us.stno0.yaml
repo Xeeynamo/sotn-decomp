@@ -38,7 +38,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, data]                          
+      - [0x113C, .data, st_update] # UNK_Invincibility0 data
+      - [0x1168, data]   
       - [0x41368, .rodata, first_c_file]
       - [0x4137C, .rodata, e_red_door]
       - [0x41394, .rodata, e_collect]
