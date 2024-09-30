@@ -44,9 +44,9 @@ segments:
       - [0x170AC, .data, spriteparts]
       - [0x18568, .data, d_18568]
       - [0x18688, assets, subweapondefs, D_80154688]
-      - [0x188F4, .data, 21250]
-      - [0x1895C, .data, 21250] # entity table
-      - [0x18A6C, .data, 21250] # blueprints
+      - [0x188F4, .data, 211D0]
+      - [0x1895C, .data, 211D0] # entity table
+      - [0x18A6C, .data, 211D0] # blueprints
       - [0x18C40, .data, 24788]
       - [0x18F7C, .data, 26C84]
       - [0x1938C, .data, pl_anims]
@@ -57,7 +57,7 @@ segments:
       - [0x1A444, .rodata, 1AC60]
       - [0x1A608, .rodata, 1CB04]
       - [0x1A7C0, .rodata, 1FCD0]
-      - [0x1A7D8, .rodata, 21250]
+      - [0x1A7D8, .rodata, 211D0]
       - [0x1A8E4, .rodata, 24788]
       - [0x1A9B4, .rodata, 26C84]
       - [0x1A9F4, .rodata, 2A060]
@@ -69,7 +69,7 @@ segments:
       - [0x1FCD8, c, 1FCD0]
       - [0x202B0, c, 202A8]
       - [0x208E8, c, 20920]
-      - [0x211C8, c, 21250]
+      - [0x211C8, c, 211D0]
       - [0x246C4, c, 24788]
       - [0x26DD8, c, 26C84]
       - [0x29F9C, c, 2A060]
@@ -77,7 +77,7 @@ segments:
       - [0x31918, c, 319C4]
       - [0x371E0, c, e_giant_spinning_cross]
       - [0x37AB8, .bss, 1CB04]
-      - [0x38ED0, .bss, 21250]
+      - [0x38ED0, .bss, 211D0]
       - [0x38F54, .bss, 2A060]
       - [0x38FDC, .bss, 2C4C4]
       - [0x397E8, .bss, 319C4]
