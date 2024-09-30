@@ -431,7 +431,7 @@ void EntitySalemWitch(Entity* self)
                 case Attack_Tribolt_SpawnProjectile:
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(E_ID_24, self, entity);
+                        CreateEntityFromEntity(E_SALEM_WITCH_TRIBOLT_LAUNCH, self, entity);
                         entity->zPriority = self->zPriority + 1;
                         entity->posY.i.hi += TriboltProjectileOffsetY;
                     }
@@ -809,66 +809,91 @@ void EntitySalemWitchCurse(Entity* self)
     }
 }
 
-extern Entity D_8007A958;
-extern u8 D_8018167C;
-extern u8 D_801816B0;
+// D_8018167C
+u8 AnimFrames_TriboltCharge[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0x02, 0x07, 0x02, 0x08,
+    0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10,
+    0x02, 0x11, 0x02, 0x12, 0x02, 0x13, 0x02, 0x14, 0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18,
+    0xFF, 0x00, 0x00, 0x00 
+};
+
+// D_801816B0
+u8 AnimFrames_TriboltBurst[] = {
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0xFF, 0x00, 0x00, 0x00 
+};
+
 extern EntityInit EntityInit_80180640;
 
+// E_SALEM_WITCH_TRIBOLT_LAUNCH
 // func_801A93D4
-void func_801A93D4(Entity* self)
+void EntitySalemWitchTriboltLaunch(Entity* self)
 {
-    Entity* temp_v0;
-    s16 temp_v0_2;
-    s32 var_s2;
+    const int ProjectileCount = 3;
+    const int BurstStartRotation = 0x80;
+    const int BurstRotateSpeed = 0x40;
+
+    enum Step {
+        Init = 0,
+        Charge = 1,
+        SpawnProjectiles = 2,
+        Burst = 3,
+        Cleanup = 4,
+    };
+
+    Entity* entity;
+    s16 rot;
+    s32 i;
 
     switch (self->step) {
-        case 0:
+        case Init:
             InitializeEntity(&EntityInit_80180640);
             self->animSet = 5;
             self->palette = PAL_OVL(0x2EB);
             self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
             self->unk6C = 0x60;
             self->drawFlags |= FLAG_DRAW_UNK8;
+
             PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH);
             // fallthrough
-        case 1:
-            if (AnimateEntity(&D_8018167C, self) == 0) {
-                SetStep(2);
+        case Charge:
+            if (AnimateEntity(&AnimFrames_TriboltCharge, self) == 0) {
+                SetStep(SpawnProjectiles);
             }
             return;
-        case 2:
+
+        case SpawnProjectiles:
             self->animSet = -0x7FFA;
             self->unk5A = 0x4B;
-            self->rotY = 0x80;
-            self->rotX = 0x80;
+            self->rotY = BurstStartRotation;
+            self->rotX = BurstStartRotation;
             self->unk6C = 0x80;
             self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->step += 1;
             self->drawFlags |= FLAG_DRAW_UNK8;
+
             PlaySfxWithPosArgs(NA_SE_EN_DR_FIREBALL);
-            for (var_s2 = 0; var_s2 < 3; var_s2++) {
-                temp_v0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                if (temp_v0 != NULL) {
-                    CreateEntityFromEntity(0x25U, self, temp_v0);
-                    temp_v0->params = var_s2;
+
+            for (i = 0; i < ProjectileCount; i++) {
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(E_ID_25, self, entity);
+                    entity->params = i;
                 }
             }
             // fallthrough
-        case 3:
-            temp_v0_2 = (u16) self->rotY + 0x40;
-            self->rotY = temp_v0_2;
-            self->rotX = temp_v0_2;
-            self->unk6C += 0xFC;
-            if (AnimateEntity(&D_801816B0, self) == 0) {
-                SetStep(4);
-                return;
+        case Burst:
+            rot = self->rotY + BurstRotateSpeed;
+            self->rotY = rot;
+            self->rotX = rot;
+            self->unk6C -= 4;
+            if (AnimateEntity(&AnimFrames_TriboltBurst, self) == 0) {
+                SetStep(Cleanup);
             }
             break;
-        case 4:
+
+        case Cleanup:
             DestroyEntity(self);
             break;
-        default:
-            return;
     }
 }
 
