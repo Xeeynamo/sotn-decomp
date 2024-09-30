@@ -203,9 +203,8 @@ jobs:
             mv function_graphs.md gh-duplicates
       - name: Generate duplicates report
         run: |
-          git clean -fdx asm/
           make force_symbols
-          make -j extract
+          make force_extract
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Commit all reports
