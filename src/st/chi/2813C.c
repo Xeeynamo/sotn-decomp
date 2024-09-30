@@ -620,7 +620,7 @@ u8 AnimFrames_CurseProjectile[] = {
     0x01, 0x35, 0x01, 0x36, 0x01, 0x37, 0x01, 0x38, 0x01, 0x39, 0x01, 0x3A, 0x01, 0x3B, 0x01, 0x3C,
     0x00, 0x00, 0x00, 0x00, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06,
     0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E,
-    0x00, 0x00, 0x00, 0x00 
+    0x00, 0x00, 0x00, 0x00
 };
 
 extern EntityInit EntityInit_80180694;
@@ -685,7 +685,7 @@ void EntitySalemWitchCurse(Entity* self)
         case Update:
             MoveEntity();
             AnimateEntity(&AnimFrames_CurseProjectile, self);   // Animates Kanji on projectile
-            
+
             // First prim is projectile itself
             prim = self->ext.prim;
             prim->x0 = prim->x2 = self->posX.i.hi - 8;
@@ -757,7 +757,7 @@ void EntitySalemWitchCurse(Entity* self)
                         prim = prim->next;
                         continue;
                     }
-                    
+
                     // All colors match because it's just a grayscale gradient
                     prim->g0 = prim->b0 = prim->r0;
                     prim->r1 = prim->g1
@@ -782,7 +782,7 @@ void EntitySalemWitchCurse(Entity* self)
                             prim = prim->next;
                             continue;
                         }
-                        
+
                         // Update UVs
                         spriteUVs = sprites_chi_4[prim->p1];
                         spriteUVs += SpriteUvOffset;
@@ -809,7 +809,68 @@ void EntitySalemWitchCurse(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A93D4);    // [Entity] Salem Witch Tribolt
+extern Entity D_8007A958;
+extern u8 D_8018167C;
+extern u8 D_801816B0;
+extern EntityInit EntityInit_80180640;
+
+// func_801A93D4
+void func_801A93D4(Entity* self)
+{
+    Entity* temp_v0;
+    s16 temp_v0_2;
+    s32 var_s2;
+
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_80180640);
+            self->animSet = 5;
+            self->palette = PAL_OVL(0x2EB);
+            self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+            self->unk6C = 0x60;
+            self->drawFlags |= FLAG_DRAW_UNK8;
+            PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH);
+            // fallthrough
+        case 1:
+            if (AnimateEntity(&D_8018167C, self) == 0) {
+                SetStep(2);
+            }
+            return;
+        case 2:
+            self->animSet = -0x7FFA;
+            self->unk5A = 0x4B;
+            self->rotY = 0x80;
+            self->rotX = 0x80;
+            self->unk6C = 0x80;
+            self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->step += 1;
+            self->drawFlags |= FLAG_DRAW_UNK8;
+            PlaySfxWithPosArgs(NA_SE_EN_DR_FIREBALL);
+            for (var_s2 = 0; var_s2 < 3; var_s2++) {
+                temp_v0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (temp_v0 != NULL) {
+                    CreateEntityFromEntity(0x25U, self, temp_v0);
+                    temp_v0->params = var_s2;
+                }
+            }
+            // fallthrough
+        case 3:
+            temp_v0_2 = (u16) self->rotY + 0x40;
+            self->rotY = temp_v0_2;
+            self->rotX = temp_v0_2;
+            self->unk6C += 0xFC;
+            if (AnimateEntity(&D_801816B0, self) == 0) {
+                SetStep(4);
+                return;
+            }
+            break;
+        case 4:
+            DestroyEntity(self);
+            break;
+        default:
+            return;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A9588);    // [Entity]
 

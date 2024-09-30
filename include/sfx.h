@@ -195,6 +195,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
+#define NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH NA_SE_BREAK_CANDLE
 #define NA_SE_PL_WARP 0x636
 #define SFX_SWITCH_PRESSED 0x640    // Demon presses switch in CHI
 
