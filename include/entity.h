@@ -75,9 +75,6 @@ typedef struct ET_Generic {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s16 : 16;
     /* 0xAE */ s8 unkAE;
-    /* 0xAF */ s8 : 8;
-    /* 0xB0 */ s32 : 32;
-    /* 0xB4 */ s32 : 32;
 } ET_Generic;
 
 typedef struct {
