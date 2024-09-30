@@ -700,20 +700,20 @@ void EntityAlucard(void) {
                 g_Player.padPressed = g_Player.padSim & 0xFFFF;
                 switch (g_Player.padSim >> 0x10) { /* switch 6; irregular */
                 case 1:                            /* switch 6 */
-                    if (PLAYER.step != 0x30) {
+                    if (PLAYER.step != Player_Unk48) {
                         func_8010E168(1, 4);
-                        SetPlayerStep(0x30);
-                        g_unkGraphicsStruct.unk0 = 1;
+                        SetPlayerStep(Player_Unk48);
+                        g_unkGraphicsStruct.pauseEnemies = 1;
                     }
                     break;
                 case 2: /* switch 6 */
                     func_8010E168(1, 4);
                     if (g_Player.unk0C & 0x01000000) {
-                        SetPlayerStep(0x32);
+                        SetPlayerStep(Player_Unk50);
                     } else {
-                        SetPlayerStep(0x31);
+                        SetPlayerStep(Player_Unk49);
                     }
-                    g_unkGraphicsStruct.unk0 = 1;
+                    g_unkGraphicsStruct.pauseEnemies = 1;
                     break;
                 }
             } else {

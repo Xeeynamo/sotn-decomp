@@ -227,7 +227,7 @@ set(SOURCE_FILES_RIC
     src/ric/spriteparts.c
     src/ric/1CB04.c
     src/ric/202A8.c
-    src/ric/21250.c
+    src/ric/211D0.c
     src/ric/26C84.c
     src/ric/2C4C4.c
     src/ric/e_giant_spinning_cross.c

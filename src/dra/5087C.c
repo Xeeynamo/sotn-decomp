@@ -963,7 +963,7 @@ void func_800F2404(s32 arg0) {
     }
     D_8003C704 = 0;
 
-    g_unkGraphicsStruct.unk0 = 0;
+    g_unkGraphicsStruct.pauseEnemies = 0;
     g_unkGraphicsStruct.unk18 = 0;
     g_unkGraphicsStruct.unk1C = 0;
     g_unkGraphicsStruct.unkC = 0x80;
@@ -1495,7 +1495,7 @@ void RunMainEngine(void) {
                     MuteCd();
                 }
             } else if (D_8006BB00 != 0) {
-                if (g_unkGraphicsStruct.unk0 != 0) {
+                if (g_unkGraphicsStruct.pauseEnemies != 0) {
                     D_80097928 = 0;
                     D_8006BB00 = 0;
                     UnMuteCd();

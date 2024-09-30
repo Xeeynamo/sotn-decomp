@@ -703,39 +703,48 @@ void func_8010EA54(s32 arg0) {
     }
 }
 
-s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity* entity = &g_Entities[0x20];
+static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 nFound;
+    s32 nEmpty;
     s32 i;
-    s32 var_a2;
-    s32 ret;
-
-    for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
         if (entity->entityId == E_NONE) {
-            ret++;
+            nEmpty++;
         }
-
-        if (entity->ext.generic.unkB0 != 0) {
-            if (entity->ext.generic.unkB0 == arg0) {
-                var_a2++;
-            }
+        if (entity->ext.subweapon.subweaponId != 0 &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
         }
-
-        if (var_a2 >= arg1) {
+        if (nFound >= limit) {
             return -1;
         }
-        entity++;
     }
-
-    return (ret == 0) ? -1 : 0;
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty == 0) {
+        return -1;
+    }
+    return 0;
 }
 
-s32 func_8010EB5C(void) {
+// Attempts to use subweapon. Performs checks before activating.
+// If it succeeds, factory is called to spawn the subweapon, and return 0.
+// If it fails, return a number 1 through 4 indicating why.
+static s32 func_8010EB5C(void) {
     SubweaponDef subWpn;
     s16 subWpnId;
     s32 atLedge;
     u8 anim;
 
     atLedge = 0;
+    // If control is not pressed
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
@@ -743,16 +752,19 @@ s32 func_8010EB5C(void) {
         atLedge = 1;
     }
     subWpnId = func_800FE3C4(&subWpn, 0, false);
-
+    // If we don't have a subweapon obtained
     if (subWpnId == 0) {
         return 1;
     }
-    if (subWpnId == 6 && g_unkGraphicsStruct.unk0 != 0) {
+    // If it's the stopwatch, but we're already paused
+    if (subWpnId == SUBWPN_STOPWATCH && g_unkGraphicsStruct.pauseEnemies) {
         return 4;
     }
-    if (func_8010EADC(subWpnId, subWpn.unk6) < 0) {
+    // If we already have too many of the subweapon active
+    if (CheckSubwpnChainLimit(subWpnId, subWpn.chainLimit) < 0) {
         return 2;
     }
+    // Should be if we don't have enough hearts?
     subWpnId = func_800FE3C4(&subWpn, 0, true);
     if (subWpnId == 0) {
         return 3;

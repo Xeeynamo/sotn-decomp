@@ -281,28 +281,3 @@ void RicSetHighJump(void) {
         PLAYER.velocityY = 0;
     }
 }
-
-s32 func_8015D1D0(s16 subWpnId, s16 maxParticles) {
-    Entity* entity;
-    s32 nFound;
-    s32 nEmpty;
-    s32 i;
-
-    entity = &g_Entities[32];
-    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
-        if (entity->entityId == E_NONE) {
-            nEmpty++;
-        }
-        if (entity->ext.generic.unkB0 != 0 &&
-            entity->ext.generic.unkB0 == subWpnId) {
-            nFound++;
-        }
-        if (nFound >= maxParticles) {
-            return -1;
-        }
-    }
-    if (nEmpty == 0) {
-        return -1;
-    }
-    return 0;
-}

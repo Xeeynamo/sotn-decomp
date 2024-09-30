@@ -113,7 +113,7 @@ void EntityPlatform(Entity* self) {
         if ((GetDistanceToPlayerX() < 32) &&
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
             D_8003C8B8 = 0;
-            g_unkGraphicsStruct.unk0 = 1;
+            g_unkGraphicsStruct.pauseEnemies = 1;
             if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_R1;
             } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
@@ -227,8 +227,8 @@ void EntityPlatform(Entity* self) {
             D_80097488.x.i.hi++;
         } else {
             D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
+            if (g_unkGraphicsStruct.pauseEnemies != 0) {
+                g_unkGraphicsStruct.pauseEnemies = 0;
             }
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             self->step++;

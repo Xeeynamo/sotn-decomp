@@ -1349,7 +1349,7 @@ typedef struct {
     /* 0x00 */ s16 attack;
     /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
-    /* 0x06 */ u8 unk6;
+    /* 0x06 */ u8 chainLimit; // how many instances of subwpn can coexist
     /* 0x07 */ u8 nFramesInvincibility;
     /* 0x08 */ u16 stunFrames;
     /* 0x0A */ u8 anim;
