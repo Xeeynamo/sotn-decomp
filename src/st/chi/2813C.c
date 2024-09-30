@@ -899,13 +899,13 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
 
 // D_801816C0
 u8 AnimFrames_TriboltProjectile[] = {
-    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x00, 0x00, 0x00, 0x00 
+    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x00, 0x00, 0x00, 0x00
 };
 
 // D_801816D0
 u8 AnimFrames_TriboltTrail[] = {
     0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0x02, 0x07, 0x02, 0x08,
-    0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0xFF, 0x00 
+    0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0xFF, 0x00
 };
 
 extern Entity D_8007D858;
@@ -992,7 +992,183 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A97C8);    // [Entity]
+extern u8 D_801816EC[];
+extern const char D_8019B2BC;
+extern EntityInit EntityInit_801806AC;
+
+// func_801A97C8
+// https://decomp.me/scratch/kNQO9
+// PSP:func_psp_09248BD0:Match
+// https://decomp.me/scratch/bmBPH
+void func_801A97C8(Entity* self)
+{
+    Collider collider;
+    Entity* entity;
+    s32 temp_s0;
+    s32 temp_s2;
+
+    if ((self->hitFlags & 3) && (self->step != 2)) {
+        PlaySfxWithPosArgs(0x728);
+        SetStep(2);
+    }
+    if (self->flags & 0x100) {
+        if (self->step != 2) {
+            self->hitboxState = 0;
+            SetStep(2);
+        }
+    }
+    switch (self->step) {
+        case 0x0:
+            InitializeEntity(&EntityInit_801806AC);
+            self->animCurFrame = 1;
+            self->hitboxOffX = 6;
+            self->facingLeft = self->params;
+
+            entity = self + 1;
+            CreateEntityFromCurrentEntity(0x1F, entity);
+            entity->params = 0;
+            entity->zPriority = self->zPriority - 2;
+
+            entity = self + 2;
+            CreateEntityFromCurrentEntity(0x1F, entity);
+            entity->params = 1;
+            entity->zPriority = self->zPriority - 1;
+            // fallthrough
+        case 0x1:
+            if (!self->step_s) {
+                if (self->facingLeft) {
+                    self->velocityX = 0x10000;
+                } else {
+                    self->velocityX = -0x10000;
+                }
+                self->velocityY = 0x10000;
+                self->step_s += 1;
+            }
+            
+            AnimateEntity(&D_801816EC, self);
+            MoveEntity();
+            
+            if (self->velocityX > 0) {
+                self->facingLeft = 1;
+            } else {
+                self->facingLeft = 0;
+            }
+            temp_s2 = self->posX.i.hi;
+            temp_s0 = self->posY.i.hi;
+            if (self->velocityX > 0) {
+                temp_s2 += 0x10;
+                g_api.CheckCollision(temp_s2, temp_s0, &collider, 0);
+                if (collider.effects & 1) {
+                    self->posX.i.hi += collider.unk14;
+                    self->velocityX = FIX(-1);
+                } else {
+                    temp_s2 += g_Tilemap.scrollX.i.hi;
+                    if (g_Tilemap.width < temp_s2) {
+                        self->velocityX = FIX(-1);
+                    }
+                }
+            } else {
+                temp_s2 = temp_s2 - 0x10;
+                g_api.CheckCollision(temp_s2, temp_s0, &collider, 0);
+                if (collider.effects & 1) {
+                    self->posX.i.hi += collider.unk1C;
+                    self->velocityX = FIX(1);
+                } else {
+                    temp_s2 += g_Tilemap.scrollX.i.hi;
+                    if (temp_s2 < g_Tilemap.x) {
+                        self->velocityX = FIX(1);
+                    }
+                }
+            }
+            temp_s2 = self->posX.i.hi;
+            temp_s0 = self->posY.i.hi;
+            if (self->velocityY > 0) {
+                temp_s0 = temp_s0 + 0x10;
+                g_api.CheckCollision(temp_s2, temp_s0, &collider, 0);
+                if (collider.effects & 1) {
+                    self->posX.i.hi += collider.unk18;
+                    self->velocityY = FIX(-1);
+                } else {
+                    temp_s0 += g_Tilemap.scrollY.i.hi;
+                    if (g_Tilemap.height < temp_s0) {
+                        self->velocityY = FIX(-1);
+                    }
+                }
+            } else {
+                temp_s0 = temp_s0 - 0x10;
+                g_api.CheckCollision(temp_s2, temp_s0, &collider, 0);
+                if (collider.effects & 1) {
+                    self->posX.i.hi += collider.unk20;
+                    self->velocityY = FIX(1);
+                } else {
+                    temp_s0 += g_Tilemap.scrollY.i.hi;
+                    if (temp_s0 < g_Tilemap.y) {
+                        self->velocityY = FIX(1);
+                    }
+                }
+            }
+            if (!self->ext.factory.unk80) {
+                PlaySfxWithPosArgs(0x691);
+                self->ext.factory.unk80 = (Random() & 0x1F) + 0x28;
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity == NULL) {
+                    break;
+                }
+                CreateEntityFromEntity(0x20U, self, entity);
+                return;
+            }
+            self->ext.factory.unk80--;
+            break;
+        
+        case 0x2:
+            if (!self->step_s) {
+                self->ext.factory.unk80 = 0x20;
+                self->step_s += 1;
+            }
+            self->animCurFrame = 0x13;
+            MoveEntity();
+            
+            self->velocityX -= self->velocityX / 16;
+            self->velocityY -= self->velocityY / 16;
+            
+            if (!--self->ext.factory.unk80) {
+                SetStep(1);
+                if (self->flags & 0x100) {
+                    PlaySfxWithPosArgs(0x729);
+                    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (entity != NULL) {
+                        CreateEntityFromEntity(2U, self, entity);
+                        entity->params = 1;
+                    }
+                    DestroyEntity(self);
+                    return;
+                }
+            }
+            break;
+        
+        case 0xFF:
+            FntPrint(&D_8019B2BC, self->animCurFrame);
+            if (g_pads[1].pressed & 0x80) {
+                if (self->params) {
+                    break;
+                }
+                self->animCurFrame++;
+                self->params |= 1;
+            } else {
+                self->params = 0;
+            }
+            if (g_pads[1].pressed & 0x20) {
+                if (!self->step_s) {
+                    self->animCurFrame--;
+                    self->step_s |= 1;
+                    return;
+                }
+            } else {
+                self->step_s = 0;
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2813C", func_801A9D40);    // [Entity]
 
