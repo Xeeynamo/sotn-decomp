@@ -181,7 +181,7 @@ void HitDetection(void) {
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->ext.generic.unkB8.entityPtr =
+                                    iterEnt2->ext.generic.unkB8 =
                                         iterEnt1;
                                     iterEnt2->hitFlags = 1;
                                     if ((i == 12) &&

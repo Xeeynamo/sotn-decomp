@@ -78,16 +78,7 @@ typedef struct ET_Generic {
     /* 0xAF */ s8 : 8;
     /* 0xB0 */ s32 : 32;
     /* 0xB4 */ s32 : 32;
-    union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
-        /* 0xB8 */ struct Entity* entityPtr;
-        struct {
-            /* 0xB8 */ u8 unk0;
-            /* 0xB9 */ u8 unk1;
-            /* 0xBA */ u8 unk2;
-            /* 0xBB */ u8 unk3;
-        } modeU8;
-    } unkB8;
+    /* 0xB8 */ struct Entity* unkB8;
 } ET_Generic;
 
 typedef struct {
@@ -241,7 +232,6 @@ typedef struct PACKED {
     /* 0xAE */ s16 equipId;
     /* 0xB0 */ s16 unkB0;
     /* 0xB4 */ s32 unkB4;
-    /* 0xB8 */ s32 unkB8;
 } ET_WeaponUnk030;
 
 typedef struct PACKED {
@@ -1507,7 +1497,6 @@ typedef struct {
     s32 unkAC;
     s16 unkB0;
     s32 unkB4;
-    s32 unkB8;
 } ET_Whip;
 
 typedef struct {
