@@ -615,7 +615,7 @@ void EntitySalemWitchGlow(Entity* self)
     }
 }
 
-u8 D_80181638[] = {
+u8 AnimFrames_CurseProjectile[] = {
     0x01, 0x2D, 0x01, 0x2E, 0x01, 0x2F, 0x01, 0x30, 0x01, 0x31, 0x01, 0x32, 0x01, 0x33, 0x01, 0x34,
     0x01, 0x35, 0x01, 0x36, 0x01, 0x37, 0x01, 0x38, 0x01, 0x39, 0x01, 0x3A, 0x01, 0x3B, 0x01, 0x3C,
     0x00, 0x00, 0x00, 0x00, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06,
@@ -626,139 +626,176 @@ u8 D_80181638[] = {
 extern EntityInit EntityInit_80180694;
 extern signed short* sprites_chi_4[];
 
+// [Should sprite groups be structs, similar to EntityInit?]
+// [Are sprite groups specific to a PART of the texture page? Is that why we need the 0x7F offset?]
 // E_SALEM_WITCH_CURSE
 // func_801A8EAC
 // PSP:func_psp_09239AC8:Match
 // PSP:https://decomp.me/scratch/AGNPO
 void EntitySalemWitchCurse(Entity* self)
 {
-    Primitive* prim;    // s0
-    s32 primIdx;        // s2
-    s16* temp_v1_10;    // s1
+    const int ProjectileSpeed = FIX(3.5);
+    //TODO: Should sprite groups be structs?
+    const int SpriteUvOffset = 8;
+    const int ProjectileSpriteMinIdx = 1;
+    const int ProjectileSpriteMaxIdx = 7;
+    const int TrailSpriteMinIdx = 8;
+    const int TrailSpriteMaxIdx = 14;
+    const int TrailStartBrightness = 0x60;
+    const int TrailDarkenSpeed = 4;
+
+    enum Step {
+        Init = 0,
+        Update = 1,
+    };
+
+    Primitive* prim;
+    s32 primIdx;
+    s16* spriteUVs;
 
     switch (self->step) {
-        case 0:
+        case Init:
             InitializeEntity(&EntityInit_80180694);
+
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             if (self->facingLeft) {
-                self->velocityX = 0xFFFC0000 | 0x8000;
+                self->velocityX = -ProjectileSpeed;
             } else {
-                self->velocityX = 0x30000 | 0x8000;
+                self->velocityX = ProjectileSpeed;
             }
+
             primIdx = g_api.AllocPrimitives(PRIM_GT4, 0x10);
             if (primIdx == -1) {
                 DestroyEntity(self);
                 return;
             }
-            
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
             self->ext.prim = prim;
             while (prim != NULL) {
                 prim->tpage = 0x12;
-                prim->clut = 0x2EB;
+                prim->clut = PAL_DRA(0x2EB);
                 prim->p3 = 0;
                 prim->priority = self->zPriority + 1;
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-        case 1:
+            // Fallthrough
+        case Update:
             MoveEntity();
-            AnimateEntity(&D_80181638, self);
+            AnimateEntity(&AnimFrames_CurseProjectile, self);   // Animates Kanji on projectile
             
+            // First prim is projectile itself
             prim = self->ext.prim;
             prim->x0 = prim->x2 = self->posX.i.hi - 8;
             prim->x1 = prim->x3 = self->posX.i.hi + 8;
             prim->y0 = prim->y1 = self->posY.i.hi - 8;
             prim->y2 = prim->y3 = self->posY.i.hi + 8;
-            if (!prim->p2) {
-                prim->p1 += 1;
-                if (prim->p1 > 7) {
-                    prim->p1 = 1;
+
+            // Check if necessary to update to new sprite
+            if (!prim->p2) {    // p2 == 0 means "request sprite UV update"
+                prim->p1 += 1;  // p1 is sprite index
+                // Loop sprites
+                if (prim->p1 > ProjectileSpriteMaxIdx) {
+                    prim->p1 = ProjectileSpriteMinIdx;
                 }
-                temp_v1_10 = sprites_chi_4[prim->p1];
-                temp_v1_10 += 0x8;
+
+                // Update UVs
+                spriteUVs = sprites_chi_4[prim->p1];
+                spriteUVs += SpriteUvOffset;
                 if (self->facingLeft) {
-                    prim->u2 = prim->u3 = *temp_v1_10++;
-                    prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
-                    prim->u0 = prim->u1 = *temp_v1_10++;
-                    prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
+                    prim->u2 = prim->u3 = *spriteUVs++;
+                    prim->v0 = prim->v2 = *spriteUVs++ + 0x7F;
+                    prim->u0 = prim->u1 = *spriteUVs++;
+                    prim->v1 = prim->v3 = *spriteUVs++ + 0x7F;
                 } else {
-                    prim->u2 = prim->u3 = *temp_v1_10++;
-                    prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
-                    prim->u0 = prim->u1 = *temp_v1_10++;
-                    prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
+                    prim->u2 = prim->u3 = *spriteUVs++;
+                    prim->v1 = prim->v3 = *spriteUVs++ + 0x7F;
+                    prim->u0 = prim->u1 = *spriteUVs++;
+                    prim->v0 = prim->v2 = *spriteUVs++ + 0x7F;
                 }
                 prim->p2 = 1;
             } else {
                 prim->p2 -= 1;
             }
             prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE | DRAW_TPAGE2;
+
+            // 50/50 chance to try to spawn part of trail
             if (Random() & 1) {
                 prim = self->ext.prim;
                 prim = prim->next;
                 prim = FindFirstUnkPrim(prim);
                 if (prim != NULL) {
                     prim->p3 = 1;
-                    prim->p1 = 8;
-                    prim->p2 = 0;
+                    prim->p1 = TrailSpriteMinIdx;
+                    prim->p2 = 0;   // "Request sprite UV update"
                     prim->r0 = prim->g0
                         = prim->b0 = prim->r1
                         = prim->g1 = prim->b1
                         = prim->r2 = prim->g2
                         = prim->b2 = prim->r3
                         = prim->g3 = prim->b3
-                        = 0x60;
+                        = TrailStartBrightness;
                     prim->x0 = prim->x2 = self->posX.i.hi - 8;
                     prim->x1 = prim->x3 = self->posX.i.hi + 8;
                     prim->y0 = prim->y1 = self->posY.i.hi - 8;
                     prim->y2 = prim->y3 = self->posY.i.hi + 8;
                 }
             }
+
+            // Update whole trail
             prim = self->ext.prim;
             prim = prim->next;
             while (prim != NULL) {
                 if (prim->p3) {
-                    prim->r0 -= 4;
+                    // Despawn if fade has run its course
+                    prim->r0 -= TrailDarkenSpeed;
                     if (!prim->r0) {
                         prim->p3 = 0;
-                        prim->drawMode = 8;
+                        prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                         continue;
                     }
                     
+                    // All colors match because it's just a grayscale gradient
                     prim->g0 = prim->b0 = prim->r0;
                     prim->r1 = prim->g1
                         = prim->b1 = prim->r2
                         = prim->g2 = prim->b2
                         = prim->r3 = prim->g3
                         = prim->b3 = prim->r0;
+
                     if (!prim->p2) {
+                        // Slowly increase size
                         prim->x0 = --prim->x2;
                         prim->x1 = ++prim->x3;
                         prim->y0 = --prim->y1;
                         prim->y2 = ++prim->y3;
+
+                        // Next sprite
                         prim->p1++;
-                        if (prim->p1 > 0xE) {
+                        // Check for despawn
+                        if (prim->p1 > TrailSpriteMaxIdx) {
                             prim->p3 = 0;
-                            prim->drawMode = 8;
+                            prim->drawMode = DRAW_HIDE;
                             prim = prim->next;
                             continue;
                         }
                         
-                        temp_v1_10 = sprites_chi_4[prim->p1];
-                        temp_v1_10 += 0x8;
+                        // Update UVs
+                        spriteUVs = sprites_chi_4[prim->p1];
+                        spriteUVs += SpriteUvOffset;
                         if (self->facingLeft) {
-                            prim->u2 = prim->u3 = *temp_v1_10++;
-                            prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
-                            prim->u0 = prim->u1 = *temp_v1_10++;
-                            prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
+                            prim->u2 = prim->u3 = *spriteUVs++;
+                            prim->v0 = prim->v2 = *spriteUVs++ + 0x7F;
+                            prim->u0 = prim->u1 = *spriteUVs++;
+                            prim->v1 = prim->v3 = *spriteUVs++ + 0x7F;
                         } else {
-                            prim->u2 = prim->u3 = *temp_v1_10++;
-                            prim->v1 = prim->v3 = *temp_v1_10++ + 0x7F;
-                            prim->u0 = prim->u1 = *temp_v1_10++;
-                            prim->v0 = prim->v2 = *temp_v1_10++ + 0x7F;
+                            prim->u2 = prim->u3 = *spriteUVs++;
+                            prim->v1 = prim->v3 = *spriteUVs++ + 0x7F;
+                            prim->u0 = prim->u1 = *spriteUVs++;
+                            prim->v0 = prim->v2 = *spriteUVs++ + 0x7F;
                         }
                         prim->p2 = 1;
                     } else {
