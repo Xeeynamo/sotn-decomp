@@ -171,13 +171,17 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
                     let line_str = line.unwrap();
 
                     if line_str.contains("INCLUDE_ASM") {
-                        let (full, [asm_dir, asm_file]) = re.captures(&line_str).unwrap().extract();
 
-                        output.push(IncludeAsmEntry {
-                            line: line_str.clone(),
-                            path: item_path.to_string_lossy().to_string(),
-                            asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
-                        });
+                        if let Some(captures) = re.captures(&line_str) {
+                            let (full, [asm_dir, asm_file]) = captures.extract();
+                            output.push(IncludeAsmEntry {
+                                line: line_str.clone(),
+                                path: item_path.to_string_lossy().to_string(),
+                                asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
+                            });
+                        } else {
+                            println!("Failed to match regex on line: {}", line_str);
+                        }
                     }
                 }
             } else if item_path.is_dir() {
