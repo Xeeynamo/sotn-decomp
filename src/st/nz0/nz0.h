@@ -324,8 +324,8 @@ extern SVECTOR D_80182840;
 extern SVECTOR D_80182848;
 
 // For NZ0_EntityCutscene
-extern s32 skip_cutscene;
-extern s32 D_801CB73C;
+extern s32 g_SkipCutscene;
+extern s32 g_IsCutsceneDone;
 extern u8 D_801813C8[];
 extern u8 D_801813CC[];
 extern u16 D_801813D0[];

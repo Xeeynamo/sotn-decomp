@@ -236,14 +236,14 @@ extern u8 D_80183C84[];
 extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
-extern s32 skip_cutscene;
+extern s32 g_SkipCutscene;
 extern s32 D_801D7D54;
 extern s32 D_801D7D58;
 extern u32 g_CutsceneFlags;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
-// *** EntityStrongWarg properties START ***
+// *** EntityFireWarg properties START ***
 
 extern Entity D_8007A958;
 extern Entity D_8007D858;
@@ -276,7 +276,7 @@ extern u16 D_801829DC;
 extern s32 D_801829EC[];
 extern s32 D_80182A04[];
 
-// *** EntityStrongWarg properties END ***
+// *** EntityFireWarg properties END ***
 
 // *** EntitySoulStealOrb properties START ***
 
@@ -296,9 +296,9 @@ extern u16 D_80181A34[];
 extern u16 D_80181A38[];
 extern s16 D_80181A3C[];
 extern const char D_801813F0[];
-extern s32 skip_cutscene;
+extern s32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
-extern s32 D_801D7DD4;
+extern s32 g_IsCutsceneDone;
 extern u16 D_801D7D60;
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];

@@ -708,7 +708,7 @@ void func_80119F70(Entity* entity) {
 void func_8011A290(Entity* entity) {
     SubweaponDef subwpn;
 
-    func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
+    func_800FE3C4(&subwpn, entity->ext.subweapon.subweaponId, 0);
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
     entity->hitboxState = subwpn.hitboxState;
@@ -716,7 +716,7 @@ void func_8011A290(Entity* entity) {
     entity->stunFrames = subwpn.stunFrames;
     entity->hitEffect = subwpn.hitEffect;
     entity->entityRoomIndex = subwpn.entityRoomIndex;
-    entity->ext.generic.unkB2 = subwpn.crashId;
+    entity->ext.subweapon.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
 

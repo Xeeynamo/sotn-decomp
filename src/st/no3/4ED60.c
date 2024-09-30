@@ -68,7 +68,7 @@ void EntityUnkId2F(Entity* self) {
 }
 
 // beams that go up when strong warg dies
-void EntityStrongWargDeathBeams(Entity* self) {
+void EntityFireWargDeathBeams(Entity* self) {
     Primitive* prim;
     s16 baseX;
     u16 hiddenPrimCount;
@@ -107,28 +107,26 @@ void EntityStrongWargDeathBeams(Entity* self) {
         }
         break;
     case 1:
-        if ((self->ext.strongWargDeathBeams.unk7C == 0) &&
-            (self->ext.strongWargDeathBeams.unk7E < 0x14)) {
+        if ((self->ext.fireWargDeathBeams.unk7C == 0) &&
+            (self->ext.fireWargDeathBeams.unk7E < 0x14)) {
             prim = &g_PrimBuf[self->primIndex];
 
             while (prim != NULL) {
                 if (prim->drawMode == DRAW_HIDE) {
-                    if (self->ext.strongWargDeathBeams.unk7E & 1) {
+                    if (self->ext.fireWargDeathBeams.unk7E & 1) {
                         PlaySfxPositional(SFX_EXPLODE_B);
                     }
 
                     if (self->facingLeft != 0) {
-                        baseX =
-                            self->posX.i.hi -
-                            D_80183080[self->ext.strongWargDeathBeams.unk7E &
-                                       0xF];
+                        baseX = self->posX.i.hi -
+                                D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                           0xF];
                         prim->x0 = prim->x2 = baseX + 0x10;
                         prim->x1 = prim->x3 = baseX - 0x10;
                     } else {
-                        baseX =
-                            self->posX.i.hi +
-                            D_80183080[self->ext.strongWargDeathBeams.unk7E &
-                                       0xF];
+                        baseX = self->posX.i.hi +
+                                D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                           0xF];
                         prim->x0 = prim->x2 = baseX - 0x10;
                         prim->x1 = prim->x3 = baseX + 0x10;
                     }
@@ -141,7 +139,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
 
                     prim->priority =
                         self->zPriority +
-                        D_801830A0[self->ext.strongWargDeathBeams.unk7E & 0xF];
+                        D_801830A0[self->ext.fireWargDeathBeams.unk7E & 0xF];
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
                     prim->p1 = (Random() & 3) + 0x10;
@@ -152,10 +150,10 @@ void EntityStrongWargDeathBeams(Entity* self) {
                 prim = prim->next;
             }
 
-            self->ext.strongWargDeathBeams.unk7C = 4;
-            self->ext.strongWargDeathBeams.unk7E++;
+            self->ext.fireWargDeathBeams.unk7C = 4;
+            self->ext.fireWargDeathBeams.unk7E++;
         } else {
-            self->ext.strongWargDeathBeams.unk7C--;
+            self->ext.fireWargDeathBeams.unk7C--;
         }
 
         prim = &g_PrimBuf[self->primIndex];
@@ -194,8 +192,7 @@ void EntityStrongWargDeathBeams(Entity* self) {
             prim = prim->next;
         }
 
-        if (hiddenPrimCount == 4 &&
-            self->ext.strongWargDeathBeams.unk7E > 0x13) {
+        if (hiddenPrimCount == 4 && self->ext.fireWargDeathBeams.unk7E > 0x13) {
             DestroyEntity(self);
             return;
         }

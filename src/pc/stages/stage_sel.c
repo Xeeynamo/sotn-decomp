@@ -87,7 +87,7 @@ s32 D_801BC340;
 s32 g_StreamDiscStatus;
 s32 D_801BC348;
 s32 D_801BC34C;
-s32 skip_cutscene;
+s32 g_SkipCutscene;
 Dialogue g_Dialogue;
 u32 D_801BC398[16];
 s32 g_MemCardSelectorX;

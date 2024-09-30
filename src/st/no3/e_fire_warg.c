@@ -2,8 +2,8 @@
 #include "no3.h"
 #include "sfx.h"
 
-void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
-                   u8 arg5, s16 xOfst) {
+static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
+                          s32 yDist, u8 arg5, s16 xOfst) {
     s32 i;
     s16 y = entity->posY.i.hi + yDist;
     s16 x = entity->posX.i.hi + xDist;
@@ -24,7 +24,7 @@ void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
     }
 }
 
-void func_801CC6F8(Entity* entity) {
+static void func_801CC6F8(Entity* entity) {
     u16 distance = GetDistanceToPlayerX();
     bool var_s1;
 
@@ -32,7 +32,7 @@ void func_801CC6F8(Entity* entity) {
     entity->velocityX = 0;
 
     if (entity->params != 0) {
-        SetStep(0xC);
+        SetStep(12);
         return;
     }
 
@@ -62,7 +62,8 @@ void func_801CC6F8(Entity* entity) {
     entity->ext.et_801CC820.unk80 = 0x20;
 }
 
-void func_801CC820(Entity* entity) {
+// Only called by the EntityFireWarg
+static void func_801CC820(Entity* entity) {
     u16 distance;
 
     if (entity->facingLeft == GetSideToPlayer()) {
@@ -92,7 +93,7 @@ void func_801CC820(Entity* entity) {
     entity->ext.et_801CC820.unk82 = 0x20;
 }
 
-void func_801CC90C(Entity* arg0) {
+static void func_801CC90C(Entity* arg0) {
     s16 temp_v0_2;
     s16 temp_v1;
     s16 temp_v0;
@@ -113,7 +114,7 @@ void func_801CC90C(Entity* arg0) {
     }
 }
 
-void EntityStrongWarg(Entity* self) {
+void EntityFireWarg(Entity* self) {
     Entity* ent_s0;
     Entity* ent_s4;
     EnemyDef* enemyDefPtr;
@@ -124,12 +125,12 @@ void EntityStrongWarg(Entity* self) {
     u8 frameIdx;
 
     var_s1 = self->step;
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         if (!self->params) {
-            if (var_s1 != 0xB) {
+            if (var_s1 != 11) {
                 self->velocityX = 0;
                 self->velocityY = 0;
-                SetStep(0xB);
+                SetStep(11);
             }
         } else {
             ent_s0 = (self + 1);
@@ -163,17 +164,18 @@ void EntityStrongWarg(Entity* self) {
             }
         }
     } else if (self->hitFlags & 0xF) {
-        if (self->ext.strongWarg.unk86 >= 0x10) {
-            self->ext.strongWarg.unk86 /= 2;
+        if (self->ext.fireWarg.unk86 >= 0x10) {
+            self->ext.fireWarg.unk86 /= 2;
         }
         if ((var_s1 == 2 || var_s1 == 3) && !self->params) {
-            SetStep(0xA);
+            SetStep(10);
         }
     }
 
     var_s1 = self->step;
     switch (var_s1) {
     case 0:
+        // The self + 1 entity is an E_ID_30, or EntityUnkId30
         ent_s0 = self + 1;
         self->unk60 = ent_s0;
         // PSP version: 0x20
@@ -182,6 +184,7 @@ void EntityStrongWarg(Entity* self) {
         if (self->params) {
             InitializeEntity(&D_80180B30);
             self->animCurFrame = 0x32;
+            // The self + 2 entity is an E_ID_31, or EntityUnkId31
             ent_s4 = self + 2;
             ent_s0->unk60 = ent_s4;
             ent_s0 = ent_s4;
@@ -199,7 +202,7 @@ void EntityStrongWarg(Entity* self) {
         } else {
             self->posX.i.hi += 0x20;
         }
-        self->ext.strongWarg.unk86 = 0x80;
+        self->ext.fireWarg.unk86 = 0x80;
         break;
 
     case 1:
@@ -220,13 +223,13 @@ void EntityStrongWarg(Entity* self) {
     case 3:
         func_801CC90C(self);
         var_s1 = GetDistanceToPlayerX();
-        if (self->ext.strongWarg.unk80) {
-            --self->ext.strongWarg.unk80;
+        if (self->ext.fireWarg.unk80) {
+            --self->ext.fireWarg.unk80;
             self->animFrameDuration = 0;
             break;
         }
 
-        if (!(self->ext.strongWarg.unk7C.unk & 0xFF)) {
+        if (!(self->ext.fireWarg.unk7C)) {
             if (self->params) {
                 frameIdx = AnimateEntity(&D_801827EC, self);
             } else {
@@ -241,9 +244,9 @@ void EntityStrongWarg(Entity* self) {
                 }
             }
             if (var_s1 < 0x50) {
-                self->ext.strongWarg.unk7C.U8.unk0 = 1;
+                self->ext.fireWarg.unk7C = 1;
                 self->animFrameIdx = 7 - self->animFrameIdx;
-                self->ext.strongWarg.unk80 = 0x10;
+                self->ext.fireWarg.unk80 = 0x10;
             }
         } else {
             if (self->params) {
@@ -262,15 +265,15 @@ void EntityStrongWarg(Entity* self) {
             }
 
             if (var_s1 >= 0x79) {
-                self->ext.strongWarg.unk7C.U8.unk0 = 0;
+                self->ext.fireWarg.unk7C = 0;
                 self->animFrameIdx = 7 - self->animFrameIdx;
-                self->ext.strongWarg.unk80 = 0x10;
+                self->ext.fireWarg.unk80 = 0x10;
             }
         }
 
         UnkCollisionFunc2(&D_801829D4);
-        if (self->ext.strongWarg.unk82) {
-            --self->ext.strongWarg.unk82;
+        if (self->ext.fireWarg.unk82) {
+            --self->ext.fireWarg.unk82;
             break;
         }
 
@@ -291,7 +294,7 @@ void EntityStrongWarg(Entity* self) {
                     self->posX.i.hi + 0x38, self->posY.i.hi, &collider, 0);
             }
 
-            if ((!self->ext.strongWarg.unk86) ||
+            if ((!self->ext.fireWarg.unk86) ||
                 (collider.effects & EFFECT_SOLID &&
                  collider.effects & EFFECT_UNK_0002)) {
                 func_801CC6F8(self);
@@ -410,7 +413,7 @@ void EntityStrongWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             AnimateEntity(&D_801828D8, self);
-            if (!--self->ext.strongWarg.unk80) {
+            if (!--self->ext.fireWarg.unk80) {
                 SetSubStep(1);
             }
             break;
@@ -462,7 +465,7 @@ void EntityStrongWarg(Entity* self) {
         case 0:
             if (!AnimateEntity(&D_80182928, self)) {
                 SetSubStep(1);
-                self->ext.strongWarg.unk80 = 0;
+                self->ext.fireWarg.unk80 = 0;
             }
             break;
         case 1:
@@ -472,7 +475,7 @@ void EntityStrongWarg(Entity* self) {
             }
 
             if (self->animCurFrame == 0x14) {
-                if (self->ext.strongWarg.unk80 == 0) {
+                if (self->ext.fireWarg.unk80 == 0) {
                     ent_s0 = AllocEntity(&D_8007A958, &D_8007A958 + 0x20);
                     if (ent_s0 != NULL) {
                         // PSP version 0x1E
@@ -487,7 +490,7 @@ void EntityStrongWarg(Entity* self) {
                     }
                 }
 
-                self->ext.strongWarg.unk80 += 1;
+                self->ext.fireWarg.unk80 += 1;
             }
         }
         break;
@@ -537,10 +540,10 @@ void EntityStrongWarg(Entity* self) {
             if (UnkCollisionFunc3(&D_801829DC) & 1) {
                 self->drawFlags = FLAG_DRAW_UNK8;
                 self->unk6C = 0x80;
-                self->ext.strongWarg.unk80 = 0;
+                self->ext.fireWarg.unk80 = 0;
                 SetSubStep(1);
-                self->ext.strongWarg.unk80++;
-                ent_s0 = AllocEntity(&D_8007D858, (&D_8007D858 + 0x20));
+                self->ext.fireWarg.unk80++;
+                ent_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent_s0 != NULL) {
                     // PSP version 0x23
                     CreateEntityFromCurrentEntity(E_ID_33, ent_s0);
@@ -555,7 +558,7 @@ void EntityStrongWarg(Entity* self) {
             break;
         case 1:
             AnimateEntity(&D_80182900, self);
-            self->ext.strongWarg.unk80 += 1;
+            self->ext.fireWarg.unk80 += 1;
             self->unk6C -= 2;
             if (self->unk6C == 0x40) {
                 PlaySfxPositional(0x780);
@@ -585,7 +588,7 @@ void EntityStrongWarg(Entity* self) {
         case 0:
             ent_s0->animFrameDuration = 0;
             ent_s0->animFrameIdx = 0;
-            ent_s0->ext.strongWarg.unk7C.unk = 1;
+            ent_s0->ext.fireWargHelper.unk7C = true;
 
             if (!(Random() & 7)) {
                 AnimateEntity(&D_8018296C, ent_s0);
@@ -638,7 +641,7 @@ void EntityStrongWarg(Entity* self) {
             UnkCollisionFunc2(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
-                ent_s0->ext.strongWarg.unk7C.unk = 0;
+                ent_s0->ext.fireWargHelper.unk7C = false;
             }
             break;
         case 2:
@@ -681,7 +684,7 @@ void EntityStrongWarg(Entity* self) {
             UnkCollisionFunc2(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
-                ent_s0->ext.strongWarg.unk7C.unk = 0;
+                ent_s0->ext.fireWargHelper.unk7C = false;
             }
         }
         break;
@@ -712,8 +715,6 @@ void EntityStrongWarg(Entity* self) {
         self->hitboxHeight = *hitboxPtr;
     }
 }
-
-const u32 padding = 0;
 
 void EntityUnkId30(Entity* self) {
     Entity* entity;
@@ -786,7 +787,7 @@ void EntityUnkId31(Entity* self) {
         CreateEntityFromCurrentEntity(E_ID_30, self + 1);
         (self + 1)->params = 1;
     }
-    if (self->ext.prim) {
+    if (self->ext.fireWargHelper.unk7C) {
         animFrameIdx = (self->animFrameIdx - 1) * 2;
         if (entity->step_s == 1) {
             hitboxPtr = D_80182FC8 + animFrameIdx;
@@ -848,7 +849,7 @@ void EntityUnkId31(Entity* self) {
         return;
     }
 
-    if (!self->ext.prim) {
+    if (!self->ext.fireWargHelper.unk7C) {
         if (animCurFrame >= 86) {
             animCurFrame -= 10;
         } else if (animCurFrame > 72) {
@@ -1066,5 +1067,7 @@ void func_801CE740(Entity* self) {
     }
 }
 
+const u32 rodata_padding = 0; // remove when wave attack decompiled
+
 // flame-like attack on ground from strong warg
-INCLUDE_ASM("st/no3/nonmatchings/4CA54", EntityStrongWargWaveAttack);
+INCLUDE_ASM("st/no3/nonmatchings/e_fire_warg", EntityFireWargWaveAttack);

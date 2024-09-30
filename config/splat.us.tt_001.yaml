@@ -34,12 +34,14 @@ segments:
   - name: tt_001
     type: code
     start: 0
-    vram:  0x80170000
+    vram: 0x80170000
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, F84]
+      - [0x40, data]
       - [0xEFC, .rodata, F84]
+      - [0xF3C, .rodata, F84] # ProcessSfxState
       - [0xF60, c, F84]
       - [0x35B0, sbss]
   - [0xA000]
