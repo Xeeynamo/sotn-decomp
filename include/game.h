@@ -852,6 +852,7 @@ typedef struct Entity {
     /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
+    /* 0xB8 */ struct Entity* unkB8;
 } Entity; // size = 0xBC
 
 typedef struct {

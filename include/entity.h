@@ -78,16 +78,6 @@ typedef struct ET_Generic {
     /* 0xAF */ s8 : 8;
     /* 0xB0 */ s32 : 32;
     /* 0xB4 */ s32 : 32;
-    union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
-        /* 0xB8 */ struct Entity* entityPtr;
-        struct {
-            /* 0xB8 */ u8 unk0;
-            /* 0xB9 */ u8 unk1;
-            /* 0xBA */ u8 unk2;
-            /* 0xBB */ u8 unk3;
-        } modeU8;
-    } unkB8;
 } ET_Generic;
 
 typedef struct {
@@ -110,7 +100,6 @@ typedef struct {
     /* 0x7C */ u32 unk[14];
     /* 0xB4 */ u16 unkB4;
     /* 0xB6 */ s16 unkB6;
-    /* 0xB8 */ PfnEntityUpdate update;
 } ET_HeartDrop;
 
 typedef struct {
@@ -241,7 +230,6 @@ typedef struct PACKED {
     /* 0xAE */ s16 equipId;
     /* 0xB0 */ s16 unkB0;
     /* 0xB4 */ s32 unkB4;
-    /* 0xB8 */ s32 unkB8;
 } ET_WeaponUnk030;
 
 typedef struct PACKED {
@@ -854,7 +842,8 @@ typedef struct {
     /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ u8 unkA8;
     /* 0xA9 */ char pad_A9[0x7];
-    /* 0xB0 */ u16 unkB0[0x6];
+    /* 0xB0 */ u16 unkB0[2];
+    /* 0xB4 */ u16 unkB4[2];
 } ET_GurkhaHammer;
 
 typedef struct {
@@ -940,8 +929,6 @@ typedef struct PACKED {
     s16 unkA6;
     void* unkA8;
     u8 anim;
-    char pad2[0x8];
-    struct Entity* unkB8;
 } ET_Player;
 
 typedef struct {
@@ -1106,10 +1093,6 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s16 subweaponId;
-#ifndef VERSION_PC
-    s32 pad2;
-#endif
-    struct Entity* parent2;
 } ET_Agunea;
 typedef struct {
     s16 unk7C;
@@ -1507,7 +1490,6 @@ typedef struct {
     s32 unkAC;
     s16 unkB0;
     s32 unkB4;
-    s32 unkB8;
 } ET_Whip;
 
 typedef struct {
@@ -1830,7 +1812,7 @@ typedef struct {
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
-    char stub[0x40];
+    char stub[0x3C];
     ET_TimerOnly timer;
     ET_EntFactory factory;
     ET_Generic generic;
