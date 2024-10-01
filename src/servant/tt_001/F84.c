@@ -155,8 +155,8 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171624);
 
 void func_us_80171864(Entity* self) {
-    s32 temp_s4 ;
-    s32 temp_s3 ;
+    s32 temp_s4;
+    s32 temp_s3;
     s32 temp_s2;
     s32 temp_s1;
 
@@ -226,7 +226,7 @@ void func_us_80171864(Entity* self) {
         } else {
             if (PLAYER.facingLeft == self->facingLeft) {
                 if (abs(D_us_801737C4 - self->posX.i.hi) <= 0) {
-                    if(PLAYER.facingLeft)
+                    if (PLAYER.facingLeft)
                         temp_s3 = 0;
                     else
                         temp_s3 = 1;
