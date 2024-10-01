@@ -62,5 +62,4 @@ typedef enum EntityIDs {
     /* 0x62 */ E_WARG_EXP_OPAQUE = 0x62,
 } EntityIDs;
 
-
 extern s16 g_SineTable[];
