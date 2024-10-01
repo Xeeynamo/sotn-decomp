@@ -11,6 +11,7 @@ D_80180C6A = 0x80180C02;
 D_80180C70 = 0x80180C08;
 D_80180C88 = 0x80180C38;
 D_80180CA0 = 0x80180C50;
+g_eRedDoorTiles = 0x80180C5C;
 UNK_Invincibility0 = 0x8018113C;
 g_testCollEnemyLookup = 0x80181168;
 g_testCollLuckCutoff = 0x80181488;
