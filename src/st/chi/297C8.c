@@ -9,7 +9,7 @@
 // D_801816EC
 u8 AnimFrames_Running[] = {
     0x06, 0x01, 0x03, 0x02, 0x02, 0x03, 0x02, 0x04, 0x03, 0x05, 0x06, 0x06, 0x03, 0x05, 0x02, 0x04,
-    0x02, 0x03, 0x03, 0x02, 0x00, 0x00, 0x00, 0x00 
+    0x02, 0x03, 0x03, 0x02, 0x00, 0x00, 0x00, 0x00
 };
 
 extern EntityInit EntityInit_801806AC;
@@ -77,10 +77,10 @@ void EntityGremlin(Entity* self)
                 self->velocityY = FIX(1);
                 self->step_s += 1;
             }
-            
+
             AnimateEntity(&AnimFrames_Running, self);
             MoveEntity();
-            
+
             // Update to correct facing based on movement
             if (self->velocityX > 0) {
                 self->facingLeft = true;
@@ -170,7 +170,7 @@ void EntityGremlin(Entity* self)
                 self->ext.gremlin.timer--;
             }
             break;
-        
+
         case HurtDeath:
             // Wait for a time (after which, check for death)
             if (!self->step_s) {
@@ -180,7 +180,7 @@ void EntityGremlin(Entity* self)
 
             self->animCurFrame = AnimFrameDeath;
             MoveEntity();
-            
+
             // Slow movement
             self->velocityX -= self->velocityX / DecelerateSpeed;
             self->velocityY -= self->velocityY / DecelerateSpeed;
@@ -204,7 +204,7 @@ void EntityGremlin(Entity* self)
                 }
             }
             break;
-        
+
         case Debug:
             FntPrint("charal %x\n", self->animCurFrame);
             if (g_pads[1].pressed & PAD_SQUARE) {
@@ -229,7 +229,66 @@ void EntityGremlin(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/297C8", func_801A9D40);    // [Entity]
+extern u8 D_80181704[];
+extern u8 D_8018171C[];
+
+// E_ID_1F
+// func_801A9D40
+void func_801A9D40(Entity* self)
+{
+    enum Step {
+        Init = 0,
+    };
+
+    Entity* entity;
+
+    switch (self->step) {
+        case Init:
+            InitializeEntity(&EntityInit_801806AC);
+            self->hitboxState = 0;
+            self->flags |= FLAG_UNK_2000;
+
+            if (self->params != 0) {
+                self->step = 2;
+                break;
+            }
+            self->step = 1;
+
+            self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+            self->unk6C = 0xC0;
+            self->drawFlags = FLAG_DRAW_UNK8;
+            break;
+
+        case 1:
+            AnimateEntity(&D_8018171C, self);
+
+            entity = self - 1;
+            self->facingLeft = entity->facingLeft;
+            self->posX.i.hi = (s16) entity->posX.i.hi;
+            self->posY.i.hi = (s16) entity->posY.i.hi;
+            if (entity->animCurFrame == 0x13) {
+                self->posY.i.hi -= 0x10;
+            }
+            if (entity->entityId != 0x1E) {
+                DestroyEntity(self);
+            }
+            break;
+
+        case 2:
+            AnimateEntity(&D_80181704, self);
+
+            entity = self - 2;
+            self->facingLeft = entity->facingLeft;
+            self->posX.i.hi = (s16) entity->posX.i.hi;
+            self->posY.i.hi = (s16) entity->posY.i.hi;
+            if (entity->animCurFrame == 0x13) {
+                self->posY.i.hi -= 0x10;
+            }
+            if (entity->entityId != 0x1E) {
+                DestroyEntity(self);
+            }
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/297C8", func_801A9E94);    // [Entity]
 
