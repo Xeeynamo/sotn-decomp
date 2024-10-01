@@ -7,7 +7,7 @@ void func_801B8E0C(Entity* self) {
     case 0:
         InitializeEntity(g_MariaInit);
         D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
+        g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_LEFT;
         if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
@@ -35,8 +35,8 @@ void func_801B8E0C(Entity* self) {
     case 2:
         if (g_CutsceneFlags & 0x2000) {
             D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
+            if (g_unkGraphicsStruct.pauseEnemies != 0) {
+                g_unkGraphicsStruct.pauseEnemies = 0;
             }
             DestroyEntity(self);
         }

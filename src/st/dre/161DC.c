@@ -27,7 +27,7 @@ void EntityCSMoveAlucard(Entity* self) {
     case 0:
         InitializeEntity(D_8018047C);
         D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
+        g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         if (g_DemoMode != Demo_None) {
@@ -129,8 +129,8 @@ void EntityCSMoveAlucard(Entity* self) {
         func_801961DC(0x80);
         if (g_unkGraphicsStruct.unkC == 0x80) {
             D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
+            if (g_unkGraphicsStruct.pauseEnemies != 0) {
+                g_unkGraphicsStruct.pauseEnemies = 0;
             }
             DestroyEntity(self);
         }
@@ -150,7 +150,7 @@ void EntityUnkId23(Entity* self) {
     case 0:
         InitializeEntity(D_8018047C);
         D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
+        g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
         if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
@@ -228,8 +228,8 @@ void EntityUnkId23(Entity* self) {
 
     case 5:
         D_8003C8B8 = 1;
-        if (g_unkGraphicsStruct.unk0 != 0) {
-            g_unkGraphicsStruct.unk0 = 0;
+        if (g_unkGraphicsStruct.pauseEnemies != 0) {
+            g_unkGraphicsStruct.pauseEnemies = 0;
         }
         player->posY.i.hi = player->posY.i.hi + 0x100;
         g_Player.padSim = 0;

@@ -2,6 +2,37 @@
 #include "ric.h"
 #include "sfx.h"
 
+static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 nFound;
+    s32 nEmpty;
+    s32 i;
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId != 0 &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty == 0) {
+        return -1;
+    }
+    return 0;
+}
+
 s32 func_8015D250(s32 unused_arg) {
     SubweaponDef subweapon;
     s16 subweaponId;
@@ -17,7 +48,7 @@ s32 func_8015D250(s32 unused_arg) {
     if (subweapon.blueprintNum == 0) {
         return 4;
     }
-    if (func_8015D1D0(subweaponId, subweapon.unk6) < 0) {
+    if (RicCheckSubwpnChainLimit(subweaponId, subweapon.chainLimit) < 0) {
         return 2;
     }
     subweaponId = func_8015FB84(&subweapon, false, true);
@@ -1428,7 +1459,7 @@ void RicEntityCrashReboundStoneParticles(Entity* self);
 void RicEntityHitByDark(Entity* self);
 void RicEntityHitByHoly(Entity* self);
 void RicEntityCrashStopwatchDoneSparkle(Entity* self);
-void func_80170548(Entity* self);
+void RicEntityStopwatchCrashLightning(Entity* self);
 void RicEntityTeleport(Entity* self);
 void RicEntityDummy(Entity* self);
 static PfnEntityUpdate entity_functions[] = {
@@ -1497,7 +1528,7 @@ static PfnEntityUpdate entity_functions[] = {
     RicEntityHitByDark,
     RicEntityHitByHoly,
     RicEntityCrashStopwatchDoneSparkle,
-    func_80170548,
+    RicEntityStopwatchCrashLightning,
     RicEntityTeleport,
     RicEntityDummy};
 STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
@@ -1656,7 +1687,7 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_HIT_BY_DARK, 96, 1, true, true, 4, B_KIND_8, 1, 0),
     B_MAKE(E_HIT_BY_HOLY, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_CRASH_STOPWATCH_DONE_PARTICLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_80170548, 1, 1, true, true, 0, B_WPN, 0, 0),
+    B_MAKE(E_CRASH_STOPWATCH_LIGHTNING, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_SMOKE_PUFF, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_SMOKE_PUFF, 4, 1, true, true, 2, B_DECOR, 3, 0),
     B_MAKE(E_SMOKE_PUFF, 6, 6, true, true, 0, B_DECOR, 0, 0),

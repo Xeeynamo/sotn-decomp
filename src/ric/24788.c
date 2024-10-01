@@ -237,7 +237,8 @@ void RicEntityBladeDash(Entity* self) {
             self->hitboxWidth = 20;
             self->hitboxOffY = 0;
             self->hitboxOffX = 0;
-            self->ext.generic.unkB0 = 0x11;
+            // Wow! So blade dash is treated as a subweapon!
+            self->ext.subweapon.subweaponId = 17;
             RicSetSubweaponParams(self);
             self->step++;
         }
@@ -262,7 +263,8 @@ void func_80160F0C(Entity* self) {
         self->hitboxOffY = -0x1A;
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        self->ext.generic.unkB0 = 0x16;
+        // High jump attack is a subweapon!
+        self->ext.subweapon.subweaponId = 22;
         RicSetSubweaponParams(self);
         self->step++;
     }
