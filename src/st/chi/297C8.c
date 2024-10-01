@@ -232,12 +232,12 @@ void EntityGremlin(Entity* self)
 // D_80181704
 u8 AnimFrames_Fire[] = {
     0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A, 0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0x01, 0x0E,
-    0x01, 0x0F, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00 
+    0x01, 0x0F, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00
 };
 
 // D_8018171C
 u8 AnimFrames_Glow[] = {
-    0x01, 0x11, 0x01, 0x12, 0x00, 0x00, 0x00, 0x00 
+    0x01, 0x11, 0x01, 0x12, 0x00, 0x00, 0x00, 0x00
 };
 
 // E_GREMLIN_EFFECT
@@ -302,7 +302,59 @@ void EntityGremlinEffect(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/297C8", func_801A9E94);    // [Entity]
+extern u8 D_80181724[];
+extern EntityInit EntityInit_801806C4;
+
+// E_ID_20
+// func_801A9E94
+void func_801A9E94(Entity* arg0)
+{
+    if (arg0->flags & 0x100) {
+        if (arg0->step != 2) {
+            arg0->hitboxState = 0;
+            SetStep(2);
+        }
+    }
+
+    switch (arg0->step) {
+        case 0:
+            InitializeEntity(&EntityInit_801806C4);
+            arg0->ext.factory.unk80 = 0x400;
+            // fallthrough
+        case 1:
+            AnimateEntity(&D_80181724, arg0);
+            MoveEntity();
+
+            arg0->velocityY = rcos(arg0->rotZ);
+            arg0->rotZ = arg0->rotZ + 0x40;
+            arg0->ext.factory.unk80--;
+            if ((arg0->ext.factory.unk80 << 0x10) == 0) {
+                arg0->hitboxState = 0;
+                SetStep(2);
+            }
+            break;
+
+        case 2:
+            switch (arg0->step_s) {
+                case 0:
+                    arg0->drawFlags = 3;
+                    arg0->rotX = 0x100;
+                    arg0->rotY = 0x100;
+                    arg0->flags |= 0x80000000;
+                    arg0->step_s++;
+                    // fallthrough
+                case 1:
+                    AnimateEntity(&D_80181724, arg0);
+                    arg0->rotX = arg0->rotX - 8;
+                    arg0->rotY = arg0->rotY - 6;
+                    if (arg0->rotX == 0) {
+                        DestroyEntity(arg0);
+                    }
+                    break;
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/297C8", func_801AA020);    // [Entity]
 
