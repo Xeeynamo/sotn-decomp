@@ -222,7 +222,7 @@ void func_us_80171624(s32 arg0) {
             e->posY.val = FIX(-32);
         } else {
             e->entityId = 0xD1;
-            if (D_8003C708.flags & 0x20) {
+            if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
                 if (ServantUnk0()) {
                     e->posX.val = FIX(192);
                 } else {
