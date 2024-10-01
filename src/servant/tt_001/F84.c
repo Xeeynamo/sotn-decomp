@@ -15,6 +15,11 @@ extern s32 D_us_801737D8;
 extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
 
+extern Entity D_800736C8;
+extern u16 D_us_80170580[48];
+extern u16 D_us_80170448[48];
+extern SpriteParts* D_us_80170040[];
+
 s32 ServantUnk0();
 void ProcessEvent(Entity* self, bool resetEvent);
 
@@ -152,7 +157,89 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
     // BUG? There is a fall-through case here with no return value on PSX
 }
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171624);
+void func_us_80171624(s32 arg0) {
+    RECT rect;
+    u16* dst;
+    u16* src;
+    s32 i;
+    SpriteParts** spriteBanks;
+    Entity* e;
+    u16 temp;
+
+#ifdef VERSION_PC
+    // i exceeds the size of D_80170448
+    const int len = LEN(D_80170448);
+#else
+    const int len = 256;
+#endif
+
+    if (arg0 != 3) {
+        dst = &g_Clut[0x1400];
+        src = D_us_80170448;
+
+        for (i = 0; i < len; i++) {
+            temp = *src++;
+            *dst = temp;
+            if (i & 0xF) {
+                *dst = temp | 0x8000;
+            }
+            dst++;
+        }
+
+        dst = &g_Clut[0x1430];
+        src = D_us_80170580;
+
+        for (i = 0; i < 32; i++) {
+            *dst++ = *src++;
+        }
+
+        rect.x = 0;
+        rect.w = 0x100;
+        rect.h = 1;
+        rect.y = 0xF4;
+
+        dst = &g_Clut[0x1400];
+        LoadImage(&rect, dst);
+
+        spriteBanks = g_api.o.spriteBanks;
+        spriteBanks += 20;
+        *spriteBanks = (SpriteParts*)D_us_80170040;
+
+        e = &g_Entities[4];
+        DestroyEntity(e);
+        e->unk5A = 0x6C;
+        e->palette = 0x140;
+        e->animSet = ANIMSET_OVL(20);
+        e->entityId = 0xD1;
+        e->params = 0;
+        e->zPriority = PLAYER.zPriority - 2;
+        e->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        e->posX.val = PLAYER.posX.val;
+        e->posY.val = PLAYER.posY.val;
+
+        if (arg0 == 1) {
+            e->entityId = 0xD1;
+            e->posX.val = FIX(128);
+            e->posY.val = FIX(-32);
+        } else {
+            e->entityId = 0xD1;
+            if (D_8003C708.flags & 0x20) {
+                if (ServantUnk0()) {
+                    e->posX.val = FIX(192);
+                } else {
+                    e->posX.val = FIX(64);
+                }
+                e->posY.val = FIX(160);
+            } else {
+                e->posX.val = (PLAYER.facingLeft ? FIX(18) : FIX(-18)) +
+                              PLAYER.posX.val;
+                e->posY.val = PLAYER.posY.val - FIX(32);
+            }
+        }
+        g_api.func_8011A3AC(e, 0, 0, &D_us_80173810);
+        g_IsServantDestroyed = 0;
+    }
+}
 
 void func_us_80171864(Entity* self) {
     s32 temp_v1;
