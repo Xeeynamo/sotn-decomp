@@ -15,7 +15,6 @@ extern s32 D_us_801737D8;
 extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
 
-extern Entity D_800736C8;
 extern u16 D_us_80170580[48];
 extern u16 D_us_80170448[48];
 extern SpriteParts* D_us_80170040[];
