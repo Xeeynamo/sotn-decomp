@@ -5,7 +5,7 @@
 
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
-extern s32 D_us_80170500;
+extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[];
 extern s32 D_us_8017050C[];
 extern s16 D_us_801737C4;
@@ -241,8 +241,10 @@ void func_us_80171624(s32 arg0) {
 }
 
 void func_us_80171864(Entity* self) {
-    s32 temp_v1;
-    s32 temp_v0;
+    s32 temp_s4;
+    s32 temp_s3;
+    s32 temp_s2;
+    s32 temp_s1;
 
     g_api.func_8011A3AC(self, 0, 0, &D_us_80173810);
     if (g_IsServantDestroyed) {
@@ -260,12 +262,12 @@ void func_us_80171864(Entity* self) {
                 D_us_801737D8 = 0xC0;
                 break;
             case 2:
-                if (self->posX.i.hi >= 0x81) {
-                    temp_v1 = 0xC0;
+                if (self->posX.i.hi > 0x80) {
+                    temp_s4 = 0xC0;
                 } else {
-                    temp_v1 = 0x40;
+                    temp_s4 = 0x40;
                 }
-                D_us_801737D8 = temp_v1;
+                D_us_801737D8 = temp_s4;
                 break;
             }
             D_us_801737DC = 0xA0;
@@ -280,10 +282,11 @@ void func_us_80171864(Entity* self) {
     }
     D_us_801737C4 = D_us_801737D8;
     D_us_801737C8 = D_us_801737DC + (rsin(self->ext.ghost.unk80) >> 0xA);
-    self->ext.ghost.unk80 = ((u16)self->ext.ghost.unk80 + 0x20) & 0xFFF;
+    self->ext.ghost.unk80 += 0x20;
+    self->ext.ghost.unk80 &= 0xfff;
     switch (self->step) {
     case 0:
-        self->ext.ghost.unk7E = (s16)self->params;
+        self->ext.ghost.unk7E = self->params;
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -308,32 +311,35 @@ void func_us_80171864(Entity* self) {
                 self->facingLeft = 0;
         } else {
             if (PLAYER.facingLeft == self->facingLeft) {
-                if (abs((s32)D_us_801737C4 - self->posX.i.hi) <= 0) {
-                    self->facingLeft = !PLAYER.facingLeft;
-
+                if (abs(D_us_801737C4 - self->posX.i.hi) <= 0) {
+                    if (PLAYER.facingLeft)
+                        temp_s3 = 0;
+                    else
+                        temp_s3 = 1;
+                    self->facingLeft = temp_s3;
                 } else { // 3e0
                     if (self->facingLeft && D_us_801737C4 < self->posX.i.hi) {
                         if (PLAYER.facingLeft)
-                            temp_v0 = 0;
+                            temp_s2 = 0;
                         else
-                            temp_v0 = 1;
-                        self->facingLeft = (u16)temp_v0;
+                            temp_s2 = 1;
+                        self->facingLeft = temp_s2;
                     } else if (!self->facingLeft) {
                         if (D_us_801737C4 > self->posX.i.hi) {
                             if (PLAYER.facingLeft)
-                                temp_v0 = 0;
+                                temp_s1 = 0;
                             else
-                                temp_v0 = 1;
-                            self->facingLeft = (u16)temp_v0;
+                                temp_s1 = 1;
+                            self->facingLeft = temp_s1;
                         }
                     }
                 }
             } else {
                 if (self->facingLeft &&
-                    self->posX.i.hi - D_us_801737C4 >= 0x20) {
+                    self->posX.i.hi - D_us_801737C4 > 0x1F) {
                     self->facingLeft = PLAYER.facingLeft;
                 } else if (!self->facingLeft) {
-                    if (D_us_801737C4 - self->posX.i.hi >= 0x20) {
+                    if (D_us_801737C4 - self->posX.i.hi > 0x1F) {
                         self->facingLeft = PLAYER.facingLeft;
                     }
                 }
@@ -343,8 +349,8 @@ void func_us_80171864(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (D_8003C704 == 0) {
-            self->ext.ghost.unkA2 = func_us_80171284(self);
-            if (self->ext.ghost.unkA2) {
+            // Note: this is an assignment, not an equality check
+            if (self->ext.ghost.unkA2 = func_us_80171284(self)) {
                 self->step++;
                 break;
             }
@@ -375,7 +381,7 @@ void func_us_80171864(Entity* self) {
             self->facingLeft = 0;
         }
         D_us_801737CC = UpdateEntityVelocityTowardsTarget(
-            self, (s16)D_us_801737C4, D_us_801737C8);
+            self, D_us_801737C4, D_us_801737C8);
         if (self->step == 2) {
             if (D_us_801737CC < 8) {
                 self->ext.ghost.unk86 = 0;
@@ -383,10 +389,11 @@ void func_us_80171864(Entity* self) {
             }
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
-            temp_v1 = D_us_80170508[((D_us_80173810.level / 10) * 3)];
-            if (self->ext.ghost.unk86 == (temp_v1 - 0x1E)) {
+            if (self->ext.ghost.unk86 ==
+                (D_us_80170508[((D_us_80173810.level / 10) * 3)] - 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
-            } else if (temp_v1 < self->ext.ghost.unk86) {
+            } else if (self->ext.ghost.unk86 >
+                       D_us_80170508[((D_us_80173810.level / 10) * 3)]) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
                     self, D_us_8017050C[((D_us_80173810.level / 10) * 3)], 1,
@@ -422,7 +429,8 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk8C++;
             break;
         case 1:
-            if (++self->ext.ghost.unk86 >= 0x3D) {
+            self->ext.ghost.unk86++;
+            if (self->ext.ghost.unk86 > 0x3C) {
                 self->ext.ghost.unk86 = 0;
                 self->ext.ghost.unk8C++;
             }
@@ -433,14 +441,15 @@ void func_us_80171864(Entity* self) {
         case 5:
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 == 1) {
-                self->facingLeft = self->facingLeft == 0;
-            } else if (self->ext.ghost.unk86 >= 0x10) {
+                self->facingLeft = self->facingLeft ? 0 : 1;
+            } else if (self->ext.ghost.unk86 > 15) {
                 self->ext.ghost.unk86 = 0;
                 self->ext.ghost.unk8C++;
             }
             break;
         case 6:
-            if (++self->ext.ghost.unk86 >= 0x3D) {
+            self->ext.ghost.unk86++;
+            if (self->ext.ghost.unk86 > 0x3C) {
                 self->ext.ghost.unk86 = 0;
                 self->ext.ghost.unk8C++;
             }
@@ -449,7 +458,7 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 == 1) {
                 self->ext.ghost.unk96 = func_us_80171568(self, 1);
-            } else if (self->ext.ghost.unk86 >= 0x3D) {
+            } else if (self->ext.ghost.unk86 > 0x3C) {
                 self->ext.ghost.unk86 = 0;
                 self->step++;
             }
@@ -457,8 +466,11 @@ void func_us_80171864(Entity* self) {
         }
         break;
     case 5:
-        if (g_Player.unk0C &
-            (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
+        if (!(g_Player.unk0C &
+              (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
+            self->step = 1;
+
+        } else {
             if (self->velocityY > FIX(-1.5)) {
                 self->velocityY -= FIX(0.25);
             }
@@ -469,8 +481,6 @@ void func_us_80171864(Entity* self) {
                 self->posY.val = FIX(-16.0);
                 self->step++;
             }
-        } else {
-            self->step = 1;
         }
         break;
     case 6:
@@ -484,15 +494,14 @@ void func_us_80171864(Entity* self) {
         break;
     }
     self->ext.ghost.unk88 += self->ext.ghost.unk8A;
-    if (!(self->ext.ghost.unk88 >= 0x21 &&
+    if (!(self->ext.ghost.unk88 > 0x20 &&
           self->ext.ghost.unk88 < 0x5F + 0x21)) {
-        temp_v0 = self->ext.ghost.unk8A;
-        self->ext.ghost.unk8A = -temp_v0;
+        self->ext.ghost.unk8A *= -1;
     }
-    self->unk6C = (u8)self->ext.ghost.unk88;
+    self->unk6C = self->ext.ghost.unk88;
     ProcessEvent(self, 0);
     func_us_80171560(self);
-    g_api.UpdateAnim(NULL, &D_us_80170500);
+    g_api.UpdateAnim(NULL, D_us_80170500);
 }
 
 void func_us_801720A4(Entity* self) {}
