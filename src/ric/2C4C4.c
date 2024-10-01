@@ -1989,7 +1989,7 @@ void RicEntitySubwpnAgunea(Entity* self) {
     u16 tempX;
     u32 heartBroachesWorn;
 
-    if (g_Player.unk0C & 0x10007) {
+    if (g_Player.unk0C & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10000)) {
         DestroyEntity(self);
         return;
     }
