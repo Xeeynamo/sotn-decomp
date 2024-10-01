@@ -5,7 +5,7 @@
 
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
-extern s32 D_us_80170500;
+extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[];
 extern s32 D_us_8017050C[];
 extern s16 D_us_801737C4;
@@ -155,8 +155,10 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171624);
 
 void func_us_80171864(Entity* self) {
-    s32 temp_v1;
-    s32 temp_v0;
+    s32 temp_s4 ;
+    s32 temp_s3 ;
+    s32 temp_s2;
+    s32 temp_s1;
 
     g_api.func_8011A3AC(self, 0, 0, &D_us_80173810);
     if (g_IsServantDestroyed) {
@@ -174,12 +176,12 @@ void func_us_80171864(Entity* self) {
                 D_us_801737D8 = 0xC0;
                 break;
             case 2:
-                if (self->posX.i.hi >= 0x81) {
-                    temp_v1 = 0xC0;
+                if (self->posX.i.hi > 0x80) {
+                    temp_s4 = 0xC0;
                 } else {
-                    temp_v1 = 0x40;
+                    temp_s4 = 0x40;
                 }
-                D_us_801737D8 = temp_v1;
+                D_us_801737D8 = temp_s4;
                 break;
             }
             D_us_801737DC = 0xA0;
@@ -223,35 +225,35 @@ void func_us_80171864(Entity* self) {
                 self->facingLeft = 0;
         } else {
             if (PLAYER.facingLeft == self->facingLeft) {
-                if (abs((s32)D_us_801737C4 - self->posX.i.hi) <= 0) {
-                    if (PLAYER.facingLeft)
-                        temp_v0 = 0;
+                if (abs(D_us_801737C4 - self->posX.i.hi) <= 0) {
+                    if(PLAYER.facingLeft)
+                        temp_s3 = 0;
                     else
-                        temp_v0 = 1;
-                    self->facingLeft = temp_v0;
+                        temp_s3 = 1;
+                    self->facingLeft = temp_s3;
                 } else { // 3e0
                     if (self->facingLeft && D_us_801737C4 < self->posX.i.hi) {
                         if (PLAYER.facingLeft)
-                            temp_v0 = 0;
+                            temp_s2 = 0;
                         else
-                            temp_v0 = 1;
-                        self->facingLeft = temp_v0;
+                            temp_s2 = 1;
+                        self->facingLeft = temp_s2;
                     } else if (!self->facingLeft) {
                         if (D_us_801737C4 > self->posX.i.hi) {
                             if (PLAYER.facingLeft)
-                                temp_v0 = 0;
+                                temp_s1 = 0;
                             else
-                                temp_v0 = 1;
-                            self->facingLeft = temp_v0;
+                                temp_s1 = 1;
+                            self->facingLeft = temp_s1;
                         }
                     }
                 }
             } else {
                 if (self->facingLeft &&
-                    self->posX.i.hi - D_us_801737C4 >= 0x20) {
+                    self->posX.i.hi - D_us_801737C4 > 0x1F) {
                     self->facingLeft = PLAYER.facingLeft;
                 } else if (!self->facingLeft) {
-                    if (D_us_801737C4 - self->posX.i.hi >= 0x20) {
+                    if (D_us_801737C4 - self->posX.i.hi > 0x1F) {
                         self->facingLeft = PLAYER.facingLeft;
                     }
                 }
@@ -342,7 +344,7 @@ void func_us_80171864(Entity* self) {
             break;
         case 1:
             self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 >= 0x3D) {
+            if (self->ext.ghost.unk86 > 0x3C) {
                 self->ext.ghost.unk86 = 0;
                 self->ext.ghost.unk8C++;
             }
@@ -354,14 +356,14 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 == 1) {
                 self->facingLeft = self->facingLeft ? 0 : 1;
-            } else if (self->ext.ghost.unk86 >= 0x10) {
+            } else if (self->ext.ghost.unk86 > 15) {
                 self->ext.ghost.unk86 = 0;
                 self->ext.ghost.unk8C++;
             }
             break;
         case 6:
             self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 >= 0x3D) {
+            if (self->ext.ghost.unk86 > 0x3C) {
                 self->ext.ghost.unk86 = 0;
                 self->ext.ghost.unk8C++;
             }
@@ -370,7 +372,7 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 == 1) {
                 self->ext.ghost.unk96 = func_us_80171568(self, 1);
-            } else if (self->ext.ghost.unk86 >= 0x3D) {
+            } else if (self->ext.ghost.unk86 > 0x3C) {
                 self->ext.ghost.unk86 = 0;
                 self->step++;
             }
@@ -406,14 +408,14 @@ void func_us_80171864(Entity* self) {
         break;
     }
     self->ext.ghost.unk88 += self->ext.ghost.unk8A;
-    if (!(self->ext.ghost.unk88 >= 0x21 &&
+    if (!(self->ext.ghost.unk88 > 0x20 &&
           self->ext.ghost.unk88 < 0x5F + 0x21)) {
         self->ext.ghost.unk8A *= -1;
     }
     self->unk6C = self->ext.ghost.unk88;
     ProcessEvent(self, 0);
     func_us_80171560(self);
-    g_api.UpdateAnim(NULL, &D_us_80170500);
+    g_api.UpdateAnim(NULL, D_us_80170500);
 }
 
 void func_us_801720A4(Entity* self) {}
