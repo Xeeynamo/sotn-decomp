@@ -231,8 +231,8 @@ void func_us_80171624(s32 arg0) {
                 }
                 e->posY.val = FIX(160);
             } else {
-                e->posX.val = (PLAYER.facingLeft ? FIX(18) : FIX(-18)) +
-                              PLAYER.posX.val;
+                e->posX.val =
+                    (PLAYER.facingLeft ? FIX(18) : FIX(-18)) + PLAYER.posX.val;
                 e->posY.val = PLAYER.posY.val - FIX(32);
             }
         }
