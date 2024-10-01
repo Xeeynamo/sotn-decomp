@@ -58,13 +58,13 @@ void EntityGremlin(Entity* self)
             self->facingLeft = self->params;
 
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_ID_1F, entity);
-            entity->params = 0;
+            CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
+            entity->params = 0; // Glow effect
             entity->zPriority = self->zPriority - 2;
 
             entity = self + 2;
-            CreateEntityFromCurrentEntity(E_ID_1F, entity);
-            entity->params = 1;
+            CreateEntityFromCurrentEntity(E_GREMLIN_EFFECT, entity);
+            entity->params = 1; // Fire (in spoon) effect
             entity->zPriority = self->zPriority - 1;
             // fallthrough
         case Idle:
@@ -229,18 +229,28 @@ void EntityGremlin(Entity* self)
     }
 }
 
-extern u8 D_80181704[];
-extern u8 D_8018171C[];
+// D_80181704
+u8 AnimFrames_Fire[] = {
+    0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A, 0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0x01, 0x0E,
+    0x01, 0x0F, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00 
+};
 
-// E_ID_1F
+// D_8018171C
+u8 AnimFrames_Glow[] = {
+    0x01, 0x11, 0x01, 0x12, 0x00, 0x00, 0x00, 0x00 
+};
+
+// E_GREMLIN_EFFECT
 // func_801A9D40
-void func_801A9D40(Entity* self)
+void EntityGremlinEffect(Entity* self)
 {
     enum Step {
         Init = 0,
+        Glow = 1,
+        Fire = 2,
     };
 
-    Entity* entity;
+    Entity* entityGremlin;
 
     switch (self->step) {
         case Init:
@@ -248,43 +258,45 @@ void func_801A9D40(Entity* self)
             self->hitboxState = 0;
             self->flags |= FLAG_UNK_2000;
 
+            // Check whether to be fire or glow
             if (self->params != 0) {
-                self->step = 2;
+                // Fire init
+                self->step = Fire;
                 break;
             }
-            self->step = 1;
-
+            // Glow init
+            self->step = Glow;
             self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
             self->unk6C = 0xC0;
             self->drawFlags = FLAG_DRAW_UNK8;
             break;
 
-        case 1:
-            AnimateEntity(&D_8018171C, self);
+        case Glow:
+            AnimateEntity(&AnimFrames_Glow, self);
 
-            entity = self - 1;
-            self->facingLeft = entity->facingLeft;
-            self->posX.i.hi = (s16) entity->posX.i.hi;
-            self->posY.i.hi = (s16) entity->posY.i.hi;
-            if (entity->animCurFrame == 0x13) {
+            entityGremlin = self - 1;
+            self->facingLeft = entityGremlin->facingLeft;
+            self->posX.i.hi = entityGremlin->posX.i.hi;
+            self->posY.i.hi = entityGremlin->posY.i.hi;
+            if (entityGremlin->animCurFrame == E_ID_13) {
                 self->posY.i.hi -= 0x10;
             }
-            if (entity->entityId != 0x1E) {
+            if (entityGremlin->entityId != 0x1E) {
                 DestroyEntity(self);
             }
             break;
 
-        case 2:
-            AnimateEntity(&D_80181704, self);
+        case Fire:
+            AnimateEntity(&AnimFrames_Fire, self);
 
-            entity = self - 2;
-            self->facingLeft = entity->facingLeft;
-            self->posX.i.hi = (s16) entity->posX.i.hi;
-            self->posY.i.hi = (s16) entity->posY.i.hi;
-            if (entity->animCurFrame == 0x13) {
+            entityGremlin = self - 2;
+            self->facingLeft = entityGremlin->facingLeft;
+            self->posX.i.hi = entityGremlin->posX.i.hi;
+            self->posY.i.hi = entityGremlin->posY.i.hi;
+            if (entityGremlin->animCurFrame == E_ID_13) {
                 self->posY.i.hi -= 0x10;
             }
-            if (entity->entityId != 0x1E) {
+            if (entityGremlin->entityId != 0x1E) {
                 DestroyEntity(self);
             }
     }

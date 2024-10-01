@@ -30,7 +30,7 @@ void EntityFallingStairs(Entity*);
 void func_8019CBA8(Entity*);
 void EntityFallingStep(Entity*);
 void EntityGremlin(Entity*);
-void func_801A9D40(Entity*);
+void EntityGremlinEffect(Entity*);
 void func_801A9E94(Entity*);
 void EntitySalemWitch(Entity*);
 void EntitySalemWitchGlow(Entity*);
@@ -77,7 +77,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityFallingStairs,
     EntityFallingStep,
     EntityGremlin,
-    func_801A9D40,  // E_ID_1F
+    EntityGremlinEffect,
     func_801A9E94,  // E_ID_20
     EntitySalemWitch,
     EntitySalemWitchGlow,

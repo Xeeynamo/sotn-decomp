@@ -37,7 +37,7 @@ typedef enum {
     /* 0x1C */ E_FALLING_STAIRS,
     /* 0x1D */ E_FALLING_STEP,
     /* 0x1E */ E_GREMLIN,
-    /* 0x1F */ E_ID_1F, //func_801A9D40
+    /* 0x1F */ E_GREMLIN_EFFECT,
     /* 0x20 */ E_ID_20, //func_801A9E94
     /* 0x21 */ E_SALEM_WITCH,
     /* 0x22 */ E_SALEM_WITCH_GLOW,
