@@ -1259,6 +1259,11 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_Gremlin;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+} ET_GremlinFire;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1377,4 +1382,5 @@ typedef union { // offset=0x7C
     ET_SalemWitch salemWitch;
     ET_SalemWitchTribolt salemWitchTribolt;
     ET_Gremlin gremlin;
+    ET_GremlinFire gremlinFire;
 } Ext;

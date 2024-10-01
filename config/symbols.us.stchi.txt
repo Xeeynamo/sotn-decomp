@@ -100,7 +100,7 @@ EntitySalemWitchTriboltLaunch = 0x801A93D4;
 EntitySalemWitchTriboltProjectile = 0x801A9588;
 EntityGremlin = 0x801A97C8;
 EntityGremlinEffect = 0x801A9D40;
-// func_801A9E94
+EntityGremlinFire = 0x801A9E94;
 // func_801AA020
 // func_801AA390
 // func_801AB0C0

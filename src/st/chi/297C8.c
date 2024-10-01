@@ -164,7 +164,7 @@ void EntityGremlin(Entity* self)
                 // Spawn
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID_20, self, entity);
+                    CreateEntityFromEntity(E_GREMLIN_FIRE, self, entity);
                 }
             } else {
                 self->ext.gremlin.timer--;
@@ -244,6 +244,9 @@ u8 AnimFrames_Glow[] = {
 // func_801A9D40
 void EntityGremlinEffect(Entity* self)
 {
+    const int AnimFrameGremlinHurt = 0x13;
+    const int GremlinHurtFrameOffsetY = -0x10;
+
     enum Step {
         Init = 0,
         Glow = 1,
@@ -278,10 +281,10 @@ void EntityGremlinEffect(Entity* self)
             self->facingLeft = entityGremlin->facingLeft;
             self->posX.i.hi = entityGremlin->posX.i.hi;
             self->posY.i.hi = entityGremlin->posY.i.hi;
-            if (entityGremlin->animCurFrame == E_ID_13) {
-                self->posY.i.hi -= 0x10;
+            if (entityGremlin->animCurFrame == AnimFrameGremlinHurt) {
+                self->posY.i.hi += GremlinHurtFrameOffsetY;
             }
-            if (entityGremlin->entityId != 0x1E) {
+            if (entityGremlin->entityId != E_GREMLIN) {
                 DestroyEntity(self);
             }
             break;
@@ -293,62 +296,82 @@ void EntityGremlinEffect(Entity* self)
             self->facingLeft = entityGremlin->facingLeft;
             self->posX.i.hi = entityGremlin->posX.i.hi;
             self->posY.i.hi = entityGremlin->posY.i.hi;
-            if (entityGremlin->animCurFrame == E_ID_13) {
-                self->posY.i.hi -= 0x10;
+            if (entityGremlin->animCurFrame == AnimFrameGremlinHurt) {
+                self->posY.i.hi += GremlinHurtFrameOffsetY;
             }
-            if (entityGremlin->entityId != 0x1E) {
+            if (entityGremlin->entityId != E_GREMLIN) {
                 DestroyEntity(self);
             }
     }
 }
 
-extern u8 D_80181724[];
+// D_80181724
+u8 AnimFrames_FireIdle[] = {
+    0x02, 0x14, 0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A, 0x02, 0x1B,
+    0x02, 0x1C, 0x02, 0x1D, 0x00, 0x00, 0x00, 0x00 
+};
+
 extern EntityInit EntityInit_801806C4;
 
-// E_ID_20
+// E_GREMLIN_FIRE
 // func_801A9E94
-void func_801A9E94(Entity* arg0)
+void EntityGremlinFire(Entity* self)
 {
-    if (arg0->flags & 0x100) {
-        if (arg0->step != 2) {
-            arg0->hitboxState = 0;
-            SetStep(2);
+    const int FireDuration = 0x400;
+    const int BounceSpeed = 0x40;
+
+    enum Step {
+        Init = 0,
+        Idle = 1,
+        Death = 2,
+    };
+
+    enum Death_Substep {
+        Death_Init = 0,
+        Death_Shrink = 1,
+    };
+
+    if (self->flags & FLAG_DEAD) {
+        if (self->step != Death) {
+            self->hitboxState = 0;
+            SetStep(Death);
         }
     }
 
-    switch (arg0->step) {
-        case 0:
+    switch (self->step) {
+        case Init:
             InitializeEntity(&EntityInit_801806C4);
-            arg0->ext.factory.unk80 = 0x400;
+            self->ext.gremlinFire.timer = FireDuration;
             // fallthrough
-        case 1:
-            AnimateEntity(&D_80181724, arg0);
+        case Idle:
+            AnimateEntity(&AnimFrames_FireIdle, self);
             MoveEntity();
 
-            arg0->velocityY = rcos(arg0->rotZ);
-            arg0->rotZ = arg0->rotZ + 0x40;
-            arg0->ext.factory.unk80--;
-            if ((arg0->ext.factory.unk80 << 0x10) == 0) {
-                arg0->hitboxState = 0;
-                SetStep(2);
+            // Bounce up and down slightly
+            self->velocityY = rcos(self->rotZ);
+            self->rotZ += BounceSpeed;
+            self->ext.gremlinFire.timer--;
+            if (self->ext.gremlinFire.timer == 0) {
+                self->hitboxState = 0;
+                SetStep(Death);
             }
             break;
 
-        case 2:
-            switch (arg0->step_s) {
-                case 0:
-                    arg0->drawFlags = 3;
-                    arg0->rotX = 0x100;
-                    arg0->rotY = 0x100;
-                    arg0->flags |= 0x80000000;
-                    arg0->step_s++;
+        case Death:
+            switch (self->step_s) {
+                case Death_Init:
+                    self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                    self->rotX = 0x100;
+                    self->rotY = 0x100;
+                    self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+                    self->step_s++;
                     // fallthrough
-                case 1:
-                    AnimateEntity(&D_80181724, arg0);
-                    arg0->rotX = arg0->rotX - 8;
-                    arg0->rotY = arg0->rotY - 6;
-                    if (arg0->rotX == 0) {
-                        DestroyEntity(arg0);
+                case Death_Shrink:
+                    AnimateEntity(&AnimFrames_FireIdle, self);
+                    self->rotX -= 8;
+                    self->rotY -= 6;
+                    if (self->rotX == 0) {
+                        DestroyEntity(self);
                     }
                     break;
             }
