@@ -1195,10 +1195,10 @@ typedef struct Collider {
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
+    /* 0x14 */ s32 unk14;   // Left edge of tile collision surrounding queried position
+    /* 0x18 */ s32 unk18;   // Top edge of tile collision surrounding queried position
+    /* 0x1C */ s32 unk1C;   // Right edge of tile collision surrounding queried position
+    /* 0x20 */ s32 unk20;   // Bottom edge of tile collision surrounding queried position
 } Collider; /* size=0x24 */
 
 typedef struct XaMusicConfig {
