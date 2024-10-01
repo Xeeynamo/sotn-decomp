@@ -3202,6 +3202,23 @@
 | 1.00 | true     | func_801870B0                       | asm/us/st/wrp/matchings/st_debug/func_801870B0.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/wrp/nonmatchings/st_debug/EntityUnkId12.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/91EBC/func_80131FA4.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/nonmatchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | _addque                             | asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_8018AFC4                    | asm/us/boss/mar/matchings/cutscene/func_us_8018AFC4.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/mar/nonmatchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | func_8018DF0C                       | asm/us/st/cen/matchings/cutscene/func_8018DF0C.s 
@@ -3321,21 +3338,6 @@
 | 1.00 | true     | D_BA000_8017AB8C                    | asm/us/weapon/nonmatchings/w_026/D_BA000_8017AB8C.s 
 | 1.00 | true     | D_BA000_8017AB94                    | asm/us/weapon/nonmatchings/w_026/D_BA000_8017AB94.s 
 | 1.00 | true     | GetWeaponId                         | asm/us/weapon/nonmatchings/w_057/GetWeaponId.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | func_80131FA4                       | asm/us/dra/matchings/91EBC/func_80131FA4.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/nonmatchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | _addque                             | asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -4239,11 +4241,6 @@
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
 | 1.00 | true     | SpuRead                             | asm/us/main/nonmatchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/nonmatchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/nonmatchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015B18C                       | asm/us/ric/matchings/1CB04/func_8015B18C.s 
 | 0.91 | true     | func_8015B1E8                       | asm/us/ric/matchings/1CB04/func_8015B1E8.s 
@@ -6926,6 +6923,9 @@
 | 1.00 | true     | SpuSetTransferStartAddr             | asm/us/main/matchings/psxsdk/libspu/s_stsa/SpuSetTransferStartAddr.s 
 | 1.00 | true     | SpuSetTransferStartAddr             | asm/us/main/nonmatchings/psxsdk/libspu/s_stsa/SpuSetTransferStartAddr.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/nonmatchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SpuWritePartly                      | asm/us/main/matchings/psxsdk/libspu/s_wp/SpuWritePartly.s 
 | 1.00 | true     | SpuWritePartly                      | asm/us/main/nonmatchings/psxsdk/libspu/s_wp/SpuWritePartly.s 
 -------------------------------------------------------------------------------
@@ -7324,6 +7324,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80171568                    | asm/us/servant/tt_001/matchings/F84/func_us_80171568.s 
 | 1.00 | true     | func_us_80171568                    | asm/us/servant/tt_001/nonmatchings/F84/func_us_80171568.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_80171624                    | asm/us/servant/tt_001/matchings/F84/func_us_80171624.s 
+| 1.00 | true     | func_us_80171624                    | asm/us/servant/tt_001/nonmatchings/F84/func_us_80171624.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80171864                    | asm/us/servant/tt_001/matchings/F84/func_us_80171864.s 
 | 1.00 | true     | func_us_80171864                    | asm/us/servant/tt_001/nonmatchings/F84/func_us_80171864.s 
