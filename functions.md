@@ -59,7 +59,7 @@
 | wrp    | PrimResetNext                       |       72 |          1 |        |                                 |       |
 | wrp    | ReplaceBreakableWithItemDrop        |       72 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | wrp    | CollectGold                         |       72 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
-| wrp    | GetNormalizedAngle                  |       74 |          7 |        |                                 |       |
+| wrp    | GetNormalizedAngle                  |       74 |          7 |        | https://decomp.me/scratch/nIT0f | 0.954 |
 | wrp    | EntityBackgroundBlock               |       76 |          6 |        |                                 |       |
 | wrp    | CreateEntityFromLayout              |       78 |          2 |        |                                 |       |
 | wrp    | EntityRoomForeground                |       78 |          6 |        |                                 |       |
