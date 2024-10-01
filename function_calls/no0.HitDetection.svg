@@ -12,7 +12,7 @@
 <!-- no0.HitDetection -->
 <g id="node1" class="node">
 <title>no0.HitDetection</title>
-<ellipse fill="red" stroke="black" cx="1301.39" cy="-198" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1301.39" cy="-198" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="1301.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.HitDetection</text>
 </g>
 <!-- dra.DealDamage -->
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.AllocEntity</title>
 <g id="a_node8"><a xlink:href="no0.AllocEntity.svg" xlink:title="no0.AllocEntity">
-<ellipse fill="red" stroke="black" cx="1301.39" cy="-18" rx="81.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1301.39" cy="-18" rx="81.79" ry="18"/>
 <text text-anchor="middle" x="1301.39" y="-14.3" font-family="Times,serif" font-size="14.00">no0.AllocEntity</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node11"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="2055.39" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2055.39" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="2055.39" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>no0.PreventEntityFromRespawning</title>
 <g id="a_node12"><a xlink:href="no0.PreventEntityFromRespawning.svg" xlink:title="no0.PreventEntityFromRespawning">
-<ellipse fill="red" stroke="black" cx="2347.39" cy="-18" rx="177.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2347.39" cy="-18" rx="177.37" ry="18"/>
 <text text-anchor="middle" x="2347.39" y="-14.3" font-family="Times,serif" font-size="14.00">no0.PreventEntityFromRespawning</text>
 </a>
 </g>

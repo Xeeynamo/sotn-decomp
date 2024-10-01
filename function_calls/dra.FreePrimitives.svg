@@ -611,7 +611,7 @@
 <g id="node39" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node39"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="8304.39" cy="-198" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="8304.39" cy="-198" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="8304.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -675,7 +675,7 @@
 <g id="node43" class="node">
 <title>no0.HitDetection</title>
 <g id="a_node43"><a xlink:href="no0.HitDetection.svg" xlink:title="no0.HitDetection">
-<ellipse fill="red" stroke="black" cx="9259.39" cy="-198" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="9259.39" cy="-198" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="9259.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.HitDetection</text>
 </a>
 </g>

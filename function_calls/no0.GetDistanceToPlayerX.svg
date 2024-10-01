@@ -12,7 +12,7 @@
 <!-- no0.GetDistanceToPlayerX -->
 <g id="node1" class="node">
 <title>no0.GetDistanceToPlayerX</title>
-<ellipse fill="red" stroke="black" cx="1419.89" cy="-18" rx="134.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1419.89" cy="-18" rx="134.58" ry="18"/>
 <text text-anchor="middle" x="1419.89" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetDistanceToPlayerX</text>
 </g>
 <!-- no0.EntityAxeKnight -->

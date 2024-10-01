@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.HitDetection</title>
 <g id="a_node7"><a xlink:href="no0.HitDetection.svg" xlink:title="no0.HitDetection">
-<ellipse fill="red" stroke="black" cx="1512.29" cy="-198" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1512.29" cy="-198" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="1512.29" y="-194.3" font-family="Times,serif" font-size="14.00">no0.HitDetection</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>no0.UnkAnimFunc</title>
 <g id="a_node10"><a xlink:href="no0.UnkAnimFunc.svg" xlink:title="no0.UnkAnimFunc">
-<ellipse fill="red" stroke="black" cx="2185.29" cy="-198" rx="96.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2185.29" cy="-198" rx="96.68" ry="18"/>
 <text text-anchor="middle" x="2185.29" y="-194.3" font-family="Times,serif" font-size="14.00">no0.UnkAnimFunc</text>
 </a>
 </g>

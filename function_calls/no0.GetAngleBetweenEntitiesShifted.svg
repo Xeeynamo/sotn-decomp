@@ -12,14 +12,14 @@
 <!-- no0.GetAngleBetweenEntitiesShifted -->
 <g id="node1" class="node">
 <title>no0.GetAngleBetweenEntitiesShifted</title>
-<ellipse fill="red" stroke="black" cx="184.58" cy="-198" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="184.58" cy="-198" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="184.58" y="-194.3" font-family="Times,serif" font-size="14.00">no0.GetAngleBetweenEntitiesShifted</text>
 </g>
 <!-- no0.Ratan2Shifted -->
 <g id="node2" class="node">
 <title>no0.Ratan2Shifted</title>
 <g id="a_node2"><a xlink:href="no0.Ratan2Shifted.svg" xlink:title="no0.Ratan2Shifted">
-<ellipse fill="red" stroke="black" cx="184.58" cy="-18" rx="97.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="184.58" cy="-18" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="184.58" y="-14.3" font-family="Times,serif" font-size="14.00">no0.Ratan2Shifted</text>
 </a>
 </g>

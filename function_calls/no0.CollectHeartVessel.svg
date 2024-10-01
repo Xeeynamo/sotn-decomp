@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node4"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="464.34" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="464.34" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="464.34" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>

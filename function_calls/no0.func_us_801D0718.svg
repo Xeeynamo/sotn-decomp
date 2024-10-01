@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="96.19" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="96.19" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="96.19" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.GetPlayerCollisionWith</title>
 <g id="a_node3"><a xlink:href="no0.GetPlayerCollisionWith.svg" xlink:title="no0.GetPlayerCollisionWith">
-<ellipse fill="red" stroke="black" cx="349.19" cy="-18" rx="139.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="349.19" cy="-18" rx="139.18" ry="18"/>
 <text text-anchor="middle" x="349.19" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetPlayerCollisionWith</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.InitializeEntity</title>
 <g id="a_node4"><a xlink:href="no0.InitializeEntity.svg" xlink:title="no0.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="606.19" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="606.19" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="606.19" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </a>
 </g>

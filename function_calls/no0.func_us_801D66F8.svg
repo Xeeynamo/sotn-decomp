@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.AnimateEntity</title>
 <g id="a_node5"><a xlink:href="no0.AnimateEntity.svg" xlink:title="no0.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="761.44" cy="-18" rx="98.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="761.44" cy="-18" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="761.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.AnimateEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node6"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="973.44" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="973.44" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="973.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.GetDistanceToPlayerX</title>
 <g id="a_node7"><a xlink:href="no0.GetDistanceToPlayerX.svg" xlink:title="no0.GetDistanceToPlayerX">
-<ellipse fill="red" stroke="black" cx="1222.44" cy="-18" rx="134.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1222.44" cy="-18" rx="134.58" ry="18"/>
 <text text-anchor="middle" x="1222.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetDistanceToPlayerX</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.GetSideToPlayer</title>
 <g id="a_node8"><a xlink:href="no0.GetSideToPlayer.svg" xlink:title="no0.GetSideToPlayer">
-<ellipse fill="red" stroke="black" cx="1483.44" cy="-18" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1483.44" cy="-18" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="1483.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetSideToPlayer</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>no0.InitializeEntity</title>
 <g id="a_node9"><a xlink:href="no0.InitializeEntity.svg" xlink:title="no0.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="1710.44" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1710.44" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="1710.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </a>
 </g>
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>no0.SetStep</title>
 <g id="a_node12"><a xlink:href="no0.SetStep.svg" xlink:title="no0.SetStep">
-<ellipse fill="red" stroke="black" cx="2291.44" cy="-18" rx="67.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2291.44" cy="-18" rx="67.69" ry="18"/>
 <text text-anchor="middle" x="2291.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.SetStep</text>
 </a>
 </g>
@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>no0.SetSubStep</title>
 <g id="a_node13"><a xlink:href="no0.SetSubStep.svg" xlink:title="no0.SetSubStep">
-<ellipse fill="red" stroke="black" cx="2462.44" cy="-18" rx="85.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2462.44" cy="-18" rx="85.59" ry="18"/>
 <text text-anchor="middle" x="2462.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.SetSubStep</text>
 </a>
 </g>
@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>no0.UnkCollisionFunc3</title>
 <g id="a_node14"><a xlink:href="no0.UnkCollisionFunc3.svg" xlink:title="no0.UnkCollisionFunc3">
-<ellipse fill="red" stroke="black" cx="2684.44" cy="-18" rx="118.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2684.44" cy="-18" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="2684.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.UnkCollisionFunc3</text>
 </a>
 </g>

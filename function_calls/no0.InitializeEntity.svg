@@ -12,7 +12,7 @@
 <!-- no0.InitializeEntity -->
 <g id="node1" class="node">
 <title>no0.InitializeEntity</title>
-<ellipse fill="red" stroke="black" cx="9896.89" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="9896.89" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="9896.89" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </g>
 <!-- no0.EntityAxeKnight -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.EntityDamageDisplay</title>
 <g id="a_node5"><a xlink:href="no0.EntityDamageDisplay.svg" xlink:title="no0.EntityDamageDisplay">
-<ellipse fill="red" stroke="black" cx="997.89" cy="-198" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="997.89" cy="-198" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="997.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityDamageDisplay</text>
 </a>
 </g>
@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>no0.EntityRedDoor</title>
 <g id="a_node14"><a xlink:href="no0.EntityRedDoor.svg" xlink:title="no0.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="3366.89" cy="-198" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3366.89" cy="-198" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="3366.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityRedDoor</text>
 </a>
 </g>

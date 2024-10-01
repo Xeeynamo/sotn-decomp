@@ -12,14 +12,14 @@
 <!-- no0.PreventEntityFromRespawning -->
 <g id="node1" class="node">
 <title>no0.PreventEntityFromRespawning</title>
-<ellipse fill="red" stroke="black" cx="234.34" cy="-18" rx="177.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="234.34" cy="-18" rx="177.37" ry="18"/>
 <text text-anchor="middle" x="234.34" y="-14.3" font-family="Times,serif" font-size="14.00">no0.PreventEntityFromRespawning</text>
 </g>
 <!-- no0.HitDetection -->
 <g id="node2" class="node">
 <title>no0.HitDetection</title>
 <g id="a_node2"><a xlink:href="no0.HitDetection.svg" xlink:title="no0.HitDetection">
-<ellipse fill="red" stroke="black" cx="90.34" cy="-198" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="90.34" cy="-198" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="90.34" y="-194.3" font-family="Times,serif" font-size="14.00">no0.HitDetection</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.ReplaceBreakableWithItemDrop</title>
 <g id="a_node3"><a xlink:href="no0.ReplaceBreakableWithItemDrop.svg" xlink:title="no0.ReplaceBreakableWithItemDrop">
-<ellipse fill="red" stroke="black" cx="379.34" cy="-198" rx="180.87" ry="18"/>
+<ellipse fill="green" stroke="black" cx="379.34" cy="-198" rx="180.87" ry="18"/>
 <text text-anchor="middle" x="379.34" y="-194.3" font-family="Times,serif" font-size="14.00">no0.ReplaceBreakableWithItemDrop</text>
 </a>
 </g>

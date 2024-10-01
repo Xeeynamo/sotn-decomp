@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.AllocEntity</title>
 <g id="a_node3"><a xlink:href="no0.AllocEntity.svg" xlink:title="no0.AllocEntity">
-<ellipse fill="red" stroke="black" cx="305.69" cy="-18" rx="81.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="305.69" cy="-18" rx="81.79" ry="18"/>
 <text text-anchor="middle" x="305.69" y="-14.3" font-family="Times,serif" font-size="14.00">no0.AllocEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node5"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="807.69" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="807.69" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="807.69" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.EntityExplosionSpawn</title>
 <g id="a_node6"><a xlink:href="no0.EntityExplosionSpawn.svg" xlink:title="no0.EntityExplosionSpawn">
-<ellipse fill="red" stroke="black" cx="1057.69" cy="-18" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1057.69" cy="-18" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="1057.69" y="-14.3" font-family="Times,serif" font-size="14.00">no0.EntityExplosionSpawn</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.UnkCollisionFunc3</title>
 <g id="a_node7"><a xlink:href="no0.UnkCollisionFunc3.svg" xlink:title="no0.UnkCollisionFunc3">
-<ellipse fill="red" stroke="black" cx="1329.69" cy="-18" rx="118.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1329.69" cy="-18" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="1329.69" y="-14.3" font-family="Times,serif" font-size="14.00">no0.UnkCollisionFunc3</text>
 </a>
 </g>

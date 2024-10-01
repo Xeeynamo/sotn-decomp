@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node4"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="655.94" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="655.94" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="655.94" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.InitializeEntity</title>
 <g id="a_node5"><a xlink:href="no0.InitializeEntity.svg" xlink:title="no0.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="869.94" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="869.94" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="869.94" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.MoveEntity</title>
 <g id="a_node6"><a xlink:href="no0.MoveEntity.svg" xlink:title="no0.MoveEntity">
-<ellipse fill="red" stroke="black" cx="1072.94" cy="-18" rx="85.29" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1072.94" cy="-18" rx="85.29" ry="18"/>
 <text text-anchor="middle" x="1072.94" y="-14.3" font-family="Times,serif" font-size="14.00">no0.MoveEntity</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.UnkEntityFunc0</title>
 <g id="a_node8"><a xlink:href="no0.UnkEntityFunc0.svg" xlink:title="no0.UnkEntityFunc0">
-<ellipse fill="red" stroke="black" cx="1438.94" cy="-18" rx="107.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1438.94" cy="-18" rx="107.48" ry="18"/>
 <text text-anchor="middle" x="1438.94" y="-14.3" font-family="Times,serif" font-size="14.00">no0.UnkEntityFunc0</text>
 </a>
 </g>

@@ -1843,7 +1843,7 @@
 <g id="node116" class="node">
 <title>no0.HitDetection</title>
 <g id="a_node116"><a xlink:href="no0.HitDetection.svg" xlink:title="no0.HitDetection">
-<ellipse fill="red" stroke="black" cx="27614.39" cy="-198" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="27614.39" cy="-198" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="27614.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.HitDetection</text>
 </a>
 </g>

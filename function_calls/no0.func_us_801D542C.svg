@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>no0.AllocEntity</title>
 <g id="a_node15"><a xlink:href="no0.AllocEntity.svg" xlink:title="no0.AllocEntity">
-<ellipse fill="red" stroke="black" cx="2396.84" cy="-18" rx="81.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2396.84" cy="-18" rx="81.79" ry="18"/>
 <text text-anchor="middle" x="2396.84" y="-14.3" font-family="Times,serif" font-size="14.00">no0.AllocEntity</text>
 </a>
 </g>
@@ -259,7 +259,7 @@
 <g id="node17" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node17"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="2898.84" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2898.84" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="2898.84" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -275,7 +275,7 @@
 <g id="node18" class="node">
 <title>no0.InitializeEntity</title>
 <g id="a_node18"><a xlink:href="no0.InitializeEntity.svg" xlink:title="no0.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="3112.84" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3112.84" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="3112.84" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </a>
 </g>

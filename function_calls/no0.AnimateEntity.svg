@@ -12,7 +12,7 @@
 <!-- no0.AnimateEntity -->
 <g id="node1" class="node">
 <title>no0.AnimateEntity</title>
-<ellipse fill="red" stroke="black" cx="3398.89" cy="-18" rx="98.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3398.89" cy="-18" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="3398.89" y="-14.3" font-family="Times,serif" font-size="14.00">no0.AnimateEntity</text>
 </g>
 <!-- no0.EntityAxeKnight -->

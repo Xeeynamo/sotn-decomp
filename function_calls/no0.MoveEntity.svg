@@ -12,7 +12,7 @@
 <!-- no0.MoveEntity -->
 <g id="node1" class="node">
 <title>no0.MoveEntity</title>
-<ellipse fill="red" stroke="black" cx="3732.99" cy="-18" rx="85.29" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3732.99" cy="-18" rx="85.29" ry="18"/>
 <text text-anchor="middle" x="3732.99" y="-14.3" font-family="Times,serif" font-size="14.00">no0.MoveEntity</text>
 </g>
 <!-- no0.EntityAxeKnightThrowingAxe -->
@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>no0.UnkCollisionFunc3</title>
 <g id="a_node13"><a xlink:href="no0.UnkCollisionFunc3.svg" xlink:title="no0.UnkCollisionFunc3">
-<ellipse fill="red" stroke="black" cx="3250.99" cy="-198" rx="118.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3250.99" cy="-198" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="3250.99" y="-194.3" font-family="Times,serif" font-size="14.00">no0.UnkCollisionFunc3</text>
 </a>
 </g>

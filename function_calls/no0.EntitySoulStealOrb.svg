@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.AnimateEntity</title>
 <g id="a_node3"><a xlink:href="no0.AnimateEntity.svg" xlink:title="no0.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="315.44" cy="-18" rx="98.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="315.44" cy="-18" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="315.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.AnimateEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node4"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="527.44" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="527.44" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="527.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.GetAngleBetweenEntities</title>
 <g id="a_node5"><a xlink:href="no0.GetAngleBetweenEntities.svg" xlink:title="no0.GetAngleBetweenEntities">
-<ellipse fill="red" stroke="black" cx="792.44" cy="-18" rx="150.57" ry="18"/>
+<ellipse fill="green" stroke="black" cx="792.44" cy="-18" rx="150.57" ry="18"/>
 <text text-anchor="middle" x="792.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetAngleBetweenEntities</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.GetNormalizedAngle</title>
 <g id="a_node6"><a xlink:href="no0.GetNormalizedAngle.svg" xlink:title="no0.GetNormalizedAngle">
-<ellipse fill="red" stroke="black" cx="1088.44" cy="-18" rx="127.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1088.44" cy="-18" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="1088.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetNormalizedAngle</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.InitializeEntity</title>
 <g id="a_node7"><a xlink:href="no0.InitializeEntity.svg" xlink:title="no0.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="1333.44" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1333.44" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="1333.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.MoveEntity</title>
 <g id="a_node8"><a xlink:href="no0.MoveEntity.svg" xlink:title="no0.MoveEntity">
-<ellipse fill="red" stroke="black" cx="1536.44" cy="-18" rx="85.29" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1536.44" cy="-18" rx="85.29" ry="18"/>
 <text text-anchor="middle" x="1536.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.MoveEntity</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>no0.UnkEntityFunc0</title>
 <g id="a_node10"><a xlink:href="no0.UnkEntityFunc0.svg" xlink:title="no0.UnkEntityFunc0">
-<ellipse fill="red" stroke="black" cx="1902.44" cy="-18" rx="107.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1902.44" cy="-18" rx="107.48" ry="18"/>
 <text text-anchor="middle" x="1902.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.UnkEntityFunc0</text>
 </a>
 </g>

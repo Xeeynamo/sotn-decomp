@@ -12,7 +12,7 @@
 <!-- no0.EntityRedDoor -->
 <g id="node1" class="node">
 <title>no0.EntityRedDoor</title>
-<ellipse fill="red" stroke="black" cx="1083.44" cy="-198" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1083.44" cy="-198" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="1083.44" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityRedDoor</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node6"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="966.44" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="966.44" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="966.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.EntityIsNearPlayer</title>
 <g id="a_node7"><a xlink:href="no0.EntityIsNearPlayer.svg" xlink:title="no0.EntityIsNearPlayer">
-<ellipse fill="red" stroke="black" cx="1200.44" cy="-18" rx="120.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1200.44" cy="-18" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="1200.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.EntityIsNearPlayer</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.GetSideToPlayer</title>
 <g id="a_node8"><a xlink:href="no0.GetSideToPlayer.svg" xlink:title="no0.GetSideToPlayer">
-<ellipse fill="red" stroke="black" cx="1447.44" cy="-18" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1447.44" cy="-18" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="1447.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.GetSideToPlayer</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>no0.InitializeEntity</title>
 <g id="a_node9"><a xlink:href="no0.InitializeEntity.svg" xlink:title="no0.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="1674.44" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1674.44" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="1674.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.InitializeEntity</text>
 </a>
 </g>

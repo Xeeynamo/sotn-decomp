@@ -12,14 +12,14 @@
 <!-- no0.EntityIsNearPlayer -->
 <g id="node1" class="node">
 <title>no0.EntityIsNearPlayer</title>
-<ellipse fill="red" stroke="black" cx="120.24" cy="-18" rx="120.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="120.24" cy="-18" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="120.24" y="-14.3" font-family="Times,serif" font-size="14.00">no0.EntityIsNearPlayer</text>
 </g>
 <!-- no0.EntityRedDoor -->
 <g id="node2" class="node">
 <title>no0.EntityRedDoor</title>
 <g id="a_node2"><a xlink:href="no0.EntityRedDoor.svg" xlink:title="no0.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="120.24" cy="-198" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="120.24" cy="-198" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="120.24" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityRedDoor</text>
 </a>
 </g>

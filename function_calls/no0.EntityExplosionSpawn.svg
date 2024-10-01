@@ -12,14 +12,14 @@
 <!-- no0.EntityExplosionSpawn -->
 <g id="node1" class="node">
 <title>no0.EntityExplosionSpawn</title>
-<ellipse fill="red" stroke="black" cx="1451.99" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1451.99" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="1451.99" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityExplosionSpawn</text>
 </g>
 <!-- no0.DestroyEntity -->
 <g id="node2" class="node">
 <title>no0.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="no0.DestroyEntity.svg" xlink:title="no0.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="1339.99" cy="-18" rx="96.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1339.99" cy="-18" rx="96.38" ry="18"/>
 <text text-anchor="middle" x="1339.99" y="-14.3" font-family="Times,serif" font-size="14.00">no0.DestroyEntity</text>
 </a>
 </g>

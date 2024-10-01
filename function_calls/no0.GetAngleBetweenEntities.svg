@@ -12,7 +12,7 @@
 <!-- no0.GetAngleBetweenEntities -->
 <g id="node1" class="node">
 <title>no0.GetAngleBetweenEntities</title>
-<ellipse fill="red" stroke="black" cx="507.54" cy="-198" rx="150.57" ry="18"/>
+<ellipse fill="green" stroke="black" cx="507.54" cy="-198" rx="150.57" ry="18"/>
 <text text-anchor="middle" x="507.54" y="-194.3" font-family="Times,serif" font-size="14.00">no0.GetAngleBetweenEntities</text>
 </g>
 <!-- ratan2 -->
