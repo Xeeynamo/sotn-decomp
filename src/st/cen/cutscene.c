@@ -78,13 +78,8 @@ INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk4);
 INCLUDE_ASM("st/cen/nonmatchings/cutscene", DrawCutsceneActorName);
 #endif
 
-#if !defined(VERSION_HD)
 #include "../set_cutscene_end.h"
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", SetCutsceneEnd);
-#endif
 
-#if !defined(VERSION_HD)
 static void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
@@ -136,9 +131,6 @@ static void CutsceneRun(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneRun);
-#endif
 
 #ifndef VERSION_HD
 #include "../cutscene_scale_avatar.h"
@@ -622,5 +614,5 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     }
 }
 #else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", EntityHolyGlassesCutscene);
+INCLUDE_ASM("st/cen/nonmatchings/cutscene", CEN_EntityCutscene);
 #endif

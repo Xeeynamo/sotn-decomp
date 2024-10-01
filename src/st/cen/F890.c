@@ -5,8 +5,6 @@
 
 extern u32 g_CutsceneFlags;
 
-#if !defined(VERSION_HD)
-
 // tile layout
 static s16 D_8018068C[] = {
     0x014A, 0x014B, 0x014E, 0x014F, 0x014C, 0x014D, 0x0150, 0x0151, 0x00F5,
@@ -36,7 +34,6 @@ static u8 D_80180780[] = {
     0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
     0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x01,
 };
-#endif
 
 void func_8018F890(s16 arg0) {
     s16 temp_v0 = arg0 - g_Tilemap.height;
@@ -50,7 +47,6 @@ void func_8018F890(s16 arg0) {
     }
 }
 
-#if !defined(VERSION_HD)
 void func_8018F8EC(u16 index) {
     Tilemap* tilemap = &g_Tilemap;
     u16 tilePos = 0x5B6;
@@ -67,11 +63,7 @@ void func_8018F8EC(u16 index) {
         tilePos += 0x2C;
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", func_8018F8EC);
-#endif
 
-#if !defined(VERSION_HD)
 // platform that lifts you into chamber, starts cutscene, gives you holy glasses
 void EntityPlatform(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -267,11 +259,7 @@ void EntityPlatform(Entity* self) {
     prim->y0 = prim->y1 = self->posY.i.hi + 15;
     prim->y2 = prim->y3 = 0x268 - tilemap->scrollY.i.hi;
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", EntityPlatform);
-#endif
 
-#if !defined(VERSION_HD)
 // Black layer that covers room interior and lights up when cutscene starts
 void EntityRoomDarkness(Entity* self) {
     Primitive* prim;
@@ -355,9 +343,6 @@ void EntityRoomDarkness(Entity* self) {
         break;
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", EntityRoomDarkness);
-#endif
 
 #if !defined(VERSION_HD)
 void EntityMaria(Entity* self) {
@@ -367,7 +352,7 @@ void EntityMaria(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_80180428);
+        InitializeEntity(g_eMariaInit);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
@@ -431,7 +416,7 @@ void EntityElevatorStationary(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_eElevatorInit);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         CreateEntityFromCurrentEntity(E_ELEVATOR_STATIONARY, &self[-1]);
@@ -584,14 +569,13 @@ void EntityElevatorStationary(Entity* self) {
 INCLUDE_ASM("st/cen/nonmatchings/F890", EntityElevatorStationary);
 #endif
 
-#if !defined(VERSION_HD)
 void EntityUnkId1B(Entity* self) {
     Entity* entity = &self[self->params];
     s32 step = self->step;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_eElevatorInit);
         if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -615,11 +599,7 @@ void EntityUnkId1B(Entity* self) {
         break;
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", EntityUnkId1B);
-#endif
 
-#if !defined(VERSION_HD)
 // Elevator when moving, fixes player into position (ID 1C)
 void EntityMovingElevator(Entity* self) {
     Entity* player = &PLAYER;
@@ -631,7 +611,7 @@ void EntityMovingElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_eElevatorInit);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -715,6 +695,3 @@ void EntityMovingElevator(Entity* self) {
         DestroyEntity(self);
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", EntityMovingElevator);
-#endif

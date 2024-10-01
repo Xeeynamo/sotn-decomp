@@ -7,6 +7,6 @@
 
 #else
 
-INCLUDE_ASM("st/cen/nonmatchings/e_stage_name", func_hd_8019A140);
+INCLUDE_ASM("st/cen/nonmatchings/e_stage_name", EntityStageNamePopup);
 
 #endif

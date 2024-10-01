@@ -40,7 +40,7 @@ INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityOlroxDrool);
 
 INCLUDE_ASM("st/cen/nonmatchings/e_misc", InitializeUnkEntity);
 
-INCLUDE_ASM("st/cen/nonmatchings/e_misc", MakeEntityFromId);
+#include "../make_entity_from_id.h"
 
 #include "../make_explosions.h"
 
