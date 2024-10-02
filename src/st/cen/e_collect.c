@@ -17,11 +17,14 @@
 
 #include "../collect_gold.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", CollectSubweapon);
+extern u16 aluric_subweapons_idx[];
+extern u16 aluric_subweapons_id[];
+
+#include "../collect_subweapon.h"
 
 #include "../collect_heart_vessel.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", CollectLifeVessel);
+#include "../collect_life_vessel.h"
 
 INCLUDE_ASM("st/cen/nonmatchings/e_collect", DestroyCurrentEntity);
 
