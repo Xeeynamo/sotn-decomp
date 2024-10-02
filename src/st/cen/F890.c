@@ -344,6 +344,7 @@ void EntityRoomDarkness(Entity* self) {
     }
 }
 
+#if !defined(VERSION_HD)
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
         /* Has player seen Maria Holy Glasses Cutscene? */
@@ -351,7 +352,7 @@ void EntityMaria(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_80180428);
+        InitializeEntity(g_eMariaInit);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
@@ -360,6 +361,9 @@ void EntityMaria(Entity* self) {
         self->zPriority = 0x80;
     }
 }
+#else
+INCLUDE_ASM("st/cen/nonmatchings/F890", EntityMaria);
+#endif
 
 s16 func_8019040C(Primitive* prim, s16 arg1) {
     s16 ret = arg1;
@@ -401,6 +405,7 @@ s16 func_801904B8(Primitive* prim, s16 arg1) {
     return arg1;
 }
 
+#if !defined(VERSION_HD)
 // Elevator when not moving (ID 1A)
 void EntityElevatorStationary(Entity* self) {
     Entity* player = &PLAYER;
@@ -411,7 +416,7 @@ void EntityElevatorStationary(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_eElevatorInit);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         CreateEntityFromCurrentEntity(E_ELEVATOR_STATIONARY, &self[-1]);
@@ -560,6 +565,9 @@ void EntityElevatorStationary(Entity* self) {
         DestroyEntity(self);
     }
 }
+#else
+INCLUDE_ASM("st/cen/nonmatchings/F890", EntityElevatorStationary);
+#endif
 
 void EntityUnkId1B(Entity* self) {
     Entity* entity = &self[self->params];
@@ -567,7 +575,7 @@ void EntityUnkId1B(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_eElevatorInit);
         if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -603,7 +611,7 @@ void EntityMovingElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_eElevatorInit);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
