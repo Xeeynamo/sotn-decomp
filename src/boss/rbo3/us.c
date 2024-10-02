@@ -141,7 +141,7 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/us", ReplaceBreakableWithItemDrop);
 
 #include "../../st/prize_drop_fall.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/us", func_8018CB34);
+#include "../../st/prize_drop_fall2.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", CollectHeart);
 

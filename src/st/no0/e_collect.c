@@ -4,7 +4,7 @@
 
 #include "../prize_drop_fall.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", func_8018CB34);
+#include "../prize_drop_fall2.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_collect", CollectHeart);
 
