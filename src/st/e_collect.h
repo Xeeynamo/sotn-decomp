@@ -142,23 +142,7 @@ static u8* g_ExplosionAnimations[] = {
 // from another file
 extern u16 g_InitializeData0[];
 
-static void func_8018CAB0(void) {
-    if (g_CurrentEntity->velocityY >= 0) {
-        g_CurrentEntity->ext.equipItemDrop.fallSpeed +=
-            g_CurrentEntity->ext.equipItemDrop.gravity;
-        g_CurrentEntity->velocityX =
-            g_CurrentEntity->ext.equipItemDrop.fallSpeed;
-        if (g_CurrentEntity->velocityX == FIX(1) ||
-            g_CurrentEntity->velocityX == FIX(-1)) {
-            g_CurrentEntity->ext.equipItemDrop.gravity =
-                -g_CurrentEntity->ext.equipItemDrop.gravity;
-        }
-    }
-
-    if (g_CurrentEntity->velocityY < FIX(0.25)) {
-        g_CurrentEntity->velocityY += FIX(0.125);
-    }
-}
+#include "prize_drop_fall.h"
 
 static void func_8018CB34(u16 arg0) {
     Collider collider;
@@ -192,7 +176,7 @@ static void func_8018CB34(u16 arg0) {
     } else {
         if (!(collider.effects & EFFECT_NOTHROUGH)) {
             MoveEntity();
-            func_8018CAB0();
+            PrizeDropFall();
         }
     }
 }
@@ -414,7 +398,7 @@ void EntityPrizeDrop(Entity* self) {
             self->ext.equipItemDrop.aliveTimer = 0x60;
             self->step++;
         } else {
-            func_8018CAB0();
+            PrizeDropFall();
         }
         break;
     case 3:
