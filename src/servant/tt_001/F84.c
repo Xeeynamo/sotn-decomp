@@ -520,7 +520,100 @@ void func_us_801720D4(void) {}
 
 void func_us_801720DC(void) {}
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_801720E4);
+extern Primitive* D_us_801737F0;
+extern s32 D_us_801737E0;
+extern s32 D_us_801737E4;
+extern s32 D_us_801737F4;
+extern s32 D_us_801737F8;
+extern s32 D_us_801737E8;
+extern s32 D_us_801737EC;
+
+void func_us_801720E4(Entity* self) {
+
+    if (self->params != 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000; // FLAG_HAS_PRIMS | FLAG_UNK_04000000 |
+                                      // FLAG_UNK_00200000
+
+        D_us_801737F0 = &g_PrimBuf[self->primIndex];
+        D_us_801737E0 = 0;
+
+        while (D_us_801737E0 < 8) {
+            D_us_801737F0->tpage = 0x1A;
+            D_us_801737F0->clut = 0x143;
+
+            D_us_801737F0->u0 = D_us_801737F0->u2 = 0x78;
+            D_us_801737F0->u1 = D_us_801737F0->u3 = 0x80;
+
+            D_us_801737F0->v0 = D_us_801737F0->v1 = 0x30;
+            D_us_801737F0->v2 = D_us_801737F0->v3 = 0x38;
+
+            D_us_801737F0->r0 = D_us_801737F0->r1 = D_us_801737F0->r2 =
+                D_us_801737F0->r3 = D_us_801737F0->g0 = D_us_801737F0->g1 =
+                    D_us_801737F0->g2 = D_us_801737F0->g3 = D_us_801737F0->b0 =
+                        D_us_801737F0->b1 = D_us_801737F0->b2 =
+                            D_us_801737F0->b3 = 0x80;
+
+            D_us_801737F0->priority = self->zPriority + 1;
+            D_us_801737F0->blendMode = 0x135;
+
+            D_us_801737F0 = D_us_801737F0->next;
+            D_us_801737E0++;
+        }
+
+        D_us_801737F4 = 0x1E;
+        D_us_801737F8 = 0;
+        g_api.PlaySfx(0x6B0);
+        self->step++;
+
+    case 1:
+        D_us_801737F8 = (D_us_801737F8 + 0x32) & 0xFFF;
+        D_us_801737F4--;
+        if (D_us_801737F4 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+
+    default:
+        self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
+
+        D_us_801737E4 = D_us_801737F8;
+        D_us_801737F0 = &g_PrimBuf[self->primIndex];
+        D_us_801737E0 = 0;
+
+        while (D_us_801737E0 < 8) {
+
+            D_us_801737E8 =
+                self->posX.i.hi +
+                ((rcos(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
+                 12);
+            D_us_801737EC =
+                self->posY.i.hi -
+                ((rsin(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
+                 12);
+            D_us_801737F0->x0 = D_us_801737F0->x2 = D_us_801737E8 - 4;
+            D_us_801737F0->x1 = D_us_801737F0->x3 = D_us_801737E8 + 4;
+            D_us_801737F0->y0 = D_us_801737F0->y1 = D_us_801737EC - 4;
+            D_us_801737F0->y2 = D_us_801737F0->y3 = D_us_801737EC + 4;
+            D_us_801737F0 = D_us_801737F0->next;
+            D_us_801737E0++;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017246C);
 
