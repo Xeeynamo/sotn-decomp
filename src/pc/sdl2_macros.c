@@ -173,7 +173,7 @@ void handle_macros(const u8* keyb, u_long* pressed) {
         Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
         temp->posX.i.hi = 128;
         temp->posY.i.hi = 128;
-        PLAYER.ext.player.unkB8 = temp;
+        PLAYER.unkB8 = temp;
         PLAYER.hitParams = 3;
     }
 
@@ -182,7 +182,7 @@ void handle_macros(const u8* keyb, u_long* pressed) {
         Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
         temp->posX.i.hi = 128;
         temp->posY.i.hi = 128;
-        PLAYER.ext.player.unkB8 = temp;
+        PLAYER.unkB8 = temp;
         PLAYER.hitParams = 0x20;
         PLAYER.hitPoints = g_Status.hp;
     }
@@ -192,7 +192,7 @@ void handle_macros(const u8* keyb, u_long* pressed) {
         Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
         temp->posX.i.hi = 128;
         temp->posY.i.hi = 128;
-        PLAYER.ext.player.unkB8 = temp;
+        PLAYER.unkB8 = temp;
         PLAYER.hitParams = 0x20;
         PLAYER.hitPoints = g_Status.hp;
         g_Player.unk5C = 1;

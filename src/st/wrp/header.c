@@ -6,7 +6,7 @@ void HitDetection(void);
 void CreateEntityWhenInHorizontalRange(LayoutEntity*);
 void func_8018A520(s16);
 void UpdateRoomPosition(void);
-void func_8018CAB0(void);
+void PrizeDropFall(void);
 void InitRoomEntities(s32 objLayoutId);
 void PlaySfxPositional(u16);
 void BottomCornerText(u8*, u8);

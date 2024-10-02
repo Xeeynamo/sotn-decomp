@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
+#include "stage.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", func_8018CAB0);
+#include "../prize_drop_fall.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_collect", func_8018CB34);
 

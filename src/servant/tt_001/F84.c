@@ -6,8 +6,7 @@
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
-extern s32 D_us_80170508[];
-extern s32 D_us_8017050C[];
+extern s32 D_us_80170508[][3];
 extern s16 D_us_801737C4;
 extern s16 D_us_801737C8;
 extern s32 D_us_801737CC;
@@ -18,6 +17,19 @@ extern FamiliarStats D_us_80173810;
 extern u16 D_us_80170580[48];
 extern u16 D_us_80170448[48];
 extern SpriteParts* D_us_80170040[];
+
+extern Primitive*
+    D_us_801737FC;        // Pointer to the current primitive being manipulated
+extern s32 D_us_80173800; // Index for the current primitive being manipulated
+extern s32 D_us_80173804; // Effect timer used to control steps and timing
+extern s16 D_us_80173808; // Temporary storage for X position of the entity or
+                          // primitive
+extern s16 D_us_8017380C; // Temporary storage for Y position of the entity or
+                          // primitive
+extern s16
+    D_us_801705A0[]; // Array of X-axis offsets for positioning primitives
+extern s16
+    D_us_801705A8[]; // Array of Y-axis offsets for positioning primitives
 
 s32 ServantUnk0();
 void ProcessEvent(Entity* self, bool resetEvent);
@@ -33,7 +45,7 @@ void func_us_801720CC(void);
 void func_us_801720D4(void);
 void func_us_801720DC(void);
 void func_us_801720E4(Entity* self);
-void func_us_8017246C(void);
+void func_us_8017246C(Entity* self);
 void func_us_801728EC(void);
 void func_us_801728F4(void);
 void func_us_801728FC(void);
@@ -109,7 +121,91 @@ s32 UpdateEntityVelocityTowardsTarget(s32 unused, s32 targetX, s32 targetY) {
     return D_us_801735C0;
 }
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
+Entity* func_us_80171284(
+    Entity* self) { // Assume self is also an Entity pointer
+    Entity* entity;
+    s32 i;
+    s32 index;
+    u32 matches = 0;
+#if !defined(VERSION_PSP)
+    s32 posDelta;
+#endif
+
+    // Hunt through these entities looking for ones that match all criteria.
+    // Call them a success and increment successes.
+    entity = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < 128; i++, entity++) {
+        D_us_801735C4[i] = 0;
+
+        // Very similar code to CheckAllEntitiesValid
+        if (!entity->entityId)
+            continue;
+        if (entity->hitboxState == 0)
+            continue;
+        if (entity->flags & FLAG_UNK_00200000)
+            continue;
+        if (entity->posX.i.hi < -16)
+            continue;
+        if (entity->posX.i.hi > 272)
+            continue;
+        if (entity->posY.i.hi > 240)
+            continue;
+        if (entity->posY.i.hi < 0)
+            continue;
+        // Differs from here
+        if (entity->hitboxState & 8 &&
+            D_us_80170508[D_us_80173810.level / 10][2] == 0)
+            continue;
+#if defined(VERSION_PSP)
+        if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
+            continue;
+#else
+        posDelta = self->posX.i.hi - entity->posX.i.hi;
+        if (ABS(posDelta) >= 49)
+            continue;
+#endif
+
+#if defined(VERSION_PSP)
+        if (abs(self->posY.i.hi - entity->posY.i.hi) >= 49)
+            continue;
+#else
+        posDelta = self->posY.i.hi - entity->posY.i.hi;
+        if (ABS(posDelta) >= 49)
+            continue;
+#endif
+
+        if (!self->facingLeft && self->posX.i.hi < entity->posX.i.hi)
+            continue;
+        if (self->facingLeft && self->posX.i.hi > entity->posX.i.hi)
+            continue;
+        if (entity->hitPoints >= 0x7000)
+            continue;
+
+        if (entity->flags & FLAG_UNK_80000) {
+            matches += 1;
+            D_us_801735C4[i] = 1;
+        } else {
+            entity->flags |= FLAG_UNK_80000;
+            return entity;
+        }
+    }
+
+    if (matches != 0) {
+        index = D_us_80173820 % 128;
+
+        for (i = 0; i < 128; i++) {
+            if (D_us_801735C4[index] != 0) {
+                entity = &g_Entities[index + STAGE_ENTITY_START];
+                D_us_80173820 = (index + 1) % 128;
+                return entity;
+            }
+
+            index = (index + 1) % 128;
+        }
+    }
+
+    return NULL;
+}
 
 #include "../check_entity_valid.h"
 
@@ -390,13 +486,13 @@ void func_us_80171864(Entity* self) {
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 ==
-                (D_us_80170508[((D_us_80173810.level / 10) * 3)] - 0x1E)) {
+                (D_us_80170508[D_us_80173810.level / 10][0] - 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (self->ext.ghost.unk86 >
-                       D_us_80170508[((D_us_80173810.level / 10) * 3)]) {
+                       D_us_80170508[D_us_80173810.level / 10][0]) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
-                    self, D_us_8017050C[((D_us_80173810.level / 10) * 3)], 1,
+                    self, D_us_80170508[D_us_80173810.level / 10][1], 1,
                     &D_us_80173810);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
@@ -607,7 +703,96 @@ void func_us_801720E4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_8017246C);
+void func_us_8017246C(Entity* self) {
+    u16 temp;
+    if (self->params) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
+
+        D_us_801737FC = &g_PrimBuf[self->primIndex];
+        for (D_us_80173800 = 0; D_us_80173800 < 3; D_us_80173800++) {
+            D_us_801737FC->clut = 0x143;
+            D_us_801737FC->tpage = 0x1E;
+            D_us_801737FC->u0 = D_us_801737FC->u2 = 0x78;
+            D_us_801737FC->v0 = D_us_801737FC->v1 = 8;
+            D_us_801737FC->u1 = D_us_801737FC->u3 = 0x80;
+            D_us_801737FC->v2 = D_us_801737FC->v3 = 0x10;
+            D_us_801737FC->priority = self->zPriority + 1;
+            D_us_801737FC->drawMode = DRAW_UNK_100 | DRAW_UNK02;
+            if (D_us_80173800) {
+                D_us_801737FC->drawMode |= DRAW_HIDE;
+            }
+            D_us_801737FC = D_us_801737FC->next;
+        }
+        D_us_80173804 = 0;
+        self->step++;
+        break;
+    case 1:
+        D_us_80173804++;
+        if (D_us_80173804 > 0xA) {
+            D_us_801737FC = &g_PrimBuf[self->primIndex];
+            D_us_801737FC = D_us_801737FC->next;
+            D_us_801737FC->drawMode &= ~DRAW_HIDE;
+            D_us_80173804 = 0;
+            self->step++;
+        }
+        break;
+    case 2:
+        D_us_80173804++;
+        if (D_us_80173804 > 0xA) {
+            D_us_801737FC = &g_PrimBuf[self->primIndex];
+            D_us_801737FC = D_us_801737FC->next;
+            D_us_801737FC = D_us_801737FC->next;
+            D_us_801737FC->drawMode &= ~DRAW_HIDE;
+            D_us_80173804 = 0;
+            self->step++;
+        }
+        break;
+    case 3:
+        D_us_80173804++;
+        if (D_us_80173804 > 0x28) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+    D_us_80173808 = self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
+    D_us_8017380C = self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
+
+    D_us_801737FC = &g_PrimBuf[self->primIndex];
+
+    for (D_us_80173800 = 0; D_us_80173800 < 3; D_us_80173800++) {
+        if (!self->facingLeft) {
+
+            D_us_801737FC->x0 = D_us_801737FC->x2 =
+                D_us_80173808 + D_us_801705A0[D_us_80173800];
+            D_us_801737FC->x1 = D_us_801737FC->x3 =
+                D_us_80173808 + (D_us_801705A0[D_us_80173800] + 8);
+        } else {
+            D_us_801737FC->x0 = D_us_801737FC->x2 =
+                D_us_80173808 - (D_us_801705A0[D_us_80173800] + 8);
+            D_us_801737FC->x1 = D_us_801737FC->x3 =
+                D_us_80173808 - D_us_801705A0[D_us_80173800];
+        }
+        D_us_801737FC->y0 = D_us_801737FC->y1 =
+            D_us_8017380C + D_us_801705A8[D_us_80173800];
+        D_us_801737FC->y2 = D_us_801737FC->y3 =
+            D_us_8017380C + (D_us_801705A8[D_us_80173800] + 8);
+        D_us_801737FC = D_us_801737FC->next;
+    }
+    return;
+}
 
 void func_us_801728EC(void) {}
 

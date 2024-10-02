@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include "common.h"
+#include "stage.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", func_801A7D64);
 
@@ -138,7 +139,7 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/us", GetPlayerCollisionWith);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", ReplaceBreakableWithItemDrop);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/us", func_8018CAB0);
+#include "../../st/prize_drop_fall.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", func_8018CB34);
 

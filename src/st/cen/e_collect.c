@@ -9,7 +9,7 @@
 
 // e_collect
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", func_8018CAB0);
+#include "../prize_drop_fall.h"
 
 INCLUDE_ASM("st/cen/nonmatchings/e_collect", func_8018CB34);
 
