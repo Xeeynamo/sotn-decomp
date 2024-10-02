@@ -251,7 +251,7 @@ void EntityBlade(Entity* self) {
             func_801D0A00(var_s2);
             func_801D0B40();
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->step_s++;
             }
             self->step_s++;
@@ -261,7 +261,7 @@ void EntityBlade(Entity* self) {
             func_801CDE10(var_s2);
             func_801D0A00(var_s2);
             func_801D0B40();
-            if ((self->ext.GH_Props.unkB0[2] == 0) &&
+            if ((self->ext.GH_Props.unkB4[0] == 0) &&
                 (self->ext.GH_Props.unkB0[0] == 0)) {
                 self->step_s++;
             }
@@ -326,7 +326,7 @@ void EntityBlade(Entity* self) {
                 self->ext.GH_Props.unk8D = 1;
             }
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 if (self->ext.GH_Props.unk8D != 0) {
                     self->step_s = 3;
                 } else {
@@ -339,12 +339,12 @@ void EntityBlade(Entity* self) {
             func_801CDE10(var_s2);
             func_801D0A00(var_s2);
             if ((self->ext.GH_Props.unkB0[0] == 1) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_C);
             }
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 (self + 15)->ext.GH_Props.unk8D = 0;
                 (self + 16)->ext.GH_Props.unk8D = 0;
                 self->step_s++;
@@ -356,7 +356,7 @@ void EntityBlade(Entity* self) {
             func_801D0A00(var_s2);
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 var_v0 = func_801D0B78(self);
                 if (var_v0 != 0) {
                     func_801CE1E8(var_v0);
@@ -385,7 +385,7 @@ void EntityBlade(Entity* self) {
         otherEnt = self + var_s2[5];
         otherEnt->ext.GH_Props.unk8D = 1;
         if ((self->ext.GH_Props.unkB0[0] == 0) &&
-            (self->ext.GH_Props.unkB0[2] == 0)) {
+            (self->ext.GH_Props.unkB4[0] == 0)) {
             otherEnt =
                 self + var_s2[5]; // repeated line, surprised it gets compiled
             otherEnt->ext.GH_Props.unk8D = 0;
@@ -408,7 +408,7 @@ void EntityBlade(Entity* self) {
         func_801D0A00(var_s2);
         func_801D0B40();
         func_801CE258(&D_80183494);
-        if (self->ext.GH_Props.unkB0[2] == 0) {
+        if (self->ext.GH_Props.unkB4[0] == 0) {
             self->ext.GH_Props.unk88 = 0;
             self->facingLeft ^= 1;
             var_v0 = func_801D0B78(self);
@@ -434,7 +434,7 @@ void EntityBlade(Entity* self) {
         func_801D0A00(var_s2);
         func_801CE258(&D_80183494);
         if ((self->ext.GH_Props.unkB0[0] == 0) &&
-            (self->ext.GH_Props.unkB0[2] == 0)) {
+            (self->ext.GH_Props.unkB4[0] == 0)) {
             var_v0 = func_801D0B78(self);
             if (var_v0 != 0) {
                 func_801CE1E8(var_v0);
@@ -464,11 +464,11 @@ void EntityBlade(Entity* self) {
             func_801D0A00(var_s2);
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 3) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(SFX_STOMP_HARD_A);
             }
             if (self->ext.GH_Props.unkB0[0] == 0 &&
-                self->ext.GH_Props.unkB0[2] == 0) {
+                self->ext.GH_Props.unkB4[0] == 0) {
                 self->step_s++;
             }
             break;
@@ -478,7 +478,7 @@ void EntityBlade(Entity* self) {
             func_801CDE88(var_s2);
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
                 (self + 15)->ext.GH_Props.unk8C = 1;
                 (self + 15)->ext.GH_Props.rotZ = 0x400;
@@ -522,7 +522,7 @@ void EntityBlade(Entity* self) {
         otherEnt->ext.GH_Props.unkA8 = 0;
     }
     D_8006C384.y = self->ext.GH_Props.unkB0[0];
-    D_8006C38C.y = self->ext.GH_Props.unkB0[2];
+    D_8006C38C.y = self->ext.GH_Props.unkB4[0];
 }
 
 void EntityBladeSword(Entity* self) {

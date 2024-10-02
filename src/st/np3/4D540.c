@@ -248,12 +248,11 @@ void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
 
     arg1 += (u16)g_CurrentEntity->ext.GH_Props.unkB0[arg2];
 
-    if (g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] == 0) {
+    if (g_CurrentEntity->ext.GH_Props.unkB4[arg2] == 0) {
         func_801CDD80(entIndices, arg1);
-        *(arg2 + 2 + g_CurrentEntity->ext.GH_Props.unkB0) = arg1[0][0];
+        g_CurrentEntity->ext.GH_Props.unkB4[arg2] = arg1[0][0];
     }
-    // I don't know why the reverse array indexing is needed, but it is. Darn.
-    if (!(--((arg2 + 2)[g_CurrentEntity->ext.GH_Props.unkB0]))) {
+    if (!(--g_CurrentEntity->ext.GH_Props.unkB4[arg2])) {
         if (arg1[1][0] == 0) {
             g_CurrentEntity->ext.GH_Props.unkB0[arg2] = 0;
         } else {
@@ -331,19 +330,27 @@ void func_801CE1E8(s16 step) {
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
-
+    // BUG: See below.
     for (i = 0; i < 4; i++) {
         g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;
-        g_CurrentEntity->ext.GH_Props.unkB0[i + 2] = 0;
+        g_CurrentEntity->ext.GH_Props.unkB4[i] = 0;
     }
 }
 
-void func_801CE228(s16 step) {
+void func_801CE228() {
     s32 i;
-
+    // BUG: Array out of bounds writing. Possible explanation:
+    // unkB0 was originally a 4-element array. This loop would iterate
+    // through the 4 elements and write each to zero.
+    // At some point, unkB0 got split to two arrays, unkB0 and unkB4.
+    // Now we zero out both arrays. But since each one is only 2 elements,
+    // the loop should only be `i < 2`. They forgot to change it. This means
+    // that for i = 2 and i = 3, the unkB0 writes are writing into unkB4,
+    // and the unkB4 is writing totally out of bounds.
+    // As far as we know, this bug does not have any consequences.
     for (i = 0; i < 4; i++) {
         g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;
-        g_CurrentEntity->ext.GH_Props.unkB0[i + 2] = 0;
+        g_CurrentEntity->ext.GH_Props.unkB4[i] = 0;
     }
 }
 

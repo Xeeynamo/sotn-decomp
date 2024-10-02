@@ -2033,7 +2033,7 @@ void RicEntitySubwpnAgunea(Entity* self) {
         }
         if (self->hitFlags != 0) {
             self->step = 3;
-            self->ext.agunea.parent = self->ext.agunea.parent2;
+            self->ext.agunea.parent = self->unkB8;
         }
         break;
     case 4:

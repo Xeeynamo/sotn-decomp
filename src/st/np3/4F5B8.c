@@ -244,7 +244,7 @@ void EntityGurkha(Entity* self) {
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             if (self->ext.GH_Props.unkB0[0] == 0 &&
-                self->ext.GH_Props.unkB0[2] == 0) {
+                self->ext.GH_Props.unkB4[0] == 0) {
                 self->step_s++;
             }
             break;
@@ -253,7 +253,7 @@ void EntityGurkha(Entity* self) {
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             func_801CF778();
-            if (self->ext.GH_Props.unkB0[2] == 0 &&
+            if (self->ext.GH_Props.unkB4[0] == 0 &&
                 self->ext.GH_Props.unkB0[0] == 0) {
                 self->step_s++;
             }
@@ -303,7 +303,7 @@ void EntityGurkha(Entity* self) {
             func_801CE2CC(var_s2);
             func_801CE258(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->ext.GH_Props.unk80 = 0;
                 self->step_s++;
             }
@@ -339,7 +339,7 @@ void EntityGurkha(Entity* self) {
             func_801CE2CC(var_s2);
             func_801CE258(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(0x740);
                 // we appear to write 0x10 twice here, weird
                 self->ext.GH_Props.unk80 = 0x10;
@@ -380,7 +380,7 @@ void EntityGurkha(Entity* self) {
             func_801CE2CC(var_s2);
             func_801CE258(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 if (self->facingLeft == 0) {
                     self->velocityX = FIX(-4);
                 } else {
@@ -410,7 +410,7 @@ void EntityGurkha(Entity* self) {
             func_801CE2CC(var_s2);
             func_801CE258(&D_80182F9C);
             if (self->ext.GH_Props.unkB0[0] == 0 &&
-                self->ext.GH_Props.unkB0[2] == 0) {
+                self->ext.GH_Props.unkB4[0] == 0) {
                 self->step_s++;
             }
             break;
@@ -435,7 +435,7 @@ void EntityGurkha(Entity* self) {
                 (self + 15)->ext.GH_Props.unkA6 / 16;
             func_801CE258(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 SetStep(5);
             }
             break;
@@ -451,7 +451,7 @@ void EntityGurkha(Entity* self) {
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
         func_801CE258(&D_80182F9C);
-        if (self->ext.GH_Props.unkB0[2] == 0) {
+        if (self->ext.GH_Props.unkB4[0] == 0) {
             self->facingLeft ^= 1;
             func_801CF7A0(self);
         }
@@ -471,7 +471,7 @@ void EntityGurkha(Entity* self) {
         func_801CE2CC(var_s2);
         func_801CE258(&D_80182F9C);
         if (self->ext.GH_Props.unkB0[0] == 0 &&
-            self->ext.GH_Props.unkB0[2] == 0) {
+            self->ext.GH_Props.unkB4[0] == 0) {
             func_801CF7A0(self);
         }
         break;
@@ -509,7 +509,7 @@ void EntityGurkha(Entity* self) {
         otherEnt->ext.GH_Props.unkA8 = 0;
     }
     D_8006C384.y = self->ext.GH_Props.unkB0[0];
-    D_8006C38C.y = self->ext.GH_Props.unkB0[2];
+    D_8006C38C.y = self->ext.GH_Props.unkB4[0];
     return;
 }
 

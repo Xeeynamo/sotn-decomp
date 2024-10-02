@@ -606,7 +606,7 @@ void func_80113EE0(void) {
 }
 
 void func_80113F7C(void) {
-    Entity* entity = PLAYER.ext.player.unkB8;
+    Entity* entity = PLAYER.unkB8;
     s16 posX;
     s32 var_a0;
     s32 var_a2;
