@@ -11,7 +11,7 @@ PSX_RBOSTAGES	:= rbo3
 PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES)) $(addprefix bo,$(PSX_RBOSTAGES))
 PSX_SERVANTS	:= tt_000 tt_001
 PSX_US_TARGETS	:= main $(PSX_OVLS) $(PSX_ALLSTAGES) $(PSX_SERVANTS)
-PSX_HD_TARGETS	:= dra ric tt_000 stwrp
+PSX_HD_TARGETS	:= dra ric tt_000 stcen stwrp
 
 # immovable
 PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
@@ -98,6 +98,7 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) config extract config/assets.us.weapon.yaml
 extract_assets_hd: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
+	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin -o assets/st/cen
 	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin -o assets/st/wrp
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
@@ -111,6 +112,7 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/boss/mar -o src/boss/mar/
 	$(SOTNASSETS) config build config/assets.$(VERSION).weapon.yaml
 build_assets_hd: $(SOTNASSETS)
+	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png

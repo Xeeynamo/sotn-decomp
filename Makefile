@@ -143,7 +143,7 @@ extract: extract_$(VERSION)
 build: ##@ build game files
 build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no0 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001
-build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
+build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
@@ -208,6 +208,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml

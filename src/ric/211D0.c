@@ -1302,7 +1302,7 @@ void RicEntityHitByHoly(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (!(g_Player.unk0C & 0x10000)) {
+        if (!(g_Player.unk0C & PLAYER_STATUS_UNK10000)) {
             DestroyEntity(entity);
             return;
         }
