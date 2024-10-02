@@ -584,8 +584,8 @@ void func_us_801720E4(Entity* self) {
             return;
         }
     }
-    self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
-    self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
+    self->posX.i.hi = self->ext.ghostEvent.parent->posX.i.hi;
+    self->posY.i.hi = self->ext.ghostEvent.parent->posY.i.hi;
 
     D_us_801737E4 = D_us_801737F8;
     D_us_801737F0 = &g_PrimBuf[self->primIndex];
