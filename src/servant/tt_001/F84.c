@@ -565,7 +565,8 @@ void func_us_801720E4(Entity* self) {
                             D_us_801737F0->b3 = 0x80;
 
             D_us_801737F0->priority = self->zPriority + 1;
-            D_us_801737F0->blendMode = 0x135;
+            D_us_801737F0->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                      DRAW_COLORS | DRAW_TRANSP;
 
             D_us_801737F0 = D_us_801737F0->next;
         }
