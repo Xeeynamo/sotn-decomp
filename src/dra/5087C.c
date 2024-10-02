@@ -317,7 +317,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     RoomHeader* room;
     u32 stack[4];
 
-    if (g_Player.unk0C & 0x40000) {
+    if (g_Player.unk0C & PLAYER_STATUS_UNK40000) {
         return 0;
     }
     res = func_800F087C(x, y);
@@ -1485,7 +1485,7 @@ void RunMainEngine(void) {
             if (D_80137598 != 0) {
                 func_80105428();
             }
-            if (g_Player.unk0C & 0x80000) {
+            if (g_Player.unk0C & PLAYER_STATUS_UNK80000) {
                 g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
@@ -1513,7 +1513,7 @@ void RunMainEngine(void) {
                     D_8006BB00 = 0;
                 }
             }
-            if (!(g_Player.unk0C & 0x40000)) {
+            if (!(g_Player.unk0C & PLAYER_STATUS_UNK40000)) {
                 if ((g_pads[0].tapped & PAD_START) && (D_8003C8B8 != 0)) {
                     func_801027A4();
                     if ((g_StageId == STAGE_ST0) ||

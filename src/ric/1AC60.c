@@ -191,7 +191,7 @@ static void func_801572A8(bool arg0) {
 
     if (arg0) {
         for (i = 0; i < LEN(D_801545E4); i++) {
-            if (unk0C & 0x20) {
+            if (unk0C & PLAYER_STATUS_UNK_20) {
                 D_801545F4[i].y = D_80154644[i];
                 D_801545E4[i].y = D_8015465C[i];
             } else {
@@ -200,7 +200,7 @@ static void func_801572A8(bool arg0) {
             }
         }
         for (i = 0; i < 7; i++) {
-            if (unk0C & 0x20) {
+            if (unk0C & PLAYER_STATUS_UNK_20) {
                 D_80154604[i].y = D_80154664[i];
                 D_80154604[i + 7].y = D_80154664[i];
             } else {
@@ -691,7 +691,7 @@ void RicMain(void) {
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
-        g_Player.unk0C |= 0x100;
+        g_Player.unk0C |= PLAYER_STATUS_UNK100;
     }
     g_api.UpdateAnim(D_80155964, D_8015538C);
     PLAYER.hitboxState = 1;
@@ -714,7 +714,7 @@ void RicMain(void) {
         return;
 #endif
     }
-    if (g_Player.unk0C & 0x50) {
+    if (g_Player.unk0C & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
     func_8015C4AC();
