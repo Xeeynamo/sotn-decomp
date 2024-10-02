@@ -53,11 +53,11 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 /*** Initializers ***/
 extern u16 D_80180404[];
 extern u16 g_InitializeData0[];
-extern u16 D_80180428[];
+extern u16 g_eMariaInit[];
 extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
 extern u16 g_InitializeEntityData0[];
-extern u16 D_8018047C[]; // EntityElevator
+extern u16 g_eElevatorInit[]; // EntityElevator
 
 extern ObjInit g_eBackgroundBlockInit[];
 extern u16* D_80180574[];
