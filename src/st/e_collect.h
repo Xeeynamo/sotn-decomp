@@ -144,42 +144,8 @@ extern u16 g_InitializeData0[];
 
 #include "prize_drop_fall.h"
 
-static void func_8018CB34(u16 arg0) {
-    Collider collider;
+#include "prize_drop_fall2.h"
 
-    if (g_CurrentEntity->velocityX < 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
-        if (collider.effects & EFFECT_NOTHROUGH) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
-
-    if (arg0) {
-        if (!(collider.effects & EFFECT_NOTHROUGH)) {
-            MoveEntity();
-            FallEntity();
-            return;
-        }
-
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-
-        if (collider.effects & EFFECT_QUICKSAND) {
-            g_CurrentEntity->posY.val += FIX(0.125);
-        } else {
-            g_CurrentEntity->posY.i.hi += collider.unk18;
-        }
-    } else {
-        if (!(collider.effects & EFFECT_NOTHROUGH)) {
-            MoveEntity();
-            PrizeDropFall();
-        }
-    }
-}
 #include "collect_heart.h"
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
@@ -402,7 +368,7 @@ void EntityPrizeDrop(Entity* self) {
         }
         break;
     case 3:
-        func_8018CB34(itemId);
+        PrizeDropFall2(itemId);
         if (!(self->params & 0x8000) && !--self->ext.equipItemDrop.aliveTimer) {
             if (itemId) {
                 self->ext.equipItemDrop.aliveTimer = 80;
@@ -413,7 +379,7 @@ void EntityPrizeDrop(Entity* self) {
         }
         break;
     case 4:
-        func_8018CB34(itemId);
+        PrizeDropFall2(itemId);
         if (--self->ext.equipItemDrop.aliveTimer) {
             if (self->ext.equipItemDrop.aliveTimer & 2) {
                 self->animCurFrame = 0;
@@ -533,7 +499,7 @@ void EntityPrizeDrop(Entity* self) {
             }
             break;
         case 2:
-            func_8018CB34(itemId);
+            PrizeDropFall2(itemId);
             prim = &g_PrimBuf[self->primIndex];
             self->ext.equipItemDrop.unk8A++;
             if (self->ext.equipItemDrop.unk8A < 17) {
@@ -718,7 +684,7 @@ void EntityEquipItemDrop(Entity* self) {
         CheckFieldCollision(D_80180EB8, 2);
         break;
     case 3:
-        func_8018CB34(1);
+        PrizeDropFall2(1);
         if (!(self->params & 0x8000)) {
             if (!(--self->ext.equipItemDrop.aliveTimer)) {
                 self->ext.equipItemDrop.aliveTimer = 80;
@@ -732,7 +698,7 @@ void EntityEquipItemDrop(Entity* self) {
         }
         break;
     case 4:
-        func_8018CB34(1);
+        PrizeDropFall2(1);
         if (--self->ext.equipItemDrop.aliveTimer) {
             prim = &g_PrimBuf[self->primIndex];
             if (self->ext.equipItemDrop.aliveTimer & 2) {
