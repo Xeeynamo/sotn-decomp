@@ -543,14 +543,12 @@ void func_us_801720E4(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000; // FLAG_HAS_PRIMS | FLAG_UNK_04000000 |
-                                      // FLAG_UNK_00200000
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
 
         D_us_801737F0 = &g_PrimBuf[self->primIndex];
-        D_us_801737E0 = 0;
 
-        while (D_us_801737E0 < 8) {
+        for (D_us_801737E0 = 0; D_us_801737E0 < 8; D_us_801737E0++) {
             D_us_801737F0->tpage = 0x1A;
             D_us_801737F0->clut = 0x143;
 
@@ -570,12 +568,11 @@ void func_us_801720E4(Entity* self) {
             D_us_801737F0->blendMode = 0x135;
 
             D_us_801737F0 = D_us_801737F0->next;
-            D_us_801737E0++;
         }
 
         D_us_801737F4 = 0x1E;
         D_us_801737F8 = 0;
-        g_api.PlaySfx(0x6B0);
+        g_api.PlaySfx(SFX_GLASS_SHARDS);
         self->step++;
 
     case 1:
@@ -585,33 +582,27 @@ void func_us_801720E4(Entity* self) {
             DestroyEntity(self);
             return;
         }
+    }
+    self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
+    self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
 
-    default:
-        self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
-        self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
+    D_us_801737E4 = D_us_801737F8;
+    D_us_801737F0 = &g_PrimBuf[self->primIndex];
 
-        D_us_801737E4 = D_us_801737F8;
-        D_us_801737F0 = &g_PrimBuf[self->primIndex];
-        D_us_801737E0 = 0;
-
-        while (D_us_801737E0 < 8) {
-
-            D_us_801737E8 =
-                self->posX.i.hi +
-                ((rcos(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
-                 12);
-            D_us_801737EC =
-                self->posY.i.hi -
-                ((rsin(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
-                 12);
-            D_us_801737F0->x0 = D_us_801737F0->x2 = D_us_801737E8 - 4;
-            D_us_801737F0->x1 = D_us_801737F0->x3 = D_us_801737E8 + 4;
-            D_us_801737F0->y0 = D_us_801737F0->y1 = D_us_801737EC - 4;
-            D_us_801737F0->y2 = D_us_801737F0->y3 = D_us_801737EC + 4;
-            D_us_801737F0 = D_us_801737F0->next;
-            D_us_801737E0++;
-        }
-        break;
+    for (D_us_801737E0 = 0; D_us_801737E0 < 8; D_us_801737E0++) {
+        D_us_801737E8 =
+            self->posX.i.hi +
+            ((rcos(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
+             12);
+        D_us_801737EC =
+            self->posY.i.hi -
+            ((rsin(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
+             12);
+        D_us_801737F0->x0 = D_us_801737F0->x2 = D_us_801737E8 - 4;
+        D_us_801737F0->x1 = D_us_801737F0->x3 = D_us_801737E8 + 4;
+        D_us_801737F0->y0 = D_us_801737F0->y1 = D_us_801737EC - 4;
+        D_us_801737F0->y2 = D_us_801737F0->y3 = D_us_801737EC + 4;
+        D_us_801737F0 = D_us_801737F0->next;
     }
 }
 
