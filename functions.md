@@ -49,7 +49,7 @@
 | wrp    | func_psp_0923C2F8                   |       47 |          7 |        | https://decomp.me/scratch/LLr7o | 1.0   |
 | wrp    | UnkEntityFunc0                      |       50 |          5 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       56 |          8 |        |                                 |       |
-| wrp    | func_8018CAB0                       |       63 |          5 |        | https://decomp.me/scratch/0vmXX | 0.98  |
+| wrp    | PrizeDropFall                       |       63 |          5 |        |                                 |       |
 |        | CreateBlueTrailEntity               |       64 |          6 |        |                                 |       |
 | wrp    | PrimDecreaseBrightness              |       64 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
 |        | ServantUnk0                         |       64 |         12 |        |                                 |       |
