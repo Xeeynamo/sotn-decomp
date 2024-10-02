@@ -3317,7 +3317,7 @@
 - [✅ ServantUpdateAnim](function_calls/tt_001.ServantUpdateAnim.svg?raw=1)
 - [✅ SetEntityAnimation](function_calls/tt_001.SetEntityAnimation.svg?raw=1)
 - [✅ UpdateEntityVelocityTowardsTarget](function_calls/tt_001.UpdateEntityVelocityTowardsTarget.svg?raw=1)
-- [❌ func_us_80171284](function_calls/tt_001.func_us_80171284.svg?raw=1)
+- [✅ func_us_80171284](function_calls/tt_001.func_us_80171284.svg?raw=1)
 - [✅ func_us_80171560](function_calls/tt_001.func_us_80171560.svg?raw=1)
 - [✅ func_us_80171568](function_calls/tt_001.func_us_80171568.svg?raw=1)
 - [✅ func_us_80171624](function_calls/tt_001.func_us_80171624.svg?raw=1)

@@ -3453,17 +3453,6 @@
 | 1.00 | true     | D_BA000_8017AB7C                    | asm/us/weapon/nonmatchings/w_026/D_BA000_8017AB7C.s 
 | 1.00 | true     | D_BA000_8017AB84                    | asm/us/weapon/nonmatchings/w_026/D_BA000_8017AB84.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
@@ -3474,6 +3463,17 @@
 | 1.00 | true     | CdSetDebug                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
+| 0.90 | true     | def_cbread                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityWeaponAttack                  | asm/us/weapon/nonmatchings/w_008/EntityWeaponAttack.s 
 | 1.00 | true     | EntityWeaponAttack                  | asm/us/weapon/nonmatchings/w_009/EntityWeaponAttack.s 
@@ -4042,6 +4042,11 @@
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/2C048/func_801B1EF4.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/2C048/func_801B2108.s 
@@ -4181,11 +4186,6 @@
 | 1.00 | true     | StoreImage                          | asm/us/main/matchings/psxsdk/libgpu/sys/StoreImage.s 
 | 1.00 | true     | LoadImage                           | asm/us/main/nonmatchings/psxsdk/libgpu/sys/LoadImage.s 
 | 1.00 | true     | StoreImage                          | asm/us/main/nonmatchings/psxsdk/libgpu/sys/StoreImage.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
-| 1.00 | true     | GsGetVcount                         | asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
@@ -7318,6 +7318,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | UpdateEntityVelocityTowardsTarget   | asm/us/servant/tt_001/matchings/F84/UpdateEntityVelocityTowardsTarget.s 
 | 1.00 | true     | UpdateEntityVelocityTowardsTarget   | asm/us/servant/tt_001/nonmatchings/F84/UpdateEntityVelocityTowardsTarget.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_80171284                    | asm/us/servant/tt_001/matchings/F84/func_us_80171284.s 
+| 1.00 | true     | func_us_80171284                    | asm/us/servant/tt_001/nonmatchings/F84/func_us_80171284.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80171568                    | asm/us/servant/tt_001/matchings/F84/func_us_80171568.s 
 | 1.00 | true     | func_us_80171568                    | asm/us/servant/tt_001/nonmatchings/F84/func_us_80171568.s 
