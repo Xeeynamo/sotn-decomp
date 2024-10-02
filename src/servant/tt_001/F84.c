@@ -6,8 +6,7 @@
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
-extern s32 D_us_80170508[];
-extern s32 D_us_8017050C[];
+extern s32 D_us_80170508[][3];
 extern s16 D_us_801737C4;
 extern s16 D_us_801737C8;
 extern s32 D_us_801737CC;
@@ -109,7 +108,91 @@ s32 UpdateEntityVelocityTowardsTarget(s32 unused, s32 targetX, s32 targetY) {
     return D_us_801735C0;
 }
 
-INCLUDE_ASM("servant/tt_001/nonmatchings/F84", func_us_80171284);
+Entity* func_us_80171284(
+    Entity* self) { // Assume self is also an Entity pointer
+    Entity* entity;
+    s32 i;
+    s32 index;
+    u32 matches = 0;
+#if !defined(VERSION_PSP)
+    s32 posDelta;
+#endif
+
+    // Hunt through these entities looking for ones that match all criteria.
+    // Call them a success and increment successes.
+    entity = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < 128; i++, entity++) {
+        D_us_801735C4[i] = 0;
+
+        // Very similar code to CheckAllEntitiesValid
+        if (!entity->entityId)
+            continue;
+        if (entity->hitboxState == 0)
+            continue;
+        if (entity->flags & FLAG_UNK_00200000)
+            continue;
+        if (entity->posX.i.hi < -16)
+            continue;
+        if (entity->posX.i.hi > 272)
+            continue;
+        if (entity->posY.i.hi > 240)
+            continue;
+        if (entity->posY.i.hi < 0)
+            continue;
+        // Differs from here
+        if (entity->hitboxState & 8 &&
+            D_us_80170508[D_us_80173810.level / 10][2] == 0)
+            continue;
+#if defined(VERSION_PSP)
+        if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
+            continue;
+#else
+        posDelta = self->posX.i.hi - entity->posX.i.hi;
+        if (ABS(posDelta) >= 49)
+            continue;
+#endif
+
+#if defined(VERSION_PSP)
+        if (abs(self->posY.i.hi - entity->posY.i.hi) >= 49)
+            continue;
+#else
+        posDelta = self->posY.i.hi - entity->posY.i.hi;
+        if (ABS(posDelta) >= 49)
+            continue;
+#endif
+
+        if (!self->facingLeft && self->posX.i.hi < entity->posX.i.hi)
+            continue;
+        if (self->facingLeft && self->posX.i.hi > entity->posX.i.hi)
+            continue;
+        if (entity->hitPoints >= 0x7000)
+            continue;
+
+        if (entity->flags & FLAG_UNK_80000) {
+            matches += 1;
+            D_us_801735C4[i] = 1;
+        } else {
+            entity->flags |= FLAG_UNK_80000;
+            return entity;
+        }
+    }
+
+    if (matches != 0) {
+        index = D_us_80173820 % 128;
+
+        for (i = 0; i < 128; i++) {
+            if (D_us_801735C4[index] != 0) {
+                entity = &g_Entities[index + STAGE_ENTITY_START];
+                D_us_80173820 = (index + 1) % 128;
+                return entity;
+            }
+
+            index = (index + 1) % 128;
+        }
+    }
+
+    return NULL;
+}
 
 #include "../check_entity_valid.h"
 
@@ -390,13 +473,13 @@ void func_us_80171864(Entity* self) {
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 ==
-                (D_us_80170508[((D_us_80173810.level / 10) * 3)] - 0x1E)) {
+                (D_us_80170508[D_us_80173810.level / 10][0] - 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (self->ext.ghost.unk86 >
-                       D_us_80170508[((D_us_80173810.level / 10) * 3)]) {
+                       D_us_80170508[D_us_80173810.level / 10][0]) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
-                    self, D_us_8017050C[((D_us_80173810.level / 10) * 3)], 1,
+                    self, D_us_80170508[D_us_80173810.level / 10][1], 1,
                     &D_us_80173810);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;

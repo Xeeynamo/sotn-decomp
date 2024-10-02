@@ -3,6 +3,10 @@
 #include <common.h>
 #include <game.h>
 
+#ifndef ABS
+#define ABS(x) (((x) >= 0) ? (x) : (-(x)))
+#endif
+
 typedef struct {
     void (*Init)(s32 arg0);
     void (*Update)(Entity* self);
@@ -78,6 +82,10 @@ extern s16 D_us_801735B8;
 extern s16 D_us_801735BC;
 // DistanceToTarget
 extern s16 D_us_801735C0;
+
+extern u32 D_us_801735C4[];
+extern FamiliarStats D_us_80173810;
+extern s32 D_us_80173820;
 
 s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 
