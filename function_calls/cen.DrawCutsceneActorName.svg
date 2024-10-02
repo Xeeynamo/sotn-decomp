@@ -12,7 +12,7 @@
 <!-- cen.DrawCutsceneActorName -->
 <g id="node1" class="node">
 <title>cen.DrawCutsceneActorName</title>
-<ellipse fill="green" stroke="black" cx="200.89" cy="-198" rx="149.47" ry="18"/>
+<ellipse fill="red" stroke="black" cx="200.89" cy="-198" rx="149.47" ry="18"/>
 <text text-anchor="middle" x="200.89" y="-194.3" font-family="Times,serif" font-size="14.00">cen.DrawCutsceneActorName</text>
 </g>
 <!-- cen.DestroyEntity -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node4"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="200.89" cy="-378" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="200.89" cy="-378" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="200.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>

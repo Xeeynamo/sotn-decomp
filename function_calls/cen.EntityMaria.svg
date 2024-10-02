@@ -12,7 +12,7 @@
 <!-- cen.EntityMaria -->
 <g id="node1" class="node">
 <title>cen.EntityMaria</title>
-<ellipse fill="green" stroke="black" cx="200.89" cy="-198" rx="85.59" ry="18"/>
+<ellipse fill="red" stroke="black" cx="200.89" cy="-198" rx="85.59" ry="18"/>
 <text text-anchor="middle" x="200.89" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityMaria</text>
 </g>
 <!-- cen.DestroyEntity -->

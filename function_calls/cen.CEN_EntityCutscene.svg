@@ -12,7 +12,7 @@
 <!-- cen.CEN_EntityCutscene -->
 <g id="node1" class="node">
 <title>cen.CEN_EntityCutscene</title>
-<ellipse fill="green" stroke="black" cx="1693.74" cy="-198" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1693.74" cy="-198" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="1693.74" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </g>
 <!-- LoadTPage -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.CutsceneUnk1</title>
 <g id="a_node5"><a xlink:href="cen.CutsceneUnk1.svg" xlink:title="cen.CutsceneUnk1">
-<ellipse fill="green" stroke="black" cx="586.74" cy="-18" rx="97.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="586.74" cy="-18" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="586.74" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CutsceneUnk1</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.CutsceneUnk4</title>
 <g id="a_node6"><a xlink:href="cen.CutsceneUnk4.svg" xlink:title="cen.CutsceneUnk4">
-<ellipse fill="green" stroke="black" cx="799.74" cy="-18" rx="97.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="799.74" cy="-18" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="799.74" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CutsceneUnk4</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>cen.DrawCutsceneActorName</title>
 <g id="a_node8"><a xlink:href="cen.DrawCutsceneActorName.svg" xlink:title="cen.DrawCutsceneActorName">
-<ellipse fill="green" stroke="black" cx="1271.74" cy="-18" rx="149.47" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1271.74" cy="-18" rx="149.47" ry="18"/>
 <text text-anchor="middle" x="1271.74" y="-14.3" font-family="Times,serif" font-size="14.00">cen.DrawCutsceneActorName</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>cen.SetCutsceneScript</title>
 <g id="a_node11"><a xlink:href="cen.SetCutsceneScript.svg" xlink:title="cen.SetCutsceneScript">
-<ellipse fill="green" stroke="black" cx="2061.74" cy="-18" rx="116.18" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2061.74" cy="-18" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="2061.74" y="-14.3" font-family="Times,serif" font-size="14.00">cen.SetCutsceneScript</text>
 </a>
 </g>

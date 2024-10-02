@@ -12,7 +12,7 @@
 <!-- cen.CollectHeart -->
 <g id="node1" class="node">
 <title>cen.CollectHeart</title>
-<ellipse fill="green" stroke="black" cx="182.89" cy="-198" rx="89.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="182.89" cy="-198" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="182.89" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectHeart</text>
 </g>
 <!-- cen.DestroyEntity -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node4"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="182.89" cy="-378" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="182.89" cy="-378" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="182.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>

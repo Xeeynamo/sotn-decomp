@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.EntityUnkId14Spawner</title>
 <g id="a_node5"><a xlink:href="cen.EntityUnkId14Spawner.svg" xlink:title="cen.EntityUnkId14Spawner">
-<ellipse fill="green" stroke="black" cx="584.29" cy="-378" rx="139.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="584.29" cy="-378" rx="139.98" ry="18"/>
 <text text-anchor="middle" x="584.29" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityUnkId14Spawner</text>
 </a>
 </g>

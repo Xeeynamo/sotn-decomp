@@ -12,7 +12,7 @@
 <!-- cen.InitializeUnkEntity -->
 <g id="node1" class="node">
 <title>cen.InitializeUnkEntity</title>
-<ellipse fill="green" stroke="black" cx="412.84" cy="-198" rx="118.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="412.84" cy="-198" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="412.84" y="-194.3" font-family="Times,serif" font-size="14.00">cen.InitializeUnkEntity</text>
 </g>
 <!-- cen.AnimateEntity -->

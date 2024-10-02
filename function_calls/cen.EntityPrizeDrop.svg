@@ -12,7 +12,7 @@
 <!-- cen.EntityPrizeDrop -->
 <g id="node1" class="node">
 <title>cen.EntityPrizeDrop</title>
-<ellipse fill="green" stroke="black" cx="1968.84" cy="-198" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1968.84" cy="-198" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="1968.84" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </g>
 <!-- cen.AnimateEntity -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.CollectGold</title>
 <g id="a_node4"><a xlink:href="cen.CollectGold.svg" xlink:title="cen.CollectGold">
-<ellipse fill="green" stroke="black" cx="555.84" cy="-18" rx="83.39" ry="18"/>
+<ellipse fill="red" stroke="black" cx="555.84" cy="-18" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="555.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.CollectHeart</title>
 <g id="a_node5"><a xlink:href="cen.CollectHeart.svg" xlink:title="cen.CollectHeart">
-<ellipse fill="green" stroke="black" cx="745.84" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="745.84" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="745.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CollectHeart</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>cen.CollectLifeVessel</title>
 <g id="a_node7"><a xlink:href="cen.CollectLifeVessel.svg" xlink:title="cen.CollectLifeVessel">
-<ellipse fill="green" stroke="black" cx="1215.84" cy="-18" rx="108.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1215.84" cy="-18" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="1215.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CollectLifeVessel</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>cen.CollectSubweapon</title>
 <g id="a_node8"><a xlink:href="cen.CollectSubweapon.svg" xlink:title="cen.CollectSubweapon">
-<ellipse fill="green" stroke="black" cx="1457.84" cy="-18" rx="115.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1457.84" cy="-18" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="1457.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CollectSubweapon</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>cen.DestroyCurrentEntity</title>
 <g id="a_node9"><a xlink:href="cen.DestroyCurrentEntity.svg" xlink:title="cen.DestroyCurrentEntity">
-<ellipse fill="green" stroke="black" cx="1723.84" cy="-18" rx="131.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1723.84" cy="-18" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="1723.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.DestroyCurrentEntity</text>
 </a>
 </g>
@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>cen.func_8018CAB0</title>
 <g id="a_node14"><a xlink:href="cen.func_8018CAB0.svg" xlink:title="cen.func_8018CAB0">
-<ellipse fill="green" stroke="black" cx="2754.84" cy="-18" rx="103.18" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2754.84" cy="-18" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="2754.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.func_8018CAB0</text>
 </a>
 </g>
@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>cen.func_8018CB34</title>
 <g id="a_node15"><a xlink:href="cen.func_8018CB34.svg" xlink:title="cen.func_8018CB34">
-<ellipse fill="green" stroke="black" cx="2978.84" cy="-18" rx="102.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2978.84" cy="-18" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="2978.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.func_8018CB34</text>
 </a>
 </g>
@@ -291,7 +291,7 @@
 <g id="node19" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node19"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="1968.84" cy="-378" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1968.84" cy="-378" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="1968.84" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>

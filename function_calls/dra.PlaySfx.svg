@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node2"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="127.39" cy="-198" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="127.39" cy="-198" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="127.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CollectGold</title>
 <g id="a_node3"><a xlink:href="cen.CollectGold.svg" xlink:title="cen.CollectGold">
-<ellipse fill="green" stroke="black" cx="356.39" cy="-198" rx="83.39" ry="18"/>
+<ellipse fill="red" stroke="black" cx="356.39" cy="-198" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="356.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.CollectHeart</title>
 <g id="a_node4"><a xlink:href="cen.CollectHeart.svg" xlink:title="cen.CollectHeart">
-<ellipse fill="green" stroke="black" cx="546.39" cy="-198" rx="89.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="546.39" cy="-198" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="546.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectHeart</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.CollectLifeVessel</title>
 <g id="a_node6"><a xlink:href="cen.CollectLifeVessel.svg" xlink:title="cen.CollectLifeVessel">
-<ellipse fill="green" stroke="black" cx="1016.39" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1016.39" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="1016.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectLifeVessel</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>cen.CollectSubweapon</title>
 <g id="a_node7"><a xlink:href="cen.CollectSubweapon.svg" xlink:title="cen.CollectSubweapon">
-<ellipse fill="green" stroke="black" cx="1258.39" cy="-198" rx="115.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1258.39" cy="-198" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="1258.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectSubweapon</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>cen.EntityElevatorStationary</title>
 <g id="a_node9"><a xlink:href="cen.EntityElevatorStationary.svg" xlink:title="cen.EntityElevatorStationary">
-<ellipse fill="green" stroke="black" cx="1767.39" cy="-198" rx="146.77" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1767.39" cy="-198" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="1767.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityElevatorStationary</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node10"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="2062.39" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2062.39" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="2062.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>

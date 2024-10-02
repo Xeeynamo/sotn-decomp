@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>cen.EntityElevatorStationary</title>
 <g id="a_node2"><a xlink:href="cen.EntityElevatorStationary.svg" xlink:title="cen.EntityElevatorStationary">
-<ellipse fill="green" stroke="black" cx="146.89" cy="-198" rx="146.77" ry="18"/>
+<ellipse fill="red" stroke="black" cx="146.89" cy="-198" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="146.89" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityElevatorStationary</text>
 </a>
 </g>

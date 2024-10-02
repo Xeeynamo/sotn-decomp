@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node2"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="128.04" cy="-198" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="128.04" cy="-198" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="128.04" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>

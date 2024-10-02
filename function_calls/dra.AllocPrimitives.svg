@@ -68,7 +68,7 @@
 <g id="node4" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node4"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="378.34" cy="-378" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="378.34" cy="-378" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="378.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>
@@ -84,7 +84,7 @@
 <g id="node5" class="node">
 <title>cen.DrawCutsceneActorName</title>
 <g id="a_node5"><a xlink:href="cen.DrawCutsceneActorName.svg" xlink:title="cen.DrawCutsceneActorName">
-<ellipse fill="green" stroke="black" cx="673.34" cy="-378" rx="149.47" ry="18"/>
+<ellipse fill="red" stroke="black" cx="673.34" cy="-378" rx="149.47" ry="18"/>
 <text text-anchor="middle" x="673.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.DrawCutsceneActorName</text>
 </a>
 </g>
@@ -116,7 +116,7 @@
 <g id="node7" class="node">
 <title>cen.EntityElevatorStationary</title>
 <g id="a_node7"><a xlink:href="cen.EntityElevatorStationary.svg" xlink:title="cen.EntityElevatorStationary">
-<ellipse fill="green" stroke="black" cx="1268.34" cy="-378" rx="146.77" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1268.34" cy="-378" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="1268.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityElevatorStationary</text>
 </a>
 </g>
@@ -132,7 +132,7 @@
 <g id="node8" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node8"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="1563.34" cy="-378" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1563.34" cy="-378" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="1563.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -180,7 +180,7 @@
 <g id="node11" class="node">
 <title>cen.EntityOlroxDrool</title>
 <g id="a_node11"><a xlink:href="cen.EntityOlroxDrool.svg" xlink:title="cen.EntityOlroxDrool">
-<ellipse fill="green" stroke="black" cx="2356.34" cy="-378" rx="109.38" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2356.34" cy="-378" rx="109.38" ry="18"/>
 <text text-anchor="middle" x="2356.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityOlroxDrool</text>
 </a>
 </g>
@@ -212,7 +212,7 @@
 <g id="node13" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node13"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="2804.34" cy="-378" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2804.34" cy="-378" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="2804.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>
@@ -244,7 +244,7 @@
 <g id="node15" class="node">
 <title>cen.EntityRelicOrb</title>
 <g id="a_node15"><a xlink:href="cen.EntityRelicOrb.svg" xlink:title="cen.EntityRelicOrb">
-<ellipse fill="green" stroke="black" cx="3242.34" cy="-378" rx="98.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="3242.34" cy="-378" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="3242.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityRelicOrb</text>
 </a>
 </g>
@@ -292,7 +292,7 @@
 <g id="node18" class="node">
 <title>cen.EntityStageNamePopup</title>
 <g id="a_node18"><a xlink:href="cen.EntityStageNamePopup.svg" xlink:title="cen.EntityStageNamePopup">
-<ellipse fill="green" stroke="black" cx="4033.34" cy="-378" rx="141.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="4033.34" cy="-378" rx="141.88" ry="18"/>
 <text text-anchor="middle" x="4033.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityStageNamePopup</text>
 </a>
 </g>
@@ -308,7 +308,7 @@
 <g id="node19" class="node">
 <title>cen.SetCutsceneScript</title>
 <g id="a_node19"><a xlink:href="cen.SetCutsceneScript.svg" xlink:title="cen.SetCutsceneScript">
-<ellipse fill="green" stroke="black" cx="4309.34" cy="-378" rx="116.18" ry="18"/>
+<ellipse fill="red" stroke="black" cx="4309.34" cy="-378" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="4309.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.SetCutsceneScript</text>
 </a>
 </g>

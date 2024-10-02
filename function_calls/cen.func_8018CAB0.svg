@@ -12,14 +12,14 @@
 <!-- cen.func_8018CAB0 -->
 <g id="node1" class="node">
 <title>cen.func_8018CAB0</title>
-<ellipse fill="green" stroke="black" cx="218.29" cy="-18" rx="103.18" ry="18"/>
+<ellipse fill="red" stroke="black" cx="218.29" cy="-18" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="218.29" y="-14.3" font-family="Times,serif" font-size="14.00">cen.func_8018CAB0</text>
 </g>
 <!-- cen.EntityPrizeDrop -->
 <g id="node2" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node2"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="105.29" cy="-198" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="105.29" cy="-198" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="105.29" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.func_8018CB34</title>
 <g id="a_node3"><a xlink:href="cen.func_8018CB34.svg" xlink:title="cen.func_8018CB34">
-<ellipse fill="green" stroke="black" cx="331.29" cy="-198" rx="102.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="331.29" cy="-198" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="331.29" y="-194.3" font-family="Times,serif" font-size="14.00">cen.func_8018CB34</text>
 </a>
 </g>

@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.EntityRelicOrb</title>
 <g id="a_node3"><a xlink:href="cen.EntityRelicOrb.svg" xlink:title="cen.EntityRelicOrb">
-<ellipse fill="green" stroke="black" cx="350.99" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="350.99" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="350.99" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityRelicOrb</text>
 </a>
 </g>

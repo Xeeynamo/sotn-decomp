@@ -68,7 +68,7 @@
 <g id="node4" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node4"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="664.39" cy="-214.23" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="664.39" cy="-214.23" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="664.39" y="-210.53" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -84,7 +84,7 @@
 <g id="node5" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node5"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="917.39" cy="-214.23" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="917.39" cy="-214.23" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="917.39" y="-210.53" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>
@@ -164,7 +164,7 @@
 <g id="node10" class="node">
 <title>cen.func_8018CB34</title>
 <g id="a_node10"><a xlink:href="cen.func_8018CB34.svg" xlink:title="cen.func_8018CB34">
-<ellipse fill="green" stroke="black" cx="2143.39" cy="-214.23" rx="102.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2143.39" cy="-214.23" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="2143.39" y="-210.53" font-family="Times,serif" font-size="14.00">cen.func_8018CB34</text>
 </a>
 </g>

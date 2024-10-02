@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CollectGold</title>
 <g id="a_node3"><a xlink:href="cen.CollectGold.svg" xlink:title="cen.CollectGold">
-<ellipse fill="green" stroke="black" cx="83.19" cy="-378" rx="83.39" ry="18"/>
+<ellipse fill="red" stroke="black" cx="83.19" cy="-378" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="83.19" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node4"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="314.19" cy="-378" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="314.19" cy="-378" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="314.19" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>

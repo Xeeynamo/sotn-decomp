@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>cen.CollectSubweapon</title>
 <g id="a_node2"><a xlink:href="cen.CollectSubweapon.svg" xlink:title="cen.CollectSubweapon">
-<ellipse fill="green" stroke="black" cx="115.69" cy="-198" rx="115.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="115.69" cy="-198" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="115.69" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectSubweapon</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.EntityElevatorStationary</title>
 <g id="a_node3"><a xlink:href="cen.EntityElevatorStationary.svg" xlink:title="cen.EntityElevatorStationary">
-<ellipse fill="green" stroke="black" cx="396.69" cy="-198" rx="146.77" ry="18"/>
+<ellipse fill="red" stroke="black" cx="396.69" cy="-198" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="396.69" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityElevatorStationary</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node4"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="691.69" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="691.69" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="691.69" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>

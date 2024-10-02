@@ -12,7 +12,7 @@
 <!-- cen.CollectLifeVessel -->
 <g id="node1" class="node">
 <title>cen.CollectLifeVessel</title>
-<ellipse fill="green" stroke="black" cx="271.89" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="271.89" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="271.89" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectLifeVessel</text>
 </g>
 <!-- cen.DestroyEntity -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node5"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="271.89" cy="-378" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="271.89" cy="-378" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="271.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>

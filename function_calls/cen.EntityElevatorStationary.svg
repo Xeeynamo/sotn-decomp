@@ -12,7 +12,7 @@
 <!-- cen.EntityElevatorStationary -->
 <g id="node1" class="node">
 <title>cen.EntityElevatorStationary</title>
-<ellipse fill="green" stroke="black" cx="1123.84" cy="-198" rx="146.77" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1123.84" cy="-198" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="1123.84" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityElevatorStationary</text>
 </g>
 <!-- cen.AnimateEntity -->

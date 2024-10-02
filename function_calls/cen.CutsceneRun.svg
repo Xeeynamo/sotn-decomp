@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node3"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="127.39" cy="-378" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="127.39" cy="-378" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="127.39" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>

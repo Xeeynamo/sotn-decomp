@@ -12,7 +12,7 @@
 <!-- cen.EntityRelicOrb -->
 <g id="node1" class="node">
 <title>cen.EntityRelicOrb</title>
-<ellipse fill="green" stroke="black" cx="813.34" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="813.34" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="813.34" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityRelicOrb</text>
 </g>
 <!-- ClearImage -->

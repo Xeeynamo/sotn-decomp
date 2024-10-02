@@ -12,14 +12,14 @@
 <!-- cen.CutsceneUnk1 -->
 <g id="node1" class="node">
 <title>cen.CutsceneUnk1</title>
-<ellipse fill="green" stroke="black" cx="258.39" cy="-18" rx="97.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="258.39" cy="-18" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="258.39" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CutsceneUnk1</text>
 </g>
 <!-- cen.CEN_EntityCutscene -->
 <g id="node2" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node2"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="127.39" cy="-198" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="127.39" cy="-198" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="127.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.SetCutsceneScript</title>
 <g id="a_node3"><a xlink:href="cen.SetCutsceneScript.svg" xlink:title="cen.SetCutsceneScript">
-<ellipse fill="green" stroke="black" cx="389.39" cy="-198" rx="116.18" ry="18"/>
+<ellipse fill="red" stroke="black" cx="389.39" cy="-198" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="389.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.SetCutsceneScript</text>
 </a>
 </g>

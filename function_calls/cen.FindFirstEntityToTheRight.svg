@@ -12,14 +12,14 @@
 <!-- cen.FindFirstEntityToTheRight -->
 <g id="node1" class="node">
 <title>cen.FindFirstEntityToTheRight</title>
-<ellipse fill="green" stroke="black" cx="288.79" cy="-18" rx="155.17" ry="18"/>
+<ellipse fill="red" stroke="black" cx="288.79" cy="-18" rx="155.17" ry="18"/>
 <text text-anchor="middle" x="288.79" y="-14.3" font-family="Times,serif" font-size="14.00">cen.FindFirstEntityToTheRight</text>
 </g>
 <!-- cen.CreateEntitiesToTheRight -->
 <g id="node2" class="node">
 <title>cen.CreateEntitiesToTheRight</title>
 <g id="a_node2"><a xlink:href="cen.CreateEntitiesToTheRight.svg" xlink:title="cen.CreateEntitiesToTheRight">
-<ellipse fill="green" stroke="black" cx="150.79" cy="-198" rx="150.57" ry="18"/>
+<ellipse fill="red" stroke="black" cx="150.79" cy="-198" rx="150.57" ry="18"/>
 <text text-anchor="middle" x="150.79" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CreateEntitiesToTheRight</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.InitRoomEntities</title>
 <g id="a_node3"><a xlink:href="cen.InitRoomEntities.svg" xlink:title="cen.InitRoomEntities">
-<ellipse fill="green" stroke="black" cx="427.79" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="427.79" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="427.79" y="-194.3" font-family="Times,serif" font-size="14.00">cen.InitRoomEntities</text>
 </a>
 </g>

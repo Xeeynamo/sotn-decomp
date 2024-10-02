@@ -12,7 +12,7 @@
 <!-- cen.CutsceneUnk3 -->
 <g id="node1" class="node">
 <title>cen.CutsceneUnk3</title>
-<ellipse fill="green" stroke="black" cx="97.49" cy="-198" rx="97.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="97.49" cy="-198" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="97.49" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CutsceneUnk3</text>
 </g>
 <!-- ClearImage -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CutsceneUnk4</title>
 <g id="a_node3"><a xlink:href="cen.CutsceneUnk4.svg" xlink:title="cen.CutsceneUnk4">
-<ellipse fill="green" stroke="black" cx="97.49" cy="-378" rx="97.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="97.49" cy="-378" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="97.49" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CutsceneUnk4</text>
 </a>
 </g>

@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>cen.CEN_EntityCutscene</title>
 <g id="a_node2"><a xlink:href="cen.CEN_EntityCutscene.svg" xlink:title="cen.CEN_EntityCutscene">
-<ellipse fill="green" stroke="black" cx="127.39" cy="-198" rx="127.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="127.39" cy="-198" rx="127.28" ry="18"/>
 <text text-anchor="middle" x="127.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CEN_EntityCutscene</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CollectGold</title>
 <g id="a_node3"><a xlink:href="cen.CollectGold.svg" xlink:title="cen.CollectGold">
-<ellipse fill="green" stroke="black" cx="356.39" cy="-198" rx="83.39" ry="18"/>
+<ellipse fill="red" stroke="black" cx="356.39" cy="-198" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="356.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node5"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="green" stroke="black" cx="795.39" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="795.39" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="795.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.EntityOlroxDrool</title>
 <g id="a_node6"><a xlink:href="cen.EntityOlroxDrool.svg" xlink:title="cen.EntityOlroxDrool">
-<ellipse fill="green" stroke="black" cx="1052.39" cy="-198" rx="109.38" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1052.39" cy="-198" rx="109.38" ry="18"/>
 <text text-anchor="middle" x="1052.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityOlroxDrool</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node7"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="1284.39" cy="-198" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1284.39" cy="-198" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="1284.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>

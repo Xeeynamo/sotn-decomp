@@ -12,7 +12,7 @@
 <!-- cen.EntityEquipItemDrop -->
 <g id="node1" class="node">
 <title>cen.EntityEquipItemDrop</title>
-<ellipse fill="green" stroke="black" cx="1669.39" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1669.39" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="1669.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </g>
 <!-- cen.BlinkItem -->
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node6"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="993.39" cy="-18" rx="105.08" ry="18"/>
+<ellipse fill="red" stroke="black" cx="993.39" cy="-18" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="993.39" y="-14.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>cen.func_8018CB34</title>
 <g id="a_node11"><a xlink:href="cen.func_8018CB34.svg" xlink:title="cen.func_8018CB34">
-<ellipse fill="green" stroke="black" cx="1942.39" cy="-18" rx="102.88" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1942.39" cy="-18" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="1942.39" y="-14.3" font-family="Times,serif" font-size="14.00">cen.func_8018CB34</text>
 </a>
 </g>
