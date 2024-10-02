@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.CollectGold</title>
 <g id="a_node5"><a xlink:href="cen.CollectGold.svg" xlink:title="cen.CollectGold">
-<ellipse fill="red" stroke="black" cx="537.24" cy="-378" rx="83.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="537.24" cy="-378" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="537.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.CollectHeart</title>
 <g id="a_node6"><a xlink:href="cen.CollectHeart.svg" xlink:title="cen.CollectHeart">
-<ellipse fill="red" stroke="black" cx="727.24" cy="-378" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="727.24" cy="-378" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="727.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CollectHeart</text>
 </a>
 </g>

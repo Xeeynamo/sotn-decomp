@@ -12,7 +12,7 @@
 <!-- cen.CollectGold -->
 <g id="node1" class="node">
 <title>cen.CollectGold</title>
-<ellipse fill="red" stroke="black" cx="451.34" cy="-198" rx="83.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="451.34" cy="-198" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="451.34" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </g>
 <!-- cen.BottomCornerText -->

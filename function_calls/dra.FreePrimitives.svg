@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CollectGold</title>
 <g id="a_node3"><a xlink:href="cen.CollectGold.svg" xlink:title="cen.CollectGold">
-<ellipse fill="red" stroke="black" cx="356.39" cy="-198" rx="83.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="356.39" cy="-198" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="356.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectGold</text>
 </a>
 </g>

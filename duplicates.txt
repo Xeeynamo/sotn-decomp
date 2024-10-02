@@ -3002,7 +3002,7 @@
 | 1.00 | true     | CollectGold                         | asm/us/boss/mar/nonmatchings/e_collect/CollectGold.s 
 | 1.00 | false    | CollectGold                         | asm/us/boss/rbo3/nonmatchings/us/CollectGold.s 
 | 1.00 | true     | func_80195974                       | asm/us/st/cen/matchings/e_collect/func_80195974.s 
-| 1.00 | false    | CollectGold                         | asm/us/st/cen/nonmatchings/e_collect/CollectGold.s 
+| 1.00 | true     | CollectGold                         | asm/us/st/cen/nonmatchings/e_collect/CollectGold.s 
 | 1.00 | true     | func_8019BAB8                       | asm/us/st/dre/matchings/e_collect/func_8019BAB8.s 
 | 1.00 | true     | CollectGold                         | asm/us/st/dre/nonmatchings/e_collect/CollectGold.s 
 | 1.00 | true     | func_801936E0                       | asm/us/st/mad/nonmatchings/e_collect/func_801936E0.s 
@@ -3021,7 +3021,7 @@
 | 1.00 | true     | CollectHeart                        | asm/us/boss/mar/nonmatchings/e_collect/CollectHeart.s 
 | 1.00 | false    | CollectHeart                        | asm/us/boss/rbo3/nonmatchings/us/CollectHeart.s 
 | 1.00 | true     | func_801958F4                       | asm/us/st/cen/matchings/e_collect/func_801958F4.s 
-| 1.00 | false    | CollectHeart                        | asm/us/st/cen/nonmatchings/e_collect/CollectHeart.s 
+| 1.00 | true     | CollectHeart                        | asm/us/st/cen/nonmatchings/e_collect/CollectHeart.s 
 | 1.00 | true     | func_8019BA38                       | asm/us/st/dre/matchings/e_collect/func_8019BA38.s 
 | 1.00 | true     | CollectHeart                        | asm/us/st/dre/nonmatchings/e_collect/CollectHeart.s 
 | 1.00 | false    | CollectHeart                        | asm/us/st/no0/nonmatchings/e_collect/CollectHeart.s 
@@ -3641,6 +3641,15 @@
 | 1.00 | true     | SetData32                           | asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+| 1.00 | true     | SsSepPlay                           | asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityClickSwitch                   | asm/us/st/no3/matchings/377D4/EntityClickSwitch.s 
 | 0.91 | true     | EntitySwitch                        | asm/us/st/no3/matchings/377D4/EntitySwitch.s 
 | 1.00 | true     | EntityClickSwitch                   | asm/us/st/no3/nonmatchings/377D4/EntityClickSwitch.s 
@@ -3716,13 +3725,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
-| 1.00 | true     | SsSepPlay                           | asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -4191,11 +4193,6 @@
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 | 1.00 | true     | _SsContModulation                   | asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
@@ -6717,6 +6714,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | Snd_SetPlayMode                     | asm/us/main/matchings/psxsdk/libsnd/ssplay/Snd_SetPlayMode.s 
 | 1.00 | true     | Snd_SetPlayMode                     | asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/Snd_SetPlayMode.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsSeqCalledTbyT_1per2              | asm/us/main/matchings/psxsdk/libsnd/ssstart/_SsSeqCalledTbyT_1per2.s 
 | 1.00 | true     | _SsSeqCalledTbyT_1per2              | asm/us/main/nonmatchings/psxsdk/libsnd/ssstart/_SsSeqCalledTbyT_1per2.s 
