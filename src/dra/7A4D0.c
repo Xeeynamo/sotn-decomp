@@ -153,7 +153,7 @@ void UpdatePlayerEntities(void) {
         }
     }
     // Appears to be a temporary debugging block that was left in.
-    if ((g_Player.unk0C & 0xC0000) ||
+    if ((g_Player.unk0C & (PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
 #if defined(VERSION_US)
         // Japanese for "without hit".
@@ -550,7 +550,7 @@ void func_8011B5A4(Entity* self) {
     switch (self->step) {
     case 0:
         // Note that paramsHi is uninitialized here - possible bug?
-        if ((g_Player.unk0C & 0x20000) && (paramsHi != 9)) {
+        if ((g_Player.unk0C & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
             DestroyEntity(self);
             return;
         }

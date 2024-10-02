@@ -671,7 +671,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             amount -= amount / 3;
         }
     }
-    if (g_Player.unk0C & 0x80) {
+    if (g_Player.unk0C & PLAYER_STATUS_STONE) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
     } else if (damage->effects & 0x200) {
@@ -693,7 +693,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         } else {
             damage->damageTaken = g_Status.hpMax / 8;
         }
-        if (g_Player.unk0C & 0x4000) {
+        if (g_Player.unk0C & PLAYER_STATUS_POISON) {
             damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
@@ -716,7 +716,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             ret = 3;
         } else {
             if (g_Status.defenseEquip > 99 && !(damage->effects & 0x180) &&
-                !(g_Player.unk0C & 0x80)) {
+                !(g_Player.unk0C & PLAYER_STATUS_STONE)) {
                 damage->damageKind = 0;
                 ret = 1;
             } else {
@@ -1813,7 +1813,7 @@ void DrawRichterHudSubweapon(void) {
     prim->u3 = ((g_Status.hearts / 10) * 8) + 8;
     prim->v3 = 0x68;
     // Perhaps flashes the heart numbers when you have enough for a crash
-    if ((g_Player.unk0C & 0x200000) && !(g_Timer & 2)) {
+    if ((g_Player.unk0C & PLAYER_STATUS_UNK200000) && !(g_Timer & 2)) {
         prim->clut = 0x100;
     } else {
         prim->clut = 0x103;
@@ -2049,7 +2049,8 @@ void DrawHudSubweapon() {
     }
 
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, EQUIP_ARMOR)) &&
-        ((g_Player.unk0C & 0x04000007) == 0x04000000)) {
+        ((g_Player.unk0C & (PLAYER_STATUS_TRANSFORM |
+                            PLAYER_STATUS_UNK4000000)) == 0x04000000)) {
         g_HealingMailTimer[0]++;
         if (g_HealingMailTimer[0] >= 128) {
             g_Player.unk56 = 2;

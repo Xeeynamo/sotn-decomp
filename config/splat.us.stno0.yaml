@@ -40,7 +40,11 @@ segments:
     subsegments:
       - [0x0, data]                          
       - [0x113C, .data, st_update] # UNK_Invincibility0 data
-      - [0x1168, data]   
+      - [0x1168, .data, collision]
+      - [0x1528, .data, e_red_door]
+      - [0x1540, data]
+      - [0x164C, .data, st_common] # g_SineTable
+      - [0x184C, data]
       - [0x41368, .rodata, first_c_file]
       - [0x4137C, .rodata, e_red_door]
       - [0x41394, .rodata, e_collect]

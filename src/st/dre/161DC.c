@@ -42,13 +42,13 @@ void EntityCSMoveAlucard(Entity* self) {
         if (self->ext.generic.unk7C.u != 0) {
             self->ext.generic.unk7C.u--;
         }
-        if (g_Player.unk0C & 7) {
+        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & 1) {
+                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = 8;
-                } else if (g_Player.unk0C & 2) {
+                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = 4;
-                } else if (g_Player.unk0C & 4) {
+                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = 2;
                 }
             }

@@ -3124,8 +3124,9 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     var_s6 = 0;
     func_800F53A4();
 
-    if ((g_Player.unk0C & 0x17) | (PLAYER.step == Player_UnmorphWolf) |
-        (PLAYER.step == Player_BossGrab) | (g_Player.unk60)) {
+    if ((g_Player.unk0C & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10)) |
+        (PLAYER.step == Player_UnmorphWolf) | (PLAYER.step == Player_BossGrab) |
+        (g_Player.unk60)) {
         if (itemId == ITEM_AXE_LORD_ARMOR) {
             if (D_801375CC == EQUIP_ARMOR) {
                 if (count[ITEM_AXE_LORD_ARMOR] != 0) {
