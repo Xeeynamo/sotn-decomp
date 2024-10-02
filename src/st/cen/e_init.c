@@ -72,7 +72,7 @@ EntityInit g_InitializeEntityData0 = {
     .enemyId = 2,
 };
 
-EntityInit D_80180428 = {
+EntityInit g_eMariaInit = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -128,7 +128,7 @@ EntityInit D_80180470 = {
     .enemyId = 3,
 };
 
-EntityInit D_8018047C = {
+EntityInit g_eElevatorInit = {
     .animSet = ANIMSET_OVL(11),
     .animCurFrame = 1,
     .unk5A = 72,
