@@ -27,9 +27,9 @@ void EntityHeartDrop(Entity* self) {
         index -= HEART_DROP_CASTLE_FLAG;
         index = g_HeartDropArray[index];
         if (index < 128) {
-            self->ext.heartDrop.update = EntityPrizeDrop;
+            self->unkB8 = (Entity*)EntityPrizeDrop;
         } else {
-            self->ext.heartDrop.update = EntityEquipItemDrop;
+            self->unkB8 = (Entity*)EntityEquipItemDrop;
             index -= 128;
         }
         self->params = index + 0x8000;
@@ -43,6 +43,6 @@ void EntityHeartDrop(Entity* self) {
             }
         }
     }
-    update = self->ext.heartDrop.update;
+    update = (PfnEntityUpdate)self->unkB8;
     update(self);
 }

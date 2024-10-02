@@ -252,8 +252,7 @@ void HitDetection(void) {
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->ext.generic.unkB8.entityPtr =
-                                        iterEnt1;
+                                    iterEnt2->unkB8 = iterEnt1;
                                     // reminder: iterEnt1->hitboxState
                                     if (miscVar1 & 8) {
                                         iterEnt2->hitFlags = 3;
@@ -310,7 +309,7 @@ void HitDetection(void) {
                     if (hitboxCheck1 >= hitboxCheck2) {
                         if ((iterEnt1->attack) &&
                             (iterEnt2->hitPoints < iterEnt1->attack)) {
-                            iterEnt2->ext.player.unkB8 = iterEnt1;
+                            iterEnt2->unkB8 = iterEnt1;
                             if (miscVar1 & 8) {
                                 iterEnt2->hitFlags = 3;
                             } else {
