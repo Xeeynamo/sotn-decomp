@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>cen.CollectSubweapon</title>
 <g id="a_node2"><a xlink:href="cen.CollectSubweapon.svg" xlink:title="cen.CollectSubweapon">
-<ellipse fill="red" stroke="black" cx="115.69" cy="-198" rx="115.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="115.69" cy="-198" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="115.69" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectSubweapon</text>
 </a>
 </g>

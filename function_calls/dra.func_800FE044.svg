@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CollectLifeVessel</title>
 <g id="a_node3"><a xlink:href="cen.CollectLifeVessel.svg" xlink:title="cen.CollectLifeVessel">
-<ellipse fill="red" stroke="black" cx="363.29" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="363.29" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="363.29" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectLifeVessel</text>
 </a>
 </g>

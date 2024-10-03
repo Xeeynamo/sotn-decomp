@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>cen.CollectLifeVessel</title>
 <g id="a_node7"><a xlink:href="cen.CollectLifeVessel.svg" xlink:title="cen.CollectLifeVessel">
-<ellipse fill="red" stroke="black" cx="1215.84" cy="-18" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1215.84" cy="-18" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="1215.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CollectLifeVessel</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>cen.CollectSubweapon</title>
 <g id="a_node8"><a xlink:href="cen.CollectSubweapon.svg" xlink:title="cen.CollectSubweapon">
-<ellipse fill="red" stroke="black" cx="1457.84" cy="-18" rx="115.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1457.84" cy="-18" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="1457.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.CollectSubweapon</text>
 </a>
 </g>

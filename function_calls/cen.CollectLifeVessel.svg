@@ -12,7 +12,7 @@
 <!-- cen.CollectLifeVessel -->
 <g id="node1" class="node">
 <title>cen.CollectLifeVessel</title>
-<ellipse fill="red" stroke="black" cx="271.89" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="271.89" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="271.89" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CollectLifeVessel</text>
 </g>
 <!-- cen.DestroyEntity -->
