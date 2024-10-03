@@ -92,7 +92,7 @@
 | wrp    | EntityUnkId12                       |      166 |         18 |        |                                 |       |
 | wrp    | CollectSubweapon                    |      185 |         20 |        | https://decomp.me/scratch/8xUEZ | 0.987 |
 |        | func_8017170C                       |      193 |          6 |        |                                 |       |
-|        | func_80171ED4                       |      200 |         20 |        | https://decomp.me/scratch/eUGn7 | 0.991 |
+|        | ServantInit                         |      200 |         20 |        |                                 |       |
 |        | func_8017110C                       |      258 |         36 |        | https://decomp.me/scratch/r0H4j | 0.813 |
 | wrp    | Update                              |      270 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | wrp    | EntityWarpSmallRocks                |      279 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
