@@ -62,7 +62,8 @@ segments:
       - [0x16EC, .data, 297C8] # EntityGremlin
       - [0x1704, .data, 297C8] # EntityGremlinEffect
       - [0x1724, .data, 297C8] # EntityGremlinFire
-      - [0x173C, .data, func_data3]
+      - [0x173C, .data, 2A020] # func_801AA020
+      - [0x17F4, .data, func_data3]
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entries data
       - [0x20D8, data]
@@ -83,8 +84,9 @@ segments:
       - [0x1B280, .rodata, 2813C] # EntitySalemWitch debug string
       - [0x1B290, .rodata, 2813C] # jtbl_8019B290 [EntitySalemWitch]
       - [0x1B2A8, .rodata, 2813C] # jtbl_8019B2A8 [EntitySalemWitchTribolt]
-      - [0x1B2BC, .rodata, 297C8] # EntityGremlin debug string
-      - [0x1B2C8, rodata] # jtbl_8019B2C8
+      - [0x1B2BC, .rodata, 297C8] # EntityGremlin debug string]
+      - [0x1B2C8, .rodata, 2A020] # jtbl_8019B2C8 [func_801AA020]
+      - [0x1B2E4, rodata] # NULL
       - [0x1B2E8, rodata] # jtbl_8019B2E8
       - [0x1B304, rodata] # jtbl_8019B304
       - [0x1B32C, rodata] # jtbl_8019B32C
@@ -109,6 +111,7 @@ segments:
       - [0x254C4, c]
       - [0x2813C, c]
       - [0x297C8, c]
+      - [0x2A020, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x1B280, rodata, 2813C]
