@@ -34,7 +34,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--output_dir",
-    action="store_true",
+    type=str,  # Expecting a string as input
     help="Output directory",
 )
 output_dir = "function_calls"
