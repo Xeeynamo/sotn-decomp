@@ -116,7 +116,6 @@ typedef struct {
     SimKind kind;
 } SimFile;
 
-
 typedef enum {
     STATUS_AILMENT_POISON,
     STATUS_AILMENT_CURSE,

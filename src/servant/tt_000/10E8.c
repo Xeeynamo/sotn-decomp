@@ -57,7 +57,7 @@ void func_80173C24(void);
 void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    ServantInit, func_80172120, func_80172C30,        func_8017339C,
+    ServantInit,   func_80172120, func_80172C30,        func_8017339C,
     func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
     func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
     func_80173C14, func_80173C1C, func_80173C24,        DestroyServantEntity,
@@ -504,9 +504,9 @@ void ServantInit(InitializeMode mode) {
     e->params = 0;
 
     if (mode == MENU_SWITCH_SERVANT) {
-        e->entityId = ENTITY_ID_SERVANT; 
+        e->entityId = ENTITY_ID_SERVANT;
         e->posX.val = FIX(128);
-            e->posY.val = FIX(-32);
+        e->posY.val = FIX(-32);
     } else {
         e->entityId = ENTITY_ID_SERVANT;
         if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {

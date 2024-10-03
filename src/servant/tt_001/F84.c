@@ -50,7 +50,7 @@ void func_us_801728F4(void);
 void func_us_801728FC(void);
 void DestroyServantEntity(Entity* self);
 ServantDesc g_ServantDesc = {
-    ServantInit, func_us_80171864, func_us_801720A4, func_us_801720AC,
+    ServantInit,      func_us_80171864, func_us_801720A4, func_us_801720AC,
     func_us_801720B4, func_us_801720BC, func_us_801720C4, func_us_801720CC,
     func_us_801720D4, func_us_801720DC, func_us_801720E4, func_us_8017246C,
     func_us_801728EC, func_us_801728F4, func_us_801728FC, DestroyServantEntity};
