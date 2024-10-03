@@ -2283,7 +2283,7 @@ void func_80123B40(Entity* self) {
 
         PLAYER = copy;
 
-        if (!(self->flags & 0x800000)) {
+        if (!(self->flags & FLAG_HAS_PRIMS)) {
             DestroyEntity(self);
             return;
         }
