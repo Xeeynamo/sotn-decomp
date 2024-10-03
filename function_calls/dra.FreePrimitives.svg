@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node5"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="795.39" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="795.39" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="795.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>

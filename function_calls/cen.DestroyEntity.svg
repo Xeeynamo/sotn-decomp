@@ -339,7 +339,7 @@
 <g id="node22" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node22"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="5168.24" cy="-378" rx="129.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="5168.24" cy="-378" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="5168.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -355,7 +355,7 @@
 <g id="node23" class="node">
 <title>cen.EntityExplosion</title>
 <g id="a_node23"><a xlink:href="cen.EntityExplosion.svg" xlink:title="cen.EntityExplosion">
-<ellipse fill="red" stroke="black" cx="5420.24" cy="-378" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="5420.24" cy="-378" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="5420.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityExplosion</text>
 </a>
 </g>
@@ -563,7 +563,7 @@
 <g id="node36" class="node">
 <title>cen.EntityStageNamePopup</title>
 <g id="a_node36"><a xlink:href="cen.EntityStageNamePopup.svg" xlink:title="cen.EntityStageNamePopup">
-<ellipse fill="red" stroke="black" cx="8656.24" cy="-378" rx="141.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="8656.24" cy="-378" rx="141.88" ry="18"/>
 <text text-anchor="middle" x="8656.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityStageNamePopup</text>
 </a>
 </g>

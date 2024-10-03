@@ -12,7 +12,7 @@
 <!-- cen.EntityEquipItemDrop -->
 <g id="node1" class="node">
 <title>cen.EntityEquipItemDrop</title>
-<ellipse fill="red" stroke="black" cx="1685.39" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1685.39" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="1685.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </g>
 <!-- cen.BlinkItem -->

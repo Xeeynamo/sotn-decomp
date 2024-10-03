@@ -132,7 +132,7 @@
 <g id="node8" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node8"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="1563.34" cy="-378" rx="129.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1563.34" cy="-378" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="1563.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -292,7 +292,7 @@
 <g id="node18" class="node">
 <title>cen.EntityStageNamePopup</title>
 <g id="a_node18"><a xlink:href="cen.EntityStageNamePopup.svg" xlink:title="cen.EntityStageNamePopup">
-<ellipse fill="red" stroke="black" cx="4033.34" cy="-378" rx="141.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4033.34" cy="-378" rx="141.88" ry="18"/>
 <text text-anchor="middle" x="4033.34" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityStageNamePopup</text>
 </a>
 </g>
