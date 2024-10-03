@@ -26,7 +26,7 @@ extern u16 aluric_subweapons_id[];
 
 #include "../collect_life_vessel.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", DestroyCurrentEntity);
+#include "../destroy_current_entity.h"
 
 INCLUDE_RODATA("st/cen/nonmatchings/e_collect", D_hd_8018D4F8);
 
@@ -48,7 +48,9 @@ INCLUDE_RODATA("st/cen/nonmatchings/e_collect", D_hd_8018D538);
 
 INCLUDE_RODATA("st/cen/nonmatchings/e_collect", D_hd_8018D540);
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", EntityPrizeDrop);
+extern s16 D_80180EB8[];
+extern u8* g_SubweaponAnimPrizeDrop[];
+#include "../entity_prize_drop.h"
 
 // TODO: needs g_ExplosionYVelocities, g_ExplosionAnimations
 INCLUDE_ASM("st/cen/nonmatchings/e_collect", EntityExplosion);
