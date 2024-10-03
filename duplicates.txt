@@ -1277,7 +1277,7 @@
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/boss/mar/nonmatchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | false    | DestroyCurrentEntity                | asm/us/boss/rbo3/nonmatchings/us/DestroyCurrentEntity.s 
 | 1.00 | true     | func_80195C5C                       | asm/us/st/cen/matchings/e_collect/func_80195C5C.s 
-| 1.00 | false    | DestroyCurrentEntity                | asm/us/st/cen/nonmatchings/e_collect/DestroyCurrentEntity.s 
+| 1.00 | true     | DestroyCurrentEntity                | asm/us/st/cen/nonmatchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | func_8019BDA0                       | asm/us/st/dre/matchings/e_collect/func_8019BDA0.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/dre/nonmatchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | func_801937C4                       | asm/us/st/mad/nonmatchings/e_collect/func_801937C4.s 
@@ -2692,6 +2692,27 @@
 | 1.00 | true     | func_8018CFA8                       | asm/us/st/wrp/matchings/e_collect/func_8018CFA8.s 
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/wrp/nonmatchings/e_collect/CollectLifeVessel.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_80191DA8                    | asm/us/boss/mar/matchings/e_collect/func_us_80191DA8.s 
+| 1.00 | true     | EntityPrizeDrop                     | asm/us/boss/mar/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 1.00 | false    | EntityPrizeDrop                     | asm/us/boss/rbo3/nonmatchings/us/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/cen/matchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/cen/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/dre/matchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/dre/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.95 | true     | EntityPrizeDrop                     | asm/us/st/mad/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 1.00 | false    | EntityPrizeDrop                     | asm/us/st/no0/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/no3/matchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/no3/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | func_801BDEF4                       | asm/us/st/np3/matchings/e_collect/func_801BDEF4.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/np3/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | func_801BE30C                       | asm/us/st/nz0/matchings/e_collect/func_801BE30C.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/nz0/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/rwrp/matchings/wrp/e_collect/EntityPrizeDrop.s 
+| 0.93 | true     | EntityPrizeDrop                     | asm/us/st/st0/matchings/e_collect/EntityPrizeDrop.s 
+| 0.93 | true     | EntityPrizeDrop                     | asm/us/st/st0/nonmatchings/e_collect/EntityPrizeDrop.s 
+| 0.99 | true     | func_8018D020                       | asm/us/st/wrp/matchings/e_collect/func_8018D020.s 
+| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/wrp/nonmatchings/e_collect/EntityPrizeDrop.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80194AC4                    | asm/us/boss/mar/matchings/e_misc/func_us_80194AC4.s 
 | 1.00 | true     | UnkCollisionFunc4                   | asm/us/boss/mar/nonmatchings/e_misc/UnkCollisionFunc4.s 
 | 1.00 | false    | UnkCollisionFunc4                   | asm/us/boss/rbo3/nonmatchings/us/UnkCollisionFunc4.s 
@@ -2879,26 +2900,6 @@
 | 1.00 | true     | func_8018A59C                       | asm/us/st/rwrp/matchings/wrp/collision/func_8018A59C.s 
 | 1.00 | true     | func_8018861C                       | asm/us/st/wrp/matchings/collision/func_8018861C.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/wrp/nonmatchings/collision/HitDetection.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_80191DA8                    | asm/us/boss/mar/matchings/e_collect/func_us_80191DA8.s 
-| 1.00 | true     | EntityPrizeDrop                     | asm/us/boss/mar/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 1.00 | false    | EntityPrizeDrop                     | asm/us/boss/rbo3/nonmatchings/us/EntityPrizeDrop.s 
-| 0.99 | false    | EntityPrizeDrop                     | asm/us/st/cen/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/dre/matchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/dre/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.95 | true     | EntityPrizeDrop                     | asm/us/st/mad/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 1.00 | false    | EntityPrizeDrop                     | asm/us/st/no0/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/no3/matchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/no3/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | func_801BDEF4                       | asm/us/st/np3/matchings/e_collect/func_801BDEF4.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/np3/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | func_801BE30C                       | asm/us/st/nz0/matchings/e_collect/func_801BE30C.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/nz0/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/rwrp/matchings/wrp/e_collect/EntityPrizeDrop.s 
-| 0.93 | true     | EntityPrizeDrop                     | asm/us/st/st0/matchings/e_collect/EntityPrizeDrop.s 
-| 0.93 | true     | EntityPrizeDrop                     | asm/us/st/st0/nonmatchings/e_collect/EntityPrizeDrop.s 
-| 0.99 | true     | func_8018D020                       | asm/us/st/wrp/matchings/e_collect/func_8018D020.s 
-| 0.99 | true     | EntityPrizeDrop                     | asm/us/st/wrp/nonmatchings/e_collect/EntityPrizeDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80193B24                    | asm/us/boss/mar/matchings/e_misc/func_us_80193B24.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/mar/nonmatchings/e_misc/EntityHeartDrop.s 

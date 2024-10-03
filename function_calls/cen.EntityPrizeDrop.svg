@@ -12,7 +12,7 @@
 <!-- cen.EntityPrizeDrop -->
 <g id="node1" class="node">
 <title>cen.EntityPrizeDrop</title>
-<ellipse fill="red" stroke="black" cx="1968.84" cy="-198" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1968.84" cy="-198" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="1968.84" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </g>
 <!-- cen.AnimateEntity -->
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>cen.DestroyCurrentEntity</title>
 <g id="a_node9"><a xlink:href="cen.DestroyCurrentEntity.svg" xlink:title="cen.DestroyCurrentEntity">
-<ellipse fill="red" stroke="black" cx="1723.84" cy="-18" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1723.84" cy="-18" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="1723.84" y="-14.3" font-family="Times,serif" font-size="14.00">cen.DestroyCurrentEntity</text>
 </a>
 </g>

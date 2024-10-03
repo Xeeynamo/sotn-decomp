@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>cen.DestroyCurrentEntity</title>
 <g id="a_node14"><a xlink:href="cen.DestroyCurrentEntity.svg" xlink:title="cen.DestroyCurrentEntity">
-<ellipse fill="red" stroke="black" cx="2899.24" cy="-378" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2899.24" cy="-378" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="2899.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.DestroyCurrentEntity</text>
 </a>
 </g>
@@ -483,7 +483,7 @@
 <g id="node31" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node31"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="7427.24" cy="-378" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="7427.24" cy="-378" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="7427.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>
