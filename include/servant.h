@@ -7,8 +7,17 @@
 #define ABS(x) (((x) >= 0) ? (x) : (-(x)))
 #endif
 
+// Unsure if these values are shared or are specific to SERVANT
+// May need to move if these init values are used for more entities
+typedef enum {
+    ENGINE_INIT_SERVANT_0 = 0,
+    MENU_SWITCH_SERVANT,
+    ENGINE_INIT_SERVANT_2,
+    MENU_SAME_SERVANT
+} InitializeMode;
+
 typedef struct {
-    void (*Init)(s32 arg0);
+    void (*Init)(InitializeMode mode);
     void (*Update)(Entity* self);
     void (*Unk08)(Entity* self);
     void (*Unk0C)(/*?*/);
@@ -92,6 +101,8 @@ s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 #ifdef VERSION_PSP
 extern ServantDesc D_8D1DC40;
 #endif
+
+void ServantInit(InitializeMode mode);
 
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);

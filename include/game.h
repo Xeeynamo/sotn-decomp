@@ -1900,6 +1900,10 @@ extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
+
+
+#define CLUT_INDEX_SERVANT              0x1400 
+#define CLUT_INDEX_SERVANT_OVERWRITE    0x1430
 extern u16 g_Clut[0x3000];
 extern u16 D_8006EBCC[0x1000]; // part of g_Clut
 extern u16 D_8006EBE0;         // part of g_Clut
@@ -1952,6 +1956,8 @@ typedef enum {
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+
+#define ENTITY_ID_SERVANT 0xD1
 
 extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
