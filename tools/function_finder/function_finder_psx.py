@@ -194,7 +194,7 @@ if __name__ == "__main__":
         for i, o in enumerate(output):
             unique_name = ".".join([o[0], o[1]])
 
-            svg_path = os.path.join("function_calls", f"{unique_name}.svg")
+            svg_path = os.path.join("gh-duplicates/function_calls", f"{unique_name}.svg")
             if os.path.exists(svg_path):
                 o[1] = f"[{o[1]}]({base_url}/{svg_path})"
 
