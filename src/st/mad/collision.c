@@ -546,7 +546,7 @@ void HitDetection(void) {
                 if (!(entFrom5C->hitFlags & 0xF)) {
                     entFrom5C->hitFlags |= 0x10;
                 }
-                if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
+                if ((entFrom5C->flags & FLAG_UNK_10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
                         g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {

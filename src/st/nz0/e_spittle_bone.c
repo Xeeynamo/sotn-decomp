@@ -21,7 +21,7 @@ void EntitySpittleBone(Entity* self) {
         InitializeEntity(D_80180CAC);
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotZ = 0;
-        self->flags &= ~(FLAG_UNK_2000 | 0x200);
+        self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
         self->facingLeft = self->params;
         break;
 
