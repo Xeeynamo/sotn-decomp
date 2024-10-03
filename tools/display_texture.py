@@ -52,10 +52,11 @@ def convert_rgb555(in_array):
             r = round(r / 31 * 255)
             g = round(g / 31 * 255)
             b = round(b / 31 * 255)
-            pixel = [r, g, b]
+            a = 255 if (r or g or b) else 0
+            pixel = [r, g, b, a]
             out_row.append(pixel)
         out_array.append(out_row)
-    return np.array(out_array)
+    return np.array(out_array, dtype="uint8")
 
 
 # Once we have a tpage and a clut, apply that clut to color the tpage.
@@ -112,9 +113,7 @@ def get_clut(colored_dump, clutnum):
 
 # For a given tpage and clut, retrieve the tpage from the raw dump, and apply
 # the clut to that tpage.
-def retrieve_colored_tpage(raw_dump, tpage_number, clut_number):
-    # Load all the data as rgb555, the native format cluts are specified in.
-    colored = convert_rgb555(raw_dump)
+def retrieve_colored_tpage(raw_dump, colored, tpage_number, clut_number):
     tpage_rendering_clut = get_clut(colored, clut_number)
     # Now we have our tpage rendering clut extracted, get the tpage, and apply that clut.
     tpage = get_tpage_by_number(raw_dump, tpage_number)
@@ -123,12 +122,20 @@ def retrieve_colored_tpage(raw_dump, tpage_number, clut_number):
 
 
 def draw_tpage_selection(raw_dump, tpage_number, clut_number, left, top, width, height):
-    # Get the tpage with the proper clut applied
-    ctp = retrieve_colored_tpage(raw_dump, tpage_number, clut_number)
+    image = get_tpage_selection(
+        raw_dump, tpage_number, clut_number, left, top, width, height
+    )
+    plt.imshow(image)
+    plt.show()
+
+
+def get_tpage_selection(
+    raw_dump, colored, tpage_number, clut_number, left, top, width, height
+):
+    ctp = retrieve_colored_tpage(raw_dump, colored, tpage_number, clut_number)
     # Crop it to match the needed UV coords, and display it
     segment = ctp[top : top + height, left : left + width]
-    plt.imshow(segment)
-    plt.show()
+    return segment
 
 
 # For the chosen filename for the vram dump, we load the bytes, convert
@@ -142,7 +149,8 @@ def load_raw_dump(filename):
                 dumpbytes = response.read()
                 print("VRAM fetched from PCSX.")
         except urllib.error.URLError as e:
-            print("Error retrieving file:", e)
+            print("Error retrieving textures from PCSX. Is it running?", e)
+            exit()
     else:  # Load from a specified filename
         with open(filename, "rb") as dumpfile:
             dumpbytes = dumpfile.read()
@@ -150,6 +158,15 @@ def load_raw_dump(filename):
     datasize = len(dumpbytes)
     bytestring = np.frombuffer(dumpbytes, dtype=np.uint8)
     return np.reshape(bytestring, (512, int(datasize / 512)))
+
+
+class textureDisplayer:
+    def __init__(self, vram_dump):
+        self.rawvram = vram_dump
+        self.colored = convert_rgb555(vram_dump)
+
+    def get_image(self, tpage, clut, x, y, w, h):
+        return get_tpage_selection(self.rawvram, self.colored, tpage, clut, x, y, w, h)
 
 
 parser = argparse.ArgumentParser(description="Renders textures from VRAM dumps")
@@ -165,17 +182,17 @@ parser.add_argument(
     "--showclut", action="store_true", help="Just show the 16 colors in the CLUT"
 )
 
+if __name__ == "__main__":
+    args = parser.parse_args()
 
-args = parser.parse_args()
-
-array = load_raw_dump(args.dump_filename)
-if args.showclut:
-    colored = convert_rgb555(array)
-    clut = get_clut(colored, args.clut_num)
-    clut = clut.reshape((1, 16, 3))  # reshape to turn the clut into a 1x16 image
-    plt.imshow(clut)
-    plt.show()
-elif args.whole:
-    draw_tpage_selection(array, args.tpage_num, args.clut_num, 0, 0, 256, 256)
-else:
-    draw_tpage_selection(array, args.tpage_num, args.clut_num, *args.UV_vals)
+    array = load_raw_dump(args.dump_filename)
+    if args.showclut:
+        colored = convert_rgb555(array)
+        clut = get_clut(colored, args.clut_num)
+        clut = clut.reshape((1, 16, 3))  # reshape to turn the clut into a 1x16 image
+        plt.imshow(clut)
+        plt.show()
+    elif args.whole:
+        draw_tpage_selection(array, args.tpage_num, args.clut_num, 0, 0, 256, 256)
+    else:
+        draw_tpage_selection(array, args.tpage_num, args.clut_num, *args.UV_vals)
