@@ -32,6 +32,11 @@ parser.add_argument(
     action="store_true",
     help="Perform a dry run. Calculate call hierarchy, but skip generating SVGs",
 )
+parser.add_argument(
+    "--output_dir",
+    type=str,  # Expecting a string as input
+    help="Output directory",
+)
 output_dir = "function_calls"
 # All functions I've found that are used in a 'jalr' instruction in the game
 callable_registers = ["$v0", "$v1", "$a0", "$a1", "$t2"]
@@ -412,6 +417,9 @@ class sotn_function:
 
 if __name__ == "__main__":
     timer = time.perf_counter()
+    args = parser.parse_args()
+    if args.output_dir:
+        output_dir = args.output_dir
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     # 1: Create baseline function objects for every .s file
@@ -459,7 +467,6 @@ if __name__ == "__main__":
         if not any(x in function.c_filename for x in ["psxsdk", "mad"]):
             analyze(function)
     print(f"Calculated call relations in {time.perf_counter() - timer} seconds")
-    args = parser.parse_args()
     if not args.ultradry:
         print(f"Rendering in {'dry' if args.dry else 'full output'} mode")
 
