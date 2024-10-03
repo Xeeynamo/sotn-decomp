@@ -52,10 +52,10 @@ def show_animset(anim_num, arg_palette):
         animdata = f.read().splitlines()
         animarray = load_array_from_file(animdata, MAIN_ANIM_ARRAY)
         anim_set_name = animarray[anim_num]
+    print(f"Animation set {anim_num} is {anim_set_name}. Loading.")
     with open(ANIMSET_FILE) as f:
         framesdata = f.read().splitlines()
         framearray = load_array_from_file(framesdata, anim_set_name)
-
     # Now we have an array that tells us the name of all the frames.
     # Start GUI code.
     class AnimationShower:
