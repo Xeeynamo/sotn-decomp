@@ -205,7 +205,6 @@ jobs:
             rm -rf build/us/weapon.ld
             make -j extract
             .venv/bin/python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
-            mv function_graphs.md gh-duplicates
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'
