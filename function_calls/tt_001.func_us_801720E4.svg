@@ -12,7 +12,7 @@
 <!-- tt_001.func_us_801720E4 -->
 <g id="node1" class="node">
 <title>tt_001.func_us_801720E4</title>
-<ellipse fill="red" stroke="black" cx="394.44" cy="-198" rx="130.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="394.44" cy="-198" rx="130.78" ry="18"/>
 <text text-anchor="middle" x="394.44" y="-194.3" font-family="Times,serif" font-size="14.00">tt_001.func_us_801720E4</text>
 </g>
 <!-- dra.AllocPrimitives -->
