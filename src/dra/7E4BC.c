@@ -783,7 +783,7 @@ void EntityHitByIce(Entity* self) {
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    sp18 = (g_Player.unk0C & PLAYER_STATUS_UNK10000) == sp18;
+    sp18 = (g_Player.status & PLAYER_STATUS_UNK10000) == sp18;
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT3, 24);
@@ -2167,7 +2167,7 @@ void UnknownEntId48(Entity* self) {
     s32 params;
 
     params = (u8)self->params;
-    if (!(g_Player.unk0C & PLAYER_STATUS_MIST_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_MIST_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -2198,7 +2198,7 @@ void UnknownEntId48(Entity* self) {
 void UnknownEntId49(Entity* self) {
     s32 x_offset;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_AXEARMOR) || (PLAYER.step != 0x2B)) {
+    if (!(g_Player.status & PLAYER_STATUS_AXEARMOR) || (PLAYER.step != 0x2B)) {
         DestroyEntity(self);
         return;
     }
@@ -2230,7 +2230,7 @@ void UnknownEntId49(Entity* self) {
 void func_80123A60(Entity* entity) {
     Entity* player = &PLAYER;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_AXEARMOR)) {
+    if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
         DestroyEntity(entity);
         return;
     }

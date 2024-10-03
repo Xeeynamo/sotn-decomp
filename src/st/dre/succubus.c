@@ -490,7 +490,7 @@ void EntitySuccubus(Entity* self) {
         switch (self->step_s) {
         case SUCCUBUS_PETAL_ATTACK_SETUP:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
+            if (g_Player.status & PLAYER_STATUS_CURSE) {
                 self->ext.succubus.unk87 = false;
             } else {
                 self->ext.succubus.unk87 = true;
@@ -522,7 +522,7 @@ void EntitySuccubus(Entity* self) {
                 SetStep(SUCCUBUS_FLY);
             }
             if (self->ext.succubus.unk87) {
-                if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
+                if (g_Player.status & PLAYER_STATUS_CURSE) {
                     SetStep(SUCCUBUS_CHARGE);
                 }
             } else if (D_80180668 != 0) {
@@ -580,7 +580,7 @@ void EntitySuccubus(Entity* self) {
                 posY = -posY;
             }
 
-            if (!(g_Player.unk0C & 0x010401A2)) {
+            if (!(g_Player.status & 0x010401A2)) {
                 if ((posY < 12) && (posX < 24)) {
                     g_Player.unk60 = 1;
                     g_Player.unk64 = 0;

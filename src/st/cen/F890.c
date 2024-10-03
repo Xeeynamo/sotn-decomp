@@ -114,11 +114,11 @@ void EntityPlatform(Entity* self) {
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
             D_8003C8B8 = 0;
             g_unkGraphicsStruct.pauseEnemies = 1;
-            if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_R1;
-            } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+            } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                 g_Player.padSim = PAD_L1;
-            } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+            } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 g_Player.padSim = PAD_R2;
             } else if (temp_s1 > 384) {
                 g_Player.padSim = PAD_LEFT;
@@ -135,13 +135,13 @@ void EntityPlatform(Entity* self) {
 
     case 2:
         g_Player.padSim = 0;
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_R1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = PAD_L1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = PAD_R2;
                 }
             }
