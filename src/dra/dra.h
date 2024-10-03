@@ -117,6 +117,14 @@ typedef struct {
 } SimFile;
 
 typedef enum {
+    E_NONE,
+    E_ENTITYFACTORY,
+
+    ENTITY_13 = 0x13,
+    E_UNK_22 = 0x22,
+} EntityIDs;
+
+typedef enum {
     STATUS_AILMENT_POISON,
     STATUS_AILMENT_CURSE,
     STATUS_AILMENT_PETRIFIED,

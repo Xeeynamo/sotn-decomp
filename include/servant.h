@@ -16,6 +16,8 @@ typedef enum {
     MENU_SAME_SERVANT
 } InitializeMode;
 
+#define ENTITY_ID_SERVANT 0xD1
+
 typedef struct {
     void (*Init)(InitializeMode mode);
     void (*Update)(Entity* self);
