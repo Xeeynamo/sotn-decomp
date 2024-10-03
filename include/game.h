@@ -1957,7 +1957,14 @@ typedef enum {
 } EntityTypes;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
-#define ENTITY_ID_SERVANT 0xD1
+typedef enum {
+    E_NONE,
+    E_ENTITYFACTORY,
+
+    ENTITY_13 = 0x13,
+    E_UNK_22 = 0x22,
+    ENTITY_ID_SERVANT = 0xD1
+} EntityIDs;
 
 extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
