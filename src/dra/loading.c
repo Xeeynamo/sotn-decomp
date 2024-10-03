@@ -125,9 +125,9 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
     }
 }
 
-void func_800E6218(s32 arg0) {
+void InitializeServant(InitializeMode mode) {
     if (g_Servant != 0) {
-        D_80170000.Init(arg0);
+        D_80170000.Init(mode);
     }
 }
 
