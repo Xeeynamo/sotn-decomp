@@ -22,7 +22,7 @@ void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
-void EntityUnkId15(Entity*);
+void EntityGreyPuff(Entity*);
 void OVL_EXPORT(EntityCutscene)(Entity*);
 void EntityPlatform(Entity*);
 void EntityMaria(Entity*);
@@ -42,7 +42,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,           EntityDummy,
     EntityBackgroundBlock, EntityUnkId12,
     EntityUnkId13,         EntityUnkId14,
-    EntityUnkId15,         OVL_EXPORT(EntityCutscene),
+    EntityGreyPuff,        OVL_EXPORT(EntityCutscene),
     EntityPlatform,        EntityMaria,
     EntityRoomDarkness,    EntityElevatorStationary,
     EntityUnkId1B,         EntityMovingElevator,

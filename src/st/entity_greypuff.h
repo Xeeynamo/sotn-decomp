@@ -3,7 +3,7 @@ extern s16 unk15_rot[];
 extern s32 unk15_yVel[];
 
 // looks like a particle of dust fading away
-void EntityUnkId15(Entity* self) {
+void EntityGreyPuff(Entity* self) {
     if (!self->step) {
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;

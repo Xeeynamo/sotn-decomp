@@ -65,16 +65,6 @@ typedef struct ET_Generic {
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ u8 unk94;
-    /* 0x95 */ u8 : 8;
-    /* 0x96 */ s16 : 16;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity* unk9C;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s16 : 16;
-    /* 0xAE */ s8 unkAE;
 } ET_Generic;
 
 typedef struct {
@@ -1278,7 +1268,8 @@ typedef struct {
     s16 unk90;
     s16 unk92;
     s16 unk94;
-    s16 pad96[3];
+    s16 : 16;
+    s32 unk98;
     s16 unk9C;
 } ET_HitByLightning;
 

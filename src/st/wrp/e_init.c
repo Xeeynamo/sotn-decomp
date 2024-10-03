@@ -6,7 +6,7 @@ void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
-void EntityUnkId15(Entity*);
+void EntityGreyPuff(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
@@ -19,7 +19,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityBackgroundBlock, // unused
     EntityUnkId12,         // unused? looks debugging stuff
-    EntityUnkId13,         EntityUnkId14,        EntityUnkId15,
+    EntityUnkId13,         EntityUnkId14,        EntityGreyPuff,
     EntityWarpRoom,        EntityWarpSmallRocks,
 };
 

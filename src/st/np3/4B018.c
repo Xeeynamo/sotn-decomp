@@ -685,10 +685,10 @@ void EntityOwlKnight(Entity* self) {
                 self->velocityX -= FIX(2); // now it's -5
             }
             if (self->facingLeft) {
-                EntityUnkId15Spawner(self, 5, 3, 12, 32, 0, -4);
+                EntityGreyPuffSpawner(self, 5, 3, 12, 32, 0, -4);
                 self->velocityX = -self->velocityX;
             } else {
-                EntityUnkId15Spawner(self, 5, 3, -12, 32, 0, 4);
+                EntityGreyPuffSpawner(self, 5, 3, -12, 32, 0, 4);
             }
         }
         break;
@@ -706,10 +706,10 @@ void EntityOwlKnight(Entity* self) {
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-6.0);
             if (self->facingLeft) {
-                EntityUnkId15Spawner(self, 5, 3, 16, 32, 0, -6);
+                EntityGreyPuffSpawner(self, 5, 3, 16, 32, 0, -6);
                 self->velocityX = -self->velocityX;
             } else {
-                EntityUnkId15Spawner(self, 5, 3, -16, 32, 0, 6);
+                EntityGreyPuffSpawner(self, 5, 3, -16, 32, 0, 6);
             }
         }
         break;
@@ -836,10 +836,10 @@ void EntityOwlKnight(Entity* self) {
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-3.0);
             if (self->facingLeft) {
-                EntityUnkId15Spawner(self, 5, 3, 12, 32, 0, -4);
+                EntityGreyPuffSpawner(self, 5, 3, 12, 32, 0, -4);
                 self->velocityX = -self->velocityX;
             } else {
-                EntityUnkId15Spawner(self, 5, 3, -12, 32, 0, 4);
+                EntityGreyPuffSpawner(self, 5, 3, -12, 32, 0, 4);
             }
         }
         break;
@@ -963,10 +963,10 @@ void EntityOwlKnight(Entity* self) {
                 PlaySfxPositional(0x793);
                 self->velocityX = FIX(-8.0);
                 if (self->facingLeft) {
-                    EntityUnkId15Spawner(self, 5, 3, 32, 32, 0, -6);
+                    EntityGreyPuffSpawner(self, 5, 3, 32, 32, 0, -6);
                     self->velocityX = -self->velocityX;
                 } else {
-                    EntityUnkId15Spawner(self, 5, 3, -32, 32, 0, 6);
+                    EntityGreyPuffSpawner(self, 5, 3, -32, 32, 0, 6);
                 }
             }
             break;

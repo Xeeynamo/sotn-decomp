@@ -977,10 +977,10 @@ void RicEntityHitByLightning(Entity* self) {
                    ((rand() % 8) + 8));
         yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
                    ((rand() % 8) + 0xA)) +
-                  self->ext.generic.unk98;
+                  self->ext.hitbylightning.unk98;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
-        self->ext.generic.unk98 -= 0x8000;
+        self->ext.hitbylightning.unk98 -= 0x8000;
 
         break;
     }

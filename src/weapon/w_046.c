@@ -418,7 +418,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 2:
-        self->ext.generic.unk98 -= 0x10;
+        self->ext.weapon_046.unk98 -= 0x10;
         self->ext.weapon_046.unk94 += self->ext.generic.unk84.unk / 4;
 
         if (self->ext.weapon_046.unk94 >= self->ext.weapon_046.unk90) {

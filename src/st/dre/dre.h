@@ -25,7 +25,7 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x15 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_FIREBALL,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_ID_BACKGROUND_HOUSE,
     /* 0x17 */ E_ID_HOUSE_SPAWNER,
     /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
@@ -52,7 +52,7 @@ Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];

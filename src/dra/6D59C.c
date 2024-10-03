@@ -797,7 +797,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
         // Hack to load unkAE as an s16 (struct has s8)
         // Longer term, figure out what g_Entites[16-64] are
         // and make dedicated ent extension.
-        if (LOH(entity->ext.generic.unkAE) != itemId) {
+        if (entity->ext.weapon.equipId != itemId) {
             continue;
         }
 
