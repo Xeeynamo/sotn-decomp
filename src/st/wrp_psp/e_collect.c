@@ -160,11 +160,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
 
 #include "../collect_heart_vessel.h"
 
-static void CollectLifeVessel(void) {
-    g_api.PlaySfx(SFX_HEART_PICKUP);
-    g_api.func_800FE044(5, 0x8000);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_life_vessel.h"
 
 static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
