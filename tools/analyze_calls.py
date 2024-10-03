@@ -32,6 +32,11 @@ parser.add_argument(
     action="store_true",
     help="Perform a dry run. Calculate call hierarchy, but skip generating SVGs",
 )
+parser.add_argument(
+    "--output_dir",
+    action="store_true",
+    help="Output directory",
+)
 output_dir = "function_calls"
 # All functions I've found that are used in a 'jalr' instruction in the game
 callable_registers = ["$v0", "$v1", "$a0", "$a1", "$t2"]
@@ -460,6 +465,8 @@ if __name__ == "__main__":
             analyze(function)
     print(f"Calculated call relations in {time.perf_counter() - timer} seconds")
     args = parser.parse_args()
+    if args.output_dir:
+        output_dir = args.output_dir
     if not args.ultradry:
         print(f"Rendering in {'dry' if args.dry else 'full output'} mode")
 
