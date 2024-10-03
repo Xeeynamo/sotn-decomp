@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.FindFirstUnkPrim</title>
 <g id="a_node4"><a xlink:href="no0.FindFirstUnkPrim.svg" xlink:title="no0.FindFirstUnkPrim">
-<ellipse fill="red" stroke="black" cx="543.44" cy="-18" rx="115.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="543.44" cy="-18" rx="115.88" ry="18"/>
 <text text-anchor="middle" x="543.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.FindFirstUnkPrim</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.PrimDecreaseBrightness</title>
 <g id="a_node7"><a xlink:href="no0.PrimDecreaseBrightness.svg" xlink:title="no0.PrimDecreaseBrightness">
-<ellipse fill="red" stroke="black" cx="1230.44" cy="-18" rx="146.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1230.44" cy="-18" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="1230.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.PrimDecreaseBrightness</text>
 </a>
 </g>

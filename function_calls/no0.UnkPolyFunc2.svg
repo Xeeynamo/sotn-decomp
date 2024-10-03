@@ -12,14 +12,14 @@
 <!-- no0.UnkPolyFunc2 -->
 <g id="node1" class="node">
 <title>no0.UnkPolyFunc2</title>
-<ellipse fill="red" stroke="black" cx="222.69" cy="-198" rx="98.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="222.69" cy="-198" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="222.69" y="-194.3" font-family="Times,serif" font-size="14.00">no0.UnkPolyFunc2</text>
 </g>
 <!-- no0.PrimResetNext -->
 <g id="node2" class="node">
 <title>no0.PrimResetNext</title>
 <g id="a_node2"><a xlink:href="no0.PrimResetNext.svg" xlink:title="no0.PrimResetNext">
-<ellipse fill="red" stroke="black" cx="222.69" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="222.69" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="222.69" y="-14.3" font-family="Times,serif" font-size="14.00">no0.PrimResetNext</text>
 </a>
 </g>
