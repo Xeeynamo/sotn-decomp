@@ -114,7 +114,7 @@ void EntityBlade(Entity* self) {
     if ((self->step & 1) && (self->hitFlags & 3)) {
         func_801CE1E8(0xE);
     }
-    if ((self->flags & 0x100) && (self->step < 0x18U) &&
+    if ((self->flags & FLAG_DEAD) && (self->step < 0x18U) &&
         (((self + 13)->ext.GH_Props.unk88 != 0) ||
          ((self + 10)->ext.GH_Props.unk88 != 0))) {
         PlaySfxPositional(0x750);
