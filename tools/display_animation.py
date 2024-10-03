@@ -20,10 +20,6 @@ MAIN_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
 ANIMSET_FILE = "src/dra/d_2F324.c"
 
-VIEWER_WIDTH = 100
-VIEWER_HEIGHT = 150
-
-
 def load_array_from_file(filelines, arrayname):
     arraydata = ""
     inarray = False
@@ -47,7 +43,7 @@ def load_array_from_file(filelines, arrayname):
     exit()
 
 
-def show_animset(anim_num, arg_palette):
+def show_animset(anim_num, arg_palette, view_w, view_h):
     with open(MAIN_ANIM_ARRAY_FILE) as f:
         animdata = f.read().splitlines()
         animarray = load_array_from_file(animdata, MAIN_ANIM_ARRAY)
@@ -96,7 +92,7 @@ def show_animset(anim_num, arg_palette):
                 print("I don't know what this is yet, need new program logic")
                 exit()
             # Now skip to line 984. We're going to make an image from the individual images.
-            overall_image = Image.new("RGBA", (VIEWER_WIDTH, VIEWER_HEIGHT))
+            overall_image = Image.new("RGBA", (view_w, view_h))
             for i in range(spriteSheetIdx):
                 ax.clear()
                 print(frame_params)
@@ -134,7 +130,7 @@ def show_animset(anim_num, arg_palette):
                 # pass pil_image twice to get transparency
                 overall_image.paste(
                     pil_image,
-                    (VIEWER_WIDTH // 2 + xpivot, VIEWER_HEIGHT // 2 + ypivot),
+                    (view_w // 2 + xpivot, view_h // 2 + ypivot),
                     pil_image,
                 )
                 frame_params = frame_params[11:]
@@ -164,7 +160,15 @@ parser.add_argument(
     "e_palette", type=lambda x: int(x, 0), help="Entity's Palette param"
 )
 
+parser.add_argument(
+    "view_width", type=lambda x: int(x, 0), help="Width of your view window"
+)
+
+parser.add_argument(
+    "view_height", type=lambda x: int(x, 0), help="Height of your view window"
+)
+
 args = parser.parse_args()
 
 texture_data = dt.load_raw_dump(args.dump_filename)
-show_animset(args.animset_num, args.e_palette)
+show_animset(args.animset_num, args.e_palette, args.view_width, args.view_height)

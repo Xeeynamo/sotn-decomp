@@ -122,8 +122,9 @@ def retrieve_colored_tpage(raw_dump, colored, tpage_number, clut_number):
 
 
 def draw_tpage_selection(raw_dump, tpage_number, clut_number, left, top, width, height):
+    colored = convert_rgb555(raw_dump)
     image = get_tpage_selection(
-        raw_dump, tpage_number, clut_number, left, top, width, height
+        raw_dump, colored, tpage_number, clut_number, left, top, width, height
     )
     plt.imshow(image)
     plt.show()
