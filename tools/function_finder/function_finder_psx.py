@@ -123,6 +123,9 @@ if __name__ == "__main__":
         branches = f["branches"]
         jump_table = f["jump_table"]
 
+        if not "jr         $ra" in f["text"]:
+            continue
+
         if "/psxsdk/" in name:
             ovl_name = name.split("/")[5]  # grab library name
             func_name = os.path.splitext(os.path.basename(name))[0]
