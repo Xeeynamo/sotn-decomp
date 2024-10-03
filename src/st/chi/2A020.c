@@ -96,7 +96,7 @@ void func_801AA020(Entity* self)
             }
             break;
         case 1:
-            if (func_801A169C(&D_8018173C) & 1) {
+            if (UpdatePhysicsState(&D_8018173C) & 1) {
                 SetStep(2);
             }
             break;

@@ -30,7 +30,7 @@ GetDistanceToPlayerY = 0x801A15C8;
 GetSideToPlayer = 0x801A15FC;
 MoveEntity = 0x801A1640;
 FallEntity = 0x801A1670;
-// func_801A169C
+UpdatePhysicsState = 0x801A169C;
 // func_801A1914
 AllocEntity = 0x801A1AFC;
 // func_801A1B5C

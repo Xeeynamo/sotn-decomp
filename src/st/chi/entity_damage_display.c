@@ -60,7 +60,9 @@ u8 func_801A1474(u8 frames[], Entity* self, u8 arg2) {
 #include "../fall_entity.h"
 
 // [Duplicate]
-s32 func_801A169C(u16* sensors) {
+// [Introduce #defines for return value?]
+// func_801A169C
+s32 UpdatePhysicsState(s16* sensors) {
     Collider col;
     Collider colBack;
     s16 x;
@@ -69,6 +71,7 @@ s32 func_801A169C(u16* sensors) {
 
     MoveEntity();
     FallEntity();
+
     if (g_CurrentEntity->velocityY >= 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
@@ -81,8 +84,7 @@ s32 func_801A169C(u16* sensors) {
                     if (col.effects & EFFECT_SOLID) {
                         g_api.CheckCollision(x, y - 8, &colBack, 0);
                         if (!(colBack.effects & EFFECT_SOLID)) {
-                            g_CurrentEntity->posY.i.hi =
-                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
+                            g_CurrentEntity->posY.i.hi += 4 + col.unk18;
                             g_CurrentEntity->velocityX = 0;
                             g_CurrentEntity->velocityY = 0;
                             g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
@@ -99,8 +101,7 @@ s32 func_801A169C(u16* sensors) {
                 }
                 g_api.CheckCollision(x, y - 8, &colBack, 0);
                 if (!(colBack.effects & EFFECT_SOLID)) {
-                    g_CurrentEntity->posY.i.hi =
-                        g_CurrentEntity->posY.i.hi + col.unk18;
+                    g_CurrentEntity->posY.i.hi += col.unk18;
                     g_CurrentEntity->velocityX = 0;
                     g_CurrentEntity->velocityY = 0;
                     g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
