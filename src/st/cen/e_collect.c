@@ -11,13 +11,11 @@
 
 #include "../prize_drop_fall.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", func_8018CB34);
+#include "../prize_drop_fall2.h"
 
-// TODO: needs c_HeartPrizes
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", CollectHeart);
+#include "../collect_heart.h"
 
-// TODO: needs c_GoldPrizes, g_goldCollectTexts
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", CollectGold);
+#include "../collect_gold.h"
 
 INCLUDE_ASM("st/cen/nonmatchings/e_collect", CollectSubweapon);
 
