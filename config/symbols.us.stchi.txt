@@ -101,7 +101,7 @@ EntitySalemWitchTriboltProjectile = 0x801A9588;
 EntityGremlin = 0x801A97C8;
 EntityGremlinEffect = 0x801A9D40;
 EntityGremlinFire = 0x801A9E94;
-// func_801AA020
+EntityThornweed = 0x801AA020;
 // func_801AA390
 // func_801AB0C0
 // func_801AB548
@@ -157,6 +157,10 @@ g_eRedDoorTiles = 0x80180768;
 
 // Referenced in func_801A8EAC
 sprites_chi_4 = 0x80199340;
+
+// Referenced in func_801AB0C0
+HitboxData = 0x801817A8;
+HitboxIndices = 0x801817D4;
 
 // Referenced in func_801AB548
 sprites_chi_7 = 0x80199A1C;

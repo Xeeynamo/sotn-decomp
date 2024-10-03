@@ -6,26 +6,30 @@
  * Description: Abandoned Mine
  */
 
-s32 func_801A169C(u16*);  // Something about collision?
 extern Entity D_8007D858;
 
-u16 D_8018173C[] = {
-    0x0000, 0x0001, 0x0000, 0x0004, 0x0002, 0xFFFC, 0xFFFC, 0x0000,
+// D_8018173C
+s16 PhysicsSensors[] = {
+    0, 1, 0, 4, 2, -4, -4, 0,
 };
 
-u8 D_8018174C[] = {
+// D_8018174C
+u8 AnimFrames_ThornweedWakeup[] = {
     0x02, 0x01, 0x06, 0x02, 0x06, 0x03, 0x06, 0x04, 0xFF, 0x00, 0x00, 0x00
 };
 
-u8 D_80181758[] = {
+// D_80181758
+u8 AnimFrames_ThornweedIdle[] = {
     0x06, 0x05, 0x06, 0x06, 0x06, 0x07, 0x06, 0x08, 0x00, 0x00, 0x00, 0x00
 };
 
-u8 D_80181764[] = {
+// D_80181764
+u8 AnimFrames_CorpseweedWakeup[] = {
     0x02, 0x09, 0x06, 0x0A, 0x06, 0x0B, 0x06, 0x0C, 0xFF, 0x00, 0x00, 0x00
 };
 
-u8 D_80181770[] = {
+// D_80181770
+u8 AnimFrames_CorpseweedIdle[] = {
     0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00 
 };
 
@@ -41,102 +45,133 @@ u8 D_8018178C[] = {
     0x04, 0x18, 0x03, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0xFF, 0x00, 0x00, 0x00 
 };
 
-u8* D_80181798[] = {
-    &D_8018174C, &D_80181764,
-    &D_80181758, &D_80181770,
+// D_80181798
+u8* AnimFrames_All[] = {
+    &AnimFrames_ThornweedWakeup, &AnimFrames_CorpseweedWakeup,  // WakeUp
+    &AnimFrames_ThornweedIdle, &AnimFrames_CorpseweedIdle,      // Idle
 };
 
-s8 D_801817A8[] = {
+// D_801817A8
+s8 HitboxData[] = {
     0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03, 0x03, 0x01, 0xFE, 0x03, 0x04, 0x00, 0xFA, 0x07, 0x09,
     0x01, 0xFB, 0x09, 0x07, 0xC1, 0xC1, 0x00, 0x00, 0x02, 0x09, 0x05, 0x08, 0x00, 0x00, 0x04, 0x04,
     0x03, 0xF5, 0x04, 0x0C, 0x04, 0xFD, 0x05, 0x05, 0x0F, 0xF5, 0x17, 0x15 
 };
 
-u8 D_801817D4[] = {
+// D_801817D4
+u8 HitboxIndices[] = {
     0x00, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04, 0x04, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04,
     0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00 
 };
 
 extern EntityInit EntityInit_801806D0;
 
-// E_ID_26
+// E_THORNWEED
+// params: 0 = Thornweed, 1 = Corpseweed
 // func_801AA020
 // PSP:func_psp_09249750:Match
 // PSP:https://decomp.me/scratch/LAyvk
-void func_801AA020(Entity* self)
+void EntityThornweed(Entity* self)
 {
-    Entity* entity;    // s0
-    u8* temp_v1_2;     // s2
-    s8* temp;          // s1
-    u32 temp2;
+    const int EntityFormCount = 2;  // Thornweed, Corpseweed
+    const int AnimFrame_ThornweedInit = 1;
+    const int AnimFrame_CorpseweedInit = 9;
+    const int WakeDistance = 0x50;
+    const int CorpseweedSpawnDelay = 0x40;
+    const int DeathExplosionDelay = 0x80;
 
+    enum Step {
+        Init = 0,
+        DropToGround = 1,
+        WaitToWake = 2,
+        WakeUp = 3,
+        Idle = 4,
+        CorpseweedDeath = 6,
+    };
+
+    Entity* entity;
+    u8* animFrames;
+    s8* hitboxData;
+    u32 hitboxIndex;
+
+    // Check for death
     if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
-        if ((self->params) && (self->ext.generic.unk84.U8.unk2)) {
-            SetStep(6);
+        if ((self->params) && (self->ext.thornweed.isCorpseweedSpawned)) {
+            SetStep(CorpseweedDeath);
         } else {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2U, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 4;
                 entity->params = 0;
             }
-            g_api.PlaySfx(0x691);
+            g_api.PlaySfx(NA_SE_EN_THORNWEED_DEATH);
             DestroyEntity(self);
             return;
         }
     }
     
     switch (self->step) {
-        case 0:
+        case Init:
             InitializeEntity(&EntityInit_801806D0);
             if (self->params) {
-                self->animCurFrame = 9;
+                self->animCurFrame = AnimFrame_CorpseweedInit;
             } else {
-                self->animCurFrame = 1;
+                self->animCurFrame = AnimFrame_ThornweedInit;
             }
             break;
-        case 1:
-            if (UpdatePhysicsState(&D_8018173C) & 1) {
-                SetStep(2);
+
+        case DropToGround:
+            if (UpdatePhysicsState(&PhysicsSensors) & 1) {
+                SetStep(WaitToWake);
             }
             break;
-        case 2:
-            if (GetDistanceToPlayerX() < 0x50) {
-                SetStep(3);
+
+        case WaitToWake:
+            if (GetDistanceToPlayerX() < WakeDistance) {
+                SetStep(WakeUp);
             }
             break;
-        case 3:
-            temp_v1_2 = D_80181798[self->params];
-            if (AnimateEntity(temp_v1_2, self) == 0) {
-                self->ext.factory.unk80 = 0x40;
-                SetStep(4);
+
+        case WakeUp:
+            animFrames = AnimFrames_All[self->params];
+            if (AnimateEntity(animFrames, self) == 0) {
+                self->ext.thornweed.timer = CorpseweedSpawnDelay;
+                SetStep(Idle);
             }
             break;
-        case 4:
+
+        case Idle:
+            // Check for any necessary idle init
             if (!self->step_s) {
                 if (self->params) {
-                    if (!--self->ext.generic.unk80.modeS16.unk0) {
+                    if (!--self->ext.thornweed.timer) {
                         self->step_s++;
+
+                        // Spawn the Corpseweed stalk/head
                         entity = self + 1;
                         CreateEntityFromEntity(E_ID_27, self, entity);
                         entity->facingLeft = (GetSideToPlayer() & 1);
                         self->enemyId = 0x9E;
-                        self->ext.stub[0xA] = 1;
+                        self->ext.thornweed.isCorpseweedSpawned = true;
                     }
                 } else {
                     self->step_s++;
                 }
             }
-            temp_v1_2 = D_80181798[self->params + 2];
-            AnimateEntity(temp_v1_2, self);
+
+            // Animate
+            animFrames = AnimFrames_All[self->params + EntityFormCount];
+            AnimateEntity(animFrames, self);
             break;
-        case 6:
+
+        case CorpseweedDeath:
             if (!self->step_s) {
                 entity = self + 1;
-                entity->flags |= 0x100;
+                entity->flags |= FLAG_DEAD;
                 self->hitboxState = 0;
-                self->unk6C = 0x80;
-                self->drawFlags |= 8;
+                self->unk6C = DeathExplosionDelay;
+                self->drawFlags |= FLAG_DRAW_UNK8;
                 self->step_s++;
             }
             if (!--self->unk6C) {
@@ -146,19 +181,21 @@ void func_801AA020(Entity* self)
                     entity->posY.i.hi -= 0xC;
                     entity->params = 2;
                 }
-                g_api.PlaySfx(0x691);
+                g_api.PlaySfx(NA_SE_EN_THORNWEED_DEATH);
                 DestroyEntity(self);
                 return;
             }
             break;
     }
-    temp = &D_801817A8[0];
-    temp2 = D_801817D4[self->animCurFrame];
-    temp = &temp[temp2 << 2];
-    self->hitboxOffX = *temp++;
-    self->hitboxOffY = *temp++;
-    self->hitboxWidth = *temp++;
-    self->hitboxHeight = *temp++;
+
+    // Update the hitbox based on the current animation frame
+    hitboxData = &HitboxData[0];
+    hitboxIndex = HitboxIndices[self->animCurFrame];
+    hitboxData = &hitboxData[hitboxIndex << 2]; // 4 entries per index
+    self->hitboxOffX = *hitboxData++;
+    self->hitboxOffY = *hitboxData++;
+    self->hitboxWidth = *hitboxData++;
+    self->hitboxHeight = *hitboxData++;
 }
 
 INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AA390);    // [Entity]
