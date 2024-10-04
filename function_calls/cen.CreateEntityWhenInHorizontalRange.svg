@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.CreateEntitiesAbove</title>
 <g id="a_node3"><a xlink:href="cen.CreateEntitiesAbove.svg" xlink:title="cen.CreateEntitiesAbove">
-<ellipse fill="red" stroke="black" cx="126.09" cy="-378" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.09" cy="-378" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="126.09" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CreateEntitiesAbove</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>cen.CreateEntitiesBelow</title>
 <g id="a_node4"><a xlink:href="cen.CreateEntitiesBelow.svg" xlink:title="cen.CreateEntitiesBelow">
-<ellipse fill="red" stroke="black" cx="396.09" cy="-378" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="396.09" cy="-378" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="396.09" y="-374.3" font-family="Times,serif" font-size="14.00">cen.CreateEntitiesBelow</text>
 </a>
 </g>

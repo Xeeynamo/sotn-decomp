@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.InitRoomEntities</title>
 <g id="a_node6"><a xlink:href="cen.InitRoomEntities.svg" xlink:title="cen.InitRoomEntities">
-<ellipse fill="red" stroke="black" cx="1116.99" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1116.99" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="1116.99" y="-194.3" font-family="Times,serif" font-size="14.00">cen.InitRoomEntities</text>
 </a>
 </g>

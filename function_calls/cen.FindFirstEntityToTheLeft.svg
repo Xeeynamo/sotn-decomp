@@ -12,14 +12,14 @@
 <!-- cen.FindFirstEntityToTheLeft -->
 <g id="node1" class="node">
 <title>cen.FindFirstEntityToTheLeft</title>
-<ellipse fill="red" stroke="black" cx="148.19" cy="-18" rx="148.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="148.19" cy="-18" rx="148.37" ry="18"/>
 <text text-anchor="middle" x="148.19" y="-14.3" font-family="Times,serif" font-size="14.00">cen.FindFirstEntityToTheLeft</text>
 </g>
 <!-- cen.CreateEntitiesToTheLeft -->
 <g id="node2" class="node">
 <title>cen.CreateEntitiesToTheLeft</title>
 <g id="a_node2"><a xlink:href="cen.CreateEntitiesToTheLeft.svg" xlink:title="cen.CreateEntitiesToTheLeft">
-<ellipse fill="red" stroke="black" cx="148.19" cy="-198" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="148.19" cy="-198" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="148.19" y="-194.3" font-family="Times,serif" font-size="14.00">cen.CreateEntitiesToTheLeft</text>
 </a>
 </g>
