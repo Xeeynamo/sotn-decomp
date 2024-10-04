@@ -227,6 +227,10 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 
     if (!entity->entityId) {
         DestroyEntity(entity);
+        /* This is interesting.  By changing the entityId of the
+         * entity, this effectively changes the update function.
+         * The update function that is called is set
+         */
 #if defined(VERSION_PSP)
         entity->entityId = entityId;
 #else
@@ -348,7 +352,7 @@ void UpdateServant(Entity* self){
     self->hitboxWidth = 0;
     self->hitboxHeight = 0;
     if (self->step < 2) {
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             switch (ServantUnk0()) {
             case 0:
                 D_us_801737D8 = 0x40;
@@ -399,7 +403,7 @@ void UpdateServant(Entity* self){
             self->ext.ghost.unk8C = 0;
             break;
         }
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi)
                 self->facingLeft = 1;
             else
@@ -443,7 +447,7 @@ void UpdateServant(Entity* self){
         UpdateEntityVelocityTowardsTarget(self, D_us_801737C4, D_us_801737C8);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (g_CutsceneHasControl == 0) {
+        if (!g_CutsceneHasControl) {
             // Note: this is an assignment, not an equality check
             if (self->ext.ghost.unkA2 = func_us_80171284(self)) {
                 self->step++;

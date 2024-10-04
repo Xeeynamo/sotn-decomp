@@ -509,7 +509,7 @@ void func_80171ED4(s32 arg0) {
         e->posY.val = 0xFFE00000;
     } else {
         e->entityId = 0xD1;
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             e->posX.val = ServantUnk0() ? 0xC00000 : 0x400000;
             e->posY.val = 0xA00000;
         } else {
@@ -534,7 +534,7 @@ void UpdateServant(Entity* self) {
     if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
-    if (D_8003C708.flags & 0x20) {
+    if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
         switch (ServantUnk0()) {
         case 0:
             D_80174B04 = 0x40;
@@ -570,7 +570,7 @@ void UpdateServant(Entity* self) {
             self->step = 5;
             break;
         }
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi) {
                 self->facingLeft = true;
             } else {
