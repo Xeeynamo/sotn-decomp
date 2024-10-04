@@ -93,7 +93,7 @@ s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 extern ServantDesc D_8D1DC40;
 #endif
 
-void UpdateServant(Entity* self);
+void UpdateServantDefault(Entity* self);
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);

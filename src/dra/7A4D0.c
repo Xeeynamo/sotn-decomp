@@ -98,10 +98,10 @@ void UpdatePlayerEntities(void) {
             } else if (entity->entityId < 0xE0) {
                 /* Objects D0-DF
                  * This is setting the update function for your current servant.
-                 * In the servant code, entityId is updated when the "mode" of the
-                 * servant is changed like when the bat goes from "seek" mode to "attack"
-                 * mode.  These update functions start at entityId = 0xD1
-                 * entityId = 0xD0 would be the init code.
+                 * In the servant code, entityId is updated when the "mode" of
+                 * the servant is changed like when the bat goes from "seek"
+                 * mode to "attack" mode.  These update functions start at
+                 * entityId = 0xD1 entityId = 0xD0 would be the init code.
                  */
                 entity->pfnUpdate =
                     ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];

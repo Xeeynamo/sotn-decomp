@@ -56,10 +56,12 @@ void func_80173C24(void);
 void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    func_80171ED4, UpdateServant, func_80172C30,        func_8017339C,
-    func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
-    func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
-    func_80173C14, func_80173C1C, func_80173C24,        DestroyServantEntity,
+    func_80171ED4,        UpdateServantDefault, func_80172C30,
+    func_8017339C,        func_801733A4,        func_801733AC,
+    func_801733B4,        func_801733BC,        func_801733C4,
+    func_801733CC,        BatFamiliarBlueTrail, func_80173C0C,
+    func_80173C14,        func_80173C1C,        func_80173C24,
+    DestroyServantEntity,
 };
 #endif
 
@@ -209,7 +211,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 
 void func_80171560(Entity* self) {}
 
-// Only ever called by UpdateServant so that is the parent
+// Only ever called by UpdateServantDefault so that is the parent
 void CreateBlueTrailEntity(Entity* parent) {
     Entity* entity;
     s32 i;
@@ -529,7 +531,7 @@ s16 GetTargetPositionWithDistanceBuffer(
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
 #else
-void UpdateServant(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
     if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
