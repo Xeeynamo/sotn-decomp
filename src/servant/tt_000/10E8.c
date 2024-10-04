@@ -527,7 +527,7 @@ s16 GetTargetPositionWithDistanceBuffer(
     s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", UpdateServantDefault);
 #else
 void UpdateServantDefault(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
