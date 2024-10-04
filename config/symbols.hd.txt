@@ -700,6 +700,7 @@ g_CastleFlags_0x62 = 0x8003BE4E;
 g_CastleFlags_0x63 = 0x8003BE4F;
 g_CurrentStream = 0x8003C100;
 g_ClutIds = 0x8003C104;
+g_CutsceneHasControl = 0x8003C704;
 D_8003C708_unk2 = 0x8003C70A;
 D_8003C708_unk4 = 0x8003C70C;
 D_8003C708_zPriority = 0x8003C70E;
