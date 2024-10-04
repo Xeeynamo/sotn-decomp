@@ -56,7 +56,7 @@ void func_80173C24(void);
 void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    func_80171ED4,        UpdateServantDefault, func_80172C30,
+    ServantInit,          UpdateServantDefault, func_80172C30,
     func_8017339C,        func_801733A4,        func_801733AC,
     func_801733B4,        func_801733BC,        func_801733C4,
     func_801733CC,        BatFamiliarBlueTrail, func_80173C0C,
@@ -440,10 +440,9 @@ void func_801719E0(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
-void ProcessEvent(Entity* self, bool resetEvent);
 extern u16 D_80170448[48];
 
-void func_80171ED4(s32 arg0) {
+void ServantInit(InitializeMode mode) {
     u16* dst;
     u16* src;
     RECT rect;
@@ -459,21 +458,21 @@ void func_80171ED4(s32 arg0) {
     const int len = 256;
 #endif
 
-    if ((arg0 == 1) || (arg0 == 3)) {
+    if ((mode == MENU_SWITCH_SERVANT) || (mode == MENU_SAME_SERVANT)) {
         ProcessEvent(NULL, true);
-        if (arg0 == 3) {
+        if (mode == MENU_SAME_SERVANT) {
             return;
         }
     }
 
-    dst = &g_Clut[0x1400];
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
     src = D_80170448;
 
     for (i = 0; i < len; i++) {
         *dst++ = *src++;
     }
 
-    dst = &g_Clut[0x1430];
+    dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
     src = D_80170720;
 
     for (i = 0; i < 32; i++) {
@@ -485,7 +484,7 @@ void func_80171ED4(s32 arg0) {
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = &g_Clut[0x1400];
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
     LoadImage(&rect, (u_long*)dst);
 
     spriteBanks = g_api.o.spriteBanks;
@@ -505,19 +504,19 @@ void func_80171ED4(s32 arg0) {
     e->posY.val = PLAYER.posY.val;
     e->params = 0;
 
-    if (arg0 == 1) {
-        e->entityId = 0xD1;
-        e->posX.val = 0x800000;
-        e->posY.val = 0xFFE00000;
+    if (mode == MENU_SWITCH_SERVANT) {
+        e->entityId = ENTITY_ID_SERVANT;
+        e->posX.val = FIX(128);
+        e->posY.val = FIX(-32);
     } else {
-        e->entityId = 0xD1;
+        e->entityId = ENTITY_ID_SERVANT;
         if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
-            e->posX.val = ServantUnk0() ? 0xC00000 : 0x400000;
-            e->posY.val = 0xA00000;
+            e->posX.val = ServantUnk0() ? FIX(192) : FIX(64);
+            e->posY.val = FIX(160);
         } else {
             e->posX.val =
-                (PLAYER.facingLeft ? +0x120000 : -0x120000) + PLAYER.posX.val;
-            e->posY.val = PLAYER.posY.val - 0x220000;
+                (PLAYER.facingLeft ? FIX(18) : FIX(-18)) + PLAYER.posX.val;
+            e->posY.val = PLAYER.posY.val - FIX(34);
         }
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;

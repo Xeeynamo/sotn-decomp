@@ -52,11 +52,10 @@ extern s16 D_80180EB8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 #include "../entity_prize_drop.h"
 
-// TODO: needs g_ExplosionYVelocities, g_ExplosionAnimations
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", EntityExplosion);
+#include "../entity_explosion.h"
 
 #include "../blink_item.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_collect", EntityEquipItemDrop);
+#include "../entity_equip_item_drop.h"
 
 #endif

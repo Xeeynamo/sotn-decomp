@@ -34,7 +34,6 @@ extern s16
 s32 ServantUnk0();
 void ProcessEvent(Entity* self, bool resetEvent);
 
-void func_us_80171624(s32 arg0);
 void func_us_801720A4(Entity* self);
 void func_us_801720AC(void);
 void func_us_801720B4(void);
@@ -50,7 +49,7 @@ void func_us_801728F4(void);
 void func_us_801728FC(void);
 void DestroyServantEntity(Entity* self);
 ServantDesc g_ServantDesc = {
-    func_us_80171624,    UpdateServantDefault, func_us_801720A4,
+    ServantInit,         UpdateServantDefault, func_us_801720A4,
     func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
     func_us_801720C4,    func_us_801720CC,     func_us_801720D4,
     func_us_801720DC,    func_us_801720E4,     func_us_8017246C,
@@ -257,7 +256,7 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
     // BUG? There is a fall-through case here with no return value on PSX
 }
 
-void func_us_80171624(s32 arg0) {
+void ServantInit(InitializeMode mode) {
     RECT rect;
     u16* dst;
     u16* src;
@@ -273,8 +272,8 @@ void func_us_80171624(s32 arg0) {
     const int len = 256;
 #endif
 
-    if (arg0 != 3) {
-        dst = &g_Clut[0x1400];
+    if (mode != MENU_SAME_SERVANT) {
+        dst = &g_Clut[CLUT_INDEX_SERVANT];
         src = D_us_80170448;
 
         for (i = 0; i < len; i++) {
@@ -286,7 +285,8 @@ void func_us_80171624(s32 arg0) {
             dst++;
         }
 
-        dst = &g_Clut[0x1430];
+        // overwrite part of the clut for this servant
+        dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
         src = D_us_80170580;
 
         for (i = 0; i < 32; i++) {
@@ -298,7 +298,7 @@ void func_us_80171624(s32 arg0) {
         rect.h = 1;
         rect.y = 0xF4;
 
-        dst = &g_Clut[0x1400];
+        dst = &g_Clut[CLUT_INDEX_SERVANT];
         LoadImage(&rect, dst);
 
         spriteBanks = g_api.o.spriteBanks;
@@ -310,19 +310,19 @@ void func_us_80171624(s32 arg0) {
         e->unk5A = 0x6C;
         e->palette = 0x140;
         e->animSet = ANIMSET_OVL(20);
-        e->entityId = 0xD1;
+        e->entityId = ENTITY_ID_SERVANT;
         e->params = 0;
         e->zPriority = PLAYER.zPriority - 2;
         e->facingLeft = (PLAYER.facingLeft + 1) & 1;
         e->posX.val = PLAYER.posX.val;
         e->posY.val = PLAYER.posY.val;
 
-        if (arg0 == 1) {
-            e->entityId = 0xD1;
+        if (mode == MENU_SWITCH_SERVANT) {
+            e->entityId = ENTITY_ID_SERVANT;
             e->posX.val = FIX(128);
             e->posY.val = FIX(-32);
         } else {
-            e->entityId = 0xD1;
+            e->entityId = ENTITY_ID_SERVANT;
             if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
                 if (ServantUnk0()) {
                     e->posX.val = FIX(192);

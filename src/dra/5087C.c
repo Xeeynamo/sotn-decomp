@@ -1277,9 +1277,9 @@ void RunMainEngine(void) {
         }
         D_80097C98 = 0;
         if (D_8003C730 == 1) {
-            func_800E6218(2);
+            InitializeServant(ENGINE_INIT_SERVANT_2);
         } else {
-            func_800E6218(0);
+            InitializeServant(ENGINE_INIT_SERVANT_0);
         }
         if (D_8003C730 == 3) {
             D_8003C730 = 0;
