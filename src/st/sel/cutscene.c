@@ -157,7 +157,7 @@ void SEL_EntityCutscene(Entity* entity) {
     case 0:
         if (SetCutsceneScript(D_8018B304)) {
             g_SkipCutscene = D_801D6B00 = D_801BC3E8 = 0;
-            D_8003C704 = 1;
+            g_CutsceneHasControl = 1;
             entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
             ++entity->step;
@@ -499,7 +499,7 @@ void SEL_EntityCutscene(Entity* entity) {
         }
         break;
     case 7:
-        D_8003C704 = 0;
+        g_CutsceneHasControl = 0;
         break;
     }
 }

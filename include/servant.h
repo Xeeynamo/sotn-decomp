@@ -9,7 +9,7 @@
 
 typedef struct {
     void (*Init)(s32 arg0);
-    void (*Update)(Entity* self);
+    PfnEntityUpdate Update;
     void (*Unk08)(Entity* self);
     void (*Unk0C)(/*?*/);
     void (*Unk10)(/*?*/);
@@ -93,6 +93,7 @@ s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 extern ServantDesc D_8D1DC40;
 #endif
 
+void UpdateServant(Entity* self);
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);

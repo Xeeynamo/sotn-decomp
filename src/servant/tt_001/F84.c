@@ -35,7 +35,6 @@ s32 ServantUnk0();
 void ProcessEvent(Entity* self, bool resetEvent);
 
 void func_us_80171624(s32 arg0);
-void func_us_80171864(Entity* self);
 void func_us_801720A4(Entity* self);
 void func_us_801720AC(void);
 void func_us_801720B4(void);
@@ -51,7 +50,7 @@ void func_us_801728F4(void);
 void func_us_801728FC(void);
 void DestroyServantEntity(Entity* self);
 ServantDesc g_ServantDesc = {
-    func_us_80171624, func_us_80171864, func_us_801720A4, func_us_801720AC,
+    func_us_80171624, UpdateServant, func_us_801720A4, func_us_801720AC,
     func_us_801720B4, func_us_801720BC, func_us_801720C4, func_us_801720CC,
     func_us_801720D4, func_us_801720DC, func_us_801720E4, func_us_8017246C,
     func_us_801728EC, func_us_801728F4, func_us_801728FC, DestroyServantEntity};
@@ -336,7 +335,7 @@ void func_us_80171624(s32 arg0) {
     }
 }
 
-void func_us_80171864(Entity* self) {
+void UpdateServant(Entity* self){
     s32 temp_s4;
     s32 temp_s3;
     s32 temp_s2;
@@ -444,7 +443,7 @@ void func_us_80171864(Entity* self) {
         UpdateEntityVelocityTowardsTarget(self, D_us_801737C4, D_us_801737C8);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (D_8003C704 == 0) {
+        if (g_CutsceneHasControl == 0) {
             // Note: this is an assignment, not an equality check
             if (self->ext.ghost.unkA2 = func_us_80171284(self)) {
                 self->step++;
@@ -460,7 +459,7 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk8C = 0;
             break;
         }
-        if (D_8003C704) {
+        if (g_CutsceneHasControl) {
             self->step = 1;
         }
         if (!CheckEntityValid(self->ext.ghost.unkA2)) {

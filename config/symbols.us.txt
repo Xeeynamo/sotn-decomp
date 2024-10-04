@@ -1157,3 +1157,4 @@ g_DebugPlayer = 0x80098850;
 _svm_brr_start_addr = 0x80098854;
 _svm_okof1 = 0x80098898;
 _svm_okof2 = 0x8009889C;
+g_CutsceneHasControl = 0x8003C704;

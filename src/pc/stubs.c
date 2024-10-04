@@ -42,7 +42,7 @@ GpuBuffer* g_CurrentBuffer;
 u32 g_GameEngineStep;
 s32 D_8003C0F8;
 s32 D_800973EC;
-s32 D_8003C704;
+s32 g_CutsceneHasControl;
 s32 D_800973EC;
 s32 D_8003C73C;
 s32 g_MapCursorTimer;

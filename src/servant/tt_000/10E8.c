@@ -40,7 +40,6 @@ s32 D_80174D40;
 s32 _unused[26];
 
 void func_80171ED4(s32 arg0);
-void func_80172120(Entity* self);
 void func_80172C30(Entity* self);
 void func_8017339C(void);
 void func_801733A4(void);
@@ -57,7 +56,7 @@ void func_80173C24(void);
 void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    func_80171ED4, func_80172120, func_80172C30,        func_8017339C,
+    func_80171ED4, UpdateServant, func_80172C30,        func_8017339C,
     func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
     func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
     func_80173C14, func_80173C1C, func_80173C24,        DestroyServantEntity,
@@ -210,7 +209,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 
 void func_80171560(Entity* self) {}
 
-// Only ever called by func_80172120 so that is the parent
+// Only ever called by UpdateServant so that is the parent
 void CreateBlueTrailEntity(Entity* parent) {
     Entity* entity;
     s32 i;
@@ -530,7 +529,7 @@ s16 GetTargetPositionWithDistanceBuffer(
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
 #else
-void func_80172120(Entity* self) {
+void UpdateServant(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
     if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
@@ -637,7 +636,7 @@ void func_80172120(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (D_8003C704) {
+        if (g_CutsceneHasControl) {
             break;
         }
         D_80174B24 = D_80174AFC - self->posX.i.hi;
