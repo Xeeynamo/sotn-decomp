@@ -7,6 +7,6 @@
 
 #else
 
-INCLUDE_ASM("st/cen/nonmatchings/e_stage_name", EntityStageNamePopup);
+#include "../entity_stage_name_popup_jp.h"
 
 #endif
