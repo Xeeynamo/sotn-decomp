@@ -39,7 +39,6 @@ s32 g_IsServantDestroyed;
 s32 D_80174D40;
 s32 _unused[26];
 
-void func_80171ED4(s32 arg0);
 void func_80172C30(Entity* self);
 void func_8017339C(void);
 void func_801733A4(void);
