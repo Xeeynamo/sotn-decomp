@@ -238,9 +238,9 @@ set(SOURCE_FILES_RIC
 
 set(SOURCE_FILES_TT_000
     src/servant/tt_000/10E8.c
-    src/servant/tt_000/448.c
+    src/servant/tt_000/clutdata.c
     src/servant/tt_000/45E4.c
-    src/servant/tt_000/4A8.c
+    src/servant/tt_000/animationdata.c
     src/servant/tt_000/608.c
     src/servant/tt_000/spriteparts.c
 )

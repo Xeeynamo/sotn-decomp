@@ -20,7 +20,7 @@ typedef enum {
 
 typedef struct {
     void (*Init)(InitializeMode mode);
-    void (*Update)(Entity* self);
+    PfnEntityUpdate Update;
     void (*Unk08)(Entity* self);
     void (*Unk0C)(/*?*/);
     void (*Unk10)(/*?*/);
@@ -67,7 +67,7 @@ typedef struct ServantEvent {
 
 extern ServantDesc g_ServantDesc;
 extern SpriteParts* D_80170040[];
-extern u16 D_80170448[];
+extern u16 g_ServantClut[];
 extern AnimationFrame D_801704A8[];
 extern AnimationFrame D_80170514[];
 extern AnimationFrame D_8017054C[];
@@ -106,6 +106,7 @@ extern ServantDesc D_8D1DC40;
 
 void ServantInit(InitializeMode mode);
 
+void UpdateServantDefault(Entity* self);
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);

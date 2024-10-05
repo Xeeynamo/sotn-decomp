@@ -1302,7 +1302,7 @@ void RicEntityHitByHoly(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (!(g_Player.unk0C & PLAYER_STATUS_UNK10000)) {
+        if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
             DestroyEntity(entity);
             return;
         }
@@ -1595,9 +1595,9 @@ void RicUpdatePlayerEntities(void) {
     // This IF will fire if we have enough hearts to use a subweapon crash.
     // No idea what it's doing here.
     if (func_8015FB84(&subwpn, true, false) >= 0) {
-        g_Player.unk0C |= PLAYER_STATUS_UNK200000;
+        g_Player.status |= PLAYER_STATUS_UNK200000;
     }
-    if (g_Player.unk0C & (PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK80000)) {
+    if (g_Player.status & (PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK80000)) {
         FntPrint("dead player\n");
         entity = &g_Entities[17]; // Weird code here. Set entity to #17 but...
         entity -= 13; // then change to #4 before the for-loop starting with 4?

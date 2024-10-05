@@ -1190,7 +1190,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 2:
         if ((self->hitFlags != 0) &&
-            (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+            (g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
             g_CastleFlags[JEWEL_SWORD_ROOM] |= wolfFlag;
         }
         break;
@@ -1285,7 +1285,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 2:
         if ((self->hitFlags != 0) &&
-            (g_Player.unk0C & PLAYER_STATUS_BAT_FORM)) {
+            (g_Player.status & PLAYER_STATUS_BAT_FORM)) {
             g_CastleFlags[JEWEL_SWORD_ROOM] |= batFlag;
         }
         break;

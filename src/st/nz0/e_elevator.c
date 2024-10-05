@@ -17,7 +17,7 @@ void EntityElevator(Entity* self) {
 
     FntPrint("elevator:%x\n", g_ElevatorTarget);
 
-    if (g_Player.unk0C & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+    if (g_Player.status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
         temp = 0;
     } else {
         temp = GetPlayerCollisionWith(self, 16, 5, 4);

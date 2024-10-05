@@ -860,7 +860,7 @@ loop_5:
     D_801362C8 = 0;
     g_DebugIsRecordingVideo = false;
     g_DemoMode = Demo_None;
-    D_8003C704 = 0;
+    g_CutsceneHasControl = 0;
     D_800973EC = 0;
     D_800974A4 = 0;
     g_CdStep = CdStep_None;

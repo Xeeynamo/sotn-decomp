@@ -42,13 +42,13 @@ void EntityCSMoveAlucard(Entity* self) {
         if (self->ext.generic.unk7C.u != 0) {
             self->ext.generic.unk7C.u--;
         }
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = 8;
-                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = 4;
-                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = 2;
                 }
             }
@@ -152,11 +152,11 @@ void EntityUnkId23(Entity* self) {
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
-        if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
-        } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+        } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
             g_Player.padSim = PAD_L1;
-        } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
         }
         g_Player.D_80072EFC = PAD_L2;
@@ -164,13 +164,13 @@ void EntityUnkId23(Entity* self) {
 
     case 1:
         g_Player.padSim = 0;
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_R1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = PAD_L1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = PAD_R2;
                 }
             }

@@ -51,7 +51,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
     Entity* player = &PLAYER;
 
     sp18 = player->posX.i.hi + tilemap->scrollX.i.hi;
-    status = g_Player.unk0C;
+    status = g_Player.status;
     if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
         if (status & PLAYER_STATUS_UNK_20) {
             sp4A = 0x14;
