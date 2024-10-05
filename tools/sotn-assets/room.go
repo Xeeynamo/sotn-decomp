@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 )
@@ -21,27 +22,24 @@ func (r room) isTerminator() bool {
 	return r.Left == 0x40
 }
 
-func readRooms(file *os.File, off psx.Addr) ([]room, dataRange, error) {
+func readRooms(file *os.File, off psx.Addr) ([]room, datarange.DataRange, error) {
 	if off == 0 {
-		return nil, dataRange{}, nil
+		return nil, datarange.DataRange{}, nil
 	}
 	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
-		return nil, dataRange{}, err
+		return nil, datarange.DataRange{}, err
 	}
 
 	rooms := []room{}
 	for {
 		var room room
 		if err := binary.Read(file, binary.LittleEndian, &room); err != nil {
-			return nil, dataRange{}, err
+			return nil, datarange.DataRange{}, err
 		}
 		if room.isTerminator() {
 			break
 		}
 		rooms = append(rooms, room)
 	}
-	return rooms, dataRange{
-		begin: off,
-		end:   off.Sum(len(rooms)*8 + 4),
-	}, nil
+	return rooms, datarange.FromAddr(off, len(rooms)*8+4), nil
 }
