@@ -439,8 +439,6 @@ void func_801719E0(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
-extern u16 D_80170448[48];
-
 void ServantInit(InitializeMode mode) {
     u16* dst;
     u16* src;
@@ -452,7 +450,7 @@ void ServantInit(InitializeMode mode) {
 
 #ifdef VERSION_PC
     // i exceeds the size of D_80170448
-    const int len = LEN(D_80170448);
+    const int len = LEN(g_ServantClut);
 #else
     const int len = 256;
 #endif
@@ -465,7 +463,7 @@ void ServantInit(InitializeMode mode) {
     }
 
     dst = &g_Clut[CLUT_INDEX_SERVANT];
-    src = D_80170448;
+    src = g_ServantClut;
 
     for (i = 0; i < len; i++) {
         *dst++ = *src++;

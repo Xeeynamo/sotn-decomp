@@ -262,14 +262,14 @@ void ServantInit(InitializeMode mode) {
 
 #ifdef VERSION_PC
     // i exceeds the size of D_80170448
-    const int len = LEN(D_80170448);
+    const int len = LEN(g_ServantClut);
 #else
     const int len = 256;
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
         dst = &g_Clut[CLUT_INDEX_SERVANT];
-        src = D_us_80170448;
+        src = g_ServantClut;
 
         for (i = 0; i < len; i++) {
             temp = *src++;

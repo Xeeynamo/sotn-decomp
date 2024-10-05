@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
-u16 D_80170448[] = {
+u16 g_ServantClut[] = {
     /* 80170448 */ 0x0000,
     /* 8017044A */ 0x07E1,
     /* 8017044C */ 0x3023,
