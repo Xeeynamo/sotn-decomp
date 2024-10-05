@@ -50,7 +50,7 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
-	sb.WriteString(fmt.Sprintf("unsigned short %s[] = {\n", symbol))
+	sb.WriteString(fmt.Sprintf("u16 %s[] = {\n", symbol))
 	for i := 0; i < len(data); i += 2 {
 		sb.WriteString(fmt.Sprintf("0x%02X%02X,", data[i+1], data[i]))
 		if (i & 31) == 30 {
@@ -245,7 +245,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	sb.WriteString("// clang-format off\n")
 	for name := range tilemaps {
 		symbol := makeSymbolFromFileName(name)
-		sb.WriteString(fmt.Sprintf("extern unsigned short %s[];\n", symbol))
+		sb.WriteString(fmt.Sprintf("extern u16 %s[];\n", symbol))
 	}
 	for name := range tiledefs {
 		symbol := makeSymbolFromFileName(name)
@@ -294,13 +294,13 @@ func buildSpriteGroup(sb *strings.Builder, sprites []*[]sprite, mainSymbol strin
 			} else {
 				size += 1
 			}
-			sb.WriteString(fmt.Sprintf("static signed short %s[%d];\n", symbol, size))
+			sb.WriteString(fmt.Sprintf("static s16 %s[%d];\n", symbol, size))
 			symbols = append(symbols, symbol)
 		} else {
 			symbols = append(symbols, "")
 		}
 	}
-	sb.WriteString(fmt.Sprintf("signed short* %s[] = {\n", mainSymbol))
+	sb.WriteString(fmt.Sprintf("s16* %s[] = {\n", mainSymbol))
 	for _, symbol := range symbols {
 		if len(symbol) > 0 {
 			sb.WriteString(fmt.Sprintf("    %s,\n", symbol))
@@ -313,7 +313,7 @@ func buildSpriteGroup(sb *strings.Builder, sprites []*[]sprite, mainSymbol strin
 		if spriteGroup == nil {
 			continue
 		}
-		sb.WriteString(fmt.Sprintf("static signed short %s[] = {\n", symbols[i]))
+		sb.WriteString(fmt.Sprintf("static s16 %s[] = {\n", symbols[i]))
 		sb.WriteString(fmt.Sprintf("    %d,\n", len(*spriteGroup)))
 		for _, sprite := range *spriteGroup {
 			sb.WriteString(fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d,\n",
@@ -365,6 +365,7 @@ func buildSprites(fileName string, outputDir string) error {
 	sbHeader.WriteString("// clang-format off\n")
 	sbData := strings.Builder{}
 	sbData.WriteString("// clang-format off\n")
+	sbData.WriteString("#include \"common.h\"\n")
 	symbols := []string{}
 	for i, sprites := range spritesBanks.Banks {
 		if len(sprites) == 0 {
@@ -372,12 +373,12 @@ func buildSprites(fileName string, outputDir string) error {
 			continue
 		}
 		symbol := fmt.Sprintf("sprites_%s_%d", ovlName, i)
-		sbHeader.WriteString(fmt.Sprintf("extern signed short* %s;\n", symbol))
+		sbHeader.WriteString(fmt.Sprintf("extern s16* %s;\n", symbol))
 		buildSpriteGroup(&sbData, sprites, symbol, r)
 		symbols = append(symbols, symbol)
 	}
 
-	sbHeader.WriteString("static signed short* spriteBanks[] = {\n")
+	sbHeader.WriteString("static s16* spriteBanks[] = {\n")
 	for _, index := range spritesBanks.Indices {
 		if index >= 0 {
 			sbHeader.WriteString(fmt.Sprintf("    &%s,\n", symbols[index]))
@@ -476,6 +477,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 
 	sbHeader := strings.Builder{}
 	sbHeader.WriteString("#include <stage.h>\n\n")
+	sbHeader.WriteString("#include \"common.h\"\n\n")
 	sbHeader.WriteString("// clang-format off\n")
 	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_x[];\n", symbolName))
 	sbHeader.WriteString("LayoutEntity* g_pStObjLayoutHorizontal[] = {\n")
@@ -491,13 +493,14 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 
 	sbData := strings.Builder{}
+	sbData.WriteString("#include \"common.h\"\n\n")
 	sbData.WriteString("// clang-format off\n")
-	sbData.WriteString(fmt.Sprintf("unsigned short %s_x[] = {\n", symbolName))
+	sbData.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
 	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true), false); err != nil {
 		return fmt.Errorf("unable to build X entity layout: %w", err)
 	}
 	sbData.WriteString(fmt.Sprintf("};\n"))
-	sbData.WriteString(fmt.Sprintf("unsigned short %s_y[] = {\n", symbolName))
+	sbData.WriteString(fmt.Sprintf("u16 %s_y[] = {\n", symbolName))
 	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, false), true); err != nil {
 		return fmt.Errorf("unable to build Y entity layout: %w", err)
 	}
