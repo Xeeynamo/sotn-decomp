@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityRelicOrb);
 
@@ -55,7 +56,17 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", func_us_801CD750);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", func_us_801CD864);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", func_us_801CDAD4);
+// Duplicates code in boss/mar
+void UpdateStatueTiles(s32 tilePos, s32 tile) {
+    u32 i;
+
+    for (i = 0; i < 6; i++) {
+        g_Tilemap.fg[tilePos] = tile;
+        tilePos++;
+        g_Tilemap.fg[tilePos] = tile;
+        tilePos += 15;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", func_us_801CDB20);
 
