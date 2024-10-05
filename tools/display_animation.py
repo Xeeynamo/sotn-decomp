@@ -2,7 +2,7 @@
 # Uses display_texture.py as dependency, so make sure that is available to it.
 
 # A normal call might look like:
-# python3 tools/display_animation.py LIVE 2
+# python3 tools/display_animation.py LIVE 2 0x163 100 100
 # This loads live textures from PCSX, and then displays ANIMSET_DRA(2).
 import display_texture as dt
 import argparse
@@ -44,39 +44,47 @@ def load_array_from_file(filelines, arrayname):
 
 
 def show_animset(anim_num, arg_palette, view_w, view_h):
-    with open(MAIN_ANIM_ARRAY_FILE) as f:
-        animdata = f.read().splitlines()
-        animarray = load_array_from_file(animdata, MAIN_ANIM_ARRAY)
-        anim_set_name = animarray[anim_num]
-    print(f"Animation set {anim_num} is {anim_set_name}. Loading.")
-    with open(ANIMSET_FILE) as f:
-        framesdata = f.read().splitlines()
-        framearray = load_array_from_file(framesdata, anim_set_name)
+
     # Now we have an array that tells us the name of all the frames.
     # Start GUI code.
     class AnimationShower:
         def __init__(self):
             self.anim_index = 1
             self.textureDisplayer = dt.textureDisplayer(texture_data)
+            # Need to load the animation's frames now.
+            # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
+            if(anim_num & 0x8000):
+                print("Overlay animation")
+                ovl_spritebank = anim_num & 0x7FFF;
+                print(ovl_spritebank)
+                exit()
+            with open(MAIN_ANIM_ARRAY_FILE) as f:
+                animdata = f.read().splitlines()
+                animarray = load_array_from_file(animdata, MAIN_ANIM_ARRAY)
+                anim_set_name = animarray[anim_num]
+            print(f"Animation set {anim_num} is {anim_set_name}. Loading.")
+            with open(ANIMSET_FILE) as f:
+                self.framesdata = f.read().splitlines()
+                self.framearray = load_array_from_file(self.framesdata, anim_set_name)
 
         def prev(self, event):
             self.anim_index -= 1
             if self.anim_index < 1:
-                self.anim_index = len(framearray) - 1
+                self.anim_index = len(self.framearray) - 1
             self.render_frame()
 
         def next(self, event):
             self.anim_index += 1
-            if self.anim_index >= len(framearray):
+            if self.anim_index >= len(self.framearray):
                 self.anim_index = 1
             self.render_frame()
 
         def render_frame(self):
             print("RENDERING", self.anim_index)
-            frame_name = framearray[self.anim_index]
+            frame_name = self.framearray[self.anim_index]
             # prepend the s16 to make sure we get the actual array, not something that
             # points to the array
-            frame_params = load_array_from_file(framesdata, "s16 " + frame_name)
+            frame_params = load_array_from_file(self.framesdata, "s16 " + frame_name)
             data_size = 1 + int(frame_params[0]) * 11
             frame_params = frame_params[:data_size]
             frame_params = [int(x) for x in frame_params]
@@ -134,7 +142,7 @@ def show_animset(anim_num, arg_palette, view_w, view_h):
                     pil_image,
                 )
                 frame_params = frame_params[11:]
-            ax.set_title(f"Frame #{self.anim_index} of {len(framearray)}")
+            ax.set_title(f"Frame #{self.anim_index} of {len(self.framearray)}")
             ax.imshow(overall_image)
             plt.draw()
 
@@ -154,7 +162,7 @@ def show_animset(anim_num, arg_palette, view_w, view_h):
 parser = argparse.ArgumentParser(description="Renders in-game animations from ANIMSET")
 parser.add_argument("dump_filename")
 parser.add_argument(
-    "animset_num", type=int, help="Animset number; 2 for ANIMSET_DRA(2)"
+    "animset_num", type=lambda x: int(x, 0), help="Animset number; 2 for ANIMSET_DRA(2)"
 )
 parser.add_argument(
     "e_palette", type=lambda x: int(x, 0), help="Entity's Palette param"
