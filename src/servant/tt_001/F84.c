@@ -256,6 +256,10 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
     // BUG? There is a fall-through case here with no return value on PSX
 }
 
+#ifdef VERSION_PC
+extern u16 g_ServantClut[48];
+#endif
+
 void ServantInit(InitializeMode mode) {
     RECT rect;
     u16* dst;
@@ -264,17 +268,15 @@ void ServantInit(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* e;
     u16 temp;
-
 #ifdef VERSION_PC
-    // i exceeds the size of D_80170448
-    const int len = LEN(D_80170448);
+    const int len = LEN(g_ServantClut);
 #else
     const int len = 256;
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
         dst = &g_Clut[CLUT_INDEX_SERVANT];
-        src = D_us_80170448;
+        src = g_ServantClut;
 
         for (i = 0; i < len; i++) {
             temp = *src++;
