@@ -95,7 +95,7 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/BOSS/MAR/MAR.BIN -o assets/boss/mar
-	$(SOTNASSETS) config extract config/assets.us.weapon.yaml
+	$(SOTNASSETS) config extract config/assets.us.yaml
 extract_assets_hd: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
 	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin -o assets/st/cen
@@ -110,7 +110,7 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 	$(SOTNASSETS) stage build_all -i assets/st/rwrp -o src/st/rwrp/
 	$(SOTNASSETS) stage build_all -i assets/boss/mar -o src/boss/mar/
-	$(SOTNASSETS) config build config/assets.$(VERSION).weapon.yaml
+	$(SOTNASSETS) config build config/assets.$(VERSION).yaml
 build_assets_hd: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
