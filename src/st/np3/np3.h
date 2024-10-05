@@ -27,7 +27,7 @@ typedef enum {
     /* 0x15 */ E_GREY_PUFF = 0x15,
 
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
-    /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
+    /* 0x1E */ E_CAVERN_DOOR_PLATFORM = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x28 */ E_LIGHTNING_THUNDER,
     /* 0x29 */ E_LIGHTNING_CLOUD,

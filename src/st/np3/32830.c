@@ -646,26 +646,26 @@ void func_801B3D24(Primitive* prim) {
     }
 }
 
-void EntityCavernDoorLever(Entity* entity) {
+void EntityCavernDoorLever(Entity* self) {
     s32 posX;
     s32 posY;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
-        entity->animCurFrame = 18;
-        entity->rotZ = -0x200;
-        entity->drawFlags |= FLAG_DRAW_ROTZ;
-        CreateEntityFromEntity(E_CAVERN_DOOR_LEVER_UNK0, entity, &entity[1]);
+        self->animCurFrame = 18;
+        self->rotZ = -0x200;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
+        CreateEntityFromEntity(E_CAVERN_DOOR_PLATFORM, self, &self[1]);
         if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
-            entity->rotZ = 0;
+            self->rotZ = 0;
         }
 
     case 1:
-        if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
-            entity->rotZ += 4;
-            if (entity->rotZ > 0) {
-                entity->rotZ = 0;
+        if (self[1].ext.cavernDoor.collision != 0) {
+            self->rotZ += 4;
+            if (self->rotZ > 0) {
+                self->rotZ = 0;
                 if (g_CastleFlags[CASTLE_FLAG_48] == 0) {
                     g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
@@ -677,12 +677,12 @@ void EntityCavernDoorLever(Entity* entity) {
         break;
     }
 
-    posX = entity->posX.val;
-    posY = entity->posY.val;
-    posX += rcos(entity->rotZ) * 0x280;
-    posY += rsin(entity->rotZ) * 0x280;
-    entity[1].posX.val = posX;
-    entity[1].posY.val = posY;
+    posX = self->posX.val;
+    posY = self->posY.val;
+    posX += rcos(self->rotZ) * 0x280;
+    posY += rsin(self->rotZ) * 0x280;
+    self[1].posX.val = posX;
+    self[1].posY.val = posY;
 }
 
 // platform attached to lever at cavern door
@@ -851,7 +851,7 @@ void func_801B44B4(WeightSelect weight) {
         posY -= 16;
     }
 
-    prim = *(s32*)&g_CurrentEntity->ext.generic.unk7C;
+    prim = g_CurrentEntity->ext.prim;
 
     while (posY > 0) {
         prim->y2 = prim->y3 = posY;
@@ -922,7 +922,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
         poly = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *(s32*)&self->ext.generic.unk7C = poly;
+        self->ext.prim = poly;
         self->flags |= FLAG_HAS_PRIMS;
 
         while (poly != NULL) {
@@ -1001,7 +1001,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
         poly = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        *(s32*)&self->ext.generic.unk7C = poly;
+        self->ext.prim = poly;
         self->flags |= FLAG_HAS_PRIMS;
 
         while (poly != NULL) {
@@ -1141,7 +1141,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 1:
         if (self->hitFlags != 0) {
-            tileLayoutPtr = &D_80181120[self->ext.generic.unk84.S16.unk0 * 6];
+            tileLayoutPtr = &D_80181120[self->ext.mermanRock.unk84 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
@@ -1157,11 +1157,11 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
+                newEntity->posX.i.hi += self->ext.mermanRock.unk84 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            params = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_8018120C[self->ext.mermanRock.unk84 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1173,10 +1173,10 @@ void EntityMermanRockLeftSide(Entity* self) {
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
-            self->ext.generic.unk84.S16.unk0++;
+            self->ext.mermanRock.unk84++;
         }
 
-        if (self->ext.generic.unk84.S16.unk0 >= 2) {
+        if (self->ext.mermanRock.unk84 >= 2) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
@@ -1199,7 +1199,6 @@ void EntityMermanRockLeftSide(Entity* self) {
 
 // right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
-    const int jewelSwordRoomUnlok = 51;
     const int rockBroken = (1 << 1);
     const int batFlag = (1 << 3);
     u16* tileLayoutPtr;
@@ -1240,7 +1239,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 1:
         if (self->hitFlags != 0) {
-            tileLayoutPtr = &D_8018115C[(self->ext.generic.unk84.S16.unk0 * 6)];
+            tileLayoutPtr = &D_8018115C[(self->ext.mermanRock.unk84 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
@@ -1256,11 +1255,11 @@ void EntityMermanRockRightSide(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
+                newEntity->posX.i.hi -= self->ext.mermanRock.unk84 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            params = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_8018120C[self->ext.mermanRock.unk84 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1273,10 +1272,10 @@ void EntityMermanRockRightSide(Entity* self) {
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
-            self->ext.generic.unk84.S16.unk0++;
+            self->ext.mermanRock.unk84++;
         }
 
-        if (self->ext.generic.unk84.S16.unk0 >= 2) {
+        if (self->ext.mermanRock.unk84 >= 2) {
             g_CastleFlags[JEWEL_SWORD_ROOM] |= rockBroken;
             self->hitboxState = 1;
             self->step++;

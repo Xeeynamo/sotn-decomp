@@ -58,7 +58,7 @@ typedef struct ET_Generic {
     /* 0x84 */ Multi unk84;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
-    /* 0x90 */ s16 unk90;
+    /* 0x90 */ s16 : 16;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ u8 unk94;
 } ET_Generic;
@@ -1677,11 +1677,11 @@ typedef struct {
 } ET_LockCamera;
 
 typedef struct {
-    struct Primitive* prim;
-    s32 jiggler;
-    s8 collision;
-    f32 xCoord;
-    f32 yCoord;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 jiggler;
+    /* 0x84 */ s8 collision;
+    /* 0x88 */ f32 xCoord;
+    /* 0x8C */ f32 yCoord;
 } ET_CavernDoor;
 
 // Unknown g_Entities[8] and [1] accessed directly in SEL
@@ -1798,6 +1798,12 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_SecretStairs;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
@@ -1817,6 +1823,25 @@ typedef struct {
     /* 0x88 */ u16 unk88;
     /* 0x8A */ u16 unk8A;
 } ET_Warg;
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 velX;
+    /* 0x86 */ s16 palette;
+} ET_SubwpnContainerGlass;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+} ET_BloodyZombie;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+} ET_MermanRock;
 
 // ====== RIC ENTITIES ======
 
@@ -1972,6 +1997,10 @@ typedef union { // offset=0x7C
     ET_BackgroundLightning backgroundLightning;
     ET_DestructAnimation destructAnim;
     ET_Warg warg;
+    ET_SecretStairs secretStairs;
+    ET_SubwpnContainerGlass subwpnContGlass;
+    ET_BloodyZombie bloodyZombie;
+    ET_MermanRock mermanRock;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
