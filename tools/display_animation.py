@@ -1,9 +1,19 @@
+# Author: bismurphy. Please feel free to contact with any questions!
+# This tool may be non-intuitive and/or buggy to use; I am happy to make
+# fixes if anyone requests them.
+
 # Displays animations for entities.
 # Uses display_texture.py as dependency, so make sure that is available to it.
 
-# A normal call might look like:
-# python3 tools/display_animation.py LIVE 2 0x163 100 100
-# This loads live textures from PCSX, and then displays ANIMSET_DRA(2).
+# Example use case: We wanted to figure out what entity EntityLightningCloud is
+# in NO3/NP3. We can see in its initialization that its Animset is 0x8001
+# and its palette is 0. Then, we can do:
+# python3 tools/display_animation.py LIVE no3 0x8001 0 150 100
+# To review all the frames in that animation.
+# LIVE will pull a live vram dump from pcsx. no3 is the overlay to grab sprite
+# data from. 0x8001 is that animset, 0 is the clut, and then 150x100 will be our
+# viewport size as we click through the entities.
+
 import display_texture as dt
 import argparse
 import re
@@ -19,9 +29,7 @@ DRA_ANIM_ARRAY_FILE = "src/dra/63ED4.c"
 DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
 DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
-# change for other overlays (should make it an arg longterm)
-OVERLAY_SPRITEBANKS_FILE = "src/st/no3/sprite_banks.h"
-OVERLAY_ANIMSETS = "src/st/no3/sprites.c"
+
 
 def load_array_from_file(filelines, arrayname):
     print(f"Trying to load {arrayname}")
@@ -47,7 +55,7 @@ def load_array_from_file(filelines, arrayname):
     exit()
 
 
-def show_animset(anim_num, arg_palette, view_w, view_h):
+def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h):
 
     # Now we have an array that tells us the name of all the frames.
     # Start GUI code.
@@ -59,11 +67,15 @@ def show_animset(anim_num, arg_palette, view_w, view_h):
             # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
             if(anim_num & 0x8000):
                 print("Overlay animation")
+                assert ovl_name != "dra"
                 spritebank = anim_num & 0x7FFF
-                main_array_file = OVERLAY_SPRITEBANKS_FILE
+                main_array_file = f"src/st/{ovl_name}/sprite_banks.h"
                 main_array = "spriteBanks"
-                animset_file = OVERLAY_ANIMSETS
+                animset_file = f"src/st/{ovl_name}/sprites.c"
+
             else:
+                print("DRA animation")
+                assert ovl_name == "dra"
                 main_array_file = DRA_ANIM_ARRAY_FILE
                 main_array = DRA_ANIM_ARRAY
                 animset_file = DRA_ANIMSET_FILE
@@ -173,7 +185,12 @@ def show_animset(anim_num, arg_palette, view_w, view_h):
 
 
 parser = argparse.ArgumentParser(description="Renders in-game animations from ANIMSET")
+
 parser.add_argument("dump_filename")
+
+parser.add_argument(
+    "overlay", help="Overlay name. dra, no3, cen, etc"
+)
 parser.add_argument(
     "animset_num", type=lambda x: int(x, 0), help="Animset number; 2 for ANIMSET_DRA(2)"
 )
@@ -192,4 +209,4 @@ parser.add_argument(
 args = parser.parse_args()
 
 texture_data = dt.load_raw_dump(args.dump_filename)
-show_animset(args.animset_num, args.e_palette, args.view_width, args.view_height)
+show_animset(args.overlay, args.animset_num, args.e_palette, args.view_width, args.view_height)
