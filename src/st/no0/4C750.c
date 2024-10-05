@@ -2,8 +2,6 @@
 #include "common.h"
 #include "no0.h"
 
-// INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CC750);
-
 extern void func_us_801CC8F8(Entity*);
 extern u16 D_us_80180A88;
 
@@ -42,7 +40,7 @@ void func_us_801CC750(Entity* self) {
         }
     }
 
-    entityPtr = (Entity*)((char*)self + 0xBC);
+    entityPtr = &self[1];
 
     for (i = -0x10; i < 0x130; i += 0x60) {
         DestroyEntity(entityPtr);
@@ -51,7 +49,7 @@ void func_us_801CC750(Entity* self) {
         entityPtr->posY.i.hi = 0x8E;
         entityPtr->posX.i.hi = i;
 
-        entityPtr = (Entity*)((char*)entityPtr + 0xBC);
+        entityPtr++;
     }
 }
 
