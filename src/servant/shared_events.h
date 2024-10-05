@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #define E_UNK_DC 220
 #define E_UNK_DF 223
 // clang-format off
