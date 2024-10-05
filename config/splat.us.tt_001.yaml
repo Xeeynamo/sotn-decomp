@@ -41,7 +41,8 @@ segments:
       - [0x0, .data, F84]
       - [0x40, .data, spriteparts]
       - [0x448, .data, clutdata]
-      - [0x4A8, data]
+      - [0x4A8, .data, animationdata]
+      - [0x508, data]
       - [0xEFC, .rodata, F84]
       - [0xF3C, .rodata, F84] # ProcessSfxState
       - [0xF60, c, F84]
