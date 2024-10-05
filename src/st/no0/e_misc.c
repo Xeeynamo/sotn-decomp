@@ -37,4 +37,3 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityBigRedFireball);
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", ClutLerp);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", PlaySfxPositional);
-
