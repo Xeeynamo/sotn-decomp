@@ -140,6 +140,7 @@ MakeEntityFromId = 0x801CC108;
 EntityBigRedFireball = 0x801CC288;
 ClutLerp = 0x801CC460;
 PlaySfxPositional = 0x801CC658;
+UpdateStatueTiles = 0x801CDAD4;
 StageNamePopupHelper = 0x801CE654;
 EntityStageNamePopup = 0x801CE824;
 func_801CD78C = 0x801D2374;
