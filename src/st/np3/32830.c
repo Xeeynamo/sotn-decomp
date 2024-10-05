@@ -50,7 +50,7 @@ void EntityBackgroundLightning(Entity* self) {
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_801B5E98, newEntity);
+                CreateEntityFromCurrentEntity(E_LIGHTNING_CLOUD, newEntity);
                 if (random0to3 >= 3) {
                     random0to3 = 0;
                 }
@@ -1583,18 +1583,21 @@ void EntityLightningThunder(Entity* self) {
     }
 }
 
-void func_801B5E98(Entity* self) {
+// When lightning strikes, we get a bright bolt, but it is against a cloud
+// as a background. It's subtle and hard to see, but it's there.
+void EntityLightningCloud(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x29;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        // There are 3 shapes of cloud, this picks which one.
         self->animCurFrame = self->params + 0x22;
         self->posX.i.hi = D_80181220[self->params][0];
         self->posY.i.hi = D_80181220[self->params][1];
-        self->ext.generic.unk80.modeS16.unk0 = 5;
+        self->ext.backgroundLightning.timer = 5;
     }
 
-    if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+    if (--self->ext.backgroundLightning.timer == 0) {
         DestroyEntity(self);
     }
 }
