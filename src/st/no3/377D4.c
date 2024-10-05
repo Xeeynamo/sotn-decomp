@@ -158,7 +158,7 @@ void EntityBackgroundLightning(Entity* self) {
     case 0:
         InitializeEntity(g_EInitGeneric);
 
-        self->ext.backgroundLightning.unk80 = 0x80;
+        self->ext.backgroundLightning.timer = 0x80;
         self->animCurFrame = 0xF;
         var_s1 = &D_80180EA0[0];
         for (i = 0; i < 12; i++) {
@@ -197,7 +197,7 @@ void EntityBackgroundLightning(Entity* self) {
 
         case 1:
             if (AnimateEntity(D_80180FAC, self) == 0) {
-                self->ext.backgroundLightning.unk80 = (Random() & 0x7F) + 0x40;
+                self->ext.backgroundLightning.timer = (Random() & 0x7F) + 0x40;
                 self->step_s += 1;
             }
             var_s3 = &D_80180F60;
@@ -232,7 +232,7 @@ void EntityBackgroundLightning(Entity* self) {
             g_GpuBuffers[1].draw.r0 = 0x10;
             g_GpuBuffers[1].draw.g0 = 8;
             g_GpuBuffers[1].draw.b0 = 0x38;
-            if (!--self->ext.backgroundLightning.unk80) {
+            if (!--self->ext.backgroundLightning.timer) {
                 SetSubStep(0);
             }
             break;

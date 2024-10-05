@@ -1579,10 +1579,6 @@ typedef struct {
     s16 unk8C;
     s16 unk8E;
 } ET_AlucardWaterEffect;
-typedef struct {
-    s32 pad;
-    s16 timer;
-} ET_801B28E4;
 
 typedef struct {
     u32 unk24[10];
@@ -1798,7 +1794,7 @@ typedef struct {
 
 typedef struct {
     s32 : 32;
-    s16 unk80;
+    s16 timer;
     s16 : 16;
     u8 unk84;
 } ET_BackgroundLightning;
@@ -1936,7 +1932,6 @@ typedef union { // offset=0x7C
     ET_AlucardWaterEffect aluwater;
     ET_80123B40 et_80123B40;
     ET_80129864 et_80129864;
-    ET_801B28E4 et_801B28E4;
     ET_PlayerOutline playerOutline;
     ET_HPNumberMove hpNumMove;
     ET_GuardText guardText;

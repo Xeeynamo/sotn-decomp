@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityUnkId14(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_801B2830(Entity* self);
-void func_801B28E4(Entity* self);
+void EntityBackgroundLightning(Entity* self);
 void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityCastleDoor(Entity* self);
@@ -116,7 +116,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId14,
     EntityGreyPuff,
     func_801B2830,
-    func_801B28E4,
+    EntityBackgroundLightning,
     EntityTransparentWater,
     EntityShuttingWindow,
     EntityCastleDoor,
