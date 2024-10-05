@@ -1570,7 +1570,7 @@ void EntityFallingRock(Entity* self) {
     }
 }
 
-void func_801B5DE8(Entity* self) {
+void EntityLightningThunder(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x2A;

@@ -180,7 +180,7 @@ void EntityBackgroundLightning(Entity* self) {
         case 0:
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_29, otherEnt);
+                CreateEntityFromCurrentEntity(E_LIGHTNING_THUNDER, otherEnt);
                 randOf3 = (Random() & 3);
                 otherEnt->posX.i.hi = D_80180FDC[randOf3][0];
                 otherEnt->posY.i.hi = D_80180FDC[randOf3][1];
@@ -1890,7 +1890,7 @@ void EntityDeathSkySwirl(Entity* self) {
     }
 }
 
-void EntityUnkId29(Entity* self) {
+void EntityLightningThunder(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B18);
         self->zPriority = 0x2A;
