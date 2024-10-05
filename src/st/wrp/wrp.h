@@ -27,7 +27,7 @@ typedef enum {
     E_UNK_12,
     E_UNK_13,
     E_ID_14,
-    E_FIREBALL,
+    E_GREY_PUFF,
     E_WARP,
     E_SMALL_ROCKS,
 } EntityIDs;
@@ -45,4 +45,4 @@ extern u16 g_eInitGeneric2[];
 extern u16 g_EInitSmallRocks[];
 
 void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);

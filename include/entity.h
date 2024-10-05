@@ -65,16 +65,6 @@ typedef struct ET_Generic {
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ u8 unk94;
-    /* 0x95 */ u8 : 8;
-    /* 0x96 */ s16 : 16;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity* unk9C;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s16 : 16;
-    /* 0xAE */ s8 unkAE;
 } ET_Generic;
 
 typedef struct {
@@ -224,9 +214,6 @@ typedef struct PACKED {
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
-    /* 0xAE */ s16 equipId;
-    /* 0xB0 */ s16 unkB0;
-    /* 0xB4 */ s32 unkB4;
 } ET_WeaponUnk030;
 
 typedef struct PACKED {
@@ -365,7 +352,6 @@ typedef struct PACKED {
 #endif
     u8 anim;
     u8 unkAD;
-    s16 equipId;
 } ET_Sword;
 
 typedef struct PACKED {
@@ -390,7 +376,6 @@ typedef struct PACKED {
 #endif
     u8 anim;
     u8 unkAD;
-    s16 equipId;
 } ET_HeavenSword;
 
 typedef struct PACKED {
@@ -414,7 +399,6 @@ typedef struct PACKED {
 #endif
     u8 anim;
     u8 unkAD;
-    s16 equipId;
 } ET_HeavenSword2;
 
 typedef struct PACKED {
@@ -1278,7 +1262,8 @@ typedef struct {
     s16 unk90;
     s16 unk92;
     s16 unk94;
-    s16 pad96[3];
+    s16 : 16;
+    s32 unk98;
     s16 unk9C;
 } ET_HitByLightning;
 

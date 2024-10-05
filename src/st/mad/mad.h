@@ -36,7 +36,7 @@ typedef enum {
     E_DUMMY_0F,
     E_DUMMY_10,
     E_ID_14 = 0x14,
-    E_FIREBALL
+    E_GREY_PUFF
 } EntityIDs;
 
 void CreateEntitiesToTheRight(s16);
@@ -50,7 +50,7 @@ void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void BottomCornerText(u8* str, u8 lowerLeft);
 void func_8019344C(void);
 void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 
 // DRA - all the exclusive global variables
 extern s32 D_80096ED0_mad;

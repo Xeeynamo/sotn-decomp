@@ -199,11 +199,11 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId13);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId14Spawner);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId15Spawner);
+INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityGreyPuffSpawner);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId14);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId15);
+INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityGreyPuff);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityOlroxDrool);
 

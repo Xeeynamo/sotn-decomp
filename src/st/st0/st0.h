@@ -25,7 +25,7 @@ typedef enum {
     E_DUMMY_0F,
     E_DUMMY_10,
     E_ID_14 = 0x14,
-    E_FIREBALL,
+    E_GREY_PUFF,
     E_DRACULA_UNK1B = 0x1B,
     E_DRACULA_UNK1C,
     E_DRACULA_UNK1D,
@@ -50,7 +50,7 @@ void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
 void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 
 extern const char* D_801A7984;
 extern const char* D_801A7990;

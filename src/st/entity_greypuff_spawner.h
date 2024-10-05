@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-void EntityUnkId15Spawner(
+void EntityGreyPuffSpawner(
     Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
 
     Entity* newEntity;
@@ -10,8 +10,8 @@ void EntityUnkId15Spawner(
     for (i = 0; i < count; i++) {
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            newEntity->entityId = E_FIREBALL;
-            newEntity->pfnUpdate = EntityUnkId15;
+            newEntity->entityId = E_GREY_PUFF;
+            newEntity->pfnUpdate = EntityGreyPuff;
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
             newEntity->params = i;

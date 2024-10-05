@@ -31,7 +31,7 @@ typedef enum {
     /* 0x12 */ E_ID_12,
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_FIREBALL,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_ID_16,
     /* 0x17 */ E_PLATFORM,
     /* 0x18 */ E_MARIA,
@@ -46,7 +46,7 @@ void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void CreateEntityFromLayout(Entity*, LayoutEntity*);
 u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2);
 void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
