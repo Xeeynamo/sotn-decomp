@@ -153,7 +153,7 @@ void UpdatePlayerEntities(void) {
         }
     }
     // Appears to be a temporary debugging block that was left in.
-    if ((g_Player.unk0C & (PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK80000)) ||
+    if ((g_Player.status & (PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
 #if defined(VERSION_US)
         // Japanese for "without hit".
@@ -550,7 +550,7 @@ void func_8011B5A4(Entity* self) {
     switch (self->step) {
     case 0:
         // Note that paramsHi is uninitialized here - possible bug?
-        if ((g_Player.unk0C & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
+        if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
             DestroyEntity(self);
             return;
         }
@@ -766,8 +766,8 @@ void EntityPlayerBlinkWhite(Entity* self) {
         sp48 = 1;
     }
     if ((((sp70 & 0x3F) != 0x1D) &&
-         (g_Player.unk0C & PLAYER_STATUS_MIST_FORM)) ||
-        (g_Player.unk0C & PLAYER_STATUS_AXEARMOR)) {
+         (g_Player.status & PLAYER_STATUS_MIST_FORM)) ||
+        (g_Player.status & PLAYER_STATUS_AXEARMOR)) {
         goto block_229;
     }
     if ((g_Player.unk6C) && sp70 != 0x20 && sp70 != 0x21 &&
@@ -997,7 +997,7 @@ block_748:
                 }
                 break;
             case 0x7008:
-                if ((g_Player.unk0C & PLAYER_STATUS_UNK400000) == 0) {
+                if ((g_Player.status & PLAYER_STATUS_UNK400000) == 0) {
                     self->step += 1;
                 }
                 break;
@@ -1008,7 +1008,7 @@ block_748:
                 }
                 /* fallthrough */
             case 0x700B:
-                if ((g_Player.unk0C & PLAYER_STATUS_UNK40000000) == 0) {
+                if ((g_Player.status & PLAYER_STATUS_UNK40000000) == 0) {
                     self->step += 1;
                 }
                 break;
@@ -1393,8 +1393,8 @@ void EntityPlayerOutline(Entity* self) {
     s16 selfX;
     s16 selfY;
 
-    if ((g_Player.unk0C & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_UNK40000 |
-                           PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
+    if ((g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_UNK40000 |
+                            PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
         !(PLAYER.animCurFrame & 0x7FFF) || (!PLAYER.animSet) ||
         ((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D))) {
         DestroyEntity(self);
@@ -1671,7 +1671,7 @@ void EntityGravityBootBeam(Entity* self) {
             self->step = 2;
         }
         // If transformed, timer drains faster
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->step = 3;
         }
         break;

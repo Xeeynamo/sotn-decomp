@@ -565,7 +565,7 @@ void func_80172120(Entity* self) {
         func_801719E0(self);
         break;
     case 1:
-        if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             self->ext.bat.unk8C = 0;
             self->step = 5;
             break;
@@ -803,14 +803,14 @@ void func_80172C30(Entity* self) {
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
         if (!self->ext.bat.unkA8) {
-            if (g_Player.unk0C & PLAYER_STATUS_UNK800) {
+            if (g_Player.status & PLAYER_STATUS_UNK800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
                 self->ext.bat.unkA8 = 1;
             }
         } else if (self->ext.bat.unkA8) {
-            if (!(g_Player.unk0C & PLAYER_STATUS_UNK800)) {
+            if (!(g_Player.status & PLAYER_STATUS_UNK800)) {
                 self->ext.bat.unkA8 = 0;
             }
         }
@@ -832,7 +832,7 @@ void func_80172C30(Entity* self) {
             D_80174C3C[self->ext.bat.unk82][D_80174B30].y =
                 self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
         }
-        if (!(g_Player.unk0C & PLAYER_STATUS_BAT_FORM)) {
+        if (!(g_Player.status & PLAYER_STATUS_BAT_FORM)) {
             self->ext.bat.unk8C = 0;
             self->step++;
         }
