@@ -78,7 +78,7 @@
 | wrp    | EntityUnkId14                       |      104 |          8 |        |                                 |       |
 | wrp    | EntityIntenseExplosion              |      104 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | wrp    | EntityBreakable                     |      105 |         11 |        |                                 |       |
-| wrp    | EntityUnkId15                       |      106 |          8 |        | https://decomp.me/scratch/ez7sR | 0.998 |
+| wrp    | EntityGreyPuff                      |      106 |          8 |        |                                 |       |
 | wrp    | PrizeDropFall2                      |      107 |         16 |        |                                 |       |
 | wrp    | BlinkItem                           |      110 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
 | wrp    | InitializeEntity                    |      113 |          2 |        |                                 |       |
