@@ -1546,6 +1546,15 @@
 | 1.00 | true     | D_us_801C13CC                       | asm/us/st/no0/nonmatchings/e_collect/D_us_801C13CC.s 
 | 1.00 | true     | D_us_801C13D4                       | asm/us/st/no0/nonmatchings/e_collect/D_us_801C13D4.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF44                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF44.s 
 | 1.00 | true     | D_800DBF4C                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF4C.s 
 | 1.00 | true     | D_800DBF54                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF54.s 
@@ -1602,14 +1611,6 @@
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/nz0/matchings/cutscene/SetCutsceneScript.s 
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -1835,25 +1836,25 @@
 | 1.00 | true     | EntityBoneScimitarParts             | asm/us/st/nz0/matchings/e_bone_scimitar/EntityBoneScimitarParts.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBirdcageDoor                  | asm/us/boss/mar/matchings/17FEC/EntityBirdcageDoor.s 
-| 1.00 | false    | func_us_801CD864                    | asm/us/st/no0/nonmatchings/e_misc/func_us_801CD864.s 
+| 1.00 | false    | func_us_801CD864                    | asm/us/st/no0/nonmatchings/4C750/func_us_801CD864.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityClockHands                    | asm/us/boss/mar/matchings/17FEC/EntityClockHands.s 
-| 1.00 | false    | func_us_801CD750                    | asm/us/st/no0/nonmatchings/e_misc/func_us_801CD750.s 
+| 1.00 | false    | func_us_801CD750                    | asm/us/st/no0/nonmatchings/4C750/func_us_801CD750.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityStatue                        | asm/us/boss/mar/matchings/17FEC/EntityStatue.s 
-| 0.98 | false    | func_us_801CDB20                    | asm/us/st/no0/nonmatchings/e_misc/func_us_801CDB20.s 
+| 0.98 | false    | func_us_801CDB20                    | asm/us/st/no0/nonmatchings/4C750/func_us_801CDB20.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityStatueGear                    | asm/us/boss/mar/matchings/17FEC/EntityStatueGear.s 
-| 1.00 | false    | func_us_801CDE48                    | asm/us/st/no0/nonmatchings/e_misc/func_us_801CDE48.s 
+| 1.00 | false    | func_us_801CDE48                    | asm/us/st/no0/nonmatchings/4C750/func_us_801CDE48.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityStoneDoor                     | asm/us/boss/mar/matchings/17FEC/EntityStoneDoor.s 
-| 0.97 | false    | func_us_801CE0F8                    | asm/us/st/no0/nonmatchings/e_misc/func_us_801CE0F8.s 
+| 0.97 | false    | func_us_801CE0F8                    | asm/us/st/no0/nonmatchings/4C750/func_us_801CE0F8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UpdateStatueTiles                   | asm/us/boss/mar/matchings/17FEC/UpdateStatueTiles.s 
-| 1.00 | true     | UpdateStatueTiles                   | asm/us/st/no0/matchings/e_misc/UpdateStatueTiles.s 
+| 1.00 | true     | UpdateStatueTiles                   | asm/us/st/no0/matchings/4C750/UpdateStatueTiles.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UpdateStoneDoorTiles                | asm/us/boss/mar/matchings/17FEC/UpdateStoneDoorTiles.s 
-| 1.00 | false    | func_us_801CE058                    | asm/us/st/no0/nonmatchings/e_misc/func_us_801CE058.s 
+| 1.00 | false    | func_us_801CE058                    | asm/us/st/no0/nonmatchings/4C750/func_us_801CE058.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ClearBackbuffer                     | asm/us/dra/matchings/42398/ClearBackbuffer.s 
 | 1.00 | true     | func_801B18F4                       | asm/us/st/sel/matchings/2C048/func_801B18F4.s 
@@ -2157,9 +2158,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | true     | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
