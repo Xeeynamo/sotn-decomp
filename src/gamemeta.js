@@ -30,7 +30,7 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "tt_000", "tt_001"
+                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno0", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "tt_000", "tt_001"
             ]
         },
         {
@@ -65,6 +65,10 @@ const gameMetadata = {
         "stmad": {
             "name": "ST/MAD/MAD.BIN",
             "desc": "Debug room"
+        },
+        "stno0": {
+            "name": "ST/NO0/NO0.BIN",
+            "desc": "Marble Gallery"
         },
         "stno3": {
             "name": "ST/NO3/NO3.BIN",
