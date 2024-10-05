@@ -214,9 +214,6 @@ typedef struct PACKED {
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
-    /* 0xAE */ s16 equipId;
-    /* 0xB0 */ s16 unkB0;
-    /* 0xB4 */ s32 unkB4;
 } ET_WeaponUnk030;
 
 typedef struct PACKED {
@@ -355,7 +352,6 @@ typedef struct PACKED {
 #endif
     u8 anim;
     u8 unkAD;
-    s16 equipId;
 } ET_Sword;
 
 typedef struct PACKED {
@@ -380,7 +376,6 @@ typedef struct PACKED {
 #endif
     u8 anim;
     u8 unkAD;
-    s16 equipId;
 } ET_HeavenSword;
 
 typedef struct PACKED {
@@ -404,7 +399,6 @@ typedef struct PACKED {
 #endif
     u8 anim;
     u8 unkAD;
-    s16 equipId;
 } ET_HeavenSword2;
 
 typedef struct PACKED {
