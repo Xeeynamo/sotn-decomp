@@ -670,7 +670,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PLAYER.entityRoomIndex = 0;
             }
         }
-        if (g_Player.unk0C & PLAYER_STATUS_AXEARMOR) {
+        if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
             PLAYER.velocityY = FIX(-3);
             func_8010E3B8(FIX(-1.25));
             PLAYER.step = Player_AxearmorHit;

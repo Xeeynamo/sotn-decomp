@@ -10,7 +10,7 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     u16 checks;
 
 #if STAGE != STAGE_ST0
-    s32 plStatus = g_Player.unk0C;
+    s32 plStatus = g_Player.status;
     Collider col;
 
     x = self->posX.i.hi;

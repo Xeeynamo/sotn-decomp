@@ -399,7 +399,7 @@ void UpdateServantDefault(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (g_Player.unk0C &
+        if (g_Player.status &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
             self->ext.ghost.unk8C = 0;
@@ -459,7 +459,7 @@ void UpdateServantDefault(Entity* self) {
         break;
     case 2:
     case 3:
-        if (g_Player.unk0C &
+        if (g_Player.status &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
             self->ext.ghost.unk8C = 0;
@@ -513,7 +513,7 @@ void UpdateServantDefault(Entity* self) {
         self->posY.val += self->velocityY;
         break;
     case 4:
-        if (!(g_Player.unk0C &
+        if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             if (self->ext.ghost.unk96->entityId == 0xDB) {
                 self->ext.ghost.unk96->params = 1;
@@ -567,7 +567,7 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     case 5:
-        if (!(g_Player.unk0C &
+        if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             self->step = 1;
 
@@ -585,7 +585,7 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     case 6:
-        if (!(g_Player.unk0C &
+        if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             self->step = 1;
         } else {

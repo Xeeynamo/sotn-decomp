@@ -76,7 +76,7 @@ void EntityEnemyBlood(Entity* self) {
         }
 
         if (self->hitboxState) {
-            if (!(g_Player.unk0C & PLAYER_STATUS_ABSORB_BLOOD)) {
+            if (!(g_Player.status & PLAYER_STATUS_ABSORB_BLOOD)) {
                 self->hitboxState = 0;
             } else {
                 self->velocityX += self->ext.bloodDroplets.speed;

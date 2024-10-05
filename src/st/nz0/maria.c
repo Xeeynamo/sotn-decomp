@@ -9,7 +9,7 @@ void func_801B8E0C(Entity* self) {
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_LEFT;
-        if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+        if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
         }
         g_Player.D_80072EFC = 1;
@@ -21,7 +21,7 @@ void func_801B8E0C(Entity* self) {
             self->step++;
         } else {
             g_Player.padSim = 0;
-            if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+            if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 if (g_Timer & 1) {
                     g_Player.padSim = PAD_R2;
                 }
