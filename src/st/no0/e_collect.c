@@ -2,21 +2,23 @@
 #include "common.h"
 #include "stage.h"
 
+extern s8 c_HeartPrizes[];
+
 #include "../prize_drop_fall.h"
 
 #include "../prize_drop_fall2.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", CollectHeart);
+#include "../collect_heart.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", CollectGold);
+#include "../collect_gold.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_collect", CollectSubweapon);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", CollectHeartVessel);
+#include "../collect_heart_vessel.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", CollectLifeVessel);
+#include "../collect_life_vessel.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", DestroyCurrentEntity);
+#include "../destroy_current_entity.h"
 
 INCLUDE_RODATA("st/no0/nonmatchings/e_collect", D_us_801C1394);
 
@@ -40,8 +42,8 @@ INCLUDE_RODATA("st/no0/nonmatchings/e_collect", D_us_801C13DC);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_collect", EntityPrizeDrop);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", EntityExplosion);
+#include "../entity_explosion.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_collect", BlinkItem);
+#include "../blink_item.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_collect", EntityEquipItemDrop);
