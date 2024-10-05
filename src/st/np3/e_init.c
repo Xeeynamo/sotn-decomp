@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityUnkId14(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_801B2830(Entity* self);
-void func_801B28E4(Entity* self);
+void EntityBackgroundLightning(Entity* self);
 void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityCastleDoor(Entity* self);
@@ -40,7 +40,7 @@ void EntityMermanRockLeftSide(Entity* self);
 void EntityMermanRockRightSide(Entity* self);
 void func_801B5488(Entity* self);
 void EntityFallingRock2(Entity* self);
-void func_801B5DE8(Entity* self);
+void EntityLightningThunder(Entity* self);
 void func_801B5E98(Entity* self);
 void EntitySwitch(Entity* self);
 void EntityHeartRoomGoldDoor(Entity* self);
@@ -116,7 +116,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId14,
     EntityGreyPuff,
     func_801B2830,
-    func_801B28E4,
+    EntityBackgroundLightning,
     EntityTransparentWater,
     EntityShuttingWindow,
     EntityCastleDoor,
@@ -133,7 +133,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityMermanRockRightSide,
     func_801B5488,
     EntityFallingRock2,
-    func_801B5DE8,
+    EntityLightningThunder,
     func_801B5E98,
     EntitySwitch,
     EntityHeartRoomGoldDoor,

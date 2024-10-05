@@ -396,7 +396,7 @@ extern s16 D_80183990[];
 extern s16 D_80183A24[];
 extern s16 D_80183A4C[];
 
-// For func_801B28E4
+// For EntityBackgroundLightning
 
 extern u8 D_80180E78[];
 extern u8 D_80180E94[];

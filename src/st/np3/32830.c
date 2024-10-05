@@ -21,8 +21,8 @@ void func_801B2830(Entity* self) {
     }
 }
 
-// Maybe related to no3 EntityBackgroundLightning
-void func_801B28E4(Entity* self) {
+// Simpler than NO3 version
+void EntityBackgroundLightning(Entity* self) {
     Entity* newEntity;
     s32 animFrame;
     s32 random0to3;
@@ -31,7 +31,7 @@ void func_801B28E4(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGeneric);
-        self->ext.et_801B28E4.timer = 0x80;
+        self->ext.backgroundLightning.timer = 0x80;
         self->animCurFrame = 15;
         g_CastleFlags[CASTLE_FLAG_55] |= 1;
         if (self->params & FLAG_DEAD) {
@@ -60,7 +60,7 @@ void func_801B28E4(Entity* self) {
             /* fallthrough */
         case 1:
             if (AnimateEntity(D_80180E94, self) == 0) {
-                self->ext.et_801B28E4.timer = (Random() & 0x7F) + 0x40;
+                self->ext.backgroundLightning.timer = (Random() & 0x7F) + 0x40;
                 self->step_s++;
             }
             animFrame = self->animCurFrame;
@@ -86,7 +86,7 @@ void func_801B28E4(Entity* self) {
             g_GpuBuffers[1].draw.r0 = 0x10;
             g_GpuBuffers[1].draw.g0 = 8;
             g_GpuBuffers[1].draw.b0 = 0x38;
-            if (--self->ext.et_801B28E4.timer == 0) {
+            if (--self->ext.backgroundLightning.timer == 0) {
                 SetSubStep(0);
             }
             return;
@@ -1570,7 +1570,7 @@ void EntityFallingRock(Entity* self) {
     }
 }
 
-void func_801B5DE8(Entity* self) {
+void EntityLightningThunder(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x2A;
