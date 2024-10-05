@@ -2,7 +2,7 @@
 #include "rwrp.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern signed short* spriteBanks[];
+extern s16** spriteBanks[];
 extern void* Cluts[];
 extern MyRoomDef rooms_layers[];
 extern void* OVL_EXPORT(g_EntityGfxs)[];
