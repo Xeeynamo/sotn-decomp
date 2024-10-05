@@ -55,7 +55,7 @@ def load_array_from_file(filelines, arrayname):
     exit()
 
 
-def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h):
+def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
 
     # Now we have an array that tells us the name of all the frames.
     # Start GUI code.
@@ -131,7 +131,7 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h):
                 print(frame_params)
                 frameFlags = frame_params[0]  # line 989
                 tpage = frame_params[6]  # line 990
-                # Assume unk5A is zero at least for now.
+                tpage += unk5A #line 991
                 runk0 = tpage & 3  # 992
                 tpage >>= 2  # 993
                 xpivot = frame_params[1]  # 994
@@ -204,9 +204,11 @@ parser.add_argument(
     "view_height", type=lambda x: int(x, 0), help="Height of your view window"
 )
 
+parser.add_argument("--unk5A", type=lambda x: int(x, 0), default=0, help="Entity's unk5A value (optional)")
+
 args = parser.parse_args()
 
 texture_data = dt.load_raw_dump(args.dump_filename)
 show_animset(
-    args.overlay, args.animset_num, args.e_palette, args.view_width, args.view_height
+    args.overlay, args.animset_num, args.e_palette, args.view_width, args.view_height, args.unk5A
 )
