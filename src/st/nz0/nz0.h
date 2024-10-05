@@ -27,7 +27,7 @@ typedef enum {
     /* 0x10 */ E_DUMMY_10,
 
     /* 0x14 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_FIREBALL,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_PURPLE_BRICK_BG,
     /* 0x17 */ E_LEFT_SECRET_WALL,
     /* 0x18 */ E_BOTT_SECRET_FLOOR,
@@ -94,7 +94,7 @@ s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
 void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 void func_801C4CC0(void);
 
 extern u8 D_8003BE6F[];

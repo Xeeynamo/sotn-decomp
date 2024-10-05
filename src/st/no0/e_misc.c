@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityRelicOrb);
 
@@ -13,11 +14,11 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId13);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId14Spawner);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId15Spawner);
+INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityGreyPuffSpawner);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId14);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId15);
+INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityGreyPuff);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityOlroxDrool);
 
@@ -36,3 +37,4 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityBigRedFireball);
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", ClutLerp);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", PlaySfxPositional);
+

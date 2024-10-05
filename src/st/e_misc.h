@@ -27,7 +27,7 @@ u16 g_eUnk14SpawnRots[] = {
 };
 #include "entity_unkId14_spawner.h"
 
-#include "entity_unkId15_spawner.h"
+#include "entity_greypuff_spawner.h"
 
 static s16 unk15_rot[] = {
     /* FF8 */ 0x0030,
@@ -41,12 +41,12 @@ static s16 unk15_rot[] = {
 };
 
 static s32 unk15_yVel[] = {
-    /* 1008 */ 0x00000400,
-    /* 100C */ 0x00002400,
-    /* 1010 */ 0x00003C00,
-    /* 1014 */ 0x00006000,
-    /* 1018 */ 0x00007800,
-    /* 101C */ 0x0000C000,
+    /* 1008 */ FIX(2.0 / 128),
+    /* 100C */ FIX(18.0 / 128),
+    /* 1010 */ FIX(30.0 / 128),
+    /* 1014 */ FIX(48.0 / 128),
+    /* 1018 */ FIX(60.0 / 128),
+    /* 101C */ FIX(96.0 / 128),
 };
 
 s32 unk14_yVel[] = {
@@ -74,7 +74,7 @@ u16 unk14_lifetime[] = {
 
 #include "entity_unkId14.h"
 
-#include "entity_unkId15.h"
+#include "entity_greypuff.h"
 
 u32 g_olroxDroolCollOffsets[] = {
     /* 1044 */ 0x00000000,

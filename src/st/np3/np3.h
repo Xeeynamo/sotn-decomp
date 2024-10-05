@@ -24,7 +24,7 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x14 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_FIREBALL = 0x15,
+    /* 0x15 */ E_GREY_PUFF = 0x15,
 
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
@@ -92,7 +92,7 @@ extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
 extern Primitive* func_801D2470(Primitive* poly);
-void EntityUnkId15(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];

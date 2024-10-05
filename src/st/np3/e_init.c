@@ -21,7 +21,7 @@ void func_801B246C(Entity* self);
 void EntityUnkId12(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityUnkId14(Entity* self);
-void EntityUnkId15(Entity* self);
+void EntityGreyPuff(Entity* self);
 void func_801B2830(Entity* self);
 void func_801B28E4(Entity* self);
 void EntityTransparentWater(Entity* self);
@@ -114,7 +114,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId12,
     EntityUnkId13,
     EntityUnkId14,
-    EntityUnkId15,
+    EntityGreyPuff,
     func_801B2830,
     func_801B28E4,
     EntityTransparentWater,

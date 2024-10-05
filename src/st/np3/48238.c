@@ -387,7 +387,7 @@ void EntityMermanFireball(Entity* self) {
         if (self->facingLeft != 0) {
             self->velocityX = FIX(1.5);
         } else {
-            self->velocityX = ~0x17FFF;
+            self->velocityX = FIX(-1.5);
         }
 
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
@@ -395,7 +395,7 @@ void EntityMermanFireball(Entity* self) {
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_FIREBALL, self, entity);
+            CreateEntityFromEntity(E_GREY_PUFF, self, entity);
             entity->ext.generic.unk94 = 4;
             entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             entity->zPriority = self->zPriority + 8;

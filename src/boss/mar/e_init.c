@@ -21,7 +21,7 @@ void func_us_8018AC0C(Entity* self);
 void EntityUnkId12(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityUnkId14(Entity* self);
-void EntityUnkId15(Entity* self);
+void EntityGreyPuff(Entity* self);
 void EntityClockRoomController(Entity* self);
 void EntityClockHands(Entity* self);
 void EntityBirdcageDoor(Entity* self);
@@ -45,7 +45,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,          EntityDummy,
     func_us_8018AC0C,     EntityUnkId12,
     EntityUnkId13,        EntityUnkId14,
-    EntityUnkId15,        EntityClockRoomController,
+    EntityGreyPuff,       EntityClockRoomController,
     EntityClockHands,     EntityBirdcageDoor,
     EntityStatue,         EntityStatueGear,
     EntityStoneDoor,      func_us_80199114,
