@@ -65,7 +65,7 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h):
             self.textureDisplayer = dt.textureDisplayer(texture_data)
             # Need to load the animation's frames now.
             # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
-            if(anim_num & 0x8000):
+            if anim_num & 0x8000:
                 print("Overlay animation")
                 assert ovl_name != "dra"
                 spritebank = anim_num & 0x7FFF
@@ -188,9 +188,7 @@ parser = argparse.ArgumentParser(description="Renders in-game animations from AN
 
 parser.add_argument("dump_filename")
 
-parser.add_argument(
-    "overlay", help="Overlay name. dra, no3, cen, etc"
-)
+parser.add_argument("overlay", help="Overlay name. dra, no3, cen, etc")
 parser.add_argument(
     "animset_num", type=lambda x: int(x, 0), help="Animset number; 2 for ANIMSET_DRA(2)"
 )
@@ -209,4 +207,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 texture_data = dt.load_raw_dump(args.dump_filename)
-show_animset(args.overlay, args.animset_num, args.e_palette, args.view_width, args.view_height)
+show_animset(
+    args.overlay, args.animset_num, args.e_palette, args.view_width, args.view_height
+)
