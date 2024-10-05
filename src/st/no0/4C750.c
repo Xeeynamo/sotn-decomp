@@ -62,7 +62,7 @@ void func_us_801CC8F8(Entity* self) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 3;
-        self->zPriority = (u16)(D_80097408[0] - 0x54);
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x54;
         self->unk68 = 0xC0;
         self->flags &= ~FLAG_UNK_20000000;
         return;
