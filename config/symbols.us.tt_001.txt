@@ -1,3 +1,4 @@
+D_80170040 = 0x80170040;
 g_Events = 0x801705B0;
 g_PlaySfxStep = 0x80170EE0;
 g_EntityRanges = 0x80170EE4;

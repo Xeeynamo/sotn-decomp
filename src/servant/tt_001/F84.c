@@ -13,10 +13,10 @@ extern s32 D_us_801737CC;
 extern s32 D_us_801737D8;
 extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
+extern SpriteParts* D_80170040[];
 
 extern u16 D_us_80170580[48];
 extern u16 D_us_80170448[48];
-extern SpriteParts* D_us_80170040[];
 
 extern Primitive*
     D_us_801737FC;        // Pointer to the current primitive being manipulated
@@ -298,7 +298,7 @@ void ServantInit(InitializeMode mode) {
 
         spriteBanks = g_api.o.spriteBanks;
         spriteBanks += 20;
-        *spriteBanks = (SpriteParts*)D_us_80170040;
+        *spriteBanks = (SpriteParts*)D_80170040;
 
         e = &g_Entities[4];
         DestroyEntity(e);
