@@ -39,8 +39,6 @@ s32 g_IsServantDestroyed;
 s32 D_80174D40;
 s32 _unused[26];
 
-void func_80171ED4(s32 arg0);
-void func_80172120(Entity* self);
 void func_80172C30(Entity* self);
 void func_8017339C(void);
 void func_801733A4(void);
@@ -57,10 +55,12 @@ void func_80173C24(void);
 void DestroyServantEntity(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    ServantInit,   func_80172120, func_80172C30,        func_8017339C,
-    func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
-    func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
-    func_80173C14, func_80173C1C, func_80173C24,        DestroyServantEntity,
+    ServantInit,          UpdateServantDefault, func_80172C30,
+    func_8017339C,        func_801733A4,        func_801733AC,
+    func_801733B4,        func_801733BC,        func_801733C4,
+    func_801733CC,        BatFamiliarBlueTrail, func_80173C0C,
+    func_80173C14,        func_80173C1C,        func_80173C24,
+    DestroyServantEntity,
 };
 #endif
 
@@ -210,7 +210,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 
 void func_80171560(Entity* self) {}
 
-// Only ever called by func_80172120 so that is the parent
+// Only ever called by UpdateServantDefault so that is the parent
 void CreateBlueTrailEntity(Entity* parent) {
     Entity* entity;
     s32 i;
@@ -527,14 +527,14 @@ s16 GetTargetPositionWithDistanceBuffer(
     s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", UpdateServantDefault);
 #else
-void func_80172120(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
     if (g_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
-    if (D_8003C708.flags & 0x20) {
+    if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
         switch (ServantUnk0()) {
         case 0:
             D_80174B04 = 0x40;
@@ -565,12 +565,12 @@ void func_80172120(Entity* self) {
         func_801719E0(self);
         break;
     case 1:
-        if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             self->ext.bat.unk8C = 0;
             self->step = 5;
             break;
         }
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi) {
                 self->facingLeft = true;
             } else {
@@ -636,7 +636,7 @@ void func_80172120(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (D_8003C704) {
+        if (g_CutsceneHasControl) {
             break;
         }
         D_80174B24 = D_80174AFC - self->posX.i.hi;
@@ -803,14 +803,14 @@ void func_80172C30(Entity* self) {
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
         if (!self->ext.bat.unkA8) {
-            if (g_Player.unk0C & PLAYER_STATUS_UNK800) {
+            if (g_Player.status & PLAYER_STATUS_UNK800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
                 self->ext.bat.unkA8 = 1;
             }
         } else if (self->ext.bat.unkA8) {
-            if (!(g_Player.unk0C & PLAYER_STATUS_UNK800)) {
+            if (!(g_Player.status & PLAYER_STATUS_UNK800)) {
                 self->ext.bat.unkA8 = 0;
             }
         }
@@ -832,7 +832,7 @@ void func_80172C30(Entity* self) {
             D_80174C3C[self->ext.bat.unk82][D_80174B30].y =
                 self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
         }
-        if (!(g_Player.unk0C & PLAYER_STATUS_BAT_FORM)) {
+        if (!(g_Player.status & PLAYER_STATUS_BAT_FORM)) {
             self->ext.bat.unk8C = 0;
             self->step++;
         }

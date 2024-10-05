@@ -3,7 +3,7 @@ void ProcessSfxState(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
-        if (D_8003C704 != 0) {
+        if (g_CutsceneHasControl != 0) {
             g_PlaySfxStep = 99;
             DestroyEntity(entity);
             return;

@@ -70,7 +70,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             g_CutsceneFlags = 0;
             g_IsCutsceneDone = 0;
             g_SkipCutscene = 0;
-            D_8003C704 = 1;
+            g_CutsceneHasControl = 1;
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
         }
@@ -497,7 +497,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case 7:
         DestroyEntity(self);
         g_CastleFlags[CASTLE_FLAG_133] = 1;
-        D_8003C704 = 0;
+        g_CutsceneHasControl = 0;
         g_Settings.D_8003CB04 |= 0x100;
         break;
     }

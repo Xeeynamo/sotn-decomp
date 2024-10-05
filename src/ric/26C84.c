@@ -697,7 +697,7 @@ void RicEntityHitByIce(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     // This is badly written but it checks if 0x10000 is unset.
-    sp18 = ((g_Player.unk0C & PLAYER_STATUS_UNK10000) == sp18);
+    sp18 = ((g_Player.status & PLAYER_STATUS_UNK10000) == sp18);
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT3, PrimCount);
