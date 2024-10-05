@@ -30,19 +30,19 @@ u8 AnimFrames_CorpseweedWakeup[] = {
 
 // D_80181770
 u8 AnimFrames_CorpseweedIdle[] = {
-    0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00 
+    0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00
 };
 
 u8 D_8018177C[] = {
-    0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00 
+    0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00
 };
 
 u8 D_80181784[] = {
-    0x02, 0x16, 0x02, 0x17, 0x00, 0x00, 0x00, 0x00 
+    0x02, 0x16, 0x02, 0x17, 0x00, 0x00, 0x00, 0x00
 };
 
 u8 D_8018178C[] = {
-    0x04, 0x18, 0x03, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0xFF, 0x00, 0x00, 0x00 
+    0x04, 0x18, 0x03, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0xFF, 0x00, 0x00, 0x00
 };
 
 // D_80181798
@@ -55,13 +55,13 @@ u8* AnimFrames_All[] = {
 s8 HitboxData[] = {
     0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03, 0x03, 0x01, 0xFE, 0x03, 0x04, 0x00, 0xFA, 0x07, 0x09,
     0x01, 0xFB, 0x09, 0x07, 0xC1, 0xC1, 0x00, 0x00, 0x02, 0x09, 0x05, 0x08, 0x00, 0x00, 0x04, 0x04,
-    0x03, 0xF5, 0x04, 0x0C, 0x04, 0xFD, 0x05, 0x05, 0x0F, 0xF5, 0x17, 0x15 
+    0x03, 0xF5, 0x04, 0x0C, 0x04, 0xFD, 0x05, 0x05, 0x0F, 0xF5, 0x17, 0x15
 };
 
 // D_801817D4
 u8 HitboxIndices[] = {
     0x00, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04, 0x04, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x04,
-    0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00 
+    0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00
 };
 
 extern EntityInit EntityInit_801806D0;
@@ -110,7 +110,7 @@ void EntityThornweed(Entity* self)
             return;
         }
     }
-    
+
     switch (self->step) {
         case Init:
             InitializeEntity(&EntityInit_801806D0);
@@ -198,7 +198,416 @@ void EntityThornweed(Entity* self)
     self->hitboxHeight = *hitboxData++;
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AA390);    // [Entity]
+extern EntityInit EntityInit_801806E8;
+extern u8 D_8018177C[];
+
+// [Should Primitive have a union for easy copypasta of rgb values? Look in case 0]
+// func_801AA390
+// https://decomp.me/scratch/QVcDz
+// PSP:func_psp_09249BE0:No match
+// PSP:https://decomp.me/scratch/lqXTP
+void func_801AA390(Entity* self)
+{
+    Collider collider;
+    Entity* entity;     // s2
+    Primitive* prim;    // s0
+    s32 primIdx;        // s7
+    s32 temp_s1;        // s4
+    s32 var_a0;         // s3
+    s32 temp;           // s1
+    s32 temp2;          // s6
+    s16 temp3;          // s5
+    u16 temp4;          // s8
+
+    if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
+        SetStep(6);
+    }
+    
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_801806E8);
+            self->animCurFrame = 0;
+            self->hitboxOffX = 2;
+            self->hitboxOffY = 9;
+            self->drawFlags = 3;
+            self->rotX = self->rotY = 0;
+            self->hitboxState = 0;
+            self->ext.generic.unk92 = 8;
+            primIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIdx == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            prim = &g_PrimBuf[primIdx];
+            self->ext.prim = prim;
+            prim->tpage = 0x13;
+            prim->clut = 0x206;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x18;
+            prim->v0 = prim->v1 = 0x28;
+            prim->v2 = prim->v3 = 0x50;
+            prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            
+            *(s32*)&prim->r1 = *(s32*)&prim->r0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+            
+            prim->priority = self->zPriority - 1;
+            prim->drawMode = 2;
+            prim = prim->next;
+            prim->tpage = 0x13;
+            prim->clut = 0x206;
+            prim->u0 = prim->u2 = 0x40;
+            prim->u1 = prim->u3 = 0x18;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = 0x70;
+            prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
+            if (self->facingLeft) {
+                prim->x2 = self->posX.i.hi - 0x14;
+                prim->x3 = self->posX.i.hi + 0x14;
+            } else {
+                prim->x2 = self->posX.i.hi + 0x14;
+                prim->x3 = self->posX.i.hi - 0x14;
+            }
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            
+            *(s32*)&prim->r1 = *(s32*)&prim->r0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+            
+            prim->priority = self->zPriority - 2;
+            prim->drawMode = 2;
+            prim = prim->next;
+            // Fallthrough
+        case 1:
+            prim = self->ext.prim;
+            switch (self->step_s) {
+                case 0:
+                    prim->x0 = --prim->x2;
+                    prim->x1 = ++prim->x3;
+                    temp = prim->x1 - prim->x0;
+                    if (temp >= 0x18) {
+                        self->step_s++;
+                    }
+                    // fallthrough
+                case 1:
+                    prim->y0 = --prim->y1;
+                    var_a0 = prim->y2 - prim->y0;
+                    if (var_a0 >= 0x28) {
+                        self->step_s++;
+                    }
+                    break;
+                
+                case 2:
+                    self->ext.generic.unk84.U8.unk0 = 1;
+                    SetStep(2);
+                    break;
+            }
+            break;
+        
+        case 2:
+            prim = self->ext.prim;
+            prim = prim->next;
+            switch (self->step_s) {
+                case 0:
+                    prim->y1 = prim->y0 -= 2;
+                    temp = prim->x0 - self->posX.i.hi;
+                    temp = abs(temp);
+                    if (temp < 0xA) {
+                        if (self->facingLeft) {
+                            prim->x0--;
+                        } else {
+                            prim->x0++;
+                        }
+                    }
+                    if (self->facingLeft) {
+                        prim->x1++;
+                    } else {
+                        prim->x1--;
+                    }
+                    temp = self->posX.i.hi - prim->x1;
+                    temp = abs(temp);
+                    if (temp >= 0x10) {
+                        self->step_s++;
+                    }
+                    break;
+                
+                case 1:
+                    if (self->facingLeft) {
+                        prim->y0--;
+                        var_a0 = prim->y2 - prim->y0;
+                        if (var_a0 < 0x59) {
+                            prim->y1--;
+                        }
+                    } else {
+                        prim->y1--;
+                        var_a0 = prim->y2 - prim->y1;
+                        if (var_a0 < 0x59) {
+                            prim->y0--;
+                        }
+                    }
+                    if (var_a0 >= 0x70) {
+                        self->step_s++;
+                    }
+                    break;
+                
+                case 2:
+                    if (self->facingLeft) {
+                        prim->y1--;
+                        var_a0 = prim->y3 - prim->y1;
+                    } else {
+                        prim->y0--;
+                        var_a0 = prim->y3 - prim->y0;
+                    }
+                    if (var_a0 >= 0x70) {
+                        self->step_s++;
+                    }
+                    break;
+                
+                case 3:
+                    temp2 = 0;
+                    temp = prim->x0 - self->posX.i.hi;
+                    temp = abs(temp);
+                    if (temp < 0x14) {
+                        if (self->facingLeft) {
+                            prim->x0--;
+                        } else {
+                            prim->x0++;
+                        }
+                    } else {
+                        temp2 += 1;
+                    }
+                    temp = self->posX.i.hi - prim->x1;
+                    temp = abs(temp);
+                    if (temp < 0x14) {
+                        if (self->facingLeft) {
+                            prim->x1++;
+                        } else {
+                            prim->x1--;
+                        }
+                    } else {
+                        temp2 += 1;
+                    }
+                    if (temp2 == 2) {
+                        self->ext.generic.unk84.U8.unk1 = 1;
+                        self->hitboxState = 3;
+                        SetStep(3);
+                    }
+                    break;
+            }
+            break;
+        
+        case 3:
+            self->animCurFrame = 0x13;
+            if (self->rotX < 0x100) {
+                self->rotX = self->rotY += 8;
+            } else {
+                self->drawFlags = 0;
+                SetStep(4);
+            }
+            break;
+        
+        case 4:
+            if (!self->step_s) {
+                self->ext.generic.unk80.modeS16.unk0 = 0x80;
+                self->step_s += 1;
+            }
+            self->animCurFrame = 0x13;
+            if (!--self->ext.generic.unk80.modeS16.unk0) {
+                if ((GetSideToPlayer() & 1) == (temp4 = self->facingLeft)) {
+                    SetStep(5);
+                } else {
+                    self->ext.generic.unk80.modeS16.unk0 = 0x20;
+                }
+            }
+            if (self->hitFlags & 2) {
+                self->ext.generic.unk90 = 0x20;
+            }
+            break;
+        
+        case 5:
+            switch (self->step_s) {
+                case 0:
+                    self->ext.generic.unk80.modeS16.unk0 = 0x20;
+                    self->step_s += 1;
+                    // fallthrough
+                case 1:
+                    AnimateEntity(D_8018177C, self);
+                    if (!--self->ext.generic.unk80.modeS16.unk0) {
+                        SetSubStep(2);
+                    }
+                    break;
+                
+                case 2:
+                    self->animCurFrame = 0x15;
+                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    if (entity != NULL) {
+                        PlaySfxWithPosArgs(0x70D);
+                        CreateEntityFromEntity(E_ID_28, self, entity);
+                        entity->zPriority = self->zPriority + 1;
+                        entity->facingLeft = self->facingLeft;
+                        entity->posY.i.hi += 0xD;
+                        if (self->facingLeft) {
+                            entity->posX.i.hi -= 4;
+                        } else {
+                            entity->posX.i.hi += 4;
+                        }
+                    }
+                    self->ext.generic.unk80.modeS16.unk0 = 0x10;
+                    self->step_s++;
+                    // fallthrough
+                case 3:
+                    if (!--self->ext.generic.unk80.modeS16.unk0) {
+                        SetStep(4);
+                    }
+                    break;
+            }
+        break;
+        
+        case 6:
+            switch (self->step_s) {
+                case 0:
+                    self->ext.generic.unk84.S8.unk0 = 0;
+                    self->ext.generic.unk84.S8.unk1 = 0;
+                    self->hitboxState = 0;
+                    self->drawFlags = 4;
+                    self->step_s++;
+                    // fallthrough
+                case 1:
+                    MoveEntity();
+                    self->velocityY += 0x1800;
+                    self->rotZ += 0x20;
+                    temp = self->posX.i.hi;
+                    var_a0 = self->posY.i.hi + 8;
+                    g_api.CheckCollision(temp, var_a0, &collider, 0);
+                    if (collider.effects & 1) {
+                        g_api.PlaySfx(0x683);
+                        self->posY.i.hi += collider.unk18;
+                        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (entity != NULL) {
+                            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                            entity->params = 1;
+                        }
+                        self->animCurFrame = 0;
+                        
+                        entity = self - 1;
+                        entity->flags |= FLAG_DEAD;
+                        
+                        PlaySfxWithPosArgs(0x672);
+                        self->step_s++;
+                    }
+                    break;
+                
+                case 2:
+                    self->ext.generic.unk80.modeS16.unk0++;
+                    prim = self->ext.prim;
+                    if (self->ext.generic.unk80.modeS16.unk0 & 1) {
+                        prim->drawMode |= 4;
+                        if (prim->x1 > prim->x0) {
+                            prim->x0++;
+                            prim->x1--;
+                        }
+                        if (prim->y0 < prim->y2) {
+                            prim->y0++;
+                        }
+                        if (prim->y1 < prim->y3) {
+                            prim->y1++;
+                        }
+                        func_801AE70C(prim, 3U);
+                    }
+                    
+                    prim = prim->next;
+                    prim->drawMode |= 4;
+                    if (self->facingLeft) {
+                        if (prim->x1 > prim->x0) {
+                            prim->x0++;
+                            prim->x1--;
+                        }
+                    } else {
+                        if (prim->x0 > prim->x1) {
+                            prim->x1++;
+                            prim->x0--;
+                        }
+                    }
+                    if (prim->y0 < prim->y2) {
+                        prim->y0++;
+                    }
+                    if (prim->y1 < prim->y3) {
+                        prim->y1++;
+                    }
+                    if (prim->v2 > 0) {
+                        prim->v2 -= 1;
+                    }
+                    if (prim->v3 > 0) {
+                        prim->v3 -= 1;
+                    }
+                    func_801AE70C(prim, 1U);
+                    break;
+            }
+    }
+    
+    if (self->ext.generic.unk90) {
+        self->ext.generic.unk90--;
+        if (self->ext.generic.unk90 & 0x10) {
+            self->ext.generic.unk92++;
+        } else {
+            self->ext.generic.unk92--;
+        }
+    } else {
+        self->ext.generic.unk92 = 8;
+    }
+    if (self->ext.generic.unk84.U8.unk0) {
+        prim = self->ext.prim;
+        
+        temp3 = self->ext.generic.unk88.S16.unk0 += 0x100;
+        temp = (rcos(temp3) * 2) >> 0xC;
+        temp_s1 = (prim->x2 + prim->x3) / 2;
+        prim->x0 = temp_s1 - 0xC + temp;
+        prim->x1 = temp_s1 + 0xC + temp;
+        temp3 = self->ext.generic.unk88.S16.unk2 += 0x200;
+        var_a0 = (rsin(temp3) * 4) >> 0xC;
+        temp_s1 = prim->y2;
+        prim->y0 = temp_s1 - 0x28 + var_a0;
+        prim->y1 = temp_s1 - 0x28 - var_a0;
+    }
+    if (self->ext.generic.unk84.U8.unk1) {
+        prim = self->ext.prim;
+        prim = prim->next;
+        temp3 = self->ext.generic.unk8C.modeS16.unk0 += 0x38;
+        temp_s1 = self->ext.generic.unk92;
+        temp = (temp_s1 * rsin(temp3)) >> 0xC;
+        temp_s1 = (prim->x2 + prim->x3) / 2;
+        if (self->facingLeft) {
+            prim->x1 = temp_s1 + 0x14 + temp;
+            prim->x0 = temp_s1 - 0x14 + temp;
+        } else {
+            prim->x1 = temp_s1 - 0x14 + temp;
+            prim->x0 = temp_s1 + 0x14 + temp;
+        }
+        temp3 = self->ext.generic.unk8C.modeS16.unk2 += 0x64;
+        var_a0 = (rsin(temp3) * 4) >> 0xC;
+        temp_s1 = prim->y2;
+        prim->y0 = temp_s1 - 0x70 + var_a0;
+        prim->y1 = temp_s1 - 0x70 - var_a0;
+        if (self->facingLeft) {
+            temp = prim->x0 + 0xC;
+        } else {
+            temp = prim->x0 - 0xC;
+        }
+        var_a0 = prim->y0 + 0xC;
+        self->posX.i.hi = temp;
+        self->posY.i.hi = var_a0;
+    }
+    entity = self - 1;
+    if (entity->entityId != 0x26) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB0C0);    // [Entity]
 
