@@ -1859,7 +1859,7 @@ extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
-extern s32 D_8003C704;
+extern s32 g_CutsceneHasControl;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;
 extern s16 D_8003C712;

@@ -961,7 +961,7 @@ void func_800F2404(s32 arg0) {
         g_unkGraphicsStruct.D_800973F8 = 0;
         g_unkGraphicsStruct.D_800973FC = 0;
     }
-    D_8003C704 = 0;
+    g_CutsceneHasControl = 0;
 
     g_unkGraphicsStruct.pauseEnemies = 0;
     g_unkGraphicsStruct.unk18 = 0;

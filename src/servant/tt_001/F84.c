@@ -34,7 +34,6 @@ extern s16
 s32 ServantUnk0();
 void ProcessEvent(Entity* self, bool resetEvent);
 
-void func_us_80171864(Entity* self);
 void func_us_801720A4(Entity* self);
 void func_us_801720AC(void);
 void func_us_801720B4(void);
@@ -50,10 +49,12 @@ void func_us_801728F4(void);
 void func_us_801728FC(void);
 void DestroyServantEntity(Entity* self);
 ServantDesc g_ServantDesc = {
-    ServantInit,      func_us_80171864, func_us_801720A4, func_us_801720AC,
-    func_us_801720B4, func_us_801720BC, func_us_801720C4, func_us_801720CC,
-    func_us_801720D4, func_us_801720DC, func_us_801720E4, func_us_8017246C,
-    func_us_801728EC, func_us_801728F4, func_us_801728FC, DestroyServantEntity};
+    ServantInit,         UpdateServantDefault, func_us_801720A4,
+    func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
+    func_us_801720C4,    func_us_801720CC,     func_us_801720D4,
+    func_us_801720DC,    func_us_801720E4,     func_us_8017246C,
+    func_us_801728EC,    func_us_801728F4,     func_us_801728FC,
+    DestroyServantEntity};
 
 #include "../set_entity_animation.h"
 
@@ -227,6 +228,10 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 
     if (!entity->entityId) {
         DestroyEntity(entity);
+        /* This is interesting.  By changing the entityId of the
+         * entity, this effectively changes the update function.
+         * The update function that is called is set
+         */
 #if defined(VERSION_PSP)
         entity->entityId = entityId;
 #else
@@ -336,7 +341,7 @@ void ServantInit(InitializeMode mode) {
     }
 }
 
-void func_us_80171864(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     s32 temp_s4;
     s32 temp_s3;
     s32 temp_s2;
@@ -349,7 +354,7 @@ void func_us_80171864(Entity* self) {
     self->hitboxWidth = 0;
     self->hitboxHeight = 0;
     if (self->step < 2) {
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             switch (ServantUnk0()) {
             case 0:
                 D_us_801737D8 = 0x40;
@@ -400,7 +405,7 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk8C = 0;
             break;
         }
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi)
                 self->facingLeft = 1;
             else
@@ -444,7 +449,7 @@ void func_us_80171864(Entity* self) {
         UpdateEntityVelocityTowardsTarget(self, D_us_801737C4, D_us_801737C8);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (D_8003C704 == 0) {
+        if (!g_CutsceneHasControl) {
             // Note: this is an assignment, not an equality check
             if (self->ext.ghost.unkA2 = func_us_80171284(self)) {
                 self->step++;
@@ -460,7 +465,7 @@ void func_us_80171864(Entity* self) {
             self->ext.ghost.unk8C = 0;
             break;
         }
-        if (D_8003C704) {
+        if (g_CutsceneHasControl) {
             self->step = 1;
         }
         if (!CheckEntityValid(self->ext.ghost.unkA2)) {
