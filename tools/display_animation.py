@@ -14,13 +14,17 @@ import numpy as np
 from PIL import Image
 
 # holds the list of animsets
-MAIN_ANIM_ARRAY_FILE = "src/dra/63ED4.c"
+DRA_ANIM_ARRAY_FILE = "src/dra/63ED4.c"
 # some day this may have a symbol name
-MAIN_ANIM_ARRAY = "D_800A3B70"
+DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
-ANIMSET_FILE = "src/dra/d_2F324.c"
+DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
+# change for other overlays (should make it an arg longterm)
+OVERLAY_SPRITEBANKS_FILE = "src/st/no3/sprite_banks.h"
+OVERLAY_ANIMSETS = "src/st/no3/sprites.c"
 
 def load_array_from_file(filelines, arrayname):
+    print(f"Trying to load {arrayname}")
     arraydata = ""
     inarray = False
     for line in filelines:
@@ -55,17 +59,26 @@ def show_animset(anim_num, arg_palette, view_w, view_h):
             # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
             if(anim_num & 0x8000):
                 print("Overlay animation")
-                ovl_spritebank = anim_num & 0x7FFF;
-                print(ovl_spritebank)
-                exit()
-            with open(MAIN_ANIM_ARRAY_FILE) as f:
+                spritebank = anim_num & 0x7FFF
+                main_array_file = OVERLAY_SPRITEBANKS_FILE
+                main_array = "spriteBanks"
+                animset_file = OVERLAY_ANIMSETS
+            else:
+                main_array_file = DRA_ANIM_ARRAY_FILE
+                main_array = DRA_ANIM_ARRAY
+                animset_file = DRA_ANIMSET_FILE
+                spritebank = anim_num
+            with open(main_array_file) as f:
                 animdata = f.read().splitlines()
-                animarray = load_array_from_file(animdata, MAIN_ANIM_ARRAY)
-                anim_set_name = animarray[anim_num]
+                animarray = load_array_from_file(animdata, main_array)
+                anim_set_name = animarray[spritebank]
             print(f"Animation set {anim_num} is {anim_set_name}. Loading.")
-            with open(ANIMSET_FILE) as f:
+            with open(animset_file) as f:
                 self.framesdata = f.read().splitlines()
+                print("Loading framearray")
+                print(animset_file)
                 self.framearray = load_array_from_file(self.framesdata, anim_set_name)
+                print("Loaded framearray.")
 
         def prev(self, event):
             self.anim_index -= 1
