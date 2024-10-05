@@ -3,7 +3,7 @@
 #include "no0.h"
 
 extern void func_us_801CC8F8(Entity*);
-extern u16 D_us_80180A88;
+extern u16 D_us_80180A88[];
 
 void func_us_801CC750(Entity* self) {
     Entity* entityPtr;
@@ -15,7 +15,7 @@ void func_us_801CC750(Entity* self) {
         return;
     }
 
-    InitializeEntity(&D_us_80180A88);
+    InitializeEntity(D_us_80180A88);
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
     if (primIndex != -1) {
         prim = &g_PrimBuf[primIndex];
