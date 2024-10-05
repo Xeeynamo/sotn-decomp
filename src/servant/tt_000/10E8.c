@@ -448,12 +448,7 @@ void ServantInit(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* e;
 
-#ifdef VERSION_PC
-    // i exceeds the size of D_80170448
-    const int len = LEN(g_ServantClut);
-#else
     const int len = 256;
-#endif
 
     if ((mode == MENU_SWITCH_SERVANT) || (mode == MENU_SAME_SERVANT)) {
         ProcessEvent(NULL, true);
