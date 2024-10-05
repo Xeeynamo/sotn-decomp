@@ -13,10 +13,10 @@ extern s32 D_us_801737CC;
 extern s32 D_us_801737D8;
 extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
+extern SpriteParts* D_80170040[];
 
 extern u16 D_us_80170580[48];
 extern u16 D_us_80170448[48];
-extern SpriteParts* D_us_80170040[];
 
 extern Primitive*
     D_us_801737FC;        // Pointer to the current primitive being manipulated
@@ -256,6 +256,10 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
     // BUG? There is a fall-through case here with no return value on PSX
 }
 
+#ifdef VERSION_PC
+extern u16 g_ServantClut[48];
+#endif
+
 void ServantInit(InitializeMode mode) {
     RECT rect;
     u16* dst;
@@ -264,17 +268,15 @@ void ServantInit(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* e;
     u16 temp;
-
 #ifdef VERSION_PC
-    // i exceeds the size of D_80170448
-    const int len = LEN(D_80170448);
+    const int len = LEN(g_ServantClut);
 #else
     const int len = 256;
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
         dst = &g_Clut[CLUT_INDEX_SERVANT];
-        src = D_us_80170448;
+        src = g_ServantClut;
 
         for (i = 0; i < len; i++) {
             temp = *src++;
@@ -303,7 +305,7 @@ void ServantInit(InitializeMode mode) {
 
         spriteBanks = g_api.o.spriteBanks;
         spriteBanks += 20;
-        *spriteBanks = (SpriteParts*)D_us_80170040;
+        *spriteBanks = (SpriteParts*)D_80170040;
 
         e = &g_Entities[4];
         DestroyEntity(e);
