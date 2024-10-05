@@ -54,6 +54,7 @@ enum SfxModes {
 #define SET_UNK_10 0x10
 #define SET_UNK_11 0x11
 #define SET_UNK_12 0x12
+#define SET_UNK_90 0x90
 #define SET_RELEASE_RATE_LOW_20_21 0xa3
 #define SET_RELEASE_RATE_LOW_22_23 0xa7
 #define SET_KEY_ON_20_21 0xa4

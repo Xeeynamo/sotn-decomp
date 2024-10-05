@@ -48,6 +48,8 @@ typedef enum EntityIDs {
     /* 0x17 */ E_BG_LIGHTNING = 0x17,
     /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
+    /* 0x29 */ E_LIGHTNING_THUNDER = 0x29,
+    /* 0x2A */ E_ID_2A,
     /* 0x2E */ E_ID_2E = 0x2E,
     /* 0x30 */ E_ID_30 = 0x30,
     /* 0x31 */ E_ID_31,

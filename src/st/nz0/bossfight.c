@@ -65,7 +65,7 @@ void EntityBossFightManager(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_VISITED);
             D_80097928 = 1;
-            D_80097910 = 0x31D;
+            D_80097910 = MU_FESTIVAL_OF_SERVANTS;
             self->step++;
         }
         break;
@@ -83,9 +83,9 @@ void EntityBossFightManager(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_RECORD);
             if (g_api.func_80131F68() != false) {
-                g_api.PlaySfx(0x90);
+                g_api.PlaySfx(SET_UNK_90);
             }
-            D_80097910 = 0x32E;
+            D_80097910 = MU_DANCE_OF_GOLD;
             self->step++;
         }
         return;
@@ -103,7 +103,7 @@ void EntityBossFightManager(Entity* self) {
         g_BossFlag |= BOSS_FLAG_DOORS_OPEN; // Reopen the door
         g_CastleFlags[SG_KILL_ALCH] = 1;
         D_80097928 = 1;
-        D_80097910 = 0x32E;
+        D_80097910 = MU_DANCE_OF_GOLD;
         self->step++;
         return;
     case 6:

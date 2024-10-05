@@ -1203,7 +1203,7 @@ void RunMainEngine(void) {
 #if defined(VERSION_US)
             D_80097910 = SE_INTRO_WIND;
 #elif defined(VERSION_HD)
-            D_80097910 = 0x327;
+            D_80097910 = MU_METAMORPHOSIS;
 #endif
         }
         if ((D_8003C730 == 0) && !(D_8003C708.flags & 0x20)) {
