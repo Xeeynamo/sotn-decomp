@@ -2,7 +2,7 @@
 #include "np3.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern signed short* spriteBanks[];
+extern s16** spriteBanks[];
 extern void* Cluts[];
 extern MyRoomDef rooms_layers[];
 extern GfxBank* g_GfxBanks[];
