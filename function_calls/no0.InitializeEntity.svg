@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.EntityEnemyBlood</title>
 <g id="a_node6"><a xlink:href="no0.EntityEnemyBlood.svg" xlink:title="no0.EntityEnemyBlood">
-<ellipse fill="red" stroke="black" cx="1265.89" cy="-198" rx="118.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1265.89" cy="-198" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="1265.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityEnemyBlood</text>
 </a>
 </g>
@@ -307,7 +307,7 @@
 <g id="node20" class="node">
 <title>no0.EntitySoulStealOrb</title>
 <g id="a_node20"><a xlink:href="no0.EntitySoulStealOrb.svg" xlink:title="no0.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="4953.89" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4953.89" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="4953.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntitySoulStealOrb</text>
 </a>
 </g>

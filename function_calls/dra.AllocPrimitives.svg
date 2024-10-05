@@ -1652,7 +1652,7 @@
 <g id="node103" class="node">
 <title>no0.EntitySoulStealOrb</title>
 <g id="a_node103"><a xlink:href="no0.EntitySoulStealOrb.svg" xlink:title="no0.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="26631.34" cy="-378" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="26631.34" cy="-378" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="26631.34" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntitySoulStealOrb</text>
 </a>
 </g>

@@ -12,7 +12,7 @@
 <!-- no0.EntityEnemyBlood -->
 <g id="node1" class="node">
 <title>no0.EntityEnemyBlood</title>
-<ellipse fill="red" stroke="black" cx="869.94" cy="-198" rx="118.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="869.94" cy="-198" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="869.94" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityEnemyBlood</text>
 </g>
 <!-- dra.CheckEquipmentItemCount -->
