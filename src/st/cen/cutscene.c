@@ -179,7 +179,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         }
         if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            D_8003C704 = 1;
+            g_CutsceneHasControl = 1;
             g_CutsceneFlags = 0;
             g_IsCutsceneDone = 0;
             g_SkipCutscene = 0;
@@ -608,7 +608,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         g_CastleFlags[HG_CS_DONE] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_GET_HOLYGLASSES, TIMEATTACK_SET_RECORD);
-        D_8003C704 = 0;
+        g_CutsceneHasControl = 0;
         g_Settings.D_8003CB04 |= 0x800;
         break;
     }

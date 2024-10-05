@@ -45,7 +45,7 @@ s32 WarpBackgroundBrightness;
 //
 // n.b.! this value is also used in src/st/wrp/warp.c
 // clang-format off
-#define PLAYER_UNK0C_READY_MASK                                                  \
+#define PLAYER_STATUS_READY_MASK                                                  \
     (                                                                            \
         /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
         /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
@@ -169,7 +169,7 @@ void EntityRWarpRoom(Entity* self) {
         // Wait for player to press the UP button
         if (collision & 0x4 && g_pads[0].pressed & PAD_UP &&
             ImplicitGetDistanceToPlayerX() < 8 &&
-            !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
+            !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             PLAYER.velocityY = PLAYER.velocityX = D_8003C8B8 = 0;
@@ -303,7 +303,7 @@ void EntityRWarpRoom(Entity* self) {
 
             if (g_pads[0].pressed & PAD_UP &&
                 ImplicitGetDistanceToPlayerX() < 8 &&
-                !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
+                !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
                 D_8003C8B8 = 0;

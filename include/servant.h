@@ -20,7 +20,7 @@ typedef enum {
 
 typedef struct {
     void (*Init)(InitializeMode mode);
-    void (*Update)(Entity* self);
+    PfnEntityUpdate Update;
     void (*Unk08)(Entity* self);
     void (*Unk0C)(/*?*/);
     void (*Unk10)(/*?*/);
@@ -106,6 +106,7 @@ extern ServantDesc D_8D1DC40;
 
 void ServantInit(InitializeMode mode);
 
+void UpdateServantDefault(Entity* self);
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);

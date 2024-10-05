@@ -1379,13 +1379,13 @@ void MenuDrawStats(s32 menuDialogue) {
         MenuDrawInt(g_Status.level, 304, 40, ctx);
         MenuDrawStr(g_MenuStr[15], 248, 56, ctx);
         i = 37;
-        if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
+        if (g_Player.status & PLAYER_STATUS_CURSE) {
             i = 40;
         }
-        if (g_Player.unk0C & PLAYER_STATUS_POISON) {
+        if (g_Player.status & PLAYER_STATUS_POISON) {
             i = 38;
         }
-        if (g_Player.unk0C & PLAYER_STATUS_STONE) {
+        if (g_Player.status & PLAYER_STATUS_STONE) {
             i = 39;
         }
         if (IsAlucart()) {
@@ -3124,7 +3124,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     var_s6 = 0;
     func_800F53A4();
 
-    if ((g_Player.unk0C & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10)) |
+    if ((g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10)) |
         (PLAYER.step == Player_UnmorphWolf) | (PLAYER.step == Player_BossGrab) |
         (g_Player.unk60)) {
         if (itemId == ITEM_AXE_LORD_ARMOR) {

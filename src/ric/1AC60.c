@@ -180,18 +180,18 @@ static void func_801572A8(bool arg0) {
     s32 xVel;
     s32 i;
     s32 j;
-    s32 unk0C;
+    s32 status;
 
     s32* vram_ptr = &g_Player.pl_vram_flag;
     s32* unk04_ptr = &g_Player.unk04;
 
     g_Player.unk04 = *vram_ptr;
     *vram_ptr = 0;
-    unk0C = g_Player.unk0C;
+    status = g_Player.status;
 
     if (arg0) {
         for (i = 0; i < LEN(D_801545E4); i++) {
-            if (unk0C & PLAYER_STATUS_UNK_20) {
+            if (status & PLAYER_STATUS_UNK_20) {
                 D_801545F4[i].y = D_80154644[i];
                 D_801545E4[i].y = D_8015465C[i];
             } else {
@@ -200,7 +200,7 @@ static void func_801572A8(bool arg0) {
             }
         }
         for (i = 0; i < 7; i++) {
-            if (unk0C & PLAYER_STATUS_UNK_20) {
+            if (status & PLAYER_STATUS_UNK_20) {
                 D_80154604[i].y = D_80154664[i];
                 D_80154604[i + 7].y = D_80154664[i];
             } else {
@@ -596,7 +596,7 @@ void RicMain(void) {
         func_8015BCD0();
         break;
     }
-    g_Player.unk08 = g_Player.unk0C;
+    g_Player.unk08 = g_Player.status;
 #ifdef VERSION_PC
     var_s4 = 0;
 #endif
@@ -671,7 +671,7 @@ void RicMain(void) {
         var_s4 |= PLAYER_STATUS_UNK20000;
     }
     var_s4 |= PLAYER_STATUS_UNK10000000;
-    g_Player.unk0C = var_s4;
+    g_Player.status = var_s4;
     if (g_Player.unk08 & PLAYER_STATUS_UNK10000) {
         if (!(var_s4 & PLAYER_STATUS_UNK10000)) {
             if (g_Player.unk5C != 0) {
@@ -691,7 +691,7 @@ void RicMain(void) {
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
-        g_Player.unk0C |= PLAYER_STATUS_UNK100;
+        g_Player.status |= PLAYER_STATUS_UNK100;
     }
     g_api.UpdateAnim(D_80155964, D_8015538C);
     PLAYER.hitboxState = 1;
@@ -714,7 +714,7 @@ void RicMain(void) {
         return;
 #endif
     }
-    if (g_Player.unk0C & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
+    if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
     func_8015C4AC();

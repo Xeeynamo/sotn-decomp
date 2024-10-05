@@ -13,10 +13,10 @@ extern s32 D_us_801737CC;
 extern s32 D_us_801737D8;
 extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
+extern SpriteParts* D_80170040[];
 
 extern u16 D_us_80170580[48];
 extern u16 D_us_80170448[48];
-extern SpriteParts* D_us_80170040[];
 
 extern Primitive*
     D_us_801737FC;        // Pointer to the current primitive being manipulated
@@ -34,7 +34,6 @@ extern s16
 s32 ServantUnk0();
 void ProcessEvent(Entity* self, bool resetEvent);
 
-void func_us_80171864(Entity* self);
 void func_us_801720A4(Entity* self);
 void func_us_801720AC(void);
 void func_us_801720B4(void);
@@ -50,10 +49,12 @@ void func_us_801728F4(void);
 void func_us_801728FC(void);
 void DestroyServantEntity(Entity* self);
 ServantDesc g_ServantDesc = {
-    ServantInit,      func_us_80171864, func_us_801720A4, func_us_801720AC,
-    func_us_801720B4, func_us_801720BC, func_us_801720C4, func_us_801720CC,
-    func_us_801720D4, func_us_801720DC, func_us_801720E4, func_us_8017246C,
-    func_us_801728EC, func_us_801728F4, func_us_801728FC, DestroyServantEntity};
+    ServantInit,         UpdateServantDefault, func_us_801720A4,
+    func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
+    func_us_801720C4,    func_us_801720CC,     func_us_801720D4,
+    func_us_801720DC,    func_us_801720E4,     func_us_8017246C,
+    func_us_801728EC,    func_us_801728F4,     func_us_801728FC,
+    DestroyServantEntity};
 
 #include "../set_entity_animation.h"
 
@@ -227,6 +228,10 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 
     if (!entity->entityId) {
         DestroyEntity(entity);
+        /* This is interesting.  By changing the entityId of the
+         * entity, this effectively changes the update function.
+         * The update function that is called is set
+         */
 #if defined(VERSION_PSP)
         entity->entityId = entityId;
 #else
@@ -300,7 +305,7 @@ void ServantInit(InitializeMode mode) {
 
         spriteBanks = g_api.o.spriteBanks;
         spriteBanks += 20;
-        *spriteBanks = (SpriteParts*)D_us_80170040;
+        *spriteBanks = (SpriteParts*)D_80170040;
 
         e = &g_Entities[4];
         DestroyEntity(e);
@@ -338,7 +343,7 @@ void ServantInit(InitializeMode mode) {
     }
 }
 
-void func_us_80171864(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     s32 temp_s4;
     s32 temp_s3;
     s32 temp_s2;
@@ -351,7 +356,7 @@ void func_us_80171864(Entity* self) {
     self->hitboxWidth = 0;
     self->hitboxHeight = 0;
     if (self->step < 2) {
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             switch (ServantUnk0()) {
             case 0:
                 D_us_801737D8 = 0x40;
@@ -396,13 +401,13 @@ void func_us_80171864(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (g_Player.unk0C &
+        if (g_Player.status &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
             self->ext.ghost.unk8C = 0;
             break;
         }
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi)
                 self->facingLeft = 1;
             else
@@ -446,7 +451,7 @@ void func_us_80171864(Entity* self) {
         UpdateEntityVelocityTowardsTarget(self, D_us_801737C4, D_us_801737C8);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (D_8003C704 == 0) {
+        if (!g_CutsceneHasControl) {
             // Note: this is an assignment, not an equality check
             if (self->ext.ghost.unkA2 = func_us_80171284(self)) {
                 self->step++;
@@ -456,13 +461,13 @@ void func_us_80171864(Entity* self) {
         break;
     case 2:
     case 3:
-        if (g_Player.unk0C &
+        if (g_Player.status &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
             self->ext.ghost.unk8C = 0;
             break;
         }
-        if (D_8003C704) {
+        if (g_CutsceneHasControl) {
             self->step = 1;
         }
         if (!CheckEntityValid(self->ext.ghost.unkA2)) {
@@ -510,7 +515,7 @@ void func_us_80171864(Entity* self) {
         self->posY.val += self->velocityY;
         break;
     case 4:
-        if (!(g_Player.unk0C &
+        if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             if (self->ext.ghost.unk96->entityId == 0xDB) {
                 self->ext.ghost.unk96->params = 1;
@@ -564,7 +569,7 @@ void func_us_80171864(Entity* self) {
         }
         break;
     case 5:
-        if (!(g_Player.unk0C &
+        if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             self->step = 1;
 
@@ -582,7 +587,7 @@ void func_us_80171864(Entity* self) {
         }
         break;
     case 6:
-        if (!(g_Player.unk0C &
+        if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             self->step = 1;
         } else {

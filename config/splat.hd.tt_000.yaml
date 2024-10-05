@@ -39,7 +39,7 @@ segments:
       - [0x448, .data, clutdata]
       - [0x4A8, .data, 4A8]
       - [0x608, .data, 608]
-      - [0x10AC, .rodata, 10E8] # func_80172120
+      - [0x10AC, .rodata, 10E8] # UpdateServantDefault
       - [0x10C4, .rodata, 10E8] # func_80174038
       - [0x10E8, c, 10E8]
       - [0x45C4, c, 45E4]
