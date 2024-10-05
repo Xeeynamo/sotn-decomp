@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>no0.CollectHeartVessel</title>
 <g id="a_node14"><a xlink:href="no0.CollectHeartVessel.svg" xlink:title="no0.CollectHeartVessel">
-<ellipse fill="red" stroke="black" cx="2836.29" cy="-198" rx="118.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2836.29" cy="-198" rx="118.88" ry="18"/>
 <text text-anchor="middle" x="2836.29" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectHeartVessel</text>
 </a>
 </g>
@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>no0.CollectLifeVessel</title>
 <g id="a_node15"><a xlink:href="no0.CollectLifeVessel.svg" xlink:title="no0.CollectLifeVessel">
-<ellipse fill="red" stroke="black" cx="3083.29" cy="-198" rx="109.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3083.29" cy="-198" rx="109.68" ry="18"/>
 <text text-anchor="middle" x="3083.29" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectLifeVessel</text>
 </a>
 </g>

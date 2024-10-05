@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.CollectGold</title>
 <g id="a_node4"><a xlink:href="no0.CollectGold.svg" xlink:title="no0.CollectGold">
-<ellipse fill="red" stroke="black" cx="265.89" cy="-378" rx="84.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="265.89" cy="-378" rx="84.49" ry="18"/>
 <text text-anchor="middle" x="265.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.CollectGold</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.CollectHeart</title>
 <g id="a_node5"><a xlink:href="no0.CollectHeart.svg" xlink:title="no0.CollectHeart">
-<ellipse fill="red" stroke="black" cx="457.89" cy="-378" rx="89.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="457.89" cy="-378" rx="89.88" ry="18"/>
 <text text-anchor="middle" x="457.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.CollectHeart</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.CollectHeartVessel</title>
 <g id="a_node6"><a xlink:href="no0.CollectHeartVessel.svg" xlink:title="no0.CollectHeartVessel">
-<ellipse fill="red" stroke="black" cx="684.89" cy="-378" rx="118.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="684.89" cy="-378" rx="118.88" ry="18"/>
 <text text-anchor="middle" x="684.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.CollectHeartVessel</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.CollectLifeVessel</title>
 <g id="a_node7"><a xlink:href="no0.CollectLifeVessel.svg" xlink:title="no0.CollectLifeVessel">
-<ellipse fill="red" stroke="black" cx="931.89" cy="-378" rx="109.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="931.89" cy="-378" rx="109.68" ry="18"/>
 <text text-anchor="middle" x="931.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.CollectLifeVessel</text>
 </a>
 </g>
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>no0.DestroyCurrentEntity</title>
 <g id="a_node12"><a xlink:href="no0.DestroyCurrentEntity.svg" xlink:title="no0.DestroyCurrentEntity">
-<ellipse fill="red" stroke="black" cx="2441.89" cy="-378" rx="132.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2441.89" cy="-378" rx="132.68" ry="18"/>
 <text text-anchor="middle" x="2441.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.DestroyCurrentEntity</text>
 </a>
 </g>
@@ -291,7 +291,7 @@
 <g id="node19" class="node">
 <title>no0.EntityExplosion</title>
 <g id="a_node19"><a xlink:href="no0.EntityExplosion.svg" xlink:title="no0.EntityExplosion">
-<ellipse fill="red" stroke="black" cx="4351.89" cy="-378" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4351.89" cy="-378" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="4351.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityExplosion</text>
 </a>
 </g>

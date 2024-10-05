@@ -1731,7 +1731,7 @@
 <g id="node109" class="node">
 <title>no0.CollectGold</title>
 <g id="a_node109"><a xlink:href="no0.CollectGold.svg" xlink:title="no0.CollectGold">
-<ellipse fill="red" stroke="black" cx="25865.39" cy="-198" rx="84.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="25865.39" cy="-198" rx="84.49" ry="18"/>
 <text text-anchor="middle" x="25865.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectGold</text>
 </a>
 </g>
@@ -1747,7 +1747,7 @@
 <g id="node110" class="node">
 <title>no0.CollectHeart</title>
 <g id="a_node110"><a xlink:href="no0.CollectHeart.svg" xlink:title="no0.CollectHeart">
-<ellipse fill="red" stroke="black" cx="26057.39" cy="-198" rx="89.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="26057.39" cy="-198" rx="89.88" ry="18"/>
 <text text-anchor="middle" x="26057.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectHeart</text>
 </a>
 </g>
@@ -1763,7 +1763,7 @@
 <g id="node111" class="node">
 <title>no0.CollectHeartVessel</title>
 <g id="a_node111"><a xlink:href="no0.CollectHeartVessel.svg" xlink:title="no0.CollectHeartVessel">
-<ellipse fill="red" stroke="black" cx="26284.39" cy="-198" rx="118.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="26284.39" cy="-198" rx="118.88" ry="18"/>
 <text text-anchor="middle" x="26284.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectHeartVessel</text>
 </a>
 </g>
@@ -1779,7 +1779,7 @@
 <g id="node112" class="node">
 <title>no0.CollectLifeVessel</title>
 <g id="a_node112"><a xlink:href="no0.CollectLifeVessel.svg" xlink:title="no0.CollectLifeVessel">
-<ellipse fill="red" stroke="black" cx="26531.39" cy="-198" rx="109.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="26531.39" cy="-198" rx="109.68" ry="18"/>
 <text text-anchor="middle" x="26531.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectLifeVessel</text>
 </a>
 </g>

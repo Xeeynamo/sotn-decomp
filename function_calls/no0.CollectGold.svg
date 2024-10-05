@@ -12,7 +12,7 @@
 <!-- no0.CollectGold -->
 <g id="node1" class="node">
 <title>no0.CollectGold</title>
-<ellipse fill="red" stroke="black" cx="378.79" cy="-198" rx="84.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="378.79" cy="-198" rx="84.49" ry="18"/>
 <text text-anchor="middle" x="378.79" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectGold</text>
 </g>
 <!-- dra.FreePrimitives -->

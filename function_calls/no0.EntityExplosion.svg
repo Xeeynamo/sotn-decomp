@@ -12,7 +12,7 @@
 <!-- no0.EntityExplosion -->
 <g id="node1" class="node">
 <title>no0.EntityExplosion</title>
-<ellipse fill="red" stroke="black" cx="310.14" cy="-198" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="310.14" cy="-198" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="310.14" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityExplosion</text>
 </g>
 <!-- no0.AnimateEntity -->

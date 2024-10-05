@@ -12,7 +12,7 @@
 <!-- no0.BlinkItem -->
 <g id="node1" class="node">
 <title>no0.BlinkItem</title>
-<ellipse fill="red" stroke="black" cx="255.29" cy="-18" rx="76.09" ry="18"/>
+<ellipse fill="green" stroke="black" cx="255.29" cy="-18" rx="76.09" ry="18"/>
 <text text-anchor="middle" x="255.29" y="-14.3" font-family="Times,serif" font-size="14.00">no0.BlinkItem</text>
 </g>
 <!-- no0.EntityEquipItemDrop -->
