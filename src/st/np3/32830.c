@@ -21,6 +21,7 @@ void func_801B2830(Entity* self) {
     }
 }
 
+// Simpler than NO3 version
 void EntityBackgroundLightning(Entity* self) {
     Entity* newEntity;
     s32 animFrame;

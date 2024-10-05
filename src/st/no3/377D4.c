@@ -144,6 +144,7 @@ extern u16 D_80180FBC[];
 extern u8 D_80180FDC[][2];
 
 // lightning and sound for background
+// More complicated than NP3 version.
 void EntityBackgroundLightning(Entity* self) {
     Entity* otherEnt;
     s32 playerRealX;
@@ -204,7 +205,8 @@ void EntityBackgroundLightning(Entity* self) {
             if (!self->params) {
                 clutIndices += 0x30;
             }
-            for (clutSrc = self->animCurFrame; *clutIndices != 0xFF; clutIndices += 4) {
+            for (clutSrc = self->animCurFrame; *clutIndices != 0xFF;
+                 clutIndices += 4) {
                 i = clutIndices[0];
                 g_ClutIds[i] = g_ClutIds[(clutIndices + clutSrc)[1] + 0x200];
             }
