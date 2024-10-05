@@ -37,7 +37,7 @@ segments:
       - [0x0, .data, 10E8]
       - [0x40, .data, spriteparts]
       - [0x448, .data, 448]
-      - [0x4A8, .data, 4A8]
+      - [0x4A8, .data, animationdata]
       - [0x608, .data, 608]
       - [0x10AC, .rodata, 10E8] # func_80172120
       - [0x10C4, .rodata, 10E8] # ProcessSfxState
