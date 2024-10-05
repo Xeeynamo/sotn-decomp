@@ -312,7 +312,7 @@ void RicEntitySmokePuff(Entity* self) {
     s16 paramsLo = self->params & 0xFF;
     s16 paramsHi = self->params >> 8;
 
-    if ((g_Player.unk0C & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
+    if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
         DestroyEntity(self);
         return;
     }

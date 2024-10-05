@@ -84,7 +84,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             g_CutsceneFlags = 0;
             D_us_8019AF2C = 0;
             g_SkipCutscene = 0;
-            D_8003C704 = 1;
+            g_CutsceneHasControl = 1;
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
         }
@@ -557,7 +557,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case 7:
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_FIRST_MARIA_MEET, TIMEATTACK_SET_RECORD);
-        D_8003C704 = 0;
+        g_CutsceneHasControl = 0;
         g_Settings.D_8003CB04 |= 0x80;
         DestroyEntity(self);
         break;

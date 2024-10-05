@@ -1001,7 +1001,7 @@ void func_8012F894(Entity* self) {
 
     s32 vram_flag_F000;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1285,7 +1285,7 @@ static s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
 void func_80130264(Entity* self) {
     s32 var_v1;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1395,7 +1395,7 @@ static s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
 void func_80130618(Entity* self) {
     s32 var_v1;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1517,7 +1517,7 @@ void func_801309B4(Entity* self) {
     s32 var_v0;
     s32 var_v0_2;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1672,7 +1672,7 @@ void func_80130E94(Entity* self) {
     s32 var_s6;
     s32 var_s7;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1805,7 +1805,7 @@ void func_80130E94(Entity* self) {
 // Entity #60. This is created manually at g_Entities[30].
 // Creation is in func_8012E7A4.
 void func_8013136C(Entity* self) {
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
