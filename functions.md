@@ -114,6 +114,6 @@
 | wrp    | EntityStageNamePopup                |      990 |         83 |        | https://decomp.me/scratch/U3Xj4 | 0.976 |
 | wrp    | EntityWarpRoom                      |     1012 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | wrp    | EntityRelicOrb                      |     1186 |         87 | Yes    | https://decomp.me/scratch/V04Wm | 0.998 |
-| tt_000 | func_80172120                       |     1199 |        126 | Yes    | https://decomp.me/scratch/TBtel | 0.984 |
+| tt_000 | UpdateServantDefault                |     1199 |        126 | Yes    |                                 |       |
 | wrp    | EntityRedDoor                       |     1248 |        112 | Yes    | https://decomp.me/scratch/lxAtb | 0.997 |
 | wrp    | HitDetection                        |     1628 |        196 |        |                                 |       |
