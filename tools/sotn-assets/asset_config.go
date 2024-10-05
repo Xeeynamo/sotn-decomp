@@ -119,7 +119,6 @@ func enqueueExtractAssetEntry(
 			Start:    start,
 			End:      end,
 			AssetDir: assetDir,
-			SrcDir:   srcDir,
 			RamBase:  ramBase,
 			Name:     name,
 			Args:     args,

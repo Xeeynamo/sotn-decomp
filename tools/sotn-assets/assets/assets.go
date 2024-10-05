@@ -7,7 +7,6 @@ type ExtractEntry struct {
 	Start    int
 	End      int
 	AssetDir string
-	SrcDir   string
 	Name     string
 	Args     []string
 	RamBase  psx.Addr
