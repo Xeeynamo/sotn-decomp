@@ -439,6 +439,10 @@ void func_801719E0(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
+#ifdef VERSION_PC
+extern u16 g_ServantClut[48];
+#endif
+
 void ServantInit(InitializeMode mode) {
     u16* dst;
     u16* src;
@@ -448,7 +452,11 @@ void ServantInit(InitializeMode mode) {
     SpriteParts** spriteBanks;
     Entity* e;
 
+#ifdef VERSION_PC
+    const int len = LEN(g_ServantClut);
+#else
     const int len = 256;
+#endif
 
     if ((mode == MENU_SWITCH_SERVANT) || (mode == MENU_SAME_SERVANT)) {
         ProcessEvent(NULL, true);
