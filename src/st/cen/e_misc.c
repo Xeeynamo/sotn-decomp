@@ -9,7 +9,7 @@
 
 #else
 
-INCLUDE_RODATA("st/cen/nonmatchings/e_misc", g_RelicOrbTexts);
+INCLUDE_RODATA("st/cen/nonmatchings/e_misc", g_RelicOrbText);
 
 INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityRelicOrb);
 

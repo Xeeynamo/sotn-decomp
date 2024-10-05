@@ -123,7 +123,7 @@ void UpdatePlayerEntities(void) {
                      entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
                     DestroyEntity(g_CurrentEntity);
                 } else {
-                    if (entity->flags & 0x100000) {
+                    if (entity->flags & FLAG_UNK_100000) {
                         UpdateAnim(NULL, D_800ACFB4);
                     }
                 }

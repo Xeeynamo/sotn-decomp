@@ -3516,9 +3516,9 @@ block_4:
                 if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
                     g_Status.statsFamiliars[g_Servant - 1].unk8++;
                 }
-                func_800E6218(1);
+                InitializeServant(MENU_SWITCH_SERVANT);
             } else {
-                func_800E6218(3);
+                InitializeServant(MENU_SAME_SERVANT);
             }
             g_MenuStep += 2;
         } else {
@@ -3534,9 +3534,9 @@ block_4:
         if (!g_UseDisk || !g_IsUsingCd) {
             if (!g_UseDisk) {
                 func_800E6250();
-                func_800E6218(1);
+                InitializeServant(MENU_SWITCH_SERVANT);
             } else if (!g_IsUsingCd) {
-                func_800E6218(1);
+                InitializeServant(MENU_SWITCH_SERVANT);
             }
             g_ServantLoaded = g_Servant;
             if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {

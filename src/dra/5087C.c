@@ -1277,9 +1277,9 @@ void RunMainEngine(void) {
         }
         D_80097C98 = 0;
         if (D_8003C730 == 1) {
-            func_800E6218(2);
+            InitializeServant(ENGINE_INIT_SERVANT_2);
         } else {
-            func_800E6218(0);
+            InitializeServant(ENGINE_INIT_SERVANT_0);
         }
         if (D_8003C730 == 3) {
             D_8003C730 = 0;
@@ -1709,7 +1709,7 @@ void RunMainEngine(void) {
                 D_801375A8 = D_801375A0 - PLAYER.posY.val;
                 for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++,
                     ent++) {
-                    if (ent->flags & 0x20000) {
+                    if (ent->flags & FLAG_UNK_20000) {
                         ent->posX.val -= D_801375A4;
                         ent->posY.val -= D_801375A8;
                     }
