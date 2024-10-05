@@ -2,7 +2,7 @@
 #include "cen.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-static signed short* spriteBanks[];
+static s16** spriteBanks[];
 static void* Cluts[];
 static MyRoomDef rooms_layers[];
 static GfxBank* gfxBanks[];

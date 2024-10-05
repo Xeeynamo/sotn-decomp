@@ -373,15 +373,15 @@ func buildSprites(fileName string, outputDir string) error {
 			continue
 		}
 		symbol := fmt.Sprintf("sprites_%s_%d", ovlName, i)
-		sbHeader.WriteString(fmt.Sprintf("extern s16* %s;\n", symbol))
+		sbHeader.WriteString(fmt.Sprintf("extern s16* %s[];\n", symbol))
 		buildSpriteGroup(&sbData, sprites, symbol, r)
 		symbols = append(symbols, symbol)
 	}
 
-	sbHeader.WriteString("static s16* spriteBanks[] = {\n")
+	sbHeader.WriteString("static s16** spriteBanks[] = {\n")
 	for _, index := range spritesBanks.Indices {
 		if index >= 0 {
-			sbHeader.WriteString(fmt.Sprintf("    &%s,\n", symbols[index]))
+			sbHeader.WriteString(fmt.Sprintf("    %s,\n", symbols[index]))
 		} else {
 			sbHeader.WriteString(fmt.Sprintf("    0,\n"))
 		}

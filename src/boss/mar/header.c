@@ -2,7 +2,7 @@
 #include "mar.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern signed short* spriteBanks[];
+extern s16** spriteBanks[];
 extern void* Cluts[];
 extern MyRoomDef rooms_layers[];
 static GfxBank* gfxBanks[];
