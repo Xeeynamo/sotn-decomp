@@ -151,7 +151,7 @@ void EntityBackgroundLightning(Entity* self) {
     s32 clutDest;
     s32 i;
     s32 clutSrc;
-    u8* var_s3;
+    u8* clutIndices;
     u8* var_s1;
 
     switch (self->step) {
@@ -200,13 +200,13 @@ void EntityBackgroundLightning(Entity* self) {
                 self->ext.backgroundLightning.timer = (Random() & 0x7F) + 0x40;
                 self->step_s += 1;
             }
-            var_s3 = &D_80180F60;
+            clutIndices = &D_80180F60;
             if (!self->params) {
-                var_s3 += 0x30;
+                clutIndices += 0x30;
             }
-            for (clutSrc = self->animCurFrame; *var_s3 != 0xFF; var_s3 += 4) {
-                i = var_s3[0];
-                g_ClutIds[i] = g_ClutIds[(var_s3 + clutSrc)[1] + 0x200];
+            for (clutSrc = self->animCurFrame; *clutIndices != 0xFF; clutIndices += 4) {
+                i = clutIndices[0];
+                g_ClutIds[i] = g_ClutIds[(clutIndices + clutSrc)[1] + 0x200];
             }
 
             if (clutSrc == 1) {
