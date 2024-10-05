@@ -89,7 +89,16 @@ INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CD750);
 
 INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CD864);
 
-INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CDAD4);
+void UpdateStatueTiles(s32 tilePos, s32 tile) {
+    u32 i;
+
+    for (i = 0; i < 6; i++) {
+        g_Tilemap.fg[tilePos] = tile;
+        tilePos++;
+        g_Tilemap.fg[tilePos] = tile;
+        tilePos += 15;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CDB20);
 
