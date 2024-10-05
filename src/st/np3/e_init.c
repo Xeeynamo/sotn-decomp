@@ -41,7 +41,7 @@ void EntityMermanRockRightSide(Entity* self);
 void func_801B5488(Entity* self);
 void EntityFallingRock2(Entity* self);
 void EntityLightningThunder(Entity* self);
-void func_801B5E98(Entity* self);
+void EntityLightningCloud(Entity* self);
 void EntitySwitch(Entity* self);
 void EntityHeartRoomGoldDoor(Entity* self);
 void EntityAlucardWaterEffect(Entity* self);
@@ -134,7 +134,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801B5488,
     EntityFallingRock2,
     EntityLightningThunder,
-    func_801B5E98,
+    EntityLightningCloud,
     EntitySwitch,
     EntityHeartRoomGoldDoor,
     EntityAlucardWaterEffect,
