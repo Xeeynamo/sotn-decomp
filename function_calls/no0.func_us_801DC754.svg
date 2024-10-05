@@ -12,7 +12,7 @@
 <!-- no0.func_us_801DC754 -->
 <g id="node1" class="node">
 <title>no0.func_us_801DC754</title>
-<ellipse fill="red" stroke="black" cx="119.59" cy="-198" rx="119.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="119.59" cy="-198" rx="119.68" ry="18"/>
 <text text-anchor="middle" x="119.59" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_us_801DC754</text>
 </g>
 <!-- no0.GetSideToPlayer -->
