@@ -135,8 +135,183 @@ void EntityUnkId16(Entity* self) {
     }
 }
 
+extern u8 D_80180EA0[];
+extern u8 D_80180F60;
+
+extern u16 D_80180FAC[];
+extern u16 D_80180FBC[];
+
+extern u8 D_80180FDC[][2];
+
 // lightning and sound for background
-INCLUDE_ASM("st/no3/nonmatchings/377D4", EntityBackgroundLightning);
+void EntityBackgroundLightning(Entity* self) {
+    Entity* otherEnt;
+    s32 playerRealX;
+    s32 randOf3;
+    s32 clutDest;
+    s32 i;
+    s32 clutSrc;
+    u8* var_s3;
+    u8* var_s1;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGeneric);
+
+        self->ext.backgroundLightning.unk80 = 0x80;
+        self->animCurFrame = 0xF;
+        var_s1 = &D_80180EA0[0];
+        for (i = 0; i < 12; i++) {
+            clutDest = var_s1[0];
+            clutSrc = 15;
+            clutSrc = var_s1[clutSrc];
+            g_ClutIds[clutDest] = g_ClutIds[clutSrc + 0x200];
+            var_s1 += 16;
+        }
+        if (self->params & 256) {
+            self->step = 4;
+            break;
+        }
+        if (g_CastleFlags[CASTLE_FLAG_55]) {
+            self->params = 0;
+        }
+    case 1:
+        switch (self->step_s) {
+        case 0:
+            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (otherEnt != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_29, otherEnt);
+                randOf3 = (Random() & 3);
+                otherEnt->posX.i.hi = D_80180FDC[randOf3][0];
+                otherEnt->posY.i.hi = D_80180FDC[randOf3][1];
+            }
+            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (otherEnt != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_2A, otherEnt);
+                if (randOf3 > 2) {
+                    randOf3 = 0;
+                }
+                otherEnt->params = randOf3;
+            }
+            self->step_s += 1;
+
+        case 1:
+            if (AnimateEntity(D_80180FAC, self) == 0) {
+                self->ext.backgroundLightning.unk80 = (Random() & 0x7F) + 0x40;
+                self->step_s += 1;
+            }
+            var_s3 = &D_80180F60;
+            if (!self->params) {
+                var_s3 += 0x30;
+            }
+            for (clutSrc = self->animCurFrame; *var_s3 != 0xFF; var_s3 += 4) {
+                i = var_s3[0];
+                g_ClutIds[i] = g_ClutIds[(var_s3 + clutSrc)[1] + 0x200];
+            }
+
+            if (clutSrc == 1) {
+                g_GpuBuffers[0].draw.r0 = 0x30;
+                g_GpuBuffers[0].draw.g0 = 0x30;
+                g_GpuBuffers[0].draw.b0 = 0x48;
+                g_GpuBuffers[1].draw.r0 = 0x30;
+                g_GpuBuffers[1].draw.g0 = 0x30;
+                g_GpuBuffers[1].draw.b0 = 0x48;
+            } else {
+                g_GpuBuffers[0].draw.r0 = 0x10;
+                g_GpuBuffers[0].draw.g0 = 8;
+                g_GpuBuffers[0].draw.b0 = 0x38;
+                g_GpuBuffers[1].draw.r0 = 0x10;
+                g_GpuBuffers[1].draw.g0 = 8;
+                g_GpuBuffers[1].draw.b0 = 0x38;
+            }
+            break;
+        case 2:
+            g_GpuBuffers[0].draw.r0 = 0x10;
+            g_GpuBuffers[0].draw.g0 = 8;
+            g_GpuBuffers[0].draw.b0 = 0x38;
+            g_GpuBuffers[1].draw.r0 = 0x10;
+            g_GpuBuffers[1].draw.g0 = 8;
+            g_GpuBuffers[1].draw.b0 = 0x38;
+            if (!--self->ext.backgroundLightning.unk80) {
+                SetSubStep(0);
+            }
+            break;
+        }
+        if (self->params != 1) {
+            break;
+        }
+        otherEnt = &PLAYER;
+        playerRealX = g_Tilemap.scrollX.i.hi + otherEnt->posX.i.hi;
+        if (playerRealX > 0x300) {
+            g_CastleFlags[CASTLE_FLAG_55] = 1;
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        if (AnimateEntity(D_80180FBC, self) == 0) {
+            self->params = 0;
+            SetStep(1);
+        }
+        g_GpuBuffers[0].draw.r0 = 16;
+        g_GpuBuffers[0].draw.g0 = 8;
+        g_GpuBuffers[0].draw.b0 = 56;
+        g_GpuBuffers[1].draw.r0 = 16;
+        g_GpuBuffers[1].draw.g0 = 8;
+        g_GpuBuffers[1].draw.b0 = 56;
+        var_s1 = &D_80180EA0[0];
+        for (i = 0; i < 12; i++) {
+            clutDest = var_s1[0];
+            clutSrc = self->animCurFrame;
+            clutSrc = var_s1[clutSrc];
+            g_ClutIds[clutDest] = g_ClutIds[clutSrc + 0x200];
+            var_s1 += 16;
+        }
+        break;
+
+    case 4:
+        g_GpuBuffers[0].draw.r0 = 16;
+        g_GpuBuffers[0].draw.g0 = 8;
+        g_GpuBuffers[0].draw.b0 = 56;
+        g_GpuBuffers[1].draw.r0 = 16;
+        g_GpuBuffers[1].draw.g0 = 8;
+        g_GpuBuffers[1].draw.b0 = 56;
+    }
+    if (self->params == 1) {
+        switch (self->ext.backgroundLightning.unk84) {
+        case 0:
+            g_api.PlaySfx(SET_UNK_90);
+            self->ext.backgroundLightning.unk84++;
+            D_80097928 = 1;
+            D_80097910 = SE_INTRO_WIND_QUIET;
+            break;
+        case 1:
+            if (g_api.func_80131F68() == false) {
+                D_80097928 = 0;
+                g_api.PlaySfx(D_80097910);
+                self->ext.backgroundLightning.unk84++;
+            }
+            break;
+        case 2:
+            otherEnt = &PLAYER;
+            playerRealX = g_Tilemap.scrollX.i.hi + otherEnt->posX.i.hi;
+            if (playerRealX > 0x300) {
+                g_api.PlaySfx(SET_UNK_90);
+                D_80097928 = 1;
+                D_80097910 = MU_DRACULAS_CASTLE;
+                self->ext.backgroundLightning.unk84++;
+            }
+            break;
+        case 3:
+            if (g_api.func_80131F68() == false) {
+                D_80097928 = 0;
+                g_api.PlaySfx(D_80097910);
+                self->ext.backgroundLightning.unk84++;
+            }
+            break;
+        }
+    }
+}
 
 // window that opens and shuts in the background
 void EntityShuttingWindow(Entity* self) {

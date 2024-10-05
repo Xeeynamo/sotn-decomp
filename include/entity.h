@@ -1796,6 +1796,13 @@ typedef struct {
     /* 0x8C */ struct Entity* parent;
 } ET_GhostEvent;
 
+typedef struct {
+    s32 : 32;
+    s16 unk80;
+    s16 : 16;
+    u8 unk84;
+} ET_BackgroundLightning;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1948,6 +1955,7 @@ typedef union { // offset=0x7C
     ET_DisableAfterImage disableAfterImage;
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
+    ET_BackgroundLightning backgroundLightning;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field_name)                               \
