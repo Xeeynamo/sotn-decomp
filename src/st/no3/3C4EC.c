@@ -364,15 +364,8 @@ void EntityBackgroundPineTrees(Entity* self) {
 
             prim_s1->y2 = prim_s1->y3 = 0x9C;
             prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
-            // Wow, the linter really mangles this block.
-            prim_s0->r0 = prim_s0->r1 = prim_s0->r2 = prim_s0->r3 =
-                prim_s0->g0 = prim_s0->g1 = prim_s0->g2 = prim_s0->g3 =
-                    prim_s0->b0 = prim_s0->b1 = prim_s0->b2 = prim_s0->b3 =
-                        prim_s1->r0 = prim_s1->r1 = prim_s1->r2 = prim_s1->r3 =
-                            prim_s1->g0 = prim_s1->g1 = prim_s1->g2 =
-                                prim_s1->g3 = prim_s1->b0 = prim_s1->b1 =
-                                    prim_s1->b2 = prim_s1->b3 =
-                                        D_801817E4[self->params];
+            // Set all colors for both prims.
+            PCOL(prim_s0) = PCOL(prim_s1) = D_801817E4[self->params];
             prim_s0->priority = 0x3F - (self->params * 2);
             prim_s1->priority = prim_s0->priority - 1;
             prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
@@ -435,19 +428,9 @@ void EntityBackgroundPineTrees(Entity* self) {
                             prim_s0->y2 - (var_s4 * 80 / 256);
                         prim_s1->y2 = prim_s1->y3 = 0x9C;
                         prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
-                        // Oh dear lord
-                        prim_s0->r0 = prim_s0->r1 = prim_s0->r2 = prim_s0->r3 =
-                            prim_s0
-                                ->g0 = prim_s0->g1 = prim_s0->g2 = prim_s0->g3 =
-                                prim_s0->b0 = prim_s0->b1 = prim_s0->b2 =
-                                    prim_s0->b3 = prim_s1->r0 = prim_s1->r1 =
-                                        prim_s1
-                                            ->r2 = prim_s1->r3 = prim_s1->g0 =
-                                            prim_s1->g1 = prim_s1->g2 =
-                                                prim_s1->g3 = prim_s1->b0 =
-                                                    prim_s1->b1 = prim_s1->b2 =
-                                                        prim_s1->b3 = D_801817E4
-                                                            [self->params];
+                        // Set all colors for both prims.
+                        PCOL(prim_s0) = PCOL(prim_s1) =
+                            D_801817E4[self->params];
                         prim_s0->priority = 0x3F - (self->params * 2);
                         prim_s1->priority = prim_s0->priority - 1;
                         prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
