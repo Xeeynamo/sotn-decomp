@@ -5,7 +5,7 @@ INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C1854);
 
 #include "../player_is_within_hitbox.h"
 
-extern u16 D_us_80180ADC;
+extern u16 D_us_80180ADC[];
 extern u8 D_us_80180E94[];
 extern u8 D_us_80180E9C[];
 extern u16 D_us_80180EA4[];
@@ -20,7 +20,7 @@ void func_801B0AA4(Entity* self) {
 
     var_s3 = self->params;
     if (!self->step) {
-        InitializeEntity(&D_us_80180ADC);
+        InitializeEntity(D_us_80180ADC);
         self->hitboxState = 1;
         var_s2 = self->ext.et_801B0AA4.unk7C = D_us_80180E9C[var_s3];
         if (var_s2) {
