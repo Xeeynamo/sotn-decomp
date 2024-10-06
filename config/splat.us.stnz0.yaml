@@ -62,7 +62,7 @@ segments:
       - [0x23DC, .data, e_skeleton]
       - [0x24CC, .data, e_spittle_bone]
       - [0x2584, .data, e_subweapon_container]
-      - [0x2610, data] # bloody skeleton
+      - [0x2610, .data, e_bloody_skeleton]
       - [0x26B8, data] # magically sealed door
       - [0x272C, .data, rooms]
       - [0x2830, .data, e_life_up]

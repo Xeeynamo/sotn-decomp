@@ -107,13 +107,6 @@ extern u16 D_80180C34[];
 // *** EntityBloodSkeleton properties START ***
 
 extern u16 D_80180C40[]; // InitProps
-extern u8 D_80182610[];  // Animation: Walking?
-extern s16 D_80182624[];
-extern u8 D_80182638[]; // Animation: Disassemble
-extern u8 D_80182654[]; // Animation: Reassemble
-extern u8 D_80182670[]; // Animation: Reassemble faster ?
-extern s32 D_80182694;
-extern s32 D_801826AC;
 
 // *** EntityBloodSkeleton properties END ***
 
