@@ -243,7 +243,7 @@
 <g id="node16" class="node">
 <title>no0.EntityRoomForeground</title>
 <g id="a_node16"><a xlink:href="no0.EntityRoomForeground.svg" xlink:title="no0.EntityRoomForeground">
-<ellipse fill="red" stroke="black" cx="3842.89" cy="-198" rx="139.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3842.89" cy="-198" rx="139.98" ry="18"/>
 <text text-anchor="middle" x="3842.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityRoomForeground</text>
 </a>
 </g>

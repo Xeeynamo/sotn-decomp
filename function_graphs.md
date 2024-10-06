@@ -1816,7 +1816,7 @@
 - [❌ EntityPrizeDrop](gh-duplicates/function_calls/no0.EntityPrizeDrop.svg?raw=1)
 - [✅ EntityRedDoor](gh-duplicates/function_calls/no0.EntityRedDoor.svg?raw=1)
 - [❌ EntityRelicOrb](gh-duplicates/function_calls/no0.EntityRelicOrb.svg?raw=1)
-- [❌ EntityRoomForeground](gh-duplicates/function_calls/no0.EntityRoomForeground.svg?raw=1)
+- [✅ EntityRoomForeground](gh-duplicates/function_calls/no0.EntityRoomForeground.svg?raw=1)
 - [❌ EntitySkeleton](gh-duplicates/function_calls/no0.EntitySkeleton.svg?raw=1)
 - [❌ EntitySkeletonPieces](gh-duplicates/function_calls/no0.EntitySkeletonPieces.svg?raw=1)
 - [❌ EntitySkeletonThrownBone](gh-duplicates/function_calls/no0.EntitySkeletonThrownBone.svg?raw=1)
