@@ -22,7 +22,16 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D191C);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D20A4);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D2318);
+extern u16 D_us_80180A94[];
+
+void func_us_801D2318(Entity* entity) {
+    if (entity->step == 0) {
+        InitializeEntity(D_us_80180A94);
+    }
+    if ((entity - 1)->entityId != 0x2E) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_801CD78C);
 
@@ -48,7 +57,17 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4AA4);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4CAC);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4E30);
+void func_us_801D4E30(void) {
+    Primitive* prim;
+    s32 i;
+
+    prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 10; i++) {
+        prim->x0 = (prim->x0 + prim->x1) / 2;
+        prim->y0 = (prim->y0 + prim->y2) / 2;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4E94);
 

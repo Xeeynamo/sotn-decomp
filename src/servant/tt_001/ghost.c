@@ -15,7 +15,7 @@ extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
 extern SpriteParts* D_80170040[];
 
-extern u16 D_us_80170580[48];
+extern u16 D_us_80170580[32];
 extern u16 D_us_80170448[48];
 
 extern Primitive*
