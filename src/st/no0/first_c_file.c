@@ -92,7 +92,10 @@ INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C2CD8);
 
 INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C2E7C);
 
-INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C3308);
+void func_us_801C3308(Entity* self) {
+    g_CastleFlags[CASTLE_FLAG_1] = 1;
+    DestroyEntity(self);
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/first_c_file", MakeExplosions);
 

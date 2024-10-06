@@ -30,7 +30,7 @@ typedef enum {
     /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x28 */ E_LIGHTNING_THUNDER,
-    /* 0x29 */ E_801B5E98,
+    /* 0x29 */ E_LIGHTNING_CLOUD,
     /* 0x2D */ E_SPLASH_WATER = 0x2D,
     /* 0x2E */ E_SURFACING_WATER,
     /* 0x2F */ E_SIDE_WATER_SPLASH,

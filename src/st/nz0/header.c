@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-extern signed short* spriteBanks[];
+extern s16** spriteBanks[];
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];
 extern MyRoomDef rooms_layers[];
