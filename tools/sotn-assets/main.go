@@ -5,24 +5,25 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"path"
 )
 
 type dataContainer[T any] struct {
-	dataRange dataRange
+	dataRange datarange.DataRange
 	content   T
 }
 
 type ovl struct {
-	ranges            []dataRange
+	ranges            []datarange.DataRange
 	rooms             dataContainer[[]room]
 	layers            dataContainer[[]roomLayers]
 	sprites           dataContainer[spriteDefs]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
-	layoutsExtraRange dataRange
+	layoutsExtraRange datarange.DataRange
 	tileMaps          dataContainer[map[psx.Addr][]byte]
 	tileDefs          dataContainer[map[psx.Addr]tileDef]
 }
@@ -74,14 +75,14 @@ func getOvlAssets(fileName string) (ovl, error) {
 	}
 
 	// check for unused tile defs (CEN has one)
-	for tileMapsRange.end < tileDefsRange.begin {
-		offset := tileDefsRange.begin.Sum(-0x10)
+	for tileMapsRange.End() < tileDefsRange.Begin() {
+		offset := tileDefsRange.Begin().Sum(-0x10)
 		unusedTileDef, unusedTileDefRange, err := readTiledef(file, offset)
 		if err != nil {
 			return ovl{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
 		}
 		tileDefs[offset] = unusedTileDef
-		tileDefsRange = mergeDataRanges([]dataRange{tileDefsRange, unusedTileDefRange})
+		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
 	sprites, spritesRange, err := readSpritesBanks(file, psx.RamStageBegin, header.Sprites)
@@ -98,7 +99,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	if layoutOff == psx.RamNull {
 		// some overlays have this field nulled, we have to find the offset ourselves
 		// it should be usually be right after header.Graphics
-		layoutOff = graphicsRange.end // ⚠️ assumption
+		layoutOff = graphicsRange.End() // ⚠️ assumption
 	}
 	nLayouts := maxBy(rooms, func(r room) int { // ⚠️ assumption
 		return int(r.EntityLayoutID)
@@ -110,7 +111,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	}
 
 	return ovl{
-		ranges: consolidateDataRanges([]dataRange{
+		ranges: datarange.ConsolidateDataRanges([]datarange.DataRange{
 			roomsRange,
 			layersRange,
 			spritesRange,
@@ -229,7 +230,7 @@ func info(fileName string) error {
 	}
 
 	entries := []struct {
-		dataRange dataRange
+		dataRange datarange.DataRange
 		name      string
 		comment   string
 	}{
@@ -247,15 +248,15 @@ func info(fileName string) error {
 	fmt.Println("  - [0x0, .data, header]")
 	for i := 0; i < len(entries); i++ {
 		e := entries[i]
-		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.begin.Real(psx.RamStageBegin), e.name)
+		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.Begin().Real(psx.RamStageBegin), e.name)
 		if e.comment != "" {
 			s = fmt.Sprintf("%s # %s", s, e.comment)
 		}
 		fmt.Println(s)
 
 		// if there is a gap between the current entry and the next one, mark it as unrecognized data
-		if i == len(entries)-1 || e.dataRange.end != entries[i+1].dataRange.begin {
-			fmt.Printf("  - [0x%X, data]\n", e.dataRange.end.Real(psx.RamStageBegin))
+		if i == len(entries)-1 || e.dataRange.End() != entries[i+1].dataRange.Begin() {
+			fmt.Printf("  - [0x%X, data]\n", e.dataRange.End().Real(psx.RamStageBegin))
 		}
 	}
 	return nil

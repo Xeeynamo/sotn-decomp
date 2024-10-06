@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
@@ -30,30 +32,13 @@ type assetConfig struct {
 	Files []assetFileEntry `yaml:"files"`
 }
 
-type assetEntry struct {
-	data     []byte
-	start    int
-	end      int
-	assetDir string
-	srcDir   string
-	name     string
-	args     []string
-	ramBase  psx.Addr
-}
-
-type assetBuildEntry struct {
-	assetDir string
-	srcDir   string
-	name     string
-}
-
-var extractHandlers = map[string]func(assetEntry) error{
-	"frameset": func(e assetEntry) error {
+var extractHandlers = map[string]func(assets.ExtractEntry) error{
+	"frameset": func(e assets.ExtractEntry) error {
 		var set []*[]sprite
 		var err error
-		if e.start != e.end {
-			r := bytes.NewReader(e.data)
-			set, _, err = readFrameSet(r, e.ramBase, e.ramBase.Sum(e.start))
+		if e.Start != e.End {
+			r := bytes.NewReader(e.Data)
+			set, _, err = readFrameSet(r, e.RamBase, e.RamBase.Sum(e.Start))
 			if err != nil {
 				return err
 			}
@@ -65,7 +50,7 @@ var extractHandlers = map[string]func(assetEntry) error{
 			return err
 		}
 
-		outPath := path.Join(e.assetDir, fmt.Sprintf("%s.frameset.json", e.name))
+		outPath := path.Join(e.AssetDir, fmt.Sprintf("%s.frameset.json", e.Name))
 		dir := filepath.Dir(outPath)
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			fmt.Printf("failed to create directory %s: %v\n", dir, err)
@@ -73,31 +58,16 @@ var extractHandlers = map[string]func(assetEntry) error{
 		}
 		return os.WriteFile(outPath, content, 0644)
 	},
-	"cutscene": func(e assetEntry) error {
-		if e.start == e.end {
-			return fmt.Errorf("cutscene cannot be 0 bytes")
-		}
-		r := bytes.NewReader(e.data)
-		script, err := parseCutsceneAsC(r, e.ramBase, e.ramBase.Sum(e.start), e.end - e.start)
-		if err != nil {
-			return err
-		}
-		outPath := path.Join(e.srcDir, fmt.Sprintf("%s.h", e.name))
-		dir := filepath.Dir(outPath)
-		if err := os.MkdirAll(dir, 0755); err != nil {
-			fmt.Printf("failed to create directory %s: %v\n", dir, err)
-			return err
-		}
-		return os.WriteFile(outPath, []byte(script), 0644)
-	},
+	"cutscene": cutscene.Handler.Extract,
 }
 
-var buildHandlers = map[string]func(assetBuildEntry) error{
-	"frameset": func(e assetBuildEntry) error {
-		inFileName := path.Join(e.assetDir, fmt.Sprintf("%s.frameset.json", e.name))
-		outFileName := path.Join(e.srcDir, fmt.Sprintf("%s.h", e.name))
-		return buildFrameSet(inFileName, outFileName, e.name)
+var buildHandlers = map[string]func(assets.BuildEntry) error{
+	"frameset": func(e assets.BuildEntry) error {
+		inFileName := path.Join(e.AssetDir, fmt.Sprintf("%s.frameset.json", e.Name))
+		outFileName := path.Join(e.SrcDir, fmt.Sprintf("%s.h", e.Name))
+		return buildFrameSet(inFileName, outFileName, e.Name)
 	},
+	"cutscene": cutscene.Handler.Build,
 }
 
 func parseArgs(entry []string) (offset int64, kind string, args []string, err error) {
@@ -134,7 +104,7 @@ func readConfig(path string) (*assetConfig, error) {
 
 func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
-	handler func(assetEntry) error,
+	handler func(assets.ExtractEntry) error,
 	assetDir string,
 	srcDir string,
 	name string,
@@ -144,15 +114,14 @@ func enqueueExtractAssetEntry(
 	args []string,
 	ramBase psx.Addr) {
 	eg.Go(func() error {
-		if err := handler(assetEntry{
-			data:     data,
-			start:    start,
-			end:      end,
-			assetDir: assetDir,
-			srcDir:   srcDir,
-			ramBase:  ramBase,
-			name:     name,
-			args:     args,
+		if err := handler(assets.ExtractEntry{
+			Data:     data,
+			Start:    start,
+			End:      end,
+			AssetDir: assetDir,
+			RamBase:  ramBase,
+			Name:     name,
+			Args:     args,
 		}); err != nil {
 			return fmt.Errorf("unable to extract asset %q: %v", name, err)
 		}
@@ -206,18 +175,18 @@ func extractAssetFile(file assetFileEntry) error {
 
 func enqueueBuildAssetEntry(
 	eg *errgroup.Group,
-	handler func(assetBuildEntry) error,
+	handler func(assets.BuildEntry) error,
 	assetDir,
 	sourceDir,
 	name string) {
 	eg.Go(func() error {
-		err := handler(assetBuildEntry{
-			assetDir: assetDir,
-			srcDir:   sourceDir,
-			name:     name,
+		err := handler(assets.BuildEntry{
+			AssetDir: assetDir,
+			SrcDir:   sourceDir,
+			Name:     name,
 		})
 		if err != nil {
-			return fmt.Errorf("unable to build asset %q: %v", name, err)
+			return fmt.Errorf("unable to build asset %q at %q: %v", name, assetDir, err)
 		}
 		return nil
 	})
