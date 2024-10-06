@@ -851,7 +851,7 @@ typedef struct Entity {
     /* 0x5C */ struct Entity* unk5C;
     /* 0x60 */ struct Entity* unk60;
     /* 0x64 */ s32 primIndex;
-    /* 0x68 */ u16 unk68;
+    /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;
     /* 0x6C */ u8 unk6C;
     /* 0x6D */ u8 unk6D[11];
