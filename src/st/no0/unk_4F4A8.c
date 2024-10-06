@@ -56,7 +56,20 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4FCC);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5074);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D51EC);
+void func_us_801D51EC(void) {
+    Primitive* prim;
+    s32 i;
+
+    prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 10; i++) {
+        prim->x0 = prim->x2 = prim->x0 - 3;
+        prim->x1 = prim->x3 = prim->x0 + 6;
+        prim->y0 = prim->y1 = prim->y0 - 3;
+        prim->y2 = prim->y3 = prim->y0 + 6;
+
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5250);
 
