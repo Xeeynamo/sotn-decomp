@@ -357,7 +357,3 @@ extern u16 g_eBlueDoorTiles[2][8];
 extern char D_80182710[];
 
 // for func_801B0AA4
-extern u16 D_80180C10[];
-extern u8 D_80180DBC[];
-extern u8 D_80180DC0[];
-extern u16 D_80180DC4[];

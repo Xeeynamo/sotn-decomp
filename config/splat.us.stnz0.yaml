@@ -40,7 +40,7 @@ segments:
       - [0x47C, .data, header]
       - [0x8EC, .data, e_laydef] # layout entries header
       - [0xA94, .data, e_init]
-      - [0xDBC, data]
+      - [0xDBC, .data, 30958]
       - [0xDE4, .data, e_breakable]
       - [0xE54, data]
       - [0x146C, .data, cutscene]
