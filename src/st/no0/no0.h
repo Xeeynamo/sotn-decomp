@@ -30,6 +30,7 @@ typedef enum EntityIDs {
     /* 0x15 */ E_GREY_PUFF = 0x15,
     /* 0x17 */ E_BG_LIGHTNING = 0x17,
     /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
+    /* 0x20 */ E_DUMMY_20 = 0x20,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x2E */ E_ID_2E = 0x2E,
     /* 0x30 */ E_ID_30 = 0x30,
