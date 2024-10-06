@@ -191,9 +191,6 @@ extern u8 D_80181218[];
 extern const u8 D_8018136C[];
 extern const u8 D_80181378[];
 extern const u8 D_80181388[];
-extern s32 g_ElevatorTarget;
-extern s16 g_ElevatorTargetPos[];
-extern u16 g_HeartDropArray[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
@@ -306,12 +303,6 @@ extern SVECTOR D_80182848;
 // For NZ0_EntityCutscene
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
-extern u8 D_801813C8[];
-extern u8 D_801813CC[];
-extern u16 D_801813D0[];
-extern u16 D_801813D4[];
-extern u16 D_801813D8[];
-extern s16 D_801813DC[];
 extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
