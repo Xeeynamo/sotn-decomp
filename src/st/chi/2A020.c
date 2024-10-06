@@ -272,7 +272,7 @@ void EntityCorpseweed(Entity* self)
         GrowStalk_FinishV = 2,
         GrowStalk_H2 = 3,
     };
-    
+
     enum Attack_Substep {
         Attack_Init = 0,
         Attack_Delay = 1,
@@ -299,7 +299,7 @@ void EntityCorpseweed(Entity* self)
     if ((self->flags & FLAG_DEAD) && (self->step < Death)) {
         SetStep(Death);
     }
-    
+
     switch (self->step) {
         case Init:
             InitializeEntity(&EntityInit_801806E8);
@@ -321,7 +321,7 @@ void EntityCorpseweed(Entity* self)
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
             self->ext.prim = prim;
-            
+
             // Leaves primitive
             prim->tpage = 0x13;
             prim->clut = PAL_DRA(0x206);
@@ -383,14 +383,14 @@ void EntityCorpseweed(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case GrowLeaves_Done:
                     self->ext.corpseweed.leavesDoneGrowing = true;
                     SetStep(GrowStalk);
                     break;
             }
             break;
-        
+
         case GrowStalk:
             prim = self->ext.prim;
             prim = prim->next;
@@ -422,7 +422,7 @@ void EntityCorpseweed(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case GrowStalk_UnevenV:
                     // Extend the facing edge of stalk sprite up
                     if (self->facingLeft) {
@@ -444,7 +444,7 @@ void EntityCorpseweed(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case GrowStalk_FinishV:
                     // Extend the non-facing edge of stalk sprite up
                     if (self->facingLeft) {
@@ -458,7 +458,7 @@ void EntityCorpseweed(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case GrowStalk_H2:
                     doneCount = 0;
 
@@ -497,7 +497,7 @@ void EntityCorpseweed(Entity* self)
                     break;
             }
             break;
-        
+
         case GrowToIdle:
             self->animCurFrame = AnimFrameIdle;
             if (self->rotX < 0x100) {
@@ -507,7 +507,7 @@ void EntityCorpseweed(Entity* self)
                 SetStep(Idle);
             }
             break;
-        
+
         case Idle:
             if (!self->step_s) {
                 self->ext.corpseweed.timer = DelayBeforeFirstAttack;
@@ -525,7 +525,7 @@ void EntityCorpseweed(Entity* self)
                 self->ext.corpseweed.bobbingTimer = BobbingTimer;
             }
             break;
-        
+
         case Attack:
             switch (self->step_s) {
                 case Attack_Init:
@@ -538,7 +538,7 @@ void EntityCorpseweed(Entity* self)
                         SetSubStep(Attack_Projectile);
                     }
                     break;
-                
+
                 case Attack_Projectile:
                     self->animCurFrame = AnimFrameAttack;
                     // Spawn projectile entity
@@ -566,7 +566,7 @@ void EntityCorpseweed(Entity* self)
                     break;
             }
         break;
-        
+
         case Death:
             switch (self->step_s) {
                 case Death_Init:
@@ -598,16 +598,16 @@ void EntityCorpseweed(Entity* self)
 
                         // Hide head
                         self->animCurFrame = 0;
-                        
+
                         // "Parent" Thornweed
                         entity = self - 1;
                         entity->flags |= FLAG_DEAD;
-                        
+
                         PlaySfxWithPosArgs(NA_SE_EN_CORPSEWEED_COLLAPSE);
                         self->step_s++;
                     }
                     break;
-                
+
                 case Death_ShrinkAndFade:
                     self->ext.corpseweed.timer++;
                     prim = self->ext.prim;
@@ -629,7 +629,7 @@ void EntityCorpseweed(Entity* self)
                         }
                         func_801AE70C(prim, 3U);
                     }
-                    
+
                     // Stalk
                     prim = prim->next;
                     prim->drawMode |= DRAW_COLORS;
@@ -664,7 +664,7 @@ void EntityCorpseweed(Entity* self)
                     break;
             }
     }
-    
+
     // Update bobbing back and forth state
     if (self->ext.corpseweed.bobbingTimer) {
         self->ext.corpseweed.bobbingTimer--;
@@ -683,7 +683,7 @@ void EntityCorpseweed(Entity* self)
     // Update leaves for bobbing back and forth
     if (self->ext.corpseweed.leavesDoneGrowing) {
         prim = self->ext.prim;
-        
+
         // X
         t = self->ext.corpseweed.bobbingLeavesXT += BobbingSpeedX_Leaves;
         x = (rcos(t) * 2) >> 0xC;
@@ -742,7 +742,147 @@ void EntityCorpseweed(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB0C0);    // [Entity] Corpseweed Projectile
+extern EntityInit EntityInit_801806F4;
+
+// E_ID_28
+// func_801AB0C0
+// PSP:func_psp_0924AE40:Match
+// PSP:https://decomp.me/scratch/qpbbH
+void func_801AB0C0(Entity* self)
+{
+    Collider collider;
+    Entity* entity;   // s3
+    Primitive* prim;  // s0
+    s32 primIdx;      // s4
+    s32 var_v0;       // s2
+    s8* hitboxData;   // s1
+    u32 hitboxIndex;  // s6
+    s32 temp2;        // s5
+
+    if ((self->hitFlags) && !(self->hitFlags & 0x80)) {
+        self->flags |= FLAG_DEAD;
+    }
+    if (self->flags & FLAG_DEAD) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            entity->params = 0;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_801806F4);
+            var_v0 = GetDistanceToPlayerX();
+            if (var_v0 > 0x60) {
+                var_v0 = 0x60;
+            }
+            if (self->facingLeft) {
+                self->velocityX = -var_v0 * 0x800;
+            } else {
+                self->velocityX = var_v0 * 0x800;
+            }
+            primIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIdx == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            prim = &g_PrimBuf[primIdx];
+            self->ext.prim = prim;
+            
+            prim->tpage = 0x13;
+            prim->clut = PAL_DRA(0x209);
+            prim->u0 = prim->u2 = 0x40;
+            prim->u1 = prim->u3 = 0x80;
+            prim->v0 = prim->v1 = 0x40;
+            prim->v2 = prim->v3 = 0x80;
+            prim->r0 = prim->g0 = prim->b0 = 0x40;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority - 1;
+            prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
+            break;
+
+        case 1:
+            AnimateEntity(D_80181784, self);
+            MoveEntity();
+
+            self->velocityY += FIX(0.125);
+            var_v0 = self->posX.i.hi;
+            temp2 = self->posY.i.hi + 1;
+            g_api.CheckCollision(var_v0, temp2, &collider, 0);
+            if (collider.effects & 1) {
+                g_api.PlaySfx(0x672);
+                self->posY.i.hi += collider.unk18;
+                SetStep(2);
+            }
+            break;
+
+        case 2:
+            if (AnimateEntity(D_8018178C, self) == 0) {
+                DestroyEntity(self);
+                return;
+            }
+            prim = self->ext.prim;
+            switch (self->step_s) {
+                case 0:
+                    prim->y0 = self->posY.i.hi - 4;
+                    prim->y1 = self->posY.i.hi - 0x20;
+                    prim->y2 = prim->y3 = self->posY.i.hi;
+                    prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
+                    if (self->facingLeft) {
+                        self->step_s = 2;
+                        prim->x0 = prim->x2 = self->posX.i.hi;
+                        prim->x1 = prim->x3 = self->posX.i.hi - 0x20;
+                    } else {
+                        self->step_s = 1;
+                        prim->x0 = prim->x2 = self->posX.i.hi;
+                        prim->x1 = prim->x3 = self->posX.i.hi + 0x20;
+                    }
+                    break;
+
+                case 1:
+                    prim->x0 += 1;
+                    prim->x1 += 8;
+                    prim->x2 -= 1;
+                    prim->x3 += 6;
+                    prim->y0 -= 3;
+                    prim->y1 -= 0xA;
+                    prim->y2 += 1;
+                    prim->y3 -= 1;
+                    func_801AE70C(prim, 7U);
+                    break;
+
+                case 2:
+                    prim->x0 -= 1;
+                    prim->x1 -= 8;
+                    prim->x2 += 1;
+                    prim->x3 -= 6;
+                    prim->y0 -= 3;
+                    prim->y1 -= 0xA;
+                    prim->y2 += 1;
+                    prim->y3 -= 1;
+                    func_801AE70C(prim, 7U);
+                    break;
+            }
+            break;
+    }
+
+    // Update the hitbox based on the current animation frame
+    hitboxData = &HitboxData[0];
+    hitboxIndex = HitboxIndices[self->animCurFrame];
+    hitboxData = &hitboxData[hitboxIndex << 2]; // 4 entries per index
+    self->hitboxOffX = *hitboxData++;
+    self->hitboxOffY = *hitboxData++;
+    self->hitboxWidth = *hitboxData++;
+    self->hitboxHeight = *hitboxData++;
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB548);
 
