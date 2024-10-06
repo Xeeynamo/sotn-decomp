@@ -201,7 +201,6 @@ extern ObjInit D_80182014[];
 
 extern u8 D_80181F30[];
 extern u16 D_80180CF4[];
-extern s32 D_80182600[];
 extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
@@ -211,23 +210,6 @@ extern u16 D_80180C94[];
 extern u16 D_80180CA0[];
 
 // *** EntitySubWeaponContainer properties START ***
-
-#define ENTITY_SUBWPNCONT_DEBRIS_COUNT 9
-typedef enum {
-    SUBWPNCONT_INIT,
-    SUBWPNCONT_IDLE,
-    SUBWPNCONT_BREAK,
-    SUBWPNCONT_DEBUG = 255
-} SUBWPNCONT_STEPS;
-
-typedef struct SubWpnContDebris {
-    u16 posX;
-    u16 posY;
-    u16 params;
-    u16 facingLeft;
-} SubWpnContDebris;
-
-extern SubWpnContDebris D_80182584[ENTITY_SUBWPNCONT_DEBRIS_COUNT];
 
 // *** EntitySubWeaponContainer properties END ***
 
@@ -259,8 +241,6 @@ extern u16 D_80180CB8[]; // Init
 
 // *** EntitySpittleBoneSpit properties END ***
 
-extern s32 D_801825CC[]; // SubWeapons params table
-extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];

@@ -7,7 +7,31 @@
 #include "nz0.h"
 #include "sfx.h"
 
+typedef struct SubWpnContDebris {
+    s16 posX;
+    s16 posY;
+    u16 params;
+    u16 facingLeft;
+} SubWpnContDebris;
+static SubWpnContDebris D_80182584[] = {
+    {0x0000, 0xFFA9, 0x0003, 0x0000}, {0xFFF6, 0xFFBA, 0x0007, 0x0001},
+    {0xFFF5, 0xFFC9, 0x0006, 0x0000}, {0x0007, 0xFFB6, 0x0007, 0x0001},
+    {0x000A, 0xFFC4, 0x0006, 0x0001}, {0xFFF7, 0xFFD9, 0x0005, 0x0000},
+    {0x0008, 0xFFD7, 0x0004, 0x0000}, {0x0002, 0xFFCF, 0x0005, 0x0001},
+    {0x0000, 0xFFBE, 0x0007, 0x0001}};
+static s32 D_801825CC[] = {
+    0x0016, 0x0014, 0x0010, 0x000E, 0x0013, 0x0015, 0x000F, 0x0011, 0x0012};
+static u8 D_801825F0[] = {0x01, 0x01, 0x04, 0x01, 0x02, 0x01, 0x05, 0x01,
+                          0x02, 0x01, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00};
+static s32 D_80182600[] = {FIX(-1), FIX(-1), FIX(-0.5), FIX(-0.25)};
+
 // SubWeapons floating in the breakable container
+typedef enum {
+    SUBWPNCONT_INIT,
+    SUBWPNCONT_IDLE,
+    SUBWPNCONT_BREAK,
+    SUBWPNCONT_DEBUG = 255
+} SUBWPNCONT_STEPS;
 void EntitySubWeaponContainer(Entity* self) {
     SubWpnContDebris* glassPieceTBL;
     Entity* newEntity;
@@ -85,7 +109,7 @@ void EntitySubWeaponContainer(Entity* self) {
         g_api.FreePrimitives(self->primIndex);
         self->flags &= ~FLAG_HAS_PRIMS;
         g_api.PlaySfx(SFX_MAGIC_GLASS_BREAK);
-        while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
+        while (i < LEN(D_80182584)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
