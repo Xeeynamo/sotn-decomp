@@ -38,13 +38,14 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, .data, F84]
-      - [0x40, .data, spriteparts]
-      - [0x448, .data, clutdata]
-      - [0x4A8, .data, animationdata]
-      - [0x508, .data, 508]
-      - [0xEFC, .rodata, F84]
-      - [0xF3C, .rodata, F84] # ProcessSfxState
-      - [0xF60, c, F84]
+      - [0x0, .data, ghost]
+      - [0x40, .data, servant_spriteparts]
+      - [0x448, .data, servant_clutdata]
+      - [0x4A8, .data, ghost_animation_data]
+      - [0x508, .data, ghost_data]
+      - [0x5AF, .data, servant_events]
+      - [0xEFC, .rodata, ghost]
+      - [0xF3C, .rodata, ghost] # ProcessSfxState
+      - [0xF60, c, ghost]
       - [0x35B0, sbss]
   - [0xA000]

@@ -21,6 +21,3 @@ u16 D_us_801705A0[4] = {6, 3, 8, 0};
 
 // y offsets for positioning primitives
 u16 D_us_801705A8[4] = {-20, -18, -15, 0};
-
-#include "../shared_events.h"
-#include "../shared_globals.h"
