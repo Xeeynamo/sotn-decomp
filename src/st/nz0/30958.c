@@ -26,18 +26,7 @@ void func_801B0958(Entity* self) {
     AnimateEntity(objInit->animFrames, self);
 }
 
-bool func_801B0A20(Entity* self) {
-    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
-
-    diffX = abs(diffX);
-    if (self->hitboxWidth >= diffX) {
-        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
-        diffX = abs(diffX);
-        return self->hitboxHeight >= diffX;
-    } else {
-        return false;
-    }
-}
+#include "../player_is_within_hitbox.h"
 
 void func_801B0AA4(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -62,7 +51,7 @@ void func_801B0AA4(Entity* self) {
         self->ext.et_801B0AA4.unk88 = 2;
     }
 
-    if (func_801B0A20(self)) {
+    if (PlayerIsWithinHitbox(self)) {
         var_s2 = GetSideToPlayer();
         if (self->ext.et_801B0AA4.unk7C) {
             var_s2 &= 2;

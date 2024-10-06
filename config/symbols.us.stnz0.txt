@@ -7,6 +7,7 @@ g_HeartDropArray = 0x801813B0;
 actor_names = 0x8018146C;
 g_eBlueDoorUV = 0x801826B8;
 g_eBlueDoorTiles = 0x801826D0;
+PlayerIsWithinHitbox = 0x801B0A20;
 EntityWargExplosionPuffOpaque = 0x801B3C38;
 EntityBossFightManager = 0x801B3FCC;
 EntityBossRoomBlock = 0x801B4518;

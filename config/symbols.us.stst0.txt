@@ -18,6 +18,7 @@ D_80183D1C = 0x80183D1C;
 D_80197F80 = 0x80197F80;
 D_8019A40C = 0x8019A40C;
 c_HeartPrizes = 0x801A7C84;
+PlayerIsWithinHitbox = 0x801A7E2C;
 EntityLockCamera = 0x801A7EB0;
 ST0_EntityCutscene = 0x801A9210;
 EntityCutscene = 0x801AA290;

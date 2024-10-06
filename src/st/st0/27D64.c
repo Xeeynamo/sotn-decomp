@@ -21,18 +21,7 @@ void func_801A7D64(Entity* self) {
     AnimateEntity(obj->animFrames, self);
 }
 
-bool func_801A7E2C(Entity* self) {
-    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
-
-    diffX = abs(diffX);
-    if (self->hitboxWidth >= diffX) {
-        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
-        diffX = abs(diffX);
-        return self->hitboxHeight >= diffX;
-    } else {
-        return false;
-    }
-}
+#include "../player_is_within_hitbox.h"
 
 extern u16 D_801805B0[];
 extern u8 D_8018065C[];
@@ -75,7 +64,7 @@ void EntityLockCamera(Entity* self) {
         return;
     }
 
-    if (func_801A7E2C(self) != 0) {
+    if (PlayerIsWithinHitbox(self) != 0) {
         facingLeft = GetSideToPlayer();
         if (self->ext.lockCamera.unk7C) {
             facingLeft &= 2;
