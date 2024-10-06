@@ -4,6 +4,14 @@
 
 // This file holds functions to handle the Slogra and Gaibon fight.
 // Slogra and Gaibon themselves are in individual files.
+s32 g_BossFlag = 0x00000000;
+
+static s16 D_80181014[][3] = {
+    {0xFFF8, 0x0068, 0}, {0xFFF8, 0x0078, 0}, {0xFFF8, 0x0088, 0},
+    {0xFFF8, 0x0098, 0}, {0x0408, 0x0068, 1}, {0x0408, 0x0078, 1},
+    {0x0408, 0x0088, 1}, {0x0408, 0x0098, 1}, {0x0408, 0x0168, 1},
+    {0x0408, 0x0178, 1}, {0x0408, 0x0188, 1}, {0x0408, 0x0198, 1},
+};
 
 void EntityBossFightManager(Entity* self) {
     Entity* newEnt;
@@ -26,8 +34,8 @@ void EntityBossFightManager(Entity* self) {
         InitializeEntity(g_EInitGeneric);
         g_BossFlag = 0;
         newEnt = self + 1;
-        temp_s1 = &D_80181014[0];
-        for (i = 0; i < 12; i++, newEnt++, temp_s1 += 3) {
+        temp_s1 = D_80181014;
+        for (i = 0; i < LEN(D_80181014); i++, newEnt++, temp_s1 += 3) {
             CreateEntityFromCurrentEntity(E_BOSS_ROOM_BLOCK, newEnt);
             newEnt->params = temp_s1[2];
             newEnt->posX.i.hi = temp_s1[0] - g_Tilemap.scrollX.i.hi;

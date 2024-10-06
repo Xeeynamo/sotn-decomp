@@ -180,7 +180,6 @@ extern u8 D_80180E24[];
 extern u8 D_80180E2C[];
 extern s16 D_80180E34[];
 extern s8 D_80180E44[];
-extern s16 D_80181014[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
