@@ -22,7 +22,16 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D191C);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D20A4);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D2318);
+extern u16 D_us_80180A94[];
+
+void func_us_801D2318(Entity* entity) {
+    if (entity->step == 0) {
+        InitializeEntity(D_us_80180A94);
+    }
+    if ((entity - 1)->entityId != 0x2E) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_801CD78C);
 
