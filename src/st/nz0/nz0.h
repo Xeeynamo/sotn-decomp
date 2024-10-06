@@ -271,10 +271,3 @@ extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
 extern u16 g_MariaInit[];
-
-// for EntityMagicallySealedDoor
-extern u8 g_eBlueDoorUV[3][8];
-extern u16 g_eBlueDoorTiles[2][8];
-extern char D_80182710[];
-
-// for func_801B0AA4
