@@ -39,6 +39,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x778, data, e_laydef]
+      - [0x91C, data, e_init]
+      - [0xC8C, data]
       - [0x113C, .data, st_update] # UNK_Invincibility0 data
       - [0x1168, .data, collision]
       - [0x1528, .data, e_red_door]
@@ -71,5 +74,6 @@ segments:
       - [0x4E654, c, e_stage_name]
       - [0x4F4A8, c, unk_4F4A8]
       - [0x5E09C, c, prim_helpers]
-      - [0x5E8CC, sbss]
+      - [0x5E8CC, .bss, create_entity]
+      - [0x5E8DC, sbss]
   - [0x5F58C]
