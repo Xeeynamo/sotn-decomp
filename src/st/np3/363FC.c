@@ -41,7 +41,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
-        self->ext.wargpuff.unk80 = obj->unk8;
+        self->ext.wargpuff.anim = obj->anim;
         self->step = params + 1;
 
         temp_v0 = self->params & 0xFF00;
@@ -59,13 +59,13 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY = FIX(1.0);
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
+        if (AnimateEntity(self->ext.wargpuff.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) != 0) {
+        if (AnimateEntity(self->ext.wargpuff.anim, self) != 0) {
             switch (self->step_s) {
             case 0:
                 self->drawFlags = FLAG_DRAW_UNK8;
@@ -132,7 +132,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->velocityY = velocityY - (adjVelocityY >> 2);
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
+        if (AnimateEntity(self->ext.wargpuff.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -147,7 +147,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
+        if (AnimateEntity(self->ext.wargpuff.anim, self) == 0) {
             DestroyEntity(self);
         }
         break;
