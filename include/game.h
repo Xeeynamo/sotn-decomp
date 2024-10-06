@@ -1815,7 +1815,8 @@ extern s32 g_IsTimeAttackUnlocked;
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 typedef enum {
     CLOCK_ROOM_DOORS, // opened by gold and silver ring; drops down to CEN
-    CASTLE_FLAG_2 = 2,
+    CASTLE_FLAG_1,
+    CASTLE_FLAG_2,
     CASTLE_FLAG_19 = 19, // Randomized by g_RandomizeCastleFlag13; unused
     // Start NO3/NP3 flags
     CASTLE_FLAG_48 = 48,
