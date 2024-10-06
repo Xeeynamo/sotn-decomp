@@ -38,11 +38,13 @@ u8 AnimFrames_CorpseweedAttackCharge[] = {
     0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00
 };
 
-u8 D_80181784[] = {
+// D_80181784
+u8 AnimFrames_CorpseweedProjectileAirborne[] = {
     0x02, 0x16, 0x02, 0x17, 0x00, 0x00, 0x00, 0x00
 };
 
-u8 D_8018178C[] = {
+// D_8018178C
+u8 AnimFrames_CorpseweedProjectileDeath[] = {
     0x04, 0x18, 0x03, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0xFF, 0x00, 0x00, 0x00
 };
 
@@ -546,7 +548,7 @@ void EntityCorpseweed(Entity* self)
                     if (entity != NULL) {
                         PlaySfxWithPosArgs(NA_SE_EN_CORPSEWEED_ATTACK);
 
-                        CreateEntityFromEntity(E_ID_28, self, entity);
+                        CreateEntityFromEntity(E_CORPSEWEED_PROJECTILE, self, entity);
                         entity->zPriority = self->zPriority + 1;
                         entity->facingLeft = self->facingLeft;
                         entity->posY.i.hi += ProjectileSpawnOffsetY;
@@ -744,21 +746,45 @@ void EntityCorpseweed(Entity* self)
 
 extern EntityInit EntityInit_801806F4;
 
-// E_ID_28
+// E_CORPSEWEED_PROJECTILE
 // func_801AB0C0
 // PSP:func_psp_0924AE40:Match
 // PSP:https://decomp.me/scratch/qpbbH
-void func_801AB0C0(Entity* self)
+void EntityCorpseweedProjectile(Entity* self)
 {
-    Collider collider;
-    Entity* entity;   // s3
-    Primitive* prim;  // s0
-    s32 primIdx;      // s4
-    s32 var_v0;       // s2
-    s8* hitboxData;   // s1
-    u32 hitboxIndex;  // s6
-    s32 temp2;        // s5
+    // Sprites
+    const int SpriteLeft = 0x40;
+    const int SpriteRight = 0x80;
+    const int SpriteTop = 0x40;
+    const int SpriteBottom = 0x80;
+    // Misc
+    const int Brightness = 0x40;
+    const int RangeMaxX = 0x60;
+    const int SpeedX = 0x800;
+    const int Gravity = FIX(0.125);
 
+    enum Step {
+        Init = 0,
+        Airborne = 1,
+        Death = 2,
+    };
+
+    enum Death_Substep {
+        Death_Init = 0,
+        Death_Right = 1,
+        Death_Left = 2,
+    };
+
+    Collider collider;
+    Entity* entity;
+    Primitive* prim;
+    s32 primIdx;
+    s32 x;
+    s8* hitboxData;
+    u32 hitboxIndex;
+    s32 y;
+
+    // Death detection
     if ((self->hitFlags) && !(self->hitFlags & 0x80)) {
         self->flags |= FLAG_DEAD;
     }
@@ -773,16 +799,16 @@ void func_801AB0C0(Entity* self)
     }
 
     switch (self->step) {
-        case 0:
+        case Init:
             InitializeEntity(&EntityInit_801806F4);
-            var_v0 = GetDistanceToPlayerX();
-            if (var_v0 > 0x60) {
-                var_v0 = 0x60;
+            x = GetDistanceToPlayerX();
+            if (x > RangeMaxX) {
+                x = RangeMaxX;
             }
             if (self->facingLeft) {
-                self->velocityX = -var_v0 * 0x800;
+                self->velocityX = -x * SpeedX;
             } else {
-                self->velocityX = var_v0 * 0x800;
+                self->velocityX = x * SpeedX;
             }
             primIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIdx == -1) {
@@ -797,11 +823,11 @@ void func_801AB0C0(Entity* self)
             
             prim->tpage = 0x13;
             prim->clut = PAL_DRA(0x209);
-            prim->u0 = prim->u2 = 0x40;
-            prim->u1 = prim->u3 = 0x80;
-            prim->v0 = prim->v1 = 0x40;
-            prim->v2 = prim->v3 = 0x80;
-            prim->r0 = prim->g0 = prim->b0 = 0x40;
+            prim->u0 = prim->u2 = SpriteLeft;
+            prim->u1 = prim->u3 = SpriteRight;
+            prim->v0 = prim->v1 = SpriteTop;
+            prim->v2 = prim->v3 = SpriteBottom;
+            prim->r0 = prim->g0 = prim->b0 = Brightness;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -809,45 +835,49 @@ void func_801AB0C0(Entity* self)
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
             break;
 
-        case 1:
-            AnimateEntity(D_80181784, self);
+        case Airborne:
+            AnimateEntity(AnimFrames_CorpseweedProjectileAirborne, self);
             MoveEntity();
 
-            self->velocityY += FIX(0.125);
-            var_v0 = self->posX.i.hi;
-            temp2 = self->posY.i.hi + 1;
-            g_api.CheckCollision(var_v0, temp2, &collider, 0);
+            self->velocityY += Gravity;
+
+            // Check for collision
+            x = self->posX.i.hi;
+            y = self->posY.i.hi + 1;
+            g_api.CheckCollision(x, y, &collider, 0);
             if (collider.effects & 1) {
-                g_api.PlaySfx(0x672);
+                g_api.PlaySfx(NA_SE_EN_CORPSEWEED_COLLAPSE);
                 self->posY.i.hi += collider.unk18;
-                SetStep(2);
+                SetStep(Death);
             }
             break;
 
-        case 2:
-            if (AnimateEntity(D_8018178C, self) == 0) {
+        case Death:
+            if (AnimateEntity(AnimFrames_CorpseweedProjectileDeath, self) == 0) {
                 DestroyEntity(self);
                 return;
             }
+
             prim = self->ext.prim;
             switch (self->step_s) {
-                case 0:
+                case Death_Init:
                     prim->y0 = self->posY.i.hi - 4;
                     prim->y1 = self->posY.i.hi - 0x20;
                     prim->y2 = prim->y3 = self->posY.i.hi;
                     prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
+
                     if (self->facingLeft) {
-                        self->step_s = 2;
+                        self->step_s = Death_Left;
                         prim->x0 = prim->x2 = self->posX.i.hi;
                         prim->x1 = prim->x3 = self->posX.i.hi - 0x20;
                     } else {
-                        self->step_s = 1;
+                        self->step_s = Death_Right;
                         prim->x0 = prim->x2 = self->posX.i.hi;
                         prim->x1 = prim->x3 = self->posX.i.hi + 0x20;
                     }
                     break;
 
-                case 1:
+                case Death_Right:
                     prim->x0 += 1;
                     prim->x1 += 8;
                     prim->x2 -= 1;
@@ -859,7 +889,7 @@ void func_801AB0C0(Entity* self)
                     func_801AE70C(prim, 7U);
                     break;
 
-                case 2:
+                case Death_Left:
                     prim->x0 -= 1;
                     prim->x1 -= 8;
                     prim->x2 += 1;

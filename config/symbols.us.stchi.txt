@@ -103,7 +103,7 @@ EntityGremlinEffect = 0x801A9D40;
 EntityGremlinFire = 0x801A9E94;
 EntityThornweed = 0x801AA020;
 EntityCorpseweed = 0x801AA390;
-// func_801AB0C0
+EntityCorpseweedProjectile = 0x801AB0C0;
 // func_801AB548
 // func_801AB7CC
 // func_801AC074

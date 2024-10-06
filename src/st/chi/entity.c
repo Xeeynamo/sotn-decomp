@@ -39,7 +39,7 @@ void EntitySalemWitchTriboltLaunch(Entity*);
 void EntitySalemWitchTriboltProjectile(Entity*);
 void EntityThornweed(Entity*);
 void EntityCorpseweed(Entity*);
-void func_801AB0C0(Entity*);
+void EntityCorpseweedProjectile(Entity*);
 void func_801AB7CC(Entity*);
 void func_801AC074(Entity*);
 void func_801AC730(Entity*);
@@ -86,7 +86,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntitySalemWitchTriboltProjectile,
     EntityThornweed,
     EntityCorpseweed,
-    func_801AB0C0,  // E_ID_28
+    EntityCorpseweedProjectile,
     func_801AB7CC,  // E_ID_29
     func_801AC074,  // E_ID_2A
     func_801AC730,  // E_ID_2B

@@ -46,7 +46,7 @@ typedef enum {
     /* 0x25 */ E_SALEM_WITCH_TRIBOLT_PROJECTILE,
     /* 0x26 */ E_THORNWEED,
     /* 0x27 */ E_CORPSEWEED,
-    /* 0x28 */ E_ID_28, //func_801AB0C0
+    /* 0x28 */ E_CORPSEWEED_PROJECTILE,
     /* 0x29 */ E_ID_29, //func_801AB7CC
     /* 0x2A */ E_ID_2A, //func_801AC074
     /* 0x2B */ E_ID_2B, //func_801AC730
