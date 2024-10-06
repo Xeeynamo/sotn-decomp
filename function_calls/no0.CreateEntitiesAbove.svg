@@ -12,7 +12,7 @@
 <!-- no0.CreateEntitiesAbove -->
 <g id="node1" class="node">
 <title>no0.CreateEntitiesAbove</title>
-<ellipse fill="red" stroke="black" cx="380.08" cy="-198" rx="126.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="380.08" cy="-198" rx="126.98" ry="18"/>
 <text text-anchor="middle" x="380.08" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CreateEntitiesAbove</text>
 </g>
 <!-- no0.CreateEntityWhenInHorizontalRange -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.FindFirstEntityAbove</title>
 <g id="a_node3"><a xlink:href="no0.FindFirstEntityAbove.svg" xlink:title="no0.FindFirstEntityAbove">
-<ellipse fill="red" stroke="black" cx="557.08" cy="-18" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="557.08" cy="-18" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="557.08" y="-14.3" font-family="Times,serif" font-size="14.00">no0.FindFirstEntityAbove</text>
 </a>
 </g>
@@ -47,37 +47,21 @@
 <polygon fill="black" stroke="black" points="535.59,-45.57 540.16,-36.02 530.63,-40.64 535.59,-45.57"/>
 <text text-anchor="middle" x="535.16" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- no0.InitRoomEntities -->
-<g id="node4" class="node">
-<title>no0.InitRoomEntities</title>
-<g id="a_node4"><a xlink:href="no0.InitRoomEntities.svg" xlink:title="no0.InitRoomEntities">
-<ellipse fill="red" stroke="black" cx="252.08" cy="-378" rx="109.68" ry="18"/>
-<text text-anchor="middle" x="252.08" y="-374.3" font-family="Times,serif" font-size="14.00">no0.InitRoomEntities</text>
-</a>
-</g>
-</g>
-<!-- no0.InitRoomEntities&#45;&gt;no0.CreateEntitiesAbove -->
-<g id="edge3" class="edge">
-<title>no0.InitRoomEntities&#45;&gt;no0.CreateEntitiesAbove</title>
-<path fill="none" stroke="black" d="M264.36,-359.93C287.01,-328.43 335.47,-261.03 361.93,-224.24"/>
-<polygon fill="black" stroke="black" points="364.85,-226.18 367.85,-216.02 359.17,-222.09 364.85,-226.18"/>
-<text text-anchor="middle" x="259.36" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
-</g>
 <!-- no0.UpdateRoomPosition -->
-<g id="node5" class="node">
+<g id="node4" class="node">
 <title>no0.UpdateRoomPosition</title>
-<g id="a_node5"><a xlink:href="no0.UpdateRoomPosition.svg" xlink:title="no0.UpdateRoomPosition">
-<ellipse fill="red" stroke="black" cx="508.08" cy="-378" rx="128.08" ry="18"/>
-<text text-anchor="middle" x="508.08" y="-374.3" font-family="Times,serif" font-size="14.00">no0.UpdateRoomPosition</text>
+<g id="a_node4"><a xlink:href="no0.UpdateRoomPosition.svg" xlink:title="no0.UpdateRoomPosition">
+<ellipse fill="green" stroke="black" cx="380.08" cy="-378" rx="128.08" ry="18"/>
+<text text-anchor="middle" x="380.08" y="-374.3" font-family="Times,serif" font-size="14.00">no0.UpdateRoomPosition</text>
 </a>
 </g>
 </g>
 <!-- no0.UpdateRoomPosition&#45;&gt;no0.CreateEntitiesAbove -->
-<g id="edge4" class="edge">
+<g id="edge3" class="edge">
 <title>no0.UpdateRoomPosition&#45;&gt;no0.CreateEntitiesAbove</title>
-<path fill="none" stroke="black" d="M495.81,-359.93C473.16,-328.43 424.69,-261.03 398.23,-224.24"/>
-<polygon fill="black" stroke="black" points="401,-222.09 392.32,-216.02 395.31,-226.18 401,-222.09"/>
-<text text-anchor="middle" x="490.81" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M380.08,-359.93C380.08,-328.97 380.08,-263.3 380.08,-226.13"/>
+<polygon fill="black" stroke="black" points="383.58,-226.02 380.08,-216.02 376.58,-226.02 383.58,-226.02"/>
+<text text-anchor="middle" x="375.08" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>

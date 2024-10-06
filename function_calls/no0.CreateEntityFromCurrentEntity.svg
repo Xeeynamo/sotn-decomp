@@ -12,7 +12,7 @@
 <!-- no0.CreateEntityFromCurrentEntity -->
 <g id="node1" class="node">
 <title>no0.CreateEntityFromCurrentEntity</title>
-<ellipse fill="red" stroke="black" cx="2031.89" cy="-198" rx="180.87" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2031.89" cy="-198" rx="180.87" ry="18"/>
 <text text-anchor="middle" x="2031.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CreateEntityFromCurrentEntity</text>
 </g>
 <!-- no0.DestroyEntity -->
