@@ -12,7 +12,7 @@ generated.symbols.*.txt
 __pycache__
 
 asm/
-assets/
+/assets/
 build/
 expected/
 disks/

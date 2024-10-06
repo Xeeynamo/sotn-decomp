@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
 	"os"
@@ -74,7 +75,7 @@ func hydrateYOrderFields(x layouts, y layouts) error {
 	return nil
 }
 
-func readEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (layouts, []dataRange, error) {
+func readEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (layouts, []datarange.DataRange, error) {
 	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return layouts{}, nil, err
 	}
@@ -89,7 +90,7 @@ func readEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (layouts
 	// the order of each layout entry must be preserved
 	pool := map[psx.Addr]int{}
 	blocks := [][]layoutEntry{}
-	xRanges := []dataRange{}
+	xRanges := []datarange.DataRange{}
 	for _, blockOffset := range sortUniqueOffsets(blockOffsets) {
 		if err := blockOffset.MoveFile(file, psx.RamStageBegin); err != nil {
 			return layouts{}, nil, err
@@ -115,13 +116,10 @@ func readEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (layouts
 
 		pool[blockOffset] = len(blocks)
 		blocks = append(blocks, entries)
-		xRanges = append(xRanges, dataRange{
-			begin: blockOffset,
-			end:   blockOffset.Sum(len(entries) * 10),
-		})
+		xRanges = append(xRanges, datarange.FromAddr(blockOffset, len(entries)*10))
 	}
 	// the very last entry needs to be aligned by 4
-	xRanges[len(xRanges)-1].end = xRanges[len(xRanges)-1].end.Align4()
+	xRanges[len(xRanges)-1] = xRanges[len(xRanges)-1].Align4()
 
 	l := layouts{Entities: blocks}
 	for _, blockOffset := range blockOffsets {
@@ -137,25 +135,13 @@ func readEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (layouts
 		if err := hydrateYOrderFields(l, yLayouts); err != nil {
 			return layouts{}, nil, fmt.Errorf("unable to populate YOrder field: %w", err)
 		}
-		xMerged := mergeDataRanges(xRanges)
+		xMerged := datarange.MergeDataRanges(xRanges)
 		yMerged := yRanges[1]
-		return l, []dataRange{
-			mergeDataRanges([]dataRange{
-				{
-					begin: off,
-					end:   endOfArray,
-				},
-				yRanges[0],
-			}),
-			mergeDataRanges([]dataRange{xMerged, yMerged}),
+		return l, []datarange.DataRange{
+			datarange.MergeDataRanges([]datarange.DataRange{datarange.New(off, endOfArray), yRanges[0]}),
+			datarange.MergeDataRanges([]datarange.DataRange{xMerged, yMerged}),
 		}, nil
 	} else {
-		return l, []dataRange{
-			{
-				begin: off,
-				end:   endOfArray,
-			},
-			mergeDataRanges(xRanges),
-		}, nil
+		return l, []datarange.DataRange{datarange.New(off, endOfArray), datarange.MergeDataRanges(xRanges)}, nil
 	}
 }
