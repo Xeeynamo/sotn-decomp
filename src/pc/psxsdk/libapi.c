@@ -27,7 +27,11 @@ long TestEvent(unsigned long event) {
     return 1;
 }
 
+#if !defined(_MSC_VER) && !defined(__MINGW32__)
+// needs to be disabled on Windows as it overlaps with the kernel32 API:
+// https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-entercriticalsection
 void EnterCriticalSection(void) { NOT_IMPLEMENTED; }
+#endif
 
 void ExitCriticalSection(void) { NOT_IMPLEMENTED; }
 

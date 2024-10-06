@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW32__)
 typedef unsigned int uint;
 typedef unsigned short ushort;
 #endif

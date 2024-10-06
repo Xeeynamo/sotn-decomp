@@ -110,6 +110,7 @@ jobs:
         mkdir C:\temp-sdl2
         powershell Invoke-WebRequest 'https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-devel-2.28.5-VC.zip' -OutFile C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip
         7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
+        choco install ninja
     - name: Clone repo
       uses: actions/checkout@v4
       with:
@@ -130,7 +131,7 @@ jobs:
         & make -j build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
-        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
+        cmake -B ${{github.workspace}}/pc -G "Ninja" -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
         cmake --build ${{github.workspace}}/pc --config Release
 
   build-linux-lle:
