@@ -47,7 +47,7 @@ segments:
       - [0x105C, data]
       - [0x13A4, .data, e_elevator]
       - [0x13C8, .data, cutscene]
-      - [0x1474, data]
+      - [0x1474, .data, maria]
       - [0x1574, .data, st_update]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
