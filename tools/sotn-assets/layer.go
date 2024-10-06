@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"encoding/json"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"slices"
@@ -77,12 +78,12 @@ func (r roomLayers) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m)
 }
 
-func readLayers(file *os.File, off psx.Addr) ([]roomLayers, dataRange, error) {
+func readLayers(file *os.File, off psx.Addr) ([]roomLayers, datarange.DataRange, error) {
 	if off == 0 {
-		return nil, dataRange{}, nil
+		return nil, datarange.DataRange{}, nil
 	}
 	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
-		return nil, dataRange{}, err
+		return nil, datarange.DataRange{}, err
 	}
 
 	// when the data starts to no longer makes sense, we can assume we reached the end of the array
@@ -90,7 +91,7 @@ func readLayers(file *os.File, off psx.Addr) ([]roomLayers, dataRange, error) {
 	layersOff := make([]psx.Addr, 2)
 	for {
 		if err := binary.Read(file, binary.LittleEndian, layersOff); err != nil {
-			return nil, dataRange{}, err
+			return nil, datarange.DataRange{}, err
 		}
 		if layersOff[0] <= psx.RamStageBegin || layersOff[0] >= off ||
 			layersOff[1] <= psx.RamStageBegin || layersOff[1] >= off {
@@ -108,11 +109,11 @@ func readLayers(file *os.File, off psx.Addr) ([]roomLayers, dataRange, error) {
 		}
 
 		if err := layerOffset.MoveFile(file, psx.RamStageBegin); err != nil {
-			return nil, dataRange{}, err
+			return nil, datarange.DataRange{}, err
 		}
 		var l layer
 		if err := binary.Read(file, binary.LittleEndian, &l); err != nil {
-			return nil, dataRange{}, err
+			return nil, datarange.DataRange{}, err
 		}
 		if l.Data != psx.RamNull || l.Tiledef != psx.RamNull || l.PackedInfo != 0 {
 			pool[layerOffset] = &l
@@ -128,8 +129,5 @@ func readLayers(file *os.File, off psx.Addr) ([]roomLayers, dataRange, error) {
 		roomsLayers[i].fg = pool[layerOffsets[i*2+0]]
 		roomsLayers[i].bg = pool[layerOffsets[i*2+1]]
 	}
-	return roomsLayers, dataRange{
-		begin: slices.Min(layerOffsets),
-		end:   off.Sum(count * 8),
-	}, nil
+	return roomsLayers, datarange.New(slices.Min(layerOffsets), off.Sum(count*8)), nil
 }
