@@ -131,7 +131,7 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                 print(frame_params)
                 frameFlags = frame_params[0]  # line 989
                 tpage = frame_params[6]  # line 990
-                tpage += unk5A #line 991
+                tpage += unk5A  # line 991
                 runk0 = tpage & 3  # 992
                 tpage >>= 2  # 993
                 xpivot = frame_params[1]  # 994
@@ -204,11 +204,21 @@ parser.add_argument(
     "view_height", type=lambda x: int(x, 0), help="Height of your view window"
 )
 
-parser.add_argument("--unk5A", type=lambda x: int(x, 0), default=0, help="Entity's unk5A value (optional)")
+parser.add_argument(
+    "--unk5A",
+    type=lambda x: int(x, 0),
+    default=0,
+    help="Entity's unk5A value (optional)",
+)
 
 args = parser.parse_args()
 
 texture_data = dt.load_raw_dump(args.dump_filename)
 show_animset(
-    args.overlay, args.animset_num, args.e_palette, args.view_width, args.view_height, args.unk5A
+    args.overlay,
+    args.animset_num,
+    args.e_palette,
+    args.view_width,
+    args.view_height,
+    args.unk5A,
 )
