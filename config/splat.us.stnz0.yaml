@@ -60,7 +60,7 @@ segments:
       - [0x2180, .data, e_axe_knight]
       - [0x22D4, .data, e_bloody_zombie]
       - [0x23DC, .data, e_skeleton]
-      - [0x24CC, data] # spittle bone
+      - [0x24CC, .data, e_spittle_bone]
       - [0x2584, data] # subweapon container
       - [0x2610, data] # bloody skeleton
       - [0x26B8, data] # magically sealed door

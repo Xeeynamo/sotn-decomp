@@ -55,7 +55,7 @@ typedef enum {
     /* 0x2E */ E_SKELETON,
     /* 0x2F */ E_SKELETON_THROWN_BONE,
     /* 0x30 */ E_SKELETON_PIECES,
-    /* 0x31 */ E_SPITTLEBONE = 0x31,
+    /* 0x31 */ E_SPITTLEBONE,
     /* 0x32 */ E_ROTATE_SPITTLEBONE,
     /* 0x33 */ E_SPITTLEBONE_SPIT,
     /* 0x34 */ E_GLOBE_TABLE,
@@ -199,10 +199,6 @@ extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit D_80182014[];
 
-extern s32 D_801824CC;
-extern s16 D_801824DC[];
-extern u8 D_801824E2[];
-extern u16 D_801824E4[];
 extern u8 D_80181F30[];
 extern u16 D_80180CF4[];
 extern s32 D_80182600[];
@@ -213,8 +209,6 @@ extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
 extern u16 D_80180CA0[];
-extern s32 D_80182504[];
-extern u8 D_80182524[];
 
 // *** EntitySubWeaponContainer properties START ***
 
@@ -262,9 +256,6 @@ typedef enum {
 // *** EntitySpittleBoneSpit properties START ***
 
 extern u16 D_80180CB8[]; // Init
-extern u8 D_80182534[];  // animation:
-extern u8 D_8018253C[];
-extern u8 D_80182540[];
 
 // *** EntitySpittleBoneSpit properties END ***
 
@@ -307,9 +298,6 @@ extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
 extern u16 g_MariaInit[];
-
-// for func_801C4198
-extern u16 D_80180C6A;
 
 // for EntityMagicallySealedDoor
 extern u8 g_eBlueDoorUV[3][8];

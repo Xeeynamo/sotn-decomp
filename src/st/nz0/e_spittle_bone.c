@@ -7,6 +7,27 @@
 #include "nz0.h"
 #include "sfx.h"
 
+static s16 D_801824CC[] = {0, 0, 0, 4, 8, -4, -16, 0};
+static s16 D_801824DC[] = {0x0000, 0x0800, 0x0C00, 0x0400};
+static u16 D_801824E4[] = {
+    0x0000, 0x0E00, 0x0F00, 0x0F80, 0x0000, 0x0200, 0x0100, 0x0080,
+    0x0000, 0x0A00, 0x0900, 0x0880, 0x0000, 0x0600, 0x0700, 0x0780};
+static s32 D_80182504[] = {
+    0x0000A000, 0xFFFF6000, 0xFFFFE000, 0x00000000, 0x00012000, 0xFFFEE000};
+static u8 D_8012518[] = {0x20, 0x20, 0x28, 0x30, 0x30, 0x30};
+static u8 D_80182524[] = {
+    0x04, 0x34, 0x04, 0x35, 0x04, 0x36, 0x04, 0x37,
+    0x04, 0x38, 0x04, 0x39, 0x00, 0x00, 0x00, 0x00,
+};
+static u8 D_80182534[] = {
+    0x02, 0x40, 0x02, 0x41, 0x02, 0x42, 0x00, 0x00,
+};
+static s32 D_8018253C[] = {
+    0x00000000, 0xFFFDC000, 0x00002000, 0xFFFDD000, 0x00004000, 0xFFFDE000,
+    0x00006000, 0xFFFE0000, 0x00008000, 0xFFFE4000, 0xFFFFE000, 0xFFFDD000,
+    0xFFFFC000, 0xFFFDE000, 0xFFFFA000, 0xFFFE0000, 0xFFFF8000, 0xFFFE4000,
+};
+
 // moves around on walls and drips poison
 void EntitySpittleBone(Entity* self) {
     Entity* newEntity;
@@ -26,7 +47,7 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(&D_801824CC) & 1) {
+        if (UnkCollisionFunc3(D_801824CC) & 1) {
             newEntity = &self[1];
             self->ext.spittleBone.unk7C = 0;
             CreateEntityFromEntity(E_ROTATE_SPITTLEBONE, self, newEntity);
@@ -69,7 +90,7 @@ void EntitySpittleBone(Entity* self) {
         return;
 
     case 3:
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < LEN(D_8012518); i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 MakeEntityFromId(E_SPITTLEBONE, self, newEntity);
@@ -84,7 +105,7 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->step = 4;
                 newEntity->velocityX = D_80182504[i];
                 newEntity->velocityY = 0xFFFD0000 - ((Random() & 3) << 0xF);
-                newEntity->ext.spittleBone.unk82 = D_801824E2[i + 0x3A];
+                newEntity->ext.spittleBone.unk82 = D_8012518[i];
             }
         }
 
@@ -242,8 +263,8 @@ void EntitySpittleBoneSpit(Entity* self) {
                 prim->r0 = r0;
                 prim->g0 = r0;
                 prim->b0 = b0;
-                LOW(prim->x2) = LOW(D_8018253C[i]);
-                LOW(prim->x3) = LOW(D_80182540[i]);
+                LOW(prim->x2) = LOW(((u8*)&D_8018253C)[i]);
+                LOW(prim->x3) = LOW(((u8*)&D_8018253C)[i + 4]);
                 prim->priority = self->zPriority;
                 prim->drawMode = drawMode;
                 prim = prim->next;
