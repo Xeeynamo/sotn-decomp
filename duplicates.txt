@@ -1750,6 +1750,11 @@
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | false    | EntityWargExplosionPuffOpaque       | asm/us/st/no0/nonmatchings/first_c_file/EntityWargExplosionPuffOpaque.s 
 | 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/no3/matchings/3FF00/EntityWargExplosionPuffOpaque.s 
 | 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/np3/matchings/363FC/EntityWargExplosionPuffOpaque.s 
@@ -1797,10 +1802,6 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -1809,9 +1810,9 @@
 | 1.00 | true     | SetLightMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_10/SetLightMatrix.s 
 | 1.00 | true     | SetColorMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_11/SetColorMatrix.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801A7E2C                       | asm/us/st/no0/matchings/first_c_file/func_801A7E2C.s 
-| 1.00 | true     | func_801B0A20                       | asm/us/st/nz0/matchings/30958/func_801B0A20.s 
-| 1.00 | true     | func_801A7E2C                       | asm/us/st/st0/matchings/27D64/func_801A7E2C.s 
+| 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/no0/matchings/first_c_file/PlayerIsWithinHitbox.s 
+| 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/nz0/matchings/30958/PlayerIsWithinHitbox.s 
+| 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/st0/matchings/27D64/PlayerIsWithinHitbox.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | EntitySkeleton                      | asm/us/st/no0/nonmatchings/unk_4F4A8/EntitySkeleton.s 
 | 1.00 | false    | func_us_801DCB48                    | asm/us/st/no0/nonmatchings/unk_4F4A8/func_us_801DCB48.s 
@@ -2130,9 +2131,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2280,7 +2278,7 @@
 | 1.00 | true     | func_80192408                       | asm/us/st/mad/matchings/st_common/func_80192408.s 
 | 1.00 | true     | func_80192408                       | asm/us/st/st0/matchings/st_common/func_80192408.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_801B0AA4                       | asm/us/st/no0/nonmatchings/first_c_file/func_801B0AA4.s 
+| 1.00 | true     | func_801B0AA4                       | asm/us/st/no0/matchings/first_c_file/func_801B0AA4.s 
 | 0.98 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/30958/func_801B0AA4.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | EntityAxeKnight                     | asm/us/st/no0/nonmatchings/unk_4F4A8/EntityAxeKnight.s 
