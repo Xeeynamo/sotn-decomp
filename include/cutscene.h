@@ -50,3 +50,4 @@ typedef enum {
 #define SET_FLAG(x) CSOP_SET_FLAG, x
 #define LOAD_PORTRAIT(addr, id) CSOP_LOAD_PORTRAIT, script_word(addr), id
 #define SCRIPT_UNKNOWN_20(x) CSOP_SCRIPT_UNKNOWN_20, script_half(x)
+#define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23

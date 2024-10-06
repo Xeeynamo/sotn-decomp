@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 )
@@ -21,14 +22,14 @@ type tileDefPaths struct {
 	Collisions string `json:"collisions"`
 }
 
-func readTiledef(file *os.File, off psx.Addr) (tileDef, dataRange, error) {
+func readTiledef(file *os.File, off psx.Addr) (tileDef, datarange.DataRange, error) {
 	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 
 	offsets := make([]psx.Addr, 4)
 	if err := binary.Read(file, binary.LittleEndian, offsets); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 
 	td := tileDef{
@@ -39,48 +40,45 @@ func readTiledef(file *os.File, off psx.Addr) (tileDef, dataRange, error) {
 	}
 
 	if err := offsets[0].MoveFile(file, psx.RamStageBegin); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := file.Read(td.tiles); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 
 	if err := offsets[1].MoveFile(file, psx.RamStageBegin); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := file.Read(td.pages); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 
 	if err := offsets[2].MoveFile(file, psx.RamStageBegin); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := file.Read(td.cluts); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 
 	if err := offsets[3].MoveFile(file, psx.RamStageBegin); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := file.Read(td.cols); err != nil {
-		return tileDef{}, dataRange{}, err
+		return tileDef{}, datarange.DataRange{}, err
 	}
 
-	return td, dataRange{
-		begin: offsets[0],
-		end:   off.Sum(0x10),
-	}, nil
+	return td, datarange.New(offsets[0], off.Sum(0x10)), nil
 }
 
-func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[psx.Addr]tileDef, dataRange, error) {
-	ranges := []dataRange{}
+func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[psx.Addr]tileDef, datarange.DataRange, error) {
+	ranges := []datarange.DataRange{}
 	processed := map[psx.Addr]tileDef{}
 	for _, rl := range roomLayers {
 		if rl.fg != nil {
 			if _, found := processed[rl.fg.Tiledef]; !found {
 				td, r, err := readTiledef(file, rl.fg.Tiledef)
 				if err != nil {
-					return nil, dataRange{}, fmt.Errorf("unable to read fg tiledef: %w", err)
+					return nil, datarange.DataRange{}, fmt.Errorf("unable to read fg tiledef: %w", err)
 				}
 				processed[rl.fg.Tiledef] = td
 				ranges = append(ranges, r)
@@ -90,12 +88,12 @@ func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[psx.Addr]tileD
 			if _, found := processed[rl.bg.Tiledef]; !found {
 				td, r, err := readTiledef(file, rl.bg.Tiledef)
 				if err != nil {
-					return nil, dataRange{}, fmt.Errorf("unable to read fg tiledef: %w", err)
+					return nil, datarange.DataRange{}, fmt.Errorf("unable to read fg tiledef: %w", err)
 				}
 				processed[rl.bg.Tiledef] = td
 				ranges = append(ranges, r)
 			}
 		}
 	}
-	return processed, mergeDataRanges(ranges), nil
+	return processed, datarange.MergeDataRanges(ranges), nil
 }
