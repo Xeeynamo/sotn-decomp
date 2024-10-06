@@ -33,7 +33,8 @@ u8 AnimFrames_CorpseweedIdle[] = {
     0x06, 0x0D, 0x06, 0x0E, 0x06, 0x0F, 0x06, 0x10, 0x00, 0x00, 0x00, 0x00
 };
 
-u8 D_8018177C[] = {
+// D_8018177C
+u8 AnimFrames_CorpseweedAttackCharge[] = {
     0x02, 0x13, 0x02, 0x14, 0x00, 0x00, 0x00, 0x00
 };
 
@@ -150,7 +151,7 @@ void EntityThornweed(Entity* self)
 
                         // Spawn the Corpseweed stalk/head
                         entity = self + 1;
-                        CreateEntityFromEntity(E_ID_27, self, entity);
+                        CreateEntityFromEntity(E_CORPSEWEED, self, entity);
                         entity->facingLeft = (GetSideToPlayer() & 1);
                         self->enemyId = 0x9E;
                         self->ext.thornweed.isCorpseweedSpawned = true;
@@ -199,40 +200,118 @@ void EntityThornweed(Entity* self)
 }
 
 extern EntityInit EntityInit_801806E8;
-extern u8 D_8018177C[];
 
-// [Should Primitive have a union for easy copypasta of rgb values? Look in case 0]
+// E_CORPSEWEED
 // func_801AA390
 // https://decomp.me/scratch/QVcDz
 // PSP:func_psp_09249BE0:No match
 // PSP:https://decomp.me/scratch/lqXTP
-void func_801AA390(Entity* self)
+void EntityCorpseweed(Entity* self)
 {
-    Collider collider;
-    Entity* entity;     // s2
-    Primitive* prim;    // s0
-    s32 primIdx;        // s7
-    s32 temp_s1;        // s4
-    s32 var_a0;         // s3
-    s32 temp;           // s1
-    s32 temp2;          // s6
-    s16 temp3;          // s5
-    u16 temp4;          // s8
+    // Sprites
+    const int SpriteLeavesLeft = 0;
+    const int SpriteLeavesRight = 0x18;
+    const int SpriteLeavesTop = 0x28;
+    const int SpriteLeavesBottom = 0x50;
+    const int SpriteStalkLeft = 0x40;
+    const int SpriteStalkRight = 0x18;
+    const int SpriteStalkTop = 0;
+    const int SpriteStalkBottom = 0x70;
+    // Anim Frames
+    const int AnimFrameInit = 0;
+    const int AnimFrameIdle = 0x13;
+    const int AnimFrameAttack = 0x15;
+    // Growth Dimensions
+    const int LeavesGrowMaxWidth = 0x18;
+    const int LeavesGrowMaxHeight = 0x28;
+    const int StalkGrowMaxWidthFacing = 0xA;
+    const int StalkGrowMaxWidthNonFacing = 0x10;
+    const int StalkGrowNonFacingStartHeight = 0x59;
+    const int StalkGrowMaxHeight = 0x70;
+    const int StalkGrowMaxHalfWidth = 0x14;
+    // Attack
+    const int DelayBeforeFirstAttack = 0x80;
+    const int DelayBetweenAttackChecks = 0x20;
+    const int AttackChargeDuration = 0x20;
+    const int ProjectileSpawnOffsetX = 4;
+    const int ProjectileSpawnOffsetY = 0xD;
+    const int PostAttackResetDelay = 0x10;
+    // Bobbing
+    const int BobbingTimer = 0x20;
+    const int BobbingOriginOffsX_Leaves = 0xC;
+    const int BobbingOriginOffsY_Leaves = 0x28;
+    const int BobbingSpeedX_Leaves = 0x100;
+    const int BobbingSpeedY_Leaves = 0x200;
+    const int BobbingOriginOffsX_Stalk = 0x14;
+    const int BobbingOriginOffsY_Stalk = 0x70;
+    const int BobbingSpeedX_Stalk = 0x38;
+    const int BobbingSpeedY_Stalk = 0x64;
+    // Death
+    const int DeathHeadFallAccel = 0x1800;
+    const int DeathHeadRotateSpeed = 0x20;
 
-    if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
-        SetStep(6);
+    enum Step {
+        Init = 0,
+        GrowLeaves = 1,
+        GrowStalk = 2,
+        GrowToIdle = 3,
+        Idle = 4,
+        Attack = 5,
+        Death = 6,
+    };
+
+    enum GrowLeaves_Substep {
+        GrowLeaves_H = 0,
+        GrowLeaves_V = 1,
+        GrowLeaves_Done = 2,
+    };
+
+    enum GrowStalk_Substep {
+        GrowStalk_H1 = 0,
+        GrowStalk_UnevenV = 1,
+        GrowStalk_FinishV = 2,
+        GrowStalk_H2 = 3,
+    };
+    
+    enum Attack_Substep {
+        Attack_Init = 0,
+        Attack_Delay = 1,
+        Attack_Projectile = 2,
+        Attack_ResetDelay = 3,
+    };
+
+    enum Death_Substep {
+        Death_Init = 0,
+        Death_DropHead = 1,
+        Death_ShrinkAndFade = 2,
+    };
+
+    Collider collider;
+    Entity* entity;
+    Primitive* prim;
+    s32 primIdx;
+    s32 pos;
+    s32 y;
+    s32 x;
+    s32 doneCount;
+    s16 t;
+
+    if ((self->flags & FLAG_DEAD) && (self->step < Death)) {
+        SetStep(Death);
     }
     
     switch (self->step) {
-        case 0:
+        case Init:
             InitializeEntity(&EntityInit_801806E8);
-            self->animCurFrame = 0;
+            self->animCurFrame = AnimFrameInit;
             self->hitboxOffX = 2;
             self->hitboxOffY = 9;
-            self->drawFlags = 3;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->rotX = self->rotY = 0;
             self->hitboxState = 0;
-            self->ext.generic.unk92 = 8;
+            self->ext.corpseweed.bobbingAngle = 8;
+
+            // Setup primitives
             primIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIdx == -1) {
                 DestroyEntity(self);
@@ -242,159 +321,176 @@ void func_801AA390(Entity* self)
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
             self->ext.prim = prim;
+            
+            // Leaves primitive
             prim->tpage = 0x13;
-            prim->clut = 0x206;
-            prim->u0 = prim->u2 = 0;
-            prim->u1 = prim->u3 = 0x18;
-            prim->v0 = prim->v1 = 0x28;
-            prim->v2 = prim->v3 = 0x50;
+            prim->clut = PAL_DRA(0x206);
+            prim->u0 = prim->u2 = SpriteLeavesLeft;
+            prim->u1 = prim->u3 = SpriteLeavesRight;
+            prim->v0 = prim->v1 = SpriteLeavesTop;
+            prim->v2 = prim->v3 = SpriteLeavesBottom;
             prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
-            
-            *(s32*)&prim->r1 = *(s32*)&prim->r0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r0;
-            
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority - 1;
-            prim->drawMode = 2;
+            prim->drawMode = FLAG_DRAW_ROTY;
+
+            // Stalk primitive
             prim = prim->next;
             prim->tpage = 0x13;
-            prim->clut = 0x206;
-            prim->u0 = prim->u2 = 0x40;
-            prim->u1 = prim->u3 = 0x18;
-            prim->v0 = prim->v1 = 0;
-            prim->v2 = prim->v3 = 0x70;
+            prim->clut = PAL_DRA(0x206);
+            prim->u0 = prim->u2 = SpriteStalkLeft;
+            prim->u1 = prim->u3 = SpriteStalkRight;
+            prim->v0 = prim->v1 = SpriteStalkTop;
+            prim->v2 = prim->v3 = SpriteStalkBottom;
             prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
             if (self->facingLeft) {
-                prim->x2 = self->posX.i.hi - 0x14;
-                prim->x3 = self->posX.i.hi + 0x14;
+                prim->x2 = self->posX.i.hi - BobbingOriginOffsX_Stalk;
+                prim->x3 = self->posX.i.hi + BobbingOriginOffsX_Stalk;
             } else {
-                prim->x2 = self->posX.i.hi + 0x14;
-                prim->x3 = self->posX.i.hi - 0x14;
+                prim->x2 = self->posX.i.hi + BobbingOriginOffsX_Stalk;
+                prim->x3 = self->posX.i.hi - BobbingOriginOffsX_Stalk;
             }
             prim->r0 = prim->g0 = prim->b0 = 0x80;
-            
-            *(s32*)&prim->r1 = *(s32*)&prim->r0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r0;
-            
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority - 2;
-            prim->drawMode = 2;
+            prim->drawMode = FLAG_DRAW_ROTY;
             prim = prim->next;
             // Fallthrough
-        case 1:
+        case GrowLeaves:
             prim = self->ext.prim;
             switch (self->step_s) {
-                case 0:
+                case GrowLeaves_H:
+                    // Expand leaves sprite horizontally
                     prim->x0 = --prim->x2;
                     prim->x1 = ++prim->x3;
-                    temp = prim->x1 - prim->x0;
-                    if (temp >= 0x18) {
+                    x = prim->x1 - prim->x0;
+                    if (x >= LeavesGrowMaxWidth) {
                         self->step_s++;
                     }
                     // fallthrough
-                case 1:
+                case GrowLeaves_V:
+                    // Extend leaves sprite up
                     prim->y0 = --prim->y1;
-                    var_a0 = prim->y2 - prim->y0;
-                    if (var_a0 >= 0x28) {
+                    y = prim->y2 - prim->y0;
+                    if (y >= LeavesGrowMaxHeight) {
                         self->step_s++;
                     }
                     break;
                 
-                case 2:
-                    self->ext.generic.unk84.U8.unk0 = 1;
-                    SetStep(2);
+                case GrowLeaves_Done:
+                    self->ext.corpseweed.leavesDoneGrowing = true;
+                    SetStep(GrowStalk);
                     break;
             }
             break;
         
-        case 2:
+        case GrowStalk:
             prim = self->ext.prim;
             prim = prim->next;
             switch (self->step_s) {
-                case 0:
+                case GrowStalk_H1:
+                    // Extend stalk sprite up
                     prim->y1 = prim->y0 -= 2;
-                    temp = prim->x0 - self->posX.i.hi;
-                    temp = abs(temp);
-                    if (temp < 0xA) {
+                    // Expand stalk sprite horizontally
+                    x = prim->x0 - self->posX.i.hi;
+                    x = abs(x);
+                    // Only expand in facing direction so far
+                    if (x < StalkGrowMaxWidthFacing) {
                         if (self->facingLeft) {
                             prim->x0--;
                         } else {
                             prim->x0++;
                         }
                     }
+                    // Expand opposite of facing direction always
                     if (self->facingLeft) {
                         prim->x1++;
                     } else {
                         prim->x1--;
                     }
-                    temp = self->posX.i.hi - prim->x1;
-                    temp = abs(temp);
-                    if (temp >= 0x10) {
+                    // Once stalk sprite has expanded enough opposite of facing direction
+                    x = self->posX.i.hi - prim->x1;
+                    x = abs(x);
+                    if (x >= StalkGrowMaxWidthNonFacing) {
                         self->step_s++;
                     }
                     break;
                 
-                case 1:
+                case GrowStalk_UnevenV:
+                    // Extend the facing edge of stalk sprite up
                     if (self->facingLeft) {
                         prim->y0--;
-                        var_a0 = prim->y2 - prim->y0;
-                        if (var_a0 < 0x59) {
+                        y = prim->y2 - prim->y0;
+                        // Then start extending the non-facing edge of stalk sprite up
+                        if (y < StalkGrowNonFacingStartHeight) {
                             prim->y1--;
                         }
                     } else {
                         prim->y1--;
-                        var_a0 = prim->y2 - prim->y1;
-                        if (var_a0 < 0x59) {
+                        y = prim->y2 - prim->y1;
+                        // Then start extending the non-facing edge of stalk sprite up
+                        if (y < StalkGrowNonFacingStartHeight) {
                             prim->y0--;
                         }
                     }
-                    if (var_a0 >= 0x70) {
+                    if (y >= StalkGrowMaxHeight) {
                         self->step_s++;
                     }
                     break;
                 
-                case 2:
+                case GrowStalk_FinishV:
+                    // Extend the non-facing edge of stalk sprite up
                     if (self->facingLeft) {
                         prim->y1--;
-                        var_a0 = prim->y3 - prim->y1;
+                        y = prim->y3 - prim->y1;
                     } else {
                         prim->y0--;
-                        var_a0 = prim->y3 - prim->y0;
+                        y = prim->y3 - prim->y0;
                     }
-                    if (var_a0 >= 0x70) {
+                    if (y >= StalkGrowMaxHeight) {
                         self->step_s++;
                     }
                     break;
                 
-                case 3:
-                    temp2 = 0;
-                    temp = prim->x0 - self->posX.i.hi;
-                    temp = abs(temp);
-                    if (temp < 0x14) {
+                case GrowStalk_H2:
+                    doneCount = 0;
+
+                    // Facing edge
+                    x = prim->x0 - self->posX.i.hi;
+                    x = abs(x);
+                    if (x < StalkGrowMaxHalfWidth) {
                         if (self->facingLeft) {
                             prim->x0--;
                         } else {
                             prim->x0++;
                         }
                     } else {
-                        temp2 += 1;
+                        doneCount += 1;
                     }
-                    temp = self->posX.i.hi - prim->x1;
-                    temp = abs(temp);
-                    if (temp < 0x14) {
+
+                    // Non-facing edge
+                    x = self->posX.i.hi - prim->x1;
+                    x = abs(x);
+                    if (x < StalkGrowMaxHalfWidth) {
                         if (self->facingLeft) {
                             prim->x1++;
                         } else {
                             prim->x1--;
                         }
                     } else {
-                        temp2 += 1;
+                        doneCount += 1;
                     }
-                    if (temp2 == 2) {
-                        self->ext.generic.unk84.U8.unk1 = 1;
+
+                    // Check if both edges are done
+                    if (doneCount == 2) {
+                        self->ext.corpseweed.stalkDoneGrowing = true;
                         self->hitboxState = 3;
                         SetStep(3);
                     }
@@ -402,116 +498,129 @@ void func_801AA390(Entity* self)
             }
             break;
         
-        case 3:
-            self->animCurFrame = 0x13;
+        case GrowToIdle:
+            self->animCurFrame = AnimFrameIdle;
             if (self->rotX < 0x100) {
                 self->rotX = self->rotY += 8;
             } else {
-                self->drawFlags = 0;
-                SetStep(4);
+                self->drawFlags = FLAG_DRAW_DEFAULT;
+                SetStep(Idle);
             }
             break;
         
-        case 4:
+        case Idle:
             if (!self->step_s) {
-                self->ext.generic.unk80.modeS16.unk0 = 0x80;
+                self->ext.corpseweed.timer = DelayBeforeFirstAttack;
                 self->step_s += 1;
             }
-            self->animCurFrame = 0x13;
-            if (!--self->ext.generic.unk80.modeS16.unk0) {
-                if ((GetSideToPlayer() & 1) == (temp4 = self->facingLeft)) {
-                    SetStep(5);
+            self->animCurFrame = AnimFrameIdle;
+            if (!--self->ext.corpseweed.timer) {
+                if ((GetSideToPlayer() & 1) == self->facingLeft) {
+                    SetStep(Attack);
                 } else {
-                    self->ext.generic.unk80.modeS16.unk0 = 0x20;
+                    self->ext.corpseweed.timer = DelayBetweenAttackChecks;
                 }
             }
             if (self->hitFlags & 2) {
-                self->ext.generic.unk90 = 0x20;
+                self->ext.corpseweed.bobbingTimer = BobbingTimer;
             }
             break;
         
-        case 5:
+        case Attack:
             switch (self->step_s) {
-                case 0:
-                    self->ext.generic.unk80.modeS16.unk0 = 0x20;
+                case Attack_Init:
+                    self->ext.corpseweed.timer = AttackChargeDuration;
                     self->step_s += 1;
                     // fallthrough
-                case 1:
-                    AnimateEntity(D_8018177C, self);
-                    if (!--self->ext.generic.unk80.modeS16.unk0) {
-                        SetSubStep(2);
+                case Attack_Delay:
+                    AnimateEntity(AnimFrames_CorpseweedAttackCharge, self);
+                    if (!--self->ext.corpseweed.timer) {
+                        SetSubStep(Attack_Projectile);
                     }
                     break;
                 
-                case 2:
-                    self->animCurFrame = 0x15;
+                case Attack_Projectile:
+                    self->animCurFrame = AnimFrameAttack;
+                    // Spawn projectile entity
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        PlaySfxWithPosArgs(0x70D);
+                        PlaySfxWithPosArgs(NA_SE_EN_CORPSEWEED_ATTACK);
+
                         CreateEntityFromEntity(E_ID_28, self, entity);
                         entity->zPriority = self->zPriority + 1;
                         entity->facingLeft = self->facingLeft;
-                        entity->posY.i.hi += 0xD;
+                        entity->posY.i.hi += ProjectileSpawnOffsetY;
                         if (self->facingLeft) {
-                            entity->posX.i.hi -= 4;
+                            entity->posX.i.hi -= ProjectileSpawnOffsetX;
                         } else {
-                            entity->posX.i.hi += 4;
+                            entity->posX.i.hi += ProjectileSpawnOffsetX;
                         }
                     }
-                    self->ext.generic.unk80.modeS16.unk0 = 0x10;
+                    self->ext.corpseweed.timer = PostAttackResetDelay;
                     self->step_s++;
                     // fallthrough
-                case 3:
-                    if (!--self->ext.generic.unk80.modeS16.unk0) {
-                        SetStep(4);
+                case Attack_ResetDelay:
+                    if (!--self->ext.corpseweed.timer) {
+                        SetStep(Idle);
                     }
                     break;
             }
         break;
         
-        case 6:
+        case Death:
             switch (self->step_s) {
-                case 0:
-                    self->ext.generic.unk84.S8.unk0 = 0;
-                    self->ext.generic.unk84.S8.unk1 = 0;
+                case Death_Init:
+                    self->ext.corpseweed.leavesDoneGrowing = false;
+                    self->ext.corpseweed.stalkDoneGrowing = false;
                     self->hitboxState = 0;
-                    self->drawFlags = 4;
+                    self->drawFlags = FLAG_DRAW_ROTZ;
                     self->step_s++;
                     // fallthrough
-                case 1:
+                case Death_DropHead:
                     MoveEntity();
-                    self->velocityY += 0x1800;
-                    self->rotZ += 0x20;
-                    temp = self->posX.i.hi;
-                    var_a0 = self->posY.i.hi + 8;
-                    g_api.CheckCollision(temp, var_a0, &collider, 0);
+                    self->velocityY += DeathHeadFallAccel;
+                    self->rotZ += DeathHeadRotateSpeed;
+
+                    // Wait until head hits the ground
+                    x = self->posX.i.hi;
+                    y = self->posY.i.hi + 8;
+                    g_api.CheckCollision(x, y, &collider, 0);
                     if (collider.effects & 1) {
-                        g_api.PlaySfx(0x683);
+                        g_api.PlaySfx(NA_SE_EN_CORPSEWEED_DEATH);
                         self->posY.i.hi += collider.unk18;
                         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+
+                        // Spawn multiple flames
                         if (entity != NULL) {
                             CreateEntityFromEntity(E_EXPLOSION, self, entity);
                             entity->params = 1;
                         }
+
+                        // Hide head
                         self->animCurFrame = 0;
                         
+                        // "Parent" Thornweed
                         entity = self - 1;
                         entity->flags |= FLAG_DEAD;
                         
-                        PlaySfxWithPosArgs(0x672);
+                        PlaySfxWithPosArgs(NA_SE_EN_CORPSEWEED_COLLAPSE);
                         self->step_s++;
                     }
                     break;
                 
-                case 2:
-                    self->ext.generic.unk80.modeS16.unk0++;
+                case Death_ShrinkAndFade:
+                    self->ext.corpseweed.timer++;
                     prim = self->ext.prim;
-                    if (self->ext.generic.unk80.modeS16.unk0 & 1) {
-                        prim->drawMode |= 4;
+
+                    // Leaves: Half speed
+                    if (self->ext.corpseweed.timer & 1) {
+                        prim->drawMode |= DRAW_COLORS;
+                        // Contract horizontally
                         if (prim->x1 > prim->x0) {
                             prim->x0++;
                             prim->x1--;
                         }
+                        // Collapse down
                         if (prim->y0 < prim->y2) {
                             prim->y0++;
                         }
@@ -521,25 +630,30 @@ void func_801AA390(Entity* self)
                         func_801AE70C(prim, 3U);
                     }
                     
+                    // Stalk
                     prim = prim->next;
-                    prim->drawMode |= 4;
+                    prim->drawMode |= DRAW_COLORS;
                     if (self->facingLeft) {
+                        // Contract horizontally
                         if (prim->x1 > prim->x0) {
                             prim->x0++;
                             prim->x1--;
                         }
                     } else {
+                        // Contract horizontally
                         if (prim->x0 > prim->x1) {
                             prim->x1++;
                             prim->x0--;
                         }
                     }
+                    // Collapse down
                     if (prim->y0 < prim->y2) {
                         prim->y0++;
                     }
                     if (prim->y1 < prim->y3) {
                         prim->y1++;
                     }
+                    // Slide Vs up, giving effect of sinking into floor
                     if (prim->v2 > 0) {
                         prim->v2 -= 1;
                     }
@@ -551,65 +665,84 @@ void func_801AA390(Entity* self)
             }
     }
     
-    if (self->ext.generic.unk90) {
-        self->ext.generic.unk90--;
-        if (self->ext.generic.unk90 & 0x10) {
-            self->ext.generic.unk92++;
+    // Update bobbing back and forth state
+    if (self->ext.corpseweed.bobbingTimer) {
+        self->ext.corpseweed.bobbingTimer--;
+        if (self->ext.corpseweed.bobbingTimer & 0x10) {
+            // Go right
+            self->ext.corpseweed.bobbingAngle++;
         } else {
-            self->ext.generic.unk92--;
+            // Go left
+            self->ext.corpseweed.bobbingAngle--;
         }
     } else {
-        self->ext.generic.unk92 = 8;
+        // No bobbing
+        self->ext.corpseweed.bobbingAngle = 8;
     }
-    if (self->ext.generic.unk84.U8.unk0) {
+
+    // Update leaves for bobbing back and forth
+    if (self->ext.corpseweed.leavesDoneGrowing) {
         prim = self->ext.prim;
         
-        temp3 = self->ext.generic.unk88.S16.unk0 += 0x100;
-        temp = (rcos(temp3) * 2) >> 0xC;
-        temp_s1 = (prim->x2 + prim->x3) / 2;
-        prim->x0 = temp_s1 - 0xC + temp;
-        prim->x1 = temp_s1 + 0xC + temp;
-        temp3 = self->ext.generic.unk88.S16.unk2 += 0x200;
-        var_a0 = (rsin(temp3) * 4) >> 0xC;
-        temp_s1 = prim->y2;
-        prim->y0 = temp_s1 - 0x28 + var_a0;
-        prim->y1 = temp_s1 - 0x28 - var_a0;
+        // X
+        t = self->ext.corpseweed.bobbingLeavesXT += BobbingSpeedX_Leaves;
+        x = (rcos(t) * 2) >> 0xC;
+        pos = (prim->x2 + prim->x3) / 2;
+        prim->x0 = pos - BobbingOriginOffsX_Leaves + x;
+        prim->x1 = pos + BobbingOriginOffsX_Leaves + x;
+
+        // Y
+        t = self->ext.corpseweed.bobbingLeavesYT += BobbingSpeedY_Leaves;
+        y = (rsin(t) * 4) >> 0xC;
+        pos = prim->y2;
+        prim->y0 = pos - BobbingOriginOffsY_Leaves + y;
+        prim->y1 = pos - BobbingOriginOffsY_Leaves - y;
     }
-    if (self->ext.generic.unk84.U8.unk1) {
+
+    // Update stalk for bobbing back and forth
+    if (self->ext.corpseweed.stalkDoneGrowing) {
         prim = self->ext.prim;
         prim = prim->next;
-        temp3 = self->ext.generic.unk8C.modeS16.unk0 += 0x38;
-        temp_s1 = self->ext.generic.unk92;
-        temp = (temp_s1 * rsin(temp3)) >> 0xC;
-        temp_s1 = (prim->x2 + prim->x3) / 2;
+
+        // X
+        t = self->ext.corpseweed.bobbingStalkXT += BobbingSpeedX_Stalk;
+        pos = self->ext.corpseweed.bobbingAngle;
+        x = (pos * rsin(t)) >> 0xC;
+        pos = (prim->x2 + prim->x3) / 2;
         if (self->facingLeft) {
-            prim->x1 = temp_s1 + 0x14 + temp;
-            prim->x0 = temp_s1 - 0x14 + temp;
+            prim->x1 = pos + BobbingOriginOffsX_Stalk + x;
+            prim->x0 = pos - BobbingOriginOffsX_Stalk + x;
         } else {
-            prim->x1 = temp_s1 - 0x14 + temp;
-            prim->x0 = temp_s1 + 0x14 + temp;
+            prim->x1 = pos - BobbingOriginOffsX_Stalk + x;
+            prim->x0 = pos + BobbingOriginOffsX_Stalk + x;
         }
-        temp3 = self->ext.generic.unk8C.modeS16.unk2 += 0x64;
-        var_a0 = (rsin(temp3) * 4) >> 0xC;
-        temp_s1 = prim->y2;
-        prim->y0 = temp_s1 - 0x70 + var_a0;
-        prim->y1 = temp_s1 - 0x70 - var_a0;
+
+        // Y
+        t = self->ext.corpseweed.bobbingStalkYT += BobbingSpeedY_Stalk;
+        y = (rsin(t) * 4) >> 0xC;
+        pos = prim->y2;
+        prim->y0 = pos - BobbingOriginOffsY_Stalk + y;
+        prim->y1 = pos - BobbingOriginOffsY_Stalk - y;
+
+        // Adjust for facing dir
         if (self->facingLeft) {
-            temp = prim->x0 + 0xC;
+            x = prim->x0 + 0xC;
         } else {
-            temp = prim->x0 - 0xC;
+            x = prim->x0 - 0xC;
         }
-        var_a0 = prim->y0 + 0xC;
-        self->posX.i.hi = temp;
-        self->posY.i.hi = var_a0;
+        y = prim->y0 + 0xC;
+        self->posX.i.hi = x;
+        self->posY.i.hi = y;
     }
+
+    // Security check: Only spawnable by E_THORNWEED
     entity = self - 1;
-    if (entity->entityId != 0x26) {
+    if (entity->entityId != E_THORNWEED) {
         DestroyEntity(self);
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB0C0);    // [Entity]
+INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB0C0);    // [Entity] Corpseweed Projectile
 
 INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB548);
 

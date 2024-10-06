@@ -1271,6 +1271,21 @@ typedef struct {
     /* 0x86 */ u8 isCorpseweedSpawned;
 } ET_Thornweed;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ u8 leavesDoneGrowing;
+    /* 0x85 */ u8 stalkDoneGrowing;
+    /* 0x86 */ char pad_86[0x2];
+    /* 0x88 */ s16 bobbingLeavesXT;
+    /* 0x8A */ s16 bobbingLeavesYT;
+    /* 0x8C */ s16 bobbingStalkXT;
+    /* 0x8E */ s16 bobbingStalkYT;
+    /* 0x90 */ s16 bobbingTimer;
+    /* 0x92 */ s16 bobbingAngle;
+} ET_Corpseweed;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1391,4 +1406,5 @@ typedef union { // offset=0x7C
     ET_Gremlin gremlin;
     ET_GremlinFire gremlinFire;
     ET_Thornweed thornweed;
+    ET_Corpseweed corpseweed;
 } Ext;
