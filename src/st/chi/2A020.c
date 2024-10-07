@@ -914,7 +914,157 @@ void EntityCorpseweedProjectile(Entity* self)
     self->hitboxHeight = *hitboxData++;
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2A020", func_801AB548);
+extern signed short* sprites_chi_7[];
+
+// func_801AB548
+// https://decomp.me/scratch/yZqKn
+// PSP:func_psp_0923A7F0:Match
+// PSP:https://decomp.me/scratch/tPXxN
+Primitive* func_801AB548(Entity* entity, Primitive* prim)
+{
+    s16 temp_t0;       // s7
+    s32 temp_t7;       // 0x44(sp)
+    s16 var_v0;        // s2
+    u8 var_v0_2;       // s6
+    u8 var_v1_2;       // s5
+    s16* spriteUVs;    // s1
+    s32 var_t6;        // 0x40(sp)
+    u8 temp_a0;        // s4
+    s16 var_t0;        // 0x4e(sp)
+    s16 var_t1;        // 0x4c(sp)
+    s16 temp_a3;       // 0x4a(sp)
+    s16 var_t2;        // s8
+    s16 var_v1;        // s0
+    u8 temp_a0_2;      // s3
+    s32 var_t0_2;
+
+    spriteUVs = sprites_chi_7[entity->animCurFrame];
+    temp_t7 = *spriteUVs;
+    spriteUVs++;
+    
+    for (var_t6 = 0; var_t6 < temp_t7; var_t6++, spriteUVs += 11) {
+        var_v1 = spriteUVs[0];    // s0
+        var_t0 = spriteUVs[1];    // 0x4e(sp)
+        var_t1 = spriteUVs[2];    // 0x4c(sp)
+        temp_a3 = spriteUVs[3];   // 0x4a(sp)
+        var_t2 = spriteUVs[4];    // s8
+        if (var_v1 & 4) {
+            temp_a3 -= 1;
+            if (var_v1 & 2) {
+                var_t0 += 1;
+            }
+        }
+        if (var_v1 & 8) {
+            var_t2 -= 1;
+            if (var_v1 & 1) {
+                var_t1 += 1;
+            }
+        }
+        if (var_v1 & 0x10) {
+            temp_a3 -= 1;
+            if (!(var_v1 & 2)) {
+                var_t0 += 1;
+            }
+        }
+        if (var_v1 & 0x20) {
+            var_t2 -= 1;
+            if (!(var_v1 & 1)) {
+                var_t1 += 1;
+            }
+        }
+        var_v0 = entity->posX.i.hi;             // s2
+        temp_t0 = entity->posY.i.hi;            // s7
+        if (entity->facingLeft) {
+            var_v0 -= var_t0;
+        } else {
+            var_v0 += var_t0;
+        }
+        temp_t0 += var_t1;
+        
+        if (entity->facingLeft) {
+            LOH(prim->x0) = var_v0 - temp_a3 + 1;
+            LOH(prim->y0) = temp_t0;
+            LOH(prim->x1) = var_v0 + 1;
+            LOH(prim->y1) = temp_t0;
+            LOH(prim->x2) = var_v0 - temp_a3 + 1;
+            LOH(prim->y2) = temp_t0 + var_t2;
+            LOH(prim->x3) = var_v0 + 1;
+            LOH(prim->y3) = temp_t0 + var_t2;
+        } else {
+            LOH(prim->x0) = var_v0;
+            LOH(prim->y0) = temp_t0;
+            LOH(prim->x1) = var_v0 + temp_a3;
+            LOH(prim->y1) = temp_t0;
+            LOH(prim->x2) = var_v0;
+            LOH(prim->y2) = temp_t0 + var_t2;
+            LOH(prim->x3) = var_v0 + temp_a3;
+            LOH(prim->y3) = temp_t0 + var_t2;
+        }
+        prim->clut = entity->palette + spriteUVs[5];
+        var_v0_2 = spriteUVs[7];      // s6
+        var_v1_2 = spriteUVs[8];      // s5
+        temp_a0 = spriteUVs[9];       // s4
+        temp_a0_2 = spriteUVs[10];    // s3
+        if (var_v1 & 4) {
+            temp_a0--;
+        }
+        if (var_v1 & 8) {
+            temp_a0_2--;
+        }
+        if (var_v1 & 0x10) {
+            var_v0_2++;
+        }
+        if (var_v1 & 0x20) {
+            var_v1_2++;
+        }
+        var_t0_2 = (var_v1 & 2) ^ (LOHU(entity->facingLeft));    // 0x3c(sp)
+        if (var_t0_2 == 0) {
+            if ((var_v1 & 1) == 0) {
+                prim->u0 = var_v0_2;
+                prim->v0 = var_v1_2;
+                prim->u1 = temp_a0;
+                prim->v1 = var_v1_2;
+                prim->u2 = var_v0_2;
+                prim->v2 = temp_a0_2;
+                prim->u3 = temp_a0;
+                prim->v3 = temp_a0_2;
+            } else {
+                prim->u0 = var_v0_2;
+                prim->v0 = temp_a0_2 - 1;
+                prim->u1 = temp_a0;
+                prim->v1 = temp_a0_2 - 1;
+                prim->u2 = var_v0_2;
+                prim->v2 = var_v1_2 - 1;
+                prim->u3 = temp_a0;
+                prim->v3 = var_v1_2 - 1;
+            }
+        } else {
+            if ((var_v1 & 1) == 0) {
+                prim->u0 = temp_a0 - 1;
+                prim->v0 = var_v1_2;
+                prim->u1 = var_v0_2 - 1;
+                prim->v1 = var_v1_2;
+                prim->u2 = temp_a0 - 1;
+                prim->v2 = temp_a0_2;
+                prim->u3 = var_v0_2 - 1;
+                prim->v3 = temp_a0_2;
+            } else {
+                prim->u0 = temp_a0 - 1;
+                prim->v0 = temp_a0_2 - 1;
+                prim->u1 = var_v0_2 - 1;
+                prim->v1 = temp_a0_2 - 1;
+                prim->u2 = temp_a0 - 1;
+                prim->v2 = var_v1_2 - 1;
+                prim->u3 = var_v0_2 - 1;
+                prim->v3 = var_v1_2 - 1;
+            }
+        }
+        prim->tpage = 0x14;
+        prim->priority = entity->zPriority + 1;
+        prim = prim->next;
+    }
+    return prim;
+}
 
 // POSSIBLE FILE BREAK
 
