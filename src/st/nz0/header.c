@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-extern s16** spriteBanks[];
-extern u_long** g_Cluts[];
-static u_long** gfxBanks[];
-extern MyRoomDef rooms_layers[];
 extern RoomHeader OVL_EXPORT(rooms)[];
+static s16** spriteBanks[];
+static u_long** cluts[];
+static u_long** gfxBanks[];
+static MyRoomDef rooms_layers[];
 
 void Update();
 void HitDetection();
@@ -20,7 +20,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = spriteBanks,
-    .cluts = g_Cluts,
+    .cluts = cluts,
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
     .tileLayers = rooms_layers,
     .gfxBanks = gfxBanks,
@@ -68,7 +68,7 @@ static u_long* D_8018008C[] = {
     PAL_TERMINATE(),
 };
 
-static u_long** g_Cluts[] = {
+static u_long** cluts[] = {
     &D_8018008C,
 };
 
