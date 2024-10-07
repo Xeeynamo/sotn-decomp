@@ -79,25 +79,6 @@ extern u16 D_80170720[];
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 
-// ******
-// tt_001
-// ******
-
-// DeltaX
-extern s16 D_us_801735B0;
-// DeltaY
-extern s16 D_us_801735B4;
-// AngleToTarget
-extern s16 D_us_801735B8;
-// BufferedTargetPosition
-extern s16 D_us_801735BC;
-// DistanceToTarget
-extern s16 D_us_801735C0;
-
-extern u32 D_us_801735C4[];
-extern FamiliarStats D_us_80173810;
-extern s32 D_us_80173820;
-
 s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 
 #ifdef VERSION_PSP
@@ -110,5 +91,6 @@ void UpdateServantDefault(Entity* self);
 void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
+s32 ServantUnk0();
 
 #endif

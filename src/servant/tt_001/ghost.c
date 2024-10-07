@@ -3,36 +3,58 @@
 #include <sfx.h>
 #include <servant.h>
 
-extern s32 g_IsServantDestroyed;
+static s16 D_us_801735B0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801735B4;
+STATIC_PAD_BSS(2);
+static s16 D_us_801735B8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801735BC;
+STATIC_PAD_BSS(2);
+static s16 D_us_801735C0;
+STATIC_PAD_BSS(2);
+
+static u32 D_us_801735C4[128];
+
+static s16 D_us_801737C4;
+STATIC_PAD_BSS(2);
+static s16 D_us_801737C8;
+STATIC_PAD_BSS(2);
+
+static s32 D_us_801737CC;
+STATIC_PAD_BSS(8);
+static s32 D_us_801737D8;
+static s32 D_us_801737DC;
+static s32 D_us_801737E0;
+static s32 D_us_801737E4;
+static s32 D_us_801737E8;
+static s32 D_us_801737EC;
+static Primitive* D_us_801737F0;
+static s32 D_us_801737F4;
+static s32 D_us_801737F8;
+static Primitive*
+    D_us_801737FC;        // Pointer to the current primitive being manipulated
+static s32 D_us_80173800; // Index for the current primitive being manipulated
+static s32 D_us_80173804; // Effect timer used to control steps and timing
+static s16 D_us_80173808;
+STATIC_PAD_BSS(2); // Temporary storage for X position of the
+                   // entity or primitive
+static s16 D_us_8017380C;
+STATIC_PAD_BSS(2); // Temporary storage for Y position of the
+                   // entity or primitive
+static FamiliarStats D_us_80173810;
+static s32 g_IsServantDestroyed;
+static s32 D_us_80173820;
+
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[][3];
-extern s16 D_us_801737C4;
-extern s16 D_us_801737C8;
-extern s32 D_us_801737CC;
-extern s32 D_us_801737D8;
-extern s32 D_us_801737DC;
-extern FamiliarStats D_us_80173810;
-extern SpriteParts* D_80170040[];
-
 extern u16 D_us_80170580[32];
-extern u16 D_us_80170448[48];
 
-extern Primitive*
-    D_us_801737FC;        // Pointer to the current primitive being manipulated
-extern s32 D_us_80173800; // Index for the current primitive being manipulated
-extern s32 D_us_80173804; // Effect timer used to control steps and timing
-extern s16 D_us_80173808; // Temporary storage for X position of the entity or
-                          // primitive
-extern s16 D_us_8017380C; // Temporary storage for Y position of the entity or
-                          // primitive
 extern s16
     D_us_801705A0[]; // Array of X-axis offsets for positioning primitives
 extern s16
     D_us_801705A8[]; // Array of Y-axis offsets for positioning primitives
-
-s32 ServantUnk0();
-void ProcessEvent(Entity* self, bool resetEvent);
 
 void func_us_801720A4(Entity* self);
 void func_us_801720AC(void);
@@ -48,6 +70,7 @@ void func_us_801728EC(void);
 void func_us_801728F4(void);
 void func_us_801728FC(void);
 void DestroyServantEntity(Entity* self);
+
 ServantDesc g_ServantDesc = {
     ServantInit,         UpdateServantDefault, func_us_801720A4,
     func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
@@ -622,14 +645,6 @@ void func_us_801720CC(void) {}
 void func_us_801720D4(void) {}
 
 void func_us_801720DC(void) {}
-
-extern Primitive* D_us_801737F0;
-extern s32 D_us_801737E0;
-extern s32 D_us_801737E4;
-extern s32 D_us_801737F4;
-extern s32 D_us_801737F8;
-extern s32 D_us_801737E8;
-extern s32 D_us_801737EC;
 
 void func_us_801720E4(Entity* self) {
 
