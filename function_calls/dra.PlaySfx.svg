@@ -1795,7 +1795,7 @@
 <g id="node113" class="node">
 <title>no0.CollectSubweapon</title>
 <g id="a_node113"><a xlink:href="no0.CollectSubweapon.svg" xlink:title="no0.CollectSubweapon">
-<ellipse fill="red" stroke="black" cx="26775.39" cy="-198" rx="116.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="26775.39" cy="-198" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="26775.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectSubweapon</text>
 </a>
 </g>
@@ -1811,7 +1811,7 @@
 <g id="node114" class="node">
 <title>no0.EntityEquipItemDrop</title>
 <g id="a_node114"><a xlink:href="no0.EntityEquipItemDrop.svg" xlink:title="no0.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="27041.39" cy="-198" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="27041.39" cy="-198" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="27041.39" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityEquipItemDrop</text>
 </a>
 </g>

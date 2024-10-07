@@ -788,7 +788,7 @@
 <g id="node49" class="node">
 <title>no0.EntityEquipItemDrop</title>
 <g id="a_node49"><a xlink:href="no0.EntityEquipItemDrop.svg" xlink:title="no0.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="11961.39" cy="-214.23" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="11961.39" cy="-214.23" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="11961.39" y="-210.53" font-family="Times,serif" font-size="14.00">no0.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -804,7 +804,7 @@
 <g id="node50" class="node">
 <title>no0.EntityPrizeDrop</title>
 <g id="a_node50"><a xlink:href="no0.EntityPrizeDrop.svg" xlink:title="no0.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="12217.39" cy="-214.23" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="12217.39" cy="-214.23" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="12217.39" y="-210.53" font-family="Times,serif" font-size="14.00">no0.EntityPrizeDrop</text>
 </a>
 </g>

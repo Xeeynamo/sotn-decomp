@@ -12,7 +12,7 @@
 <!-- no0.CollectSubweapon -->
 <g id="node1" class="node">
 <title>no0.CollectSubweapon</title>
-<ellipse fill="red" stroke="black" cx="243.34" cy="-198" rx="116.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="243.34" cy="-198" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="243.34" y="-194.3" font-family="Times,serif" font-size="14.00">no0.CollectSubweapon</text>
 </g>
 <!-- dra.PlaySfx -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.EntityPrizeDrop</title>
 <g id="a_node5"><a xlink:href="no0.EntityPrizeDrop.svg" xlink:title="no0.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="243.34" cy="-378" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="243.34" cy="-378" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="243.34" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityPrizeDrop</text>
 </a>
 </g>

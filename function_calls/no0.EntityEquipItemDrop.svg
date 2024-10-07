@@ -12,7 +12,7 @@
 <!-- no0.EntityEquipItemDrop -->
 <g id="node1" class="node">
 <title>no0.EntityEquipItemDrop</title>
-<ellipse fill="red" stroke="black" cx="1645.69" cy="-198" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1645.69" cy="-198" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="1645.69" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityEquipItemDrop</text>
 </g>
 <!-- dra.AddToInventory -->
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>no0.EntityPrizeDrop</title>
 <g id="a_node12"><a xlink:href="no0.EntityPrizeDrop.svg" xlink:title="no0.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="2231.69" cy="-18" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2231.69" cy="-18" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="2231.69" y="-14.3" font-family="Times,serif" font-size="14.00">no0.EntityPrizeDrop</text>
 </a>
 </g>

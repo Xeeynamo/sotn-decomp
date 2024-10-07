@@ -12,7 +12,7 @@
 <!-- no0.EntityPrizeDrop -->
 <g id="node1" class="node">
 <title>no0.EntityPrizeDrop</title>
-<ellipse fill="red" stroke="black" cx="1872.44" cy="-198" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1872.44" cy="-198" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="1872.44" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityPrizeDrop</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>no0.CollectSubweapon</title>
 <g id="a_node11"><a xlink:href="no0.CollectSubweapon.svg" xlink:title="no0.CollectSubweapon">
-<ellipse fill="red" stroke="black" cx="2116.44" cy="-18" rx="116.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2116.44" cy="-18" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="2116.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.CollectSubweapon</text>
 </a>
 </g>
@@ -291,7 +291,7 @@
 <g id="node19" class="node">
 <title>no0.EntityEquipItemDrop</title>
 <g id="a_node19"><a xlink:href="no0.EntityEquipItemDrop.svg" xlink:title="no0.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="1872.44" cy="-378" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1872.44" cy="-378" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="1872.44" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityEquipItemDrop</text>
 </a>
 </g>

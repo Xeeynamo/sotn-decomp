@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.CollectSubweapon</title>
 <g id="a_node8"><a xlink:href="no0.CollectSubweapon.svg" xlink:title="no0.CollectSubweapon">
-<ellipse fill="red" stroke="black" cx="1175.89" cy="-378" rx="116.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1175.89" cy="-378" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="1175.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.CollectSubweapon</text>
 </a>
 </g>
@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>no0.EntityBigRedFireball</title>
 <g id="a_node15"><a xlink:href="no0.EntityBigRedFireball.svg" xlink:title="no0.EntityBigRedFireball">
-<ellipse fill="red" stroke="black" cx="3282.89" cy="-378" rx="129.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3282.89" cy="-378" rx="129.18" ry="18"/>
 <text text-anchor="middle" x="3282.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityBigRedFireball</text>
 </a>
 </g>
@@ -275,7 +275,7 @@
 <g id="node18" class="node">
 <title>no0.EntityEquipItemDrop</title>
 <g id="a_node18"><a xlink:href="no0.EntityEquipItemDrop.svg" xlink:title="no0.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="4097.89" cy="-378" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4097.89" cy="-378" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="4097.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -419,7 +419,7 @@
 <g id="node27" class="node">
 <title>no0.EntityPrizeDrop</title>
 <g id="a_node27"><a xlink:href="no0.EntityPrizeDrop.svg" xlink:title="no0.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="6451.89" cy="-378" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="6451.89" cy="-378" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="6451.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityPrizeDrop</text>
 </a>
 </g>
