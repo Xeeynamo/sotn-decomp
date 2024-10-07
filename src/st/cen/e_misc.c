@@ -22,11 +22,11 @@ extern u16 msgBoxTpage[0x600];
 
 #include "../entity_unkId13.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityUnkId14Spawner);
+INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityExplosionVariantsSpawner);
 
 #include "../entity_greypuff_spawner.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityUnkId14);
+INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityExplosionVariants);
 
 INCLUDE_ASM("st/cen/nonmatchings/e_misc", EntityGreyPuff);
 

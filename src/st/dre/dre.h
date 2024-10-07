@@ -51,7 +51,7 @@ void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 /* *** Initializers *** */

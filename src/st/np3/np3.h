@@ -87,7 +87,7 @@ extern void func_801BB3F4(s16);
 extern s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern s32 GetDistanceToPlayerX(void);
-extern void EntityUnkId14(Entity* entity);
+extern void EntityExplosionVariants(Entity* entity);
 extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);

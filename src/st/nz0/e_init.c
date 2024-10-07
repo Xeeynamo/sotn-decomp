@@ -20,7 +20,7 @@ void EntityDummy(Entity*);
 void func_801B0958(Entity*);
 void func_801B0AA4(Entity*);
 void EntityUnkId13(Entity*);
-void EntityUnkId14(Entity*);
+void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityPurpleBrickScrollingBackground(Entity*);
 void EntityLeftSecretRoomWall(Entity*);
@@ -99,7 +99,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801B0958,
     func_801B0AA4,
     EntityUnkId13,
-    EntityUnkId14,
+    EntityExplosionVariants,
     EntityGreyPuff,
     EntityPurpleBrickScrollingBackground,
     EntityLeftSecretRoomWall,

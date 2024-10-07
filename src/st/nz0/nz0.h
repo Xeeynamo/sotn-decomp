@@ -93,7 +93,7 @@ s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 void func_801C4CC0(void);
 
