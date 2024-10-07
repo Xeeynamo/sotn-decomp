@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
 // Breakable container holding Skill of Wolf, Bat Card, maybe others
