@@ -55,7 +55,7 @@ segments:
       - [0x4141C, .rodata, blit_char]
       - [0x4142C, .rodata, e_misc]
       - [0x41468, .rodata, 4C750]
-      - [0x414A8, .rodata, e_stage_name]
+      - [0x414B8, .rodata, e_stage_name]
       - [0x414EC, .rodata, unk_4F4A8]
       - [0x4184C, .rodata, prim_helpers]
       - [0x41854, c, first_c_file]

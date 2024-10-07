@@ -111,3 +111,5 @@ INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CE0F8);
 void func_us_801CE2D8(void) {}
 
 INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CE2E0);
+
+INCLUDE_RODATA("st/no0/nonmatchings/4C750", D_us_801C14A8);
