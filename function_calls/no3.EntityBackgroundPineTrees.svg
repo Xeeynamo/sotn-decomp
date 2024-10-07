@@ -12,7 +12,7 @@
 <!-- no3.EntityBackgroundPineTrees -->
 <g id="node1" class="node">
 <title>no3.EntityBackgroundPineTrees</title>
-<ellipse fill="red" stroke="black" cx="313.44" cy="-198" rx="161.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="313.44" cy="-198" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="313.44" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityBackgroundPineTrees</text>
 </g>
 <!-- dra.AllocPrimitives -->

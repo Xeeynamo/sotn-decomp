@@ -2028,7 +2028,7 @@
 - [✅ EntityBackgroundBushes](gh-duplicates/function_calls/no3.EntityBackgroundBushes.svg?raw=1)
 - [✅ EntityBackgroundCastleWall](gh-duplicates/function_calls/no3.EntityBackgroundCastleWall.svg?raw=1)
 - [✅ EntityBackgroundLightning](gh-duplicates/function_calls/no3.EntityBackgroundLightning.svg?raw=1)
-- [❌ EntityBackgroundPineTrees](gh-duplicates/function_calls/no3.EntityBackgroundPineTrees.svg?raw=1)
+- [✅ EntityBackgroundPineTrees](gh-duplicates/function_calls/no3.EntityBackgroundPineTrees.svg?raw=1)
 - [✅ EntityBackgroundTrees](gh-duplicates/function_calls/no3.EntityBackgroundTrees.svg?raw=1)
 - [✅ EntityBat](gh-duplicates/function_calls/no3.EntityBat.svg?raw=1)
 - [✅ EntityBigRedFireball](gh-duplicates/function_calls/no3.EntityBigRedFireball.svg?raw=1)
