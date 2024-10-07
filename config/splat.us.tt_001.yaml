@@ -48,5 +48,5 @@ segments:
       - [0xF3C, .rodata, ghost] # ProcessSfxState
       - [0xF60, c, ghost]
       - [0x35B0, .bss, ghost]
-      - [0x37CC, sbss]
+      - [0x37FC, sbss]
   - [0xA000]

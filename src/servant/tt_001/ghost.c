@@ -14,21 +14,28 @@ u32 D_us_801735C4[128];
 s16 D_us_801737C4, D_us_801737C4_;
 s16 D_us_801737C8, D_us_801737C8_;
 
+s32 D_us_801737CC, D_us_801737CC_dummy, D_us_801737CC_dummy2;
+s32 D_us_801737D8;
+s32 D_us_801737DC;
+s32 D_us_801737E0;
+s32 D_us_801737E4;
+s32 D_us_801737E8;
+s32 D_us_801737EC;
+Primitive* D_us_801737F0;
+s32 D_us_801737F4;
+s32 D_us_801737F8;
+
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[][3];
-extern s32 D_us_801737CC;
-extern s32 D_us_801737D8;
-extern s32 D_us_801737DC;
 extern FamiliarStats D_us_80173810;
 extern SpriteParts* D_80170040[];
 
 extern u16 D_us_80170580[32];
 extern u16 D_us_80170448[48];
 
-extern Primitive*
-    D_us_801737FC;        // Pointer to the current primitive being manipulated
+extern Primitive* D_us_801737FC;        // Pointer to the current primitive being manipulated
 extern s32 D_us_80173800; // Index for the current primitive being manipulated
 extern s32 D_us_80173804; // Effect timer used to control steps and timing
 extern s16 D_us_80173808; // Temporary storage for X position of the entity or
@@ -631,14 +638,6 @@ void func_us_801720CC(void) {}
 void func_us_801720D4(void) {}
 
 void func_us_801720DC(void) {}
-
-extern Primitive* D_us_801737F0;
-extern s32 D_us_801737E0;
-extern s32 D_us_801737E4;
-extern s32 D_us_801737F4;
-extern s32 D_us_801737F8;
-extern s32 D_us_801737E8;
-extern s32 D_us_801737EC;
 
 void func_us_801720E4(Entity* self) {
 
