@@ -395,7 +395,7 @@ void EntityBackgroundPineTrees(Entity* self) {
             if (prim_s0->drawMode == DRAW_HIDE) {
                 for (prim_s1 = prim_s0->next; prim_s1 != NULL;
                      prim_s1 = prim_s1->next) {
-                    if (prim_s1->drawMode == 8) {
+                    if (prim_s1->drawMode == DRAW_HIDE) {
                         prim_s0->tpage = 0xE;
                         prim_s0->u0 = prim_s0->u2 = 0x80;
                         prim_s0->u1 = prim_s0->u3 = 0x80 + 0x28;
@@ -434,13 +434,13 @@ void EntityBackgroundPineTrees(Entity* self) {
                         prim_s0->priority = 0x3F - (self->params * 2);
                         prim_s1->priority = prim_s0->priority - 1;
                         prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
-                        return;
+                        break;
                     }
                 }
-                return;
+                break;
             }
         }
-        return;
+        break;
     }
 }
 
