@@ -3,6 +3,7 @@ g_pStObjLayoutVertical = 0x8018084C;
 PfnEntityUpdates = 0x80180920;
 g_InitializeData0 = 0x80180A70;
 g_InitializeEntityData0 = 0x80180A7C;
+g_EInitGeneric = 0x80180A94;
 g_InitDataEnt13 = 0x80180AD0;
 g_eInitGeneric2 = 0x80180AE8;
 g_eDamageDisplayInit = 0x80180B18;
