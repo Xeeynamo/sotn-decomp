@@ -916,151 +916,168 @@ void EntityCorpseweedProjectile(Entity* self)
 
 extern signed short* sprites_chi_7[];
 
+// [Use SpritePart struct?]
 // func_801AB548
 // https://decomp.me/scratch/yZqKn
 // PSP:func_psp_0923A7F0:Match
 // PSP:https://decomp.me/scratch/tPXxN
 Primitive* func_801AB548(Entity* entity, Primitive* prim)
 {
-    s16 temp_t0;       // s7
-    s32 temp_t7;       // 0x44(sp)
-    s16 var_v0;        // s2
-    u8 var_v0_2;       // s6
-    u8 var_v1_2;       // s5
-    s16* spriteUVs;    // s1
-    s32 var_t6;        // 0x40(sp)
-    u8 temp_a0;        // s4
-    s16 var_t0;        // 0x4e(sp)
-    s16 var_t1;        // 0x4c(sp)
-    s16 temp_a3;       // 0x4a(sp)
-    s16 var_t2;        // s8
-    s16 var_v1;        // s0
-    u8 temp_a0_2;      // s3
-    s32 var_t0_2;
+    s16 y;
+    s32 spritePartCount;
+    s16 x;
+    u8 spriteU0;
+    u8 spriteV0;
+    s16* spriteData;
+    s32 i;
+    u8 spriteU1;
+    s16 spriteDestX;
+    s16 spriteDestY;
+    s16 spriteDestW;
+    s16 spriteDestH;
+    s16 spriteFlags;
+    u8 spriteV1;
+    s32 xFlip;
 
-    spriteUVs = sprites_chi_7[entity->animCurFrame];
-    temp_t7 = *spriteUVs;
-    spriteUVs++;
+    spriteData = sprites_chi_7[entity->animCurFrame];
+    spritePartCount = *spriteData;
+    spriteData++;
     
-    for (var_t6 = 0; var_t6 < temp_t7; var_t6++, spriteUVs += 11) {
-        var_v1 = spriteUVs[0];    // s0
-        var_t0 = spriteUVs[1];    // 0x4e(sp)
-        var_t1 = spriteUVs[2];    // 0x4c(sp)
-        temp_a3 = spriteUVs[3];   // 0x4a(sp)
-        var_t2 = spriteUVs[4];    // s8
-        if (var_v1 & 4) {
-            temp_a3 -= 1;
-            if (var_v1 & 2) {
-                var_t0 += 1;
+    for (i = 0; i < spritePartCount; i++, spriteData += 11) {
+        spriteFlags = spriteData[0];
+        spriteDestX = spriteData[1];
+        spriteDestY = spriteData[2];
+        spriteDestW = spriteData[3];
+        spriteDestH = spriteData[4];
+
+        // Adjust sprite position to respect sprite flags
+        if (spriteFlags & 4) {
+            spriteDestW -= 1;
+            if (spriteFlags & 2) {
+                spriteDestX += 1;
             }
         }
-        if (var_v1 & 8) {
-            var_t2 -= 1;
-            if (var_v1 & 1) {
-                var_t1 += 1;
+        if (spriteFlags & 8) {
+            spriteDestH -= 1;
+            if (spriteFlags & 1) {
+                spriteDestY += 1;
             }
         }
-        if (var_v1 & 0x10) {
-            temp_a3 -= 1;
-            if (!(var_v1 & 2)) {
-                var_t0 += 1;
+        if (spriteFlags & 0x10) {
+            spriteDestW -= 1;
+            if (!(spriteFlags & 2)) {
+                spriteDestX += 1;
             }
         }
-        if (var_v1 & 0x20) {
-            var_t2 -= 1;
-            if (!(var_v1 & 1)) {
-                var_t1 += 1;
+        if (spriteFlags & 0x20) {
+            spriteDestH -= 1;
+            if (!(spriteFlags & 1)) {
+                spriteDestY += 1;
             }
         }
-        var_v0 = entity->posX.i.hi;             // s2
-        temp_t0 = entity->posY.i.hi;            // s7
+
+        // Calculate sprite position to respect facing
+        x = entity->posX.i.hi;
+        y = entity->posY.i.hi;
         if (entity->facingLeft) {
-            var_v0 -= var_t0;
+            x -= spriteDestX;
         } else {
-            var_v0 += var_t0;
+            x += spriteDestX;
         }
-        temp_t0 += var_t1;
+        y += spriteDestY;
         
+        // Set sprite position to respect the above, plus sprite dimensions
         if (entity->facingLeft) {
-            LOH(prim->x0) = var_v0 - temp_a3 + 1;
-            LOH(prim->y0) = temp_t0;
-            LOH(prim->x1) = var_v0 + 1;
-            LOH(prim->y1) = temp_t0;
-            LOH(prim->x2) = var_v0 - temp_a3 + 1;
-            LOH(prim->y2) = temp_t0 + var_t2;
-            LOH(prim->x3) = var_v0 + 1;
-            LOH(prim->y3) = temp_t0 + var_t2;
+            LOH(prim->x0) = x - spriteDestW + 1;
+            LOH(prim->y0) = y;
+            LOH(prim->x1) = x + 1;
+            LOH(prim->y1) = y;
+            LOH(prim->x2) = x - spriteDestW + 1;
+            LOH(prim->y2) = y + spriteDestH;
+            LOH(prim->x3) = x + 1;
+            LOH(prim->y3) = y + spriteDestH;
         } else {
-            LOH(prim->x0) = var_v0;
-            LOH(prim->y0) = temp_t0;
-            LOH(prim->x1) = var_v0 + temp_a3;
-            LOH(prim->y1) = temp_t0;
-            LOH(prim->x2) = var_v0;
-            LOH(prim->y2) = temp_t0 + var_t2;
-            LOH(prim->x3) = var_v0 + temp_a3;
-            LOH(prim->y3) = temp_t0 + var_t2;
+            LOH(prim->x0) = x;
+            LOH(prim->y0) = y;
+            LOH(prim->x1) = x + spriteDestW;
+            LOH(prim->y1) = y;
+            LOH(prim->x2) = x;
+            LOH(prim->y2) = y + spriteDestH;
+            LOH(prim->x3) = x + spriteDestW;
+            LOH(prim->y3) = y + spriteDestH;
         }
-        prim->clut = entity->palette + spriteUVs[5];
-        var_v0_2 = spriteUVs[7];      // s6
-        var_v1_2 = spriteUVs[8];      // s5
-        temp_a0 = spriteUVs[9];       // s4
-        temp_a0_2 = spriteUVs[10];    // s3
-        if (var_v1 & 4) {
-            temp_a0--;
+
+        // Entity-relative clut
+        prim->clut = entity->palette + spriteData[5];
+
+        spriteU0 = spriteData[7];
+        spriteV0 = spriteData[8];
+        spriteU1 = spriteData[9];
+        spriteV1 = spriteData[10];
+
+        // Adjust sprite UVs to respect sprite flags
+        if (spriteFlags & 4) {
+            spriteU1--;
         }
-        if (var_v1 & 8) {
-            temp_a0_2--;
+        if (spriteFlags & 8) {
+            spriteV1--;
         }
-        if (var_v1 & 0x10) {
-            var_v0_2++;
+        if (spriteFlags & 0x10) {
+            spriteU0++;
         }
-        if (var_v1 & 0x20) {
-            var_v1_2++;
+        if (spriteFlags & 0x20) {
+            spriteV0++;
         }
-        var_t0_2 = (var_v1 & 2) ^ (LOHU(entity->facingLeft));    // 0x3c(sp)
-        if (var_t0_2 == 0) {
-            if ((var_v1 & 1) == 0) {
-                prim->u0 = var_v0_2;
-                prim->v0 = var_v1_2;
-                prim->u1 = temp_a0;
-                prim->v1 = var_v1_2;
-                prim->u2 = var_v0_2;
-                prim->v2 = temp_a0_2;
-                prim->u3 = temp_a0;
-                prim->v3 = temp_a0_2;
+
+        // Set sprite UVs to respect the above, plus facing
+        xFlip = (spriteFlags & 2) ^ entity->facingLeft;
+        if (!xFlip) {
+            if (!(spriteFlags & 1)) {
+                prim->u0 = spriteU0;
+                prim->v0 = spriteV0;
+                prim->u1 = spriteU1;
+                prim->v1 = spriteV0;
+                prim->u2 = spriteU0;
+                prim->v2 = spriteV1;
+                prim->u3 = spriteU1;
+                prim->v3 = spriteV1;
             } else {
-                prim->u0 = var_v0_2;
-                prim->v0 = temp_a0_2 - 1;
-                prim->u1 = temp_a0;
-                prim->v1 = temp_a0_2 - 1;
-                prim->u2 = var_v0_2;
-                prim->v2 = var_v1_2 - 1;
-                prim->u3 = temp_a0;
-                prim->v3 = var_v1_2 - 1;
+                prim->u0 = spriteU0;
+                prim->v0 = spriteV1 - 1;
+                prim->u1 = spriteU1;
+                prim->v1 = spriteV1 - 1;
+                prim->u2 = spriteU0;
+                prim->v2 = spriteV0 - 1;
+                prim->u3 = spriteU1;
+                prim->v3 = spriteV0 - 1;
             }
         } else {
-            if ((var_v1 & 1) == 0) {
-                prim->u0 = temp_a0 - 1;
-                prim->v0 = var_v1_2;
-                prim->u1 = var_v0_2 - 1;
-                prim->v1 = var_v1_2;
-                prim->u2 = temp_a0 - 1;
-                prim->v2 = temp_a0_2;
-                prim->u3 = var_v0_2 - 1;
-                prim->v3 = temp_a0_2;
+            if (!(spriteFlags & 1)) {
+                prim->u0 = spriteU1 - 1;
+                prim->v0 = spriteV0;
+                prim->u1 = spriteU0 - 1;
+                prim->v1 = spriteV0;
+                prim->u2 = spriteU1 - 1;
+                prim->v2 = spriteV1;
+                prim->u3 = spriteU0 - 1;
+                prim->v3 = spriteV1;
             } else {
-                prim->u0 = temp_a0 - 1;
-                prim->v0 = temp_a0_2 - 1;
-                prim->u1 = var_v0_2 - 1;
-                prim->v1 = temp_a0_2 - 1;
-                prim->u2 = temp_a0 - 1;
-                prim->v2 = var_v1_2 - 1;
-                prim->u3 = var_v0_2 - 1;
-                prim->v3 = var_v1_2 - 1;
+                prim->u0 = spriteU1 - 1;
+                prim->v0 = spriteV1 - 1;
+                prim->u1 = spriteU0 - 1;
+                prim->v1 = spriteV1 - 1;
+                prim->u2 = spriteU1 - 1;
+                prim->v2 = spriteV0 - 1;
+                prim->u3 = spriteU0 - 1;
+                prim->v3 = spriteV0 - 1;
             }
         }
+
         prim->tpage = 0x14;
+        // Entity-relative z priority
         prim->priority = entity->zPriority + 1;
+
+        // Next!
         prim = prim->next;
     }
     return prim;
