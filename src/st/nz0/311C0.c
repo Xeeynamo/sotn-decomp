@@ -625,7 +625,7 @@ void EntityCannonLever(Entity* self) {
         break;
     }
 
-    if (D_8003BE6F[0] != 0) {
+    if (g_CastleFlags[0x83] != 0) {
         self->hitboxState = 0;
     }
     prim = self->ext.prim;
@@ -678,7 +678,7 @@ void EntityCannon(Entity* self) {
         prim->priority = 0x78;
         prim->drawMode = DRAW_UNK02;
 
-        if (D_8003BE6F[0] != 0) {
+        if (g_CastleFlags[0x83] != 0) {
             self->step = 3;
         }
         break;
@@ -748,7 +748,7 @@ void EntityCannonShot(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
             }
-            D_8003BE6F[0] = 1;
+            g_CastleFlags[0x83] = 1;
             DestroyEntity(self);
         }
         break;
