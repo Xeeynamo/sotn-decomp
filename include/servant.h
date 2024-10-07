@@ -79,12 +79,6 @@ extern u16 D_80170720[];
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 
-// ******
-// tt_001
-// ******
-
-extern FamiliarStats D_us_80173810;
-extern s32 D_us_80173820;
 
 s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 

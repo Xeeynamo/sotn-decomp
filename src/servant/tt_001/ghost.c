@@ -24,24 +24,25 @@ s32 D_us_801737EC;
 Primitive* D_us_801737F0;
 s32 D_us_801737F4;
 s32 D_us_801737F8;
+Primitive* D_us_801737FC; // Pointer to the current primitive being manipulated
+s32 D_us_80173800;  // Index for the current primitive being manipulated
+s32 D_us_80173804;  // Effect timer used to control steps and timing
+s16 D_us_80173808, D_us_80173808_; // Temporary storage for X position of the entity or
+                          // primitive
+s16 D_us_8017380C, D_us_8017380C_; // Temporary storage for Y position of the entity or
+                          // primitive
+FamiliarStats D_us_80173810;
+s32 g_IsServantDestroyed;
+s32 D_us_80173820;
 
-extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[][3];
-extern FamiliarStats D_us_80173810;
 extern SpriteParts* D_80170040[];
 
 extern u16 D_us_80170580[32];
 extern u16 D_us_80170448[48];
 
-extern Primitive* D_us_801737FC;        // Pointer to the current primitive being manipulated
-extern s32 D_us_80173800; // Index for the current primitive being manipulated
-extern s32 D_us_80173804; // Effect timer used to control steps and timing
-extern s16 D_us_80173808; // Temporary storage for X position of the entity or
-                          // primitive
-extern s16 D_us_8017380C; // Temporary storage for Y position of the entity or
-                          // primitive
 extern s16
     D_us_801705A0[]; // Array of X-axis offsets for positioning primitives
 extern s16
