@@ -245,6 +245,14 @@ set(SOURCE_FILES_TT_000
     src/servant/tt_000/spriteparts.c
 )
 
+set(SOURCE_FILES_TT_001
+    src/servant/tt_001/ghost.c
+    src/servant/tt_001/servant_clutdata.c
+    src/servant/tt_001/ghost_animation_data.c
+    src/servant/tt_001/ghost_data.c
+    src/servant/tt_001/servant_spriteparts.c
+)
+
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/banks.c
@@ -363,6 +371,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
+    ${SOURCE_FILES_TT_001}
 )
 
 add_library(core ${SOURCE_FILES_CORE})

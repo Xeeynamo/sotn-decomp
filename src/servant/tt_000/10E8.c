@@ -524,9 +524,6 @@ void ServantInit(InitializeMode mode) {
     g_IsServantDestroyed = 0;
 }
 
-s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
-
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", UpdateServantDefault);
 #else

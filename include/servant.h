@@ -92,5 +92,7 @@ void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 s32 ServantUnk0();
+s16 GetTargetPositionWithDistanceBuffer(
+    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #endif
