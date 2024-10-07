@@ -44,7 +44,6 @@ segments:
       - [0xDE4, .data, e_breakable]
       - [0xE54, .data, 311C0]
       - [0x1010, .data, bossfight]
-      - [0x105C, data]
       - [0x13A4, .data, e_elevator]
       - [0x13C8, .data, cutscene]
       - [0x1474, .data, maria]

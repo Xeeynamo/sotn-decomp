@@ -119,8 +119,8 @@ extern u16 D_80180D00[];
 // *** EntitySlogra properties START ***
 
 extern u16 D_80180D0C[]; // Init
-extern u16 D_8018105C[];
-extern s32 D_8018106C;
+extern s16 D_8018105C[];
+extern s16 D_8018106C[];
 extern u8 D_80181074[]; // Animation
 extern u8 D_80181080[]; // Animation: Taunt
 extern u8 D_8018108C[]; // Animation: Firing projectiles
@@ -136,8 +136,12 @@ extern u8 D_80181128[]; // Animation
 extern u8 D_80181140[]; // Animation
 extern u8 D_80181150[]; // Animation
 extern u8 D_80181158[]; // Animation
-extern s32 D_80181178[];
+extern u8 D_80181160[];
+extern u8 D_80181170[];
+extern u8 D_80181178[][4];
 extern u8 D_801811B8[];
+extern s8 D_801811E0[][4];
+extern u8 D_80181218[];
 
 // *** EntitySlogra properties END ***
 
@@ -177,13 +181,9 @@ extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
 extern s32 g_BossFlag; // original names: boss_flag / beri_flag
-extern const u8 D_80181160[];
-extern const u8 D_80181170[];
-extern s8 D_801811E0[];
-extern u8 D_80181218[];
-extern const u8 D_8018136C[];
-extern const u8 D_80181378[];
-extern const u8 D_80181388[];
+extern u8 D_8018136C[];
+extern u8 D_80181378[];
+extern u8 D_80181388[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
