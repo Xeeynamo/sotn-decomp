@@ -295,7 +295,7 @@
 | 1.00 | true     | MakeExplosions                      | asm/us/st/no3/matchings/e_misc/MakeExplosions.s 
 | 0.96 | true     | func_801B653C                       | asm/us/st/np3/matchings/363FC/func_801B653C.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/np3/matchings/e_misc/MakeExplosions.s 
-| 0.96 | true     | AxeKnightDeath                      | asm/us/st/nz0/matchings/311C0/AxeKnightDeath.s 
+| 0.96 | true     | AxeKnightDeath                      | asm/us/st/nz0/matchings/337B4/AxeKnightDeath.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/nz0/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/rwrp/matchings/rwrp/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/st0/matchings/e_misc/MakeExplosions.s 
@@ -1754,7 +1754,7 @@
 | 1.00 | false    | EntityWargExplosionPuffOpaque       | asm/us/st/no0/nonmatchings/first_c_file/EntityWargExplosionPuffOpaque.s 
 | 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/no3/matchings/3FF00/EntityWargExplosionPuffOpaque.s 
 | 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/np3/matchings/363FC/EntityWargExplosionPuffOpaque.s 
-| 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/nz0/matchings/311C0/EntityWargExplosionPuffOpaque.s 
+| 0.97 | true     | func_801B3C3C                       | asm/us/st/nz0/matchings/33C3C/func_801B3C3C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityClickSwitch                   | asm/us/st/no3/matchings/377D4/EntityClickSwitch.s 
 | 0.91 | true     | EntitySwitch                        | asm/us/st/no3/matchings/377D4/EntitySwitch.s 

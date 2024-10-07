@@ -2590,6 +2590,8 @@
 - [✅ UpdateStageEntities](gh-duplicates/function_calls/nz0.UpdateStageEntities.svg?raw=1)
 - [✅ func_801B0958](gh-duplicates/function_calls/nz0.func_801B0958.svg?raw=1)
 - [✅ func_801B0AA4](gh-duplicates/function_calls/nz0.func_801B0AA4.svg?raw=1)
+- [✅ func_801B37B4](gh-duplicates/function_calls/nz0.func_801B37B4.svg?raw=1)
+- [✅ func_801B3C3C](gh-duplicates/function_calls/nz0.func_801B3C3C.svg?raw=1)
 - [✅ func_801B69E8](gh-duplicates/function_calls/nz0.func_801B69E8.svg?raw=1)
 - [✅ func_801B6DE4](gh-duplicates/function_calls/nz0.func_801B6DE4.svg?raw=1)
 - [✅ func_801B8E0C](gh-duplicates/function_calls/nz0.func_801B8E0C.svg?raw=1)
