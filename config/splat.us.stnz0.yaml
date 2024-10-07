@@ -43,6 +43,8 @@ segments:
       - [0xDBC, .data, 30958]
       - [0xDE4, .data, e_breakable]
       - [0xE54, .data, 311C0]
+      - [0xF50, .data, 337B4]
+      - [0xFA4, .data, 33C3C]
       - [0x1010, .data, bossfight]
       - [0x13A4, .data, e_elevator]
       - [0x13C8, .data, cutscene]
@@ -112,8 +114,9 @@ segments:
       - [0x16A5C, .data, tile_data] # tile data
       - [0x20A5C, .data, tile_data] # tile definitions
       - [0x26E8C, .data, sprites]
-      - [0x3058C, rodata]
-      - [0x305A4, .rodata, 311C0] # EntityWargExplosionPuffOpaque
+      - [0x3058C, .rodata, 311C0] # EntityRedEyeBust
+      - [0x30598, .rodata, 337B4] # EntityRelicContainer
+      - [0x305A4, .rodata, 33C3C] # EntityWargExplosionPuffOpaque
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
       - [0x305FC, .rodata, slogra] # EntitySlogra
@@ -142,6 +145,8 @@ segments:
       - [0x30958, c]
       - [0x30EEC, c, e_breakable]
       - [0x311C0, c]
+      - [0x337B4, c]
+      - [0x33C3C, c]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
       - [0x34690, c, slogra]
       - [0x35778, c, gaibon]
