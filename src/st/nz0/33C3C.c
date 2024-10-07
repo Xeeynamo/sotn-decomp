@@ -1,26 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "np3.h"
+#include "nz0.h"
 
-// Make a EntityWargExplosionPuffOpaque
-void func_801B653C(void) {
-    Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-    s32 i;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            // Make a EntityWargExplosionPuffOpaque
-            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
-            entity->params = 2;
-            entity->ext.wargpuff.unk89 = 6 - i;
-            entity->ext.wargpuff.unk84 = temp_s3;
-            entity->ext.wargpuff.unk88 = temp_s4;
-        }
-    }
-}
-
+// Id 0x38
+static u8 D_80180FA4[] = {
+    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
+    0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
+    0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0xFF, 0x00,
+};
+static u8 D_80180FC0[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
+    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A,
+    0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0xFF, 0x00,
+};
+static Unkstruct_80180FE0 D_80180FE0[] = {
+    {0x000E, 0x0079, 0x0000, 0x30, 0x00, D_80180FA4},
+    {0x800B, 0x0057, 0x0000, 0x00, 0x00, D_80180FC0},
+    {0x800B, 0x0057, 0x0003, 0x30, 0x00, D_80180FC0},
+    {0x000E, 0x0079, 0x0004, 0x30, 0x00, D_80180FA4}};
 void EntityWargExplosionPuffOpaque(Entity* self) {
     Unkstruct_80180FE0* obj;
     s32 velocityX;
@@ -36,8 +32,8 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
     case 0:
         InitializeEntity(g_InitializeEntityData0);
         params = self->params & 0xF;
-        obj = &D_8018129C[params];
-        self->palette = obj->palette + 0xD0;
+        obj = &D_80180FE0[params];
+        self->palette = obj->palette + 0x2E0;
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
@@ -58,7 +54,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->velocityY = FIX(1.0);
+        self->velocityY = FIX(-1);
         if (AnimateEntity(self->ext.wargpuff.anim, self) == 0) {
             DestroyEntity(self);
         }
@@ -81,7 +77,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
             case 2:
                 self->unk6C += 0xFC;
-                break;
+                return;
             }
         } else {
             DestroyEntity(self);

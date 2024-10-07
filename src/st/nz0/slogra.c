@@ -163,7 +163,7 @@ void EntitySlogra(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        UnkCollisionFunc2(&D_8018106C);
+        UnkCollisionFunc2(D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 if (self->ext.GS_Props.attackMode == 0) {
@@ -321,7 +321,7 @@ void EntitySlogra(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        UnkCollisionFunc2(&D_8018106C);
+        UnkCollisionFunc2(D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 self->ext.GS_Props.flag ^= 1;
@@ -457,9 +457,8 @@ void EntitySlogra(Entity* self) {
         }
         break;
     }
-    hitbox = &D_801811B8[self->animCurFrame][D_80181178];
-    hitbox--;
-    hitbox++;
+    hitbox = D_80181178;
+    hitbox += 4 * D_801811B8[self->animCurFrame];
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];

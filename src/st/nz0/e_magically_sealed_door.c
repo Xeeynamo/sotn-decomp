@@ -1,14 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NZ0
- * Entity: Magically Sealed Door
- */
-
 #include "nz0.h"
 #include "sfx.h"
 
+static u8 g_eBlueDoorUV[][8] = {
+    {0x03, 0x0D, 0x03, 0x0D, 0x03, 0x03, 0x45, 0x45},
+    {0x13, 0x3D, 0x13, 0x3D, 0x03, 0x03, 0x45, 0x45},
+    {0x3D, 0x13, 0x3D, 0x13, 0x03, 0x03, 0x45, 0x45}};
+static u16 g_eBlueDoorTiles[][8] = {
+    {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000},
+    {0x130, 0x138, 0x1C0, 0x1C5, 0x130, 0x138, 0x1C0, 0x1C5},
+    {0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000},
+    {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000}};
+static char D_80182710[] = {
+    0x7C, 0x0E, 'M',  'a',  'g',  'i',  'c',  'a', 'l',  'l',
+    'y',  ' ',  's',  'e',  'a',  'l',  'e',  'd', 0x81, 0x44,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
 // Another dupe of EntityIsNearPlayer but needs separate definition in nz0
-s32 EntityIsNearPlayer2(Entity* e) {
+static s32 EntityIsNearPlayer2(Entity* e) {
     s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
 
     diff = abs(diff);
@@ -64,7 +73,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        uv = (u8*)g_eBlueDoorUV;
+        uv = g_eBlueDoorUV;
         prim = &g_PrimBuf[self->primIndex];
         y = self->posY.i.hi - 0x1F;
         for (prim = &g_PrimBuf[self->primIndex], i = 0; prim->next != NULL; i++,

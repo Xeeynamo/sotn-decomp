@@ -7,6 +7,26 @@
 #include "nz0.h"
 #include "sfx.h"
 
+static u8 anim_walk[] = {
+    0x03, 0x01, 0x06, 0x02, 0x06, 0x03, 0x06, 0x04, 0x06, 0x05,
+    0x06, 0x06, 0x06, 0x07, 0x06, 0x08, 0x03, 0x01, 0x00, 0x00};
+static s16 D_80182624[] = {0, 1, 1, 3, 6, 2, 1, 4, 4, 0};
+static u8 anim_disassemble[] = {
+    0x08, 0x09, 0x08, 0x0A, 0x08, 0x0B, 0x08, 0x0C, 0x08, 0x0D,
+    0x08, 0x0E, 0x08, 0x0F, 0x08, 0x10, 0x08, 0x11, 0x08, 0x12,
+    0x08, 0x13, 0x10, 0x14, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_reassemble[] = {
+    0x08, 0x14, 0x08, 0x13, 0x08, 0x12, 0x08, 0x11, 0x08, 0x10,
+    0x08, 0x0F, 0x08, 0x0E, 0x08, 0x0D, 0x08, 0x0C, 0x08, 0x0B,
+    0x08, 0x0A, 0x08, 0x09, 0x10, 0x02, 0xFF, 0x00};
+static u8 anim_reassemble_alt[] = {
+    0x03, 0x14, 0x03, 0x13, 0x03, 0x12, 0x03, 0x11, 0x03, 0x10, 0x03, 0x0F,
+    0x03, 0x0E, 0x03, 0x0D, 0x03, 0x0C, 0x03, 0x0B, 0x03, 0x0A, 0x03, 0x09,
+    0x02, 0x02, 0xFF, 0x00, 0x40, 0x00, 0x28, 0x00, 0x60, 0x00, 0x38, 0x00};
+static s16 D_80182694[] = {0x0000, 0x0018, 0x0000, 0x0004, 0x0008, 0xFFFC,
+                           0xFFF0, 0x0000, 0x0000, 0x0018, 0x0008, 0x0000};
+static s16 D_801826AC[] = {0x000A, 0x001C, 0x000A, 0x0014, 0x00FF, 0x0000};
+
 typedef enum {
     BLOOD_SKELETON_INIT,
     BLOOD_SKELETON_IDLE,
@@ -36,7 +56,7 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_IDLE:
-        if (UnkCollisionFunc3(&D_80182694) & 1) {
+        if (UnkCollisionFunc3(D_80182694) & 1) {
             self->step_s = 0;
             self->step++;
         }
@@ -51,18 +71,18 @@ void EntityBloodSkeleton(Entity* self) {
             }
         }
 
-        if ((AnimateEntity(D_80182610, self) == 0) &&
+        if ((AnimateEntity(anim_walk, self) == 0) &&
             (GetDistanceToPlayerY() < 48) && (Random() % 4) == 0) {
             self->facingLeft = GetSideToPlayer() % 2 == 0;
         }
 
-        if ((u8)CheckColliderOffsets(&D_801826AC, self->facingLeft) != 2) {
+        if ((u8)CheckColliderOffsets(D_801826AC, self->facingLeft) != 2) {
             self->facingLeft ^= 1;
         }
         break;
 
     case BLOOD_SKELETON_DISASSEMBLE:
-        if (AnimateEntity(D_80182638, self) == 0) {
+        if (AnimateEntity(anim_disassemble, self) == 0) {
             self->ext.generic.unk80.modeS16.unk0 = 0xF0;
             self->flags &= ~FLAG_DEAD;
             if (self->params != 0) {
@@ -103,9 +123,9 @@ void EntityBloodSkeleton(Entity* self) {
 
         case 2:
             if (self->params == 0) {
-                animation = &D_80182654;
+                animation = &anim_reassemble;
             } else {
-                animation = &D_80182670;
+                animation = &anim_reassemble_alt;
             }
 
             if (AnimateEntity(animation, self) == 0) {

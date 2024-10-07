@@ -28,25 +28,32 @@ void func_801B0958(Entity* self) {
 
 #include "../player_is_within_hitbox.h"
 
+extern u16 D_80180C10[];
+static u8 e_801B0AA4_hitbox[] = {32, 32, 32, 32};
+static u8 e_801B0AA4_variant[] = {0, 0, 0, 0};
+static u16 e_801B0AA4_mapScroll[] = {
+    0x0000, 0x00FB, 0x0100, 0x01FB, 0x0000, 0x00FB, 0x0100, 0x01FB,
+    0x0000, 0x00FB, 0x0600, 0x01FB, 0x0000, 0x0000, 0x0600, 0x01FB,
+};
 void func_801B0AA4(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     u16* dataPtr;
     // These vars are all reused for things; hard to make good names :(
     u16 var_s2;
-    u16 var_s3;
+    u16 params;
     s16 var_s4;
 
-    var_s3 = self->params;
+    params = self->params;
     if (!self->step) {
-        InitializeEntity(&D_80180C10);
+        InitializeEntity(D_80180C10);
         self->hitboxState = 1;
-        var_s2 = self->ext.et_801B0AA4.unk7C = D_80180DC0[var_s3];
+        var_s2 = self->ext.et_801B0AA4.unk7C = e_801B0AA4_variant[params];
         if (var_s2) {
-            self->hitboxWidth = D_80180DBC[var_s3];
+            self->hitboxWidth = e_801B0AA4_hitbox[params];
             self->hitboxHeight = 0x14;
         } else {
             self->hitboxWidth = 0x14;
-            self->hitboxHeight = D_80180DBC[var_s3];
+            self->hitboxHeight = e_801B0AA4_hitbox[params];
         }
         self->ext.et_801B0AA4.unk88 = 2;
     }
@@ -62,14 +69,14 @@ void func_801B0AA4(Entity* self) {
         }
         if (var_s2 != self->ext.et_801B0AA4.unk88) {
             self->ext.et_801B0AA4.unk88 = var_s2;
-            var_s3 = (var_s3 << 3) + var_s2;
-            dataPtr = &D_80180DC4[var_s3];
+            params = (params << 3) + var_s2;
+            dataPtr = &e_801B0AA4_mapScroll[params];
             self->ext.et_801B0AA4.unk7E = 0;
             self->ext.et_801B0AA4.unk8A = 0x10;
-            var_s3 = tilemap->scrollX.i.hi;
-            if (var_s3 != *dataPtr && self->ext.et_801B0AA4.unk7C) {
+            params = tilemap->scrollX.i.hi;
+            if (params != *dataPtr && self->ext.et_801B0AA4.unk7C) {
                 self->ext.et_801B0AA4.unk7E = 1;
-                tilemap->x = var_s3;
+                tilemap->x = params;
             } else {
                 tilemap->x = *dataPtr;
             }
@@ -82,10 +89,10 @@ void func_801B0AA4(Entity* self) {
                 tilemap->y = *dataPtr;
             }
             self->ext.et_801B0AA4.unk82 = *dataPtr++;
-            var_s3 += 0x100;
-            if (var_s3 != *dataPtr && self->ext.et_801B0AA4.unk7C) {
+            params += 0x100;
+            if (params != *dataPtr && self->ext.et_801B0AA4.unk7C) {
                 self->ext.et_801B0AA4.unk7E |= 4;
-                tilemap->width = var_s3;
+                tilemap->width = params;
             } else {
                 tilemap->width = *dataPtr;
             }

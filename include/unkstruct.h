@@ -116,7 +116,7 @@ typedef struct {
     /* 0x4 */ u16 palette;
     /* 0x6 */ s8 drawMode;
     /* 0x7 */ char pad_7;
-    /* 0x8 */ s32 unk8;
+    /* 0x8 */ u8* anim;
 } Unkstruct_80180FE0;
 
 typedef struct Unkstruct_801C7954 {

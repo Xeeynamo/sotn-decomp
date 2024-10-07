@@ -15,7 +15,7 @@ void EntityRedEyeBust(Entity* self) {
         break;
 
     case 2:
-        FntPrint(&D_801B058C, self->animCurFrame); // "charal %x\n"
+        FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params == 0) {
                 self->animCurFrame++;
@@ -101,6 +101,11 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
     }
 }
 
+static u16 D_80180E54[] = {
+    0x05C0, 0x05C1, 0x05C8, 0x05C9, 0x05D0, 0x05D1, 0x05D8, 0x05D9,
+    0x05C2, 0x05C3, 0x05CA, 0x05CB, 0x05D2, 0x05D3, 0x05DA, 0x05DB,
+    0x05C4, 0x05C5, 0x05CC, 0x05CD, 0x05D4, 0x05D5, 0x05DC, 0x05DD,
+    0x05C6, 0x05C7, 0x05CE, 0x05CF, 0x05D6, 0x05D7, 0x05DE, 0x05DF};
 void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     Entity* newEntity;
     s32 cond;
@@ -114,7 +119,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->hitboxState = 2;
 
         cond = g_CastleFlags[CASTLE_FLAG_129] != 0;
-        tileLayoutPtr = &D_80180E54 + (-cond & 0xC);
+        tileLayoutPtr = D_80180E54 + (-cond & 24);
 
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
@@ -138,7 +143,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     case LEFT_SECRET_ROOM_WALL_BREAK:
         self->ext.nz0311c0.unk84++;
-        tileLayoutPtr = &D_80180E54 + (self->ext.nz0311c0.unk84 * 4);
+        tileLayoutPtr = D_80180E54 + (self->ext.nz0311c0.unk84 * 8);
 
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
@@ -180,6 +185,9 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     }
 }
 
+static u16 D_80180E94[] = {
+    0x05B8, 0x05B8, 0x05B9, 0x05B9, 0x05B2, 0x05B3, 0x05BA, 0x05BB,
+    0x05B4, 0x05B5, 0x05BC, 0x05BD, 0x05B6, 0x05B7, 0x05BE, 0x05BF};
 void EntityBottomSecretRoomFloor(
     Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     Entity* newEntity;
@@ -193,7 +201,7 @@ void EntityBottomSecretRoomFloor(
         self->hitboxHeight = 16;
         self->hitboxState = 2;
         flag = (g_CastleFlags[CASTLE_FLAG_130] != 0);
-        tileLayoutPtr = &D_80180E94 + (-flag & 0x6);
+        tileLayoutPtr = D_80180E94 + (-flag & 12);
 
         tilePos = 0x2E7;
         for (i = 0; i < 2; i++) {
@@ -217,7 +225,7 @@ void EntityBottomSecretRoomFloor(
 
     case BOTTOM_SECRET_ROOM_FLOOR_BREAK:
         self->ext.nz0311c0.unk84++;
-        tileLayoutPtr = &D_80180E94 + (self->ext.nz0311c0.unk84 * 2);
+        tileLayoutPtr = D_80180E94 + (self->ext.nz0311c0.unk84 * 4);
 
         tilePos = 0x2E7;
         for (i = 0; i < 2; i++) {
@@ -324,6 +332,7 @@ void EntitySecretWallDebris(Entity* self) {
     }
 }
 
+static s32 D_80180EB4 = 0;
 void BoxPuzzleFloorButton(Entity* self) {
     s32 temp_s1 = GetPlayerCollisionWith(self, 8, 8, 4);
     s16 primIndex;
@@ -461,6 +470,9 @@ void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
 }
 
 // moveable box for spike/switch areas
+static s16 D_80180EB8[][2] = {
+    {0x0000, 0x0010}, {0x0010, 0x0000}, {0x0000, 0x0010},
+    {0x0000, 0x0004}, {0x0002, 0xFFFC}, {0xFFFC, 0x0000}};
 void EntityMoveableBox(Entity* self) {
     Entity* player;
     Primitive* prim;
@@ -514,7 +526,7 @@ void EntityMoveableBox(Entity* self) {
             }
         }
 
-        UnkCollisionFunc2(&D_80180EB8);
+        UnkCollisionFunc2(D_80180EB8);
 
         if (self->params == 0) {
             temp_v0_2 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -546,6 +558,7 @@ void EntityMoveableBox(Entity* self) {
 }
 
 // lever to operate cannon
+static s32 D_80180ED0[] = {0};
 void EntityCannonLever(Entity* self) {
     Primitive* prim;
     s16 primIndex;
@@ -742,6 +755,8 @@ void EntityCannonShot(Entity* self) {
     }
 }
 
+static u16 D_80180ED4[] = {0x0740, 0x0748, 0x0750, 0x0758, 0x0741, 0x0749};
+static u16 D_80180EE0[] = {0x0751, 0x0181, 0x0185, 0x0188, 0x020A, 0x0759};
 void EntityCannonWall(Entity* self) {
     u16* tileLayoutPtr;
     s32 tilePos;
@@ -753,7 +768,7 @@ void EntityCannonWall(Entity* self) {
         InitializeEntity(g_EInitGeneric);
 
         cond = g_CastleFlags[CASTLE_FLAG_131] != 0;
-        tileLayoutPtr = (-cond & 6) + &D_80180ED4[0];
+        tileLayoutPtr = (-cond & 6) + D_80180ED4;
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr;
             tilePos += 0x10;
@@ -774,7 +789,7 @@ void EntityCannonWall(Entity* self) {
     case 2:
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-        tileLayoutPtr = &D_80180EE0;
+        tileLayoutPtr = D_80180EE0;
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr;
             tilePos += 0x10;
@@ -784,6 +799,7 @@ void EntityCannonWall(Entity* self) {
 }
 
 // Floor button which you kill the blood skeleton to lift the small elevator
+static bool g_CallElevator = false;
 void EntityBloodSkeleElevButton(Entity* self) {
     Primitive* prim;
     s16 primIndex;
@@ -1090,6 +1106,11 @@ void EntityFloorSpikes(Entity* self) {
 }
 
 // table with globe on it that can be broken
+static u8 D_80180EF0[] = {0x02, 0x01, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00};
+static u8 D_80180EF8[] = {
+    0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x03, 0x07, 0x03, 0x08,
+    0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x03, 0x0C, 0x21, 0x0D, 0xFF, 0x00};
+static u16 D_80180F10[] = {0, 1, 2, 6, 10, 0};
 void EntityTableWithGlobe(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1120,6 +1141,14 @@ void EntityTableWithGlobe(Entity* self) {
 
 // Tank (and decoration) at bottom of secret floor room. When broken,
 // provides a Life Max Up
+static u8 D_80180F1C[] = {
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
+    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x00, 0x00, 0x00, 0x00};
+static u8 D_80180F30[] = {
+    0x0F, 0x09, 0x06, 0x0A, 0x05, 0x0B, 0x04, 0x0C, 0x03, 0x0D,
+    0x03, 0x0E, 0x03, 0x0F, 0x03, 0x10, 0x03, 0x11, 0x03, 0x12,
+    0x30, 0x13, 0x01, 0x14, 0xFF, 0x00, 0x00, 0x00};
+static u16 D_80180F4C[] = {0x0003, 0x0000};
 void EntityLifeMaxTank(Entity* self) {
     Entity* newEntity;
 
@@ -1159,269 +1188,6 @@ void EntityLifeMaxTank(Entity* self) {
     case 3:
         newEntity = self;
         newEntity->animCurFrame = 20;
-        break;
-    }
-}
-
-// Breakable container holding Skill of Wolf, Bat Card, maybe others
-void EntityRelicContainer(Entity* self) {
-    Entity* newEntity;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180CDC);
-        if (self->params & 0x100) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        } else {
-            self->zPriority = 0x6A;
-            self->hitboxWidth = 8;
-            self->hitboxHeight = 12;
-            self->hitboxOffY = -0xA;
-            self->hitboxOffX = 0;
-            self->hitboxState = 2;
-            CreateEntityFromEntity(E_RELIC_CONTAINER, self, self + 1);
-            self[1].params = 0x100;
-        }
-
-    case 1:
-        if (self->params & 0x100) {
-            AnimateEntity(D_80180F74, self);
-            break;
-        }
-        AnimateEntity(D_80180F50, self);
-        if (self->hitFlags != 0) {
-            self->hitboxState = 0;
-            SetStep(2);
-        }
-        break;
-
-    case 2:
-        if (self->params > 0x1) {
-            CreateEntityFromEntity(E_RELIC_ORB, self, self + 1);
-        } else {
-            CreateEntityFromEntity(E_HEART_DROP, self, self + 1);
-        }
-
-        (self + 1)->params = D_80180F9C[self->params];
-        do { // !FAKE
-        } while (0);
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->params = 2;
-            newEntity->posY.i.hi -= 8;
-        }
-        PlaySfxPositional(SFX_GLASS_BREAK_E);
-        self->step++;
-
-    case 3:
-        self->animCurFrame = 4;
-        break;
-
-    case 255:
-        FntPrint(&D_801B0598, self->animCurFrame); // "charal %x\n"
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            newEntity = self;
-            newEntity->step_s = 0;
-        }
-        break;
-    }
-}
-
-// Table in room with bone-throwing skeleton. Drops a Resist Thunder.
-void EntityBlueFlameTable(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180CDC);
-        self->zPriority = 0x6A;
-        self->hitboxWidth = 8;
-        self->hitboxHeight = 16;
-        self->hitboxOffY = -0xA;
-        self->hitboxOffX = 0;
-        self->hitboxState = 2;
-
-    case 1:
-        AnimateEntity(D_80180F88, self);
-        if (self->hitFlags != 0) {
-            g_api.PlaySfx(SFX_CANDLE_HIT);
-            self->hitboxState = 0;
-            SetStep(2);
-        }
-        break;
-
-    case 2:
-        CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-        self[1].params = D_80180F9C[self->params];
-        self->step++;
-
-    case 3:
-        self->animCurFrame = 18;
-        break;
-    }
-}
-
-void AxeKnightDeath() {
-    Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-    s32 i;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
-            entity->params = 2;
-            entity->ext.wargpuff.unk89 = 6 - i;
-            entity->ext.wargpuff.unk84 = temp_s3;
-            entity->ext.wargpuff.unk88 = temp_s4;
-        }
-    }
-}
-
-// Id 0x38
-void EntityWargExplosionPuffOpaque(Entity* self) {
-    Unkstruct_80180FE0* obj;
-    s32 velocityX;
-    s32 velocityY;
-    s32 params;
-    s32 temp_s0;
-    s32 adjVelocityX;
-    s32 adjVelocityY;
-    u32 temp_v0;
-    s32 rnd;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_InitializeEntityData0);
-        params = self->params & 0xF;
-        obj = &D_80180FE0[params];
-        self->palette = obj->palette + 0x2E0;
-        self->drawMode = obj->drawMode;
-        self->animSet = obj->animSet;
-        self->unk5A = obj->unk2;
-        self->ext.wargpuff.unk80 = obj->unk8;
-        self->step = params + 1;
-
-        temp_v0 = self->params & 0xFF00;
-        if (temp_v0 != 0) {
-            self->zPriority = temp_v0 >> 8;
-        }
-
-        if (self->params & 0xF0) {
-            self->palette = 0x819F;
-            self->drawMode = DRAW_TPAGE;
-            self->facingLeft = 1;
-        }
-        break;
-
-    case 1:
-        MoveEntity();
-        self->velocityY = FIX(-1);
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 2:
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) != 0) {
-            switch (self->step_s) {
-            case 0:
-                self->drawFlags = FLAG_DRAW_UNK8;
-                self->unk6C = 0x80;
-                self->step_s++;
-                break;
-
-            case 1:
-                if (self->animFrameIdx == 5) {
-                    self->step_s++;
-                }
-                break;
-
-            case 2:
-                self->unk6C += 0xFC;
-                return;
-            }
-        } else {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 3:
-        if (self->step_s == 0) {
-            self->drawFlags |= FLAG_DRAW_ROTZ;
-            switch (self->ext.wargpuff.unk88) {
-            case 1:
-                if (self->ext.wargpuff.unk89 >= 0x4) {
-                    self->ext.wargpuff.unk89 += 0xFD;
-                    self->ext.wargpuff.unk84 -= 0x800;
-                }
-                break;
-
-            case 2:
-                self->ext.wargpuff.unk84 =
-                    (u16)self->ext.wargpuff.unk84 +
-                    ((u8)self->ext.wargpuff.unk89 * 0xC0);
-                break;
-            }
-            self->ext.wargpuff.unk84 = self->ext.wargpuff.unk84 & 0xFFF;
-            self->rotZ = self->ext.wargpuff.unk84 & 0xFFF;
-            temp_s0 = self->ext.wargpuff.unk89 * 0x140;
-            temp_s0 /= 28;
-            self->velocityX = temp_s0 * rsin(self->ext.wargpuff.unk84);
-            self->velocityY = -(temp_s0 * rcos(self->ext.wargpuff.unk84));
-            self->step_s++;
-        }
-
-        if (self->animFrameIdx >= 13) {
-            velocityX = self->velocityX;
-            if (velocityX < 0) {
-                adjVelocityX = velocityX + 3;
-            } else {
-                adjVelocityX = velocityX;
-            }
-            self->velocityX = velocityX - (adjVelocityX >> 2);
-
-            velocityY = self->velocityY;
-            if (velocityY < 0) {
-                adjVelocityY = velocityY + 3;
-            } else {
-                adjVelocityY = velocityY;
-            }
-            self->velocityY = velocityY - (adjVelocityY >> 2);
-        }
-        MoveEntity();
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 4:
-        if (self->step_s == 0) {
-            rnd = Random();
-            self->velocityY = FIX(-0.75);
-            self->facingLeft = rnd & 1;
-            self->rotX = 0xC0;
-            self->drawFlags |= FLAG_DRAW_ROTX;
-            self->step_s++;
-        }
-        MoveEntity();
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
         break;
     }
 }

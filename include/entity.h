@@ -737,7 +737,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
-    /* 0x80 */ s32 unk80;
+    /* 0x80 */ u8* anim;
     /* 0x84 */ s16 unk84;
     /* 0x86 */ u8 pad86[2];
     /* 0x88 */ u8 unk88;
