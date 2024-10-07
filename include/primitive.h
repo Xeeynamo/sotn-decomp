@@ -11,6 +11,17 @@ typedef enum {
 } PrimitivePriority;
 
 #define blendMode drawMode // maintained to easily migrate existing scratches
+
+// Macros for simplifying long stretches setting prim colors.
+// "prim red". Do PRED(prim) = 0x80 to set all reds to 0x80.
+#define PRED(p) p->r0 = p->r1 = p->r2 = p->r3
+// "prim green". Do PGRN(prim) = 0x80 to set all greens to 0x80.
+#define PGRN(p) p->g0 = p->g1 = p->g2 = p->g3
+// "prim blue". Do PBLU(prim) = 0x80 to set all blues to 0x80.
+#define PBLU(p) p->b0 = p->b1 = p->b2 = p->b3
+// "prim color". Do PCOL(prim) =  0x80 to set all RGBs to 0x80.
+#define PCOL(p) PRED(p) = PGRN(p) = PBLU(p)
+
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
 #if defined(VERSION_PC) || defined(VERSION_PSP)

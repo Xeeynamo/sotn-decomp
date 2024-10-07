@@ -267,8 +267,182 @@ void EntityUnkId50(Entity* self) {
     }
 }
 
+extern u16 D_801817D4[];
+extern u16 D_801817DC[];
+extern u8 D_801817E4[];
+extern u16 D_801817E8[];
+extern u16* D_801817EC[];
 // part of parallax background with pine trees
-INCLUDE_ASM("st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
+void EntityBackgroundPineTrees(Entity* self) {
+    Tilemap* gTilemap = &g_Tilemap;
+    u16 selfUnk68;
+    s32 primIndex;
+    u16* var_s5;
+    u16 var_s4;
+    u16 width;
+    u16 xpos;
+    Primitive* prim_s1;
+    Primitive* prim_s0;
+
+    xpos = self->params; // Temporary reuse of xpos var for params
+    selfUnk68 = D_801817D4[xpos];
+    var_s5 = D_801817EC[xpos];
+    var_s5 += (u16)self->ext.timer.t * 2;
+    var_s4 = D_801817DC[xpos];
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AD0);
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        self->unk68 = selfUnk68;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (primIndex == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+
+        for (prim_s0 = &g_PrimBuf[primIndex]; prim_s0 != NULL;
+             prim_s0 = prim_s0->next) {
+            prim_s0->drawMode = DRAW_HIDE;
+        }
+
+        for (prim_s0 = &g_PrimBuf[primIndex]; true; prim_s0 = prim_s1->next) {
+            if (*var_s5 >= 0x121) {
+                return;
+            }
+            self->ext.timer.t++;
+            for (; prim_s0 != NULL; prim_s0 = prim_s0->next) {
+                if (prim_s0->drawMode == DRAW_HIDE) {
+                    break;
+                }
+            }
+            if (prim_s0 == NULL) {
+                return;
+            }
+
+            for (prim_s1 = prim_s0->next; prim_s1 != NULL;
+                 prim_s1 = prim_s1->next) {
+                if (prim_s1->drawMode == DRAW_HIDE) {
+                    break;
+                }
+            }
+            if (prim_s1 == NULL) {
+                return;
+            }
+            prim_s0->tpage = 0xE;
+            prim_s0->u0 = prim_s0->u2 = 0x80;
+            prim_s0->u1 = prim_s0->u3 = 0x80 + 0x28;
+            prim_s0->v0 = prim_s0->v1 = 0x80;
+            prim_s0->v2 = prim_s0->v3 = 0x80 + 0x50;
+
+            prim_s1->tpage = 0xF;
+            prim_s1->u0 = prim_s1->u2 = 0xB0;
+            prim_s1->u1 = prim_s1->u3 = 0xB0 + 0x08;
+            prim_s1->v0 = prim_s1->v1 = 0xC8;
+            prim_s1->v2 = prim_s1->v3 = 0xC8 + 0x30;
+
+            xpos = *var_s5++;
+            width = var_s4 * 20 / 256;
+
+            prim_s0->x0 = prim_s0->x2 = xpos - width;
+            prim_s0->x1 = prim_s0->x3 = xpos + width;
+
+            width = var_s4 * 4 / 256;
+
+            prim_s1->x0 = prim_s1->x2 = xpos - width + 1;
+            prim_s1->x1 = prim_s1->x3 = xpos + width + 1;
+
+            xpos = *var_s5++;
+
+            prim_s0->clut = prim_s1->clut = D_801817E8[(xpos >> 8) & 0xFF];
+
+            prim_s0->y2 = prim_s0->y3 =
+                0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
+
+            prim_s0->y0 = prim_s0->y1 = prim_s0->y2 - (var_s4 * 80 / 256);
+
+            prim_s1->y2 = prim_s1->y3 = 0x9C;
+            prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
+            // Set all colors for both prims.
+            PCOL(prim_s0) = PCOL(prim_s1) = D_801817E4[self->params];
+            prim_s0->priority = 0x3F - (self->params * 2);
+            prim_s1->priority = prim_s0->priority - 1;
+            prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
+        }
+    case 1:
+        xpos = 0x80 - self->posX.i.hi;
+        self->posX.i.hi = 0x80;
+
+        for (prim_s0 = &g_PrimBuf[self->primIndex]; prim_s0 != NULL;
+             prim_s0 = prim_s0->next) {
+            if (prim_s0->drawMode != DRAW_HIDE) {
+                prim_s0->x0 = prim_s0->x2 -= xpos;
+                prim_s0->x1 = prim_s0->x3 -= xpos;
+                if (prim_s0->x1 <= 0) {
+                    prim_s0->drawMode = DRAW_HIDE;
+                }
+            }
+        }
+        xpos = gTilemap->scrollX.i.hi * selfUnk68 / 256 + 0x120;
+
+        if (xpos < *var_s5) {
+            return;
+        }
+        self->ext.timer.t++;
+        for (prim_s0 = &g_PrimBuf[self->primIndex]; prim_s0 != NULL;
+             prim_s0 = prim_s0->next) {
+            if (prim_s0->drawMode == DRAW_HIDE) {
+                for (prim_s1 = prim_s0->next; prim_s1 != NULL;
+                     prim_s1 = prim_s1->next) {
+                    if (prim_s1->drawMode == DRAW_HIDE) {
+                        prim_s0->tpage = 0xE;
+                        prim_s0->u0 = prim_s0->u2 = 0x80;
+                        prim_s0->u1 = prim_s0->u3 = 0x80 + 0x28;
+                        prim_s0->v0 = prim_s0->v1 = 0x80;
+                        prim_s0->v2 = prim_s0->v3 = 0x80 + 0x50;
+
+                        prim_s1->tpage = 0xF;
+                        prim_s1->u0 = prim_s1->u2 = 0xB0;
+                        prim_s1->u1 = prim_s1->u3 = 0xB0 + 0x08;
+                        prim_s1->v0 = prim_s1->v1 = 0xC8;
+                        prim_s1->v2 = prim_s1->v3 = 0xC8 + 0x30;
+
+                        xpos = 0x120 - (xpos - *var_s5++);
+                        width = var_s4 * 20 / 256;
+
+                        prim_s0->x0 = prim_s0->x2 = xpos - width;
+                        prim_s0->x1 = prim_s0->x3 = xpos + width;
+
+                        width = var_s4 * 4 / 256;
+
+                        prim_s1->x0 = prim_s1->x2 = xpos - width + 1;
+                        prim_s1->x1 = prim_s1->x3 = xpos + width + 1;
+
+                        xpos = *var_s5;
+                        prim_s0->clut = prim_s1->clut =
+                            D_801817E8[(xpos >> 8) & 0xFF];
+                        prim_s0->y2 = prim_s0->y3 =
+                            0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
+                        prim_s0->y0 = prim_s0->y1 =
+                            prim_s0->y2 - (var_s4 * 80 / 256);
+                        prim_s1->y2 = prim_s1->y3 = 0x9C;
+                        prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
+                        // Set all colors for both prims.
+                        PCOL(prim_s0) = PCOL(prim_s1) =
+                            D_801817E4[self->params];
+                        prim_s0->priority = 0x3F - (self->params * 2);
+                        prim_s1->priority = prim_s0->priority - 1;
+                        prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        break;
+    }
+}
 
 void EntityUnkId52(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
