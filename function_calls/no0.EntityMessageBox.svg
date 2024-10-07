@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.BlitChar</title>
 <g id="a_node5"><a xlink:href="no0.BlitChar.svg" xlink:title="no0.BlitChar">
-<ellipse fill="red" stroke="black" cx="574.34" cy="-18" rx="69.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="574.34" cy="-18" rx="69.59" ry="18"/>
 <text text-anchor="middle" x="574.34" y="-14.3" font-family="Times,serif" font-size="14.00">no0.BlitChar</text>
 </a>
 </g>

@@ -1763,7 +1763,7 @@
 - [✅ AllocEntity](gh-duplicates/function_calls/no0.AllocEntity.svg?raw=1)
 - [✅ AnimateEntity](gh-duplicates/function_calls/no0.AnimateEntity.svg?raw=1)
 - [✅ BlinkItem](gh-duplicates/function_calls/no0.BlinkItem.svg?raw=1)
-- [❌ BlitChar](gh-duplicates/function_calls/no0.BlitChar.svg?raw=1)
+- [✅ BlitChar](gh-duplicates/function_calls/no0.BlitChar.svg?raw=1)
 - [✅ BottomCornerText](gh-duplicates/function_calls/no0.BottomCornerText.svg?raw=1)
 - [❌ CheckColliderOffsets](gh-duplicates/function_calls/no0.CheckColliderOffsets.svg?raw=1)
 - [✅ CheckFieldCollision](gh-duplicates/function_calls/no0.CheckFieldCollision.svg?raw=1)

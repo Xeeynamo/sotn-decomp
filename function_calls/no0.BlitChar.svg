@@ -12,7 +12,7 @@
 <!-- no0.BlitChar -->
 <g id="node1" class="node">
 <title>no0.BlitChar</title>
-<ellipse fill="red" stroke="black" cx="236.29" cy="-198" rx="69.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="236.29" cy="-198" rx="69.59" ry="18"/>
 <text text-anchor="middle" x="236.29" y="-194.3" font-family="Times,serif" font-size="14.00">no0.BlitChar</text>
 </g>
 <!-- dra.func_80106A28 -->
