@@ -948,10 +948,8 @@ void EntitySuccubus(Entity* self) {
     if ((self->velocityY < 0) && (posY < 48)) {
         self->posY.i.hi = 48 - g_Tilemap.scrollY.i.hi;
     }
-    // TODO: !FAKE
-    hitbox = (s8*)&D_80180830[self->animCurFrame][D_801807F8];
-    hitbox--;
-    hitbox++;
+    hitbox = D_801807F8;
+    hitbox += 4 * D_80180830[self->animCurFrame];
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
@@ -1160,9 +1158,8 @@ void EntitySuccubusClone(Entity* self) {
         }
         break;
     }
-    hitbox = &D_80180830[self->animCurFrame][D_801807F8];
-    hitbox--;
-    hitbox++;
+    hitbox = D_801807F8;
+    hitbox += 4 * D_80180830[self->animCurFrame];
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];

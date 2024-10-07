@@ -625,7 +625,7 @@ void EntityCannonLever(Entity* self) {
         break;
     }
 
-    if (D_8003BE6F[0] != 0) {
+    if (g_CastleFlags[CANNON_WALL_SHORTCUT] != 0) {
         self->hitboxState = 0;
     }
     prim = self->ext.prim;
@@ -678,7 +678,7 @@ void EntityCannon(Entity* self) {
         prim->priority = 0x78;
         prim->drawMode = DRAW_UNK02;
 
-        if (D_8003BE6F[0] != 0) {
+        if (g_CastleFlags[CANNON_WALL_SHORTCUT] != 0) {
             self->step = 3;
         }
         break;
@@ -748,7 +748,7 @@ void EntityCannonShot(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
             }
-            D_8003BE6F[0] = 1;
+            g_CastleFlags[CANNON_WALL_SHORTCUT] = 1;
             DestroyEntity(self);
         }
         break;
@@ -767,20 +767,20 @@ void EntityCannonWall(Entity* self) {
     case 0:
         InitializeEntity(g_EInitGeneric);
 
-        cond = g_CastleFlags[CASTLE_FLAG_131] != 0;
+        cond = g_CastleFlags[CANNON_WALL_SHORTCUT] != 0;
         tileLayoutPtr = (-cond & 6) + D_80180ED4;
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr;
             tilePos += 0x10;
         }
 
-        if (g_CastleFlags[CASTLE_FLAG_131] != 0) {
+        if (g_CastleFlags[CANNON_WALL_SHORTCUT] != 0) {
             DestroyEntity(self);
         }
         break;
 
     case 1:
-        i = g_CastleFlags[CASTLE_FLAG_131] != 0; // TODO: !FAKE:
+        i = g_CastleFlags[CANNON_WALL_SHORTCUT] != 0; // TODO: !FAKE:
         if (i) {
             self->step++;
         }

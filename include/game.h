@@ -1835,7 +1835,7 @@ typedef enum {
     // Start NZ0 flags
     CASTLE_FLAG_129 = 129,
     CASTLE_FLAG_130,
-    CASTLE_FLAG_131,
+    CANNON_WALL_SHORTCUT,
     SG_KILL_ALCH, // Slogra & Gaibon were killed in Alchemy Lab
     CASTLE_FLAG_133,
     CASTLE_FLAG_149 = 149,

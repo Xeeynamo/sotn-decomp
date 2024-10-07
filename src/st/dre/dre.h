@@ -96,7 +96,7 @@ extern s8 g_CloneShootOrder[4][7]; // 0x801807D4
 
 extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
-extern s32 D_801807F8[];
+extern u8 D_801807F8[][4];
 extern u8 D_80180830[];
 extern s16 D_80180D80[];
 extern u16 g_InitializeEntityData0[];

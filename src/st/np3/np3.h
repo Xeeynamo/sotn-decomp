@@ -203,7 +203,7 @@ extern u8 D_8018139C[];  // animation
 extern u8 D_801813B4[];  // animation
 extern u8 D_801813C4[];  // animation
 extern u8 D_801813CC[];  // animation
-extern s32 D_801813EC[];
+extern u8 D_801813EC[][4];
 extern u8 D_8018142C[];
 
 // *** EntitySlogra properties END ***
