@@ -410,9 +410,8 @@ void EntitySlogra(Entity* self) {
         }
         break;
     }
-    hitbox = &D_8018142C[self->animCurFrame][D_801813EC];
-    hitbox--;
-    hitbox++;
+    hitbox = D_801813EC;
+    hitbox += 4 * D_8018142C[self->animCurFrame];
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
