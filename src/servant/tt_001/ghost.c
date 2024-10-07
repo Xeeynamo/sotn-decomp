@@ -3,12 +3,21 @@
 #include <sfx.h>
 #include <servant.h>
 
+s16 D_us_801735B0, D_us_801735B0_;
+s16 D_us_801735B4, D_us_801735B4_;
+s16 D_us_801735B8, D_us_801735B8_;
+s16 D_us_801735BC, D_us_801735BC_;
+s16 D_us_801735C0, D_us_801735C0_;
+
+u32 D_us_801735C4[128];
+
+s16 D_us_801737C4, D_us_801737C4_;
+s16 D_us_801737C8, D_us_801737C8_;
+
 extern s32 g_IsServantDestroyed;
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[][3];
-extern s16 D_us_801737C4;
-extern s16 D_us_801737C8;
 extern s32 D_us_801737CC;
 extern s32 D_us_801737D8;
 extern s32 D_us_801737DC;

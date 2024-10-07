@@ -83,18 +83,6 @@ extern EntitySearch g_EntityRanges[];
 // tt_001
 // ******
 
-// DeltaX
-extern s16 D_us_801735B0;
-// DeltaY
-extern s16 D_us_801735B4;
-// AngleToTarget
-extern s16 D_us_801735B8;
-// BufferedTargetPosition
-extern s16 D_us_801735BC;
-// DistanceToTarget
-extern s16 D_us_801735C0;
-
-extern u32 D_us_801735C4[];
 extern FamiliarStats D_us_80173810;
 extern s32 D_us_80173820;
 
