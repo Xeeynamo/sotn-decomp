@@ -35,7 +35,8 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", MakeEntityFromId);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", func_us_801CC1D0);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityBigRedFireball);
+extern u16 g_InitializeEntityData0[];
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", ClutLerp);
 

@@ -48,7 +48,8 @@ segments:
       - [0x1540, .data, e_room_fg]
       - [0x15CC, .data, e_particles]
       - [0x164C, .data, st_common] # g_SineTable
-      - [0x184C, data]
+      - [0x184C, .data, e_collect]
+      - [0x1B3C, data]
       - [0x41368, .rodata, first_c_file]
       - [0x4137C, .rodata, e_red_door]
       - [0x41394, .rodata, e_collect]
@@ -74,5 +75,6 @@ segments:
       - [0x4F4A8, c, unk_4F4A8]
       - [0x5E09C, c, prim_helpers]
       - [0x5E8CC, .bss, create_entity]
-      - [0x5E8DC, sbss]
+      - [0x5E8DC, bss]
+      - [0x5F54C, .bss, e_collect]
   - [0x5F58C]
