@@ -22,11 +22,11 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D191C);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D20A4);
 
-extern u16 D_us_80180A94[];
+extern u16 g_EInitGeneric[];
 
 void func_us_801D2318(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_us_80180A94);
+        InitializeEntity(g_EInitGeneric);
     }
     if ((entity - 1)->entityId != 0x2E) {
         DestroyEntity(entity);
