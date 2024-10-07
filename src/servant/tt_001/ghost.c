@@ -3,18 +3,26 @@
 #include <sfx.h>
 #include <servant.h>
 
-s16 D_us_801735B0; STATIC_PAD_BSS(2);
-s16 D_us_801735B4; STATIC_PAD_BSS(2);
-s16 D_us_801735B8; STATIC_PAD_BSS(2);
-s16 D_us_801735BC; STATIC_PAD_BSS(2);
-s16 D_us_801735C0; STATIC_PAD_BSS(2);
+s16 D_us_801735B0;
+STATIC_PAD_BSS(2);
+s16 D_us_801735B4;
+STATIC_PAD_BSS(2);
+s16 D_us_801735B8;
+STATIC_PAD_BSS(2);
+s16 D_us_801735BC;
+STATIC_PAD_BSS(2);
+s16 D_us_801735C0;
+STATIC_PAD_BSS(2);
 
 u32 D_us_801735C4[128];
 
-s16 D_us_801737C4; STATIC_PAD_BSS(2);
-s16 D_us_801737C8; STATIC_PAD_BSS(2);
+s16 D_us_801737C4;
+STATIC_PAD_BSS(2);
+s16 D_us_801737C8;
+STATIC_PAD_BSS(2);
 
-s32 D_us_801737CC; STATIC_PAD_BSS(8);
+s32 D_us_801737CC;
+STATIC_PAD_BSS(8);
 s32 D_us_801737D8;
 s32 D_us_801737DC;
 s32 D_us_801737E0;
@@ -27,10 +35,12 @@ s32 D_us_801737F8;
 Primitive* D_us_801737FC; // Pointer to the current primitive being manipulated
 s32 D_us_80173800;        // Index for the current primitive being manipulated
 s32 D_us_80173804;        // Effect timer used to control steps and timing
-s16 D_us_80173808; STATIC_PAD_BSS(2); // Temporary storage for X position of the
-                                   // entity or primitive
-s16 D_us_8017380C; STATIC_PAD_BSS(2); // Temporary storage for Y position of the
-                                   // entity or primitive
+s16 D_us_80173808;
+STATIC_PAD_BSS(2); // Temporary storage for X position of the
+                   // entity or primitive
+s16 D_us_8017380C;
+STATIC_PAD_BSS(2); // Temporary storage for Y position of the
+                   // entity or primitive
 FamiliarStats D_us_80173810;
 s32 g_IsServantDestroyed;
 s32 D_us_80173820;
