@@ -12,7 +12,7 @@
 <!-- no0.EntityStageNamePopup -->
 <g id="node1" class="node">
 <title>no0.EntityStageNamePopup</title>
-<ellipse fill="red" stroke="black" cx="538.05" cy="-198" rx="142.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="538.05" cy="-198" rx="142.17" ry="18"/>
 <text text-anchor="middle" x="538.05" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityStageNamePopup</text>
 </g>
 <!-- FntPrint -->
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.StageNamePopupHelper</title>
 <g id="a_node7"><a xlink:href="no0.StageNamePopupHelper.svg" xlink:title="no0.StageNamePopupHelper">
-<ellipse fill="red" stroke="black" cx="1064.05" cy="-18" rx="145.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1064.05" cy="-18" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="1064.05" y="-14.3" font-family="Times,serif" font-size="14.00">no0.StageNamePopupHelper</text>
 </a>
 </g>

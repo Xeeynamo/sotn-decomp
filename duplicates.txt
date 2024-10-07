@@ -1481,7 +1481,7 @@
 | 1.00 | false    | EntityStageNamePopup                | asm/us/boss/rbo3/nonmatchings/us/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/cen/matchings/e_stage_name/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/dre/matchings/20734/EntityStageNamePopup.s 
-| 1.00 | false    | EntityStageNamePopup                | asm/us/st/no0/nonmatchings/e_stage_name/EntityStageNamePopup.s 
+| 1.00 | true     | EntityStageNamePopup                | asm/us/st/no0/matchings/e_stage_name/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/no3/matchings/4AFF0/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/np3/matchings/e_stage_name/EntityStageNamePopup.s 
 | 0.99 | true     | EntityStageNamePopup                | asm/us/st/nz0/matchings/e_stage_name/EntityStageNamePopup.s 
@@ -1492,7 +1492,7 @@
 | 1.00 | false    | StageNamePopupHelper                | asm/us/boss/rbo3/nonmatchings/us/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/cen/matchings/e_misc/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/dre/matchings/e_misc/StageNamePopupHelper.s 
-| 1.00 | false    | StageNamePopupHelper                | asm/us/st/no0/nonmatchings/e_stage_name/StageNamePopupHelper.s 
+| 1.00 | true     | StageNamePopupHelper                | asm/us/st/no0/matchings/e_stage_name/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/no3/matchings/e_misc/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/np3/matchings/e_misc/StageNamePopupHelper.s 
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/nz0/matchings/e_stage_name/StageNamePopupHelper.s 

@@ -12,7 +12,7 @@
 <!-- no0.StageNamePopupHelper -->
 <g id="node1" class="node">
 <title>no0.StageNamePopupHelper</title>
-<ellipse fill="red" stroke="black" cx="146.89" cy="-198" rx="145.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="146.89" cy="-198" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="146.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.StageNamePopupHelper</text>
 </g>
 <!-- no0.PrimDecreaseBrightness -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.EntityStageNamePopup</title>
 <g id="a_node3"><a xlink:href="no0.EntityStageNamePopup.svg" xlink:title="no0.EntityStageNamePopup">
-<ellipse fill="red" stroke="black" cx="146.89" cy="-378" rx="142.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="146.89" cy="-378" rx="142.17" ry="18"/>
 <text text-anchor="middle" x="146.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityStageNamePopup</text>
 </a>
 </g>
