@@ -173,7 +173,37 @@ s16 func_us_801C1F98(Primitive* prim, s16 arg1) {
     return ret;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C2044);
+s16 func_us_801C2044(Primitive* prim, s16 offset) {
+    prim->drawMode = DRAW_UNK02;
+    prim->u0 = prim->u2 = 0x50;
+    prim->u1 = prim->u3 = 0x60;
+    prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
+    prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
+    prim->v2 = prim->v3 = 0x26;
+    prim->y2 = prim->y3 = offset;
+    offset -= 0x20;
+
+    if (offset < 0x44) {
+        offset = 0x44 - offset;
+        prim->v0 = prim->v1 = offset + 6;
+        prim->y0 = prim->y1 = 0x44;
+
+        prim = prim->next;
+        prim->drawMode = DRAW_UNK02;
+        prim->v0 = prim->v1 = 0x50;
+        prim->v2 = prim->v3 = 0x60;
+        prim->y0 = prim->y1 = 0x2C;
+        prim->y2 = prim->y3 = 0x3C;
+        prim->u0 = prim->u2 = 0x22 - offset;
+        prim->u1 = prim->u3 = 0x22;
+        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi;
+        prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + offset;
+    } else {
+        prim->v0 = prim->v1 = 6;
+        prim->y0 = prim->y1 = offset;
+    }
+    return offset;
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C2184);
 
