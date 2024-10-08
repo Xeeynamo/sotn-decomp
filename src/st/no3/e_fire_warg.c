@@ -12,11 +12,11 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
             newEnt->entityId = E_ID_14;
-            newEnt->pfnUpdate = EntityUnkId14;
+            newEnt->pfnUpdate = EntityExplosionVariants;
             newEnt->params = params;
             newEnt->posX.i.hi = x + i * xOfst;
             newEnt->posY.i.hi = y;
-            newEnt->ext.generic.unk94 = D_80182A48[i];
+            newEnt->ext.destructAnim.index = D_80182A48[i];
             newEnt->rotY = newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
             newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             newEnt->zPriority = entity->zPriority + 1;
@@ -375,15 +375,15 @@ void EntityFireWarg(Entity* self) {
             if (var_s2) {
                 if (var_s2 < 0) {
                     var_s2 += 0x3000;
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, -16, 38, ((Random() & 3) + 1), -4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 10, 38, ((Random() & 3) + 1), -4);
                 } else {
                     var_s2 -= 0x3000;
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, -10, 38, ((Random() & 3) + 1), 4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 16, 38, ((Random() & 3) + 1), 4);
                 }
                 self->velocityX = var_s2;
@@ -511,15 +511,15 @@ void EntityFireWarg(Entity* self) {
             if (self->velocityX != 0) {
                 if (self->facingLeft) {
                     self->velocityX += FIX(0.125);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, -32, 38, ((Random() & 3) + 1), -4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 2, 38, ((Random() & 3) + 1), -4);
                 } else {
                     self->velocityX -= FIX(0.125);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, -2, 38, ((Random() & 3) + 1), 4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 32, 38, ((Random() & 3) + 1), 4);
                 }
             }
@@ -607,15 +607,15 @@ void EntityFireWarg(Entity* self) {
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
                 } else {
                     self->velocityX -= FIX(0.5);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
                 }
             } else {
@@ -650,15 +650,15 @@ void EntityFireWarg(Entity* self) {
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.5);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 0, 38, ((Random() & 3) + 1), -4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 26, 38, ((Random() & 3) + 1), -4);
                 } else {
                     self->velocityX -= FIX(0.5);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, -26, 38, ((Random() & 3) + 1), 4);
-                    EntityUnkId14Spawner(
+                    EntityExplosionVariantsSpawner(
                         self, 1, 1, 0, 38, ((Random() & 3) + 1), 4);
                 }
             } else {

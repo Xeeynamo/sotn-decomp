@@ -49,7 +49,7 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 extern const char* D_801A7984;

@@ -210,11 +210,11 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
             newEnt->entityId = E_ID_14;
-            newEnt->pfnUpdate = EntityUnkId14;
+            newEnt->pfnUpdate = EntityExplosionVariants;
             newEnt->params = params;
             newEnt->posX.i.hi = x + i * xOfst;
             newEnt->posY.i.hi = y;
-            newEnt->ext.generic.unk94 = D_801832E8[i];
+            newEnt->ext.destructAnim.index = D_801832E8[i];
             newEnt->rotY = newEnt->rotX = D_801832D8[D_801832E8[i] + arg5];
             newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             newEnt->zPriority = entity->zPriority + 1;

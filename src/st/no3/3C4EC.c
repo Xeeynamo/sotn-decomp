@@ -113,7 +113,7 @@ void EntityCastleDoorTransition(Entity* entity) {
     case 2:
         if (entity->ext.castleDoorTransition.playerVelocity != 0) {
             entity->ext.castleDoorTransition.playerVelocity -= 0x2800;
-            EntityUnkId14Spawner(
+            EntityExplosionVariantsSpawner(
                 &PLAYER, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
             D_8003C8B8 = 1;

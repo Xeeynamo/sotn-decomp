@@ -3,7 +3,7 @@
 
 #define OVL_EXPORT(x) NO0_##x
 
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 typedef enum EntityIDs {

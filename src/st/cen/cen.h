@@ -45,7 +45,7 @@ typedef enum {
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void CreateEntityFromLayout(Entity*, LayoutEntity*);
 u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2);
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 extern PfnEntityUpdate PfnEntityUpdates[];

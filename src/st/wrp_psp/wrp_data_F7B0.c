@@ -34,7 +34,7 @@ PfnEntityUpdate D_psp_09246E30[] = {
     /* 424 */ (PfnEntityUpdate)EntityBackgroundBlock, // unused
     /* 428 */ (PfnEntityUpdate)EntityUnkId12, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)EntityUnkId13,
-    /* 430 */ (PfnEntityUpdate)EntityUnkId14,
+    /* 430 */ (PfnEntityUpdate)EntityExplosionVariants,
     /* 434 */ (PfnEntityUpdate)EntityGreyPuff,
     /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
     /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
