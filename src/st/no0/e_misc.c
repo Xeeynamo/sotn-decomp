@@ -15,11 +15,11 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", CheckColliderOffsets);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId13);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId14Spawner);
+INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityExplosionVariantsSpawner);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityGreyPuffSpawner);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId14);
+INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityExplosionVariants);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityGreyPuff);
 

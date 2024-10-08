@@ -1799,6 +1799,16 @@ typedef struct {
     u8 unk84;
 } ET_BackgroundLightning;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ u8 index;
+} ET_DestructAnimation;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1951,6 +1961,7 @@ typedef union { // offset=0x7C
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
+    ET_DestructAnimation destructAnim;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field_name)                               \

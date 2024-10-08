@@ -48,7 +48,7 @@ extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
 extern u16 g_EInitSmallRocks[];
 
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 #endif

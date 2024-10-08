@@ -2,6 +2,7 @@
 #include "common.h"
 #include <sfx.h>
 #include <servant.h>
+#include "../servant_private.h"
 
 static s16 D_us_801735B0;
 STATIC_PAD_BSS(2);
@@ -49,7 +50,7 @@ static s32 D_us_80173820;
 extern s32 D_us_801704A8;
 extern AnimationFrame* D_us_80170500[];
 extern s32 D_us_80170508[][3];
-extern u16 D_us_80170580[32];
+extern u16 D_us_80170580[];
 
 extern s16
     D_us_801705A0[]; // Array of X-axis offsets for positioning primitives
@@ -69,9 +70,8 @@ void func_us_8017246C(Entity* self);
 void func_us_801728EC(void);
 void func_us_801728F4(void);
 void func_us_801728FC(void);
-void DestroyServantEntity(Entity* self);
 
-ServantDesc g_ServantDesc = {
+ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, func_us_801720A4,
     func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
     func_us_801720C4,    func_us_801720CC,     func_us_801720D4,
@@ -281,6 +281,7 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 
 #ifdef VERSION_PC
 extern u16 g_ServantClut[48];
+extern u16 D_us_80170580[16];
 #endif
 
 void ServantInit(InitializeMode mode) {
@@ -292,16 +293,18 @@ void ServantInit(InitializeMode mode) {
     Entity* e;
     u16 temp;
 #ifdef VERSION_PC
-    const int len = LEN(g_ServantClut);
+    const int lenServantClut = LEN(g_ServantClut);
+    const int lenGhostClut = LEN(D_us_80170580);
 #else
-    const int len = 256;
+    const int lenServantClut = 256;
+    const int lenGhostClut = 32;
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
         dst = &g_Clut[CLUT_INDEX_SERVANT];
         src = g_ServantClut;
 
-        for (i = 0; i < len; i++) {
+        for (i = 0; i < lenServantClut; i++) {
             temp = *src++;
             *dst = temp;
             if (i & 0xF) {
@@ -314,7 +317,7 @@ void ServantInit(InitializeMode mode) {
         dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
         src = D_us_80170580;
 
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < lenGhostClut; i++) {
             *dst++ = *src++;
         }
 
@@ -531,7 +534,7 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.unk86 = 0;
             if (self->ext.ghost.unk92->entityId == 0xDA) {
                 self->ext.ghost.unk92->params = 1;
-                g_ServantDesc.Unk28(self->ext.ghost.unk92);
+                ghost_ServantDesc.Unk28(self->ext.ghost.unk92);
             }
         }
         self->posX.val += self->velocityX;
@@ -542,7 +545,7 @@ void UpdateServantDefault(Entity* self) {
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             if (self->ext.ghost.unk96->entityId == 0xDB) {
                 self->ext.ghost.unk96->params = 1;
-                g_ServantDesc.Unk2C(self->ext.ghost.unk96);
+                ghost_ServantDesc.Unk2C(self->ext.ghost.unk96);
             }
             self->step = 1;
             break;

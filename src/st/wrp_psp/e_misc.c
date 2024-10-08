@@ -10,7 +10,7 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityRelicOrb);
 
 #include "../entity_unkId13.h"
 
-#include "../entity_unkId14.h"
+#include "../entity_explosion_variants.h"
 
 #include "../entity_greypuff.h"
 

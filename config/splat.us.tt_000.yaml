@@ -41,7 +41,6 @@ segments:
       - [0x608, .data, 608]
       - [0x10AC, .rodata, 10E8] # UpdateServantDefault
       - [0x10C4, .rodata, 10E8] # ProcessSfxState
-      - [0x10E8, c]
-      - [0x45E4, c]
+      - [0x10E8, c, 10E8]
       - [0x48D8, .bss, 10E8]
   - [0xA000]
