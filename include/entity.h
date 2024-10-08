@@ -642,9 +642,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 pad7C;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 unk84;
+    // This counter is used for the Y "bob" the ghost does
+    /* 0x80 */ s16 BobCounterY;
+    /* 0x82 */ s16 TargetAngle;
+    /* 0x84 */ s16 MaxAngle;
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;

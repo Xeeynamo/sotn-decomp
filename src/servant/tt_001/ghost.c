@@ -4,28 +4,33 @@
 #include <servant.h>
 #include "../servant_private.h"
 
-static s16 D_us_801735B0;
+#define ABILITY_STATS_DELAY_FRAMES 0
+#define ABILITY_STATS_SPELL_ID 1
+#define ABILITY_STATS_BAD_ATTACKS 2
+
+// These variables are only used in UpdateEntityVelocityTowardsTarget
+static s16 DeltaX;
 STATIC_PAD_BSS(2);
-static s16 D_us_801735B4;
+static s16 DeltaY;
 STATIC_PAD_BSS(2);
-static s16 D_us_801735B8;
+static s16 AngleToTarget;
 STATIC_PAD_BSS(2);
-static s16 D_us_801735BC;
+static s16 AllowedAngle;
 STATIC_PAD_BSS(2);
-static s16 D_us_801735C0;
+static s16 DistanceToTarget;
 STATIC_PAD_BSS(2);
 
 static u32 D_us_801735C4[128];
 
-static s16 D_us_801737C4;
+static s16 TargetLocationX;
 STATIC_PAD_BSS(2);
-static s16 D_us_801737C8;
+static s16 TargetLocationY;
 STATIC_PAD_BSS(2);
 
 static s32 D_us_801737CC;
 STATIC_PAD_BSS(8);
-static s32 D_us_801737D8;
-static s32 D_us_801737DC;
+static s32 TargetLocationX_calc;
+static s32 TargetLocationY_calc;
 static s32 D_us_801737E0;
 static s32 D_us_801737E4;
 static s32 D_us_801737E8;
@@ -43,76 +48,77 @@ STATIC_PAD_BSS(2); // Temporary storage for X position of the
 static s16 D_us_8017380C;
 STATIC_PAD_BSS(2); // Temporary storage for Y position of the
                    // entity or primitive
-static FamiliarStats D_us_80173810;
+static FamiliarStats GhostStats;
 static s32 g_IsServantDestroyed;
 static s32 D_us_80173820;
 
-extern s32 D_us_801704A8;
+extern s32 DefaultAnimationFrame;
 extern AnimationFrame* D_us_80170500[];
-extern s32 D_us_80170508[][3];
-extern u16 D_us_80170580[];
+extern s32 AbilityStats[][3];
+extern u16 GhostClut[];
 
 extern s16
     D_us_801705A0[]; // Array of X-axis offsets for positioning primitives
 extern s16
     D_us_801705A8[]; // Array of Y-axis offsets for positioning primitives
 
-void func_us_801720A4(Entity* self);
-void func_us_801720AC(void);
-void func_us_801720B4(void);
-void func_us_801720BC(void);
-void func_us_801720C4(void);
-void func_us_801720CC(void);
-void func_us_801720D4(void);
-void func_us_801720DC(void);
+void unused_20A4(Entity* self);
+void unused_20AC(void);
+void unused_20B4(void);
+void unused_20BC(void);
+void unused_20C4(void);
+void unused_20CC(void);
+void unused_20D4(void);
+void unused_20DC(void);
 void func_us_801720E4(Entity* self);
 void func_us_8017246C(Entity* self);
-void func_us_801728EC(void);
-void func_us_801728F4(void);
-void func_us_801728FC(void);
+void unused_28EC(void);
+void unused_28F4(void);
+void unused_28FC(void);
 
 ServantDesc ghost_ServantDesc = {
-    ServantInit,         UpdateServantDefault, func_us_801720A4,
-    func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
-    func_us_801720C4,    func_us_801720CC,     func_us_801720D4,
-    func_us_801720DC,    func_us_801720E4,     func_us_8017246C,
-    func_us_801728EC,    func_us_801728F4,     func_us_801728FC,
+    ServantInit,         UpdateServantDefault, unused_20A4,
+    unused_20AC,    unused_20B4,     unused_20BC,
+    unused_20C4,    unused_20CC,     unused_20D4,
+    unused_20DC,    func_us_801720E4,     func_us_8017246C,
+    unused_28EC,    unused_28F4,     unused_28FC,
     DestroyServantEntity};
 
 #include "../set_entity_animation.h"
 
-s32 UpdateEntityVelocityTowardsTarget(s32 unused, s32 targetX, s32 targetY) {
-    // AngleToTarget
-    D_us_801735B8 = CalculateAngleToEntity(g_CurrentEntity, targetX, targetY);
-    // BufferedTargetPosition
-    D_us_801735BC = GetTargetPositionWithDistanceBuffer(
-        D_us_801735B8, g_CurrentEntity->ext.factory.unk82,
-        g_CurrentEntity->ext.factory.unk84);
-    g_CurrentEntity->ext.factory.unk82 = D_us_801735BC;
+// This gets called from the update function called by the engine
+// g_CurrentEntity should be the Familiar entity
+// Unsure where the target angle gets set initially
+s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) {
+    AngleToTarget = CalculateAngleToEntity(g_CurrentEntity, targetX, targetY);
+    AllowedAngle = GetTargetPositionWithDistanceBuffer(
+        AngleToTarget, g_CurrentEntity->ext.ghost.TargetAngle,
+        g_CurrentEntity->ext.ghost.MaxAngle);
+    g_CurrentEntity->ext.ghost.TargetAngle = AllowedAngle;
     // DeltaX
-    D_us_801735B0 = targetX - g_CurrentEntity->posX.i.hi;
+    DeltaX = targetX - g_CurrentEntity->posX.i.hi;
     // DeltaY
-    D_us_801735B4 = targetY - g_CurrentEntity->posY.i.hi;
+    DeltaY = targetY - g_CurrentEntity->posY.i.hi;
     // DistanceToTarget
-    D_us_801735C0 =
+    DistanceToTarget =
         SquareRoot12(
-            ((D_us_801735B0 * D_us_801735B0) + (D_us_801735B4 * D_us_801735B4))
+            ((DeltaX * DeltaX) + (DeltaY * DeltaY))
             << 0xC) >>
         0xC;
 
     switch (g_CurrentEntity->step) {
     case 2:
-        g_CurrentEntity->velocityX = rcos(D_us_801735BC) * D_us_801735C0 * 2;
-        g_CurrentEntity->velocityY = -(rsin(D_us_801735BC) * D_us_801735C0 * 2);
+        g_CurrentEntity->velocityX = rcos(AllowedAngle) * DistanceToTarget * 2;
+        g_CurrentEntity->velocityY = -(rsin(AllowedAngle) * DistanceToTarget * 2);
         break;
     case 3:
-        g_CurrentEntity->velocityX = rcos(D_us_801735BC) * D_us_801735C0 * 8;
-        g_CurrentEntity->velocityY = -(rsin(D_us_801735BC) * D_us_801735C0 * 8);
+        g_CurrentEntity->velocityX = rcos(AllowedAngle) * DistanceToTarget * 8;
+        g_CurrentEntity->velocityY = -(rsin(AllowedAngle) * DistanceToTarget * 8);
         break;
     default:
-        g_CurrentEntity->velocityX = (rcos(D_us_801735BC) * D_us_801735C0) >> 2;
+        g_CurrentEntity->velocityX = (rcos(AllowedAngle) * DistanceToTarget) >> 2;
         g_CurrentEntity->velocityY =
-            -((rsin(D_us_801735BC) * D_us_801735C0) >> 2);
+            -((rsin(AllowedAngle) * DistanceToTarget) >> 2);
         break;
     }
 
@@ -133,7 +139,7 @@ s32 UpdateEntityVelocityTowardsTarget(s32 unused, s32 targetX, s32 targetY) {
         g_CurrentEntity->velocityY = FIX(-0.25);
     }
 
-    if (D_us_801735C0 > 0x100) {
+    if (DistanceToTarget > 0x100) {
         g_CurrentEntity->velocityX =
             (targetX - g_CurrentEntity->posX.i.hi) << 0xE;
         g_CurrentEntity->velocityY =
@@ -141,7 +147,7 @@ s32 UpdateEntityVelocityTowardsTarget(s32 unused, s32 targetX, s32 targetY) {
     }
 
     // Return the distance between entity and target
-    return D_us_801735C0;
+    return DistanceToTarget;
 }
 
 Entity* func_us_80171284(
@@ -177,7 +183,7 @@ Entity* func_us_80171284(
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            D_us_80170508[D_us_80173810.level / 10][2] == 0)
+            AbilityStats[GhostStats.level / 10][ABILITY_STATS_BAD_ATTACKS] == 0)
             continue;
 #if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
@@ -232,7 +238,7 @@ Entity* func_us_80171284(
 
 #include "../check_entity_valid.h"
 
-void func_us_80171560(Entity* self) {}
+void unused_1560(Entity* self) {}
 
 #if defined(VERSION_PSP)
 void func_psp_092EA460(Entity* self, s32 entityId, s32 params) {
@@ -281,7 +287,7 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 
 #ifdef VERSION_PC
 extern u16 g_ServantClut[48];
-extern u16 D_us_80170580[16];
+extern u16 GhostClut[16];
 #endif
 
 void ServantInit(InitializeMode mode) {
@@ -294,7 +300,7 @@ void ServantInit(InitializeMode mode) {
     u16 temp;
 #ifdef VERSION_PC
     const int lenServantClut = LEN(g_ServantClut);
-    const int lenGhostClut = LEN(D_us_80170580);
+    const int lenGhostClut = LEN(GhostClut);
 #else
     const int lenServantClut = 256;
     const int lenGhostClut = 32;
@@ -315,7 +321,7 @@ void ServantInit(InitializeMode mode) {
 
         // overwrite part of the clut for this servant
         dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
-        src = D_us_80170580;
+        src = GhostClut;
 
         for (i = 0; i < lenGhostClut; i++) {
             *dst++ = *src++;
@@ -364,7 +370,7 @@ void ServantInit(InitializeMode mode) {
                 e->posY.val = PLAYER.posY.val - FIX(32);
             }
         }
-        g_api.func_8011A3AC(e, 0, 0, &D_us_80173810);
+        g_api.func_8011A3AC(e, 0, 0, &GhostStats);
         g_IsServantDestroyed = 0;
     }
 }
@@ -375,20 +381,24 @@ void UpdateServantDefault(Entity* self) {
     s32 temp_s2;
     s32 temp_s1;
 
-    g_api.func_8011A3AC(self, 0, 0, &D_us_80173810);
+    g_api.func_8011A3AC(self, 0, 0, &GhostStats);
     if (g_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     self->hitboxWidth = 0;
     self->hitboxHeight = 0;
+
+    // I think if step is < 2, the target the ghost is moving to is Alucard
     if (self->step < 2) {
+        // I don't believe this is the correct flag.  This appears to be a flag
+        // with the foreground layer, not the stage.
         if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             switch (ServantUnk0()) {
             case 0:
-                D_us_801737D8 = 0x40;
+                TargetLocationX_calc = 0x40;
                 break;
             case 1:
-                D_us_801737D8 = 0xC0;
+                TargetLocationX_calc = 0xC0;
                 break;
             case 2:
                 if (self->posX.i.hi > 0x80) {
@@ -396,23 +406,23 @@ void UpdateServantDefault(Entity* self) {
                 } else {
                     temp_s4 = 0x40;
                 }
-                D_us_801737D8 = temp_s4;
+                TargetLocationX_calc = temp_s4;
                 break;
             }
-            D_us_801737DC = 0xA0;
+            TargetLocationY_calc = 0xA0;
         } else {
             if (PLAYER.facingLeft) {
-                D_us_801737D8 = PLAYER.posX.i.hi + 0x12;
+                TargetLocationX_calc = PLAYER.posX.i.hi + 18;
             } else {
-                D_us_801737D8 = PLAYER.posX.i.hi - 0x12;
+                TargetLocationX_calc = PLAYER.posX.i.hi - 18;
             }
-            D_us_801737DC = PLAYER.posY.i.hi - 0x20;
+            TargetLocationY_calc = PLAYER.posY.i.hi - 32;
         }
     }
-    D_us_801737C4 = D_us_801737D8;
-    D_us_801737C8 = D_us_801737DC + (rsin(self->ext.ghost.unk80) >> 0xA);
-    self->ext.ghost.unk80 += 0x20;
-    self->ext.ghost.unk80 &= 0xfff;
+    TargetLocationX = TargetLocationX_calc;
+    TargetLocationY = TargetLocationY_calc + (rsin(self->ext.ghost.BobCounterY) >> 0xA);
+    self->ext.ghost.BobCounterY += 32;
+    self->ext.ghost.BobCounterY &= 0xfff;
     switch (self->step) {
     case 0:
         self->ext.ghost.unk7E = self->params;
@@ -420,9 +430,9 @@ void UpdateServantDefault(Entity* self) {
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_UNK8;
-        SetEntityAnimation(self, &D_us_801704A8);
-        self->ext.ghost.unk84 = 0x200;
-        self->ext.ghost.unk88 = 0x80;
+        SetEntityAnimation(self, &DefaultAnimationFrame);
+        self->ext.ghost.MaxAngle = 512;
+        self->ext.ghost.unk88 = 128;
         self->ext.ghost.unk8A = -1;
         self->step++;
         break;
@@ -440,21 +450,21 @@ void UpdateServantDefault(Entity* self) {
                 self->facingLeft = 0;
         } else {
             if (PLAYER.facingLeft == self->facingLeft) {
-                if (abs(D_us_801737C4 - self->posX.i.hi) <= 0) {
+                if (abs(TargetLocationX - self->posX.i.hi) <= 0) {
                     if (PLAYER.facingLeft)
                         temp_s3 = 0;
                     else
                         temp_s3 = 1;
                     self->facingLeft = temp_s3;
                 } else { // 3e0
-                    if (self->facingLeft && D_us_801737C4 < self->posX.i.hi) {
+                    if (self->facingLeft && TargetLocationX < self->posX.i.hi) {
                         if (PLAYER.facingLeft)
                             temp_s2 = 0;
                         else
                             temp_s2 = 1;
                         self->facingLeft = temp_s2;
                     } else if (!self->facingLeft) {
-                        if (D_us_801737C4 > self->posX.i.hi) {
+                        if (TargetLocationX > self->posX.i.hi) {
                             if (PLAYER.facingLeft)
                                 temp_s1 = 0;
                             else
@@ -465,16 +475,16 @@ void UpdateServantDefault(Entity* self) {
                 }
             } else {
                 if (self->facingLeft &&
-                    self->posX.i.hi - D_us_801737C4 > 0x1F) {
+                    self->posX.i.hi - TargetLocationX > 0x1F) {
                     self->facingLeft = PLAYER.facingLeft;
                 } else if (!self->facingLeft) {
-                    if (D_us_801737C4 - self->posX.i.hi > 0x1F) {
+                    if (TargetLocationX - self->posX.i.hi > 0x1F) {
                         self->facingLeft = PLAYER.facingLeft;
                     }
                 }
             }
         }
-        UpdateEntityVelocityTowardsTarget(self, D_us_801737C4, D_us_801737C8);
+        UpdateEntityVelocityTowardsTarget(self, TargetLocationX, TargetLocationY);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (!g_CutsceneHasControl) {
@@ -501,8 +511,8 @@ void UpdateServantDefault(Entity* self) {
             break;
         }
 
-        D_us_801737C4 = self->ext.ghost.unkA2->posX.i.hi;
-        D_us_801737C8 = self->ext.ghost.unkA2->posY.i.hi;
+        TargetLocationX = self->ext.ghost.unkA2->posX.i.hi;
+        TargetLocationY = self->ext.ghost.unkA2->posY.i.hi;
         if (self->velocityX > 0) {
             self->facingLeft = 1;
         }
@@ -510,7 +520,7 @@ void UpdateServantDefault(Entity* self) {
             self->facingLeft = 0;
         }
         D_us_801737CC = UpdateEntityVelocityTowardsTarget(
-            self, D_us_801737C4, D_us_801737C8);
+            self, TargetLocationX, TargetLocationY);
         if (self->step == 2) {
             if (D_us_801737CC < 8) {
                 self->ext.ghost.unk86 = 0;
@@ -519,14 +529,14 @@ void UpdateServantDefault(Entity* self) {
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 ==
-                (D_us_80170508[D_us_80173810.level / 10][0] - 0x1E)) {
+                (AbilityStats[GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES] - 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (self->ext.ghost.unk86 >
-                       D_us_80170508[D_us_80173810.level / 10][0]) {
+                       AbilityStats[GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
-                    self, D_us_80170508[D_us_80173810.level / 10][1], 1,
-                    &D_us_80173810);
+                    self, AbilityStats[GhostStats.level / 10][ABILITY_STATS_SPELL_ID], 1,
+                    &GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
             }
@@ -550,7 +560,7 @@ void UpdateServantDefault(Entity* self) {
             self->step = 1;
             break;
         }
-        UpdateEntityVelocityTowardsTarget(self, D_us_801737C4, D_us_801737C8);
+        UpdateEntityVelocityTowardsTarget(self, TargetLocationX, TargetLocationY);
         self->posY.val += self->velocityY;
         switch (self->ext.ghost.unk8C) {
         case 0:
@@ -629,25 +639,25 @@ void UpdateServantDefault(Entity* self) {
     }
     self->unk6C = self->ext.ghost.unk88;
     ProcessEvent(self, 0);
-    func_us_80171560(self);
+    unused_1560(self);
     g_api.UpdateAnim(NULL, D_us_80170500);
 }
 
-void func_us_801720A4(Entity* self) {}
+void unused_20A4(Entity* self) {}
 
-void func_us_801720AC(void) {}
+void unused_20AC(void) {}
 
-void func_us_801720B4(void) {}
+void unused_20B4(void) {}
 
-void func_us_801720BC(void) {}
+void unused_20BC(void) {}
 
-void func_us_801720C4(void) {}
+void unused_20C4(void) {}
 
-void func_us_801720CC(void) {}
+void unused_20CC(void) {}
 
-void func_us_801720D4(void) {}
+void unused_20D4(void) {}
 
-void func_us_801720DC(void) {}
+void unused_20DC(void) {}
 
 void func_us_801720E4(Entity* self) {
 
@@ -819,11 +829,11 @@ void func_us_8017246C(Entity* self) {
     return;
 }
 
-void func_us_801728EC(void) {}
+void unused_28EC(void) {}
 
-void func_us_801728F4(void) {}
+void unused_28F4(void) {}
 
-void func_us_801728FC(void) {}
+void unused_28FC(void) {}
 
 #include "../destroy_servant_entity.h"
 
