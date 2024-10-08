@@ -496,7 +496,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         D_80170000 = g_ServantDesc;
         return 0;
     case SimFileType_FamiliarChr:
-        snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN", 0);
+        snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN", g_Servant - 1);
         u8 temp[0x6000];
         FileReadToBuf(smolbuf, &temp, 0, 0x6000);
         LoadTPage(&temp, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
