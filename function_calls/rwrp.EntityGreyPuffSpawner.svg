@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="146.89" cy="-198" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="146.89" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityGreyPuffSpawner</text>
 </g>
-<!-- rwrp.AllocEntity -->
+<!-- wrp.AllocEntity -->
 <g id="node2" class="node">
-<title>rwrp.AllocEntity</title>
-<g id="a_node2"><a xlink:href="rwrp.AllocEntity.svg" xlink:title="rwrp.AllocEntity">
-<ellipse fill="green" stroke="black" cx="146.89" cy="-18" rx="87.18" ry="18"/>
-<text text-anchor="middle" x="146.89" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.AllocEntity</text>
+<title>wrp.AllocEntity</title>
+<g id="a_node2"><a xlink:href="wrp.AllocEntity.svg" xlink:title="wrp.AllocEntity">
+<ellipse fill="green" stroke="black" cx="146.89" cy="-18" rx="83.39" ry="18"/>
+<text text-anchor="middle" x="146.89" y="-14.3" font-family="Times,serif" font-size="14.00">wrp.AllocEntity</text>
 </a>
 </g>
 </g>
-<!-- rwrp.EntityGreyPuffSpawner&#45;&gt;rwrp.AllocEntity -->
+<!-- rwrp.EntityGreyPuffSpawner&#45;&gt;wrp.AllocEntity -->
 <g id="edge1" class="edge">
-<title>rwrp.EntityGreyPuffSpawner&#45;&gt;rwrp.AllocEntity</title>
+<title>rwrp.EntityGreyPuffSpawner&#45;&gt;wrp.AllocEntity</title>
 <path fill="none" stroke="black" d="M146.89,-179.93C146.89,-148.97 146.89,-83.3 146.89,-46.13"/>
 <polygon fill="black" stroke="black" points="150.39,-46.02 146.89,-36.02 143.39,-46.02 150.39,-46.02"/>
 <text text-anchor="middle" x="141.89" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
