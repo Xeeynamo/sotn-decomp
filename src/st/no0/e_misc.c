@@ -1,43 +1,43 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
-#include "game.h"
+#include "no0.h"
+#define HEART_DROP_CASTLE_FLAG 0 // This should be fixed
 
-// "Obtained"
+// Obtained
 INCLUDE_RODATA("st/no0/nonmatchings/e_misc", D_us_801C141C);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityRelicOrb);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityHeartDrop);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityMessageBox);
+#include "../entity_heart_drop.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", CheckColliderOffsets);
+#include "../entity_message_box.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId13);
+#include "../check_coll_offsets.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId14Spawner);
+#include "../entity_unkId13.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityGreyPuffSpawner);
+#include "../entity_unkId14_spawner.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityUnkId14);
+#include "../entity_greypuff_spawner.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityGreyPuff);
+#include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityOlroxDrool);
+#include "../entity_greypuff.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", UnkCollisionFunc5);
+#include "../entity_olrox_drool.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityIntenseExplosion);
+#include "../unk_collision_func5.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", InitializeUnkEntity);
+#include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", MakeEntityFromId);
+#include "../initialize_unk_entity.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", func_us_801CC1D0);
+#include "../make_entity_from_id.h"
 
-extern u16 g_InitializeEntityData0[];
+#include "../make_explosions.h"
+
 #include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", ClutLerp);
+#include "../clut_lerp.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_misc", PlaySfxPositional);
+#include "../play_sfx_positional.h"

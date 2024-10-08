@@ -6,6 +6,8 @@
 void EntityUnkId14(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
+#define HEART_DROP_CASTLE_FLAG 0
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -65,3 +67,5 @@ typedef enum EntityIDs {
 
 extern s16 g_SineTable[];
 extern u16 g_eInitGeneric2[];
+extern u16 g_InitializeEntityData0[];
+extern u16 g_HeartDropArray[];
