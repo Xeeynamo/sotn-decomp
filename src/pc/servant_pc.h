@@ -2,7 +2,6 @@
 #ifndef SERVANT_PC_H
 #define SERVANT_PC_H
 
-#include "weapon.h"
 void HandleServantPrg();
 void HandleServantChr();
 #endif
