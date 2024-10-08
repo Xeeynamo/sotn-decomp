@@ -2,6 +2,7 @@
 #include <servant.h>
 #include <sfx.h>
 #include <psxsdk/libc.h>
+#include "../servant_private.h"
 
 #ifndef VERSION_PSP
 s32 D_801748D8[0x80];
@@ -52,9 +53,8 @@ void func_80173C0C(Entity* self);
 void func_80173C14(void);
 void func_80173C1C(void);
 void func_80173C24(void);
-void DestroyServantEntity(Entity* self);
 
-ServantDesc g_ServantDesc = {
+ServantDesc bat_ServantDesc = {
     ServantInit,          UpdateServantDefault, func_80172C30,
     func_8017339C,        func_801733A4,        func_801733AC,
     func_801733B4,        func_801733BC,        func_801733C4,
@@ -523,9 +523,6 @@ void ServantInit(InitializeMode mode) {
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
     g_IsServantDestroyed = 0;
 }
-
-s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", UpdateServantDefault);
@@ -1060,3 +1057,20 @@ void func_80173C24(void) {}
 #endif
 
 #include "../process_event.h"
+
+#include "../create_event_entity.h"
+
+#include "../is_movement_allowed.h"
+
+#ifndef VERSION_PSP
+#include "../check_all_entities_valid.h"
+#endif
+
+#include "../servant_unk0.h"
+
+#ifdef VERSION_PSP
+extern ServantDesc bat_ServantDesc;
+void func_092EC220(void) {
+    memcpy((u8*)&D_8D1DC40, (u8*)&bat_ServantDesc, sizeof(ServantDesc));
+}
+#endif

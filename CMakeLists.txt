@@ -38,6 +38,7 @@ set(SOURCE_FILES_PC
     src/pc/sim_pc.c
     src/pc/pl_arc.c
     src/pc/pl_ric.c
+    src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
     src/pc/weapon_pc.c
@@ -239,10 +240,17 @@ set(SOURCE_FILES_RIC
 set(SOURCE_FILES_TT_000
     src/servant/tt_000/10E8.c
     src/servant/tt_000/clutdata.c
-    src/servant/tt_000/45E4.c
     src/servant/tt_000/animationdata.c
     src/servant/tt_000/608.c
     src/servant/tt_000/spriteparts.c
+)
+
+set(SOURCE_FILES_TT_001
+    src/servant/tt_001/ghost.c
+    src/servant/tt_001/servant_clutdata.c
+    src/servant/tt_001/ghost_animation_data.c
+    src/servant/tt_001/ghost_data.c
+    src/servant/tt_001/servant_spriteparts.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
@@ -363,6 +371,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
+    ${SOURCE_FILES_TT_001}
 )
 
 add_library(core ${SOURCE_FILES_CORE})
