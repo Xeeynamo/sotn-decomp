@@ -44,7 +44,7 @@ void EntityOlroxDrool(Entity* self) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 // When hitting the ground, a sizzling effect is made
-                EntityUnkId14Spawner(self, 1, 2, 0, 0, 3, 0);
+                EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {

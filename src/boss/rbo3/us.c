@@ -197,11 +197,11 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/us", CheckColliderOffsets);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId13);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId14Spawner);
+INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityExplosionVariantsSpawner);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityGreyPuffSpawner);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityUnkId14);
+INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityExplosionVariants);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/us", EntityGreyPuff);
 

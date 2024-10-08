@@ -49,7 +49,7 @@ void ReplaceBreakableWithItemDrop(Entity*);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void BottomCornerText(u8* str, u8 lowerLeft);
 void func_8019344C(void);
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 // DRA - all the exclusive global variables

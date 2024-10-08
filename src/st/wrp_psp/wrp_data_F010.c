@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
 
-u16 unk15_rot[] = {
+u16 greyPuff_rot[] = {
     /* FF8 */ 0x0030,
     /* FFA */ 0x0050,
     /* FFC */ 0x0080,
@@ -12,7 +12,7 @@ u16 unk15_rot[] = {
     /* 1006 */ 0x0000,
 };
 
-s32 unk15_yVel[] = {
+s32 greyPuff_yVel[] = {
     /* 1008 */ 0x00000400,
     /* 100C */ 0x00002400,
     /* 1010 */ 0x00003C00,
@@ -21,7 +21,7 @@ s32 unk15_yVel[] = {
     /* 101C */ 0x0000C000,
 };
 
-s32 unk14_yVel[] = {
+s32 explode_yVel[] = {
     /* 1020 */ 0x00000800,
     /* 1024 */ 0x00002800,
     /* 1028 */ 0x00004800,
@@ -30,7 +30,7 @@ s32 unk14_yVel[] = {
     /* 1034 */ 0x00012000,
 };
 
-u8 unk14_startFrame[] = {
+u8 explode_startFrame[] = {
     /* 1038 */ 0x01,
     /* 1039 */ 0x09,
     /* 103A */ 0x15,
@@ -39,7 +39,7 @@ u8 unk14_startFrame[] = {
 
 u8 pad[] = {0, 0, 0, 0};
 
-u16 unk14_lifetime[] = {
+u16 explode_lifetime[] = {
     /* 103C */ 0x0010,
     /* 103E */ 0x0018,
     /* 1040 */ 0x002A,
