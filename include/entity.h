@@ -1286,6 +1286,16 @@ typedef struct {
     /* 0x92 */ s16 bobbingAngle;
 } ET_Corpseweed;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ Primitive* prim;
+    /* 0x84 */ char pad_84[0x8];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ char pad_90[0x1];
+    /* 0x91 */ u8 unk91;
+} ET_chi_801ab7cc;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1407,4 +1417,5 @@ typedef union { // offset=0x7C
     ET_GremlinFire gremlinFire;
     ET_Thornweed thornweed;
     ET_Corpseweed corpseweed;
+    ET_chi_801ab7cc chi_801ab7cc;
 } Ext;

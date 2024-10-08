@@ -87,8 +87,9 @@ segments:
       - [0x1B2BC, .rodata, 297C8] # EntityGremlin debug string]
       - [0x1B2C8, .rodata, 2A020] # jtbl_8019B2C8 [EntityThornweed]
       - [0x1B2E8, .rodata, 2A020] # jtbl_8019B2E8 [EntityCorpseweed]
-      - [0x1B304, rodata] # jtbl_8019B304
-      - [0x1B32C, rodata] # jtbl_8019B32C
+      - [0x1B304, .rodata, 2B7CC] # jtbl_8019B304 [func_801AB7CC]
+      - [0x1B32C, .rodata, 2B7CC] # jtbl_8019B32C [func_801AB7CC]
+      - [0x1B340, rodata] # NULL
       - [0x1B344, rodata] # jtbl_8019B344
       - [0x1B36C, rodata] # jtbl_8019B36C
       - [0x1B384, rodata] # jtbl_8019B384
