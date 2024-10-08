@@ -67,7 +67,7 @@ typedef struct ServantEvent {
 
 extern SpriteParts* D_80170040[];
 extern u16 g_ServantClut[];
-extern AnimationFrame D_801704A8[];
+extern AnimationFrame DefaultAnimationFrame[];
 extern AnimationFrame D_80170514[];
 extern AnimationFrame D_8017054C[];
 extern AnimationFrame D_801705EC[];
