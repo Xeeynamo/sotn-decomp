@@ -551,8 +551,6 @@ u16* func_801B11E8(unsigned char ch) {
     return g_api.func_80106A28(jCh, 0);
 }
 
-u8 func_801B101C(u8* script);
-void func_801B1198(s16 arg0); /* extern */
 extern u8 D_80182C58[];
 extern u16 D_801BEE90[][0x30];
 // Resembles SEL func_801B79D4
@@ -570,7 +568,7 @@ void func_801B1298(Entity* self) {
     case 0:
         if (func_801B101C(D_80182C58)) {
             self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = (s32)g_Dialogue.prim[1];
+            self->primIndex = g_Dialogue.prim[1];
             ++self->step;
             func_801B1198(0);
             glyphIndex = 0;
