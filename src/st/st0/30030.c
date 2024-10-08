@@ -555,14 +555,14 @@ extern u8 D_80182C58[];
 extern u16 D_801BEE90[][0x30];
 // Resembles SEL func_801B79D4
 void func_801B1298(Entity* self) {
-    s32 i; // wants s1, is s0
+    s32 i;
     Primitive* prim;
-    u16 y;          // wants s7, is s3
-    u16 glyphIndex; // wants s6, is s6
-    u16* var_v1;    // wants s4, is s4
-    u16 nextChar;   // wants s3, is s5
-    u16* glyph;     // wants s2, is s2
-    s16 y0;         // wants sp3e, is s8
+    u16 y;
+    u16 glyphIndex;
+    u16* var_v1;
+    u16 nextChar;
+    u16* glyph;
+    s16 y0;
 
     switch (self->step) {
     case 0:
