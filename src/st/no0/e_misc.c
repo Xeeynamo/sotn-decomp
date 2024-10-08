@@ -7,7 +7,6 @@ INCLUDE_RODATA("st/no0/nonmatchings/e_misc", D_us_801C141C);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityRelicOrb);
 
-
 #include "../entity_heart_drop.h"
 
 #include "../entity_message_box.h"
