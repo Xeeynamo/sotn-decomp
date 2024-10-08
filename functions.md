@@ -75,7 +75,7 @@
 | wrp    | CreateEntitiesBelow                 |       99 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | wrp    | EntityExplosion                     |      100 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
 | wrp    | AnimateEntity                       |      102 |          7 |        |                                 |       |
-| wrp    | EntityUnkId14                       |      104 |          8 |        |                                 |       |
+| wrp    | EntityExplosionVariants             |      104 |          8 |        |                                 |       |
 | wrp    | EntityIntenseExplosion              |      104 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | wrp    | EntityBreakable                     |      105 |         11 |        |                                 |       |
 | wrp    | EntityGreyPuff                      |      106 |          8 |        |                                 |       |
