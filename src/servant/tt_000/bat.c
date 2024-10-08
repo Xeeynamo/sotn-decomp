@@ -7,14 +7,22 @@
 #ifndef VERSION_PSP
 s32 D_801748D8[0x80];
 Collider D_80174AD8;
-s16 D_80174AFC, D_80174AFC_;
-s16 D_80174B00, D_80174B00_;
-s16 D_80174B04, D_80174B04_;
-s16 D_80174B08, D_80174B08_;
-s16 D_80174B0C, D_80174B0C_;
-s16 D_80174B10, D_80174B10_;
-s16 D_80174B14, D_80174B14_;
-s16 D_80174B18, D_80174B18_;
+s16 D_80174AFC;
+STATIC_PAD_BSS(2);
+s16 D_80174B00;
+STATIC_PAD_BSS(2);
+s16 D_80174B04;
+STATIC_PAD_BSS(2);
+s16 D_80174B08;
+STATIC_PAD_BSS(2);
+s16 D_80174B0C;
+STATIC_PAD_BSS(2);
+s16 D_80174B10;
+STATIC_PAD_BSS(2);
+s16 D_80174B14;
+STATIC_PAD_BSS(2);
+s16 D_80174B18;
+STATIC_PAD_BSS(2);
 s32 D_80174B1C;
 s32 D_80174B20;
 s32 D_80174B24;
@@ -23,10 +31,14 @@ s32 D_80174B2C;
 s32 D_80174B2C;
 s32 D_80174B30;
 s32 D_80174B34;
-s16 D_80174B38, D_80174B38_;
-s16 D_80174B3C, D_80174B3C_;
-s16 D_80174B40, D_80174B40_;
-s16 D_80174B44, D_80174B44_;
+s16 D_80174B38;
+STATIC_PAD_BSS(2);
+s16 D_80174B3C;
+STATIC_PAD_BSS(2);
+s16 D_80174B40;
+STATIC_PAD_BSS(2);
+s16 D_80174B44;
+STATIC_PAD_BSS(2);
 Primitive* D_80174B48;
 s32 D_80174B4C[16];
 Point16 D_80174B8C[16];
@@ -525,7 +537,7 @@ void ServantInit(InitializeMode mode) {
 }
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", UpdateServantDefault);
+INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateServantDefault);
 #else
 void UpdateServantDefault(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
@@ -746,7 +758,7 @@ void UpdateServantDefault(Entity* self) {
 #endif
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172C30);
+INCLUDE_ASM("servant/tt_000/nonmatchings/bat", func_80172C30);
 #else
 void func_80172C30(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
