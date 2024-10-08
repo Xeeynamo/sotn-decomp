@@ -2,6 +2,7 @@
 #include "common.h"
 #include <sfx.h>
 #include <servant.h>
+#include "../servant_private.h"
 
 static s16 D_us_801735B0;
 STATIC_PAD_BSS(2);
@@ -69,9 +70,8 @@ void func_us_8017246C(Entity* self);
 void func_us_801728EC(void);
 void func_us_801728F4(void);
 void func_us_801728FC(void);
-void DestroyServantEntity(Entity* self);
 
-ServantDesc g_ServantDesc = {
+ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, func_us_801720A4,
     func_us_801720AC,    func_us_801720B4,     func_us_801720BC,
     func_us_801720C4,    func_us_801720CC,     func_us_801720D4,
@@ -534,7 +534,7 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.unk86 = 0;
             if (self->ext.ghost.unk92->entityId == 0xDA) {
                 self->ext.ghost.unk92->params = 1;
-                g_ServantDesc.Unk28(self->ext.ghost.unk92);
+                ghost_ServantDesc.Unk28(self->ext.ghost.unk92);
             }
         }
         self->posX.val += self->velocityX;
@@ -545,7 +545,7 @@ void UpdateServantDefault(Entity* self) {
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
             if (self->ext.ghost.unk96->entityId == 0xDB) {
                 self->ext.ghost.unk96->params = 1;
-                g_ServantDesc.Unk2C(self->ext.ghost.unk96);
+                ghost_ServantDesc.Unk2C(self->ext.ghost.unk96);
             }
             self->step = 1;
             break;

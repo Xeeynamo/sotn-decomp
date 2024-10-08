@@ -15,6 +15,6 @@
 
 #ifdef VERSION_PSP
 void func_092EC220(void) {
-    memcpy((u8*)&D_8D1DC40, (u8*)&g_ServantDesc, sizeof(ServantDesc));
+    memcpy((u8*)&D_8D1DC40, (u8*)&bat_ServantDesc, sizeof(ServantDesc));
 }
 #endif

@@ -65,7 +65,6 @@ typedef struct ServantEvent {
 #define CHECK_CASTLE_FLAG 0x80000000
 #define FOR_CASTLE_FLAG(x) CHECK_CASTLE_FLAG | x
 
-extern ServantDesc g_ServantDesc;
 extern SpriteParts* D_80170040[];
 extern u16 g_ServantClut[];
 extern AnimationFrame D_801704A8[];
@@ -79,20 +78,9 @@ extern u16 D_80170720[];
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 
-s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
-
 #ifdef VERSION_PSP
 extern ServantDesc D_8D1DC40;
 #endif
-
-void ServantInit(InitializeMode mode);
-
-void UpdateServantDefault(Entity* self);
-void ProcessEvent(Entity* self, bool resetEvent);
 void DestroyEntity(Entity* entity);
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
-s32 ServantUnk0();
-s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 #endif

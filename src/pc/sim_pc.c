@@ -8,6 +8,7 @@
 #include <string.h>
 #include <lba.h>
 #include "weapon_pc.h"
+#include "servant_pc.h"
 
 s32 g_SimVabId = 0;
 
@@ -493,14 +494,10 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         INFOF("TODO: will load weapon 'f1_%03d'", fileId);
         return 0;
     case SimFileType_FamiliarPrg:
-        D_80170000 = g_ServantDesc;
+        HandleServantPrg();
         return 0;
     case SimFileType_FamiliarChr:
-        snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN", g_Servant - 1);
-        u8 temp[0x6000];
-        FileReadToBuf(smolbuf, &temp, 0, 0x6000);
-        LoadTPage(&temp, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
-        LoadTPage(&temp[0x4000], 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        HandleServantChr();
         return 0;
     }
     if (!sim.path) {

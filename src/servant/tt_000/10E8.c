@@ -2,6 +2,7 @@
 #include <servant.h>
 #include <sfx.h>
 #include <psxsdk/libc.h>
+#include "../servant_private.h"
 
 #ifndef VERSION_PSP
 s32 D_801748D8[0x80];
@@ -52,9 +53,8 @@ void func_80173C0C(Entity* self);
 void func_80173C14(void);
 void func_80173C1C(void);
 void func_80173C24(void);
-void DestroyServantEntity(Entity* self);
 
-ServantDesc g_ServantDesc = {
+ServantDesc bat_ServantDesc = {
     ServantInit,          UpdateServantDefault, func_80172C30,
     func_8017339C,        func_801733A4,        func_801733AC,
     func_801733B4,        func_801733BC,        func_801733C4,
