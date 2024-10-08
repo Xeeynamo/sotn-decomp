@@ -38,7 +38,7 @@
 | wrp    | CreateEntityFromCurrentEntity       |       40 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | wrp    | CreateEntityFromEntity              |       40 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | wrp    | PreventEntityFromRespawning         |       41 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
-|        | 10E8.rodata                         |       42 |          0 | Yes    |                                 |       |
+|        | bat.rodata                          |       42 |          0 | Yes    |                                 |       |
 | wrp    | GetSideToPlayer                     |       42 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | wrp    | FindFirstEntityBelow                |       43 |          5 |        |                                 |       |
 | wrp    | FindFirstEntityToTheLeft            |       43 |          5 |        |                                 |       |
