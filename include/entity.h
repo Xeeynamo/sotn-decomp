@@ -1289,12 +1289,15 @@ typedef struct {
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ Primitive* prim;
-    /* 0x84 */ char pad_84[0x8];
-    /* 0x8C */ s16 unk8C;
-    /* 0x8E */ s16 unk8E;
+    /* 0x84 */ s16 leavesWidth;
+    /* 0x86 */ s16 leavesHeight;
+    /* 0x88 */ s16 stemWidth;
+    /* 0x88 */ s16 stemHeight;
+    /* 0x8C */ s16 timer;
+    /* 0x8E */ s16 wiggleT;
     /* 0x90 */ char pad_90[0x1];
-    /* 0x91 */ u8 unk91;
-} ET_chi_801ab7cc;
+    /* 0x91 */ u8 triggerAttack;
+} ET_VenusWeed;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -1417,5 +1420,5 @@ typedef union { // offset=0x7C
     ET_GremlinFire gremlinFire;
     ET_Thornweed thornweed;
     ET_Corpseweed corpseweed;
-    ET_chi_801ab7cc chi_801ab7cc;
+    ET_VenusWeed venusWeed;
 } Ext;

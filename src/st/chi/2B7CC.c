@@ -6,37 +6,134 @@
  * Description: Abandoned Mine
  */
 
-#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801AB7CC);    // [Entity]
-//#else
-extern s32 D_801817F4;
-extern s32 D_801818F8;
-extern s32 D_80181904;
+// D_801817F4
+u8 PhysicsSensors_VenusWeed[] = {
+    0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x02, 0x00, 0xFC, 0xFF, 0xFC, 0xFF, 0x00, 0x00 
+};
+
+u8 D_80181804[] = {
+    0x00, 0x00, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00 
+};
+
+u8 D_8018180C[] = {
+    0x01, 0x01, 0x0A, 0x03, 0x06, 0x04, 0x06, 0x05, 0x05, 0x06, 0x05, 0x07, 0x05, 0x08, 0x05, 0x09,
+    0x05, 0x0A, 0x08, 0x0C, 0xFF, 0x00, 0x00, 0x00 
+};
+
+u8 D_80181824[] = {
+    0x04, 0x0C, 0x08, 0x0E, 0x04, 0x0F, 0x01, 0x10, 0xFF, 0x00, 0x00, 0x00 
+};
+
+u8 D_80181830[] = {
+    0x03, 0x10, 0x08, 0x11, 0xFF, 0x00, 0x00, 0x00,
+};
+
+u8 D_80181838[] = {
+    0x12, 0x11, 0x02, 0x12, 0x02, 0x13, 0x04, 0x14, 0x04, 0x15, 0x6F, 0x16, 0x08, 0x13, 0x08, 0x12,
+    0x08, 0x11, 0x08, 0x10, 0x20, 0x0F, 0x08, 0x0E, 0x04, 0x0C, 0xFF, 0x00,
+};
+
+u8 D_80181854[] = {
+    0x0A, 0x0B, 0x0A, 0x0C, 0x0A, 0x0D, 0x0A, 0x0C, 0x00, 0x00, 0x00, 0x00 
+};
+
+u8 D_80181860[] = {
+    0x10, 0x17, 0x08, 0x18, 0x06, 0x19, 0x05, 0x1A, 0x04, 0x1B, 0x01, 0x1C, 0xFF, 0x00, 0x00, 0x00 
+};
+
+u8 D_80181870[] = {
+    0x14, 0x1C, 0x03, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20, 0x02, 0x21, 0x2A, 0x1F, 0x05, 0x0F,
+    0x05, 0x0E, 0x10, 0x0C, 0xFF, 0x00, 0x00, 0x00 
+};
+
+u8 D_80181888[] = {
+    0x01, 0x26, 0x04, 0x27, 0x04, 0x28, 0x04, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D,
+    0x02, 0x2E, 0x02, 0x2F, 0x02, 0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34, 0x02, 0x35,
+    0x02, 0x36, 0x03, 0x33, 0x03, 0x34, 0x03, 0x35, 0x03, 0x36, 0x04, 0x33, 0x04, 0x34, 0x04, 0x35,
+    0x04, 0x36, 0x05, 0x33, 0x05, 0x34, 0x05, 0x35, 0x05, 0x36, 0x04, 0x33, 0x04, 0x34, 0x04, 0x35,
+    0xFF, 0x00, 0x00, 0x00 
+};
+
+u8 D_801818CC[] = {
+    0x03, 0x36, 0x03, 0x33, 0x02, 0x34, 0x01, 0x35, 0x04, 0x30, 0x04, 0x2F, 0x04, 0x2E, 0x05, 0x2D,
+    0x05, 0x2C, 0x05, 0x2B, 0x05, 0x2A, 0x04, 0x29, 0x04, 0x28, 0x04, 0x27, 0x01, 0x26, 0xFF, 0x00 
+};
+
+u8 D_801818EC[] = {
+    0x03, 0x22, 0x03, 0x23, 0x03, 0x24, 0x03, 0x25, 0x00, 0x00, 0x00, 0x00 
+};
+
+// D_801818F8
+u8 AnimFrames_ThornweedDisguise[] = {
+    0x05, 0x2A, 0x05, 0x2B, 0x05, 0x2C, 0x05, 0x2D, 0x00, 0x00, 0x00, 0x00 
+};
+
+// D_80181904
+u8 AnimFrames_ThornweedQuickWiggle[] = {
+    0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x10, 0x0C, 0x0E, 0x0E,
+    0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF, 0x00 
+};
 
 extern EntityInit EntityInit_80180700;
 
-// E_ID_29
+// E_VENUS_WEED
 // func_801AB7CC
 // https://decomp.me/scratch/QrYmQ
 // PSP:func_psp_0923AE68:Match
 // PSP:https://decomp.me/scratch/MjOOd
-void func_801AB7CC(Entity* self)
+void EntityVenusWeed(Entity* self)
 {
-    Entity* entity;       // s2
-    s32 x;                // s3
-    s32 primIdx;          // s6
-    s32 y;                // s5
-    Primitive* prim;      // s0
-    s32 var_a3;           // s4
-    s32 var_s2;           // s1
-    s16 temp_v0_8;        // s7
+    const int ActivateDistanceX = 0x70;
+    const int LeavesWidthMax = 0x38;
+    const int LeavesHeightMax = 0x22;
+    const int StemWidthMax = 0xC;
+    const int StemHeightMax = 0x22;
+    const int FlowerOffsetY = 0x1B;
+    const int WiggleLeavesSpeed = 0x180;
+    const int AttackDuration = 0x30;
+    const int DeathFinalClut = PAL_DRA(0x210);
 
-    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
-        SetStep(8);
+    enum Step {
+        INIT = 0,
+        DROP_TO_GROUND = 1,
+        THORNWEED_DISGUISE = 2,
+        GROW = 3,
+        IDLE = 4,
+        ATTACK = 5,
+        DEATH = 8,
+    };
+
+    enum Grow_Substep {
+        GROW_LEAVES = 0,
+        GROW_STEM = 1,
+        GROW_FLOWER = 2,
+        GROW_TENDRILS = 3,
+        GROW_DONE = 4,
+    };
+
+    enum Death_Substep {
+        DEATH_INIT = 0,
+        DEATH_COLOR_CYCLE = 1,
+        DEATH_SHRINK = 2,
+        DEATH_DONE = 3,
+    };
+
+    Entity* entity;
+    s32 x;
+    s32 primIdx;
+    s32 y;
+    Primitive* prim;
+    s32 checkCount;
+    s32 i;
+    s16 rot;
+
+    // Death check
+    if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
+        SetStep(DEATH);
     }
     
     switch (self->step) {
-        case 0:
+        case INIT:
             InitializeEntity(&EntityInit_80180700);
             self->hitboxOffX = 1;
             self->hitboxOffY = -7;
@@ -51,19 +148,20 @@ void func_801AB7CC(Entity* self)
             prim = &g_PrimBuf[primIdx];
             self->ext.prim = prim;
             
-            for (var_s2 = 0; var_s2 < 2; var_s2++) {
+            for (i = 0; i < 2; i++) {
                 prim->tpage = 0x14;
-                prim->clut = 0x21A;
+                prim->clut = PAL_DRA(0x21A);
                 prim->u0 = prim->u2 = 0x48;
                 prim->u1 = prim->u3 = 0x80;
                 prim->v0 = prim->v1 = 0;
                 prim->v2 = prim->v3 = 0x22;
                 prim->priority = self->zPriority - 1;
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 
                 prim = prim->next;
             }
-            self->ext.chi_801ab7cc.prim = prim;
+
+            self->ext.venusWeed.prim = prim;
             prim->tpage = 0x14;
             prim->clut = 0x21A;
             prim->u0 = prim->u2 = 0;
@@ -72,229 +170,274 @@ void func_801AB7CC(Entity* self)
             prim->v2 = prim->v3 = 0x52;
             prim->priority = self->zPriority - 2;
             prim->drawMode = 8;
+
             prim = prim->next;
             break;
         
-        case 1:
-            if (UpdatePhysicsState(&D_801817F4) & 1) {
-                SetStep(2);
+        case DROP_TO_GROUND:
+            if (UpdatePhysicsState(&PhysicsSensors_VenusWeed) & 1) {
+                SetStep(THORNWEED_DISGUISE);
             }
             break;
         
-        case 2:
-            AnimateEntity(&D_801818F8, self);
-            if (GetDistanceToPlayerX() < 0x70) {
+        case THORNWEED_DISGUISE:
+            AnimateEntity(&AnimFrames_ThornweedDisguise, self);
+            if (GetDistanceToPlayerX() < ActivateDistanceX) {
                 self->hitboxState = 0;
                 SetStep(3);
             }
+
+            // Death check
             if (self->flags & FLAG_DEAD) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(2U, self, entity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, entity);
                     entity->posY.i.hi -= 4;
                     entity->params = 0;
                 }
                 
-                PlaySfxWithPosArgs(0x693);
+                PlaySfxWithPosArgs(NA_SE_EN_EXPLOSIVE_DEATH);
                 DestroyEntity(self);
                 return;
             }
             break;
         
-        case 3:
-            AnimateEntity(&D_80181904, self);
-            var_a3 = 0;
+        case GROW:
+            AnimateEntity(&AnimFrames_ThornweedQuickWiggle, self);
+
+            checkCount = 0;
             switch (self->step_s) {                
-                case 0:
-                    self->ext.factory.unk84++;
-                    if (self->ext.factory.unk84 > 0x38) {
-                        self->ext.factory.unk84 = 0x38;
-                        var_a3 += 1;
+                case GROW_LEAVES:
+                    // Update leaves width
+                    self->ext.venusWeed.leavesWidth++;
+                    if (self->ext.venusWeed.leavesWidth > LeavesWidthMax) {
+                        self->ext.venusWeed.leavesWidth = LeavesWidthMax;
+                        checkCount += 1;
                     }
-                    self->ext.factory.unk86++;
-                    if (self->ext.factory.unk86 > 0x22) {
-                        self->ext.factory.unk86 = 0x22;
-                        var_a3 += 1;
+
+                    // Update leaves height
+                    self->ext.venusWeed.leavesHeight++;
+                    if (self->ext.venusWeed.leavesHeight > LeavesHeightMax) {
+                        self->ext.venusWeed.leavesHeight = LeavesHeightMax;
+                        checkCount += 1;
                     }
+
                     prim = self->ext.prim;
                     x = self->posX.i.hi;
                     y = self->posY.i.hi;
-                    y -=self->ext.factory.unk86;
-                    for (var_s2 = -1; var_s2 < 2; var_s2 += 2) {
+                    y -=self->ext.venusWeed.leavesHeight;
+                    // 2 primitives: One for left and one for right
+                    for (i = -1; i < 2; i += 2) {
                         prim->x0 = prim->x2 = x;
-                        prim->x1 = prim->x3 = x + (self->ext.factory.unk84 * var_s2);
+                        prim->x1 = prim->x3 = x + self->ext.venusWeed.leavesWidth * i;
                         prim->y0 = prim->y1 = y;
                         prim->y2 = prim->y3 = self->posY.i.hi;
-                        prim->drawMode = 2;
+                        prim->drawMode = DRAW_UNK02;
+
                         prim = prim->next;
                     }
-                    if (var_a3 == 2) {
+
+                    // Check for completion
+                    if (checkCount == 2) {
                         self->step_s++;
                     }
                     break;
                 
-                case 1:
-                    self->ext.factory.unk88++;
-                    if (self->ext.factory.unk88 > 0xC) {
-                        self->ext.factory.unk88 = 0xC;
-                        var_a3 += 1;
+                case GROW_STEM:
+                    // Update stem width
+                    self->ext.venusWeed.stemWidth++;
+                    if (self->ext.venusWeed.stemWidth > StemWidthMax) {
+                        self->ext.venusWeed.stemWidth = StemWidthMax;
+                        checkCount += 1;
                     }
-                    self->ext.factory.unk8A++;
-                    if (self->ext.factory.unk8A > 0x22) {
-                        self->ext.factory.unk8A = 0x22;
-                        var_a3 += 1;
+
+                    // Update stem height
+                    self->ext.venusWeed.stemHeight++;
+                    if (self->ext.venusWeed.stemHeight > StemHeightMax) {
+                        self->ext.venusWeed.stemHeight = StemHeightMax;
+                        checkCount += 1;
                     }
-                    prim = self->ext.chi_801ab7cc.prim;
+
+                    prim = self->ext.venusWeed.prim;
                     x = self->posX.i.hi;
-                    y = self->posY.i.hi - self->ext.factory.unk8A;
-                    prim->x0 = prim->x2 = x - self->ext.factory.unk88;
-                    prim->x1 = prim->x3 = x + self->ext.factory.unk88;
+                    y = self->posY.i.hi - self->ext.venusWeed.stemHeight;
+                    prim->x0 = prim->x2 = x - self->ext.venusWeed.stemWidth;
+                    prim->x1 = prim->x3 = x + self->ext.venusWeed.stemWidth;
                     prim->y0 = prim->y1 = y;
                     prim->y2 = prim->y3 = self->posY.i.hi;
-                    prim->drawMode = 2;
-                    if (var_a3 == 2) {
+                    prim->drawMode = DRAW_UNK02;
+
+                    // Check for completion
+                    if (checkCount == 2) {
                         self->step_s++;
                     }
                     break;
                 
-                case 2:
+                case GROW_FLOWER:
                     entity = self + 1;
-                    CreateEntityFromCurrentEntity(0x2A, entity);
+
+                    // Spawn entity
+                    CreateEntityFromCurrentEntity(E_ID_2A, entity);
                     entity->posX.i.hi = self->posX.i.hi;
-                    entity->posY.i.hi = self->posY.i.hi - 0x1B;
+                    entity->posY.i.hi = self->posY.i.hi - FlowerOffsetY;
+
+                    // Face the player
                     entity->facingLeft = GetSideToPlayer() & 1;
                     entity->zPriority = (s32)self->zPriority;
+
                     self->step_s++;
                     break;
                 
-                case 3:
+                case GROW_TENDRILS:
                     entity = (self + 2);
-                    for (var_s2 = 0; var_s2 < 0xA; var_s2++, entity++) {
-                        CreateEntityFromCurrentEntity(0x2B, entity);
-                        entity->params = var_s2;
+                    for (i = 0; i < 0xA; i++, entity++) {
+                        CreateEntityFromCurrentEntity(E_ID_2B, entity);
+                        entity->params = i;
                         entity->zPriority = self->zPriority + 1;
                     }
+
                     self->step_s++;
                     break;
                 
-                case 4:
+                case GROW_DONE:
+                    //TODO: Wait for signal?
                     break;
             }
             break;
         
-        case 4:
-            AnimateEntity(&D_801818F8, self);
+        case IDLE:
+            //TODO: Wait for signal?
+            AnimateEntity(&AnimFrames_ThornweedDisguise, self);
             break;
         
-        case 5:
-            if (self->ext.chi_801ab7cc.unk91) {
-                self->ext.chi_801ab7cc.unk91 = false;
-                self->ext.generic.unk8C.modeU16.unk0 = 0x30;
+        case ATTACK:
+            //TODO: Wait for signal?
+            if (self->ext.venusWeed.triggerAttack) {
+                self->ext.venusWeed.triggerAttack = false;
+                self->ext.venusWeed.timer = AttackDuration;
             }
-            if (self->ext.chi_801ab7cc.unk8C) {
-                AnimateEntity(&D_80181904, self);
-                self->ext.chi_801ab7cc.unk8C--;
+            if (self->ext.venusWeed.timer) {
+                AnimateEntity(&AnimFrames_ThornweedQuickWiggle, self);
+                self->ext.venusWeed.timer--;
             }
             break;
         
-        case 8:
+        case DEATH:
             switch (self->step_s) {
-                case 0:
-                    self->ext.generic.unk8C.modeU16.unk2 = 0;
+                case DEATH_INIT:
+                    self->ext.venusWeed.wiggleT = 0;
                     self->step_s++;
                     // fallthrough
-                case 1:
+                case DEATH_COLOR_CYCLE:
+                    // Cycle thru cluts
                     if (!(g_Timer & 7)) {
+                        // Switch to next clut
                         self->palette += 1;
+                        // For primitives too
                         prim = self->ext.prim;
                         while (prim != NULL) {
                             prim->clut += 1;
                             prim = prim->next;
                         }
-                        if (self->palette == 0x210) {
+                        if (self->palette == DeathFinalClut) {
                             self->step_s++;
                         }
                     }
                     break;
                 
-                case 2:
-                    var_a3 = 0;
-                    self->ext.chi_801ab7cc.unk8C++;
-                    if (self->ext.chi_801ab7cc.unk8C & 1) {
+                case DEATH_SHRINK:
+                    checkCount = 0;
+                    self->ext.venusWeed.timer++;
+                    // Every other frame
+                    if (self->ext.venusWeed.timer & 1) {
                         prim = self->ext.prim;
                         x = self->posX.i.hi;
-                        if (self->ext.factory.unk84) {
-                            self->ext.factory.unk84--;
-                            if (self->ext.factory.unk84 < 0) {
-                                self->ext.factory.unk84 = 0;
+
+                        // Shrink leaves
+                        if (self->ext.venusWeed.leavesWidth) {
+                            self->ext.venusWeed.leavesWidth--;
+                            if (self->ext.venusWeed.leavesWidth < 0) {
+                                self->ext.venusWeed.leavesWidth = 0;
                             }
                         }
-                        for (var_s2 = -1; var_s2 < 2; var_s2 += 2) {
-                            prim->x1 = x + ((self->ext.factory.unk84 + 0x38) / 2 * var_s2);
-                            prim->x3 = x + (self->ext.factory.unk84 * var_s2);
+                        // Update leaves sprites
+                        for (i = -1; i < 2; i += 2) {
+                            prim->x1 = x + (self->ext.venusWeed.leavesWidth + LeavesWidthMax) / 2 * i;
+                            prim->x3 = x + (self->ext.venusWeed.leavesWidth * i);
                             prim->y0++;
                             prim->y1++;
                             if (prim->y1 > prim->y2) {
                                 prim->drawMode = 8;
-                                var_a3 += 1;
+                                checkCount += 1;
                             }
                             prim = prim->next;
                         }
                     }
-                    prim = self->ext.chi_801ab7cc.prim;
+
+                    // Collapse stem
+                    prim = self->ext.venusWeed.prim;
                     prim->y0 = ++prim->y1;
                     if (prim->y0 > prim->y2) {
-                        prim->drawMode = 8;
-                        var_a3 += 1;
+                        prim->drawMode = DRAW_HIDE;
+                        checkCount += 1;
                     }
-                    if (var_a3 == 3) {
+
+                    // Check for completion
+                    if (checkCount == 3) {
                         self->step_s += 1;
                     }
                     break;
                 
-                case 3:
+                case DEATH_DONE:
+                    // Spawn explosion
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(2U, self, entity);
+                        CreateEntityFromEntity(E_EXPLOSION, self, entity);
                         entity->params = 2;
                         entity->posY.i.hi -= 0xC;
                     }
-                    PlaySfxWithPosArgs(0x655);
+
+                    PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_DEATH);
+
+                    // Destroy
                     PreventEntityFromRespawning(self);
                     DestroyEntity(self);
                     return;
             }
     }
+    
+    // Update wiggle
+    if (self->ext.venusWeed.wiggleT) {
+        rot = self->rotZ;
+        self->rotZ += WiggleLeavesSpeed;
+        x = rcos(rot) * 3 >> 0xC;
+        y = rsin(rot) * 3 >> 0xC;
+        prim = self->ext.prim;
         
-    if (self->ext.chi_801ab7cc.unk8E) {
-        temp_v0_8 = self->rotZ;                 // s7
-        self->rotZ += 0x180;
-        x = rcos(temp_v0_8) * 3 >> 0xC;         // s3
-        y = rsin(temp_v0_8) * 3 >> 0xC;         // s5
-        prim = self->ext.prim;                  // s0
-        
-        for (var_s2 = -1; var_s2 < 2; var_s2 += 2) {
-            prim->x1 = self->posX.i.hi + (x + 0x38) * var_s2;
-            prim->y1 = self->posY.i.hi - 0x22 + y * var_s2;
+        // Update leaves
+        for (i = -1; i < 2; i += 2) {
+            prim->x1 = self->posX.i.hi + (x + LeavesWidthMax) * i;
+            prim->y1 = self->posY.i.hi - LeavesHeightMax + y * i;
 
             prim = prim->next;
         }
+
+        // Update stem
         x /= 2;
         entity = self + 1;
-        prim = self->ext.chi_801ab7cc.prim;
-        self->ext.chi_801ab7cc.unk8E--;
-        if (!self->ext.chi_801ab7cc.unk8E) {
+        prim = self->ext.venusWeed.prim;
+        self->ext.venusWeed.wiggleT--;
+        if (!self->ext.venusWeed.wiggleT) {
             entity->posX.i.hi = self->posX.i.hi;
-            prim->x0 = self->posX.i.hi - 0xC;
-            prim->x1 = self->posX.i.hi + 0xC;
+            prim->x0 = self->posX.i.hi - StemWidthMax;
+            prim->x1 = self->posX.i.hi + StemWidthMax;
         } else {
-            prim->x0 = self->posX.i.hi - 0xC + x;
-            prim->x1 = self->posX.i.hi + 0xC + x;
+            prim->x0 = self->posX.i.hi - StemWidthMax + x;
+            prim->x1 = self->posX.i.hi + StemWidthMax + x;
             entity->posX.i.hi = self->posX.i.hi + x;
         }
     }
 }
-#endif
 
 INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801AC074);    // [Entity]
 

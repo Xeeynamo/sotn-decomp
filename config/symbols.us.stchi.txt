@@ -125,6 +125,7 @@ UnkPolyFunc0 = 0x801AE6E0;
 // *** Data ***
 //TODO: Migrate this
 gfxBanks = 0x80180364;
+PhysicsSensors_VenusWeed = 0x801817F4;
 
 // *** sbss ***
 g_LayoutObjHorizontal = 0x801AE770;
