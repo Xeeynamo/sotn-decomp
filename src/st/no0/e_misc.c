@@ -15,11 +15,11 @@ INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityRelicOrb);
 
 #include "../entity_unkId13.h"
 
-#include "../entity_unkId14_spawner.h"
+INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityExplosionVariantsSpawner);
 
 #include "../entity_greypuff_spawner.h"
 
-#include "../entity_unkId14.h"
+INCLUDE_ASM("st/no0/nonmatchings/e_misc", EntityExplosionVariants);
 
 #include "../entity_greypuff.h"
 
