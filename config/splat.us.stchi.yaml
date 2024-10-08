@@ -112,14 +112,6 @@ segments:
       - [0x2813C, c]
       - [0x297C8, c]
       - [0x2A020, c]
-
-# Initial attempt with file splits, semi-up-to-date structures (didn't work?)
-#      - [0x1B280, rodata, 2813C]
-#      - [0x1B304, rodata, 2B7CC]
-#      - [0x1B3C0, rodata, 2D2BC]
-#      - [0x2813C, asm]
-#      - [0x2B7CC, asm]
-#      - [0x2D2BC, asm]
-
+      - [0x2B7CC, c]
       - [0x2E770, sbss]
   - [0x2F428]
