@@ -537,7 +537,7 @@ void ServantInit(InitializeMode mode) {
 }
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", UpdateServantDefault);
+INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateServantDefault);
 #else
 void UpdateServantDefault(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
@@ -758,7 +758,7 @@ void UpdateServantDefault(Entity* self) {
 #endif
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172C30);
+INCLUDE_ASM("servant/tt_000/nonmatchings/bat", func_80172C30);
 #else
 void func_80172C30(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
