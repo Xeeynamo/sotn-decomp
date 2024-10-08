@@ -34,13 +34,14 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, .data, 10E8]
-      - [0x40, .data, spriteparts]
-      - [0x448, .data, clutdata]
-      - [0x4A8, .data, animationdata]
-      - [0x608, .data, 608]
-      - [0x10AC, .rodata, 10E8] # UpdateServantDefault
-      - [0x10C4, .rodata, 10E8] # ProcessSfxState
-      - [0x10E8, c, 10E8]
-      - [0x48D8, .bss, 10E8]
+      - [0x0, .data, bat]
+      - [0x40, .data, servant_spriteparts]
+      - [0x448, .data, servant_clutdata]
+      - [0x4A8, .data, bat_animation_data]
+      - [0x608, .data, bat_data]
+      - [0x760, .data, servant_events]
+      - [0x10AC, .rodata, bat] # UpdateServantDefault
+      - [0x10C4, .rodata, bat] # ProcessSfxState
+      - [0x10E8, c, bat]
+      - [0x48D8, .bss, bat]
   - [0xA000]

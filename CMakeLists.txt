@@ -238,11 +238,12 @@ set(SOURCE_FILES_RIC
 )
 
 set(SOURCE_FILES_TT_000
-    src/servant/tt_000/10E8.c
-    src/servant/tt_000/clutdata.c
-    src/servant/tt_000/animationdata.c
-    src/servant/tt_000/608.c
-    src/servant/tt_000/spriteparts.c
+    src/servant/tt_000/bat.c
+    src/servant/tt_000/servant_clutdata.c
+    src/servant/tt_000/bat_animation_data.c
+    src/servant/tt_000/bat_data.c
+    src/servant/tt_000/servant_spriteparts.c
+    src/servant/tt_000/servant_events.c
 )
 
 set(SOURCE_FILES_TT_001
@@ -251,6 +252,7 @@ set(SOURCE_FILES_TT_001
     src/servant/tt_001/ghost_animation_data.c
     src/servant/tt_001/ghost_data.c
     src/servant/tt_001/servant_spriteparts.c
+    src/servant/tt_001/servant_events.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
