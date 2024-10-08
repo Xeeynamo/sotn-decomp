@@ -20,7 +20,7 @@
 #define SE_CASTLE_GATE_MOVE 0x7A5
 #define SE_WATER_SPLASH 0x7C2
 
-void EntityUnkId14(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 typedef enum EntityIDs {

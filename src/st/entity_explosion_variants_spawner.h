@@ -1,7 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_eUnk14SpawnRots[];
 
-void EntityUnkId14Spawner(
+static u16 explosionVariantSizes[] = {
+    /* FE8 */ 0x0010,
+    /* FEA */ 0x0020,
+    /* FEC */ 0x0030,
+    /* FEE */ 0x0040,
+    /* FF0 */ 0x0050,
+    /* FF2 */ 0x0060,
+    /* FF4 */ 0x0070,
+    /* FF6 */ 0x0000,
+};
+
+void EntityExplosionVariantsSpawner(
     Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
     Entity* newEntity;
     s32 i;
@@ -14,10 +24,10 @@ void EntityUnkId14Spawner(
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
             newEntity->entityId = E_ID_14;
-            newEntity->pfnUpdate = EntityUnkId14;
+            newEntity->pfnUpdate = EntityExplosionVariants;
             newEntity->params = params;
-            newEntity->ext.generic.unk94 = arg5 + i;
-            newEntity->rotY = newEntity->rotX = g_eUnk14SpawnRots[arg5 + i];
+            newEntity->ext.destructAnim.index = arg5 + i;
+            newEntity->rotY = newEntity->rotX = explosionVariantSizes[arg5 + i];
             newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             newEntity->zPriority = self->zPriority + 1;
         }

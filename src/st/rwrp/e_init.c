@@ -5,21 +5,21 @@
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
-void EntityUnkId14(Entity*);
+void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityBreakable,       EntityExplosion,      EntityPrizeDrop,
-    EntityDamageDisplay,   EntityRedDoor,        EntityIntenseExplosion,
-    EntitySoulStealOrb,    EntityRoomForeground, EntityStageNamePopup,
-    EntityEquipItemDrop,   EntityRelicOrb,       EntityHeartDrop,
-    EntityEnemyBlood,      EntityMessageBox,     EntityDummy,
+    EntityBreakable,       EntityExplosion,         EntityPrizeDrop,
+    EntityDamageDisplay,   EntityRedDoor,           EntityIntenseExplosion,
+    EntitySoulStealOrb,    EntityRoomForeground,    EntityStageNamePopup,
+    EntityEquipItemDrop,   EntityRelicOrb,          EntityHeartDrop,
+    EntityEnemyBlood,      EntityMessageBox,        EntityDummy,
     EntityDummy,
     EntityBackgroundBlock, // unused
     EntityUnkId12,         // unused? looks debugging stuff
-    EntityUnkId13,         EntityUnkId14,        EntityGreyPuff,
+    EntityUnkId13,         EntityExplosionVariants, EntityGreyPuff,
     EntityRWarpRoom,       EntityWarpSmallRocks,
 };
 

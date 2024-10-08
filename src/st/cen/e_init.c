@@ -21,7 +21,7 @@ void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
-void EntityUnkId14(Entity*);
+void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
 void OVL_EXPORT(EntityCutscene)(Entity*);
 void EntityPlatform(Entity*);
@@ -41,7 +41,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityEnemyBlood,      EntityMessageBox,
     EntityDummy,           EntityDummy,
     EntityBackgroundBlock, EntityUnkId12,
-    EntityUnkId13,         EntityUnkId14,
+    EntityUnkId13,         EntityExplosionVariants,
     EntityGreyPuff,        OVL_EXPORT(EntityCutscene),
     EntityPlatform,        EntityMaria,
     EntityRoomDarkness,    EntityElevatorStationary,

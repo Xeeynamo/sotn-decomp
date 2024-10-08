@@ -406,7 +406,7 @@ void EntityMermanFireball(Entity* self) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_GREY_PUFF, self, entity);
-            entity->ext.generic.unk94 = 4;
+            entity->ext.destructAnim.index = 4;
             entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             entity->zPriority = self->zPriority + 8;
             entity->rotY = entity->rotX = 192;

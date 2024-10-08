@@ -2,7 +2,7 @@
 #include "mar.h"
 
 void EntityUnkId13(Entity* self);
-void EntityUnkId14(Entity* self);
+void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 
 #define HEART_DROP_CASTLE_FLAG 0
