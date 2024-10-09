@@ -227,7 +227,7 @@ void EntitySecretStairs(Entity* self) {
                 self->posX.i.hi = temp_s0 - g_Tilemap.scrollX.i.hi;
                 self->posY.i.hi = temp_s1 - g_Tilemap.scrollY.i.hi;
                 if (self->params != 3) {
-                    (self+1)->ext.secretStairs.unk84 = 1;
+                    (self + 1)->ext.secretStairs.unk84 = 1;
                 } else {
                     tilePos = &D_801808B0;
                     while (*tilePos != 0xFFFF) {

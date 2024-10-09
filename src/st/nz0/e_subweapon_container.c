@@ -3,8 +3,8 @@
 #include "sfx.h"
 
 typedef struct SubWpnContDebris {
-    s16 posX;
-    s16 posY;
+    s16 velX;
+    s16 velY;
     u16 params;
     u16 facingLeft;
 } SubWpnContDebris;

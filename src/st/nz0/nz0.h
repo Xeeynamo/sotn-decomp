@@ -200,27 +200,6 @@ extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 g_EInitSkeletonPieces[];
 extern u16 g_EInitSkeletonBone[];
 
-// *** EntitySubWeaponContainer properties START ***
-
-#define ENTITY_SUBWPNCONT_DEBRIS_COUNT 9
-typedef enum {
-    SUBWPNCONT_INIT,
-    SUBWPNCONT_IDLE,
-    SUBWPNCONT_BREAK,
-    SUBWPNCONT_DEBUG = 255
-} SUBWPNCONT_STEPS;
-
-typedef struct SubWpnContDebris {
-    u16 velX;
-    u16 velY;
-    u16 params;
-    u16 facingLeft;
-} SubWpnContDebris;
-
-extern SubWpnContDebris D_80182584[ENTITY_SUBWPNCONT_DEBRIS_COUNT];
-
-// *** EntitySubWeaponContainer properties END ***
-
 // *** EntityLeftSecretRoomWall properties START ***
 
 typedef enum {
