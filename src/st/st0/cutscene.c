@@ -2,6 +2,8 @@
 #include "st0.h"
 #include <cutscene.h>
 
+extern Dialogue g_Dialogue;
+
 #include "../cutscene_unk1.h"
 
 static u8 SetCutsceneScript(u8* script) {

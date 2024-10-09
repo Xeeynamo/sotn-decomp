@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
-#define ST0_WEIRD_DIALOGUE
-
 #include "st0.h"
+#include "dialogue2.h"
 #include "disk.h"
 
 void SetGameState(GameState gameState) {
@@ -471,22 +469,25 @@ void PrologueScroll(void) {
     }
 }
 
+// This file uses g_Dialogue with a different struct than the usual.
+// It is based on struct Dialogue, which is used in cutscene.c
+extern Dialogue2 g_Dialogue;
 u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
 
-    D_801C24E4[0] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
-    if (D_801C24E4[0] != -1) {
+    g_Dialogue.primIndex[0] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    if (g_Dialogue.primIndex[0] != -1) {
         g_Dialogue.nextCharX = 0x200;
         g_Dialogue.scriptCur = script;
         g_Dialogue.startY = 0x216;
         g_Dialogue.nextLineX = 0;
         g_Dialogue.nextCharY = 0;
         g_Dialogue.portraitAnimTimer = 0;
-        D_801C24DE = 0;
-        D_801C24DF = 0;
-        D_801C24E0 = &g_PrimBuf[D_801C24E4[0]];
-        prim = &g_PrimBuf[D_801C24E4[0]];
+        g_Dialogue.unk12 = 0;
+        g_Dialogue.clutIndex = 0;
+        g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[0]];
+        prim = &g_PrimBuf[g_Dialogue.primIndex[0]];
         for (i = 0; i < 0x20; i++) {
             if (i & 1) {
                 prim->tpage = 9;
@@ -508,7 +509,7 @@ u8 func_801B101C(u8* script) {
 
         return true;
     }
-    D_801C24E4[0] = 0;
+    g_Dialogue.primIndex[0] = 0;
     return false;
 }
 
@@ -568,7 +569,7 @@ void func_801B1298(Entity* self) {
     case 0:
         if (func_801B101C(D_80182C58)) {
             self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = g_Dialogue.prim[1];
+            self->primIndex = g_Dialogue.primIndex[0];
             ++self->step;
             func_801B1198(0);
             glyphIndex = 0;
