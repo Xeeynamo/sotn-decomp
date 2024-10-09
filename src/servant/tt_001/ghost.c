@@ -39,9 +39,11 @@ static Primitive* s_CurrentAttackPrim;
 static s32 s_AttackCloudTimer;
 static s32 s_AttackPosOscillator_calc;
 static Primitive*
-    s_CurrentConfusedPrim;        // Pointer to the current primitive being manipulated
-static s32 s_ConfusedPrimIndex; // Index for the current primitive being manipulated
-static s32 s_ConfusedFrameCounter; // Effect timer used to control steps and timing
+    s_CurrentConfusedPrim; // Pointer to the current primitive being manipulated
+static s32
+    s_ConfusedPrimIndex; // Index for the current primitive being manipulated
+static s32
+    s_ConfusedFrameCounter; // Effect timer used to control steps and timing
 static s16 s_ParentX;
 STATIC_PAD_BSS(2); // Temporary storage for X position of the
                    // entity or primitive
@@ -49,7 +51,7 @@ static s16 s_ParentY;
 STATIC_PAD_BSS(2); // Temporary storage for Y position of the
                    // entity or primitive
 static FamiliarStats s_GhostStats;
-static s32 g_IsServantDestroyed; 
+static s32 g_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 
 extern s32 d_DefaultGhostAnimationFrame[];
@@ -78,10 +80,10 @@ void unused_28FC(void);
 
 ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, unused_20A4,
-    unused_20AC,    unused_20B4,     unused_20BC,
-    unused_20C4,    unused_20CC,     unused_20D4,
-    unused_20DC,    UpdateAttackEntites,     UpdateConfusedEntites,
-    unused_28EC,    unused_28F4,     unused_28FC,
+    unused_20AC,         unused_20B4,          unused_20BC,
+    unused_20C4,         unused_20CC,          unused_20D4,
+    unused_20DC,         UpdateAttackEntites,  UpdateConfusedEntites,
+    unused_28EC,         unused_28F4,          unused_28FC,
     DestroyServantEntity};
 
 #include "../set_entity_animation.h"
@@ -89,7 +91,8 @@ ServantDesc ghost_ServantDesc = {
 // This gets called from the update function called by the engine
 // g_CurrentEntity should be the Familiar entity
 // Unsure where the target angle gets set initially
-s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) {
+s32 UpdateEntityVelocityTowardsTarget(
+    Entity* unused, s32 targetX, s32 targetY) {
     s_AngleToTarget = CalculateAngleToEntity(g_CurrentEntity, targetX, targetY);
     s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
         s_AngleToTarget, g_CurrentEntity->ext.ghost.targetAngle,
@@ -99,22 +102,25 @@ s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) 
     s_DeltaX = targetX - g_CurrentEntity->posX.i.hi;
     s_DeltaY = targetY - g_CurrentEntity->posY.i.hi;
     s_DistanceToTarget =
-        SquareRoot12(
-            ((s_DeltaX * s_DeltaX) + (s_DeltaY * s_DeltaY))
-            << 0xC) >>
+        SquareRoot12(((s_DeltaX * s_DeltaX) + (s_DeltaY * s_DeltaY)) << 0xC) >>
         0xC;
 
     switch (g_CurrentEntity->step) {
     case 2:
-        g_CurrentEntity->velocityX = rcos(s_AllowedAngle) * s_DistanceToTarget * 2;
-        g_CurrentEntity->velocityY = -(rsin(s_AllowedAngle) * s_DistanceToTarget * 2);
+        g_CurrentEntity->velocityX =
+            rcos(s_AllowedAngle) * s_DistanceToTarget * 2;
+        g_CurrentEntity->velocityY =
+            -(rsin(s_AllowedAngle) * s_DistanceToTarget * 2);
         break;
     case 3:
-        g_CurrentEntity->velocityX = rcos(s_AllowedAngle) * s_DistanceToTarget * 8;
-        g_CurrentEntity->velocityY = -(rsin(s_AllowedAngle) * s_DistanceToTarget * 8);
+        g_CurrentEntity->velocityX =
+            rcos(s_AllowedAngle) * s_DistanceToTarget * 8;
+        g_CurrentEntity->velocityY =
+            -(rsin(s_AllowedAngle) * s_DistanceToTarget * 8);
         break;
     default:
-        g_CurrentEntity->velocityX = (rcos(s_AllowedAngle) * s_DistanceToTarget) >> 2;
+        g_CurrentEntity->velocityX =
+            (rcos(s_AllowedAngle) * s_DistanceToTarget) >> 2;
         g_CurrentEntity->velocityY =
             -((rsin(s_AllowedAngle) * s_DistanceToTarget) >> 2);
         break;
@@ -148,8 +154,7 @@ s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) 
     return s_DistanceToTarget;
 }
 
-Entity* FindValidTarget(
-    Entity* self) { // Assume self is also an Entity pointer
+Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
     Entity* entity;
     s32 i;
     s32 index;
@@ -181,7 +186,8 @@ Entity* FindValidTarget(
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_BAD_ATTACKS] == 0)
+            d_GhostAbilityStats[s_GhostStats.level / 10]
+                               [ABILITY_STATS_BAD_ATTACKS] == 0)
             continue;
 #if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
@@ -418,7 +424,8 @@ void UpdateServantDefault(Entity* self) {
         }
     }
     s_TargetLocationX = s_TargetLocationX_calc;
-    s_TargetLocationY = s_TargetLocationY_calc + (rsin(self->ext.ghost.bobCounterY) >> 0xA);
+    s_TargetLocationY =
+        s_TargetLocationY_calc + (rsin(self->ext.ghost.bobCounterY) >> 0xA);
     self->ext.ghost.bobCounterY += 32;
     self->ext.ghost.bobCounterY &= 0xfff;
     switch (self->step) {
@@ -455,7 +462,8 @@ void UpdateServantDefault(Entity* self) {
                         temp_s3 = 1;
                     self->facingLeft = temp_s3;
                 } else { // 3e0
-                    if (self->facingLeft && s_TargetLocationX < self->posX.i.hi) {
+                    if (self->facingLeft &&
+                        s_TargetLocationX < self->posX.i.hi) {
                         if (PLAYER.facingLeft)
                             temp_s2 = 0;
                         else
@@ -482,7 +490,8 @@ void UpdateServantDefault(Entity* self) {
                 }
             }
         }
-        UpdateEntityVelocityTowardsTarget(self, s_TargetLocationX, s_TargetLocationY);
+        UpdateEntityVelocityTowardsTarget(
+            self, s_TargetLocationX, s_TargetLocationY);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (!g_CutsceneHasControl) {
@@ -527,14 +536,18 @@ void UpdateServantDefault(Entity* self) {
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 ==
-                (d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES] - 0x1E)) {
+                (d_GhostAbilityStats[s_GhostStats.level / 10]
+                                    [ABILITY_STATS_DELAY_FRAMES] -
+                 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (self->ext.ghost.unk86 >
-                       d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
+                       d_GhostAbilityStats[s_GhostStats.level / 10]
+                                          [ABILITY_STATS_DELAY_FRAMES]) {
                 self->ext.ghost.unk86 = 0;
-                g_api.func_8011A3AC(
-                    self, d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_SPELL_ID], 1,
-                    &s_GhostStats);
+                g_api.func_8011A3AC(self,
+                                    d_GhostAbilityStats[s_GhostStats.level / 10]
+                                                       [ABILITY_STATS_SPELL_ID],
+                                    1, &s_GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
             }
@@ -558,7 +571,8 @@ void UpdateServantDefault(Entity* self) {
             self->step = 1;
             break;
         }
-        UpdateEntityVelocityTowardsTarget(self, s_TargetLocationX, s_TargetLocationY);
+        UpdateEntityVelocityTowardsTarget(
+            self, s_TargetLocationX, s_TargetLocationY);
         self->posY.val += self->velocityY;
         switch (self->ext.ghost.unk8C) {
         case 0:
@@ -678,7 +692,8 @@ void UpdateAttackEntites(Entity* self) {
 
         s_CurrentAttackPrim = &g_PrimBuf[self->primIndex];
 
-        for (s_AttackPrimIndex = 0; s_AttackPrimIndex < 8; s_AttackPrimIndex++) {
+        for (s_AttackPrimIndex = 0; s_AttackPrimIndex < 8;
+             s_AttackPrimIndex++) {
             s_CurrentAttackPrim->tpage = 0x1A;
             s_CurrentAttackPrim->clut = 0x143;
 
@@ -688,15 +703,18 @@ void UpdateAttackEntites(Entity* self) {
             s_CurrentAttackPrim->v0 = s_CurrentAttackPrim->v1 = 0x30;
             s_CurrentAttackPrim->v2 = s_CurrentAttackPrim->v3 = 0x38;
 
-            s_CurrentAttackPrim->r0 = s_CurrentAttackPrim->r1 = s_CurrentAttackPrim->r2 =
-                s_CurrentAttackPrim->r3 = s_CurrentAttackPrim->g0 = s_CurrentAttackPrim->g1 =
-                    s_CurrentAttackPrim->g2 = s_CurrentAttackPrim->g3 = s_CurrentAttackPrim->b0 =
-                        s_CurrentAttackPrim->b1 = s_CurrentAttackPrim->b2 =
-                            s_CurrentAttackPrim->b3 = 0x80;
+            s_CurrentAttackPrim->r0 = s_CurrentAttackPrim->r1 =
+                s_CurrentAttackPrim->r2 = s_CurrentAttackPrim->r3 =
+                    s_CurrentAttackPrim->g0 = s_CurrentAttackPrim->g1 =
+                        s_CurrentAttackPrim->g2 = s_CurrentAttackPrim->g3 =
+                            s_CurrentAttackPrim->b0 = s_CurrentAttackPrim->b1 =
+                                s_CurrentAttackPrim->b2 =
+                                    s_CurrentAttackPrim->b3 = 0x80;
 
             s_CurrentAttackPrim->priority = self->zPriority + 1;
-            s_CurrentAttackPrim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
-                                      DRAW_COLORS | DRAW_TRANSP;
+            s_CurrentAttackPrim->drawMode =
+                DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                DRAW_TRANSP;
 
             s_CurrentAttackPrim = s_CurrentAttackPrim->next;
         }
@@ -707,7 +725,8 @@ void UpdateAttackEntites(Entity* self) {
         self->step++;
 
     case 1:
-        s_AttackPosOscillator_calc = (s_AttackPosOscillator_calc + 0x32) & 0xFFF;
+        s_AttackPosOscillator_calc =
+            (s_AttackPosOscillator_calc + 0x32) & 0xFFF;
         s_AttackCloudTimer--;
         if (s_AttackCloudTimer < 0) {
             DestroyEntity(self);
@@ -723,11 +742,13 @@ void UpdateAttackEntites(Entity* self) {
     for (s_AttackPrimIndex = 0; s_AttackPrimIndex < 8; s_AttackPrimIndex++) {
         D_us_801737E8 =
             self->posX.i.hi +
-            ((rcos(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) * s_AttackCloudTimer) >>
+            ((rcos(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) *
+              s_AttackCloudTimer) >>
              12);
         D_us_801737EC =
             self->posY.i.hi -
-            ((rsin(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) * s_AttackCloudTimer) >>
+            ((rsin(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) *
+              s_AttackCloudTimer) >>
              12);
         s_CurrentAttackPrim->x0 = s_CurrentAttackPrim->x2 = D_us_801737E8 - 4;
         s_CurrentAttackPrim->x1 = s_CurrentAttackPrim->x3 = D_us_801737E8 + 4;
@@ -759,7 +780,8 @@ void UpdateConfusedEntites(Entity* self) {
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
 
         s_CurrentConfusedPrim = &g_PrimBuf[self->primIndex];
-        for (s_ConfusedPrimIndex = 0; s_ConfusedPrimIndex < 3; s_ConfusedPrimIndex++) {
+        for (s_ConfusedPrimIndex = 0; s_ConfusedPrimIndex < 3;
+             s_ConfusedPrimIndex++) {
             s_CurrentConfusedPrim->clut = 0x143;
             s_CurrentConfusedPrim->tpage = 0x1E;
             s_CurrentConfusedPrim->u0 = s_CurrentConfusedPrim->u2 = 0x78;
@@ -809,7 +831,8 @@ void UpdateConfusedEntites(Entity* self) {
 
     s_CurrentConfusedPrim = &g_PrimBuf[self->primIndex];
 
-    for (s_ConfusedPrimIndex = 0; s_ConfusedPrimIndex < 3; s_ConfusedPrimIndex++) {
+    for (s_ConfusedPrimIndex = 0; s_ConfusedPrimIndex < 3;
+         s_ConfusedPrimIndex++) {
         if (!self->facingLeft) {
 
             s_CurrentConfusedPrim->x0 = s_CurrentConfusedPrim->x2 =
