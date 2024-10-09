@@ -12,7 +12,7 @@
 <!-- no0.PlaySfxPositional -->
 <g id="node1" class="node">
 <title>no0.PlaySfxPositional</title>
-<ellipse fill="red" stroke="black" cx="3592.89" cy="-198" rx="111.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3592.89" cy="-198" rx="111.28" ry="18"/>
 <text text-anchor="middle" x="3592.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.PlaySfxPositional</text>
 </g>
 <!-- dra.PlaySfxVolPan -->

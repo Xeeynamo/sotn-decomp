@@ -12,7 +12,7 @@
 <!-- no0.ClutLerp -->
 <g id="node1" class="node">
 <title>no0.ClutLerp</title>
-<ellipse fill="red" stroke="black" cx="109.8" cy="-198" rx="71.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="109.8" cy="-198" rx="71.49" ry="18"/>
 <text text-anchor="middle" x="109.8" y="-194.3" font-family="Times,serif" font-size="14.00">no0.ClutLerp</text>
 </g>
 <!-- GetClut -->

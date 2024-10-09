@@ -1572,7 +1572,7 @@
 <g id="node98" class="node">
 <title>no0.EntityMessageBox</title>
 <g id="a_node98"><a xlink:href="no0.EntityMessageBox.svg" xlink:title="no0.EntityMessageBox">
-<ellipse fill="red" stroke="black" cx="25466.34" cy="-378" rx="118.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="25466.34" cy="-378" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="25466.34" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityMessageBox</text>
 </a>
 </g>
@@ -1588,7 +1588,7 @@
 <g id="node99" class="node">
 <title>no0.EntityOlroxDrool</title>
 <g id="a_node99"><a xlink:href="no0.EntityOlroxDrool.svg" xlink:title="no0.EntityOlroxDrool">
-<ellipse fill="red" stroke="black" cx="25713.34" cy="-378" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="25713.34" cy="-378" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="25713.34" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityOlroxDrool</text>
 </a>
 </g>

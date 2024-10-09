@@ -12,7 +12,7 @@
 <!-- no0.EntityGreyPuff -->
 <g id="node1" class="node">
 <title>no0.EntityGreyPuff</title>
-<ellipse fill="red" stroke="black" cx="100.74" cy="-198" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="100.74" cy="-198" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="100.74" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityGreyPuff</text>
 </g>
 <!-- no0.DestroyEntity -->

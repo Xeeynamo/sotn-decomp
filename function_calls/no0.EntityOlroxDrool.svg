@@ -12,7 +12,7 @@
 <!-- no0.EntityOlroxDrool -->
 <g id="node1" class="node">
 <title>no0.EntityOlroxDrool</title>
-<ellipse fill="red" stroke="black" cx="681.44" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="681.44" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="681.44" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityOlroxDrool</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.CheckColliderOffsets</title>
 <g id="a_node4"><a xlink:href="no0.CheckColliderOffsets.svg" xlink:title="no0.CheckColliderOffsets">
-<ellipse fill="red" stroke="black" cx="560.44" cy="-18" rx="128.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="560.44" cy="-18" rx="128.08" ry="18"/>
 <text text-anchor="middle" x="560.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.CheckColliderOffsets</text>
 </a>
 </g>
