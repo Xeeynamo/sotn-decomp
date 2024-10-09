@@ -245,6 +245,7 @@ bool InitGame(void) {
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
 
+extern const char* g_goldCollectTexts[10]; // refeer to e_collect.h
 void InitSotnMenuTable(void);
 void InitStrings(void) {
     InitSotnMenuTable();
@@ -259,6 +260,9 @@ void InitStrings(void) {
     }
     for (int i = 0; i < LEN(g_EnemyDefs); i++) {
         g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
+    }
+    for (int i = 0; i < LEN(g_goldCollectTexts); i++) {
+        g_goldCollectTexts[i] = AnsiToSotnMenuString(g_goldCollectTexts[i]);
     }
 }
 
