@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-AnimationFrame DefaultGhostAnimationFrame[] = {
+AnimationFrame d_DefaultGhostAnimationFrame[] = {
     /* 801704A8 */ {2, 0x0201},
     /* 801704AC */ {2, 0x0202},
     /* 801704B0 */ {2, 0x0203},
@@ -27,6 +27,6 @@ AnimationFrame D_us_801704CC[] = {
     /* 801704F8 */ {2, 0x0214},
     /* 801704FC */ {0, 0x0000}};
 
-AnimationFrame* D_us_80170500[] = {
-    /* 801705F4 */ DefaultGhostAnimationFrame,
+AnimationFrame* d_GhostAnimationFrames[] = {
+    /* 801705F4 */ d_DefaultGhostAnimationFrame,
     /* 801705F8 */ D_us_801704CC};

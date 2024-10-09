@@ -643,9 +643,9 @@ typedef struct {
     /* 0x7C */ s16 pad7C;
     /* 0x7E */ s16 unk7E;
     // This counter is used for the Y "bob" the ghost does
-    /* 0x80 */ s16 BobCounterY;
-    /* 0x82 */ s16 TargetAngle;
-    /* 0x84 */ s16 MaxAngle;
+    /* 0x80 */ s16 bobCounterY;
+    /* 0x82 */ s16 targetAngle;
+    /* 0x84 */ s16 maxAngle;
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
@@ -654,7 +654,7 @@ typedef struct {
     /* 0x92 */ struct Entity* unk92;
     /* 0x96 */ struct Entity* unk96;
     /* 0x9A */ byte pad_1C[0x6];
-    /* 0xA2 */ struct Entity* unkA2;
+    /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;
 
 typedef struct {

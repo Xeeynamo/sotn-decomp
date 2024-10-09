@@ -9,58 +9,58 @@
 #define ABILITY_STATS_BAD_ATTACKS 2
 
 // These variables are only used in UpdateEntityVelocityTowardsTarget
-static s16 DeltaX;
+static s16 s_DeltaX;
 STATIC_PAD_BSS(2);
-static s16 DeltaY;
+static s16 s_DeltaY;
 STATIC_PAD_BSS(2);
-static s16 AngleToTarget;
+static s16 s_AngleToTarget;
 STATIC_PAD_BSS(2);
-static s16 AllowedAngle;
+static s16 s_AllowedAngle;
 STATIC_PAD_BSS(2);
-static s16 DistanceToTarget;
+static s16 s_DistanceToTarget;
 STATIC_PAD_BSS(2);
 
-static u32 D_us_801735C4[128];
+static u32 s_TargetMatch[128];
 
-static s16 TargetLocationX;
+static s16 s_TargetLocationX;
 STATIC_PAD_BSS(2);
-static s16 TargetLocationY;
+static s16 s_TargetLocationY;
 STATIC_PAD_BSS(2);
 
 static s32 D_us_801737CC;
 STATIC_PAD_BSS(8);
-static s32 TargetLocationX_calc;
-static s32 TargetLocationY_calc;
-static s32 D_us_801737E0;
-static s32 D_us_801737E4;
+static s32 s_TargetLocationX_calc;
+static s32 s_TargetLocationY_calc;
+static s32 s_AttackPrimIndex;
+static s32 s_AttackPosOscillator;
 static s32 D_us_801737E8;
 static s32 D_us_801737EC;
-static Primitive* D_us_801737F0;
-static s32 D_us_801737F4;
-static s32 D_us_801737F8;
+static Primitive* s_CurrentAttackPrim;
+static s32 s_AttackCloudTimer;
+static s32 s_AttackPosOscillator_calc;
 static Primitive*
-    D_us_801737FC;        // Pointer to the current primitive being manipulated
-static s32 D_us_80173800; // Index for the current primitive being manipulated
-static s32 D_us_80173804; // Effect timer used to control steps and timing
-static s16 D_us_80173808;
+    s_CurrentConfusedPrim;        // Pointer to the current primitive being manipulated
+static s32 s_ConfusedPrimIndex; // Index for the current primitive being manipulated
+static s32 s_ConfusedFrameCounter; // Effect timer used to control steps and timing
+static s16 s_ParentX;
 STATIC_PAD_BSS(2); // Temporary storage for X position of the
                    // entity or primitive
-static s16 D_us_8017380C;
+static s16 s_ParentY;
 STATIC_PAD_BSS(2); // Temporary storage for Y position of the
                    // entity or primitive
-static FamiliarStats GhostStats;
-static s32 g_IsServantDestroyed;
-static s32 D_us_80173820;
+static FamiliarStats s_GhostStats;
+static s32 g_IsServantDestroyed; 
+static s32 s_LastTargetedEntityIndex;
 
-extern s32 DefaultGhostAnimationFrame[];
-extern AnimationFrame* D_us_80170500[];
-extern s32 AbilityStats[][3];
-extern u16 GhostClut[];
+extern s32 d_DefaultGhostAnimationFrame[];
+extern AnimationFrame* d_GhostAnimationFrames[];
+extern s32 d_GhostAbilityStats[][3];
+extern u16 d_GhostClut[];
 
 extern s16
-    D_us_801705A0[]; // Array of X-axis offsets for positioning primitives
+    d_ConfusedOffsetsX[]; // Array of X-axis offsets for positioning primitives
 extern s16
-    D_us_801705A8[]; // Array of Y-axis offsets for positioning primitives
+    d_ConfusedOffsetsY[]; // Array of Y-axis offsets for positioning primitives
 
 void unused_20A4(Entity* self);
 void unused_20AC(void);
@@ -70,8 +70,8 @@ void unused_20C4(void);
 void unused_20CC(void);
 void unused_20D4(void);
 void unused_20DC(void);
-void func_us_801720E4(Entity* self);
-void func_us_8017246C(Entity* self);
+void UpdateAttackEntites(Entity* self);
+void UpdateConfusedEntites(Entity* self);
 void unused_28EC(void);
 void unused_28F4(void);
 void unused_28FC(void);
@@ -80,7 +80,7 @@ ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, unused_20A4,
     unused_20AC,    unused_20B4,     unused_20BC,
     unused_20C4,    unused_20CC,     unused_20D4,
-    unused_20DC,    func_us_801720E4,     func_us_8017246C,
+    unused_20DC,    UpdateAttackEntites,     UpdateConfusedEntites,
     unused_28EC,    unused_28F4,     unused_28FC,
     DestroyServantEntity};
 
@@ -90,35 +90,33 @@ ServantDesc ghost_ServantDesc = {
 // g_CurrentEntity should be the Familiar entity
 // Unsure where the target angle gets set initially
 s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) {
-    AngleToTarget = CalculateAngleToEntity(g_CurrentEntity, targetX, targetY);
-    AllowedAngle = GetTargetPositionWithDistanceBuffer(
-        AngleToTarget, g_CurrentEntity->ext.ghost.TargetAngle,
-        g_CurrentEntity->ext.ghost.MaxAngle);
-    g_CurrentEntity->ext.ghost.TargetAngle = AllowedAngle;
-    // DeltaX
-    DeltaX = targetX - g_CurrentEntity->posX.i.hi;
-    // DeltaY
-    DeltaY = targetY - g_CurrentEntity->posY.i.hi;
-    // DistanceToTarget
-    DistanceToTarget =
+    s_AngleToTarget = CalculateAngleToEntity(g_CurrentEntity, targetX, targetY);
+    s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+        s_AngleToTarget, g_CurrentEntity->ext.ghost.targetAngle,
+        g_CurrentEntity->ext.ghost.maxAngle);
+    g_CurrentEntity->ext.ghost.targetAngle = s_AllowedAngle;
+
+    s_DeltaX = targetX - g_CurrentEntity->posX.i.hi;
+    s_DeltaY = targetY - g_CurrentEntity->posY.i.hi;
+    s_DistanceToTarget =
         SquareRoot12(
-            ((DeltaX * DeltaX) + (DeltaY * DeltaY))
+            ((s_DeltaX * s_DeltaX) + (s_DeltaY * s_DeltaY))
             << 0xC) >>
         0xC;
 
     switch (g_CurrentEntity->step) {
     case 2:
-        g_CurrentEntity->velocityX = rcos(AllowedAngle) * DistanceToTarget * 2;
-        g_CurrentEntity->velocityY = -(rsin(AllowedAngle) * DistanceToTarget * 2);
+        g_CurrentEntity->velocityX = rcos(s_AllowedAngle) * s_DistanceToTarget * 2;
+        g_CurrentEntity->velocityY = -(rsin(s_AllowedAngle) * s_DistanceToTarget * 2);
         break;
     case 3:
-        g_CurrentEntity->velocityX = rcos(AllowedAngle) * DistanceToTarget * 8;
-        g_CurrentEntity->velocityY = -(rsin(AllowedAngle) * DistanceToTarget * 8);
+        g_CurrentEntity->velocityX = rcos(s_AllowedAngle) * s_DistanceToTarget * 8;
+        g_CurrentEntity->velocityY = -(rsin(s_AllowedAngle) * s_DistanceToTarget * 8);
         break;
     default:
-        g_CurrentEntity->velocityX = (rcos(AllowedAngle) * DistanceToTarget) >> 2;
+        g_CurrentEntity->velocityX = (rcos(s_AllowedAngle) * s_DistanceToTarget) >> 2;
         g_CurrentEntity->velocityY =
-            -((rsin(AllowedAngle) * DistanceToTarget) >> 2);
+            -((rsin(s_AllowedAngle) * s_DistanceToTarget) >> 2);
         break;
     }
 
@@ -139,7 +137,7 @@ s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) 
         g_CurrentEntity->velocityY = FIX(-0.25);
     }
 
-    if (DistanceToTarget > 0x100) {
+    if (s_DistanceToTarget > 0x100) {
         g_CurrentEntity->velocityX =
             (targetX - g_CurrentEntity->posX.i.hi) << 0xE;
         g_CurrentEntity->velocityY =
@@ -147,10 +145,10 @@ s32 UpdateEntityVelocityTowardsTarget(Entity* unused, s32 targetX, s32 targetY) 
     }
 
     // Return the distance between entity and target
-    return DistanceToTarget;
+    return s_DistanceToTarget;
 }
 
-Entity* func_us_80171284(
+Entity* FindValidTarget(
     Entity* self) { // Assume self is also an Entity pointer
     Entity* entity;
     s32 i;
@@ -164,7 +162,7 @@ Entity* func_us_80171284(
     // Call them a success and increment successes.
     entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 128; i++, entity++) {
-        D_us_801735C4[i] = 0;
+        s_TargetMatch[i] = 0;
 
         // Very similar code to CheckAllEntitiesValid
         if (!entity->entityId)
@@ -183,7 +181,7 @@ Entity* func_us_80171284(
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            AbilityStats[GhostStats.level / 10][ABILITY_STATS_BAD_ATTACKS] == 0)
+            d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_BAD_ATTACKS] == 0)
             continue;
 #if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
@@ -212,7 +210,7 @@ Entity* func_us_80171284(
 
         if (entity->flags & FLAG_UNK_80000) {
             matches += 1;
-            D_us_801735C4[i] = 1;
+            s_TargetMatch[i] = 1;
         } else {
             entity->flags |= FLAG_UNK_80000;
             return entity;
@@ -220,12 +218,12 @@ Entity* func_us_80171284(
     }
 
     if (matches != 0) {
-        index = D_us_80173820 % 128;
+        index = s_LastTargetedEntityIndex % 128;
 
         for (i = 0; i < 128; i++) {
-            if (D_us_801735C4[index] != 0) {
+            if (s_TargetMatch[index] != 0) {
                 entity = &g_Entities[index + STAGE_ENTITY_START];
-                D_us_80173820 = (index + 1) % 128;
+                s_LastTargetedEntityIndex = (index + 1) % 128;
                 return entity;
             }
 
@@ -287,7 +285,7 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
 
 #ifdef VERSION_PC
 extern u16 g_ServantClut[48];
-extern u16 GhostClut[16];
+extern u16 d_GhostClut[16];
 #endif
 
 void ServantInit(InitializeMode mode) {
@@ -300,10 +298,10 @@ void ServantInit(InitializeMode mode) {
     u16 temp;
 #ifdef VERSION_PC
     const int lenServantClut = LEN(g_ServantClut);
-    const int lenGhostClut = LEN(GhostClut);
+    const int lend_GhostClut = LEN(d_GhostClut);
 #else
     const int lenServantClut = 256;
-    const int lenGhostClut = 32;
+    const int lend_GhostClut = 32;
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
@@ -321,9 +319,9 @@ void ServantInit(InitializeMode mode) {
 
         // overwrite part of the clut for this servant
         dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
-        src = GhostClut;
+        src = d_GhostClut;
 
-        for (i = 0; i < lenGhostClut; i++) {
+        for (i = 0; i < lend_GhostClut; i++) {
             *dst++ = *src++;
         }
 
@@ -370,7 +368,7 @@ void ServantInit(InitializeMode mode) {
                 e->posY.val = PLAYER.posY.val - FIX(32);
             }
         }
-        g_api.func_8011A3AC(e, 0, 0, &GhostStats);
+        g_api.func_8011A3AC(e, 0, 0, &s_GhostStats);
         g_IsServantDestroyed = 0;
     }
 }
@@ -381,7 +379,7 @@ void UpdateServantDefault(Entity* self) {
     s32 temp_s2;
     s32 temp_s1;
 
-    g_api.func_8011A3AC(self, 0, 0, &GhostStats);
+    g_api.func_8011A3AC(self, 0, 0, &s_GhostStats);
     if (g_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
     }
@@ -395,10 +393,10 @@ void UpdateServantDefault(Entity* self) {
         if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
             switch (ServantUnk0()) {
             case 0:
-                TargetLocationX_calc = 0x40;
+                s_TargetLocationX_calc = 0x40;
                 break;
             case 1:
-                TargetLocationX_calc = 0xC0;
+                s_TargetLocationX_calc = 0xC0;
                 break;
             case 2:
                 if (self->posX.i.hi > 0x80) {
@@ -406,23 +404,23 @@ void UpdateServantDefault(Entity* self) {
                 } else {
                     temp_s4 = 0x40;
                 }
-                TargetLocationX_calc = temp_s4;
+                s_TargetLocationX_calc = temp_s4;
                 break;
             }
-            TargetLocationY_calc = 0xA0;
+            s_TargetLocationY_calc = 0xA0;
         } else {
             if (PLAYER.facingLeft) {
-                TargetLocationX_calc = PLAYER.posX.i.hi + 18;
+                s_TargetLocationX_calc = PLAYER.posX.i.hi + 18;
             } else {
-                TargetLocationX_calc = PLAYER.posX.i.hi - 18;
+                s_TargetLocationX_calc = PLAYER.posX.i.hi - 18;
             }
-            TargetLocationY_calc = PLAYER.posY.i.hi - 32;
+            s_TargetLocationY_calc = PLAYER.posY.i.hi - 32;
         }
     }
-    TargetLocationX = TargetLocationX_calc;
-    TargetLocationY = TargetLocationY_calc + (rsin(self->ext.ghost.BobCounterY) >> 0xA);
-    self->ext.ghost.BobCounterY += 32;
-    self->ext.ghost.BobCounterY &= 0xfff;
+    s_TargetLocationX = s_TargetLocationX_calc;
+    s_TargetLocationY = s_TargetLocationY_calc + (rsin(self->ext.ghost.bobCounterY) >> 0xA);
+    self->ext.ghost.bobCounterY += 32;
+    self->ext.ghost.bobCounterY &= 0xfff;
     switch (self->step) {
     case 0:
         self->ext.ghost.unk7E = self->params;
@@ -430,8 +428,8 @@ void UpdateServantDefault(Entity* self) {
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_UNK8;
-        SetEntityAnimation(self, &DefaultGhostAnimationFrame);
-        self->ext.ghost.MaxAngle = 512;
+        SetEntityAnimation(self, &d_DefaultGhostAnimationFrame);
+        self->ext.ghost.maxAngle = 512;
         self->ext.ghost.unk88 = 128;
         self->ext.ghost.unk8A = -1;
         self->step++;
@@ -450,21 +448,21 @@ void UpdateServantDefault(Entity* self) {
                 self->facingLeft = 0;
         } else {
             if (PLAYER.facingLeft == self->facingLeft) {
-                if (abs(TargetLocationX - self->posX.i.hi) <= 0) {
+                if (abs(s_TargetLocationX - self->posX.i.hi) <= 0) {
                     if (PLAYER.facingLeft)
                         temp_s3 = 0;
                     else
                         temp_s3 = 1;
                     self->facingLeft = temp_s3;
                 } else { // 3e0
-                    if (self->facingLeft && TargetLocationX < self->posX.i.hi) {
+                    if (self->facingLeft && s_TargetLocationX < self->posX.i.hi) {
                         if (PLAYER.facingLeft)
                             temp_s2 = 0;
                         else
                             temp_s2 = 1;
                         self->facingLeft = temp_s2;
                     } else if (!self->facingLeft) {
-                        if (TargetLocationX > self->posX.i.hi) {
+                        if (s_TargetLocationX > self->posX.i.hi) {
                             if (PLAYER.facingLeft)
                                 temp_s1 = 0;
                             else
@@ -475,21 +473,21 @@ void UpdateServantDefault(Entity* self) {
                 }
             } else {
                 if (self->facingLeft &&
-                    self->posX.i.hi - TargetLocationX > 0x1F) {
+                    self->posX.i.hi - s_TargetLocationX > 0x1F) {
                     self->facingLeft = PLAYER.facingLeft;
                 } else if (!self->facingLeft) {
-                    if (TargetLocationX - self->posX.i.hi > 0x1F) {
+                    if (s_TargetLocationX - self->posX.i.hi > 0x1F) {
                         self->facingLeft = PLAYER.facingLeft;
                     }
                 }
             }
         }
-        UpdateEntityVelocityTowardsTarget(self, TargetLocationX, TargetLocationY);
+        UpdateEntityVelocityTowardsTarget(self, s_TargetLocationX, s_TargetLocationY);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (!g_CutsceneHasControl) {
             // Note: this is an assignment, not an equality check
-            if (self->ext.ghost.unkA2 = func_us_80171284(self)) {
+            if (self->ext.ghost.attackTarget = FindValidTarget(self)) {
                 self->step++;
                 break;
             }
@@ -506,13 +504,13 @@ void UpdateServantDefault(Entity* self) {
         if (g_CutsceneHasControl) {
             self->step = 1;
         }
-        if (!CheckEntityValid(self->ext.ghost.unkA2)) {
+        if (!CheckEntityValid(self->ext.ghost.attackTarget)) {
             self->step = 1;
             break;
         }
 
-        TargetLocationX = self->ext.ghost.unkA2->posX.i.hi;
-        TargetLocationY = self->ext.ghost.unkA2->posY.i.hi;
+        s_TargetLocationX = self->ext.ghost.attackTarget->posX.i.hi;
+        s_TargetLocationY = self->ext.ghost.attackTarget->posY.i.hi;
         if (self->velocityX > 0) {
             self->facingLeft = 1;
         }
@@ -520,7 +518,7 @@ void UpdateServantDefault(Entity* self) {
             self->facingLeft = 0;
         }
         D_us_801737CC = UpdateEntityVelocityTowardsTarget(
-            self, TargetLocationX, TargetLocationY);
+            self, s_TargetLocationX, s_TargetLocationY);
         if (self->step == 2) {
             if (D_us_801737CC < 8) {
                 self->ext.ghost.unk86 = 0;
@@ -529,14 +527,14 @@ void UpdateServantDefault(Entity* self) {
         } else if (D_us_801737CC < 8) {
             self->ext.ghost.unk86++;
             if (self->ext.ghost.unk86 ==
-                (AbilityStats[GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES] - 0x1E)) {
+                (d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES] - 0x1E)) {
                 self->ext.ghost.unk92 = func_us_80171568(self, 0);
             } else if (self->ext.ghost.unk86 >
-                       AbilityStats[GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
+                       d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
                 self->ext.ghost.unk86 = 0;
                 g_api.func_8011A3AC(
-                    self, AbilityStats[GhostStats.level / 10][ABILITY_STATS_SPELL_ID], 1,
-                    &GhostStats);
+                    self, d_GhostAbilityStats[s_GhostStats.level / 10][ABILITY_STATS_SPELL_ID], 1,
+                    &s_GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
             }
@@ -560,7 +558,7 @@ void UpdateServantDefault(Entity* self) {
             self->step = 1;
             break;
         }
-        UpdateEntityVelocityTowardsTarget(self, TargetLocationX, TargetLocationY);
+        UpdateEntityVelocityTowardsTarget(self, s_TargetLocationX, s_TargetLocationY);
         self->posY.val += self->velocityY;
         switch (self->ext.ghost.unk8C) {
         case 0:
@@ -640,7 +638,7 @@ void UpdateServantDefault(Entity* self) {
     self->unk6C = self->ext.ghost.unk88;
     ProcessEvent(self, 0);
     unused_1560(self);
-    g_api.UpdateAnim(NULL, D_us_80170500);
+    g_api.UpdateAnim(NULL, d_GhostAnimationFrames);
 }
 
 void unused_20A4(Entity* self) {}
@@ -659,7 +657,8 @@ void unused_20D4(void) {}
 
 void unused_20DC(void) {}
 
-void func_us_801720E4(Entity* self) {
+// This creates and handles the updates for the attack cloud
+void UpdateAttackEntites(Entity* self) {
 
     if (self->params != 0) {
         DestroyEntity(self);
@@ -677,40 +676,40 @@ void func_us_801720E4(Entity* self) {
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
 
-        D_us_801737F0 = &g_PrimBuf[self->primIndex];
+        s_CurrentAttackPrim = &g_PrimBuf[self->primIndex];
 
-        for (D_us_801737E0 = 0; D_us_801737E0 < 8; D_us_801737E0++) {
-            D_us_801737F0->tpage = 0x1A;
-            D_us_801737F0->clut = 0x143;
+        for (s_AttackPrimIndex = 0; s_AttackPrimIndex < 8; s_AttackPrimIndex++) {
+            s_CurrentAttackPrim->tpage = 0x1A;
+            s_CurrentAttackPrim->clut = 0x143;
 
-            D_us_801737F0->u0 = D_us_801737F0->u2 = 0x78;
-            D_us_801737F0->u1 = D_us_801737F0->u3 = 0x80;
+            s_CurrentAttackPrim->u0 = s_CurrentAttackPrim->u2 = 0x78;
+            s_CurrentAttackPrim->u1 = s_CurrentAttackPrim->u3 = 0x80;
 
-            D_us_801737F0->v0 = D_us_801737F0->v1 = 0x30;
-            D_us_801737F0->v2 = D_us_801737F0->v3 = 0x38;
+            s_CurrentAttackPrim->v0 = s_CurrentAttackPrim->v1 = 0x30;
+            s_CurrentAttackPrim->v2 = s_CurrentAttackPrim->v3 = 0x38;
 
-            D_us_801737F0->r0 = D_us_801737F0->r1 = D_us_801737F0->r2 =
-                D_us_801737F0->r3 = D_us_801737F0->g0 = D_us_801737F0->g1 =
-                    D_us_801737F0->g2 = D_us_801737F0->g3 = D_us_801737F0->b0 =
-                        D_us_801737F0->b1 = D_us_801737F0->b2 =
-                            D_us_801737F0->b3 = 0x80;
+            s_CurrentAttackPrim->r0 = s_CurrentAttackPrim->r1 = s_CurrentAttackPrim->r2 =
+                s_CurrentAttackPrim->r3 = s_CurrentAttackPrim->g0 = s_CurrentAttackPrim->g1 =
+                    s_CurrentAttackPrim->g2 = s_CurrentAttackPrim->g3 = s_CurrentAttackPrim->b0 =
+                        s_CurrentAttackPrim->b1 = s_CurrentAttackPrim->b2 =
+                            s_CurrentAttackPrim->b3 = 0x80;
 
-            D_us_801737F0->priority = self->zPriority + 1;
-            D_us_801737F0->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+            s_CurrentAttackPrim->priority = self->zPriority + 1;
+            s_CurrentAttackPrim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                                       DRAW_COLORS | DRAW_TRANSP;
 
-            D_us_801737F0 = D_us_801737F0->next;
+            s_CurrentAttackPrim = s_CurrentAttackPrim->next;
         }
 
-        D_us_801737F4 = 0x1E;
-        D_us_801737F8 = 0;
+        s_AttackCloudTimer = 0x1E;
+        s_AttackPosOscillator_calc = 0;
         g_api.PlaySfx(SFX_GLASS_SHARDS);
         self->step++;
 
     case 1:
-        D_us_801737F8 = (D_us_801737F8 + 0x32) & 0xFFF;
-        D_us_801737F4--;
-        if (D_us_801737F4 < 0) {
+        s_AttackPosOscillator_calc = (s_AttackPosOscillator_calc + 0x32) & 0xFFF;
+        s_AttackCloudTimer--;
+        if (s_AttackCloudTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -718,27 +717,30 @@ void func_us_801720E4(Entity* self) {
     self->posX.i.hi = self->ext.ghostEvent.parent->posX.i.hi;
     self->posY.i.hi = self->ext.ghostEvent.parent->posY.i.hi;
 
-    D_us_801737E4 = D_us_801737F8;
-    D_us_801737F0 = &g_PrimBuf[self->primIndex];
+    s_AttackPosOscillator = s_AttackPosOscillator_calc;
+    s_CurrentAttackPrim = &g_PrimBuf[self->primIndex];
 
-    for (D_us_801737E0 = 0; D_us_801737E0 < 8; D_us_801737E0++) {
+    for (s_AttackPrimIndex = 0; s_AttackPrimIndex < 8; s_AttackPrimIndex++) {
         D_us_801737E8 =
             self->posX.i.hi +
-            ((rcos(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
+            ((rcos(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) * s_AttackCloudTimer) >>
              12);
         D_us_801737EC =
             self->posY.i.hi -
-            ((rsin(D_us_801737E4 + (D_us_801737E0 << 9)) * D_us_801737F4) >>
+            ((rsin(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) * s_AttackCloudTimer) >>
              12);
-        D_us_801737F0->x0 = D_us_801737F0->x2 = D_us_801737E8 - 4;
-        D_us_801737F0->x1 = D_us_801737F0->x3 = D_us_801737E8 + 4;
-        D_us_801737F0->y0 = D_us_801737F0->y1 = D_us_801737EC - 4;
-        D_us_801737F0->y2 = D_us_801737F0->y3 = D_us_801737EC + 4;
-        D_us_801737F0 = D_us_801737F0->next;
+        s_CurrentAttackPrim->x0 = s_CurrentAttackPrim->x2 = D_us_801737E8 - 4;
+        s_CurrentAttackPrim->x1 = s_CurrentAttackPrim->x3 = D_us_801737E8 + 4;
+        s_CurrentAttackPrim->y0 = s_CurrentAttackPrim->y1 = D_us_801737EC - 4;
+        s_CurrentAttackPrim->y2 = s_CurrentAttackPrim->y3 = D_us_801737EC + 4;
+        s_CurrentAttackPrim = s_CurrentAttackPrim->next;
     }
 }
 
-void func_us_8017246C(Entity* self) {
+// This creates and handles the updates for the question marks
+// that appear above Ghost when you turn into a bat while
+// Ghost is summoned.
+void UpdateConfusedEntites(Entity* self) {
     u16 temp;
     if (self->params) {
         DestroyEntity(self);
@@ -756,75 +758,75 @@ void func_us_8017246C(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
 
-        D_us_801737FC = &g_PrimBuf[self->primIndex];
-        for (D_us_80173800 = 0; D_us_80173800 < 3; D_us_80173800++) {
-            D_us_801737FC->clut = 0x143;
-            D_us_801737FC->tpage = 0x1E;
-            D_us_801737FC->u0 = D_us_801737FC->u2 = 0x78;
-            D_us_801737FC->v0 = D_us_801737FC->v1 = 8;
-            D_us_801737FC->u1 = D_us_801737FC->u3 = 0x80;
-            D_us_801737FC->v2 = D_us_801737FC->v3 = 0x10;
-            D_us_801737FC->priority = self->zPriority + 1;
-            D_us_801737FC->drawMode = DRAW_UNK_100 | DRAW_UNK02;
-            if (D_us_80173800) {
-                D_us_801737FC->drawMode |= DRAW_HIDE;
+        s_CurrentConfusedPrim = &g_PrimBuf[self->primIndex];
+        for (s_ConfusedPrimIndex = 0; s_ConfusedPrimIndex < 3; s_ConfusedPrimIndex++) {
+            s_CurrentConfusedPrim->clut = 0x143;
+            s_CurrentConfusedPrim->tpage = 0x1E;
+            s_CurrentConfusedPrim->u0 = s_CurrentConfusedPrim->u2 = 0x78;
+            s_CurrentConfusedPrim->v0 = s_CurrentConfusedPrim->v1 = 8;
+            s_CurrentConfusedPrim->u1 = s_CurrentConfusedPrim->u3 = 0x80;
+            s_CurrentConfusedPrim->v2 = s_CurrentConfusedPrim->v3 = 0x10;
+            s_CurrentConfusedPrim->priority = self->zPriority + 1;
+            s_CurrentConfusedPrim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
+            if (s_ConfusedPrimIndex) { // Hide the 2nd and 3rd question mark
+                s_CurrentConfusedPrim->drawMode |= DRAW_HIDE;
             }
-            D_us_801737FC = D_us_801737FC->next;
+            s_CurrentConfusedPrim = s_CurrentConfusedPrim->next;
         }
-        D_us_80173804 = 0;
+        s_ConfusedFrameCounter = 0;
         self->step++;
         break;
-    case 1:
-        D_us_80173804++;
-        if (D_us_80173804 > 0xA) {
-            D_us_801737FC = &g_PrimBuf[self->primIndex];
-            D_us_801737FC = D_us_801737FC->next;
-            D_us_801737FC->drawMode &= ~DRAW_HIDE;
-            D_us_80173804 = 0;
+    case 1: // after 10 frames, unhide a question mark
+        s_ConfusedFrameCounter++;
+        if (s_ConfusedFrameCounter > 10) {
+            s_CurrentConfusedPrim = &g_PrimBuf[self->primIndex];
+            s_CurrentConfusedPrim = s_CurrentConfusedPrim->next;
+            s_CurrentConfusedPrim->drawMode &= ~DRAW_HIDE;
+            s_ConfusedFrameCounter = 0;
             self->step++;
         }
         break;
-    case 2:
-        D_us_80173804++;
-        if (D_us_80173804 > 0xA) {
-            D_us_801737FC = &g_PrimBuf[self->primIndex];
-            D_us_801737FC = D_us_801737FC->next;
-            D_us_801737FC = D_us_801737FC->next;
-            D_us_801737FC->drawMode &= ~DRAW_HIDE;
-            D_us_80173804 = 0;
+    case 2: // after 10 frames, unhide another question mark
+        s_ConfusedFrameCounter++;
+        if (s_ConfusedFrameCounter > 10) {
+            s_CurrentConfusedPrim = &g_PrimBuf[self->primIndex];
+            s_CurrentConfusedPrim = s_CurrentConfusedPrim->next;
+            s_CurrentConfusedPrim = s_CurrentConfusedPrim->next;
+            s_CurrentConfusedPrim->drawMode &= ~DRAW_HIDE;
+            s_ConfusedFrameCounter = 0;
             self->step++;
         }
         break;
-    case 3:
-        D_us_80173804++;
-        if (D_us_80173804 > 0x28) {
+    case 3: // after 40 more frames (60 total), destroy entity
+        s_ConfusedFrameCounter++;
+        if (s_ConfusedFrameCounter > 40) {
             DestroyEntity(self);
             return;
         }
     }
-    D_us_80173808 = self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
-    D_us_8017380C = self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
+    s_ParentX = self->posX.i.hi = self->ext.ghostEvent.parent->posX.i.hi;
+    s_ParentY = self->posY.i.hi = self->ext.ghostEvent.parent->posY.i.hi;
 
-    D_us_801737FC = &g_PrimBuf[self->primIndex];
+    s_CurrentConfusedPrim = &g_PrimBuf[self->primIndex];
 
-    for (D_us_80173800 = 0; D_us_80173800 < 3; D_us_80173800++) {
+    for (s_ConfusedPrimIndex = 0; s_ConfusedPrimIndex < 3; s_ConfusedPrimIndex++) {
         if (!self->facingLeft) {
 
-            D_us_801737FC->x0 = D_us_801737FC->x2 =
-                D_us_80173808 + D_us_801705A0[D_us_80173800];
-            D_us_801737FC->x1 = D_us_801737FC->x3 =
-                D_us_80173808 + (D_us_801705A0[D_us_80173800] + 8);
+            s_CurrentConfusedPrim->x0 = s_CurrentConfusedPrim->x2 =
+                s_ParentX + d_ConfusedOffsetsX[s_ConfusedPrimIndex];
+            s_CurrentConfusedPrim->x1 = s_CurrentConfusedPrim->x3 =
+                s_ParentX + (d_ConfusedOffsetsX[s_ConfusedPrimIndex] + 8);
         } else {
-            D_us_801737FC->x0 = D_us_801737FC->x2 =
-                D_us_80173808 - (D_us_801705A0[D_us_80173800] + 8);
-            D_us_801737FC->x1 = D_us_801737FC->x3 =
-                D_us_80173808 - D_us_801705A0[D_us_80173800];
+            s_CurrentConfusedPrim->x0 = s_CurrentConfusedPrim->x2 =
+                s_ParentX - (d_ConfusedOffsetsX[s_ConfusedPrimIndex] + 8);
+            s_CurrentConfusedPrim->x1 = s_CurrentConfusedPrim->x3 =
+                s_ParentX - d_ConfusedOffsetsX[s_ConfusedPrimIndex];
         }
-        D_us_801737FC->y0 = D_us_801737FC->y1 =
-            D_us_8017380C + D_us_801705A8[D_us_80173800];
-        D_us_801737FC->y2 = D_us_801737FC->y3 =
-            D_us_8017380C + (D_us_801705A8[D_us_80173800] + 8);
-        D_us_801737FC = D_us_801737FC->next;
+        s_CurrentConfusedPrim->y0 = s_CurrentConfusedPrim->y1 =
+            s_ParentY + d_ConfusedOffsetsY[s_ConfusedPrimIndex];
+        s_CurrentConfusedPrim->y2 = s_CurrentConfusedPrim->y3 =
+            s_ParentY + (d_ConfusedOffsetsY[s_ConfusedPrimIndex] + 8);
+        s_CurrentConfusedPrim = s_CurrentConfusedPrim->next;
     }
     return;
 }
