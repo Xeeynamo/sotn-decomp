@@ -44,7 +44,7 @@ void EntityBoneScimitarParts(Entity*);
 void EntityAxeKnight(Entity*);
 void EntityAxeKnightThrowingAxe(Entity*);
 void EntityBloodyZombie(Entity*);
-void func_801C5D20(Entity*);
+void EntityBloodDrips(Entity*);
 void EntityBloodSplatter(Entity*);
 void EntitySkeleton(Entity*);
 void EntitySkeletonThrownBone(Entity*);
@@ -123,7 +123,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityAxeKnight,
     EntityAxeKnightThrowingAxe,
     EntityBloodyZombie,
-    func_801C5D20,
+    EntityBloodDrips,
     EntityBloodSplatter,
     EntitySkeleton,
     EntitySkeletonThrownBone,

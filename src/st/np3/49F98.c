@@ -158,7 +158,7 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
-void func_801CA498(Primitive* prim) {
+static void func_801CA498(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x12;
@@ -439,7 +439,7 @@ void EntityBloodyZombie(Entity* self) {
     }
 }
 
-void func_801CAE0C(Entity* self) { // BloodDrips
+void EntityBloodDrips(Entity* self) { // BloodDrips
     Primitive* prim;
     s16 primIndex;
 

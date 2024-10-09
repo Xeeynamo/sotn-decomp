@@ -73,7 +73,7 @@ void EntityOwl(Entity* self);
 void func_801CD540(Entity* self);
 void func_801CD620(Entity* self);
 void EntityBloodyZombie(Entity* self);
-void func_801CAE0C(Entity* self);
+void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
@@ -166,7 +166,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801CD540,
     func_801CD620,
     EntityBloodyZombie,
-    func_801CAE0C,
+    EntityBloodDrips,
     EntityBloodSplatter,
     EntityStairwayPiece,
     EntityFallingRock,

@@ -466,7 +466,7 @@ void EntityBloodyZombie(Entity* self) {
     }
 }
 
-void func_801C5D20(Entity* self) { // BloodDrips
+void EntityBloodDrips(Entity* self) { // BloodDrips
     Primitive* prim;
     s16 primIndex;
 
