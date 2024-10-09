@@ -42,9 +42,8 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, 10E8]
-      - [0x48C8, c, 45E4]
+      - [0x80, c, bat]
       - [0x4C80, data]
-      - [0x5E00, .rodata, 10E8]
+      - [0x5E00, .rodata, bat]
       - {type: bss, vram: 0x092ed480}
   - [0x5E80]
