@@ -263,7 +263,7 @@ enum RicSubweapons {
     PL_W_19,
     PL_W_20,
     PL_W_21,
-    PL_W_22,
+    PL_W_HIGHJUMP,
     PL_W_23,
     PL_W_CRASH_VIBHUTI,
     PL_W_CRASH_REBOUND_STONE,

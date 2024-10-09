@@ -7,8 +7,6 @@
 
 #else
 
-// e_collect
-
 #include "../prize_drop_fall.h"
 
 #include "../prize_drop_fall2.h"

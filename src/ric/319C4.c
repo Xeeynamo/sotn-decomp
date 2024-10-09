@@ -1089,7 +1089,7 @@ void RicEntityStopwatchCrashLightning(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        self->ext.subweapon.subweaponId = 0x1E;
+        self->ext.subweapon.subweaponId = PL_W_30;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
