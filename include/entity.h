@@ -646,13 +646,13 @@ typedef struct {
     /* 0x80 */ s16 bobCounterY;
     /* 0x82 */ s16 targetAngle;
     /* 0x84 */ s16 maxAngle;
-    /* 0x86 */ s16 unk86;
+    /* 0x86 */ s16 frameCounter;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 unk8C;
+    /* 0x8C */ s16 confusedSubStep;
     /* 0x8E */ s32 pad8E;
-    /* 0x92 */ struct Entity* unk92;
-    /* 0x96 */ struct Entity* unk96;
+    /* 0x92 */ struct Entity* attackEntity;
+    /* 0x96 */ struct Entity* confusedEntity;
     /* 0x9A */ byte pad_1C[0x6];
     /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;

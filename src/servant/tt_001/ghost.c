@@ -27,7 +27,7 @@ STATIC_PAD_BSS(2);
 static s16 s_TargetLocationY;
 STATIC_PAD_BSS(2);
 
-static s32 D_us_801737CC;
+static s32 s_DistanceToTarget2;
 STATIC_PAD_BSS(8);
 static s32 s_TargetLocationX_calc;
 static s32 s_TargetLocationY_calc;
@@ -247,7 +247,7 @@ void unused_1560(Entity* self) {}
 #if defined(VERSION_PSP)
 void func_psp_092EA460(Entity* self, s32 entityId, s32 params) {
 #else
-Entity* func_us_80171568(Entity* self, s32 entityId) {
+Entity* CreateChildEntity(Entity* self, s32 entityId) {
 #endif
     Entity* entity;
     s32 i;
@@ -279,7 +279,7 @@ Entity* func_us_80171568(Entity* self, s32 entityId) {
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->posX.val = self->posX.val;
         entity->posY.val = self->posY.val;
-        entity->ext.factory.parent = self;
+        entity->ext.ghostEvent.parent = self;
 #if defined(VERSION_PSP)
         entity->params = params;
 #else
@@ -445,7 +445,7 @@ void UpdateServantDefault(Entity* self) {
         if (g_Player.status &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
-            self->ext.ghost.unk8C = 0;
+            self->ext.ghost.confusedSubStep = 0;
             break;
         }
         if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
@@ -507,7 +507,7 @@ void UpdateServantDefault(Entity* self) {
         if (g_Player.status &
             (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR)) {
             self->step = 4;
-            self->ext.ghost.unk8C = 0;
+            self->ext.ghost.confusedSubStep = 0;
             break;
         }
         if (g_CutsceneHasControl) {
@@ -526,24 +526,23 @@ void UpdateServantDefault(Entity* self) {
         if (self->velocityX < 0) {
             self->facingLeft = 0;
         }
-        D_us_801737CC = UpdateEntityVelocityTowardsTarget(
+        s_DistanceToTarget2 = UpdateEntityVelocityTowardsTarget(
             self, s_TargetLocationX, s_TargetLocationY);
         if (self->step == 2) {
-            if (D_us_801737CC < 8) {
-                self->ext.ghost.unk86 = 0;
+            if (s_DistanceToTarget2 < 8) {
+                self->ext.ghost.frameCounter = 0;
                 self->step += 1;
             }
-        } else if (D_us_801737CC < 8) {
-            self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 ==
+        } else if (s_DistanceToTarget2 < 8) {
+            self->ext.ghost.frameCounter++;
+            if (self->ext.ghost.frameCounter ==
                 (d_GhostAbilityStats[s_GhostStats.level / 10]
-                                    [ABILITY_STATS_DELAY_FRAMES] -
-                 0x1E)) {
-                self->ext.ghost.unk92 = func_us_80171568(self, 0);
-            } else if (self->ext.ghost.unk86 >
+                                    [ABILITY_STATS_DELAY_FRAMES] - 30)) {
+                self->ext.ghost.attackEntity = CreateChildEntity(self, 0);
+            } else if (self->ext.ghost.frameCounter >
                        d_GhostAbilityStats[s_GhostStats.level / 10]
                                           [ABILITY_STATS_DELAY_FRAMES]) {
-                self->ext.ghost.unk86 = 0;
+                self->ext.ghost.frameCounter = 0;
                 g_api.func_8011A3AC(self,
                                     d_GhostAbilityStats[s_GhostStats.level / 10]
                                                        [ABILITY_STATS_SPELL_ID],
@@ -552,10 +551,10 @@ void UpdateServantDefault(Entity* self) {
                 self->hitboxHeight = 8;
             }
         } else {
-            self->ext.ghost.unk86 = 0;
-            if (self->ext.ghost.unk92->entityId == 0xDA) {
-                self->ext.ghost.unk92->params = 1;
-                ghost_ServantDesc.Unk28(self->ext.ghost.unk92);
+            self->ext.ghost.frameCounter = 0;
+            if (self->ext.ghost.attackEntity->entityId == 0xDA) {
+                self->ext.ghost.attackEntity->params = 1;
+                ghost_ServantDesc.Unk28(self->ext.ghost.attackEntity);
             }
         }
         self->posX.val += self->velocityX;
@@ -564,9 +563,9 @@ void UpdateServantDefault(Entity* self) {
     case 4:
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
-            if (self->ext.ghost.unk96->entityId == 0xDB) {
-                self->ext.ghost.unk96->params = 1;
-                ghost_ServantDesc.Unk2C(self->ext.ghost.unk96);
+            if (self->ext.ghost.confusedEntity->entityId == 0xDB) {
+                self->ext.ghost.confusedEntity->params = 1;
+                ghost_ServantDesc.Unk2C(self->ext.ghost.confusedEntity);
             }
             self->step = 1;
             break;
@@ -574,43 +573,43 @@ void UpdateServantDefault(Entity* self) {
         UpdateEntityVelocityTowardsTarget(
             self, s_TargetLocationX, s_TargetLocationY);
         self->posY.val += self->velocityY;
-        switch (self->ext.ghost.unk8C) {
+        switch (self->ext.ghost.confusedSubStep) {
         case 0:
-            self->ext.ghost.unk86 = 0;
-            self->ext.ghost.unk8C++;
+            self->ext.ghost.frameCounter = 0;
+            self->ext.ghost.confusedSubStep++;
             break;
         case 1:
-            self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 > 0x3C) {
-                self->ext.ghost.unk86 = 0;
-                self->ext.ghost.unk8C++;
+            self->ext.ghost.frameCounter++;
+            if (self->ext.ghost.frameCounter > 0x3C) {
+                self->ext.ghost.frameCounter = 0;
+                self->ext.ghost.confusedSubStep++;
             }
             break;
         case 2:
         case 3:
         case 4:
         case 5:
-            self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 == 1) {
+            self->ext.ghost.frameCounter++;
+            if (self->ext.ghost.frameCounter == 1) {
                 self->facingLeft = self->facingLeft ? 0 : 1;
-            } else if (self->ext.ghost.unk86 > 15) {
-                self->ext.ghost.unk86 = 0;
-                self->ext.ghost.unk8C++;
+            } else if (self->ext.ghost.frameCounter > 15) {
+                self->ext.ghost.frameCounter = 0;
+                self->ext.ghost.confusedSubStep++;
             }
             break;
         case 6:
-            self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 > 0x3C) {
-                self->ext.ghost.unk86 = 0;
-                self->ext.ghost.unk8C++;
+            self->ext.ghost.frameCounter++;
+            if (self->ext.ghost.frameCounter > 0x3C) {
+                self->ext.ghost.frameCounter = 0;
+                self->ext.ghost.confusedSubStep++;
             }
             break;
         case 7:
-            self->ext.ghost.unk86++;
-            if (self->ext.ghost.unk86 == 1) {
-                self->ext.ghost.unk96 = func_us_80171568(self, 1);
-            } else if (self->ext.ghost.unk86 > 0x3C) {
-                self->ext.ghost.unk86 = 0;
+            self->ext.ghost.frameCounter++;
+            if (self->ext.ghost.frameCounter == 1) {
+                self->ext.ghost.confusedEntity = CreateChildEntity(self, 1);
+            } else if (self->ext.ghost.frameCounter > 0x3C) {
+                self->ext.ghost.frameCounter = 0;
                 self->step++;
             }
             break;
