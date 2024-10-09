@@ -52,7 +52,7 @@ static FamiliarStats GhostStats;
 static s32 g_IsServantDestroyed;
 static s32 D_us_80173820;
 
-extern s32 DefaultAnimationFrame;
+extern s32 DefaultGhostAnimationFrame[];
 extern AnimationFrame* D_us_80170500[];
 extern s32 AbilityStats[][3];
 extern u16 GhostClut[];
@@ -430,7 +430,7 @@ void UpdateServantDefault(Entity* self) {
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_UNK8;
-        SetEntityAnimation(self, &DefaultAnimationFrame);
+        SetEntityAnimation(self, &DefaultGhostAnimationFrame);
         self->ext.ghost.MaxAngle = 512;
         self->ext.ghost.unk88 = 128;
         self->ext.ghost.unk8A = -1;
