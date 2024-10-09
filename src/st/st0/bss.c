@@ -2,6 +2,7 @@
 #include <game.h>
 #include "dialogue2.h"
 
+// As g_Dialogue can be either structs, we only care of the bigger one
 union DiagCombo {
     Dialogue diag1;
     Dialogue2 diag2;

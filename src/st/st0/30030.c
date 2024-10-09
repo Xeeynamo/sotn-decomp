@@ -469,6 +469,8 @@ void PrologueScroll(void) {
     }
 }
 
+// This file uses g_Dialogue with a different struct than the usual.
+// It is based on struct Dialogue, which is used in cutscene.c
 extern Dialogue2 g_Dialogue;
 u8 func_801B101C(u8* script) {
     Primitive* prim;
