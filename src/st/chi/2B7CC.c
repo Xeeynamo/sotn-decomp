@@ -8,20 +8,20 @@
 
 // D_801817F4
 u8 PhysicsSensors_VenusWeed[] = {
-    0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x02, 0x00, 0xFC, 0xFF, 0xFC, 0xFF, 0x00, 0x00 
+    0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x02, 0x00, 0xFC, 0xFF, 0xFC, 0xFF, 0x00, 0x00
 };
 
 u8 D_80181804[] = {
-    0x00, 0x00, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00 
+    0x00, 0x00, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00
 };
 
 u8 D_8018180C[] = {
     0x01, 0x01, 0x0A, 0x03, 0x06, 0x04, 0x06, 0x05, 0x05, 0x06, 0x05, 0x07, 0x05, 0x08, 0x05, 0x09,
-    0x05, 0x0A, 0x08, 0x0C, 0xFF, 0x00, 0x00, 0x00 
+    0x05, 0x0A, 0x08, 0x0C, 0xFF, 0x00, 0x00, 0x00
 };
 
 u8 D_80181824[] = {
-    0x04, 0x0C, 0x08, 0x0E, 0x04, 0x0F, 0x01, 0x10, 0xFF, 0x00, 0x00, 0x00 
+    0x04, 0x0C, 0x08, 0x0E, 0x04, 0x0F, 0x01, 0x10, 0xFF, 0x00, 0x00, 0x00
 };
 
 u8 D_80181830[] = {
@@ -34,16 +34,16 @@ u8 D_80181838[] = {
 };
 
 u8 D_80181854[] = {
-    0x0A, 0x0B, 0x0A, 0x0C, 0x0A, 0x0D, 0x0A, 0x0C, 0x00, 0x00, 0x00, 0x00 
+    0x0A, 0x0B, 0x0A, 0x0C, 0x0A, 0x0D, 0x0A, 0x0C, 0x00, 0x00, 0x00, 0x00
 };
 
 u8 D_80181860[] = {
-    0x10, 0x17, 0x08, 0x18, 0x06, 0x19, 0x05, 0x1A, 0x04, 0x1B, 0x01, 0x1C, 0xFF, 0x00, 0x00, 0x00 
+    0x10, 0x17, 0x08, 0x18, 0x06, 0x19, 0x05, 0x1A, 0x04, 0x1B, 0x01, 0x1C, 0xFF, 0x00, 0x00, 0x00
 };
 
 u8 D_80181870[] = {
     0x14, 0x1C, 0x03, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20, 0x02, 0x21, 0x2A, 0x1F, 0x05, 0x0F,
-    0x05, 0x0E, 0x10, 0x0C, 0xFF, 0x00, 0x00, 0x00 
+    0x05, 0x0E, 0x10, 0x0C, 0xFF, 0x00, 0x00, 0x00
 };
 
 u8 D_80181888[] = {
@@ -51,27 +51,27 @@ u8 D_80181888[] = {
     0x02, 0x2E, 0x02, 0x2F, 0x02, 0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34, 0x02, 0x35,
     0x02, 0x36, 0x03, 0x33, 0x03, 0x34, 0x03, 0x35, 0x03, 0x36, 0x04, 0x33, 0x04, 0x34, 0x04, 0x35,
     0x04, 0x36, 0x05, 0x33, 0x05, 0x34, 0x05, 0x35, 0x05, 0x36, 0x04, 0x33, 0x04, 0x34, 0x04, 0x35,
-    0xFF, 0x00, 0x00, 0x00 
+    0xFF, 0x00, 0x00, 0x00
 };
 
 u8 D_801818CC[] = {
     0x03, 0x36, 0x03, 0x33, 0x02, 0x34, 0x01, 0x35, 0x04, 0x30, 0x04, 0x2F, 0x04, 0x2E, 0x05, 0x2D,
-    0x05, 0x2C, 0x05, 0x2B, 0x05, 0x2A, 0x04, 0x29, 0x04, 0x28, 0x04, 0x27, 0x01, 0x26, 0xFF, 0x00 
+    0x05, 0x2C, 0x05, 0x2B, 0x05, 0x2A, 0x04, 0x29, 0x04, 0x28, 0x04, 0x27, 0x01, 0x26, 0xFF, 0x00
 };
 
 u8 D_801818EC[] = {
-    0x03, 0x22, 0x03, 0x23, 0x03, 0x24, 0x03, 0x25, 0x00, 0x00, 0x00, 0x00 
+    0x03, 0x22, 0x03, 0x23, 0x03, 0x24, 0x03, 0x25, 0x00, 0x00, 0x00, 0x00
 };
 
 // D_801818F8
 u8 AnimFrames_ThornweedDisguise[] = {
-    0x05, 0x2A, 0x05, 0x2B, 0x05, 0x2C, 0x05, 0x2D, 0x00, 0x00, 0x00, 0x00 
+    0x05, 0x2A, 0x05, 0x2B, 0x05, 0x2C, 0x05, 0x2D, 0x00, 0x00, 0x00, 0x00
 };
 
 // D_80181904
 u8 AnimFrames_ThornweedQuickWiggle[] = {
     0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x10, 0x0C, 0x0E, 0x0E,
-    0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF, 0x00 
+    0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF, 0x00
 };
 
 extern EntityInit EntityInit_80180700;
@@ -131,13 +131,13 @@ void EntityVenusWeed(Entity* self)
     if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
         SetStep(DEATH);
     }
-    
+
     switch (self->step) {
         case INIT:
             InitializeEntity(&EntityInit_80180700);
             self->hitboxOffX = 1;
             self->hitboxOffY = -7;
-            
+
             primIdx = g_api.AllocPrimitives(PRIM_GT4, 3);
             if (primIdx == -1) {
                 DestroyEntity(self);
@@ -147,7 +147,7 @@ void EntityVenusWeed(Entity* self)
             self->primIndex = primIdx;
             prim = &g_PrimBuf[primIdx];
             self->ext.prim = prim;
-            
+
             for (i = 0; i < 2; i++) {
                 prim->tpage = 0x14;
                 prim->clut = PAL_DRA(0x21A);
@@ -157,7 +157,7 @@ void EntityVenusWeed(Entity* self)
                 prim->v2 = prim->v3 = 0x22;
                 prim->priority = self->zPriority - 1;
                 prim->drawMode = DRAW_HIDE;
-                
+
                 prim = prim->next;
             }
 
@@ -173,13 +173,13 @@ void EntityVenusWeed(Entity* self)
 
             prim = prim->next;
             break;
-        
+
         case DROP_TO_GROUND:
             if (UpdatePhysicsState(&PhysicsSensors_VenusWeed) & 1) {
                 SetStep(THORNWEED_DISGUISE);
             }
             break;
-        
+
         case THORNWEED_DISGUISE:
             AnimateEntity(&AnimFrames_ThornweedDisguise, self);
             if (GetDistanceToPlayerX() < ActivateDistanceX) {
@@ -195,18 +195,18 @@ void EntityVenusWeed(Entity* self)
                     entity->posY.i.hi -= 4;
                     entity->params = 0;
                 }
-                
+
                 PlaySfxWithPosArgs(NA_SE_EN_EXPLOSIVE_DEATH);
                 DestroyEntity(self);
                 return;
             }
             break;
-        
+
         case GROW:
             AnimateEntity(&AnimFrames_ThornweedQuickWiggle, self);
 
             checkCount = 0;
-            switch (self->step_s) {                
+            switch (self->step_s) {
                 case GROW_LEAVES:
                     // Update leaves width
                     self->ext.venusWeed.leavesWidth++;
@@ -242,7 +242,7 @@ void EntityVenusWeed(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case GROW_STEM:
                     // Update stem width
                     self->ext.venusWeed.stemWidth++;
@@ -272,7 +272,7 @@ void EntityVenusWeed(Entity* self)
                         self->step_s++;
                     }
                     break;
-                
+
                 case GROW_FLOWER:
                     entity = self + 1;
 
@@ -287,7 +287,7 @@ void EntityVenusWeed(Entity* self)
 
                     self->step_s++;
                     break;
-                
+
                 case GROW_TENDRILS:
                     entity = (self + 2);
                     for (i = 0; i < 0xA; i++, entity++) {
@@ -298,18 +298,18 @@ void EntityVenusWeed(Entity* self)
 
                     self->step_s++;
                     break;
-                
+
                 case GROW_DONE:
                     //TODO: Wait for signal?
                     break;
             }
             break;
-        
+
         case IDLE:
             //TODO: Wait for signal?
             AnimateEntity(&AnimFrames_ThornweedDisguise, self);
             break;
-        
+
         case ATTACK:
             //TODO: Wait for signal?
             if (self->ext.venusWeed.triggerAttack) {
@@ -321,7 +321,7 @@ void EntityVenusWeed(Entity* self)
                 self->ext.venusWeed.timer--;
             }
             break;
-        
+
         case DEATH:
             switch (self->step_s) {
                 case DEATH_INIT:
@@ -344,7 +344,7 @@ void EntityVenusWeed(Entity* self)
                         }
                     }
                     break;
-                
+
                 case DEATH_SHRINK:
                     checkCount = 0;
                     self->ext.venusWeed.timer++;
@@ -387,7 +387,7 @@ void EntityVenusWeed(Entity* self)
                         self->step_s += 1;
                     }
                     break;
-                
+
                 case DEATH_DONE:
                     // Spawn explosion
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -405,7 +405,7 @@ void EntityVenusWeed(Entity* self)
                     return;
             }
     }
-    
+
     // Update wiggle
     if (self->ext.venusWeed.wiggleT) {
         rot = self->rotZ;
@@ -413,7 +413,7 @@ void EntityVenusWeed(Entity* self)
         x = rcos(rot) * 3 >> 0xC;
         y = rsin(rot) * 3 >> 0xC;
         prim = self->ext.prim;
-        
+
         // Update leaves
         for (i = -1; i < 2; i += 2) {
             prim->x1 = self->posX.i.hi + (x + LeavesWidthMax) * i;
@@ -439,7 +439,268 @@ void EntityVenusWeed(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801AC074);    // [Entity]
+extern u8 D_8018180C[];
+extern u8 D_80181854[];
+extern u8 D_80181824[];
+extern u8 D_80181830[];
+extern u8 D_80181838[];
+extern u8 D_80181860[];
+extern u8 D_80181870[];
+extern EntityInit EntityInit_8018070C;
+
+// E_ID_2A
+// func_801AC074
+// https://decomp.me/scratch/0O3ex
+// PSP:func_psp_0923BB48:Match
+// PSP:https://decomp.me/scratch/yUOcn
+void func_801AC074(Entity* self)
+{
+    Entity* entity;   // s0
+    s32 x;            // s5
+    s16 temp_v0_6;    // s2
+    s32 var_s1;       // s1
+    s32 var_s4;       // s4
+    s32 var_v0;       // s3
+    s32 y;            // s6
+
+    if (self->hitFlags & 3) {
+        PlaySfxWithPosArgs(0x70F);
+        entity = self - 1;
+        entity->ext.venusWeed.wiggleT = 0x40;
+    }
+    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
+        PlaySfxWithPosArgs(0x710);
+        SetStep(8);
+    }
+    
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_8018070C);
+            self->hitboxOffX = 6;
+            self->hitboxOffY = -0x10;
+            self->hitboxWidth = 0xE;
+            self->hitboxHeight = 0xE;
+            self->animCurFrame = 1;
+            self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->rotX = self->rotY = 0;
+            self->hitboxState = 0;
+            break;
+        
+        case 1:
+            self->rotX = self->rotY += 6;
+            if (self->rotX >= 0x100) {
+                self->drawFlags = 0;
+                self->hitboxState = 3;
+                
+                PlaySfxWithPosArgs(0x669);
+                SetStep(2);
+            }
+            break;
+        
+        case 2:
+            if (AnimateEntity(D_8018180C, self) == 0) {
+                entity = self - 1;
+                entity->step = 4;
+                entity->step_s = 0;
+                SetStep(3);
+            }
+            break;
+        
+        case 3:
+            if (!self->step_s) {
+                self->ext.venusWeedFlower.unk8C = 1;
+                self->step_s++;
+            }
+            if (AnimateEntity(D_80181854, self) == 0) {
+                self->facingLeft = GetSideToPlayer() & 1;
+            }
+            if (!--self->ext.venusWeedFlower.unk8C) {
+                self->facingLeft = GetSideToPlayer() & 1;
+                if (self->ext.venusWeedFlower.unk92) {
+                    SetStep(5);
+                } else {
+                    SetStep(4);
+                }
+                self->ext.venusWeedFlower.unk92 ^= 1;
+                return;
+            }
+            break;
+        
+        case 4:
+            switch (self->step_s) {
+                case 0:
+                    entity = self - 1;
+                    entity->step = 5;
+                    entity->step_s = 0;
+                    entity = self + 1;
+                    for (var_s1 = 0; var_s1 < 0xA; var_s1++, entity++) {
+                        entity->step = 3;
+                        entity->step_s = 0;
+                    }
+                    self->step_s++;
+                    // fallthrough
+                case 1:
+                    if (AnimateEntity(D_80181824, self) == 0) {
+                        SetSubStep(2);
+                    }
+                    break;
+                
+                case 2:
+                    PlaySfxWithPosArgs(0x6B0);
+                    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (entity != NULL) {
+                        CreateEntityFromEntity(0x2DU, self, entity);
+                        entity->facingLeft = self->facingLeft;
+                        entity->ext.venusWeedFlower.entity = self;
+                    }
+                    self->step_s++;
+                    // fallthrough
+                case 3:
+                    if (AnimateEntity(D_80181830, self) == 0) {
+                        entity = self + 1;
+                        if (g_Timer & 1) {
+                            var_v0 = 0;
+                        } else {
+                            var_v0 = 4;
+                        }
+                        for (var_s1 = 0; var_s1 < 10; var_s1++, entity++) {
+                            entity->ext.venusWeedFlower.unk90 = var_v0 + 1;
+                            var_v0++;
+                            var_v0 &= 0x7;
+                        }
+                        SetSubStep(4);
+                    }
+                    break;
+                
+                case 4:
+                    if (AnimateEntity(D_80181838, self) == 0) {
+                        SetSubStep(5);
+                    }
+                    break;
+                
+                case 5:
+                    entity = self - 1;
+                    entity->step = 4;
+                    SetStep(3);
+                    break;
+            }
+            if (self->ext.venusWeedFlower.unk91) {
+                entity = self - 1;
+                entity->ext.venusWeed.triggerAttack = true;
+                if (!(self->palette & 0x8000)) {
+                    self->palette += self->ext.venusWeedFlower.unk91;
+                    if (self->palette > 0x219) {
+                        self->palette = 0x219;
+                    }
+                    self->ext.venusWeedFlower.unk91 = false;
+                    return;
+                }
+            }
+            break;
+        
+        case 5:
+            switch (self->step_s) {
+                case 0:
+                    entity = self - 1;
+                    entity->step = 6;
+                    entity->step_s = 0;
+                    self->step_s += 1;
+                    // fallthrough
+                case 1:
+                    if (AnimateEntity(D_80181860, self) == 0) {
+                        SetSubStep(2);
+                        return;
+                    }
+                    break;
+                
+                case 2:
+                    PlaySfxWithPosArgs(0x6B0);
+                    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (entity != NULL) {
+                        CreateEntityFromEntity(E_ID_2D, self, entity);
+                        entity->facingLeft = self->facingLeft;
+                        entity->ext.venusWeedFlower.entity = self;
+                    }
+                    self->step_s++;
+                    // fallthrough
+                case 3:
+                    if (AnimateEntity(D_80181870, self) == 0) {
+                        self->step_s++;
+                    }
+                    if (!self->animFrameDuration && self->animFrameIdx == 3) {
+                        PlaySfxWithPosArgs(0x626);
+                        if (self->facingLeft) {
+                            x = self->posX.i.hi - 0x18;
+                        } else {
+                            x = self->posX.i.hi + 0x18;
+                        }
+                        y = self->posY.i.hi - 0x18;
+                        entity = &PLAYER;
+                        temp_v0_6 = ratan2(entity->posY.i.hi - y, entity->posX.i.hi - x);
+                        if (self->facingLeft) {
+                            if (temp_v0_6 < 0) {
+                                if (temp_v0_6 > -0x480) {
+                                    temp_v0_6 = -0x480;
+                                }
+                                var_s4 = -0x60;
+                            } else {
+                                if (temp_v0_6 < 0x500) {
+                                    temp_v0_6 = 0x500;
+                                }
+                                var_s4 = 0x60;
+                            }
+                        } else if (temp_v0_6 < 0) {
+                            if (temp_v0_6 < -0x380) {
+                                temp_v0_6 = -0x380;
+                            }
+                            var_s4 = 0x60;
+                        } else {
+                            if (temp_v0_6 > 0x300) {
+                                temp_v0_6 = 0x300;
+                            }
+                            var_s4 = -0x60;
+                        }
+                        for (var_s1 = 0; var_s1 < 5; var_s1++) {
+                            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                            if (entity != NULL) {
+                                CreateEntityFromEntity(E_ID_2C, self, entity);
+                                entity->rotZ = temp_v0_6;
+                                entity->params = var_s1;
+                                entity->posX.i.hi = x;
+                                entity->posY.i.hi -= 0x18;
+                            }
+                            temp_v0_6 += var_s4;
+                        }
+                        return;
+                    }
+                    break;
+                
+                case 4:
+                    entity = self - 1;
+                    entity->step = 4;
+                    SetStep(3);
+                    return;
+            }
+            break;
+        
+        case 8:
+            entity = self + 1;
+            for (var_s1 = 0; var_s1 < 0xA; var_s1++, entity++) {
+                entity->flags |= FLAG_DEAD;
+            }
+            PlaySfxWithPosArgs(0x65B);
+            self->hitboxState = 0;
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                entity->params = 3;
+            }
+            entity = self - 1;
+            entity->flags |= FLAG_DEAD;
+            DestroyEntity(self);
+            break;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801AC730);    // [Entity]
 

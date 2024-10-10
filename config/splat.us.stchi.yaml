@@ -90,10 +90,10 @@ segments:
       - [0x1B2E8, .rodata, 2A020] # jtbl_8019B2E8 [EntityCorpseweed]
       - [0x1B304, .rodata, 2B7CC] # jtbl_8019B304 [EntityVenusWeed]
       - [0x1B32C, .rodata, 2B7CC] # jtbl_8019B32C [EntityVenusWeed]
-      - [0x1B340, rodata] # NULL
-      - [0x1B344, rodata] # jtbl_8019B344
-      - [0x1B36C, rodata] # jtbl_8019B36C
-      - [0x1B384, rodata] # jtbl_8019B384
+      - [0x1B344, .rodata, 2B7CC] # jtbl_8019B344 [func_801AC074]
+      - [0x1B36C, .rodata, 2B7CC] # jtbl_8019B36C [func_801AC074]
+      - [0x1B384, .rodata, 2B7CC] # jtbl_8019B384 [func_801AC074]
+      - [0x1B398, rodata] # NULL
       - [0x1B39C, rodata] # jtbl_8019B39C
       - [0x1B3C0, rodata]
       - [0x1B3E0, rodata] # jtbl_8019B3E0

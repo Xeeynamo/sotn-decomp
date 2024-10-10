@@ -1299,6 +1299,17 @@ typedef struct {
     /* 0x91 */ u8 triggerAttack;
 } ET_VenusWeed;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ char pad_8E[0x2];
+    /* 0x90 */ u8 unk90;
+    /* 0x91 */ u8 unk91;
+    /* 0x92 */ u8 unk92;
+    /* 0x92 */ char pad_93[0x11];
+    /* 0xA4 */ struct Entity* entity;
+} ET_VenusWeedFlower;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1421,4 +1432,5 @@ typedef union { // offset=0x7C
     ET_Thornweed thornweed;
     ET_Corpseweed corpseweed;
     ET_VenusWeed venusWeed;
+    ET_VenusWeedFlower venusWeedFlower;
 } Ext;
