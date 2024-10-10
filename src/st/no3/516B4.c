@@ -1435,7 +1435,7 @@ void EntityHighWaterSplash(Entity* self) {
 }
 
 // falling object, larger
-void EntityLargeFallingObject(Entity* self) {
+void EntityDeadMerman(Entity* self) {
     u8 temp_v0;
 
     if (self->step == 0) {

@@ -1396,7 +1396,7 @@ void EntityHighWaterSplash(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(D_801839B0, self);
+        AnimateEntity(D_801822C0, self);
         MoveEntity();
         self->velocityY += FIX(0.25);
         self->rotX += 6;
@@ -1411,7 +1411,7 @@ void EntityHighWaterSplash(Entity* self) {
         break;
 
     case 3:
-        if (AnimateEntity(D_801839B0, self) == 0) {
+        if (AnimateEntity(D_801822C0, self) == 0) {
             MoveEntity();
             self->velocityY += FIX(0.25);
             self->rotX += 6;
@@ -1424,9 +1424,7 @@ void EntityHighWaterSplash(Entity* self) {
     }
 }
 
-void EntityLargeFallingObject(Entity* self) {
-    u8 temp_v0;
-
+void EntityDeadMerman(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitWaterObject);
         self->animCurFrame = 13;
@@ -1440,11 +1438,9 @@ void EntityLargeFallingObject(Entity* self) {
         return;
     }
     MoveEntity();
-    temp_v0 = self->ext.generic.unk84.U8.unk0 - 1;
-    self->ext.generic.unk84.U8.unk0--;
     self->velocityY += FIX(0.0625);
     self->unk6C += 0xFE;
-    if (temp_v0 == 0) {
+    if (--self->ext.generic.unk84.U8.unk0 == 0) {
         DestroyEntity(self);
     }
 }
