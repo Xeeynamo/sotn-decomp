@@ -399,9 +399,9 @@ void UpdateServantDefault(Entity* self) {
 
     // I think if step is < 2, the target the ghost is moving to is Alucard
     if (self->step < 2) {
-        // I don't believe this is the correct flag.  This appears to be a flag
-        // with the foreground layer, not the stage.
-        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+        // these flags are set in the SetRoomForegroundLayer and is set to
+        // layerDef->rect.params
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             switch (ServantUnk0()) {
             case 0:
                 s_TargetLocationX_calc = 0x40;

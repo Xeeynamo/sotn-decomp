@@ -1181,6 +1181,10 @@ typedef struct {
     /* 0x0C */ u8* collision;
 } TileDefinition; // size = 0x10
 
+#define LAYOUT_RECT_PARAMS_UNKNOWN_10 0x10
+#define LAYOUT_RECT_PARAMS_UNKNOWN_20 0x20
+#define LAYOUT_RECT_PARAMS_UNKNOWN_40 0x40
+
 typedef struct {
     /* 0x00 */ u32 left : 6;
     /* 0x04 */ u32 top : 6;
