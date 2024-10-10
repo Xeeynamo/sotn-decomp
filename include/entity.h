@@ -784,7 +784,7 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ s32 accelY;
+    /* 0x7C */ u32 accelY;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ f32 topY;
