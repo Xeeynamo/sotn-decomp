@@ -12,7 +12,7 @@
 <!-- no0.EntityExplosionVariantsSpawner -->
 <g id="node1" class="node">
 <title>no0.EntityExplosionVariantsSpawner</title>
-<ellipse fill="red" stroke="black" cx="184.58" cy="-198" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="184.58" cy="-198" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="184.58" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityExplosionVariantsSpawner</text>
 </g>
 <!-- no0.AllocEntity -->

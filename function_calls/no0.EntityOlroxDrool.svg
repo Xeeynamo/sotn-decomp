@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.EntityExplosionVariantsSpawner</title>
 <g id="a_node6"><a xlink:href="no0.EntityExplosionVariantsSpawner.svg" xlink:title="no0.EntityExplosionVariantsSpawner">
-<ellipse fill="red" stroke="black" cx="1101.44" cy="-18" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1101.44" cy="-18" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="1101.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.EntityExplosionVariantsSpawner</text>
 </a>
 </g>
