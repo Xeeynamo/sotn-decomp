@@ -9,7 +9,7 @@
 extern Entity D_8007D858;
 
 // D_8018173C
-s16 PhysicsSensors[] = {
+s16 PhysicsSensors_Thornweed[] = {
     0, 1, 0, 4, 2, -4, -4, 0,
 };
 
@@ -125,7 +125,7 @@ void EntityThornweed(Entity* self)
             break;
 
         case DropToGround:
-            if (UpdatePhysicsState(&PhysicsSensors) & 1) {
+            if (UpdatePhysicsState(&PhysicsSensors_Thornweed) & 1) {
                 SetStep(WaitToWake);
             }
             break;
