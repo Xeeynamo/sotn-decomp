@@ -254,6 +254,6 @@ void func_us_801C3308(Entity* self) {
     DestroyEntity(self);
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/first_c_file", MakeExplosions);
+INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C3334);
 
 INCLUDE_ASM("st/no0/nonmatchings/first_c_file", EntityWargExplosionPuffOpaque);

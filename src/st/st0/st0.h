@@ -179,15 +179,6 @@ extern u8 D_801824CC[];
 extern s8 D_801A7BDC;
 extern Point32 D_801BEB64[];
 extern s32 g_SkipCutscene;
-extern s16 D_801C24D4;
-extern s16 D_801C24D6;
-extern s16 D_801C24D8;
-extern s16 D_801C24DA;
-extern s16 D_801C24DC;
-extern s8 D_801C24DE;
-extern s8 D_801C24DF;
-extern Primitive* D_801C24E0;
-extern s32 D_801C24E4[];
 extern s32 D_801C2578;
 extern s32 g_IsCutsceneDone;
 
@@ -210,5 +201,3 @@ extern s32 g_SkipCutscene;
 extern s32 D_801C2504;
 extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;
-
-extern Dialogue g_Dialogue;
