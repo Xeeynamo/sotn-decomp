@@ -61,7 +61,7 @@ void EntityWaterDrop(Entity* self);
 void EntityMerman2(Entity* self);
 void EntityMermanWaterSplash(Entity* self);
 void EntityMediumWaterSplash(Entity* self);
-void EntityUnkId3D(Entity* self);
+void EntityHighWaterSplash(Entity* self);
 void EntityExplosion2(Entity* self);
 void EntityLargeFallingObject(Entity* self);
 void EntityFallingObject2(Entity* self);
@@ -116,7 +116,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
-    EntityDummy,
+    EntityDummy, // 0x10
     EntityCavernDoorVase,
     EntityUnkId12,
     EntityUnkId13,
@@ -132,7 +132,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,
-    EntityClickSwitch,
+    EntityClickSwitch, // 0x20
     EntityPathBlockSmallWeight,
     EntityPathBlockTallWeight,
     EntityTrapDoor,
@@ -148,7 +148,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFireWarg,
     EntityFireWargWaveAttack,
     EntityUnkId2F,
-    EntityUnkId30,
+    EntityUnkId30, // 0x30
     EntityUnkId31,
     EntityExplosion3,
     EntityFireWargDeathBeams,
@@ -161,10 +161,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMerman2,
     EntityMermanWaterSplash,
     EntityMediumWaterSplash,
-    EntityUnkId3D,
+    EntityHighWaterSplash,
     EntityExplosion2,
     EntityLargeFallingObject,
-    EntityFallingObject2,
+    EntityFallingObject2, // 0x40
     EntityMerman,
     EntityMermanFireball,
     EntityFallingObject,
@@ -180,7 +180,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityZombieSpawner,
     EntityPushAlucard,
     EntityForegroundTree,
-    EntityUnkId50,
+    EntityUnkId50, // 0x50
     EntityBackgroundPineTrees,
     EntityUnkId52,
     EntityCastleDoorTransition,
@@ -196,7 +196,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFallingRock,
     EntityUnkId5E,
     EntityFlyingOwlAndLeaves,
-    EntityFallingLeaf,
+    EntityFallingLeaf, // 0x60
     EntityWargExplosionPuffTransparent,
     EntityWargExplosionPuffOpaque
 };

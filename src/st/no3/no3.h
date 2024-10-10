@@ -63,7 +63,7 @@ typedef enum EntityIDs {
     /* 0x3A */ E_MERMAN_SPAWNER_3A,
     /* 0x3B */ E_MERMAN_JUMP_WATER,
     /* 0x3C */ E_MERMAN2_UNK1,
-    /* 0x3D */ E_MEDIUM_WATER_SPLASH,
+    /* 0x3D */ E_HIGH_WATER_SPLASH,
     /* 0x3E */ E_MERMAN2_SPIT_FIRE,
     /* 0x3F */ E_MERMAN2_DYING,
     /* 0x40 */ E_MERMAN2_JUMP_AIR,

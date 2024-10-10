@@ -39,7 +39,7 @@ typedef enum {
     /* 0x32 */ E_MERMAN_SPAWNER_32,
     /* 0x33 */ E_MERMAN_JUMP_WATER,
     /* 0x34 */ E_MERMAN2_UNK1,
-    /* 0x35 */ E_MEDIUM_WATER_SPLASH,
+    /* 0x35 */ E_HIGH_WATER_SPLASH,
     /* 0x36 */ E_MERMAN2_SPIT_FIRE,
     /* 0x37 */ E_MERMAN2_DYING,
     /* 0x38 */ E_MERMAN2_JUMP_AIR,

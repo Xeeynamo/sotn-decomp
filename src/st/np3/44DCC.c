@@ -1289,7 +1289,7 @@ void EntityMermanWaterSplash(Entity* self) {
         for (i = 0; i < 7; i++) {
             newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_MEDIUM_WATER_SPLASH, self, newEntity);
+                CreateEntityFromEntity(E_HIGH_WATER_SPLASH, self, newEntity);
                 newEntity->params = D_80182304[i];
                 newEntity->posX.i.hi = newEntity->posX.i.hi + posPtr[i];
                 newEntity->velocityX = velPtr[i];
@@ -1365,7 +1365,7 @@ void EntityFallingObject2(Entity* self) {
 }
 
 // ID 0x35
-void func_801C7E18(Entity* self) {
+void EntityHighWaterSplash(Entity* self) {
     s8 temp; // probably !FAKE
 
     switch (self->step) {
@@ -1381,22 +1381,22 @@ void func_801C7E18(Entity* self) {
         self->rotX = 0x100;
         self->rotY = 0x1A0;
         self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->ext.generic.unk84.S8.unk1 = 0x11;
-        self->ext.generic.unk84.S8.unk0 = self->params;
+        self->ext.mermanWaterSplash.unk85 = 0x11;
+        self->ext.mermanWaterSplash.unk84 = self->params;
         self->drawFlags |= FLAG_DRAW_UNK8;
         break;
 
     case 1:
-        temp = self->ext.generic.unk84.S8.unk0 - 1;
-        self->ext.generic.unk84.S8.unk0--;
-        self->ext.generic.unk84.S8.unk1--;
+        temp = self->ext.mermanWaterSplash.unk84 - 1;
+        self->ext.mermanWaterSplash.unk84--;
+        self->ext.mermanWaterSplash.unk85--;
         if (!(temp & 0xFF)) {
             self->step++;
         }
         break;
 
     case 2:
-        AnimateEntity(D_801822C0, self);
+        AnimateEntity(D_801839B0, self);
         MoveEntity();
         self->velocityY += FIX(0.25);
         self->rotX += 6;
@@ -1404,14 +1404,14 @@ void func_801C7E18(Entity* self) {
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);
         }
-        if (!--self->ext.generic.unk84.U8.unk1) {
+        if (!--self->ext.mermanWaterSplash.unk85) {
             self->velocityY = 0;
             self->step++;
         }
         break;
 
     case 3:
-        if (AnimateEntity(D_801822C0, self) == 0) {
+        if (AnimateEntity(D_801839B0, self) == 0) {
             MoveEntity();
             self->velocityY += FIX(0.25);
             self->rotX += 6;

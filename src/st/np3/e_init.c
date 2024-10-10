@@ -53,7 +53,7 @@ void EntityWaterDrop(Entity* self);
 void EntityMerman2(Entity* self);
 void EntityMermanWaterSplash(Entity* self);
 void EntityMediumWaterSplash(Entity* self);
-void func_801C7E18(Entity* self);
+void EntityHighWaterSplash(Entity* self);
 void EntityExplosion2(Entity* self);
 void EntityLargeFallingObject(Entity* self);
 void EntityFallingObject2(Entity* self);
@@ -146,7 +146,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMerman2,
     EntityMermanWaterSplash,
     EntityMediumWaterSplash,
-    func_801C7E18,
+    EntityHighWaterSplash,
     EntityExplosion2,
     EntityLargeFallingObject,
     EntityFallingObject2,

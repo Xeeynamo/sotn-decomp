@@ -855,7 +855,7 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_80[0x4];
     /* 0x84 */ s8 unk84;
-    /* 0x85 */ char pad_85[0x1];
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ s8 unk86;
 } ET_MermanWaterSplash;
 
