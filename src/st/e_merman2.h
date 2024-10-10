@@ -273,8 +273,8 @@ void EntitySurfacingWater(Entity* self) {
                 prim->y2 += 9 / temp_s3;
                 prim->y3 -= 9 / temp_s3;
             }
-            PGREY(prim,0) = PGREY(prim,1) = 255;
-            PGREY(prim,2) = PGREY(prim,3) = 128;
+            PGREY(prim, 0) = PGREY(prim, 1) = 255;
+            PGREY(prim, 2) = PGREY(prim, 3) = 128;
 
             prim->clut = 0x162;
             prim->tpage = 0x1A;
@@ -289,7 +289,8 @@ void EntitySurfacingWater(Entity* self) {
             }
             prim = prim->next;
         }
-        self->ext.waterEffects.topY.i.hi = g_SurfacingYTbl[self->params & 0xFF] + 12 + (rand() & 1);
+        self->ext.waterEffects.topY.i.hi =
+            g_SurfacingYTbl[self->params & 0xFF] + 12 + (rand() & 1);
         self->velocityX = self->ext.waterEffects.unk8A * 16;
         if (params) {
             self->velocityY = self->velocityX / temp_s3;
@@ -315,7 +316,8 @@ void EntitySurfacingWater(Entity* self) {
                 return;
             }
         } else {
-            x += (g_WaterXTbl[self->ext.waterEffects.unk88 + 1] - 6 - tilemap->scrollX.i.hi);
+            x += (g_WaterXTbl[self->ext.waterEffects.unk88 + 1] - 6 -
+                  tilemap->scrollX.i.hi);
             if (self->posX.i.hi >= x) {
                 DestroyEntity(self);
                 return;
@@ -328,7 +330,7 @@ void EntitySurfacingWater(Entity* self) {
 
     prim = &g_PrimBuf[self->primIndex];
 
-    for(i = 0; i < 2; i++) {
+    for (i = 0; i < 2; i++) {
         prim->y2 -= y;
         prim->y3 -= y;
         prim->y0 = prim->y2 - self->ext.waterEffects.topY.i.hi;
@@ -336,9 +338,9 @@ void EntitySurfacingWater(Entity* self) {
         prim->x2 = prim->x0 = x - 9;
         prim->x3 = prim->x1 = x + 9;
         prim->b1 -= 8;
-        PGREY(prim,0) = PGREY(prim,1);
+        PGREY(prim, 0) = PGREY(prim, 1);
         prim->b3 -= 4;
-        PGREY(prim,2) = PGREY(prim,3);
+        PGREY(prim, 2) = PGREY(prim, 3);
         if (prim->r0 < 9) {
             DestroyEntity(self);
             return;
@@ -369,7 +371,7 @@ void EntitySideWaterSplash(Entity* self) {
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
-        for(prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
+        for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
             prim->u0 = prim->u2 = 0xF0;
             prim->u1 = prim->u3 = 0xFF;
             prim->v0 = prim->v1 = 0;
@@ -411,13 +413,13 @@ void EntitySideWaterSplash(Entity* self) {
     x = self->posX.i.hi;
     y = self->posY.i.hi;
 
-    for(prim = &g_PrimBuf[self->primIndex];prim != NULL; prim = prim->next){
+    for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
         prim->x0 = prim->x2 = x - (prim->p1 / 2) - 4;
         prim->x1 = prim->x3 = x + (prim->p1 / 2) + 4;
         prim->y0 = prim->y1 = y - (prim->p1 / 2) - 4;
         prim->y2 = prim->y3 = y + (prim->p1 / 2) + 4;
         if (prim->b1 >= 3) {
-            prim->b1 -= 3;    
+            prim->b1 -= 3;
         } else {
             DestroyEntity(self);
             return;
@@ -537,11 +539,11 @@ void EntityWaterDrop(Entity* self) {
                 break;
             }
 
-            
-            prim->posX.i.lo = prim->posY.i.lo = 0; //halfword at 0x10?
-            prim->velocityY.val = (rand() * 8) + self->velocityY; //word at 0x1C
+            prim->posX.i.lo = prim->posY.i.lo = 0; // halfword at 0x10?
+            prim->velocityY.val = (rand() * 8) + self->velocityY; // word at
+                                                                  // 0x1C
             prim->posY.i.hi = y + (rand() & 15);
-            prim->posX.i.hi = x + (rand() & 31) - 16; //halfword at 0x12
+            prim->posX.i.hi = x + (rand() & 31) - 16; // halfword at 0x12
             prim->delay = (rand() & 15) + 32;
             prim->x0 = prim->posX.i.hi;
             prim->y0 = prim->posY.i.hi;
@@ -579,7 +581,7 @@ void EntityWaterDrop(Entity* self) {
                 prim->g0 -= 4;
                 prim->b0 -= 4;
             } else {
-                prim->velocityY.val += FIX(28.0/128);
+                prim->velocityY.val += FIX(28.0 / 128);
             }
             prim->x0 = prim->posX.i.hi;
             prim->y0 = prim->posY.i.hi;
@@ -587,4 +589,35 @@ void EntityWaterDrop(Entity* self) {
         }
         break;
     }
+}
+
+// Detects if the merman is splashing into water.
+// If so, creates a splash effect, and sets merman underwater to true.
+bool CheckMermanEnteringWater(s16 yOffset) {
+    Collider collider;
+    Entity* newEntity;
+    s32 res = false;
+
+    s16 x = g_CurrentEntity->posX.i.hi;
+    s16 y = g_CurrentEntity->posY.i.hi + yOffset;
+    g_api.CheckCollision(x, y, &collider, 0);
+
+    if (!(collider.effects & EFFECT_SOLID)) {
+        res = true;
+    }
+
+    if (collider.effects & EFFECT_WATER) {
+        if (!g_CurrentEntity->ext.merman.isUnderwater) {
+            newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(
+                    E_MERMAN_JUMP_WATER, g_CurrentEntity, newEntity);
+                newEntity->posY.i.hi += yOffset;
+                newEntity->zPriority = g_CurrentEntity->zPriority;
+            }
+            g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
+            g_CurrentEntity->ext.merman.isUnderwater = true;
+        }
+    }
+    return res;
 }

@@ -151,7 +151,7 @@ extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
-extern s16 g_WaterXTbl[];     // pos TBL
+extern s16 g_WaterXTbl[];    // pos TBL
 extern Point32 D_80182224[]; // accel_x TBL
 extern u8 D_80182244[];      // timers
 extern s32 D_80182248;       // Collision data

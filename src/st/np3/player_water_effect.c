@@ -127,7 +127,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                                     E_SIDE_WATER_SPLASH, player, var_s0);
                                 var_s0->params =
                                     (u16)g_WaterXTbl[arg0->ext.aluwater.unk88 +
-                                                    7] +
+                                                     7] +
                                     (var_s1 << 4) + i;
                                 var_s0->posY.i.hi += (var_s6 - var_s3);
                                 var_s0->zPriority = player->zPriority;
@@ -156,13 +156,13 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                 }
             } else if ((sp28) && (var_s3 < 9) && (!arg0->ext.aluwater.unk7C)) {
                 if (sp10[0] < 0xE) {
-                    var_s7 =
-                        ((0xE - sp10[0]) << 0xB) + (g_WaterXTbl[sp30 + 2] << 8) +
-                        (g_WaterXTbl[sp30 + 5] << 5);
+                    var_s7 = ((0xE - sp10[0]) << 0xB) +
+                             (g_WaterXTbl[sp30 + 2] << 8) +
+                             (g_WaterXTbl[sp30 + 5] << 5);
                 } else if (sp10[1] < 0xE) {
-                    var_s7 =
-                        ((sp10[1] + 0xE) << 0xB) + (g_WaterXTbl[sp30 + 2] << 8) +
-                        (g_WaterXTbl[sp30 + 6] << 5);
+                    var_s7 = ((sp10[1] + 0xE) << 0xB) +
+                             (g_WaterXTbl[sp30 + 2] << 8) +
+                             (g_WaterXTbl[sp30 + 6] << 5);
                 } else {
                     var_s7 = g_WaterXTbl[sp30 + 2] << 8;
                 }

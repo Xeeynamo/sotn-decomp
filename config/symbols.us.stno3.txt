@@ -127,6 +127,7 @@ EntitySurfacingWater = 0x801D1FC0;
 EntitySideWaterSplash = 0x801D24AC;
 EntitySmallWaterDrop = 0x801D2840;
 EntityWaterDrop = 0x801D2A9C;
+CheckMermanEnteringWater = 0x801D2D40;
 EntityMerman2 = 0x801D2E4C;
 EntityExplosion2 = 0x801D3F38;
 EntityMediumWaterSplash = 0x801D4168;

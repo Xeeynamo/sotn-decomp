@@ -2,37 +2,6 @@
 #include "np3.h"
 #include "../e_merman2.h"
 
-s32 func_801C6458(s16 yOffset) {
-    s16 newY = yOffset + g_CurrentEntity->posY.i.hi;
-    s32 expectedResult = 0;
-    Collider collider;
-    Entity* newEntity;
-    s32 res;
-
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
-
-    if (expectedResult == (collider.effects & EFFECT_SOLID)) {
-        res = true;
-    } else {
-        res = false;
-    }
-
-    if (collider.effects & EFFECT_WATER) {
-        if (!g_CurrentEntity->ext.merman.isUnderwater) {
-            newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_MERMAN_JUMP_WATER, g_CurrentEntity, newEntity);
-                newEntity->posY.i.hi += yOffset;
-                newEntity->zPriority = g_CurrentEntity->zPriority;
-            }
-            g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
-            g_CurrentEntity->ext.merman.isUnderwater = true;
-        }
-    }
-    return res;
-}
-
 void EntityMerman2(Entity* self) {
     s32 primIndex;
     Collider collider;
@@ -244,7 +213,7 @@ void EntityMerman2(Entity* self) {
                 }
             }
             if (self->velocityY > 0) {
-                func_801C6458(0x1B);
+                CheckMermanEnteringWater(0x1B);
             }
             if (self->ext.merman2.isUnderwater == 0) {
                 if (UnkCollisionFunc3(&D_80182248) & 1) {
@@ -309,12 +278,12 @@ void EntityMerman2(Entity* self) {
                             self->step_s--;
                         }
                     }
-                    if (func_801C6458(0x1B)) {
+                    if (CheckMermanEnteringWater(0x1B)) {
                         self->ext.merman2.ignoreCol = 1;
                     }
                 }
             } else {
-                if (func_801C6458(0x1B)) {
+                if (CheckMermanEnteringWater(0x1B)) {
                     self->ext.merman2.ignoreCol = 1;
                 }
             }
@@ -405,7 +374,7 @@ void EntityMerman2(Entity* self) {
                 self->posY.i.hi += 10;
                 self->step_s++;
             }
-            func_801C6458(0x1B);
+            CheckMermanEnteringWater(0x1B);
             if (self->ext.merman2.isUnderwater) {
                 self->ext.merman2.ignoreCol = 1;
             }
@@ -433,7 +402,7 @@ void EntityMerman2(Entity* self) {
                     FLAG_DRAW_ROTX;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
-            if (func_801C6458(0x1B)) {
+            if (CheckMermanEnteringWater(0x1B)) {
                 self->ext.merman2.ignoreCol = 1;
             }
         }
@@ -447,7 +416,8 @@ void EntityMerman2(Entity* self) {
         }
         MoveEntity();
         self->velocityY += FIX(0.25);
-        if (!(func_801C6458(0x1B)) && !(self->ext.merman2.isUnderwater)) {
+        if (!(CheckMermanEnteringWater(0x1B)) &&
+            !(self->ext.merman2.isUnderwater)) {
             self->ext.merman2.ignoreCol = 0;
             SetStep(MERMAN2_WALKING_TO_PLAYER);
         }
@@ -537,7 +507,7 @@ void EntityMerman2(Entity* self) {
                     }
                 }
             }
-            func_801C6458(0x1B);
+            CheckMermanEnteringWater(0x1B);
             break;
 
         case 2:

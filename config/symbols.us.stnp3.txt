@@ -20,6 +20,7 @@ EntityGaibon = 0x801B78BC;
 EntityRedDoor = 0x801BB89C;
 EntityMessageBox = 0x801BFD98;
 EntityStageNamePopup = 0x801C2860;
+CheckMermanEnteringWater = 0x801C6458;
 EntityMerman2 = 0x801C6564;
 EntityMerman = 0x801C8238;
 EntityBoneScimitar = 0x801C91C4;
