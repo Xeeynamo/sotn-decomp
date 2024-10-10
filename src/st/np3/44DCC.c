@@ -1428,7 +1428,7 @@ void EntityDeadMerman(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitWaterObject);
         self->animCurFrame = 13;
-        self->ext.generic.unk84.S8.unk0 = 0x20;
+        self->ext.merman.timer = 0x20;
         self->hitboxState = 0;
         self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
@@ -1440,7 +1440,7 @@ void EntityDeadMerman(Entity* self) {
     MoveEntity();
     self->velocityY += FIX(0.0625);
     self->unk6C += 0xFE;
-    if (--self->ext.generic.unk84.U8.unk0 == 0) {
+    if (--self->ext.merman.timer == 0) {
         DestroyEntity(self);
     }
 }
