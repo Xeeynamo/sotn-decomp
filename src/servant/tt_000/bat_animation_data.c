@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-AnimationFrame DefaultBatAnimationFrame[] = {
+AnimationFrame g_DefaultBatAnimationFrame[] = {
     /* 801704A8 */ {4, 0x0415},
     /* 801704AC */ {1, 0x0416},
     /* 801704B0 */ {1, 0x0417},
@@ -100,7 +100,7 @@ AnimationFrame D_801705EC[] = {
 };
 
 AnimationFrame* D_801705F4[] = {
-    /* 801705F4 */ DefaultBatAnimationFrame,
+    /* 801705F4 */ g_DefaultBatAnimationFrame,
     /* 801705F8 */ D_801704E0,
     /* 801705FC */ D_80170514,
     /* 80170600 */ D_8017054C,
