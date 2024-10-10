@@ -2,10 +2,10 @@
 #include "mar.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** spriteBanks[];
-extern void* Cluts[];
-extern MyRoomDef rooms_layers[];
-static GfxBank* gfxBanks[];
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long* OVL_EXPORT(cluts)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
@@ -14,11 +14,11 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
-    .cluts = Cluts,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = rooms_layers,
-    .gfxBanks = gfxBanks,
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
@@ -33,7 +33,7 @@ static u16** D_us_8018008C[] = {
     0x00000010, D_us_801852E0, PAL_TERMINATE(),
 };
 
-static void* Cluts[] = {
+u_long* OVL_EXPORT(cluts)[] = {
     D_us_8018008C,
 };
 
@@ -49,7 +49,7 @@ static u_long* D_us_801800F8[] = {
     0x00A00100, 0x00800080, &D_us_80184220, 0xFFFFFFFF,
 };
 
-static GfxBank* gfxBanks[] = {
+u_long* OVL_EXPORT(gfxBanks)[] = {
     &D_us_801800F4_TERM, &D_us_801800F8,      &D_us_801800F4_TERM,
     &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,
     &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,

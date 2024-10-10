@@ -196,8 +196,8 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 
 void InitStageDummy(Overlay* o);
 void InitStageCEN(Overlay* o);
-void InitStageWrp(Overlay* o);
-void InitStageSel(Overlay* o);
+void InitStageWRP(Overlay* o);
+void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
@@ -401,10 +401,10 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     case SimFileType_StagePrg:
         switch (g_StageId) {
         case STAGE_SEL:
-            InitStageSel(&g_api.o);
+            InitStageSEL(&g_api.o);
             break;
         case STAGE_WRP:
-            InitStageWrp(&g_api.o);
+            InitStageWRP(&g_api.o);
             break;
         default:
             InitStageDummy(&g_api.o);

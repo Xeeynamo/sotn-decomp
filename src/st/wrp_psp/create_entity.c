@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
+#include "../pfn_entity_update.h"
 
 static u16* g_LayoutObjHorizontal;
 static u16* g_LayoutObjVertical;

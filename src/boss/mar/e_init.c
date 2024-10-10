@@ -34,7 +34,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_us_8018C90C(Entity* self);
 void func_us_8018CA94(Entity* self);
 
-PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,      EntityExplosion,
     EntityPrizeDrop,      EntityDamageDisplay,
     EntityRedDoor,        EntityIntenseExplosion,

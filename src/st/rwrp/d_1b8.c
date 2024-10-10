@@ -21,7 +21,7 @@ static void* D_801801CC[] = {
     /* 0x1E4 */ (void*)D_80181764,
     /* 0x1E8 */ (void*)0xFFFFFFFF,
 };
-void* OVL_EXPORT(g_EntityGfxs)[] = {
+void* OVL_EXPORT(gfxBanks)[] = {
     /* 0x1EC */ D_801801B8,
     /* 0x1F0 */ D_801801B8,
     /* 0x1F4 */ D_801801B8,

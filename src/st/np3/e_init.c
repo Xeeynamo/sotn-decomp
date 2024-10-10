@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
+#include "np3.h"
 
 void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
@@ -93,7 +93,7 @@ void EntityGurkhaSword(Entity* self);
 void EntityBlade(Entity* self);
 void EntityBladeSword(Entity* self);
 
-PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
