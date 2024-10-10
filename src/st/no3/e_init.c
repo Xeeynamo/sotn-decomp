@@ -1,0 +1,202 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "no3.h"
+
+void EntityBreakable(Entity* self);
+void EntityExplosion(Entity* self);
+void EntityPrizeDrop(Entity* self);
+void EntityDamageDisplay(Entity* self);
+void EntityRedDoor(Entity* self);
+void EntityIntenseExplosion(Entity* self);
+void EntitySoulStealOrb(Entity* self);
+void EntityRoomForeground(Entity* self);
+void EntityStageNamePopup(Entity* self);
+void EntityEquipItemDrop(Entity* self);
+void EntityRelicOrb(Entity* self);
+void EntityHeartDrop(Entity* self);
+void EntityEnemyBlood(Entity* self);
+void EntityMessageBox(Entity* self);
+void EntityDummy(Entity* self);
+void EntityDummy(Entity* self);
+void EntityCavernDoorVase(Entity* self);
+void EntityUnkId12(Entity* self);
+void EntityUnkId13(Entity* self);
+void EntityExplosionVariants(Entity* self);
+void EntityGreyPuff(Entity* self);
+void EntityUnkId16(Entity* self);
+void EntityBackgroundLightning(Entity* self);
+void EntityTransparentWater(Entity* self);
+void EntityShuttingWindow(Entity* self);
+void EntityCastleDoor(Entity* self);
+void EntityBackgroundBushes(Entity* self);
+void EntityUnkId1C(Entity* self);
+void EntityCavernDoorLever(Entity* self);
+void EntityCavernDoorPlatform(Entity* self);
+void EntityCavernDoor(Entity* self);
+void EntityClickSwitch(Entity* self);
+void EntityPathBlockSmallWeight(Entity* self);
+void EntityPathBlockTallWeight(Entity* self);
+void EntityTrapDoor(Entity* self);
+void EntityMermanRockLeftSide(Entity* self);
+void EntityMermanRockRightSide(Entity* self);
+void EntityUnkId26(Entity* self);
+void EntityFallingRock2(Entity* self);
+void EntityDeathSkySwirl(Entity* self);
+void EntityLightningThunder(Entity* self);
+void EntityLightningCloud(Entity* self);
+void EntitySwitch(Entity* self);
+void EntityHeartRoomGoldDoor(Entity* self);
+void EntityFireWarg(Entity* self);
+void EntityFireWargWaveAttack(Entity* self);
+void EntityUnkId2F(Entity* self);
+void EntityUnkId30(Entity* self);
+void EntityUnkId31(Entity* self);
+void EntityExplosion3(Entity* self);
+void EntityFireWargDeathBeams(Entity* self);
+void EntityAlucardWaterEffect(Entity* self);
+void EntitySplashWater(Entity* self);
+void EntitySurfacingWater(Entity* self);
+void EntitySideWaterSplash(Entity* self);
+void EntitySmallWaterDrop(Entity* self);
+void EntityWaterDrop(Entity* self);
+void EntityMerman2(Entity* self);
+void EntityMermanWaterSplash(Entity* self);
+void EntityMediumWaterSplash(Entity* self);
+void EntityUnkId3D(Entity* self);
+void EntityExplosion2(Entity* self);
+void EntityLargeFallingObject(Entity* self);
+void EntityFallingObject2(Entity* self);
+void EntityMerman(Entity* self);
+void EntityMermanFireball(Entity* self);
+void EntityFallingObject(Entity* self);
+void EntityMermanExplosion(Entity* self);
+void EntityMermanSpawner(Entity* self);
+void EntityBoneScimitar(Entity* self);
+void EntityBoneScimitarParts(Entity* self);
+void EntityBat(Entity* self);
+void EntityUnkId49(Entity* self);
+void EntityWarg(Entity* self);
+void EntityUnkId4B(Entity* self);
+void EntityZombie(Entity* self);
+void EntityZombieSpawner(Entity* self);
+void EntityPushAlucard(Entity* self);
+void EntityForegroundTree(Entity* self);
+void EntityUnkId50(Entity* self);
+void EntityBackgroundPineTrees(Entity* self);
+void EntityUnkId52(Entity* self);
+void EntityCastleDoorTransition(Entity* self);
+void EntityCastleBridge(Entity* self);
+void EntityBackgroundTrees(Entity* self);
+void EntityBackgroundCastleWall(Entity* self);
+void NO3_EntityCutscene(Entity* self);
+void EntityRoomTransition2(Entity* self);
+void EntityDeathStolenItem(Entity* self);
+void EntityDeath(Entity* self);
+void EntityUnkId5B(Entity* self);
+void EntityStairwayPiece(Entity* self);
+void EntityFallingRock(Entity* self);
+void EntityUnkId5E(Entity* self);
+void EntityFlyingOwlAndLeaves(Entity* self);
+void EntityFallingLeaf(Entity* self);
+void EntityWargExplosionPuffTransparent(Entity* self);
+void EntityWargExplosionPuffOpaque(Entity* self);
+
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
+    EntityBreakable,
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
+    EntityRedDoor,
+    EntityIntenseExplosion,
+    EntitySoulStealOrb,
+    EntityRoomForeground,
+    EntityStageNamePopup,
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
+    EntityEnemyBlood,
+    EntityMessageBox,
+    EntityDummy,
+    EntityDummy,
+    EntityCavernDoorVase,
+    EntityUnkId12,
+    EntityUnkId13,
+    EntityExplosionVariants,
+    EntityGreyPuff,
+    EntityUnkId16,
+    EntityBackgroundLightning,
+    EntityTransparentWater,
+    EntityShuttingWindow,
+    EntityCastleDoor,
+    EntityBackgroundBushes,
+    EntityUnkId1C,
+    EntityCavernDoorLever,
+    EntityCavernDoorPlatform,
+    EntityCavernDoor,
+    EntityClickSwitch,
+    EntityPathBlockSmallWeight,
+    EntityPathBlockTallWeight,
+    EntityTrapDoor,
+    EntityMermanRockLeftSide,
+    EntityMermanRockRightSide,
+    EntityUnkId26,
+    EntityFallingRock2,
+    EntityDeathSkySwirl,
+    EntityLightningThunder,
+    EntityLightningCloud,
+    EntitySwitch,
+    EntityHeartRoomGoldDoor,
+    EntityFireWarg,
+    EntityFireWargWaveAttack,
+    EntityUnkId2F,
+    EntityUnkId30,
+    EntityUnkId31,
+    EntityExplosion3,
+    EntityFireWargDeathBeams,
+    EntityAlucardWaterEffect,
+    EntitySplashWater,
+    EntitySurfacingWater,
+    EntitySideWaterSplash,
+    EntitySmallWaterDrop,
+    EntityWaterDrop,
+    EntityMerman2,
+    EntityMermanWaterSplash,
+    EntityMediumWaterSplash,
+    EntityUnkId3D,
+    EntityExplosion2,
+    EntityLargeFallingObject,
+    EntityFallingObject2,
+    EntityMerman,
+    EntityMermanFireball,
+    EntityFallingObject,
+    EntityMermanExplosion,
+    EntityMermanSpawner,
+    EntityBoneScimitar,
+    EntityBoneScimitarParts,
+    EntityBat,
+    EntityUnkId49,
+    EntityWarg,
+    EntityUnkId4B,
+    EntityZombie,
+    EntityZombieSpawner,
+    EntityPushAlucard,
+    EntityForegroundTree,
+    EntityUnkId50,
+    EntityBackgroundPineTrees,
+    EntityUnkId52,
+    EntityCastleDoorTransition,
+    EntityCastleBridge,
+    EntityBackgroundTrees,
+    EntityBackgroundCastleWall,
+    NO3_EntityCutscene,
+    EntityRoomTransition2,
+    EntityDeathStolenItem,
+    EntityDeath,
+    EntityUnkId5B,
+    EntityStairwayPiece,
+    EntityFallingRock,
+    EntityUnkId5E,
+    EntityFlyingOwlAndLeaves,
+    EntityFallingLeaf,
+    EntityWargExplosionPuffTransparent,
+    EntityWargExplosionPuffOpaque
+};

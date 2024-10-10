@@ -1776,6 +1776,12 @@ typedef struct {
 } ET_DisableAfterImage;
 
 typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_EntityExplosion2;
+
+typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ u16 unk7E;
 } ET_EntityExplosion3;
@@ -1992,6 +1998,7 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
+    ET_EntityExplosion2 entityExplosion2;
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;

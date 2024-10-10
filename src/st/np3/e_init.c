@@ -56,7 +56,7 @@ void EntityMediumWaterSplash(Entity* self);
 void func_801C7E18(Entity* self);
 void EntityExplosion2(Entity* self);
 void EntityLargeFallingObject(Entity* self);
-void func_801C7D80(Entity* self);
+void EntityFallingObject2(Entity* self);
 void EntityMerman(Entity* self);
 void EntityMermanFireball(Entity* self);
 void func_801C8F54(Entity* self);
@@ -109,7 +109,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
-    EntityDummy,
+    EntityDummy, // 0x10
     func_801B246C,
     EntityUnkId12,
     EntityUnkId13,
@@ -125,7 +125,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,
-    EntityClickSwitch,
+    EntityClickSwitch, // 0x20
     EntityPathBlockSmallWeight,
     EntityPathBlockTallWeight,
     EntityTrapDoor,
@@ -141,7 +141,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySplashWater,
     EntitySurfacingWater,
     EntitySideWaterSplash,
-    EntitySmallWaterDrop,
+    EntitySmallWaterDrop, // 0x30
     EntityWaterDrop,
     EntityMerman2,
     EntityMermanWaterSplash,
@@ -149,7 +149,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801C7E18,
     EntityExplosion2,
     EntityLargeFallingObject,
-    func_801C7D80,
+    EntityFallingObject2,
     EntityMerman,
     EntityMermanFireball,
     func_801C8F54,
@@ -157,7 +157,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMermanSpawner,
     EntityBoneScimitar,
     EntityBoneScimitarParts,
-    EntityBat,
+    EntityBat, // 0x40
     EntityUnkId49,
     EntityZombie,
     EntityZombieSpawner,
@@ -173,7 +173,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityWargExplosionPuffOpaque,
     EntitySlogra,
     EntitySlograSpear,
-    EntitySlograSpearProjectile,
+    EntitySlograSpearProjectile, // 0x50
     EntityGaibon,
     func_801B8CC0,
     EntitySmallGaibonProjectile,

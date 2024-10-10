@@ -47,7 +47,7 @@ typedef enum {
     /* 0x3A */ E_MERMAN_SPIT_FIRE,
     /* 0x3B */ E_MERMAN_JUMP_AIR,
     /* 0x3C */ E_MERMAN_DYING,
-    /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
+    /* 0x3F */ E_BONE_SCIMITAR_HEAD,
     /* 0x40 */ E_BAT,
     /* 0x41 */ E_ID_41,
     /* 0x42 */ E_ZOMBIE,

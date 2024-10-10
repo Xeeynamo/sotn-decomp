@@ -536,7 +536,7 @@ void EntityWaterDrop(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.generic.unk7C.s = 0x2F;
+        self->ext.timer.t = 0x2F;
         self->flags |= FLAG_HAS_PRIMS;
 
         while (1) {
@@ -567,7 +567,7 @@ void EntityWaterDrop(Entity* self) {
         break;
 
     case 1:
-        if (--self->ext.generic.unk7C.s == 0) {
+        if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
             return;
         }
@@ -1152,25 +1152,25 @@ void EntityMerman2(Entity* self) {
 }
 
 // some sort of explosion: ID 0x36
-void EntityExplosion2(Entity* entity, s32 arg1) {
+void EntityExplosion2(Entity* self) {
     Primitive* prim;
     s16 primIndex;
 
-    if (entity->step == 0) {
+    if (self->step == 0) {
         InitializeEntity(g_EInitWaterObject);
-        entity->animCurFrame = 0;
-        entity->hitboxState = 0;
-        entity->zPriority += 4;
-        if (entity->params != 0) {
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
+        self->zPriority += 4;
+        if (self->params != 0) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex == -1) {
-                DestroyEntity(entity);
+                DestroyEntity(self);
                 return;
             }
             prim = &g_PrimBuf[primIndex];
-            entity->primIndex = primIndex;
-            *(s32*)&entity->ext.generic.unk7C.s = prim;
-            entity->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.entityExplosion2.prim = prim;
+            self->flags |= FLAG_HAS_PRIMS;
             UnkPolyFunc2(prim);
             prim->u0 = 0;
             prim->u1 = 0x20;
@@ -1184,15 +1184,15 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             LOH(prim->next->b2) = 0x40;
             LOH(prim->next->u1) = 0;
             prim->next->b3 = 0x60;
-            prim->next->x1 = entity->posX.i.hi;
-            prim->next->y0 = entity->posY.i.hi;
-            prim->priority = entity->zPriority - 4;
+            prim->next->x1 = self->posX.i.hi;
+            prim->next->y0 = self->posY.i.hi;
+            prim->priority = self->zPriority - 4;
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         }
     }
 
-    if (entity->params != 0) {
-        prim = *(s32*)&entity->ext.generic.unk7C.s;
+    if (self->params != 0) {
+        prim = self->ext.entityExplosion2.prim;
         UnkPrimHelper(prim);
         prim->next->b3 += 252;
         LOH(prim->next->u1) -= 128;
@@ -1201,13 +1201,13 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         }
     }
 
-    entity->ext.generic.unk84.U8.unk0++;
-    if (!(entity->ext.generic.unk84.U8.unk0 % 4)) {
-        entity->posY.i.hi++;
+    self->ext.entityExplosion2.unk84++;
+    if (!(self->ext.entityExplosion2.unk84 % 4)) {
+        self->posY.i.hi++;
     }
 
-    if (AnimateEntity(D_801822B0, entity) == 0) {
-        DestroyEntity(entity);
+    if (AnimateEntity(D_801822B0, self) == 0) {
+        DestroyEntity(self);
     }
 }
 
@@ -1349,7 +1349,7 @@ void EntityMermanWaterSplash(Entity* self) {
     }
 }
 
-void func_801C7D80(Entity* self) {
+void EntityFallingObject2(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitWaterObject);
         self->animCurFrame = 0;
