@@ -652,16 +652,6 @@ typedef struct {
 } ET_Ghost;
 
 typedef struct {
-    /* 0x7C */ char pad_0[0xC];
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ char pad_8A[0x3];
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ char pad_8E[0xE];
-    /* 0x9C */ s16 unk9C;
-    /* 0xA0 */ struct Entity* next;
-} ET_801CF254;
-
-typedef struct {
     /* 0x7C */ char pad_0[0x4];
     /* 0x80 */ s16 unk80;
     /* 0x82 */ char pad_82[0xA];
@@ -1937,7 +1927,6 @@ typedef union { // offset=0x7C
     ET_RichterPowerUpRing ricPowerRing;
     ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
-    ET_801CF254 et_801CF254;
     ET_GurkhaSword gurkhaSword;
     ET_Dracula dracula;
     ET_DracFinal dracFinalForm;

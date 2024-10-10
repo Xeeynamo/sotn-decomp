@@ -16,7 +16,7 @@ void EntityHammerWeapon(Entity* self) {
         self->drawFlags |= FLAG_DRAW_ROTZ;
 
     case 1:
-        angle = *(u16*)&self->ext.stub[0x20];
+        angle = self->ext.GH_Props.rotZ;
         self->rotZ = angle;
         self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
         self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
@@ -45,20 +45,23 @@ void EntityHammerWeapon(Entity* self) {
 }
 
 void func_801CF778(void) {
-    ET_801CF254* et = &g_CurrentEntity[15].ext.et_801CF254;
-    et->unk9C = et->next->ext.et_801CF254.unk9C + 0x300;
+    Entity* currEnt15;
+    Entity* ent15Parent;
+    currEnt15 = &g_CurrentEntity[15];
+    ent15Parent = currEnt15->ext.GH_Props.parent;
+    currEnt15->ext.GH_Props.rotZ = ent15Parent->ext.GH_Props.rotZ + 0x300;
 }
 
 int func_801CF7A0(Entity* ent) {
     Entity* otherEnt;
-    s32 step;
     s32 xDistance;
-
-    if (g_CurrentEntity->ext.et_801CE4CC.unk8E != 0) {
-        --g_CurrentEntity->ext.et_801CE4CC.unk8E;
+    s32 step;
+    
+    if (g_CurrentEntity->ext.GH_Props.unk8E) {
+        --g_CurrentEntity->ext.GH_Props.unk8E;
     }
-
-    xDistance = ent->posX.i.hi - PLAYER.posX.i.hi;
+    otherEnt = &PLAYER;
+    xDistance = ent->posX.i.hi - otherEnt->posX.i.hi;
 
     if (g_CurrentEntity->facingLeft) {
         xDistance = -xDistance;
@@ -69,13 +72,14 @@ int func_801CF7A0(Entity* ent) {
         return;
     }
 
-    if ((u8)g_CurrentEntity->ext.generic.unk84.S8.unk0 == 1) {
+    if (g_CurrentEntity->ext.GH_Props.unk84 == 1) {
         otherEnt = g_CurrentEntity + 10;
     } else {
         otherEnt = g_CurrentEntity + 13;
     }
 
-    if (func_801CE120(otherEnt, g_CurrentEntity->facingLeft)) {
+    step = func_801CE120(otherEnt, g_CurrentEntity->facingLeft);
+    if (step) {
         func_801CE1E8(7);
         return;
     }
@@ -90,14 +94,14 @@ int func_801CF7A0(Entity* ent) {
         step = 5;
     }
 
-    if (xDistance >= 129) {
+    if (xDistance > 128) {
         step = 8;
     }
 
-    if (g_CurrentEntity->ext.et_801CE4CC.unk8E == 0) {
+    if (!g_CurrentEntity->ext.GH_Props.unk8E) {
         if (xDistance < 160) {
+            g_CurrentEntity->ext.GH_Props.unk8E = 3;
             step = 6;
-            g_CurrentEntity->ext.et_801CE4CC.unk8E = 3;
             g_CurrentEntity->ext.gurkhaSword.unk8C = 1;
         }
         if (xDistance < 64) {
