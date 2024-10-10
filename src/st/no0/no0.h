@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
+#define STAGE_IS_NO0
+
 #define OVL_EXPORT(x) NO0_##x
 
 void EntityExplosionVariants(Entity* entity);

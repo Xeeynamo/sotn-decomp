@@ -49,7 +49,8 @@ segments:
       - [0x15CC, .data, e_particles]
       - [0x164C, .data, st_common] # g_SineTable
       - [0x184C, .data, e_collect]
-      - [0x1B3C, data]
+      - [0x1B3C, .data, e_misc]
+      - [0x1C14, data]
       - [0x41368, .rodata, first_c_file]
       - [0x4137C, .rodata, e_red_door]
       - [0x41394, .rodata, e_collect]
