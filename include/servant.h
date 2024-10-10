@@ -64,6 +64,7 @@ typedef struct ServantEvent {
 } ServantEvent;
 
 #define CHECK_NONE -1
+#define SERVANT_ENTITY_INDEX 4
 
 #define CHECK_RELIC_FLAG 0x40000000
 #define FOR_RELIC(x) CHECK_RELIC_FLAG | x
@@ -72,15 +73,13 @@ typedef struct ServantEvent {
 #define CHECK_CASTLE_FLAG 0x80000000
 #define FOR_CASTLE_FLAG(x) CHECK_CASTLE_FLAG | x
 
-extern SpriteParts* D_80170040[];
+extern SpriteParts* g_ServantSpriteParts[];
 extern u16 g_ServantClut[];
 extern AnimationFrame D_80170514[];
 extern AnimationFrame D_8017054C[];
 extern AnimationFrame D_801705EC[];
 extern AnimationFrame* D_801705F4[];
 extern Sprite D_80170608[];
-extern s32 D_80170658[][5];
-extern u16 D_80170720[];
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 

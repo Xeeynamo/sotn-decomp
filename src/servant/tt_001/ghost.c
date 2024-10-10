@@ -56,7 +56,7 @@ static s16 s_ParentY;
 STATIC_PAD_BSS(2); // Temporary storage for Y position of the
                    // entity or primitive
 static FamiliarStats s_GhostStats;
-static s32 g_IsServantDestroyed;
+static s32 s_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 
 extern s32 g_DefaultGhostAnimationFrame[];
@@ -346,9 +346,9 @@ void ServantInit(InitializeMode mode) {
 
         spriteBanks = g_api.o.spriteBanks;
         spriteBanks += 20;
-        *spriteBanks = (SpriteParts*)D_80170040;
+        *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
 
-        e = &g_Entities[4];
+        e = &g_Entities[SERVANT_ENTITY_INDEX];
         DestroyEntity(e);
         e->unk5A = 0x6C;
         e->palette = 0x140;
@@ -366,7 +366,7 @@ void ServantInit(InitializeMode mode) {
             e->posY.val = FIX(-32);
         } else {
             e->entityId = ENTITY_ID_SERVANT;
-            if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+            if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
                 if (ServantUnk0()) {
                     e->posX.val = FIX(192);
                 } else {
@@ -380,7 +380,7 @@ void ServantInit(InitializeMode mode) {
             }
         }
         g_api.func_8011A3AC(e, 0, 0, &s_GhostStats);
-        g_IsServantDestroyed = 0;
+        s_IsServantDestroyed = 0;
     }
 }
 
@@ -391,7 +391,7 @@ void UpdateServantDefault(Entity* self) {
     s32 temp_s1;
 
     g_api.func_8011A3AC(self, 0, 0, &s_GhostStats);
-    if (g_IsServantDestroyed) {
+    if (s_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     self->hitboxWidth = 0;
@@ -453,7 +453,7 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.confusedSubStep = 0;
             break;
         }
-        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi)
                 self->facingLeft = 1;
             else

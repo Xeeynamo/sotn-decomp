@@ -4,53 +4,59 @@
 #include <psxsdk/libc.h>
 #include "../servant_private.h"
 
+#define ABILITY_STATS_DELAY_FRAMES 0
+#define ABILITY_STATS_ATTACK_ANGLE 1
+#define ABILITY_STATS_ADD_BAT_COUNT 2
+#define ABILITY_STATS_MIN_ENEMY_HP 3
+#define ABILITY_STATS_BAD_ATTACKS 4
+
 #ifndef VERSION_PSP
-s32 D_801748D8[0x80];
-Collider D_80174AD8;
-s16 D_80174AFC;
+static s32 D_801748D8[0x80];
+static Collider D_80174AD8;
+static s16 D_80174AFC;
 STATIC_PAD_BSS(2);
-s16 D_80174B00;
+static s16 D_80174B00;
 STATIC_PAD_BSS(2);
-s16 D_80174B04;
+static s16 D_80174B04;
 STATIC_PAD_BSS(2);
-s16 D_80174B08;
+static s16 D_80174B08;
 STATIC_PAD_BSS(2);
-s16 D_80174B0C;
+static s16 D_80174B0C;
 STATIC_PAD_BSS(2);
-s16 D_80174B10;
+static s16 D_80174B10;
 STATIC_PAD_BSS(2);
-s16 D_80174B14;
+static s16 D_80174B14;
 STATIC_PAD_BSS(2);
-s16 D_80174B18;
+static s16 D_80174B18;
 STATIC_PAD_BSS(2);
-s32 D_80174B1C;
-s32 D_80174B20;
-s32 D_80174B24;
-s32 D_80174B28;
-s32 D_80174B2C;
-s32 D_80174B2C;
-s32 D_80174B30;
-s32 D_80174B34;
-s16 D_80174B38;
+static s32 D_80174B1C;
+static s32 D_80174B20;
+static s32 D_80174B24;
+static s32 D_80174B28;
+static s32 D_80174B2C;
+static s32 D_80174B2C;
+static s32 D_80174B30;
+static s32 D_80174B34;
+static s16 D_80174B38;
 STATIC_PAD_BSS(2);
-s16 D_80174B3C;
+static s16 D_80174B3C;
 STATIC_PAD_BSS(2);
-s16 D_80174B40;
+static s16 D_80174B40;
 STATIC_PAD_BSS(2);
-s16 D_80174B44;
+static s16 D_80174B44;
 STATIC_PAD_BSS(2);
-Primitive* D_80174B48;
-s32 D_80174B4C[16];
-Point16 D_80174B8C[16];
-s16 D_80174BCC[16];
-s16 D_80174BEC[16];
-s16 D_80174C0C[16];
-s32 D_80174C2C;
-FamiliarStats D_80174C30;
-Point16 D_80174C3C[4][16];
-s32 g_IsServantDestroyed;
-s32 D_80174D40;
-s32 _unused[26];
+static Primitive* D_80174B48;
+static s32 D_80174B4C[16];
+static Point16 D_80174B8C[16];
+static s16 D_80174BCC[16];
+static s16 D_80174BEC[16];
+static s16 D_80174C0C[16];
+static s32 D_80174C2C;
+static FamiliarStats s_BatStats;
+static Point16 D_80174C3C[4][16];
+static s32 s_IsServantDestroyed;
+static s32 D_80174D40;
+static s32 _unused[26];
 
 void func_80172C30(Entity* self);
 void unused_339C(void);
@@ -76,10 +82,9 @@ ServantDesc bat_ServantDesc = {
 };
 #endif
 
-extern AnimationFrame g_DefaultBatAnimationFrame[];
 
 #ifdef VERSION_PSP
-extern FamiliarStats D_80174C30;
+extern FamiliarStats s_BatStats;
 extern s32 D_801748D8[0x80];
 
 extern Collider D_80174AD8;
@@ -110,11 +115,16 @@ extern s16 D_80174BCC[16];
 extern s16 D_80174BEC[16];
 extern s16 D_80174C0C[16];
 extern s32 D_80174C2C;
-extern FamiliarStats D_80174C30;
+extern FamiliarStats s_BatStats;
 extern Point16 D_80174C3C[4][16];
-extern s32 g_IsServantDestroyed;
+extern s32 s_IsServantDestroyed;
 extern s32 D_80174D40;
 #endif
+
+
+extern AnimationFrame g_DefaultBatAnimationFrame[];
+extern s32 g_BatAbilityStats[][5];
+extern u16 g_BatClut[];
 
 #include "../set_entity_animation.h"
 
@@ -151,7 +161,7 @@ Entity* func_8017110C(Entity* self) {
         if (e->posY.i.hi < 0) {
             continue;
         }
-        if (e->hitboxState & 8 && !D_80170658[D_80174C30.level / 10][4]) {
+        if (e->hitboxState & 8 && !g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_BAD_ATTACKS]) {
             continue;
         }
         if (abs(self->posX.i.hi - e->posX.i.hi) < 64 &&
@@ -169,7 +179,7 @@ Entity* func_8017110C(Entity* self) {
         }
 
         if (e->flags & FLAG_UNK_80000) {
-            if (e->hitPoints >= D_80170658[D_80174C30.level / 10][3]) {
+            if (e->hitPoints >= g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_MIN_ENEMY_HP]) {
                 found++;
                 D_801748D8[i] = 1;
             }
@@ -450,7 +460,7 @@ void func_801719E0(Entity* self) {
         }
     }
     self->ext.bat.unk80 = self->entityId;
-    g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
+    g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
 }
 
 #ifdef VERSION_PC
@@ -487,7 +497,7 @@ void ServantInit(InitializeMode mode) {
     }
 
     dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
-    src = D_80170720;
+    src = g_BatClut;
 
     for (i = 0; i < 32; i++) {
         *dst++ = *src++;
@@ -503,9 +513,9 @@ void ServantInit(InitializeMode mode) {
 
     spriteBanks = g_api.o.spriteBanks;
     spriteBanks += 20;
-    *spriteBanks = (SpriteParts*)D_80170040;
+    *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
 
-    e = &g_Entities[4];
+    e = &g_Entities[SERVANT_ENTITY_INDEX];
 
     DestroyEntity(e);
 
@@ -524,7 +534,7 @@ void ServantInit(InitializeMode mode) {
         e->posY.val = FIX(-32);
     } else {
         e->entityId = ENTITY_ID_SERVANT;
-        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             e->posX.val = ServantUnk0() ? FIX(192) : FIX(64);
             e->posY.val = FIX(160);
         } else {
@@ -535,18 +545,18 @@ void ServantInit(InitializeMode mode) {
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
-    g_IsServantDestroyed = 0;
+    s_IsServantDestroyed = 0;
 }
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateServantDefault);
 #else
 void UpdateServantDefault(Entity* self) {
-    g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (g_IsServantDestroyed != 0) {
+    g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
+    if (s_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
-    if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+    if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
         switch (ServantUnk0()) {
         case 0:
             D_80174B04 = 0x40;
@@ -582,7 +592,7 @@ void UpdateServantDefault(Entity* self) {
             self->step = 5;
             break;
         }
-        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi) {
                 self->facingLeft = true;
             } else {
@@ -663,7 +673,7 @@ void UpdateServantDefault(Entity* self) {
                 SetEntityAnimation(self, D_8017054C);
             }
             self->ext.bat.unk8C++;
-            if (self->ext.bat.unk8C > D_80170658[D_80174C30.level / 10][0]) {
+            if (self->ext.bat.unk8C > g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
                 self->ext.bat.unk8C = 0;
                 // Pay attention - this is not a ==
                 if (self->ext.bat.target = func_8017110C(self)) {
@@ -686,7 +696,7 @@ void UpdateServantDefault(Entity* self) {
             D_80174B20 = self->ext.bat.target->posY.i.hi;
             self->hitboxWidth = 5;
             self->hitboxHeight = 5;
-            g_api.func_8011A3AC(self, 15, 1, &D_80174C30);
+            g_api.func_8011A3AC(self, 15, 1, &s_BatStats);
             self->ext.bat.unk86 = 0xC00;
             SetEntityAnimation(self, D_801705EC);
             CreateBlueTrailEntity(self);
@@ -699,7 +709,7 @@ void UpdateServantDefault(Entity* self) {
         D_80174B0C = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
         D_80174B10 = GetTargetPositionWithDistanceBuffer(
             D_80174B0C, self->ext.bat.unk86,
-            D_80170658[D_80174C30.level / 10][1]);
+            g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_ATTACK_ANGLE]);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
         self->velocityY = -(rsin(D_80174B10) << 2 << 4);
@@ -776,15 +786,15 @@ void func_80172C30(Entity* self) {
         return;
     }
 
-    g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
-    if (g_IsServantDestroyed != 0) {
+    g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
+    if (s_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     switch (self->step) {
     case 0:
         func_801719E0(self);
         if (!self->ext.bat.unk82) {
-            func_8017160C(D_80170658[D_80174C30.level / 10][2], 0xD2);
+            func_8017160C(g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_ADD_BAT_COUNT], 0xD2);
         }
         break;
     case 1:
@@ -859,7 +869,7 @@ void func_80172C30(Entity* self) {
         } else if (self->ext.bat.unk8C >= 0x1F) {
             func_8017170C(self, 0);
             if (!self->ext.bat.unk82) {
-                self->entityId = 0xD1;
+                self->entityId = ENTITY_ID_SERVANT;
                 self->step = 0;
                 break;
             }

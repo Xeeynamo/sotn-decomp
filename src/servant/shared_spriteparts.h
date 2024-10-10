@@ -32,7 +32,7 @@ int D_801703F4[];
 int D_80170410[];
 int D_8017042C[];
 
-SpriteParts* D_80170040[] = {
+SpriteParts* g_ServantSpriteParts[] = {
     (SpriteParts*)NULL,       (SpriteParts*)D_801700C8,
     (SpriteParts*)D_801700E4, (SpriteParts*)D_80170100,
     (SpriteParts*)D_8017011C, (SpriteParts*)D_80170138,
