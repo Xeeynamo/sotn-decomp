@@ -53,25 +53,25 @@ s32 D_80174D40;
 s32 _unused[26];
 
 void func_80172C30(Entity* self);
-void func_8017339C(void);
-void func_801733A4(void);
-void func_801733AC(void);
-void func_801733B4(void);
-void func_801733BC(void);
-void func_801733C4(void);
-void func_801733CC(void);
+void unused_339C(void);
+void unused_33A4(void);
+void unused_33AC(void);
+void unused_33B4(void);
+void unused_33BC(void);
+void unused_33C4(void);
+void unused_33CC(void);
 void BatFamiliarBlueTrail(Entity* self);
-void func_80173C0C(Entity* self);
-void func_80173C14(void);
-void func_80173C1C(void);
-void func_80173C24(void);
+void unused_3C0C(Entity* self);
+void unused_3C14(void);
+void unused_3C1C(void);
+void unused_3C24(void);
 
 ServantDesc bat_ServantDesc = {
     ServantInit,          UpdateServantDefault, func_80172C30,
-    func_8017339C,        func_801733A4,        func_801733AC,
-    func_801733B4,        func_801733BC,        func_801733C4,
-    func_801733CC,        BatFamiliarBlueTrail, func_80173C0C,
-    func_80173C14,        func_80173C1C,        func_80173C24,
+    unused_339C,        unused_33A4,        unused_33AC,
+    unused_33B4,        unused_33BC,        unused_33C4,
+    unused_33CC,        BatFamiliarBlueTrail, unused_3C0C,
+    unused_3C14,        unused_3C1C,        unused_3C24,
     DestroyServantEntity,
 };
 #endif
@@ -220,7 +220,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 }
 #endif
 
-void func_80171560(Entity* self) {}
+void unused_1560(Entity* self) {}
 
 // Only ever called by UpdateServantDefault so that is the parent
 void CreateBlueTrailEntity(Entity* parent) {
@@ -752,7 +752,7 @@ void UpdateServantDefault(Entity* self) {
         break;
     }
     ProcessEvent(self, false);
-    func_80171560(self);
+    unused_1560(self);
     g_api.UpdateAnim(NULL, D_801705F4);
 }
 #endif
@@ -882,24 +882,24 @@ void func_80172C30(Entity* self) {
         break;
     }
     ProcessEvent(self, false);
-    func_80171560(self);
+    unused_1560(self);
     g_api.UpdateAnim(NULL, D_801705F4);
 }
 #endif
 
-void func_8017339C(void) {}
+void unused_339C(void) {}
 
-void func_801733A4(void) {}
+void unused_33A4(void) {}
 
-void func_801733AC(void) {}
+void unused_33AC(void) {}
 
-void func_801733B4(void) {}
+void unused_33B4(void) {}
 
-void func_801733BC(void) {}
+void unused_33BC(void) {}
 
-void func_801733C4(void) {}
+void unused_33C4(void) {}
 
-void func_801733CC(void) {}
+void unused_33CC(void) {}
 
 // When bat familiar swoops toward enemy to attack, it leaves a trail of blue
 // bat outlines behind it, not unlike Alucard's wing smash bat outlines.
@@ -1035,16 +1035,16 @@ void BatFamiliarBlueTrail(Entity* self) {
 }
 
 #ifndef VERSION_PSP
-void func_80173C0C(Entity* self) {}
+void unused_3C0C(Entity* self) {}
 #else
-void func_80173C0C(void) {}
+void unused_3C0C(void) {}
 #endif
 
-void func_80173C14(void) {}
+void unused_3C14(void) {}
 
-void func_80173C1C(void) {}
+void unused_3C1C(void) {}
 
-void func_80173C24(void) {}
+void unused_3C24(void) {}
 
 #include "../destroy_servant_entity.h"
 
