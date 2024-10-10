@@ -9,7 +9,7 @@ void UpdateStageEntities(void);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern s16** OVL_EXPORT(spriteBanks)[];
-static u_long* cluts[];
+extern u_long* OVL_EXPORT(cluts)[];
 extern MyRoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long* OVL_EXPORT(gfxBanks)[];
 
@@ -20,7 +20,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),
-    .cluts = cluts,
+    .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = NULL,
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
@@ -35,7 +35,7 @@ u_long* D_801800A0[] = {
     PAL_BULK(0x2000, D_80181D08),
     PAL_TERMINATE(),
 };
-static u_long* cluts[] = {D_801800A0};
+u_long* OVL_EXPORT(cluts)[] = {D_801800A0};
 
 #include "layers.h"
 
