@@ -76,6 +76,7 @@ u8 AnimFrames_ThornweedQuickWiggle[] = {
 
 extern EntityInit EntityInit_80180700;
 
+// [Why can't PhysicsSensors_VenusWeed be named PhysicsSensors AND PhysicsSensors_Thornweed be named PhysicsSensors? Names collide why?]
 // E_VENUS_WEED
 // func_801AB7CC
 // https://decomp.me/scratch/QrYmQ
