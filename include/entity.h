@@ -642,18 +642,19 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 pad7C;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 unk8C;
+    // This counter is used for the Y "bob" the ghost does
+    /* 0x80 */ s16 bobCounterY;
+    /* 0x82 */ s16 targetAngle;
+    /* 0x84 */ s16 maxAngle;
+    /* 0x86 */ s16 frameCounter;
+    /* 0x88 */ s16 opacity;
+    /* 0x8A */ s16 opacityAdjustmentAmount;
+    /* 0x8C */ s16 confusedSubStep;
     /* 0x8E */ s32 pad8E;
-    /* 0x92 */ struct Entity* unk92;
-    /* 0x96 */ struct Entity* unk96;
+    /* 0x92 */ struct Entity* attackEntity;
+    /* 0x96 */ struct Entity* confusedEntity;
     /* 0x9A */ byte pad_1C[0x6];
-    /* 0xA2 */ struct Entity* unkA2;
+    /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;
 
 typedef struct {
@@ -2011,6 +2012,7 @@ SYNC_FIELD(ET_EntFactory, ET_stopwatchCircle, parent);
 SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
+SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);

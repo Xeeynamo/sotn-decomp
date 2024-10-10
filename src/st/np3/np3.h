@@ -271,7 +271,6 @@ extern u8 D_8018267C[]; // Animation: Walking faster
 extern s32 D_8018268C;
 extern s32 D_801826A4;
 extern s32 D_801826C4;
-extern PfnEntityUpdate PfnEntityUpdates[];
 extern u8 D_80182914[];
 extern u8 D_80182935[];
 
@@ -333,7 +332,7 @@ extern s16 D_801833A0[];
 extern s16 D_801833CC[];
 
 // For EntityOwl
-extern u16 D_80180B2C;
+extern u16 D_80180B2C[];
 extern u16 D_801826CC[];
 extern u8 D_801826EC[];
 extern u8 D_801826F8[];

@@ -1,4 +1,4 @@
-PfnEntityUpdates = 0x80180924;
+NO3_EntityUpdates = 0x80180924;
 g_eBreakableInit = 0x80180AAC;
 g_InitializeData0 = 0x80180AB8;
 g_InitializeEntityData0 = 0x80180AC4;

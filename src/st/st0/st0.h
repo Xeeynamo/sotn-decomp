@@ -56,7 +56,6 @@ extern const char* D_801A7984;
 extern const char* D_801A7990;
 extern const char* D_801A799C;
 
-extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 

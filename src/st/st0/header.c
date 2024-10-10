@@ -2,9 +2,9 @@
 #include "st0.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** spriteBanks[];
-extern void* Cluts[];
-extern MyRoomDef rooms_layers[];
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long* OVL_EXPORT(cluts)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* g_EntityGfxs[];
 void UpdateStageEntities();
 void PrologueScroll();
@@ -15,10 +15,10 @@ static Overlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
-    .cluts = Cluts,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = rooms_layers,
+    .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = g_EntityGfxs,
     .UpdateStageEntities = UpdateStageEntities,
     .StageEndCutScene = PrologueScroll,
@@ -37,7 +37,7 @@ extern u16* D_8019A830[0x80];
 extern u16* D_8019AA30[0x80];
 extern u16* D_8019B010[0x100];
 
-static u16** Clut[] = {
+static u_long* Clut[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0), PAL_BULK(0x2000, D_8019A750),
     PAL_BULK(0x2100, D_8019AD30),  PAL_BULK(0x2120, D_8019AC30),
     PAL_BULK(0x21A0, D_8019AD70),  PAL_BULK(0x21D0, D_8019ADD0),
@@ -45,7 +45,7 @@ static u16** Clut[] = {
     PAL_BULK(0x2300, D_8019A830),  PAL_BULK(0x2480, D_8019AA30),
     PAL_BULK(0x2800, D_8019B010),  PAL_TERMINATE()};
 
-static void* Cluts[] = {
+u_long* OVL_EXPORT(cluts)[] = {
     Clut,
 };
 

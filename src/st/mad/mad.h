@@ -85,7 +85,6 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollPrizeTable[];
 // extern u16 g_testCollRandTable;
 extern RoomHeader g_rooms[];
-extern PfnEntityUpdate PfnEntityUpdates[];
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];

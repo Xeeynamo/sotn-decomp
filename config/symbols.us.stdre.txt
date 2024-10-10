@@ -1,5 +1,5 @@
-g_GfxBanks = 0x801801D0;
-PfnEntityUpdates = 0x801803C8;
+DRE_gfxBanks = 0x801801D0;
+DRE_EntityUpdates = 0x801803C8;
 g_eBreakableInit = 0x80180458;
 g_InitializeData0 = 0x80180464;
 g_InitializeEntityData0 = 0x80180470;

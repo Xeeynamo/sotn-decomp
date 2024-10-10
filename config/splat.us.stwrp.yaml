@@ -37,7 +37,6 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0xB8, .data, header] # layers
-      - [0x1B8, .data, d_1b8] # entity gfx
       - [0x23C, .data, e_laydef] # layout entries header
       - [0x3E4, .data, e_init]
       - [0x528, .data, st_debug]

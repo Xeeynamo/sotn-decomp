@@ -79,7 +79,7 @@ void NZ0_EntityCutscene(Entity*);
 void EntityMaria(Entity*);
 void func_801B8E0C(Entity*);
 
-PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakableNZ0,
     EntityExplosion,
     EntityPrizeDrop,

@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 
+void Update(void);
+void HitDetection(void);
+void UpdateRoomPosition(void);
+void InitRoomEntities(s32 objLayoutId);
+void UpdateStageEntities(void);
+
 extern RoomHeader OVL_EXPORT(rooms)[];
-static s16** spriteBanks[];
-static void* Cluts[];
-static MyRoomDef rooms_layers[];
-static GfxBank* gfxBanks[];
-void UpdateStageEntities();
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long* OVL_EXPORT(cluts)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -14,11 +19,11 @@ Overlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
-    .cluts = Cluts,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = NULL,
-    .tileLayers = rooms_layers,
-    .gfxBanks = gfxBanks,
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
@@ -28,16 +33,12 @@ extern u16* D_8018658C[0x80];
 extern u16* D_8018678C[0x80];
 extern u16* D_8018698C[0x10];
 extern u16* D_801869AC[0x20];
-
-static u16** D_801800A0[] = {
+static u_long* D_801800A0[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0), PAL_BULK(0x2000, D_8018658C),
     PAL_BULK(0x2080, D_8018678C),  PAL_BULK(0x2100, D_8018698C),
     PAL_BULK(0x2230, D_801869AC),  PAL_TERMINATE(),
 };
-
-static void* Cluts[] = {
-    D_801800A0,
-};
+static u_long* OVL_EXPORT(cluts)[] = {D_801800A0};
 
 #include "layers.h"
 
@@ -74,9 +75,8 @@ static u_long* D_80180188[] = {
     GFX_TERMINATE(),
 };
 
-static GfxBank* gfxBanks[] = {
+u_long* OVL_EXPORT(gfxBanks)[] = {
     &D_80180134, &D_80180148, &D_80180188, &D_80180134, &D_80180134,
     &D_80180168, &D_80180134, &D_80180134, &D_80180134, &D_80180134,
     &D_80180134, &D_80180134, &D_80180134, &D_80180134, &D_80180134,
-    &D_80180134, &D_80180134, &D_80180134, &D_80180134, &D_80180134,
-};
+    &D_80180134, &D_80180134, &D_80180134, &D_80180134, &D_80180134};

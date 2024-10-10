@@ -18,6 +18,13 @@ typedef enum {
 
 #define ENTITY_ID_SERVANT 0xD1
 
+/* These are mostly update functions.
+ * Update function is called in the engine and is
+ * calculated by index = Entity->entityId - 0xD0.
+ * "Default" update function is Update as most servants
+ * are set to entityId = 0xD1 (index 1)
+ * Sub entities tend to use lower pointers
+ * Some servants change thier entityId to switch "modes" */
 typedef struct {
     void (*Init)(InitializeMode mode);
     PfnEntityUpdate Update;
@@ -67,7 +74,6 @@ typedef struct ServantEvent {
 
 extern SpriteParts* D_80170040[];
 extern u16 g_ServantClut[];
-extern AnimationFrame D_801704A8[];
 extern AnimationFrame D_80170514[];
 extern AnimationFrame D_8017054C[];
 extern AnimationFrame D_801705EC[];

@@ -31,7 +31,7 @@ void EntityElevatorStationary(Entity*);
 void EntityUnkId1B(Entity*);
 void EntityMovingElevator(Entity*);
 
-PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,       EntityExplosion,
     EntityPrizeDrop,       EntityDamageDisplay,
     EntityRedDoor,         EntityIntenseExplosion,
