@@ -18,7 +18,7 @@ static u16 func_801C4144(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {
     }
     *arg3++ = temp;
 
-    temp = D_80182168[*ptr++];
+    temp = g_splashAspects[*ptr++];
     if (temp) {
         temp = arg1 / temp;
     } else {

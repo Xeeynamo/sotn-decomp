@@ -2,206 +2,6 @@
 #include "no3.h"
 #include "../e_merman2.h"
 
-// ID 0x35
-void EntitySplashWater(Entity* self) {
-    Tilemap* tilemap = &g_Tilemap;
-    u16 params = self->params;
-    u16 temp_s2 = params >> 0xB;
-    u16 temp_s5 = (params >> 8) & 7;
-    u16 temp_s4 = (params >> 5) & 7;
-
-    Primitive *prim, *prim2;
-    Entity* newEntity;
-    s16 primIndex;
-    s16 temp_a0;
-    s16 temp_a1;
-    s16 temp_a2;
-    u16 temp_t3;
-    s16 temp_t8;
-    char pad[0x4];
-    s32 i;
-
-    params &= 0xF;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitCommon);
-        if (temp_s2 != 0 && temp_s4 != 7) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
-        } else {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        }
-        if (primIndex != -1) {
-            self->flags |= FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            temp_t3 = self->posY.i.hi;
-            temp_t8 = self->posX.i.hi;
-            self->ext.waterEffects.unk82 = temp_t3 + tilemap->scrollY.i.hi;
-            for (i = 0; prim != NULL; i++) {
-                if (i % 2) {
-                    prim->u0 = prim->u2 = prim2->u0;
-                    prim->u1 = prim->u3 = prim2->u1;
-                    prim->v0 = prim->v1 = prim2->v0;
-                    prim->v2 = prim->v3 = prim2->v2;
-                    prim->y2 = prim2->y2;
-                    prim->y3 = prim2->y3;
-                    prim->x2 = prim->x0 = prim2->x0;
-                    prim->x3 = prim->x1 = prim2->x1;
-                } else {
-                    prim->u1 = prim->u3 = 0x20;
-                    prim->v2 = prim->v3 = 0x7C;
-                    prim->u0 = prim->u2 = 0;
-                    prim->v0 = prim->v1 = 96;
-                    prim->y2 = prim->y3 = temp_t3;
-                    prim->x2 = prim->x0 = temp_t8 - 0xE;
-                    prim->x3 = prim->x1 = temp_t8 + 0xE;
-                    if (i >= 2) {
-                        temp_a2 = D_80183858[temp_s4];
-                        if (temp_s2 >= 0xF) {
-                            prim->u0 = prim->u2 = prim2->u1;
-                            prim->x0 = prim->x2 = prim2->x1;
-                            temp_a1 = prim2->y3;
-                            prim->y2 = temp_a1;
-                            if (temp_a2 != 0) {
-                                prim->y3 =
-                                    temp_a1 - (prim->x1 - prim->x0) / temp_a2;
-                            } else {
-                                prim->y3 = temp_a1;
-                            }
-                        } else {
-                            prim->u1 = prim->u3 = prim2->u0;
-                            prim->x1 = prim->x3 = prim2->x0;
-                            temp_a1 = prim2->y2;
-                            prim->y3 = temp_a1;
-                            if (temp_a2 != 0) {
-                                prim->y2 =
-                                    temp_a1 + (prim->x1 - prim->x0) / temp_a2;
-                            } else {
-                                prim->y2 = temp_a1;
-                            }
-                        }
-                    } else {
-                        if (temp_s2 != 0) {
-                            if (temp_s2 >= 0xF) {
-                                prim->u1 = prim->u3 =
-                                    prim->u0 + (temp_s2 << 5) / 28;
-                                prim->x1 = prim->x3 = temp_s2 + prim->x0;
-                            } else {
-                                prim->u0 = prim->u2 =
-                                    prim->u2 + (temp_s2 << 5) / 28;
-                                prim->x0 = prim->x2 = temp_s2 + prim->x2;
-                            }
-                        }
-                        if (temp_s5 != 0) {
-                            temp_a0 = D_80183858[temp_s5];
-                            if (temp_a0 < 0) {
-                                if (temp_t8 >= prim->x1) {
-                                    prim->y2 += (prim->x1 - prim->x0) / temp_a0;
-                                } else {
-                                    prim->y2 += (temp_t8 - prim->x0) / temp_a0;
-                                    prim->y3 = prim->y3 -
-                                               (prim->x1 - temp_t8) / temp_a0;
-                                }
-                            } else if (prim->x0 >= temp_t8) {
-                                prim->y3 -= (prim->x1 - prim->x0) / temp_a0;
-                            } else {
-                                prim->y2 += (temp_t8 - prim->x0) / temp_a0;
-                                prim->y3 -= (prim->x1 - temp_t8) / temp_a0;
-                            }
-                        }
-                    }
-                }
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = 255;
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = 128;
-                prim->clut = 0x162;
-                prim->tpage = 0x1A;
-                prim->priority = self->zPriority + 2;
-                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-                if (i % 2) {
-                    prim->clut = 0x15F;
-                    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                        prim->b1 = 0;
-                    prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                        prim->b3 = 96;
-                    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
-                                     DRAW_UNK02 | DRAW_TRANSP;
-                    prim->priority += 2;
-                }
-                prim2 = prim;
-                prim = prim->next;
-            }
-
-            temp_a2 = (self->posX.i.hi - 120) >> 4;
-            if (temp_a2 < -8) {
-                temp_a2 = -8;
-                temp_a2 = -8;
-            }
-            if (temp_a2 > 8) {
-                temp_a2 = 8;
-            }
-
-            g_api.PlaySfxVolPan(D_801813A8, 0x7F, temp_a2);
-            self->velocityY = D_80183878[params].x;
-            self->ext.waterEffects.accelY = D_80183878[params].y;
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
-                newEntity->velocityY = self->velocityY;
-            }
-            break;
-        }
-        DestroyEntity(self);
-        return;
-
-    case 1:
-        MoveEntity(self);
-        self->velocityY += self->ext.waterEffects.accelY;
-        if (self->velocityY > FIX(2.5)) {
-            self->step++;
-        }
-        break;
-
-    case 2:
-        MoveEntity(self);
-        if (g_PrimBuf[self->primIndex].r0 < 9) {
-            DestroyEntity(self);
-            return;
-        }
-        break;
-    }
-
-    temp_t3 = self->ext.waterEffects.unk82 - self->posY.i.hi;
-    temp_t3 -= tilemap->scrollY.i.hi;
-    prim = &g_PrimBuf[self->primIndex];
-
-    for (i = 0; prim != NULL; i++) {
-        prim->y0 = prim->y2 - temp_t3;
-        prim->y1 = prim->y3 - temp_t3;
-        if (i % 2) {
-            if (prim->b3 >= 4) {
-                prim->b3 += 252;
-            }
-            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-        } else {
-            if (prim->b3 >= 8) {
-                prim->b3 += 252;
-            }
-            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-            if (prim->b3 <= 8) {
-                if (prim->b1 >= 8) {
-                    prim->b1 += 248;
-                }
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
-            }
-        }
-        prim = prim->next;
-    }
-}
-
 // ID 0x36
 void EntitySurfacingWater(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -257,7 +57,7 @@ void EntitySurfacingWater(Entity* self) {
             prim->x2 = prim->x0 = left;
             prim->x3 = prim->x1 = right;
             if (params != 0) {
-                var_s2 = D_80183858[params];
+                var_s2 = g_splashAspects[params];
                 prim->y2 = prim->y2 + 9 / var_s2;
                 prim->y3 = prim->y3 - 9 / var_s2;
             }
@@ -393,7 +193,7 @@ void EntitySideWaterSplash(Entity* self) {
             params = self->params;
             temp_s0 = params & 0xF;
             if (temp_s0 == 0) {
-                g_api.PlaySfx(D_801813A8);
+                g_api.PlaySfx(g_SplashSfx);
             }
             angle = LOH(D_801838E4[(params >> 3) & 0x1E]);
             ptr = (s32*)&D_801838A4[temp_s0];
