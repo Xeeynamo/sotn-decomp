@@ -12,6 +12,7 @@ g_SplashYMovement = 0x80182188;
 g_SurfacingYTbl = 0x801821A8;
 g_SideWaterSpeeds = 0x801821B4;
 g_SideWaterAngles = 0x801821F4;
+g_SmallWaterDropVel = 0x80182204;
 D_801828C8 = 0x801828C8;
 EntityStairwayPiece = 0x801B5790;
 EntitySlogra = 0x801B6990;

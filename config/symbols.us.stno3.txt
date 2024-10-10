@@ -32,6 +32,7 @@ g_SplashYMovement = 0x80183878;
 g_SurfacingYTbl = 0x80183898;
 g_SideWaterSpeeds = 0x801838A4;
 g_SideWaterAngles = 0x801838E4;
+g_SmallWaterDropVel = 0x801838F4;
 EntityCavernDoorVase = 0x801B77D4;
 EntityUnkId12 = 0x801B78A8;
 EntityBreakable = 0x801B7A64;

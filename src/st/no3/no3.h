@@ -207,7 +207,7 @@ extern ObjInit D_80182764[];
 extern u16 D_80183080[];
 extern u16 D_801830A0[];
 extern u8 D_8018383C[];
-extern s32 D_801838F4[];
+extern s32 g_SmallWaterDropVel[];
 extern s32 g_SideWaterSpeeds[];
 extern s16 g_SideWaterAngles[];
 extern s16 g_splashAspects[];

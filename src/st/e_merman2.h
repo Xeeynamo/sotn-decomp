@@ -430,3 +430,79 @@ void EntitySideWaterSplash(Entity* self) {
         prim->p1++;
     }
 }
+
+void EntitySmallWaterDrop(Entity* self) {
+    u16 params = self->params;
+    s16 upperParams = params & 0xFF00;
+    Primitive *prim, *prim2;
+    s32 primIndex;
+    s32 xVel;
+    s16 x, y;
+
+    params &= 0xFF;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_eInitGeneric2);
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        y -= Random() & 3;
+
+        if (upperParams > 0) {
+            x += Random() & 3;
+        } else {
+            x -= Random() & 3;
+        }
+        self->posX.i.hi = x;
+        self->posY.i.hi = y;
+
+        while (prim != NULL) {
+            prim->u0 = 2;
+            prim->v0 = 2;
+            prim->x0 = x;
+            prim->y0 = y;
+            prim->r0 = 96;
+            prim->g0 = 96;
+            prim->b0 = 128;
+            prim->priority = self->zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        xVel = g_SmallWaterDropVel[params * 2];
+        if (upperParams > 0) {
+            xVel = -xVel;
+        }
+        self->velocityX = xVel + (upperParams * 16);
+        self->velocityY = g_SmallWaterDropVel[params * 2 + 1];
+        self->ext.waterEffects.accelY = FIX(0.25);
+        break;
+
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.waterEffects.accelY;
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = x;
+    prim->y0 = y;
+    if (prim->b0 >= 8) {
+        prim->b0 -= 8;
+        prim->r0 = prim->g0 -= 6;
+        return;
+    }
+    DestroyEntity(self);
+}
