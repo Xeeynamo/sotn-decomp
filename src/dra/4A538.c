@@ -1561,18 +1561,18 @@ void SetRoomForegroundLayer(LayerDef* layerDef) {
 
     g_Tilemap.fg = layerDef->layout;
     g_Tilemap.order = layerDef->zPriority;
-    if (layerDef->rect.params & 0x40) {
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_UNKNOWN_40) {
         g_Tilemap.order = 0x60;
         D_8003C708.flags = layerDef->rect.params;
         D_8003C708.unk2 = 0;
         D_8003C708.unk4 = 0;
         D_8003C708.zPriority = layerDef->zPriority;
     }
-    if (layerDef->rect.params & 0x20) {
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
         g_Tilemap.order = 0x60;
         D_8003C708.flags = layerDef->rect.params;
     }
-    if (layerDef->rect.params & 0x10) {
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_UNKNOWN_10) {
         g_Tilemap.order = 0x60;
         D_8013AED0 = 0;
     };

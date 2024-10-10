@@ -76,6 +76,8 @@ ServantDesc bat_ServantDesc = {
 };
 #endif
 
+extern AnimationFrame g_DefaultBatAnimationFrame[];
+
 #ifdef VERSION_PSP
 extern FamiliarStats D_80174C30;
 extern s32 D_801748D8[0x80];
@@ -350,7 +352,7 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            SetEntityAnimation(self, D_801704A8);
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             self->ext.bat.unk84 = rand() % 4096;
             self->ext.bat.unk86 = 0;
             self->ext.bat.unk88 = 0xC;
@@ -367,7 +369,7 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            SetEntityAnimation(self, D_801704A8);
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
@@ -413,14 +415,14 @@ void func_801719E0(Entity* self) {
         case 0xD1:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            SetEntityAnimation(self, D_801704A8);
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            SetEntityAnimation(self, D_801704A8);
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
@@ -640,7 +642,7 @@ void UpdateServantDefault(Entity* self) {
         if (self->velocityY > FIX(1.0)) {
             SetEntityAnimation(self, D_801705EC);
         } else if (D_80174B14 < 60) {
-            SetEntityAnimation(self, D_801704A8);
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
         } else if (D_80174B14 > 100) {
             SetEntityAnimation(self, D_80170514);
         }
@@ -807,7 +809,7 @@ void func_80172C30(Entity* self) {
             if (self->velocityY > FIX(1)) {
                 SetEntityAnimation(self, D_801705EC);
             } else {
-                SetEntityAnimation(self, D_801704A8);
+                SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             }
             self->ext.bat.unk8E = true;
         }
@@ -865,7 +867,7 @@ void func_80172C30(Entity* self) {
             D_80174C3C[self->ext.bat.unk82][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
             D_80174C3C[self->ext.bat.unk82][0].y = rand() % 256;
-            SetEntityAnimation(self, D_801704A8);
+            SetEntityAnimation(self, g_DefaultBatAnimationFrame);
         }
         break;
     case 3:
