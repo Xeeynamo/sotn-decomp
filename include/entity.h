@@ -647,8 +647,8 @@ typedef struct {
     /* 0x82 */ s16 targetAngle;
     /* 0x84 */ s16 maxAngle;
     /* 0x86 */ s16 frameCounter;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
+    /* 0x88 */ s16 opacity;
+    /* 0x8A */ s16 opacityAdjustmentAmount;
     /* 0x8C */ s16 confusedSubStep;
     /* 0x8E */ s32 pad8E;
     /* 0x92 */ struct Entity* attackEntity;

@@ -18,6 +18,13 @@ typedef enum {
 
 #define ENTITY_ID_SERVANT 0xD1
 
+/* These are mostly update functions.
+ * Update function is called in the engine and is
+ * calculated by index = Entity->entityId - 0xD0.
+ * "Default" update function is Update as most servants
+ * are set to entityId = 0xD1 (index 1)
+ * Sub entities tend to use lower pointers
+ * Some servants change thier entityId to switch "modes" */
 typedef struct {
     void (*Init)(InitializeMode mode);
     PfnEntityUpdate Update;

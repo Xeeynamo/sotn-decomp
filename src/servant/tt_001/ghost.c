@@ -8,6 +8,11 @@
 #define ABILITY_STATS_SPELL_ID 1
 #define ABILITY_STATS_BAD_ATTACKS 2
 
+#define ENTITY_ID_ATTACK_CLOUD 0xDA
+#define ENTITY_ID_CONFUSION 0xDB
+
+typedef enum { ATTACK_CLOUD, CONFUSION } ChildEntityType;
+
 // These variables are only used in UpdateEntityVelocityTowardsTarget
 static s16 s_DeltaX;
 STATIC_PAD_BSS(2);
@@ -54,15 +59,15 @@ static FamiliarStats s_GhostStats;
 static s32 g_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 
-extern s32 d_DefaultGhostAnimationFrame[];
-extern AnimationFrame* d_GhostAnimationFrames[];
-extern s32 d_GhostAbilityStats[][3];
-extern u16 d_GhostClut[];
+extern s32 g_DefaultGhostAnimationFrame[];
+extern AnimationFrame* g_GhostAnimationFrames[];
+extern s32 g_GhostAbilityStats[][3];
+extern u16 g_GhostClut[];
 
 extern s16
-    d_ConfusedOffsetsX[]; // Array of X-axis offsets for positioning primitives
+    g_ConfusedOffsetsX[]; // Array of X-axis offsets for positioning primitives
 extern s16
-    d_ConfusedOffsetsY[]; // Array of Y-axis offsets for positioning primitives
+    g_ConfusedOffsetsY[]; // Array of Y-axis offsets for positioning primitives
 
 void unused_20A4(Entity* self);
 void unused_20AC(void);
@@ -186,7 +191,7 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            d_GhostAbilityStats[s_GhostStats.level / 10]
+            g_GhostAbilityStats[s_GhostStats.level / 10]
                                [ABILITY_STATS_BAD_ATTACKS] == 0)
             continue;
 #if defined(VERSION_PSP)
@@ -245,9 +250,9 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
 void unused_1560(Entity* self) {}
 
 #if defined(VERSION_PSP)
-void func_psp_092EA460(Entity* self, s32 entityId, s32 params) {
+void func_psp_092EA460(Entity* self, s32 entityType, s32 params) {
 #else
-Entity* CreateChildEntity(Entity* self, s32 entityId) {
+Entity* CreateChildEntity(Entity* self, ChildEntityType entityType) {
 #endif
     Entity* entity;
     s32 i;
@@ -268,10 +273,10 @@ Entity* CreateChildEntity(Entity* self, s32 entityId) {
 #if defined(VERSION_PSP)
         entity->entityId = entityId;
 #else
-        if (entityId == 0) {
-            entity->entityId = 0xDA;
+        if (entityType == ATTACK_CLOUD) {
+            entity->entityId = ENTITY_ID_ATTACK_CLOUD;
         } else {
-            entity->entityId = 0xDB;
+            entity->entityId = ENTITY_ID_CONFUSION;
         }
 #endif
         entity->zPriority = self->zPriority;
@@ -291,7 +296,7 @@ Entity* CreateChildEntity(Entity* self, s32 entityId) {
 
 #ifdef VERSION_PC
 extern u16 g_ServantClut[48];
-extern u16 d_GhostClut[16];
+extern u16 g_GhostClut[16];
 #endif
 
 void ServantInit(InitializeMode mode) {
@@ -304,10 +309,10 @@ void ServantInit(InitializeMode mode) {
     u16 temp;
 #ifdef VERSION_PC
     const int lenServantClut = LEN(g_ServantClut);
-    const int lend_GhostClut = LEN(d_GhostClut);
+    const int leng_GhostClut = LEN(g_GhostClut);
 #else
     const int lenServantClut = 256;
-    const int lend_GhostClut = 32;
+    const int leng_GhostClut = 32;
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
@@ -325,9 +330,9 @@ void ServantInit(InitializeMode mode) {
 
         // overwrite part of the clut for this servant
         dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
-        src = d_GhostClut;
+        src = g_GhostClut;
 
-        for (i = 0; i < lend_GhostClut; i++) {
+        for (i = 0; i < leng_GhostClut; i++) {
             *dst++ = *src++;
         }
 
@@ -435,10 +440,10 @@ void UpdateServantDefault(Entity* self) {
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_UNK8;
-        SetEntityAnimation(self, &d_DefaultGhostAnimationFrame);
+        SetEntityAnimation(self, &g_DefaultGhostAnimationFrame);
         self->ext.ghost.maxAngle = 512;
-        self->ext.ghost.unk88 = 128;
-        self->ext.ghost.unk8A = -1;
+        self->ext.ghost.opacity = 128;
+        self->ext.ghost.opacityAdjustmentAmount = -1;
         self->step++;
         break;
     case 1:
@@ -536,15 +541,16 @@ void UpdateServantDefault(Entity* self) {
         } else if (s_DistanceToTarget2 < 8) {
             self->ext.ghost.frameCounter++;
             if (self->ext.ghost.frameCounter ==
-                (d_GhostAbilityStats[s_GhostStats.level / 10]
-                                    [ABILITY_STATS_DELAY_FRAMES] - 30)) {
+                (g_GhostAbilityStats[s_GhostStats.level / 10]
+                                    [ABILITY_STATS_DELAY_FRAMES] -
+                 30)) {
                 self->ext.ghost.attackEntity = CreateChildEntity(self, 0);
             } else if (self->ext.ghost.frameCounter >
-                       d_GhostAbilityStats[s_GhostStats.level / 10]
+                       g_GhostAbilityStats[s_GhostStats.level / 10]
                                           [ABILITY_STATS_DELAY_FRAMES]) {
                 self->ext.ghost.frameCounter = 0;
                 g_api.func_8011A3AC(self,
-                                    d_GhostAbilityStats[s_GhostStats.level / 10]
+                                    g_GhostAbilityStats[s_GhostStats.level / 10]
                                                        [ABILITY_STATS_SPELL_ID],
                                     1, &s_GhostStats);
                 self->hitboxWidth = 8;
@@ -552,8 +558,10 @@ void UpdateServantDefault(Entity* self) {
             }
         } else {
             self->ext.ghost.frameCounter = 0;
-            if (self->ext.ghost.attackEntity->entityId == 0xDA) {
+            if (self->ext.ghost.attackEntity->entityId ==
+                ENTITY_ID_ATTACK_CLOUD) {
                 self->ext.ghost.attackEntity->params = 1;
+                // this is calling UpdateAttackEntites
                 ghost_ServantDesc.Unk28(self->ext.ghost.attackEntity);
             }
         }
@@ -563,8 +571,10 @@ void UpdateServantDefault(Entity* self) {
     case 4:
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
-            if (self->ext.ghost.confusedEntity->entityId == 0xDB) {
+            if (self->ext.ghost.confusedEntity->entityId ==
+                ENTITY_ID_CONFUSION) {
                 self->ext.ghost.confusedEntity->params = 1;
+                // this is calling UpdateConfusedEntites
                 ghost_ServantDesc.Unk2C(self->ext.ghost.confusedEntity);
             }
             self->step = 1;
@@ -599,7 +609,7 @@ void UpdateServantDefault(Entity* self) {
             break;
         case 6:
             self->ext.ghost.frameCounter++;
-            if (self->ext.ghost.frameCounter > 0x3C) {
+            if (self->ext.ghost.frameCounter > 60) {
                 self->ext.ghost.frameCounter = 0;
                 self->ext.ghost.confusedSubStep++;
             }
@@ -608,7 +618,7 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.frameCounter++;
             if (self->ext.ghost.frameCounter == 1) {
                 self->ext.ghost.confusedEntity = CreateChildEntity(self, 1);
-            } else if (self->ext.ghost.frameCounter > 0x3C) {
+            } else if (self->ext.ghost.frameCounter > 60) {
                 self->ext.ghost.frameCounter = 0;
                 self->step++;
             }
@@ -643,15 +653,21 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     }
-    self->ext.ghost.unk88 += self->ext.ghost.unk8A;
-    if (!(self->ext.ghost.unk88 > 0x20 &&
-          self->ext.ghost.unk88 < 0x5F + 0x21)) {
-        self->ext.ghost.unk8A *= -1;
+
+    // controls the pulsing fade
+    self->ext.ghost.opacity += self->ext.ghost.opacityAdjustmentAmount;
+    if (!(self->ext.ghost.opacity > 0x20 &&
+          self->ext.ghost.opacity < 0x5F + 0x21)) {
+        self->ext.ghost.opacityAdjustmentAmount *= -1;
     }
-    self->unk6C = self->ext.ghost.unk88;
+
+    // unk6C is used in conjunction with self->drawFlags = FLAG_DRAW_UNK8 to set
+    // the alpha/saturation.  When it's zero, it's invisible, when it's 255,
+    // it's at the opacity of the sprite itself and is "bright".
+    self->unk6C = self->ext.ghost.opacity;
     ProcessEvent(self, 0);
     unused_1560(self);
-    g_api.UpdateAnim(NULL, d_GhostAnimationFrames);
+    g_api.UpdateAnim(NULL, g_GhostAnimationFrames);
 }
 
 void unused_20A4(Entity* self) {}
@@ -718,14 +734,13 @@ void UpdateAttackEntites(Entity* self) {
             s_CurrentAttackPrim = s_CurrentAttackPrim->next;
         }
 
-        s_AttackCloudTimer = 0x1E;
+        s_AttackCloudTimer = 30;
         s_AttackPosOscillator_calc = 0;
         g_api.PlaySfx(SFX_GLASS_SHARDS);
         self->step++;
 
     case 1:
-        s_AttackPosOscillator_calc =
-            (s_AttackPosOscillator_calc + 0x32) & 0xFFF;
+        s_AttackPosOscillator_calc = (s_AttackPosOscillator_calc + 50) & 0xFFF;
         s_AttackCloudTimer--;
         if (s_AttackCloudTimer < 0) {
             DestroyEntity(self);
@@ -835,19 +850,19 @@ void UpdateConfusedEntites(Entity* self) {
         if (!self->facingLeft) {
 
             s_CurrentConfusedPrim->x0 = s_CurrentConfusedPrim->x2 =
-                s_ParentX + d_ConfusedOffsetsX[s_ConfusedPrimIndex];
+                s_ParentX + g_ConfusedOffsetsX[s_ConfusedPrimIndex];
             s_CurrentConfusedPrim->x1 = s_CurrentConfusedPrim->x3 =
-                s_ParentX + (d_ConfusedOffsetsX[s_ConfusedPrimIndex] + 8);
+                s_ParentX + (g_ConfusedOffsetsX[s_ConfusedPrimIndex] + 8);
         } else {
             s_CurrentConfusedPrim->x0 = s_CurrentConfusedPrim->x2 =
-                s_ParentX - (d_ConfusedOffsetsX[s_ConfusedPrimIndex] + 8);
+                s_ParentX - (g_ConfusedOffsetsX[s_ConfusedPrimIndex] + 8);
             s_CurrentConfusedPrim->x1 = s_CurrentConfusedPrim->x3 =
-                s_ParentX - d_ConfusedOffsetsX[s_ConfusedPrimIndex];
+                s_ParentX - g_ConfusedOffsetsX[s_ConfusedPrimIndex];
         }
         s_CurrentConfusedPrim->y0 = s_CurrentConfusedPrim->y1 =
-            s_ParentY + d_ConfusedOffsetsY[s_ConfusedPrimIndex];
+            s_ParentY + g_ConfusedOffsetsY[s_ConfusedPrimIndex];
         s_CurrentConfusedPrim->y2 = s_CurrentConfusedPrim->y3 =
-            s_ParentY + (d_ConfusedOffsetsY[s_ConfusedPrimIndex] + 8);
+            s_ParentY + (g_ConfusedOffsetsY[s_ConfusedPrimIndex] + 8);
         s_CurrentConfusedPrim = s_CurrentConfusedPrim->next;
     }
     return;
