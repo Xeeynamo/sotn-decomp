@@ -663,7 +663,6 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-
 } ET_GurkhaSword;
 
 struct draculaPrimitive;
@@ -1197,15 +1196,6 @@ typedef struct {
     s32 unk88;
     struct Entity* parent;
 } ET_8016E9E4;
-
-typedef struct {
-    u8 unk7C;
-    u8 unk7D[3];
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-} ET_801CC820;
 
 typedef struct {
     s16 unk7C;
@@ -1962,7 +1952,6 @@ typedef union { // offset=0x7C
     ET_Death death;
     ET_SpittleBone spittleBone;
     ET_Player player;
-    ET_801CC820 et_801CC820;
     ET_801AF774 et_801AF774;
     ET_Drop drop;
     ET_BigRedFireball bigredfireball;

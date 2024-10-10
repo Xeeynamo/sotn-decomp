@@ -56,7 +56,7 @@ int func_801CF7A0(Entity* ent) {
     Entity* otherEnt;
     s32 xDistance;
     s32 step;
-    
+
     if (g_CurrentEntity->ext.GH_Props.unk8E) {
         --g_CurrentEntity->ext.GH_Props.unk8E;
     }

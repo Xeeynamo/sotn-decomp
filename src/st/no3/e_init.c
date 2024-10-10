@@ -198,5 +198,4 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFlyingOwlAndLeaves,
     EntityFallingLeaf, // 0x60
     EntityWargExplosionPuffTransparent,
-    EntityWargExplosionPuffOpaque
-};
+    EntityWargExplosionPuffOpaque};
