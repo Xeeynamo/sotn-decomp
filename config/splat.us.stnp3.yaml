@@ -59,7 +59,7 @@ segments:
       - [0x2440, data]
       - [0x2460, .data, e_bone_scimitar]
       - [0x2554, data]
-      - [0x25D4, data]
+      - [0x25D4, .data, e_bloody_zombie]
       - [0x26CC, data]
       - [0x2720, data]
       - [0x2740, data]
@@ -93,7 +93,7 @@ segments:
       - [0x3206C, .rodata, e_bone_scimitar] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C] # EntityBat
       - [0x320A0, .rodata, 49BC8] # EntityZombie
-      - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
+      - [0x320B4, .rodata, e_bloody_zombie] # EntityBloodyZombie data
       - [0x320DC, .rodata, 4B018] # Shared charal string for owl and owl knight
       - [0x320EC, .rodata, 4B018] # EntityOwl
       - [0x3214C, .rodata, 4B018] # EntityOwlKnight
@@ -128,7 +128,7 @@ segments:
       - [0x490E8, c, e_bone_scimitar] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]
-      - [0x49F98, c] # EntityBloodyZombie
+      - [0x49F98, c, e_bloody_zombie] # EntityBloodyZombie
       - [0x4B018, c]
       - [0x4D540, c]
       - [0x4E69C, c]

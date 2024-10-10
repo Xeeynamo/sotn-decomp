@@ -254,7 +254,7 @@ extern u16 D_801825CC;
 
 // *** EntityBloodyZombie properties START ***
 
-extern u16 g_EInitBloodyZombieNP3[]; // InitProps
+extern u16 g_EInitBloodyZombie[]; // InitProps
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking

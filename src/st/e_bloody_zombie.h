@@ -1,12 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-// NOTE: There is an nz0/e_bloody_zombie.c which is almost exactly the same as
-// this file. Would maybe be smart to try to de-duplicate. Could be marked as
-// an Issue for someone to deal with later?
-
-#include "np3.h"
-#include "sfx.h"
-
 typedef enum {
     BLOODY_ZOMBIE_INIT,
     BLOODY_ZOMBIE_WALK,
@@ -17,6 +10,54 @@ typedef enum {
     BLOODY_ZOMBIE_DYING = 8,
     BLOODY_ZOMBIE_DESTROY
 } EntityBloodyZombieSteps;
+
+extern u16 g_EInitBloodyZombie[];
+static s16 sensors_ground[4][2] = {{0, 28}, {0, 4}, {8, -4}, {-16, 0}};
+static u16 sensors_move[][2] = {{0, 28}, {8, 0}};
+static u8 anim_walk[] = {0x04, 0x02, 0x0D, 0x03, 0x0A, 0x02, 0x0A, 0x01,
+                         0x0D, 0x04, 0x0A, 0x01, 0x06, 0x02, 0x00, 0x00};
+static u8 anim_attack[] = {
+    0x04, 0x05, 0x04, 0x06, 0x03, 0x07, 0x02, 0x08, 0x02, 0x09, 0x04, 0x08,
+    0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F,
+    0x0C, 0x10, 0x02, 0x11, 0x02, 0x12, 0x02, 0x13, 0xFF, 0x00};
+static u8 anim_hit[] = {
+    0x01, 0x16, 0x01, 0x14, 0x01, 0x15, 0x01, 0x14, 0x02, 0x15,
+    0x03, 0x14, 0x04, 0x15, 0x08, 0x14, 0x02, 0x16, 0xFF, 0x00};
+static u8 anim_die[] = {
+    0x01, 0x16, 0x01, 0x14, 0x01, 0x15, 0x01, 0x14, 0x02, 0x15, 0x03, 0x14,
+    0x04, 0x15, 0x28, 0x14, 0x06, 0x17, 0x05, 0x18, 0x05, 0x19, 0x05, 0x1A,
+    0x05, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0xFF, 0x00};
+static u8 anim_chase[] = {0x02, 0x02, 0x06, 0x03, 0x04, 0x02, 0x04, 0x01,
+                          0x06, 0x04, 0x04, 0x01, 0x02, 0x02, 0x00, 0x00};
+// Use python3 tools/display_texture.py LIVE 0x1A 0x1B7 --whole
+// and look at the row of fire-looking images in the row with top at 0x20
+// Disable format to keep these as 5-grouped arrays. p2, x, y, w, h.
+// clang-format off
+static u8 small_blood_anim[] = {
+    0x08, 0x40, 0x20, 0x0F, 0x0F,
+    0x08, 0x50, 0x20, 0x0F, 0x0F,
+    0x08, 0x60, 0x20, 0x0F, 0x0F,
+    0x08, 0x70, 0x20, 0x0F, 0x0F,
+    0xFF, 0x00};
+// Same as above, this looks like a big puffy explosion with red palette
+static u8 big_blood_anim[] = {
+    0x04, 0x20, 0x00, 0x1F, 0x1F,
+    0x04, 0x40, 0x00, 0x1F, 0x1F,
+    0x04, 0x60, 0x00, 0x1F, 0x1F,
+    0x04, 0x00, 0x20, 0x1F, 0x1F,
+    0x04, 0x20, 0x20, 0x1F, 0x0F,
+    0x04, 0x20, 0x30, 0x1F, 0x0F,
+    0xFF, 0x00};
+// clang-format on
+
+static s16 D_801823C4[][2] = {{0x0000, 0x0000}, {0x00FF, 0x0000}};
+#if defined(STAGE_IS_NZ0)
+static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06, 0x03,
+                      0x05, 0x04, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00};
+#endif
 
 void EntityBloodSplatter(Entity* self) {
     Primitive* prim;
@@ -130,7 +171,7 @@ void EntityBloodSplatter(Entity* self) {
         }
 
         prim->next->b3 -= 2;
-        if (UpdateAnimation(&D_8018268C, prim) == 0) {
+        if (UpdateAnimation(small_blood_anim, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
@@ -147,7 +188,7 @@ void EntityBloodSplatter(Entity* self) {
             prim->next->b3 = 0;
         }
 
-        if (UpdateAnimation(&D_801826A4, prim) == 0) {
+        if (UpdateAnimation(big_blood_anim, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
@@ -158,7 +199,7 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
-static void func_801CA498(Primitive* prim) {
+static void func_801C53AC(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x12;
@@ -225,26 +266,26 @@ void EntityBloodyZombie(Entity* self) {
 
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
-        InitializeEntity(g_EInitBloodyZombieNP3);
+        InitializeEntity(g_EInitBloodyZombie);
         self->hitboxOffX = 1;
         self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
 
     case BLOODY_ZOMBIE_UNK_2:
-        if (UnkCollisionFunc3(&D_801825D4) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
 
     case BLOODY_ZOMBIE_WALK:
         if (self->step_s == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = 128;
+            self->ext.bloodyZombie.unk80 = 128;
             self->step_s++;
         }
 
-        AnimateEntity(D_801825EC, self);
-        UnkCollisionFunc2(D_801825E4);
+        AnimateEntity(anim_walk, self);
+        UnkCollisionFunc2(sensors_move);
 
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-0.375);
@@ -252,8 +293,8 @@ void EntityBloodyZombie(Entity* self) {
             self->velocityX = FIX(0.375);
         }
 
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = 128;
+        if (--self->ext.bloodyZombie.unk80 == 0) {
+            self->ext.bloodyZombie.unk80 = 128;
             self->facingLeft ^= 1;
         }
 
@@ -277,10 +318,10 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_CHASE:
-        if (AnimateEntity(D_8018267C, self) == 0) {
+        if (AnimateEntity(anim_chase, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        UnkCollisionFunc2(D_801825E4);
+        UnkCollisionFunc2(sensors_move);
 
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.75);
@@ -307,7 +348,7 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_ATTACK:
-        animStatus = AnimateEntity(D_801825FC, self);
+        animStatus = AnimateEntity(anim_attack, self);
         if (animStatus & 0x80 && self->animFrameIdx == 10) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
         }
@@ -327,7 +368,7 @@ void EntityBloodyZombie(Entity* self) {
             self->step_s++;
         }
 
-        if (AnimateEntity(D_80182620, self) == 0) {
+        if (AnimateEntity(anim_hit, self) == 0) {
             SetStep(BLOODY_ZOMBIE_WALK);
             self->step_s++;
         }
@@ -342,7 +383,7 @@ void EntityBloodyZombie(Entity* self) {
             }
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            *(s32*)&self->ext.generic.unk7C = prim;
+            self->ext.bloodyZombie.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             self->step_s++;
         }
@@ -353,7 +394,7 @@ void EntityBloodyZombie(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
-                    newEntity->facingLeft = self->ext.generic.unk84.U8.unk0;
+                    newEntity->facingLeft = self->ext.bloodyZombie.unk84;
                     if (self->facingLeft != 0) {
                         newEntity->posX.i.hi -= 4;
                     } else {
@@ -361,36 +402,36 @@ void EntityBloodyZombie(Entity* self) {
                     }
                     newEntity->posY.i.hi += 4;
                 }
-                self->ext.generic.unk84.U8.unk0 ^= 1;
+                self->ext.bloodyZombie.unk84 ^= 1;
             }
-            self->ext.generic.unk80.modeS16.unk0 = 0;
+            self->ext.bloodyZombie.unk80 = 0;
         } else {
-            if (self->ext.generic.unk80.modeS16.unk0 == 0) {
+            if (self->ext.bloodyZombie.unk80 == 0) {
                 PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
             }
 
-            self->ext.generic.unk80.modeS16.unk0++;
+            self->ext.bloodyZombie.unk80++;
             if (!(g_Timer & 3)) {
-                prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
+                prim = FindFirstUnkPrim2(self->ext.bloodyZombie.prim, 2);
                 if (prim != NULL) {
                     UnkPolyFunc2(prim);
-                    prim->next->r3 = self->ext.generic.unk84.U8.unk0;
+                    prim->next->r3 = self->ext.bloodyZombie.unk84;
                 }
-                self->ext.generic.unk84.U8.unk0 ^= 1;
+                self->ext.bloodyZombie.unk84 ^= 1;
             }
         }
 
         if (self->flags & FLAG_HAS_PRIMS) {
-            prim = *(s32*)&self->ext.generic.unk7C;
+            prim = self->ext.bloodyZombie.prim;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
-                    func_801CA498(prim);
+                    func_801C53AC(prim);
                 }
                 prim = prim->next;
             }
         }
 
-        if (AnimateEntity(D_80182634, self) == 0) {
+        if (AnimateEntity(anim_die, self) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -402,7 +443,7 @@ void EntityBloodyZombie(Entity* self) {
                     newEntity->posX.i.hi += 8;
                 }
             }
-            self->ext.generic.unk80.modeS16.unk0 = 64;
+            self->ext.bloodyZombie.unk80 = 64;
             self->animCurFrame = 0;
             PlaySfxPositional(SFX_STUTTER_EXPLODE_LOW);
             self->step++;
@@ -411,16 +452,16 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_DESTROY:
         if (self->flags & FLAG_HAS_PRIMS) {
-            prim = *(s32*)&self->ext.generic.unk7C;
+            prim = self->ext.bloodyZombie.prim;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
-                    func_801CA498(prim);
+                    func_801C53AC(prim);
                 }
                 prim = prim->next;
             }
         }
 
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.bloodyZombie.unk80 == 0) {
             DestroyEntity(self);
         }
         break;
@@ -451,7 +492,7 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->hitboxState = 0;
-            *(s32*)&self->ext.generic.unk7C = prim;
+            self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
                 prim->x0 = prim->x1 = self->posX.i.hi;
@@ -473,8 +514,8 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
         break;
 
     case 1:
-        prim = *(s32*)&self->ext.generic.unk7C;
-        if (CheckColliderOffsets(&D_801826C4, 0)) {
+        prim = self->ext.prim;
+        if (CheckColliderOffsets(&D_801823C4, 0) != 0) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 self->step_s = 1;
