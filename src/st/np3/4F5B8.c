@@ -116,7 +116,7 @@ int func_801CF7A0(Entity* ent) {
     }
 
     if ((g_CurrentEntity->step == 7) && (step == 5)) {
-        g_CurrentEntity->ext.factory.unkB0 = 1;
+        g_CurrentEntity->ext.gurkhaSword.unkB0 = 1;
     }
 }
 

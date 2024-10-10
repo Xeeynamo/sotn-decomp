@@ -660,6 +660,10 @@ typedef struct {
     /* 0x9C */ u16 unk9C;
     /* 0x9E */ char pad_9E[0x8];
     /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+
 } ET_GurkhaSword;
 
 struct draculaPrimitive;
