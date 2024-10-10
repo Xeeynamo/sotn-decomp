@@ -151,7 +151,7 @@ extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
-extern s16 D_80181230[];     // pos TBL
+extern s16 g_WaterXTbl[];     // pos TBL
 extern Point32 D_80182224[]; // accel_x TBL
 extern u8 D_80182244[];      // timers
 extern s32 D_80182248;       // Collision data
@@ -212,7 +212,7 @@ extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
 extern u16 g_SplashSfx;
-extern u16 D_8018122E;
+extern u16 g_SurfacingSfx;
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
@@ -230,10 +230,7 @@ extern s64 D_801821B4[];
 extern u8 D_801821F4[];
 extern s16 g_splashAspects[];
 extern s32 g_SplashYMovement[];
-extern s16 g_splashAspects[];
-extern s16 D_801821A8[];
-extern s16 g_splashAspects[];
-extern s16 D_801821A8[];
+extern s16 g_SurfacingYTbl[];
 extern s32 D_80182204[];
 extern u8 D_801822A4[];
 extern const u8 D_801822B0[];

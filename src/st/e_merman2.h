@@ -221,3 +221,126 @@ void EntitySplashWater(Entity* self) {
         }
     }
 }
+
+void EntitySurfacingWater(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Primitive* prim;
+    s32 primIndex;
+    s16 temp_s3;
+    u16 params;
+    s16 x, y;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_eInitGeneric2);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        temp_s3 = (self->posX.i.hi - 120) >> 4;
+        if (temp_s3 < -8) {
+            temp_s3 = -8;
+        }
+        if (temp_s3 > 8) {
+            temp_s3 = 8;
+        }
+        params = self->params;
+        if (!(params & 0x8000)) {
+            g_api.PlaySfxVolPan(g_SurfacingSfx, 0x7F, temp_s3);
+        }
+        params = (params >> 8) & 0x7F;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        self->ext.waterEffects.unk82 = y + tilemap->scrollY.i.hi;
+        prim = &g_PrimBuf[primIndex];
+        for (i = 0; i < 2; i++) {
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x1E;
+            prim->v0 = prim->v1 = 0x60;
+            prim->v2 = prim->v3 = 0x7C;
+            prim->y2 = prim->y3 = y;
+            prim->x2 = prim->x0 = x - 9;
+            prim->x3 = prim->x1 = x + 9;
+            if (params) {
+                temp_s3 = g_splashAspects[params];
+                prim->y2 += 9 / temp_s3;
+                prim->y3 -= 9 / temp_s3;
+            }
+            PGREY(prim,0) = PGREY(prim,1) = 255;
+            PGREY(prim,2) = PGREY(prim,3) = 128;
+
+            prim->clut = 0x162;
+            prim->tpage = 0x1A;
+            prim->priority = self->zPriority + 2;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            if (i != 0) {
+                prim->clut = 0x161;
+                prim->priority = self->zPriority + 4;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            }
+            prim = prim->next;
+        }
+        self->ext.waterEffects.topY.i.hi = g_SurfacingYTbl[self->params & 0xFF] + 12 + (rand() & 1);
+        self->velocityX = self->ext.waterEffects.unk8A * 16;
+        if (params) {
+            self->velocityY = self->velocityX / temp_s3;
+            if (self->velocityY < 0) {
+                self->velocityY = -self->velocityY;
+            }
+        }
+        break;
+
+    case 1:
+        self->ext.waterEffects.topY.val -= FIX(0.25);
+        break;
+    }
+
+    MoveEntity(self);
+    i = self->velocityX;
+    if (i != 0) {
+        x = g_WaterXTbl[self->ext.waterEffects.unk88];
+        if (i < 0) {
+            x += 6 - tilemap->scrollX.i.hi;
+            if (self->posX.i.hi < x) {
+                DestroyEntity(self);
+                return;
+            }
+        } else {
+            x += (g_WaterXTbl[self->ext.waterEffects.unk88 + 1] - 6 - tilemap->scrollX.i.hi);
+            if (self->posX.i.hi >= x) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+    }
+
+    x = self->posX.i.hi;
+    y = self->ext.waterEffects.unk82 - self->posY.i.hi - tilemap->scrollY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+
+    for(i = 0; i < 2; i++) {
+        prim->y2 -= y;
+        prim->y3 -= y;
+        prim->y0 = prim->y2 - self->ext.waterEffects.topY.i.hi;
+        prim->y1 = prim->y3 - self->ext.waterEffects.topY.i.hi;
+        prim->x2 = prim->x0 = x - 9;
+        prim->x3 = prim->x1 = x + 9;
+        prim->b1 -= 8;
+        PGREY(prim,0) = PGREY(prim,1);
+        prim->b3 -= 4;
+        PGREY(prim,2) = PGREY(prim,3);
+        if (prim->r0 < 9) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = prim->next;
+    }
+    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->scrollY.i.hi;
+}

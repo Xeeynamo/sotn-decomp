@@ -15,7 +15,7 @@ extern u8 D_80183A9C[]; // animation
 extern s16 D_80183A5C;
 extern s16 D_80183A6C;
 extern u8 D_80183ADC[]; // animation
-extern s16 D_801813AC[];
+extern s16 g_WaterXTbl[];
 
 void EntityMerman(Entity* self) {
     Entity* newEntity;
@@ -99,7 +99,7 @@ void EntityMerman(Entity* self) {
             self->velocityY = FIX(0.5);
         }
 
-        pos = D_801813AC;
+        pos = g_WaterXTbl;
         pos += (self->params >> 8) & 1;
         posY += g_Tilemap.scrollY.i.hi;
         if (pos[4] < posY) {
@@ -124,7 +124,7 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = D_801813AC;
+            pos = g_WaterXTbl;
             pos += (self->params >> 8) & 1;
             camY = g_Tilemap.scrollY.i.hi;
             posY = self->posY.i.hi;

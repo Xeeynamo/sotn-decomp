@@ -1,12 +1,15 @@
 NP3_gfxBanks = 0x801806DC;
 g_TrapDoorFlag = 0x80181104;
 g_SplashSfx = 0x8018122C;
+g_SurfacingSfx = 0x8018122E;
+g_WaterXTbl = 0x80181230;
 NP3_PrizeDrops = 0x80181618;
 g_ESoulStealOrbAngles = 0x8018205C;
 g_ESoulStealOrbSprt = 0x8018206C;
 g_ESoulStealOrbAnim = 0x801820CC;
 g_splashAspects = 0x80182168;
 g_SplashYMovement = 0x80182188;
+g_SurfacingYTbl = 0x801821A8;
 D_801828C8 = 0x801828C8;
 EntityStairwayPiece = 0x801B5790;
 EntitySlogra = 0x801B6990;

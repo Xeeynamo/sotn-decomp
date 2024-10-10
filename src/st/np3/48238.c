@@ -85,7 +85,7 @@ void EntityMerman(Entity* self) {
             self->velocityY = FIX(0.5);
         }
 
-        pos = D_80181230;
+        pos = g_WaterXTbl;
         pos += (self->params >> 8) & 1;
         posY += g_Tilemap.scrollY.i.hi;
         if (pos[4] < posY) {
@@ -110,7 +110,7 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = D_80181230;
+            pos = g_WaterXTbl;
             pos += (self->params >> 8) & 1;
             camY = g_Tilemap.scrollY.i.hi;
             posY = self->posY.i.hi;

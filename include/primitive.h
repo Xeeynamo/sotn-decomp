@@ -22,6 +22,11 @@ typedef enum {
 // "prim color". Do PCOL(prim) =  0x80 to set all RGBs to 0x80.
 #define PCOL(p) PRED(p) = PGRN(p) = PBLU(p)
 
+// Alternatively, set a point in a prim to a given shade of grey.
+// prim->r0 = prim->g0 = prim->b0 = 255 becomes
+// PGREY(prim, 0) = 255
+#define PGREY(p, n) p->r##n = p->g##n = p->b##n
+
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
 #if defined(VERSION_PC) || defined(VERSION_PSP)

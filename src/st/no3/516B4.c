@@ -2,157 +2,6 @@
 #include "no3.h"
 #include "../e_merman2.h"
 
-// ID 0x36
-void EntitySurfacingWater(Entity* self) {
-    Tilemap* tilemap = &g_Tilemap;
-    s16 left, right, bottom;
-    Primitive* prim;
-    s16 primIndex;
-    s16 temp_t0;
-    s32 rnd;
-    s16 var_s2;
-    u16 params;
-    s16* ptr;
-    s16 temp3;
-    s16 tempv0;
-    s16 x, y;
-    s32 i, j;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitCommon);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        self->primIndex = primIndex;
-        self->flags |= FLAG_HAS_PRIMS;
-        var_s2 = (self->posX.i.hi - 120) >> 4;
-        if (var_s2 < -8) {
-            var_s2 = -8;
-        }
-        if (var_s2 > 8) {
-            var_s2 = 8;
-        }
-        params = self->params;
-        if (!(params & 0x8000)) {
-            g_api.PlaySfxVolPan(D_801813AA, 0x7F, var_s2);
-        }
-        params = (params >> 8) & 0x7F;
-        prim = &g_PrimBuf[primIndex];
-        right = self->posX.i.hi;
-        bottom = self->posY.i.hi;
-        left = right - 9;
-        right += 9;
-        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-
-        for (i = 0; i < 2; i++) {
-            prim->u2 = 0;
-            prim->u0 = 0;
-            prim->u1 = prim->u3 = 0x1E;
-            prim->v0 = prim->v1 = 0x60;
-            prim->v2 = prim->v3 = 0x7C;
-            prim->y2 = prim->y3 = bottom;
-            prim->x2 = prim->x0 = left;
-            prim->x3 = prim->x1 = right;
-            if (params != 0) {
-                var_s2 = g_splashAspects[params];
-                prim->y2 = prim->y2 + 9 / var_s2;
-                prim->y3 = prim->y3 - 9 / var_s2;
-            }
-            prim->clut = 0x162;
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                255;
-            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-                128;
-            prim->tpage = 0x1A;
-            prim->priority = self->zPriority + 2;
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-            if (i != 0) {
-                prim->clut = 0x161;
-                prim->priority = self->zPriority + 4;
-                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                                 DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-            }
-            prim = prim->next;
-        }
-        rnd = (rand() & 1) + 12;
-        self->ext.waterEffects.topY.i.hi = D_80183898[(u8)self->params] + rnd;
-        self->velocityX = self->ext.waterEffects.unk8A * 16;
-        if (params != 0) {
-            self->velocityY = self->velocityX / var_s2;
-            if (self->velocityY < 0) {
-                self->velocityY = -self->velocityY;
-            }
-        }
-        break;
-
-    case 1:
-        self->ext.waterEffects.topY.val -= FIX(0.25);
-        break;
-    }
-
-    MoveEntity(self);
-
-    //! FAKE:
-    j = self->velocityX;
-
-    if (self->velocityX != 0) {
-        right = D_801813AC[self->ext.waterEffects.unk88];
-        ptr = D_801813AC;
-        if (self->velocityX < 0) {
-            right += 6;
-            x = right - tilemap->scrollX.i.hi;
-            if (self->posX.i.hi < x) {
-                DestroyEntity(self);
-                return;
-            }
-        } else {
-            ptr++;
-            temp3 = tilemap->scrollX.i.hi + 6;
-            x = right;
-            x += (ptr[self->ext.waterEffects.unk88] - temp3);
-            if (self->posX.i.hi >= x) {
-                DestroyEntity(self);
-                return;
-            }
-        }
-    }
-
-    j = 0;
-    tempv0 = self->ext.waterEffects.unk82;
-    x = self->posX.i.hi;
-    y = self->posY.i.hi;
-
-    bottom = tempv0 - y - tilemap->scrollY.i.hi;
-
-    prim = &g_PrimBuf[self->primIndex];
-    temp_t0 = x - 9;
-    x += 9;
-
-    while (j < 2) {
-        prim->y2 = prim->y2 - bottom;
-        prim->y3 = prim->y3 - bottom;
-        prim->y0 = prim->y2 - self->ext.waterEffects.topY.i.hi;
-        prim->y1 = prim->y3 - self->ext.waterEffects.topY.i.hi;
-        prim->x2 = prim->x0 = temp_t0;
-        prim->x3 = prim->x1 = x;
-        prim->b1 += 248;
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
-        prim->b3 += 252;
-        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-        if (prim->r0 < 9) {
-            DestroyEntity(self);
-            return;
-        }
-        prim = prim->next;
-        j++;
-    }
-    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->scrollY.i.hi;
-}
-
 // ID 0x37
 void EntitySideWaterSplash(Entity* self) {
     Primitive* prim;
@@ -430,7 +279,7 @@ s32 func_801D2D40(s16 yVector) {
 }
 
 extern u16 D_80180B48[];
-extern s16 D_801813AC[];     // pos TBL
+extern s16 g_WaterXTbl[];     // pos TBL
 extern Point32 D_80183914[]; // accel_x TBL
 extern s32 D_80183938;       // Collision data
 extern u8 D_80183984[];      // Animation
@@ -511,7 +360,7 @@ void EntityMerman2(Entity* self) {
         if (!(collider.effects & EFFECT_WATER)) {
             self->velocityY = FIX(0.5);
         }
-        pos = D_801813AC;
+        pos = g_WaterXTbl;
         pos += (self->params >> 8) & 1;
         posY += g_Tilemap.scrollY.i.hi;
         if (pos[4] < posY) {
@@ -587,7 +436,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = D_801813AC;
+            pos = g_WaterXTbl;
             pos += (self->params >> 8) & 1;
             posY = self->posY.i.hi;
             posY -= 24;
