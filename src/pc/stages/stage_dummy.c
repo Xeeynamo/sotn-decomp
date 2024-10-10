@@ -38,7 +38,7 @@ static Overlay g_StageDesc = {
     sprite_banks,
     clut_anims,
     NULL,
-    rooms_layers,
+    OVL_EXPORT(rooms_layers),
     entity_gfxs,
     UpdateStageEntities,
     NULL,

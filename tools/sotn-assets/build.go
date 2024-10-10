@@ -266,7 +266,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	sb.WriteString("static MyRoomDef rooms_layers[] = {\n")
+	sb.WriteString("MyRoomDef OVL_EXPORT(rooms_layers)[] = {\n")
 	for _, rl := range roomsLayers {
 		if l, found := rl["fg"]; found {
 			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]))
@@ -378,7 +378,7 @@ func buildSprites(fileName string, outputDir string) error {
 		symbols = append(symbols, symbol)
 	}
 
-	sbHeader.WriteString("static s16** spriteBanks[] = {\n")
+	sbHeader.WriteString("s16** OVL_EXPORT(spriteBanks)[] = {\n")
 	for _, index := range spritesBanks.Indices {
 		if index >= 0 {
 			sbHeader.WriteString(fmt.Sprintf("    %s,\n", symbols[index]))

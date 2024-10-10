@@ -6,7 +6,7 @@ void HitDetection(void);
 extern RoomHeader g_Rooms[];
 extern SpriteParts* g_SpriteBanks;
 extern u_long* g_Cluts;
-extern RoomDef g_TileLayers[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* g_EntityGfxs;
 void UpdateStageEntities(void);
 
@@ -19,7 +19,7 @@ Overlay g_StageOverlay = {
     /* 0x14 */ &g_SpriteBanks,
     /* 0x18 */ &g_Cluts,
     /* 0x1C */ NULL,
-    /* 0x20 */ g_TileLayers,
+    /* 0x20 */ OVL_EXPORT(rooms_layers),
     /* 0x24 */ &g_EntityGfxs,
     /* 0x28 */ UpdateStageEntities,
     /* 0x2C */ 0x00000000,

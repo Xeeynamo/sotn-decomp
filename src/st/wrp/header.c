@@ -8,10 +8,10 @@ void InitRoomEntities(s32 objLayoutId);
 void UpdateStageEntities(void);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-static s16** spriteBanks[];
+extern s16** OVL_EXPORT(spriteBanks)[];
 static u_long* cluts[];
-static MyRoomDef rooms_layers[];
-static GfxBank* gfxBanks[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -19,11 +19,11 @@ Overlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = cluts,
     .objLayoutHorizontal = NULL,
-    .tileLayers = rooms_layers,
-    .gfxBanks = gfxBanks,
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
@@ -53,7 +53,7 @@ static u_long* D_801801CC[] = {
     GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_80181764),
     GFX_TERMINATE(),
 };
-static GfxBank* gfxBanks[] = {
+u_long* OVL_EXPORT(gfxBanks)[] = {
     D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
     D_801801CC, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
     D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,

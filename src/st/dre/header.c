@@ -2,10 +2,10 @@
 #include "dre.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** spriteBanks[];
-extern void* Cluts[];
-extern MyRoomDef rooms_layers[];
-extern GfxBank* g_GfxBanks[];
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long* OVL_EXPORT(cluts)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 
 Overlay OVL_EXPORT(Overlay) = {
@@ -14,11 +14,11 @@ Overlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
-    .cluts = Cluts,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = NULL,
-    .tileLayers = rooms_layers,
-    .gfxBanks = g_GfxBanks,
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
@@ -30,7 +30,7 @@ extern u16* D_8018B148[0x80];
 extern u16* D_8018B348[0x80];
 extern u16* D_8018ABE8[0x100];
 
-static u16** Clut[] = {
+static u_long* Clut[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
     PAL_BULK(0x2000, D_8018AEA8),
     PAL_BULK(0x2080, D_8018AF48),
@@ -40,7 +40,7 @@ static u16** Clut[] = {
     PAL_TERMINATE(),
 };
 
-static void* Cluts[] = {
+u_long* OVL_EXPORT(cluts)[] = {
     Clut,
 };
 
