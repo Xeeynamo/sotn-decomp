@@ -167,11 +167,16 @@ static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-extern s32 D_170000_8017CB84;
-extern s16 D_170000_8017CB88[];
-extern s16 D_170000_8017CBA0[];
-extern s16 D_170000_8017CBB8[];
-extern f32 D_170000_8017CBD0[11][4];
+#define NUM_UNK 11
+
+s32 D_170000_8017CB84;
+s16 D_170000_8017CB88[NUM_UNK];
+STATIC_PAD_BSS(2);
+s16 D_170000_8017CBA0[NUM_UNK];
+STATIC_PAD_BSS(2);
+s16 D_170000_8017CBB8[NUM_UNK];
+STATIC_PAD_BSS(2);
+f32 D_170000_8017CBD0[NUM_UNK][4];
 
 static void EntityWeaponAttack(Entity* self) {
     s32 anim;
@@ -421,7 +426,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         uvPtr = &D_170000_8017ABC4;
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < NUM_UNK; i++) {
             prim->u0 = prim->u2 = *uvPtr++;
             prim->v0 = prim->v1 = *uvPtr++;
             prim->u1 = prim->u3 = *uvPtr++;
@@ -438,13 +443,13 @@ static void EntityWeaponShieldSpell(Entity* self) {
             prim->r0 = (rand() & 0xF) + 1;
             prim = prim->next;
         }
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < NUM_UNK; i++) {
             prim->r0 = prim->r2 = D_170000_8017ABF0[i * 4 + 0];
             prim->g0 = prim->g2 = D_170000_8017ABF0[i * 4 + 1];
             prim->b0 = prim->b2 = D_170000_8017ABF0[i * 4 + 2];
-            prim->r1 = prim->r3 = D_170000_8017ABF0[(i + 1) % 11 * 4 + 0];
-            prim->g1 = prim->g3 = D_170000_8017ABF0[(i + 1) % 11 * 4 + 1];
-            prim->b1 = prim->b3 = D_170000_8017ABF0[(i + 1) % 11 * 4 + 2];
+            prim->r1 = prim->r3 = D_170000_8017ABF0[(i + 1) % NUM_UNK * 4 + 0];
+            prim->g1 = prim->g3 = D_170000_8017ABF0[(i + 1) % NUM_UNK * 4 + 1];
+            prim->b1 = prim->b3 = D_170000_8017ABF0[(i + 1) % NUM_UNK * 4 + 2];
             prim->drawMode = DRAW_HIDE;
             prim->type = PRIM_G4;
             prim = prim->next;
@@ -543,7 +548,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->ext.shield.unk92 += self->ext.shield.unk86;
         if (--self->ext.shield.unk80 == 0) {
             prim = prim->next;
-            for (i = 0; i < 11; i++) {
+            for (i = 0; i < NUM_UNK; i++) {
                 prim->g0 = 5;
                 prim = prim->next;
             }
@@ -597,10 +602,10 @@ static void EntityWeaponShieldSpell(Entity* self) {
     selfY = PLAYER.posY.i.hi - playerYOffset;
     primXScale = self->ext.shield.unk90;
     primYScale = self->ext.shield.unk90 * self->ext.shield.unk98 / 256;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < NUM_UNK; i++) {
         switch (prim->g0) {
         case 0:
-            angle = self->ext.shield.unk92 + ((i << 0xC) / 11);
+            angle = self->ext.shield.unk92 + ((i << 0xC) / NUM_UNK);
             primXCenter = selfX + (((rcos(angle) >> 4) * primXScale) >> 8);
             primYCenter = selfY - (((rsin(angle) >> 4) * primYScale) >> 8);
             if (i == 6) {
@@ -647,7 +652,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     if (var_s8 == 0) {
         return;
     }
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < NUM_UNK; i++) {
         if (var_s8 == 2) {
             if (prim->r0 > 8) {
                 prim->r0 -= 4;
@@ -687,11 +692,13 @@ static void EntityWeaponShieldSpell(Entity* self) {
             }
         } else {
             prim->x0 = prim->x2 = D_170000_8017CB88[i];
-            prim->x1 = prim->x3 = D_170000_8017CB88[(i + 1) % 11];
+            prim->x1 = prim->x3 = D_170000_8017CB88[(i + 1) % NUM_UNK];
             prim->y0 = D_170000_8017CBA0[i] - self->ext.shield.unk96;
             prim->y2 = D_170000_8017CBA0[i] + self->ext.shield.unk96;
-            prim->y1 = D_170000_8017CBA0[(i + 1) % 11] - self->ext.shield.unk96;
-            prim->y3 = D_170000_8017CBA0[(i + 1) % 11] + self->ext.shield.unk96;
+            prim->y1 =
+                D_170000_8017CBA0[(i + 1) % NUM_UNK] - self->ext.shield.unk96;
+            prim->y3 =
+                D_170000_8017CBA0[(i + 1) % NUM_UNK] + self->ext.shield.unk96;
             prim->priority = D_170000_8017CBB8[i];
         }
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
@@ -713,7 +720,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 11);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_UNK);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -731,7 +738,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < NUM_UNK; i++) {
             prim->u0 = prim->u2 = *uvPtr++;
             prim->v0 = prim->v1 = *uvPtr++;
             prim->u1 = prim->u3 = *uvPtr++;
@@ -760,14 +767,14 @@ s32 func_ptr_80170004(Entity* self) {
         if (self->ext.shield.unk94 > 0xC0) {
             self->ext.shield.unk94 = 0xC0;
         }
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < NUM_UNK; i++) {
             D_170000_8017CBD0[i][0].val += D_170000_8017CBD0[i][2].val;
             D_170000_8017CBD0[i][1].val += D_170000_8017CBD0[i][3].val;
             D_170000_8017CBD0[i][3].val += 0x2000;
         }
         if (--self->ext.shield.unk80 == 0) {
             prim = &g_PrimBuf[self->primIndex];
-            for (i = 0; i < 11; i++) {
+            for (i = 0; i < NUM_UNK; i++) {
                 prim->g0 = 1;
                 prim = prim->next;
             }
@@ -787,7 +794,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
     }
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < NUM_UNK; i++) {
         switch (prim->g0) {
         case 0:
             primXCenter = D_170000_8017CBD0[i][0].i.hi;
