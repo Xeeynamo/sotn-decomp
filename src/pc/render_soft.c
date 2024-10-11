@@ -428,8 +428,7 @@ void SoftDrawOTag(OT_TYPE* p) {
             num_updates = 2;
             break;
         default:
-            assert(false);
-            WARNF("code %02X not supported", code);
+            WARNF("SoftDrawOTag: code %02X not supported", code);
             break;
         }
         for (int i = 0; i < num_updates; i++) {

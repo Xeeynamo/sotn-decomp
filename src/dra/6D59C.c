@@ -255,7 +255,11 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
 
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     AnimationFrame* animFrame;
+#if defined(VERSION_PC)
+    s32 ret = 0;
+#else
     s32 ret;
+#endif
 
     if (g_CurrentEntity->animFrameDuration == -1) {
         ret = -1;
