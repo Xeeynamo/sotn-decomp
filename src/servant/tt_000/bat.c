@@ -10,16 +10,19 @@
 #define ABILITY_STATS_MIN_ENEMY_HP 3
 #define ABILITY_STATS_BAD_ATTACKS 4
 
+#define ENTITY_ID_ATTACK_MODE 0xD2
+#define ENTITY_ID_BLUE_TRAIL 0xDA
+
 #ifndef VERSION_PSP
-static s32 D_801748D8[0x80];
+static s32 s_TargetMatch[0x80];
 static Collider D_80174AD8;
-static s16 D_80174AFC;
+static s16 s_TargetLocationX;
 STATIC_PAD_BSS(2);
-static s16 D_80174B00;
+static s16 s_TargetLocationY;
 STATIC_PAD_BSS(2);
-static s16 D_80174B04;
+static s16 s_TargetLocationX_calc;
 STATIC_PAD_BSS(2);
-static s16 D_80174B08;
+static s16 s_TargetLocationY_calc;
 STATIC_PAD_BSS(2);
 static s16 D_80174B0C;
 STATIC_PAD_BSS(2);
@@ -45,7 +48,7 @@ static s16 D_80174B40;
 STATIC_PAD_BSS(2);
 static s16 D_80174B44;
 STATIC_PAD_BSS(2);
-static Primitive* D_80174B48;
+static Primitive* s_CurrentPrim;
 static s32 D_80174B4C[16];
 static Point16 D_80174B8C[16];
 static s16 D_80174BCC[16];
@@ -55,28 +58,28 @@ static s32 D_80174C2C;
 static FamiliarStats s_BatStats;
 static Point16 D_80174C3C[4][16];
 static s32 s_IsServantDestroyed;
-static s32 D_80174D40;
+static s32 s_LastTargetedEntityIndex;
 static s32 _unused[26];
 
-void func_80172C30(Entity* self);
-void unused_339C(void);
-void unused_33A4(void);
-void unused_33AC(void);
-void unused_33B4(void);
-void unused_33BC(void);
-void unused_33C4(void);
-void unused_33CC(void);
-void BatFamiliarBlueTrail(Entity* self);
-void unused_3C0C(Entity* self);
-void unused_3C14(void);
-void unused_3C1C(void);
-void unused_3C24(void);
+static void func_80172C30(Entity* self);
+static void unused_339C(void);
+static void unused_33A4(void);
+static void unused_33AC(void);
+static void unused_33B4(void);
+static void unused_33BC(void);
+static void unused_33C4(void);
+static void unused_33CC(void);
+static void UpdateBatBlueTrailEntities(Entity* self);
+static void unused_3C0C(Entity* self);
+static void unused_3C14(void);
+static void unused_3C1C(void);
+static void unused_3C24(void);
 
 ServantDesc bat_ServantDesc = {
     ServantInit,          UpdateServantDefault, func_80172C30,
     unused_339C,        unused_33A4,        unused_33AC,
     unused_33B4,        unused_33BC,        unused_33C4,
-    unused_33CC,        BatFamiliarBlueTrail, unused_3C0C,
+    unused_33CC,        UpdateBatBlueTrailEntities, unused_3C0C,
     unused_3C14,        unused_3C1C,        unused_3C24,
     DestroyServantEntity,
 };
@@ -85,13 +88,13 @@ ServantDesc bat_ServantDesc = {
 
 #ifdef VERSION_PSP
 extern FamiliarStats s_BatStats;
-extern s32 D_801748D8[0x80];
+extern s32 s_TargetMatch[0x80];
 
 extern Collider D_80174AD8;
-extern s16 D_80174AFC;
-extern s16 D_80174B00;
-extern s16 D_80174B04;
-extern s16 D_80174B08;
+extern s16 s_TargetLocationX;
+extern s16 s_TargetLocationY;
+extern s16 s_TargetLocationX_calc;
+extern s16 s_TargetLocationY_calc;
 extern s16 D_80174B0C;
 extern s16 D_80174B10;
 extern s16 D_80174B14;
@@ -108,7 +111,7 @@ extern s16 D_80174B38;
 extern s16 D_80174B3C;
 extern s16 D_80174B40;
 extern s16 D_80174B44;
-extern Primitive* D_80174B48;
+extern Primitive* s_CurrentPrim;
 extern s32 D_80174B4C[16];
 extern Point16 D_80174B8C[16];
 extern s16 D_80174BCC[16];
@@ -118,7 +121,7 @@ extern s32 D_80174C2C;
 extern FamiliarStats s_BatStats;
 extern Point16 D_80174C3C[4][16];
 extern s32 s_IsServantDestroyed;
-extern s32 D_80174D40;
+extern s32 s_LastTargetedEntityIndex;
 #endif
 
 
@@ -128,74 +131,74 @@ extern u16 g_BatClut[];
 
 #include "../set_entity_animation.h"
 
-Entity* func_8017110C(Entity* self) {
+static Entity* FindValidTarget(Entity* self) {
     const int EntitySearchCount = 128;
     s32 foundIndex;
     s32 i;
     u32 found;
-    Entity* e;
+    Entity* entity;
     s32 distance;
 
     found = 0;
-    e = &g_Entities[STAGE_ENTITY_START];
-    for (i = 0; i < EntitySearchCount; i++, e++) {
-        D_801748D8[i] = 0;
-        if (!e->entityId) {
+    entity = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < EntitySearchCount; i++, entity++) {
+        s_TargetMatch[i] = 0;
+        if (!entity->entityId) {
             continue;
         }
-        if (e->hitboxState == 0) {
+        if (entity->hitboxState == 0) {
             continue;
         }
-        if (e->flags & FLAG_UNK_00200000) {
+        if (entity->flags & FLAG_UNK_00200000) {
             continue;
         }
-        if (e->posX.i.hi < -0x10) {
+        if (entity->posX.i.hi < -16) {
             continue;
         }
-        if (e->posX.i.hi > 0x110) {
+        if (entity->posX.i.hi > 272) {
             continue;
         }
-        if (e->posY.i.hi > 0xF0) {
+        if (entity->posY.i.hi > 240) {
             continue;
         }
-        if (e->posY.i.hi < 0) {
+        if (entity->posY.i.hi < 0) {
             continue;
         }
-        if (e->hitboxState & 8 && !g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_BAD_ATTACKS]) {
+        if (entity->hitboxState & 8 && !g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_BAD_ATTACKS]) {
             continue;
         }
-        if (abs(self->posX.i.hi - e->posX.i.hi) < 64 &&
-            abs(self->posY.i.hi - e->posY.i.hi) < 64) {
+        if (abs(self->posX.i.hi - entity->posX.i.hi) < 64 &&
+            abs(self->posY.i.hi - entity->posY.i.hi) < 64) {
             continue;
         }
-        if (!self->facingLeft && self->posX.i.hi < e->posX.i.hi) {
+        if (!self->facingLeft && self->posX.i.hi < entity->posX.i.hi) {
             continue;
         }
-        if (self->facingLeft && self->posX.i.hi > e->posX.i.hi) {
+        if (self->facingLeft && self->posX.i.hi > entity->posX.i.hi) {
             continue;
         }
-        if (e->hitPoints >= 0x7000) {
+        if (entity->hitPoints >= 0x7000) {
             continue;
         }
 
-        if (e->flags & FLAG_UNK_80000) {
-            if (e->hitPoints >= g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_MIN_ENEMY_HP]) {
+        if (entity->flags & FLAG_UNK_80000) {
+            if (entity->hitPoints >= g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_MIN_ENEMY_HP]) {
                 found++;
-                D_801748D8[i] = 1;
+                s_TargetMatch[i] = 1;
             }
         } else {
-            e->flags |= FLAG_UNK_80000;
-            return e;
+            entity->flags |= FLAG_UNK_80000;
+            return entity;
         }
     }
 
     if (found > 0) {
-        foundIndex = D_80174D40 % EntitySearchCount;
+        foundIndex = s_LastTargetedEntityIndex % EntitySearchCount;
         for (i = 0; i < 0x80; i++) {
-            if (D_801748D8[foundIndex]) {
-                e = &g_Entities[STAGE_ENTITY_START + foundIndex];
-                D_80174D40 = (foundIndex + 1) % EntitySearchCount;
-                return e;
+            if (s_TargetMatch[foundIndex]) {
+                entity = &g_Entities[STAGE_ENTITY_START + foundIndex];
+                s_LastTargetedEntityIndex = (foundIndex + 1) % EntitySearchCount;
+                return entity;
             }
             foundIndex = (foundIndex + 1) % EntitySearchCount;
         }
@@ -207,7 +210,8 @@ Entity* func_8017110C(Entity* self) {
 #include "../check_entity_valid.h"
 
 #ifndef VERSION_PSP
-bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
+// This may be dead code.  Doesn't look like it is called anywhere.
+bool Unused_CheckCollision(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
     g_api.CheckCollision(x, y, &D_80174AD8, 0);
@@ -232,7 +236,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 }
 #endif
 
-void unused_1560(Entity* self) {}
+static void unused_1560(Entity* self) {}
 
 // Only ever called by UpdateServantDefault so that is the parent
 void CreateBlueTrailEntity(Entity* parent) {
@@ -252,8 +256,8 @@ void CreateBlueTrailEntity(Entity* parent) {
         // Make sure it's empty
         DestroyEntity(entity);
         // The entity we're making is the Servant function 0xA,
-        // BatFamiliarBlueTrail
-        entity->entityId = 0xDA;
+        // UpdateBatBlueTrailEntities
+        entity->entityId = ENTITY_ID_BLUE_TRAIL;
         entity->zPriority = parent->zPriority;
         entity->facingLeft = parent->facingLeft;
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -263,7 +267,7 @@ void CreateBlueTrailEntity(Entity* parent) {
     }
 }
 
-void func_8017160C(s32 amount, s32 entityId) {
+void CreateAdditionalBats(s32 amount, s32 entityId) {
     s32 i;
     Entity* entity;
     u16 facing;
@@ -336,8 +340,8 @@ void func_801718A0(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->ext.bat.unk8C << 7) * 8) >> 12;
-    y -= entity->ext.bat.unk8C / 2;
+    x += (rsin(entity->ext.bat.frameCounter << 7) * 8) >> 12;
+    y -= entity->ext.bat.frameCounter / 2;
 
     prim = &g_PrimBuf[entity->primIndex];
     prim->x0 = prim->x2 = x - D_80170608[frame].x;
@@ -353,7 +357,7 @@ void func_801719E0(Entity* self) {
         self->ext.bat.unk82 = self->params;
         self->ext.bat.unk8E = 0;
         switch (self->entityId) {
-        case 0xD1:
+        case ENTITY_ID_SERVANT:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
@@ -366,11 +370,11 @@ void func_801719E0(Entity* self) {
             self->ext.bat.unk84 = rand() % 4096;
             self->ext.bat.unk86 = 0;
             self->ext.bat.unk88 = 0xC;
-            self->ext.bat.unk8C = rand() % 4096;
+            self->ext.bat.frameCounter = rand() % 4096;
             self->ext.bat.unk8A = 0x20;
             self->step++;
             break;
-        case 0xD2:
+        case ENTITY_ID_ATTACK_MODE:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
@@ -422,14 +426,14 @@ void func_801719E0(Entity* self) {
     } else {
         self->ext.bat.unk8E = 0;
         switch (self->entityId) {
-        case 0xD1:
+        case ENTITY_ID_SERVANT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-            self->ext.bat.unk8C = rand() % 4096;
+            self->ext.bat.frameCounter = rand() % 4096;
             self->step++;
             break;
-        case 0xD2:
+        case ENTITY_ID_ATTACK_MODE:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
@@ -559,36 +563,36 @@ void UpdateServantDefault(Entity* self) {
     if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
         switch (ServantUnk0()) {
         case 0:
-            D_80174B04 = 0x40;
+            s_TargetLocationX_calc = 0x40;
             break;
         case 1:
-            D_80174B04 = 0xC0;
+            s_TargetLocationX_calc = 0xC0;
             break;
         case 2:
-            D_80174B04 = (self->posX.i.hi > 0x80) ? 0xC0 : 0x40;
+            s_TargetLocationX_calc = (self->posX.i.hi > 0x80) ? 0xC0 : 0x40;
             break;
         }
-        D_80174B08 = 0xA0;
+        s_TargetLocationY_calc = 0xA0;
     } else {
         D_80174B18 = -0x12;
         if (PLAYER.facingLeft) {
             D_80174B18 = -D_80174B18;
         }
-        D_80174B04 = PLAYER.posX.i.hi + D_80174B18;
-        D_80174B08 = PLAYER.posY.i.hi - 0x22;
+        s_TargetLocationX_calc = PLAYER.posX.i.hi + D_80174B18;
+        s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x22;
     }
     D_80174B0C = self->ext.bat.unk84;
     self->ext.bat.unk84 += 0x10;
     D_80174B14 = self->ext.bat.unk88;
-    D_80174AFC = D_80174B04 + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
-    D_80174B00 = D_80174B08 - ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
+    s_TargetLocationX = s_TargetLocationX_calc + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
+    s_TargetLocationY = s_TargetLocationY_calc - ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
     switch (self->step) {
     case 0:
         func_801719E0(self);
         break;
     case 1:
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
-            self->ext.bat.unk8C = 0;
+            self->ext.bat.frameCounter = 0;
             self->step = 5;
             break;
         }
@@ -600,33 +604,33 @@ void UpdateServantDefault(Entity* self) {
             }
         } else {
             if (PLAYER.facingLeft == self->facingLeft) {
-                if (abs(D_80174AFC - self->posX.i.hi) <= 0) {
+                if (abs(s_TargetLocationX - self->posX.i.hi) <= 0) {
                     self->facingLeft = PLAYER.facingLeft ? false : true;
                 } else {
-                    if (self->facingLeft && D_80174AFC < self->posX.i.hi) {
+                    if (self->facingLeft && s_TargetLocationX < self->posX.i.hi) {
                         self->facingLeft = PLAYER.facingLeft ? false : true;
                     } else if (
-                        !self->facingLeft && D_80174AFC > self->posX.i.hi) {
+                        !self->facingLeft && s_TargetLocationX > self->posX.i.hi) {
                         self->facingLeft = PLAYER.facingLeft ? false : true;
                     }
                 }
             } else if (
-                self->facingLeft && (self->posX.i.hi - D_80174AFC) > 0x1F) {
+                self->facingLeft && (self->posX.i.hi - s_TargetLocationX) > 0x1F) {
                 self->facingLeft = PLAYER.facingLeft;
             } else if (
-                !self->facingLeft && (D_80174AFC - self->posX.i.hi) > 0x1F) {
+                !self->facingLeft && (s_TargetLocationX - self->posX.i.hi) > 0x1F) {
                 self->facingLeft = PLAYER.facingLeft;
             }
         }
-        D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
+        D_80174B0C = CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
         D_80174B10 = GetTargetPositionWithDistanceBuffer(
             D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
         self->ext.bat.unk86 = D_80174B10;
-        D_80174B04 = D_80174AFC - self->posX.i.hi;
-        D_80174B08 = D_80174B00 - self->posY.i.hi;
+        s_TargetLocationX_calc = s_TargetLocationX - self->posX.i.hi;
+        s_TargetLocationY_calc = s_TargetLocationY - self->posY.i.hi;
         D_80174B14 =
             SquareRoot12(
-                (D_80174B04 * D_80174B04 + D_80174B08 * D_80174B08) << 12) >>
+                (s_TargetLocationX_calc * s_TargetLocationX_calc + s_TargetLocationY_calc * s_TargetLocationY_calc) << 12) >>
             12;
         if (D_80174B14 < 30) {
             self->velocityY = -(rsin(D_80174B10) << 3);
@@ -645,8 +649,8 @@ void UpdateServantDefault(Entity* self) {
             self->velocityX = rcos(D_80174B10) << 6;
             self->ext.bat.unk8A = 0x80;
         } else {
-            self->velocityX = (D_80174AFC - self->posX.i.hi) << 0xE;
-            self->velocityY = (D_80174B00 - self->posY.i.hi) << 0xE;
+            self->velocityX = (s_TargetLocationX - self->posX.i.hi) << 0xE;
+            self->velocityY = (s_TargetLocationY - self->posY.i.hi) << 0xE;
             self->ext.bat.unk8A = 0x80;
         }
         if (self->velocityY > FIX(1.0)) {
@@ -661,8 +665,8 @@ void UpdateServantDefault(Entity* self) {
         if (g_CutsceneHasControl) {
             break;
         }
-        D_80174B24 = D_80174AFC - self->posX.i.hi;
-        D_80174B28 = D_80174B00 - self->posY.i.hi;
+        D_80174B24 = s_TargetLocationX - self->posX.i.hi;
+        D_80174B28 = s_TargetLocationY - self->posY.i.hi;
         D_80174B2C =
             SquareRoot12(
                 (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
@@ -672,11 +676,11 @@ void UpdateServantDefault(Entity* self) {
                 self->ext.bat.unk8E = 0;
                 SetEntityAnimation(self, D_8017054C);
             }
-            self->ext.bat.unk8C++;
-            if (self->ext.bat.unk8C > g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
-                self->ext.bat.unk8C = 0;
+            self->ext.bat.frameCounter++;
+            if (self->ext.bat.frameCounter > g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
+                self->ext.bat.frameCounter = 0;
                 // Pay attention - this is not a ==
-                if (self->ext.bat.target = func_8017110C(self)) {
+                if (self->ext.bat.target = FindValidTarget(self)) {
                     self->step++;
                 }
             }
@@ -685,12 +689,12 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     case 2:
-        self->ext.bat.unk8C++;
-        if (self->ext.bat.unk8C == 1) {
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter == 1) {
             g_api.PlaySfx(SFX_UI_ALERT_TINK);
             func_8017170C(self, 1);
-        } else if (self->ext.bat.unk8C > 30) {
-            self->ext.bat.unk8C = 0;
+        } else if (self->ext.bat.frameCounter > 30) {
+            self->ext.bat.frameCounter = 0;
             func_8017170C(self, 0);
             D_80174B1C = self->ext.bat.target->posX.i.hi;
             D_80174B20 = self->ext.bat.target->posY.i.hi;
@@ -728,13 +732,13 @@ void UpdateServantDefault(Entity* self) {
                 (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
             12;
         if (!CheckEntityValid(self->ext.bat.target) || D_80174B2C < 8) {
-            self->ext.bat.unk8C = 0;
+            self->ext.bat.frameCounter = 0;
             self->step++;
             SetEntityAnimation(self, D_8017054C);
         }
         break;
     case 4:
-        D_80174B0C = CalculateAngleToEntity(self, D_80174AFC, D_80174B00);
+        D_80174B0C = CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
         D_80174B10 = GetTargetPositionWithDistanceBuffer(
             D_80174B0C, self->ext.bat.unk86, 0x10);
         self->ext.bat.unk86 = D_80174B10;
@@ -743,21 +747,21 @@ void UpdateServantDefault(Entity* self) {
         self->facingLeft = (self->velocityX >= 0) ? true : false;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->ext.bat.unk8C++;
-        if (self->ext.bat.unk8C > 30) {
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter > 30) {
             self->hitboxWidth = 0;
             self->hitboxHeight = 0;
             self->step = 1;
         }
         break;
     case 5:
-        self->ext.bat.unk8C++;
-        if (self->ext.bat.unk8C == 1) {
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter == 1) {
             g_api.PlaySfx(SFX_BAT_SCREECH);
             func_8017170C(self, 3);
-        } else if (self->ext.bat.unk8C > 30) {
+        } else if (self->ext.bat.frameCounter > 30) {
             func_8017170C(self, 0);
-            self->entityId = 0xD2;
+            self->entityId = ENTITY_ID_ATTACK_MODE;
             self->step = 0;
         }
         func_801718A0(self);
@@ -794,7 +798,7 @@ void func_80172C30(Entity* self) {
     case 0:
         func_801719E0(self);
         if (!self->ext.bat.unk82) {
-            func_8017160C(g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_ADD_BAT_COUNT], 0xD2);
+            CreateAdditionalBats(g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_ADD_BAT_COUNT], ENTITY_ID_ATTACK_MODE);
         }
         break;
     case 1:
@@ -855,18 +859,18 @@ void func_80172C30(Entity* self) {
                 self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
         }
         if (!(g_Player.status & PLAYER_STATUS_BAT_FORM)) {
-            self->ext.bat.unk8C = 0;
+            self->ext.bat.frameCounter = 0;
             self->step++;
         }
         break;
     case 2:
-        self->ext.bat.unk8C++;
-        if (self->ext.bat.unk8C == 1) {
+        self->ext.bat.frameCounter++;
+        if (self->ext.bat.frameCounter == 1) {
             if (!self->ext.bat.unk82) {
                 g_api.PlaySfx(SFX_BAT_SCREECH);
             }
             func_8017170C(self, 2);
-        } else if (self->ext.bat.unk8C >= 0x1F) {
+        } else if (self->ext.bat.frameCounter >= 0x1F) {
             func_8017170C(self, 0);
             if (!self->ext.bat.unk82) {
                 self->entityId = ENTITY_ID_SERVANT;
@@ -915,7 +919,7 @@ void unused_33CC(void) {}
 
 // When bat familiar swoops toward enemy to attack, it leaves a trail of blue
 // bat outlines behind it, not unlike Alucard's wing smash bat outlines.
-void BatFamiliarBlueTrail(Entity* self) {
+void UpdateBatBlueTrailEntities(Entity* self) {
     const s32 nPrim = 16;
     const s32 XS = 11; // X start, left
     const s32 XE = 13; // X end, right
@@ -932,17 +936,17 @@ void BatFamiliarBlueTrail(Entity* self) {
             return;
         } else {
             self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-            D_80174B48 = &g_PrimBuf[self->primIndex];
+            s_CurrentPrim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < nPrim; i++) {
-                D_80174B48->tpage = 0x1B;
-                D_80174B48->clut = 0x143;
-                D_80174B48->u0 = D_80174B48->u2 = 64;
-                D_80174B48->v0 = D_80174B48->v1 = 0;
-                D_80174B48->u1 = D_80174B48->u3 = 88;
-                D_80174B48->v2 = D_80174B48->v3 = 32;
-                D_80174B48->priority = self->zPriority;
-                D_80174B48->drawMode = 0x15 | DRAW_HIDE;
-                D_80174B48 = D_80174B48->next;
+                s_CurrentPrim->tpage = 0x1B;
+                s_CurrentPrim->clut = 0x143;
+                s_CurrentPrim->u0 = s_CurrentPrim->u2 = 64;
+                s_CurrentPrim->v0 = s_CurrentPrim->v1 = 0;
+                s_CurrentPrim->u1 = s_CurrentPrim->u3 = 88;
+                s_CurrentPrim->v2 = s_CurrentPrim->v3 = 32;
+                s_CurrentPrim->priority = self->zPriority;
+                s_CurrentPrim->drawMode = 0x15 | DRAW_HIDE;
+                s_CurrentPrim = s_CurrentPrim->next;
                 D_80174B4C[i] = 0;
             }
             D_80174C2C = 0;
@@ -960,82 +964,82 @@ void BatFamiliarBlueTrail(Entity* self) {
         D_80174C0C[D_80174C2C] = 192;
         D_80174B4C[D_80174C2C] = 1;
         D_80174C2C = ++D_80174C2C >= nPrim ? 0 : D_80174C2C;
-        D_80174B48 = &g_PrimBuf[self->primIndex];
+        s_CurrentPrim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < nPrim; i++) {
             if (D_80174B4C[i]) {
                 if (D_80174BCC[i]) {
-                    D_80174B48->x0 = D_80174B48->x2 =
+                    s_CurrentPrim->x0 = s_CurrentPrim->x2 =
                         D_80174B8C[i].x + D_80174BEC[i] * XS / 256;
-                    D_80174B48->x1 = D_80174B48->x3 =
+                    s_CurrentPrim->x1 = s_CurrentPrim->x3 =
                         D_80174B8C[i].x - D_80174BEC[i] * XE / 256;
                 } else {
-                    D_80174B48->x0 = D_80174B48->x2 =
+                    s_CurrentPrim->x0 = s_CurrentPrim->x2 =
                         D_80174B8C[i].x - D_80174BEC[i] * XS / 256;
-                    D_80174B48->x1 = D_80174B48->x3 =
+                    s_CurrentPrim->x1 = s_CurrentPrim->x3 =
                         D_80174B8C[i].x + D_80174BEC[i] * XE / 256;
                 }
-                D_80174B48->y0 = D_80174B48->y1 =
+                s_CurrentPrim->y0 = s_CurrentPrim->y1 =
                     D_80174B8C[i].y - D_80174BEC[i] * YS / 256;
-                D_80174B48->y2 = D_80174B48->y3 =
+                s_CurrentPrim->y2 = s_CurrentPrim->y3 =
                     D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
-                D_80174B48->r0 = D_80174B48->r1 = D_80174B48->r2 =
-                    D_80174B48->r3 = D_80174B48->g0 = D_80174B48->g1 =
-                        D_80174B48->g2 = D_80174B48->g3 = D_80174B48->b0 =
-                            D_80174B48->b1 = D_80174B48->b2 = D_80174B48->b3 =
+                s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
+                    s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
+                        s_CurrentPrim->g2 = s_CurrentPrim->g3 = s_CurrentPrim->b0 =
+                            s_CurrentPrim->b1 = s_CurrentPrim->b2 = s_CurrentPrim->b3 =
                                 D_80174C0C[i];
                 D_80174BEC[i] -= 8;
                 D_80174C0C[i] -= 8;
                 if (D_80174C0C[i] < 81) {
-                    D_80174B48->drawMode |= DRAW_HIDE;
+                    s_CurrentPrim->drawMode |= DRAW_HIDE;
                     D_80174B4C[i] = 0;
                 } else {
-                    D_80174B48->drawMode ^= DRAW_HIDE;
+                    s_CurrentPrim->drawMode ^= DRAW_HIDE;
                 }
             }
-            D_80174B48 = D_80174B48->next;
+            s_CurrentPrim = s_CurrentPrim->next;
         }
         break;
     case 2:
         isEntityAlive = false;
-        D_80174B48 = &g_PrimBuf[self->primIndex];
+        s_CurrentPrim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < nPrim; i++) {
             if (D_80174B4C[i]) {
                 if (D_80174BCC[i]) {
-                    D_80174B48->x0 = D_80174B48->x2 =
+                    s_CurrentPrim->x0 = s_CurrentPrim->x2 =
                         D_80174B8C[i].x + D_80174BEC[i] * XS / 256;
-                    D_80174B48->x1 = D_80174B48->x3 =
+                    s_CurrentPrim->x1 = s_CurrentPrim->x3 =
                         D_80174B8C[i].x - D_80174BEC[i] * XE / 256;
                 } else {
-                    D_80174B48->x0 = D_80174B48->x2 =
+                    s_CurrentPrim->x0 = s_CurrentPrim->x2 =
                         D_80174B8C[i].x - D_80174BEC[i] * XS / 256;
-                    D_80174B48->x1 = D_80174B48->x3 =
+                    s_CurrentPrim->x1 = s_CurrentPrim->x3 =
                         D_80174B8C[i].x + D_80174BEC[i] * XE / 256;
                 }
-                D_80174B48->y0 = D_80174B48->y1 =
+                s_CurrentPrim->y0 = s_CurrentPrim->y1 =
                     D_80174B8C[i].y - D_80174BEC[i] * YS / 256;
-                D_80174B48->y2 = D_80174B48->y3 =
+                s_CurrentPrim->y2 = s_CurrentPrim->y3 =
                     D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
-                D_80174B48->r0 = D_80174B48->r1 = D_80174B48->r2 =
-                    D_80174B48->r3 = D_80174B48->g0 = D_80174B48->g1 =
-                        D_80174B48->g2 = D_80174B48->g3 = D_80174B48->b0 =
-                            D_80174B48->b1 = D_80174B48->b2 = D_80174B48->b3 =
+                s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
+                    s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
+                        s_CurrentPrim->g2 = s_CurrentPrim->g3 = s_CurrentPrim->b0 =
+                            s_CurrentPrim->b1 = s_CurrentPrim->b2 = s_CurrentPrim->b3 =
                                 D_80174C0C[i];
-                D_80174B48->r0 = D_80174B48->r1 = D_80174B48->r2 =
-                    D_80174B48->r3 = D_80174B48->g0 = D_80174B48->g1 =
-                        D_80174B48->g2 = D_80174B48->g3 = D_80174B48->b0 =
-                            D_80174B48->b1 = D_80174B48->b2 = D_80174B48->b3 =
+                s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
+                    s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
+                        s_CurrentPrim->g2 = s_CurrentPrim->g3 = s_CurrentPrim->b0 =
+                            s_CurrentPrim->b1 = s_CurrentPrim->b2 = s_CurrentPrim->b3 =
                                 D_80174C0C[i];
                 D_80174BEC[i] -= 8;
                 D_80174C0C[i] -= 8;
                 if (D_80174C0C[i] < 81) {
-                    D_80174B48->drawMode |= DRAW_HIDE;
+                    s_CurrentPrim->drawMode |= DRAW_HIDE;
                     D_80174B4C[i] = 0;
                 } else {
-                    D_80174B48->drawMode ^= DRAW_HIDE;
+                    s_CurrentPrim->drawMode ^= DRAW_HIDE;
                 }
             }
             isEntityAlive |= D_80174B4C[i];
-            D_80174B48 = D_80174B48->next;
+            s_CurrentPrim = s_CurrentPrim->next;
         }
 
         if (isEntityAlive == false) {

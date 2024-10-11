@@ -69,19 +69,19 @@ extern s16
 extern s16
     g_ConfusedOffsetsY[]; // Array of Y-axis offsets for positioning primitives
 
-void unused_20A4(Entity* self);
-void unused_20AC(void);
-void unused_20B4(void);
-void unused_20BC(void);
-void unused_20C4(void);
-void unused_20CC(void);
-void unused_20D4(void);
-void unused_20DC(void);
-void UpdateAttackEntites(Entity* self);
-void UpdateConfusedEntites(Entity* self);
-void unused_28EC(void);
-void unused_28F4(void);
-void unused_28FC(void);
+static void unused_20A4(Entity* self);
+static void unused_20AC(void);
+static void unused_20B4(void);
+static void unused_20BC(void);
+static void unused_20C4(void);
+static void unused_20CC(void);
+static void unused_20D4(void);
+static void unused_20DC(void);
+static void UpdateAttackEntites(Entity* self);
+static void UpdateConfusedEntites(Entity* self);
+static void unused_28EC(void);
+static void unused_28F4(void);
+static void unused_28FC(void);
 
 ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, unused_20A4,
@@ -159,7 +159,8 @@ s32 UpdateEntityVelocityTowardsTarget(
     return s_DistanceToTarget;
 }
 
-Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
+static Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
+    const int EntitySearchCount = 128;
     Entity* entity;
     s32 i;
     s32 index;
@@ -171,7 +172,7 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
     // Hunt through these entities looking for ones that match all criteria.
     // Call them a success and increment successes.
     entity = &g_Entities[STAGE_ENTITY_START];
-    for (i = 0; i < 128; i++, entity++) {
+    for (i = 0; i < EntitySearchCount; i++, entity++) {
         s_TargetMatch[i] = 0;
 
         // Very similar code to CheckAllEntitiesValid
@@ -229,16 +230,16 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
     }
 
     if (matches != 0) {
-        index = s_LastTargetedEntityIndex % 128;
+        index = s_LastTargetedEntityIndex % EntitySearchCount;
 
-        for (i = 0; i < 128; i++) {
+        for (i = 0; i < EntitySearchCount; i++) {
             if (s_TargetMatch[index] != 0) {
                 entity = &g_Entities[index + STAGE_ENTITY_START];
-                s_LastTargetedEntityIndex = (index + 1) % 128;
+                s_LastTargetedEntityIndex = (index + 1) % EntitySearchCount;
                 return entity;
             }
 
-            index = (index + 1) % 128;
+            index = (index + 1) % EntitySearchCount;
         }
     }
 
@@ -247,12 +248,12 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
 
 #include "../check_entity_valid.h"
 
-void unused_1560(Entity* self) {}
+static void unused_1560(Entity* self) {}
 
 #if defined(VERSION_PSP)
-void func_psp_092EA460(Entity* self, s32 entityType, s32 params) {
+void func_psp_092EA460(Entity* parent, s32 entityType, s32 params) {
 #else
-Entity* CreateChildEntity(Entity* self, ChildEntityType entityType) {
+Entity* CreateChildEntity(Entity* parent, ChildEntityType entityType) {
 #endif
     Entity* entity;
     s32 i;
@@ -279,12 +280,12 @@ Entity* CreateChildEntity(Entity* self, ChildEntityType entityType) {
             entity->entityId = ENTITY_ID_CONFUSION;
         }
 #endif
-        entity->zPriority = self->zPriority;
-        entity->facingLeft = self->facingLeft;
+        entity->zPriority = parent->zPriority;
+        entity->facingLeft = parent->facingLeft;
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->posX.val = self->posX.val;
-        entity->posY.val = self->posY.val;
-        entity->ext.ghostEvent.parent = self;
+        entity->posX.val = parent->posX.val;
+        entity->posY.val = parent->posY.val;
+        entity->ext.ghostEvent.parent = parent;
 #if defined(VERSION_PSP)
         entity->params = params;
 #else
