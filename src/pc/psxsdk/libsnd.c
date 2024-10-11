@@ -1,4 +1,4 @@
-#ifdef WANT_LIBSND_LLE
+#ifndef WANT_LIBSND_LLE
 #include <common.h>
 #include <psxsdk/libspu.h>
 #include <psxsdk/libsnd.h>
