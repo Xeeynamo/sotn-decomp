@@ -3,6 +3,7 @@
 
 #include "../entrance_stage_entities.h"
 
+<<<<<<< HEAD
 void EntityShuttingWindow(Entity* self) {
     Primitive* prim;
     s16 primIndex;
@@ -98,6 +99,9 @@ void EntityShuttingWindow(Entity* self) {
 }
 
 // Entity ID: 0x19
+=======
+// main door to the castle that closes during intro
+>>>>>>> 4a2fd5bc (Dedupe closing window)
 void EntityCastleDoor(Entity* self) {
     SVECTOR svec1;
     VECTOR vec;

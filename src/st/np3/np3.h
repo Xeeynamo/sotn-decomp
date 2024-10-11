@@ -123,7 +123,6 @@ extern u16 g_EInitGurkhaHammer[];
 extern u16 g_EInitGurkhaSword[];
 extern u16 g_EInitGurkhaBlade[];
 extern ObjInit2 D_80180C10[];
-extern SVEC4 D_80180EEC[];
 extern SVEC4 D_80180F6C;
 extern MATRIX D_80180F9C;
 extern SVECTOR* D_80180FD4[];

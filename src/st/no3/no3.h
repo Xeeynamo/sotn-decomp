@@ -14,7 +14,6 @@
 #define SE_WARG_PAIN 0x781
 #define SE_WARG_ATTACK 0x782
 #define SE_WARG_GROWL 0x783
-#define SE_NO3_WINDOW_CLOSE 0x79D
 #define SE_VO_DEATH_STEALS 0x7A0
 #define SE_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2
@@ -117,7 +116,6 @@ extern ObjInit2 D_80180BFC[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
 extern u16 D_80180DD0[];
-extern SVEC4 D_80181024[];
 extern SVEC4 D_801810A4;
 extern MATRIX D_801810D4;
 extern SVECTOR* D_8018110C;
