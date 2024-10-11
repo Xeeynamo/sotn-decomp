@@ -19,6 +19,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-mismatch")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
