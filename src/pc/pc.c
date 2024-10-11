@@ -9,15 +9,6 @@ bool g_IsQuitRequested;   // controls whenever MainGame should quit
 bool g_TimedExit = false; // should we exit after some time?
 int g_TimeLimit = 0;      // number of frames before exiting
 
-FILE* cd_fp = NULL;
-void OpenCd(char* filename) {
-    cd_fp = fopen(filename, "rb");
-
-    if (!cd_fp) {
-        DEBUGF("Couldn't open CD.\n");
-    }
-}
-
 int CdReading();
 void ExecCd();
 void MyAudioCallback(void* data, u8* buffer, int length) {

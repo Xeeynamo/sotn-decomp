@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Sound)
+project(sotn)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,6 +30,7 @@ endif()
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
+    src/pc/main.c
     src/pc/log.c
     src/pc/stubs.c
     src/pc/sotn.c

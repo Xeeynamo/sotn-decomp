@@ -33,20 +33,4 @@ DRAWENV* MyPutDrawEnv(DRAWENV* env) {}
 
 void MyDrawOTag(OT_TYPE* p) {}
 
-int main(int argc, char* argv[]) {
-    const char* filename;
-
-    if (argc < 2) {
-        filename = "disks/sotn.us.bin";
-    } else {
-        filename = argv[1];
-    }
-    OpenCd(filename);
-
-    if (InitGame()) {
-        MainGame();
-    }
-    ResetGame();
-}
-
 int MyMoveImage(RECT* rect, int x, int y) {}

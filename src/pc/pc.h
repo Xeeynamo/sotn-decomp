@@ -15,11 +15,22 @@
 
 #define DISP_WIDTH 256
 #define DISP_HEIGHT 256
-#define SCREEN_SCALE 4
 
 #define VRAM_W 1024
 #define VRAM_H 512
 #define VRAM_STRIDE 2048
+
+enum TestMode {
+    NO_TEST,
+    TEST_SNDLIB,
+};
+struct InitGameParams {
+    const char* diskPath;
+    enum TestMode testMode;
+    int stage;
+    int player;
+    int scale;
+};
 
 struct FileOpenRead {
     const char* filename;
@@ -41,6 +52,11 @@ typedef struct FileUseContent {
     size_t length;
     void* param;
 } FileLoad;
+
+extern struct InitGameParams g_GameParams;
+bool InitGame(struct InitGameParams* params);
+void MainGame(void);
+void ResetGame(void);
 
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param);

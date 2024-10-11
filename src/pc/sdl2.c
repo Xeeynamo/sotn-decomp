@@ -13,6 +13,7 @@
 #include "sdl_defs.h"
 #include "sdl2_macros.h"
 
+extern struct InitGameParams g_GameParams;
 extern bool g_IsQuitRequested;
 extern u16 g_RawVram[VRAM_W * VRAM_H];
 SDL_Window* g_Window = NULL;
@@ -40,7 +41,7 @@ bool InitPlatform() {
 
     g_Window = SDL_CreateWindow(
         "SOTN", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        DISP_WIDTH * SCREEN_SCALE, DISP_HEIGHT * SCREEN_SCALE,
+        DISP_WIDTH * g_GameParams.scale, DISP_HEIGHT * g_GameParams.scale,
         SDL_WINDOW_SHOWN);
     if (!g_Window) {
         ERRORF("SDL_CreateWindow: %s", SDL_GetError());
@@ -226,24 +227,4 @@ u_long MyPadRead(int id) {
     }
 
     return pressed;
-}
-
-int main(int argc, char* argv[]) {
-    const char* filename;
-
-    if (argc < 2) {
-        filename = "disks/sotn.us.bin";
-    } else if (argc == 2 && !strcmp(argv[1], "test")) {
-#ifdef WANT_LIBSND_LLE
-        run_tests();
-#endif
-    } else {
-        filename = argv[1];
-    }
-    OpenCd(filename);
-
-    if (InitGame()) {
-        MainGame();
-    }
-    ResetGame();
 }
