@@ -18,7 +18,7 @@ void EntityRoomTransition2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         tilemap->y = 0xFC;
         g_Player.padSim = PAD_RIGHT;
         D_8003C8B8 = 0;

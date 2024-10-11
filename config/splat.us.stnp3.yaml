@@ -88,7 +88,7 @@ segments:
       - [0x31FA0, .rodata, e_misc] # EntityRelicOrb
       - [0x31FD8, .rodata, e_misc] # EntityMessageBox
       - [0x31FEC, .rodata, e_stage_name] # EntityStageNamePopup
-      - [0x32020, .rodata, 44DCC] # EntityMerman2
+      - [0x32020, .rodata, e_merman2] # EntityMerman2
       - [0x32044, .rodata, 48238] # EntityMerman
       - [0x3206C, .rodata, e_bone_scimitar] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C] # EntityBat
@@ -123,7 +123,7 @@ segments:
       - [0x43D28, c, e_room_fg]
       - [0x43E14, c, popup]
       - [0x44144, c, player_water_effect]
-      - [0x44DCC, c] # Merman Entities
+      - [0x44DCC, c, e_merman2] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c, e_bone_scimitar] # EntityBoneScimitar
       - [0x4997C, c]

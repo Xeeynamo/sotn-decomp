@@ -5,7 +5,7 @@
 void func_801B2830(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitSpawner);
         self->ext.generic.unk7C.S8.unk0 = 16;
         self->ext.generic.unk7C.S8.unk1 = 8;
         self->ext.generic.unk7E.modeU8.unk0 = 56;

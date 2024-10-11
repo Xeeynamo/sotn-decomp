@@ -1440,3 +1440,38 @@ void EntityDeadMerman(Entity* self) {
         DestroyEntity(self);
     }
 }
+
+void EntityMermanSpawner(Entity* self) {
+    Entity* newEntity;
+    s16 xVar;
+    s16 yVar;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitSpawner);
+        self->flags |= FLAG_UNK_2000;
+    }
+
+    if (!(g_Timer % 0x40)) {
+        Entity* player = &PLAYER;
+        yVar = g_Tilemap.scrollY.i.hi + player->posY.i.hi;
+        if (yVar >= 256) {
+            xVar = g_Tilemap.scrollX.i.hi + player->posX.i.hi;
+            xVar += Random() - 0x80;
+            if (xVar < 0x40 || xVar > 0x2C0) {
+                return;
+            }
+            yVar = 496;
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[170]);
+            if (newEntity != 0) {
+                if (Random() & 1) {
+                    CreateEntityFromCurrentEntity(E_MERMAN2, newEntity);
+                    newEntity->params = Random() & 1;
+                } else {
+                    CreateEntityFromCurrentEntity(E_MERMAN, newEntity);
+                }
+                newEntity->posX.i.hi = xVar - g_Tilemap.scrollX.i.hi;
+                newEntity->posY.i.hi = yVar - g_Tilemap.scrollY.i.hi;
+            }
+        }
+    }
+}

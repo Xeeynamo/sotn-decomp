@@ -336,7 +336,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             }
         }
     } else {
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitSpawner);
     }
     arg0->ext.aluwater.unk7C = sp28;
     arg0->ext.aluwater.unk80 = sp18;

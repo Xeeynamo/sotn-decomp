@@ -1,4 +1,5 @@
 NP3_gfxBanks = 0x801806DC;
+g_EInitSpawner = 0x80180A60;
 g_TrapDoorFlag = 0x80181104;
 g_SplashSfx = 0x8018122C;
 g_SurfacingSfx = 0x8018122E;

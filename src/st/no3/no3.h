@@ -60,14 +60,14 @@ typedef enum EntityIDs {
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
-    /* 0x3A */ E_MERMAN_SPAWNER_3A,
+    /* 0x3A */ E_MERMAN2,
     /* 0x3B */ E_MERMAN_JUMP_WATER,
     /* 0x3C */ E_MERMAN2_UNK1,
     /* 0x3D */ E_HIGH_WATER_SPLASH,
     /* 0x3E */ E_MERMAN2_SPIT_FIRE,
     /* 0x3F */ E_MERMAN2_DYING,
     /* 0x40 */ E_MERMAN2_JUMP_AIR,
-    /* 0x41 */ E_MERMAN_SPAWNER_41,
+    /* 0x41 */ E_MERMAN,
     /* 0x42 */ E_MERMAN_SPIT_FIRE,
     /* 0x43 */ E_MERMAN_JUMP_AIR,
     /* 0x44 */ E_MERMAN_DYING,
@@ -98,7 +98,7 @@ extern u16 D_80182F9C[];
 extern u16 D_80182FA8[];
 extern u16 D_80182FC8[];
 extern u16 D_80182FE8[];
-extern u16 D_80180AD0[];
+extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 D_80180AF4[];
 extern u16 g_EInitCommon[];
@@ -302,7 +302,7 @@ extern u16 g_EntityCastleBridgePriorities[];
 extern u8 g_EntityCastleBridgeUVs[];
 extern s16 g_EntityCastleBridgeUVOffsets[];
 extern u8 g_EntityCastleBridgePages[];
-extern u16 D_80180AD0[];
+extern u16 g_EInitSpawner[];
 extern s16 D_80181870[];
 
 extern Dialogue g_Dialogue;

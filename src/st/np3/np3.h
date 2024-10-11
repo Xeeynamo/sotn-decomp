@@ -36,14 +36,14 @@ typedef enum {
     /* 0x2F */ E_SIDE_WATER_SPLASH,
     /* 0x30 */ E_SMALL_WATER_DROP,
     /* 0x31 */ E_WATER_DROP,
-    /* 0x32 */ E_MERMAN_SPAWNER_32,
+    /* 0x32 */ E_MERMAN2,
     /* 0x33 */ E_MERMAN_JUMP_WATER,
     /* 0x34 */ E_MERMAN2_UNK1,
     /* 0x35 */ E_HIGH_WATER_SPLASH,
     /* 0x36 */ E_MERMAN2_SPIT_FIRE,
     /* 0x37 */ E_MERMAN2_DYING,
     /* 0x38 */ E_MERMAN2_JUMP_AIR,
-    /* 0x39 */ E_MERMAN_SPAWNER_39,
+    /* 0x39 */ E_MERMAN,
     /* 0x3A */ E_MERMAN_SPIT_FIRE,
     /* 0x3B */ E_MERMAN_JUMP_AIR,
     /* 0x3C */ E_MERMAN_DYING,
@@ -101,7 +101,7 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableDrawModes[];
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
-extern u16 D_80180A60[];
+extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitUnkId12[];
 extern u16 g_EInitCommon[];
