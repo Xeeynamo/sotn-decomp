@@ -45,7 +45,7 @@
 #endif
 
 #elif defined(VERSION_PSP)
-#define STATIC_ASSERT(x)
+#define STATIC_ASSERT(x, y)
 #define PACKED
 
 #else
