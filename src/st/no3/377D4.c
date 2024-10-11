@@ -24,4 +24,3 @@ void EntityCavernDoorVase(Entity* self) {
 }
 
 #include "../entity_unk_id12.h"
-

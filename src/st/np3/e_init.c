@@ -22,7 +22,7 @@ void EntityUnkId12(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_801B2830(Entity* self);
+void EntityUnkId16(Entity* self);
 void EntityBackgroundLightning(Entity* self);
 void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
@@ -115,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_801B2830,
+    EntityUnkId16,
     EntityBackgroundLightning,
     EntityTransparentWater,
     EntityShuttingWindow,

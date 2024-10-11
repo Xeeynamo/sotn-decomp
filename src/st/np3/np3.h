@@ -24,8 +24,8 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x14 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_GREY_PUFF = 0x15,
-
+    /* 0x15 */ E_GREY_PUFF,
+    /* 0x16 */ E_ID_16,
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_CAVERN_DOOR_PLATFORM = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
@@ -389,12 +389,6 @@ extern s16 D_80183934[];
 extern s16 D_80183990[];
 extern s16 D_80183A24[];
 extern s16 D_80183A4C[];
-
-// For EntityBackgroundLightning
-
-extern u8 D_80180E78[];
-extern u8 D_80180E94[];
-extern u8 D_80180EA4[][2];
 
 // for EntityBackgroundBushes
 
