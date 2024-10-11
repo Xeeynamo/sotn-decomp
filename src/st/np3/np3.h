@@ -123,9 +123,7 @@ extern u16 g_EInitGurkhaHammer[];
 extern u16 g_EInitGurkhaSword[];
 extern u16 g_EInitGurkhaBlade[];
 extern ObjInit2 D_80180C10[];
-extern SVEC4 D_80180F6C;
 extern MATRIX D_80180F9C;
-extern SVECTOR* D_80180FD4[];
 extern u8 D_80180FE0[];
 extern u16 D_80180FF8[8];
 extern s16 D_80181098[][2];
@@ -276,7 +274,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern SVECTOR D_801B1EA0;
+extern SVECTOR g_CastleDoorVector;
 
 // For EntityHammer
 extern u16 g_EInitGurkhaType0[];

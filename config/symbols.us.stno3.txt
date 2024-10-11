@@ -55,6 +55,7 @@ g_MermanSplashXOffset = 0x801839E8;
 g_HighWaterSplashParams = 0x801839F4;
 g_Merman2posPtr = 0x801839FC;
 g_Merman2velPtr = 0x80183A0C;
+g_CastleDoorVector = 0x801B73E0;
 EntityCavernDoorVase = 0x801B77D4;
 EntityUnkId12 = 0x801B78A8;
 EntityBreakable = 0x801B7A64;

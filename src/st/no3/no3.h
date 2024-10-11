@@ -116,10 +116,7 @@ extern ObjInit2 D_80180BFC[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
 extern u16 D_80180DD0[];
-extern SVEC4 D_801810A4;
-extern MATRIX D_801810D4;
 extern SVECTOR* D_8018110C;
-extern u8 D_80181118[];
 extern u16 D_80181120[];
 extern u16 D_80181130[8];
 extern s16 D_801811D0[][2];
@@ -281,7 +278,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern SVECTOR D_801B73E0;
+extern SVECTOR g_CastleDoorVector;
 
 // For NO3_EntityCutscene
 extern u8 D_80181A28[];

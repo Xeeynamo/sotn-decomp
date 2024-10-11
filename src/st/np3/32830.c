@@ -4,6 +4,7 @@
 #include "../entrance_stage_entities.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void EntityShuttingWindow(Entity* self) {
     Primitive* prim;
     s16 primIndex;
@@ -204,6 +205,8 @@ void EntityCastleDoor(Entity* self) {
     }
 }
 
+=======
+>>>>>>> 7799a863 (Dedupe EntityCastleDoor)
 extern SVECTOR D_801810B0;
 extern s16 D_80181068;
 extern s16* D_80181088;

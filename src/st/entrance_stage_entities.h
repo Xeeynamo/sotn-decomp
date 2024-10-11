@@ -445,7 +445,11 @@ void EntityCastleDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
+<<<<<<< HEAD
         InitializeEntity(g_EInitInteractable);
+=======
+        InitializeEntity(g_EInitGeneric);
+>>>>>>> 7799a863 (Dedupe EntityCastleDoor)
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -584,6 +588,7 @@ void EntityCastleDoor(Entity* self) {
         prim = prim->next;
     }
 }
+<<<<<<< HEAD
 
 #define UVWH(u, v, w, h) u, v, w, h
 
@@ -2315,3 +2320,5 @@ void EntityTilemapShufflerUnused(Entity* self) {
         break;
     }
 }
+=======
+>>>>>>> 7799a863 (Dedupe EntityCastleDoor)

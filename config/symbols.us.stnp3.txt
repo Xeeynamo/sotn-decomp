@@ -33,6 +33,7 @@ g_HighWaterSplashParams = 0x80182304;
 g_Merman2posPtr = 0x8018230C;
 g_Merman2velPtr = 0x8018231C;
 D_801828C8 = 0x801828C8;
+g_CastleDoorVector = 0x801B1EA0;
 EntityStairwayPiece = 0x801B5790;
 CreateExplosionPuff = 0x801B653C;
 EntitySlogra = 0x801B6990;
