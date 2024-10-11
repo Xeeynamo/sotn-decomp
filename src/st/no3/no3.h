@@ -214,7 +214,7 @@ extern s16 g_splashAspects[];
 extern s32 g_SplashYMovement[];
 extern s16 g_SurfacingYTbl[];
 extern u8 D_80183994[];
-extern const u8 D_801839A0[];
+extern const u8 g_explosion2anim[];
 extern u8 D_801839A8[];
 extern u8 D_801839B0[];
 extern Point32 D_801839C0[];

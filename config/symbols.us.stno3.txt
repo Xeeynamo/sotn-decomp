@@ -43,6 +43,7 @@ g_merman2_walkanim = 0x80183960;
 g_merman2_spitfire = 0x8018396C;
 g_merman_walkanim_init = 0x80183984;
 g_merman2_swim_anim = 0x8018398C;
+g_explosion2anim = 0x801839A0;
 EntityCavernDoorVase = 0x801B77D4;
 EntityUnkId12 = 0x801B78A8;
 EntityBreakable = 0x801B7A64;

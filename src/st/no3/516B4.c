@@ -2,66 +2,6 @@
 #include "no3.h"
 #include "../e_merman2.h"
 
-// some sort of explosion
-void EntityExplosion2(Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-
-    if (self->step == 0) {
-        InitializeEntity(g_EInitWaterObject);
-        self->animCurFrame = 0;
-        self->hitboxState = 0;
-        self->zPriority += 4;
-        if (self->params != 0) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-            if (primIndex == -1) {
-                DestroyEntity(self);
-                return;
-            }
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->ext.entityExplosion2.prim = prim;
-            self->flags |= FLAG_HAS_PRIMS;
-            UnkPolyFunc2(prim);
-            prim->u0 = 0;
-            prim->u1 = 0x20;
-            prim->tpage = 0x1A;
-            prim->clut = 0x1FF;
-            prim->v3 = prim->v2 = 0x20;
-            prim->v1 = prim->v0 = 0;
-            prim->u2 = prim->u0;
-            prim->u3 = prim->u1;
-            LOH(prim->next->r2) = 0x40;
-            LOH(prim->next->b2) = 0x40;
-            LOH(prim->next->u1) = 0;
-            prim->next->b3 = 0x60;
-            prim->next->x1 = (u16)self->posX.i.hi;
-            prim->next->y0 = (u16)self->posY.i.hi;
-            prim->priority = self->zPriority - 4;
-            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
-        }
-    }
-
-    if (self->params != 0) {
-        prim = self->ext.entityExplosion2.prim;
-        UnkPrimHelper(prim);
-        prim->next->b3 += 252;
-        LOH(prim->next->u1) -= 128;
-        if (prim->next->b3 < 16) {
-            prim->drawMode = DRAW_HIDE;
-        }
-    }
-
-    self->ext.entityExplosion2.unk84++;
-    if (!(self->ext.entityExplosion2.unk84 % 4)) {
-        self->posY.i.hi++;
-    }
-
-    if (AnimateEntity(D_801839A0, self) == 0) {
-        DestroyEntity(self);
-    }
-}
-
 // medium sized water splash used with merman
 void EntityMediumWaterSplash(Entity* entity) {
     Entity* newEntity;
