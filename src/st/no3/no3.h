@@ -216,7 +216,7 @@ extern s16 g_SurfacingYTbl[];
 extern u8 g_MediumWaterSplashAnim[];
 extern const u8 g_explosion2anim[];
 extern u8 g_FallingObject2Anim[];
-extern u8 D_801839B0[];
+extern u8 g_HighWaterSplashAnim[];
 extern Point32 g_Merman2XY[];
 extern u16 g_MermanSplashXOffset[];
 extern u8 g_HighWaterSplashParams[];

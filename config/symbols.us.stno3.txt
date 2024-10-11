@@ -47,6 +47,7 @@ g_merman2_swim_anim = 0x8018398C;
 g_MediumWaterSplashAnim = 0x80183994;
 g_explosion2anim = 0x801839A0;
 g_FallingObject2Anim = 0x801839A8;
+g_HighWaterSplashAnim = 0x801839B0;
 g_Merman2XY = 0x801839C0;
 g_MermanSplashXOffset = 0x801839E8;
 g_HighWaterSplashParams = 0x801839F4;

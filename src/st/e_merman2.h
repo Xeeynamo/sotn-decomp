@@ -1364,3 +1364,79 @@ void EntityFallingObject2(Entity* self) {
         DestroyEntity(self);
     }
 }
+
+void EntityHighWaterSplash(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        self->animSet = ANIMSET_DRA(2);
+        self->velocityY = FIX(-5);
+        self->palette = 0x8162;
+        self->drawMode = DRAW_TPAGE;
+        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->palette = 0x8018;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->unk6C = 0xA0;
+        self->rotX = 0x100;
+        self->rotY = 0x1A0;
+        self->ext.mermanWaterSplash.unk84 = self->params;
+        self->ext.mermanWaterSplash.unk85 = 0x11;
+        break;
+
+    case 1:
+        self->ext.mermanWaterSplash.unk85--;
+        if (!--self->ext.mermanWaterSplash.unk84) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(g_HighWaterSplashAnim, self);
+        MoveEntity();
+        self->velocityY += FIX(0.25);
+        self->rotX += 6;
+        self->rotY -= 4;
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        if (!--self->ext.mermanWaterSplash.unk85) {
+            self->velocityY = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(g_HighWaterSplashAnim, self) == 0) {
+            MoveEntity();
+            self->velocityY += FIX(0.25);
+            self->rotX += 6;
+            self->rotY -= 4;
+        }
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+void EntityDeadMerman(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(g_EInitWaterObject);
+        self->animCurFrame = 13;
+        self->ext.merman.timer = 0x20;
+        self->hitboxState = 0;
+        self->velocityY = FIX(0.0625);
+        self->palette = self->params + 0xE;
+        self->unk6C = 0x80;
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->flags |= FLAG_UNK_2000;
+        return;
+    }
+    MoveEntity();
+    self->velocityY += FIX(0.0625);
+    self->unk6C += 0xFE;
+    if (--self->ext.merman.timer == 0) {
+        DestroyEntity(self);
+    }
+}
