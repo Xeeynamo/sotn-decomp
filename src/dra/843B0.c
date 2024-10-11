@@ -1439,7 +1439,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
 // Entity ID 45. Created by factory blueprint 81.
 // That blueprint is used in ControlBatForm, when step_s is 4.
 // Also, when bat familiar shoots a fireball, the blueprint
-// is used in func_80172C30.
+// is used in UpdateBatAttackMode.
 
 void EntityBatFireball(Entity* self) {
     // This is a 1 when a bat familiar is shooting, and a 0

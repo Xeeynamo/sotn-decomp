@@ -4,12 +4,13 @@
 #include <psxsdk/libc.h>
 #include "../servant_private.h"
 
-#define ABILITY_STATS_DELAY_FRAMES 0
-#define ABILITY_STATS_ATTACK_ANGLE 1
-#define ABILITY_STATS_ADD_BAT_COUNT 2
-#define ABILITY_STATS_MIN_ENEMY_HP 3
-#define ABILITY_STATS_BAD_ATTACKS 4
+#define DELAY_FRAMES_INDEX 0
+#define MAX_ATTACK_ANGLE_INDEX 1
+#define ADD_BAT_COUNT_INDEX 2
+#define MIN_ENEMY_HP_INDEX 3
+#define BAD_ATTACKS_INDEX 4
 
+#define ENTITY_ID_SEEK_MODE ENTITY_ID_SERVANT
 #define ENTITY_ID_ATTACK_MODE 0xD2
 #define ENTITY_ID_BLUE_TRAIL 0xDA
 
@@ -24,25 +25,25 @@ static s16 s_TargetLocationX_calc;
 STATIC_PAD_BSS(2);
 static s16 s_TargetLocationY_calc;
 STATIC_PAD_BSS(2);
-static s16 D_80174B0C;
+static s16 s_AngleToTarget;
 STATIC_PAD_BSS(2);
-static s16 D_80174B10;
+static s16 s_AllowedAngle;
 STATIC_PAD_BSS(2);
-static s16 D_80174B14;
+static s16 s_DistanceToAttackTarget_0;
 STATIC_PAD_BSS(2);
-static s16 D_80174B18;
+static s16 s_xOffset_calc;
 STATIC_PAD_BSS(2);
 static s32 D_80174B1C;
 static s32 D_80174B20;
-static s32 D_80174B24;
-static s32 D_80174B28;
-static s32 D_80174B2C;
-static s32 D_80174B2C;
-static s32 D_80174B30;
-static s32 D_80174B34;
-static s16 D_80174B38;
+static s32 s_AttackTargetDeltaX;
+static s32 s_AttackTargetDeltaY;
+static s32 s_DistanceToAttackTarget_1;
+static s32 s_DistanceToAttackTarget_1;
+static s32 s_PointIndex;
+static s32 s_DistanceToFollowTarget;
+static s16 s_PointAdjustX;
 STATIC_PAD_BSS(2);
-static s16 D_80174B3C;
+static s16 s_PointAdjustY;
 STATIC_PAD_BSS(2);
 static s16 D_80174B40;
 STATIC_PAD_BSS(2);
@@ -61,7 +62,7 @@ static s32 s_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 static s32 _unused[26];
 
-static void func_80172C30(Entity* self);
+static void UpdateBatAttackMode(Entity* self);
 static void unused_339C(void);
 static void unused_33A4(void);
 static void unused_33AC(void);
@@ -78,7 +79,7 @@ static void unused_3C24(void);
 ServantDesc bat_ServantDesc = {
     ServantInit,
     UpdateServantDefault,
-    func_80172C30,
+    UpdateBatAttackMode,
     unused_339C,
     unused_33A4,
     unused_33AC,
@@ -104,20 +105,20 @@ extern s16 s_TargetLocationX;
 extern s16 s_TargetLocationY;
 extern s16 s_TargetLocationX_calc;
 extern s16 s_TargetLocationY_calc;
-extern s16 D_80174B0C;
-extern s16 D_80174B10;
-extern s16 D_80174B14;
-extern s16 D_80174B18;
+extern s16 s_AngleToTarget;
+extern s16 s_AllowedAngle;
+extern s16 s_DistanceToAttackTarget_0;
+extern s16 s_xOffset_calc;
 extern s32 D_80174B1C;
 extern s32 D_80174B20;
-extern s32 D_80174B24;
-extern s32 D_80174B28;
-extern s32 D_80174B2C;
-extern s32 D_80174B2C;
-extern s32 D_80174B30;
-extern s32 D_80174B34;
-extern s16 D_80174B38;
-extern s16 D_80174B3C;
+extern s32 s_AttackTargetDeltaX;
+extern s32 s_AttackTargetDeltaY;
+extern s32 s_DistanceToAttackTarget_1;
+extern s32 s_DistanceToAttackTarget_1;
+extern s32 s_PointIndex;
+extern s32 s_DistanceToFollowTarget;
+extern s16 s_PointAdjustX;
+extern s16 s_PointAdjustY;
 extern s16 D_80174B40;
 extern s16 D_80174B44;
 extern Primitive* s_CurrentPrim;
@@ -134,8 +135,10 @@ extern s32 s_LastTargetedEntityIndex;
 #endif
 
 extern AnimationFrame g_DefaultBatAnimationFrame[];
+extern AnimationFrame g_BatHighVelocityAnimationFrame[];
 extern s32 g_BatAbilityStats[][5];
 extern u16 g_BatClut[];
+extern Sprite g_BatSpriteData[];
 
 #include "../set_entity_animation.h"
 
@@ -174,7 +177,7 @@ static Entity* FindValidTarget(Entity* self) {
         }
         if (entity->hitboxState & 8 &&
             !g_BatAbilityStats[s_BatStats.level / 10]
-                              [ABILITY_STATS_BAD_ATTACKS]) {
+                              [BAD_ATTACKS_INDEX]) {
             continue;
         }
         if (abs(self->posX.i.hi - entity->posX.i.hi) < 64 &&
@@ -194,7 +197,7 @@ static Entity* FindValidTarget(Entity* self) {
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
                 g_BatAbilityStats[s_BatStats.level / 10]
-                                 [ABILITY_STATS_MIN_ENEMY_HP]) {
+                                 [MIN_ENEMY_HP_INDEX]) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
@@ -206,7 +209,7 @@ static Entity* FindValidTarget(Entity* self) {
 
     if (found > 0) {
         foundIndex = s_LastTargetedEntityIndex % EntitySearchCount;
-        for (i = 0; i < 0x80; i++) {
+        for (i = 0; i < EntitySearchCount; i++) {
             if (s_TargetMatch[foundIndex]) {
                 entity = &g_Entities[STAGE_ENTITY_START + foundIndex];
                 s_LastTargetedEntityIndex =
@@ -296,8 +299,10 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
             entity->animSet = ANIMSET_OVL(20);
-            entity->zPriority = g_Entities[0].zPriority - 2;
-            entity->facingLeft = (g_Entities[0].facingLeft + 1) & 1;
+            entity->zPriority = PLAYER.zPriority - 2;
+            entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
+            // params is used as a bat index for additional bats
+            // index 0 is the "main" bat, with others being the followers
             entity->params = i + 1;
         }
         entity->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
@@ -305,7 +310,7 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
     }
 }
 
-void func_8017170C(Entity* entity, s32 frameIndex) {
+static void UpdatePrimitives(Entity* entity, s32 frameIndex) {
     Primitive* prim;
     s32 tpage;
     s32 x;
@@ -325,21 +330,21 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     }
     y = entity->posY.i.hi - 16;
 
-    prim->x0 = prim->x2 = x - D_80170608[index].x;
-    prim->y0 = prim->y1 = y - D_80170608[index].y;
-    prim->x1 = prim->x3 = prim->x0 + D_80170608[index].width;
-    prim->y2 = prim->y3 = prim->y0 + D_80170608[index].height;
-    prim->clut = D_80170608[index].clut;
-    prim->tpage = D_80170608[index].tpage / 4;
-    prim->u0 = prim->u2 = D_80170608[index].texLeft;
-    prim->v0 = prim->v1 = D_80170608[index].texTop;
-    prim->u1 = prim->u3 = D_80170608[index].texRight;
-    prim->v2 = prim->v3 = D_80170608[index].texBottom;
+    prim->x0 = prim->x2 = x - g_BatSpriteData[index].x;
+    prim->y0 = prim->y1 = y - g_BatSpriteData[index].y;
+    prim->x1 = prim->x3 = prim->x0 + g_BatSpriteData[index].width;
+    prim->y2 = prim->y3 = prim->y0 + g_BatSpriteData[index].height;
+    prim->clut = g_BatSpriteData[index].clut;
+    prim->tpage = g_BatSpriteData[index].tpage / 4;
+    prim->u0 = prim->u2 = g_BatSpriteData[index].texLeft;
+    prim->v0 = prim->v1 = g_BatSpriteData[index].texTop;
+    prim->u1 = prim->u3 = g_BatSpriteData[index].texRight;
+    prim->v2 = prim->v3 = g_BatSpriteData[index].texBottom;
     prim->priority = entity->zPriority + 1;
     prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
 }
 
-void func_801718A0(Entity* entity) {
+static void UpdatePrimWhenAlucardIsBat(Entity* entity) {
     Primitive* prim;
     s32 frame;
     s32 y;
@@ -357,34 +362,34 @@ void func_801718A0(Entity* entity) {
     y -= entity->ext.bat.frameCounter / 2;
 
     prim = &g_PrimBuf[entity->primIndex];
-    prim->x0 = prim->x2 = x - D_80170608[frame].x;
-    prim->y0 = prim->y1 = y - D_80170608[frame].y;
-    prim->x1 = prim->x3 = prim->x0 + D_80170608[frame].width;
-    prim->y2 = prim->y3 = prim->y0 + D_80170608[frame].height;
+    prim->x0 = prim->x2 = x - g_BatSpriteData[frame].x;
+    prim->y0 = prim->y1 = y - g_BatSpriteData[frame].y;
+    prim->x1 = prim->x3 = prim->x0 + g_BatSpriteData[frame].width;
+    prim->y2 = prim->y3 = prim->y0 + g_BatSpriteData[frame].height;
 }
 
-void func_801719E0(Entity* self) {
+void SwitchModeInitialize(Entity* self) {
     s32 i;
 
-    if (!self->ext.bat.unk80) {
-        self->ext.bat.unk82 = self->params;
+    if (!self->ext.bat.previouslyInitialized) {
+        self->ext.bat.batIndex = self->params;
         self->ext.bat.unk8E = 0;
         switch (self->entityId) {
-        case ENTITY_ID_SERVANT:
+        case ENTITY_ID_SEEK_MODE:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
-            func_8017170C(self, 0);
+            UpdatePrimitives(self, 0);
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             self->ext.bat.unk84 = rand() % 4096;
-            self->ext.bat.unk86 = 0;
+            self->ext.bat.targetAngle = 0;
             self->ext.bat.unk88 = 0xC;
             self->ext.bat.frameCounter = rand() % 4096;
-            self->ext.bat.unk8A = 0x20;
+            self->ext.bat.maxAngle = 0x20;
             self->step++;
             break;
         case ENTITY_ID_ATTACK_MODE:
@@ -393,40 +398,40 @@ void func_801719E0(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            func_8017170C(self, 0);
+            UpdatePrimitives(self, 0);
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-            if (!self->ext.bat.unk82) {
+            if (!self->ext.bat.batIndex) {
                 self->ext.bat.follow = &PLAYER;
             } else {
-                self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
+                self->ext.bat.follow = &g_Entities[3 + self->ext.bat.batIndex];
             }
             self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
             self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 
-            if (!self->ext.bat.unk82) {
+            if (!self->ext.bat.batIndex) {
                 for (i = 0; i < 16; i++) {
-                    D_80174C3C[self->ext.bat.unk82][i].x =
+                    D_80174C3C[self->ext.bat.batIndex][i].x =
                         self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
-                    D_80174C3C[self->ext.bat.unk82][i].y =
+                    D_80174C3C[self->ext.bat.batIndex][i].y =
                         self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
                 }
             } else {
                 for (i = 0; i < 16; i++) {
                     if (PLAYER.facingLeft) {
-                        D_80174C3C[self->ext.bat.unk82][i].x =
+                        D_80174C3C[self->ext.bat.batIndex][i].x =
                             PLAYER.posX.i.hi +
-                            ((self->ext.bat.unk82 + 1) * 0x10) +
+                            ((self->ext.bat.batIndex + 1) * 0x10) +
                             self->ext.bat.cameraX;
 
                     } else {
-                        D_80174C3C[self->ext.bat.unk82][i].x =
+                        D_80174C3C[self->ext.bat.batIndex][i].x =
                             PLAYER.posX.i.hi -
-                            ((self->ext.bat.unk82 + 1) * 0x10) +
+                            ((self->ext.bat.batIndex + 1) * 0x10) +
                             self->ext.bat.cameraX;
                     }
-                    D_80174C3C[self->ext.bat.unk82][i].y =
+                    D_80174C3C[self->ext.bat.batIndex][i].y =
                         PLAYER.posY.i.hi + self->ext.bat.cameraY;
                 }
                 self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
@@ -439,7 +444,7 @@ void func_801719E0(Entity* self) {
     } else {
         self->ext.bat.unk8E = 0;
         switch (self->entityId) {
-        case ENTITY_ID_SERVANT:
+        case ENTITY_ID_SEEK_MODE:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
@@ -450,25 +455,25 @@ void func_801719E0(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-            if (!self->ext.bat.unk82) {
+            if (!self->ext.bat.batIndex) {
                 self->ext.bat.follow = &PLAYER;
             } else {
-                self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
+                self->ext.bat.follow = &g_Entities[3 + self->ext.bat.batIndex];
             }
             self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
             self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
-                    D_80174C3C[self->ext.bat.unk82][i].x =
-                        PLAYER.posX.i.hi + ((self->ext.bat.unk82 + 1) * 0x10) +
+                    D_80174C3C[self->ext.bat.batIndex][i].x =
+                        PLAYER.posX.i.hi + ((self->ext.bat.batIndex + 1) * 0x10) +
                         self->ext.bat.cameraX;
                 } else {
-                    D_80174C3C[self->ext.bat.unk82][i].x =
-                        PLAYER.posX.i.hi - ((self->ext.bat.unk82 + 1) * 0x10) +
+                    D_80174C3C[self->ext.bat.batIndex][i].x =
+                        PLAYER.posX.i.hi - ((self->ext.bat.batIndex + 1) * 0x10) +
                         self->ext.bat.cameraX;
                 }
-                D_80174C3C[self->ext.bat.unk82][i].y =
+                D_80174C3C[self->ext.bat.batIndex][i].y =
                     PLAYER.posY.i.hi + self->ext.bat.cameraY;
             }
             self->ext.bat.unkA8 = 0;
@@ -476,7 +481,7 @@ void func_801719E0(Entity* self) {
             break;
         }
     }
-    self->ext.bat.unk80 = self->entityId;
+    self->ext.bat.previouslyInitialized = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
 }
 
@@ -543,14 +548,15 @@ void ServantInit(InitializeMode mode) {
     e->facingLeft = (PLAYER.facingLeft + 1) & 1;
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
+    // params is used as a bat index for the multiple bats for this servant
     e->params = 0;
 
     if (mode == MENU_SWITCH_SERVANT) {
-        e->entityId = ENTITY_ID_SERVANT;
+        e->entityId = ENTITY_ID_SEEK_MODE;
         e->posX.val = FIX(128);
         e->posY.val = FIX(-32);
     } else {
-        e->entityId = ENTITY_ID_SERVANT;
+        e->entityId = ENTITY_ID_SEEK_MODE;
         if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             e->posX.val = ServantUnk0() ? FIX(192) : FIX(64);
             e->posY.val = FIX(160);
@@ -587,25 +593,25 @@ void UpdateServantDefault(Entity* self) {
         }
         s_TargetLocationY_calc = 0xA0;
     } else {
-        D_80174B18 = -0x12;
+        s_xOffset_calc = -0x12;
         if (PLAYER.facingLeft) {
-            D_80174B18 = -D_80174B18;
+            s_xOffset_calc = -s_xOffset_calc;
         }
-        s_TargetLocationX_calc = PLAYER.posX.i.hi + D_80174B18;
+        s_TargetLocationX_calc = PLAYER.posX.i.hi + s_xOffset_calc;
         s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x22;
     }
-    D_80174B0C = self->ext.bat.unk84;
+    s_AngleToTarget = self->ext.bat.unk84;
     self->ext.bat.unk84 += 0x10;
-    D_80174B14 = self->ext.bat.unk88;
+    s_DistanceToAttackTarget_0 = self->ext.bat.unk88;
     s_TargetLocationX =
-        s_TargetLocationX_calc + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
+        s_TargetLocationX_calc + ((rcos(s_AngleToTarget) >> 4) * s_DistanceToAttackTarget_0 >> 8);
     s_TargetLocationY = s_TargetLocationY_calc -
-                        ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
+                        ((rsin(s_AngleToTarget / 2) >> 4) * s_DistanceToAttackTarget_0 >> 8);
     switch (self->step) {
-    case 0:
-        func_801719E0(self);
+    case 0:  // Init vars
+        SwitchModeInitialize(self);
         break;
-    case 1:
+    case 1:  // Seek target
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             self->ext.bat.frameCounter = 0;
             self->step = 5;
@@ -638,44 +644,46 @@ void UpdateServantDefault(Entity* self) {
                 self->facingLeft = PLAYER.facingLeft;
             }
         }
-        D_80174B0C =
+        s_AngleToTarget =
             CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
-        D_80174B10 = GetTargetPositionWithDistanceBuffer(
-            D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
-        self->ext.bat.unk86 = D_80174B10;
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.bat.targetAngle, self->ext.bat.maxAngle);
+        self->ext.bat.targetAngle = s_AllowedAngle;
         s_TargetLocationX_calc = s_TargetLocationX - self->posX.i.hi;
         s_TargetLocationY_calc = s_TargetLocationY - self->posY.i.hi;
-        D_80174B14 =
+        s_DistanceToAttackTarget_0 =
             SquareRoot12((s_TargetLocationX_calc * s_TargetLocationX_calc +
                           s_TargetLocationY_calc * s_TargetLocationY_calc)
                          << 12) >>
             12;
-        if (D_80174B14 < 30) {
-            self->velocityY = -(rsin(D_80174B10) << 3);
-            self->velocityX = rcos(D_80174B10) << 3;
-            self->ext.bat.unk8A = 0x20;
-        } else if (D_80174B14 < 60) {
-            self->velocityY = -(rsin(D_80174B10) << 4);
-            self->velocityX = rcos(D_80174B10) << 4;
-            self->ext.bat.unk8A = 0x40;
-        } else if (D_80174B14 < 100) {
-            self->velocityY = -(rsin(D_80174B10) << 5);
-            self->velocityX = rcos(D_80174B10) << 5;
-            self->ext.bat.unk8A = 0x60;
-        } else if (D_80174B14 < 0x100) {
-            self->velocityY = -(rsin(D_80174B10) << 6);
-            self->velocityX = rcos(D_80174B10) << 6;
-            self->ext.bat.unk8A = 0x80;
+
+        // The farther the bat is from the target, the larger allowed angle
+        if (s_DistanceToAttackTarget_0 < 30) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 3);
+            self->velocityX = rcos(s_AllowedAngle) << 3;
+            self->ext.bat.maxAngle = 0x20;
+        } else if (s_DistanceToAttackTarget_0 < 60) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 4);
+            self->velocityX = rcos(s_AllowedAngle) << 4;
+            self->ext.bat.maxAngle = 0x40;
+        } else if (s_DistanceToAttackTarget_0 < 100) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 5);
+            self->velocityX = rcos(s_AllowedAngle) << 5;
+            self->ext.bat.maxAngle = 0x60;
+        } else if (s_DistanceToAttackTarget_0 < 0x100) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 6);
+            self->velocityX = rcos(s_AllowedAngle) << 6;
+            self->ext.bat.maxAngle = 0x80;
         } else {
             self->velocityX = (s_TargetLocationX - self->posX.i.hi) << 0xE;
             self->velocityY = (s_TargetLocationY - self->posY.i.hi) << 0xE;
-            self->ext.bat.unk8A = 0x80;
+            self->ext.bat.maxAngle = 0x80;
         }
         if (self->velocityY > FIX(1.0)) {
-            SetEntityAnimation(self, D_801705EC);
-        } else if (D_80174B14 < 60) {
+            SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
+        } else if (s_DistanceToAttackTarget_0 < 60) {
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-        } else if (D_80174B14 > 100) {
+        } else if (s_DistanceToAttackTarget_0 > 100) {
             SetEntityAnimation(self, D_80170514);
         }
         self->posX.val += self->velocityX;
@@ -683,13 +691,13 @@ void UpdateServantDefault(Entity* self) {
         if (g_CutsceneHasControl) {
             break;
         }
-        D_80174B24 = s_TargetLocationX - self->posX.i.hi;
-        D_80174B28 = s_TargetLocationY - self->posY.i.hi;
-        D_80174B2C =
+        s_AttackTargetDeltaX = s_TargetLocationX - self->posX.i.hi;
+        s_AttackTargetDeltaY = s_TargetLocationY - self->posY.i.hi;
+        s_DistanceToAttackTarget_1 =
             SquareRoot12(
-                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
+                (s_AttackTargetDeltaX * s_AttackTargetDeltaX + s_AttackTargetDeltaY * s_AttackTargetDeltaY) << 12) >>
             12;
-        if (D_80174B2C < 0x18) {
+        if (s_DistanceToAttackTarget_1 < 0x18) {
             if (self->ext.bat.unk8E) {
                 self->ext.bat.unk8E = 0;
                 SetEntityAnimation(self, D_8017054C);
@@ -697,7 +705,7 @@ void UpdateServantDefault(Entity* self) {
             self->ext.bat.frameCounter++;
             if (self->ext.bat.frameCounter >
                 g_BatAbilityStats[s_BatStats.level / 10]
-                                 [ABILITY_STATS_DELAY_FRAMES]) {
+                                 [DELAY_FRAMES_INDEX]) {
                 self->ext.bat.frameCounter = 0;
                 // Pay attention - this is not a ==
                 if (self->ext.bat.target = FindValidTarget(self)) {
@@ -708,36 +716,36 @@ void UpdateServantDefault(Entity* self) {
             self->ext.bat.unk8E = 1;
         }
         break;
-    case 2:
+    case 2: // Begin attack
         self->ext.bat.frameCounter++;
         if (self->ext.bat.frameCounter == 1) {
             g_api.PlaySfx(SFX_UI_ALERT_TINK);
-            func_8017170C(self, 1);
+            UpdatePrimitives(self, 1);
         } else if (self->ext.bat.frameCounter > 30) {
             self->ext.bat.frameCounter = 0;
-            func_8017170C(self, 0);
+            UpdatePrimitives(self, 0);
             D_80174B1C = self->ext.bat.target->posX.i.hi;
             D_80174B20 = self->ext.bat.target->posY.i.hi;
             self->hitboxWidth = 5;
             self->hitboxHeight = 5;
             g_api.func_8011A3AC(self, 15, 1, &s_BatStats);
-            self->ext.bat.unk86 = 0xC00;
-            SetEntityAnimation(self, D_801705EC);
+            self->ext.bat.targetAngle = 0xC00;
+            SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
             CreateBlueTrailEntity(self);
             self->step++;
         }
         break;
-    case 3:
+    case 3: // Move to attack target
         D_80174B1C = self->ext.bat.target->posX.i.hi;
         D_80174B20 = self->ext.bat.target->posY.i.hi;
-        D_80174B0C = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
-        D_80174B10 = GetTargetPositionWithDistanceBuffer(
-            D_80174B0C, self->ext.bat.unk86,
+        s_AngleToTarget = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.bat.targetAngle,
             g_BatAbilityStats[s_BatStats.level / 10]
-                             [ABILITY_STATS_ATTACK_ANGLE]);
-        self->ext.bat.unk86 = D_80174B10;
-        self->velocityX = rcos(D_80174B10) << 2 << 4;
-        self->velocityY = -(rsin(D_80174B10) << 2 << 4);
+                             [MAX_ATTACK_ANGLE_INDEX]);
+        self->ext.bat.targetAngle = s_AllowedAngle;
+        self->velocityX = rcos(s_AllowedAngle) << 2 << 4;
+        self->velocityY = -(rsin(s_AllowedAngle) << 2 << 4);
         if (self->velocityX > 0) {
             self->facingLeft = 1;
         }
@@ -746,26 +754,26 @@ void UpdateServantDefault(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        D_80174B24 = D_80174B1C - self->posX.i.hi;
-        D_80174B28 = D_80174B20 - self->posY.i.hi;
-        D_80174B2C =
+        s_AttackTargetDeltaX = D_80174B1C - self->posX.i.hi;
+        s_AttackTargetDeltaY = D_80174B20 - self->posY.i.hi;
+        s_DistanceToAttackTarget_1 =
             SquareRoot12(
-                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
+                (s_AttackTargetDeltaX * s_AttackTargetDeltaX + s_AttackTargetDeltaY * s_AttackTargetDeltaY) << 12) >>
             12;
-        if (!CheckEntityValid(self->ext.bat.target) || D_80174B2C < 8) {
+        if (!CheckEntityValid(self->ext.bat.target) || s_DistanceToAttackTarget_1 < 8) {
             self->ext.bat.frameCounter = 0;
             self->step++;
             SetEntityAnimation(self, D_8017054C);
         }
         break;
     case 4:
-        D_80174B0C =
+        s_AngleToTarget =
             CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
-        D_80174B10 = GetTargetPositionWithDistanceBuffer(
-            D_80174B0C, self->ext.bat.unk86, 0x10);
-        self->ext.bat.unk86 = D_80174B10;
-        self->velocityX = rcos(D_80174B10) << 2 << 4;
-        self->velocityY = -(rsin(D_80174B10) << 2 << 4);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.bat.targetAngle, 0x10);
+        self->ext.bat.targetAngle = s_AllowedAngle;
+        self->velocityX = rcos(s_AllowedAngle) << 2 << 4;
+        self->velocityY = -(rsin(s_AllowedAngle) << 2 << 4);
         self->facingLeft = (self->velocityX >= 0) ? true : false;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -776,17 +784,17 @@ void UpdateServantDefault(Entity* self) {
             self->step = 1;
         }
         break;
-    case 5:
+    case 5: // This is when Alucard is a bat
         self->ext.bat.frameCounter++;
         if (self->ext.bat.frameCounter == 1) {
             g_api.PlaySfx(SFX_BAT_SCREECH);
-            func_8017170C(self, 3);
+            UpdatePrimitives(self, 3);
         } else if (self->ext.bat.frameCounter > 30) {
-            func_8017170C(self, 0);
+            UpdatePrimitives(self, 0);
             self->entityId = ENTITY_ID_ATTACK_MODE;
             self->step = 0;
         }
-        func_801718A0(self);
+        UpdatePrimWhenAlucardIsBat(self);
         break;
     }
     ProcessEvent(self, false);
@@ -796,18 +804,18 @@ void UpdateServantDefault(Entity* self) {
 #endif
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/bat", func_80172C30);
+INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateBatAttackMode);
 #else
-void func_80172C30(Entity* self) {
+void UpdateBatAttackMode(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
-        D_80174B38 = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
+        s_PointAdjustX = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
                      (self->ext.bat.unkB0 - PLAYER.posX.i.hi);
-        D_80174B3C = (self->ext.bat.cameraY - g_Tilemap.scrollY.i.hi) +
+        s_PointAdjustY = (self->ext.bat.cameraY - g_Tilemap.scrollY.i.hi) +
                      (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
 
-        for (D_80174B30 = 0; D_80174B30 < 0x10; D_80174B30++) {
-            D_80174C3C[self->ext.bat.unk82][D_80174B30].x -= D_80174B38;
-            D_80174C3C[self->ext.bat.unk82][D_80174B30].y -= D_80174B3C;
+        for (s_PointIndex = 0; s_PointIndex < 0x10; s_PointIndex++) {
+            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x -= s_PointAdjustX;
+            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y -= s_PointAdjustY;
         }
         return;
     }
@@ -818,10 +826,10 @@ void func_80172C30(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_801719E0(self);
-        if (!self->ext.bat.unk82) {
+        SwitchModeInitialize(self);
+        if (!self->ext.bat.batIndex) {
             CreateAdditionalBats(g_BatAbilityStats[s_BatStats.level / 10]
-                                                  [ABILITY_STATS_ADD_BAT_COUNT],
+                                                  [ADD_BAT_COUNT_INDEX],
                                  ENTITY_ID_ATTACK_MODE);
         }
         break;
@@ -831,9 +839,9 @@ void func_80172C30(Entity* self) {
         self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
         self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
         D_80174B40 =
-            D_80174C3C[self->ext.bat.unk82][0].x - self->ext.bat.cameraX;
+            D_80174C3C[self->ext.bat.batIndex][0].x - self->ext.bat.cameraX;
         D_80174B44 =
-            D_80174C3C[self->ext.bat.unk82][0].y - self->ext.bat.cameraY;
+            D_80174C3C[self->ext.bat.batIndex][0].y - self->ext.bat.cameraY;
         self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xC;
         self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xC;
         self->posX.val += self->velocityX;
@@ -845,7 +853,7 @@ void func_80172C30(Entity* self) {
             }
         } else {
             if (self->velocityY > FIX(1)) {
-                SetEntityAnimation(self, D_801705EC);
+                SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
             } else {
                 SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             }
@@ -864,22 +872,24 @@ void func_80172C30(Entity* self) {
                 self->ext.bat.unkA8 = 0;
             }
         }
-        D_80174B38 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
-        D_80174B3C = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
-        D_80174B34 =
-            SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
+
+        // It looks like the use of the variables was largely arbitrary
+        s_PointAdjustX = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
+        s_PointAdjustY = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
+        s_DistanceToFollowTarget =
+            SquareRoot12(((s_PointAdjustX * s_PointAdjustX) + (s_PointAdjustY * s_PointAdjustY))
                          << 0xC) >>
             0xC;
-        if (IsMovementAllowed(0) || D_80174B34 >= 0x19) {
-            for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
-                D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
-                    D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].x;
-                D_80174C3C[self->ext.bat.unk82][D_80174B30].y =
-                    D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].y;
+        if (IsMovementAllowed(0) || s_DistanceToFollowTarget > 0x18) {
+            for (s_PointIndex = 0; s_PointIndex < 0xF; s_PointIndex++) {
+                D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x =
+                    D_80174C3C[self->ext.bat.batIndex][s_PointIndex + 1].x;
+                D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y =
+                    D_80174C3C[self->ext.bat.batIndex][s_PointIndex + 1].y;
             }
-            D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
+            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x =
                 self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
-            D_80174C3C[self->ext.bat.unk82][D_80174B30].y =
+            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y =
                 self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
         }
         if (!(g_Player.status & PLAYER_STATUS_BAT_FORM)) {
@@ -890,27 +900,27 @@ void func_80172C30(Entity* self) {
     case 2:
         self->ext.bat.frameCounter++;
         if (self->ext.bat.frameCounter == 1) {
-            if (!self->ext.bat.unk82) {
+            if (!self->ext.bat.batIndex) {
                 g_api.PlaySfx(SFX_BAT_SCREECH);
             }
-            func_8017170C(self, 2);
-        } else if (self->ext.bat.frameCounter >= 0x1F) {
-            func_8017170C(self, 0);
-            if (!self->ext.bat.unk82) {
-                self->entityId = ENTITY_ID_SERVANT;
+            UpdatePrimitives(self, 2);
+        } else if (self->ext.bat.frameCounter > 30) {
+            UpdatePrimitives(self, 0);
+            if (!self->ext.bat.batIndex) {
+                self->entityId = ENTITY_ID_SEEK_MODE;
                 self->step = 0;
                 break;
             }
             self->step++;
-            D_80174C3C[self->ext.bat.unk82][0].x =
+            D_80174C3C[self->ext.bat.batIndex][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
-            D_80174C3C[self->ext.bat.unk82][0].y = rand() % 256;
+            D_80174C3C[self->ext.bat.batIndex][0].y = rand() % 256;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
         }
         break;
     case 3:
-        D_80174B40 = D_80174C3C[self->ext.bat.unk82][0].x;
-        D_80174B44 = D_80174C3C[self->ext.bat.unk82][0].y;
+        D_80174B40 = D_80174C3C[self->ext.bat.batIndex][0].x;
+        D_80174B44 = D_80174C3C[self->ext.bat.batIndex][0].y;
         self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xA;
         self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xA;
         self->posX.val += self->velocityX;

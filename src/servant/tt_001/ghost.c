@@ -4,9 +4,9 @@
 #include <servant.h>
 #include "../servant_private.h"
 
-#define ABILITY_STATS_DELAY_FRAMES 0
-#define ABILITY_STATS_SPELL_ID 1
-#define ABILITY_STATS_BAD_ATTACKS 2
+#define DELAY_FRAMES_INDEX 0
+#define SPELL_ID_INDEX 1
+#define BAD_ATTACKS_INDEX 2
 
 #define ENTITY_ID_ATTACK_CLOUD 0xDA
 #define ENTITY_ID_CONFUSION 0xDB
@@ -194,7 +194,7 @@ static Entity* FindValidTarget(
         // Differs from here
         if (entity->hitboxState & 8 &&
             g_GhostAbilityStats[s_GhostStats.level / 10]
-                               [ABILITY_STATS_BAD_ATTACKS] == 0)
+                               [BAD_ATTACKS_INDEX] == 0)
             continue;
 #if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
@@ -544,16 +544,16 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.frameCounter++;
             if (self->ext.ghost.frameCounter ==
                 (g_GhostAbilityStats[s_GhostStats.level / 10]
-                                    [ABILITY_STATS_DELAY_FRAMES] -
+                                    [DELAY_FRAMES_INDEX] -
                  30)) {
                 self->ext.ghost.attackEntity = CreateChildEntity(self, 0);
             } else if (self->ext.ghost.frameCounter >
                        g_GhostAbilityStats[s_GhostStats.level / 10]
-                                          [ABILITY_STATS_DELAY_FRAMES]) {
+                                          [DELAY_FRAMES_INDEX]) {
                 self->ext.ghost.frameCounter = 0;
                 g_api.func_8011A3AC(self,
                                     g_GhostAbilityStats[s_GhostStats.level / 10]
-                                                       [ABILITY_STATS_SPELL_ID],
+                                                       [SPELL_ID_INDEX],
                                     1, &s_GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;

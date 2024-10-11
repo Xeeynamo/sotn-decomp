@@ -77,9 +77,9 @@ extern SpriteParts* g_ServantSpriteParts[];
 extern u16 g_ServantClut[];
 extern AnimationFrame D_80170514[];
 extern AnimationFrame D_8017054C[];
-extern AnimationFrame D_801705EC[];
+
 extern AnimationFrame* D_801705F4[];
-extern Sprite D_80170608[];
+
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 
