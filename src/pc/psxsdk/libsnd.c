@@ -268,7 +268,9 @@ struct _ss_spu_vm_rec_struct _ss_spu_vm_rec;
 s16 _svm_orev1;
 s16 _svm_orev2;
 
-void SpuVmKeyOn(s16 arg0, s16 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5) { assert(0); }
+void SpuVmKeyOn(s16 arg0, s16 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    assert(0);
+}
 
 s32 _svm_envx_hist[32];
 s32 D_8003BD08 = 0;

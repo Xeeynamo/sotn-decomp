@@ -301,5 +301,7 @@ long SpuMallocWithStartAddr(unsigned long addr, long size) {
     return var_v0;
 }
 #include <assert.h>
-void _SpuSetVoiceAttr(SpuVoiceAttr* arg0, s32 arg1, s32 arg2, s32 arg3) { NOT_IMPLEMENTED; }
+void _SpuSetVoiceAttr(SpuVoiceAttr* arg0, s32 arg1, s32 arg2, s32 arg3) {
+    NOT_IMPLEMENTED;
+}
 #endif
