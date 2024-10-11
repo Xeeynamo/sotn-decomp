@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="370.6,-45.97 374.23,-36.02 365.19,-41.53 370.6,-45.97"/>
 <text text-anchor="middle" x="369.23" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- no0.func_us_801C1E48 -->
+<!-- no0.EntityBreakable -->
 <g id="node4" class="node">
-<title>no0.func_us_801C1E48</title>
-<g id="a_node4"><a xlink:href="no0.func_us_801C1E48.svg" xlink:title="no0.func_us_801C1E48">
-<ellipse fill="red" stroke="black" cx="242.19" cy="-378" rx="118.88" ry="18"/>
-<text text-anchor="middle" x="242.19" y="-374.3" font-family="Times,serif" font-size="14.00">no0.func_us_801C1E48</text>
+<title>no0.EntityBreakable</title>
+<g id="a_node4"><a xlink:href="no0.EntityBreakable.svg" xlink:title="no0.EntityBreakable">
+<ellipse fill="green" stroke="black" cx="242.19" cy="-378" rx="106.68" ry="18"/>
+<text text-anchor="middle" x="242.19" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityBreakable</text>
 </a>
 </g>
 </g>
-<!-- no0.func_us_801C1E48&#45;&gt;no0.ReplaceBreakableWithItemDrop -->
+<!-- no0.EntityBreakable&#45;&gt;no0.ReplaceBreakableWithItemDrop -->
 <g id="edge3" class="edge">
-<title>no0.func_us_801C1E48&#45;&gt;no0.ReplaceBreakableWithItemDrop</title>
+<title>no0.EntityBreakable&#45;&gt;no0.ReplaceBreakableWithItemDrop</title>
 <path fill="none" stroke="black" d="M242.19,-359.93C242.19,-328.97 242.19,-263.3 242.19,-226.13"/>
 <polygon fill="black" stroke="black" points="245.69,-226.02 242.19,-216.02 238.69,-226.02 245.69,-226.02"/>
 <text text-anchor="middle" x="237.19" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
