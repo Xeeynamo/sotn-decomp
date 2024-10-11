@@ -1965,8 +1965,8 @@ typedef union { // offset=0x7C
     ET_DestructAnimation destructAnim;
 } Ext;
 
-#define SYNC_FIELD(struct1, struct2, field_name)                               \
-    STATIC_ASSERT(OFF(struct1, field_name) == OFF(struct2, field_name))
+#define SYNC_FIELD(struct1, struct2, field)                                    \
+    STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);

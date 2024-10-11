@@ -36,6 +36,7 @@
 
 #if defined(VERSION_PC)
 #ifndef _MSC_VER
+#include <assert.h>
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
 #else

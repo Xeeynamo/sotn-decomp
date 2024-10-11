@@ -1,6 +1,9 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+void _SsGetSeqData(s16 arg0, s16 arg1);
+void _SsContPortamento(s16 arg0, s16 arg1, s32 arg2);
+
 void _SsSeqPlay(s16 arg0, s16 arg1) {
     struct SeqStruct* temp_s1;
     s32 var_s0;
@@ -160,6 +163,8 @@ void _SsContDataEntry(s16, s16, u8);
 void _SsContNrpn2(s16, s16, u8);
 void _SsContRpn1(s16, s16, u8);
 void _SsContRpn2(s16, s16, u8);
+void _SsContResetAll(s16 arg0, s16 arg1);
+void _SsContNrpn1(s16 arg0, s16 arg1, s8 arg2);
 
 void _SsSetControlChange(s16 arg0, s16 arg1, s32 arg2) {
     u32 control;
