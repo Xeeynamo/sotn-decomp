@@ -1306,9 +1306,21 @@ typedef struct {
     /* 0x90 */ u8 unk90;
     /* 0x91 */ u8 unk91;
     /* 0x92 */ u8 unk92;
-    /* 0x92 */ char pad_93[0x11];
+    /* 0x94 */ char pad_94[0x10];
     /* 0xA4 */ struct Entity* entity;
 } ET_VenusWeedFlower;
+
+typedef struct {    // TODO: Not sure about this yet
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ char pad_8E[0x2];
+    /* 0x90 */ u8 unk90;            // Used by tendril
+    /* 0x91 */ u8 unk91;
+    /* 0x92 */ u8 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ char pad_96[0xE];
+    /* 0xA4 */ struct Entity* entity;
+} ET_VenusWeedTendril;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -1433,4 +1445,5 @@ typedef union { // offset=0x7C
     ET_Corpseweed corpseweed;
     ET_VenusWeed venusWeed;
     ET_VenusWeedFlower venusWeedFlower;
+    ET_VenusWeedTendril venusWeedTendril;
 } Ext;

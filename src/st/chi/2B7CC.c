@@ -70,8 +70,13 @@ u8 AnimFrames_ThornweedDisguise[] = {
 
 // D_80181904
 u8 AnimFrames_ThornweedQuickWiggle[] = {
-    0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x10, 0x0C, 0x0E, 0x0E,
-    0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF, 0x00
+    0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00
+};
+    
+// D_8018190E
+u8 D_8018190E[] = {
+    0x10, 0x0C, 0x0E, 0x0E, 0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF,
+    0x00
 };
 
 extern EntityInit EntityInit_80180700;
@@ -703,7 +708,142 @@ void func_801AC074(Entity* self)
     }
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801AC730);    // [Entity]
+extern s8 D_80181920[];
+extern s16 D_80181946[];
+extern EntityInit EntityInit_80180718;
+
+// E_ID_2B
+// func_801AC730
+// https://decomp.me/scratch/dVIWY
+// PSP:func_psp_0923C4E8:No match
+// PSP:https://decomp.me/scratch/tbskC
+void func_801AC730(Entity* self)
+{
+    s32 var_s0;        // s0
+    s8* temp_v1_2;     // s2
+    Entity* entity;    // s1
+    u32 temp;          // s3
+
+    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
+        SetStep(8);
+    }
+    
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_80180718);
+            self->animCurFrame = 0;
+            break;
+        
+        case 1:
+            if (UpdatePhysicsState(PhysicsSensors_VenusWeed) & 1) {
+                SetStep(2);
+            }
+            break;
+        
+        case 2:
+            if (!self->step_s) {
+                var_s0 = (self->params * 2) - 9;
+                var_s0 = var_s0 * var_s0;
+                if (self->params < 5) {
+                    var_s0 = -var_s0;
+                }
+                if (var_s0 > 0) {
+                    var_s0 += 0x18;
+                } else {
+                    var_s0 -= 0x18;
+                }
+                var_s0 += (Random() & 0x1F) - 0xF;
+                self->ext.venusWeedTendril.unk94 = var_s0;
+                self->step_s++;
+            }
+            AnimateEntity(D_801818EC, self);
+            func_801A1914(D_80181804);
+            entity = self - 1 - self->params;
+            var_s0 = entity->posX.i.hi + self->ext.venusWeedTendril.unk94;
+            var_s0 -= self->posX.i.hi;
+            if (abs(var_s0) < 2) {
+                self->step_s--;
+            } else if (var_s0 > 0) {
+                self->velocityX = (abs(var_s0) << 0xC) / 4;
+            } else {
+                self->velocityX = (-(abs(var_s0) << 0xC)) / 4;
+            }
+            break;
+        
+        case 3:
+            switch (self->step_s) {
+                case 0:
+                    AnimateEntity(D_801818EC, self);
+                    if (self->ext.venusWeedTendril.unk90) {
+#if VERSION_PSP
+                        self->ext.venusWeedTendril.unk8C = D_80181946[self->ext.venusWeedTendril.unk90 - 1];
+#else
+                        self->ext.venusWeedTendril.unk8C = D_80181946[self->ext.venusWeedTendril.unk90];
+#endif
+                        self->ext.venusWeedTendril.unk90 = 0;
+                        SetSubStep(1);
+                    }
+                    break;
+                
+                case 1:
+                    if (self->ext.venusWeedTendril.unk8C) {
+                        self->ext.venusWeedTendril.unk8C--;
+                        break;
+                    }
+                    self->step_s++;
+                    // Fallthrough
+                case 2:
+                    if (AnimateEntity(D_80181888, self) == 0) {
+                        SetSubStep(3);
+                    }
+                    if (!self->animFrameDuration && self->animFrameIdx == 0xA) {
+                        PlaySfxWithPosArgs(0x6D2);
+                    }
+                    break;
+                
+                case 3:
+                    if (AnimateEntity(D_801818CC, self) == 0) {
+                        SetStep(2);
+                    }
+                    break;
+            }
+            if (self->hitFlags & 0x80) {
+                entity = self - 1 - self->params;
+                entity->ext.venusWeedTendril.unk91++;
+            }
+            break;
+        
+        case 8:
+            if (!self->step_s) {
+                self->ext.venusWeedTendril.unk8C = (self->params * 8) + 8;
+                self->step_s++;
+            }
+            if (!--self->ext.venusWeedTendril.unk8C) {
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(2U, self, entity);
+                    entity->params = 2;
+                    entity->posY.i.hi -= 0xC;
+                }
+                PlaySfxWithPosArgs(0x655);
+                DestroyEntity(self);
+                return;
+            }
+            break;
+    }
+    
+    temp_v1_2 = D_80181920;
+#if VERSION_PSP
+    temp = D_8018190E[self->animCurFrame - 0x22];
+#else
+    temp = D_8018190E[self->animCurFrame];
+#endif
+    temp_v1_2 += temp * 4;
+    self->hitboxOffX = *temp_v1_2++;
+    self->hitboxOffY = *temp_v1_2++;
+    self->hitboxWidth = *temp_v1_2++;
+    self->hitboxHeight = *temp_v1_2++;
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801ACB6C);    // [Entity]
 
