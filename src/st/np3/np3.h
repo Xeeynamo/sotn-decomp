@@ -231,7 +231,7 @@ extern s16 g_splashAspects[];
 extern s32 g_SplashYMovement[];
 extern s16 g_SurfacingYTbl[];
 extern s32 g_SmallWaterDropVel[];
-extern u8 D_801822A4[];
+extern u8 g_MediumWaterSplashAnim[];
 extern const u8 g_explosion2anim[];
 extern u8 D_801822B8[];
 extern u8 D_801822C0[];

@@ -1210,3 +1210,29 @@ void EntityExplosion2(Entity* self) {
         DestroyEntity(self);
     }
 }
+
+// medium sized water splash used with merman
+void EntityMediumWaterSplash(Entity* entity) {
+    Entity* newEntity;
+
+    if (entity->step == 0) {
+        InitializeEntity(g_EInitWaterSplash);
+        entity->animCurFrame = 0;
+        if (entity->facingLeft != 0) {
+            entity->velocityX = FIX(2);
+            return;
+        }
+        entity->velocityX = FIX(-2);
+        return;
+    }
+    AnimateEntity(g_MediumWaterSplashAnim, entity);
+    MoveEntity();
+    if (entity->flags & FLAG_DEAD) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+            newEntity->params = 0;
+        }
+        DestroyEntity(entity);
+    }
+}

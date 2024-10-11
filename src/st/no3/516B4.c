@@ -2,32 +2,6 @@
 #include "no3.h"
 #include "../e_merman2.h"
 
-// medium sized water splash used with merman
-void EntityMediumWaterSplash(Entity* entity) {
-    Entity* newEntity;
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180B54);
-        entity->animCurFrame = 0;
-        if (entity->facingLeft != 0) {
-            entity->velocityX = FIX(2);
-            return;
-        }
-        entity->velocityX = FIX(-2);
-        return;
-    }
-    AnimateEntity(D_80183994, entity);
-    MoveEntity();
-    if (entity->flags & FLAG_DEAD) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-            newEntity->params = 0;
-        }
-        DestroyEntity(entity);
-    }
-}
-
 // spawns EntityMediumWaterSplash, part of merman splash
 void EntityMermanWaterSplash(Entity* self) {
     Unkstruct_801C7954 sp;

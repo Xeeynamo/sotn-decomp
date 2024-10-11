@@ -22,6 +22,7 @@ g_merman2_walkanim = 0x80182270;
 g_merman2_spitfire = 0x8018227C;
 g_merman_walkanim_init = 0x80182294;
 g_merman2_swim_anim = 0x8018229C;
+g_MediumWaterSplashAnim = 0x801822A4;
 g_explosion2anim = 0x801822B0;
 D_801828C8 = 0x801828C8;
 EntityStairwayPiece = 0x801B5790;
