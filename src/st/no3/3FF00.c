@@ -640,7 +640,7 @@ void EntityUnkId5E(Entity* entity) {
     }
 }
 
-void func_801C13F8() {
+void CreateExplosionPuff() {
     Entity* entity;
     s16 temp_s3;
     s8 temp_s4;

@@ -151,16 +151,16 @@ extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
-extern s16 g_WaterXTbl[];    // pos TBL
-extern Point32 D_80182224[]; // accel_x TBL
-extern u8 D_80182244[];      // timers
-extern s32 D_80182248;       // Collision data
-extern s32 D_80182258;       // Collision data
-extern u16 D_80182268;       // Collision data
-extern u8 D_80182270[];      // Animation
-extern u8 D_8018227C[];      // Animation
-extern u8 D_80182294[];      // Animation
-extern u8 D_8018229C[];      // Animation
+extern s16 g_WaterXTbl[];           // pos TBL
+extern Point32 g_merman2Swimvels[]; // accel_x TBL
+extern u8 g_merman2_walktimers[];   // timers
+extern s32 g_merman_coll1;          // Collision data
+extern s32 g_merman2_coll3;         // Collision data
+extern u16 g_merman_coll2;          // Collision data
+extern u8 g_merman2_walkanim[];     // Animation
+extern u8 g_merman2_spitfire[];     // Animation
+extern u8 g_merman_walkanim_init[]; // Animation
+extern u8 g_merman2_swim_anim[];    // Animation
 extern Point32 D_801822D0[];
 extern u16 D_801822F8[];
 extern u8 D_80182304[];
