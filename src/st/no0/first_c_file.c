@@ -145,7 +145,36 @@ void func_801B0AA4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C1E48);
+extern u16 g_eBreakableInit[];
+extern u8* g_eBreakableAnimations[8];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableAnimSets[];
+extern u8 g_eBreakableDrawModes[];
+void EntityBreakable(Entity* entity) {
+    u16 breakableType = entity->params >> 0xC;
+    if (entity->step) {
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
+        if (entity->hitParams) {
+            Entity* entityDropItem;
+            breakableType == 1 ? g_api_PlaySfx(SFX_GLASS_BREAK_C)
+                               : g_api_PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
+            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entityDropItem != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
+                entityDropItem->params =
+                    g_eBreakableExplosionTypes[breakableType];
+            }
+            ReplaceBreakableWithItemDrop(entity);
+        }
+    } else {
+        InitializeEntity(g_eBreakableInit);
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
+        entity->drawMode = g_eBreakableDrawModes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animSet = g_eBreakableAnimSets[breakableType];
+    }
+}
 
 s16 func_us_801C1F98(Primitive* prim, s16 arg1) {
     s16 ret = arg1;
