@@ -58,7 +58,7 @@ jobs:
       matrix:
         compiler: ["clang", "gcc"]
         build_type: ["Debug", "RelWithDebInfo"]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: extract-assets
     steps:
       - name: Install requirements
