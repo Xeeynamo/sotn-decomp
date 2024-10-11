@@ -5,6 +5,7 @@ g_EInitParticle = 0x80180AC4;
 g_EInitSpawner = 0x80180AD0;
 g_EInitInteractable = 0x80180ADC;
 g_EInitUnkId13 = 0x80180AE8;
+g_EInitUnkId12 = 0x80180AF4;
 g_EInitCommon = 0x80180B00;
 g_EInitDamageNum = 0x80180B0C;
 g_EInitWaterObject = 0x80180B48;

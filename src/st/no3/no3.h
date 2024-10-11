@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
+#define STAGE_IS_NO3
+
 #define OVL_EXPORT(x) NO3_##x
 
 #define CASTLE_FLAG_BANK 0x34
@@ -100,7 +102,7 @@ extern u16 D_80182FC8[];
 extern u16 D_80182FE8[];
 extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
-extern u16 D_80180AF4[];
+extern u16 g_EInitUnkId12[];
 extern u16 g_EInitCommon[];
 extern u16 D_80180B18[];
 extern u16 D_80180B24[];

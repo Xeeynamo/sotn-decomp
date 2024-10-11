@@ -41,8 +41,8 @@ segments:
       - [0x77C, .data, e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xAAC, data]
-      - [0xDC0, data]
-      - [0xDD0, data]
+      - [0xDC0, .data, 377D4]
+      - [0xDD0, .data, 377D4]
       - [0xE50, data]
       - [0xE70, data]
       - [0xE80, data]
