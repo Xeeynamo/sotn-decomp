@@ -50,4 +50,4 @@ static u8 g_eBreakableDrawModes[] = {
     DRAW_DEFAULT,
     DRAW_DEFAULT};
 
-#include "../e_breakable.h";
+#include "../e_breakable.h"
