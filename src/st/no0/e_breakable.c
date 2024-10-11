@@ -18,7 +18,7 @@ static u8 g_eBreakableHitboxes[] = {8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0};
 // TODO: Check if PSP is in the BSS section like it is on other stages
 static u8 g_eBreakableExplosionTypes[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-static u16 g_eBreakableAnimSets[] = {
+static u16 g_eBreakableanimSets[] = {
     ANIMSET_DRA(3), ANIMSET_OVL(1),
     ANIMSET_OVL(1), ANIMSET_DRA(3),
     ANIMSET_DRA(3), ANIMSET_DRA(3),
@@ -50,29 +50,4 @@ static u8 g_eBreakableDrawModes[] = {
     DRAW_DEFAULT,
     DRAW_DEFAULT};
 
-extern u16 g_eBreakableInit[];
-
-void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->params >> 0xC;
-    if (entity->step) {
-        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-        if (entity->hitParams) {
-            Entity* entityDropItem;
-            breakableType == 1 ? g_api_PlaySfx(SFX_GLASS_BREAK_C)
-                               : g_api_PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
-            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->params =
-                    g_eBreakableExplosionTypes[breakableType];
-            }
-            ReplaceBreakableWithItemDrop(entity);
-        }
-    } else {
-        InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        entity->drawMode = g_eBreakableDrawModes[breakableType];
-        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        entity->animSet = g_eBreakableAnimSets[breakableType];
-    }
-}
+#include "../e_breakable.h";
