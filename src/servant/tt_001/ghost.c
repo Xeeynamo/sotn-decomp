@@ -193,8 +193,8 @@ static Entity* FindValidTarget(
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            g_GhostAbilityStats[s_GhostStats.level / 10]
-                               [BAD_ATTACKS_INDEX] == 0)
+            g_GhostAbilityStats[s_GhostStats.level / 10][BAD_ATTACKS_INDEX] ==
+                0)
             continue;
 #if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)

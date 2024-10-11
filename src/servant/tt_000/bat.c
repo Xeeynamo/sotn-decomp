@@ -176,8 +176,7 @@ static Entity* FindValidTarget(Entity* self) {
             continue;
         }
         if (entity->hitboxState & 8 &&
-            !g_BatAbilityStats[s_BatStats.level / 10]
-                              [BAD_ATTACKS_INDEX]) {
+            !g_BatAbilityStats[s_BatStats.level / 10][BAD_ATTACKS_INDEX]) {
             continue;
         }
         if (abs(self->posX.i.hi - entity->posX.i.hi) < 64 &&
@@ -196,8 +195,7 @@ static Entity* FindValidTarget(Entity* self) {
 
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
-                g_BatAbilityStats[s_BatStats.level / 10]
-                                 [MIN_ENEMY_HP_INDEX]) {
+                g_BatAbilityStats[s_BatStats.level / 10][MIN_ENEMY_HP_INDEX]) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
@@ -466,11 +464,13 @@ void SwitchModeInitialize(Entity* self) {
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
                     D_80174C3C[self->ext.bat.batIndex][i].x =
-                        PLAYER.posX.i.hi + ((self->ext.bat.batIndex + 1) * 0x10) +
+                        PLAYER.posX.i.hi +
+                        ((self->ext.bat.batIndex + 1) * 0x10) +
                         self->ext.bat.cameraX;
                 } else {
                     D_80174C3C[self->ext.bat.batIndex][i].x =
-                        PLAYER.posX.i.hi - ((self->ext.bat.batIndex + 1) * 0x10) +
+                        PLAYER.posX.i.hi -
+                        ((self->ext.bat.batIndex + 1) * 0x10) +
                         self->ext.bat.cameraX;
                 }
                 D_80174C3C[self->ext.bat.batIndex][i].y =
@@ -604,14 +604,16 @@ void UpdateServantDefault(Entity* self) {
     self->ext.bat.unk84 += 0x10;
     s_DistanceToAttackTarget_0 = self->ext.bat.unk88;
     s_TargetLocationX =
-        s_TargetLocationX_calc + ((rcos(s_AngleToTarget) >> 4) * s_DistanceToAttackTarget_0 >> 8);
-    s_TargetLocationY = s_TargetLocationY_calc -
-                        ((rsin(s_AngleToTarget / 2) >> 4) * s_DistanceToAttackTarget_0 >> 8);
+        s_TargetLocationX_calc +
+        ((rcos(s_AngleToTarget) >> 4) * s_DistanceToAttackTarget_0 >> 8);
+    s_TargetLocationY =
+        s_TargetLocationY_calc -
+        ((rsin(s_AngleToTarget / 2) >> 4) * s_DistanceToAttackTarget_0 >> 8);
     switch (self->step) {
-    case 0:  // Init vars
+    case 0: // Init vars
         SwitchModeInitialize(self);
         break;
-    case 1:  // Seek target
+    case 1: // Seek target
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             self->ext.bat.frameCounter = 0;
             self->step = 5;
@@ -694,8 +696,9 @@ void UpdateServantDefault(Entity* self) {
         s_AttackTargetDeltaX = s_TargetLocationX - self->posX.i.hi;
         s_AttackTargetDeltaY = s_TargetLocationY - self->posY.i.hi;
         s_DistanceToAttackTarget_1 =
-            SquareRoot12(
-                (s_AttackTargetDeltaX * s_AttackTargetDeltaX + s_AttackTargetDeltaY * s_AttackTargetDeltaY) << 12) >>
+            SquareRoot12((s_AttackTargetDeltaX * s_AttackTargetDeltaX +
+                          s_AttackTargetDeltaY * s_AttackTargetDeltaY)
+                         << 12) >>
             12;
         if (s_DistanceToAttackTarget_1 < 0x18) {
             if (self->ext.bat.unk8E) {
@@ -704,8 +707,7 @@ void UpdateServantDefault(Entity* self) {
             }
             self->ext.bat.frameCounter++;
             if (self->ext.bat.frameCounter >
-                g_BatAbilityStats[s_BatStats.level / 10]
-                                 [DELAY_FRAMES_INDEX]) {
+                g_BatAbilityStats[s_BatStats.level / 10][DELAY_FRAMES_INDEX]) {
                 self->ext.bat.frameCounter = 0;
                 // Pay attention - this is not a ==
                 if (self->ext.bat.target = FindValidTarget(self)) {
@@ -741,8 +743,7 @@ void UpdateServantDefault(Entity* self) {
         s_AngleToTarget = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
         s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
             s_AngleToTarget, self->ext.bat.targetAngle,
-            g_BatAbilityStats[s_BatStats.level / 10]
-                             [MAX_ATTACK_ANGLE_INDEX]);
+            g_BatAbilityStats[s_BatStats.level / 10][MAX_ATTACK_ANGLE_INDEX]);
         self->ext.bat.targetAngle = s_AllowedAngle;
         self->velocityX = rcos(s_AllowedAngle) << 2 << 4;
         self->velocityY = -(rsin(s_AllowedAngle) << 2 << 4);
@@ -757,10 +758,12 @@ void UpdateServantDefault(Entity* self) {
         s_AttackTargetDeltaX = D_80174B1C - self->posX.i.hi;
         s_AttackTargetDeltaY = D_80174B20 - self->posY.i.hi;
         s_DistanceToAttackTarget_1 =
-            SquareRoot12(
-                (s_AttackTargetDeltaX * s_AttackTargetDeltaX + s_AttackTargetDeltaY * s_AttackTargetDeltaY) << 12) >>
+            SquareRoot12((s_AttackTargetDeltaX * s_AttackTargetDeltaX +
+                          s_AttackTargetDeltaY * s_AttackTargetDeltaY)
+                         << 12) >>
             12;
-        if (!CheckEntityValid(self->ext.bat.target) || s_DistanceToAttackTarget_1 < 8) {
+        if (!CheckEntityValid(self->ext.bat.target) ||
+            s_DistanceToAttackTarget_1 < 8) {
             self->ext.bat.frameCounter = 0;
             self->step++;
             SetEntityAnimation(self, D_8017054C);
@@ -809,13 +812,15 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateBatAttackMode);
 void UpdateBatAttackMode(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
         s_PointAdjustX = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
-                     (self->ext.bat.unkB0 - PLAYER.posX.i.hi);
+                         (self->ext.bat.unkB0 - PLAYER.posX.i.hi);
         s_PointAdjustY = (self->ext.bat.cameraY - g_Tilemap.scrollY.i.hi) +
-                     (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
+                         (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
 
         for (s_PointIndex = 0; s_PointIndex < 0x10; s_PointIndex++) {
-            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x -= s_PointAdjustX;
-            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y -= s_PointAdjustY;
+            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x -=
+                s_PointAdjustX;
+            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y -=
+                s_PointAdjustY;
         }
         return;
     }
@@ -828,9 +833,9 @@ void UpdateBatAttackMode(Entity* self) {
     case 0:
         SwitchModeInitialize(self);
         if (!self->ext.bat.batIndex) {
-            CreateAdditionalBats(g_BatAbilityStats[s_BatStats.level / 10]
-                                                  [ADD_BAT_COUNT_INDEX],
-                                 ENTITY_ID_ATTACK_MODE);
+            CreateAdditionalBats(
+                g_BatAbilityStats[s_BatStats.level / 10][ADD_BAT_COUNT_INDEX],
+                ENTITY_ID_ATTACK_MODE);
         }
         break;
     case 1:
@@ -877,7 +882,8 @@ void UpdateBatAttackMode(Entity* self) {
         s_PointAdjustX = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
         s_PointAdjustY = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
         s_DistanceToFollowTarget =
-            SquareRoot12(((s_PointAdjustX * s_PointAdjustX) + (s_PointAdjustY * s_PointAdjustY))
+            SquareRoot12(((s_PointAdjustX * s_PointAdjustX) +
+                          (s_PointAdjustY * s_PointAdjustY))
                          << 0xC) >>
             0xC;
         if (IsMovementAllowed(0) || s_DistanceToFollowTarget > 0x18) {
