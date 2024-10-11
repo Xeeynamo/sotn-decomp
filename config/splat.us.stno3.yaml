@@ -79,8 +79,8 @@ segments:
       - [0x26638, .data, tile_data] # tile definitions
       - [0x2EA68, .data, sprites]
       - [0x373E0, data]
-      - [0x373E8, .rodata, 377D4] # EntityCastleDoor
-      - [0x37400, .rodata, 377D4] # EntityStairwayPiece
+      - [0x373E8, .rodata, 37B98] # EntityCastleDoor
+      - [0x37400, .rodata, 37B98] # EntityStairwayPiece
       - [0x37414, .rodata, 3C4EC]
       - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, .rodata, cutscene] # actor names
@@ -108,6 +108,8 @@ segments:
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
       - [0x377D4, c]
+      - [0x37A64, c, e_breakable]
+      - [0x37B98, c]
       - [0x3C4EC, c]
       - [0x3E134, c]
       - [0x3E544, c, cutscene]
