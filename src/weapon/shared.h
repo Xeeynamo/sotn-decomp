@@ -20,12 +20,7 @@ static void LoadWeaponPalette(s32 clutIndex) {
         return;
     }
 
-    // I think dst is longer than src so this reads out of bounds
-#ifndef VERSION_PC
     for (i = 0; i < LEN(*D_8006EDCC); i++) {
-#else
-    for (i = 0; i < 112; i++) {
-#endif
         *dst++ = *src++;
     }
 

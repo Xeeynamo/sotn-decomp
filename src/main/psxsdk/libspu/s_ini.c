@@ -1,12 +1,6 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-extern s32 _spu_fd;
-extern s32 _spu_trans_mode;
-extern s32 _spu_rev_flag;
-extern s32 _spu_rev_reserve_wa;
-extern s32 _spu_rev_offsetaddr;
-
 struct SpuRevAttr {
     s32 unk0;
     s32 unk18;
@@ -16,15 +10,18 @@ struct SpuRevAttr {
     s32 unk24;
 };
 
+extern s32 _spu_fd;
+extern s32 _spu_trans_mode;
+extern s32 _spu_rev_flag;
+extern s32 _spu_rev_reserve_wa;
+extern s32 _spu_rev_offsetaddr;
 extern struct SpuRevAttr _spu_rev_attr;
-
 extern u16 _spu_voice_centerNote[];
-
 extern s32 _spu_EVdma;
-
 extern s32 _spu_keystat;
-
 extern s32 _spu_rev_startaddr[];
+
+void SpuStart(void);
 
 void _SpuInit(s32 arg0) {
     s32 i;
