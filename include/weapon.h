@@ -27,3 +27,13 @@ typedef struct {
 #define N_WEAPON_PAL 12
 extern u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
 #endif
+
+#ifdef VERSION_PC
+// LoadWeaponPalette reads a predetermined amount of bytes from the weapon
+// palette, often going out of the array boundaries. This is not a problem on
+// PSX, but on any other platform we need to force each weapon palette to be
+// `N_ARRAY_PAL` long to account for the extra data read.
+#define N_ARRAY_PAL LEN(*D_8006EDCC)
+#else
+#define N_ARRAY_PAL
+#endif

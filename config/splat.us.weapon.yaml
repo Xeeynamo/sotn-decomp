@@ -726,9 +726,9 @@ segments:
     subsegments:
       - [0x107040, animset, w_037_1]
       - [0x107504, animset, w_037_2]
-      - [0x107504, data, w_037]
+      - [0x107504, .data, w_037]
       - [0x1077C4, c, w_037]
-      - [0x108BE4, sbss, w_037]
+      - [0x108BE4, .bss, w_037]
   - name: f_038
     type: grey4
     start: 0x10A000
