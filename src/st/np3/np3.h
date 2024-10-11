@@ -161,11 +161,11 @@ extern u8 g_merman2_walkanim[];     // Animation
 extern u8 g_merman2_spitfire[];     // Animation
 extern u8 g_merman_walkanim_init[]; // Animation
 extern u8 g_merman2_swim_anim[];    // Animation
-extern Point32 D_801822D0[];
-extern u16 D_801822F8[];
-extern u8 D_80182304[];
-extern u16 D_8018230C[];
-extern s32 D_8018231C[];
+extern Point32 g_Merman2XY[];
+extern u16 g_MermanSplashXOffset[];
+extern u8 g_HighWaterSplashParams[];
+extern u16 g_Merman2posPtr[];
+extern s32 g_Merman2velPtr[];
 extern Point32 D_80182338[];
 extern u8 D_80182358[];
 extern s16 D_8018235C;
@@ -233,7 +233,7 @@ extern s16 g_SurfacingYTbl[];
 extern s32 g_SmallWaterDropVel[];
 extern u8 g_MediumWaterSplashAnim[];
 extern const u8 g_explosion2anim[];
-extern u8 D_801822B8[];
+extern u8 g_FallingObject2Anim[];
 extern u8 D_801822C0[];
 extern u8 D_80182400[];
 extern u8 D_80182414[];
