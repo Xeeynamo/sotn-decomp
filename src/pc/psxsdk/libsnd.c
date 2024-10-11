@@ -93,7 +93,7 @@ u16* D_80032F10;
 
 struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 
-void WaitEvent(s32) {}
+void WaitEvent(s32 arg0) {}
 
 union RegBuf _svm_sreg_buf;
 
@@ -268,7 +268,7 @@ struct _ss_spu_vm_rec_struct _ss_spu_vm_rec;
 s16 _svm_orev1;
 s16 _svm_orev2;
 
-void SpuVmKeyOn(s16, s16, u8, s32, s32, s32) { assert(0); }
+void SpuVmKeyOn(s16 arg0, s16 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5) { assert(0); }
 
 s32 _svm_envx_hist[32];
 s32 D_8003BD08 = 0;
@@ -586,7 +586,7 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
 
 long ResetRCnt(long spec) { return 1; }
 
-void* InterruptCallback(u8, void (*)()) { return 0; }
+void* InterruptCallback(u8 arg0, void (*arg1)()) { return 0; }
 
 long GetVideoMode(void) { return 0; }
 
@@ -1151,7 +1151,7 @@ s32 _spu_addrMode;
 
 void (* volatile _spu_IRQCallback)();
 
-void DeliverEvent(unsigned long, unsigned long) {}
+void DeliverEvent(unsigned long arg0, unsigned long arg1) {}
 
 s32 D_800330F8[256] = {0};
 s32 D_80033558;
@@ -1200,14 +1200,14 @@ int _spu_t(int mode, ...) {
     return 0;
 }
 
-void _SsSndCrescendo(s16, s16) { assert(false); }
-void _SsSndDecrescendo(s16, s16) { assert(false); }
+void _SsSndCrescendo(s16 arg0, s16 arg1) { assert(false); }
+void _SsSndDecrescendo(s16 arg0, s16 arg1) { assert(false); }
 
 void SpuVmSetVol(
     short seq_sep_no, short vabId, short program, short voll, short volr) {
     assert(false);
 }
 
-void _SsContDataEntry(s16, s16, u8) { assert(false); }
+void _SsContDataEntry(s16 arg0, s16 arg1, u8 arg2) { assert(false); }
 
 #endif
