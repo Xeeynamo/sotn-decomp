@@ -159,7 +159,8 @@ s32 UpdateEntityVelocityTowardsTarget(
     return s_DistanceToTarget;
 }
 
-static Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
+static Entity* FindValidTarget(
+    Entity* self) { // Assume self is also an Entity pointer
     const int EntitySearchCount = 128;
     Entity* entity;
     s32 i;

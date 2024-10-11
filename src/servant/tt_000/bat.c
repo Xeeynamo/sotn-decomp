@@ -76,15 +76,24 @@ static void unused_3C1C(void);
 static void unused_3C24(void);
 
 ServantDesc bat_ServantDesc = {
-    ServantInit,          UpdateServantDefault, func_80172C30,
-    unused_339C,        unused_33A4,        unused_33AC,
-    unused_33B4,        unused_33BC,        unused_33C4,
-    unused_33CC,        UpdateBatBlueTrailEntities, unused_3C0C,
-    unused_3C14,        unused_3C1C,        unused_3C24,
+    ServantInit,
+    UpdateServantDefault,
+    func_80172C30,
+    unused_339C,
+    unused_33A4,
+    unused_33AC,
+    unused_33B4,
+    unused_33BC,
+    unused_33C4,
+    unused_33CC,
+    UpdateBatBlueTrailEntities,
+    unused_3C0C,
+    unused_3C14,
+    unused_3C1C,
+    unused_3C24,
     DestroyServantEntity,
 };
 #endif
-
 
 #ifdef VERSION_PSP
 extern FamiliarStats s_BatStats;
@@ -123,7 +132,6 @@ extern Point16 D_80174C3C[4][16];
 extern s32 s_IsServantDestroyed;
 extern s32 s_LastTargetedEntityIndex;
 #endif
-
 
 extern AnimationFrame g_DefaultBatAnimationFrame[];
 extern s32 g_BatAbilityStats[][5];
@@ -164,7 +172,9 @@ static Entity* FindValidTarget(Entity* self) {
         if (entity->posY.i.hi < 0) {
             continue;
         }
-        if (entity->hitboxState & 8 && !g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_BAD_ATTACKS]) {
+        if (entity->hitboxState & 8 &&
+            !g_BatAbilityStats[s_BatStats.level / 10]
+                              [ABILITY_STATS_BAD_ATTACKS]) {
             continue;
         }
         if (abs(self->posX.i.hi - entity->posX.i.hi) < 64 &&
@@ -182,7 +192,9 @@ static Entity* FindValidTarget(Entity* self) {
         }
 
         if (entity->flags & FLAG_UNK_80000) {
-            if (entity->hitPoints >= g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_MIN_ENEMY_HP]) {
+            if (entity->hitPoints >=
+                g_BatAbilityStats[s_BatStats.level / 10]
+                                 [ABILITY_STATS_MIN_ENEMY_HP]) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
@@ -197,7 +209,8 @@ static Entity* FindValidTarget(Entity* self) {
         for (i = 0; i < 0x80; i++) {
             if (s_TargetMatch[foundIndex]) {
                 entity = &g_Entities[STAGE_ENTITY_START + foundIndex];
-                s_LastTargetedEntityIndex = (foundIndex + 1) % EntitySearchCount;
+                s_LastTargetedEntityIndex =
+                    (foundIndex + 1) % EntitySearchCount;
                 return entity;
             }
             foundIndex = (foundIndex + 1) % EntitySearchCount;
@@ -584,8 +597,10 @@ void UpdateServantDefault(Entity* self) {
     D_80174B0C = self->ext.bat.unk84;
     self->ext.bat.unk84 += 0x10;
     D_80174B14 = self->ext.bat.unk88;
-    s_TargetLocationX = s_TargetLocationX_calc + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
-    s_TargetLocationY = s_TargetLocationY_calc - ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
+    s_TargetLocationX =
+        s_TargetLocationX_calc + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
+    s_TargetLocationY = s_TargetLocationY_calc -
+                        ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
     switch (self->step) {
     case 0:
         func_801719E0(self);
@@ -607,30 +622,33 @@ void UpdateServantDefault(Entity* self) {
                 if (abs(s_TargetLocationX - self->posX.i.hi) <= 0) {
                     self->facingLeft = PLAYER.facingLeft ? false : true;
                 } else {
-                    if (self->facingLeft && s_TargetLocationX < self->posX.i.hi) {
+                    if (self->facingLeft &&
+                        s_TargetLocationX < self->posX.i.hi) {
                         self->facingLeft = PLAYER.facingLeft ? false : true;
-                    } else if (
-                        !self->facingLeft && s_TargetLocationX > self->posX.i.hi) {
+                    } else if (!self->facingLeft &&
+                               s_TargetLocationX > self->posX.i.hi) {
                         self->facingLeft = PLAYER.facingLeft ? false : true;
                     }
                 }
-            } else if (
-                self->facingLeft && (self->posX.i.hi - s_TargetLocationX) > 0x1F) {
+            } else if (self->facingLeft &&
+                       (self->posX.i.hi - s_TargetLocationX) > 0x1F) {
                 self->facingLeft = PLAYER.facingLeft;
-            } else if (
-                !self->facingLeft && (s_TargetLocationX - self->posX.i.hi) > 0x1F) {
+            } else if (!self->facingLeft &&
+                       (s_TargetLocationX - self->posX.i.hi) > 0x1F) {
                 self->facingLeft = PLAYER.facingLeft;
             }
         }
-        D_80174B0C = CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        D_80174B0C =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
         D_80174B10 = GetTargetPositionWithDistanceBuffer(
             D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
         self->ext.bat.unk86 = D_80174B10;
         s_TargetLocationX_calc = s_TargetLocationX - self->posX.i.hi;
         s_TargetLocationY_calc = s_TargetLocationY - self->posY.i.hi;
         D_80174B14 =
-            SquareRoot12(
-                (s_TargetLocationX_calc * s_TargetLocationX_calc + s_TargetLocationY_calc * s_TargetLocationY_calc) << 12) >>
+            SquareRoot12((s_TargetLocationX_calc * s_TargetLocationX_calc +
+                          s_TargetLocationY_calc * s_TargetLocationY_calc)
+                         << 12) >>
             12;
         if (D_80174B14 < 30) {
             self->velocityY = -(rsin(D_80174B10) << 3);
@@ -677,7 +695,9 @@ void UpdateServantDefault(Entity* self) {
                 SetEntityAnimation(self, D_8017054C);
             }
             self->ext.bat.frameCounter++;
-            if (self->ext.bat.frameCounter > g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_DELAY_FRAMES]) {
+            if (self->ext.bat.frameCounter >
+                g_BatAbilityStats[s_BatStats.level / 10]
+                                 [ABILITY_STATS_DELAY_FRAMES]) {
                 self->ext.bat.frameCounter = 0;
                 // Pay attention - this is not a ==
                 if (self->ext.bat.target = FindValidTarget(self)) {
@@ -713,7 +733,8 @@ void UpdateServantDefault(Entity* self) {
         D_80174B0C = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
         D_80174B10 = GetTargetPositionWithDistanceBuffer(
             D_80174B0C, self->ext.bat.unk86,
-            g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_ATTACK_ANGLE]);
+            g_BatAbilityStats[s_BatStats.level / 10]
+                             [ABILITY_STATS_ATTACK_ANGLE]);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 2 << 4;
         self->velocityY = -(rsin(D_80174B10) << 2 << 4);
@@ -738,7 +759,8 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     case 4:
-        D_80174B0C = CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        D_80174B0C =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
         D_80174B10 = GetTargetPositionWithDistanceBuffer(
             D_80174B0C, self->ext.bat.unk86, 0x10);
         self->ext.bat.unk86 = D_80174B10;
@@ -798,7 +820,9 @@ void func_80172C30(Entity* self) {
     case 0:
         func_801719E0(self);
         if (!self->ext.bat.unk82) {
-            CreateAdditionalBats(g_BatAbilityStats[s_BatStats.level / 10][ABILITY_STATS_ADD_BAT_COUNT], ENTITY_ID_ATTACK_MODE);
+            CreateAdditionalBats(g_BatAbilityStats[s_BatStats.level / 10]
+                                                  [ABILITY_STATS_ADD_BAT_COUNT],
+                                 ENTITY_ID_ATTACK_MODE);
         }
         break;
     case 1:
@@ -984,9 +1008,10 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                     D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
-                        s_CurrentPrim->g2 = s_CurrentPrim->g3 = s_CurrentPrim->b0 =
-                            s_CurrentPrim->b1 = s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                D_80174C0C[i];
+                        s_CurrentPrim->g2 = s_CurrentPrim->g3 =
+                            s_CurrentPrim->b0 = s_CurrentPrim->b1 =
+                                s_CurrentPrim->b2 = s_CurrentPrim->b3 =
+                                    D_80174C0C[i];
                 D_80174BEC[i] -= 8;
                 D_80174C0C[i] -= 8;
                 if (D_80174C0C[i] < 81) {
@@ -1021,14 +1046,16 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                     D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
-                        s_CurrentPrim->g2 = s_CurrentPrim->g3 = s_CurrentPrim->b0 =
-                            s_CurrentPrim->b1 = s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                D_80174C0C[i];
+                        s_CurrentPrim->g2 = s_CurrentPrim->g3 =
+                            s_CurrentPrim->b0 = s_CurrentPrim->b1 =
+                                s_CurrentPrim->b2 = s_CurrentPrim->b3 =
+                                    D_80174C0C[i];
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
-                        s_CurrentPrim->g2 = s_CurrentPrim->g3 = s_CurrentPrim->b0 =
-                            s_CurrentPrim->b1 = s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                D_80174C0C[i];
+                        s_CurrentPrim->g2 = s_CurrentPrim->g3 =
+                            s_CurrentPrim->b0 = s_CurrentPrim->b1 =
+                                s_CurrentPrim->b2 = s_CurrentPrim->b3 =
+                                    D_80174C0C[i];
                 D_80174BEC[i] -= 8;
                 D_80174C0C[i] -= 8;
                 if (D_80174C0C[i] < 81) {
