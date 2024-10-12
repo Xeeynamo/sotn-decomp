@@ -1474,7 +1474,11 @@ void func_80136010(void) {
 
     s8 sum;
     s8* new_var;
+#if defined(VERSION_PC)
+    s16* fakeptr = 0;
+#else
     s16* fakeptr;
+#endif
 
     SpuGetAllKeysStatus(g_KeyStatus);
     if (g_SeqIsPlaying == 0) {
