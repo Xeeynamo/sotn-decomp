@@ -38,9 +38,9 @@ typedef struct {
 
 extern s32 D_8003C8B8;
 
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
-extern u16 g_EInitInteracteable[];
+extern u16 g_EInitInteractable[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitSmallRocks[];
 

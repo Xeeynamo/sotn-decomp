@@ -48,7 +48,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
@@ -113,7 +113,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     switch (self->step) {
     case LEFT_SECRET_ROOM_WALL_INIT:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 2;
@@ -196,7 +196,7 @@ void EntityBottomSecretRoomFloor(
 
     switch (self->step) {
     case BOTTOM_SECRET_ROOM_FLOOR_INIT:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;
@@ -342,7 +342,7 @@ void BoxPuzzleFloorButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -404,7 +404,7 @@ void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -484,7 +484,7 @@ void EntityMoveableBox(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -568,7 +568,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->hitboxState = 2;
@@ -644,7 +644,7 @@ void EntityCannon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -732,7 +732,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = 0x81AF;
@@ -765,7 +765,7 @@ void EntityCannonWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
 
         cond = g_CastleFlags[CANNON_WALL_SHORTCUT] != 0;
         tileLayoutPtr = (-cond & 6) + D_80180ED4;
@@ -808,7 +808,7 @@ void EntityBloodSkeleElevButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxHeight = 8;
         self->hitboxOffY = -22;
         self->hitboxWidth = 6;
@@ -876,7 +876,7 @@ void EntityElevator2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         g_CallElevator = false;
@@ -961,7 +961,7 @@ void EntityFloorButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->ext.nz0311c0.unk80 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -1042,7 +1042,7 @@ void EntityFloorSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;

@@ -200,7 +200,7 @@ void Entity3DBackgroundHouse(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         // Usually this can be if primIndex == -1 DestroyEntity but nope
         if (primIndex != -1) {

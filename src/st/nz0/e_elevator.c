@@ -15,7 +15,7 @@ void func_801B6DE4(Entity* self) {
     temp_s1 = self->hitFlags;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->ext.generic.unk80.modeS32 =
             self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         self->hitboxHeight = 8;
@@ -99,7 +99,7 @@ void EntityElevator(Entity* self) {
 
     switch (self->step) {
     case ELEVATOR_INIT:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         self->hitboxWidth = 16;

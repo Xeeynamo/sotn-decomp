@@ -56,7 +56,7 @@ EntityInit g_EInitBreakable = {
     .enemyId = 0,
 };
 
-EntityInit g_EInitObtaineable = {
+EntityInit g_EInitObtainable = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -80,7 +80,7 @@ EntityInit g_EInitMaria = {
     .enemyId = 4,
 };
 
-EntityInit g_EInitInteracteable = {
+EntityInit g_EInitInteractable = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,

@@ -50,9 +50,9 @@ void EntityGreyPuff(Entity* entity);
 
 /*** Initializers ***/
 extern u16 g_EInitBreakable[];
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 g_EInitMaria[];
-extern u16 g_EInitInteracteable[];
+extern u16 g_EInitInteractable[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];
 extern u16 g_eElevatorInit[]; // EntityElevator

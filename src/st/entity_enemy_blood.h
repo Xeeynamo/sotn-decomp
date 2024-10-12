@@ -10,7 +10,7 @@ void EntityEnemyBlood(Entity* self) {
     case 0:
         i = g_api.func_800EDB58(PRIM_TILE_ALT, NParticles);
         if (i != -1) {
-            InitializeEntity(g_EInitObtaineable);
+            InitializeEntity(g_EInitObtainable);
             facingLeft = self->params;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = i;

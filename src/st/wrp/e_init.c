@@ -24,10 +24,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 u16 g_EInitBreakable[] = {ANIMSET_OVL(1), 0x0000, 0x0000, 0x0000, 0x0000};
-u16 g_EInitObtaineable[] = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0001};
+u16 g_EInitObtainable[] = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0001};
 u16 g_EInitParticle[] = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0002};
 u16 g_EInitMaria[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0004};
-u16 g_EInitInteracteable[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0005};
+u16 g_EInitInteractable[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0005};
 u16 g_EInitUnkId13[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0002};
 u16 g_EInitUnkId12[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0001};
 u16 g_EInitCommon[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0003};

@@ -56,7 +56,7 @@ void EntityGreyPuff(Entity* entity);
 extern s32 D_80096ED0_mad;
 
 // ST/MAD
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 g_EInitCommon[];
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];

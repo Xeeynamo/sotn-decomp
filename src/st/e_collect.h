@@ -140,7 +140,7 @@ static u8* g_ExplosionAnimations[] = {
 };
 
 // from another file
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 
 #include "prize_drop_fall.h"
 

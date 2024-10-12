@@ -99,10 +99,10 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableDrawModes[];
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
 extern u16 D_80180A60[];
-extern u16 g_EInitInteracteable[];
+extern u16 g_EInitInteractable[];
 extern u16 g_EInitUnkId12[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitWaterObject[];
@@ -403,4 +403,4 @@ extern u8 D_80180EA4[][2];
 
 // for EntityBackgroundBushes
 
-extern u16 g_EInitStInteracteable[];
+extern u16 g_EInitStInteractable[];

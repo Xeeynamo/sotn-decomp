@@ -29,7 +29,7 @@ void func_psp_0923B2F0(Entity*);
 
 #endif
 
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 
 #include "entity_soul_steal_orb.h"
 

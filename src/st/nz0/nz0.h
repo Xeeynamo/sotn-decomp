@@ -98,7 +98,7 @@ void EntityGreyPuff(Entity* entity);
 void func_801C4CC0(void);
 
 extern u16 g_EInitParticle[];
-extern u16 g_EInitInteracteable[]; // Init Elevator2
+extern u16 g_EInitInteractable[]; // Init Elevator2
 extern u16 g_EInitCommon[];
 extern u16 D_80180C34[];
 
@@ -192,7 +192,7 @@ extern ObjInit D_80182014[];
 
 extern u8 D_80181F30[];
 extern u16 g_EInitSubwpnClochePieces[];
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];

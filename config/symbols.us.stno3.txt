@@ -1,8 +1,8 @@
 NO3_EntityUpdates = 0x80180924;
 g_EInitBreakable = 0x80180AAC;
-g_EInitObtaineable = 0x80180AB8;
+g_EInitObtainable = 0x80180AB8;
 g_EInitParticle = 0x80180AC4;
-g_EInitInteracteable = 0x80180ADC;
+g_EInitInteractable = 0x80180ADC;
 g_EInitUnkId13 = 0x80180AE8;
 g_EInitCommon = 0x80180B00;
 g_EInitDamageNum = 0x80180B0C;

@@ -19,7 +19,7 @@ void func_psp_0923B2F0(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitObtaineable);
+            InitializeEntity(g_EInitObtainable);
             prim = &g_PrimBuf[primIndex];
             prim->drawMode = DRAW_HIDE;
             self->flags |= FLAG_HAS_PRIMS;

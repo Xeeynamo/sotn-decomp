@@ -8,7 +8,7 @@ u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
                     0x17, 0x19, 0x1A, 0x1B, 0x1C, 0x1D};
 SVECTOR D_8018287C = {0, 0, 0};
 
-extern u16 g_EInitInteracteable[];
+extern u16 g_EInitInteractable[];
 void EntityLifeUpSpawn(Entity* self) {
     s32 count_low_x1;
     Collider collider;
@@ -32,7 +32,7 @@ void EntityLifeUpSpawn(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = 0;
         // We allocate 385 primitives for this entity!!!

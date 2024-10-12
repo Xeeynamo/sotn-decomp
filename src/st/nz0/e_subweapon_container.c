@@ -285,7 +285,7 @@ void func_801C7884(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitObtaineable);
+        InitializeEntity(g_EInitObtainable);
         entity->hitboxState = 0;
 
     case 1:

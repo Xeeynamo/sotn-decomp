@@ -86,7 +86,7 @@ extern void ReplaceBreakableWithItemDrop(Entity*);
 extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
 extern s16 D_80182A38[];
 extern u8 D_80182A48[];
@@ -97,7 +97,7 @@ extern u16 D_80182FA8[];
 extern u16 D_80182FC8[];
 extern u16 D_80182FE8[];
 extern u16 D_80180AD0[];
-extern u16 g_EInitInteracteable[];
+extern u16 g_EInitInteractable[];
 extern u16 D_80180AF4[];
 extern u16 g_EInitCommon[];
 extern u16 D_80180B18[];

@@ -1258,7 +1258,7 @@ void EntityMermanWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteracteable);
+        InitializeEntity(g_EInitInteractable);
         break;
 
     case 1:

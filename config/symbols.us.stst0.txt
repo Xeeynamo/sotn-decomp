@@ -1,7 +1,7 @@
 g_EntityGfxs = 0x801802C4;
 ST0_EntityUpdates = 0x801804BC;
 g_EInitBreakable = 0x80180574;
-g_EInitObtaineable = 0x80180580;
+g_EInitObtainable = 0x80180580;
 g_EInitParticle = 0x8018058C;
 g_EInitUnkId13 = 0x801805A4;
 g_EInitCommon = 0x801805BC;

@@ -166,7 +166,7 @@ extern s32 D_801C2578;
 // *** EntityDracula properties END ***
 
 extern s16 D_80181990[];
-extern u16 g_EInitObtaineable[];
+extern u16 g_EInitObtainable[];
 extern u16 D_80181D74[];
 extern s16 g_collectXVelTable[];
 extern s16 g_collectYVelTable[];
