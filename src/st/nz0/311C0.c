@@ -469,11 +469,11 @@ void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
     D_801CB736[self->params] = temp;
 }
 
-// moveable box for spike/switch areas
+// movable box for spike/switch areas
 static s16 D_80180EB8[][2] = {
     {0x0000, 0x0010}, {0x0010, 0x0000}, {0x0000, 0x0010},
     {0x0000, 0x0004}, {0x0002, 0xFFFC}, {0xFFFC, 0x0000}};
-void EntityMoveableBox(Entity* self) {
+void EntityMovableBox(Entity* self) {
     Entity* player;
     Primitive* prim;
     s32 temp_s1 = GetPlayerCollisionWith(self, 0x10, 0x10, 5);

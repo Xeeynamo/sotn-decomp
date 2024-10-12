@@ -27,7 +27,7 @@ void EntityLeftSecretRoomWall(Entity*);
 void EntityBottomSecretRoomFloor(Entity*);
 void BoxPuzzleFloorButton(Entity*);
 void BoxPuzzleSpikes(Entity*);
-void EntityMoveableBox(Entity*);
+void EntityMovableBox(Entity*);
 void EntityCannonLever(Entity*);
 void EntityCannon(Entity*);
 void EntityCannonShot(Entity*);
@@ -106,7 +106,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBottomSecretRoomFloor,
     BoxPuzzleFloorButton,
     BoxPuzzleSpikes,
-    EntityMoveableBox,
+    EntityMovableBox,
     EntityCannonLever,
     EntityCannon,
     EntityCannonShot,
