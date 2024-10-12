@@ -845,7 +845,110 @@ void func_801AC730(Entity* self)
     self->hitboxHeight = *temp_v1_2++;
 }
 
-INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801ACB6C);    // [Entity]
+extern EntityInit EntityInit_80180724;
+
+// E_ID_2C
+// func_801ACB6C
+// https://decomp.me/scratch/AyVyt
+// PSP:func_psp_0923CAC8:Match
+// PSP:https://decomp.me/scratch/qBeC0
+void func_801ACB6C(Entity* self)
+{
+    Collider collider;
+    Entity* entity;     // s0
+    s16 temp_s0;        // s1
+    s32 temp_lo;        // s4
+    s32 temp_s1;        // s2
+    s32 temp_v1_2;      // s3
+
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_80180724);
+            self->animCurFrame = 0x37;
+            self->drawFlags = 4;
+            temp_s0 = self->rotZ;
+            self->hitboxOffX = (rcos(temp_s0) * 6) >> 0xC;
+            self->hitboxOffY = (rsin(temp_s0) * 6) >> 0xC;
+            self->ext.venusWeedDart.unk94 = rcos(temp_s0) << 3 >> 0xC;
+            self->ext.venusWeedDart.unk96 = rsin(temp_s0) << 3 >> 0xC;
+            self->ext.venusWeedDart.unk98 = 0x8000;
+            // fallthrough
+        case 1:
+            MoveEntity();
+            temp_s0 = self->rotZ;
+            temp_s1 = self->ext.venusWeedDart.unk98;
+            self->velocityX = (temp_s1 * rcos(temp_s0)) >> 0xC;
+            self->velocityY = (temp_s1 * rsin(temp_s0)) >> 0xC;
+            self->ext.venusWeedDart.unk98 += self->ext.venusWeedDart.unk9C;
+            self->ext.venusWeedDart.unk9C += ((self->params + 1) << 0xB);
+            if (self->ext.venusWeedDart.unk9C > 0x10000) {
+                self->ext.venusWeedDart.unk9C = 0x10000;
+            }
+            if (self->ext.venusWeedDart.unk98 > 0x60000) {
+                self->ext.venusWeedDart.unk98 = 0x60000;
+            }
+            temp_lo = self->posX.i.hi + self->ext.venusWeedDart.unk94;
+            temp_v1_2 = self->posY.i.hi + self->ext.venusWeedDart.unk96;
+            g_api_CheckCollision(temp_lo, temp_v1_2, &collider, 0);
+            if (collider.effects & 1) {
+                PlaySfxWithPosArgs(0x64A);
+                if (self->velocityY > 0) {
+                    self->posY.i.hi += collider.unk18;
+                }
+                if (self->velocityY < 0) {
+                    self->posY.i.hi += collider.unk20;
+                }
+                self->hitboxState = 0;
+                self->ext.venusWeedDart.unk8C = 0x20;
+                SetStep(3);
+            }
+            if (self->hitFlags & 0x80) {
+                entity = &PLAYER;
+                self->ext.venusWeedDart.unk94 = entity->posX.i.hi - self->posX.i.hi;
+                self->ext.venusWeedDart.unk96 = entity->posY.i.hi - self->posY.i.hi;
+                self->ext.venusWeedDart.unk8C = 0;
+                self->hitboxState = 0;
+                SetStep(2);
+                break;
+            }
+            if (self->unk44) {
+                self->flags & FLAG_DEAD;    // Weird?
+            }
+            break;
+        
+        case 2:
+            if (!(self->palette & 0x8000)) {
+                self->ext.venusWeedDart.unk8C++;
+                self->palette = self->ext.venusWeedDart.unk8C + 0x20A;
+                
+                if (self->palette > 0x219) {
+                    self->palette = 0x219;
+                }
+            }
+            if (self->ext.venusWeedDart.unk8C > 0x30) {
+                self->flags |= 0x100;
+            }
+            entity = &PLAYER;
+            self->posX.i.hi = entity->posX.i.hi - self->ext.venusWeedDart.unk94;
+            self->posY.i.hi = entity->posY.i.hi - self->ext.venusWeedDart.unk96;
+            break;
+        
+        case 3:
+            if (!--self->ext.venusWeedDart.unk8C) {
+                self->flags |= 0x100;
+            }
+            break;
+    }
+    
+    if (self->flags & FLAG_DEAD) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2U, self, entity);
+            entity->params = 0;
+        }
+        DestroyEntity(self);
+    }
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801ACEF4);    // [Entity]

@@ -1322,6 +1322,16 @@ typedef struct {    // TODO: Not sure about this yet
     /* 0xA4 */ struct Entity* entity;
 } ET_VenusWeedTendril;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ char pad_8E[0x6];
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s32 unk9C;
+} ET_VenusWeedDart;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1446,4 +1456,5 @@ typedef union { // offset=0x7C
     ET_VenusWeed venusWeed;
     ET_VenusWeedFlower venusWeedFlower;
     ET_VenusWeedTendril venusWeedTendril;
+    ET_VenusWeedDart venusWeedDart;
 } Ext;
