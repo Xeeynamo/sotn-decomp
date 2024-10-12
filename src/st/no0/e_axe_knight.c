@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
 static s16 sensors_move[] = {0, 32, 8, 0};
