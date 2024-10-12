@@ -258,8 +258,8 @@ extern unsigned short _svm_okon1;
 extern unsigned short _svm_okon2;
 extern unsigned short _svm_okof1;
 extern unsigned short _svm_okof2;
-extern unsigned short _svm_orev1;
-extern unsigned short _svm_orev2;
+extern "C" unsigned short _svm_orev1;
+extern "C" unsigned short _svm_orev2;
 
 extern "C" s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
                s16 voll, s16 volr);
@@ -376,9 +376,9 @@ void test_spu_vm_do_allocate()
 }
 
 extern "C" void SsInitHot(void);
-extern u8 aPbav[0x3000];
-extern s32 g_VabAddrs[];
-extern u8 D_8013B6A0[269488];
+extern "C" u8 aPbav[0x3000];
+extern "C" s32 g_VabAddrs[];
+extern "C" u8 D_8013B6A0[269488];
 
 extern "C" void SsVabClose(s16 vabid);
 
