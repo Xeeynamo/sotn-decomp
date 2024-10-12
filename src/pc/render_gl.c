@@ -132,6 +132,7 @@ void ShowVram4bpp(void) {
     SDL_DestroyTexture(t);
 }
 
+extern struct InitGameParams g_GameParams;
 int GlDrawSync(int mode) {
     switch (g_DebugSdl) {
     case DEBUG_SDL_SHOW_VRAM_16bpp:
@@ -146,7 +147,7 @@ int GlDrawSync(int mode) {
     }
 
     SDL_RenderPresent(g_Renderer);
-    SDL_RenderSetScale(g_Renderer, SCREEN_SCALE, SCREEN_SCALE);
+    SDL_RenderSetScale(g_Renderer, g_GameParams.scale, g_GameParams.scale);
 
     // SDL event handling
     SDL_Event event;
@@ -168,8 +169,8 @@ int GlDrawSync(int mode) {
 }
 
 DISPENV* GlPutDispEnv(DISPENV* env) {
-    int w = env->disp.w * SCREEN_SCALE;
-    int h = env->disp.h * SCREEN_SCALE;
+    int w = env->disp.w * g_GameParams.scale;
+    int h = env->disp.h * g_GameParams.scale;
     if (g_WndWidth == w && g_WndHeight == h) {
         return env;
     }

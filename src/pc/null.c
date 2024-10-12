@@ -6,6 +6,9 @@
 extern bool g_TimedExit;
 extern int g_TimeLimit;
 
+int Main(int argc, char* argv[]);
+int main(int argc, char* argv[]) { return Main(argc, argv); }
+
 bool InitPlatform() {
     g_TimedExit = true;
     g_TimeLimit = 60;
@@ -32,21 +35,5 @@ void MySsInitHot(void) {}
 DRAWENV* MyPutDrawEnv(DRAWENV* env) {}
 
 void MyDrawOTag(OT_TYPE* p) {}
-
-int main(int argc, char* argv[]) {
-    const char* filename;
-
-    if (argc < 2) {
-        filename = "disks/sotn.us.bin";
-    } else {
-        filename = argv[1];
-    }
-    OpenCd(filename);
-
-    if (InitGame()) {
-        MainGame();
-    }
-    ResetGame();
-}
 
 int MyMoveImage(RECT* rect, int x, int y) {}

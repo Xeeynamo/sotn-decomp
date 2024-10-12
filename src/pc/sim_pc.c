@@ -202,10 +202,6 @@ void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
-    char pad[0x20];
-    s32 i;
-    u32* pDst;
-    u32* pSrc;
     u16* clutAddr;
 
     switch (kind) {
@@ -355,6 +351,10 @@ int readToBuf(const char* filename, char* dest) {
     return 0;
 }
 
+static bool isFirstBoot() {
+    return g_StageId == STAGE_SEL && g_GameState == Game_Init;
+}
+
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
     char buf[128];
@@ -399,6 +399,16 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
         break;
     case SimFileType_StagePrg:
+        if (isFirstBoot()) {
+            if (g_GameParams.player >= 0) {
+                g_PlayableCharacter = g_GameParams.player;
+            }
+            if (g_GameParams.stage >= 0) {
+                g_StageId = g_GameParams.stage;
+                SetGameState(Game_NowLoading);
+                g_GameStep = 1;
+            }
+        }
         switch (g_StageId) {
         case STAGE_SEL:
             InitStageSEL(&g_api.o);

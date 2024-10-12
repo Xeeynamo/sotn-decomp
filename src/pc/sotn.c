@@ -127,7 +127,16 @@ static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-bool InitGame(void) {
+FILE* cd_fp = NULL;
+struct InitGameParams g_GameParams;
+bool InitGame(struct InitGameParams* params) {
+    g_GameParams = *params;
+    if (params->diskPath) {
+        cd_fp = fopen(params->diskPath, "rb");
+        if (!cd_fp) {
+            WARNF("couldn't open CD at '%s'", params->diskPath);
+        }
+    }
     if (!InitPlatform()) {
         return false;
     }
