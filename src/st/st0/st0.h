@@ -60,10 +60,10 @@ extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 // *** Initializers ***
-extern u16 g_eBreakableInit[];
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitBreakable[];
+extern u16 g_EInitParticle[];
 extern u16 D_80180598[]; // Init EntityCutscene
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
 extern u16 D_801805E0[]; // Init EntityDracula
 extern u16 D_801805EC[]; // Init EntityDraculaFireball
@@ -166,7 +166,7 @@ extern s32 D_801C2578;
 // *** EntityDracula properties END ***
 
 extern s16 D_80181990[];
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtaineable[];
 extern u16 D_80181D74[];
 extern s16 g_collectXVelTable[];
 extern s16 g_collectYVelTable[];

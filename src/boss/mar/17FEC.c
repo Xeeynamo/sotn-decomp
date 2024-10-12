@@ -76,7 +76,7 @@ void EntityClockRoomController(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
 
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         g_api.PlaySfx(SET_STOP_MUSIC);
         D_80097928 = 1;
         g_Statues[RIGHT_STATUE] = false; // right statue closed
@@ -182,7 +182,7 @@ void EntityClockHands(Entity* self) {
     u16 params = self->params;
 
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
@@ -219,7 +219,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = D_us_801812A8[self->ext.birdcage.state & 1];
         self->zPriority = 0x3C;
@@ -309,7 +309,7 @@ void EntityStatue(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 10;
         self->hitboxWidth = 16;
@@ -416,7 +416,7 @@ void EntityStatueGear(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->step_s == 0) {
-            InitializeEntity(g_eInitGeneric2);
+            InitializeEntity(g_EInitCommon);
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 17;
             self->zPriority = 0x80;
@@ -503,7 +503,7 @@ void EntityStoneDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;

@@ -17,7 +17,7 @@ u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtaineable[];
 extern u16 msgBoxTpage[0x600];
 
 void BlinkItem(Entity* entity, u16 blinkFlag);
@@ -87,7 +87,7 @@ void EntityRelicOrb(Entity* self) {
             return;
         }
 #endif
-        InitializeEntity(g_InitializeData0);
+        InitializeEntity(g_EInitObtaineable);
         for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
             if (!g_ItemIconSlots[iconSlot]) {
                 break;

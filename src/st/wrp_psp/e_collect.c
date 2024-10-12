@@ -200,7 +200,7 @@ void EntityPrizeDrop(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeData0);
+        InitializeEntity(g_EInitObtaineable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = DRAW_DEFAULT;
         if (itemId > 23) {

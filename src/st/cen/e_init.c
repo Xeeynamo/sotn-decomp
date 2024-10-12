@@ -48,7 +48,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId1B,         EntityMovingElevator,
 };
 
-EntityInit D_80180404 = {
+EntityInit g_EInitBreakable = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -56,7 +56,7 @@ EntityInit D_80180404 = {
     .enemyId = 0,
 };
 
-EntityInit g_InitializeData0 = {
+EntityInit g_EInitObtaineable = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -64,7 +64,7 @@ EntityInit g_InitializeData0 = {
     .enemyId = 1,
 };
 
-EntityInit g_InitializeEntityData0 = {
+EntityInit g_EInitParticle = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -72,7 +72,7 @@ EntityInit g_InitializeEntityData0 = {
     .enemyId = 2,
 };
 
-EntityInit g_eMariaInit = {
+EntityInit g_EInitMaria = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -80,7 +80,7 @@ EntityInit g_eMariaInit = {
     .enemyId = 4,
 };
 
-EntityInit g_EInitGeneric = {
+EntityInit g_EInitInteracteable = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -88,7 +88,7 @@ EntityInit g_EInitGeneric = {
     .enemyId = 5,
 };
 
-EntityInit g_InitDataEnt13 = {
+EntityInit g_EInitUnkId13 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -96,7 +96,7 @@ EntityInit g_InitDataEnt13 = {
     .enemyId = 2,
 };
 
-EntityInit g_EntityUnkId12Init = {
+EntityInit g_EInitUnkId12 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -104,7 +104,7 @@ EntityInit g_EntityUnkId12Init = {
     .enemyId = 1,
 };
 
-EntityInit g_eInitGeneric2 = {
+EntityInit g_EInitCommon = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -112,7 +112,7 @@ EntityInit g_eInitGeneric2 = {
     .enemyId = 3,
 };
 
-EntityInit g_eDamageDisplayInit = {
+EntityInit g_EInitDamageNum = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -120,7 +120,7 @@ EntityInit g_eDamageDisplayInit = {
     .enemyId = 3,
 };
 
-EntityInit D_80180470 = {
+EntityInit g_EInitUnused = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
     .unk5A = 0,

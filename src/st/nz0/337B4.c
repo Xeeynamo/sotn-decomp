@@ -18,7 +18,7 @@ void EntityRelicContainer(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180CDC);
+        InitializeEntity(g_EInitPrizeContainer);
         if (self->params & 0x100) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
@@ -95,7 +95,7 @@ void EntityRelicContainer(Entity* self) {
 void EntityBlueFlameTable(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180CDC);
+        InitializeEntity(g_EInitPrizeContainer);
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 16;

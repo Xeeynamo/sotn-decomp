@@ -21,7 +21,7 @@ void EntityHammer(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B8C);
+        InitializeEntity(g_EInitGurkhaType0);
         self->animCurFrame = 3;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -335,13 +335,13 @@ void EntityGurkhaBodyParts(Entity* self) {
     case 0:
         switch (self->params >> 8) {
         case 0:
-            InitializeEntity(D_80180B8C);
+            InitializeEntity(g_EInitGurkhaType0);
             break;
         case 1:
-            InitializeEntity(D_80180BA4);
+            InitializeEntity(g_EInitGurkhaType1);
             break;
         case 2:
-            InitializeEntity(D_80180BBC);
+            InitializeEntity(g_EInitGurkhaType2);
             break;
         }
         self->hitboxWidth = 6;

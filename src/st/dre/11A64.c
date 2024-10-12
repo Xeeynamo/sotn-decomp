@@ -13,7 +13,7 @@ void EntityUnkId11(Entity* entity) {
     ObjInit* obj = (ObjInit*)&D_80180528[entity->params * 10];
 
     if (entity->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
         entity->unk5A = obj->unk5A;
@@ -90,7 +90,7 @@ void func_80191B44(Entity* entity) {
     }
 }
 
-extern u16 g_eBreakableInit[];
+extern u16 g_EInitBreakable[];
 extern u8* g_eBreakableAnimations[];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
@@ -112,7 +112,7 @@ void EntityBreakable(Entity* entity) {
             ReplaceBreakableWithItemDrop(entity);
         }
     } else {
-        InitializeEntity(g_eBreakableInit);
+        InitializeEntity(g_EInitBreakable);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         entity->drawMode = g_eBreakableDrawModes[temp_s0];
         entity->hitboxHeight = g_eBreakableHitboxes[temp_s0];
@@ -128,7 +128,7 @@ void EntityBackgroundClouds(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex == -1) {
             DestroyEntity(self);

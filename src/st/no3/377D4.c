@@ -13,7 +13,7 @@ void EntityCavernDoorVase(Entity* self) {
     ObjInit2* objInit = &D_80180BFC[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->facingLeft = objInit->facingLeft;
@@ -86,7 +86,7 @@ void EntityUnkId12(Entity* entity) {
     }
 }
 
-extern u16 g_eBreakableInit[];
+extern u16 g_EInitBreakable[];
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
@@ -108,7 +108,7 @@ void EntityBreakable(Entity* entity) {
             ReplaceBreakableWithItemDrop(entity);
         }
     } else {
-        InitializeEntity(g_eBreakableInit);
+        InitializeEntity(g_EInitBreakable);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
@@ -157,7 +157,7 @@ void EntityBackgroundLightning(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
 
         self->ext.backgroundLightning.timer = 0x80;
         self->animCurFrame = 0xF;
@@ -329,7 +329,7 @@ void EntityShuttingWindow(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -434,7 +434,7 @@ void EntityCastleDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -787,7 +787,7 @@ void EntityTransparentWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         self->ext.transparentWater.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -1367,7 +1367,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1465,7 +1465,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1555,7 +1555,7 @@ void EntityUnkId26(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         if (g_CastleFlags[CASTLE_FLAG_58] != 0) {
             self->step = 2;
         }
@@ -1658,7 +1658,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posX.i.hi = 1432 - g_Tilemap.scrollX.i.hi;
@@ -1957,7 +1957,7 @@ void EntityDeathSkySwirl(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 65);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -2189,7 +2189,7 @@ void EntityUnkId49(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         break;
     case 1:
         temp = g_Tilemap.fg[9];

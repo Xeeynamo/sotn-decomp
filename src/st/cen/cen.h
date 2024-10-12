@@ -49,12 +49,12 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 /*** Initializers ***/
-extern u16 D_80180404[];
-extern u16 g_InitializeData0[];
-extern u16 g_eMariaInit[];
-extern u16 g_EInitGeneric[];
-extern u16 g_eInitGeneric2[];
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitBreakable[];
+extern u16 g_EInitObtaineable[];
+extern u16 g_EInitMaria[];
+extern u16 g_EInitInteracteable[];
+extern u16 g_EInitCommon[];
+extern u16 g_EInitParticle[];
 extern u16 g_eElevatorInit[]; // EntityElevator
 
 extern ObjInit g_eBackgroundBlockInit[];

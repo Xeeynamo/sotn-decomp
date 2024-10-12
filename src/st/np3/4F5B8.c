@@ -10,7 +10,7 @@ void EntityHammerWeapon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B98);
+        InitializeEntity(g_EInitGurkhaHammer);
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
         self->drawFlags |= FLAG_DRAW_ROTZ;
@@ -133,7 +133,7 @@ void EntityGurkha(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BA4);
+        InitializeEntity(g_EInitGurkhaType1);
         self->animCurFrame = 3;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -519,7 +519,7 @@ void EntityGurkhaSword(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BB0);
+        InitializeEntity(g_EInitGurkhaSword);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->drawFlags |= FLAG_DRAW_ROTZ;

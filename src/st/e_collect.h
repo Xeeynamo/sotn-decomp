@@ -140,7 +140,7 @@ static u8* g_ExplosionAnimations[] = {
 };
 
 // from another file
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtaineable[];
 
 #include "prize_drop_fall.h"
 
@@ -187,7 +187,7 @@ Entity* func_801939C4(void) {
 
 #include "entity_prize_drop.h"
 
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 
 #include "entity_explosion.h"
 
@@ -208,7 +208,7 @@ void func_80194314(Entity* entity) {
         return;
     }
 
-    InitializeEntity(g_eBreakableInit);
+    InitializeEntity(g_EInitBreakable);
     entity->animCurFrame = entity->ext.generic.unk7C.U8.unk0;
     entity->velocityX =
         g_collectXVelTable[entity->ext.generic.unk80.modeS8.unk0 * 2];

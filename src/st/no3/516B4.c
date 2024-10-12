@@ -25,7 +25,7 @@ void EntitySplashWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         if (temp_s2 != 0 && temp_s4 != 7) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         } else {
@@ -220,7 +220,7 @@ void EntitySurfacingWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -368,7 +368,7 @@ void EntitySideWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
@@ -455,7 +455,7 @@ void EntitySmallWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -527,7 +527,7 @@ void EntityWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x21);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -1258,7 +1258,7 @@ void EntityMermanWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         break;
 
     case 1:
@@ -1380,7 +1380,7 @@ void EntityUnkId3D(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = 0x8162;

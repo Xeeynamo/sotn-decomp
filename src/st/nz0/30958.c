@@ -12,7 +12,7 @@ void func_801B0958(Entity* self) {
     ObjInit* objInit = &D_80180D64[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->unk5A = objInit->unk5A;

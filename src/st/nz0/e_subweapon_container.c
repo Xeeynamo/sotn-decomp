@@ -46,7 +46,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
     switch (self->step) {
     case SUBWPNCONT_INIT:
-        InitializeEntity(D_80180CE8);
+        InitializeEntity(g_EInitSubwpnCloche);
         self->drawMode = DRAW_TPAGE;
         self->animCurFrame = 1;
         self->zPriority = 0x70;
@@ -179,7 +179,7 @@ void func_801C7538(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180CF4);
+        InitializeEntity(g_EInitSubwpnClochePieces);
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->animCurFrame = entity->params;
         entity->palette += entity->ext.generic.unk84.S16.unk2;
@@ -216,7 +216,7 @@ void func_801C7654(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
         entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -257,7 +257,7 @@ void func_801C77B8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180CF4);
+        InitializeEntity(g_EInitSubwpnClochePieces);
         entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         entity->rotY = 0x100;
         entity->rotX = 0x100;
@@ -285,7 +285,7 @@ void func_801C7884(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_InitializeData0);
+        InitializeEntity(g_EInitObtaineable);
         entity->hitboxState = 0;
 
     case 1:

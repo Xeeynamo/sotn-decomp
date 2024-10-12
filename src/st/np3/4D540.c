@@ -32,7 +32,7 @@ void func_801CD540(Entity* self) {
 
 void func_801CD620(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
     }
 }
 

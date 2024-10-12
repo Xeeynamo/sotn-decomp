@@ -11,7 +11,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 56;
         if (entity->params != 0) {
@@ -109,7 +109,7 @@ void EntityFallingLeaf(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = (entity->params & 1) + 63;
         entity->zPriority = 0xC1;

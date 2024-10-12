@@ -56,8 +56,8 @@ void EntityGreyPuff(Entity* entity);
 extern s32 D_80096ED0_mad;
 
 // ST/MAD
-extern u16 g_InitializeData0[];
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitObtaineable[];
+extern u16 g_EInitCommon[];
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];
@@ -74,7 +74,7 @@ extern u16 g_HeartDropArray[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern ObjInit D_801810F4[];
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollEnemyLookup[];
 // extern u8 g_testCollLuckCutoff[];
@@ -86,7 +86,7 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollRandTable;
 extern RoomHeader g_rooms[];
 
-extern u16 g_eBreakableInit[];
+extern u16 g_EInitBreakable[];
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];

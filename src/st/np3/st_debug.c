@@ -5,7 +5,7 @@ void func_801B246C(Entity* self) {
     ObjInit2* objInit = &D_80180C10[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->facingLeft = objInit->facingLeft;

@@ -20,7 +20,7 @@ static u16 g_EntityUnkId12TilemapProps[] = {
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
 
-extern u16 g_EntityUnkId12Init[];
+extern u16 g_EInitUnkId12[];
 void EntityUnkId12(Entity* entity) {
     u16 var_s0;
     u16 params;
@@ -63,7 +63,7 @@ void EntityUnkId12(Entity* entity) {
             g_Tilemap.height = *tilemapProps;
         }
     } else {
-        InitializeEntity(g_EntityUnkId12Init);
+        InitializeEntity(g_EInitUnkId12);
         var_s0 = entity->ext.generic.unk7C.u = g_EntityUnkId12Data[params];
         if (var_s0) {
             entity->hitboxWidth = g_EntityUnkId12Hitbox[params];

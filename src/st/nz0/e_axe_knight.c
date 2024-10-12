@@ -20,7 +20,7 @@ typedef enum {
     AXE_KNIGHT_DYING,
 } EntityAxeKnightSteps;
 
-extern u16 g_EAxeKnightInit[];
+extern u16 g_EInitAxeKnight[];
 static s16 sensors_move[] = {0, 32, 8, 0};
 static s16 sensors_ground[4][2] = {{0, 32}, {0, 4}, {8, -4}, {-16, 0}};
 static s16 dead_particle_pos[][2] = {
@@ -116,7 +116,7 @@ s32 func_801C4198(Entity* axeKnight) {
 
     switch (axeKnight->step_s) {
     case 0:
-        clutBase = g_EAxeKnightInit[3];
+        clutBase = g_EInitAxeKnight[3];
         dataPtr = sprites_nz0_3[axeKnight->animCurFrame];
         primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
         if (primIndex != -1) {
@@ -225,7 +225,7 @@ void EntityAxeKnight(Entity* self) {
 
     switch (self->step) {
     case AXE_KNIGHT_INIT:
-        InitializeEntity(g_EAxeKnightInit);
+        InitializeEntity(g_EInitAxeKnight);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
@@ -465,7 +465,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180C70);
+        InitializeEntity(g_EInitAxeKnightAxe);
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->velocityY = init_velocity_y[entity->params];
         velocityX = init_velocity_x[entity->params];

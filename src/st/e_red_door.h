@@ -2,7 +2,7 @@
 #include <stage.h>
 #include "sfx.h"
 
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 extern u16 g_eRedDoorTiles[2][8];
 
 u8 g_eRedDoorUV[][8] = {
@@ -47,7 +47,7 @@ void EntityRedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
         self->zPriority = PLAYER.zPriority - 0x20;

@@ -83,7 +83,7 @@ void EntityFireWargDeathBeams(Entity* self) {
         temp_s1 = self->unk5A + 3;
         temp_s1_u16 = (u16)temp_s1;
 
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
 
         if (primIndex == -1) {
@@ -358,7 +358,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         entity->animSet = ANIMSET_DRA(14);
         entity->unk5A = 0x79;
         entity->palette = 0xD0;

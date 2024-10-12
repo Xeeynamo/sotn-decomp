@@ -18,7 +18,7 @@ typedef enum {
     BLOODY_ZOMBIE_DESTROY
 } EntityBloodyZombieSteps;
 
-extern u16 g_EBloodyZombieInit[];
+extern u16 g_EInitBloodyZombie[];
 static s16 sensors_ground[4][2] = {{0, 28}, {0, 4}, {8, -4}, {-16, 0}};
 static u16 sensors_move[][2] = {{0, 28}, {8, 0}};
 static u8 anim_walk[] = {0x04, 0x02, 0x0D, 0x03, 0x0A, 0x02, 0x0A, 0x01,
@@ -56,7 +56,7 @@ void EntityBloodSplatter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         break;
 
     case 1:
@@ -257,7 +257,7 @@ void EntityBloodyZombie(Entity* self) {
 
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
-        InitializeEntity(g_EBloodyZombieInit);
+        InitializeEntity(g_EInitBloodyZombie);
         self->hitboxOffX = 1;
         self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
@@ -477,7 +477,7 @@ void func_801C5D20(Entity* self) { // BloodDrips
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];

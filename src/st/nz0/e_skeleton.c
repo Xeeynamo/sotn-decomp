@@ -74,7 +74,7 @@ void EntitySkeleton(Entity* self) {
 
     switch (self->step) {
     case SKELETON_INIT:
-        InitializeEntity(D_80180C88);
+        InitializeEntity(g_EInitSkeleton);
         self->ext.skeleton.attackTimer = 80; // Skeleton attack timer cycle
         self->ext.skeleton.facingLeft = 0;   // Facing init
         self->ext.skeleton.attackTimerIndex = 0;
@@ -228,7 +228,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
         return;
     }
 
-    InitializeEntity(D_80180C94);
+    InitializeEntity(g_EInitSkeletonPieces);
     self->drawFlags = FLAG_DRAW_ROTZ;
     self->animCurFrame = self->params + 15;
 
@@ -255,7 +255,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
             DestroyEntity(self);
         }
     } else {
-        InitializeEntity(D_80180CA0);
+        InitializeEntity(g_EInitSkeletonBone);
         self->posY.val -= FIX(0.0625);
         xDistanceToPlayer = GetDistanceToPlayerX();
         xDistanceToPlayer /= 32;
@@ -277,7 +277,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 // the main entity list.
 void func_801C6678(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180C88);
+        InitializeEntity(g_EInitSkeleton);
         self->rotX = 0x120;
         self->rotY = 0x200;
         self->unk6C = 0;

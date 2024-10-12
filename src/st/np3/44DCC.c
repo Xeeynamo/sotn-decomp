@@ -31,7 +31,7 @@ void EntitySplashWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         if (temp_s2 != 0 && temp_s4 != 7) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         } else {
@@ -226,7 +226,7 @@ void EntitySurfacingWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -374,7 +374,7 @@ void EntitySideWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
@@ -461,7 +461,7 @@ void EntitySmallWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -533,7 +533,7 @@ void EntityWaterDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x21);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -673,7 +673,7 @@ void EntityMerman2(Entity* self) {
 
     switch (self->step) {
     case MERMAN2_INIT:
-        InitializeEntity(D_80180AB4);
+        InitializeEntity(g_EInitWaterObject);
         self->hitboxOffY = 8;
         self->zPriority = 0xA9;
         if (self->params != 0) {
@@ -1162,7 +1162,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
     s16 primIndex;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180AB4);
+        InitializeEntity(g_EInitWaterObject);
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
         entity->zPriority += 4;
@@ -1220,7 +1220,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     Entity* newEntity;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180AC0);
+        InitializeEntity(g_EInitWaterSplash);
         entity->animCurFrame = 0;
         if (entity->facingLeft != 0) {
             entity->velocityX = FIX(2);
@@ -1253,7 +1253,7 @@ void EntityMermanWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         break;
 
     case 1:
@@ -1356,7 +1356,7 @@ void EntityMermanWaterSplash(Entity* self) {
 
 void func_801C7D80(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180AB4);
+        InitializeEntity(g_EInitWaterObject);
         self->animCurFrame = 0;
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_2000;
@@ -1375,7 +1375,7 @@ void func_801C7E18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = 0x8162;
@@ -1433,7 +1433,7 @@ void EntityLargeFallingObject(Entity* self) {
     u8 temp_v0;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180AB4);
+        InitializeEntity(g_EInitWaterObject);
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
         self->hitboxState = 0;

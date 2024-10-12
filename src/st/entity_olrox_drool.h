@@ -5,14 +5,14 @@
 
 extern u32 g_olroxDroolCollOffsets[];
 
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 void EntityOlroxDrool(Entity* self) {
     s16 primIndex;
     Primitive* prim;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;

@@ -25,7 +25,7 @@ static u8 g_eBreakableDrawModes[] = {
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 #endif
 
-extern u16 g_eBreakableInit[];
+extern u16 g_EInitBreakable[];
 
 void EntityBreakableNZ0(Entity* self) {
     u16 breakableType = self->params >> 12;
@@ -59,7 +59,7 @@ void EntityBreakableNZ0(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(g_eBreakableInit);
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         self->drawMode = g_eBreakableDrawModes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];

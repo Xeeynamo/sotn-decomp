@@ -55,9 +55,9 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 /* *** Initializers *** */
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtaineable[];
 extern u16 D_8018047C[];
-extern u16 g_EInitGeneric[];
+extern u16 g_EInitInteracteable[];
 extern u16 D_801804A0[];
 extern u16 D_801804D0[]; // EntitySuccubus
 extern u16 D_801804DC[];
@@ -99,8 +99,8 @@ extern const u8 D_80180794[];
 extern u8 D_801807F8[][4];
 extern u8 D_80180830[];
 extern s16 D_80180D80[];
-extern u16 g_InitializeEntityData0[];
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitParticle[];
+extern u16 g_EInitCommon[];
 extern u16 D_801804F4[];
 extern s8 c_HeartPrizes[];
 extern u16 D_801804E8[];

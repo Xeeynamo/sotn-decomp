@@ -66,6 +66,6 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 extern s16 g_SineTable[];
-extern u16 g_eInitGeneric2[];
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitCommon[];
+extern u16 g_EInitParticle[];
 extern u16 g_HeartDropArray[];

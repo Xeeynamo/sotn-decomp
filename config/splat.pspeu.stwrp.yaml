@@ -97,13 +97,13 @@ segments:
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
       - [0xF790, .data, wrp_psp/wrp_data_F7B0] # g_eRedDoorTiles
       - [0xF7B0, .data, wrp_psp/wrp_data_F7B0] # D_psp_09246E30
-      - [0xF810, .data, wrp_psp/wrp_data_F810] # g_eBreakableInit
-      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_InitializeData0
-      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_InitializeEntityData0
+      - [0xF810, .data, wrp_psp/wrp_data_F810] # g_EInitBreakable
+      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_EInitObtaineable
+      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_EInitParticle
       - [0xF840, data] # D_psp_09246EC0
       - [0xF850, data] # D_psp_09246ED0
       - [0xF860, data] # D_80180488
-      - [0xF870, data] # g_eInitGeneric2
+      - [0xF870, data] # g_EInitCommon
       - [0xF880, data] # D_psp_09246F00
       - [0xF890, data] # D_801804C4
       - [0xF8A0, data] # D_psp_09246F20

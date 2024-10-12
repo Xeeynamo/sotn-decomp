@@ -57,7 +57,7 @@ static void StageNamePopupHelper(Primitive* prim) {
     }
 }
 
-extern u16 g_EInitGeneric[];
+extern u16 g_EInitInteracteable[];
 void EntityStageNamePopup(Entity* self) {
     u8 pad[100];
     Primitive* prim;
@@ -73,7 +73,7 @@ void EntityStageNamePopup(Entity* self) {
             return;
         }
 
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteracteable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x57);
         if (primIndex == -1) {
             DestroyEntity(self);

@@ -6,7 +6,7 @@
 #define SFX_BREAKABLE_HIT SFX_CANDLE_HIT
 #endif
 
-extern u16 g_eBreakableInit[];
+extern u16 g_EInitBreakable[];
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
@@ -33,7 +33,7 @@ void EntityBreakable(Entity* entity) {
             ReplaceBreakableWithItemDrop(entity);
         }
     } else {
-        InitializeEntity(g_eBreakableInit);
+        InitializeEntity(g_EInitBreakable);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
