@@ -4,9 +4,9 @@
 #include <servant.h>
 #include "../servant_private.h"
 
-#define ABILITY_STATS_DELAY_FRAMES 0
-#define ABILITY_STATS_SPELL_ID 1
-#define ABILITY_STATS_BAD_ATTACKS 2
+#define DELAY_FRAMES_INDEX 0
+#define SPELL_ID_INDEX 1
+#define BAD_ATTACKS_INDEX 2
 
 #define ENTITY_ID_ATTACK_CLOUD 0xDA
 #define ENTITY_ID_CONFUSION 0xDB
@@ -56,7 +56,7 @@ static s16 s_ParentY;
 STATIC_PAD_BSS(2); // Temporary storage for Y position of the
                    // entity or primitive
 static FamiliarStats s_GhostStats;
-static s32 g_IsServantDestroyed;
+static s32 s_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 
 extern s32 g_DefaultGhostAnimationFrame[];
@@ -69,19 +69,19 @@ extern s16
 extern s16
     g_ConfusedOffsetsY[]; // Array of Y-axis offsets for positioning primitives
 
-void unused_20A4(Entity* self);
-void unused_20AC(void);
-void unused_20B4(void);
-void unused_20BC(void);
-void unused_20C4(void);
-void unused_20CC(void);
-void unused_20D4(void);
-void unused_20DC(void);
-void UpdateAttackEntites(Entity* self);
-void UpdateConfusedEntites(Entity* self);
-void unused_28EC(void);
-void unused_28F4(void);
-void unused_28FC(void);
+static void unused_20A4(Entity* self);
+static void unused_20AC(void);
+static void unused_20B4(void);
+static void unused_20BC(void);
+static void unused_20C4(void);
+static void unused_20CC(void);
+static void unused_20D4(void);
+static void unused_20DC(void);
+static void UpdateAttackEntites(Entity* self);
+static void UpdateConfusedEntites(Entity* self);
+static void unused_28EC(void);
+static void unused_28F4(void);
+static void unused_28FC(void);
 
 ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, unused_20A4,
@@ -159,7 +159,9 @@ s32 UpdateEntityVelocityTowardsTarget(
     return s_DistanceToTarget;
 }
 
-Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
+static Entity* FindValidTarget(
+    Entity* self) { // Assume self is also an Entity pointer
+    const int EntitySearchCount = 128;
     Entity* entity;
     s32 i;
     s32 index;
@@ -171,7 +173,7 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
     // Hunt through these entities looking for ones that match all criteria.
     // Call them a success and increment successes.
     entity = &g_Entities[STAGE_ENTITY_START];
-    for (i = 0; i < 128; i++, entity++) {
+    for (i = 0; i < EntitySearchCount; i++, entity++) {
         s_TargetMatch[i] = 0;
 
         // Very similar code to CheckAllEntitiesValid
@@ -191,8 +193,8 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            g_GhostAbilityStats[s_GhostStats.level / 10]
-                               [ABILITY_STATS_BAD_ATTACKS] == 0)
+            g_GhostAbilityStats[s_GhostStats.level / 10][BAD_ATTACKS_INDEX] ==
+                0)
             continue;
 #if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
@@ -229,16 +231,16 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
     }
 
     if (matches != 0) {
-        index = s_LastTargetedEntityIndex % 128;
+        index = s_LastTargetedEntityIndex % EntitySearchCount;
 
-        for (i = 0; i < 128; i++) {
+        for (i = 0; i < EntitySearchCount; i++) {
             if (s_TargetMatch[index] != 0) {
                 entity = &g_Entities[index + STAGE_ENTITY_START];
-                s_LastTargetedEntityIndex = (index + 1) % 128;
+                s_LastTargetedEntityIndex = (index + 1) % EntitySearchCount;
                 return entity;
             }
 
-            index = (index + 1) % 128;
+            index = (index + 1) % EntitySearchCount;
         }
     }
 
@@ -247,12 +249,12 @@ Entity* FindValidTarget(Entity* self) { // Assume self is also an Entity pointer
 
 #include "../check_entity_valid.h"
 
-void unused_1560(Entity* self) {}
+static void unused_1560(Entity* self) {}
 
 #if defined(VERSION_PSP)
-void func_psp_092EA460(Entity* self, s32 entityType, s32 params) {
+void func_psp_092EA460(Entity* parent, s32 entityType, s32 params) {
 #else
-Entity* CreateChildEntity(Entity* self, ChildEntityType entityType) {
+Entity* CreateChildEntity(Entity* parent, ChildEntityType entityType) {
 #endif
     Entity* entity;
     s32 i;
@@ -279,12 +281,12 @@ Entity* CreateChildEntity(Entity* self, ChildEntityType entityType) {
             entity->entityId = ENTITY_ID_CONFUSION;
         }
 #endif
-        entity->zPriority = self->zPriority;
-        entity->facingLeft = self->facingLeft;
+        entity->zPriority = parent->zPriority;
+        entity->facingLeft = parent->facingLeft;
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->posX.val = self->posX.val;
-        entity->posY.val = self->posY.val;
-        entity->ext.ghostEvent.parent = self;
+        entity->posX.val = parent->posX.val;
+        entity->posY.val = parent->posY.val;
+        entity->ext.ghostEvent.parent = parent;
 #if defined(VERSION_PSP)
         entity->params = params;
 #else
@@ -346,9 +348,9 @@ void ServantInit(InitializeMode mode) {
 
         spriteBanks = g_api.o.spriteBanks;
         spriteBanks += 20;
-        *spriteBanks = (SpriteParts*)D_80170040;
+        *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
 
-        e = &g_Entities[4];
+        e = &g_Entities[SERVANT_ENTITY_INDEX];
         DestroyEntity(e);
         e->unk5A = 0x6C;
         e->palette = 0x140;
@@ -366,7 +368,7 @@ void ServantInit(InitializeMode mode) {
             e->posY.val = FIX(-32);
         } else {
             e->entityId = ENTITY_ID_SERVANT;
-            if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+            if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
                 if (ServantUnk0()) {
                     e->posX.val = FIX(192);
                 } else {
@@ -380,7 +382,7 @@ void ServantInit(InitializeMode mode) {
             }
         }
         g_api.func_8011A3AC(e, 0, 0, &s_GhostStats);
-        g_IsServantDestroyed = 0;
+        s_IsServantDestroyed = 0;
     }
 }
 
@@ -391,7 +393,7 @@ void UpdateServantDefault(Entity* self) {
     s32 temp_s1;
 
     g_api.func_8011A3AC(self, 0, 0, &s_GhostStats);
-    if (g_IsServantDestroyed) {
+    if (s_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     self->hitboxWidth = 0;
@@ -453,7 +455,7 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.confusedSubStep = 0;
             break;
         }
-        if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi)
                 self->facingLeft = 1;
             else
@@ -542,16 +544,16 @@ void UpdateServantDefault(Entity* self) {
             self->ext.ghost.frameCounter++;
             if (self->ext.ghost.frameCounter ==
                 (g_GhostAbilityStats[s_GhostStats.level / 10]
-                                    [ABILITY_STATS_DELAY_FRAMES] -
+                                    [DELAY_FRAMES_INDEX] -
                  30)) {
                 self->ext.ghost.attackEntity = CreateChildEntity(self, 0);
             } else if (self->ext.ghost.frameCounter >
                        g_GhostAbilityStats[s_GhostStats.level / 10]
-                                          [ABILITY_STATS_DELAY_FRAMES]) {
+                                          [DELAY_FRAMES_INDEX]) {
                 self->ext.ghost.frameCounter = 0;
                 g_api.func_8011A3AC(self,
                                     g_GhostAbilityStats[s_GhostStats.level / 10]
-                                                       [ABILITY_STATS_SPELL_ID],
+                                                       [SPELL_ID_INDEX],
                                     1, &s_GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;

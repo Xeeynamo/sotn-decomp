@@ -94,7 +94,7 @@ AnimationFrame D_8017054C[] = {
     /* 801705E8 */ {-2, 0x0000},
 };
 
-AnimationFrame D_801705EC[] = {
+AnimationFrame g_BatHighVelocityAnimationFrame[] = {
     /* 801705EC */ {1, 0x0415},
     /* 801705F0 */ {-1, 0x0000},
 };
@@ -104,5 +104,5 @@ AnimationFrame* D_801705F4[] = {
     /* 801705F8 */ D_801704E0,
     /* 801705FC */ D_80170514,
     /* 80170600 */ D_8017054C,
-    /* 80170604 */ D_801705EC,
+    /* 80170604 */ g_BatHighVelocityAnimationFrame,
 };
