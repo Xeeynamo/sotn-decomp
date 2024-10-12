@@ -135,7 +135,7 @@ static void testSndLib(void) {
 #endif
 }
 
-int main(int argc, char* argv[]) {
+int Main(int argc, char* argv[]) {
     struct InitGameParams params;
     if (!parseArgs(&params, argc, argv)) {
         printHelp();

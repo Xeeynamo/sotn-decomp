@@ -6,6 +6,9 @@
 extern bool g_TimedExit;
 extern int g_TimeLimit;
 
+int Main(int argc, char* argv[]);
+int main(int argc, char* argv[]) { return Main(argc, argv); }
+
 bool InitPlatform() {
     g_TimedExit = true;
     g_TimeLimit = 60;

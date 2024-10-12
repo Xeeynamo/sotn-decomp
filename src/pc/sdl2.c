@@ -29,6 +29,9 @@ int g_WndHeight = -1;
 
 uint32_t GPU_Update(const int32_t sys_timestamp);
 
+int Main(int argc, char* argv[]);
+int main(int argc, char* argv[]) { return Main(argc, argv); }
+
 void ResetPlatform(void);
 bool InitPlatform() {
     atexit(ResetPlatform);
