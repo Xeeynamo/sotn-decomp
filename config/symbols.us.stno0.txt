@@ -193,5 +193,5 @@ anim_throw_stand = 0x8018253C;
 anim_die = 0x80182560;
 hitboxes = 0x8018256C;
 hitbox_lookup = 0x8018257C;
-g_EAxeKnightInit = 0x80180C6A;
+g_EAxeKnightInit = 0x80180BFC;
 AxeKnightDeath = 0x801C3334;
