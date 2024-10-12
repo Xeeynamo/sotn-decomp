@@ -108,6 +108,6 @@ void func_us_801C3308(Entity* self) {
     DestroyEntity(self);
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/41F98", func_us_801C3334);
+INCLUDE_ASM("st/no0/nonmatchings/41F98", AxeKnightDeath);
 
 INCLUDE_ASM("st/no0/nonmatchings/41F98", EntityWargExplosionPuffOpaque);
