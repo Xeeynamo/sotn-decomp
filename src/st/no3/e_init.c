@@ -28,7 +28,7 @@ void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityCastleDoor(Entity* self);
 void EntityBackgroundBushes(Entity* self);
-void EntityUnkId1C(Entity* self);
+void EntityBackgroundTrees(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
 void EntityCavernDoor(Entity* self);
@@ -85,7 +85,7 @@ void EntityBackgroundPineTrees(Entity* self);
 void EntityUnkId52(Entity* self);
 void EntityCastleDoorTransition(Entity* self);
 void EntityCastleBridge(Entity* self);
-void EntityBackgroundTrees(Entity* self);
+void EntityDistantBackgroundTrees(Entity* self);
 void EntityBackgroundCastleWall(Entity* self);
 void NO3_EntityCutscene(Entity* self);
 void EntityRoomTransition2(Entity* self);
@@ -128,7 +128,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityShuttingWindow,
     EntityCastleDoor,
     EntityBackgroundBushes,
-    EntityUnkId1C,
+    EntityBackgroundTrees,
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,
@@ -185,7 +185,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId52,
     EntityCastleDoorTransition,
     EntityCastleBridge,
-    EntityBackgroundTrees,
+    EntityDistantBackgroundTrees,
     EntityBackgroundCastleWall,
     NO3_EntityCutscene,
     EntityRoomTransition2,

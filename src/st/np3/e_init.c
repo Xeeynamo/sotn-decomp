@@ -28,7 +28,7 @@ void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityCastleDoor(Entity* self);
 void EntityBackgroundBushes(Entity* self);
-void func_801B3704(Entity* self);
+void EntityBackgroundTrees(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
 void EntityCavernDoor(Entity* self);
@@ -121,7 +121,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityShuttingWindow,
     EntityCastleDoor,
     EntityBackgroundBushes,
-    func_801B3704,
+    EntityBackgroundTrees,
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,

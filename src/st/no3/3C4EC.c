@@ -716,7 +716,9 @@ void EntityCastleBridge(Entity* self) {
 }
 
 // ID 0x55
-void EntityBackgroundTrees(Entity* self) {
+// Mostly just shadows in the far distance.
+// Use texture viewer to confirm.
+void EntityDistantBackgroundTrees(Entity* self) {
     Primitive* prim;
     s16 primIndex;
     s16 temp_v0_2;
