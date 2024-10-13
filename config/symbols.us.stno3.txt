@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 NO3_EntityUpdates = 0x80180924;
 g_EInitBreakable = 0x80180AAC;
 g_EInitObtainable = 0x80180AB8;
@@ -13,6 +14,24 @@ g_EInitWaterSplash = 0x80180B54;
 g_EInitBoneScimitar = 0x80180B78;
 g_EInitScimitarParts = 0x80180B84;
 NO3_RedDoorTiles = 0x80180DA0;
+=======
+PfnEntityUpdates = 0x80180924;
+g_eBreakableInit = 0x80180AAC;
+g_InitializeData0 = 0x80180AB8;
+g_InitializeEntityData0 = 0x80180AC4;
+g_ESpawnerInit = 0x80180AD0;
+g_EInitGeneric = 0x80180ADC;
+g_InitDataEnt13 = 0x80180AE8;
+g_EntityUnkId12Init = 0x80180AF4;
+g_eInitGeneric2 = 0x80180B00;
+g_eDamageDisplayInit = 0x80180B0C;
+g_eInitGeneric3 = 0x80180B18;
+g_eMerman2Init = 0x80180B48;
+g_EMediumWaterSplashInit = 0x80180B54;
+g_BoneScimitarInit = 0x80180B78;
+g_ScimitarPartsInit = 0x80180B84;
+g_eRedDoorTiles = 0x80180DA0;
+>>>>>>> 547072a9 (Next dedupes of bushes and trees)
 g_eBreakableAnimations = 0x80180E50;
 g_eBreakableHitboxes = 0x80180E70;
 g_eBreakableExplosionTypes = 0x80180E78;

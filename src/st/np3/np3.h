@@ -387,4 +387,8 @@ extern s16 D_80183A4C[];
 
 // for EntityBackgroundBushes
 
+<<<<<<< HEAD
 extern u16 g_EInitStInteractable[];
+=======
+extern u16 g_eInitGeneric3[];
+>>>>>>> 547072a9 (Next dedupes of bushes and trees)

@@ -42,7 +42,7 @@ segments:
       - [0xD98, .data, st_debug]
       - [0xE18, .data, e_breakable]
       - [0xE78, .data, 32830]
-      - [0x10B8, data]
+      - [0x10C0, data]
       - [0x1300, data]
       - [0x14B4, .data, gaibon]
       - [0x1618, data, d_prize_drops]
