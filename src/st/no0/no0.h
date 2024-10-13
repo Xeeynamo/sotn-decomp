@@ -39,4 +39,4 @@ extern u16 g_EInitParticle[];
 extern u16 g_HeartDropArray[];
 
 // Axe knight
-extern u16 D_80180C70[];
+extern u16 g_EInitAxeKnightAxe[];
