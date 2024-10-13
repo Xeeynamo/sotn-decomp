@@ -23,19 +23,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityWarpRoom,        EntityWarpSmallRocks,
 };
 
-u16 g_EInitBreakable[] = {ANIMSET_OVL(1), 0x0000, 0x0000, 0x0000, 0x0000};
-u16 g_EInitObtainable[] = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0001};
-u16 g_EInitParticle[] = {ANIMSET_DRA(3), 0x0000, 0x0000, 0x0000, 0x0002};
-u16 g_EInitMaria[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0004};
-u16 g_EInitInteractable[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0005};
-u16 g_EInitUnkId13[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0002};
-u16 g_EInitUnkId12[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0001};
-u16 g_EInitCommon[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0003};
-u16 g_EInitDamageNum[] = {ANIMSET_DRA(0), 0x0000, 0x0000, 0x0000, 0x0003};
-u16 g_EInitUnused[] = {ANIMSET_OVL(1), 0x0000, 0x0000, 0x0000, 0x0003};
-u16 g_EInitReverseSmallRocks[] = {
-    ANIMSET_OVL(11), 0x0001, 0x0048, 0x021A, 0x0061};
-u16 g_EInitSmallRocks[] = {ANIMSET_OVL(1), 0x0000, 0x0000, 0x0000, 0x0005};
+#include "../e_init_common.h"
+EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(11), 1, 0x48, 0x21A, 97};
+EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0, 0x00, 0x000, 5};
 
 static u32 D_801804D0[] = {0x00FF0140};
 static u32 D_801804D4[] = {0x26022502, 0x26022702, 0x00000000};

@@ -10,10 +10,15 @@
 #include <string.h>
 #include <cJSON/cJSON.h>
 
+#undef HARD_LINK
+
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
+
+// shared stage data and bss
+#include "../st/e_init_common.h"
 PfnEntityUpdate* PfnEntityUpdates;
 LayoutEntity** g_pStObjLayoutHorizontal;
 LayoutEntity** g_pStObjLayoutVertical;
