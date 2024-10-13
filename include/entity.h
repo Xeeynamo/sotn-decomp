@@ -1332,6 +1332,12 @@ typedef struct {
     /* 0x9C */ s32 unk9C;
 } ET_VenusWeedDart;
 
+typedef struct {
+    /* 0x7C */ Primitive* unk7C;
+    /* 0x80 */ char pad_80[0x24];
+    /* 0xA4 */ struct Entity* unkA4;
+} ET_VenusWeedTendrilSpike;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1457,4 +1463,5 @@ typedef union { // offset=0x7C
     ET_VenusWeedFlower venusWeedFlower;
     ET_VenusWeedTendril venusWeedTendril;
     ET_VenusWeedDart venusWeedDart;
+    ET_VenusWeedTendrilSpike venusWeedTendrilSpike;
 } Ext;

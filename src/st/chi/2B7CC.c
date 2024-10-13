@@ -72,7 +72,7 @@ u8 AnimFrames_ThornweedDisguise[] = {
 u8 AnimFrames_ThornweedQuickWiggle[] = {
     0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00
 };
-    
+
 // D_8018190E
 u8 D_8018190E[] = {
     0x10, 0x0C, 0x0E, 0x0E, 0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF,
@@ -478,7 +478,7 @@ void func_801AC074(Entity* self)
         PlaySfxWithPosArgs(0x710);
         SetStep(8);
     }
-    
+
     switch (self->step) {
         case 0:
             InitializeEntity(&EntityInit_8018070C);
@@ -491,18 +491,18 @@ void func_801AC074(Entity* self)
             self->rotX = self->rotY = 0;
             self->hitboxState = 0;
             break;
-        
+
         case 1:
             self->rotX = self->rotY += 6;
             if (self->rotX >= 0x100) {
                 self->drawFlags = 0;
                 self->hitboxState = 3;
-                
+
                 PlaySfxWithPosArgs(0x669);
                 SetStep(2);
             }
             break;
-        
+
         case 2:
             if (AnimateEntity(D_8018180C, self) == 0) {
                 entity = self - 1;
@@ -511,7 +511,7 @@ void func_801AC074(Entity* self)
                 SetStep(3);
             }
             break;
-        
+
         case 3:
             if (!self->step_s) {
                 self->ext.venusWeedFlower.unk8C = 1;
@@ -531,7 +531,7 @@ void func_801AC074(Entity* self)
                 return;
             }
             break;
-        
+
         case 4:
             switch (self->step_s) {
                 case 0:
@@ -550,7 +550,7 @@ void func_801AC074(Entity* self)
                         SetSubStep(2);
                     }
                     break;
-                
+
                 case 2:
                     PlaySfxWithPosArgs(0x6B0);
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -577,13 +577,13 @@ void func_801AC074(Entity* self)
                         SetSubStep(4);
                     }
                     break;
-                
+
                 case 4:
                     if (AnimateEntity(D_80181838, self) == 0) {
                         SetSubStep(5);
                     }
                     break;
-                
+
                 case 5:
                     entity = self - 1;
                     entity->step = 4;
@@ -603,7 +603,7 @@ void func_801AC074(Entity* self)
                 }
             }
             break;
-        
+
         case 5:
             switch (self->step_s) {
                 case 0:
@@ -618,7 +618,7 @@ void func_801AC074(Entity* self)
                         return;
                     }
                     break;
-                
+
                 case 2:
                     PlaySfxWithPosArgs(0x6B0);
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -680,7 +680,7 @@ void func_801AC074(Entity* self)
                         return;
                     }
                     break;
-                
+
                 case 4:
                     entity = self - 1;
                     entity->step = 4;
@@ -688,7 +688,7 @@ void func_801AC074(Entity* self)
                     return;
             }
             break;
-        
+
         case 8:
             entity = self + 1;
             for (var_s1 = 0; var_s1 < 0xA; var_s1++, entity++) {
@@ -727,19 +727,19 @@ void func_801AC730(Entity* self)
     if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         SetStep(8);
     }
-    
+
     switch (self->step) {
         case 0:
             InitializeEntity(&EntityInit_80180718);
             self->animCurFrame = 0;
             break;
-        
+
         case 1:
             if (UpdatePhysicsState(PhysicsSensors_VenusWeed) & 1) {
                 SetStep(2);
             }
             break;
-        
+
         case 2:
             if (!self->step_s) {
                 var_s0 = (self->params * 2) - 9;
@@ -769,7 +769,7 @@ void func_801AC730(Entity* self)
                 self->velocityX = (-(abs(var_s0) << 0xC)) / 4;
             }
             break;
-        
+
         case 3:
             switch (self->step_s) {
                 case 0:
@@ -784,7 +784,7 @@ void func_801AC730(Entity* self)
                         SetSubStep(1);
                     }
                     break;
-                
+
                 case 1:
                     if (self->ext.venusWeedTendril.unk8C) {
                         self->ext.venusWeedTendril.unk8C--;
@@ -800,7 +800,7 @@ void func_801AC730(Entity* self)
                         PlaySfxWithPosArgs(0x6D2);
                     }
                     break;
-                
+
                 case 3:
                     if (AnimateEntity(D_801818CC, self) == 0) {
                         SetStep(2);
@@ -812,7 +812,7 @@ void func_801AC730(Entity* self)
                 entity->ext.venusWeedTendril.unk91++;
             }
             break;
-        
+
         case 8:
             if (!self->step_s) {
                 self->ext.venusWeedTendril.unk8C = (self->params * 8) + 8;
@@ -831,7 +831,7 @@ void func_801AC730(Entity* self)
             }
             break;
     }
-    
+
     temp_v1_2 = D_80181920;
 #if VERSION_PSP
     temp = D_8018190E[self->animCurFrame - 0x22];
@@ -950,100 +950,77 @@ void func_801ACB6C(Entity* self)
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/2B7CC", func_801ACEF4);    // [Entity]
-#else
-// typedef struct {
-//     /* 0x00 */ char pad0[0x28];
-//     /* 0x28 */ ? unk28;                             // inferred
-//     /* 0x28 */ char pad28[0xA];
-//     /* 0x32 */ s16 unkAE;
-// } ET_EntitySlot16;                                  // size = 0x34
+Primitive* func_801AB548(Entity*, Primitive*);
+extern EntityInit EntityInit_8018070C;
 
-// ?* func_801AB548(void*, Primitive*);                // extern
-// extern u16 EntityInit_8018070C;
+// E_ID_2D
+// func_801ACEF4
+// https://decomp.me/scratch/uQtVP
+// PSP:func_psp_0923D008:No match
+// PSP:https://decomp.me/scratch/zjZnY
+void func_801ACEF4(Entity* self)
+{
+    Primitive* prim;    // s0
+    Primitive* prim2;   // s1
+    Primitive* prim3;   // s3
+    s32 primIdx;        // s5
+    Entity* entity;     // s2
+    s16 var_s4;         // s4
 
-// void func_801ACEF4(Entity* arg0)
-// {
-//     ?* temp_t3;
-//     ?* var_a2;
-//     ?* var_a3;
-//     ?* var_t0;
-//     ?* var_t1;
-//     Primitive* temp_t0;
-//     Primitive* var_t0_2;
-//     s16 temp_v0;
-//     u16 temp_v0_2;
-//     u16 temp_v1;
-//     void* temp_s1;
-//     void* temp_s1_2;
-//     void* temp_s1_3;
-
-//     temp_v1 = arg0->step;
-//     switch (temp_v1) {                              // irregular
-//         case 0:
-//             InitializeEntity(&EntityInit_8018070C);
-//             arg0->hitboxState = 0;
-//             arg0->palette = 0x8224;
-//             arg0->flags |= 0x202000;
-//             temp_v0 = g_api_AllocPrimitives(PRIM_GT4, 5);
-//             if (temp_v0 != -1) {
-//                 temp_t0 = &g_PrimBuf[temp_v0];
-//                 arg0->primIndex = (s32) temp_v0;
-//                 arg0->ext.prim = temp_t0;
-//                 temp_s1 = arg0->ext.heartDrop.unk[0xA] - 0xBC;
-//                 arg0->flags |= 0x800000;
-//                 var_t1 = temp_s1->unk7C;
-//                 var_t0 = func_801AB548(temp_s1, temp_t0);
-//                 if (var_t1 != NULL) {
-//                     do {
-//                         temp_t3 = var_t0->unk0;
-//                         var_a3 = var_t0;
-//                         var_a2 = var_t1;
-// loop_6:
-//                         var_a3->unk0 = var_a2->unk0;
-//                         var_a3->unk4 = (s32) var_a2->unk4;
-//                         var_a3->unk8 = (s32) var_a2->unk8;
-//                         var_a3->unkC = (s32) var_a2->unkC;
-//                         var_a2 += 0x10;
-//                         var_a3 += 0x10;
-//                         if (var_a2 != (var_t1 + 0x30)) {
-//                             goto loop_6;
-//                         }
-//                         *var_a3 = *var_a2;
-//                         var_t0->unk0 = temp_t3;
-//                         var_t0->unk26 = (s16) (var_t1->unk26 + 1);
-//                         var_t1 = var_t1->unk0;
-//                         var_t0 = temp_t3;
-//                     } while (var_t1 != NULL);
-//                 }
-//                 temp_s1_2 = temp_s1 + 0xBC;
-//                 arg0->animCurFrame = temp_s1_2->unk56;
-//                 arg0->zPriority = temp_s1_2->unk24 + 1;
-//             case 1:
-//                 var_t0_2 = arg0->ext.prim;
-//                 if (var_t0_2 != NULL) {
-//                     do {
-//                         var_t0_2->clut = arg0->palette & 0xFFF;
-//                         var_t0_2->drawMode = 2;
-//                         var_t0_2 = var_t0_2->next;
-//                     } while (var_t0_2 != NULL);
-//                 }
-//                 temp_s1_3 = arg0->ext.heartDrop.unk[0xA];
-//                 temp_v0_2 = arg0->palette + 1;
-//                 arg0->palette = temp_v0_2;
-//                 arg0->animCurFrame = temp_s1_3->unk56;
-//                 if (((temp_v0_2 & 0xFFF) >= 0x233) || (temp_s1_3->unk26 != 0x2A)) {
-//                     goto block_14;
-//                 }
-//             } else {
-// block_14:
-//                 DestroyEntity(arg0);
-//             }
-//             return;
-//     }
-// }
-#endif
+    switch (self->step) {
+        case 0:
+            InitializeEntity(&EntityInit_8018070C);
+            
+            self->flags |= FLAG_UNK_2000 | FLAG_UNK_00200000;
+            self->hitboxState = 0;
+            self->palette = PAL_OVL(0x224);
+            primIdx = g_api.AllocPrimitives(PRIM_GT4, 5);
+            if (primIdx == -1) {
+                DestroyEntity(self);
+                break;
+            } else {
+                self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIdx;
+                prim = &g_PrimBuf[primIdx];
+                self->ext.venusWeedTendrilSpike.unk7C = prim;
+                entity = self->ext.venusWeedTendrilSpike.unkA4;
+                entity--;
+                prim = self->ext.venusWeedTendrilSpike.unk7C;
+                prim = func_801AB548(entity, prim);
+                for (prim2 = entity->ext.venusWeedTendrilSpike.unk7C; prim2 != NULL; prim2 = prim2->next, prim = prim3) {
+                    prim3 = prim->next;
+                    
+                    *prim = *prim2;
+                    prim->next = prim3;
+                    prim->priority = prim2->priority + 1;
+                }
+            }
+            entity = entity + 1;
+            self->animCurFrame = entity->animCurFrame;
+            self->zPriority = entity->zPriority + 1;
+            // Fallthrough
+        case 1:
+            var_s4 = self->palette & 0xFFF;
+            prim = self->ext.prim;
+            while (prim != NULL) {
+                prim->clut = var_s4;
+                prim->drawMode = 2;
+                prim = prim->next;
+            }
+            entity = self->ext.venusWeedTendrilSpike.unkA4;
+            self->animCurFrame = entity->animCurFrame;
+            self->palette++;
+            var_s4 = self->palette & 0xFFF;
+            if (var_s4 > 0x232) {
+                DestroyEntity(self);
+            } else {
+                if (entity->entityId != 0x2A) {
+                    DestroyEntity(self);
+                }
+            }
+            break;
+    }
+}
 
 s32 func_801AE70C(Primitive* prim, u8 arg1);
 void StageNamePopupHelper(Primitive* prim)  // [Duplicate]
