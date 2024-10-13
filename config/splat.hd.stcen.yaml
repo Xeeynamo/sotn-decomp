@@ -42,6 +42,7 @@ segments:
       - [0x394, .data, e_init]
       - [0x4D4, .data, st_debug]
       - [0x554, .data, e_breakable]
+      - [0x5D8, .data, d_prize_drops]
       - [0x5D8, .data, cutscene]
       - [0x684, data, cutscene]
       - [0x6BC, .data, F890]
