@@ -217,7 +217,6 @@ extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
 extern u8 D_8018148C[];
-extern u16 g_HeartDropArray[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];
