@@ -49,6 +49,7 @@ segments:
       - [0x5D4, data]
       - [0x680, .data, cutscene]
       - [0x688, data]
+      - [0x744, data, d_prize_drops]
       - [0x764, .data, st_update]
       - [0x790, .data, collision]
       - [0xB50, .data, e_red_door]
