@@ -473,10 +473,8 @@ typedef struct {
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ u8 pad[4];
-#ifdef PLATFORM_64BIT
-    s16 _align_anim;
-#endif
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ u32 : 32;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 unkAE;
@@ -1447,10 +1445,11 @@ typedef struct {
     u16 unk7C;
     u16 unk7E;
     u8 unk80;
-    byte pad81;
+    u8 : 8;
     u8 unk82;
-    byte pad83;
+    u8 : 8;
     s32 unk84;
+    s32 : 32;
     struct Entity* parent;
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
 
