@@ -44,6 +44,7 @@ segments:
       - [0xC8C, data]
       - [0xF04, .data, e_breakable]
       - [0xFC0, data]
+      - [0x1100, .data, d_prize_drops]
       - [0x113C, .data, st_update] # UNK_Invincibility0 data
       - [0x1168, .data, collision]
       - [0x1528, .data, e_red_door]
