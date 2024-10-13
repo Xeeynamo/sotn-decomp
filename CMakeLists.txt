@@ -279,6 +279,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/st_debug.c
     src/st/cen/e_breakable.c
     src/st/cen/DB18.c
+    src/st/cen/d_prize_drops.c
     src/st/cen/cutscene.c
     src/st/cen/F890.c
     src/st/cen/st_update.c
