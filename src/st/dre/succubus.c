@@ -71,7 +71,7 @@ typedef enum {
 } SuccubusDyingSubSteps;
 
 // Original name: multiple_count
-extern s32 g_HeartDropArray; // clones counter
+extern s32 g_MultipleCount; // clones counter
 
 void EntitySuccubus(Entity* self) {
     u8* clonesShootOrder;
@@ -84,7 +84,7 @@ void EntitySuccubus(Entity* self) {
     s32 temp;
     s32 i;
 
-    FntPrint("multiple_count %x\n", g_HeartDropArray);
+    FntPrint("multiple_count %x\n", g_MultipleCount);
 
     if ((self->hitFlags & 3) && (self->step & SUCCUBUS_CS_1)) {
         SetStep(SUCCUBUS_GET_HIT);
@@ -246,7 +246,7 @@ void EntitySuccubus(Entity* self) {
             CreateEntityFromCurrentEntity(
                 E_SUCCUBUS_CUTSCENE, &g_Entities[200]);
             g_Entities[200].params = 1;
-            g_HeartDropArray = 0;
+            g_MultipleCount = 0;
             D_80180664 |= 2;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_RECORD);
@@ -703,7 +703,7 @@ void EntitySuccubus(Entity* self) {
             self->params = *clonesShootOrder;
             self->ext.succubus.timer = 64;
             self->hitboxState = 0;
-            g_HeartDropArray = 6;
+            g_MultipleCount = 6;
             PlaySfxPositional(NA_VO_SU_GRUNT_1);
             PlaySfxPositional(NA_SE_SU_CREATE_CLONES);
             self->step_s++;
@@ -762,7 +762,7 @@ void EntitySuccubus(Entity* self) {
                  */
                 SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
             }
-            if (g_HeartDropArray == 0) {
+            if (g_MultipleCount == 0) {
                 SetStep(SUCCUBUS_IDLE);
             }
             break;
@@ -878,7 +878,7 @@ void EntitySuccubus(Entity* self) {
             }
 
             self->ext.succubus.timer = 32;
-            g_HeartDropArray = 0;
+            g_MultipleCount = 0;
             if (GetSideToPlayer() & 1) {
                 self->velocityX = FIX(2);
             } else {
@@ -1032,7 +1032,7 @@ void EntitySuccubusWingOverlay(Entity* entity) {
     entity->zPriority = PLAYER.zPriority + 4;
 }
 
-extern s32 g_HeartDropArray; // clones counter
+extern s32 g_MultipleCount; // clones counter
 
 void EntitySuccubusClone(Entity* self) {
     Entity* newEntity;
@@ -1040,14 +1040,14 @@ void EntitySuccubusClone(Entity* self) {
     s32 velX;
     s32 i;
 
-    if (g_HeartDropArray == 0) {
+    if (g_MultipleCount == 0) {
         self->flags |= FLAG_DEAD;
     }
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != 5) {
-            if (g_HeartDropArray != 0) {
-                g_HeartDropArray--;
+            if (g_MultipleCount != 0) {
+                g_MultipleCount--;
             }
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
