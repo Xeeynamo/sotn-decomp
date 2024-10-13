@@ -104,6 +104,7 @@ jobs:
     strategy:
       matrix:
         build_type: ["Debug", "RelWithDebInfo"]
+        sound_engine: ["lle", "custom"]
     runs-on: macos-latest
     needs: extract-assets
     steps:
@@ -128,13 +129,18 @@ jobs:
         run: make -j build_assets
       - name: Build
         run: |
-          cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          export PC_FLAGS=""
+          if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
+            export PC_FLAGS="-DWANT_LIBSND_LLE=1"
+          fi
+          cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
 
   build-windows:
     strategy:
       matrix:
         build_type: ["Debug", "RelWithDebInfo"]
+        sound_engine: ["lle", "custom"]
     runs-on: windows-latest
     needs: extract-assets
     steps:
@@ -163,5 +169,9 @@ jobs:
         & make -j build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
-        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
+        $PC_FLAGS=""
+        if ("${{ matrix.sound_engine }}" -eq "lle") {
+          $PC_FLAGS="-DWANT_LIBSND_LLE=1"
+        }
+        cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
         cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
