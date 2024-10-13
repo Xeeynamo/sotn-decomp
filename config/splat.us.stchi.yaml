@@ -113,5 +113,6 @@ segments:
       - [0x297C8, c]
       - [0x2A020, c]
       - [0x2B7CC, c]
+      - [0x2D0EC, c]
       - [0x2E770, sbss]
   - [0x2F428]
