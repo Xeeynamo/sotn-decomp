@@ -123,13 +123,6 @@ extern u16 g_EInitGurkhaHammer[];
 extern u16 g_EInitGurkhaSword[];
 extern u16 g_EInitGurkhaBlade[];
 extern ObjInit2 D_80180C10[];
-extern MATRIX D_80180F9C;
-extern u8 D_80180FE0[];
-extern u16 D_80180FF8[8];
-extern SVECTOR D_801810B8[];
-extern u8 D_801810C0;
-extern u8 D_801810E0[];
-extern u8 D_801810EC[];
 extern u16 D_801810F8[];
 extern s32 g_TrapDoorFlag; // 0 = Closed, 1 = Open
 extern const u8 D_80181108[];

@@ -580,10 +580,6 @@ void EntityCastleDoor(Entity* self) {
         prim = prim->next;
     }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
 
 #define UVWH(u, v, w, h) u, v, w, h
 
@@ -604,22 +600,13 @@ static s16 bush_unk_data[] = {0, 20, 0, 32, 1, 32, 0, 8, 2, 20, 1, 16, 0xFFFF, 0
 static s16 bush_render_data[] = {
     0x00C0, 0x005E, 0x0017, 0x0080, 0x0200, 0x005B, 0x0014, 0x003F,
     0x0140, 0x005D, 0x003C, 0x00A0, 0x01C0, 0x005C, 0x003C, 0x00D0};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c5654497 (format)
 static s16* bush_unk_starts[] = {&bush_unk_data[0], &bush_unk_data[14],
                                  &bush_unk_data[18], &bush_unk_data[24]};
 static s16 backgroundTreePositions[][2] = {
     {0x200, 0}, {0x280, 12}, {0x300, 4}, {0x380, 16}};
-<<<<<<< HEAD
-=======
 static s16* bush_unk_starts[] = {
     &bush_unk_data[0], &bush_unk_data[14], &bush_unk_data[18], &bush_unk_data[24]};
 static s16 backgroundTreePositions[][2] = {{0x200, 0}, {0x280, 12}, {0x300, 4}, {0x380, 16}};
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
-=======
->>>>>>> c5654497 (format)
 static u16 backgroundTreeCluts[] = {0x15, 0x46, 0x47, 0x48};
 static SVECTOR backgroundBushZeroVec = {0, 0, 0};
 static SVECTOR backgroundTreeZeroVec = {0, 0, 0};
@@ -645,11 +632,7 @@ void EntityBackgroundBushes(Entity* self) {
     MATRIX m;
 
     if (!self->step) {
-<<<<<<< HEAD
         InitializeEntity(g_EInitInteractable3);
-=======
-        InitializeEntity(g_eInitGeneric3);
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -682,17 +665,8 @@ void EntityBackgroundBushes(Entity* self) {
         trans.vz = var_s5[0] + 0x400;
         TransMatrix(&m, &trans);
         SetTransMatrix(&m);
-<<<<<<< HEAD
-<<<<<<< HEAD
         RotTransPers(
             &backgroundBushZeroVec, &rotTransXYResult, &unused1, &unused2);
-=======
-        RotTransPers(&backgroundBushZeroVec, &rotTransXYResult, &unused1, &unused2);
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
-=======
-        RotTransPers(
-            &backgroundBushZeroVec, &rotTransXYResult, &unused1, &unused2);
->>>>>>> c5654497 (format)
         // Split out the upper and lower halfword of rotTransXYResult
         xPos = rotTransXYResult & 0xFFFF;
         yPos = rotTransXYResult >> 16;
@@ -767,11 +741,7 @@ void EntityBackgroundTrees(Entity* self) {
     s32 posY;
 
     if (!self->step) {
-<<<<<<< HEAD
         InitializeEntity(g_EInitInteractable3);
-=======
-        InitializeEntity(g_eInitGeneric3);
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -831,8 +801,6 @@ void EntityBackgroundTrees(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
 
 static u8 transWaterCluts[] = {
@@ -2346,11 +2314,3 @@ void EntityTilemapShufflerUnused(Entity* self) {
         break;
     }
 }
-=======
->>>>>>> 7799a863 (Dedupe EntityCastleDoor)
-=======
-}
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
-=======
-}
->>>>>>> c5654497 (format)
