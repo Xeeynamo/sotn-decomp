@@ -185,7 +185,7 @@ typedef struct {
     s32 accelerationX;
     s32 accelerationY;
     byte pad[32];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -225,7 +225,7 @@ typedef struct PACKED {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -237,7 +237,7 @@ typedef struct {
     s32 unk84;
     s32 unk88;
     byte pad[32];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -260,7 +260,7 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -279,7 +279,7 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -293,7 +293,7 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -315,7 +315,7 @@ typedef struct {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 : 32;
 #endif
     u8 anim;
@@ -343,7 +343,7 @@ typedef struct PACKED {
     s16 unkA2;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     u8 anim;
@@ -367,7 +367,7 @@ typedef struct PACKED {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     u8 anim;
@@ -390,7 +390,7 @@ typedef struct PACKED {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     u8 anim;
@@ -418,7 +418,7 @@ typedef struct PACKED {
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ s16 unkA0;
     /* 0xA4 */ byte pad[10];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     /* 0xAC */ u8 anim;
@@ -469,10 +469,8 @@ typedef struct {
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ u8 pad[4];
-#ifdef VERSION_PC
-    s16 _align_anim;
-#endif
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ u32 : 32;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 unkAE;
@@ -499,7 +497,7 @@ typedef struct PACKED {
     /* 0xA0 */ u32 : 32;
     /* 0xA4 */ u32 : 32;
     /* 0xA8 */ u32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     /* 0xAC */ u8 anim;
@@ -524,7 +522,7 @@ typedef struct PACKED {
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ u8 unk9C;
     /* 0x9D */ u8 pad[15];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     /* 0xAC */ u8 anim;
@@ -1115,7 +1113,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     s32 : 32;
 #endif
     s16 subweaponId;
@@ -1162,7 +1160,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     s32 : 32;
 #endif
     s16 subweaponId;
@@ -1337,7 +1335,7 @@ typedef struct {
     u16 unk80;
     u16 pad82;
     Point16* unk84;
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     /* 0x88 */ s32 : 32;
 #endif
     /* 0x8C */ struct Entity* parent;
@@ -1367,7 +1365,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 : 32;
 #endif
     /* 0xB0 */ s16 subweaponId;
@@ -1389,7 +1387,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 : 32;
 #endif
     /* 0xB0 */ s16 subweaponId;
@@ -1443,10 +1441,11 @@ typedef struct {
     u16 unk7C;
     u16 unk7E;
     u8 unk80;
-    byte pad81;
+    u8 : 8;
     u8 unk82;
-    byte pad83;
+    u8 : 8;
     s32 unk84;
+    s32 : 32;
     struct Entity* parent;
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
 
@@ -1472,7 +1471,7 @@ typedef struct {
 } ET_Whip;
 
 typedef struct {
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     s32 pad7c;
 #endif
     Primitive* unk80;

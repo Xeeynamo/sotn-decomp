@@ -19,6 +19,21 @@
 #define VERSION "us"
 #endif
 
+#if defined(_MSC_VER)
+#if defined(_WIN64) || defined(_M_X64) || defined(_M_ARM64)
+#define PLATFORM_64BIT
+#endif
+#elif defined(__GNUC__) || defined(__clang__) || defined(__MWERKS__)
+#if defined(__x86_64__) || defined(__aarch64__) || defined(__ppc64__) ||       \
+    defined(__powerpc64__) || defined(__riscv_xlen)
+#define PLATFORM_64BIT
+#endif
+#else
+#if (defined(__LP64__) || defined(_LP64))
+#define PLATFORM_64BIT
+#endif
+#endif
+
 #include "include_asm.h"
 #include "settings.h"
 #include "types.h"
