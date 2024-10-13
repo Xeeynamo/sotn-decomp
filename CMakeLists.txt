@@ -303,7 +303,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
-    src/st/wrp/d_608.c
+    src/st/wrp/d_prize_drops.c
     src/st/wrp/rooms.c
     src/st/wrp/e_layout.c
     src/st/wrp/tile_data.c

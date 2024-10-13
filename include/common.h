@@ -49,6 +49,12 @@
 #define __builtin_memcpy memcpy
 #endif
 
+#ifdef _MSC_VER
+#define ZERO_LEN 1
+#else
+#define ZERO_LEN 0
+#endif
+
 #if defined(VERSION_PC)
 #ifndef _MSC_VER
 #include <assert.h>
