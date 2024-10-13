@@ -1,11 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: DRE
- * Enemy: Succubus Boss
- * ID: 0x19
- * BOSS ID: 9
- */
-
 #include "dre.h"
 #include "sfx.h"
 

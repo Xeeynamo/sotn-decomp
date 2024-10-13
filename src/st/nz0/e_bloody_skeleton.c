@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NZ0
- * Enemy: Blood Skeleton
- */
-
 #include "nz0.h"
 #include "sfx.h"
 

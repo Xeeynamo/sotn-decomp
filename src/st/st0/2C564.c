@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: ST0
- * Enemy: Dracula Boss
- */
-
 #include "st0.h"
 #include "sfx.h"
 
