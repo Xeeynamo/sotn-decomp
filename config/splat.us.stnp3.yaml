@@ -45,7 +45,7 @@ segments:
       - [0x10C0, data]
       - [0x1300, data]
       - [0x14B4, .data, gaibon]
-      - [0x1618, data]
+      - [0x1618, data, d_prize_drops]
       - [0x164C, .data, st_update]
       - [0x1678, .data, collision]
       - [0x1A38, .data, e_red_door]
