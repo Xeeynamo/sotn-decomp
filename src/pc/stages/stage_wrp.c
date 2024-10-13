@@ -11,8 +11,12 @@ u32 D_80181420[836];
 u16 D_80181D08[48];
 
 extern Overlay OVL_EXPORT(Overlay);
-extern PfnEntityUpdate* PfnEntityUpdates;
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 void InitStageWRP(Overlay* o) {
     LoadReset();
     LOAD_ASSET("assets/st/wrp/D_80181D08.bin", D_80181D08);
@@ -20,4 +24,6 @@ void InitStageWRP(Overlay* o) {
     LOAD_ASSET("assets/st/wrp/D_80181764.bin", D_80181764);
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
+    g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }

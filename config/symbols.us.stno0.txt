@@ -1,5 +1,5 @@
-g_pStObjLayoutHorizontal = 0x80180778;
-g_pStObjLayoutVertical = 0x8018084C;
+NO0_pStObjLayoutHorizontal = 0x80180778;
+NO0_pStObjLayoutVertical = 0x8018084C;
 NO0_EntityUpdates = 0x80180920;
 g_EInitBreakable = 0x80180A64;
 g_EInitObtainable = 0x80180A70;

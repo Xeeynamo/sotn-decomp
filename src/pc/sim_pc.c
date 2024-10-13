@@ -413,6 +413,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         case STAGE_SEL:
             InitStageSEL(&g_api.o);
             break;
+        case STAGE_CEN:
+            InitStageCEN(&g_api.o);
+            break;
         case STAGE_WRP:
             InitStageWRP(&g_api.o);
             break;

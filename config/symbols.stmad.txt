@@ -1,6 +1,7 @@
 g_pStTilesetDebug = 0x80180290;
 MAD_gfxBanks = 0x801802A4;
-g_pStObjLayoutHorizontal = 0x801802F4;
+MAD_pStObjLayoutHorizontal = 0x801802F4;
+MAD_pStObjLayoutVertical = 0x801803C8;
 MAD_EntityUpdates = 0x8018049C;
 g_EInitBreakable = 0x801804F0;
 g_EInitUnkId13 = 0x8018052C;
@@ -58,7 +59,6 @@ EntityExplosionVariants = 0x80195A54;
 EntityGreyPuff = 0x80195B44;
 UnkPolyFunc2 = 0x801996EC;
 PrimDecreaseBrightness = 0x8019976C;
-g_pStObjLayoutVertical = 0x801803C8;
 g_ESoulStealOrbAngles = 0x80181068;
 g_ESoulStealOrbAnim = 0x801810D8;
 g_ESoulStealOrbSprt = 0x80181078;

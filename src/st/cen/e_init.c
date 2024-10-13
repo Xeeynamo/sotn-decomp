@@ -48,98 +48,13 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId1B,         EntityMovingElevator,
 };
 
-EntityInit g_EInitBreakable = {
-    .animSet = ANIMSET_OVL(1),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 0,
-};
-
-EntityInit g_EInitObtainable = {
-    .animSet = ANIMSET_DRA(3),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 1,
-};
-
-EntityInit g_EInitParticle = {
-    .animSet = ANIMSET_DRA(3),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 2,
-};
-
-EntityInit g_EInitMaria = {
-    .animSet = ANIMSET_DRA(0),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 4,
-};
-
-EntityInit g_EInitInteractable = {
-    .animSet = ANIMSET_DRA(0),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 5,
-};
-
-EntityInit g_EInitUnkId13 = {
-    .animSet = ANIMSET_DRA(0),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 2,
-};
-
-EntityInit g_EInitUnkId12 = {
-    .animSet = ANIMSET_DRA(0),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 1,
-};
-
-EntityInit g_EInitCommon = {
-    .animSet = ANIMSET_DRA(0),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 3,
-};
-
-EntityInit g_EInitDamageNum = {
-    .animSet = ANIMSET_DRA(0),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 3,
-};
-
-EntityInit g_EInitUnused = {
-    .animSet = ANIMSET_OVL(1),
-    .animCurFrame = 0,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .enemyId = 3,
-};
-
-EntityInit g_eElevatorInit = {
-    .animSet = ANIMSET_OVL(11),
-    .animCurFrame = 1,
-    .unk5A = 72,
-    .palette = PAL_DRA(547),
-    .enemyId = 5,
-};
+#include "../e_init_common.h"
+EInit g_eElevatorInit = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
 
 static u32 JUNK_80180488 = 0x00FF0140;
 static u32 D_8018048C = 0x00FF0740;
 
-ObjInit g_eBackgroundBlockInit = {
+ObjInit OVL_EXPORT(BackgroundBlockInit) = {
     .animSet = ANIMSET_OVL(2),
     .zPriority = 129,
     .unk5A = 0,
@@ -150,7 +65,7 @@ ObjInit g_eBackgroundBlockInit = {
 };
 
 u16 OVL_EXPORT(RedDoorTiles)[][8] = {
-    {0x039C, 0x039B, 0x039C, 0x039B, 0x010D, 0x010B, 0x010D, 0x010B},
-    {0x03A3, 0x03A4, 0x03A5, 0x03A6, 0x02F4, 0x0309, 0x0305, 0x0307},
-    {0x03A3, 0x03A7, 0x03A8, 0x03A3, 0x02F4, 0x030F, 0x0310, 0x02F4},
+    {0x39C, 0x39B, 0x39C, 0x39B, 0x10D, 0x10B, 0x10D, 0x10B},
+    {0x3A3, 0x3A4, 0x3A5, 0x3A6, 0x2F4, 0x309, 0x305, 0x307},
+    {0x3A3, 0x3A7, 0x3A8, 0x3A3, 0x2F4, 0x30F, 0x310, 0x2F4},
 };

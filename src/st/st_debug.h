@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern ObjInit g_eBackgroundBlockInit[];
+extern ObjInit OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
 
 void EntityBackgroundBlock(Entity* self) {
-    ObjInit* objInit = &g_eBackgroundBlockInit[self->params];
+    ObjInit* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
