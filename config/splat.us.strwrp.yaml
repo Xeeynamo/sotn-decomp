@@ -40,7 +40,7 @@ segments:
       - [0x1B8, .data, rwrp/d_1b8] # entity gfx
       - [0x23C, .data, rwrp/e_laydef] # layout entries header
       - [0x3E4, .data, rwrp/e_init]
-      - [0x528, .data, wrp/st_debug]
+      - [0x528, .data, rwrp/st_debug]
       - [0x5A8, .data, wrp/e_breakable]
       - [0x608, .data, wrp/d_608]
       - [0x648, .data, rwrp/warp]
@@ -71,7 +71,7 @@ segments:
       - [0x8DA0, .rodata, rwrp/e_misc] # EntityMessageBox
       - [0x8DB4, .rodata, wrp/e_stage_name] # EntityStageNamePopup
       - [0x8DE8, .rodata, wrp/prim_helpers]
-      - [0x8DF0, c, wrp/st_debug]
+      - [0x8DF0, c, rwrp/st_debug]
       - [0x908C, c, wrp/e_breakable]
       - [0x91C0, c, rwrp/warp]
       - [0xA168, c, wrp/st_update]
