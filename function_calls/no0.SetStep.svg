@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.EntityAxeKnight</title>
 <g id="a_node3"><a xlink:href="no0.EntityAxeKnight.svg" xlink:title="no0.EntityAxeKnight">
-<ellipse fill="red" stroke="black" cx="358.34" cy="-198" rx="107.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="358.34" cy="-198" rx="107.78" ry="18"/>
 <text text-anchor="middle" x="358.34" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityAxeKnight</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.func_801C4550</title>
 <g id="a_node7"><a xlink:href="no0.func_801C4550.svg" xlink:title="no0.func_801C4550">
-<ellipse fill="red" stroke="black" cx="1361.34" cy="-198" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1361.34" cy="-198" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="1361.34" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_801C4550</text>
 </a>
 </g>

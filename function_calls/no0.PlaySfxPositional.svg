@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.EntityAxeKnight</title>
 <g id="a_node3"><a xlink:href="no0.EntityAxeKnight.svg" xlink:title="no0.EntityAxeKnight">
-<ellipse fill="red" stroke="black" cx="107.89" cy="-378" rx="107.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="107.89" cy="-378" rx="107.78" ry="18"/>
 <text text-anchor="middle" x="107.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityAxeKnight</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.EntityAxeKnightThrowingAxe</title>
 <g id="a_node4"><a xlink:href="no0.EntityAxeKnightThrowingAxe.svg" xlink:title="no0.EntityAxeKnightThrowingAxe">
-<ellipse fill="red" stroke="black" cx="402.89" cy="-378" rx="168.97" ry="18"/>
+<ellipse fill="green" stroke="black" cx="402.89" cy="-378" rx="168.97" ry="18"/>
 <text text-anchor="middle" x="402.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityAxeKnightThrowingAxe</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>no0.func_801C3F9C</title>
 <g id="a_node7"><a xlink:href="no0.func_801C3F9C.svg" xlink:title="no0.func_801C3F9C">
-<ellipse fill="red" stroke="black" cx="1202.89" cy="-378" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1202.89" cy="-378" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="1202.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.func_801C3F9C</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>no0.func_801C4198</title>
 <g id="a_node8"><a xlink:href="no0.func_801C4198.svg" xlink:title="no0.func_801C4198">
-<ellipse fill="red" stroke="black" cx="1427.89" cy="-378" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1427.89" cy="-378" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="1427.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.func_801C4198</text>
 </a>
 </g>

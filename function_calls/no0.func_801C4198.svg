@@ -12,7 +12,7 @@
 <!-- no0.func_801C4198 -->
 <g id="node1" class="node">
 <title>no0.func_801C4198</title>
-<ellipse fill="red" stroke="black" cx="441.44" cy="-198" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="441.44" cy="-198" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="441.44" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_801C4198</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no0.func_801C3F9C</title>
 <g id="a_node5"><a xlink:href="no0.func_801C3F9C.svg" xlink:title="no0.func_801C3F9C">
-<ellipse fill="red" stroke="black" cx="776.44" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="776.44" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="776.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.func_801C3F9C</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>no0.EntityAxeKnight</title>
 <g id="a_node6"><a xlink:href="no0.EntityAxeKnight.svg" xlink:title="no0.EntityAxeKnight">
-<ellipse fill="red" stroke="black" cx="441.44" cy="-378" rx="107.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="441.44" cy="-378" rx="107.78" ry="18"/>
 <text text-anchor="middle" x="441.44" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityAxeKnight</text>
 </a>
 </g>

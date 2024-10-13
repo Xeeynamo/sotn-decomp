@@ -12,14 +12,14 @@
 <!-- no0.EntityAxeKnightThrowingAxe -->
 <g id="node1" class="node">
 <title>no0.EntityAxeKnightThrowingAxe</title>
-<ellipse fill="red" stroke="black" cx="718.34" cy="-198" rx="168.97" ry="18"/>
+<ellipse fill="green" stroke="black" cx="718.34" cy="-198" rx="168.97" ry="18"/>
 <text text-anchor="middle" x="718.34" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityAxeKnightThrowingAxe</text>
 </g>
 <!-- no0.EntityAxeKnightRotateAxe -->
 <g id="node2" class="node">
 <title>no0.EntityAxeKnightRotateAxe</title>
 <g id="a_node2"><a xlink:href="no0.EntityAxeKnightRotateAxe.svg" xlink:title="no0.EntityAxeKnightRotateAxe">
-<ellipse fill="red" stroke="black" cx="155.34" cy="-18" rx="155.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="155.34" cy="-18" rx="155.17" ry="18"/>
 <text text-anchor="middle" x="155.34" y="-14.3" font-family="Times,serif" font-size="14.00">no0.EntityAxeKnightRotateAxe</text>
 </a>
 </g>
