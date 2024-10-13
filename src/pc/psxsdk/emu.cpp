@@ -10,7 +10,11 @@
 #include "../../main/psxsdk/libsnd/libsnd_i.h"
 
 // adjust SS_SEQ_TABSIZ in include/psxsdk/libsnd.h accordingly
+#ifdef PLATFORM_64BIT
 static_assert(sizeof(SeqStruct) == 192, "SS_SEQ_TABSIZ check");
+#else
+static_assert(sizeof(SeqStruct) == 172, "SS_SEQ_TABSIZ check");
+#endif
 
 PS_SPU* SPU = nullptr;
 
