@@ -42,7 +42,7 @@ segments:
       - [0x3E4, .data, rwrp/e_init]
       - [0x528, .data, rwrp/st_debug]
       - [0x5A8, .data, wrp/e_breakable]
-      - [0x608, .data, wrp/d_prize_drops]
+      - [0x608, .data, rwrp/d_prize_drops]
       - [0x648, .data, rwrp/warp]
       - [0x690, .data, wrp/st_update]
       - [0x6BC, .data, wrp/collision]

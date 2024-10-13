@@ -1,3 +1,3 @@
 actor_names = 0x80180680;
-g_HeartDropArray = 0x80180744;
+MAR_PrizeDrops = 0x80180744;
 g_StoneDoorTiles = 0x801812DC;

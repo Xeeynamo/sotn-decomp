@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 
-u16 g_HeartDropArray[ZERO_LEN] = {};
+u16 OVL_EXPORT(PrizeDrops)[ZERO_LEN] = {};

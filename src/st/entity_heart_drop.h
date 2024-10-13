@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_HeartDropArray[];
 
 #if defined(VERSION_BETA)
-static u16 g_HeartDropArray[] = {
+static u16 OVL_EXPORT(PrizeDrops)[] = {
     0x000C, 0x0017, 0x00D8, 0x012F, 0x000C, 0x0085, 0x0017, 0x00E5,
     0x014A, 0x00EE, 0x013A, 0x0017, 0x000C, 0x00C9, 0x008B, 0x00C8,
     0x0098, 0x0099, 0x0142, 0x0161, 0x008F, 0x011A, 0x011F, 0x0099,
     0x00C9, 0x00F2, 0x0133, 0x0103, 0x0150, 0x013E, 0x000C, 0x0017,
     0x0103, 0x00D6, 0x00E6, 0x0017, 0x0017, 0x0089, 0x0139, 0x0000};
+#else
+// defined in d_prize_drops.c
+extern u16 OVL_EXPORT(PrizeDrops)[];
 #endif
 
 void EntityHeartDrop(Entity* self) {
@@ -25,7 +27,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= HEART_DROP_CASTLE_FLAG;
-        index = g_HeartDropArray[index];
+        index = OVL_EXPORT(PrizeDrops)[index];
         if (index < 128) {
             self->unkB8 = (Entity*)EntityPrizeDrop;
         } else {
