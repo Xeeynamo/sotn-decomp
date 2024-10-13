@@ -2499,7 +2499,7 @@
 - [✅ EntityMagicallySealedDoor](gh-duplicates/function_calls/nz0.EntityMagicallySealedDoor.svg?raw=1)
 - [✅ EntityMaria](gh-duplicates/function_calls/nz0.EntityMaria.svg?raw=1)
 - [✅ EntityMessageBox](gh-duplicates/function_calls/nz0.EntityMessageBox.svg?raw=1)
-- [✅ EntityMoveableBox](gh-duplicates/function_calls/nz0.EntityMoveableBox.svg?raw=1)
+- [✅ EntityMovableBox](gh-duplicates/function_calls/nz0.EntityMovableBox.svg?raw=1)
 - [✅ EntityOlroxDrool](gh-duplicates/function_calls/nz0.EntityOlroxDrool.svg?raw=1)
 - [✅ EntityPrizeDrop](gh-duplicates/function_calls/nz0.EntityPrizeDrop.svg?raw=1)
 - [✅ EntityPurpleBrickScrollingBackground](gh-duplicates/function_calls/nz0.EntityPurpleBrickScrollingBackground.svg?raw=1)
