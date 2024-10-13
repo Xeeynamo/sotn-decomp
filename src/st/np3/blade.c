@@ -122,7 +122,7 @@ void EntityBlade(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BBC);
+        InitializeEntity(g_EInitGurkhaType2);
         self->animCurFrame = 0;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -538,7 +538,7 @@ void EntityBladeSword(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BC8);
+        InitializeEntity(g_EInitGurkhaBlade);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         self->drawFlags |= FLAG_DRAW_ROTZ;

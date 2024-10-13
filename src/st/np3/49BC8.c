@@ -23,7 +23,7 @@ void EntityZombie(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B08);
+        InitializeEntity(g_EInitZombie);
         self->hitboxWidth = 8;
         self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;

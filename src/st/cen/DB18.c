@@ -14,7 +14,7 @@ void func_8018DB18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180404);
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = 0xB0;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->animCurFrame = self->params + 28;

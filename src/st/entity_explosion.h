@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 extern s32 g_ExplosionYVelocities[];
 extern u8* g_ExplosionAnimations[];
 
@@ -10,7 +10,7 @@ typedef u32 (*AnimateEntityMissingProto)(u8[], Entity*);
 
 void EntityExplosion(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->animSet = ANIMSET_DRA(2);

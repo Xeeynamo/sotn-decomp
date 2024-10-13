@@ -41,7 +41,7 @@ void EntityMerman(Entity* self) {
 
     switch (self->step) {
     case MERMAN_INIT:
-        InitializeEntity(D_80180ACC);
+        InitializeEntity(g_EInitMerman);
         self->ext.merman.palette = 0x2B9;
         self->zPriority = 0xA9;
         self->velocityY = FIX(-1);
@@ -379,7 +379,7 @@ void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180AD8);
+        InitializeEntity(g_EInitMermanFireball);
         self->hitboxWidth = 6;
         self->animCurFrame = 0;
         self->hitboxHeight = 3;
@@ -423,7 +423,7 @@ void EntityMermanFireball(Entity* self) {
 // some kind of falling object
 void func_801C8F54(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180ACC);
+        InitializeEntity(g_EInitMerman);
         self->animCurFrame = 0;
         self->hitboxState = 0;
         self->zPriority += 4;
@@ -438,7 +438,7 @@ void func_801C8F54(Entity* self) {
 
 void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->palette = 0x82BB;
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = D_80182454[self->params];

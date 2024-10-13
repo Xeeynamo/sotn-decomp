@@ -1,11 +1,11 @@
 g_EntityGfxs = 0x801802C4;
 ST0_EntityUpdates = 0x801804BC;
-g_eBreakableInit = 0x80180574;
-g_InitializeData0 = 0x80180580;
-g_InitializeEntityData0 = 0x8018058C;
-g_InitDataEnt13 = 0x801805A4;
-g_eInitGeneric2 = 0x801805BC;
-g_eDamageDisplayInit = 0x801805C8;
+g_EInitBreakable = 0x80180574;
+g_EInitObtainable = 0x80180580;
+g_EInitParticle = 0x8018058C;
+g_EInitUnkId13 = 0x801805A4;
+g_EInitCommon = 0x801805BC;
+g_EInitDamageNum = 0x801805C8;
 g_eRedDoorTiles = 0x8018064C;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;

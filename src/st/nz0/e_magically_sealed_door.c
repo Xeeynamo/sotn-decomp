@@ -53,7 +53,7 @@ void EntityMagicallySealedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = 0;
         self->animCurFrame = 1;
         self->zPriority = PLAYER.zPriority - 0x20;

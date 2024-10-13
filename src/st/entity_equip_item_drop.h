@@ -33,7 +33,7 @@ void EntityEquipItemDrop(Entity* self) {
             return;
         }
 #endif
-        InitializeEntity(g_InitializeData0);
+        InitializeEntity(g_EInitObtainable);
         self->ext.equipItemDrop.timer = 0;
         break;
     case 1:

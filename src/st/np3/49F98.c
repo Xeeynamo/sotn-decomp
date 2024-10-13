@@ -28,7 +28,7 @@ void EntityBloodSplatter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         break;
 
     case 1:
@@ -229,7 +229,7 @@ void EntityBloodyZombie(Entity* self) {
 
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
-        InitializeEntity(D_80180B38);
+        InitializeEntity(g_EInitBloodyZombieNP3);
         self->hitboxOffX = 1;
         self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
@@ -449,7 +449,7 @@ void func_801CAE0C(Entity* self) { // BloodDrips
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];

@@ -16,7 +16,7 @@ void EntityStageNamePopup(Entity* self) {
             return;
         }
 
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 181);
         if (primIndex == -1) {

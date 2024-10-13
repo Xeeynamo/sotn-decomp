@@ -38,10 +38,10 @@ typedef struct {
 
 extern s32 D_8003C8B8;
 
-extern u16 g_InitializeData0[];
-extern u16 g_InitializeEntityData0[];
-extern u16 g_EInitGeneric[];
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitObtainable[];
+extern u16 g_EInitParticle[];
+extern u16 g_EInitInteractable[];
+extern u16 g_EInitCommon[];
 extern u16 g_EInitSmallRocks[];
 
 void EntityExplosionVariants(Entity* entity);

@@ -131,7 +131,7 @@ void EntityDeathStolenItem(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         break;
 
     case 1:
@@ -292,7 +292,7 @@ void EntityDeath(Entity* self) {
         if (g_CutsceneFlags & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                InitializeEntity(g_eInitGeneric2);
+                InitializeEntity(g_EInitCommon);
                 self->animSet = ANIMSET_OVL(8);
                 self->palette = 0x2D6;
                 self->unk5A = 0x44;
@@ -570,7 +570,7 @@ void EntityUnkId5B(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
@@ -610,7 +610,7 @@ void EntityUnkId5E(Entity* entity) {
     switch (entity->step) {
     case 0:
         animCurFrame = entity->animCurFrame;
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animCurFrame = animCurFrame;
         entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
@@ -676,7 +676,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_80181C5C[params];
         self->palette = obj->palette + 0xD0;

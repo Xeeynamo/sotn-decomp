@@ -453,7 +453,7 @@ extern u16 D_80183B48[];
 // part of explosion when merman dies
 void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->palette = PAL_OVL(0x2BB);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = D_80183B44[self->params];

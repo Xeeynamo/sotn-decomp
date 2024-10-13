@@ -30,7 +30,7 @@ void EntityBackgroundLightning(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->ext.backgroundLightning.timer = 0x80;
         self->animCurFrame = 15;
         g_CastleFlags[CASTLE_FLAG_55] |= 1;
@@ -118,7 +118,7 @@ void EntityShuttingWindow(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -221,7 +221,7 @@ void EntityCastleDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -329,7 +329,7 @@ void EntityBackgroundBushes(Entity* self) {
     MATRIX m;
 
     if (!self->step) {
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -438,7 +438,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
     s32 var_v1;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -520,7 +520,7 @@ void EntityTransparentWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->ext.transparentWater.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -652,7 +652,7 @@ void EntityCavernDoorLever(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         entity->animCurFrame = 18;
         entity->rotZ = -0x200;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
@@ -693,7 +693,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 17;
         self->ext.cavernDoor.xCoord.val = self->posX.val;
         self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
@@ -728,7 +728,7 @@ void EntityCavernDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
 
@@ -877,7 +877,7 @@ void EntityClickSwitch(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
         if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
@@ -910,7 +910,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
@@ -989,7 +989,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
@@ -1063,7 +1063,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 void EntityTrapDoor(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         entity->animCurFrame = 0x1B;
         entity->zPriority = 0x6A;
         entity->hitboxWidth = 0x10;
@@ -1111,7 +1111,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1210,7 +1210,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1300,7 +1300,7 @@ void func_801B5488(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         if (g_CastleFlags[CASTLE_FLAG_58] != 0) {
             self->step = 2;
         }
@@ -1346,7 +1346,7 @@ void EntityFallingRock2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame;
         self->animCurFrame += 31;
         self->zPriority = 0x9F;
@@ -1402,7 +1402,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posX.i.hi = 1432 - g_Tilemap.scrollX.i.hi;
@@ -1534,7 +1534,7 @@ void EntityFallingRock(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
         self->rotY = 0x60;
         self->rotX = 0x60;
@@ -1572,7 +1572,7 @@ void EntityFallingRock(Entity* self) {
 
 void EntityLightningThunder(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->facingLeft = Random() & 1;
@@ -1587,7 +1587,7 @@ void EntityLightningThunder(Entity* self) {
 // as a background. It's subtle and hard to see, but it's there.
 void EntityLightningCloud(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x29;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         // There are 3 shapes of cloud, this picks which one.
@@ -1608,7 +1608,7 @@ void EntitySwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[CASTLE_FLAG_50]) {
@@ -1643,7 +1643,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AA8);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 0x25;
         self->zPriority = 0x5E;
 
@@ -1754,7 +1754,7 @@ void EntityUnkId49(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         break;
     case 1:
         temp = g_Tilemap.fg[0x12 / 2];

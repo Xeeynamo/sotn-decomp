@@ -2,7 +2,7 @@
 
 // params: message box duration
 // ext.messageBox.label: box size and text to render
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtainable[];
 void EntityMessageBox(Entity* self) {
     const u16 VramX = 0;
     const u16 VramY = 0x180;
@@ -30,7 +30,7 @@ void EntityMessageBox(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeData0);
+        InitializeEntity(g_EInitObtainable);
         self->flags |= FLAG_UNK_10000;
         self->flags ^= FLAG_POS_CAMERA_LOCKED;
         if (!self->params) {

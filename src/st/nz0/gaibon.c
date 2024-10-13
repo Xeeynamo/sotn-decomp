@@ -98,7 +98,7 @@ void EntityGaibon(Entity* self) {
     }
     switch (self->step) {
     case GAIBON_INIT:
-        InitializeEntity(D_80180D30);
+        InitializeEntity(g_EInitGaibon);
         other = self + 1;
         // func_801B69E8
         CreateEntityFromCurrentEntity(E_GAIBON_UNK0, other);
@@ -499,7 +499,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_NEAR_DEATH_TRANSFORM:
             if (AnimateEntity(D_801812FC, self) == 0) {
                 self->ext.GS_Props.flag++;
-                self->palette = D_80180D30[3] + self->ext.GS_Props.flag;
+                self->palette = g_EInitGaibon[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     self->flags &= ~0xF;
                     SetStep(4);
@@ -517,7 +517,7 @@ void EntityGaibon(Entity* self) {
                 self->flags &= ~0xF;
                 // do-while needed on PSX but not PSP
                 do {
-                    self->palette = D_80180D30[3];
+                    self->palette = g_EInitGaibon[3];
                     PlaySfxPositional(SFX_EXPLODE_SMALL);
                     self->step_s++;
                 } while (0);
@@ -592,7 +592,7 @@ void func_801B69E8(Entity* self) {
     s16 animCurFrame;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180D30);
+        InitializeEntity(g_EInitGaibon);
         self->hitboxState = 0;
     }
 
@@ -629,7 +629,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D3C);
+        InitializeEntity(g_EInitGaibonProjectile);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
@@ -661,7 +661,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D48);
+        InitializeEntity(g_EInitGaibonLargeProjectile);
         if (self->params == 0) {
             self->animSet = ANIMSET_DRA(2);
             self->drawFlags = FLAG_DRAW_ROTZ;

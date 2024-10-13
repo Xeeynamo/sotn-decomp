@@ -46,7 +46,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
-        InitializeEntity(D_80180C40);
+        InitializeEntity(g_EInitBloodySkeleton);
         self->facingLeft = (u32)Random() % 2;
         self->animCurFrame = 1;
         self->flags &=

@@ -85,7 +85,7 @@ void EntityPlatform(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitGeneric);
+            InitializeEntity(g_EInitInteractable);
             self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 9;
             self->zPriority = 0x80;
@@ -282,7 +282,7 @@ void EntityRoomDarkness(Entity* self) {
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitGeneric);
+            InitializeEntity(g_EInitInteractable);
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->animSet = 0;
@@ -352,7 +352,7 @@ void EntityMaria(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_eMariaInit);
+        InitializeEntity(g_EInitMaria);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;

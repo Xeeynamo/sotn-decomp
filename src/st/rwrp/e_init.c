@@ -24,29 +24,29 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 // *** Group here all the Entity Init ***
-u16 g_eBreakableInit[] = {
+u16 g_EInitBreakable[] = {
     0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
-u16 g_InitializeData0[] = {
+u16 g_EInitObtainable[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
-u16 g_InitializeEntityData0[] = {
+u16 g_EInitParticle[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000,
 };
-u16 g_EInitGeneric[] = {
+u16 g_EInitInteractable[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
 };
-u16 g_InitDataEnt13[] = {
+u16 g_EInitUnkId13[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
 };
-u16 g_EntityUnkId12Init[] = {
+u16 g_EInitUnkId12[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
-u16 g_eInitGeneric2[] = {
+u16 g_EInitCommon[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
-u16 g_eDamageDisplayInit[] = {
+u16 g_EInitDamageNum[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
 u16 D_801804AC[] = {
