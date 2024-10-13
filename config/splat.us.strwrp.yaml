@@ -46,7 +46,7 @@ segments:
       - [0x648, .data, rwrp/warp]
       - [0x690, .data, wrp/st_update]
       - [0x6BC, .data, wrp/collision]
-      - [0xA7C, .data, wrp/e_red_door]
+      - [0xA7C, .data, rwrp/e_red_door]
       - [0xA94, .data, wrp/st_common]
       - [0xC94, .data, wrp/e_collect]
       - [0xF84, .data, rwrp/e_misc]
@@ -63,7 +63,7 @@ segments:
       - [0x8C48, .rodata, rwrp/warp] # warp strings
       - [0x8C88, .rodata, rwrp/warp] # EntityRWarpRoom
       - [0x8CB0, .rodata, rwrp/warp] # EntityWarpSmallRocks
-      - [0x8CC8, .rodata, wrp/e_red_door] # EntityRedDoor
+      - [0x8CC8, .rodata, rwrp/e_red_door] # EntityRedDoor
       - [0x8CE0, .rodata, wrp/e_collect] # CollectGold strings
       - [0x8D30, .rodata, wrp/e_collect] # EntityPrizeDrop
       - [0x8D50, .rodata, wrp/e_collect] # EntityEquipItemDrop
@@ -77,7 +77,7 @@ segments:
       - [0xA168, c, wrp/st_update]
       - [0xA59C, c, wrp/collision]
       - [0xBD58, c, rwrp/create_entity]
-      - [0xC8D0, c, wrp/e_red_door]
+      - [0xC8D0, c, rwrp/e_red_door]
       - [0xD580, c, wrp/st_common]
       - [0xEA30, c, wrp/e_collect]
       - [0xff9c, c, wrp/blit_char]

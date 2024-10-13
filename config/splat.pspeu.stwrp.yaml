@@ -95,7 +95,7 @@ segments:
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
-      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # g_eRedDoorTiles
+      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # WRP_RedDoorTiles
       - [0xF7B0, .data, wrp_psp/wrp_data_F7B0] # D_psp_09246E30
       - [0xF810, .data, wrp_psp/wrp_data_F810] # g_EInitBreakable
       - [0xF820, .data, wrp_psp/wrp_data_F810] # g_EInitObtainable
