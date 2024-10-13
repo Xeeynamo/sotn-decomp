@@ -1,10 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * File: 394D4.c
- * Overlay: NZ0
- * Description: Alchemy Laboratory
- */
-
 #include "nz0.h"
 #include "sfx.h"
 

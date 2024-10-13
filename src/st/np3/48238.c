@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NP3
- * Description: Merman Room (2)
- */
-
 #include "np3.h"
 #include "sfx.h"
 #include "../e_merman.h"

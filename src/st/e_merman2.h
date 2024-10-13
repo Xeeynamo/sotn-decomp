@@ -1,11 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Entity: Merman2
- * Stages: NO3, NP3
- *
- * Another merman variant
- */
-
 typedef enum {
     MERMAN2_INIT,
     MERMAN2_SWIMMING_UP,

@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NP3
- * Enemy: Bloody Zombie
- */
 
 // NOTE: There is an nz0/e_bloody_zombie.c which is almost exactly the same as
 // this file. Would maybe be smart to try to de-duplicate. Could be marked as

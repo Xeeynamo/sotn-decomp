@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
 #include "sfx.h"
 
 extern u16 g_EInitCommon[];
-extern u16 g_eRedDoorTiles[2][8];
+extern u16 OVL_EXPORT(RedDoorTiles)[2][8];
 
 u8 g_eRedDoorUV[][8] = {
     {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
@@ -348,7 +347,7 @@ void EntityRedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_eRedDoorTiles[sp3F][i];
+            g_Tilemap.fg[tileIdx] = OVL_EXPORT(RedDoorTiles)[sp3F][i];
         }
     } else {
         for (i = 0; i < 4; i++) {
@@ -357,7 +356,7 @@ void EntityRedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_eRedDoorTiles[sp3F][i + 4];
+            g_Tilemap.fg[tileIdx] = OVL_EXPORT(RedDoorTiles)[sp3F][i + 4];
         }
     }
 }
