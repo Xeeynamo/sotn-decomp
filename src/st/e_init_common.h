@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #ifndef HARD_LINK
-EInit g_EInitBreakable = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 1};
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0x00, 0x000, 2};
 EInit g_EInitMaria = {ANIMSET_DRA(0), 0, 0x00, 0x000, 4};

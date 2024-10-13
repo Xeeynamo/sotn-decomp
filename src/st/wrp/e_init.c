@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
-#include "../st_private.h"
 
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
@@ -23,6 +22,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityWarpRoom,        EntityWarpSmallRocks,
 };
 
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(11), 1, 0x48, 0x21A, 97};
 EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0, 0x00, 0x000, 5};

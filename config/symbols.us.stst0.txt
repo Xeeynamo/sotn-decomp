@@ -1,5 +1,5 @@
 ST0_EntityUpdates = 0x801804BC;
-g_EInitBreakable = 0x80180574;
+ST0_EInitBreakable = 0x80180574;
 g_EInitObtainable = 0x80180580;
 g_EInitParticle = 0x8018058C;
 g_EInitUnkId13 = 0x801805A4;

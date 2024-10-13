@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "game.h"
-#include "stage.h"
-#define OVL_EXPORT(x) CEN_##x
+#include "cen.h"
 
 void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
@@ -48,6 +46,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId1B,         EntityMovingElevator,
 };
 
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitElevator = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
 

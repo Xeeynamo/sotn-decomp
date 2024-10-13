@@ -17,7 +17,7 @@ void UnusedCENEntity(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitBreakable);
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = 0xB0;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->animCurFrame = self->params + 28;

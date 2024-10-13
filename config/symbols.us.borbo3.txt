@@ -1,7 +1,7 @@
 RBO3_pStObjLayoutHorizontal = 0x801801EC;
 RBO3_pStObjLayoutVertical = 0x801802C0;
 RBO3_EntityUpdates = 0x80180394;
-g_EInitBreakable = 0x80180414;
+RBO3_EInitBreakable = 0x80180414;
 g_EInitObtainable = 0x80180420;
 g_EInitParticle = 0x8018042C;
 g_EInitInteractable = 0x80180444;

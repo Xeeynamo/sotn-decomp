@@ -60,7 +60,7 @@ extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 // *** Initializers ***
-extern u16 g_EInitBreakable[];
+extern EInit OVL_EXPORT(EInitBreakable);
 extern u16 g_EInitParticle[];
 extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 g_EInitCommon[];

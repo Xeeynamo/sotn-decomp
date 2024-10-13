@@ -24,9 +24,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 // *** Group here all the Entity Init ***
-u16 g_EInitBreakable[] = {
-    0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 u16 g_EInitObtainable[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };

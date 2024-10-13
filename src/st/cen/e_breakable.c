@@ -40,7 +40,7 @@ void EntityBreakable(Entity* self) {
     u16 breakableType = self->params >> 0xC;
 
     if (self->step == 0) {
-        InitializeEntity(g_EInitBreakable);
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = 0xB0;
         self->drawMode = g_eBreakableDrawModes[breakableType];
         newEntity = &self[1];

@@ -1,5 +1,5 @@
 NO3_EntityUpdates = 0x80180924;
-g_EInitBreakable = 0x80180AAC;
+NO3_EInitBreakable = 0x80180AAC;
 g_EInitObtainable = 0x80180AB8;
 g_EInitParticle = 0x80180AC4;
 g_EInitSpawner = 0x80180AD0;
