@@ -59,11 +59,18 @@ jobs:
         compiler: ["clang", "gcc"]
         build_type: ["Debug", "RelWithDebInfo"]
         sound_engine: ["lle", "custom"]
+        arch: ["x86_64", "i686"]
     runs-on: ubuntu-24.04
     needs: extract-assets
     steps:
       - name: Install requirements
         run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
+      - name: Install multilib
+        if: matrix.arch == 'i686'
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install gcc-multilib g++-multilib libsdl2-dev:i386
       - name: Clone repo
         uses: actions/checkout@v4
         with:
@@ -81,6 +88,9 @@ jobs:
           export PC_FLAGS=""
           if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
             export PC_FLAGS="-DWANT_LIBSND_LLE=1"
+          fi
+          if [[ "${{ matrix.arch }}" == "i686" ]]; then
+            export PC_FLAGS="$PC_FLAGS -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
           fi
           export CC=${{ matrix.compiler }}
           cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
