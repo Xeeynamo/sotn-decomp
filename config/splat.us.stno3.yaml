@@ -52,6 +52,7 @@ segments:
       - [0x1ACC, .data, cutscene]
       - [0x1AD4, data]
       - [0x1B40, data]
+      - [0x1C8C, .data, d_prize_drops]
       - [0x1CC0, .data, st_update]
       - [0x1CEC, .data, collision]
       - [0x20AC, .data, e_red_door]
