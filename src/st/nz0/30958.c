@@ -22,7 +22,7 @@ void func_801B0958(Entity* self) {
 
 #include "../player_is_within_hitbox.h"
 
-extern u16 D_80180C10[];
+extern u16 g_EInitUnkId12[];
 static u8 e_801B0AA4_hitbox[] = {32, 32, 32, 32};
 static u8 e_801B0AA4_variant[] = {0, 0, 0, 0};
 static u16 e_801B0AA4_mapScroll[] = {
@@ -39,7 +39,7 @@ void func_801B0AA4(Entity* self) {
 
     params = self->params;
     if (!self->step) {
-        InitializeEntity(D_80180C10);
+        InitializeEntity(g_EInitUnkId12);
         self->hitboxState = 1;
         var_s2 = self->ext.et_801B0AA4.unk7C = e_801B0AA4_variant[params];
         if (var_s2) {

@@ -53,6 +53,9 @@ u8 e_table_blue_flame_p[128];
 u8 e_table_with_alembic_p[128];
 u8 e_table_with_globe_p[128];
 
+// bss
+u16 D_801CB736[3];
+
 extern AbbreviatedOverlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
@@ -109,7 +112,7 @@ void InitStageNZ0(Overlay* o) {
     LOAD_ASSET_PAL("assets/st/nz0", e_table_with_alembic_p);
     LOAD_ASSET_PAL("assets/st/nz0", e_table_with_globe_p);
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(AbbreviatedOverlay));
-    // PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
     g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }

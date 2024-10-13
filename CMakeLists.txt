@@ -297,6 +297,52 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/prim_helpers.c
 )
 
+set(SOURCE_FILES_STAGE_NZ0
+    src/pc/stages/stage_nz0.c
+    src/st/nz0/header.c
+    src/st/nz0/e_laydef.c
+    src/st/nz0/e_init.c
+    src/st/nz0/rooms.c
+    src/st/nz0/e_layout.c
+    src/st/nz0/cutscene_data.c
+    src/st/nz0/tile_data.c
+    src/st/nz0/sprites.c
+    src/st/nz0/30958.c
+    src/st/nz0/e_breakable.c
+    src/st/nz0/d_prize_drops.c
+    src/st/nz0/311C0.c
+    src/st/nz0/337B4.c
+    src/st/nz0/e_explosion_puff_opaque.c
+    src/st/nz0/bossfight.c
+    src/st/nz0/slogra.c
+    src/st/nz0/gaibon.c
+    src/st/nz0/e_elevator.c
+    src/st/nz0/cutscene.c
+    src/st/nz0/maria.c
+    src/st/nz0/st_update.c
+    src/st/nz0/collision.c
+    src/st/nz0/create_entity.c
+    src/st/nz0/e_red_door.c
+    src/st/nz0/st_common.c
+    src/st/nz0/e_collect.c
+    src/st/nz0/blit_char.c
+    src/st/nz0/e_misc.c
+    src/st/nz0/e_particles.c
+    src/st/nz0/e_room_fg.c
+    src/st/nz0/popup.c
+    src/st/nz0/e_bone_scimitar.c
+    src/st/nz0/e_axe_knight.c
+    src/st/nz0/e_bloody_zombie.c
+    src/st/nz0/e_skeleton.c
+    src/st/nz0/e_spittle_bone.c
+    src/st/nz0/e_subweapon_container.c
+    src/st/nz0/e_blood_skeleton.c
+    src/st/nz0/e_magically_sealed_door.c
+    src/st/nz0/e_stage_name.c
+    src/st/nz0/prim_helpers.c
+    src/st/nz0/e_life_up.c
+)
+
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/header.c
@@ -370,6 +416,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_CEN}
+    ${SOURCE_FILES_STAGE_NZ0}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
