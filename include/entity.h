@@ -1965,18 +1965,6 @@ typedef union { // offset=0x7C
     ET_DestructAnimation destructAnim;
 } Ext;
 
-typedef enum {
-    AXE_KNIGHT_INIT,
-    AXE_KNIGHT_IDLE,
-    AXE_KNIGHT_WALK_TOWARDS_PLAYER,
-    AXE_KNIGHT_WALK_AWAY_FROM_PLAYER,
-    AXE_KNIGHT_STANDING_THROW,
-    AXE_KNIGHT_DUCKING_THROW,
-    AXE_KNIGHT_UNUSED, // Charge Attack missing step from the blue AxeKnight
-    AXE_KNIGHT_ARCING_THROW, // Unused, present in the blue AxeKnight
-    AXE_KNIGHT_DYING,
-} EntityAxeKnightSteps;
-
 #define SYNC_FIELD(struct1, struct2, field)                                    \
     STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
