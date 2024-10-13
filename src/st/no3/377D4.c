@@ -1,10 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * File: 377D4.c
- * Overlay: NO3
- * Description: Castle Entrance
- */
-
 #include "no3.h"
 #include "sfx.h"
 
