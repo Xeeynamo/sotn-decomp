@@ -3,8 +3,6 @@
 
 static s32 elevator_target = 0;
 static s16 elevator_target_pos[] = {0x0000, 0x0060, 0x0360, 0x0660};
-u16 g_HeartDropArray[] = {0x012B, 0x000C, 0x015A, 0x0017, 0x00E5, 0x0146,
-                          0x0144, 0x011A, 0x0085, 0x0092, 0x011F, 0x0000};
 
 void func_801B6DE4(Entity* self) {
     s32 temp_s1;

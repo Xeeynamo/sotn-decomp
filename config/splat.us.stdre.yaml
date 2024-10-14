@@ -45,6 +45,7 @@ segments:
       - [0x630, data]
       - [0x640, data]
       - [0x650, data]
+      - [0x660, .data, d_prize_drops]
       - [0x660, data]
       - [0x770, data]
       - [0x938, .data, cutscene]

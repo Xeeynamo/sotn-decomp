@@ -279,6 +279,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/st_debug.c
     src/st/cen/e_breakable.c
     src/st/cen/DB18.c
+    src/st/cen/d_prize_drops.c
     src/st/cen/cutscene.c
     src/st/cen/F890.c
     src/st/cen/st_update.c
@@ -303,7 +304,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
-    src/st/wrp/d_608.c
+    src/st/wrp/d_prize_drops.c
     src/st/wrp/rooms.c
     src/st/wrp/e_layout.c
     src/st/wrp/tile_data.c

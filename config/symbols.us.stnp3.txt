@@ -1,6 +1,6 @@
 NP3_gfxBanks = 0x801806DC;
 g_TrapDoorFlag = 0x80181104;
-g_HeartDropArray = 0x80181618;
+NP3_PrizeDrops = 0x80181618;
 g_ESoulStealOrbAngles = 0x8018205C;
 g_ESoulStealOrbSprt = 0x8018206C;
 g_ESoulStealOrbAnim = 0x801820CC;
