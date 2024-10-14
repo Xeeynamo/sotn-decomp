@@ -4,7 +4,7 @@
 extern u16 g_EInitCommon[];
 extern u16 OVL_EXPORT(RedDoorTiles)[2][8];
 
-u8 g_eRedDoorUV[][8] = {
+static u8 g_eRedDoorUV[][8] = {
     {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
     {0x88, 0xA8, 0x88, 0xA8, 0x21, 0x21, 0x5F, 0x5F},
     {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
@@ -31,7 +31,7 @@ static bool EntityIsNearPlayer(Entity* self) {
     return true;
 }
 
-void EntityRedDoor(Entity* self) {
+void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     Primitive* prim;
     s32 i;
     s16 angle;
