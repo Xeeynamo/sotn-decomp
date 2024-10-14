@@ -23,7 +23,3 @@ INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_us_801DD018);
 INCLUDE_ASM("st/no0/nonmatchings/5BDCC", EntitySkeletonThrownBone);
 
 INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_801C6678);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_us_801DD2B0);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", EntityMagicallySealedDoor);
