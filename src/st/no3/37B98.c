@@ -3,46 +3,6 @@
 
 #include "../entrance_stage_entities.h"
 
-// lever and platform to open caverns door
-void EntityCavernDoorLever(Entity* self) {
-    s32 posX;
-    s32 posY;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_eInitGeneric3);
-        self->animCurFrame = 18;
-        self->rotZ = -0x200;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
-        CreateEntityFromEntity(E_CAVERN_DOOR_PLATFORM, self, self + 1);
-        if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
-            self->rotZ = 0;
-        }
-
-    case 1:
-        if ((self + 1)->ext.cavernDoor.collision != 0) {
-            self->rotZ += 4;
-            if (self->rotZ > 0) {
-                self->rotZ = 0;
-                if (g_CastleFlags[CASTLE_FLAG_48] == 0) {
-                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-                }
-                g_CastleFlags[CASTLE_FLAG_48] = 1;
-            } else if (!(g_Timer & 0xF)) {
-                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-            }
-        }
-        break;
-    }
-
-    posX = self->posX.val;
-    posY = self->posY.val;
-    posX += rcos(self->rotZ) * 0x280;
-    posY += rsin(self->rotZ) * 0x280;
-    self[1].posX.val = posX;
-    self[1].posY.val = posY;
-}
-
 // platform attached to lever at cavern door
 void EntityCavernDoorPlatform(Entity* self) {
     Entity* player;
