@@ -386,11 +386,11 @@
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/cen/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/dre/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | func_801910A8                       | asm/us/st/mad/matchings/e_red_door/func_801910A8.s 
+| 1.00 | true     | func_us_801DD2B0                    | asm/us/st/no0/matchings/e_magically_sealed_door/func_us_801DD2B0.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/no0/matchings/e_red_door/EntityIsNearPlayer.s 
-| 1.00 | false    | func_us_801DD2B0                    | asm/us/st/no0/nonmatchings/5BDCC/func_us_801DD2B0.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/no3/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/np3/matchings/e_red_door/EntityIsNearPlayer.s 
-| 1.00 | true     | EntityIsNearPlayer2                 | asm/us/st/nz0/matchings/e_magically_sealed_door/EntityIsNearPlayer2.s 
+| 1.00 | true     | MagicallySealedDoorIsNearPlayer     | asm/us/st/nz0/matchings/e_magically_sealed_door/MagicallySealedDoorIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/nz0/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/rwrp/matchings/rwrp/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/st0/matchings/e_red_door/EntityIsNearPlayer.s 
@@ -1751,11 +1751,6 @@
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | EntityWargExplosionPuffOpaque       | asm/us/st/no0/nonmatchings/41F98/EntityWargExplosionPuffOpaque.s 
 | 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/no3/matchings/3FF00/EntityWargExplosionPuffOpaque.s 
 | 0.98 | true     | EntityWargExplosionPuffOpaque       | asm/us/st/np3/matchings/363FC/EntityWargExplosionPuffOpaque.s 
@@ -1802,6 +1797,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2132,6 +2131,9 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2294,11 +2296,11 @@
 | 1.00 | true     | func_801C4550                       | asm/us/st/no0/matchings/e_axe_knight/func_801C4550.s 
 | 1.00 | true     | func_801C4550                       | asm/us/st/nz0/matchings/e_axe_knight/func_801C4550.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityMagicallySealedDoor           | asm/us/st/no0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
+| 0.99 | true     | EntityMagicallySealedDoor           | asm/us/st/nz0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_801B0AA4                       | asm/us/st/no0/matchings/first_c_file/func_801B0AA4.s 
 | 0.98 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/30958/func_801B0AA4.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | EntityMagicallySealedDoor           | asm/us/st/no0/nonmatchings/5BDCC/EntityMagicallySealedDoor.s 
-| 0.99 | true     | EntityMagicallySealedDoor           | asm/us/st/nz0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | EntitySkeletonThrownBone            | asm/us/st/no0/nonmatchings/5BDCC/EntitySkeletonThrownBone.s 
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/nz0/matchings/e_skeleton/EntitySkeletonThrownBone.s 

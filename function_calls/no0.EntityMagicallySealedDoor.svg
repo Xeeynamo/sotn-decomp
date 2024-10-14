@@ -12,7 +12,7 @@
 <!-- no0.EntityMagicallySealedDoor -->
 <g id="node1" class="node">
 <title>no0.EntityMagicallySealedDoor</title>
-<ellipse fill="red" stroke="black" cx="1465.44" cy="-198" rx="157.87" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1465.44" cy="-198" rx="157.87" ry="18"/>
 <text text-anchor="middle" x="1465.44" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntityMagicallySealedDoor</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>no0.func_us_801DD2B0</title>
 <g id="a_node12"><a xlink:href="no0.func_us_801DD2B0.svg" xlink:title="no0.func_us_801DD2B0">
-<ellipse fill="red" stroke="black" cx="2450.44" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2450.44" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="2450.44" y="-14.3" font-family="Times,serif" font-size="14.00">no0.func_us_801DD2B0</text>
 </a>
 </g>
