@@ -3,49 +3,6 @@
 
 #include "../entrance_stage_entities.h"
 
-void func_801B3D24(Primitive* prim) {
-    s32 xVar;
-    s32 yVar;
-
-    switch (prim->p3) {
-    case 1:
-        xVar = (Random() & 0xF) - 8;
-        prim->x0 = g_CurrentEntity->posX.i.hi + xVar;
-        prim->y0 = 0x9C;
-        prim->x1 = 0;
-        prim->y1 = 0;
-        if (xVar > 0) {
-            LOW(prim->x3) = Random() << 6;
-        } else {
-            LOW(prim->x3) = -Random() * 0x40;
-        }
-        LOW(prim->x2) = (Random() << 8) + FIX(-4);
-        prim->blendMode = 2;
-        prim->p3++;
-        /* fallthrough */
-    case 2:
-        xVar = (prim->x0 << 0x10) + (u16)prim->x1;
-        yVar = (prim->y0 << 0x10) + (u16)prim->y1;
-        xVar += LOW(prim->x3);
-        yVar += LOW(prim->x2);
-        prim->x0 = (xVar >> 0x10);
-        prim->x1 = xVar & 0xFFFF;
-        prim->y0 = (yVar >> 0x10);
-        prim->y1 = yVar & 0xFFFF;
-
-        LOW(prim->x2) += FIX(1.0 / 4.0);
-        if (LOW(prim->x2) <= 0x60000) {
-            return;
-        }
-        prim->p3++;
-        break;
-    case 3:
-        prim->blendMode = 8;
-        prim->p3 = 0;
-        break;
-    }
-}
-
 void EntityCavernDoorLever(Entity* self) {
     s32 posX;
     s32 posY;
@@ -232,7 +189,7 @@ void EntityCavernDoor(Entity* self) {
         for (prim = self->ext.cavernDoor.prim; prim != NULL;
              prim = prim->next) {
             if (prim->p3) {
-                func_801B3D24(prim);
+                DoorCascadePhysics(prim);
             }
         }
     }
@@ -1141,7 +1098,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         prim = self->ext.heartRoomGoldDoor.prim;
         while (prim != NULL) {
             if (prim->p3 != 0) {
-                func_801B3D24(prim);
+                DoorCascadePhysics(prim);
             }
             prim = prim->next;
         }

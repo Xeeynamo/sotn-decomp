@@ -187,10 +187,34 @@ typedef struct AxePrim {
     /* 0x22 */ s16 y2;
     /* 0x24 */ u8 step;
     /* 0x26 */ u16 priority;
-    /* 0x2A */ s32 pad;
+    /* 0x28 */ s32 pad;
     /* 0x2C */ s16 timer;
     /* 0x2E */ s16 unk2E;
     /* 0x30 */ s16 unk30;
     /* 0x32 */ u16 drawMode;
 } AxePrim;
+
+// If we find more uses, can get a better name.
+typedef struct EntranceCascadePrim {
+    /* 0x00 */ struct EntranceCascadePrim* next;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
+#endif
+    /* 0x04 */ s32 : 32;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ s32 : 32;
+    /* 0x10 */ s32 : 32;
+    /* 0x14 */ s16 x1;
+    /* 0x16 */ s16 y1;
+    /* 0x18 */ s32 : 32;
+    /* 0x1C */ s32 : 32;
+    /* 0x20 */ f32 velocityY;
+    /* 0x24 */ s32 : 32;
+    /* 0x28 */ s32 : 24;
+    /* 0x2B */ u8 p3; // TODO not verified
+    /* 0x2C */ f32 velocityX;
+    /* 0x30 */ s16 : 16;
+    /* 0x32 */ u16 drawMode;
+} EntranceCascadePrim; /* size=0x34 */
 #endif
