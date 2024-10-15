@@ -104,12 +104,12 @@ EntityGremlinFire = 0x801A9E94;
 EntityThornweed = 0x801AA020;
 EntityCorpseweed = 0x801AA390;
 EntityCorpseweedProjectile = 0x801AB0C0;
-// func_801AB7CC
-// func_801AC074
-// func_801AC730
-// func_801ACB6C
-// func_801ACEF4
 SetupPrimsForEntitySpriteParts = 0x801AB548;
+EntityVenusWeed = 0x801AB7CC;
+EntityVenusWeedFlower = 0x801AC074;
+EntityVenusWeedTendril = 0x801AC730;
+EntityVenusWeedDart = 0x801ACB6C;
+EntityVenusWeedSpike = 0x801ACEF4;
 StageNamePopupHelper = 0x801AD0EC;
 //EntityStageNamePopup = 0x801AD2BC;
 //UnkPrimHelper = 0x801ADF40;
