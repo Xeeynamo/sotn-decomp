@@ -258,7 +258,7 @@ void func_8019B914(Entity* entity) {
 
         if (entity->primIndex != 0) {
             prim = &g_PrimBuf[entity->primIndex];
-            func_801ADF40(prim);
+            UnkPrimHelper(prim);
             LOH(prim->next->r2) = LOH(prim->next->b2) += 4;
             if (LOH(prim->next->r2) > 64) {
                 prim->next->b3 += 252;

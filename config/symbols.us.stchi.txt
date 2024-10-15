@@ -112,7 +112,7 @@ EntityVenusWeedDart = 0x801ACB6C;
 EntityVenusWeedSpike = 0x801ACEF4;
 StageNamePopupHelper = 0x801AD0EC;
 EntityStageNamePopup = 0x801AD2BC;
-//UnkPrimHelper = 0x801ADF40;
+UnkPrimHelper = 0x801ADF40;
 UpdateAnimation = 0x801AE328;
 FindFirstUnkPrim = 0x801AE478;
 FindFirstUnkPrim2 = 0x801AE4A8;
@@ -120,7 +120,7 @@ PrimToggleVisibility = 0x801AE524;
 PrimResetNext = 0x801AE5AC;
 UnkPolyFunc2 = 0x801AE68C;
 UnkPolyFunc0 = 0x801AE6E0;
-//PrimDecreaseBrightness = 0x801AE70C;
+PrimDecreaseBrightness = 0x801AE70C;
 
 // *** Data ***
 //TODO: Migrate this

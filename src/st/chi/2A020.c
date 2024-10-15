@@ -629,7 +629,7 @@ void EntityCorpseweed(Entity* self)
                         if (prim->y1 < prim->y3) {
                             prim->y1++;
                         }
-                        func_801AE70C(prim, 3U);
+                        PrimDecreaseBrightness(prim, 3U);
                     }
 
                     // Stalk
@@ -662,7 +662,7 @@ void EntityCorpseweed(Entity* self)
                     if (prim->v3 > 0) {
                         prim->v3 -= 1;
                     }
-                    func_801AE70C(prim, 1U);
+                    PrimDecreaseBrightness(prim, 1U);
                     break;
             }
     }
@@ -886,7 +886,7 @@ void EntityCorpseweedProjectile(Entity* self)
                     prim->y1 -= 0xA;
                     prim->y2 += 1;
                     prim->y3 -= 1;
-                    func_801AE70C(prim, 7U);
+                    PrimDecreaseBrightness(prim, 7U);
                     break;
 
                 case Death_Left:
@@ -898,7 +898,7 @@ void EntityCorpseweedProjectile(Entity* self)
                     prim->y1 -= 0xA;
                     prim->y2 += 1;
                     prim->y3 -= 1;
-                    func_801AE70C(prim, 7U);
+                    PrimDecreaseBrightness(prim, 7U);
                     break;
             }
             break;
