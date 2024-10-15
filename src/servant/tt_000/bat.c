@@ -1014,8 +1014,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
         s_TrailUpdateFadeAmounts[s_BlueTrailIndex] = 192;
         s_TrailEntityIsAlive[s_BlueTrailIndex] = true;
 
-        s_BlueTrailIndex++;
-        s_BlueTrailIndex = s_BlueTrailIndex >= nPrim ? 0 : s_BlueTrailIndex;
+        s_BlueTrailIndex = ++s_BlueTrailIndex >= nPrim ? 0 : s_BlueTrailIndex;
 
         s_CurrentPrim = &g_PrimBuf[self->primIndex];
         for (trailIndex = 0; trailIndex < nPrim; trailIndex++) {
