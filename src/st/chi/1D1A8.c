@@ -6,7 +6,7 @@
  * Description: Abandoned Mine
  */
 
-void func_8019D0D8(Primitive*);
+void UpdateDustParticles(Primitive*);
 extern EntityInit EntityInit_8018067C;
 
 u16 Room3_FallingStairsNotFallenTileIndices[] = {
@@ -320,7 +320,7 @@ void EntityFallingStairs(Entity* self)
         // Update dust particles
         while (prim != NULL) {
             if (prim->p3) {
-                func_8019D0D8(prim);
+                UpdateDustParticles(prim);
             }
             prim = prim->next;
         }
@@ -488,7 +488,7 @@ void EntityFallingStep(Entity* self) {
         prim = prim->next;
         while (prim != NULL) {
             if (prim->p3) {
-                func_8019D0D8(prim);
+                UpdateDustParticles(prim);
             }
             prim = prim->next;
         }

@@ -1,7 +1,7 @@
 // *** Functions ***
 // func_8019B914
 // func_8019CBA8
-// func_8019D0D8    // Falling Stairs Dust Particles
+UpdateDustParticles = 0x8019D0D8;
 Random = 0x8019DE74;
 CreateEntityFromLayout = 0x8019FA64;
 CreateEntityWhenInVerticalRange = 0x8019FB28;
