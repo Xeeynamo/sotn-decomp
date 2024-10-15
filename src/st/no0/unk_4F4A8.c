@@ -110,9 +110,9 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D66F8);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D75E4);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntitySkeleton);
+INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7670);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntitySkeletonPieces);
+INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7B40);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7C20);
 

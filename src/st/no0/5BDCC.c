@@ -13,13 +13,3 @@ void func_us_801DC754(void) {
 }
 
 INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_us_801DC788);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", SkeletonAttackCheck);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_us_801DCB48);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_us_801DD018);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", EntitySkeletonThrownBone);
-
-INCLUDE_ASM("st/no0/nonmatchings/5BDCC", func_801C6678);
