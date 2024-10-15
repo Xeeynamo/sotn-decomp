@@ -1802,18 +1802,6 @@ typedef struct {
 } ET_DestructAnimation;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ u16 unk8A;
-} ET_Warg;
-typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 velX;
@@ -1832,6 +1820,19 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 unk84;
 } ET_MermanRock;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ u16 unk88;
+    /* 0x8A */ u16 unk8A;
+} ET_Warg;
 
 // ====== RIC ENTITIES ======
 
@@ -1985,11 +1986,11 @@ typedef union { // offset=0x7C
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
     ET_DestructAnimation destructAnim;
-    ET_Warg warg;
     ET_SecretStairs secretStairs;
     ET_SubwpnContainerGlass subwpnContGlass;
     ET_BloodyZombie bloodyZombie;
     ET_MermanRock mermanRock;
+    ET_Warg warg;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

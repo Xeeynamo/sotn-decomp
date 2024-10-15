@@ -1011,7 +1011,7 @@ void EntityExplosion3(Entity* entity) {
     }
     entity->ext.entityExplosion3.timer++;
     if (entity->ext.entityExplosion3.timer >= 32) {
-        CreateEntityFromCurrentEntity(2, entity);
+        CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
         entity->params = 1;
     }
 }
