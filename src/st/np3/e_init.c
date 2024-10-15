@@ -32,7 +32,7 @@ void EntityBackgroundTrees(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
 void EntityCavernDoor(Entity* self);
-void EntityClickSwitch(Entity* self);
+void EntityWeightsSwitch(Entity* self);
 void EntityPathBlockSmallWeight(Entity* self);
 void EntityPathBlockTallWeight(Entity* self);
 void EntityTrapDoor(Entity* self);
@@ -125,7 +125,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,
-    EntityClickSwitch, // 0x20
+    EntityWeightsSwitch, // 0x20
     EntityPathBlockSmallWeight,
     EntityPathBlockTallWeight,
     EntityTrapDoor,
