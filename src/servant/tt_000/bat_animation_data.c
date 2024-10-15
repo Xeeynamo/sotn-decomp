@@ -34,7 +34,7 @@ AnimationFrame D_801704E0[] = {
     /* 80170510 */ {0, 0x0000},
 };
 
-AnimationFrame D_80170514[] = {
+AnimationFrame g_BatFarFromTargetAnimationFrame[] = {
     /* 80170514 */ {1, 0x0415},
     /* 80170518 */ {1, 0x0416},
     /* 8017051C */ {1, 0x0417},
@@ -51,7 +51,7 @@ AnimationFrame D_80170514[] = {
     /* 80170548 */ {0, 0x0000},
 };
 
-AnimationFrame D_8017054C[] = {
+AnimationFrame g_BatCloseToTargetAnimationFrame[] = {
     /* 8017054C */ {1, 0x0415},
     /* 80170550 */ {1, 0x0416},
     /* 80170554 */ {1, 0x0417},
@@ -99,10 +99,10 @@ AnimationFrame g_BatHighVelocityAnimationFrame[] = {
     /* 801705F0 */ {-1, 0x0000},
 };
 
-AnimationFrame* D_801705F4[] = {
+AnimationFrame* g_BatAnimationFrames[] = {
     /* 801705F4 */ g_DefaultBatAnimationFrame,
     /* 801705F8 */ D_801704E0,
-    /* 801705FC */ D_80170514,
-    /* 80170600 */ D_8017054C,
+    /* 801705FC */ g_BatFarFromTargetAnimationFrame,
+    /* 80170600 */ g_BatCloseToTargetAnimationFrame,
     /* 80170604 */ g_BatHighVelocityAnimationFrame,
 };
