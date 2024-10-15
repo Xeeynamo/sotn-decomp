@@ -12,6 +12,7 @@ extern s32 D_psp_0926BC50;
 
 extern EntityInit EntityInit_8018067C;
 
+// D_8018089C
 u16 Room3_DemonSwitchWallTilesCollision[] = {
     0x039D, 0x03A0, 0x03A0, 0x039E, 0x03A0, 0x03A0, 0x03A0, 0x039F,
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
@@ -19,6 +20,7 @@ u16 Room3_DemonSwitchWallTilesCollision[] = {
 
 // [Combine this and above into multidimensional array]
 // Never directly referenced. Accessed by overflowing from above array
+// D_801808B4
 u16 Room3_DemonSwitchWallTilesNoCollision[] = {
     0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
     0x01BF, 0x01BF, 0x01BF, 0x01BF,

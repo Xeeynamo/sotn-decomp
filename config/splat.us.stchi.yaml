@@ -36,15 +36,15 @@ segments:
       - [0x0, .data, header]
       - [0xE8, .data, header] # layers
       - [0x298, data] # gfxbanks
-      - [0x3B4, .data, e_laydef] # layout entries header
+      - [0x3B4, .data, e_laydef] # layout entities header
       - [0x55C, .data, entity]
       - [0x89C, .data, 1BEDC]
       - [0x8CC, .data, 1C5CC]
       - [0x974, .data, 1D1A8]
       - [0x9E4, .data, func_data1]
       - [0xA4C, .data, collision]
-      - [0xAAC, .data, entity_damage_display]
-      - [0x1154, .data, e_collect]
+      - [0xDFC, .data, entity_damage_display]
+      - [0x1024, .data, e_collect]
       - [0x1314, .data, 23F58] # EntityRelicOrb
       - [0x1378, .data, 23F58] # EntityUnkId14Spawner
       - [0x1388, .data, 254C4] # EntityUnkId15, EntityUnkId14
@@ -53,7 +53,6 @@ segments:
       - [0x13EC, .data, 254C4] # UnkRecursivePrimFunc1
       - [0x140C, .data, 254C4] # UnkRecursivePrimFunc2
       - [0x142C, .data, 254C4] # EntitySoulStealOrb
-      - [0x14AC, .data, 254C4] # EntityEnemyBlood
       - [0x1538, .data, 2813C] # EntitySalemWitch
       - [0x162C, .data, 2813C] # EntitySalemWitchGlow
       - [0x1638, .data, 2813C] # EntitySalemWitchCurse
@@ -65,7 +64,7 @@ segments:
       - [0x173C, .data, 2A020] # EntityThornweed, EntityCorpseweed
       - [0x17F4, .data, 2B7CC] # EntityVenusWeed
       - [0x195C, .data, rooms]
-      - [0x19F8, .data, e_layout] # layout entries data
+      - [0x19F8, .data, e_layout] # layout entities data
       - [0x20D8, data]
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions

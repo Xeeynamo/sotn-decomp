@@ -6,6 +6,7 @@
 
 #include "chi.h"
 
+// D_80180DFC
 u16 g_eDamageDisplayClut[] = {
     PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
     PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
@@ -32,6 +33,7 @@ u16 g_eDamageDisplayClut[] = {
 // func_801A0560: CreateEntityFromEntity
 #include "../create_entity.h"
 
+// D_80180E0C: g_eRedDoorUV
 // func_801A05DC: EntityIsNearPlayer
 // func_801A0654: [E_RED_DOOR] EntityRedDoor
 #include "../e_red_door.h"
@@ -202,6 +204,7 @@ s32 func_801A1914(s16* posX) {
 // func_801A1AFC: AllocEntity
 #include "../../alloc_entity.h"
 
+// D_80180E24
 s16 D_80180E24[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC,
     0x031F, 0x0381, 0x03E3, 0x0444, 0x04A5, 0x0505, 0x0564, 0x05C2,
