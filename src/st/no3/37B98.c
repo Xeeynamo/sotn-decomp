@@ -3,38 +3,6 @@
 
 #include "../entrance_stage_entities.h"
 
-void EntityLightningThunder(Entity* self) {
-    if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric3);
-        self->zPriority = 0x2A;
-        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        self->facingLeft = Random() & 1;
-        g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
-    }
-    if (AnimateEntity(D_80181390, self) == 0) {
-        DestroyEntity(self);
-    }
-}
-
-// When lightning strikes, we get a bright bolt, but it is against a cloud
-// as a background. It's subtle and hard to see, but it's there.
-void EntityLightningCloud(Entity* self) {
-    if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric3);
-        self->zPriority = 0x29;
-        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        // There are 3 shapes of cloud, this picks which one.
-        self->animCurFrame = self->params + 0x22;
-        self->posX.i.hi = D_8018139C[self->params << 1];
-        self->posY.i.hi = D_8018139E[self->params << 1];
-        self->ext.backgroundLightning.timer = 5;
-    }
-
-    if (--self->ext.backgroundLightning.timer == 0) {
-        DestroyEntity(self);
-    }
-}
-
 // switch that goes downwards when you stand on it
 void EntitySwitch(Entity* entity) {
     s32 temp_a0 = GetPlayerCollisionWith(entity, 8, 4, 4);

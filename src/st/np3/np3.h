@@ -191,8 +191,6 @@ extern u8 D_8018142C[];
 
 // *** EntitySlogra properties END ***
 
-extern const u8 D_80181214[];
-extern s16 D_80181220[][2];
 extern u16 g_SplashSfx;
 extern u16 g_SurfacingSfx;
 extern u8 D_801813D4[];
