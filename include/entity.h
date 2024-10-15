@@ -1288,7 +1288,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ Primitive* prim;
+    /* 0x80 */ Primitive* stemPrim;
     /* 0x84 */ s16 leavesWidth;
     /* 0x86 */ s16 leavesHeight;
     /* 0x88 */ s16 stemWidth;
@@ -1301,42 +1301,40 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x10];
-    /* 0x8C */ s16 unk8C;
-    /* 0x8E */ char pad_8E[0x2];
-    /* 0x90 */ u8 unk90;
-    /* 0x91 */ u8 unk91;
-    /* 0x92 */ u8 unk92;
+    /* 0x8C */ s16 triggerAttack;
+    /* 0x8E */ char pad_8E[0x3];
+    /* 0x91 */ u8 clutOffset;
+    /* 0x92 */ u8 nextAttackIsDarts;
     /* 0x94 */ char pad_94[0x10];
     /* 0xA4 */ struct Entity* entity;
 } ET_VenusWeedFlower;
 
 typedef struct {    // TODO: Not sure about this yet
     /* 0x7C */ char pad_7C[0x10];
-    /* 0x8C */ s16 unk8C;
+    /* 0x8C */ s16 timer;
     /* 0x8E */ char pad_8E[0x2];
-    /* 0x90 */ u8 unk90;            // Used by tendril
-    /* 0x91 */ u8 unk91;
-    /* 0x92 */ u8 unk92;
-    /* 0x94 */ s16 unk94;
+    /* 0x90 */ u8 spikeStartTimeOffsetIndex;
+    /* 0x91 */ char pad_91[0x2];
+    /* 0x94 */ s16 targetX;
     /* 0x96 */ char pad_96[0xE];
     /* 0xA4 */ struct Entity* entity;
 } ET_VenusWeedTendril;
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x10];
-    /* 0x8C */ s16 unk8C;
+    /* 0x8C */ s16 clutIndex;
     /* 0x8E */ char pad_8E[0x6];
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ s16 unk96;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ s32 unk9C;
+    /* 0x94 */ s16 nextPosDeltaX;
+    /* 0x96 */ s16 nextPosDeltaY;
+    /* 0x98 */ s32 speed;
+    /* 0x9C */ s32 accel;
 } ET_VenusWeedDart;
 
 typedef struct {
-    /* 0x7C */ Primitive* unk7C;
+    /* 0x7C */ Primitive* firstPart;
     /* 0x80 */ char pad_80[0x24];
-    /* 0xA4 */ struct Entity* unkA4;
-} ET_VenusWeedTendrilSpike;
+    /* 0xA4 */ struct Entity* flower;
+} ET_VenusWeedSpike;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -1463,5 +1461,5 @@ typedef union { // offset=0x7C
     ET_VenusWeedFlower venusWeedFlower;
     ET_VenusWeedTendril venusWeedTendril;
     ET_VenusWeedDart venusWeedDart;
-    ET_VenusWeedTendrilSpike venusWeedTendrilSpike;
+    ET_VenusWeedSpike venusWeedSpike;
 } Ext;

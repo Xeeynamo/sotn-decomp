@@ -41,10 +41,10 @@ void EntityThornweed(Entity*);
 void EntityCorpseweed(Entity*);
 void EntityCorpseweedProjectile(Entity*);
 void EntityVenusWeed(Entity*);
-void func_801AC074(Entity*);
-void func_801AC730(Entity*);
-void func_801ACB6C(Entity*);
-void func_801ACEF4(Entity*);
+void EntityVenusWeedFlower(Entity*);
+void EntityVenusWeedTendril(Entity*);
+void EntityVenusWeedDart(Entity*);
+void EntityVenusWeedSpike(Entity*);
 
 PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId01,
@@ -88,10 +88,10 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityCorpseweed,
     EntityCorpseweedProjectile,
     EntityVenusWeed,
-    func_801AC074,  // E_ID_2A
-    func_801AC730,  // E_ID_2B
-    func_801ACB6C,  // E_ID_2C
-    func_801ACEF4,  // E_ID_2D
+    EntityVenusWeedFlower,
+    EntityVenusWeedTendril,
+    EntityVenusWeedDart,
+    EntityVenusWeedSpike,
 };
 
 //TODO: Used in EntityUnkId01

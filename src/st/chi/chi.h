@@ -48,10 +48,10 @@ typedef enum {
     /* 0x27 */ E_CORPSEWEED,
     /* 0x28 */ E_CORPSEWEED_PROJECTILE,
     /* 0x29 */ E_VENUS_WEED,
-    /* 0x2A */ E_ID_2A, //func_801AC074 [Venus Weed Flower]
-    /* 0x2B */ E_ID_2B, //func_801AC730 [Venus Weed Tendrils]
-    /* 0x2C */ E_ID_2C, //func_801ACB6C
-    /* 0x2D */ E_ID_2D, //func_801ACEF4
+    /* 0x2A */ E_VENUS_WEED_FLOWER,
+    /* 0x2B */ E_VENUS_WEED_TENDRIL,
+    /* 0x2C */ E_VENUS_WEED_DART,
+    /* 0x2D */ E_VENUS_WEED_SPIKE,
 } EntityIDs;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
