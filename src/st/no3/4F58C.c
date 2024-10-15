@@ -4,10 +4,10 @@
 
 static void func_801CF58C(Entity* self) {
     self->velocityX = 0;
-    self->ext.generic.unk84.S16.unk2 = 0x100;
+    self->ext.warg.unk86 = 0x100;
     SetStep(6);
     g_api.PlaySfx(SE_WARG_GROWL);
-    self->ext.generic.unk80.modeS16.unk0 = 0x20;
+    self->ext.warg.unk80 = 0x20;
 }
 
 void func_801CF5E0(Entity* self) {
@@ -18,34 +18,33 @@ void func_801CF5E0(Entity* self) {
         return;
     }
 
-    if (self->ext.generic.unk84.S16.unk2 == 0) {
+    if (self->ext.warg.unk86 == 0) {
         func_801CF58C(self);
         return;
     }
 
-    temp_v0 = self->ext.generic.unk84.S16.unk0 - self->posX.i.hi -
-              g_Tilemap.scrollX.i.hi;
+    temp_v0 = self->ext.warg.unk84 - self->posX.i.hi - g_Tilemap.scrollX.i.hi;
 
     if (temp_v0 > 16) {
         SetStep(3);
         if (self->facingLeft != 0) {
-            self->ext.generic.unk7C.S8.unk0 = 0;
+            self->ext.warg.unk7C = 0;
         } else {
-            self->ext.generic.unk7C.S8.unk0 = 1;
+            self->ext.warg.unk7C = 1;
         }
     } else if (temp_v0 < -16) {
         SetStep(3);
         if (self->facingLeft != 0) {
-            self->ext.generic.unk7C.S8.unk0 = 1;
+            self->ext.warg.unk7C = 1;
         } else {
-            self->ext.generic.unk7C.S8.unk0 = 0;
+            self->ext.warg.unk7C = 0;
         }
     } else {
         SetStep(7);
     }
 
-    self->ext.generic.unk80.modeS16.unk0 = 0;
-    self->ext.generic.unk80.modeS16.unk2 = 32;
+    self->ext.warg.unk80 = 0;
+    self->ext.warg.unk82 = 32;
 }
 
 // duplicate of func_801CC90C in this file
@@ -55,17 +54,17 @@ void func_801CF6D8(Entity* arg0) {
     s16 temp_v0;
 
     temp_v0 = GetDistanceToPlayerX();
-    temp_v1 = arg0->ext.generic.unk84.S16.unk2;
+    temp_v1 = arg0->ext.warg.unk86;
     if (temp_v1 != 0) {
 
         if ((u32)(temp_v0) < 0x60) {
             temp_v0_2 = temp_v1 - 2;
-            arg0->ext.generic.unk84.S16.unk2 = temp_v0_2;
+            arg0->ext.warg.unk86 = temp_v0_2;
             if (temp_v0_2 < 0) {
-                arg0->ext.generic.unk84.S16.unk2 = 0;
+                arg0->ext.warg.unk86 = 0;
             }
         } else {
-            arg0->ext.generic.unk84.S16.unk2 = (temp_v1 - 1);
+            arg0->ext.warg.unk86 = (temp_v1 - 1);
         }
     }
 }
@@ -340,9 +339,13 @@ void EntityWarg(Entity* self) {
                 CreateEntityFromCurrentEntity(E_WARG_EXP_TRANSP, otherEnt);
                 // Is this divide?
                 otherEnt->params =
-                    ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8) << 8) + 1;
-                otherEnt->posX.i.hi = self->ext.warg.unk88 - gTilemap->scrollX.i.hi;
-                otherEnt->posY.i.hi = self->ext.warg.unk8A - gTilemap->scrollY.i.hi;
+                    ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)
+                     << 8) +
+                    1;
+                otherEnt->posX.i.hi =
+                    self->ext.warg.unk88 - gTilemap->scrollX.i.hi;
+                otherEnt->posY.i.hi =
+                    self->ext.warg.unk8A - gTilemap->scrollY.i.hi;
                 if (self->facingLeft) {
                     otherEnt->posX.i.hi += (((Random() & 0xF) - 8) * 8);
                 } else {
@@ -382,14 +385,14 @@ void EntityWarg(Entity* self) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            dr_env = g_api.func_800EDB08((POLY_GT4 *)prim);
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
 
             if (dr_env != NULL) {
-                prim->type = 7;
+                prim->type = PRIM_ENV;
                 prim->priority = 0x3F;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
 
-                // The bgtz here is due to loeading everything from the draw
+                // The bgtz here is due to loading everything from the draw
                 drawEnv = g_CurrentBuffer->draw;
                 drawEnv.isbg = 1;
                 drawEnv.r0 = drawEnv.g0 = drawEnv.b0 = 0;
@@ -406,11 +409,11 @@ void EntityWarg(Entity* self) {
                 return;
             }
             prim = prim->next;
-            dr_env = g_api.func_800EDB08((POLY_GT4 *)prim);
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (dr_env != NULL) {
-                prim->type = 7;
+                prim->type = PRIM_ENV;
                 prim->priority = 0x41;
-                prim->drawMode = 0x800;
+                prim->drawMode = DRAW_UNK_800;
 
             } else {
                 DestroyEntity(self);
@@ -433,7 +436,8 @@ void EntityWarg(Entity* self) {
             prim->y0 = prim->y1 = self->posY.i.hi - 0x30;
             prim->y2 = prim->y3 = prim->y0 + 0x60;
             prim->priority = self->zPriority;
-            prim->drawMode = 0x53;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             self->posX.i.hi = 0x40;
             self->posY.i.hi = 0x40;
             self->zPriority = 0x40;
