@@ -43,7 +43,7 @@ void EntityFallingRock2(Entity* self);
 void EntityDeathSkySwirl(Entity* self);
 void EntityLightningThunder(Entity* self);
 void EntityLightningCloud(Entity* self);
-void EntitySwitch(Entity* self);
+void EntityHeartRoomSwitch(Entity* self);
 void EntityHeartRoomGoldDoor(Entity* self);
 void EntityFireWarg(Entity* self);
 void EntityFireWargWaveAttack(Entity* self);
@@ -73,7 +73,7 @@ void EntityMermanSpawner(Entity* self);
 void EntityBoneScimitar(Entity* self);
 void EntityBoneScimitarParts(Entity* self);
 void EntityBat(Entity* self);
-void EntityUnkId49(Entity* self);
+void EntityTilemapShufflerUnused(Entity* self);
 void EntityWarg(Entity* self);
 void EntityUnkId4B(Entity* self);
 void EntityZombie(Entity* self);
@@ -143,7 +143,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDeathSkySwirl,
     EntityLightningThunder,
     EntityLightningCloud,
-    EntitySwitch,
+    EntityHeartRoomSwitch,
     EntityHeartRoomGoldDoor,
     EntityFireWarg,
     EntityFireWargWaveAttack,
@@ -173,7 +173,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBoneScimitar,
     EntityBoneScimitarParts,
     EntityBat,
-    EntityUnkId49,
+    EntityTilemapShufflerUnused,
     EntityWarg,
     EntityUnkId4B,
     EntityZombie,

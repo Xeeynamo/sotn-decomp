@@ -100,19 +100,11 @@ extern u16 D_80182F9C[];
 extern u16 D_80182FA8[];
 extern u16 D_80182FC8[];
 extern u16 D_80182FE8[];
-<<<<<<< HEAD
 extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitUnkId12[];
 extern u16 g_EInitCommon[];
-extern u16 D_80180B18[];
-=======
-extern u16 g_ESpawnerInit[];
-extern u16 g_EInitGeneric[];
-extern u16 g_EntityUnkId12Init[];
-extern u16 g_eInitGeneric2[];
-extern u16 g_eInitGeneric3[];
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
+extern u16 g_EInitStInteractable[];
 extern u16 D_80180B24[];
 extern u16 D_80180B30[];
 extern u16 g_EInitWaterObject[];

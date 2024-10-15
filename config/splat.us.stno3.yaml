@@ -47,8 +47,7 @@ segments:
       - [0xE70, data]
       - [0xE80, data]
       - [0xE90, data]
-      - [0xEA0, .data, 37B98]
-      - [0x1140, .data, 37B98]
+      - [0xEA0, .data, entrance_stage_entities]
       - [0x13A8, data]
       - [0x1ACC, .data, cutscene]
       - [0x1AD4, data]
@@ -80,8 +79,8 @@ segments:
       - [0x26638, .data, tile_data] # tile definitions
       - [0x2EA68, .data, sprites]
       - [0x373E0, data]
-      - [0x373E8, .rodata, 37B98] # EntityCastleDoor
-      - [0x37400, .rodata, 37B98] # EntityStairwayPiece
+      - [0x373E8, .rodata, entrance_stage_entities] # EntityCastleDoor
+      - [0x37400, .rodata, entrance_stage_entities] # EntityStairwayPiece
       - [0x37414, .rodata, 3C4EC]
       - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, .rodata, cutscene] # actor names
@@ -110,7 +109,7 @@ segments:
       - [0x377CC, .rodata, prim_helpers]
       - [0x377D4, c]
       - [0x37A64, c, e_breakable]
-      - [0x37B98, c]
+      - [0x37B98, c, entrance_stage_entities]
       - [0x3C4EC, c]
       - [0x3E134, c]
       - [0x3E544, c, cutscene]

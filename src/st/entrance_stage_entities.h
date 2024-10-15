@@ -604,9 +604,6 @@ static s16* bush_unk_starts[] = {&bush_unk_data[0], &bush_unk_data[14],
                                  &bush_unk_data[18], &bush_unk_data[24]};
 static s16 backgroundTreePositions[][2] = {
     {0x200, 0}, {0x280, 12}, {0x300, 4}, {0x380, 16}};
-static s16* bush_unk_starts[] = {
-    &bush_unk_data[0], &bush_unk_data[14], &bush_unk_data[18], &bush_unk_data[24]};
-static s16 backgroundTreePositions[][2] = {{0x200, 0}, {0x280, 12}, {0x300, 4}, {0x380, 16}};
 static u16 backgroundTreeCluts[] = {0x15, 0x46, 0x47, 0x48};
 static SVECTOR backgroundBushZeroVec = {0, 0, 0};
 static SVECTOR backgroundTreeZeroVec = {0, 0, 0};
@@ -632,7 +629,7 @@ void EntityBackgroundBushes(Entity* self) {
     MATRIX m;
 
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -741,7 +738,7 @@ void EntityBackgroundTrees(Entity* self) {
     s32 posY;
 
     if (!self->step) {
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -958,7 +955,7 @@ void EntityCavernDoorLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 18;
         self->rotZ = -0x200;
         self->drawFlags |= FLAG_DRAW_ROTZ;
@@ -999,7 +996,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 17;
         self->ext.cavernDoor.xCoord.val = self->posX.val;
         self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
@@ -1038,7 +1035,7 @@ void EntityCavernDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
 
@@ -1192,7 +1189,7 @@ void EntityWeightsSwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
@@ -1225,7 +1222,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
         // All the prims below here are for the chain.
@@ -1306,7 +1303,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
@@ -1385,7 +1382,7 @@ static u8 trapdoor_anim[] = {
 void EntityTrapDoor(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         entity->animCurFrame = 27;
         entity->zPriority = 0x6A;
         entity->hitboxWidth = 16;
@@ -1698,7 +1695,7 @@ void EntityFallingRock2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
         self->drawFlags |= FLAG_DRAW_ROTZ;
         self->zPriority = 0x9F;
@@ -1883,7 +1880,7 @@ void EntityFallingRock(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
         self->rotY = 0x60;
         self->rotX = 0x60;
@@ -2107,7 +2104,7 @@ static u8 thunder_anim[] = {4, 23, 3, 24, 2, 25, 2, 26, 255, 0, 0, 0};
 
 void EntityLightningThunder(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->facingLeft = Random() & 1;
@@ -2124,7 +2121,7 @@ extern s16 cloudPos[][2] = {{0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}};
 // as a background. It's subtle and hard to see, but it's there.
 void EntityLightningCloud(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x29;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         // There are 3 shapes of cloud, this picks which one.
@@ -2145,7 +2142,7 @@ void EntityHeartRoomSwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[CASTLE_FLAG_50]) {
@@ -2184,7 +2181,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitInteractable3);
+        InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 37;
         self->zPriority = 0x5E;
 

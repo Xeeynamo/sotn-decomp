@@ -41,7 +41,7 @@ segments:
       - [0x8D0, .data, e_init]
       - [0xD98, .data, st_debug]
       - [0xE18, .data, e_breakable]
-      - [0xE78, .data, 32830]
+      - [0xE78, .data, entrance_stage_entities]
       - [0x122C, data]
       - [0x1300, data]
       - [0x14B4, .data, gaibon]
@@ -79,7 +79,7 @@ segments:
       - [0x21CF4, .data, tile_data] # tile definitions
       - [0x2A124, .data, sprites]
       - [0x31EA0, data]
-      - [0x31EA8, .rodata, 32830] # EntityStairwayPiece
+      - [0x31EA8, .rodata, entrance_stage_entities] # EntityStairwayPiece
       - [0x31EBC, .rodata, 363FC] # func_801B63FC
       - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
       - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
@@ -106,7 +106,7 @@ segments:
       - [0x32464, .rodata, prim_helpers]
       - [0x3246C, c, st_debug]
       - [0x326FC, c, e_breakable]
-      - [0x32830, c]
+      - [0x32830, c, entrance_stage_entities]
       - [0x363FC, c]
       - [0x36990, c, slogra]
       - [0x378BC, c, gaibon]

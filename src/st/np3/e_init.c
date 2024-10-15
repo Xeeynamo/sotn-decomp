@@ -42,7 +42,7 @@ void EntityJewelSwordDoor(Entity* self);
 void EntityFallingRock2(Entity* self);
 void EntityLightningThunder(Entity* self);
 void EntityLightningCloud(Entity* self);
-void EntitySwitch(Entity* self);
+void EntityHeartRoomSwitch(Entity* self);
 void EntityHeartRoomGoldDoor(Entity* self);
 void EntityAlucardWaterEffect(Entity* self);
 void EntitySplashWater(Entity* self);
@@ -65,7 +65,7 @@ void EntityMermanSpawner(Entity* self);
 void EntityBoneScimitar(Entity* self);
 void EntityBoneScimitarParts(Entity* self);
 void EntityBat(Entity* self);
-void EntityUnkId49(Entity* self);
+void EntityTilemapShufflerUnused(Entity* self);
 void EntityZombie(Entity* self);
 void EntityZombieSpawner(Entity* self);
 void EntityOwlKnight(Entity* self);
@@ -135,7 +135,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFallingRock2,
     EntityLightningThunder,
     EntityLightningCloud,
-    EntitySwitch,
+    EntityHeartRoomSwitch,
     EntityHeartRoomGoldDoor,
     EntityAlucardWaterEffect,
     EntitySplashWater,
@@ -158,7 +158,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBoneScimitar,
     EntityBoneScimitarParts,
     EntityBat, // 0x40
-    EntityUnkId49,
+    EntityTilemapShufflerUnused,
     EntityZombie,
     EntityZombieSpawner,
     EntityOwlKnight,
@@ -187,7 +187,6 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBladeSword,
 };
 
-<<<<<<< HEAD
 u16 g_EInitBreakable[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
 u16 g_EInitObtainable[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0001};
 u16 g_EInitParticle[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
@@ -206,26 +205,6 @@ u16 g_EInitBoneScimitar[] = {0x8002, 0x0001, 0x0048, 0x02C5, 0x0069};
 u16 g_EInitScimitarParts[] = {0x8002, 0x0001, 0x0048, 0x02C5, 0x0002};
 u16 g_EInitBat[] = {0x8005, 0x0000, 0x004C, 0x02C8, 0x0040};
 u16 g_EInitZombie[] = {0x8007, 0x0000, 0x004D, 0x02D3, 0x006E};
-=======
-u16 g_eBreakableInit[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
-u16 g_InitializeData0[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0001};
-u16 g_InitializeEntityData0[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
-u16 g_ESpawnerInit[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
-u16 g_EInitGeneric[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
-u16 g_InitDataEnt13[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
-u16 g_EntityUnkId12Init[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
-u16 g_eInitGeneric2[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-u16 g_eDamageDisplayInit[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
-u16 g_eInitGeneric3[] = {0x8001, 0x0000, 0x0000, 0x0000, 0x0005};
-u16 g_eMerman2Init[] = {0x8003, 0x0001, 0x0048, 0x028C, 0x001D};
-u16 g_EMediumWaterSplashInit[] = {0x8003, 0x0000, 0x0048, 0x028C, 0x001E};
-u16 D_80180ACC[] = {0x8004, 0x0001, 0x004A, 0x02B2, 0x001B};
-u16 D_80180AD8[] = {0x8004, 0x0000, 0x004A, 0x02B2, 0x001C};
-u16 g_BoneScimitarInit[] = {0x8002, 0x0001, 0x0048, 0x02C5, 0x0069};
-u16 g_ScimitarPartsInit[] = {0x8002, 0x0001, 0x0048, 0x02C5, 0x0002};
-u16 D_80180AFC[] = {0x8005, 0x0000, 0x004C, 0x02C8, 0x0040};
-u16 D_80180B08[] = {0x8007, 0x0000, 0x004D, 0x02D3, 0x006E};
->>>>>>> 547072a9 (Next dedupes of bushes and trees)
 u16 D_80180B14[] = {0x8008, 0x0010, 0x0049, 0x02CB, 0x0014};
 u16 D_80180B20[] = {0x8008, 0x0000, 0x0049, 0x02CB, 0x0015};
 u16 g_EInitOwl[] = {0x8008, 0x0001, 0x0049, 0x02CB, 0x0016};
