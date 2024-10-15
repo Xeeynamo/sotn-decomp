@@ -99,8 +99,8 @@ segments:
       - [0x37698, .rodata, e_fire_warg] # EntityFireWarg
       - [0x376D0, rodata] # EntityFireWargWaveAttack
       - [0x376E8, .rodata, 4ED60] # EntityUnkId2F
-      - [0x376FC, rodata] # D_801B76FC
-      - [0x37704, rodata] # EntityWarg
+      - [0x376FC, .rodata, 4F58C] # EntityWarg RECT
+      - [0x37704, .rodata, 4F58C] # EntityWarg
       - [0x37738, .rodata, 516B4]
       - [0x3775C, .rodata, 53F38]
       - [0x37784, .rodata, e_bone_scimitar]
@@ -123,6 +123,7 @@ segments:
       - [0x4AFF0, c]
       - [0x4C5A4, c, e_fire_warg]
       - [0x4ED60, c]
+      - [0x4F58C, c]
       - [0x50A2C, c, player_water_effect]
       - [0x516B4, c]
       - [0x53F38, c]
