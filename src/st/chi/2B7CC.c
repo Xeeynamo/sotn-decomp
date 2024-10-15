@@ -1144,7 +1144,7 @@ void EntityVenusWeedSpike(Entity* self)
                 prim = self->ext.venusWeedSpike.firstPart;
 
                 // Draw sprite parts
-                prim = func_801AB548(entity, prim); // Returns following prim
+                prim = SetupPrimsForEntitySpriteParts(entity, prim); // Returns following prim
 
                 // Copy prims to a later index (while maintaining linked list order)
                 for (primItr = entity->ext.venusWeedSpike.firstPart; primItr != NULL; primItr = primItr->next, prim = primNext) {

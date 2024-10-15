@@ -922,7 +922,7 @@ extern signed short* sprites_chi_7[];
 // https://decomp.me/scratch/yZqKn
 // PSP:func_psp_0923A7F0:Match
 // PSP:https://decomp.me/scratch/tPXxN
-Primitive* func_801AB548(Entity* entity, Primitive* prim)
+Primitive* SetupPrimsForEntitySpriteParts(Entity* entity, Primitive* prim)
 {
     s16 y;
     s32 spritePartCount;
