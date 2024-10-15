@@ -192,9 +192,9 @@ void EntityThornweed(Entity* self)
     }
 
     // Update the hitbox based on the current animation frame
-    hitboxData = &HitboxData[0];
+    hitboxData = HitboxData;
     hitboxIndex = HitboxIndices[self->animCurFrame];
-    hitboxData = &hitboxData[hitboxIndex << 2]; // 4 entries per index
+    hitboxData += hitboxIndex * 4;  // 4 entries per index
     self->hitboxOffX = *hitboxData++;
     self->hitboxOffY = *hitboxData++;
     self->hitboxWidth = *hitboxData++;
