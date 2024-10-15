@@ -3,58 +3,6 @@
 
 #include "../entrance_stage_entities.h"
 
-void EntityFallingRock2(Entity* self) {
-    s32 animFrame = self->params & 0xF;
-    Collider collider;
-    Entity* newEntity;
-    s32 temp_a0;
-    s32 var_a1;
-    s32 new_var2;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_eInitGeneric3);
-        self->animCurFrame = animFrame;
-        self->animCurFrame += 31;
-        self->zPriority = 0x9F;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
-        break;
-
-    case 1:
-        MoveEntity();
-        self->velocityY += FIX(0.25);
-        self->rotZ -= 0x20;
-        new_var2 = self->posY.i.hi;
-        new_var2 += rockYOffsets[animFrame];
-        g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
-
-        if (collider.effects & EFFECT_SOLID) {
-            if (self->velocityY > FIX(4.0)) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEntity != 0) {
-                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                    newEntity->params = 0x11;
-                    if (animFrame == 0) {
-                        newEntity->params = 0x13;
-                    }
-                }
-                DestroyEntity(self);
-                return;
-            }
-            self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
-            temp_a0 = -self->velocityY;
-            self->velocityY = -self->velocityY;
-            if (temp_a0 < 0) {
-                var_a1 = temp_a0 + 7;
-            } else {
-                var_a1 = temp_a0;
-            }
-            self->velocityY = temp_a0 - (var_a1 >> 3);
-        }
-        break;
-    }
-}
-
 // ID 0x4B
 // Stairway piece you can break before Death encounter
 void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
