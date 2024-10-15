@@ -46,6 +46,7 @@ void EntityVenusWeedTendril(Entity*);
 void EntityVenusWeedDart(Entity*);
 void EntityVenusWeedSpike(Entity*);
 
+// D_8018055C
 PfnEntityUpdate PfnEntityUpdates[] = {
     EntityUnkId01,
     EntityExplosion,
@@ -96,6 +97,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
 
 //TODO: Used in EntityUnkId01
 //TODO: Used in func_8018DB18
+// D_80180610
 EntityInit EntityInit_80180610 = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
@@ -108,6 +110,7 @@ EntityInit EntityInit_80180610 = {
 //TODO: Used in func_801A3740
 //TODO: Used in func_801A3FDC
 //TODO: (More were unlisted)
+// D_8018061C
 EntityInit g_InitializeData0 = {
     .animSet = ANIMSET_DRA(3),
     .animCurFrame = 0,
@@ -130,6 +133,7 @@ EntityInit g_InitializeEntityData0 = {
 };
 
 //TODO: No match, no errors
+// D_80180634
 EntityInit EntityInit_80180634 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -160,6 +164,7 @@ EntityInit g_InitDataEnt13 = {
 };
 
 //TODO: Used in EntityUnkId12
+// D_80180658
 EntityInit EntityInit_80180658 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -171,6 +176,7 @@ EntityInit EntityInit_80180658 = {
 //TODO: Used in func_801A7C8C
 //TODO: Used in EntityBackgroundBlock
 //TODO: Used in EntityRedDoor
+// D_80180664
 EntityInit g_eInitGeneric2 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -180,6 +186,7 @@ EntityInit g_eInitGeneric2 = {
 };
 
 //TODO: Used in EntityDamageDisplay
+// D_80180670
 EntityInit g_eDamageDisplayInit = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -190,6 +197,7 @@ EntityInit g_eDamageDisplayInit = {
 
 //TODO: Used in EntityDemonSwitchWall
 //TODO: Used in EntityBreakableWallDebris
+// D_8018067C
 EntityInit EntityInit_8018067C = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
@@ -201,6 +209,7 @@ EntityInit EntityInit_8018067C = {
 //TODO: Used in func_801A813C
 //TODO: Used in func_801A8DE8
 //TODO: (More were unlisted)
+// D_80180688
 EntityInit EntityInit_80180688 = {
     .animSet = ANIMSET_OVL(3),
     .animCurFrame = 1,
@@ -210,6 +219,7 @@ EntityInit EntityInit_80180688 = {
 };
 
 //TODO: Used in func_801A8EAC
+// D_80180694
 EntityInit EntityInit_80180694 = {
     .animSet = ANIMSET_OVL(3),
     .animCurFrame = 0,
@@ -219,6 +229,7 @@ EntityInit EntityInit_80180694 = {
 };
 
 //TODO: Used in func_801A9588
+// D_801806A0
 EntityInit EntityInit_801806A0 = {
     .animSet = ANIMSET_OVL(4),
     .animCurFrame = 0,
@@ -229,6 +240,7 @@ EntityInit EntityInit_801806A0 = {
 
 //TODO: Used in func_801A97C8
 //TODO: Used in func_801A9D40
+// D_801806AC
 EntityInit EntityInit_801806AC = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
@@ -238,6 +250,7 @@ EntityInit EntityInit_801806AC = {
 };
 
 //TODO: No match, no errors
+// D_801806B8
 EntityInit EntityInit_801806B8 = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
@@ -247,6 +260,7 @@ EntityInit EntityInit_801806B8 = {
 };
 
 //TODO: Used in func_801A9E94
+// D_801806C4
 EntityInit EntityInit_801806C4 = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
@@ -256,6 +270,7 @@ EntityInit EntityInit_801806C4 = {
 };
 
 //TODO: Used in func_801AA0F0
+// D_801806D0
 EntityInit EntityInit_801806D0 = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -265,6 +280,7 @@ EntityInit EntityInit_801806D0 = {
 };
 
 //TODO: No match, no errors
+// D_801806DC
 EntityInit EntityInit_801806DC = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -274,6 +290,7 @@ EntityInit EntityInit_801806DC = {
 };
 
 //TODO: Used in func_801AA404
+// D_801806E8
 EntityInit EntityInit_801806E8 = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -283,6 +300,7 @@ EntityInit EntityInit_801806E8 = {
 };
 
 //TODO: Used in func_801AB0C0
+// D_801806F4
 EntityInit EntityInit_801806F4 = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
@@ -292,6 +310,7 @@ EntityInit EntityInit_801806F4 = {
 };
 
 //TODO: Used in func_801AB844
+// D_80180700
 EntityInit EntityInit_80180700 = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
@@ -302,6 +321,7 @@ EntityInit EntityInit_80180700 = {
 
 //TODO: Used in func_801AC124
 //TODO: Used in func_801ACEF4
+// D_8018070C
 EntityInit EntityInit_8018070C = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
@@ -311,6 +331,7 @@ EntityInit EntityInit_8018070C = {
 };
 
 //TODO: Used in func_801AC7A0
+// D_80180718
 EntityInit EntityInit_80180718 = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
@@ -320,6 +341,7 @@ EntityInit EntityInit_80180718 = {
 };
 
 //TODO: Used in func_801ACB6C
+// D_80180724
 EntityInit EntityInit_80180724 = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 55,
@@ -328,22 +350,29 @@ EntityInit EntityInit_80180724 = {
     .enemyId = 164,
 };
 
-static u16 D_80180730[] = {
-    0x0140, 0x00FF,
+// D_80180730
+static u8 AnimFrames_80180730[] = {
+    0x40, 0x01, 0xFF, 0x00,
 };
 
-static u16 D_80180734[] = {
-    0x2502, 0x2602, 0x2702, 0x2602, 0x0000, 0x0000,
+// D_80180734
+static u8 AnimFrames_80180734[] = {
+    0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_80180740[] = {
-    0x0006, 0x01FA, 0x0000, 0x0000, 0x0000, 0x0010, 0x0000, 0x0000,
+// Used in EntityBackgroundBlock
+// D_80180740
+ObjInit2 ObjInit2_80180740 = {
+    .animSet = ANIMSET_DRA(6),
+    .zPriority = 0x1FA,
+    .unk4 = {.s = 0},
+    .palette = PAL_DRA(0),
+    .drawFlags = DRAW_DEFAULT,
+    .drawMode = DRAW_TPAGE,
+    .unk10 = &AnimFrames_80180730,
 };
 
-u16* D_80180750[] = {
-    D_80180730,
-};
-
+// D_80180754
 ObjInit2 ObjInit2_80180754 = {
     .animSet = ANIMSET_OVL(1),
     .zPriority = 0xC0,
@@ -352,9 +381,10 @@ ObjInit2 ObjInit2_80180754 = {
     .drawFlags = DRAW_TRANSP | DRAW_UNK02,
     .drawMode = 0x30,
     .unkC = 0,
-    .unk10 = D_80180734,
+    .unk10 = AnimFrames_80180734,
 };
 
+// D_80180768
 u16 g_eRedDoorTiles[3][8] = {
     {
         0x039C,
@@ -388,9 +418,12 @@ u16 g_eRedDoorTiles[3][8] = {
     },
 };
 
+// D_80180798
 u8 D_80180798[] = {32, 32, 32, 32, 32, 32, 80, 32};
+// D_801807A0
 u8 D_801807A0[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
+// D_801807A8
 u16 D_801807A8[] = {
     0x0000, 0x0000, 0x0600, 0x0100, 0x0000, 0x0000, 0x0600, 0x01FC,
     0x0000, 0x00FC, 0x0600, 0x01FC, 0x0000, 0x0000, 0x0600, 0x01FC,
@@ -401,34 +434,41 @@ u16 D_801807A8[] = {
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
 
+// D_80180818
 static u16 D_80180818[] = {
     0x0E03, 0x0F04, 0x1004, 0x1104, 0x1204, 0x1304, 0x1403, 0x0000,
 };
 
+// D_80180828
 static u16 D_80180828[] = {
     0x1503, 0x1604, 0x1704, 0x1804, 0x1904, 0x1A04, 0x1B03, 0x0000,
 };
 
+// D_80180838
 u16* D_80180838[] = {
     D_80180818, D_80180828, NULL, NULL, NULL, NULL, NULL, NULL,
 };
 
-// height?
+// [height?]
+// D_80180858
 u8 D_80180858[] = {
     12, 20, 0, 0, 0, 0, 0, 0,
 };
 
-// params?
+// [params?]
+// D_80180860
 u8 D_80180860[] = {
     3, 3, 0, 0, 0, 0, 0, 0,
 };
 
-// animset?
+// [animset?]
+// D_80180868
 u16 D_80180868[] = {
     ANIMSET_OVL(1), ANIMSET_OVL(1), 0, 0, 0, 0, 0, 0,
 };
 
-// draw mode?
+// [draw mode?]
+// D_80180878
 u8 D_80180878[] = {
     DRAW_TPAGE | DRAW_TPAGE2,
     DRAW_TPAGE | DRAW_TPAGE2,
@@ -440,6 +480,7 @@ u8 D_80180878[] = {
     DRAW_DEFAULT,
 };
 
+// D_80180880
 s16 D_80180880[] = {
     -4, -4, 3, -6, 2, 9, -4, 12, 0, 2, 0, 15, 0, 31,
 };
