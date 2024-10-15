@@ -16,7 +16,7 @@
 
 #ifndef VERSION_PSP
 static s32 s_TargetMatch[0x80];
-static Collider D_80174AD8;
+static Collider s_UnusedCollider;
 static s16 s_TargetLocationX;
 STATIC_PAD_BSS(2);
 static s16 s_TargetLocationY;
@@ -33,8 +33,8 @@ static s16 s_DistanceToAttackTarget_0;
 STATIC_PAD_BSS(2);
 static s16 s_xOffset_calc;
 STATIC_PAD_BSS(2);
-static s32 D_80174B1C;
-static s32 D_80174B20;
+static s32 s_TargetPositionX;
+static s32 s_TargetPositionY;
 static s32 s_AttackTargetDeltaX;
 static s32 s_AttackTargetDeltaY;
 static s32 s_DistanceToAttackTarget_1;
@@ -45,19 +45,19 @@ static s16 s_PointAdjustX;
 STATIC_PAD_BSS(2);
 static s16 s_PointAdjustY;
 STATIC_PAD_BSS(2);
-static s16 D_80174B40;
+static s16 s_MoveToPositionX;
 STATIC_PAD_BSS(2);
-static s16 D_80174B44;
+static s16 s_MoveToPositionY;
 STATIC_PAD_BSS(2);
 static Primitive* s_CurrentPrim;
-static s32 D_80174B4C[16];
-static Point16 D_80174B8C[16];
-static s16 D_80174BCC[16];
-static s16 D_80174BEC[16];
-static s16 D_80174C0C[16];
-static s32 D_80174C2C;
+static s32 s_TrailEntityIsAlive[16];
+static Point16 s_TrailLocationPoints[16];
+static s16 s_TrailFacingLeftCache[16];
+static s16 s_TrailUpdateOffsets[16];
+static s16 s_TrailUpdateFadeAmounts[16];
+static s32 s_BlueTrailIndex;
 static FamiliarStats s_BatStats;
-static Point16 D_80174C3C[4][16];
+static Point16 s_BatPathingPoints[4][16];
 static s32 s_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 static s32 _unused[26];
@@ -100,7 +100,7 @@ ServantDesc bat_ServantDesc = {
 extern FamiliarStats s_BatStats;
 extern s32 s_TargetMatch[0x80];
 
-extern Collider D_80174AD8;
+extern Collider s_UnusedCollider;
 extern s16 s_TargetLocationX;
 extern s16 s_TargetLocationY;
 extern s16 s_TargetLocationX_calc;
@@ -109,8 +109,8 @@ extern s16 s_AngleToTarget;
 extern s16 s_AllowedAngle;
 extern s16 s_DistanceToAttackTarget_0;
 extern s16 s_xOffset_calc;
-extern s32 D_80174B1C;
-extern s32 D_80174B20;
+extern s32 s_TargetPositionX;
+extern s32 s_TargetPositionY;
 extern s32 s_AttackTargetDeltaX;
 extern s32 s_AttackTargetDeltaY;
 extern s32 s_DistanceToAttackTarget_1;
@@ -119,23 +119,26 @@ extern s32 s_PointIndex;
 extern s32 s_DistanceToFollowTarget;
 extern s16 s_PointAdjustX;
 extern s16 s_PointAdjustY;
-extern s16 D_80174B40;
-extern s16 D_80174B44;
+extern s16 s_MoveToPositionX;
+extern s16 s_MoveToPositionY;
 extern Primitive* s_CurrentPrim;
-extern s32 D_80174B4C[16];
-extern Point16 D_80174B8C[16];
-extern s16 D_80174BCC[16];
-extern s16 D_80174BEC[16];
-extern s16 D_80174C0C[16];
-extern s32 D_80174C2C;
+extern s32 s_TrailEntityIsAlive[16];
+extern Point16 s_TrailLocationPoints[16];
+extern s16 s_TrailFacingLeftCache[16];
+extern s16 s_TrailUpdateOffsets[16];
+extern s16 s_TrailUpdateFadeAmounts[16];
+extern s32 s_BlueTrailIndex;
 extern FamiliarStats s_BatStats;
-extern Point16 D_80174C3C[4][16];
+extern Point16 s_BatPathingPoints[4][16];
 extern s32 s_IsServantDestroyed;
 extern s32 s_LastTargetedEntityIndex;
 #endif
 
 extern AnimationFrame g_DefaultBatAnimationFrame[];
 extern AnimationFrame g_BatHighVelocityAnimationFrame[];
+extern AnimationFrame g_BatFarFromTargetAnimationFrame[];
+extern AnimationFrame g_BatCloseToTargetAnimationFrame[];
+extern AnimationFrame* g_BatAnimationFrames[];
 extern s32 g_BatAbilityStats[][5];
 extern u16 g_BatClut[];
 extern Sprite g_BatSpriteData[];
@@ -228,19 +231,19 @@ static Entity* FindValidTarget(Entity* self) {
 bool Unused_CheckCollision(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
-    g_api.CheckCollision(x, y, &D_80174AD8, 0);
-    if (D_80174AD8.effects & 1) {
+    g_api.CheckCollision(x, y, &s_UnusedCollider, 0);
+    if (s_UnusedCollider.effects & 1) {
         return 0;
     }
 
     for (curY = y - 16; curY > 0; curY -= 16) {
-        g_api.CheckCollision(x, curY, &D_80174AD8, 0);
-        switch (D_80174AD8.effects & 0x801) {
+        g_api.CheckCollision(x, curY, &s_UnusedCollider, 0);
+        switch (s_UnusedCollider.effects & 0x801) {
         case 0:
             break;
         case 1:
             *outX = x;
-            *outY = curY + D_80174AD8.unk10;
+            *outY = curY + s_UnusedCollider.unk10;
             return 1;
         default:
             return 0;
@@ -410,26 +413,26 @@ void SwitchModeInitialize(Entity* self) {
 
             if (!self->ext.bat.batIndex) {
                 for (i = 0; i < 16; i++) {
-                    D_80174C3C[self->ext.bat.batIndex][i].x =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
                         self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
-                    D_80174C3C[self->ext.bat.batIndex][i].y =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].y =
                         self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
                 }
             } else {
                 for (i = 0; i < 16; i++) {
                     if (PLAYER.facingLeft) {
-                        D_80174C3C[self->ext.bat.batIndex][i].x =
+                        s_BatPathingPoints[self->ext.bat.batIndex][i].x =
                             PLAYER.posX.i.hi +
                             ((self->ext.bat.batIndex + 1) * 0x10) +
                             self->ext.bat.cameraX;
 
                     } else {
-                        D_80174C3C[self->ext.bat.batIndex][i].x =
+                        s_BatPathingPoints[self->ext.bat.batIndex][i].x =
                             PLAYER.posX.i.hi -
                             ((self->ext.bat.batIndex + 1) * 0x10) +
                             self->ext.bat.cameraX;
                     }
-                    D_80174C3C[self->ext.bat.batIndex][i].y =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].y =
                         PLAYER.posY.i.hi + self->ext.bat.cameraY;
                 }
                 self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
@@ -463,17 +466,17 @@ void SwitchModeInitialize(Entity* self) {
 
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
-                    D_80174C3C[self->ext.bat.batIndex][i].x =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
                         PLAYER.posX.i.hi +
                         ((self->ext.bat.batIndex + 1) * 0x10) +
                         self->ext.bat.cameraX;
                 } else {
-                    D_80174C3C[self->ext.bat.batIndex][i].x =
+                    s_BatPathingPoints[self->ext.bat.batIndex][i].x =
                         PLAYER.posX.i.hi -
                         ((self->ext.bat.batIndex + 1) * 0x10) +
                         self->ext.bat.cameraX;
                 }
-                D_80174C3C[self->ext.bat.batIndex][i].y =
+                s_BatPathingPoints[self->ext.bat.batIndex][i].y =
                     PLAYER.posY.i.hi + self->ext.bat.cameraY;
             }
             self->ext.bat.unkA8 = 0;
@@ -686,7 +689,7 @@ void UpdateServantDefault(Entity* self) {
         } else if (s_DistanceToAttackTarget_0 < 60) {
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
         } else if (s_DistanceToAttackTarget_0 > 100) {
-            SetEntityAnimation(self, D_80170514);
+            SetEntityAnimation(self, g_BatFarFromTargetAnimationFrame);
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -703,7 +706,7 @@ void UpdateServantDefault(Entity* self) {
         if (s_DistanceToAttackTarget_1 < 0x18) {
             if (self->ext.bat.unk8E) {
                 self->ext.bat.unk8E = 0;
-                SetEntityAnimation(self, D_8017054C);
+                SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
             }
             self->ext.bat.frameCounter++;
             if (self->ext.bat.frameCounter >
@@ -726,8 +729,8 @@ void UpdateServantDefault(Entity* self) {
         } else if (self->ext.bat.frameCounter > 30) {
             self->ext.bat.frameCounter = 0;
             UpdatePrimitives(self, 0);
-            D_80174B1C = self->ext.bat.target->posX.i.hi;
-            D_80174B20 = self->ext.bat.target->posY.i.hi;
+            s_TargetPositionX = self->ext.bat.target->posX.i.hi;
+            s_TargetPositionY = self->ext.bat.target->posY.i.hi;
             self->hitboxWidth = 5;
             self->hitboxHeight = 5;
             g_api.func_8011A3AC(self, 15, 1, &s_BatStats);
@@ -738,9 +741,10 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     case 3: // Move to attack target
-        D_80174B1C = self->ext.bat.target->posX.i.hi;
-        D_80174B20 = self->ext.bat.target->posY.i.hi;
-        s_AngleToTarget = CalculateAngleToEntity(self, D_80174B1C, D_80174B20);
+        s_TargetPositionX = self->ext.bat.target->posX.i.hi;
+        s_TargetPositionY = self->ext.bat.target->posY.i.hi;
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetPositionX, s_TargetPositionY);
         s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
             s_AngleToTarget, self->ext.bat.targetAngle,
             g_BatAbilityStats[s_BatStats.level / 10][MAX_ATTACK_ANGLE_INDEX]);
@@ -755,8 +759,8 @@ void UpdateServantDefault(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        s_AttackTargetDeltaX = D_80174B1C - self->posX.i.hi;
-        s_AttackTargetDeltaY = D_80174B20 - self->posY.i.hi;
+        s_AttackTargetDeltaX = s_TargetPositionX - self->posX.i.hi;
+        s_AttackTargetDeltaY = s_TargetPositionY - self->posY.i.hi;
         s_DistanceToAttackTarget_1 =
             SquareRoot12((s_AttackTargetDeltaX * s_AttackTargetDeltaX +
                           s_AttackTargetDeltaY * s_AttackTargetDeltaY)
@@ -766,7 +770,7 @@ void UpdateServantDefault(Entity* self) {
             s_DistanceToAttackTarget_1 < 8) {
             self->ext.bat.frameCounter = 0;
             self->step++;
-            SetEntityAnimation(self, D_8017054C);
+            SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
         }
         break;
     case 4:
@@ -802,7 +806,7 @@ void UpdateServantDefault(Entity* self) {
     }
     ProcessEvent(self, false);
     unused_1560(self);
-    g_api.UpdateAnim(NULL, D_801705F4);
+    g_api.UpdateAnim(NULL, g_BatAnimationFrames);
 }
 #endif
 
@@ -816,10 +820,10 @@ void UpdateBatAttackMode(Entity* self) {
         s_PointAdjustY = (self->ext.bat.cameraY - g_Tilemap.scrollY.i.hi) +
                          (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
 
-        for (s_PointIndex = 0; s_PointIndex < 0x10; s_PointIndex++) {
-            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x -=
+        for (s_PointIndex = 0; s_PointIndex < 16; s_PointIndex++) {
+            s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].x -=
                 s_PointAdjustX;
-            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y -=
+            s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].y -=
                 s_PointAdjustY;
         }
         return;
@@ -843,17 +847,17 @@ void UpdateBatAttackMode(Entity* self) {
         self->ext.bat.unkB2 = PLAYER.posY.i.hi;
         self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
         self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
-        D_80174B40 =
-            D_80174C3C[self->ext.bat.batIndex][0].x - self->ext.bat.cameraX;
-        D_80174B44 =
-            D_80174C3C[self->ext.bat.batIndex][0].y - self->ext.bat.cameraY;
-        self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xC;
-        self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xC;
+        s_MoveToPositionX = s_BatPathingPoints[self->ext.bat.batIndex][0].x -
+                            self->ext.bat.cameraX;
+        s_MoveToPositionY = s_BatPathingPoints[self->ext.bat.batIndex][0].y -
+                            self->ext.bat.cameraY;
+        self->velocityX = (s_MoveToPositionX - self->posX.i.hi) << 0xC;
+        self->velocityY = (s_MoveToPositionY - self->posY.i.hi) << 0xC;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
             if (self->ext.bat.unk8E) {
-                SetEntityAnimation(self, D_8017054C);
+                SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
                 self->ext.bat.unk8E = false;
             }
         } else {
@@ -888,14 +892,16 @@ void UpdateBatAttackMode(Entity* self) {
             0xC;
         if (IsMovementAllowed(0) || s_DistanceToFollowTarget > 0x18) {
             for (s_PointIndex = 0; s_PointIndex < 0xF; s_PointIndex++) {
-                D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x =
-                    D_80174C3C[self->ext.bat.batIndex][s_PointIndex + 1].x;
-                D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y =
-                    D_80174C3C[self->ext.bat.batIndex][s_PointIndex + 1].y;
+                s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].x =
+                    s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex + 1]
+                        .x;
+                s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].y =
+                    s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex + 1]
+                        .y;
             }
-            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].x =
+            s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].x =
                 self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
-            D_80174C3C[self->ext.bat.batIndex][s_PointIndex].y =
+            s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].y =
                 self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
         }
         if (!(g_Player.status & PLAYER_STATUS_BAT_FORM)) {
@@ -918,17 +924,17 @@ void UpdateBatAttackMode(Entity* self) {
                 break;
             }
             self->step++;
-            D_80174C3C[self->ext.bat.batIndex][0].x =
+            s_BatPathingPoints[self->ext.bat.batIndex][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
-            D_80174C3C[self->ext.bat.batIndex][0].y = rand() % 256;
+            s_BatPathingPoints[self->ext.bat.batIndex][0].y = rand() % 256;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
         }
         break;
     case 3:
-        D_80174B40 = D_80174C3C[self->ext.bat.batIndex][0].x;
-        D_80174B44 = D_80174C3C[self->ext.bat.batIndex][0].y;
-        self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xA;
-        self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xA;
+        s_MoveToPositionX = s_BatPathingPoints[self->ext.bat.batIndex][0].x;
+        s_MoveToPositionY = s_BatPathingPoints[self->ext.bat.batIndex][0].y;
+        self->velocityX = (s_MoveToPositionX - self->posX.i.hi) << 0xA;
+        self->velocityY = (s_MoveToPositionY - self->posY.i.hi) << 0xA;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->posX.i.hi < -0x20 || 0x120 < self->posX.i.hi) {
@@ -939,7 +945,7 @@ void UpdateBatAttackMode(Entity* self) {
     }
     ProcessEvent(self, false);
     unused_1560(self);
-    g_api.UpdateAnim(NULL, D_801705F4);
+    g_api.UpdateAnim(NULL, g_BatAnimationFrames);
 }
 #endif
 
@@ -965,7 +971,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
     const s32 XE = 13; // X end, right
     const s32 YS = 24; // Y start, top
     const s32 YE = 8;  // Y end, bottom
-    s32 i;
+    s32 trailUpdateIndex;
     s32 isEntityAlive;
 
     switch (self->step) {
@@ -977,7 +983,8 @@ void UpdateBatBlueTrailEntities(Entity* self) {
         } else {
             self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             s_CurrentPrim = &g_PrimBuf[self->primIndex];
-            for (i = 0; i < nPrim; i++) {
+            for (trailUpdateIndex = 0; trailUpdateIndex < nPrim;
+                 trailUpdateIndex++) {
                 s_CurrentPrim->tpage = 0x1B;
                 s_CurrentPrim->clut = 0x143;
                 s_CurrentPrim->u0 = s_CurrentPrim->u2 = 64;
@@ -985,11 +992,12 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                 s_CurrentPrim->u1 = s_CurrentPrim->u3 = 88;
                 s_CurrentPrim->v2 = s_CurrentPrim->v3 = 32;
                 s_CurrentPrim->priority = self->zPriority;
-                s_CurrentPrim->drawMode = 0x15 | DRAW_HIDE;
+                s_CurrentPrim->drawMode =
+                    DRAW_TRANSP | DRAW_COLORS | DRAW_HIDE | DRAW_TPAGE;
                 s_CurrentPrim = s_CurrentPrim->next;
-                D_80174B4C[i] = 0;
+                s_TrailEntityIsAlive[trailUpdateIndex] = 0;
             }
-            D_80174C2C = 0;
+            s_BlueTrailIndex = 0;
             self->step++;
         }
         break;
@@ -997,42 +1005,55 @@ void UpdateBatBlueTrailEntities(Entity* self) {
         if (self->ext.batFamBlueTrail.parent->step != 3) {
             self->step++;
         }
-        D_80174B8C[D_80174C2C].x = self->ext.batFamBlueTrail.parent->posX.i.hi;
-        D_80174B8C[D_80174C2C].y = self->ext.batFamBlueTrail.parent->posY.i.hi;
-        D_80174BCC[D_80174C2C] = self->ext.batFamBlueTrail.parent->facingLeft;
-        D_80174BEC[D_80174C2C] = 256;
-        D_80174C0C[D_80174C2C] = 192;
-        D_80174B4C[D_80174C2C] = 1;
-        D_80174C2C = ++D_80174C2C >= nPrim ? 0 : D_80174C2C;
+        s_TrailLocationPoints[s_BlueTrailIndex].x =
+            self->ext.batFamBlueTrail.parent->posX.i.hi;
+        s_TrailLocationPoints[s_BlueTrailIndex].y =
+            self->ext.batFamBlueTrail.parent->posY.i.hi;
+        s_TrailFacingLeftCache[s_BlueTrailIndex] =
+            self->ext.batFamBlueTrail.parent->facingLeft;
+        s_TrailUpdateOffsets[s_BlueTrailIndex] = 256;
+        s_TrailUpdateFadeAmounts[s_BlueTrailIndex] = 192;
+        s_TrailEntityIsAlive[s_BlueTrailIndex] = true;
+
+        s_BlueTrailIndex++;
+        s_BlueTrailIndex = s_BlueTrailIndex >= nPrim ? 0 : s_BlueTrailIndex;
+
         s_CurrentPrim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < nPrim; i++) {
-            if (D_80174B4C[i]) {
-                if (D_80174BCC[i]) {
+        for (trailUpdateIndex = 0; trailUpdateIndex < nPrim;
+             trailUpdateIndex++) {
+            if (s_TrailEntityIsAlive[trailUpdateIndex]) {
+                if (s_TrailFacingLeftCache[trailUpdateIndex]) {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        D_80174B8C[i].x + D_80174BEC[i] * XS / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x +
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        D_80174B8C[i].x - D_80174BEC[i] * XE / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x -
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
                 } else {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        D_80174B8C[i].x - D_80174BEC[i] * XS / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x -
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        D_80174B8C[i].x + D_80174BEC[i] * XE / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x +
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
                 }
                 s_CurrentPrim->y0 = s_CurrentPrim->y1 =
-                    D_80174B8C[i].y - D_80174BEC[i] * YS / 256;
+                    s_TrailLocationPoints[trailUpdateIndex].y -
+                    s_TrailUpdateOffsets[trailUpdateIndex] * YS / 256;
                 s_CurrentPrim->y2 = s_CurrentPrim->y3 =
-                    D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
+                    s_TrailLocationPoints[trailUpdateIndex].y +
+                    s_TrailUpdateOffsets[trailUpdateIndex] * YE / 256;
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
                         s_CurrentPrim->g2 = s_CurrentPrim->g3 =
                             s_CurrentPrim->b0 = s_CurrentPrim->b1 =
                                 s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                    D_80174C0C[i];
-                D_80174BEC[i] -= 8;
-                D_80174C0C[i] -= 8;
-                if (D_80174C0C[i] < 81) {
+                                    s_TrailUpdateFadeAmounts[trailUpdateIndex];
+                s_TrailUpdateOffsets[trailUpdateIndex] -= 8;
+                s_TrailUpdateFadeAmounts[trailUpdateIndex] -= 8;
+                if (s_TrailUpdateFadeAmounts[trailUpdateIndex] < 81) {
                     s_CurrentPrim->drawMode |= DRAW_HIDE;
-                    D_80174B4C[i] = 0;
+                    s_TrailEntityIsAlive[trailUpdateIndex] = false;
                 } else {
                     s_CurrentPrim->drawMode ^= DRAW_HIDE;
                 }
@@ -1043,45 +1064,52 @@ void UpdateBatBlueTrailEntities(Entity* self) {
     case 2:
         isEntityAlive = false;
         s_CurrentPrim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < nPrim; i++) {
-            if (D_80174B4C[i]) {
-                if (D_80174BCC[i]) {
+        for (trailUpdateIndex = 0; trailUpdateIndex < nPrim;
+             trailUpdateIndex++) {
+            if (s_TrailEntityIsAlive[trailUpdateIndex]) {
+                if (s_TrailFacingLeftCache[trailUpdateIndex]) {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        D_80174B8C[i].x + D_80174BEC[i] * XS / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x +
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        D_80174B8C[i].x - D_80174BEC[i] * XE / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x -
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
                 } else {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        D_80174B8C[i].x - D_80174BEC[i] * XS / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x -
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        D_80174B8C[i].x + D_80174BEC[i] * XE / 256;
+                        s_TrailLocationPoints[trailUpdateIndex].x +
+                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
                 }
                 s_CurrentPrim->y0 = s_CurrentPrim->y1 =
-                    D_80174B8C[i].y - D_80174BEC[i] * YS / 256;
+                    s_TrailLocationPoints[trailUpdateIndex].y -
+                    s_TrailUpdateOffsets[trailUpdateIndex] * YS / 256;
                 s_CurrentPrim->y2 = s_CurrentPrim->y3 =
-                    D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
+                    s_TrailLocationPoints[trailUpdateIndex].y +
+                    s_TrailUpdateOffsets[trailUpdateIndex] * YE / 256;
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
                         s_CurrentPrim->g2 = s_CurrentPrim->g3 =
                             s_CurrentPrim->b0 = s_CurrentPrim->b1 =
                                 s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                    D_80174C0C[i];
+                                    s_TrailUpdateFadeAmounts[trailUpdateIndex];
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
                         s_CurrentPrim->g2 = s_CurrentPrim->g3 =
                             s_CurrentPrim->b0 = s_CurrentPrim->b1 =
                                 s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                    D_80174C0C[i];
-                D_80174BEC[i] -= 8;
-                D_80174C0C[i] -= 8;
-                if (D_80174C0C[i] < 81) {
+                                    s_TrailUpdateFadeAmounts[trailUpdateIndex];
+                s_TrailUpdateOffsets[trailUpdateIndex] -= 8;
+                s_TrailUpdateFadeAmounts[trailUpdateIndex] -= 8;
+                if (s_TrailUpdateFadeAmounts[trailUpdateIndex] < 81) {
                     s_CurrentPrim->drawMode |= DRAW_HIDE;
-                    D_80174B4C[i] = 0;
+                    s_TrailEntityIsAlive[trailUpdateIndex] = false;
                 } else {
                     s_CurrentPrim->drawMode ^= DRAW_HIDE;
                 }
             }
-            isEntityAlive |= D_80174B4C[i];
+            isEntityAlive |= s_TrailEntityIsAlive[trailUpdateIndex];
             s_CurrentPrim = s_CurrentPrim->next;
         }
 
