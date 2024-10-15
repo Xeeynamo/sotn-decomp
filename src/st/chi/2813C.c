@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 2813C.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 extern EntityInit EntityInit_80180688;
 

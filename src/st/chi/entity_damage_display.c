@@ -1,26 +1,49 @@
-#include "chi.h"
-
 /*
  * File: entity_damage_display.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
+#include "chi.h"
+
 u16 g_eDamageDisplayClut[] = {
     PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
     PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
 };
 
-//TODO: Centralize this instead of what's in ../entity_damage_display.h? (it's missing data?)
+// [Centralize this instead of what's in ../entity_damage_display.h? (it's missing data?]
+// func_8019F3C0: [E_NUMERIC_DAMAGE] EntityDamageDisplay
 #include "../entity_damage_display.h"
 
+// func_8019FA64: CreateEntityFromLayout
+// func_8019FB28: CreateEntityWhenInVerticalRange
+// func_8019FC40: CreateEntityWhenInHorizontalRange
+// func_8019FD58: FindFirstEntityToTheRight
+// func_8019FDA4: FindFirstEntityToTheLeft
+// func_8019FDFC: CreateEntitiesToTheRight
+// func_8019FEF8: CreateEntitiesToTheLeft
+// func_801A000C: FindFirstEntityAbove
+// func_801A0058: FindFirstEntityBelow
+// func_801A00B0: CreateEntitiesAbove
+// func_801A01AC: CreateEntitiesBelow
+// func_801A02C0: InitRoomEntities
+// func_801A0438: UpdateRoomPosition
+// func_801A04EC: CreateEntityFromCurrentEntity
+// func_801A0560: CreateEntityFromEntity
 #include "../create_entity.h"
 
+// func_801A05DC: EntityIsNearPlayer
+// func_801A0654: [E_RED_DOOR] EntityRedDoor
 #include "../e_red_door.h"
 
+// func_801A128C: DestroyEntity
+// func_801A12F8: DestroyEntitiesFromIndex
+// func_801A1374: PreventEntityFromRespawning
+// func_801A13BC: AnimateEntity
 #include "../entity.h"
 
 // [Duplicate]
+// func_801A1474
 u8 func_801A1474(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];
@@ -53,10 +76,15 @@ u8 func_801A1474(u8 frames[], Entity* self, u8 arg2) {
 }
 
 // "Current entity" functions?
+// func_801A158C: GetDistanceToPlayerX
 #include "../get_distance_to_player_x.h"
+// func_801A15C8: GetDistanceToPlayerY
 #include "../get_distance_to_player_y.h"
+// func_801A15FC: GetSideToPlayer
 #include "../get_side_to_player.h"
+// func_801A1640: MoveEntity
 #include "../move_entity.h"
+// func_801A1670: FallEntity
 #include "../fall_entity.h"
 
 // [Duplicate]
@@ -115,6 +143,7 @@ s32 UpdatePhysicsState(s16* sensors) {
 }
 
 // [Duplicate]
+// func_801A1914
 s32 func_801A1914(s16* posX) {
     Collider collider;
     s16 temp2;
@@ -170,6 +199,7 @@ s32 func_801A1914(s16* posX) {
     return 1;
 }
 
+// func_801A1AFC: AllocEntity
 #include "../../alloc_entity.h"
 
 s16 D_80180E24[] = {
@@ -207,19 +237,24 @@ s16 D_80180E24[] = {
     0xFCE1, 0xFD44, 0xFDA7, 0xFE0B, 0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
 // [Duplicate]
+// func_801A1B5C
 s32 func_801A1B5C(u8 arg0, s16 arg1) { return D_80180E24[arg0] * arg1; }
 // [Duplicate]
+// func_801A1B88
 s16 func_801A1B88(u8 arg0) { return D_80180E24[arg0]; }
 // [Duplicate]
+// func_801A1BA4
 void func_801A1BA4(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityX = func_801A1B5C(arg0 & 0xFF, arg1);
     g_CurrentEntity->velocityY = func_801A1B5C((arg0 - 0x40) & 0xFF, arg1);
 }
 
 // [Duplicate]
+// func_801A1C10
 u8 func_801A1C10(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 // [Duplicate]
+// func_801A1C48
 u8 func_801A1C48(Entity* arg0, Entity* arg1) {
     u16 x;
     u16 y;
@@ -232,6 +267,7 @@ u8 func_801A1C48(Entity* arg0, Entity* arg1) {
 
 // [Duplicate]
 // [Almost duplicate of func_801A1E24 - x/y are swapped]
+// func_801A1C90
 u16 func_801A1C90(s16 x, s16 y) {
     x -= g_CurrentEntity->posX.i.hi;
     y -= g_CurrentEntity->posY.i.hi;
@@ -239,30 +275,38 @@ u16 func_801A1C90(s16 x, s16 y) {
     return func_801A1C10(x, y);
 }
 
+// func_801A1CD8: AdjustValueWithinThreshold
 #include "../adjust_value_within_threshold.h"
+// func_801A1D30: UnkEntityFunc0
 #include "../unk_entity_func0.h"
 
 // [Duplicate]
+// func_801A1DBC
 u16 func_801A1DBC(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
+// func_801A1DEC: GetAngleBetweenEntities
 #include "../get_angle_between_entities.h"
 // [Duplicate]
 // [Almost duplicate of func_801A1C90 - x/y are swapped]
+// func_801A1E24
 u16 func_801A1E24(s16 x, s16 y) {
     x -= g_CurrentEntity->posX.i.hi;
     y -= g_CurrentEntity->posY.i.hi;
 
     return ratan2(y, x);
 }
+// func_801A1E6C: GetNormalizedAngle
 #include "../get_normalized_angle.h"
 
+// func_801A1ECC: SetStep
 #include "../set_step.h"
+// func_801A1EEC: SetSubStep
 #include "../set_sub_step.h"
 
+void EntityExplosion(Entity*);
 // [Duplicate]
 // [Migrate to common file once func_801A3520 is EntityExplosion?]
 // func_801A1F08
-void EntityExplosion(Entity*);
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
@@ -284,7 +328,9 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 }
 //#include "../entity_explosion_spawn.h"
 
+// func_801A1F9C: InitializeEntity
 #include "../init_entity.h"
+// func_801A2098: [E_DUMMY_0F] [E_DUMMY_10] EntityDummy
 #include "../entity_dummy.h"
 
 // [Duplicate]
@@ -321,7 +367,9 @@ s32 func_801A20C0(u16* hitSensors, s16 sensorCount) {
     }
 }
 
+// func_801A21E8: CheckFieldCollision
 #include "../check_field_collision.h"
+// func_801A2340: GetPlayerCollisionWith
 #include "../get_player_collision_with.h"
 
 void EntityPrizeDrop(Entity*);

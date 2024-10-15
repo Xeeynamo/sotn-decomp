@@ -1,21 +1,23 @@
-#include "chi.h"
-
 /*
  * File: 23F58.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
-// [Duplicate]
-// func_801A3F58
+#include "chi.h"
+
 extern u16 g_InitializeData0[];
+
+// [Duplicate]
+// func_801A3F58: [E_RELIC_ORB] EntityRelicOrb
 #include "../entity_relic_orb.h"
+
+extern u16 D_801809E4[];
 
 // [Duplicate]
 // [Almost duplicate of CEN.EntityHeartDrop -- 0xC0 immediate is 0xB0 here]
+// E_HEART_DROP
 // func_801A4A28
-extern u16 D_801809E4[];
-
 void func_801A4A28(Entity* self) {
     u16 temp_a0;
     u16 temp_a0_2;
@@ -51,13 +53,14 @@ void func_801A4A28(Entity* self) {
 }
 
 // [Duplicate]
-// func_801A4B50
+// func_801A4B50: [E_SAVE_GAME_POPUP] EntityMessageBox
 #include "../entity_message_box.h"
 
+// func_801A50AC: CheckColliderOffsets
 #include "../check_coll_offsets.h"
 
 // [Duplicate]
-// func_801A519C
+// func_801A519C: [E_ID_13] EntityUnkId13
 #include "../entity_unkId13.h"
 
 //D_80181378
@@ -65,11 +68,13 @@ u16 g_eUnk14SpawnRots[] = {
     0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0000
 };
 void EntityUnkId14(Entity*);
+
 // [Duplicate]
-// func_801A52AC
+// func_801A52AC: EntityUnkId14Spawner
 #include "../entity_unkId14_spawner.h"
 
 void EntityUnkId15(Entity*);
+
 // [Duplicate]
-// func_801A53DC
+// func_801A53DC: EntityUnkId15Spawner
 #include "../entity_unkId15_spawner.h"

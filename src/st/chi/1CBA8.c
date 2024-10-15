@@ -1,16 +1,19 @@
-#include "chi.h"
-
 /*
  * File: 1CBA8.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
+#include "chi.h"
+
 extern EntityInit EntityInit_8018067C;
 extern u16 g_Tilemap_scrollX_i_hi;
 
-// [Entity] ???
+// E_ID_1B
+// func_8019CBA8
+// https://decomp.me/scratch/BFa12
 // PSP:func_psp_0924B458:Match
+// PSP:https://decomp.me/scratch/IWYbc
 void func_8019CBA8(Entity* self) {
     s32 tileIdx;        // s2
     s32 primIdx;        // s6
@@ -134,7 +137,7 @@ void func_8019CBA8(Entity* self) {
         self->posY.val -= 0x4000;
 
         if (!(g_Timer & 7)) {
-            if ((g_Timer & 1)) {
+            if ((g_Timer % 2)) {
                 prim = self->ext.prim;
                 prim = prim->next;
                 prim = FindFirstUnkPrim(prim);

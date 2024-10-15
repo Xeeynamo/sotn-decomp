@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 297C8.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 // D_801816EC
 u8 AnimFrames_Running[] = {

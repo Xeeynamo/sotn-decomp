@@ -1,14 +1,15 @@
-#include "chi.h"
-
 /*
  * File: 1B3FC.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
+#include "chi.h"
+
 extern s32 g_eInitGeneric2;
 extern ObjInit2 D_80180740[];
 
+// func_8019B3FC: [E_BACKGROUND_BLOCK] EntityBackgroundBlock
 void EntityBackgroundBlock(Entity* entity) {
     ObjInit2* objInit = &D_80180740[entity->params];
     if (entity->step == 0) {
@@ -35,6 +36,8 @@ extern u8 D_80180798[];
 extern u8 D_801807A0[];
 extern u16 D_801807A8[];
 
+// E_ID_12
+// func_8019B4DC
 void EntityUnkId12(Entity* entity) {
     s32 temp_v0;
     u16* temp_v0_2;
@@ -101,7 +104,8 @@ extern u16 D_80180868[];
 extern u8 D_80180878[];
 extern u16 D_80180880;
 
-// EntityUnkId01
+// E_ID_01
+// func_8019B698
 void EntityUnkId01(Entity* entity) {
     u16* ptr;
     s32 i;
@@ -164,7 +168,9 @@ void EntityUnkId01(Entity* entity) {
     }
 }
 
-// CEN.func_8018DB18 [Entity] E_ID_1A
+// [Duplicate of CEN.func_8018DB18]
+// E_ID_1A
+// func_8019B914
 void func_8019B914(Entity* entity) {
     Collider collider;
     Primitive* prim;
@@ -273,8 +279,8 @@ void func_8019B914(Entity* entity) {
     }
 }
 
-// "Falling pebble" particle for EntityDemonSwitchWall
-void Particle_FallingPebbleUpdate(Primitive* prim) {
+// func_8019BD0C
+void UpdateFallingPebble(Primitive* prim) {
     const int FallSpeed = 2;
     const int MaxScrolledY = 160;
 
@@ -313,7 +319,9 @@ void Particle_FallingPebbleUpdate(Primitive* prim) {
 }
 
 extern EntityInit EntityInit_8018067C;
-// [Entity] Top of room 3, demon button
+
+// E_DEMON_SWITCH
+// func_8019BDF8
 void EntityDemonSwitch(Entity* entity) {
     enum Step {
         Init = 0,

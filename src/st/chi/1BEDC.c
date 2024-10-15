@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 1BEDC.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 #ifdef VERSION_PSP
 extern s32 D_psp_0926BC50;
@@ -17,14 +17,18 @@ u16 Room3_DemonSwitchWallTilesCollision[] = {
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
 };
 
-//TODO: Combine this and above into multidimensional array
+// [Combine this and above into multidimensional array]
 // Never directly referenced. Accessed by overflowing from above array
 u16 Room3_DemonSwitchWallTilesNoCollision[] = {
     0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
     0x01BF, 0x01BF, 0x01BF, 0x01BF,
 };
 
-// [Entity] Room 3, Top, Demon Switch Wall
+// E_DEMON_SWITCH_WALL
+// func_8019BEDC
+// https://decomp.me/scratch/oDbUj
+// PSP:func_psp_0924ED28:No match
+// PSP:https://decomp.me/scratch/DxiYq
 void EntityDemonSwitchWall(Entity* self) {
     enum Step {
         Init = 0,
@@ -155,7 +159,7 @@ void EntityDemonSwitchWall(Entity* self) {
             prim = self->ext.prim;
             while (prim != NULL) {
                 if (prim->p3) {
-                    Particle_FallingPebbleUpdate(prim);
+                    UpdateFallingPebble(prim);
                 }
                 prim = prim->next;
             }
@@ -222,7 +226,8 @@ void EntityDemonSwitchWall(Entity* self) {
     }
 }
 
-// [Entity] Room 5, Bottom, Breakable Wall Debris
+// E_BREAKABLE_WALL_DEBRIS
+// func_8019C31C
 void EntityBreakableWallDebris(Entity* entity) {
     Collider collider;
     s32 temp_a0_2;

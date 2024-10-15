@@ -1,11 +1,11 @@
-#include "chi.h"
-#include "collision_data.h"
-
 /*
  * File: collision.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
+#include "collision_data.h"
 
 void EntityDamageDisplay(Entity*);
 
@@ -21,7 +21,8 @@ u16 g_testCollRandTable[] = {
     0x016B, 0x0FF8, 0x016C, 0x0FFD, 0x016D, 0x0FFF, 0x016E,
 };
 
-//TODO: Centralize this instead of what's in ../collision.h?
+// [Centralize this instead of what's in ../collision.h?]
+// func_8019E2A8
 void HitDetection(void) {
 #ifdef VERSION_PC
     u8 sp[SP_LEN];

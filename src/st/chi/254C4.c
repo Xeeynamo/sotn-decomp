@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 254C4.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 // D_80181388
 s16 unk15_rot[] = {
@@ -34,11 +34,11 @@ u16 unk14_lifetime[] = {
 };
 
 // [Duplicate]
-// func_801A54C4
+// func_801A54C4: [E_ID_14] EntityUnkId14
 #include "../entity_unkId14.h"
 
 // [Duplicate]
-// func_801A55B4
+// func_801A55B4: [E_ID_15] EntityUnkId15
 #include "../entity_unkId15.h"
 
 extern u16 g_InitializeEntityData0[];
@@ -315,7 +315,7 @@ u8 func_801A59D4(s32 arg0) {
 }
 
 // [Duplicate]
-// func_801A5F54
+// func_801A5F54: [E_INTENSE_EXPLOSION] EntityIntenseExplosion
 #include "../entity_intense_explosion.h"
 
 u8 D_801813DC[] = {
@@ -396,7 +396,7 @@ void func_801A61E8(void) {
 extern u8 g_bigRedFireballAnim[];
 
 // [Duplicate]
-// func_801A62A0
+// func_801A62A0: EntityBigRedFireball
 #include "../entity_big_red_fireball.h"
 
 // D_801813EC
@@ -406,7 +406,7 @@ u16 g_UnkRecursPrimVecOrder[] = {
 };
 
 // [Duplicate]
-// func_801A6478
+// func_801A6478: UnkRecursivePrimFunc1
 #include "../unk_recursive_primfunc_1.h"
 
 // D_8018140C
@@ -416,11 +416,13 @@ u16 g_UnkRecursPrim2Inds[] = {
 };
 
 // [Duplicate]
-// func_801A6A58
+// func_801A6A58: UnkRecursivePrimFunc2
 #include "../unk_recursive_primfunc_2.h"
 
+// func_801A7158: ClutLerp
 #include "../clut_lerp.h"
 
+// func_801A7350: PlaySfxWithPosArgs
 #include "../play_sfx_with_pos_args.h"
 
 extern u16 g_InitializeData0[];
@@ -446,11 +448,11 @@ u8 g_ESoulStealOrbAnim[] = {
 };
 
 // [Duplicate]
-// func_801A7448
+// func_801A7448: [E_SOUL_STEAL_ORB] EntitySoulStealOrb
 #include "../entity_soul_steal_orb.h"
 
 // [Duplicate]
-// func_801A77DC
+// func_801A77DC: [E_ENEMY_BLOOD] EntityEnemyBlood
 #include "../entity_enemy_blood.h"
 
 #if !defined(VERSION_PSP)
@@ -477,6 +479,7 @@ extern u16 g_eInitGeneric2[];
 
 // [Duplicate]
 // [Need to remove D_######## symbol names before using common include]
+// E_ROOM_FOREGROUND
 // func_801A7C8C
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_801814C0[entity->params];
@@ -502,8 +505,10 @@ void EntityRoomForeground(Entity* entity) {
 //TODO: Can't use this include yet, as it still contains D_######## symbol names
 //#include "../e_room_fg.h"
 
+// func_801A7D78: BottomCornerText
 #include "../bottom_corner_text.h"
 
+// [Move to same file as salem witch]
 // func_801A80A8
 void SalemWitchTrySpawnShadow()
 {

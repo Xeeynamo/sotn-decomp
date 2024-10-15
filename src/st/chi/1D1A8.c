@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 1D1A8.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 void UpdateDustParticles(Primitive*);
 extern EntityInit EntityInit_8018067C;
@@ -31,8 +31,11 @@ u16 Room3_FallingStairsFallenTileValues[] = {
     0x01C4, 0x0222,
 };
 
-// [Entity] Room 3, Entry (All Entrances), Falling Stairs
+// E_FALLING_STAIRS
+// func_8019D1A8
+// https://decomp.me/scratch/ydih8
 // PSP:func_psp_0924D948:Match
+// PSP:https://decomp.me/scratch/42GFW
 void EntityFallingStairs(Entity* self)
 {
     const s32 NotFallenPosX = 207;
@@ -65,10 +68,10 @@ void EntityFallingStairs(Entity* self)
     Entity* entity;
     Entity* player;
     s32 scrolledY;
-    s32 primIdx;
-    s32 selfPosY;
-    s32 selfPosX;
     s32 scrolledX;
+    s32 selfPosX;
+    s32 selfPosY;
+    s32 primIdx;
 
     scrolledX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
     scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
@@ -156,8 +159,7 @@ void EntityFallingStairs(Entity* self)
                     prim->r0 = 0x60;
                     prim->g0 = 0x60;
                     prim->b0 = 0x20;
-                    prim->v0 = 1;
-                    prim->u0 = 1;
+                    prim->u0 = prim->v0 = 1;
                     prim->priority = 0xC0;
                     prim->drawMode = DRAW_HIDE;
                     self->ext.fallingStairs.prim = prim;
@@ -230,7 +232,8 @@ void EntityFallingStairs(Entity* self)
                             yPos = self->posY.i.hi;
                             for (i = 0; i < 8; i++) {
                                 prim = self->ext.prim;
-                                prim = FindFirstUnkPrim(prim->next);
+                                prim = prim->next;
+                                prim = FindFirstUnkPrim(prim);
                                 if (prim != NULL) {
                                     prim->p3 = 1;
                                     prim->p2 = 0;
@@ -245,10 +248,7 @@ void EntityFallingStairs(Entity* self)
 
                 case RotateCounterClockwise:
                     self->rotZ -= self->ext.fallingStairs.rotateAccel;
-
-                    // This line works better in PSP, but the uncommented line is better in PSX
-                    //self->ext.fallingStairs.rotateAccel++;
-                    self->ext.fallingStairs.rotateAccel = self->ext.fallingStairs.rotateAccel + 1;
+                    self->ext.fallingStairs.rotateAccel += 1;
 
                     xPos = 0x74 - g_Tilemap.scrollX.i.hi;
                     yPos = 0x2C0 - g_Tilemap.scrollY.i.hi;
@@ -326,16 +326,17 @@ void EntityFallingStairs(Entity* self)
         }
 
         prim = self->ext.fallingStairs.prim;
-        prim->v0 = 0;
-        prim->u0 = 0;
-        prim->y0 = 0;
-        prim->x0 = 0;
+        prim->u0 = prim->v0 = 0;
+        prim->x0 = prim->y0 = 0;
         prim->drawMode = DRAW_UNK02;
     }
 }
 
-// [Entity] Room 8, Middle, Falling Step
+// E_FALLING_STEP
+// func_8019D9C8
+// https://decomp.me/scratch/aHmp1
 // PSP:func_psp_0924E4D8:Match
+// PSP:https://decomp.me/scratch/QAIZG
 void EntityFallingStep(Entity* self) {
     const s32 TilePos = 0x20D;
     const s32 TileInitVal = 0x233;
@@ -499,4 +500,5 @@ void EntityFallingStep(Entity* self) {
     }
 }
 
+// func_8019DE74: Random
 #include "../random.h"

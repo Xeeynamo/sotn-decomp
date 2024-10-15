@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 2B7CC.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 #define TENDRIL_COUNT 10
 

@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 2DF40.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 // func_801ADF40: UnkPrimHelper
 // func_801AE328: UpdateAnimation

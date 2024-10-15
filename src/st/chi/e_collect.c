@@ -1,16 +1,16 @@
-#include "chi.h"
-
 /*
  * File: e_collect.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
+#include "chi.h"
+
 //TODO: Use ../e_collect.h
 
 // [Duplicate]
 // func_801A273C
-void func_801A273C(void) {
+void func_801A273C() {
     s32 temp_v1;
     Entity* entity;
 
@@ -186,10 +186,10 @@ u8* g_ExplosionAnimations[] = {
 };
 
 // [Duplicate]
-// func_801A291C
+// func_801A291C: CollectHeart
 #include "../collect_heart.h"
 // [Duplicate]
-// func_801A299C
+// func_801A299C: CollectGold
 #include "../collect_gold.h"
 // [Duplicate]
 // func_801A2A78
@@ -226,7 +226,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 // [Duplicate]
-// func_801A2B90
+// func_801A2B90: CollectHeartVessel
 #include "../collect_heart_vessel.h"
 // [Duplicate]
 // func_801A2C34
@@ -242,6 +242,7 @@ void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 extern u16 g_InitializeData0[];
 
 // [Duplicate]
+// E_PRIZE_DROP
 // func_801A2CAC
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
@@ -457,12 +458,14 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 // [Duplicate]
-// func_801A3520
+// func_801A3520: [E_EXPLOSION] EntityExplosion
 #include "../entity_explosion.h"
+// func_801A361C: BlinkItem
 #include "../blink_item.h"
 extern s32 D_80097410;
 extern s32 D_80097414;
 // [Duplicate]
+// E_EQUIP_ITEM_DROP
 // func_801A36C0
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
@@ -656,4 +659,5 @@ void EntityEquipItemDrop(Entity* self) {
 //TODO: I think the above SHOULD all match e_collect.h, but e_collect.h contains D_######## (and func_########?) symbol names that need to be named better
 //#include "../e_collect.h"
 
+// func_801A3CA8: BlitChar
 #include "../blit_char.h"

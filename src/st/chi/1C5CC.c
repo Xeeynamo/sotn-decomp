@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
  * File: 1C5CC.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
+
+#include "chi.h"
 
 extern EntityInit EntityInit_8018067C;
 
@@ -25,7 +25,9 @@ s16 Room5_BreakableRoomEntityData[] = {
     0x000B, 0xFFEC, 0x0010, 0xFE40,
 };
 
-// [Entity] Room 5, Middle/Bottom, Breakable Wall
+// E_BREAKABLE_WALL
+// func_8019C5CC
+// https://decomp.me/scratch/Xmw21
 void EntityBreakableWall(Entity* self) {
     const int WallWidthTiles = 3;
     const int WallHeightTiles = 4;
