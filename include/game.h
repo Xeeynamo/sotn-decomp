@@ -768,7 +768,7 @@ typedef struct {
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
     /* 0x0C */ u32 unkC;
-    /* 0x10 */ u8* unk10;
+    /* 0x10 */ u8* unk10;   // AnimFrames
 } ObjInit2; // size = 0x14
 
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
