@@ -38,7 +38,7 @@ void EntityPathBlockTallWeight(Entity* self);
 void EntityTrapDoor(Entity* self);
 void EntityMermanRockLeftSide(Entity* self);
 void EntityMermanRockRightSide(Entity* self);
-void func_801B5488(Entity* self);
+void EntityJewelSwordDoor(Entity* self);
 void EntityFallingRock2(Entity* self);
 void EntityLightningThunder(Entity* self);
 void EntityLightningCloud(Entity* self);
@@ -131,7 +131,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityTrapDoor,
     EntityMermanRockLeftSide,
     EntityMermanRockRightSide,
-    func_801B5488,
+    EntityJewelSwordDoor,
     EntityFallingRock2,
     EntityLightningThunder,
     EntityLightningCloud,

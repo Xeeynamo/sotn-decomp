@@ -1464,7 +1464,11 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
+<<<<<<< HEAD
         InitializeEntity(g_EInitInteractable);
+=======
+        InitializeEntity(g_EInitGeneric);
+>>>>>>> d0217bc0 (Dedupe everything with the jewel sword door)
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1562,7 +1566,11 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
+<<<<<<< HEAD
         InitializeEntity(g_EInitInteractable);
+=======
+        InitializeEntity(g_EInitGeneric);
+>>>>>>> d0217bc0 (Dedupe everything with the jewel sword door)
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1652,7 +1660,11 @@ void EntityJewelSwordDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
+<<<<<<< HEAD
         InitializeEntity(g_EInitInteractable);
+=======
+        InitializeEntity(g_EInitGeneric);
+>>>>>>> d0217bc0 (Dedupe everything with the jewel sword door)
         if (g_CastleFlags[CASTLE_FLAG_58] != 0) {
             self->step = 2;
         }
@@ -1687,6 +1699,7 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
     }
 }
+<<<<<<< HEAD
 
 // falling rock that breaks into dust
 void EntityFallingRock2(Entity* self) {
@@ -2314,3 +2327,5 @@ void EntityTilemapShufflerUnused(Entity* self) {
         break;
     }
 }
+=======
+>>>>>>> d0217bc0 (Dedupe everything with the jewel sword door)

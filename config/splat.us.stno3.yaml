@@ -49,7 +49,7 @@ segments:
       - [0xE90, data]
       - [0xEA0, .data, 37B98]
       - [0x1140, .data, 37B98]
-      - [0x1258, data]
+      - [0x134C, data]
       - [0x1ACC, .data, cutscene]
       - [0x1AD4, data]
       - [0x1B40, data]
