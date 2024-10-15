@@ -93,9 +93,9 @@ segments:
       - [0x1B36C, .rodata, 2B7CC] # jtbl_8019B36C [EntityVenusWeedFlower]
       - [0x1B384, .rodata, 2B7CC] # jtbl_8019B384 [EntityVenusWeedFlower]
       - [0x1B39C, .rodata, 2B7CC] # jtbl_8019B39C [EntityVenusWeedTendril]
-      - [0x1B3C0, rodata]
-      - [0x1B3E0, rodata] # jtbl_8019B3E0
       - [0x1B3F4, rodata]
+      - [0x1B3C0, .rodata, 2D0EC] # EntityStageNamePopup strings
+      - [0x1B3E0, .rodata, 2D0EC] # jtbl_8019B3E0 [StageNamePopup]
       - [0x1B3FC, c]
       - [0x1BEDC, c]
       - [0x1C5CC, c]

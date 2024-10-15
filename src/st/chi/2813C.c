@@ -822,7 +822,7 @@ u8 AnimFrames_TriboltBurst[] = {
     0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0xFF, 0x00, 0x00, 0x00
 };
 
-extern EntityInit EntityInit_80180640;
+extern EntityInit g_EInitGeneric;
 
 // E_SALEM_WITCH_TRIBOLT_LAUNCH
 // func_801A93D4
@@ -846,7 +846,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
 
     switch (self->step) {
         case Init:
-            InitializeEntity(&EntityInit_80180640);
+            InitializeEntity(&g_EInitGeneric);
             self->animSet = 5;
             self->palette = PAL_OVL(0x2EB);
             self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;

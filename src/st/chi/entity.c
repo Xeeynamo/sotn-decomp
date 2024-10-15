@@ -9,7 +9,7 @@ void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
-void func_801AD2BC(Entity*);
+void EntityStageNamePopup(Entity*);
 void EntityEquipItemDrop(Entity*);
 void EntityRelicOrb(Entity*);
 void func_801A4A28(Entity*);
@@ -55,7 +55,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
-    func_801AD2BC,  // EntityStageNamePopup
+    EntityStageNamePopup,
     EntityEquipItemDrop,
     EntityRelicOrb,
     func_801A4A28,  // EntityHeartDrop
@@ -140,7 +140,8 @@ EntityInit EntityInit_80180634 = {
 
 //TODO: Used in func_801A941C
 //TODO: Used in func_801AD2BC
-EntityInit EntityInit_80180640 = {
+// EntityInit_80180640
+EntityInit g_EInitGeneric = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,

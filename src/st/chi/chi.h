@@ -5,6 +5,8 @@
 
 #define OVL_EXPORT(x) CHI_##x
 
+#define CASTLE_FLAG_BANK 0x52
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID_01,
