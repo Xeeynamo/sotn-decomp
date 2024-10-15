@@ -12,7 +12,7 @@
 <!-- no0.EntitySkeletonPieces -->
 <g id="node1" class="node">
 <title>no0.EntitySkeletonPieces</title>
-<ellipse fill="red" stroke="black" cx="271.69" cy="-198" rx="129.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="271.69" cy="-198" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="271.69" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntitySkeletonPieces</text>
 </g>
 <!-- no0.FallEntity -->

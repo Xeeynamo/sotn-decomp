@@ -12,7 +12,7 @@
 <!-- no0.EntitySkeletonThrownBone -->
 <g id="node1" class="node">
 <title>no0.EntitySkeletonThrownBone</title>
-<ellipse fill="red" stroke="black" cx="634.19" cy="-198" rx="158.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="634.19" cy="-198" rx="158.67" ry="18"/>
 <text text-anchor="middle" x="634.19" y="-194.3" font-family="Times,serif" font-size="14.00">no0.EntitySkeletonThrownBone</text>
 </g>
 <!-- no0.DestroyEntity -->
