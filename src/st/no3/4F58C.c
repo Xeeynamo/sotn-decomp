@@ -554,7 +554,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         entity->animSet = ANIMSET_DRA(14);
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
