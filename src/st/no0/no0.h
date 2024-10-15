@@ -30,7 +30,10 @@ typedef enum EntityIDs {
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x48 */ E_AXE_KNIGHT_AXE = 0x48,
-    /* 0x49 */ E_WARG_EXP_OPAQUE
+    /* 0x49 */ E_WARG_EXP_OPAQUE,
+    /* 0x4D */ E_SKELETON = 0x4D,
+    /* 0x4E */ E_SKELETON_THROWN_BONE,
+    /* 0x4F */ E_SKELETON_PIECES
 } EntityIDs;
 
 extern s16 g_SineTable[];
@@ -39,3 +42,8 @@ extern u16 g_EInitParticle[];
 
 // Axe knight
 extern u16 g_EInitAxeKnightAxe[];
+
+// Skeleton
+extern u16 g_EInitSkeleton[];
+extern u16 g_EInitSkeletonPieces[];
+extern u16 g_EInitSkeletonBone[];
