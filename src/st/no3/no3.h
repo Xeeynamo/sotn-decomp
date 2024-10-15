@@ -133,8 +133,6 @@ extern SVECTOR D_801811F0[];
 extern u8 D_801811F8;
 extern u8 D_80181218[];
 extern u8 D_80181224[];
-extern s32 g_TrapDoorFlag; // 0 = Closed, 1 = Open
-extern u8 D_80181240[];
 extern u16 D_80181258[];
 extern u16 D_80181264[];
 extern u16 D_8018127C[];

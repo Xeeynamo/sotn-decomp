@@ -3,45 +3,6 @@
 
 #include "../entrance_stage_entities.h"
 
-void EntityTrapDoor(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(g_eInitGeneric3);
-        entity->animCurFrame = 0x1B;
-        entity->zPriority = 0x6A;
-        entity->hitboxWidth = 0x10;
-        entity->hitboxHeight = 4;
-        entity->hitboxState = 1;
-
-        if (g_TrapDoorFlag == 0) {
-            if (PLAYER.posY.val < entity->posY.val) {
-                g_Tilemap.fg[0xA8E / 2] = 0x129;
-                g_Tilemap.fg[0xA90 / 2] = 0x132;
-                DestroyEntity(entity);
-                return;
-            }
-            g_Tilemap.fg[0xA8E / 2] = 0x6C8;
-            g_Tilemap.fg[0xA90 / 2] = 0x6C9;
-        } else {
-            entity->animCurFrame = 30;
-            g_Tilemap.fg[0xA8E / 2] = 0x6C8;
-            g_Tilemap.fg[0xA90 / 2] = 0x6C9;
-            entity->step = 128;
-        }
-
-    case 1:
-        if (entity->hitFlags != 0) {
-            g_TrapDoorFlag = 1;
-            entity->step++;
-        }
-        break;
-
-    case 2:
-        AnimateEntity(D_80181108, entity);
-        break;
-    }
-}
-
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {
     const int rockBroken = (1 << 0);
