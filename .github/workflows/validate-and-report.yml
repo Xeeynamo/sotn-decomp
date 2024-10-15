@@ -195,6 +195,7 @@ jobs:
       - name: Generate duplicates report
         run: |
           make clean
+          make force_symbols
           make -j extract
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
