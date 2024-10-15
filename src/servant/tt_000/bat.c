@@ -971,7 +971,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
     const s32 XE = 13; // X end, right
     const s32 YS = 24; // Y start, top
     const s32 YE = 8;  // Y end, bottom
-    s32 trailUpdateIndex;
+    s32 trailIndex;
     s32 isEntityAlive;
 
     switch (self->step) {
@@ -983,8 +983,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
         } else {
             self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             s_CurrentPrim = &g_PrimBuf[self->primIndex];
-            for (trailUpdateIndex = 0; trailUpdateIndex < nPrim;
-                 trailUpdateIndex++) {
+            for (trailIndex = 0; trailIndex < nPrim; trailIndex++) {
                 s_CurrentPrim->tpage = 0x1B;
                 s_CurrentPrim->clut = 0x143;
                 s_CurrentPrim->u0 = s_CurrentPrim->u2 = 64;
@@ -995,7 +994,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
                 s_CurrentPrim->drawMode =
                     DRAW_TRANSP | DRAW_COLORS | DRAW_HIDE | DRAW_TPAGE;
                 s_CurrentPrim = s_CurrentPrim->next;
-                s_TrailEntityIsAlive[trailUpdateIndex] = 0;
+                s_TrailEntityIsAlive[trailIndex] = 0;
             }
             s_BlueTrailIndex = 0;
             self->step++;
@@ -1019,41 +1018,40 @@ void UpdateBatBlueTrailEntities(Entity* self) {
         s_BlueTrailIndex = s_BlueTrailIndex >= nPrim ? 0 : s_BlueTrailIndex;
 
         s_CurrentPrim = &g_PrimBuf[self->primIndex];
-        for (trailUpdateIndex = 0; trailUpdateIndex < nPrim;
-             trailUpdateIndex++) {
-            if (s_TrailEntityIsAlive[trailUpdateIndex]) {
-                if (s_TrailFacingLeftCache[trailUpdateIndex]) {
+        for (trailIndex = 0; trailIndex < nPrim; trailIndex++) {
+            if (s_TrailEntityIsAlive[trailIndex]) {
+                if (s_TrailFacingLeftCache[trailIndex]) {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        s_TrailLocationPoints[trailUpdateIndex].x +
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
+                        s_TrailLocationPoints[trailIndex].x +
+                        s_TrailUpdateOffsets[trailIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        s_TrailLocationPoints[trailUpdateIndex].x -
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
+                        s_TrailLocationPoints[trailIndex].x -
+                        s_TrailUpdateOffsets[trailIndex] * XE / 256;
                 } else {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        s_TrailLocationPoints[trailUpdateIndex].x -
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
+                        s_TrailLocationPoints[trailIndex].x -
+                        s_TrailUpdateOffsets[trailIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        s_TrailLocationPoints[trailUpdateIndex].x +
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
+                        s_TrailLocationPoints[trailIndex].x +
+                        s_TrailUpdateOffsets[trailIndex] * XE / 256;
                 }
                 s_CurrentPrim->y0 = s_CurrentPrim->y1 =
-                    s_TrailLocationPoints[trailUpdateIndex].y -
-                    s_TrailUpdateOffsets[trailUpdateIndex] * YS / 256;
+                    s_TrailLocationPoints[trailIndex].y -
+                    s_TrailUpdateOffsets[trailIndex] * YS / 256;
                 s_CurrentPrim->y2 = s_CurrentPrim->y3 =
-                    s_TrailLocationPoints[trailUpdateIndex].y +
-                    s_TrailUpdateOffsets[trailUpdateIndex] * YE / 256;
+                    s_TrailLocationPoints[trailIndex].y +
+                    s_TrailUpdateOffsets[trailIndex] * YE / 256;
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
                         s_CurrentPrim->g2 = s_CurrentPrim->g3 =
                             s_CurrentPrim->b0 = s_CurrentPrim->b1 =
                                 s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                    s_TrailUpdateFadeAmounts[trailUpdateIndex];
-                s_TrailUpdateOffsets[trailUpdateIndex] -= 8;
-                s_TrailUpdateFadeAmounts[trailUpdateIndex] -= 8;
-                if (s_TrailUpdateFadeAmounts[trailUpdateIndex] < 81) {
+                                    s_TrailUpdateFadeAmounts[trailIndex];
+                s_TrailUpdateOffsets[trailIndex] -= 8;
+                s_TrailUpdateFadeAmounts[trailIndex] -= 8;
+                if (s_TrailUpdateFadeAmounts[trailIndex] < 81) {
                     s_CurrentPrim->drawMode |= DRAW_HIDE;
-                    s_TrailEntityIsAlive[trailUpdateIndex] = false;
+                    s_TrailEntityIsAlive[trailIndex] = false;
                 } else {
                     s_CurrentPrim->drawMode ^= DRAW_HIDE;
                 }
@@ -1064,52 +1062,53 @@ void UpdateBatBlueTrailEntities(Entity* self) {
     case 2:
         isEntityAlive = false;
         s_CurrentPrim = &g_PrimBuf[self->primIndex];
-        for (trailUpdateIndex = 0; trailUpdateIndex < nPrim;
-             trailUpdateIndex++) {
-            if (s_TrailEntityIsAlive[trailUpdateIndex]) {
-                if (s_TrailFacingLeftCache[trailUpdateIndex]) {
+        for (trailIndex = 0; trailIndex < nPrim; trailIndex++) {
+            if (s_TrailEntityIsAlive[trailIndex]) {
+                if (s_TrailFacingLeftCache[trailIndex]) {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        s_TrailLocationPoints[trailUpdateIndex].x +
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
+                        s_TrailLocationPoints[trailIndex].x +
+                        s_TrailUpdateOffsets[trailIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        s_TrailLocationPoints[trailUpdateIndex].x -
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
+                        s_TrailLocationPoints[trailIndex].x -
+                        s_TrailUpdateOffsets[trailIndex] * XE / 256;
                 } else {
                     s_CurrentPrim->x0 = s_CurrentPrim->x2 =
-                        s_TrailLocationPoints[trailUpdateIndex].x -
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XS / 256;
+                        s_TrailLocationPoints[trailIndex].x -
+                        s_TrailUpdateOffsets[trailIndex] * XS / 256;
                     s_CurrentPrim->x1 = s_CurrentPrim->x3 =
-                        s_TrailLocationPoints[trailUpdateIndex].x +
-                        s_TrailUpdateOffsets[trailUpdateIndex] * XE / 256;
+                        s_TrailLocationPoints[trailIndex].x +
+                        s_TrailUpdateOffsets[trailIndex] * XE / 256;
                 }
                 s_CurrentPrim->y0 = s_CurrentPrim->y1 =
-                    s_TrailLocationPoints[trailUpdateIndex].y -
-                    s_TrailUpdateOffsets[trailUpdateIndex] * YS / 256;
+                    s_TrailLocationPoints[trailIndex].y -
+                    s_TrailUpdateOffsets[trailIndex] * YS / 256;
                 s_CurrentPrim->y2 = s_CurrentPrim->y3 =
-                    s_TrailLocationPoints[trailUpdateIndex].y +
-                    s_TrailUpdateOffsets[trailUpdateIndex] * YE / 256;
+                    s_TrailLocationPoints[trailIndex].y +
+                    s_TrailUpdateOffsets[trailIndex] * YE / 256;
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
                         s_CurrentPrim->g2 = s_CurrentPrim->g3 =
                             s_CurrentPrim->b0 = s_CurrentPrim->b1 =
                                 s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                    s_TrailUpdateFadeAmounts[trailUpdateIndex];
+                                    s_TrailUpdateFadeAmounts[trailIndex];
+                // BUG - This is the same as the line above.  Sets these all
+                // again
                 s_CurrentPrim->r0 = s_CurrentPrim->r1 = s_CurrentPrim->r2 =
                     s_CurrentPrim->r3 = s_CurrentPrim->g0 = s_CurrentPrim->g1 =
                         s_CurrentPrim->g2 = s_CurrentPrim->g3 =
                             s_CurrentPrim->b0 = s_CurrentPrim->b1 =
                                 s_CurrentPrim->b2 = s_CurrentPrim->b3 =
-                                    s_TrailUpdateFadeAmounts[trailUpdateIndex];
-                s_TrailUpdateOffsets[trailUpdateIndex] -= 8;
-                s_TrailUpdateFadeAmounts[trailUpdateIndex] -= 8;
-                if (s_TrailUpdateFadeAmounts[trailUpdateIndex] < 81) {
+                                    s_TrailUpdateFadeAmounts[trailIndex];
+                s_TrailUpdateOffsets[trailIndex] -= 8;
+                s_TrailUpdateFadeAmounts[trailIndex] -= 8;
+                if (s_TrailUpdateFadeAmounts[trailIndex] < 81) {
                     s_CurrentPrim->drawMode |= DRAW_HIDE;
-                    s_TrailEntityIsAlive[trailUpdateIndex] = false;
+                    s_TrailEntityIsAlive[trailIndex] = false;
                 } else {
                     s_CurrentPrim->drawMode ^= DRAW_HIDE;
                 }
             }
-            isEntityAlive |= s_TrailEntityIsAlive[trailUpdateIndex];
+            isEntityAlive |= s_TrailEntityIsAlive[trailIndex];
             s_CurrentPrim = s_CurrentPrim->next;
         }
 
