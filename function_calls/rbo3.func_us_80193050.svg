@@ -12,7 +12,7 @@
 <!-- rbo3.func_us_80193050 -->
 <g id="node1" class="node">
 <title>rbo3.func_us_80193050</title>
-<ellipse fill="red" stroke="black" cx="317.44" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="317.44" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="317.44" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.func_us_80193050</text>
 </g>
 <!-- dra.AllocPrimitives -->

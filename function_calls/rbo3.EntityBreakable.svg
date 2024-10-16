@@ -12,7 +12,7 @@
 <!-- rbo3.EntityBreakable -->
 <g id="node1" class="node">
 <title>rbo3.EntityBreakable</title>
-<ellipse fill="red" stroke="black" cx="593.34" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="593.34" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="593.34" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityBreakable</text>
 </g>
 <!-- dra.PlaySfx -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.CreateEntityFromCurrentEntity</title>
 <g id="a_node5"><a xlink:href="rbo3.CreateEntityFromCurrentEntity.svg" xlink:title="rbo3.CreateEntityFromCurrentEntity">
-<ellipse fill="red" stroke="black" cx="746.34" cy="-18" rx="185.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="746.34" cy="-18" rx="185.47" ry="18"/>
 <text text-anchor="middle" x="746.34" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.CreateEntityFromCurrentEntity</text>
 </a>
 </g>

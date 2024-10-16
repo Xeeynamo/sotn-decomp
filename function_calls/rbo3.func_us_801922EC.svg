@@ -12,7 +12,7 @@
 <!-- rbo3.func_us_801922EC -->
 <g id="node1" class="node">
 <title>rbo3.func_us_801922EC</title>
-<ellipse fill="red" stroke="black" cx="211.74" cy="-198" rx="123.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="211.74" cy="-198" rx="123.48" ry="18"/>
 <text text-anchor="middle" x="211.74" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.func_us_801922EC</text>
 </g>
 <!-- rbo3.DestroyEntity -->
