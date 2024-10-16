@@ -35,7 +35,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0xE8, .data, header] # layers
-      - [0x298, data] # gfxbanks
+      - [0x298, .data, gfx_banks] # gfxbanks
       - [0x3B4, .data, e_laydef] # layout entities header
       - [0x55C, .data, entity]
       - [0x89C, .data, 1BEDC]
