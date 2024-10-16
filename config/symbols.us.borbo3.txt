@@ -1,3 +1,9 @@
+g_EInitBreakable = 0x80180414;
+g_eBreakableAnimations = 0x801805A0;
+g_eBreakableHitboxes = 0x801805C0;
+g_eBreakableExplosionTypes = 0x801805C8;
+g_eBreakableanimSets = 0x801805D0;
+g_eBreakableDrawModes = 0x801805E0;
 func_801A7D64 = 0x80191080;
 EntityUnkId12 = 0x80191148;
 EntityBreakable = 0x80191304;
