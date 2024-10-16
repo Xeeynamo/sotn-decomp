@@ -381,7 +381,7 @@ void ServantInit(InitializeMode mode) {
                 e->posY.val = PLAYER.posY.val - FIX(32);
             }
         }
-        g_api.func_8011A3AC(e, 0, 0, &s_GhostStats);
+        g_api.GetServantStats(e, 0, 0, &s_GhostStats);
         s_IsServantDestroyed = 0;
     }
 }
@@ -392,7 +392,7 @@ void UpdateServantDefault(Entity* self) {
     s32 temp_s2;
     s32 temp_s1;
 
-    g_api.func_8011A3AC(self, 0, 0, &s_GhostStats);
+    g_api.GetServantStats(self, 0, 0, &s_GhostStats);
     if (s_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
     }
@@ -551,10 +551,11 @@ void UpdateServantDefault(Entity* self) {
                        g_GhostAbilityStats[s_GhostStats.level / 10]
                                           [DELAY_FRAMES_INDEX]) {
                 self->ext.ghost.frameCounter = 0;
-                g_api.func_8011A3AC(self,
-                                    g_GhostAbilityStats[s_GhostStats.level / 10]
-                                                       [SPELL_ID_INDEX],
-                                    1, &s_GhostStats);
+                g_api.GetServantStats(
+                    self,
+                    g_GhostAbilityStats[s_GhostStats.level / 10]
+                                       [SPELL_ID_INDEX],
+                    1, &s_GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
             }

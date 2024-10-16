@@ -201,7 +201,7 @@ bool InitGame(struct InitGameParams* params) {
     api.func_8010BF64 = func_8010BF64;
     api.func_800F1FC4 = func_800F1FC4;
     api.func_800F2288 = func_800F2288;
-    api.func_8011A3AC = func_8011A3AC;
+    api.GetServantStats = GetServantStats;
     api.func_800FF460 = func_800FF460;
     api.func_800FF494 = func_800FF494;
     api.CdSoundCommandQueueEmpty = CdSoundCommandQueueEmpty;
