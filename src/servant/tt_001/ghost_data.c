@@ -6,8 +6,16 @@
 // 1 - spell Id
 // 2 - make bad attacks (skips enemy hitbox & 8)
 s32 g_GhostAbilityStats[][3] = {
-    {120, 17, 1}, {120, 17, 1}, {100, 17, 1}, {100, 17, 1}, {90, 17, 0},
-    {90, 17, 0},  {75, 17, 0},  {75, 18, 0},  {60, 18, 0},  {60, 18, 0},
+    {120, FAM_ABILITY_GHOST_ATTACK, 1},
+    {120, FAM_ABILITY_GHOST_ATTACK, 1},
+    {100, FAM_ABILITY_GHOST_ATTACK, 1},
+    {100, FAM_ABILITY_GHOST_ATTACK, 1},
+    {90, FAM_ABILITY_GHOST_ATTACK, 0},
+    {90, FAM_ABILITY_GHOST_ATTACK, 0},
+    {75, FAM_ABILITY_GHOST_ATTACK, 0},
+    {75, FAM_ABILITY_GHOST_ATTACK_SOULSTEAL, 0},
+    {60, FAM_ABILITY_GHOST_ATTACK_SOULSTEAL, 0},
+    {60, FAM_ABILITY_GHOST_ATTACK_SOULSTEAL, 0},
 };
 
 // Ghost specific clut

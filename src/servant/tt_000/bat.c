@@ -374,7 +374,7 @@ void SwitchModeInitialize(Entity* self) {
 
     if (!self->ext.bat.previouslyInitialized) {
         self->ext.bat.batIndex = self->params;
-        self->ext.bat.unk8E = 0;
+        self->ext.bat.doUpdateCloseAnimation = false;
         switch (self->entityId) {
         case ENTITY_ID_SEEK_MODE:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -386,9 +386,9 @@ void SwitchModeInitialize(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             SetEntityAnimation(self, g_DefaultBatAnimationFrame);
-            self->ext.bat.unk84 = rand() % 4096;
+            self->ext.bat.randomMovementAngle = rand() % 4096;
             self->ext.bat.targetAngle = 0;
-            self->ext.bat.unk88 = 0xC;
+            self->ext.bat.randomMovementScaler = 0xC;
             self->ext.bat.frameCounter = rand() % 4096;
             self->ext.bat.maxAngle = 0x20;
             self->step++;
@@ -438,12 +438,12 @@ void SwitchModeInitialize(Entity* self) {
                 self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
                 self->posY.i.hi = rand() % 256;
             }
-            self->ext.bat.unkA8 = 0;
+            self->ext.bat.hasShotFireball = 0;
             self->step++;
             break;
         }
     } else {
-        self->ext.bat.unk8E = 0;
+        self->ext.bat.doUpdateCloseAnimation = false;
         switch (self->entityId) {
         case ENTITY_ID_SEEK_MODE:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
@@ -479,13 +479,13 @@ void SwitchModeInitialize(Entity* self) {
                 s_BatPathingPoints[self->ext.bat.batIndex][i].y =
                     PLAYER.posY.i.hi + self->ext.bat.cameraY;
             }
-            self->ext.bat.unkA8 = 0;
+            self->ext.bat.hasShotFireball = 0;
             self->step++;
             break;
         }
     }
     self->ext.bat.previouslyInitialized = self->entityId;
-    g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
+    g_api.GetServantStats(self, 0, 0, &s_BatStats);
 }
 
 #ifdef VERSION_PC
@@ -578,7 +578,7 @@ void ServantInit(InitializeMode mode) {
 INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateServantDefault);
 #else
 void UpdateServantDefault(Entity* self) {
-    g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
+    g_api.GetServantStats(self, 0, 0, &s_BatStats);
     if (s_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
@@ -603,9 +603,9 @@ void UpdateServantDefault(Entity* self) {
         s_TargetLocationX_calc = PLAYER.posX.i.hi + s_xOffset_calc;
         s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x22;
     }
-    s_AngleToTarget = self->ext.bat.unk84;
-    self->ext.bat.unk84 += 0x10;
-    s_DistanceToAttackTarget_0 = self->ext.bat.unk88;
+    s_AngleToTarget = self->ext.bat.randomMovementAngle;
+    self->ext.bat.randomMovementAngle += 0x10;
+    s_DistanceToAttackTarget_0 = self->ext.bat.randomMovementScaler;
     s_TargetLocationX =
         s_TargetLocationX_calc +
         ((rcos(s_AngleToTarget) >> 4) * s_DistanceToAttackTarget_0 >> 8);
@@ -704,8 +704,8 @@ void UpdateServantDefault(Entity* self) {
                          << 12) >>
             12;
         if (s_DistanceToAttackTarget_1 < 0x18) {
-            if (self->ext.bat.unk8E) {
-                self->ext.bat.unk8E = 0;
+            if (self->ext.bat.doUpdateCloseAnimation) {
+                self->ext.bat.doUpdateCloseAnimation = false;
                 SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
             }
             self->ext.bat.frameCounter++;
@@ -713,12 +713,12 @@ void UpdateServantDefault(Entity* self) {
                 g_BatAbilityStats[s_BatStats.level / 10][DELAY_FRAMES_INDEX]) {
                 self->ext.bat.frameCounter = 0;
                 // Pay attention - this is not a ==
-                if (self->ext.bat.target = FindValidTarget(self)) {
+                if (self->ext.bat.attackTarget = FindValidTarget(self)) {
                     self->step++;
                 }
             }
         } else {
-            self->ext.bat.unk8E = 1;
+            self->ext.bat.doUpdateCloseAnimation = true;
         }
         break;
     case 2: // Begin attack
@@ -729,11 +729,11 @@ void UpdateServantDefault(Entity* self) {
         } else if (self->ext.bat.frameCounter > 30) {
             self->ext.bat.frameCounter = 0;
             UpdatePrimitives(self, 0);
-            s_TargetPositionX = self->ext.bat.target->posX.i.hi;
-            s_TargetPositionY = self->ext.bat.target->posY.i.hi;
+            s_TargetPositionX = self->ext.bat.attackTarget->posX.i.hi;
+            s_TargetPositionY = self->ext.bat.attackTarget->posY.i.hi;
             self->hitboxWidth = 5;
             self->hitboxHeight = 5;
-            g_api.func_8011A3AC(self, 15, 1, &s_BatStats);
+            g_api.GetServantStats(self, FAM_ABILITY_BAT_ATTACK, 1, &s_BatStats);
             self->ext.bat.targetAngle = 0xC00;
             SetEntityAnimation(self, g_BatHighVelocityAnimationFrame);
             CreateBlueTrailEntity(self);
@@ -741,8 +741,8 @@ void UpdateServantDefault(Entity* self) {
         }
         break;
     case 3: // Move to attack target
-        s_TargetPositionX = self->ext.bat.target->posX.i.hi;
-        s_TargetPositionY = self->ext.bat.target->posY.i.hi;
+        s_TargetPositionX = self->ext.bat.attackTarget->posX.i.hi;
+        s_TargetPositionY = self->ext.bat.attackTarget->posY.i.hi;
         s_AngleToTarget =
             CalculateAngleToEntity(self, s_TargetPositionX, s_TargetPositionY);
         s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
@@ -766,7 +766,7 @@ void UpdateServantDefault(Entity* self) {
                           s_AttackTargetDeltaY * s_AttackTargetDeltaY)
                          << 12) >>
             12;
-        if (!CheckEntityValid(self->ext.bat.target) ||
+        if (!CheckEntityValid(self->ext.bat.attackTarget) ||
             s_DistanceToAttackTarget_1 < 8) {
             self->ext.bat.frameCounter = 0;
             self->step++;
@@ -816,9 +816,9 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateBatAttackMode);
 void UpdateBatAttackMode(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
         s_PointAdjustX = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
-                         (self->ext.bat.unkB0 - PLAYER.posX.i.hi);
+                         (self->ext.bat.lastPlayerPosX - PLAYER.posX.i.hi);
         s_PointAdjustY = (self->ext.bat.cameraY - g_Tilemap.scrollY.i.hi) +
-                         (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
+                         (self->ext.bat.lastPlayerPosY - PLAYER.posY.i.hi);
 
         for (s_PointIndex = 0; s_PointIndex < 16; s_PointIndex++) {
             s_BatPathingPoints[self->ext.bat.batIndex][s_PointIndex].x -=
@@ -829,7 +829,7 @@ void UpdateBatAttackMode(Entity* self) {
         return;
     }
 
-    g_api.func_8011A3AC(self, 0, 0, &s_BatStats);
+    g_api.GetServantStats(self, 0, 0, &s_BatStats);
     if (s_IsServantDestroyed != 0) {
         self->zPriority = PLAYER.zPriority - 2;
     }
@@ -843,8 +843,8 @@ void UpdateBatAttackMode(Entity* self) {
         }
         break;
     case 1:
-        self->ext.bat.unkB0 = PLAYER.posX.i.hi;
-        self->ext.bat.unkB2 = PLAYER.posY.i.hi;
+        self->ext.bat.lastPlayerPosX = PLAYER.posX.i.hi;
+        self->ext.bat.lastPlayerPosY = PLAYER.posY.i.hi;
         self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
         self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
         s_MoveToPositionX = s_BatPathingPoints[self->ext.bat.batIndex][0].x -
@@ -856,9 +856,9 @@ void UpdateBatAttackMode(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
-            if (self->ext.bat.unk8E) {
+            if (self->ext.bat.doUpdateCloseAnimation) {
                 SetEntityAnimation(self, g_BatCloseToTargetAnimationFrame);
-                self->ext.bat.unk8E = false;
+                self->ext.bat.doUpdateCloseAnimation = false;
             }
         } else {
             if (self->velocityY > FIX(1)) {
@@ -866,19 +866,19 @@ void UpdateBatAttackMode(Entity* self) {
             } else {
                 SetEntityAnimation(self, g_DefaultBatAnimationFrame);
             }
-            self->ext.bat.unk8E = true;
+            self->ext.bat.doUpdateCloseAnimation = true;
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
-        if (!self->ext.bat.unkA8) {
+        if (!self->ext.bat.hasShotFireball) {
             if (g_Player.status & PLAYER_STATUS_UNK800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
-                self->ext.bat.unkA8 = 1;
+                self->ext.bat.hasShotFireball = 1;
             }
-        } else if (self->ext.bat.unkA8) {
+        } else if (self->ext.bat.hasShotFireball) {
             if (!(g_Player.status & PLAYER_STATUS_UNK800)) {
-                self->ext.bat.unkA8 = 0;
+                self->ext.bat.hasShotFireball = 0;
             }
         }
 

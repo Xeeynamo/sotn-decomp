@@ -54,7 +54,7 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_8010BF64(Unkstruct_8010BF64* arg0);
 void func_800F1FC4(s32 arg0);
 void func_800F2288(void); // unknown signature
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 s32 func_800FF460(s32 arg0);
 s32 func_800FF494(EnemyDef* arg0);
 bool CdSoundCommandQueueEmpty(void);
@@ -117,7 +117,7 @@ GameApi g_ApiInit = {
     func_8010BF64,
     func_800F1FC4,
     func_800F2288,
-    func_8011A3AC,
+    GetServantStats,
     func_800FF460,
     func_800FF494,
     CdSoundCommandQueueEmpty,

@@ -1039,6 +1039,14 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+// This enum has the ids for familiar abilities which use the g_SpellDef
+// table to fetch stats and modifiers for said abilities.
+typedef enum {
+    FAM_ABILITY_BAT_ATTACK = 15,
+    FAM_ABILITY_GHOST_ATTACK = 17,
+    FAM_ABILITY_GHOST_ATTACK_SOULSTEAL = 18,
+} FamiliarAbilityIds;
+
 // Need two familiar enums. One has a zero entry, one does not.
 // This one is used in places that need to access the familiar
 // stats array...
@@ -1545,7 +1553,7 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
-    /* 8003C874 */ void (*func_8011A3AC)(
+    /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
@@ -1625,7 +1633,7 @@ extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
-extern void (*g_api_func_8011A3AC)(
+extern void (*g_api_GetServantStats)(
     Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
 extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
