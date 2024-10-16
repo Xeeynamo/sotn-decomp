@@ -175,42 +175,42 @@ void func_06008588(int param_1) {
 
     puVar5 = &DAT_0605d6c0[param_1 * 4];
     puVar6 = &DAT_0605CD90[param_1];
-    if (puVar5->flags == 0) {
+    if (puVar5->tileFlags == 0) {
         return;
     }
-    if ((puVar5->flags & 1) != 0) {
+    if ((puVar5->tileFlags & 1) != 0) {
         cnt = func_0600F96C(puVar6->unkc, &DAT_060485e0, puVar6->unk18);
         DmaScroll(&DAT_060485e0, puVar6->dst0, cnt);
     }
-    if ((puVar5->flags & 2) != 0) {
+    if ((puVar5->tileFlags & 2) != 0) {
         cnt = func_0600F96C(puVar6->unk10, &DAT_060485e0, puVar6->unk1c);
         DmaScroll(&DAT_060485e0, puVar6->dst4, cnt);
     }
-    if ((puVar5->flags & 4) != 0) {
+    if ((puVar5->tileFlags & 4) != 0) {
         if (DAT_060086d4 == 4) {
             func_060089F0(puVar6);
         } else {
             func_0600871C(puVar6, &DAT_0605c680, param_1);
         }
     }
-    if ((puVar5->flags & 8) != 0) {
+    if ((puVar5->tileFlags & 8) != 0) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
-    if ((puVar5->flags & 0x10) != 0) {
+    if ((puVar5->tileFlags & 0x10) != 0) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
-    if ((puVar5->flags & 0x20) != 0) {
+    if ((puVar5->tileFlags & 0x20) != 0) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
-    if ((puVar5->flags & 0x40) != 0) {
+    if ((puVar5->tileFlags & 0x40) != 0) {
         cnt = func_0600F96C(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
     }
-    if ((puVar5->flags & 0x80) != 0) {
+    if ((puVar5->tileFlags & 0x80) != 0) {
         cnt = func_0600F96C(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
         DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
     }
-    puVar5->flags = 0;
+    puVar5->tileFlags = 0;
     puVar5->cnt = 0;
     puVar5->dest = 0;
     puVar5->src = 0;

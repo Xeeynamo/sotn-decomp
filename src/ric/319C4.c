@@ -1369,7 +1369,7 @@ void RicEntityAguneaCircle(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC2;
-            prim->drawMode = 0x200 | DRAW_HIDE;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.aguneaCrash.subweaponId = PL_W_CRASH_AGUNEA;
