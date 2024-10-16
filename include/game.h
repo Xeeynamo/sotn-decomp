@@ -808,7 +808,7 @@ typedef enum {
 } GfxBankKind;
 #define GFX_TERMINATE() ((u_long*)-1) // can't be in GfxBankKind
 #define GFX_ENTRY(x, y, w, h, data)                                            \
-    (u_long*)((x) | ((y) << 16)), (u_long*)((w) | ((h) << 16)), (u_long*)data
+    (u_long*)((x) | ((y) << 16)), (u_long*)((w) | ((h) << 16)), (u_long*)data // x and y are swapped?
 typedef struct {
     /* 0x00 */ u_long* xy;
     /* 0x04 */ u_long* wh;
