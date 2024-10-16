@@ -1,5 +1,5 @@
 /*
- * File: d_298.c
+ * File: gfx_banks.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
@@ -9,72 +9,87 @@
 // D_80180298
 static u_long* GfxBank_Null[] = {
     GFX_BANK_NONE,
-    GFX_ENTRY(0, 0, 0, 0, 0),
+    GFX_ENTRY(0, 0, 0, 0, NULL),
     GFX_TERMINATE(),
 };
+
+extern u8 D_80189B38[];
+extern u8 D_80182508[];
 
 // D_801802AC
 static u_long* GfxBank_StageName[] = {
     GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 64, 128, 128, (void*)0x80189B38),
-    GFX_ENTRY(256, 96, 128, 128, (void*)0x80182508),
+    GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80189B38), // EN Stage Name
+    GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_80182508), // JP Stage Name (Large)
     GFX_TERMINATE(),
 };
 
+extern u8 D_80182A60[];
+
 // D_801802CC
-static void* GfxBank_Gremlin1[] = {
+static u_long* GfxBank_Gremlin1[] = {
     GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 128, 128, 128, (void*)0x80182A60),
+    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80182A60), // Gremlin
     GFX_TERMINATE(),
 };
 
 // D_801802E0
-static void* GfxBank_Gremlin2[] = {
+static u_long* GfxBank_Gremlin2[] = {
     GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 128, 128, 128, (void*)0x80182A60),
+    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80182A60), // Gremlin
     GFX_TERMINATE(),
 };
+
+extern u8 D_80183480[];
+extern u8 D_801841F8[];
+extern u8 D_80185BA0[];
+extern u8 D_80186B1C[];
+extern u8 D_80184DBC[];
 
 // D_801802F4
-static void* GfxBank_SalemWitch[] = {
+static u_long* GfxBank_SalemWitch[] = {
     GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 128, 128, 128, (void*)0x80183480),
-    GFX_ENTRY(256, 160, 128, 128, (void*)0x801841F8),
-    GFX_ENTRY(384, 128, 128, 128, (void*)0x80185BA0),
-    GFX_ENTRY(384, 160, 128, 128, (void*)0x80186B1C),
-    GFX_ENTRY(256, 448, 128, 128, (void*)0x80184DBC),
+    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80183480),     // Body/Arm
+    GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, D_801841F8),     // Shine/Curse/Body
+    GFX_ENTRY(0x180, 0x80, 0x80, 0x80, D_80185BA0),     // Explosion
+    GFX_ENTRY(0x180, 0xA0, 0x80, 0x80, D_80186B1C),     // Shine
+    GFX_ENTRY(0x100, 0x1C0, 0x80, 0x80, D_80184DBC),    // Fire
     GFX_TERMINATE(),
 };
 
+extern u8 D_801870F8[];
+extern u8 D_80187E84[];
+extern u8 D_80188A10[];
+
 // D_80180338
-static void* GfxBank_AllWeeds[] = {
+static u_long* GfxBank_AllWeeds[] = {
     GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 192, 128, 128, (void*)0x801870F8),
-    GFX_ENTRY(256, 256, 128, 128, (void*)0x80187E84),
-    GFX_ENTRY(256, 288, 128, 128, (void*)0x80188A10),
+    GFX_ENTRY(0x100, 0xC0, 0x80, 0x80, D_801870F8),     // Thornweed/Corpseweed
+    GFX_ENTRY(0x100, 0x100, 0x80, 0x80, D_80187E84),    // Venus Weed Flower/Stem/Woman/Projectiles
+    GFX_ENTRY(0x100, 0x120, 0x80, 0x80, D_80188A10),    // Venus Weed Woman
     GFX_TERMINATE(),
 };
 
 // D_80180364
-GfxBank* OVL_EXPORT(g_EntityGfxs)[] = {
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_StageName,
-    (GfxBank*)GfxBank_Gremlin1,
-    (GfxBank*)GfxBank_SalemWitch,
-    (GfxBank*)GfxBank_AllWeeds,
-    (GfxBank*)GfxBank_Gremlin2,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
-    (GfxBank*)GfxBank_Null,
+u_long* OVL_EXPORT(g_EntityGfxs)[] = {
+    GfxBank_Null,
+    GfxBank_StageName,
+    GfxBank_Gremlin1,
+    GfxBank_SalemWitch,
+    GfxBank_AllWeeds,
+    GfxBank_Gremlin2,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
+    GfxBank_Null,
 };

@@ -65,7 +65,19 @@ segments:
       - [0x17F4, .data, 2B7CC] # EntityVenusWeed
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entities data
-      - [0x20D8, data]
+      - [0x20D8, cmp] # JP Stage Name (Small)
+      - [0x2508, cmp] # JP Stage Name (Large)
+      - [0x2A60, cmp] # Gremlin 1
+      - [0x3480, cmp] # Salem Witch 1
+      - [0x41F8, cmp] # Salem Witch 2
+      - [0x4DBC, cmp] # Salem Witch 3
+      - [0x5BA0, cmp] # Salem Witch 4
+      - [0x6B1C, cmp] # Salem Witch 5
+      - [0x70F8, cmp] # Thornweed/Corpseweed
+      - [0x7E84, cmp] # Venus Weed 1
+      - [0x8A10, cmp] # Venus Weed 2
+      - [0x9B38, cmp] # EN Stage Name
+      - [0x9FE0, data] # What is this? It's not compressed graphics
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
