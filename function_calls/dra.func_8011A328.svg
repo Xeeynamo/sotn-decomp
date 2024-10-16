@@ -15,37 +15,37 @@
 <ellipse fill="green" stroke="black" cx="1441.84" cy="-198" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="1441.84" y="-194.3" font-family="Times,serif" font-size="14.00">dra.func_8011A328</text>
 </g>
-<!-- dra.func_800FD9D4 -->
+<!-- dra.GetSpellDef -->
 <g id="node2" class="node">
-<title>dra.func_800FD9D4</title>
-<g id="a_node2"><a xlink:href="dra.func_800FD9D4.svg" xlink:title="dra.func_800FD9D4">
-<ellipse fill="green" stroke="black" cx="1330.84" cy="-18" rx="103.98" ry="18"/>
-<text text-anchor="middle" x="1330.84" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_800FD9D4</text>
+<title>dra.GetSpellDef</title>
+<g id="a_node2"><a xlink:href="dra.GetSpellDef.svg" xlink:title="dra.GetSpellDef">
+<ellipse fill="green" stroke="black" cx="1339.84" cy="-18" rx="85.29" ry="18"/>
+<text text-anchor="middle" x="1339.84" y="-14.3" font-family="Times,serif" font-size="14.00">dra.GetSpellDef</text>
 </a>
 </g>
 </g>
-<!-- dra.func_8011A328&#45;&gt;dra.func_800FD9D4 -->
+<!-- dra.func_8011A328&#45;&gt;dra.GetSpellDef -->
 <g id="edge1" class="edge">
-<title>dra.func_8011A328&#45;&gt;dra.func_800FD9D4</title>
-<path fill="none" stroke="black" d="M1431.2,-179.93C1411.64,-148.57 1369.88,-81.6 1346.87,-44.71"/>
-<polygon fill="black" stroke="black" points="1349.71,-42.65 1341.45,-36.02 1343.77,-46.35 1349.71,-42.65"/>
-<text text-anchor="middle" x="1336.45" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.func_8011A328&#45;&gt;dra.GetSpellDef</title>
+<path fill="none" stroke="black" d="M1432.06,-179.93C1414.09,-148.57 1375.71,-81.6 1354.57,-44.71"/>
+<polygon fill="black" stroke="black" points="1357.6,-42.95 1349.59,-36.02 1351.53,-46.43 1357.6,-42.95"/>
+<text text-anchor="middle" x="1344.59" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.func_80118894 -->
 <g id="node3" class="node">
 <title>dra.func_80118894</title>
 <g id="a_node3"><a xlink:href="dra.func_80118894.svg" xlink:title="dra.func_80118894">
-<ellipse fill="green" stroke="black" cx="1553.84" cy="-18" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="1553.84" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_80118894</text>
+<ellipse fill="green" stroke="black" cx="1543.84" cy="-18" rx="100.98" ry="18"/>
+<text text-anchor="middle" x="1543.84" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_80118894</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8011A328&#45;&gt;dra.func_80118894 -->
 <g id="edge2" class="edge">
 <title>dra.func_8011A328&#45;&gt;dra.func_80118894</title>
-<path fill="none" stroke="black" d="M1452.58,-179.93C1472.32,-148.57 1514.45,-81.6 1537.67,-44.71"/>
-<polygon fill="black" stroke="black" points="1540.77,-46.34 1543.13,-36.02 1534.85,-42.62 1540.77,-46.34"/>
-<text text-anchor="middle" x="1538.13" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M1451.62,-179.93C1469.59,-148.57 1507.97,-81.6 1529.11,-44.71"/>
+<polygon fill="black" stroke="black" points="1532.16,-46.43 1534.09,-36.02 1526.08,-42.95 1532.16,-46.43"/>
+<text text-anchor="middle" x="1529.09" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.EntityBatEcho -->
 <g id="node4" class="node">
