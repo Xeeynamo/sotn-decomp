@@ -438,7 +438,7 @@ void SwitchModeInitialize(Entity* self) {
                 self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
                 self->posY.i.hi = rand() % 256;
             }
-            self->ext.bat.hasShotFireball = 0;
+            self->ext.bat.hasShotFireball = false;
             self->step++;
             break;
         }
@@ -479,7 +479,7 @@ void SwitchModeInitialize(Entity* self) {
                 s_BatPathingPoints[self->ext.bat.batIndex][i].y =
                     PLAYER.posY.i.hi + self->ext.bat.cameraY;
             }
-            self->ext.bat.hasShotFireball = 0;
+            self->ext.bat.hasShotFireball = false;
             self->step++;
             break;
         }
@@ -874,11 +874,11 @@ void UpdateBatAttackMode(Entity* self) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
-                self->ext.bat.hasShotFireball = 1;
+                self->ext.bat.hasShotFireball = true;
             }
         } else if (self->ext.bat.hasShotFireball) {
             if (!(g_Player.status & PLAYER_STATUS_UNK800)) {
-                self->ext.bat.hasShotFireball = 0;
+                self->ext.bat.hasShotFireball = false;
             }
         }
 
