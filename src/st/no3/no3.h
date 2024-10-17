@@ -72,13 +72,15 @@ typedef enum EntityIDs {
     /* 0x43 */ E_MERMAN_JUMP_AIR,
     /* 0x44 */ E_MERMAN_DYING,
     /* 0x47 */ E_BONE_SCIMITAR_HEAD = 0x47,
-    /* 0x4C */ E_ZOMBIE = 0x4C,
+    /* 0x4B */ E_ID_4B = 0x4B,
+    /* 0x4C */ E_ZOMBIE,
     /* 0x59 */ E_ID_59 = 0x59,
     /* 0x5B */ E_DEATH_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
     /* 0x5E */ E_DEATH_5E,
     /* 0x60 */ E_FLYING_OWL_UNK60 = 0x60,
-    /* 0x62 */ E_WARG_EXP_OPAQUE = 0x62,
+    /* 0x61 */ E_WARG_EXP_TRANSP,
+    /* 0x62 */ E_WARG_EXP_OPAQUE,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -159,9 +161,8 @@ extern s32 D_801819EC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
-extern s16 D_801832EC[];
 extern s16 D_801836BC[];
-extern u16 D_80180B9C;
+extern u16 D_80180B9C[];
 
 // *** EntityExplosion3 *** //
 extern u16 D_80180B3C[];

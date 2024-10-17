@@ -260,6 +260,9 @@ enum SfxModes {
 #define NA_VO_SU_DELICIOUS 0x8D1
 
 // STAGE NO3 / NP3
+#define SFX_UNK_780 0x780
+#define SFX_UNK_781 0x781
+#define SFX_UNK_782 0x782
 #define NA_SE_EV_WINDOW_LATCH 0x79D
 #define SE_DEATH_TAKES_ITEMS 0x7A0
 #define NA_VO_DEATH_LAUGH 0x7A1
