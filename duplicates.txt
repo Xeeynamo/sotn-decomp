@@ -281,28 +281,12 @@
 | 1.00 | true     | SetTile16                           | asm/us/main/matchings/psxsdk/libgpu/prim/SetTile16.s 
 | 1.00 | true     | SetTile8                            | asm/us/main/matchings/psxsdk/libgpu/prim/SetTile8.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801952D8                    | asm/us/boss/mar/matchings/e_misc/func_us_801952D8.s 
-| 1.00 | true     | func_us_8019B500                    | asm/us/boss/rbo3/matchings/e_misc/func_us_8019B500.s 
-| 1.00 | true     | func_801991C0                       | asm/us/st/cen/matchings/e_misc/func_801991C0.s 
-| 1.00 | true     | func_8019F304                       | asm/us/st/dre/matchings/e_misc/func_8019F304.s 
-| 1.00 | true     | func_80196934                       | asm/us/st/mad/matchings/e_misc/func_80196934.s 
-| 0.96 | true     | AxeKnightDeath                      | asm/us/st/no0/matchings/41F98/AxeKnightDeath.s 
-| 1.00 | true     | MakeExplosions                      | asm/us/st/no0/matchings/e_misc/MakeExplosions.s 
-| 0.96 | true     | func_801C13F8                       | asm/us/st/no3/matchings/3FF00/func_801C13F8.s 
-| 1.00 | true     | func_801C9BC0                       | asm/us/st/no3/matchings/e_misc/func_801C9BC0.s 
-| 0.96 | true     | func_801B653C                       | asm/us/st/np3/matchings/363FC/func_801B653C.s 
-| 1.00 | true     | func_801C1430                       | asm/us/st/np3/matchings/e_misc/func_801C1430.s 
-| 0.96 | true     | func_801B3B78                       | asm/us/st/nz0/matchings/337B4/func_801B3B78.s 
-| 1.00 | true     | func_801C1848                       | asm/us/st/nz0/matchings/e_misc/func_801C1848.s 
-| 1.00 | true     | func_801924DC                       | asm/us/st/rwrp/matchings/rwrp/e_misc/func_801924DC.s 
-| 1.00 | true     | func_801B8C48                       | asm/us/st/st0/matchings/e_misc/func_801B8C48.s 
-| 1.00 | true     | func_8019055C                       | asm/us/st/wrp/matchings/e_misc/func_8019055C.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80190388                    | asm/us/boss/mar/matchings/st_common/func_us_80190388.s 
 | 1.00 | true     | func_us_801965B0                    | asm/us/boss/rbo3/matchings/st_common/func_us_801965B0.s 
 | 1.00 | true     | func_80156C60                       | asm/us/ric/matchings/1AC60/func_80156C60.s 
 | 1.00 | true     | func_80173E0C                       | asm/us/servant/tt_000/matchings/bat/func_80173E0C.s 
 | 1.00 | true     | func_us_80172AE4                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172AE4.s 
+| 1.00 | true     | func_us_80178804                    | asm/us/servant/tt_002/matchings/3678/func_us_80178804.s 
 | 1.00 | true     | func_80194264                       | asm/us/st/cen/matchings/st_common/func_80194264.s 
 | 1.00 | true     | func_8019A3A8                       | asm/us/st/dre/matchings/st_common/func_8019A3A8.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/mad/matchings/st_common/DestroyEntity.s 
@@ -331,6 +315,24 @@
 | 1.00 | true     | func_801BA648                       | asm/us/st/sel/matchings/stream/func_801BA648.s 
 | 1.00 | true     | func_801BA668                       | asm/us/st/sel/matchings/stream/func_801BA668.s 
 | 1.00 | true     | func_801BA688                       | asm/us/st/sel/matchings/stream/func_801BA688.s 
+| 1.00 | false    | func_us_80177F64                    | asm/us/servant/tt_002/nonmatchings/3678/func_us_80177F64.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801952D8                    | asm/us/boss/mar/matchings/e_misc/func_us_801952D8.s 
+| 1.00 | true     | func_us_8019B500                    | asm/us/boss/rbo3/matchings/e_misc/func_us_8019B500.s 
+| 1.00 | true     | func_801991C0                       | asm/us/st/cen/matchings/e_misc/func_801991C0.s 
+| 1.00 | true     | func_8019F304                       | asm/us/st/dre/matchings/e_misc/func_8019F304.s 
+| 1.00 | true     | func_80196934                       | asm/us/st/mad/matchings/e_misc/func_80196934.s 
+| 0.96 | true     | AxeKnightDeath                      | asm/us/st/no0/matchings/41F98/AxeKnightDeath.s 
+| 1.00 | true     | MakeExplosions                      | asm/us/st/no0/matchings/e_misc/MakeExplosions.s 
+| 0.96 | true     | func_801C13F8                       | asm/us/st/no3/matchings/3FF00/func_801C13F8.s 
+| 1.00 | true     | func_801C9BC0                       | asm/us/st/no3/matchings/e_misc/func_801C9BC0.s 
+| 0.96 | true     | func_801B653C                       | asm/us/st/np3/matchings/363FC/func_801B653C.s 
+| 1.00 | true     | func_801C1430                       | asm/us/st/np3/matchings/e_misc/func_801C1430.s 
+| 0.96 | true     | func_801B3B78                       | asm/us/st/nz0/matchings/337B4/func_801B3B78.s 
+| 1.00 | true     | func_801C1848                       | asm/us/st/nz0/matchings/e_misc/func_801C1848.s 
+| 1.00 | true     | func_801924DC                       | asm/us/st/rwrp/matchings/rwrp/e_misc/func_801924DC.s 
+| 1.00 | true     | func_801B8C48                       | asm/us/st/st0/matchings/e_misc/func_801B8C48.s 
+| 1.00 | true     | func_8019055C                       | asm/us/st/wrp/matchings/e_misc/func_8019055C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80197BD0                    | asm/us/boss/mar/matchings/e_room_fg/func_us_80197BD0.s 
 | 1.00 | true     | func_us_8019DDF8                    | asm/us/boss/rbo3/matchings/e_room_fg/func_us_8019DDF8.s 
@@ -1750,6 +1752,11 @@
 | 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 | 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_801745E4                       | asm/us/servant/tt_000/matchings/bat/func_801745E4.s 
+| 1.00 | true     | func_us_801732BC                    | asm/us/servant/tt_001/matchings/ghost/func_us_801732BC.s 
+| 1.00 | true     | func_us_80173B14                    | asm/us/servant/tt_002/matchings/3678/func_us_80173B14.s 
+| 1.00 | true     | func_us_80178FDC                    | asm/us/servant/tt_002/matchings/3678/func_us_80178FDC.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_801B9CE8                       | asm/us/st/no3/matchings/377D4/func_801B9CE8.s 
 | 0.91 | true     | func_801BBF38                       | asm/us/st/no3/matchings/377D4/func_801BBF38.s 
 | 1.00 | true     | func_801B4558                       | asm/us/st/np3/matchings/32830/func_801B4558.s 
@@ -1804,6 +1811,50 @@
 | 1.00 | false    | SetRotMatrix                        | asm/us/main/nonmatchings/psxsdk/libgte/mtx_09/SetRotMatrix.s 
 | 1.00 | false    | SetLightMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_10/SetLightMatrix.s 
 | 1.00 | false    | SetColorMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_11/SetColorMatrix.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
+| 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
+| 1.00 | true     | func_us_8017865C                    | asm/us/servant/tt_002/matchings/3678/func_us_8017865C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80173E78                       | asm/us/servant/tt_000/matchings/bat/func_80173E78.s 
+| 1.00 | true     | func_us_80172B50                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172B50.s 
+| 1.00 | true     | func_us_80178870                    | asm/us/servant/tt_002/matchings/3678/func_us_80178870.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80173EB0                       | asm/us/servant/tt_000/matchings/bat/func_80173EB0.s 
+| 1.00 | true     | func_us_80172B88                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172B88.s 
+| 1.00 | true     | func_us_801788A8                    | asm/us/servant/tt_002/matchings/3678/func_us_801788A8.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80173F30                       | asm/us/servant/tt_000/matchings/bat/func_80173F30.s 
+| 1.00 | true     | func_us_80172C08                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172C08.s 
+| 1.00 | true     | func_us_80178928                    | asm/us/servant/tt_002/matchings/3678/func_us_80178928.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80173F74                       | asm/us/servant/tt_000/matchings/bat/func_80173F74.s 
+| 1.00 | true     | func_us_80172C4C                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172C4C.s 
+| 1.00 | true     | func_us_8017896C                    | asm/us/servant/tt_002/matchings/3678/func_us_8017896C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80173FE8                       | asm/us/servant/tt_000/matchings/bat/func_80173FE8.s 
+| 1.00 | true     | func_us_80172CC0                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172CC0.s 
+| 1.00 | true     | func_us_801789E0                    | asm/us/servant/tt_002/matchings/3678/func_us_801789E0.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80174038                       | asm/us/servant/tt_000/matchings/bat/func_80174038.s 
+| 1.00 | true     | func_us_80172D10                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172D10.s 
+| 0.93 | false    | func_us_80178A30                    | asm/us/servant/tt_002/nonmatchings/3678/func_us_80178A30.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80174210                       | asm/us/servant/tt_000/matchings/bat/func_80174210.s 
+| 1.00 | true     | func_us_80172EE8                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172EE8.s 
+| 1.00 | true     | func_us_80178C08                    | asm/us/servant/tt_002/matchings/3678/func_us_80178C08.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801746A0                       | asm/us/servant/tt_000/matchings/bat/func_801746A0.s 
+| 1.00 | true     | func_us_80173378                    | asm/us/servant/tt_001/matchings/ghost/func_us_80173378.s 
+| 1.00 | true     | func_us_80179098                    | asm/us/servant/tt_002/matchings/3678/func_us_80179098.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801747B8                       | asm/us/servant/tt_000/matchings/bat/func_801747B8.s 
+| 1.00 | true     | func_us_80173490                    | asm/us/servant/tt_001/matchings/ghost/func_us_80173490.s 
+| 1.00 | true     | func_us_801791B0                    | asm/us/servant/tt_002/matchings/3678/func_us_801791B0.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_80174864                       | asm/us/servant/tt_000/matchings/bat/func_80174864.s 
+| 1.00 | true     | func_us_8017353C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017353C.s 
+| 1.00 | true     | func_us_8017925C                    | asm/us/servant/tt_002/matchings/3678/func_us_8017925C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeleton                      | asm/us/st/no0/matchings/e_skeleton/EntitySkeleton.s 
 | 0.98 | true     | func_801C5FC4                       | asm/us/st/nz0/matchings/e_skeleton/func_801C5FC4.s 
@@ -2204,41 +2255,8 @@
 | 1.00 | true     | func_80173C2C                       | asm/us/servant/tt_000/matchings/bat/func_80173C2C.s 
 | 1.00 | true     | func_us_80172904                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172904.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_80173C64                       | asm/us/servant/tt_000/matchings/bat/func_80173C64.s 
-| 1.00 | true     | func_us_8017293C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017293C.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80173E78                       | asm/us/servant/tt_000/matchings/bat/func_80173E78.s 
-| 1.00 | true     | func_us_80172B50                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172B50.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80173EB0                       | asm/us/servant/tt_000/matchings/bat/func_80173EB0.s 
-| 1.00 | true     | func_us_80172B88                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172B88.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80173F30                       | asm/us/servant/tt_000/matchings/bat/func_80173F30.s 
-| 1.00 | true     | func_us_80172C08                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172C08.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80173F74                       | asm/us/servant/tt_000/matchings/bat/func_80173F74.s 
-| 1.00 | true     | func_us_80172C4C                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172C4C.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80173FE8                       | asm/us/servant/tt_000/matchings/bat/func_80173FE8.s 
-| 1.00 | true     | func_us_80172CC0                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172CC0.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80174038                       | asm/us/servant/tt_000/matchings/bat/func_80174038.s 
-| 1.00 | true     | func_us_80172D10                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172D10.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80174210                       | asm/us/servant/tt_000/matchings/bat/func_80174210.s 
-| 1.00 | true     | func_us_80172EE8                    | asm/us/servant/tt_001/matchings/ghost/func_us_80172EE8.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801745E4                       | asm/us/servant/tt_000/matchings/bat/func_801745E4.s 
-| 1.00 | true     | func_us_801732BC                    | asm/us/servant/tt_001/matchings/ghost/func_us_801732BC.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801746A0                       | asm/us/servant/tt_000/matchings/bat/func_801746A0.s 
-| 1.00 | true     | func_us_80173378                    | asm/us/servant/tt_001/matchings/ghost/func_us_80173378.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801747B8                       | asm/us/servant/tt_000/matchings/bat/func_801747B8.s 
-| 1.00 | true     | func_us_80173490                    | asm/us/servant/tt_001/matchings/ghost/func_us_80173490.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80174864                       | asm/us/servant/tt_000/matchings/bat/func_80174864.s 
-| 1.00 | true     | func_us_8017353C                    | asm/us/servant/tt_001/matchings/ghost/func_us_8017353C.s 
+| 1.00 | false    | func_us_80175730                    | asm/us/servant/tt_002/nonmatchings/3678/func_us_80175730.s 
+| 1.00 | false    | func_us_80175A78                    | asm/us/servant/tt_002/nonmatchings/3678/func_us_80175A78.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018F890                       | asm/us/st/cen/matchings/F890/func_8018F890.s 
 | 1.00 | true     | func_801961DC                       | asm/us/st/dre/matchings/161DC/func_801961DC.s 
