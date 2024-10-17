@@ -1,9 +1,36 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
+#include <servant.h>
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801739D0);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173B14);
+// This is a duplicate CreateEventEntity which is lower in the file, but we need both
+// to match the binary for PSX
+void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
+    Entity* entity;
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        entity = &g_Entities[5 + i];
+        if (!entity->entityId) {
+            break;
+        }
+    }
+
+    if (!entity->entityId) {
+        DestroyEntity(entity);
+        entity->entityId = entityId;
+        entity->zPriority = entityParent->zPriority;
+        entity->facingLeft = entityParent->facingLeft;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->posX.val = entityParent->posX.val;
+        entity->posY.val = entityParent->posY.val;
+        // Not necessarily making batFamBlueTrail here, but
+        // that's an Ext that works. Just needs parent at 0x8C.
+        entity->ext.batFamBlueTrail.parent = entityParent;
+        entity->params = params;
+    }
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173BD0);
 
@@ -41,31 +68,40 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_8017865C);
+#ifndef VERSION_PSP
+#include "../servant_update_anim.h"
+#endif
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178804);
+#include "../../destroy_entity.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178870);
+#ifndef VERSION_PSP
+#include "../accumulate_toward_zero.h"
+#include "../search_for_entity_in_range.h"
+#endif
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801788A8);
+#include "../calculate_angle_to_entity.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178928);
+#include "../get_target_position_with_distance_buffer.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_8017896C);
+#ifndef VERSION_PSP
+#include "../calculate_distance.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801789E0);
-
+// There is some .rodata jumptable stuff going on with ProcessSfxState
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
+//#include "../play_sfx.h"
+#endif
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178C08);
+#include "../process_event.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178FDC);
+#include "../create_event_entity.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80179098);
+#include "../is_movement_allowed.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801791B0);
+#ifndef VERSION_PSP
+#include "../check_all_entities_valid.h"
+#endif
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_8017925C);
+#include "../servant_unk0.h"
 
 INCLUDE_RODATA("servant/tt_002/nonmatchings/3678", func_us_80173994);
 
