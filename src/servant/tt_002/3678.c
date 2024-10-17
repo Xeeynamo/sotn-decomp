@@ -4,8 +4,8 @@
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801739D0);
 
-// This is a duplicate CreateEventEntity which is lower in the file, but we need both
-// to match the binary for PSX
+// This is a duplicate CreateEventEntity which is lower in the file, but we need
+// both to match the binary for PSX
 void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
@@ -89,7 +89,7 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
 // There is some .rodata jumptable stuff going on with ProcessSfxState
 // where the table is in the middle of the .rodata function
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
-//#include "../play_sfx.h"
+// #include "../play_sfx.h"
 #endif
 
 #include "../process_event.h"
