@@ -156,7 +156,7 @@ pub struct IncludeAsmEntry {
 fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
     let entries = std::fs::read_dir(dir).expect("Unable to read directory");
 
-    let re = Regex::new("INCLUDE_ASM\\(\"([^\"]*)\", ([^)]*)\\)").unwrap();
+    let re = Regex::new("INCLUDE_ASM\\((?:\\n\\s+)?\"([^\"]*)\", ([^)]*)\\)").unwrap();
     let mut output = Vec::new();
 
     entries.for_each(|entry| {
@@ -167,20 +167,31 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
 
                 let file = File::open(item_path.clone()).expect("Unable to open file");
                 let reader = BufReader::new(file);
+                let mut buffer = String::new();
+
                 for line in reader.lines() {
                     let line_str = line.unwrap();
 
                     if line_str.contains("INCLUDE_ASM") {
-                        if let Some(captures) = re.captures(&line_str) {
+                        buffer.push_str(&line_str);
+                        if !line_str.contains(';') {
+                            buffer.push_str(" ");
+                            println!("INCLUDE_ASM line did not contain ;, buffering input to subsequent lines");
+                            continue;
+                        }
+
+                        if let Some(captures) = re.captures(&buffer) {
                             let (full, [asm_dir, asm_file]) = captures.extract();
                             output.push(IncludeAsmEntry {
-                                line: line_str.clone(),
+                                line: buffer.clone(),
                                 path: item_path.to_string_lossy().to_string(),
                                 asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
                             });
                         } else {
-                            println!("Failed to match regex on line: {}", line_str);
+                            println!("Failed to match regex on line: {}", buffer);
                         }
+
+                        buffer.clear();
                     }
                 }
             } else if item_path.is_dir() {
