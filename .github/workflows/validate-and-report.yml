@@ -176,22 +176,17 @@ jobs:
           python-version: '3.x'
       - name: Install secondary pre-requirements
         run: |
-            make python-dependencies & \
-            (sudo apt-get update && sudo apt-get install graphviz) & \
-            wait
+            make python-dependencies
       - name: Generate duplicates report
         run: |
-          make clean
           make force_symbols
+          rm -rf build/us/main.ld
+          rm -rf build/us/weapon.ld
           make -j extract
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Generate function report
         run: |
-            git checkout config/
-            rm -rf build/us/main.ld
-            rm -rf build/us/weapon.ld
-            make -j extract
             .venv/bin/python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md
       - name: Commit all reports
         run: |
