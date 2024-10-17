@@ -25,7 +25,7 @@ extern u16 D_801809E4[];
 // [Almost duplicate of CEN.EntityHeartDrop -- 0xC0 immediate is 0xB0 here]
 // E_HEART_DROP
 // func_801A4A28
-void func_801A4A28(Entity* self) {
+void EntityHeartDrop(Entity* self) {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 var_a0;
