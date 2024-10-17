@@ -10,7 +10,7 @@ static void func_801CF58C(Entity* self) {
     self->ext.warg.unk80 = 0x20;
 }
 
-void func_801CF5E0(Entity* self) {
+static void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
     if (self->facingLeft == GetSideToPlayer()) {
@@ -47,41 +47,39 @@ void func_801CF5E0(Entity* self) {
     self->ext.warg.unk82 = 32;
 }
 
-// duplicate of func_801CC90C in this file
-void func_801CF6D8(Entity* arg0) {
-    s16 temp_v0_2;
-    s16 temp_v1;
-    s16 temp_v0;
+// duplicate of func_801CC90C
+static void func_801CF6D8(Entity* self) {
+    u16 xDist = GetDistanceToPlayerX();
 
-    temp_v0 = GetDistanceToPlayerX();
-    temp_v1 = arg0->ext.warg.unk86;
-    if (temp_v1 != 0) {
-
-        if ((u32)(temp_v0) < 0x60) {
-            temp_v0_2 = temp_v1 - 2;
-            arg0->ext.warg.unk86 = temp_v0_2;
-            if (temp_v0_2 < 0) {
-                arg0->ext.warg.unk86 = 0;
+    if (self->ext.warg.unk86) {
+        if (xDist < 0x60) {
+            self->ext.warg.unk86 -= 2;
+            if (self->ext.warg.unk86 < 0) {
+                self->ext.warg.unk86 = 0;
             }
         } else {
-            arg0->ext.warg.unk86 = (temp_v1 - 1);
+            self->ext.warg.unk86--;
         }
     }
 }
 
-extern u16 D_80180B9C;
-extern u8 D_801830BC;
-extern u8 D_801830DC;
-extern u8 D_801830FC;
-extern u8 D_80183130;
-extern u8 D_80183148;
-extern u8 D_80183178;
-extern u8 D_80183180;
-extern u8 D_801831A0;
-extern u8 D_801831FC;
-extern u8 D_80183204;
+// Init
+extern u16 D_80180B9C[];
+// Animations
+extern u8 D_801830BC[];
+extern u8 D_801830DC[];
+extern u8 D_801830FC[];
+extern u8 D_80183130[];
+extern u8 D_80183148[];
+extern u8 D_80183178[];
+extern u8 D_80183180[];
+extern u8 D_801831A0[];
+extern u8 D_801831FC[];
+extern u8 D_80183204[];
+// For UnkCollisionFunc functions
 extern s16 D_80183274[];
 extern u16 D_8018327C[];
+// Lookup tables
 extern u32 D_8018328C[];
 extern u32 D_801832A4[];
 extern u16 D_801832EC[];
@@ -98,12 +96,7 @@ void EntityWarg(Entity* self) {
     s32 primIndex;
     EnemyDef* enemy;
     DRAWENV drawEnv;
-    RECT rect = (RECT){
-        .x = 0,
-        .y = 0x100,
-        .w = 0x80,
-        .h = 0x80,
-    };
+    RECT rect = {0, 0x100, 0x80, 0x80};
 
     gTilemap = &g_Tilemap;
     switchTemp = self->step;
@@ -134,7 +127,7 @@ void EntityWarg(Entity* self) {
         self->unk60 = otherEnt;
         CreateEntityFromCurrentEntity(E_ID_4B, otherEnt);
         otherEnt->unk5C = self;
-        InitializeEntity(&D_80180B9C);
+        InitializeEntity(D_80180B9C);
         otherEnt->unk60 = self;
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
         if (self->facingLeft) {
@@ -145,14 +138,14 @@ void EntityWarg(Entity* self) {
         self->ext.warg.unk86 = 0x40;
         break;
     case 1:
-        AnimateEntity(&D_801830FC, self);
+        AnimateEntity(D_801830FC, self);
         if (UnkCollisionFunc3(D_8018327C) & 1) {
             SetStep(2);
             self->ext.warg.unk84 = self->posX.i.hi + gTilemap->scrollX.i.hi;
         }
         break;
     case 2:
-        AnimateEntity(&D_801830FC, self);
+        AnimateEntity(D_801830FC, self);
         if (GetDistanceToPlayerX() < 0x80 || self->hitFlags) {
             SetStep(7);
         }
@@ -166,7 +159,7 @@ void EntityWarg(Entity* self) {
             break;
         }
         if (!self->ext.warg.unk7C) {
-            animResult = AnimateEntity(&D_801830BC, self);
+            animResult = AnimateEntity(D_801830BC, self);
             if (!animResult || (animResult & 0x80)) {
                 animResult = self->animFrameIdx - 1;
                 if (self->facingLeft) {
@@ -186,7 +179,7 @@ void EntityWarg(Entity* self) {
                 }
             }
         } else {
-            animResult = AnimateEntity(&D_801830DC, self);
+            animResult = AnimateEntity(D_801830DC, self);
             if (animResult != 1) {
                 animResult = self->animFrameIdx - 1;
                 if (self->facingLeft) {
@@ -227,7 +220,7 @@ void EntityWarg(Entity* self) {
         break;
     case 5:
         func_801CF6D8(self);
-        if (!AnimateEntity(&D_80183130, self)) {
+        if (!AnimateEntity(D_80183130, self)) {
             self->facingLeft ^= 1;
             self->animCurFrame = 0xE;
             func_801CF5E0(self);
@@ -236,14 +229,14 @@ void EntityWarg(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            AnimateEntity(&D_80183178, self);
+            AnimateEntity(D_80183178, self);
             if (!--self->ext.warg.unk80) {
                 SetSubStep(1);
             }
             break;
         case 1:
             otherEnt = self + 1;
-            animResult = AnimateEntity(&D_80183148, self);
+            animResult = AnimateEntity(D_80183148, self);
             if (self->velocityX) {
                 if (self->velocityX < 0) {
                     self->velocityX += FIX(0.375);
@@ -275,7 +268,7 @@ void EntityWarg(Entity* self) {
     case 7:
         self->ext.warg.unk80 += 1;
         func_801CF6D8(self);
-        AnimateEntity(&D_80183180, self);
+        AnimateEntity(D_80183180, self);
         if (self->ext.warg.unk82) {
             self->ext.warg.unk82 -= 1;
             break;
@@ -289,7 +282,7 @@ void EntityWarg(Entity* self) {
         }
         break;
     case 8:
-        if (!AnimateEntity(&D_801831A0, self)) {
+        if (!AnimateEntity(D_801831A0, self)) {
             func_801CF5E0(self);
         }
         break;
@@ -322,12 +315,12 @@ void EntityWarg(Entity* self) {
                         self, 1, 1, 0x20, 0x26, (Random() & 3) + 1, 4);
                 }
             }
-            if (!AnimateEntity(&D_801831FC, self)) {
+            if (!AnimateEntity(D_801831FC, self)) {
                 SetSubStep(2);
             }
             break;
         case 2:
-            if (!AnimateEntity(&D_80183204, self)) {
+            if (!AnimateEntity(D_80183204, self)) {
                 func_801CF5E0(self);
             }
         }
@@ -363,7 +356,7 @@ void EntityWarg(Entity* self) {
             }
             break;
         case 1:
-            AnimateEntity(&D_801831A0, self);
+            AnimateEntity(D_801831A0, self);
             self->unk6C -= 2;
             if (self->unk6C == 0x40) {
                 g_api.PlaySfx(SFX_UNK_780);
@@ -444,7 +437,7 @@ void EntityWarg(Entity* self) {
             self->step_s += 1;
             break;
         case 2:
-            AnimateEntity(&D_801831A0, self);
+            AnimateEntity(D_801831A0, self);
             self->posX.i.hi = 0x40;
             self->posY.i.hi = 0x40;
             self->zPriority = 0x40;
@@ -497,7 +490,7 @@ void EntityUnkId4B(Entity* self) {
     previous = self - 1;
 
     if (!self->step) {
-        InitializeEntity(&D_80180B9C);
+        InitializeEntity(D_80180B9C);
         self->animCurFrame = 0;
         self->hitPoints = 0x7FFF;
     }

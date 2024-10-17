@@ -93,23 +93,18 @@ static void func_801CC820(Entity* entity) {
     entity->ext.et_801CC820.unk82 = 0x20;
 }
 
-static void func_801CC90C(Entity* arg0) {
-    s16 temp_v0_2;
-    s16 temp_v1;
-    s16 temp_v0;
+// duplicate of func_801CF6D8
+static void func_801CC90C(Entity* self) {
+    u16 xDist = GetDistanceToPlayerX();
 
-    temp_v0 = GetDistanceToPlayerX();
-    temp_v1 = arg0->ext.generic.unk84.S16.unk2;
-    if (temp_v1 != 0) {
-
-        if ((u32)(temp_v0) < 0x60) {
-            temp_v0_2 = temp_v1 - 2;
-            arg0->ext.generic.unk84.S16.unk2 = temp_v0_2;
-            if (temp_v0_2 < 0) {
-                arg0->ext.generic.unk84.S16.unk2 = 0;
+    if (self->ext.fireWarg.unk86) {
+        if (xDist < 0x60) {
+            self->ext.fireWarg.unk86 -= 2;
+            if (self->ext.fireWarg.unk86 < 0) {
+                self->ext.fireWarg.unk86 = 0;
             }
         } else {
-            arg0->ext.generic.unk84.S16.unk2 = (temp_v1 - 1);
+            self->ext.fireWarg.unk86--;
         }
     }
 }

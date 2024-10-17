@@ -162,7 +162,7 @@ extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
 extern s16 D_801836BC[];
-extern u16 D_80180B9C;
+extern u16 D_80180B9C[];
 
 // *** EntityExplosion3 *** //
 extern u16 D_80180B3C[];
