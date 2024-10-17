@@ -38,12 +38,6 @@ typedef struct ET_Generic {
             /* 0x81 */ u8 unk1;
         } modeS8;
     } unk80; // size = 0x4
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s16 : 16;
-    /* 0x92 */ s16 : 16;
-    /* 0x94 */ u8 unk94;
 } ET_Generic;
 
 typedef struct {
