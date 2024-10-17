@@ -79,7 +79,7 @@ typedef enum EntityIDs {
     /* 0x59 */ E_ID_59 = 0x59,
     /* 0x5B */ E_DEATH_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
-    /* 0x5E */ E_DEATH_5E,
+    /* 0x5E */ E_DEATH_SCYTHE_SHADOW,
     /* 0x60 */ E_FLYING_OWL_UNK60 = 0x60,
     /* 0x61 */ E_WARG_EXP_TRANSP,
     /* 0x62 */ E_WARG_EXP_OPAQUE,

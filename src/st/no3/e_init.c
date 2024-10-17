@@ -94,7 +94,7 @@ void EntityDeath(Entity* self);
 void EntityUnkId5B(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
-void EntityUnkId5E(Entity* self);
+void EntityDeathScytheShadow(Entity* self);
 void EntityFlyingOwlAndLeaves(Entity* self);
 void EntityFallingLeaf(Entity* self);
 void EntityWargExplosionPuffTransparent(Entity* self);
@@ -194,7 +194,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId5B,
     EntityStairwayPiece,
     EntityFallingRock,
-    EntityUnkId5E,
+    EntityDeathScytheShadow,
     EntityFlyingOwlAndLeaves,
     EntityFallingLeaf, // 0x60
     EntityWargExplosionPuffTransparent,

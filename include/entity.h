@@ -1834,6 +1834,12 @@ typedef struct {
     /* 0x8A */ u16 unk8A;
 } ET_Warg;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u16 timer;
+} ET_DeathScythe;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1991,6 +1997,7 @@ typedef union { // offset=0x7C
     ET_BloodyZombie bloodyZombie;
     ET_MermanRock mermanRock;
     ET_Warg warg;
+    ET_DeathScythe deathScythe;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
