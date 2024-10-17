@@ -1,0 +1,45 @@
+options:
+  platform: psx
+  basename: tt_002
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/SERVANT/TT_002.BIN
+  asm_path: asm/us/servant/tt_002
+  asset_path: assets/servant/tt_002
+  src_path: src/servant/tt_002
+  ld_script_path: build/us/tt_002.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.tt_002.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.tt_002.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.tt_002.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+  disassemble_all: true
+sha1: 4589bb04fe475439c6d6e9b7273a8971ad859b4d
+segments:
+  - name: tt_002
+    type: code
+    start: 0
+    vram:  0x80170000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x3678, .rodata, us]
+      - [0x39D0, c, us]
+      - [0x92D0, sbss]
+  - [0xA000]
