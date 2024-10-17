@@ -71,7 +71,7 @@ void EntityHeartDrop(Entity* self) {
 #include "../entity_unkId13.h"
 
 //D_80181378
-u16 g_eUnk14SpawnRots[] = {
+static u16 g_eUnk14SpawnRots[] = {
     0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0000
 };
 void EntityUnkId14(Entity*);
