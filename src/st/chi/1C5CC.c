@@ -9,14 +9,14 @@
 extern EntityInit EntityInit_8018067C;
 
 // D_801808CC
-u16 Room5_BreakableWallTilesCollision[] = {
+static u16 BreakableWallTilesCollision[] = {
     0x0399, 0x039A, 0x0399, 0x039A, 0x039B, 0x039C, 0x039B, 0x039C,
     0x0399, 0x039A, 0x0399, 0x039A, 0x0106, 0x0108, 0x0106, 0x0108,
     0x010B, 0x010D, 0x010B, 0x010D, 0x0106, 0x0108, 0x0106, 0x0108,
 };
 
 // D_801808FC
-s16 Room5_BreakableRoomEntityData[] = {
+static s16 BreakableRoomEntityData[] = {
     0x000D, 0x0012, 0xFFE8, 0x0000, 0x000D, 0x0012, 0xFFF8, 0x0800,
     0x000D, 0x0012, 0x0000, 0x0000, 0x000D, 0x0012, 0x0008, 0x0200,
     0x000D, 0x0012, 0x0018, 0x0800, 0x000C, 0x0006, 0x0014, 0x0100,
@@ -72,7 +72,7 @@ void EntityBreakableWall(Entity* self) {
             self->flags |= FLAG_UNK_400000;
 
             // Determine tile indices to use
-            pSrcTile = Room5_BreakableWallTilesCollision;
+            pSrcTile = BreakableWallTilesCollision;
             if (g_CastleFlags[CASTLE_FLAG_CHI_BREAKABLE_WALL]) {
                 pSrcTile += 0xC;    // No collision
             }
@@ -136,7 +136,7 @@ void EntityBreakableWall(Entity* self) {
             prim->priority = 0x6A;
             prim->drawMode = DRAW_UNK02;
             
-            pSrcTile = Room5_BreakableRoomEntityData;
+            pSrcTile = BreakableRoomEntityData;
             entity = self + 1;
             for (c = 0; c < 15; c++, entity++) {
                 DestroyEntity(entity);
@@ -160,7 +160,7 @@ void EntityBreakableWall(Entity* self) {
                 self->hitboxOffX -= 8;
 
                 // Update collision via tilemap
-                pSrcTile = Room5_BreakableWallTilesCollision;
+                pSrcTile = BreakableWallTilesCollision;
                 pSrcTile += 0x18 - self->ext.breakableWall.breakCount * 4;
                 tileIdx = 0x163 - self->ext.breakableWall.breakCount;
                 for (b = 0; b < WallHeightTiles; b++, pSrcTile++) {
