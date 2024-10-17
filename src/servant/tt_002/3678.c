@@ -87,6 +87,7 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
 #include "../calculate_distance.h"
 
 // There is some .rodata jumptable stuff going on with ProcessSfxState
+// where the table is in the middle of the .rodata function
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
 //#include "../play_sfx.h"
 #endif
