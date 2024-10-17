@@ -181,6 +181,7 @@ jobs:
             wait
       - name: Generate duplicates report
         run: |
+          make clean
           make force_symbols
           make -j extract
           cd tools/dups
