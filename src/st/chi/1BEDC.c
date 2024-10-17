@@ -6,7 +6,7 @@
 
 #include "chi.h"
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP)
 extern s32 D_psp_0926BC50;
 #endif
 
@@ -110,7 +110,7 @@ void EntityDemonSwitchWall(Entity* self) {
                 self->posY.i.hi--;
             }
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP)
             // There's a big diff here and I can't figure out how to match it
 
             // Here is the closest I've gotten
@@ -171,7 +171,7 @@ void EntityDemonSwitchWall(Entity* self) {
             yPos = self->posY.i.hi + 0x20;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP)
                 CreateEntityFromCurrentEntity(D_psp_0926BC50, newEntity);
 #else
                 CreateEntityFromCurrentEntity(E_ID_15, newEntity);
