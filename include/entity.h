@@ -35,7 +35,6 @@ typedef struct ET_Generic {
         } modeS16;
         struct {
             /* 0x80 */ u8 unk0;
-            /* 0x81 */ u8 unk1;
         } modeS8;
     } unk80; // size = 0x4
 } ET_Generic;
