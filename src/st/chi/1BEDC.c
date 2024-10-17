@@ -13,7 +13,7 @@ extern s32 D_psp_0926BC50;
 extern EntityInit EntityInit_8018067C;
 
 // D_8018089C
-u16 Room3_DemonSwitchWallTilesCollision[] = {
+static u16 WallTilesCollision[] = {
     0x039D, 0x03A0, 0x03A0, 0x039E, 0x03A0, 0x03A0, 0x03A0, 0x039F,
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
 };
@@ -21,7 +21,7 @@ u16 Room3_DemonSwitchWallTilesCollision[] = {
 // [Combine this and above into multidimensional array]
 // Never directly referenced. Accessed by overflowing from above array
 // D_801808B4
-u16 Room3_DemonSwitchWallTilesNoCollision[] = {
+static u16 WallTilesNoCollision[] = {
     0x01C2, 0x01BF, 0x01BF, 0x01D2, 0x01BF, 0x01BF, 0x01BF, 0x01D3,
     0x01BF, 0x01BF, 0x01BF, 0x01BF,
 };
@@ -58,7 +58,7 @@ void EntityDemonSwitchWall(Entity* self) {
             self->animCurFrame = 1; // Default: Collision (closed)
 
             // Determine tilemap adjustments to make for collision based on current map flags
-            pSrcTile = Room3_DemonSwitchWallTilesCollision;
+            pSrcTile = WallTilesCollision;
             if (g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON]) {
                 pSrcTile += 0xC;    // No collision (opened)
             }
@@ -190,7 +190,7 @@ void EntityDemonSwitchWall(Entity* self) {
             }
 
             // Update tilemap to remove collision as the wall moves out of the way
-            pSrcTile = Room3_DemonSwitchWallTilesCollision;
+            pSrcTile = WallTilesCollision;
             pSrcTile += 0xC;
             tileIdx = 0x6D;
             for (iCol = 0; iCol < remainingColumnCount; tileIdx++, iCol++) {
