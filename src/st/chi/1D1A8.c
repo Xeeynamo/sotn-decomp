@@ -10,28 +10,28 @@ void UpdateDustParticles(Primitive*);
 extern EntityInit EntityInit_8018067C;
 
 // D_80180974
-u16 Room3_FallingStairsNotFallenTileIndices[] = {
+static u16 FallingStairsNotFallenTileIndices[] = {
     0x022B, 0x022C, 0x0239, 0x023A, 0x023B, 0x023C, 0x0247, 0x0248,
     0x0249, 0x024A, 0x0255, 0x0256, 0x0257, 0x0258, 0x0259, 0x0265,
     0x0266, 0x0000,
 };
 
 // D_80180998
-u16 Room3_FallingStairsFallenTileIndices[] = {
+static u16 FallingStairsFallenTileIndices[] = {
     0x028B, 0x028C, 0x0299, 0x029A, 0x029B, 0x029C, 0x02A7, 0x02A8,
     0x02A9, 0x02AA, 0x02B5, 0x02B6, 0x02B7, 0x02B8, 0x02B9, 0x02C5,
     0x02C6, 0x0000,
 };
 
 // D_801809BC
-u16 Room3_FallingStairsNotFallenTileValues[] = {
+static u16 FallingStairsNotFallenTileValues[] = {
     0x01F9, 0x0224, 0x01F9, 0x0207, 0x0243, 0x0225, 0x01F9, 0x01E7,
     0x0244, 0x0226, 0x0229, 0x01E7, 0x0243, 0x01B5, 0x0226, 0x024B,
     0x0226, 0x0000,
 };
 
 // D_801809E0
-u16 Room3_FallingStairsFallenTileValues[] = {
+static u16 FallingStairsFallenTileValues[] = {
     0x01C4, 0x0222,
 };
 
@@ -96,15 +96,15 @@ void EntityFallingStairs(Entity* self)
             self->animCurFrame = 0;
 
             // Change tileset to show UNfallen stairs
-            pDstTileIdx = &Room3_FallingStairsNotFallenTileIndices;
-            pSrcTile = &Room3_FallingStairsNotFallenTileValues;
+            pDstTileIdx = &FallingStairsNotFallenTileIndices;
+            pSrcTile = &FallingStairsNotFallenTileValues;
             for (i = 0; i < 0x11; i++, pDstTileIdx++, pSrcTile++) {
                 g_Tilemap.fg[*pDstTileIdx] = *pSrcTile;
             }
 
             // Change tileset to hide fallen stairs
-            pDstTileIdx = &Room3_FallingStairsFallenTileIndices;
-            pSrcTile = &Room3_FallingStairsFallenTileValues;
+            pDstTileIdx = &FallingStairsFallenTileIndices;
+            pSrcTile = &FallingStairsFallenTileValues;
             for (i = 0; i < 0xF; i++, pDstTileIdx++) {
                 g_Tilemap.fg[*pDstTileIdx] = 0; // Most tiles are blank
             }
@@ -132,7 +132,7 @@ void EntityFallingStairs(Entity* self)
             self->animCurFrame = 0x23;
 
             // Clear out all tiles in unfallen state
-            pDstTileIdx = &Room3_FallingStairsNotFallenTileIndices;
+            pDstTileIdx = &FallingStairsNotFallenTileIndices;
             for (i = 0; i < 0x11; i++, pDstTileIdx++) {
                 g_Tilemap.fg[*pDstTileIdx] = 0;
             }
@@ -306,8 +306,8 @@ void EntityFallingStairs(Entity* self)
 
         case Land:
             // Update tilemap to show fallen stairs
-            pDstTileIdx = &Room3_FallingStairsFallenTileIndices;
-            pSrcTile = &Room3_FallingStairsNotFallenTileValues;
+            pDstTileIdx = &FallingStairsFallenTileIndices;
+            pSrcTile = &FallingStairsNotFallenTileValues;
             for (i = 0; i < 0x10; i++, pDstTileIdx++, pSrcTile++) {
                 g_Tilemap.fg[*pDstTileIdx] = *pSrcTile; // All except the last tile are in front of nothing
             }
