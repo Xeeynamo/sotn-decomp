@@ -146,7 +146,7 @@ static u8 D_80181160[] = {
 // Used in func_801A2A78
 // Used in func_801A2CAC
 // D_80181184
-u16 D_80181184[] = {
+static u16 D_80181184[] = {
     0x0000, 0x000E, 0x000F, 0x0011, 0x0010, 0x0013, 0x0012, 0x0014,
     0x0015, 0x0016
 };
@@ -159,14 +159,14 @@ const char* g_goldCollectTexts[] = {
 };
 
 // D_801811C0
-u32 c_GoldPrizes[] = {
+static u32 c_GoldPrizes[] = {
     0x00000001, 0x00000019, 0x00000032, 0x00000064,
     0x000000FA, 0x00000190, 0x000002BC, 0x000003E8,
     0x000007D0, 0x00001388
 };
 // Used in func_801A2CAC
 // D_801811E8
-u8* D_801811E8[] = {
+static u8* D_801811E8[] = {
     &D_80181024, &D_80181028, &D_80181054, &D_80181064,
     &D_80181068, &D_8018106C, &D_80181070, &D_80181074,
     &D_80181078, &D_8018107C, &D_80181080, &D_80181084,
@@ -178,23 +178,24 @@ u8* D_801811E8[] = {
 // Used in func_801A2CAC
 // Used in func_801A36C0
 // D_80181248
-u8 D_80181248[] = {
+static u8 D_80181248[] = {
     0xFA, 0xFF, 0x04, 0x00, 0x00, 0x00, 0xF8, 0xFF
 };
 
 // D_80181250
-s8 c_HeartPrizes[] = {
+static s8 c_HeartPrizes[] = {
     0x01, 0x05, 0x00, 0x00
 };
 
 // Used in func_801A3520
 // D_80181254
-s32 g_ExplosionYVelocities[] = {
+static s32 g_ExplosionYVelocities[] = {
     0xFFFF0000, 0xFFFE8000, 0xFFFE8000, 0xFFFE8000,
     0xFFFD0000, 0x02020102, 0x04020302, 0x06020502,
     0x08020702, 0x00000000
 };
 
+// [Does this need to be static after new file splits?]
 // Used in func_801A62A0
 // D_8018127C
 u8 g_bigRedFireballAnim[] = {
@@ -211,7 +212,7 @@ u8 g_bigRedFireballAnim[] = {
 
 // Used in func_801A3520
 // D_80181300
-u8* g_ExplosionAnimations[] = {
+static u8* g_ExplosionAnimations[] = {
     0x80181268, 0x8018127C, 0x80181298, 0x801812C8,
     0x801812FC
 };
