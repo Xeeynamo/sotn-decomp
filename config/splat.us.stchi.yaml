@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
+  disassemble_all: True
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
