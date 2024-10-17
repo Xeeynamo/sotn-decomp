@@ -7,29 +7,29 @@
 #include "chi.h"
 
 // D_80181388
-s16 unk15_rot[] = {
+static s16 unk15_rot[] = {
     0x0030, 0x0050, 0x0080, 0x00B0, 0x00D0, 0x0100, 0x0100, 0x0000
 };
 
 // D_80181398
-s32 unk15_yVel[] = {
+static s32 unk15_yVel[] = {
     0x00000400, 0x00002400, 0x00003C00, 0x00006000,
     0x00007800, 0x0000C000
 };
 
 // D_801813B0
-s32 unk14_yVel[] = {
+static s32 unk14_yVel[] = {
     0x00000800, 0x00002800, 0x00004800, 0x00007000,
     0x0000E000, 0x00012000
 };
 
 // D_801813C8
-u8 unk14_startFrame[] = {
+static u8 unk14_startFrame[] = {
     0x01, 0x09, 0x15, 0x2B
 };
 
 // D_801813CC
-u16 unk14_lifetime[] = {
+static u16 unk14_lifetime[] = {
     0x0010, 0x0018, 0x002A, 0x002F
 };
 
@@ -44,7 +44,7 @@ u16 unk14_lifetime[] = {
 extern u16 g_InitializeEntityData0[];
 
 // D_801813D4
-u32 g_olroxDroolCollOffsets[] = {
+static u32 g_olroxDroolCollOffsets[] = {
     0x00000000, 0x000000FF
 };
 
@@ -319,7 +319,7 @@ u8 func_801A59D4(s32 arg0) {
 #include "../entity_intense_explosion.h"
 
 // D_801813DC
-u8 D_801813DC[] = {
+static u8 D_801813DC[] = {
     0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x04, 0x06, 0xFF, 0x00, 0x00, 0x00
 };
 
@@ -401,7 +401,7 @@ extern u8 g_bigRedFireballAnim[];
 #include "../entity_big_red_fireball.h"
 
 // D_801813EC
-u16 g_UnkRecursPrimVecOrder[] = {
+static u16 g_UnkRecursPrimVecOrder[] = {
     0x0000, 0x0001, 0x0003, 0x0004, 0x0001, 0x0002, 0x0004, 0x0005,
     0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008
 };
@@ -411,7 +411,7 @@ u16 g_UnkRecursPrimVecOrder[] = {
 #include "../unk_recursive_primfunc_1.h"
 
 // D_8018140C
-u16 g_UnkRecursPrim2Inds[] = {
+static u16 g_UnkRecursPrim2Inds[] = {
     0x0000, 0x0001, 0x0003, 0x0004, 0x0001, 0x0002, 0x0004, 0x0005,
     0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008
 };
@@ -429,12 +429,12 @@ u16 g_UnkRecursPrim2Inds[] = {
 extern u16 g_InitializeData0[];
 
 // D_8018142C
-u16 g_ESoulStealOrbAngles[] = {
+static u16 g_ESoulStealOrbAngles[] = {
     0x0820, 0x0840, 0x0860, 0x0880, 0x08C0, 0x0900, 0x0940, 0x0A00
 };
 
 // D_8018143C
-s16 g_ESoulStealOrbSprt[] = {
+static s16 g_ESoulStealOrbSprt[] = {
     0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
     0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
     0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
@@ -444,7 +444,7 @@ s16 g_ESoulStealOrbSprt[] = {
 };
 
 // D_8018149C
-u8 g_ESoulStealOrbAnim[] = {
+static u8 g_ESoulStealOrbAnim[] = {
     0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00
 };
 
