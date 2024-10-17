@@ -26,11 +26,13 @@ Overlay OVL_EXPORT(Overlay) = {
 // D_80180040: spriteBanks
 #include "sprite_banks.h"
 
+extern u16* D_80189FE0[0x30];   // Unused
+extern u16* D_8018A040[0x100];
+extern u16* D_8018A240[0x60];   // Unused
 extern u16* D_8018A300[0x40];
 extern u16* D_8018A380[0x20];
 extern u16* D_8018A3C0[0x40];
 extern u16* D_8018A440[0x290];
-extern u16* D_8018A040[0x100];
 
 // D_801800A0
 static u16** D_801800A0[] = {
