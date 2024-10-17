@@ -10,6 +10,7 @@ g_eBreakableDrawModes = 0x801805E0;
 func_801A7D64 = 0x80191080;
 EntityUnkId12 = 0x80191148;
 EntityBreakable = 0x80191304;
+EntityMedusa = 0x8019179C;
 Random = 0x80193198;
 Update = 0x801931C8;
 UpdateStageEntities = 0x801934C4;

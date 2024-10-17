@@ -242,6 +242,18 @@ enum SfxModes {
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
 
+// BOSS RBO3 - Medusa
+#define SFX_RBO3_UNK_7C5 0x7C5
+#define SFX_RBO3_UNK_7C8 0x7C8
+#define SFX_RBO3_UNK_7D1 0x7D1
+#define SFX_RBO3_UNK_7FB 0x7FB
+#define SFX_RBO3_UNK_7FD 0x7FD
+#define SFX_RBO3_UNK_7FE 0x7FE
+#define SFX_RBO3_UNK_7FF 0x7FF
+#define SFX_RBO3_UNK_801 0x801
+#define SFX_RBO3_UNK_802 0x802
+#define SFX_RBO3_UNK_804 0x804
+
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2

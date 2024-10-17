@@ -675,6 +675,13 @@ typedef struct {
 } ET_RoomTransition2;
 
 typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ char pad_84[0x8];
+    /* 0x8C */ s32 accelY;
+} ET_80192998;
+
+typedef struct {
     /* 0x7C */ u8 pad0[0x4];
     /* 0x80 */ u8* anim;
     /* 0x84 */ s16 unk84;
@@ -1986,6 +1993,7 @@ typedef union { // offset=0x7C
     ET_Succubus succubus;
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
+    ET_80192998 e_80192998;
     ET_WargExplosionPuffOpaque wargpuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
