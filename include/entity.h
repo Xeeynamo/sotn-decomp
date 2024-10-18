@@ -33,26 +33,23 @@ typedef struct ET_Generic {
             /* 0x80 */ s16 unk0;
             /* 0x82 */ s16 unk2;
         } modeS16;
-        struct {
-            /* 0x80 */ u8 unk0;
-        } modeS8;
     } unk80; // size = 0x4
 } ET_Generic;
 
 typedef struct {
-    /* 0x00 */ u16 timer;
-    /* 0x02 */ s16 unk7E;
-    /* 0x04 */ u8 aliveTimer;
-    /* 0x05 */ s8 unk81;
-    /* 0x06 */ s16 unk82;
-    /* 0x08 */ s32 fallSpeed;
-    /* 0x0C */ s16 gravity;
-    /* 0x0E */ s16 unk8A;
-    /* 0x10 */ s16 iconSlot;
-    /* 0x12 */ s16 unk8E;
-    /* 0x14 */ s16 unk90;
-    /* 0x16 */ s16 unk92;
-    /* 0x18 */ s32 castleFlag;
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ u8 aliveTimer;
+    /* 0x81 */ s8 unk81;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 fallSpeed;
+    /* 0x88 */ s16 gravity;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 iconSlot;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
 typedef struct {
@@ -1818,6 +1815,19 @@ typedef struct {
     /* 0x84 */ u16 timer;
 } ET_DeathScythe;
 
+typedef struct {
+    /* 0x7C */ u8 animframe;
+    /* 0x7D */ s32 : 24;
+    /* 0x80 */ u8 velIndex;
+} ET_Unused_MAD_ST0;
+
+// Elevator at the top of CEN.
+// Exists in both CEN and NO0 (lowers you into CEN)
+typedef struct {
+    /* 0x7C */ struct Primitve* prim;
+    /* 0x80 */ u8 unk80;
+} ET_CEN_Elevator;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1976,6 +1986,8 @@ typedef union { // offset=0x7C
     ET_MermanRock mermanRock;
     ET_Warg warg;
     ET_DeathScythe deathScythe;
+    ET_Unused_MAD_ST0 unusedMadST0;
+    ET_CEN_Elevator cenElevator;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

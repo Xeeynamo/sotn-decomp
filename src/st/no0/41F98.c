@@ -61,14 +61,14 @@ s16 func_us_801C2044(Primitive* prim, s16 offset) {
 
 INCLUDE_ASM("st/no0/nonmatchings/41F98", func_us_801C2184);
 
-extern u16 D_us_80180B60[];
+extern u16 g_EInitElevator[];
 void func_us_801C26B8(Entity* self) {
     Entity* entity = &self[self->params];
     s32 step = self->step;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B60);
+        InitializeEntity(g_EInitElevator);
         if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -80,13 +80,13 @@ void func_us_801C26B8(Entity* self) {
 
     case 1:
         self->posX.i.hi = entity->posX.i.hi;
-        if (self->params == step) {
+        if (self->params == 1) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            self->ext.generic.unk80.modeS8.unk0 =
+            self->ext.cenElevator.unk80 =
                 GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            self->ext.generic.unk80.modeS8.unk0 =
+            self->ext.cenElevator.unk80 =
                 GetPlayerCollisionWith(self, 12, 8, 6);
         }
         break;

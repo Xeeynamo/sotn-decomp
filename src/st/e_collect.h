@@ -197,10 +197,10 @@ extern u16 g_EInitParticle[];
 #include "blink_item.h"
 #else
 // Also, this function is never called.
-void func_80194314(Entity* entity) {
-    if (entity->step != 0) {
-        if (entity->posY.i.hi >= 0xF1) {
-            DestroyEntity(entity);
+void Unreferenced_MAD_ST0_func(Entity* self) {
+    if (self->step != 0) {
+        if (self->posY.i.hi >= 0xF1) {
+            DestroyEntity(self);
             return;
         }
         FallEntity();
@@ -209,14 +209,12 @@ void func_80194314(Entity* entity) {
     }
 
     InitializeEntity(g_EInitBreakable);
-    entity->animCurFrame = entity->ext.generic.unk7C.U8.unk0;
-    entity->velocityX =
-        g_collectXVelTable[entity->ext.generic.unk80.modeS8.unk0 * 2];
-    entity->velocityY =
-        g_collectYVelTable[entity->ext.generic.unk80.modeS8.unk0 * 2];
+    self->animCurFrame = self->ext.unusedMadST0.animframe;
+    self->velocityX = g_collectXVelTable[self->ext.unusedMadST0.velIndex * 2];
+    self->velocityY = g_collectYVelTable[self->ext.unusedMadST0.velIndex * 2];
 
-    if (entity->params != 0) {
-        entity->zPriority -= 1;
+    if (self->params != 0) {
+        self->zPriority -= 1;
     }
 }
 #endif

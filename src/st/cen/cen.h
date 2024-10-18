@@ -55,7 +55,7 @@ extern u16 g_EInitMaria[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];
-extern u16 g_eElevatorInit[]; // EntityElevator
+extern u16 g_EInitElevator[]; // EntityElevator
 
 extern u16* D_80180574[];
 extern u8 D_80180594[];

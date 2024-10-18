@@ -49,7 +49,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 #include "../e_init_common.h"
-EInit g_eElevatorInit = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
+EInit g_EInitElevator = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
 
 static u32 JUNK_80180488 = 0x00FF0140;
 static u32 D_8018048C = 0x00FF0740;

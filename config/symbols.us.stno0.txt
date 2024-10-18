@@ -8,6 +8,7 @@ g_EInitInteractable = 0x80180A94;
 g_EInitUnkId13 = 0x80180AD0;
 g_EInitCommon = 0x80180AE8;
 g_EInitDamageNum = 0x80180B18;
+g_EInitElevator = 0x80180B60;
 D_80180C94 = 0x80180BC0;
 g_EInitAxeKnight = 0x80180BFC;
 D_80180C6A = 0x80180C02;
