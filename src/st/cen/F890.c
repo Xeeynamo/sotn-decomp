@@ -127,7 +127,7 @@ void EntityPlatform(Entity* self) {
             } else {
                 g_Player.padSim = 0;
             }
-            g_Entities[1].ext.generic.unk7C.S8.unk0 = 0;
+            g_Entities[1].ext.entSlot1.unk0 = 0;
             g_Player.D_80072EFC = 1;
             self->step++;
         }
@@ -230,7 +230,7 @@ void EntityPlatform(Entity* self) {
             if (g_unkGraphicsStruct.pauseEnemies != 0) {
                 g_unkGraphicsStruct.pauseEnemies = 0;
             }
-            g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+            g_Entities[1].ext.entSlot1.unk0 = 1;
             self->step++;
             g_api.PlaySfx(SFX_DOOR_CLOSE_A);
         }
@@ -416,13 +416,13 @@ void EntityElevatorStationary(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eElevatorInit);
+        InitializeEntity(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         CreateEntityFromCurrentEntity(E_ELEVATOR_STATIONARY, &self[-1]);
-        self[-1].params = 1;
+        (self - 1)->params = 1;
         CreateEntityFromCurrentEntity(E_ELEVATOR_STATIONARY, &self[-2]);
-        self[-2].params = 2;
+        (self - 2)->params = 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -430,7 +430,7 @@ void EntityElevatorStationary(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.prim = prim;
+        self->ext.cenElevator.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         prim->tpage = 0x12;
         prim->clut = 0x223;
@@ -453,17 +453,17 @@ void EntityElevatorStationary(Entity* self) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
-            g_Entities[1].ext.stub[0x00] = 1;
+            g_Entities[1].ext.entSlot1.unk0 = 1;
             SetStep(3);
         }
         break;
 
     case 1:
-        if (*(u8*)&self[-1].ext.stub[0x4]) {
+        if ((self - 1)->ext.cenElevator.unk80) {
             posX = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_UP) {
                 if (abs(posX) < 8) {
-                    g_Entities[1].ext.stub[0x00] = 1;
+                    g_Entities[1].ext.entSlot1.unk0 = 1;
                     g_Player.D_80072EFC = 2;
                     g_Player.padSim = 0;
                     PLAYER.velocityX = 0;
@@ -494,7 +494,7 @@ void EntityElevatorStationary(Entity* self) {
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                g_Entities[1].ext.stub[0x00] = 0;
+                g_Entities[1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
@@ -531,14 +531,14 @@ void EntityElevatorStationary(Entity* self) {
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                g_Entities[1].ext.stub[0x00] = 0;
+                g_Entities[1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
             break;
         }
     }
-    prim = self->ext.prim;
+    prim = self->ext.cenElevator.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
@@ -575,7 +575,7 @@ void EntityUnkId1B(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eElevatorInit);
+        InitializeEntity(g_EInitElevator);
         if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -587,13 +587,13 @@ void EntityUnkId1B(Entity* self) {
 
     case 1:
         self->posX.i.hi = entity->posX.i.hi;
-        if (self->params == step) {
+        if (self->params == 1) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            self->ext.generic.unk80.modeS8.unk0 =
+            self->ext.cenElevator.unk80 =
                 GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            self->ext.generic.unk80.modeS8.unk0 =
+            self->ext.cenElevator.unk80 =
                 GetPlayerCollisionWith(self, 12, 8, 6);
         }
         break;
@@ -611,7 +611,7 @@ void EntityMovingElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eElevatorInit);
+        InitializeEntity(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -621,7 +621,7 @@ void EntityMovingElevator(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.prim = prim;
+        self->ext.cenElevator.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->tpage = 0x12;
@@ -646,7 +646,7 @@ void EntityMovingElevator(Entity* self) {
         }
 
         self->animCurFrame = 10;
-        g_Entities[1].ext.stub[0x00] = 1;
+        g_Entities[1].ext.entSlot1.unk0 = 1;
         SetStep(step);
         break;
 
@@ -666,7 +666,7 @@ void EntityMovingElevator(Entity* self) {
         g_Player.pl_vram_flag = 0x41;
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.cenElevator.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
