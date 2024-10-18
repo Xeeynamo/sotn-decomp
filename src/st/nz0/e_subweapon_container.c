@@ -3,8 +3,8 @@
 #include "sfx.h"
 
 typedef struct SubWpnContDebris {
-    s16 posX;
-    s16 posY;
+    s16 velX;
+    s16 velY;
     u16 params;
     u16 facingLeft;
 } SubWpnContDebris;
@@ -64,7 +64,7 @@ void EntitySubWeaponContainer(Entity* self) {
         }
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        *(s32*)&self->ext.generic.unk7C = prim;
+        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
@@ -108,12 +108,12 @@ void EntitySubWeaponContainer(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
-                newEntity->posX.i.hi += glassPieceTBL->posX;
-                newEntity->posY.i.hi += glassPieceTBL->posY;
-                newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
+                newEntity->posX.i.hi += glassPieceTBL->velX;
+                newEntity->posY.i.hi += glassPieceTBL->velY;
+                newEntity->ext.subwpnContGlass.velX = glassPieceTBL->velX;
                 newEntity->params = glassPieceTBL->params;
                 newEntity->facingLeft = glassPieceTBL->facingLeft;
-                newEntity->ext.generic.unk84.S16.unk2 = self->params;
+                newEntity->ext.subwpnContGlass.palette = self->params;
             }
             glassPieceTBL++;
             i++;
@@ -168,39 +168,36 @@ void EntitySubWeaponContainer(Entity* self) {
 }
 
 // Subweapon container falling glass pieces
-void func_801C7538(Entity* entity) {
-    s32 new_var;
-    s16 var_v0;
+void EntitySubWpnContGlass(Entity* self) {
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSubwpnClochePieces);
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->animCurFrame = entity->params;
-        entity->palette += entity->ext.generic.unk84.S16.unk2;
-        entity->velocityX = entity->ext.generic.unk84.S16.unk0 << 12;
-        entity->velocityX += 0x8000 - (Random() << 8);
-        entity->velocityY -= (Random() & 0x1F) << 12;
+        self->animCurFrame = self->params;
+        self->palette += self->ext.subwpnContGlass.palette;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->velocityX = self->ext.subwpnContGlass.velX * 0x1000;
+        self->velocityX -= (Random() * 0x100) + FIX(-0.5);
+        self->velocityY -= (Random() & 0x1F) * 0x1000;
         break;
 
     case 1:
         MoveEntity();
-        entity->velocityY += FIX(0.125);
+        self->velocityY += FIX(0.125);
 
-        if (entity->velocityX != 0) {
-            if (entity->facingLeft == 0) {
-                new_var = (u16)entity->rotZ - 16;
-                var_v0 = new_var;
+        if (self->velocityX != 0) {
+            if (self->facingLeft) {
+                self->rotZ += 0x10;
             } else {
-                var_v0 = entity->rotZ + 16;
+                self->rotZ -= 0x10;
             }
-        } else if (entity->facingLeft != 0) {
-            var_v0 = entity->rotZ - 16;
         } else {
-            var_v0 = entity->rotZ + 16;
+            if (self->facingLeft) {
+                self->rotZ -= 0x10;
+            } else {
+                self->rotZ += 0x10;
+            }
         }
-
-        entity->rotZ = var_v0;
         break;
     }
 }

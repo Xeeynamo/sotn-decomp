@@ -24,73 +24,82 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
     }
 }
 
-static void func_801CC6F8(Entity* entity) {
+static void func_801CC6F8(Entity* self) {
     u16 distance = GetDistanceToPlayerX();
-    bool var_s1;
+    bool buttNearScreenEdge;
 
-    entity->ext.et_801CC820.unk86 = 0x100;
-    entity->velocityX = 0;
+    self->velocityX = 0;
+    self->ext.fireWarg.unk86 = 0x100;
 
-    if (entity->params != 0) {
+    if (self->params) {
         SetStep(12);
         return;
     }
 
-    var_s1 = 0;
-
-    if (entity->facingLeft != 0) {
-        var_s1 = entity->posX.i.hi >= 0x71;
-    } else if (entity->posX.i.hi < 0x90) {
-        var_s1 = 1;
+    // This will test if we're facing left, with high X, or facing right with
+    // low X.
+    buttNearScreenEdge = false;
+    if (self->facingLeft) {
+        if (self->posX.i.hi > 0x70) {
+            buttNearScreenEdge = true;
+        }
+    } else {
+        if (self->posX.i.hi < 0x90) {
+            buttNearScreenEdge = true;
+        }
     }
 
     if (distance < 0x70) {
-        if (!(Random() & 3) && !var_s1) {
+        if (!(Random() & 3) && !buttNearScreenEdge) {
             SetStep(9);
-            return;
+        } else {
+            SetStep(6);
+            PlaySfxPositional(0x783);
+            self->ext.fireWarg.unk80 = 0x20;
         }
-    } else if ((Random() & 3) && !var_s1) {
-        SetStep(9);
-        if (!(Random() & 3)) {
-            entity->ext.et_801CC820.unk86 = 0;
+    } else {
+        if ((Random() & 3) && !buttNearScreenEdge) {
+            SetStep(9);
+            if (!(Random() & 3)) {
+                self->ext.fireWarg.unk86 = 0;
+            }
+        } else {
+            SetStep(6);
+            PlaySfxPositional(0x783);
+            self->ext.fireWarg.unk80 = 0x20;
         }
-        return;
     }
-
-    SetStep(6);
-    PlaySfxPositional(0x783);
-    entity->ext.et_801CC820.unk80 = 0x20;
 }
 
 // Only called by the EntityFireWarg
-static void func_801CC820(Entity* entity) {
+static void func_801CC820(Entity* self) {
     u16 distance;
 
-    if (entity->facingLeft == GetSideToPlayer()) {
-        if (entity->params == 0) {
-            SetStep(5);
-        } else {
+    if ((self->facingLeft == GetSideToPlayer()) & 1) {
+        if (self->params) {
             SetStep(4);
+        } else {
+            SetStep(5);
         }
         return;
     }
-    if (entity->ext.et_801CC820.unk86 == 0) {
-        func_801CC6F8(entity);
+    if (!self->ext.fireWarg.unk86) {
+        func_801CC6F8(self);
         return;
     }
     distance = GetDistanceToPlayerX();
-    if ((distance < 0x48) && (entity->step != 4)) {
+    if ((distance < 0x48) && (self->step != 4)) {
         SetStep(4);
         return;
     }
     SetStep(3);
     if (distance < 0x60) {
-        entity->ext.et_801CC820.unk7C = 1;
+        self->ext.fireWarg.unk7C = 1;
     } else {
-        entity->ext.et_801CC820.unk7C = 0;
+        self->ext.fireWarg.unk7C = 0;
     }
-    entity->ext.et_801CC820.unk80 = 0;
-    entity->ext.et_801CC820.unk82 = 0x20;
+    self->ext.fireWarg.unk80 = 0;
+    self->ext.fireWarg.unk82 = 0x20;
 }
 
 // duplicate of func_801CF6D8
@@ -1002,7 +1011,7 @@ void EntityExplosion3(Entity* entity) {
     }
     entity->ext.entityExplosion3.timer++;
     if (entity->ext.entityExplosion3.timer >= 32) {
-        CreateEntityFromCurrentEntity(2, entity);
+        CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
         entity->params = 1;
     }
 }

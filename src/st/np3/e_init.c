@@ -22,27 +22,27 @@ void EntityUnkId12(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_801B2830(Entity* self);
+void EntityUnkId16(Entity* self);
 void EntityBackgroundLightning(Entity* self);
 void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityCastleDoor(Entity* self);
 void EntityBackgroundBushes(Entity* self);
-void func_801B3704(Entity* self);
+void EntityBackgroundTrees(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
 void EntityCavernDoor(Entity* self);
-void EntityClickSwitch(Entity* self);
+void EntityWeightsSwitch(Entity* self);
 void EntityPathBlockSmallWeight(Entity* self);
 void EntityPathBlockTallWeight(Entity* self);
 void EntityTrapDoor(Entity* self);
 void EntityMermanRockLeftSide(Entity* self);
 void EntityMermanRockRightSide(Entity* self);
-void func_801B5488(Entity* self);
+void EntityJewelSwordDoor(Entity* self);
 void EntityFallingRock2(Entity* self);
 void EntityLightningThunder(Entity* self);
 void EntityLightningCloud(Entity* self);
-void EntitySwitch(Entity* self);
+void EntityHeartRoomSwitch(Entity* self);
 void EntityHeartRoomGoldDoor(Entity* self);
 void EntityAlucardWaterEffect(Entity* self);
 void EntitySplashWater(Entity* self);
@@ -53,10 +53,10 @@ void EntityWaterDrop(Entity* self);
 void EntityMerman2(Entity* self);
 void EntityMermanWaterSplash(Entity* self);
 void EntityMediumWaterSplash(Entity* self);
-void func_801C7E18(Entity* self);
+void EntityHighWaterSplash(Entity* self);
 void EntityExplosion2(Entity* self);
-void EntityLargeFallingObject(Entity* self);
-void func_801C7D80(Entity* self);
+void EntityDeadMerman(Entity* self);
+void EntityFallingObject2(Entity* self);
 void EntityMerman(Entity* self);
 void EntityMermanFireball(Entity* self);
 void func_801C8F54(Entity* self);
@@ -65,7 +65,7 @@ void EntityMermanSpawner(Entity* self);
 void EntityBoneScimitar(Entity* self);
 void EntityBoneScimitarParts(Entity* self);
 void EntityBat(Entity* self);
-void EntityUnkId49(Entity* self);
+void EntityTilemapShufflerUnused(Entity* self);
 void EntityZombie(Entity* self);
 void EntityZombieSpawner(Entity* self);
 void EntityOwlKnight(Entity* self);
@@ -73,7 +73,7 @@ void EntityOwl(Entity* self);
 void func_801CD540(Entity* self);
 void func_801CD620(Entity* self);
 void EntityBloodyZombie(Entity* self);
-void func_801CAE0C(Entity* self);
+void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
@@ -109,47 +109,47 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
-    EntityDummy,
+    EntityDummy, // 0x10
     func_801B246C,
     EntityUnkId12,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_801B2830,
+    EntityUnkId16,
     EntityBackgroundLightning,
     EntityTransparentWater,
     EntityShuttingWindow,
     EntityCastleDoor,
     EntityBackgroundBushes,
-    func_801B3704,
+    EntityBackgroundTrees,
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,
-    EntityClickSwitch,
+    EntityWeightsSwitch, // 0x20
     EntityPathBlockSmallWeight,
     EntityPathBlockTallWeight,
     EntityTrapDoor,
     EntityMermanRockLeftSide,
     EntityMermanRockRightSide,
-    func_801B5488,
+    EntityJewelSwordDoor,
     EntityFallingRock2,
     EntityLightningThunder,
     EntityLightningCloud,
-    EntitySwitch,
+    EntityHeartRoomSwitch,
     EntityHeartRoomGoldDoor,
     EntityAlucardWaterEffect,
     EntitySplashWater,
     EntitySurfacingWater,
     EntitySideWaterSplash,
-    EntitySmallWaterDrop,
+    EntitySmallWaterDrop, // 0x30
     EntityWaterDrop,
     EntityMerman2,
     EntityMermanWaterSplash,
     EntityMediumWaterSplash,
-    func_801C7E18,
+    EntityHighWaterSplash,
     EntityExplosion2,
-    EntityLargeFallingObject,
-    func_801C7D80,
+    EntityDeadMerman,
+    EntityFallingObject2,
     EntityMerman,
     EntityMermanFireball,
     func_801C8F54,
@@ -157,8 +157,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMermanSpawner,
     EntityBoneScimitar,
     EntityBoneScimitarParts,
-    EntityBat,
-    EntityUnkId49,
+    EntityBat, // 0x40
+    EntityTilemapShufflerUnused,
     EntityZombie,
     EntityZombieSpawner,
     EntityOwlKnight,
@@ -166,14 +166,14 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801CD540,
     func_801CD620,
     EntityBloodyZombie,
-    func_801CAE0C,
+    EntityBloodDrips,
     EntityBloodSplatter,
     EntityStairwayPiece,
     EntityFallingRock,
     EntityWargExplosionPuffOpaque,
     EntitySlogra,
     EntitySlograSpear,
-    EntitySlograSpearProjectile,
+    EntitySlograSpearProjectile, // 0x50
     EntityGaibon,
     func_801B8CC0,
     EntitySmallGaibonProjectile,
@@ -190,7 +190,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 u16 g_EInitBreakable[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
 u16 g_EInitObtainable[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0001};
 u16 g_EInitParticle[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
-u16 D_80180A60[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
+u16 g_EInitSpawner[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
 u16 g_EInitInteractable[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
 u16 g_EInitUnkId13[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
 u16 g_EInitUnkId12[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
@@ -208,7 +208,7 @@ u16 g_EInitZombie[] = {0x8007, 0x0000, 0x004D, 0x02D3, 0x006E};
 u16 D_80180B14[] = {0x8008, 0x0010, 0x0049, 0x02CB, 0x0014};
 u16 D_80180B20[] = {0x8008, 0x0000, 0x0049, 0x02CB, 0x0015};
 u16 g_EInitOwl[] = {0x8008, 0x0001, 0x0049, 0x02CB, 0x0016};
-u16 g_EInitBloodyZombieNP3[] = {0x8009, 0x0001, 0x004A, 0x02D6, 0x000D};
+u16 g_EInitBloodyZombie[] = {0x8009, 0x0001, 0x004A, 0x02D6, 0x000D};
 u16 g_EInitSlograNP3[] = {0x800A, 0x0000, 0x0048, 0x02D9, 0x00F3};
 u16 g_EInitSlograSpearNP3[] = {0x800A, 0x0000, 0x0048, 0x02D9, 0x00F4};
 u16 g_EInitSlograProjectileNP3[] = {0x800A, 0x0000, 0x0048, 0x02D9, 0x00F5};

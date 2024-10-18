@@ -24,10 +24,10 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x14 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_GREY_PUFF = 0x15,
-
+    /* 0x15 */ E_GREY_PUFF,
+    /* 0x16 */ E_ID_16,
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
-    /* 0x1E */ E_CAVERN_DOOR_LEVER_UNK0 = 0x1E,
+    /* 0x1E */ E_CAVERN_DOOR_PLATFORM = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x28 */ E_LIGHTNING_THUNDER,
     /* 0x29 */ E_LIGHTNING_CLOUD,
@@ -36,14 +36,14 @@ typedef enum {
     /* 0x2F */ E_SIDE_WATER_SPLASH,
     /* 0x30 */ E_SMALL_WATER_DROP,
     /* 0x31 */ E_WATER_DROP,
-    /* 0x32 */ E_MERMAN_SPAWNER_32,
+    /* 0x32 */ E_MERMAN2,
     /* 0x33 */ E_MERMAN_JUMP_WATER,
     /* 0x34 */ E_MERMAN2_UNK1,
-    /* 0x35 */ E_MEDIUM_WATER_SPLASH,
+    /* 0x35 */ E_HIGH_WATER_SPLASH,
     /* 0x36 */ E_MERMAN2_SPIT_FIRE,
     /* 0x37 */ E_MERMAN2_DYING,
     /* 0x38 */ E_MERMAN2_JUMP_AIR,
-    /* 0x39 */ E_MERMAN_SPAWNER_39,
+    /* 0x39 */ E_MERMAN,
     /* 0x3A */ E_MERMAN_SPIT_FIRE,
     /* 0x3B */ E_MERMAN_JUMP_AIR,
     /* 0x3C */ E_MERMAN_DYING,
@@ -101,7 +101,7 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableDrawModes[];
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
-extern u16 D_80180A60[];
+extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitUnkId12[];
 extern u16 g_EInitCommon[];
@@ -123,22 +123,6 @@ extern u16 g_EInitGurkhaHammer[];
 extern u16 g_EInitGurkhaSword[];
 extern u16 g_EInitGurkhaBlade[];
 extern ObjInit2 D_80180C10[];
-extern SVEC4 D_80180EEC[];
-extern SVEC4 D_80180F6C;
-extern MATRIX D_80180F9C;
-extern SVECTOR* D_80180FD4[];
-extern u8 D_80180FE0[];
-extern u16 D_80180FF8[8];
-extern s16 D_80181098[][2];
-extern s16 D_801810A8[];
-extern SVECTOR D_801810B8[];
-extern u8 D_801810C0;
-extern u8 D_801810E0[];
-extern u8 D_801810EC[];
-extern u16 D_801810F8[];
-extern s32 g_TrapDoorFlag; // 0 = Closed, 1 = Open
-extern const u8 D_80181108[];
-extern u16 D_80181120[];
 extern u16 D_8018112C[];
 extern u16 D_80181144[];
 extern u16 D_8018115C[]; // this could be a struct
@@ -146,26 +130,25 @@ extern u16 D_80181168[];
 extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
-extern u16 D_80181204[];
 extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
-extern s16 D_80181230[];     // pos TBL
-extern Point32 D_80182224[]; // accel_x TBL
-extern u8 D_80182244[];      // timers
-extern s32 D_80182248;       // Collision data
-extern s32 D_80182258;       // Collision data
-extern u16 D_80182268;       // Collision data
-extern u8 D_80182270[];      // Animation
-extern u8 D_8018227C[];      // Animation
-extern u8 D_80182294[];      // Animation
-extern u8 D_8018229C[];      // Animation
-extern Point32 D_801822D0[];
-extern u16 D_801822F8[];
-extern u8 D_80182304[];
-extern u16 D_8018230C[];
-extern s32 D_8018231C[];
+extern s16 g_WaterXTbl[];           // pos TBL
+extern Point32 g_merman2Swimvels[]; // accel_x TBL
+extern u8 g_merman2_walktimers[];   // timers
+extern s32 g_merman_coll1;          // Collision data
+extern s32 g_merman2_coll3;         // Collision data
+extern u16 g_merman_coll2;          // Collision data
+extern u8 g_merman2_walkanim[];     // Animation
+extern u8 g_merman2_spitfire[];     // Animation
+extern u8 g_merman_walkanim_init[]; // Animation
+extern u8 g_merman2_swim_anim[];    // Animation
+extern Point32 g_Merman2XY[];
+extern u16 g_MermanSplashXOffset[];
+extern u8 g_HighWaterSplashParams[];
+extern u16 g_Merman2posPtr[];
+extern s32 g_Merman2velPtr[];
 extern Point32 D_80182338[];
 extern u8 D_80182358[];
 extern s16 D_8018235C;
@@ -208,11 +191,8 @@ extern u8 D_8018142C[];
 
 // *** EntitySlogra properties END ***
 
-extern u8 D_8018120C[]; // this could be a struct
-extern const u8 D_80181214[];
-extern s16 D_80181220[][2];
-extern u16 D_8018122C;
-extern u16 D_8018122E;
+extern u16 g_SplashSfx;
+extern u16 g_SurfacingSfx;
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
@@ -225,20 +205,16 @@ extern s8 c_HeartPrizes[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
 extern u8 D_80182008[];
-extern s32 D_80182204[];
-extern s64 D_801821B4[];
-extern u8 D_801821F4[];
-extern s16 D_80182168[];
-extern Point32 D_80182188[];
-extern s16 D_80182168[];
-extern s16 D_801821A8[];
-extern s16 D_80182168[];
-extern s16 D_801821A8[];
-extern s32 D_80182204[];
-extern u8 D_801822A4[];
-extern const u8 D_801822B0[];
-extern u8 D_801822B8[];
-extern u8 D_801822C0[];
+extern s32 g_SideWaterSpeeds[];
+extern s16 g_SideWaterAngles[];
+extern s16 g_splashAspects[];
+extern s32 g_SplashYMovement[];
+extern s16 g_SurfacingYTbl[];
+extern s32 g_SmallWaterDropVel[];
+extern u8 g_MediumWaterSplashAnim[];
+extern const u8 g_explosion2anim[];
+extern u8 g_FallingObject2Anim[];
+extern u8 g_HighWaterSplashAnim[];
 extern u8 D_80182400[];
 extern u8 D_80182414[];
 extern s32 D_80182440[];
@@ -254,7 +230,7 @@ extern u16 D_801825CC;
 
 // *** EntityBloodyZombie properties START ***
 
-extern u16 g_EInitBloodyZombieNP3[]; // InitProps
+extern u16 g_EInitBloodyZombie[]; // InitProps
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking
@@ -281,7 +257,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern SVECTOR D_801B1EA0;
+extern SVECTOR g_CastleDoorVector;
 
 // For EntityHammer
 extern u16 g_EInitGurkhaType0[];
@@ -393,12 +369,6 @@ extern s16 D_80183934[];
 extern s16 D_80183990[];
 extern s16 D_80183A24[];
 extern s16 D_80183A4C[];
-
-// For EntityBackgroundLightning
-
-extern u8 D_80180E78[];
-extern u8 D_80180E94[];
-extern u8 D_80180EA4[][2];
 
 // for EntityBackgroundBushes
 
