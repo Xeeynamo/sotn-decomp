@@ -161,4 +161,44 @@ mod tests {
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
+
+    #[test]
+    fn test_equality() {
+        let input_line = "if (self->flags == 256) {";
+        let expected_line = "if (self->flags == FLAG_DEAD) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_inequality() {
+        let input_line = "if (self->flags != 256) {";
+        let expected_line = "if (self->flags != FLAG_DEAD) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_bitwise_and() {
+        let input_line = "if (D_8003C708.flags & 0x60) {";
+        let expected_line = "if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_bitwise_or() {
+        let input_line = "D_8003C708.flags | 0x40;";
+        let expected_line = "D_8003C708.flags | FLAG_UNK_40;";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_bitwise_xor() {
+        let input_line = "D_8003C708.flags ^ 0x40;";
+        let expected_line = "D_8003C708.flags ^ FLAG_UNK_40;";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
 }

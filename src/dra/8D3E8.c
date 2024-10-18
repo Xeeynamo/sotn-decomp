@@ -2045,7 +2045,7 @@ void EntityGiantSpinningCross(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->drawMode = 0x100 | DRAW_HIDE;
+            prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             prim = prim->next;
         }
         func_8011A290(self);

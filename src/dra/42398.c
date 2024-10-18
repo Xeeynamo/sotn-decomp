@@ -1033,7 +1033,7 @@ void func_800E414C(void) {
     RoomTeleport* temp_a1;
     s32 temp_a0;
 
-    if (!(D_8003C708.flags & 0x40)) {
+    if (!(D_8003C708.flags & FLAG_UNK_40)) {
         return;
     }
 
@@ -1058,7 +1058,7 @@ void func_800E414C(void) {
         }
         PlaySfx(0x80);
         D_80097928 = 1;
-        if (D_8003C708.flags == 0x40) {
+        if (D_8003C708.flags == FLAG_UNK_40) {
             g_Player.D_80072EFC = 0x18;
             g_Player.padSim = PAD_LEFT;
         } else {
@@ -1082,7 +1082,7 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi < 0x78) {
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -1102,7 +1102,7 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi >= 0x89) {
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;

@@ -71,7 +71,7 @@ s32 func_0600F96C(s32, s32, s32);
 void DmaScroll(s32* src, s32* dest, u32 cnt);
 
 struct Unk0605d6c0 {
-    u32 flags;
+    u32 tileFlags;
     u32 src;
     u32 dest;
     u32 cnt;
