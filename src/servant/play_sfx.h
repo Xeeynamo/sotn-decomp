@@ -37,7 +37,7 @@ void ProcessSfxState(Entity* entity) {
         break;
 
     case 5:
-        if ((*(s32*)&D_8003C708.flags & 0x60) != 0) {
+        if ((*(s32*)&D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) != 0) {
             g_PlaySfxStep = 99;
             DestroyEntity(entity);
             return;

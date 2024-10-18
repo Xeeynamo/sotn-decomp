@@ -924,7 +924,7 @@ void RicEntitySubwpnAxe(Entity* self) {
                 self->ext.subwpnAxe.unk8B[sp10 + 4] = 0;
                 self->ext.subwpnAxe.unk8B[sp10 + 8] = 0;
             } else {
-                prim->drawMode = 0x100 | DRAW_HIDE;
+                prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             }
             prim = prim->next;
             sp10++;
@@ -1139,7 +1139,7 @@ void RicEntityCrashAxe(Entity* self) {
                     self->ext.axeCrash.unk8B[sp10 + 4] = 0;
                     self->ext.axeCrash.unk8B[sp10 + 8] = 0;
                 } else {
-                    prim->drawMode = 0x100 | DRAW_HIDE;
+                    prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
                 }
                 prim = prim->next;
                 sp10++;
@@ -2411,7 +2411,7 @@ void RicEntityCrashVibhuti(Entity* self) {
                 }
                 prim = &g_PrimBuf[self->primIndex];
                 for (i = 0; i < 9; i++) {
-                    if (prim->drawMode & 8) {
+                    if (prim->drawMode & DRAW_HIDE) {
                         break;
                     }
                     prim = prim->next;
