@@ -200,10 +200,6 @@ extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 g_EInitSkeletonPieces[];
 extern u16 g_EInitSkeletonBone[];
 
-// *** EntitySubWeaponContainer properties START ***
-
-// *** EntitySubWeaponContainer properties END ***
-
 // *** EntityLeftSecretRoomWall properties START ***
 
 typedef enum {

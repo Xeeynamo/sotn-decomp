@@ -12,9 +12,10 @@ void MakeExplosions(void) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
-            entity->ext.generic.unk84.U8.unk1 = 6 - i;
-            entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
-            entity->ext.generic.unk84.U8.unk0 = temp_s4;
+            // EntityExplosion does not seem to use these values.
+            entity->ext.destructAnim.unk85 = 6 - i;
+            entity->ext.destructAnim.unk80 = temp_s3;
+            entity->ext.destructAnim.unk84 = temp_s4;
         }
     }
 }

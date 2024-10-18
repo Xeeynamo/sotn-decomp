@@ -90,7 +90,7 @@ void EntityZombieSpawner(Entity* self) {
     s32 rnd;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitSpawner);
         self->ext.zombieSpawner.spawnDelay = 1;
         self->flags &= FLAG_UNK_2000;
     }

@@ -5,23 +5,6 @@ struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef union {
-    s32 unk;
-    void* ptr;
-    struct {
-        s8 unk0, unk1, unk2, unk3;
-    } S8;
-    struct {
-        u8 unk0, unk1, unk2, unk3;
-    } U8;
-    struct {
-        s16 unk0, unk2;
-    } S16;
-    struct {
-        u16 unk0, unk2;
-    } U16;
-} Multi;
-
-typedef union {
     s16 s;
     u16 u;
     struct {
@@ -52,15 +35,8 @@ typedef struct ET_Generic {
         } modeS16;
         struct {
             /* 0x80 */ u8 unk0;
-            /* 0x81 */ u8 unk1;
         } modeS8;
     } unk80; // size = 0x4
-    /* 0x84 */ Multi unk84;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 : 16;
-    /* 0x94 */ u8 unk94;
 } ET_Generic;
 
 typedef struct {
@@ -652,16 +628,6 @@ typedef struct {
 } ET_Ghost;
 
 typedef struct {
-    /* 0x7C */ char pad_0[0xC];
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ char pad_8A[0x3];
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ char pad_8E[0xE];
-    /* 0x9C */ s16 unk9C;
-    /* 0xA0 */ struct Entity* next;
-} ET_801CF254;
-
-typedef struct {
     /* 0x7C */ char pad_0[0x4];
     /* 0x80 */ s16 unk80;
     /* 0x82 */ char pad_82[0xA];
@@ -670,6 +636,9 @@ typedef struct {
     /* 0x9C */ u16 unk9C;
     /* 0x9E */ char pad_9E[0x8];
     /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
 } ET_GurkhaSword;
 
 struct draculaPrimitive;
@@ -791,7 +760,7 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ s32 accelY;
+    /* 0x7C */ u32 accelY;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ f32 topY;
@@ -854,8 +823,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_80[0x4];
-    /* 0x84 */ s8 unk84;
-    /* 0x85 */ char pad_85[0x1];
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ s8 unk86;
 } ET_MermanWaterSplash;
 
@@ -1203,15 +1172,6 @@ typedef struct {
     s32 unk88;
     struct Entity* parent;
 } ET_8016E9E4;
-
-typedef struct {
-    u8 unk7C;
-    u8 unk7D[3];
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-} ET_801CC820;
 
 typedef struct {
     s16 unk7C;
@@ -1677,11 +1637,11 @@ typedef struct {
 } ET_LockCamera;
 
 typedef struct {
-    struct Primitive* prim;
-    s32 jiggler;
-    s8 collision;
-    f32 xCoord;
-    f32 yCoord;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 jiggler;
+    /* 0x84 */ s8 collision;
+    /* 0x88 */ f32 xCoord;
+    /* 0x8C */ f32 yCoord;
 } ET_CavernDoor;
 
 // Unknown g_Entities[8] and [1] accessed directly in SEL
@@ -1776,6 +1736,12 @@ typedef struct {
 } ET_DisableAfterImage;
 
 typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_EntityExplosion2;
+
+typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ u16 unk7E;
 } ET_EntityExplosion3;
@@ -1798,12 +1764,40 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_SecretStairs;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ u8 index;
 } ET_DestructAnimation;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 velX;
+    /* 0x86 */ s16 palette;
+} ET_SubwpnContainerGlass;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+} ET_BloodyZombie;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+} ET_MermanRock;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -1817,6 +1811,12 @@ typedef struct {
     /* 0x88 */ u16 unk88;
     /* 0x8A */ u16 unk8A;
 } ET_Warg;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u16 timer;
+} ET_DeathScythe;
 
 // ====== RIC ENTITIES ======
 
@@ -1906,7 +1906,6 @@ typedef union { // offset=0x7C
     ET_RichterPowerUpRing ricPowerRing;
     ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
-    ET_801CF254 et_801CF254;
     ET_GurkhaSword gurkhaSword;
     ET_Dracula dracula;
     ET_DracFinal dracFinalForm;
@@ -1938,7 +1937,6 @@ typedef union { // offset=0x7C
     ET_Death death;
     ET_SpittleBone spittleBone;
     ET_Player player;
-    ET_801CC820 et_801CC820;
     ET_801AF774 et_801AF774;
     ET_Drop drop;
     ET_BigRedFireball bigredfireball;
@@ -1967,11 +1965,17 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
+    ET_EntityExplosion2 entityExplosion2;
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
     ET_DestructAnimation destructAnim;
+    ET_SecretStairs secretStairs;
+    ET_SubwpnContainerGlass subwpnContGlass;
+    ET_BloodyZombie bloodyZombie;
+    ET_MermanRock mermanRock;
     ET_Warg warg;
+    ET_DeathScythe deathScythe;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
