@@ -31,7 +31,6 @@ typedef struct ET_Generic {
         /* 0x80 */ struct Entity* entityPtr;
         struct {
             /* 0x80 */ s16 unk0;
-            /* 0x82 */ s16 unk2;
         } modeS16;
     } unk80; // size = 0x4
 } ET_Generic;
@@ -901,7 +900,11 @@ typedef struct {
 } ET_TimerOnly;
 
 typedef struct {
-    char pad[8];
+    /* 0x7C */ s8 unk7C;
+    /* 0x7D */ s8 unk7D;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
     struct Primitive* prim;
 } ET_AxeKnight;
 
@@ -1340,7 +1343,7 @@ typedef struct {
     s32 unk98;
     s32 unk9C;
     u16 unkA0;
-    u16 : 16;
+    s16 unkA2;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
@@ -1428,10 +1431,8 @@ typedef struct {
 } ET_Whip;
 
 typedef struct {
-#ifndef PLATFORM_64BIT
-    s32 pad7c;
-#endif
-    Primitive* unk80;
+    Primitive* prim1;
+    Primitive* prim2;
     s16 unk84;
     s16 unk86;
     s16 unk88;
@@ -1594,8 +1595,8 @@ typedef struct {
 
 typedef struct {
     u8 digits[4];
-    s16 unk80;
-    s16 unk82;
+    s16 number;
+    s16 type;
     s16 unk84;
     u16 unk86;
     u16 unk88;

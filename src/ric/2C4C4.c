@@ -198,9 +198,9 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
         while (prim != NULL) {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
+            PRED(prim) = randR;
+            PGRN(prim) = randG;
+            PBLU(prim) = randB;
             if (i == 0) {
                 prim->b0 = prim->b1 = prim->g0 = prim->g1 = prim->r0 =
                     prim->r1 = 0;
@@ -495,7 +495,7 @@ void RicEntityRevivalColumn(Entity* self) {
     }
     prim = &g_PrimBuf[self->primIndex];
     prim->x0 = prim->x2 = self->posX.i.hi - self->ext.ricColumn.unk7C;
-    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.factory.unk7E;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.ricColumn.unk7E;
     prim->x1 = prim->x3 = prim->x0 + self->ext.ricColumn.unk80;
     prim->y2 = prim->y3 = prim->y0 + self->ext.ricColumn.unk82;
     prim->u0 = prim->u2 = 1;
@@ -717,7 +717,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         // the parent pointer is set in RicEntityFactory.
         // the value of unk84 is set in RicEntitySubwpnCross
         self->ext.crossBoomerang.unk84 =
-            self->ext.factory.parent->ext.crossBoomerang.unk84;
+            self->ext.crossBoomerang.parent->ext.crossBoomerang.unk84;
         self->animSet = ANIMSET_OVL(17);
         self->animCurFrame = D_80155E68[self->params];
         self->unk5A = 0x66;
@@ -732,7 +732,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
 
     case 1:
         self->rotZ -= 0x80;
-        if (self->ext.factory.parent->step == 7) {
+        if (self->ext.crossBoomerang.parent->step == 7) {
             self->step++;
             self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
@@ -929,7 +929,7 @@ void RicEntitySubwpnAxe(Entity* self) {
             prim = prim->next;
             sp10++;
         }
-        self->ext.factory.unkB0 = PL_W_AXE;
+        self->ext.subwpnAxe.subweaponId = PL_W_AXE;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
@@ -1156,7 +1156,7 @@ void RicEntityCrashAxe(Entity* self) {
     case 1:
         temp_s1 = self->ext.axeCrash.unk9C;
         if (++self->ext.axeCrash.unk9C >= 0x29) {
-            self->ext.factory.unkA2 = 16;
+            self->ext.axeCrash.unkA2 = 16;
             self->step++;
         }
         temp_s0 = self->ext.axeCrash.unkA0;
@@ -1168,8 +1168,8 @@ void RicEntityCrashAxe(Entity* self) {
         self->posY.val += self->velocityY;
         break;
     case 2:
-        if (--self->ext.factory.unkA2 == 0) {
-            self->ext.factory.unkA2 = 8;
+        if (--self->ext.axeCrash.unkA2 == 0) {
+            self->ext.axeCrash.unkA2 = 8;
             self->step++;
         }
         temp_s1 = self->ext.axeCrash.unk9C;
@@ -1182,7 +1182,7 @@ void RicEntityCrashAxe(Entity* self) {
         self->posY.val += self->velocityY;
         break;
     case 3:
-        if (--self->ext.factory.unkA2 == 0) {
+        if (--self->ext.axeCrash.unkA2 == 0) {
             if ((u8)self->params == 0) {
                 g_api.PlaySfx(SFX_TELEPORT_BANG_A);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
@@ -1439,9 +1439,8 @@ void RicEntitySubwpnDagger(Entity* self) {
         if (self->ext.subweapon.timer == 0x20) {
             prim->drawMode |=
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = 0x60;
+            PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) =
+                0x60;
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -1493,8 +1492,8 @@ void RicEntitySubwpnDagger(Entity* self) {
         prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
         if (self->ext.subweapon.timer < 0x21) {
             prim->r0 -= 2;
-            prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
-                prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
+            prim->g0 = prim->b0 = PGREY(prim, 1) = PGREY(prim, 2) =
+                PGREY(prim, 3) = prim->r0;
         }
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
@@ -1511,20 +1510,20 @@ void RicEntitySubwpnDagger(Entity* self) {
 }
 
 static void ReboundStoneBounce1(s32 arg0) {
-    g_CurrentEntity->ext.generic.unk7C.s =
-        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
+    g_CurrentEntity->ext.reboundStone.stoneAngle =
+        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
     }
 }
 
 static void ReboundStoneBounce2(s16 arg0) {
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk7C.s =
-            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.stoneAngle =
+            (arg0 * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
     }
 }
 
@@ -1560,8 +1559,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         playerY = self->posY.i.hi;
         for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next, i++) {
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                0xFF;
+            PGREY(prim, 0) = PGREY(prim, 1) = 0xFF;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -2156,8 +2154,8 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
         prim = &g_PrimBuf[self->primIndex];
-        self->ext.prim = prim;
-        self->ext.et_801291C4.unk80 = prim;
+        self->ext.et_801291C4.prim1 = prim;
+        self->ext.et_801291C4.prim2 = prim;
         self->ext.et_801291C4.unk90 = (self->params >> 8);
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
@@ -2182,7 +2180,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
                 i = 0;
             }
         }
-        prim = self->ext.prim;
+        prim = self->ext.et_801291C4.prim1;
         prim->x0 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
         prim->x1 = prim->x0;
@@ -2191,7 +2189,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         prim->y2 = self->posY.i.hi;
         prim->x3 = prim->x2;
         prim->y3 = prim->y2 - 0x10;
-        self->ext.et_801291C4.unk80 = prim;
+        self->ext.et_801291C4.prim2 = prim;
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
@@ -2208,7 +2206,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
     case 1:
 
         for (i = 0; i < 2; i++) {
-            prim = self->ext.et_801291C4.unk80;
+            prim = self->ext.et_801291C4.prim2;
             temp_s2 = self->ext.et_801291C4.unk84;
             somethingX = temp_s6->posX.i.hi - prim->x2;
             somethingY = temp_s6->posY.i.hi - prim->y2;
@@ -2254,7 +2252,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
             LOW(temp_s3->x0) = LOW(prim->x2);
             LOW(temp_s3->x1) = LOW(prim->x3);
             self->ext.et_801291C4.unk84 = temp_s2;
-            self->ext.et_801291C4.unk80 = temp_s3;
+            self->ext.et_801291C4.prim2 = temp_s3;
             xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
             yOffset = (rsin(temp_s2) * 0xC) >> 0xC;
             temp_s2 = temp_s2 - 0x400;
@@ -2271,7 +2269,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         return;
     case 2:
         if (self->step_s == 0) {
-            prim = self->ext.prim;
+            prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
                 prim->clut = 0x15F;
                 prim = prim->next;
@@ -2279,7 +2277,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
             self->step_s += 1;
             return;
         }
-        prim = self->ext.prim;
+        prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
@@ -2292,7 +2290,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         self->step += 1;
         break;
     case 3:
-        prim = self->ext.prim;
+        prim = self->ext.et_801291C4.prim1;
         var_s2 = 1;
         while (prim != NULL) {
             if (RicPrimDecreaseBrightness(prim, 4) & 0xFF) {
@@ -2303,7 +2301,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
             prim = prim->next;
         }
         if (var_s2 != 0) {
-            prim = self->ext.prim;
+            prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -2337,7 +2335,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk88;
             entity->facingLeft =
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk8C;
-            entity->ext.factory.unkB0 = PL_W_CRASH_VIBHUTI;
+            entity->ext.vibCrashCloud.subweaponId = PL_W_CRASH_VIBHUTI;
             RicSetSubweaponParams(entity);
             entity->unk5A = 0x79;
             entity->animSet = ANIMSET_DRA(14);

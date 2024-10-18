@@ -97,7 +97,7 @@ void func_80116208(void) {
     case 1:
         if (g_Player.unk60 == 3) {
             temp_s0 = HandleDamage(&damage, 2, g_Player.unk64, 1);
-            func_80118C84(damage.damageTaken, 0);
+            CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
                 func_80115394(&damage, Player_BossGrab, 1);
@@ -1412,7 +1412,7 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-s32 func_80118C84(s32 arg0, s32 arg1) {
+s32 CreateHPNumMove(s32 arg0, s32 arg1) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
 
     if (entity != NULL) {
@@ -1420,8 +1420,8 @@ s32 func_80118C84(s32 arg0, s32 arg1) {
         entity->entityId = ENTITY_13;
         entity->posX.val = PLAYER.posX.val;
         entity->posY.val = PLAYER.posY.val;
-        entity->ext.generic.unk80.modeS16.unk0 = arg0;
-        entity->ext.generic.unk80.modeS16.unk2 = arg1;
+        entity->ext.hpNumMove.number = arg0;
+        entity->ext.hpNumMove.type = arg1;
         return 0;
     }
     return -1;

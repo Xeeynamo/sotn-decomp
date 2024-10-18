@@ -562,7 +562,7 @@ s32 func_80113D7C(s16 damageAmount) {
     u16 temp_s1;
 
     temp_s0 = HandleDamage(&damage, 2, damageAmount / 2, 1);
-    func_80118C84(damage.damageTaken, 0);
+    CreateHPNumMove(damage.damageTaken, 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
         g_Player.timers[2] = 4;
