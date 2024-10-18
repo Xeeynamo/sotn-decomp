@@ -33,11 +33,11 @@ static u16 WallTilesNoCollision[] = {
 // PSP:https://decomp.me/scratch/DxiYq
 void EntityDemonSwitchWall(Entity* self) {
     enum Step {
-        Init = 0,
-        IdleClosed = 1,
-        PrepToOpen = 2,
-        Opening = 3,
-        IdleOpen = 16,  //NOTE: This state is never set from Opening, it's only set from Init
+        INIT = 0,
+        IDLE_CLOSED = 1,
+        PREP_TO_OPEN = 2,
+        OPENING = 3,
+        IDLE_OPEN = 16,  //NOTE: This state is never set from Opening, it's only set from Init
     };
 
     s32 tileIdx;
@@ -52,7 +52,7 @@ void EntityDemonSwitchWall(Entity* self) {
     s32 yPos;
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_8018067C);
 
             self->animCurFrame = 1; // Default: Collision (closed)
@@ -74,16 +74,16 @@ void EntityDemonSwitchWall(Entity* self) {
             // Update internal state
             if (g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON]) {
                 self->animCurFrame = 0;
-                self->step = IdleOpen;
+                self->step = IDLE_OPEN;
                 break;
             }
             // Fallthrough
-        case IdleClosed: // Never set directly
+        case IDLE_CLOSED: // Never set directly
             if (g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON]) {
                 self->step++;   // PrepToOpen
             }
             break;
-        case PrepToOpen:    // Never set directly
+        case PREP_TO_OPEN:    // Never set directly
             primIdx = g_api.AllocPrimitives(PRIM_TILE, 16);
             if (primIdx != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
@@ -101,7 +101,7 @@ void EntityDemonSwitchWall(Entity* self) {
             }
             self->step++;   // Opening
             return;
-        case Opening:   // Never set directly
+        case OPENING:   // Never set directly
             // Shake vertically
             self->ext.demonSwitchWall.unk80++;
             if (self->ext.demonSwitchWall.unk80 & 1) {
@@ -204,7 +204,7 @@ void EntityDemonSwitchWall(Entity* self) {
                 DestroyEntity(self);
             }
             break;
-        case IdleOpen:
+        case IDLE_OPEN:
             if (g_pads[1].pressed & PAD_SQUARE) {
                 if (self->params) {
                     break;

@@ -41,12 +41,12 @@ void EntityBreakableWall(Entity* self) {
     const int startTileIdx = 0x160;
 
     enum Step {
-        Init = 0,
-        Idle = 1,
-        Break_1 = 2,    // Dynamically calculated, never set directly
-        Break_2 = 3,    // Dynamically calculated, never set directly
-        Break_3 = 4,    // Dynamically calculated, never set directly
-        WaitForReset = 8,
+        INIT = 0,
+        IDLE = 1,
+        BREAK_1 = 2,    // Dynamically calculated, never set directly
+        BREAK_2 = 3,    // Dynamically calculated, never set directly
+        BREAK_3 = 4,    // Dynamically calculated, never set directly
+        WAIT_FOR_RESET = 8,
     };
 
     s32 xPos; //s6
@@ -60,7 +60,7 @@ void EntityBreakableWall(Entity* self) {
     Entity* entity;
     
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_8018067C);
             self->animCurFrame = 2;
             self->animCurFrame = 0;
@@ -148,7 +148,7 @@ void EntityBreakableWall(Entity* self) {
                 entity->rotZ = *pSrcTile++;
             }
             return;
-        case Idle:
+        case IDLE:
             if (self->flags & FLAG_DEAD) {
                 g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
                 
@@ -201,14 +201,14 @@ void EntityBreakableWall(Entity* self) {
                 self->step += self->ext.breakableWall.breakCount;
             }
             return;
-        case Break_1:   // Dynamically calculated, never set directly
+        case BREAK_1:   // Dynamically calculated, never set directly
             prim = self->ext.prim;
             prim = prim->next;
             prim->drawMode = DRAW_HIDE;
             self->ext.breakableWall.resetTimer = ResetTime;
-            self->step = WaitForReset;
+            self->step = WAIT_FOR_RESET;
             return;
-        case Break_2:   // Dynamically calculated, never set directly
+        case BREAK_2:   // Dynamically calculated, never set directly
             prim = self->ext.prim;
             prim->u1 = prim->u3 -= 0x10;
             prim->x1 = prim->x3 -= 0x10;
@@ -220,9 +220,9 @@ void EntityBreakableWall(Entity* self) {
                 entity->params = 3;
             }
             self->ext.breakableWall.resetTimer = ResetTime;
-            self->step = WaitForReset;
+            self->step = WAIT_FOR_RESET;
             return;
-        case Break_3:   // Dynamically calculated, never set directly
+        case BREAK_3:   // Dynamically calculated, never set directly
             prim = self->ext.prim;
             prim->drawMode = DRAW_HIDE;
             self->hitboxState = 0;
@@ -233,9 +233,9 @@ void EntityBreakableWall(Entity* self) {
             g_api.func_800F1FC4(CASTLE_FLAG_CHI_BREAKABLE_WALL);
             DestroyEntity(self);
             return;
-        case WaitForReset:
+        case WAIT_FOR_RESET:
             if (!--self->ext.breakableWall.resetTimer) {
-                self->step = Idle;
+                self->step = IDLE;
             }
             return;
     }

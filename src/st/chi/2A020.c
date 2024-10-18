@@ -84,12 +84,12 @@ void EntityThornweed(Entity* self)
     const int DeathExplosionDelay = 0x80;
 
     enum Step {
-        Init = 0,
-        DropToGround = 1,
-        WaitToWake = 2,
-        WakeUp = 3,
-        Idle = 4,
-        CorpseweedDeath = 6,
+        INIT = 0,
+        DROP_TO_GROUND = 1,
+        WAIT_TO_WAKE = 2,
+        WAKE_UP = 3,
+        IDLE = 4,
+        CORPSEWEED_DEATH = 6,
     };
 
     Entity* entity;
@@ -100,7 +100,7 @@ void EntityThornweed(Entity* self)
     // Check for death
     if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
         if ((self->params) && (self->ext.thornweed.isCorpseweedSpawned)) {
-            SetStep(CorpseweedDeath);
+            SetStep(CORPSEWEED_DEATH);
         } else {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
@@ -115,7 +115,7 @@ void EntityThornweed(Entity* self)
     }
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806D0);
             if (self->params) {
                 self->animCurFrame = AnimFrame_CorpseweedInit;
@@ -124,27 +124,27 @@ void EntityThornweed(Entity* self)
             }
             break;
 
-        case DropToGround:
+        case DROP_TO_GROUND:
             if (UpdatePhysicsState(&PhysicsSensors) & 1) {
-                SetStep(WaitToWake);
+                SetStep(WAIT_TO_WAKE);
             }
             break;
 
-        case WaitToWake:
+        case WAIT_TO_WAKE:
             if (GetDistanceToPlayerX() < WakeDistance) {
-                SetStep(WakeUp);
+                SetStep(WAKE_UP);
             }
             break;
 
-        case WakeUp:
+        case WAKE_UP:
             animFrames = AnimFrames_All[self->params];
             if (AnimateEntity(animFrames, self) == 0) {
                 self->ext.thornweed.timer = CorpseweedSpawnDelay;
-                SetStep(Idle);
+                SetStep(IDLE);
             }
             break;
 
-        case Idle:
+        case IDLE:
             // Check for any necessary idle init
             if (!self->step_s) {
                 if (self->params) {
@@ -168,7 +168,7 @@ void EntityThornweed(Entity* self)
             AnimateEntity(animFrames, self);
             break;
 
-        case CorpseweedDeath:
+        case CORPSEWEED_DEATH:
             if (!self->step_s) {
                 entity = self + 1;
                 entity->flags |= FLAG_DEAD;
@@ -253,39 +253,39 @@ void EntityCorpseweed(Entity* self)
     const int DeathHeadRotateSpeed = 0x20;
 
     enum Step {
-        Init = 0,
-        GrowLeaves = 1,
-        GrowStalk = 2,
-        GrowToIdle = 3,
-        Idle = 4,
-        Attack = 5,
-        Death = 6,
+        INIT = 0,
+        GROW_LEAVES = 1,
+        GROW_STEM = 2,
+        GROW_TO_IDLE = 3,
+        IDLE = 4,
+        ATTACK = 5,
+        DEATH = 6,
     };
 
     enum GrowLeaves_Substep {
-        GrowLeaves_H = 0,
-        GrowLeaves_V = 1,
-        GrowLeaves_Done = 2,
+        GROW_LEAVES_H = 0,
+        GROW_LEAVES_V = 1,
+        GROW_LEAVES_DONE = 2,
     };
 
-    enum GrowStalk_Substep {
-        GrowStalk_H1 = 0,
-        GrowStalk_UnevenV = 1,
-        GrowStalk_FinishV = 2,
-        GrowStalk_H2 = 3,
+    enum GrowStem_Substep {
+        GROW_STEM_H1 = 0,
+        GROW_STEM_UNEVEN_V = 1,
+        GROW_STEM_FINISH_V = 2,
+        GROW_STEM_H2 = 3,
     };
 
     enum Attack_Substep {
-        Attack_Init = 0,
-        Attack_Delay = 1,
-        Attack_Projectile = 2,
-        Attack_ResetDelay = 3,
+        ATTACK_INIT = 0,
+        ATTACK_DELAY = 1,
+        ATTACK_PROJECTILE = 2,
+        ATTACK_RESET_DELAY = 3,
     };
 
     enum Death_Substep {
-        Death_Init = 0,
-        Death_DropHead = 1,
-        Death_ShrinkAndFade = 2,
+        DEATH_INIT = 0,
+        DEATH_DROP_HEAD = 1,
+        DEATH_SHRINK_AND_FADE = 2,
     };
 
     Collider collider;
@@ -298,12 +298,12 @@ void EntityCorpseweed(Entity* self)
     s32 doneCount;
     s16 t;
 
-    if ((self->flags & FLAG_DEAD) && (self->step < Death)) {
-        SetStep(Death);
+    if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
+        SetStep(DEATH);
     }
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806E8);
             self->animCurFrame = AnimFrameInit;
             self->hitboxOffX = 2;
@@ -365,10 +365,10 @@ void EntityCorpseweed(Entity* self)
             prim->drawMode = FLAG_DRAW_ROTY;
             prim = prim->next;
             // Fallthrough
-        case GrowLeaves:
+        case GROW_LEAVES:
             prim = self->ext.prim;
             switch (self->step_s) {
-                case GrowLeaves_H:
+                case GROW_LEAVES_H:
                     // Expand leaves sprite horizontally
                     prim->x0 = --prim->x2;
                     prim->x1 = ++prim->x3;
@@ -377,7 +377,7 @@ void EntityCorpseweed(Entity* self)
                         self->step_s++;
                     }
                     // fallthrough
-                case GrowLeaves_V:
+                case GROW_LEAVES_V:
                     // Extend leaves sprite up
                     prim->y0 = --prim->y1;
                     y = prim->y2 - prim->y0;
@@ -386,18 +386,18 @@ void EntityCorpseweed(Entity* self)
                     }
                     break;
 
-                case GrowLeaves_Done:
+                case GROW_LEAVES_DONE:
                     self->ext.corpseweed.leavesDoneGrowing = true;
-                    SetStep(GrowStalk);
+                    SetStep(GROW_STEM);
                     break;
             }
             break;
 
-        case GrowStalk:
+        case GROW_STEM:
             prim = self->ext.prim;
             prim = prim->next;
             switch (self->step_s) {
-                case GrowStalk_H1:
+                case GROW_STEM_H1:
                     // Extend stalk sprite up
                     prim->y1 = prim->y0 -= 2;
                     // Expand stalk sprite horizontally
@@ -425,7 +425,7 @@ void EntityCorpseweed(Entity* self)
                     }
                     break;
 
-                case GrowStalk_UnevenV:
+                case GROW_STEM_UNEVEN_V:
                     // Extend the facing edge of stalk sprite up
                     if (self->facingLeft) {
                         prim->y0--;
@@ -447,7 +447,7 @@ void EntityCorpseweed(Entity* self)
                     }
                     break;
 
-                case GrowStalk_FinishV:
+                case GROW_STEM_FINISH_V:
                     // Extend the non-facing edge of stalk sprite up
                     if (self->facingLeft) {
                         prim->y1--;
@@ -461,7 +461,7 @@ void EntityCorpseweed(Entity* self)
                     }
                     break;
 
-                case GrowStalk_H2:
+                case GROW_STEM_H2:
                     doneCount = 0;
 
                     // Facing edge
@@ -494,23 +494,23 @@ void EntityCorpseweed(Entity* self)
                     if (doneCount == 2) {
                         self->ext.corpseweed.stalkDoneGrowing = true;
                         self->hitboxState = 3;
-                        SetStep(3);
+                        SetStep(GROW_TO_IDLE);
                     }
                     break;
             }
             break;
 
-        case GrowToIdle:
+        case GROW_TO_IDLE:
             self->animCurFrame = AnimFrameIdle;
             if (self->rotX < 0x100) {
                 self->rotX = self->rotY += 8;
             } else {
                 self->drawFlags = FLAG_DRAW_DEFAULT;
-                SetStep(Idle);
+                SetStep(IDLE);
             }
             break;
 
-        case Idle:
+        case IDLE:
             if (!self->step_s) {
                 self->ext.corpseweed.timer = DelayBeforeFirstAttack;
                 self->step_s += 1;
@@ -518,7 +518,7 @@ void EntityCorpseweed(Entity* self)
             self->animCurFrame = AnimFrameIdle;
             if (!--self->ext.corpseweed.timer) {
                 if ((GetSideToPlayer() & 1) == self->facingLeft) {
-                    SetStep(Attack);
+                    SetStep(ATTACK);
                 } else {
                     self->ext.corpseweed.timer = DelayBetweenAttackChecks;
                 }
@@ -528,20 +528,20 @@ void EntityCorpseweed(Entity* self)
             }
             break;
 
-        case Attack:
+        case ATTACK:
             switch (self->step_s) {
-                case Attack_Init:
+                case ATTACK_INIT:
                     self->ext.corpseweed.timer = AttackChargeDuration;
                     self->step_s += 1;
                     // fallthrough
-                case Attack_Delay:
+                case ATTACK_DELAY:
                     AnimateEntity(AnimFrames_CorpseweedAttackCharge, self);
                     if (!--self->ext.corpseweed.timer) {
-                        SetSubStep(Attack_Projectile);
+                        SetSubStep(ATTACK_PROJECTILE);
                     }
                     break;
 
-                case Attack_Projectile:
+                case ATTACK_PROJECTILE:
                     self->animCurFrame = AnimFrameAttack;
                     // Spawn projectile entity
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -561,24 +561,24 @@ void EntityCorpseweed(Entity* self)
                     self->ext.corpseweed.timer = PostAttackResetDelay;
                     self->step_s++;
                     // fallthrough
-                case Attack_ResetDelay:
+                case ATTACK_RESET_DELAY:
                     if (!--self->ext.corpseweed.timer) {
-                        SetStep(Idle);
+                        SetStep(IDLE);
                     }
                     break;
             }
         break;
 
-        case Death:
+        case DEATH:
             switch (self->step_s) {
-                case Death_Init:
+                case DEATH_INIT:
                     self->ext.corpseweed.leavesDoneGrowing = false;
                     self->ext.corpseweed.stalkDoneGrowing = false;
                     self->hitboxState = 0;
                     self->drawFlags = FLAG_DRAW_ROTZ;
                     self->step_s++;
                     // fallthrough
-                case Death_DropHead:
+                case DEATH_DROP_HEAD:
                     MoveEntity();
                     self->velocityY += DeathHeadFallAccel;
                     self->rotZ += DeathHeadRotateSpeed;
@@ -610,7 +610,7 @@ void EntityCorpseweed(Entity* self)
                     }
                     break;
 
-                case Death_ShrinkAndFade:
+                case DEATH_SHRINK_AND_FADE:
                     self->ext.corpseweed.timer++;
                     prim = self->ext.prim;
 
@@ -764,15 +764,15 @@ void EntityCorpseweedProjectile(Entity* self)
     const int Gravity = FIX(0.125);
 
     enum Step {
-        Init = 0,
-        Airborne = 1,
-        Death = 2,
+        INIT = 0,
+        AIRBORNE = 1,
+        DEATH = 2,
     };
 
     enum Death_Substep {
-        Death_Init = 0,
-        Death_Right = 1,
-        Death_Left = 2,
+        DEATH_INIT = 0,
+        DEATH_RIGHT = 1,
+        DEATH_LEFT = 2,
     };
 
     Collider collider;
@@ -799,7 +799,7 @@ void EntityCorpseweedProjectile(Entity* self)
     }
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806F4);
             x = GetDistanceToPlayerX();
             if (x > RangeMaxX) {
@@ -835,7 +835,7 @@ void EntityCorpseweedProjectile(Entity* self)
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
             break;
 
-        case Airborne:
+        case AIRBORNE:
             AnimateEntity(AnimFrames_CorpseweedProjectileAirborne, self);
             MoveEntity();
 
@@ -848,11 +848,11 @@ void EntityCorpseweedProjectile(Entity* self)
             if (collider.effects & 1) {
                 g_api.PlaySfx(NA_SE_EN_CORPSEWEED_COLLAPSE);
                 self->posY.i.hi += collider.unk18;
-                SetStep(Death);
+                SetStep(DEATH);
             }
             break;
 
-        case Death:
+        case DEATH:
             if (AnimateEntity(AnimFrames_CorpseweedProjectileDeath, self) == 0) {
                 DestroyEntity(self);
                 return;
@@ -860,24 +860,24 @@ void EntityCorpseweedProjectile(Entity* self)
 
             prim = self->ext.prim;
             switch (self->step_s) {
-                case Death_Init:
+                case DEATH_INIT:
                     prim->y0 = self->posY.i.hi - 4;
                     prim->y1 = self->posY.i.hi - 0x20;
                     prim->y2 = prim->y3 = self->posY.i.hi;
                     prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
 
                     if (self->facingLeft) {
-                        self->step_s = Death_Left;
+                        self->step_s = DEATH_LEFT;
                         prim->x0 = prim->x2 = self->posX.i.hi;
                         prim->x1 = prim->x3 = self->posX.i.hi - 0x20;
                     } else {
-                        self->step_s = Death_Right;
+                        self->step_s = DEATH_RIGHT;
                         prim->x0 = prim->x2 = self->posX.i.hi;
                         prim->x1 = prim->x3 = self->posX.i.hi + 0x20;
                     }
                     break;
 
-                case Death_Right:
+                case DEATH_RIGHT:
                     prim->x0 += 1;
                     prim->x1 += 8;
                     prim->x2 -= 1;
@@ -889,7 +889,7 @@ void EntityCorpseweedProjectile(Entity* self)
                     PrimDecreaseBrightness(prim, 7U);
                     break;
 
-                case Death_Left:
+                case DEATH_LEFT:
                     prim->x0 -= 1;
                     prim->x1 -= 8;
                     prim->x2 += 1;

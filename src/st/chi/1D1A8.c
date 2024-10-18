@@ -51,16 +51,16 @@ void EntityFallingStairs(Entity* self)
     const s32 RightSideHitHeight = 0x29F;
 
     enum Step {
-        Init = 0,
-        WaitForTrigger = 1,
-        BreakAway = 2,
-        Falling = 3,
-        Land = 4,
+        INIT = 0,
+        WAIT_FOR_TRIGGER = 1,
+        BREAK_AWAY = 2,
+        FALLING = 3,
+        LAND = 4,
     };
 
     enum FallingStep {
-        RotateClockwise = 0,
-        RotateCounterClockwise = 1,
+        ROTATE_CLOCKWISE = 0,
+        ROTATE_COUNTER_CLOCKWISE = 1,
     };
 
     Primitive* prim;
@@ -81,7 +81,7 @@ void EntityFallingStairs(Entity* self)
     scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
 
     switch (self->step) {
-        case Init:
+        case INIT:
             if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STAIRS]) {
                 DestroyEntity(self);
                 return;
@@ -113,7 +113,7 @@ void EntityFallingStairs(Entity* self)
             }
 
             // Fallthrough
-        case WaitForTrigger:
+        case WAIT_FOR_TRIGGER:
             player = &PLAYER;
             xPos = player->posX.i.hi;
             yPos = player->posY.i.hi;
@@ -128,7 +128,7 @@ void EntityFallingStairs(Entity* self)
             }
             break;
 
-        case BreakAway:
+        case BREAK_AWAY:
             self->animCurFrame = 0x23;
 
             // Clear out all tiles in unfallen state
@@ -191,9 +191,9 @@ void EntityFallingStairs(Entity* self)
             self->step++;
             break;
 
-        case Falling:
+        case FALLING:
             switch (self->step_s) {
-                case RotateClockwise:
+                case ROTATE_CLOCKWISE:
                     MoveEntity();
                     self->rotZ += 0x12;
                     self->velocityY += 0x4000;
@@ -250,7 +250,7 @@ void EntityFallingStairs(Entity* self)
                     }
                     break;
 
-                case RotateCounterClockwise:
+                case ROTATE_COUNTER_CLOCKWISE:
                     self->rotZ -= self->ext.fallingStairs.rotateAccel;
                     self->ext.fallingStairs.rotateAccel += 1;
 
@@ -304,7 +304,7 @@ void EntityFallingStairs(Entity* self)
             }
             break;
 
-        case Land:
+        case LAND:
             // Update tilemap to show fallen stairs
             pDstTileIdx = &FallingStairsFallenTileIndices;
             pSrcTile = &FallingStairsNotFallenTileValues;
@@ -350,10 +350,10 @@ void EntityFallingStep(Entity* self) {
     const u32 TriggerBoxH = 0x40;
 
     enum Step {
-        Init = 0,
-        WaitForTrigger = 1,
-        BreakAway = 2,
-        Falling = 3,
+        INIT = 0,
+        WAIT_FOR_TRIGGER = 1,
+        BREAK_AWAY = 2,
+        FALLING = 3,
     };
 
     Primitive* prim;
@@ -368,7 +368,7 @@ void EntityFallingStep(Entity* self) {
     Collider collider;
 
     switch (self->step) {
-    case Init:
+    case INIT:
         if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STEP]) {
             DestroyEntity(self);
             return;
@@ -378,7 +378,7 @@ void EntityFallingStep(Entity* self) {
         self->drawFlags |= 4;
         g_Tilemap.fg[TilePos] = TileInitVal;
         // Fallthrough
-    case WaitForTrigger:
+    case WAIT_FOR_TRIGGER:
         player = &PLAYER;
         posX = player->posX.i.hi;
         posY = player->posY.i.hi;
@@ -394,7 +394,7 @@ void EntityFallingStep(Entity* self) {
         }
         break;
         
-    case BreakAway:
+    case BREAK_AWAY:
         self->animCurFrame = 0x24;
         g_Tilemap.fg[TilePos] = 0;
         g_api.PlaySfx(NA_SE_SECRET_STAIRS);
@@ -428,7 +428,7 @@ void EntityFallingStep(Entity* self) {
         self->step++;
         break;
         
-    case Falling:
+    case FALLING:
         MoveEntity();
         self->rotZ -= 0x20;
         self->velocityY += 0x4000;

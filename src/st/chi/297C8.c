@@ -27,10 +27,10 @@ void EntityGremlin(Entity* self)
     const int AnimFrameDeath = 0x13;
 
     enum Step {
-        Init = 0,
-        Idle = 1,
-        HurtDeath = 2,
-        Debug = 0xFF,
+        INIT = 0,
+        IDLE = 1,
+        HURT_DEATH = 2,
+        DEBUG = 0xFF,
     };
 
     Collider collider;
@@ -39,19 +39,19 @@ void EntityGremlin(Entity* self)
     s32 yPos;
 
     // Check for being hurt
-    if ((self->hitFlags & 3) && (self->step != HurtDeath)) {
+    if ((self->hitFlags & 3) && (self->step != HURT_DEATH)) {
         PlaySfxWithPosArgs(NA_SE_EN_GREMLIN_HURT);
-        SetStep(HurtDeath);
+        SetStep(HURT_DEATH);
     }
     // Check for being dead
     if (self->flags & FLAG_DEAD) {
-        if (self->step != HurtDeath) {
+        if (self->step != HURT_DEATH) {
             self->hitboxState = 0;
-            SetStep(HurtDeath);
+            SetStep(HURT_DEATH);
         }
     }
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806AC);
             self->animCurFrame = 1;
             self->hitboxOffX = 6;
@@ -67,7 +67,7 @@ void EntityGremlin(Entity* self)
             entity->params = 1; // Fire (in spoon) effect
             entity->zPriority = self->zPriority - 1;
             // fallthrough
-        case Idle:
+        case IDLE:
             if (!self->step_s) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(1);
@@ -171,7 +171,7 @@ void EntityGremlin(Entity* self)
             }
             break;
 
-        case HurtDeath:
+        case HURT_DEATH:
             // Wait for a time (after which, check for death)
             if (!self->step_s) {
                 self->ext.gremlin.timer = HurtDuration;
@@ -187,7 +187,7 @@ void EntityGremlin(Entity* self)
 
             // If wait time is over, check for death
             if (!--self->ext.gremlin.timer) {
-                SetStep(Idle);
+                SetStep(IDLE);
 
                 // Check if dead
                 if (self->flags & FLAG_DEAD) {
@@ -205,7 +205,7 @@ void EntityGremlin(Entity* self)
             }
             break;
 
-        case Debug:
+        case DEBUG:
             FntPrint("charal %x\n", self->animCurFrame);
             if (g_pads[1].pressed & PAD_SQUARE) {
                 if (self->params) {
@@ -248,15 +248,15 @@ void EntityGremlinEffect(Entity* self)
     const int GremlinHurtFrameOffsetY = -0x10;
 
     enum Step {
-        Init = 0,
-        Glow = 1,
-        Fire = 2,
+        INIT = 0,
+        GLOW = 1,
+        FIRE = 2,
     };
 
     Entity* entityGremlin;
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806AC);
             self->hitboxState = 0;
             self->flags |= FLAG_UNK_2000;
@@ -264,17 +264,17 @@ void EntityGremlinEffect(Entity* self)
             // Check whether to be fire or glow
             if (self->params != 0) {
                 // Fire init
-                self->step = Fire;
+                self->step = FIRE;
                 break;
             }
             // Glow init
-            self->step = Glow;
+            self->step = GLOW;
             self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
             self->unk6C = 0xC0;
             self->drawFlags = FLAG_DRAW_UNK8;
             break;
 
-        case Glow:
+        case GLOW:
             AnimateEntity(&AnimFrames_Glow, self);
 
             entityGremlin = self - 1;
@@ -289,7 +289,7 @@ void EntityGremlinEffect(Entity* self)
             }
             break;
 
-        case Fire:
+        case FIRE:
             AnimateEntity(&AnimFrames_Fire, self);
 
             entityGremlin = self - 2;
@@ -321,29 +321,29 @@ void EntityGremlinFire(Entity* self)
     const int BounceSpeed = 0x40;
 
     enum Step {
-        Init = 0,
-        Idle = 1,
-        Death = 2,
+        INIT = 0,
+        IDLE = 1,
+        DEATH = 2,
     };
 
     enum Death_Substep {
-        Death_Init = 0,
-        Death_Shrink = 1,
+        DEATH_INIT = 0,
+        DEATH_SHRINK = 1,
     };
 
     if (self->flags & FLAG_DEAD) {
-        if (self->step != Death) {
+        if (self->step != DEATH) {
             self->hitboxState = 0;
-            SetStep(Death);
+            SetStep(DEATH);
         }
     }
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806C4);
             self->ext.gremlinFire.timer = FireDuration;
             // fallthrough
-        case Idle:
+        case IDLE:
             AnimateEntity(&AnimFrames_FireIdle, self);
             MoveEntity();
 
@@ -353,20 +353,20 @@ void EntityGremlinFire(Entity* self)
             self->ext.gremlinFire.timer--;
             if (self->ext.gremlinFire.timer == 0) {
                 self->hitboxState = 0;
-                SetStep(Death);
+                SetStep(DEATH);
             }
             break;
 
-        case Death:
+        case DEATH:
             switch (self->step_s) {
-                case Death_Init:
+                case DEATH_INIT:
                     self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                     self->rotX = 0x100;
                     self->rotY = 0x100;
                     self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
                     self->step_s++;
                     // fallthrough
-                case Death_Shrink:
+                case DEATH_SHRINK:
                     AnimateEntity(&AnimFrames_FireIdle, self);
                     self->rotX -= 8;
                     self->rotY -= 6;

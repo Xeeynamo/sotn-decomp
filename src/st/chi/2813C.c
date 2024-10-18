@@ -95,51 +95,51 @@ void EntitySalemWitch(Entity* self)
     const int ShadowDestroyThreshold = 0x20;    // When timer is below this, destroy shadow
 
     enum Step {
-        Init            = 0x0,
-        WaitToAggro     = 0x3,
-        Idle            = 0x5,
-        TurnAround      = 0x4,
-        Attack          = 0x7,
-        Attack_Curse    = 0x6,
-        Attack_Tribolt  = 0x8,
-        Hurt            = 0xA,
-        Death           = 0x10,
-        Shadow_Init     = 0x20,
-        Shadow_Wait     = 0x21,
-        Debug           = 0xFF,
+        INIT            = 0x0,
+        WAIT_TO_AGGRO   = 0x3,
+        IDLE            = 0x5,
+        TURN_AROUND     = 0x4,
+        ATTACK          = 0x7,
+        ATTACK_CURSE    = 0x6,
+        ATTACK_TRIBOLT  = 0x8,
+        HURT            = 0xA,
+        DEATH           = 0x10,
+        SHADOW_INIT     = 0x20,
+        SHADOW_WAIT     = 0x21,
+        DEBUG           = 0xFF,
     };
 
     enum Attack_Substep {
-        Attack_Init             = 0,
-        Attack_MoveToPosition   = 1,
-        Attack_ReevaluateMove   = 2,
-        Attack_Perform          = 3,
+        ATTACK_INIT             = 0,
+        ATTACK_MOVE_TO_POSITION = 1,
+        ATTACK_REEVALUATE_MOVE  = 2,
+        ATTACK_PERFORM          = 3,
     };
 
     enum Attack_Curse_Substep {
-        Attack_Curse_Init                       = 0,
-        Attack_Curse_Cast                       = 1,
-        Attack_Curse_Charge                     = 2,
-        Attack_Curse_SpawnProjectileAndReset    = 3,
+        ATTACK_CURSE_INIT                       = 0,
+        ATTACK_CURSE_CAST                       = 1,
+        ATTACK_CURSE_CHARGE                     = 2,
+        ATTACK_CURSE_SPAWN_PROJECTILE_AND_RESET = 3,
     };
 
     enum Attack_Tribolt_Substep {
-        Attack_Tribolt_Init             = 0,
-        Attack_Tribolt_HandsUp          = 1,
-        Attack_Tribolt_SpawnProjectile  = 2,
-        Attack_Tribolt_Wait             = 3,
-        Attack_Tribolt_Reset            = 4,
+        ATTACK_TRIBOLT_INIT             = 0,
+        ATTACK_TRIBOLT_HANDS_UP         = 1,
+        ATTACK_TRIBOLT_SPAWN_PROJECTILE = 2,
+        ATTACK_TRIBOLT_WAIT             = 3,
+        ATTACK_TRIBOLT_RESET            = 4,
     };
 
     enum Hurt_Substep {
-        Hurt_Init = 0,
-        Hurt_Wait = 1,
+        HURT_INIT = 0,
+        HURT_WAIT = 1,
     };
 
     enum Death_Substep {
-        Death_Init = 0,
-        Death_Wait = 1,
-        Death_Explode = 2,
+        DEATH_INIT      = 0,
+        DEATH_WAIT      = 1,
+        DEATH_EXPLODE   = 2,
     };
 
     Entity* entity;
@@ -150,28 +150,28 @@ void EntitySalemWitch(Entity* self)
     s32 yPos;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {
-        SetStep(Hurt);
+        SetStep(HURT);
     }
-    if ((self->flags & FLAG_DEAD) && (self->step < Death)) {
-        SetStep(Death);
+    if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
+        SetStep(DEATH);
     }
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_80180688);
             self->hitboxOffY = 0xA;
             entity = self + 1;
             CreateEntityFromCurrentEntity(E_SALEM_WITCH_GLOW, entity);
             entity->zPriority = self->zPriority - 1;
-            SetStep(WaitToAggro);
+            SetStep(WAIT_TO_AGGRO);
             break;
 
-        case WaitToAggro:
+        case WAIT_TO_AGGRO:
             if ((GetDistanceToPlayerX() < 0xA0) && (GetDistanceToPlayerY() < 0x70)) {
-                SetStep(Idle);
+                SetStep(IDLE);
             }
             break;
 
-        case Idle:
+        case IDLE:
             // Reset on entry
             if (!self->step_s) {
                 self->velocityX = 0;
@@ -203,12 +203,12 @@ void EntitySalemWitch(Entity* self)
                 // Close and facing opposite (presumably, engaging)
                 if (GetDistanceToPlayerX() < 0x68 && (entity->facingLeft != self->facingLeft)) {
                     self->ext.salemWitch.thinksPlayerIsEngaging = true;
-                    SetStep(Attack);
+                    SetStep(ATTACK);
                 }
                 // Far and facing same (presumably, retreating)
                 if ((GetDistanceToPlayerX() > 0x58) && (entity->facingLeft == self->facingLeft)) {
                     self->ext.salemWitch.thinksPlayerIsEngaging = false;
-                    SetStep(Attack);
+                    SetStep(ATTACK);
                 }
             }
 
@@ -224,11 +224,11 @@ void EntitySalemWitch(Entity* self)
             // Turn to face player if necessary
             isToRightOfPlayer = GetSideToPlayer() & 1;
             if (self->facingLeft != isToRightOfPlayer) {
-                SetStep(TurnAround);
+                SetStep(TURN_AROUND);
             }
             break;
 
-        case TurnAround:
+        case TURN_AROUND:
             if (!self->step_s) {
                 self->facingLeft ^= 1;  // Turn around
                 self->step_s++;
@@ -241,19 +241,19 @@ void EntitySalemWitch(Entity* self)
             self->velocityX -= self->velocityX / DecelerateSlow;
             self->velocityY -= self->velocityY / DecelerateSlow;
             if (!AnimateEntity(AnimFrames_TurnAround, self)) {
-                SetStep(Idle);
+                SetStep(IDLE);
             }
             break;
 
-        case Attack:
+        case ATTACK:
             switch (self->step_s) {
-                case Attack_Init:
+                case ATTACK_INIT:
                     self->velocityY = 0;
                     // Move to position for a random amount of time between ~0.25s and ~0.75s
                     self->ext.salemWitch.timer = (Random() & 0x1F) + 0x10;
                     self->step_s++;
                     // fallthrough
-                case Attack_MoveToPosition:
+                case ATTACK_MOVE_TO_POSITION:
                     MoveEntity();
                     SalemWitchTrySpawnShadow();
 
@@ -302,13 +302,13 @@ void EntitySalemWitch(Entity* self)
                     // Retreating and close
                     if (!self->ext.salemWitch.thinksPlayerIsEngaging &&
                         GetDistanceToPlayerX() < xPos) {
-                        SetSubStep(Attack_ReevaluateMove);
+                        SetSubStep(ATTACK_REEVALUATE_MOVE);
                     }
 
                     // Engaging and far
                     if (self->ext.salemWitch.thinksPlayerIsEngaging) {
                         if (xPos < GetDistanceToPlayerX()) {
-                            SetSubStep(Attack_ReevaluateMove);
+                            SetSubStep(ATTACK_REEVALUATE_MOVE);
                         }
                     }
 
@@ -327,17 +327,17 @@ void EntitySalemWitch(Entity* self)
                         self->ext.salemWitch.timer = 1;
                     }
                     if (!--self->ext.salemWitch.timer) {
-                        SetSubStep(Attack_Perform);
+                        SetSubStep(ATTACK_PERFORM);
                     }
 
                     // Turn to face player if necessary
                     isToRightOfPlayer = GetSideToPlayer() & 1;
                     if (self->facingLeft != isToRightOfPlayer) {
-                        SetStep(TurnAround);
+                        SetStep(TURN_AROUND);
                     }
                 break;
 
-                case Attack_ReevaluateMove:
+                case ATTACK_REEVALUATE_MOVE:
                     MoveEntity();
                     SalemWitchTrySpawnShadow();
 
@@ -346,11 +346,11 @@ void EntitySalemWitch(Entity* self)
                     self->animCurFrame = AnimFramePause;
                     if (abs(self->velocityX) < VelocityAlmostStopped) {
                         self->ext.salemWitch.thinksPlayerIsEngaging ^= 1;
-                        SetSubStep(Attack_MoveToPosition);
+                        SetSubStep(ATTACK_MOVE_TO_POSITION);
                     }
                     break;
 
-                case Attack_Perform:
+                case ATTACK_PERFORM:
                     MoveEntity();
                     SalemWitchTrySpawnShadow();
 
@@ -359,9 +359,9 @@ void EntitySalemWitch(Entity* self)
                     self->animCurFrame = AnimFramePause;
                     if (abs(self->velocityX) < VelocityAlmostStopped) {
                         if (self->ext.salemWitch.willCurseNextAttack) {
-                            SetStep(Attack_Curse);
+                            SetStep(ATTACK_CURSE);
                         } else {
-                            SetStep(Attack_Tribolt);
+                            SetStep(ATTACK_TRIBOLT);
                         }
                         self->ext.salemWitch.willCurseNextAttack ^= 1;  // Toggle between attacks
                     }
@@ -369,34 +369,34 @@ void EntitySalemWitch(Entity* self)
             }
             break;
 
-        case Attack_Curse:
+        case ATTACK_CURSE:
             self->ext.salemWitch.timer++;
             switch (self->step_s) {
-                case Attack_Curse_Init:
+                case ATTACK_CURSE_INIT:
                     PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_ATTACK);
                     self->step_s++;
                     // fallthrough
-                case Attack_Curse_Cast:
+                case ATTACK_CURSE_CAST:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
                         PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_HAND_MOVEMENT);
                     }
                     if (!AnimateEntity(AnimFrames_CurseHandMovements, self)) {
-                        SetSubStep(Attack_Curse_Charge);
+                        SetSubStep(ATTACK_CURSE_CHARGE);
                     }
                     break;
 
-                case Attack_Curse_Charge:
+                case ATTACK_CURSE_CHARGE:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
                         PlaySfxWithPosArgs(NA_SE_EN_ELECTRIC_ZAP);
                     }
                     if (!AnimateEntity(AnimFrames_CurseKanjiFlash, self)) {
-                        SetSubStep(Attack_Curse_SpawnProjectileAndReset);
+                        SetSubStep(ATTACK_CURSE_SPAWN_PROJECTILE_AND_RESET);
                     }
                     break;
 
-                case Attack_Curse_SpawnProjectileAndReset:
+                case ATTACK_CURSE_SPAWN_PROJECTILE_AND_RESET:
                     if (!AnimateEntity(AnimFrames_CurseReset, self)) {
-                        SetStep(Idle);
+                        SetStep(IDLE);
                     }
                     if (!self->animFrameDuration &&
                         self->animFrameIdx == CurseProjectileSpawnAnimFrameIdx) {
@@ -416,19 +416,19 @@ void EntitySalemWitch(Entity* self)
             }
             break;
 
-        case Attack_Tribolt:
+        case ATTACK_TRIBOLT:
             switch (self->step_s) {
-                case Attack_Tribolt_Init:
+                case ATTACK_TRIBOLT_INIT:
                     PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_ATTACK);
                     self->step_s++;
                     // fallthrough
-                case Attack_Tribolt_HandsUp:
+                case ATTACK_TRIBOLT_HANDS_UP:
                     if (!AnimateEntity(AnimFrames_TriboltHandsUp, self)) {
-                        SetSubStep(Attack_Tribolt_SpawnProjectile);
+                        SetSubStep(ATTACK_TRIBOLT_SPAWN_PROJECTILE);
                     }
                     break;
 
-                case Attack_Tribolt_SpawnProjectile:
+                case ATTACK_TRIBOLT_SPAWN_PROJECTILE:
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
                         CreateEntityFromEntity(E_SALEM_WITCH_TRIBOLT_LAUNCH, self, entity);
@@ -438,23 +438,23 @@ void EntitySalemWitch(Entity* self)
                     self->ext.salemWitch.timer = TriboltChargeDuration;
                     self->step_s++;
                     // fallthrough
-                case Attack_Tribolt_Wait:
+                case ATTACK_TRIBOLT_WAIT:
                     if (!--self->ext.salemWitch.timer) {
                         self->step_s++;
                     }
                     break;
 
-                case Attack_Tribolt_Reset:
+                case ATTACK_TRIBOLT_RESET:
                     if (!AnimateEntity(AnimFrames_TriboltReset, self)) {
-                        SetStep(Idle);
+                        SetStep(IDLE);
                     }
                     break;
             }
             break;
 
-        case Hurt:
+        case HURT:
             switch (self->step_s) {
-                case Hurt_Init:
+                case HURT_INIT:
                     // Knockback
                     if (self->facingLeft) {
                         self->velocityX = KnockbackSpeed;
@@ -468,7 +468,7 @@ void EntitySalemWitch(Entity* self)
                     PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_HURT);
                     self->step_s++;
                     // fallthrough
-                case Hurt_Wait:
+                case HURT_WAIT:
                     MoveEntity();
                     SalemWitchTrySpawnShadow();
 
@@ -476,18 +476,18 @@ void EntitySalemWitch(Entity* self)
                     self->velocityX -= self->velocityX / DecelerateFast;
                     self->velocityY -= self->velocityY / DecelerateFast;
                     if (!--self->ext.salemWitch.timer) {
-                        SetStep(Idle);
+                        SetStep(IDLE);
                     }
                     break;
             }
             break;
 
-        case Death:
+        case DEATH:
             switch (self->step_s) {
-                case Death_Init:
+                case DEATH_INIT:
                     // Death for the shadow too
                     entity = self + 1;
-                    entity->step = Death;
+                    entity->step = DEATH;
 
                     self->hitboxState = 0;
 
@@ -504,7 +504,7 @@ void EntitySalemWitch(Entity* self)
                     PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_DEATH);
                     self->step_s++;
                     // fallthrough
-                case Death_Wait:
+                case DEATH_WAIT:
                     MoveEntity();
 
                     // Slow down x movement
@@ -514,7 +514,7 @@ void EntitySalemWitch(Entity* self)
                     }
                     break;
 
-                case Death_Explode:
+                case DEATH_EXPLODE:
                     PlaySfxWithPosArgs(NA_SE_FIRE_BURST);
 
                     // Fire particles
@@ -528,7 +528,7 @@ void EntitySalemWitch(Entity* self)
             }
             break;
 
-        case Shadow_Init:
+        case SHADOW_INIT:
             InitializeEntity(&EntityInit_80180688);
             self->flags |= 0x2000;
             self->hitboxState = 0;
@@ -537,14 +537,14 @@ void EntitySalemWitch(Entity* self)
             self->drawFlags = FLAG_DRAW_UNK8;
             self->unk6C = ShadowDuration;
             // fallthrough
-        case Shadow_Wait:
+        case SHADOW_WAIT:
             self->unk6C -= ShadowTickSpeed;
             if (self->unk6C < ShadowDestroyThreshold) {
                 DestroyEntity(self);
             }
             return;
 
-        case Debug:
+        case DEBUG:
             FntPrint("charal %x\n", self->animCurFrame);
             if (g_pads[1].pressed & PAD_SQUARE) {
                 if (self->params) {
@@ -646,8 +646,8 @@ void EntitySalemWitchCurse(Entity* self)
     const int TrailDarkenSpeed = 4;
 
     enum Step {
-        Init = 0,
-        Update = 1,
+        INIT = 0,
+        UPDATE = 1,
     };
 
     Primitive* prim;
@@ -655,7 +655,7 @@ void EntitySalemWitchCurse(Entity* self)
     s16* spriteUVs;
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_80180694);
 
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -683,7 +683,7 @@ void EntitySalemWitchCurse(Entity* self)
                 prim = prim->next;
             }
             // Fallthrough
-        case Update:
+        case UPDATE:
             MoveEntity();
             AnimateEntity(&AnimFrames_CurseProjectile, self);   // Animates Kanji on projectile
 
@@ -834,11 +834,11 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
     const int BurstRotateSpeed = 0x40;
 
     enum Step {
-        Init = 0,
-        Charge = 1,
-        SpawnProjectiles = 2,
-        Burst = 3,
-        Cleanup = 4,
+        INIT = 0,
+        CHARGE = 1,
+        SPAWN_PROJECTILES = 2,
+        BURST = 3,
+        CLEANUP = 4,
     };
 
     Entity* entity;
@@ -846,7 +846,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
     s32 i;
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&g_EInitGeneric);
             self->animSet = 5;
             self->palette = PAL_OVL(0x2EB);
@@ -856,13 +856,13 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
 
             PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH);
             // fallthrough
-        case Charge:
+        case CHARGE:
             if (AnimateEntity(&AnimFrames_TriboltCharge, self) == 0) {
-                SetStep(SpawnProjectiles);
+                SetStep(SPAWN_PROJECTILES);
             }
             return;
 
-        case SpawnProjectiles:
+        case SPAWN_PROJECTILES:
             self->animSet = -0x7FFA;
             self->unk5A = 0x4B;
             self->rotY = BurstStartRotation;
@@ -882,17 +882,17 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
                 }
             }
             // fallthrough
-        case Burst:
+        case BURST:
             rot = self->rotY + BurstRotateSpeed;
             self->rotY = rot;
             self->rotX = rot;
             self->unk6C -= 4;
             if (AnimateEntity(&AnimFrames_TriboltBurst, self) == 0) {
-                SetStep(Cleanup);
+                SetStep(CLEANUP);
             }
             break;
 
-        case Cleanup:
+        case CLEANUP:
             DestroyEntity(self);
             break;
     }
@@ -921,10 +921,10 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
     const int SpinSpeed = 0x400;
 
     enum Step {
-        Init = 0,
-        Update = 1,
-        Trail_Init = 8,
-        Trail_Update = 9,
+        INIT = 0,
+        UPDATE = 1,
+        TRAIL_INIT = 8,
+        TRAIL_UPDATE = 9,
     };
 
     Entity* entity;
@@ -934,7 +934,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
     s32 launchDir;
 
     switch (self->step) {
-        case Init:
+        case INIT:
             InitializeEntity(&EntityInit_801806A0);
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
             self->rotX = 0x80;
@@ -942,7 +942,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
             self->rotZ = GetAngleBetweenEntities(self, &PLAYER) + (launchDir << 9) + SpinSpeed;
             self->ext.salemWitchTribolt.timer = 0x40;
             // fallthrough
-        case Update:
+        case UPDATE:
             MoveEntity();
             AnimateEntity(&AnimFrames_TriboltProjectile, self);
 
@@ -970,12 +970,12 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
                     entity->rotX = self->rotX;
                     entity->params = self->animCurFrame;
                     entity->zPriority = self->zPriority + 1;
-                    entity->step = Trail_Init;
+                    entity->step = TRAIL_INIT;
                 }
             }
             break;
 
-        case Trail_Init:
+        case TRAIL_INIT:
             InitializeEntity(&EntityInit_801806A0);
             self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
@@ -984,7 +984,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
             self->unk6C = 0x60;
             self->animFrameIdx = self->animCurFrame;
             // fallthrough
-        case Trail_Update:
+        case TRAIL_UPDATE:
             self->unk6C += 0xFC;
             if (AnimateEntity(&AnimFrames_TriboltTrail, self) == 0) {
                 DestroyEntity(self);

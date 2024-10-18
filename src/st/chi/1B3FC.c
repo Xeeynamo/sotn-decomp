@@ -324,13 +324,13 @@ extern EntityInit EntityInit_8018067C;
 // func_8019BDF8
 void EntityDemonSwitch(Entity* entity) {
     enum Step {
-        Init = 0,
-        Press = 1,
+        INIT = 0,
+        PRESS = 1,
     };
 
     switch (entity->step)
     {
-    case Init:
+    case INIT:
             InitializeEntity(&EntityInit_8018067C);
             
             entity->animCurFrame = 3;
@@ -343,7 +343,7 @@ void EntityDemonSwitch(Entity* entity) {
                 entity->animCurFrame = 4;
             }
             // fallthrough
-    case Press:
+    case PRESS:
         if (entity->unk44 == 7) {
             g_api.PlaySfx(SFX_SWITCH_PRESSED);
             g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] = 1;
