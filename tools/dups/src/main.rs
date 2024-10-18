@@ -1,8 +1,6 @@
 use regex::Regex;
-use std::env::*;
 use std::fs;
 use std::fs::File;
-use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
@@ -155,8 +153,6 @@ pub struct IncludeAsmEntry {
 
 fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
     let entries = std::fs::read_dir(dir).expect("Unable to read directory");
-
-    let re = Regex::new("INCLUDE_ASM\\(\"([^\"]*)\", ([^)]*)\\)").unwrap();
     let mut output = Vec::new();
 
     entries.for_each(|entry| {
@@ -166,28 +162,52 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
                 println!("checking {:?}", item_path);
 
                 let file = File::open(item_path.clone()).expect("Unable to open file");
-                let reader = BufReader::new(file);
-                for line in reader.lines() {
-                    let line_str = line.unwrap();
+                let mut reader = BufReader::new(file);
+                let mut buffer = String::new();
 
-                    if line_str.contains("INCLUDE_ASM") {
-                        if let Some(captures) = re.captures(&line_str) {
-                            let (full, [asm_dir, asm_file]) = captures.extract();
-                            output.push(IncludeAsmEntry {
-                                line: line_str.clone(),
-                                path: item_path.to_string_lossy().to_string(),
-                                asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
-                            });
-                        } else {
-                            println!("Failed to match regex on line: {}", line_str);
-                        }
-                    }
-                }
+                reader
+                    .read_to_string(&mut buffer)
+                    .expect("Unable to read file");
+
+                output.append(&mut process_buffer_for_include_asm(
+                    &buffer,
+                    &item_path.to_string_lossy(),
+                ));
             } else if item_path.is_dir() {
                 process_directory_for_include_asm(&item_path.to_string_lossy());
             }
         }
     });
+    output
+}
+
+fn process_buffer_for_include_asm(file_content: &str, file_path: &str) -> Vec<IncludeAsmEntry> {
+    let re = Regex::new("INCLUDE_ASM\\((?:\\s+)?\"([^\"]*)\", ([^)]*)\\)").unwrap();
+    let mut output = Vec::new();
+    let mut buffer = String::new();
+
+    for line_str in file_content.lines() {
+        if line_str.contains("INCLUDE_ASM") || !buffer.is_empty() {
+            buffer.push_str(line_str);
+            if !line_str.contains(';') {
+                buffer.push_str(" ");
+                println!("INCLUDE_ASM line did not contain ;, buffering input to subsequent lines");
+                continue;
+            }
+
+            if let Some(captures) = re.captures(&buffer) {
+                let (full, [asm_dir, asm_file]) = captures.extract();
+                output.push(IncludeAsmEntry {
+                    line: buffer.clone(),
+                    path: file_path.to_string(),
+                    asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
+                });
+            } else {
+                println!("Failed to match regex on line: {}", buffer);
+            }
+            buffer.clear();
+        }
+    }
     output
 }
 
@@ -635,5 +655,65 @@ mod tests {
         let s2 = "world".as_bytes();
         let similarity = levenshtein_similarity(s1, s2);
         assert_eq!(similarity, 0.2);
+    }
+
+    // INCLUDE_ASM on a single line
+    #[test]
+    fn test_process_buffer_for_include_asm() {
+        let file_content = r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);
+
+INCLUDE_ASM("foo/bar/do_something", DoSomethingElse);"#;
+
+        let result = process_buffer_for_include_asm(file_content, "test.c");
+
+        assert_eq!(result.len(), 2);
+        assert_eq!(
+            result[0],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);"#.to_string(),
+                path: "test.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomething.s".to_string(),
+            }
+        );
+
+        assert_eq!(
+            result[1],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM("foo/bar/do_something", DoSomethingElse);"#.to_string(),
+                path: "test.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomethingElse.s".to_string(),
+            }
+        );
+    }
+
+    // INCLUDE_ASM lint formatted to concurrent lines
+    #[test]
+    fn test_process_buffer_for_include_asm_with_multiline() {
+        let file_content = r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);
+
+INCLUDE_ASM(
+    "foo/bar/do_something", DoSomethingWithSomethingElse);"#;
+
+        let result = process_buffer_for_include_asm(file_content, "test_multiline.c");
+
+        assert_eq!(result.len(), 2);
+        assert_eq!(
+            result[0],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);"#.to_string(),
+                path: "test_multiline.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomething.s".to_string(),
+            }
+        );
+        assert_eq!(
+            result[1],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM(     "foo/bar/do_something", DoSomethingWithSomethingElse);"#
+                    .to_string(),
+                path: "test_multiline.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomethingWithSomethingElse.s"
+                    .to_string(),
+            }
+        );
     }
 }
