@@ -1641,10 +1641,11 @@ typedef struct {
     /* 0x8C */ f32 yCoord;
 } ET_CavernDoor;
 
-// Unknown g_Entities[8] and [1] accessed directly in SEL
+// Seems like g_Entities[1] through g_Entities[8], as used in SEL.
+// Accessed directly by index, not updated like normal entities in-engine.
 typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ f32 unk80;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 : 16;
