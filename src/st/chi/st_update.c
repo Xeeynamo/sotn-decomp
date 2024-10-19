@@ -1,7 +1,7 @@
 /*
- * File: 1DE74.c
+ * File: st_update.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: STAGE - Update functions
  */
 
 #include "chi.h"
