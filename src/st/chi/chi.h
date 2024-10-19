@@ -9,7 +9,7 @@
 
 typedef enum {
     /* 0x00 */ E_NONE,
-    /* 0x01 */ E_ID_01,
+    /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ E_NUMERIC_DAMAGE,
@@ -26,16 +26,16 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x11 */ E_BACKGROUND_BLOCK,
-    /* 0x12 */ E_ID_12,
-    /* 0x13 */ E_ID_13,
+    /* 0x12 */ E_TRIGGER_VOLUME,
+    /* 0x13 */ E_FLAME_TRAIL,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_ID_15, // Created in EntityDemonSwitchWall
+    /* 0x15 */ E_ID_15, // E_GREY_PUFF
     /* 0x16 */ E_DEMON_SWITCH_WALL,
     /* 0x17 */ E_DEMON_SWITCH,
     /* 0x18 */ E_BREAKABLE_WALL,
-    /* 0x19 */ E_BREAKABLE_WALL_DEBRIS, // Created in EntityBreakableWallDebris, EntityBreakableWall
-    /* 0x1A */ E_ID_1A, //func_8019B914 - CEN.func_8018DB18 (E_ELEVATOR_STATIONARY)? - Created in EntityUnkId01
-    /* 0x1B */ E_ID_1B, //func_8019CBA8
+    /* 0x19 */ E_BREAKABLE_WALL_DEBRIS,
+    /* 0x1A */ E_BREAKABLE_DEBRIS,
+    /* 0x1B */ E_CERBERUS_GATE_DEBUG,
     /* 0x1C */ E_FALLING_STAIRS,
     /* 0x1D */ E_FALLING_STEP,
     /* 0x1E */ E_GREMLIN,

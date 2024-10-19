@@ -67,7 +67,8 @@ void EntityHeartDrop(Entity* self) {
 #include "../check_coll_offsets.h"
 
 // [Duplicate]
-// func_801A519C: [E_ID_13] EntityUnkId13
+// [Rename in repo]
+// func_801A519C: [E_FLAME_TRAIL] EntityUnkId13 (EntityFlameTrail)
 #include "../entity_unkId13.h"
 
 //D_80181378

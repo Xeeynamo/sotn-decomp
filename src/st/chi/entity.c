@@ -1,7 +1,7 @@
 #include "game.h"
 #include "stage.h"
 
-void EntityUnkId01(Entity*);
+void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
-void EntityUnkId12(Entity*);
+void EntityTriggerVolume(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
@@ -25,9 +25,9 @@ void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
 void EntityBreakableWall(Entity*);
 void EntityBreakableWallDebris(Entity*);
-void func_8019B914(Entity*);
+void EntityBreakableDebris(Entity*);
 void EntityFallingStairs(Entity*);
-void func_8019CBA8(Entity*);
+void EntityCerberusGateDebug(Entity*);
 void EntityFallingStep(Entity*);
 void EntityGremlin(Entity*);
 void EntityGremlinEffect(Entity*);
@@ -48,7 +48,7 @@ void EntityVenusWeedSpike(Entity*);
 
 // D_8018055C
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityUnkId01,
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -65,16 +65,16 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock,
-    EntityUnkId12,
-    EntityUnkId13,
+    EntityTriggerVolume,
+    EntityUnkId13,  // EntityFlameTrail
     EntityUnkId14,
-    EntityUnkId15,
+    EntityUnkId15,  // EntityGreyPuff
     EntityDemonSwitchWall,
     EntityDemonSwitch,
     EntityBreakableWall,
     EntityBreakableWallDebris,
-    func_8019B914,  // E_ID_1A - CEN.func_8018DB18
-    func_8019CBA8,  // E_ID_1B
+    EntityBreakableDebris,
+    EntityCerberusGateDebug,
     EntityFallingStairs,
     EntityFallingStep,
     EntityGremlin,
@@ -95,7 +95,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityVenusWeedSpike,
 };
 
-//TODO: Used in EntityUnkId01
+//TODO: Used in EntityBreakable
 //TODO: Used in func_8018DB18
 // D_80180610
 EntityInit EntityInit_80180610 = {

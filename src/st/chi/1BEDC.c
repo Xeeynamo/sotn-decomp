@@ -121,18 +121,18 @@ void EntityDemonSwitchWall(Entity* self) {
             //    temp -= 8;
             //}
             //if (temp == 0) {
-            //    g_api.PlaySfx(0x644);
+            //    g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
             //}
             //MoveEntity();
 
             // This is just what's in the PSX version
             if ((self->ext.demonSwitchWall.unk80 & 7) == 0) {
-                g_api.PlaySfx(0x644);
+                g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
             }
             MoveEntity();
 #else
             if ((self->ext.demonSwitchWall.unk80 & 7) == 0) {
-                g_api.PlaySfx(0x644);
+                g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
             }
             MoveEntity();
 #endif

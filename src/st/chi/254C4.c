@@ -34,11 +34,13 @@ static u16 unk14_lifetime[] = {
 };
 
 // [Duplicate]
+// [Rename in shared file]
 // func_801A54C4: [E_ID_14] EntityUnkId14
 #include "../entity_unkId14.h"
 
 // [Duplicate]
-// func_801A55B4: [E_ID_15] EntityUnkId15
+// [Rename in shared files]
+// func_801A55B4: [E_ID_15 (E_GREY_PUFF)] EntityUnkId15 (EntityDustPuff)
 #include "../entity_unkId15.h"
 
 extern u16 g_InitializeEntityData0[];

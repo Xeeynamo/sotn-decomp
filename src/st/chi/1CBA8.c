@@ -9,12 +9,12 @@
 extern EntityInit EntityInit_8018067C;
 extern u16 g_Tilemap_scrollX_i_hi;
 
-// E_ID_1B
+// E_CERBERUS_GATE_DEBUG
 // func_8019CBA8
 // https://decomp.me/scratch/BFa12
 // PSP:func_psp_0924B458:Match
 // PSP:https://decomp.me/scratch/IWYbc
-void func_8019CBA8(Entity* self) {
+void EntityCerberusGateDebug(Entity* self) {
     s32 tileIdx;        // s2
     s32 primIdx;        // s6
     Primitive* prim;    // s0

@@ -32,13 +32,13 @@ void EntityBackgroundBlock(Entity* entity) {
 }
 
 extern u16 EntityInit_80180658;
-extern u8 D_80180798[];
-extern u8 D_801807A0[];
+extern u8 D_80180798[];     // Trigger long dimension size
+extern u8 D_801807A0[];     // Trigger long dimension is horizontal
 extern u16 D_801807A8[];
 
-// E_ID_12
+// E_TRIGGER_VOLUME
 // func_8019B4DC
-void EntityUnkId12(Entity* entity) {
+void EntityTriggerVolume(Entity* entity) {
     s32 temp_v0;
     u16* temp_v0_2;
     u16 temp_s1 = entity->params;
@@ -97,16 +97,16 @@ void EntityUnkId12(Entity* entity) {
 
 extern s32 D_8007D858[];
 extern s32 EntityInit_80180610;
-extern s32 D_80180838[];
-extern u8 D_80180858[];
-extern u8 D_80180860[];
-extern u16 D_80180868[];
-extern u8 D_80180878[];
-extern u16 D_80180880;
+extern s32 D_80180838[];    // Candle anim frames
+extern u8 D_80180858[];     // Candle hitbox height
+extern u8 D_80180860[];     // Candle death E_EXPLOSION params
+extern u16 D_80180868[];    // Candle anim set
+extern u8 D_80180878[];     // Candle draw mode
+extern u16 D_80180880;      // Candle death particles spawn offset
 
-// E_ID_01
+// E_BREAKABLE
 // func_8019B698
-void EntityUnkId01(Entity* entity) {
+void EntityBreakable(Entity* entity) {
     u16* ptr;
     s32 i;
     u16 params = entity->params >> 0xC;
@@ -142,7 +142,7 @@ void EntityUnkId01(Entity* entity) {
         for (ptr = &D_80180880, i = 0; i < 4; i++) {
             newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID_1A, entity, newEntity);
+                CreateEntityFromEntity(E_BREAKABLE_DEBRIS, entity, newEntity);
                 newEntity->posX.i.hi += *ptr++;
                 newEntity->posY.i.hi += *ptr++;
                 if (params != 0) {
@@ -156,7 +156,7 @@ void EntityUnkId01(Entity* entity) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_1A, entity, newEntity);
+                    CreateEntityFromEntity(E_BREAKABLE_DEBRIS, entity, newEntity);
                     newEntity->posX.i.hi += *ptr++;
                     newEntity->posY.i.hi += *ptr++;
                     newEntity->params = i + 4;
@@ -169,9 +169,9 @@ void EntityUnkId01(Entity* entity) {
 }
 
 // [Duplicate of CEN.func_8018DB18]
-// E_ID_1A
+// E_BREAKABLE_DEBRIS
 // func_8019B914
-void func_8019B914(Entity* entity) {
+void EntityBreakableDebris(Entity* entity) {
     Collider collider;
     Primitive* prim;
     s16 primIndex;
