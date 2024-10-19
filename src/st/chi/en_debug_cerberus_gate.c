@@ -1,7 +1,7 @@
 /*
- * File: 1CBA8.c
+ * File: en_debug_cerberus_gate.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - DEBUG Cerberus Gate
  */
 
 #include "chi.h"

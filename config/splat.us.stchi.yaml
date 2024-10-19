@@ -96,7 +96,7 @@ segments:
       - [0x17B90, .data, sprites]
       - [0x1B100, .rodata, en_demon_switch_wall] # jtbl_8019B100 [EntityDemonSwitchWall]
       - [0x1B144, .rodata, en_breakable_wall] # jtbl_8018B144 [EntityBreakableWall]
-      - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
+      - [0x1B168, .rodata, en_debug_cerberus_gate] # jtbl_8019B168 [EntityCerberusGateDebug]
       - [0x1B180, .rodata, 1D0D8] # jtbl_8019B180 [1D0D8]
       - [0x1B194, .rodata, 1FA64] # jtbl_8019B194 [EntityRedDoor]
       - [0x1B1AC, .rodata, e_collect] # CollectGold strings
@@ -125,7 +125,7 @@ segments:
       - [0x1B698, c, en_breakable]
       - [0x1BD0C, c, en_demon_switch_wall]
       - [0x1C31C, c, en_breakable_wall]
-      - [0x1CBA8, c]
+      - [0x1CBA8, c, en_debug_cerberus_gate]
       - [0x1D0D8, c]
       - [0x1DE74, c]
       - [0x1E2A8, c, collision]
