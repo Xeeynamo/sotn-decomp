@@ -136,7 +136,7 @@ static s32 func_ptr_80170004(Entity* self) {
             }
             if ((PLAYER.animFrameIdx == 1) || (PLAYER.animFrameIdx == 4) ||
                 (PLAYER.animFrameIdx == 7)) {
-                g_api.PlaySfx(SFX_UNK_6EE);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
             }
             if (PLAYER.animFrameIdx == 10) {
                 g_api.PlaySfx(SFX_UNK_6EF);

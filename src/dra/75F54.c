@@ -886,7 +886,7 @@ void func_80117AC0(void) {
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             SetPlayerAnim(0xC8);
-            PlaySfx(SFX_UNK_6EE);
+            PlaySfx(SFX_VO_ALU_ATTACK_A);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
             PLAYER.animFrameIdx = 0;

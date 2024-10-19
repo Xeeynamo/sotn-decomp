@@ -73,7 +73,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         if (params == 4) {
-            g_api.PlaySfx(SFX_UNK_6EE);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
         }
 
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
