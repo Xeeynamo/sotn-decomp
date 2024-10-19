@@ -1,7 +1,7 @@
 /*
- * File: 1D0D8.c
+ * File: en_falling_stairs.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Falling stairs and falling step
  */
 
 #include "chi.h"
