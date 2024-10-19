@@ -1,7 +1,7 @@
 /*
- * File: 2813C.c
+ * File: en_salem_witch.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Salem Witch
  */
 
 #include "chi.h"
