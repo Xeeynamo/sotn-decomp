@@ -1047,7 +1047,7 @@ void func_80114DF4(s32 arg0) {
         func_8010E3B8(FIX(-1.25));
         func_80113E68();
         PLAYER.palette = 0x8161;
-        PlaySfx(SFX_UNK_6EC);
+        PlaySfx(SFX_VO_ALU_SILENCE);
         g_Player.timers[2] = 0;
         g_Player.timers[0] = 0;
         g_Player.timers[1] = 0;
