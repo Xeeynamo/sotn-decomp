@@ -6,16 +6,6 @@
 
 #include "chi.h"
 
-// D_80180DFC
-static u16 g_eDamageDisplayClut[] = {
-    PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
-    PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
-};
-
-// [Centralize this instead of what's in ../entity_damage_display.h? (it's missing data?]
-// func_8019F3C0: [E_NUMERIC_DAMAGE] EntityDamageDisplay
-#include "../entity_damage_display.h"
-
 // func_8019FA64: CreateEntityFromLayout
 // func_8019FB28: CreateEntityWhenInVerticalRange
 // func_8019FC40: CreateEntityWhenInHorizontalRange

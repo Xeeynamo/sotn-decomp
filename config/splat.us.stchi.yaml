@@ -44,18 +44,18 @@ segments:
       - [0x974, .data, 1D0D8]
       - [0x9E4, .data, d_prize_drops]
       - [0xA20, .data, 1DE74]
-
       - [0xA4C, .data, collision]
-      - [0xDFC, .data, entity_damage_display]
+      - [0xEC0, .data, 1FA64] # EntityRedDoor
       - [0x1024, .data, e_collect]
       - [0x1314, .data, 23F58] # EntityRelicOrb
       - [0x1378, .data, 23F58] # EntityUnkId14Spawner
-      - [0x1388, .data, 254C4] # EntityUnkId15, EntityUnkId14
-      - [0x13D4, .data, 254C4] # EntityOlroxDrool
-      - [0x13DC, .data, 254C4] # func_801A6054
-      - [0x13EC, .data, 254C4] # UnkRecursivePrimFunc1
-      - [0x140C, .data, 254C4] # UnkRecursivePrimFunc2
-      - [0x142C, .data, 254C4] # EntitySoulStealOrb
+      - [0x1388, .data, 23F58] # EntityUnkId15, EntityUnkId14
+      - [0x13D4, .data, 23F58] # EntityOlroxDrool
+      - [0x13DC, .data, 23F58] # func_801A6054
+      - [0x13EC, .data, 23F58] # UnkRecursivePrimFunc1
+      - [0x140C, .data, 23F58] # UnkRecursivePrimFunc2
+
+      - [0x142C, .data, 27448] # EntitySoulStealOrb
       - [0x1538, .data, 2813C] # EntitySalemWitch
       - [0x162C, .data, 2813C] # EntitySalemWitchGlow
       - [0x1638, .data, 2813C] # EntitySalemWitchCurse
@@ -94,14 +94,14 @@ segments:
       - [0x1B144, .rodata, 1C31C] # jtbl_8018B144 [1C31C]
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, .rodata, 1D0D8] # jtbl_8019B180 [1D0D8]
-
-      - [0x1B194, .rodata, entity_damage_display] # jtbl_8019B194 [EntityRedDoor]
+      - [0x1B194, .rodata, 1FA64] # jtbl_8019B194 [EntityRedDoor]
       - [0x1B1AC, .rodata, e_collect] # CollectGold strings
       - [0x1B1FC, .rodata, e_collect] # jtbl_8019B1FC [EntityPrizeDrop]
       - [0x1B21C, .rodata, e_collect] # jtbl_8019B21C [EntityEquipItemDrop]
       - [0x1B234, .rodata, 23F58] # EntityRelicOrb string
       - [0x1B244, .rodata, 23F58] # jtbl_8019B244 [EntityRelicOrb]
       - [0x1B26C, .rodata, 23F58] # jtbl_8019B26C [EntityMessageBox]
+
       - [0x1B280, .rodata, 2813C] # EntitySalemWitch debug string
       - [0x1B290, .rodata, 2813C] # jtbl_8019B290 [EntitySalemWitch]
       - [0x1B2A8, .rodata, 2813C] # jtbl_8019B2A8 [EntitySalemWitchTribolt]
@@ -123,12 +123,13 @@ segments:
       - [0x1CBA8, c]
       - [0x1D0D8, c]
       - [0x1DE74, c]
-
       - [0x1E2A8, c, collision]
-      - [0x1F3C0, c, entity_damage_display]
+      - [0x1FA64, c]
       - [0x2273C, c, e_collect]
+      - [0x23CA8, c]
       - [0x23F58, c]
-      - [0x254C4, c]
+
+      - [0x27448, c]
       - [0x2813C, c]
       - [0x297C8, c]
       - [0x2A020, c]
