@@ -1,7 +1,7 @@
 /*
- * File: 2DF40.c
+ * File: ut_prim_helpers.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: UTILITY - Primitive helper functions
  */
 
 #include "chi.h"
