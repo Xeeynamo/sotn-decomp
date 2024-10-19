@@ -705,7 +705,7 @@ void EntitySuccubus(Entity* self) {
             self->hitboxState = 0;
             g_MultipleCount = 6;
             PlaySfxPositional(NA_VO_SU_GRUNT_1);
-            PlaySfxPositional(NA_SE_SU_CREATE_CLONES);
+            PlaySfxPositional(SFX_PSWORD_TWIRL);
             self->step_s++;
 
         case SUCCUBUS_CLONE_ATTACK_WAIT:

@@ -244,7 +244,6 @@ enum SfxModes {
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_SE_SU_CREATE_CLONES 0x6D5
 #define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
 // Blank, may be a leftover from the Jap version.
@@ -517,7 +516,7 @@ enum Sfx {
     SFX_DISSONANT_SCREECH,
     SFX_RNO4_MAGIC_GLASS_BREAK,
     SFX_PSWORD_TWIRL_ATTACK,
-    SFX_PSWORD_TWIRL,
+    SFX_PSWORD_TWIRL, // Also Succubus Clone Spawn
     SFX_CROW_CAW_PAIN,
     SFX_CROW_CAW,
     SFX_UNK_CLONE_DISAPPEAR,
