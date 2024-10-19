@@ -1081,7 +1081,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        PlaySfx(SFX_UNK_6DF);
+        PlaySfx(SFX_CRASH_CROSS);
         PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         g_Player.timers[12] = 4;
