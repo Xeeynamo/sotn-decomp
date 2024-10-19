@@ -1051,7 +1051,7 @@ void EntitySuccubusClone(Entity* self) {
             }
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
-            g_api.PlaySfxVolPan(0x6D9, 0x54, 0);
+            g_api.PlaySfxVolPan(SFX_BOSS_CLONE_DISAPPEAR, 0x54, 0);
             SetStep(5);
         }
     }
