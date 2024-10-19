@@ -272,8 +272,6 @@ enum SfxModes {
 // DRA
 #define SFX_UNK_6F7 0x6F7
 
-// WEAPON SOUNDS
-#define SE_WPN_PENTAGRAM 0x6E4
 
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
