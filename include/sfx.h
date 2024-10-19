@@ -536,6 +536,8 @@ enum Sfx {
     SFX_VO_RIC_DEATH,
     SFX_VO_RIC_HYDRO_STORM, // 0x700
     SFX_VO_RIC_PAIN_A,
+    SFX_CLOCK_BELL = 1958,
+    SFX_CLOCK_ROOM_TICK = 1961
 };
 
 #endif
