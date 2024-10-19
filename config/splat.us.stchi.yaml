@@ -143,7 +143,7 @@ segments:
       - [0x27448, c, en_soul_steal_orb]
       - [0x277DC, c, en_enemy_blood]
       - [0x27C8C, c, en_room_foreground]
-      - [0x27D78, c]
+      - [0x27D78, c, en_bottom_corner_text]
       - [0x2813C, c]
       - [0x297C8, c]
       - [0x2A020, c]
