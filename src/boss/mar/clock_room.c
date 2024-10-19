@@ -21,7 +21,7 @@ void EntityClockRoomController(Entity* self) {
     // Plays the clock bell
     if (self->ext.clockRoom.bellTimer != 0) {
         if (self->ext.clockRoom.bellDuration == 0) {
-            g_api.PlaySfx(0x7A6); // Clock bell
+            g_api.PlaySfx(SFX_CLOCK_BELL);
             if (--self->ext.clockRoom.bellTimer) {
                 self->ext.clockRoom.bellDuration = 64;
             }
@@ -57,7 +57,7 @@ void EntityClockRoomController(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_Timer == ((g_Timer / 60) * 0x3C)) {
-            g_api.PlaySfx(0x7A9); // Clock tick
+            g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
@@ -157,7 +157,7 @@ void EntityClockRoomController(Entity* self) {
 
     case 1:
         if (status->timerFrames == 0) {
-            g_api.PlaySfx(0x7A9); // clock tick
+            g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
         // Update clock hands
