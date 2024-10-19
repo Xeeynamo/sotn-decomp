@@ -100,7 +100,7 @@ bool RicDoAttack(void) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
         }
         if (sfxGrunt == 2) {
-            g_api.PlaySfx(SFX_GRUNT_C);
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
         }
         return true;
     }
@@ -122,7 +122,7 @@ bool RicDoAttack(void) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
         }
         if (sfxGrunt == 2) {
-            g_api.PlaySfx(SFX_GRUNT_C);
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
         }
         switch (PLAYER.step) {
         default:
@@ -299,7 +299,7 @@ void RicSetBladeDash(void) {
     g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_8015CC28();
-    g_api.PlaySfx(SFX_GRUNT_C);
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
     g_api.PlaySfx(0x707);
 }
 
