@@ -223,7 +223,7 @@ bool RicDoCrash(void) {
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x40), 0);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x47), 0);
-        g_api.PlaySfx(SFX_HYDROSTORM);
+        g_api.PlaySfx(SFX_VO_RIC_HYDRO_STORM);
         break;
     case SUBWPN_REBNDSTONE:
     case SUBWPN_VIBHUTI:

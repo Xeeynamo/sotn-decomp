@@ -59,7 +59,7 @@ enum RicSteps {
 };
 
 enum RicSfxs {
-    SFX_HYDROSTORM = 0x700,
+    SFX_VO_RIC_HYDRO_STORM = 0x700,
     SFX_UNK_701,
 };
 
