@@ -694,7 +694,7 @@ void DoGravityJump(void) {
 }
 
 s16 g_SfxAttackGrunts[] = {
-    SFX_VO_ALU_ATTACK_A, SFX_UNK_6EF, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
+    SFX_VO_ALU_ATTACK_A, SFX_VO_ALU_ATTACK_B, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -1071,45 +1071,45 @@ block_45:
         D_80139824 = 0x28;
         PLAYER.step = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 20: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 21: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 22: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 28: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0xA;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         CheckMoveDirection();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 27: // Estoc
         animVariant = atLedge;
         CheckMoveDirection();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         if (g_Player.pl_vram_flag & 1) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
@@ -1131,14 +1131,14 @@ block_45:
         D_80139824 = 0x80;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 26: // Unknown, not a direct equippable item (but there are 2 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 0: // Most normal swords come in this range
     case 1:

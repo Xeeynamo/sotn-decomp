@@ -139,7 +139,7 @@ static s32 func_ptr_80170004(Entity* self) {
                 g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
             }
             if (PLAYER.animFrameIdx == 10) {
-                g_api.PlaySfx(SFX_UNK_6EF);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
                 return;
             }
             return;
