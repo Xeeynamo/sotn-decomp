@@ -1306,7 +1306,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
     SetPlayerAnim(0xDA);
-    PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
+    PlaySfx(SFX_VO_ALU_SOUL_STEAL);
     func_80118C28(0xC);
     g_Player.timers[12] = 4;
 }
