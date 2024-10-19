@@ -1,7 +1,7 @@
 /*
- * File: 27C8C.c
+ * File: en_room_foreground.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Room foreground
  */
 
 #include "chi.h"
