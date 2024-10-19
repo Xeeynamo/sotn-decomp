@@ -895,7 +895,7 @@ void RicHandleDead(
         func_8015CAAC(FIX(-0.75));
         RicSetAnimation(D_80155544);
         PLAYER.velocityY = FIX(-1.625);
-        g_api.PlaySfx(SFX_UNK_6FF);
+        g_api.PlaySfx(SFX_VO_RIC_DEATH);
         if (damageEffects & ELEMENT_FIRE) {
             func_8015FA5C(0);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
