@@ -784,15 +784,6 @@ typedef struct {
 } ET_801CDFD8;
 
 typedef struct {
-    /* 0x7C */ char pad_0[0x8];
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ char pad_85[0x9];
-    /* 0x8E */ u8 unk8E;
-    /* 0x8F */ char pad_8F[0x20];
-    /* 0xB0 */ s16 unkB0;
-} ET_801CE4CC;
-
-typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
 } ET_TransparentWater;
@@ -1922,7 +1913,6 @@ typedef union { // offset=0x7C
     ET_801D0B78 et_801D0B78;
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;
-    ET_801CE4CC et_801CE4CC;
     ET_801CDFD8 et_801CDFD8;
     ET_TransparentWater transparentWater;
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
