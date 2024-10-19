@@ -1,7 +1,7 @@
 /*
- * File: 23CA8.c
+ * File: ut_blit_char.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: UTILITIY - Blit text character
  */
 
 // func_801A3CA8: BlitChar

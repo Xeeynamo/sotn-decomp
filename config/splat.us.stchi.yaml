@@ -134,7 +134,7 @@ segments:
       - [0x205DC, c, en_red_door]
       - [0x2128C, c, ut_common]
       - [0x2273C, c, en_collect]
-      - [0x23CA8, c]
+      - [0x23CA8, c, ut_blit_char]
       - [0x23F58, c]
       - [0x27448, c]
       - [0x27C8C, c]
