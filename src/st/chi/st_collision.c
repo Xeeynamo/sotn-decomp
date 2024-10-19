@@ -1,7 +1,7 @@
 /*
- * File: collision.c
+ * File: st_collision.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: STAGE - Collision functions
  */
 
 #include "chi.h"

@@ -47,7 +47,7 @@ segments:
       - [0x974, .data, en_falling_stairs]
       - [0x9E4, .data, d_prize_drops]
       - [0xA20, .data, st_update]
-      - [0xA4C, .data, collision]
+      - [0xA4C, .data, st_collision]
       - [0xEC0, .data, 1FA64] # EntityRedDoor
       - [0x1024, .data, e_collect]
       - [0x1314, .data, 23F58] # EntityRelicOrb
@@ -128,7 +128,7 @@ segments:
       - [0x1CBA8, c, en_debug_cerberus_gate]
       - [0x1D0D8, c, en_falling_stairs]
       - [0x1DE74, c, st_update]
-      - [0x1E2A8, c, collision]
+      - [0x1E2A8, c, st_collision]
       - [0x1FA64, c]
       - [0x2273C, c, e_collect]
       - [0x23CA8, c]
