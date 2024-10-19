@@ -106,4 +106,20 @@ mod tests {
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
+
+    #[test]
+    fn test_equality() {
+        let input_line = "if (self->drawFlags == 8) {";
+        let expected_line = "if (self->drawFlags == FLAG_DRAW_UNK8) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_inequality() {
+        let input_line = "if (self->drawFlags != 8) {";
+        let expected_line = "if (self->drawFlags != FLAG_DRAW_UNK8) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
 }

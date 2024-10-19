@@ -4,7 +4,7 @@ s32 ServantUnk0(void) {
         if (D_8003C708.flags == 0x22) {
             return 1;
         }
-        if (D_8003C708.flags == 0x20) {
+        if (D_8003C708.flags == FLAG_UNK_20) {
             return 0;
         }
         return 2;
@@ -13,7 +13,7 @@ s32 ServantUnk0(void) {
             return 0;
         }
 
-        if (D_8003C708.flags == 0x20) {
+        if (D_8003C708.flags == FLAG_UNK_20) {
             return 1;
         }
         return 2;

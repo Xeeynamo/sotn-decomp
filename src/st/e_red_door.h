@@ -258,7 +258,7 @@ void EntityRedDoor(Entity* self) {
     angle = self->ext.door.angle;
     prim = &g_PrimBuf[self->primIndex];
     for (; prim != NULL; i++, prim = prim->next) {
-        if (!(prim->drawMode & 8)) {
+        if (!(prim->drawMode & DRAW_HIDE)) {
             if (!(self->params & 0x100)) {
                 if (i == 0) {
                     endX = prim->x0 = prim->x2 =
