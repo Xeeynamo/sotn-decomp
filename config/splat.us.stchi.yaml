@@ -118,8 +118,8 @@ segments:
       - [0x1B36C, .rodata, en_venus_weed] # jtbl_8019B36C [EntityVenusWeedFlower]
       - [0x1B384, .rodata, en_venus_weed] # jtbl_8019B384 [EntityVenusWeedFlower]
       - [0x1B39C, .rodata, en_venus_weed] # jtbl_8019B39C [EntityVenusWeedTendril]
-      - [0x1B3C0, .rodata, 2D0EC] # EntityStageNamePopup strings
-      - [0x1B3E0, .rodata, 2D0EC] # jtbl_8019B3E0 [StageNamePopup]
+      - [0x1B3C0, .rodata, en_stage_name] # EntityStageNamePopup strings
+      - [0x1B3E0, .rodata, en_stage_name] # jtbl_8019B3E0 [StageNamePopup]
       - [0x1B3F4, .rodata, 2DF40] # UnkPrimHelper SVECTOR
       - [0x1B3FC, c, en_background_block]
       - [0x1B4DC, c, en_trigger_volume]
@@ -148,7 +148,7 @@ segments:
       - [0x297C8, c, en_gremlin]
       - [0x2A020, c, en_thornweed_corpseweed]
       - [0x2B548, c, en_venus_weed]
-      - [0x2D0EC, c]
+      - [0x2D0EC, c, en_stage_name]
       - [0x2DF40, c]
       - [0x2E770, sbss]
   - [0x2F428]

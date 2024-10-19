@@ -1,7 +1,7 @@
 /*
- * File: 2B7CC.c
+ * File: en_stage_name.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Stage name popup
  */
 
 #include "chi.h"
