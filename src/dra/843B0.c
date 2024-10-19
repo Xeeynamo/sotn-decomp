@@ -2340,8 +2340,8 @@ void EntityAguneaHitEnemy(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
         prim = &g_PrimBuf[self->primIndex];
-        self->ext.prim = prim;
-        self->ext.et_801291C4.unk80 = prim;
+        self->ext.et_801291C4.prim1 = prim;
+        self->ext.et_801291C4.prim2 = prim;
         self->ext.et_801291C4.unk90 = (self->params >> 8);
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
@@ -2366,7 +2366,7 @@ void EntityAguneaHitEnemy(Entity* self) {
                 i = 0;
             }
         }
-        prim = self->ext.prim;
+        prim = self->ext.et_801291C4.prim1;
         prim->x0 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
         prim->x1 = prim->x0;
@@ -2375,7 +2375,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         prim->y2 = self->posY.i.hi;
         prim->x3 = prim->x2;
         prim->y3 = prim->y2 - 0x10;
-        self->ext.et_801291C4.unk80 = prim;
+        self->ext.et_801291C4.prim2 = prim;
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
@@ -2392,7 +2392,7 @@ void EntityAguneaHitEnemy(Entity* self) {
     case 1:
 
         for (i = 0; i < 2; i++) {
-            prim = self->ext.et_801291C4.unk80;
+            prim = self->ext.et_801291C4.prim2;
             temp_s2 = self->ext.et_801291C4.unk84;
             somethingX = sine->posX.i.hi - prim->x2;
             somethingY = sine->posY.i.hi - prim->y2;
@@ -2438,7 +2438,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             LOW(temp_s3->x0) = LOW(prim->x2);
             LOW(temp_s3->x1) = LOW(prim->x3);
             self->ext.et_801291C4.unk84 = temp_s2;
-            self->ext.et_801291C4.unk80 = temp_s3;
+            self->ext.et_801291C4.prim2 = temp_s3;
             xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
             yOffset = (rsin(temp_s2) * 0xC) >> 0xC;
             temp_s2 = temp_s2 - 0x400;
@@ -2455,7 +2455,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         return;
     case 2:
         if (self->step_s == 0) {
-            prim = self->ext.prim;
+            prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
                 prim->clut = 0x15F;
                 prim = prim->next;
@@ -2463,7 +2463,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             self->step_s += 1;
             return;
         }
-        prim = self->ext.prim;
+        prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
             prim->clut = 0x194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
@@ -2476,7 +2476,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         self->step += 1;
         break;
     case 3:
-        prim = self->ext.prim;
+        prim = self->ext.et_801291C4.prim1;
         var_s2 = 1;
         while (prim != NULL) {
             if (DraPrimDecreaseBrightness(prim, 4) & 0xFF) {
@@ -2487,13 +2487,12 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim = prim->next;
         }
         if (var_s2 != 0) {
-            prim = self->ext.prim;
+            prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             DestroyEntity(self);
-            break;
         }
         break;
     }
