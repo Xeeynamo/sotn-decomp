@@ -6,12 +6,6 @@
 
 #include "chi.h"
 
-extern u16 g_InitializeData0[];
-
-// [Duplicate]
-// func_801A4B50: [E_SAVE_GAME_POPUP] EntityMessageBox
-#include "../entity_message_box.h"
-
 // func_801A50AC: CheckColliderOffsets
 #include "../check_coll_offsets.h"
 
