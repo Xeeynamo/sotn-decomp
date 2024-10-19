@@ -94,7 +94,7 @@ bool RicDoAttack(void) {
 
     if (func_8015D250(temp_rand / 6) == 0) {
         if (sfxGrunt == 0) {
-            g_api.PlaySfx(SFX_GRUNT_A);
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }
         if (sfxGrunt == 1) {
             g_api.PlaySfx(SFX_GRUNT_B);
@@ -116,7 +116,7 @@ bool RicDoAttack(void) {
             g_api.PlaySfx(0x706);
         }
         if (sfxGrunt == 0) {
-            g_api.PlaySfx(SFX_GRUNT_A);
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }
         if (sfxGrunt == 1) {
             g_api.PlaySfx(SFX_GRUNT_B);
