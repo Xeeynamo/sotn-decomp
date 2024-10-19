@@ -1,7 +1,7 @@
 /*
- * File: 1C31C.c
+ * File: en_breakable_wall.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - 3 layer wall that is breakable by attacking
  */
 
 #include "chi.h"

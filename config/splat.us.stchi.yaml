@@ -43,7 +43,7 @@ segments:
       - [0x798, .data, en_trigger_volume]
       - [0x818, .data, en_breakable]
       - [0x89C, .data, en_demon_switch_wall]
-      - [0x8CC, .data, 1C31C]
+      - [0x8CC, .data, en_breakable_wall]
       - [0x974, .data, 1D0D8]
       - [0x9E4, .data, d_prize_drops]
       - [0xA20, .data, 1DE74]
@@ -95,7 +95,7 @@ segments:
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
       - [0x1B100, .rodata, en_demon_switch_wall] # jtbl_8019B100 [EntityDemonSwitchWall]
-      - [0x1B144, .rodata, 1C31C] # jtbl_8018B144 [1C31C]
+      - [0x1B144, .rodata, en_breakable_wall] # jtbl_8018B144 [EntityBreakableWall]
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, .rodata, 1D0D8] # jtbl_8019B180 [1D0D8]
       - [0x1B194, .rodata, 1FA64] # jtbl_8019B194 [EntityRedDoor]
@@ -108,7 +108,7 @@ segments:
       - [0x1B280, .rodata, 2813C] # EntitySalemWitch debug string
       - [0x1B290, .rodata, 2813C] # jtbl_8019B290 [EntitySalemWitch]
       - [0x1B2A8, .rodata, 2813C] # jtbl_8019B2A8 [EntitySalemWitchTribolt]
-      - [0x1B2BC, .rodata, 297C8] # EntityGremlin debug string]
+      - [0x1B2BC, .rodata, 297C8] # EntityGremlin debug string
       - [0x1B2C8, .rodata, 2A020] # jtbl_8019B2C8 [EntityThornweed]
       - [0x1B2E8, .rodata, 2A020] # jtbl_8019B2E8 [EntityCorpseweed]
       - [0x1B304, .rodata, 2B548] # jtbl_8019B304 [EntityVenusWeed]
@@ -124,7 +124,7 @@ segments:
       - [0x1B4DC, c, en_trigger_volume]
       - [0x1B698, c, en_breakable]
       - [0x1BD0C, c, en_demon_switch_wall]
-      - [0x1C31C, c]
+      - [0x1C31C, c, en_breakable_wall]
       - [0x1CBA8, c]
       - [0x1D0D8, c]
       - [0x1DE74, c]
