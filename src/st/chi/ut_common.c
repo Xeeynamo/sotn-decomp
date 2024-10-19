@@ -1,7 +1,7 @@
 /*
- * File: entity_damage_display.c
+ * File: ut_common.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: UTILITY - Common functions
  */
 
 #include "chi.h"
