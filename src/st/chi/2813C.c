@@ -6,6 +6,24 @@
 
 #include "chi.h"
 
+// [Move to same file as salem witch]
+// func_801A80A8
+void SalemWitchTrySpawnShadow()
+{
+    Entity* entity;
+
+    if (!(g_Timer & 0xF)) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_SALEM_WITCH, g_CurrentEntity, entity);
+            entity->facingLeft = g_CurrentEntity->facingLeft;
+            entity->zPriority = g_CurrentEntity->zPriority - 1;
+            entity->params = g_CurrentEntity->animCurFrame;
+            entity->step = 0x20;    // Shadow_Init
+        }
+    }
+}
+
 extern EntityInit EntityInit_80180688;
 
 // D_80181538
