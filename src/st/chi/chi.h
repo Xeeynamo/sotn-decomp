@@ -1,3 +1,9 @@
+/*
+ * File: chi.h
+ * Overlay: CHI
+ * Description: Abandoned Mine
+ */
+
 #ifndef CHI_H
 #define CHI_H
 
