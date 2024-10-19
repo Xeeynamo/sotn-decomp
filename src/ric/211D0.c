@@ -195,12 +195,12 @@ bool RicDoCrash(void) {
         RicSetStep(PL_S_FLAME_WHIP);
         RicSetAnimation(ric_anim_flame_whip);
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_36, 1), 0);
-        g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
         break;
     case SUBWPN_DAGGER:
         RicSetStep(PL_S_THROW_DAGGERS);
         RicSetAnimation(ric_anim_throw_daggers);
-        g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
         break;
@@ -212,7 +212,7 @@ bool RicDoCrash(void) {
             PLAYER.velocityY = 0;
         }
         func_8015CC28();
-        g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
         break;
@@ -234,7 +234,7 @@ bool RicDoCrash(void) {
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x40), 0);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x47), 0);
-        g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
         break;
     case SUBWPN_BIBLE:
     case SUBWPN_STOPWATCH:
@@ -244,7 +244,7 @@ bool RicDoCrash(void) {
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x40), 0);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x47), 0);
-        g_api.PlaySfx(SFX_GRUNT_SUBWPN_A);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
         break;
     case SUBWPN_CROSS:
         RicSetStep(PL_S_STAND_IN_AIR);
@@ -254,7 +254,7 @@ bool RicDoCrash(void) {
             PLAYER.velocityY = 0;
         }
         func_8015CC28();
-        g_api.PlaySfx(SFX_CROSS_CRASH);
+        g_api.PlaySfx(SFX_UNK_701);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
         break;
