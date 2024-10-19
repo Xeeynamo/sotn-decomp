@@ -52,12 +52,12 @@ segments:
       - [0xE24, .data, ut_common]
       - [0x1024, .data, en_collect]
       - [0x1314, .data, en_relic_orb] # EntityRelicOrb
-      - [0x1378, .data, 250AC] # EntityUnkId14Spawner
-      - [0x1388, .data, 250AC] # EntityUnkId15, EntityUnkId14
-      - [0x13D4, .data, 250AC] # EntityOlroxDrool
-      - [0x13DC, .data, 250AC] # func_801A6054
-      - [0x13EC, .data, 250AC] # UnkRecursivePrimFunc1
-      - [0x140C, .data, 250AC] # UnkRecursivePrimFunc2
+      - [0x1378, .data, en_particles] # EntityUnkId14Spawner
+      - [0x1388, .data, en_particles] # EntityUnkId15, EntityUnkId14
+      - [0x13D4, .data, en_particles] # EntityOlroxDrool
+      - [0x13DC, .data, en_particles] # func_801A6054
+      - [0x13EC, .data, 26478] # UnkRecursivePrimFunc1
+      - [0x140C, .data, 26478] # UnkRecursivePrimFunc2
       - [0x142C, .data, 27448] # EntitySoulStealOrb
       - [0x14AC, .data, 27C8C]
       - [0x1538, .data, 2813C] # EntitySalemWitch
@@ -138,7 +138,8 @@ segments:
       - [0x23F58, c, en_relic_orb]
       - [0x24A28, c, en_heart_drop]
       - [0x24B50, c, en_message_box]
-      - [0x250AC, c]
+      - [0x250AC, c, en_particles]
+      - [0x26478, c]
       - [0x27448, c]
       - [0x27C8C, c]
       - [0x27D78, c]
