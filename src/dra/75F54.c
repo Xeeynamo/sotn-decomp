@@ -220,7 +220,7 @@ void func_801166A4(void) {
 
     case 1:
         if (PLAYER.animFrameDuration < 0) {
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
             func_8010E570(0);
         }
         break;

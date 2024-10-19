@@ -522,7 +522,7 @@ void func_8010E4D0(void) {
         PLAYER.velocityX = 0;
         SetPlayerStep(Player_AlucardStuck);
         func_80111CC0();
-        PlaySfx(NA_SE_VO_AL_WHAT);
+        PlaySfx(SFX_VO_ALU_WHAT);
         return;
     }
     func_80111CC0();

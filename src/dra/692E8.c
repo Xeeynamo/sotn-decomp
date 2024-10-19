@@ -455,7 +455,7 @@ void func_8010A234(s32 arg0) {
         CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
         if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
             // Alucard says "WHAT?!" when first putting on Axe Lord Armor
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x20;
             func_8010FAF4();
