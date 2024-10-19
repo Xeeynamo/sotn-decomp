@@ -1,7 +1,7 @@
 /*
- * File: 1BD0C.c
+ * File: en_demon_switch_wall.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Secret wall that is opened by the demon familiar pressing a button
  */
 
 #include "chi.h"
