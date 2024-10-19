@@ -455,7 +455,7 @@ void func_8010A234(s32 arg0) {
         CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
         if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
             // Alucard says "WHAT?!" when first putting on Axe Lord Armor
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x20;
             func_8010FAF4();
@@ -801,7 +801,7 @@ void EntityAlucard(void) {
                                 g_Player.unk18 = damage.effects;
                                 func_8010E168(1, 0xC);
                                 g_Player.timers[3] = 6;
-                                PlaySfx(SFX_UNK_6E7);
+                                PlaySfx(SFX_VO_ALU_PAIN_A);
                                 CreateHPNumMove(1, 0);
                                 break;
                             case 2:
@@ -848,7 +848,7 @@ void EntityAlucard(void) {
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2C, 0x4E), 0);
                                 if (D_800ACDFC == 0) {
-                                    PlaySfx(SFX_UNK_6EB);
+                                    PlaySfx(SFX_VO_ALU_PAIN_E);
                                 }
                                 D_800ACDFC = 0x20;
                                 if (damage.damageTaken != 0) {

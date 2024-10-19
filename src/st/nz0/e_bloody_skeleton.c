@@ -126,7 +126,10 @@ void EntityBloodSkeleton(Entity* self) {
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
                 self->hitboxState = 3;
-                self->flags = g_api.enemyDefs[70].flags & 0x1FFFFFFF;
+                self->flags =
+                    g_api.enemyDefs[70].flags &
+                    ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                      FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
                 SetStep(BLOOD_SKELETON_WALK);
             }
         }

@@ -58,15 +58,6 @@ enum RicSteps {
     PL_S_DEBUG = 0xF0,
 };
 
-enum RicSfxs {
-    SFX_GRUNT_A = 0x6F9,
-    SFX_GRUNT_B,
-    SFX_GRUNT_C,
-    SFX_GRUNT_SUBWPN_A,
-    SFX_HYDROSTORM = 0x700,
-    SFX_CROSS_CRASH,
-};
-
 enum RicTimers {
     PL_T_POISON,
     PL_T_CURSE,

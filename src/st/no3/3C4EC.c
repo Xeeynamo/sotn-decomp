@@ -60,7 +60,7 @@ void EntityPushAlucard(Entity* entity) {
     case 4:
         player->posX.val += 0x48000;
         if (tilemap->scrollX.i.hi > 0xF80) {
-            g_api.PlaySfx(SE_NO3_ALUCARD_JUMP);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
             entity->ext.generic.unk7C.S8.unk0 = 0;
             entity->step++;

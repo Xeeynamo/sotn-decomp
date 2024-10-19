@@ -157,7 +157,7 @@ void RicInit(s16 initParam) {
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= FLAG_HAS_PRIMS;
     for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
-        prim->drawMode = 0x102 | DRAW_HIDE;
+        prim->drawMode = DRAW_UNK_100 | DRAW_UNK02 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {
         RicCreateEntFactoryFromEntity(playerPtr, FACTORY(BP_TELEPORT, 1), 0);
