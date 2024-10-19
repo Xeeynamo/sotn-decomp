@@ -75,7 +75,7 @@ static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 #if STAGE != STAGE_ST0
-static const char* g_goldCollectTexts[] = {
+const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
@@ -105,7 +105,7 @@ static s16 D_80180EB8[] = {-6, 4, 0, -8};
 // Note that this array is in rodata. Other overlays have it in data.
 static const s8 c_HeartPrizes[2][2];
 #else
-static s8 c_HeartPrizes[] = {1, 5};
+s8 c_HeartPrizes[] = {1, 5};
 #endif
 
 static s32 g_ExplosionYVelocities[] = {
@@ -140,7 +140,7 @@ static u8* g_ExplosionAnimations[] = {
 };
 
 // from another file
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtainable[];
 
 #include "prize_drop_fall.h"
 
@@ -187,7 +187,7 @@ Entity* func_801939C4(void) {
 
 #include "entity_prize_drop.h"
 
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 
 #include "entity_explosion.h"
 
@@ -197,10 +197,10 @@ extern u16 g_InitializeEntityData0[];
 #include "blink_item.h"
 #else
 // Also, this function is never called.
-void func_80194314(Entity* entity) {
-    if (entity->step != 0) {
-        if (entity->posY.i.hi >= 0xF1) {
-            DestroyEntity(entity);
+void Unreferenced_MAD_ST0_func(Entity* self) {
+    if (self->step != 0) {
+        if (self->posY.i.hi >= 0xF1) {
+            DestroyEntity(self);
             return;
         }
         FallEntity();
@@ -208,15 +208,13 @@ void func_80194314(Entity* entity) {
         return;
     }
 
-    InitializeEntity(g_eBreakableInit);
-    entity->animCurFrame = entity->ext.generic.unk7C.U8.unk0;
-    entity->velocityX =
-        g_collectXVelTable[entity->ext.generic.unk80.modeS8.unk0 * 2];
-    entity->velocityY =
-        g_collectYVelTable[entity->ext.generic.unk80.modeS8.unk0 * 2];
+    InitializeEntity(g_EInitBreakable);
+    self->animCurFrame = self->ext.unusedMadST0.animframe;
+    self->velocityX = g_collectXVelTable[self->ext.unusedMadST0.velIndex * 2];
+    self->velocityY = g_collectYVelTable[self->ext.unusedMadST0.velIndex * 2];
 
-    if (entity->params != 0) {
-        entity->zPriority -= 1;
+    if (self->params != 0) {
+        self->zPriority -= 1;
     }
 }
 #endif

@@ -266,7 +266,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	sb.WriteString("static MyRoomDef rooms_layers[] = {\n")
+	sb.WriteString("MyRoomDef OVL_EXPORT(rooms_layers)[] = {\n")
 	for _, rl := range roomsLayers {
 		if l, found := rl["fg"]; found {
 			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]))
@@ -378,7 +378,7 @@ func buildSprites(fileName string, outputDir string) error {
 		symbols = append(symbols, symbol)
 	}
 
-	sbHeader.WriteString("static s16** spriteBanks[] = {\n")
+	sbHeader.WriteString("s16** OVL_EXPORT(spriteBanks)[] = {\n")
 	for _, index := range spritesBanks.Indices {
 		if index >= 0 {
 			sbHeader.WriteString(fmt.Sprintf("    %s,\n", symbols[index]))
@@ -394,6 +394,7 @@ func buildSprites(fileName string, outputDir string) error {
 }
 
 func buildEntityLayouts(fileName string, outputDir string) error {
+	ovlName := path.Base(outputDir)
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
 		nWritten := 0
 		for i, entries := range banks {
@@ -480,13 +481,13 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbHeader.WriteString("#include \"common.h\"\n\n")
 	sbHeader.WriteString("// clang-format off\n")
 	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_x[];\n", symbolName))
-	sbHeader.WriteString("LayoutEntity* g_pStObjLayoutHorizontal[] = {\n")
+	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
 		sbHeader.WriteString(fmt.Sprintf("    (LayoutEntity*)&%s_x[%d],\n", symbolName, offsets[i]))
 	}
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_y[];\n", symbolName))
-	sbHeader.WriteString("LayoutEntity* g_pStObjLayoutVertical[] = {\n")
+	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutVertical[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
 		sbHeader.WriteString(fmt.Sprintf("    (LayoutEntity*)&%s_y[%d],\n", symbolName, offsets[i]))
 	}

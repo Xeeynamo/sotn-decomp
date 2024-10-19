@@ -7,7 +7,7 @@ void func_801A7D64(Entity* self) {
     ObjInit* obj = &D_80180638[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
         self->unk5A = obj->unk5A;
@@ -149,7 +149,7 @@ void func_801A805C(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(g_eBreakableInit);
+        InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = D_8018074C[params];
         self->hitboxHeight = D_801806F8[params];
@@ -182,7 +182,7 @@ void func_801A8328(Entity* self) {
             break;
         }
 
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (firstPrimIndex != -1) {
             prim = &g_PrimBuf[firstPrimIndex];
@@ -256,7 +256,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;

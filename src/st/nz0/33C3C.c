@@ -30,7 +30,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_80180FE0[params];
         self->palette = obj->palette + 0x2E0;

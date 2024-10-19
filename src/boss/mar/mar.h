@@ -42,9 +42,9 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 extern s32 D_800973FC;
 extern u16 g_Statues[];
-extern u16 D_80180A60[];
+extern u16 g_EInitMaria[];
 
 #endif

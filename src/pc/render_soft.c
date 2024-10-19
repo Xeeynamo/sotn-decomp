@@ -65,11 +65,12 @@ void CopyVram(void) {
     SDL_DestroyTexture(t);
 }
 
+extern struct InitGameParams g_GameParams;
 int SoftDrawSync(int mode) {
     CopyVram();
 
     SDL_RenderPresent(g_Renderer);
-    SDL_RenderSetScale(g_Renderer, SCREEN_SCALE, SCREEN_SCALE);
+    SDL_RenderSetScale(g_Renderer, g_GameParams.scale, g_GameParams.scale);
 
     // SDL event handling
     SDL_Event event;
@@ -87,8 +88,8 @@ int SoftDrawSync(int mode) {
 }
 
 DISPENV* SoftPutDispEnv(DISPENV* env) {
-    int w = env->disp.w * SCREEN_SCALE;
-    int h = env->disp.h * SCREEN_SCALE;
+    int w = env->disp.w * g_GameParams.scale;
+    int h = env->disp.h * g_GameParams.scale;
     if (g_WndWidth == w && g_WndHeight == h) {
         return env;
     }
@@ -428,8 +429,7 @@ void SoftDrawOTag(OT_TYPE* p) {
             num_updates = 2;
             break;
         default:
-            assert(false);
-            WARNF("code %02X not supported", code);
+            WARNF("SoftDrawOTag: code %02X not supported", code);
             break;
         }
         for (int i = 0; i < num_updates; i++) {

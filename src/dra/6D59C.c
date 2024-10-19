@@ -255,7 +255,11 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
 
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     AnimationFrame* animFrame;
+#if defined(VERSION_PC)
+    s32 ret = 0;
+#else
     s32 ret;
+#endif
 
     if (g_CurrentEntity->animFrameDuration == -1) {
         ret = -1;
@@ -518,7 +522,7 @@ void func_8010E4D0(void) {
         PLAYER.velocityX = 0;
         SetPlayerStep(Player_AlucardStuck);
         func_80111CC0();
-        PlaySfx(NA_SE_VO_AL_WHAT);
+        PlaySfx(SFX_VO_ALU_WHAT);
         return;
     }
     func_80111CC0();
@@ -690,7 +694,12 @@ void DoGravityJump(void) {
 }
 
 s16 g_SfxAttackGrunts[] = {
-    SFX_UNK_6EE, SFX_UNK_6EF, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
+    SFX_VO_ALU_ATTACK_A,
+    SFX_VO_ALU_ATTACK_B,
+    SFX_VO_ALU_ATTACK_C,
+    SFX_VO_ALU_ATTACK_D,
+    0x0000,
+    0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -1045,7 +1054,7 @@ block_45:
                 g_Player.unk46 = 0x8012;
                 g_Player.unk54 = 0xFF;
                 PLAYER.step_s = 0x51;
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
                 return 1;
             }
         }
@@ -1067,45 +1076,45 @@ block_45:
         D_80139824 = 0x28;
         PLAYER.step = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 20: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 21: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 22: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 28: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0xA;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         CheckMoveDirection();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 27: // Estoc
         animVariant = atLedge;
         CheckMoveDirection();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         if (g_Player.pl_vram_flag & 1) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
@@ -1127,14 +1136,14 @@ block_45:
         D_80139824 = 0x80;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 26: // Unknown, not a direct equippable item (but there are 2 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 0: // Most normal swords come in this range
     case 1:
@@ -1260,7 +1269,7 @@ block_45:
         }
         break;
     case 135: // Unknown
-        PlaySfx(SFX_UNK_6F0);
+        PlaySfx(SFX_VO_ALU_ATTACK_C);
         g_Player.timers[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;
@@ -1287,7 +1296,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
     SetPlayerAnim(0xBA);
-    PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
+    PlaySfx(SFX_VO_ALU_DARK_META);
     PlaySfx(SFX_UI_MP_FULL);
     g_Player.timers[11] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
@@ -1302,7 +1311,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
     SetPlayerAnim(0xDA);
-    PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
+    PlaySfx(SFX_VO_ALU_SOUL_STEAL);
     func_80118C28(0xC);
     g_Player.timers[12] = 4;
 }
@@ -1314,7 +1323,7 @@ void func_8010FC50(void) {
     func_8010E3E0();
     CreateEntFactoryFromEntity(g_CurrentEntity, 117, 0);
     SetPlayerAnim(0xF0);
-    PlaySfx(NA_SE_VO_AL_PUNCH);
+    PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[12] = 4;
 }
 
@@ -1325,7 +1334,7 @@ void func_8010FCB8(void) {
     func_8010E3E0();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
     SetPlayerAnim(0xF1);
-    PlaySfx(NA_SE_VO_AL_PUNCH);
+    PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[12] = 4;
 }
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-extern u16 D_80180A60[];
+extern u16 g_EInitMaria[];
 extern u8 D_us_80180690[];
 extern u8 D_us_801806A4[];
 extern u8 D_us_801806B8[];
@@ -30,7 +30,7 @@ void func_us_8018CA94(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitMaria);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->unk5A = 0x48;

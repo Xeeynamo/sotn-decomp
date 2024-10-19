@@ -1089,7 +1089,7 @@ void RicEntityStopwatchCrashLightning(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        self->ext.subweapon.subweaponId = 0x1E;
+        self->ext.subweapon.subweaponId = PL_W_30;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
@@ -1369,7 +1369,7 @@ void RicEntityAguneaCircle(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC2;
-            prim->drawMode = 0x200 | DRAW_HIDE;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.aguneaCrash.subweaponId = PL_W_CRASH_AGUNEA;

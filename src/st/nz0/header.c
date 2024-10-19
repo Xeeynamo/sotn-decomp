@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
-extern RoomHeader OVL_EXPORT(rooms)[];
-static s16** spriteBanks[];
-static u_long** cluts[];
-static u_long** gfxBanks[];
-static MyRoomDef rooms_layers[];
-
 void Update();
 void HitDetection();
 void UpdateRoomPosition();
 void InitRoomEntities();
 void UpdateStageEntities();
+
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long** OVL_EXPORT(cluts)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern RoomHeader OVL_EXPORT(rooms)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -19,11 +20,11 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
-    .cluts = cluts,
-    .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = rooms_layers,
-    .gfxBanks = gfxBanks,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
+    .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
@@ -68,7 +69,7 @@ static u_long* D_8018008C[] = {
     PAL_TERMINATE(),
 };
 
-static u_long** cluts[] = {
+u_long** OVL_EXPORT(cluts)[] = {
     &D_8018008C,
 };
 
@@ -269,7 +270,7 @@ static u_long* D_80180868[] = {
     GFX_TERMINATE(),
 };
 
-static u_long** gfxBanks[] = {
+u_long* OVL_EXPORT(gfxBanks)[] = {
     D_8018047C, D_80180848, D_801807FC, D_801804F4, D_80180490,
     D_801805B4, D_80180490, D_80180780, D_801806A8, D_8018065C,
     D_80180730, D_8018057C, D_80180490, D_80180624, D_80180490,

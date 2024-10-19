@@ -527,7 +527,7 @@ u8* GetEquipOrder(EquipKind kind);
 u8* GetEquipCount(EquipKind kind);
 const char* GetEquipmentName(EquipKind kind, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_800FD9D4(SpellDef* spell, s32 id);
+void GetSpellDef(SpellDef* spell, s32 id);
 s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer);
 void LearnSpell(s32 spellId);
 void func_800FDE00(void);
@@ -578,7 +578,7 @@ void func_80115C50(void);
 void func_80118894(Entity*);
 
 void func_80118C28(s32 arg0);
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions

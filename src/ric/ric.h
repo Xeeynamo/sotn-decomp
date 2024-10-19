@@ -58,15 +58,6 @@ enum RicSteps {
     PL_S_DEBUG = 0xF0,
 };
 
-enum RicSfxs {
-    SFX_GRUNT_A = 0x6F9,
-    SFX_GRUNT_B,
-    SFX_GRUNT_C,
-    SFX_GRUNT_SUBWPN_A,
-    SFX_HYDROSTORM = 0x700,
-    SFX_CROSS_CRASH,
-};
-
 enum RicTimers {
     PL_T_POISON,
     PL_T_CURSE,
@@ -263,7 +254,7 @@ enum RicSubweapons {
     PL_W_19,
     PL_W_20,
     PL_W_21,
-    PL_W_22,
+    PL_W_HIGHJUMP,
     PL_W_23,
     PL_W_CRASH_VIBHUTI,
     PL_W_CRASH_REBOUND_STONE,

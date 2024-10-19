@@ -132,7 +132,7 @@ void EntityBossFightManager(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         g_BossFlag = 0;
         newEnt = self + 1;
         temp_s1 = D_80181014;
@@ -251,7 +251,7 @@ void EntityBossFightManager(Entity* self) {
 void EntityBossRoomBlock(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D00);
+        InitializeEntity(g_EInitBossDoor);
         self->animCurFrame = 8;
 
     case 1:

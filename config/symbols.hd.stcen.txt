@@ -1,8 +1,8 @@
-g_InitializeData0 = 0x80180410;
-g_InitializeEntityData0 = 0x8018041C;
-g_eMariaInit = 0x80180428;
-g_eElevatorInit = 0x8018047C;
-g_HeartDropArray = 0x801805D8;
+g_EInitObtainable = 0x80180410;
+g_EInitParticle = 0x8018041C;
+g_EInitMaria = 0x80180428;
+g_EInitElevator = 0x8018047C;
+CEN_PrizeDrops = 0x801805D8;
 D_801805DC = 0x801805DC;
 D_801805E0 = 0x801805E0;
 D_801805E8 = 0x801805E8;

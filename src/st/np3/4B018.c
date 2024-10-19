@@ -36,7 +36,7 @@ void EntityOwl(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B2C);
+        InitializeEntity(g_EInitOwl);
         // Turns out the knight is spawned from the owl. Neat!
         CreateEntityFromEntity(E_OWL_KNIGHT, self, KNIGHT);
         CreateEntityFromEntity(E_801CD620, self, self + 3);

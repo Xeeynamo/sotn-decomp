@@ -1,34 +1,36 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Sound)
+project(sotn)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (WIN32)
-  set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+    set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
-  set(CMAKE_BUILD_TYPE Debug)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-  set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+    set(CMAKE_BUILD_TYPE Debug)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
 
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-mismatch")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-mismatch")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
+    src/pc/main.c
     src/pc/log.c
     src/pc/stubs.c
     src/pc/sotn.c
@@ -45,13 +47,12 @@ set(SOURCE_FILES_PC
     src/pc/psxsdk/PsyCross/src/gte/PsyX_GTE.cpp
     src/pc/psxsdk/PsyCross/src/gte/inline_c.c
     src/pc/psxsdk/PsyCross/src/gte/libgte_.c
-
 )
 
 if(WIN32)
-list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
+    list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
 else()
-list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
+    list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
 endif()
 
 set(SOURCE_FILES_PSX_SDK
@@ -60,8 +61,6 @@ set(SOURCE_FILES_PSX_SDK
 )
 
 set(WANT_LIBSND_LLE FALSE CACHE BOOL "Whether to append use LLE for libsnd")
-
-if(WANT_LIBSND_LLE)
 set(SOURCE_FILES_LIBSND_LLE
     # libsnd
     src/main/psxsdk/libsnd/adsr.c
@@ -150,7 +149,8 @@ set(SOURCE_FILES_LIBSND_LLE
     src/pc/psxsdk/emu.cpp
     src/pc/psxsdk/mednafen/spu.cpp
 )
-list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
+if(WANT_LIBSND_LLE)
+    list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
 endif()
 
 set(SOURCE_FILES_MOCK_SDK
@@ -167,7 +167,7 @@ set(SOURCE_FILES_MOCK_SDK
 )
 
 set(SOURCE_FILES_3RD
-   src/pc/3rd/cJSON/cJSON.c
+    src/pc/3rd/cJSON/cJSON.c
 )
 
 set(SOURCE_FILES_DRA
@@ -279,6 +279,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/st_debug.c
     src/st/cen/e_breakable.c
     src/st/cen/DB18.c
+    src/st/cen/d_prize_drops.c
     src/st/cen/cutscene.c
     src/st/cen/F890.c
     src/st/cen/st_update.c
@@ -294,20 +295,16 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/e_room_fg.c
     src/st/cen/popup.c
     src/st/cen/prim_helpers.c
-    src/st/cen/header.c
-    src/st/cen/create_entity.c
-    src/st/cen/cutscene.c
-    src/st/cen/e_collect.c
 )
 
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
-    src/st/wrp/d_1b8.c
+    src/st/wrp/header.c
     src/st/wrp/e_laydef.c
     src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
-    src/st/wrp/d_608.c
+    src/st/wrp/d_prize_drops.c
     src/st/wrp/rooms.c
     src/st/wrp/e_layout.c
     src/st/wrp/tile_data.c
@@ -335,6 +332,7 @@ set(SOURCE_FILES_WEAPON
     src/weapon/w_007.c
     src/weapon/w_012.c
     src/weapon/w_034.c
+    src/weapon/w_037.c
     src/weapon/w_041.c
     src/weapon/w_045.c
     src/weapon/w_046.c
@@ -348,6 +346,7 @@ set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WE
 set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_007)
 set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_012)
 set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_034)
+set_source_files_properties(src/weapon/w_037.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_037)
 set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_041)
 set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_045)
 set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
@@ -370,6 +369,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_STAGE_SEL}
+    ${SOURCE_FILES_STAGE_CEN}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
@@ -378,13 +378,13 @@ set(SOURCE_FILES_CORE
 
 add_library(core ${SOURCE_FILES_CORE})
 
-target_include_directories(core PRIVATE
+target_include_directories(core PUBLIC
     include
     src/dra
     src/pc/3rd
-    )
+)
 
-target_compile_definitions(core PRIVATE
+target_compile_definitions(core PUBLIC
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
@@ -392,10 +392,9 @@ target_compile_definitions(core PRIVATE
     HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
-    )
+)
 
 # sdl2 target
-
 add_executable(${PROJECT_NAME}
     src/pc/sdl2.c
     src/pc/render_soft.c
@@ -406,65 +405,25 @@ add_executable(${PROJECT_NAME}
     src/pc/psxsdk/mednafen/gpu_polygon.cpp
     src/pc/psxsdk/mednafen/gpu_sprite.cpp
     src/pc/sdl2_macros.c
-    )
-
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${SDL2_INCLUDE_DIRS}
-    include
-    src/dra
-    src/pc/3rd
-    )
-
+)
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
 if (WIN32)
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${SDL2_LIBRARIES} core)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core)
 else()
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${SDL2_LIBRARIES} core m)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core m)
 endif()
-
-
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    _USE_MATH_DEFINES # needed for msvc
-    VERSION_PC
-    PERMUTER
-    NON_MATCHING
-    HARD_LINK
-    DEMO_KEY_PTR=0
-    _internal_version_us
-    )
-
 if(WANT_LIBSND_LLE)
-target_compile_definitions(core PRIVATE WANT_LIBSND_LLE=1)
-target_compile_definitions(${PROJECT_NAME} PRIVATE WANT_LIBSND_LLE=1)
+    target_compile_definitions(core PRIVATE WANT_LIBSND_LLE=1)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE WANT_LIBSND_LLE=1)
 endif()
 
 # null target
-
 add_executable(${PROJECT_NAME}_null
     src/pc/null.c
-    )
-
-target_include_directories(${PROJECT_NAME}_null PRIVATE
-    include
-    src/dra
-    src/pc/3rd
-    )
+)
 
 if (WIN32)
-target_link_libraries(${PROJECT_NAME}_null PRIVATE
-    core)
+    target_link_libraries(${PROJECT_NAME}_null PRIVATE core)
 else()
-target_link_libraries(${PROJECT_NAME}_null PRIVATE
-    core m)
+    target_link_libraries(${PROJECT_NAME}_null PRIVATE core m)
 endif()
-
-target_compile_definitions(${PROJECT_NAME}_null PRIVATE
-    _USE_MATH_DEFINES # needed for msvc
-    VERSION_PC
-    PERMUTER
-    NON_MATCHING
-    HARD_LINK
-    DEMO_KEY_PTR=0
-    _internal_version_us
-    )

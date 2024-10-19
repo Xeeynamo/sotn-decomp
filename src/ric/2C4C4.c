@@ -347,7 +347,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.subweaponId = PL_W_CRASH_CROSS;
         RicSetSubweaponParams(self);
         LoadImage(&crash_cross_img_vram, crash_cross_img_data);
-        g_api.PlaySfx(0x6DF);
+        g_api.PlaySfx(SFX_CRASH_CROSS);
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         break;
@@ -924,7 +924,7 @@ void RicEntitySubwpnAxe(Entity* self) {
                 self->ext.subwpnAxe.unk8B[sp10 + 4] = 0;
                 self->ext.subwpnAxe.unk8B[sp10 + 8] = 0;
             } else {
-                prim->drawMode = 0x100 | DRAW_HIDE;
+                prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             }
             prim = prim->next;
             sp10++;
@@ -1139,7 +1139,7 @@ void RicEntityCrashAxe(Entity* self) {
                     self->ext.axeCrash.unk8B[sp10 + 4] = 0;
                     self->ext.axeCrash.unk8B[sp10 + 8] = 0;
                 } else {
-                    prim->drawMode = 0x100 | DRAW_HIDE;
+                    prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
                 }
                 prim = prim->next;
                 sp10++;
@@ -2411,7 +2411,7 @@ void RicEntityCrashVibhuti(Entity* self) {
                 }
                 prim = &g_PrimBuf[self->primIndex];
                 for (i = 0; i < 9; i++) {
-                    if (prim->drawMode & 8) {
+                    if (prim->drawMode & DRAW_HIDE) {
                         break;
                     }
                     prim = prim->next;

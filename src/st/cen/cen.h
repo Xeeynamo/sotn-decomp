@@ -48,18 +48,15 @@ u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
-extern PfnEntityUpdate PfnEntityUpdates[];
-
 /*** Initializers ***/
-extern u16 D_80180404[];
-extern u16 g_InitializeData0[];
-extern u16 g_eMariaInit[];
-extern u16 g_EInitGeneric[];
-extern u16 g_eInitGeneric2[];
-extern u16 g_InitializeEntityData0[];
-extern u16 g_eElevatorInit[]; // EntityElevator
+extern u16 g_EInitBreakable[];
+extern u16 g_EInitObtainable[];
+extern u16 g_EInitMaria[];
+extern u16 g_EInitInteractable[];
+extern u16 g_EInitCommon[];
+extern u16 g_EInitParticle[];
+extern u16 g_EInitElevator[]; // EntityElevator
 
-extern ObjInit g_eBackgroundBlockInit[];
 extern u16* D_80180574[];
 extern u8 D_80180594[];
 extern u8 D_8018059C[];

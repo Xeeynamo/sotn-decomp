@@ -38,7 +38,7 @@ static u8 D_80181538[] = {
 void func_801B8E0C(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_MariaInit);
+        InitializeEntity(g_EInitMaria);
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = PAD_LEFT;
@@ -94,7 +94,7 @@ void EntityMaria(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_MariaInit);
+        InitializeEntity(g_EInitMaria);
         self->animSet = ANIMSET_OVL(0xF);
         self->animCurFrame = 1;
         self->unk5A = 0x48;

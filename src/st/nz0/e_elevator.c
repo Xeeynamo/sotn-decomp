@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 static s32 elevator_target = 0;
 static s16 elevator_target_pos[] = {0x0000, 0x0060, 0x0360, 0x0660};
-u16 g_HeartDropArray[] = {0x012B, 0x000C, 0x015A, 0x0017, 0x00E5, 0x0146,
-                          0x0144, 0x011A, 0x0085, 0x0092, 0x011F, 0x0000};
 
 void func_801B6DE4(Entity* self) {
     s32 temp_s1;
@@ -15,7 +14,7 @@ void func_801B6DE4(Entity* self) {
     temp_s1 = self->hitFlags;
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->ext.generic.unk80.modeS32 =
             self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         self->hitboxHeight = 8;
@@ -99,7 +98,7 @@ void EntityElevator(Entity* self) {
 
     switch (self->step) {
     case ELEVATOR_INIT:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         self->hitboxWidth = 16;
@@ -168,7 +167,7 @@ void EntityElevator(Entity* self) {
             } else {
                 self->step = ELEVATOR_ASCEND;
             }
-            PlaySfxPositional(0x6E6);
+            PlaySfxPositional(SFX_LOW_SYNTH_BUBBLES);
         }
         self->ext.elevator.elevatorTarget = elevator_target;
         break;

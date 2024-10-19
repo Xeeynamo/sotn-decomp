@@ -23,8 +23,8 @@ typedef enum {
     BONE_SCIMITAR_WALK_LEFT
 } BoneScimitarSpecialSubSteps;
 
-extern u16 g_BoneScimitarInit[];
-extern u16 g_ScimitarPartsInit[];
+extern u16 g_EInitBoneScimitar[];
+extern u16 g_EInitScimitarParts[];
 
 static bool spawn_special =
     false; // Flag for special bone scimitar to appear or not
@@ -87,7 +87,7 @@ void EntityBoneScimitar(Entity* self) {
 
     switch (self->step) {
     case BONE_SCIMITAR_INIT:
-        InitializeEntity(g_BoneScimitarInit);
+        InitializeEntity(g_EInitBoneScimitar);
         if (self->params != 0) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -312,7 +312,7 @@ void EntityBoneScimitarParts(Entity* self) {
         self->step = 0;
         return;
     }
-    InitializeEntity(g_ScimitarPartsInit);
+    InitializeEntity(g_EInitScimitarParts);
     self->drawFlags = FLAG_DRAW_ROTZ;
     self->animCurFrame = (self->params & 0xFF) + 16;
 

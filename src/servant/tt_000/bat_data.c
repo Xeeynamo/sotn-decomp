@@ -2,7 +2,7 @@
 #include "servant.h"
 
 // sprite data
-Sprite D_80170608[] = {
+Sprite g_BatSpriteData[] = {
     {-4, -4, 8, 8, 0x144, 0x78, 8, 0, 16, 8},
     {-4, -4, 8, 8, 0x144, 0x78, 120, 8, 128, 16},
     {-4, -4, 8, 8, 0x144, 0x78, 228, 135, 236, 143},
@@ -15,7 +15,7 @@ Sprite D_80170608[] = {
 // 2 - additional bat count
 // 3 - min enemy HP
 // 4 - make bad attacks (attack invincible?)
-s32 D_80170658[][5] = {
+s32 g_BatAbilityStats[][5] = {
     {90, 64, 0, 128, 1}, //
     {90, 96, 0, 128, 1}, //
     {60, 128, 1, 96, 1}, //
@@ -29,7 +29,7 @@ s32 D_80170658[][5] = {
 };
 
 // Bat specific clut
-u16 D_80170720[] = {
+u16 g_BatClut[] = {
     0x0000, 0xFC00, 0xF400, 0xEC00, 0xE400, 0xDC00, 0xD400, 0xCC00,
     0xC400, 0xBC00, 0xB400, 0xAC00, 0xA400, 0x9C00, 0x9400, 0x8C00,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x7FFF, 0x0000,

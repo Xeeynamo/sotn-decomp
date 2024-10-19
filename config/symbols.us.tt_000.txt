@@ -2,4 +2,4 @@ g_PlaySfxStep = 0x80171090;
 CheckEntityValid = 0x801713C8;
 CalculateAngleToEntity = 0x80173F30;
 GetTargetPositionWithDistanceBuffer = 0x80173F74;
-g_IsServantDestroyed = 0x80174D3C;
+s_IsServantDestroyed = 0x80174D3C;

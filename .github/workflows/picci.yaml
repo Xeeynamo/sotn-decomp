@@ -21,6 +21,9 @@ on:
 
 jobs:
   extract-assets:
+    # Building and testing cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the CI dependencies
+    if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repo
@@ -51,11 +54,23 @@ jobs:
           path: assets
 
   build-linux:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: ["clang", "gcc"]
+        build_type: ["Debug", "RelWithDebInfo"]
+        sound_engine: ["lle", "custom"]
+        arch: ["x86_64", "i686"]
+    runs-on: ubuntu-24.04
     needs: extract-assets
     steps:
       - name: Install requirements
         run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
+      - name: Install multilib
+        if: matrix.arch == 'i686'
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install gcc-multilib g++-multilib libsdl2-dev:i386
       - name: Clone repo
         uses: actions/checkout@v4
         with:
@@ -70,10 +85,26 @@ jobs:
         run: make -j build_assets
       - name: Build
         run: |
-          cmake -B ${{github.workspace}}/pc
-          cmake --build ${{github.workspace}}/pc --config Release
+          export PC_FLAGS=""
+          if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
+            export PC_FLAGS="-DWANT_LIBSND_LLE=1"
+          fi
+          if [[ "${{ matrix.arch }}" == "i686" ]]; then
+            export PC_FLAGS="$PC_FLAGS -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32"
+          fi
+          export CC=${{ matrix.compiler }}
+          cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
+      - name: Test
+        if: matrix.sound_engine == 'lle'
+        run: |
+          ${{github.workspace}}/pc/sotn --test sndlib
 
   build-macos:
+    strategy:
+      matrix:
+        build_type: ["Debug", "RelWithDebInfo"]
+        sound_engine: ["lle", "custom"]
     runs-on: macos-latest
     needs: extract-assets
     steps:
@@ -98,10 +129,18 @@ jobs:
         run: make -j build_assets
       - name: Build
         run: |
-          cmake -B ${{github.workspace}}/pc
-          cmake --build ${{github.workspace}}/pc --config Release
+          export PC_FLAGS=""
+          if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
+            export PC_FLAGS="-DWANT_LIBSND_LLE=1"
+          fi
+          cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
 
   build-windows:
+    strategy:
+      matrix:
+        build_type: ["Debug", "RelWithDebInfo"]
+        sound_engine: ["lle", "custom"]
     runs-on: windows-latest
     needs: extract-assets
     steps:
@@ -130,31 +169,9 @@ jobs:
         & make -j build_assets SOTNASSETS=$SOTN_ASSETS
     - name: Build
       run: |
-        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
-        cmake --build ${{github.workspace}}/pc --config Release
-
-  build-linux-lle:
-    runs-on: ubuntu-latest
-    needs: extract-assets
-    steps:
-      - name: Install requirements
-        run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
-      - name: Clone repo
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
-          submodules: false
-      - name: Get assets
-        uses: actions/download-artifact@v4
-        with:
-          name: assets
-          path: assets
-      - name: Build assets
-        run: make -j build_assets
-      - name: Build
-        run: |
-          cmake -B ${{github.workspace}}/pc -DWANT_LIBSND_LLE=1
-          cmake --build ${{github.workspace}}/pc --config Release
-      - name: Test
-        run: |
-          ${{github.workspace}}/pc/Sound test
+        $PC_FLAGS=""
+        if ("${{ matrix.sound_engine }}" -eq "lle") {
+          $PC_FLAGS="-DWANT_LIBSND_LLE=1"
+        }
+        cmake -B ${{github.workspace}}/pc $PC_FLAGS -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
+        cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}

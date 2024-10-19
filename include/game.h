@@ -1039,6 +1039,14 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+// This enum has the ids for familiar abilities which use the g_SpellDef
+// table to fetch stats and modifiers for said abilities.
+typedef enum {
+    FAM_ABILITY_BAT_ATTACK = 15,
+    FAM_ABILITY_GHOST_ATTACK = 17,
+    FAM_ABILITY_GHOST_ATTACK_SOULSTEAL = 18,
+} FamiliarAbilityIds;
+
 // Need two familiar enums. One has a zero entry, one does not.
 // This one is used in places that need to access the familiar
 // stats array...
@@ -1180,6 +1188,10 @@ typedef struct {
     /* 0x08 */ u8* clut;
     /* 0x0C */ u8* collision;
 } TileDefinition; // size = 0x10
+
+#define LAYOUT_RECT_PARAMS_UNKNOWN_10 0x10
+#define LAYOUT_RECT_PARAMS_UNKNOWN_20 0x20
+#define LAYOUT_RECT_PARAMS_UNKNOWN_40 0x40
 
 typedef struct {
     /* 0x00 */ u32 left : 6;
@@ -1467,12 +1479,13 @@ typedef struct {
     /* 0x14 */ u16 clutIndex;         // CLUT index
     /* 0x16 */ u8 nextCharTimer;      // timer to next character
     /* 0x17 */ u8 unk17;              // unknown
-    /* 0x18 */ Primitive* prim[6];    // for dialogue graphics rendering
-    /* 0x30 */ s32 primIndex[3];      // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;             // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;             // global timer
-    /* 0x40 */ u8* scriptEnd;         // pointer to the end of the script
-} Dialogue;                           // size = 0x44
+    // Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
+    /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
+    /* 0x30 */ s32 primIndex[3];   // primIndices: unk, actorName, unk
+    /* 0x3C */ u16 unk3C;          // maybe it is a begin flag?
+    /* 0x3E */ u16 timer;          // global timer
+    /* 0x40 */ u8* scriptEnd;      // pointer to the end of the script
+} Dialogue;                        // size = 0x44
 
 typedef struct {
     u32 effects; // Curse, poison, etc; needs an enum.
@@ -1540,7 +1553,7 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
-    /* 8003C874 */ void (*func_8011A3AC)(
+    /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
@@ -1620,7 +1633,7 @@ extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
-extern void (*g_api_func_8011A3AC)(
+extern void (*g_api_GetServantStats)(
     Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
 extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);

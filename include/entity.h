@@ -1,29 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/**
- * Custom Entity Subtypes
- */
-
 #include "common.h"
 
 struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
-
-typedef union {
-    s32 unk;
-    void* ptr;
-    struct {
-        s8 unk0, unk1, unk2, unk3;
-    } S8;
-    struct {
-        u8 unk0, unk1, unk2, unk3;
-    } U8;
-    struct {
-        s16 unk0, unk2;
-    } S16;
-    struct {
-        u16 unk0, unk2;
-    } U16;
-} Multi;
 
 typedef union {
     s16 s;
@@ -54,33 +33,23 @@ typedef struct ET_Generic {
             /* 0x80 */ s16 unk0;
             /* 0x82 */ s16 unk2;
         } modeS16;
-        struct {
-            /* 0x80 */ u8 unk0;
-            /* 0x81 */ u8 unk1;
-        } modeS8;
     } unk80; // size = 0x4
-    /* 0x84 */ Multi unk84;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 : 16;
-    /* 0x94 */ u8 unk94;
 } ET_Generic;
 
 typedef struct {
-    /* 0x00 */ u16 timer;
-    /* 0x02 */ s16 unk7E;
-    /* 0x04 */ u8 aliveTimer;
-    /* 0x05 */ s8 unk81;
-    /* 0x06 */ s16 unk82;
-    /* 0x08 */ s32 fallSpeed;
-    /* 0x0C */ s16 gravity;
-    /* 0x0E */ s16 unk8A;
-    /* 0x10 */ s16 iconSlot;
-    /* 0x12 */ s16 unk8E;
-    /* 0x14 */ s16 unk90;
-    /* 0x16 */ s16 unk92;
-    /* 0x18 */ s32 castleFlag;
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ u8 aliveTimer;
+    /* 0x81 */ s8 unk81;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 fallSpeed;
+    /* 0x88 */ s16 gravity;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 iconSlot;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
 typedef struct {
@@ -189,7 +158,7 @@ typedef struct {
     s32 accelerationX;
     s32 accelerationY;
     byte pad[32];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -229,7 +198,7 @@ typedef struct PACKED {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -241,7 +210,7 @@ typedef struct {
     s32 unk84;
     s32 unk88;
     byte pad[32];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -264,7 +233,7 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -283,7 +252,7 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -297,7 +266,7 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim[2];
 #endif
     u8 anim;
@@ -319,7 +288,7 @@ typedef struct {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 : 32;
 #endif
     u8 anim;
@@ -347,7 +316,7 @@ typedef struct PACKED {
     s16 unkA2;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     u8 anim;
@@ -371,7 +340,7 @@ typedef struct PACKED {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     u8 anim;
@@ -394,7 +363,7 @@ typedef struct PACKED {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     u8 anim;
@@ -422,7 +391,7 @@ typedef struct PACKED {
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ s16 unkA0;
     /* 0xA4 */ byte pad[10];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     /* 0xAC */ u8 anim;
@@ -473,10 +442,8 @@ typedef struct {
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ u8 pad[4];
-#ifdef VERSION_PC
-    s16 _align_anim;
-#endif
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ u32 : 32;
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 unkAE;
@@ -503,7 +470,7 @@ typedef struct PACKED {
     /* 0xA0 */ u32 : 32;
     /* 0xA4 */ u32 : 32;
     /* 0xA8 */ u32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     /* 0xAC */ u8 anim;
@@ -528,7 +495,7 @@ typedef struct PACKED {
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ u8 unk9C;
     /* 0x9D */ u8 pad[15];
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 _align_anim;
 #endif
     /* 0xAC */ u8 anim;
@@ -597,27 +564,27 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 unk84;
-    /* 0x84 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 unk8C;
-    /* 0x8e */ s16 unk8E;
+    /* 0x80 */ s16 previouslyInitialized;
+    /* 0x82 */ s16 batIndex;
+    /* 0x84 */ s16 randomMovementAngle;
+    /* 0x84 */ s16 targetAngle;
+    /* 0x88 */ s16 randomMovementScaler;
+    /* 0x8A */ s16 maxAngle;
+    /* 0x8C */ s16 frameCounter;
+    /* 0x8e */ s16 doUpdateCloseAnimation;
     /* 0x90 */ s32 unk90;
     /* 0x94 */ s32 unk94;
     /* 0x98 */ s32 unk98;
     /* 0x9C */ s16 unk9C;
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ s32 unkA0;
-    /* 0xA4 */ struct Entity* target;
-    /* 0xA8 */ s16 unkA8;
+    /* 0xA4 */ struct Entity* attackTarget;
+    /* 0xA8 */ s16 hasShotFireball;
     /* 0xAA */ s16 unkAA;
     /* 0xAC */ s16 cameraX;
     /* 0xAE */ s16 cameraY;
-    /* 0xB0 */ s16 unkB0;
-    /* 0xB2 */ s16 unkB2;
+    /* 0xB0 */ s16 lastPlayerPosX;
+    /* 0xB2 */ s16 lastPlayerPosY;
     /* 0xB4 */ struct Entity* follow;
 } ET_Bat;
 
@@ -642,29 +609,20 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 pad7C;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 unk8C;
+    // This counter is used for the Y "bob" the ghost does
+    /* 0x80 */ s16 bobCounterY;
+    /* 0x82 */ s16 targetAngle;
+    /* 0x84 */ s16 maxAngle;
+    /* 0x86 */ s16 frameCounter;
+    /* 0x88 */ s16 opacity;
+    /* 0x8A */ s16 opacityAdjustmentAmount;
+    /* 0x8C */ s16 confusedSubStep;
     /* 0x8E */ s32 pad8E;
-    /* 0x92 */ struct Entity* unk92;
-    /* 0x96 */ struct Entity* unk96;
+    /* 0x92 */ struct Entity* attackEntity;
+    /* 0x96 */ struct Entity* confusedEntity;
     /* 0x9A */ byte pad_1C[0x6];
-    /* 0xA2 */ struct Entity* unkA2;
+    /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;
-
-typedef struct {
-    /* 0x7C */ char pad_0[0xC];
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ char pad_8A[0x3];
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ char pad_8E[0xE];
-    /* 0x9C */ s16 unk9C;
-    /* 0xA0 */ struct Entity* next;
-} ET_801CF254;
 
 typedef struct {
     /* 0x7C */ char pad_0[0x4];
@@ -675,6 +633,9 @@ typedef struct {
     /* 0x9C */ u16 unk9C;
     /* 0x9E */ char pad_9E[0x8];
     /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
 } ET_GurkhaSword;
 
 struct draculaPrimitive;
@@ -796,7 +757,7 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ s32 accelY;
+    /* 0x7C */ u32 accelY;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ f32 topY;
@@ -859,8 +820,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_80[0x4];
-    /* 0x84 */ s8 unk84;
-    /* 0x85 */ char pad_85[0x1];
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ s8 unk86;
 } ET_MermanWaterSplash;
 
@@ -1118,7 +1079,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     s32 : 32;
 #endif
     s16 subweaponId;
@@ -1165,7 +1126,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     s32 : 32;
 #endif
     s16 subweaponId;
@@ -1208,15 +1169,6 @@ typedef struct {
     s32 unk88;
     struct Entity* parent;
 } ET_8016E9E4;
-
-typedef struct {
-    u8 unk7C;
-    u8 unk7D[3];
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-} ET_801CC820;
 
 typedef struct {
     s16 unk7C;
@@ -1340,7 +1292,7 @@ typedef struct {
     u16 unk80;
     u16 pad82;
     Point16* unk84;
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     /* 0x88 */ s32 : 32;
 #endif
     /* 0x8C */ struct Entity* parent;
@@ -1370,7 +1322,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 : 32;
 #endif
     /* 0xB0 */ s16 subweaponId;
@@ -1392,7 +1344,7 @@ typedef struct {
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
     s32 : 32;
 #endif
     /* 0xB0 */ s16 subweaponId;
@@ -1446,10 +1398,11 @@ typedef struct {
     u16 unk7C;
     u16 unk7E;
     u8 unk80;
-    byte pad81;
+    u8 : 8;
     u8 unk82;
-    byte pad83;
+    u8 : 8;
     s32 unk84;
+    s32 : 32;
     struct Entity* parent;
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
 
@@ -1475,7 +1428,7 @@ typedef struct {
 } ET_Whip;
 
 typedef struct {
-#ifndef VERSION_PC
+#ifndef PLATFORM_64BIT
     s32 pad7c;
 #endif
     Primitive* unk80;
@@ -1681,11 +1634,11 @@ typedef struct {
 } ET_LockCamera;
 
 typedef struct {
-    struct Primitive* prim;
-    s32 jiggler;
-    s8 collision;
-    f32 xCoord;
-    f32 yCoord;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 jiggler;
+    /* 0x84 */ s8 collision;
+    /* 0x88 */ f32 xCoord;
+    /* 0x8C */ f32 yCoord;
 } ET_CavernDoor;
 
 // Unknown g_Entities[8] and [1] accessed directly in SEL
@@ -1780,6 +1733,12 @@ typedef struct {
 } ET_DisableAfterImage;
 
 typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_EntityExplosion2;
+
+typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ u16 unk7E;
 } ET_EntityExplosion3;
@@ -1802,12 +1761,72 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_SecretStairs;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ u8 index;
 } ET_DestructAnimation;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 velX;
+    /* 0x86 */ s16 palette;
+} ET_SubwpnContainerGlass;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+} ET_BloodyZombie;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+} ET_MermanRock;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ u16 unk88;
+    /* 0x8A */ u16 unk8A;
+} ET_Warg;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u16 timer;
+} ET_DeathScythe;
+
+typedef struct {
+    /* 0x7C */ u8 animframe;
+    /* 0x7D */ s32 : 24;
+    /* 0x80 */ u8 velIndex;
+} ET_Unused_MAD_ST0;
+
+// Elevator at the top of CEN.
+// Exists in both CEN and NO0 (lowers you into CEN)
+typedef struct {
+    /* 0x7C */ struct Primitve* prim;
+    /* 0x80 */ u8 unk80;
+} ET_CEN_Elevator;
 
 // ====== RIC ENTITIES ======
 
@@ -1897,7 +1916,6 @@ typedef union { // offset=0x7C
     ET_RichterPowerUpRing ricPowerRing;
     ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
-    ET_801CF254 et_801CF254;
     ET_GurkhaSword gurkhaSword;
     ET_Dracula dracula;
     ET_DracFinal dracFinalForm;
@@ -1929,7 +1947,6 @@ typedef union { // offset=0x7C
     ET_Death death;
     ET_SpittleBone spittleBone;
     ET_Player player;
-    ET_801CC820 et_801CC820;
     ET_801AF774 et_801AF774;
     ET_Drop drop;
     ET_BigRedFireball bigredfireball;
@@ -1958,14 +1975,23 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
+    ET_EntityExplosion2 entityExplosion2;
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
     ET_DestructAnimation destructAnim;
+    ET_SecretStairs secretStairs;
+    ET_SubwpnContainerGlass subwpnContGlass;
+    ET_BloodyZombie bloodyZombie;
+    ET_MermanRock mermanRock;
+    ET_Warg warg;
+    ET_DeathScythe deathScythe;
+    ET_Unused_MAD_ST0 unusedMadST0;
+    ET_CEN_Elevator cenElevator;
 } Ext;
 
-#define SYNC_FIELD(struct1, struct2, field_name)                               \
-    STATIC_ASSERT(OFF(struct1, field_name) == OFF(struct2, field_name))
+#define SYNC_FIELD(struct1, struct2, field)                                    \
+    STATIC_ASSERT(OFF(struct1, field) == OFF(struct2, field), "unsynced")
 
 SYNC_FIELD(ET_Player, ET_Weapon, anim);
 SYNC_FIELD(ET_Player, ET_WeaponUnk006, anim);
@@ -2011,6 +2037,7 @@ SYNC_FIELD(ET_EntFactory, ET_stopwatchCircle, parent);
 SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
+SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);

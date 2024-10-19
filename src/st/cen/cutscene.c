@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
+#include "../pfn_entity_update.h"
 #include <cutscene.h>
 
-// Bizarre variable - u8 here, but u16 in EntityHeartDrop
-// Possible that since EntityHeartDrop is not used in CEN, that data
-// is reused here for the holy glasses cutscene? Very unusual.
-u8 g_HeartDropArray[] = {0, 64, 0, 0};
+static u8 D_801805D8[] = {0, 64, 0, 0};
 static u8 D_801805DC[] = {0, 0, 0, 0};
 
 // clut
@@ -254,7 +252,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 i = *g_Dialogue.scriptCur++;
                 nextChar2 = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
-                uCoord = g_HeartDropArray[nextChar2 & 1];
+                uCoord = D_801805D8[nextChar2 & 1];
                 vCoord = D_801805DC[nextChar2 & 1];
                 prim->clut = D_801805E0[i];
                 prim->tpage = 0x90;

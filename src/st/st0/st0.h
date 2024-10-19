@@ -56,15 +56,14 @@ extern const char* D_801A7984;
 extern const char* D_801A7990;
 extern const char* D_801A799C;
 
-extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 // *** Initializers ***
-extern u16 g_eBreakableInit[];
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitBreakable[];
+extern u16 g_EInitParticle[];
 extern u16 D_80180598[]; // Init EntityCutscene
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
 extern u16 D_801805E0[]; // Init EntityDracula
 extern u16 D_801805EC[]; // Init EntityDraculaFireball
@@ -167,7 +166,7 @@ extern s32 D_801C2578;
 // *** EntityDracula properties END ***
 
 extern s16 D_80181990[];
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtainable[];
 extern u16 D_80181D74[];
 extern s16 g_collectXVelTable[];
 extern s16 g_collectYVelTable[];
@@ -179,15 +178,6 @@ extern u8 D_801824CC[];
 extern s8 D_801A7BDC;
 extern Point32 D_801BEB64[];
 extern s32 g_SkipCutscene;
-extern s16 D_801C24D4;
-extern s16 D_801C24D6;
-extern s16 D_801C24D8;
-extern s16 D_801C24DA;
-extern s16 D_801C24DC;
-extern s8 D_801C24DE;
-extern s8 D_801C24DF;
-extern Primitive* D_801C24E0;
-extern s32 D_801C24E4[];
 extern s32 D_801C2578;
 extern s32 g_IsCutsceneDone;
 
@@ -210,5 +200,3 @@ extern s32 g_SkipCutscene;
 extern s32 D_801C2504;
 extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;
-
-extern Dialogue g_Dialogue;

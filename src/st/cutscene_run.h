@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
-
 extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
-extern PfnEntityUpdate PfnEntityUpdates[];
 void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;

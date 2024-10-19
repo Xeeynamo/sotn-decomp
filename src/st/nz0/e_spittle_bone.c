@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NZ0
- * Enemy: Spittle Bone
- */
-
 #include "nz0.h"
 #include "sfx.h"
 
@@ -39,7 +34,7 @@ void EntitySpittleBone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180CAC);
+        InitializeEntity(g_EInitSpittleBone);
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotZ = 0;
         self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
@@ -146,7 +141,7 @@ void EntityRotateSpittlebone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
         break;
 
@@ -201,7 +196,7 @@ void EntitySpittleBoneSpit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180CB8);
+        InitializeEntity(g_EInitSpittleBoneSpit);
         self->ext.spittleBone.unk82 = 0;
         self->rotX = 0;
         self->rotY = 0;

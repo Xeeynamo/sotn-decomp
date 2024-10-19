@@ -2,7 +2,7 @@
 #include "np3.h"
 
 // Make a EntityWargExplosionPuffOpaque
-void func_801B653C(void) {
+void CreateExplosionPuff(void) {
     Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
@@ -34,7 +34,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_8018129C[params];
         self->palette = obj->palette + 0xD0;

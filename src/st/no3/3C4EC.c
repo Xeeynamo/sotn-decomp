@@ -9,7 +9,7 @@ void EntityPushAlucard(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 255;
@@ -60,7 +60,7 @@ void EntityPushAlucard(Entity* entity) {
     case 4:
         player->posX.val += 0x48000;
         if (tilemap->scrollX.i.hi > 0xF80) {
-            g_api.PlaySfx(SE_NO3_ALUCARD_JUMP);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
             entity->ext.generic.unk7C.S8.unk0 = 0;
             entity->step++;
@@ -93,7 +93,7 @@ void EntityCastleDoorTransition(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.padSim = PAD_RIGHT;
         g_Player.D_80072EFC = 0xFF;
@@ -144,7 +144,7 @@ void EntityForegroundTree(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         EntRange = &g_Entities[192];
         self->unk68 = var_s3;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
@@ -221,7 +221,7 @@ void EntityUnkId50(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         ptr = D_801814EC;
         temp = &g_Entities[192];
         self->unk68 = 0xC0;
@@ -291,7 +291,7 @@ void EntityBackgroundPineTrees(Entity* self) {
     var_s4 = D_801817DC[xpos];
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = selfUnk68;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -454,7 +454,7 @@ void EntityUnkId52(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         ptr = D_801817F8;
         temp = &g_Entities[192];
         self->ext.et_801BCC4C.unk7C = 0;
@@ -527,7 +527,7 @@ void EntityCastleBridge(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, primCount);
 
@@ -716,7 +716,9 @@ void EntityCastleBridge(Entity* self) {
 }
 
 // ID 0x55
-void EntityBackgroundTrees(Entity* self) {
+// Mostly just shadows in the far distance.
+// Use texture viewer to confirm.
+void EntityDistantBackgroundTrees(Entity* self) {
     Primitive* prim;
     s16 primIndex;
     s16 temp_v0_2;
@@ -725,7 +727,7 @@ void EntityBackgroundTrees(Entity* self) {
     do { //! FAKE:
         switch (self->step) {
         case 0:
-            InitializeEntity(D_80180AD0);
+            InitializeEntity(g_EInitSpawner);
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
             if (primIndex == 0) {
                 DestroyEntity(self);

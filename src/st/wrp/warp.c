@@ -2,21 +2,17 @@
 #include "wrp.h"
 #include <sfx.h>
 
-#ifdef VERSION_PSP
-static u32 g_HeartDropArray[] = {
+static u32 bg_color_angle[] = {
     0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
     0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
 };
+
+#if defined(VERSION_PSP)
 extern u32 D_80180648; // SBSS
 extern s32 D_psp_0924BC90;
-
 #else
-// this is supposed to be u16, not u32.
-// the game devs probably put the wrong type.
-extern u32 g_HeartDropArray[16];
 static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
-
 #endif
 
 static WarpCoord WarpRoomCoords[] = {
@@ -90,7 +86,7 @@ void EntityWarpRoom(Entity* self) {
     switch (self->step) {
     case 0:
         // Initialize all the objects in the warp room
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
         if (primIndex == -1) {
             self->step = 0;
@@ -310,27 +306,27 @@ void EntityWarpRoom(Entity* self) {
 
     prim = self->ext.warpRoom.primBg;
     for (i = 0; i < 16; i++) {
-        angle = g_HeartDropArray[(i + 0) % 16];
+        angle = bg_color_angle[(i + 0) % 16];
         prim->r0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 5) % 16];
+        angle = bg_color_angle[(i + 5) % 16];
         prim->g0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 10) % 16];
+        angle = bg_color_angle[(i + 10) % 16];
         prim->b0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 1) % 16];
+        angle = bg_color_angle[(i + 1) % 16];
         prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 6) % 16];
+        angle = bg_color_angle[(i + 6) % 16];
         prim->g1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 11) % 16];
+        angle = bg_color_angle[(i + 11) % 16];
         prim->b1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             WarpBackgroundBrightness;
-        g_HeartDropArray[i] += 0x20;
+        bg_color_angle[i] += 0x20;
         prim = prim->next;
     }
 }

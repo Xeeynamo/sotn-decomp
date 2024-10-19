@@ -340,7 +340,7 @@ static s32 func_ptr_80170014(Entity* self) {
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = self->hitboxWidth = 8;
-        g_api.PlaySfx(0x6EE);
+        g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
         self->ext.weapon.unk7E = 0x40;
         g_Player.timers[10] = 4;
         self->step++;

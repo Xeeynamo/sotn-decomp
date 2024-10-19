@@ -18,7 +18,7 @@ void EntityRoomTransition2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         tilemap->y = 0xFC;
         g_Player.padSim = PAD_RIGHT;
         D_8003C8B8 = 0;
@@ -131,7 +131,7 @@ void EntityDeathStolenItem(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         break;
 
     case 1:
@@ -292,7 +292,7 @@ void EntityDeath(Entity* self) {
         if (g_CutsceneFlags & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                InitializeEntity(g_eInitGeneric2);
+                InitializeEntity(g_EInitCommon);
                 self->animSet = ANIMSET_OVL(8);
                 self->palette = 0x2D6;
                 self->unk5A = 0x44;
@@ -363,7 +363,7 @@ void EntityDeath(Entity* self) {
         if (!(self->rotZ & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(E_DEATH_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
                 newEntity->rotZ = self->rotZ;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -545,7 +545,7 @@ void EntityDeath(Entity* self) {
         if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_DEATH_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
@@ -570,7 +570,7 @@ void EntityUnkId5B(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
@@ -592,7 +592,7 @@ void EntityUnkId5B(Entity* entity) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromCurrentEntity(E_DEATH_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
                 newEntity->animCurFrame = entity->animCurFrame;
                 newEntity->params = 1;
                 break;
@@ -604,43 +604,46 @@ void EntityUnkId5B(Entity* entity) {
     entity->ext.generic.unk7C.s = 0;
 }
 
-void EntityUnkId5E(Entity* entity) {
+// When meeting Death, the scythe spins around, leaving behind semi-transparent
+// copies of itself. This entity represents those semi-transparent copies.
+// Identified through NOP-out in emulator.
+void EntityDeathScytheShadow(Entity* self) {
     s16 animCurFrame;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        animCurFrame = entity->animCurFrame;
-        InitializeEntity(g_eInitGeneric2);
-        entity->animCurFrame = animCurFrame;
-        entity->animSet = ANIMSET_OVL(8);
-        entity->palette = 0x2D6;
-        entity->unk5A = 0x44;
-        if (entity->params != 0) {
-            entity->drawFlags = FLAG_DRAW_UNK8;
-            entity->ext.generic.unk84.U16.unk0 = 0x40;
+        animCurFrame = self->animCurFrame;
+        InitializeEntity(g_EInitCommon);
+        self->animCurFrame = animCurFrame;
+        self->animSet = ANIMSET_OVL(8);
+        self->palette = 0x2D6;
+        self->unk5A = 0x44;
+        if (self->params != 0) {
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->ext.deathScythe.timer = 0x40;
         } else {
-            entity->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
-            entity->ext.generic.unk84.U16.unk0 = 0x20;
+            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+            self->ext.deathScythe.timer = 0x20;
         }
-        entity->unk6C = 0x40;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->unk6C = 0x40;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         break;
 
     case 1:
-        if (!(--entity->ext.generic.unk84.U16.unk0)) {
-            DestroyEntity(entity);
+        if (!(--self->ext.deathScythe.timer)) {
+            DestroyEntity(self);
             break;
         }
-        if (entity->params != 0) {
-            entity->unk6C = (s8)entity->unk6C - 1;
+        if (self->params != 0) {
+            self->unk6C--;
         } else {
-            entity->unk6C += -2;
+            self->unk6C += -2;
         }
         break;
     }
 }
 
-void func_801C13F8() {
+void CreateExplosionPuff() {
     Entity* entity;
     s16 temp_s3;
     s8 temp_s4;
@@ -676,7 +679,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_80181C5C[params];
         self->palette = obj->palette + 0xD0;

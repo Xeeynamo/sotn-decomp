@@ -122,11 +122,19 @@ mod tests {
             name: String::from("func1"),
             ops: vec![],
             key: vec![1, 2, 3],
+            decompiled: false,
+            dir: String::from("testdir1"),
+            file: String::from("testfile1"),
+            similarity: 0.0,
         };
         let func2 = Function {
             name: String::from("func2"),
             ops: vec![],
             key: vec![1, 2, 3],
+            decompiled: false,
+            dir: String::from("testdir2"),
+            file: String::from("testfile2"),
+            similarity: 0.0,
         };
 
         map.insert(func1.key.clone(), func1.clone());
@@ -144,11 +152,19 @@ mod tests {
             name: String::from("func1"),
             ops: vec![],
             key: vec![1, 2, 3],
+            decompiled: false,
+            dir: String::from("testdir1"),
+            file: String::from("testfile1"),
+            similarity: 0.0,
         };
         let func2 = Function {
             name: String::from("func2"),
             ops: vec![],
             key: vec![4, 5, 6],
+            decompiled: false,
+            dir: String::from("testdir2"),
+            file: String::from("testfile2"),
+            similarity: 0.0,
         };
 
         map.insert(func1.key.clone(), func1.clone());

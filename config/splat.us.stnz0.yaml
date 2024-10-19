@@ -47,6 +47,7 @@ segments:
       - [0xFA4, .data, 33C3C]
       - [0x1010, .data, bossfight]
       - [0x13A4, .data, e_elevator]
+      - [0x13BC, .data, d_prize_drops]
       - [0x13C8, .data, cutscene]
       - [0x1474, .data, maria]
       - [0x1574, .data, st_update]

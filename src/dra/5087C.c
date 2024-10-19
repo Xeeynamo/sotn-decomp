@@ -1080,7 +1080,7 @@ void DrawMapCursor(void) {
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
         if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0 ||
-            D_8003C708.flags & 0x60) {
+            D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
         D_801375C8 = 1;
@@ -1192,10 +1192,10 @@ void RunMainEngine(void) {
         g_backbufferY = 0;
         func_800F14CC();
         LoadRoomLayer(D_801375BC.def->tileLayoutId);
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & FLAG_UNK_20) {
             LoadGfxAsync(ANIMSET_DRA(3));
         }
-        if (D_8003C708.flags & 0x40) {
+        if (D_8003C708.flags & FLAG_UNK_40) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
         D_80097910 = g_StagesLba[g_StageId].unk18;
@@ -1206,7 +1206,7 @@ void RunMainEngine(void) {
             D_80097910 = MU_METAMORPHOSIS;
 #endif
         }
-        if ((D_8003C730 == 0) && !(D_8003C708.flags & 0x20)) {
+        if ((D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
             PlaySfx(D_80097910);
         }
         D_80097928 = 0;
@@ -1504,7 +1504,7 @@ void RunMainEngine(void) {
                     UnMuteCd();
                 } else {
                     UnMuteCd();
-                    if (!(D_8003C708.flags & 0x60)) {
+                    if (!(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20))) {
                         PlaySfx(D_80097910);
                         if (D_80097910 != 0) {
                             D_80097928 = 0;
@@ -1643,7 +1643,7 @@ void RunMainEngine(void) {
                 D_801375A0 = PLAYER.posY.val;
                 PLAYER.posX.i.hi = D_801375C0 + g_Tilemap.scrollX.i.hi;
                 PLAYER.posY.i.hi = D_801375C4 + g_Tilemap.scrollY.i.hi;
-                if (D_8003C708.flags & 0x60) {
+                if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
                     LoadGfxAsync(ANIMSET_DRA(1));
                 }
                 func_800EA538(2);
@@ -1661,10 +1661,10 @@ void RunMainEngine(void) {
                 PLAYER.posY.i.hi = (u8)PLAYER.posY.i.hi;
                 PLAYER.posX.i.hi = (u8)PLAYER.posX.i.hi;
                 LoadRoomLayer(D_801375BC.def->tileLayoutId);
-                if (D_8003C708.flags & 0x20) {
+                if (D_8003C708.flags & FLAG_UNK_20) {
                     LoadGfxAsync(ANIMSET_DRA(3));
                 }
-                if (D_8003C708.flags & 0x40) {
+                if (D_8003C708.flags & FLAG_UNK_40) {
                     LoadGfxAsync(ANIMSET_DRA(4));
                 }
                 g_Tilemap.x =

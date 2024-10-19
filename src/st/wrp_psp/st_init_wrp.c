@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
+#include "../pfn_entity_update.h"
 
 // entity table to allocate new entities
 extern PfnEntityUpdate* D_08C6BC30;

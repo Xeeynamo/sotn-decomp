@@ -1081,7 +1081,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        PlaySfx(SFX_UNK_6DF);
+        PlaySfx(SFX_CRASH_CROSS);
         PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         g_Player.timers[12] = 4;
@@ -1439,7 +1439,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
 // Entity ID 45. Created by factory blueprint 81.
 // That blueprint is used in ControlBatForm, when step_s is 4.
 // Also, when bat familiar shoots a fireball, the blueprint
-// is used in func_80172C30.
+// is used in UpdateBatAttackMode.
 
 void EntityBatFireball(Entity* self) {
     // This is a 1 when a bat familiar is shooting, and a 0

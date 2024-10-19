@@ -39,19 +39,20 @@ segments:
       - [0x1C4, .data, header] # layers
       - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, e_laydef] # layout entries header
-      - [0x924, data]
+      - [0x924, .data, e_init]
       - [0xAAC, data]
-      - [0xDC0, data]
-      - [0xDD0, data]
+      - [0xDC0, .data, 377D4]
+      - [0xDD0, .data, 377D4]
       - [0xE50, data]
       - [0xE70, data]
       - [0xE80, data]
       - [0xE90, data]
-      - [0xEA0, data]
-      - [0x11F0, data]
+      - [0xEA0, .data, entrance_stage_entities]
+      - [0x13A8, data]
       - [0x1ACC, .data, cutscene]
       - [0x1AD4, data]
       - [0x1B40, data]
+      - [0x1C8C, .data, d_prize_drops]
       - [0x1CC0, .data, st_update]
       - [0x1CEC, .data, collision]
       - [0x20AC, .data, e_red_door]
@@ -78,8 +79,8 @@ segments:
       - [0x26638, .data, tile_data] # tile definitions
       - [0x2EA68, .data, sprites]
       - [0x373E0, data]
-      - [0x373E8, .rodata, 377D4] # EntityCastleDoor
-      - [0x37400, .rodata, 377D4] # EntityStairwayPiece
+      - [0x373E8, .rodata, entrance_stage_entities] # EntityCastleDoor
+      - [0x37400, .rodata, entrance_stage_entities] # EntityStairwayPiece
       - [0x37414, .rodata, 3C4EC]
       - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, .rodata, cutscene] # actor names
@@ -98,15 +99,17 @@ segments:
       - [0x37698, .rodata, e_fire_warg] # EntityFireWarg
       - [0x376D0, rodata] # EntityFireWargWaveAttack
       - [0x376E8, .rodata, 4ED60] # EntityUnkId2F
-      - [0x376FC, rodata] # D_801B76FC
-      - [0x37704, rodata] # EntityWarg
-      - [0x37738, .rodata, 516B4]
+      - [0x376FC, .rodata, 4F58C] # EntityWarg RECT
+      - [0x37704, .rodata, 4F58C] # EntityWarg
+      - [0x37738, .rodata, e_merman2]
       - [0x3775C, .rodata, 53F38]
       - [0x37784, .rodata, e_bone_scimitar]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
       - [0x377D4, c]
+      - [0x37A64, c, e_breakable]
+      - [0x37B98, c, entrance_stage_entities]
       - [0x3C4EC, c]
       - [0x3E134, c]
       - [0x3E544, c, cutscene]
@@ -122,8 +125,9 @@ segments:
       - [0x4AFF0, c]
       - [0x4C5A4, c, e_fire_warg]
       - [0x4ED60, c]
+      - [0x4F58C, c]
       - [0x50A2C, c, player_water_effect]
-      - [0x516B4, c]
+      - [0x516B4, c, e_merman2]
       - [0x53F38, c]
       - [0x559d0, c, e_bone_scimitar]
       - [0x56264, c]

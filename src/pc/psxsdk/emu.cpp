@@ -10,7 +10,11 @@
 #include "../../main/psxsdk/libsnd/libsnd_i.h"
 
 // adjust SS_SEQ_TABSIZ in include/psxsdk/libsnd.h accordingly
+#ifdef PLATFORM_64BIT
 static_assert(sizeof(SeqStruct) == 192, "SS_SEQ_TABSIZ check");
+#else
+static_assert(sizeof(SeqStruct) == 172, "SS_SEQ_TABSIZ check");
+#endif
 
 PS_SPU* SPU = nullptr;
 
@@ -127,7 +131,7 @@ extern "C" u16 read_16(u32 addr, char* file, int line)
 
 extern "C" void write_dma(u32 data, char* file, int line)
 {
-    writes.push_back({SPU->RWAddr, data, file, line, 1});
+    writes.push_back({SPU->RWAddr, (u16)data, file, line, 1});
     SPU->WriteDMA(data);
 }
 
@@ -258,8 +262,8 @@ extern unsigned short _svm_okon1;
 extern unsigned short _svm_okon2;
 extern unsigned short _svm_okof1;
 extern unsigned short _svm_okof2;
-extern unsigned short _svm_orev1;
-extern unsigned short _svm_orev2;
+extern "C" unsigned short _svm_orev1;
+extern "C" unsigned short _svm_orev2;
 
 extern "C" s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
                s16 voll, s16 volr);
@@ -376,9 +380,9 @@ void test_spu_vm_do_allocate()
 }
 
 extern "C" void SsInitHot(void);
-extern u8 aPbav[0x3000];
-extern s32 g_VabAddrs[];
-extern u8 D_8013B6A0[269488];
+extern "C" u8 aPbav[0x3000];
+extern "C" s32 g_VabAddrs[];
+extern "C" u8 D_8013B6A0[269488];
 
 extern "C" void SsVabClose(s16 vabid);
 

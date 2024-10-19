@@ -29,26 +29,6 @@ typedef struct {
     MyLayer* bg;
 } MyRoomDef;
 
-#if defined(VERSION_PSP)
-// A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity** g_pStObjLayoutHorizontal;
-// A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity** g_pStObjLayoutVertical;
-
-#else
-// A horizontally ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-// A vertically ordered array with head and tail sigils in the 1st field
-extern LayoutEntity* g_pStObjLayoutVertical[];
-
-#endif
-
-#if defined(VERSION_PSP)
-extern PfnEntityUpdate* PfnEntityUpdates;
-#else
-extern PfnEntityUpdate PfnEntityUpdates[];
-#endif
-
 extern u16 g_ItemIconSlots[32];
 
 /*
@@ -79,26 +59,12 @@ void MoveEntity();
 void FallEntity(void);
 Entity* AllocEntity(Entity* start, Entity* end);
 
-/*
- * `EntityInit` is used to define initialization options
- * for entities. This is treated as a `u16[]` by
- * `InitializeEntity` but is defined as a struct for
- * convenience and readability as well as providing the
- * correct layout and size for these entries.
- */
-typedef struct EntityInit {
-    u16 animSet;
-    u16 animCurFrame;
-    u16 unk5A;
-    u16 palette;
-    u16 enemyId;
-    u16 : 16;
-} EntityInit;
+// used by InitializeEntity to pre-fill certain entity fields
+// cannot be declared as a struct, field order:
+// animSet, animCurFrame, unk5A, palette, enemyID
+typedef u16 EInit[5];
 
-/*
- * InitializeEntity takes a EntityInit but treats it as
- * a `u16[]`.
- */
+// InitializeEntity takes a EInit but treats it as a `u16[]`
 void InitializeEntity(u16 arg0[]);
 
 #endif

@@ -9,7 +9,7 @@ void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
     if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_OVL(0x1B6);
         self->unk6C = 0x70;

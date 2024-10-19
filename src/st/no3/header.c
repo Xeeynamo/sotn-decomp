@@ -2,10 +2,11 @@
 #include "no3.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** spriteBanks[];
-extern void* Cluts[];
-extern MyRoomDef rooms_layers[];
-extern GfxBank* g_GfxBanks[];
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long* OVL_EXPORT(cluts)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
@@ -14,11 +15,11 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = spriteBanks,
-    .cluts = Cluts,
-    .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = rooms_layers,
-    .gfxBanks = g_GfxBanks,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
+    .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
@@ -51,7 +52,7 @@ extern u16* D_80198118[0x80];
 extern u16* D_80198318[0x80];
 
 // n.b.! very similar to np3
-static u16** Clut[] = {
+static u_long* Clut[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
     PAL_BULK(0xD00, D_80198578),
     PAL_BULK(0x2000, D_801966B8),
@@ -81,7 +82,7 @@ static u16** Clut[] = {
     PAL_TERMINATE(),
 };
 
-static void* Cluts[] = {
+u_long* OVL_EXPORT(cluts)[] = {
     Clut,
 };
 
@@ -204,7 +205,7 @@ static GfxBank D_801806D0 = {
 };
 static u_long D_801806D0_TERM = GFX_TERMINATE();
 
-static GfxBank* g_GfxBanks[] = {
+u_long* OVL_EXPORT(gfxBanks)[] = {
     &D_801805A4, &D_801805D8, &D_8018061C, &D_8018066C, &D_8018068C,
     &D_801805B8, &D_801806D0, &D_801805A4, &D_801805A4, &D_801805A4,
     &D_801805A4, &D_801805A4, &D_801805A4, &D_801805A4, &D_801805A4,

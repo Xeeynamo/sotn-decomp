@@ -2,10 +2,11 @@
 #include "mad.h"
 
 extern RoomHeader g_Rooms[];
-extern SpriteParts** SpriteBanks[];
-extern void* Cluts[];
-extern RoomDef g_TileLayers[];
-extern GfxBank* g_pStTileset[];
+extern s16** OVL_EXPORT(spriteBanks)[];
+extern u_long* OVL_EXPORT(cluts)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 void func_8018E1D4();
 
@@ -15,11 +16,11 @@ static Overlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = g_Rooms,
-    .spriteBanks = SpriteBanks,
-    .cluts = Cluts,
-    .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = g_TileLayers,
-    .gfxBanks = g_pStTileset,
+    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .cluts = OVL_EXPORT(cluts),
+    .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
+    .tileLayers = OVL_EXPORT(rooms_layers),
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
     .unk2c = NULL,
     .unk30 = NULL,
@@ -28,22 +29,20 @@ static Overlay OVL_EXPORT(Overlay) = {
     .StageEndCutScene = func_8018E1D4,
 };
 
-extern SpriteParts* D_8018CAA8[];
-
-static SpriteParts** SpriteBanks[] = {
+extern s16* D_8018CAA8[];
+s16** OVL_EXPORT(spriteBanks)[] = {
     NULL, D_8018CAA8, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
 };
 
 extern u16* D_80182058[0x10];
-
-static u16** Clut[] = {
+static u_long* Clut[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
     PAL_BULK(0x2000, D_80182058),
     PAL_TERMINATE(),
 };
 
-static void* Cluts[] = {
+u_long* OVL_EXPORT(cluts)[] = {
     Clut,
 };

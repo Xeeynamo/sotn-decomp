@@ -723,7 +723,7 @@ void func_8011A290(Entity* entity) {
 void func_8011A328(Entity* entity, s32 arg1) {
     SpellDef spell;
 
-    func_800FD9D4(&spell, arg1);
+    GetSpellDef(&spell, arg1);
     entity->attack = spell.attack;
     entity->attackElement = spell.attackElement;
     entity->hitboxState = spell.hitboxState;
@@ -734,21 +734,27 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_80118894(entity);
 }
 
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out) {
+/// @brief Fetches current FamiliarStats and
+/// @param servant Entity to update with spell or attack information
+/// @param spellId Spell/attack to execute
+/// @param fetchSpell Fndicates if spell information should be fetched
+/// @param out Fetched FamiliarStats set here
+void GetServantStats(
+    Entity* servant, s32 spellId, s32 fetchSpell, FamiliarStats* out) {
     SpellDef spell;
 
     *out = g_Status.statsFamiliars[g_Servant - 1];
-    if (arg2 != 0) {
-        func_800FD9D4(&spell, spellId);
-        entity->attack = spell.attack;
-        entity->attackElement = spell.attackElement;
-        entity->hitboxState = spell.hitboxState;
-        entity->nFramesInvincibility = spell.nFramesInvincibility;
-        entity->stunFrames = spell.stunFrames;
-        entity->hitEffect = spell.hitEffect;
-        entity->entityRoomIndex = spell.entityRoomIndex;
-        entity->attack = spell.attack * ((out->level * 4 / 95) + 1);
-        func_80118894(entity);
+    if (fetchSpell) {
+        GetSpellDef(&spell, spellId);
+        servant->attack = spell.attack;
+        servant->attackElement = spell.attackElement;
+        servant->hitboxState = spell.hitboxState;
+        servant->nFramesInvincibility = spell.nFramesInvincibility;
+        servant->stunFrames = spell.stunFrames;
+        servant->hitEffect = spell.hitEffect;
+        servant->entityRoomIndex = spell.entityRoomIndex;
+        servant->attack = spell.attack * ((out->level * 4 / 95) + 1);
+        func_80118894(servant);
     }
 }
 

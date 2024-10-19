@@ -78,7 +78,9 @@ u32 g_olroxDroolCollOffsets[] = {
 
 #include "unk_collision_func5.h"
 
+#if !defined(STAGE_IS_NO0)
 #include "unk_collision_func4.h"
+#endif
 
 #include "entity_intense_explosion.h"
 
@@ -135,10 +137,11 @@ void func_801966B0(u16* sensors) {
 
 #include "make_explosions.h"
 
-u16 g_UnkRecursPrimVecOrder[] = {
-    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "entity_big_red_fireball.h"
 
+#if !defined(STAGE_IS_NO0)
+u16 g_UnkRecursPrimVecOrder[] = {
+    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "unk_recursive_primfunc_1.h"
 
 u16 g_UnkRecursPrim2Inds[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8,
@@ -151,6 +154,7 @@ u16 g_UnkRecursPrim2Inds[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8,
 };
 
 #include "unk_recursive_primfunc_2.h"
+#endif
 
 #include "clut_lerp.h"
 

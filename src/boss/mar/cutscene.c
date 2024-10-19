@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
+#include "mar.h"
+#include "../../st/pfn_entity_update.h"
 #include <cutscene.h>
 
 #include "mar.h"
@@ -574,7 +575,7 @@ void func_us_8018C90C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitMaria);
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_RIGHT;

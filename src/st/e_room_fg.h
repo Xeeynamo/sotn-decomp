@@ -21,12 +21,12 @@ extern ObjInit eRoomForegroundInit[];
 
 #endif
 
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &eRoomForegroundInit[entity->params];
 
     if (!entity->step) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk5A;

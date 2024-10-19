@@ -119,7 +119,7 @@ void EntitySlogra(Entity* self) {
 
     switch (self->step) {
     case SLOGRA_INIT:
-        InitializeEntity(D_80180D0C);
+        InitializeEntity(g_EInitSlogra);
         CreateEntityFromCurrentEntity(E_SLOGRA_SPEAR, &self[1]);
 
     case SLOGRA_FLOOR_ALIGN:
@@ -470,7 +470,7 @@ void EntitySlograSpear(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D18);
+        InitializeEntity(g_EInitSlograSpear);
 
     case 1:
         self->facingLeft = self[-1].facingLeft;
@@ -529,7 +529,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D24);
+        InitializeEntity(g_EInitSlograProjectile);
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-4);
         } else {

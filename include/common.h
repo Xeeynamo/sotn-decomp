@@ -19,6 +19,21 @@
 #define VERSION "us"
 #endif
 
+#if defined(_MSC_VER)
+#if defined(_WIN64) || defined(_M_X64) || defined(_M_ARM64)
+#define PLATFORM_64BIT
+#endif
+#elif defined(__GNUC__) || defined(__clang__) || defined(__MWERKS__)
+#if defined(__x86_64__) || defined(__aarch64__) || defined(__ppc64__) ||       \
+    defined(__powerpc64__) || defined(__riscv_xlen)
+#define PLATFORM_64BIT
+#endif
+#else
+#if (defined(__LP64__) || defined(_LP64))
+#define PLATFORM_64BIT
+#endif
+#endif
+
 #include "include_asm.h"
 #include "settings.h"
 #include "types.h"
@@ -34,8 +49,15 @@
 #define __builtin_memcpy memcpy
 #endif
 
+#ifdef _MSC_VER
+#define ZERO_LEN 1
+#else
+#define ZERO_LEN 0
+#endif
+
 #if defined(VERSION_PC)
 #ifndef _MSC_VER
+#include <assert.h>
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
 #else
@@ -44,7 +66,7 @@
 #endif
 
 #elif defined(VERSION_PSP)
-#define STATIC_ASSERT(x)
+#define STATIC_ASSERT(x, y)
 #define PACKED
 
 #else

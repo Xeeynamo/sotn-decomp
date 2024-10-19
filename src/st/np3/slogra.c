@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NP3
- * Enemy: Slogra & Gaibon Boss
- */
-
 #include "np3.h"
 #include "sfx.h"
 
@@ -91,7 +86,7 @@ void EntitySlogra(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_80180B44);
+        InitializeEntity(g_EInitSlograNP3);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromCurrentEntity(E_SLOGRA_SPEAR, &self[1]);
 
@@ -423,7 +418,7 @@ void EntitySlograSpear(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B50);
+        InitializeEntity(g_EInitSlograSpearNP3);
 
     case 1:
         self->facingLeft = self[-1].facingLeft;
@@ -482,7 +477,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B5C);
+        InitializeEntity(g_EInitSlograProjectileNP3);
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-4);
         } else {

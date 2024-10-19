@@ -116,7 +116,7 @@ extern Overlay g_StageSel;
 s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
-void InitStageSel(Overlay* o) {
+void InitStageSEL(Overlay* o) {
     memcpy(o, &g_StageSel, sizeof(Overlay));
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;

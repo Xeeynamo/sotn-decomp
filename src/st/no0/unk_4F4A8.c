@@ -22,11 +22,11 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D191C);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D20A4);
 
-extern u16 g_EInitGeneric[];
+extern u16 g_EInitInteractable[];
 
 void func_us_801D2318(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
     }
     if ((entity - 1)->entityId != 0x2E) {
         DestroyEntity(entity);
@@ -110,9 +110,9 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D66F8);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D75E4);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntitySkeleton);
+INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7670);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntitySkeletonPieces);
+INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7B40);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7C20);
 
@@ -135,41 +135,3 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DA488);
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DA6B4);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DADD0);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_801C3F9C);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_801C4198);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_801C4550);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntityAxeKnight);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntityAxeKnightRotateAxe);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntityAxeKnightThrowingAxe);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DBDCC);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DC194);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DC64C);
-
-void func_us_801DC754(void) {
-    g_CurrentEntity->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-}
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DC788);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", SkeletonAttackCheck);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DCB48);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DD018);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntitySkeletonThrownBone);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_801C6678);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DD2B0);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", EntityMagicallySealedDoor);

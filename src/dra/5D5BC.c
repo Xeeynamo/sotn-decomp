@@ -213,7 +213,7 @@ void AddToInventory(u16 id, EquipKind kind) {
     }
 }
 
-void func_800FD9D4(SpellDef* spell, s32 id) {
+void GetSpellDef(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(ITEM_MOJO_MAIL, EQUIP_ARMOR) != 0) {

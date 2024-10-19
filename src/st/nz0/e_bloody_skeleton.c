@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NZ0
- * Enemy: Blood Skeleton
- */
-
 #include "nz0.h"
 #include "sfx.h"
 
@@ -46,7 +41,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
-        InitializeEntity(D_80180C40);
+        InitializeEntity(g_EInitBloodySkeleton);
         self->facingLeft = (u32)Random() % 2;
         self->animCurFrame = 1;
         self->flags &=
@@ -131,7 +126,10 @@ void EntityBloodSkeleton(Entity* self) {
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
                 self->hitboxState = 3;
-                self->flags = g_api.enemyDefs[70].flags & 0x1FFFFFFF;
+                self->flags =
+                    g_api.enemyDefs[70].flags &
+                    ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                      FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
                 SetStep(BLOOD_SKELETON_WALK);
             }
         }

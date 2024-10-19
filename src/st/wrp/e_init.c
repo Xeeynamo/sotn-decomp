@@ -10,7 +10,7 @@ void EntityGreyPuff(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
-PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,       EntityExplosion,         EntityPrizeDrop,
     EntityDamageDisplay,   EntityRedDoor,           EntityIntenseExplosion,
     EntitySoulStealOrb,    EntityRoomForeground,    EntityStageNamePopup,
@@ -23,46 +23,13 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityWarpRoom,        EntityWarpSmallRocks,
 };
 
-u16 g_eBreakableInit[] = {
-    0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
-u16 g_InitializeData0[] = {
-    0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
-};
-u16 g_InitializeEntityData0[] = {
-    0x0003, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
-};
-u16 g_MariaInit[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000,
-};
-u16 g_EInitGeneric[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
-};
-u16 g_InitDataEnt13[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
-};
-u16 g_EntityUnkId12Init[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
-};
-u16 g_eInitGeneric2[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
-};
-u16 g_eDamageDisplayInit[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
-};
-u16 D_801804AC[] = {
-    0x8001, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
-};
-u16 g_EInitReverseSmallRocks[] = {
-    0x800B, 0x0001, 0x0048, 0x021A, 0x0061, 0x0000,
-};
-u16 g_EInitSmallRocks[] = {
-    0x8001, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
-};
+#include "../e_init_common.h"
+EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(11), 1, 0x48, 0x21A, 97};
+EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0, 0x00, 0x000, 5};
 
 static u32 D_801804D0[] = {0x00FF0140};
 static u32 D_801804D4[] = {0x26022502, 0x26022702, 0x00000000};
-ObjInit g_eBackgroundBlockInit[] = {
+ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
     {0x0006, 0x01FA, 0x0000, 0x0000, 0x00, 0x10, 0x00000000, D_801804D0},
     {0x8001, 0x00C0, 0x0000, 0x0000, 0x03, 0x30, 0x00000000, D_801804D4},
 };
@@ -70,7 +37,7 @@ ObjInit g_eBackgroundBlockInit[] = {
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
 // There is a loop in EntityRedDoor that forces to write those tiles
 // at every frame based on the door state to create the animation.
-u16 g_eRedDoorTiles[][8] = {
-    {0x1D, 0x25, 0x75, 0x7D, 0xC6, 0xC7, 0xC8, 0xC9},
-    {0x1F, 0x27, 0x77, 0x7F, 0xCA, 0xCB, 0xCC, 0xCD},
+u16 OVL_EXPORT(RedDoorTiles)[][8] = {
+    {0x01D, 0x025, 0x075, 0x07D, 0x0C6, 0x0C7, 0x0C8, 0x0C9},
+    {0x01F, 0x027, 0x077, 0x07F, 0x0CA, 0x0CB, 0x0CC, 0x0CD},
 };

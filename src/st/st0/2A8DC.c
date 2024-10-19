@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: ST0
- * Entity: Secret Stairs
- */
-
 #include "st0.h"
 #include "sfx.h"
 
@@ -141,8 +136,8 @@ void EntitySecretStairs(Entity* self) {
         InitializeEntity(D_80180628);
         self->animCurFrame = 1;
         if (self->params == 0) {
-            self->ext.generic.unk84.U8.unk0 = true;
-            newEntity = &self[1];
+            self->ext.secretStairs.unk84 = true;
+            newEntity = self + 1;
             for (i = 0; i < 3; i++) {
                 CreateEntityFromCurrentEntity(E_SECRET_STAIRS, newEntity);
                 newEntity->params = i + 1;
@@ -150,7 +145,7 @@ void EntitySecretStairs(Entity* self) {
             }
 
         } else {
-            self->ext.generic.unk84.U8.unk0 = false;
+            self->ext.secretStairs.unk84 = false;
             if (self->params == 3) {
                 self->animCurFrame = 2;
                 self->zPriority += 1;
@@ -195,9 +190,11 @@ void EntitySecretStairs(Entity* self) {
         break;
 
     case 3:
-        if (!self->ext.generic.unk84.U8.unk0) {
-            self->posX.i.hi = self[-1].posX.i.hi;
-            self->posY.i.hi = self[-1].posY.i.hi;
+        if (!self->ext.secretStairs.unk84) {
+            // TODO: What is self - 1? In case 0 we create self + 1, but
+            // it's not clear what entity comes before us.
+            self->posX.i.hi = (self - 1)->posX.i.hi;
+            self->posY.i.hi = (self - 1)->posY.i.hi;
             if (self->params == 3) {
                 self->posX.i.hi += 16;
                 self->posY.i.hi += 16;
@@ -230,7 +227,7 @@ void EntitySecretStairs(Entity* self) {
                 self->posX.i.hi = temp_s0 - g_Tilemap.scrollX.i.hi;
                 self->posY.i.hi = temp_s1 - g_Tilemap.scrollY.i.hi;
                 if (self->params != 3) {
-                    self[1].ext.stub[0x8] = 1;
+                    (self + 1)->ext.secretStairs.unk84 = 1;
                 } else {
                     tilePos = &D_801808B0;
                     while (*tilePos != 0xFFFF) {

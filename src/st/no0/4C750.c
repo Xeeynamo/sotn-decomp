@@ -57,7 +57,7 @@ extern s32 D_80097408[];
 
 void func_us_801CC8F8(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 3;
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x54;

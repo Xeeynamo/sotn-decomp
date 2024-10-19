@@ -4,9 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stage_loader.h"
-#include "cen.h"
-
-extern Overlay OVL_EXPORT(Overlay);
+#include "../st/cen/cen.h"
 
 u16 D_8018658C[0x80];
 u16 D_8018678C[0x80];
@@ -18,6 +16,13 @@ u8 D_80181658[836];
 u8 D_8018199C[8356];
 u8 D_80185830[3420];
 
+extern Overlay OVL_EXPORT(Overlay);
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+extern LayoutEntity* OVL_EXPORT(pStObjLayoutVertical)[];
+extern PfnEntityUpdate* PfnEntityUpdates;
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+extern LayoutEntity** g_pStObjLayoutVertical;
 void InitStageCEN(Overlay* o) {
     LoadReset();
     LOAD_ASSET("assets/st/cen/D_8018658C.bin", D_8018658C);
@@ -30,4 +35,7 @@ void InitStageCEN(Overlay* o) {
     LOAD_ASSET("assets/st/cen/D_8018199C.bin", D_8018199C);
     LOAD_ASSET("assets/st/cen/D_80185830.bin", D_80185830);
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
+    g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }
