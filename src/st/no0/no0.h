@@ -48,3 +48,6 @@ extern u16 g_EInitAxeKnightAxe[];
 extern u16 g_EInitSkeleton[];
 extern u16 g_EInitSkeletonPieces[];
 extern u16 g_EInitSkeletonBone[];
+
+// Clock room
+extern u16 g_Statues[];

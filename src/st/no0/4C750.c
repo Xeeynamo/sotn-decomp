@@ -77,10 +77,4 @@ void func_us_801CC8F8(Entity* self) {
 
 INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CC9B4);
 
-INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CCAAC);
-
-INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CCBE4);
-
-INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CCC2C);
-
 INCLUDE_RODATA("st/no0/nonmatchings/4C750", D_us_801C14A8);

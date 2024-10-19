@@ -89,7 +89,7 @@ segments:
       - [0x4A21C, c, blit_char]
       - [0x4A4CC, c, e_misc]
       - [0x4C750, c]
-      - [0x4CC74, c, clock_room]
+      - [0x4CAAC, c, clock_room]
       - [0x4E2E0, c]
       - [0x4E654, c, e_stage_name]
       - [0x4F4A8, c, unk_4F4A8]

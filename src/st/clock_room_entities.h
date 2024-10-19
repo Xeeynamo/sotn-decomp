@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sfx.h"
 
 void EntityClockHands(Entity* self) {
@@ -163,9 +164,13 @@ void EntityStatue(Entity* self) {
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
         entity->drawFlags = FLAG_DRAW_UNK8;
+#ifdef STAGE_IS_NO0
+        entity->drawMode = DRAW_TPAGE;
+#else
         entity->blendMode = 0x10;
         entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
                         FLAG_KEEP_ALIVE_OFFCAMERA;
+#endif
         entity->posY.i.hi += 8;
         break;
 
@@ -361,11 +366,15 @@ void EntityStoneDoor(Entity* self) {
             } else {
                 self->posX.i.hi--;
             }
+#ifdef STAGE_IS_NO0
+            g_backbufferY = 1;
+#else
             if (self->ext.stoneDoor.unk80 % 2) {
                 g_backbufferY = 1;
             } else {
                 g_backbufferY = 0;
             }
+#endif
         } else {
             g_backbufferY = 0;
         }
