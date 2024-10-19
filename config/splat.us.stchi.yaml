@@ -50,7 +50,7 @@ segments:
       - [0xA4C, .data, st_collision]
       - [0xE0C, .data, en_red_door]
       - [0xE24, .data, ut_common]
-      - [0x1024, .data, e_collect]
+      - [0x1024, .data, en_collect]
       - [0x1314, .data, 23F58] # EntityRelicOrb
       - [0x1378, .data, 23F58] # EntityUnkId14Spawner
       - [0x1388, .data, 23F58] # EntityUnkId15, EntityUnkId14
@@ -100,9 +100,9 @@ segments:
       - [0x1B168, .rodata, en_debug_cerberus_gate] # jtbl_8019B168 [EntityCerberusGateDebug]
       - [0x1B180, .rodata, en_falling_stairs] # jtbl_8019B180 [EntityFallingStairs]
       - [0x1B194, .rodata, en_red_door] # jtbl_8019B194 [EntityRedDoor]
-      - [0x1B1AC, .rodata, e_collect] # CollectGold strings
-      - [0x1B1FC, .rodata, e_collect] # jtbl_8019B1FC [EntityPrizeDrop]
-      - [0x1B21C, .rodata, e_collect] # jtbl_8019B21C [EntityEquipItemDrop]
+      - [0x1B1AC, .rodata, en_collect] # CollectGold strings
+      - [0x1B1FC, .rodata, en_collect] # jtbl_8019B1FC [EntityPrizeDrop]
+      - [0x1B21C, .rodata, en_collect] # jtbl_8019B21C [EntityEquipItemDrop]
       - [0x1B234, .rodata, 23F58] # EntityRelicOrb string
       - [0x1B244, .rodata, 23F58] # jtbl_8019B244 [EntityRelicOrb]
       - [0x1B26C, .rodata, 23F58] # jtbl_8019B26C [EntityMessageBox]
@@ -133,7 +133,7 @@ segments:
       - [0x1FA64, c, ut_create_entity]
       - [0x205DC, c, en_red_door]
       - [0x2128C, c, ut_common]
-      - [0x2273C, c, e_collect]
+      - [0x2273C, c, en_collect]
       - [0x23CA8, c]
       - [0x23F58, c]
       - [0x27448, c]

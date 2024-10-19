@@ -1,7 +1,7 @@
 /*
- * File: e_collect.c
+ * File: en_collect.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Prize Collection
  */
 
 #include "chi.h"
