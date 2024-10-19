@@ -1,7 +1,7 @@
 /*
- * File: 27448.c
+ * File: en_soul_steal_orb.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Soul steal orb
  */
 
 #include "chi.h"
@@ -31,7 +31,3 @@ static u8 g_ESoulStealOrbAnim[] = {
 // [Duplicate]
 // func_801A7448: [E_SOUL_STEAL_ORB] EntitySoulStealOrb
 #include "../entity_soul_steal_orb.h"
-
-// [Duplicate]
-// func_801A77DC: [E_ENEMY_BLOOD] EntityEnemyBlood
-#include "../entity_enemy_blood.h"
