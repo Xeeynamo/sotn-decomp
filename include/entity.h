@@ -623,20 +623,6 @@ typedef struct {
     /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;
 
-typedef struct {
-    /* 0x7C */ char pad_0[0x4];
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ char pad_82[0xA];
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ char pad_8D[0xF];
-    /* 0x9C */ u16 unk9C;
-    /* 0x9E */ char pad_9E[0x8];
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 unkB0;
-} ET_GurkhaSword;
-
 struct draculaPrimitive;
 typedef struct ET_Dracula {
     /* 0x7C */ char pad_7C[4];
@@ -1431,12 +1417,12 @@ typedef struct {
 } ET_Whip;
 
 typedef struct {
-    Primitive* prim1;
-    Primitive* prim2;
-    s16 unk84;
-    s16 unk86;
-    s16 unk88;
-    struct Entity* parent;
+    /* 0x7C */ struct Primitive* prim1;
+    /* 0x80 */ struct Primitive* prim2;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8C */ struct Entity* parent;
     s16 unk90;
 } ET_801291C4;
 
@@ -1918,7 +1904,6 @@ typedef union { // offset=0x7C
     ET_RichterPowerUpRing ricPowerRing;
     ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
-    ET_GurkhaSword gurkhaSword;
     ET_Dracula dracula;
     ET_DracFinal dracFinalForm;
     ET_Succubus succubus;

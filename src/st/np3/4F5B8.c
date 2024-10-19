@@ -102,10 +102,10 @@ int func_801CF7A0(Entity* ent) {
         if (xDistance < 160) {
             g_CurrentEntity->ext.GH_Props.unk8E = 3;
             step = 6;
-            g_CurrentEntity->ext.gurkhaSword.unk8C = 1;
+            g_CurrentEntity->ext.GH_Props.unk8C = 1;
         }
         if (xDistance < 64) {
-            g_CurrentEntity->ext.gurkhaSword.unk8C = 0;
+            g_CurrentEntity->ext.GH_Props.unk8C = 0;
         }
     }
 
@@ -116,7 +116,7 @@ int func_801CF7A0(Entity* ent) {
     }
 
     if ((g_CurrentEntity->step == 7) && (step == 5)) {
-        g_CurrentEntity->ext.gurkhaSword.unkB0 = 1;
+        g_CurrentEntity->ext.GH_Props.unkB0[0] = 1;
     }
 }
 
@@ -530,11 +530,11 @@ void EntityGurkhaSword(Entity* self) {
         break;
 
     case 1:
-        angle = self->ext.gurkhaSword.unk9C;
+        angle = self->ext.GH_Props.rotZ;
         self->rotZ = angle;
         self->hitboxOffX = (u32)rsin(angle) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
-        if (self->ext.gurkhaSword.unk8C) {
+        if (self->ext.GH_Props.unk8C) {
             self->step++;
         }
         break;
@@ -550,8 +550,8 @@ void EntityGurkhaSword(Entity* self) {
     case 3:
         MoveEntity();
         self->rotZ -= 0x100;
-        self->ext.gurkhaSword.unk9C = self->rotZ;
-        self->ext.gurkhaSword.unkA6 = -0xC0;
+        self->ext.GH_Props.rotZ = self->rotZ;
+        self->ext.GH_Props.unkA6 = -0xC0;
         angle = self->rotZ;
         self->hitboxOffX = (u32)rsin(self->rotZ) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
@@ -567,7 +567,7 @@ void EntityGurkhaSword(Entity* self) {
         }
 
         if (abs(self->velocityX) == 0x80000) {
-            self->ext.gurkhaSword.unk8C = 0;
+            self->ext.GH_Props.unk8C = 0;
             self->step = 1;
         }
         break;
@@ -579,7 +579,7 @@ void EntityGurkhaSword(Entity* self) {
             angle = (Random() * 6) + 0x900;
             self->velocityX = (rnd * rcos(angle)) / 2;
             self->velocityY = rnd * rsin(angle);
-            self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
+            self->ext.GH_Props.unk80 = (Random() & 0x1F) + 0x20;
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
@@ -588,8 +588,8 @@ void EntityGurkhaSword(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            self->rotZ += self->ext.gurkhaSword.unkA6;
-            if (--self->ext.gurkhaSword.unk80 == 0) {
+            self->rotZ += self->ext.GH_Props.unkA6;
+            if (--self->ext.GH_Props.unk80 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
