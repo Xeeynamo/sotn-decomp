@@ -1622,7 +1622,7 @@ void func_801309B4(Entity* self) {
     self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s2) >> 8;
     if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
         self->animFrameDuration == -1) {
-        PlaySfx(SFX_UNK_6F7);
+        PlaySfx(SFX_ALU_WOLF_BARK);
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     }

@@ -254,8 +254,6 @@ enum SfxModes {
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2
 
-// DRA
-#define SFX_UNK_6F7 0x6F7
 
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
