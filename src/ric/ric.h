@@ -60,7 +60,7 @@ enum RicSteps {
 
 enum RicSfxs {
     SFX_VO_RIC_ATTACK_A = 0x6F9,
-    SFX_GRUNT_B,
+    SFX_VO_RIC_ATTACK_B,
     SFX_GRUNT_C,
     SFX_GRUNT_SUBWPN_A,
     SFX_HYDROSTORM = 0x700,

@@ -97,7 +97,7 @@ bool RicDoAttack(void) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }
         if (sfxGrunt == 1) {
-            g_api.PlaySfx(SFX_GRUNT_B);
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
         }
         if (sfxGrunt == 2) {
             g_api.PlaySfx(SFX_GRUNT_C);
@@ -119,7 +119,7 @@ bool RicDoAttack(void) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }
         if (sfxGrunt == 1) {
-            g_api.PlaySfx(SFX_GRUNT_B);
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
         }
         if (sfxGrunt == 2) {
             g_api.PlaySfx(SFX_GRUNT_C);
@@ -285,7 +285,7 @@ void RicSetSlideKick(void) {
     RicSetSpeedX(FIX(5.5));
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
-    g_api.PlaySfx(SFX_GRUNT_B);
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
     g_Player.timers[PL_T_12] = 4;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_31, 0);
 }
