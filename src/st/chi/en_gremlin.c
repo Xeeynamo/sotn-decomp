@@ -1,7 +1,7 @@
 /*
- * File: 297C8.c
+ * File: en_gremlin.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Gremlin
  */
 
 #include "chi.h"
