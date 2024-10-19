@@ -48,7 +48,8 @@ segments:
       - [0x9E4, .data, d_prize_drops]
       - [0xA20, .data, st_update]
       - [0xA4C, .data, st_collision]
-      - [0xEC0, .data, en_red_door]
+      - [0xE0C, .data, en_red_door]
+      - [0xE24, .data, 2128C]
       - [0x1024, .data, e_collect]
       - [0x1314, .data, 23F58] # EntityRelicOrb
       - [0x1378, .data, 23F58] # EntityUnkId14Spawner
@@ -131,6 +132,7 @@ segments:
       - [0x1E2A8, c, st_collision]
       - [0x1FA64, c, ut_create_entity]
       - [0x205DC, c, en_red_door]
+      - [0x2128C, c]
       - [0x2273C, c, e_collect]
       - [0x23CA8, c]
       - [0x23F58, c]
