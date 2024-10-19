@@ -87,7 +87,7 @@ void func_80116208(void) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.timers[2] = 8;
             g_Player.unk40 = 0x8166;
-            PlaySfx(SFX_UNK_6EB);
+            PlaySfx(SFX_VO_ALU_PAIN_E);
         }
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;

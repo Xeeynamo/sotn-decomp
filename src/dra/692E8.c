@@ -848,7 +848,7 @@ void EntityAlucard(void) {
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2C, 0x4E), 0);
                                 if (D_800ACDFC == 0) {
-                                    PlaySfx(SFX_UNK_6EB);
+                                    PlaySfx(SFX_VO_ALU_PAIN_E);
                                 }
                                 D_800ACDFC = 0x20;
                                 if (damage.damageTaken != 0) {
