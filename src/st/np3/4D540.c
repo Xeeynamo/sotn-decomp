@@ -262,12 +262,12 @@ void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
 }
 
 void func_801CDFD8(Entity* self, s32 arg1) {
-    if (self->ext.et_801CDFD8.unkB4 == 0) {
-        func_801CDD00(self, self->ext.et_801CDFD8.unkA4, arg1);
-        self->ext.et_801CDFD8.unkB4 = arg1;
+    if (self->ext.GH_Props.unkB4[0] == 0) {
+        func_801CDD00(self, self->ext.GH_Props.unkA4, arg1);
+        self->ext.GH_Props.unkB4[0] = arg1;
     }
-    self->ext.et_801CDFD8.unkB4--;
-    self->ext.et_801CDFD8.unk9C += self->ext.et_801CDFD8.unkA6;
+    self->ext.GH_Props.unkB4[0]--;
+    self->ext.GH_Props.rotZ += self->ext.GH_Props.unkA6;
     func_801CD83C(self);
 }
 
