@@ -1,7 +1,7 @@
 /*
- * File: 2A020.c
+ * File: en_thornweed_corpseweed.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Thornweed & Corpseweed
  */
 
 #include "chi.h"
