@@ -1,10 +1,95 @@
 /*
- * File: 1C5CC.c
+ * File: 1C31C.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
 #include "chi.h"
+
+extern EntityInit EntityInit_8018067C;
+
+// [Step enum]
+// E_BREAKABLE_WALL_DEBRIS
+// func_8019C31C
+void EntityBreakableWallDebris(Entity* entity) {
+    Collider collider;
+    s32 temp_a0_2;
+    s32 temp_a0_3;
+    s32 temp_v1_3;
+    s32 var_s2;
+    u16 temp_v1;
+    u16 temp_v1_2;
+    u8 temp_a0;
+    Entity* temp_v0;
+    Entity* temp_v0_2;
+
+    temp_v1 = entity->step;
+    switch (temp_v1) {
+        case 0:
+            InitializeEntity(&EntityInit_8018067C);
+            temp_a0 = entity->params;
+            entity->drawFlags = 4;
+            entity->zPriority = 0x69;
+            entity->animCurFrame = temp_a0;
+            if (entity->rotZ & 1) {
+                entity->facingLeft = 1;
+                entity->rotZ = entity->rotZ & 0xFFF0;
+            }
+            temp_a0_2 = (Random() & 0xF) << 0xC;
+            entity->velocityX = temp_a0_2;
+            if (entity->animCurFrame == 0xD) {
+                entity->velocityX = temp_a0_2 + 0x4000;
+            }
+            temp_a0_3 = ((Random() & 7) << 0xB) - 0x4000;
+            entity->velocityY = temp_a0_3;
+            if (entity->animCurFrame < 0xB) {
+                entity->velocityY = temp_a0_3 + 0xFFFF0000;
+            }
+            entity->ext.generic.unk9C.modeS16.unk0 = ((Random() & 3) + 1) * 32;
+            return;
+        case 1:
+            temp_v1_2 = entity->params;
+            if (temp_v1_2 & 0x100) {
+                entity->params = temp_v1_2 & 0xFF;
+                entity->step = entity->step + 1;
+                return;
+            }
+            return;
+        case 2:
+            entity->rotZ += entity->ext.generic.unk9C.modeS16.unk0;
+            MoveEntity();
+            entity->velocityY = entity->velocityY + 0x2000;
+            g_api_CheckCollision(entity->posX.i.hi, (s32) (s16) (entity->posY.i.hi + 6), &collider, 0);
+            if (collider.effects & 1) {
+                entity->posY.i.hi = entity->posY.i.hi + collider.unk18;
+                if (entity->animCurFrame >= 0xC) {
+                    var_s2 = 0;
+                    do {
+                        temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        var_s2 += 1;
+                        if (temp_v0 != NULL) {
+                            CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, entity, temp_v0);
+                            temp_v0->params = ((Random() & 3) + 9) | 0x100;
+                        }
+                    } while (var_s2 < 2);
+                    DestroyEntity(entity);
+                    return;
+                }
+                temp_v1_3 = entity->velocityY;
+                if (temp_v1_3 <= 0x7FFF) {
+                    temp_v0_2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (temp_v0_2 != NULL) {
+                        CreateEntityFromEntity(E_INTENSE_EXPLOSION, entity, temp_v0_2);
+                        temp_v0_2->params = 0xC010;
+                    }
+                    DestroyEntity(entity);
+                    return;
+                }
+                entity->velocityY = -temp_v1_3 * 2 / 3;
+            }
+            break;
+    }
+}
 
 extern EntityInit EntityInit_8018067C;
 

@@ -39,10 +39,12 @@ segments:
       - [0x298, .data, gfx_banks] # gfxbanks
       - [0x3B4, .data, e_laydef] # layout entities header
       - [0x55C, .data, entity]
-      - [0x89C, .data, 1BEDC]
-      - [0x8CC, .data, 1C5CC]
-      - [0x974, .data, 1D1A8]
-      - [0x9E4, .data, func_data1]
+      - [0x89C, .data, 1BD0C]
+      - [0x8CC, .data, 1C31C]
+      - [0x974, .data, 1D0D8]
+      - [0x9E4, .data, d_prize_drops]
+      - [0xA20, .data, 1DE74]
+
       - [0xA4C, .data, collision]
       - [0xDFC, .data, entity_damage_display]
       - [0x1024, .data, e_collect]
@@ -88,10 +90,11 @@ segments:
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
-      - [0x1B100, .rodata, 1BEDC] # jtbl_8019B100 [1BEDC]
-      - [0x1B144, .rodata, 1C5CC] # jtbl_8018B144 [1C5CC]
+      - [0x1B100, .rodata, 1BD0C] # jtbl_8019B100 [1BD0C]
+      - [0x1B144, .rodata, 1C31C] # jtbl_8018B144 [1C31C]
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
-      - [0x1B180, .rodata, 1D1A8] # jtbl_8019B180 [1D1A8]
+      - [0x1B180, .rodata, 1D0D8] # jtbl_8019B180 [1D0D8]
+
       - [0x1B194, .rodata, entity_damage_display] # jtbl_8019B194 [EntityRedDoor]
       - [0x1B1AC, .rodata, e_collect] # CollectGold strings
       - [0x1B1FC, .rodata, e_collect] # jtbl_8019B1FC [EntityPrizeDrop]
@@ -115,12 +118,12 @@ segments:
       - [0x1B3E0, .rodata, 2D0EC] # jtbl_8019B3E0 [StageNamePopup]
       - [0x1B3F4, .rodata, 2D0EC] # UnkPrimHelper SVECTOR
       - [0x1B3FC, c]
-      - [0x1BEDC, c]
-      - [0x1C5CC, c]
+      - [0x1BD0C, c]
+      - [0x1C31C, c]
       - [0x1CBA8, c]
-      - [0x1D1A8, c]
-      - [0x1DEA4, c]
-      - [0x1E1A0, c]
+      - [0x1D0D8, c]
+      - [0x1DE74, c]
+
       - [0x1E2A8, c, collision]
       - [0x1F3C0, c, entity_damage_display]
       - [0x2273C, c, e_collect]

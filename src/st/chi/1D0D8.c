@@ -1,10 +1,43 @@
 /*
- * File: 1D1A8.c
+ * File: 1D0D8.c
  * Overlay: CHI
  * Description: Abandoned Mine
  */
 
 #include "chi.h"
+
+// [Move into same file as EntityFallingStairs]
+// func_8019D0D8
+// https://decomp.me/scratch/0asn9
+// PSP:func_psp_0924D7F8:No match
+// PSP:https://decomp.me/scratch/vOZf2
+void UpdateDustParticles(Primitive* prim)
+{
+    s32 s1;
+    s32 s0;
+
+    if (!prim->p2) {
+        prim->u0 = prim->v0 = 1;
+        prim->drawMode = 2;
+        LOW(prim->x2) = -(((Random() & 0x7F)) << 9);
+        LOW(prim->x3) = 0;
+        prim->p2 = 1U;
+    }
+
+    s1 = (prim->x0 << 0x10) + prim->x1;
+    s0 = (prim->y0 << 0x10) + prim->y1;
+    s1 += LOW(prim->x2);
+    s0 += LOW(prim->x3);
+    prim->x0 = s1 >> 0x10;
+    prim->y0 = s0 >> 0x10;
+    
+    LOW(prim->x3) += 0x2800;
+    if (prim->y0 > 0x140) {
+        prim->p3 = 0;
+        prim->p2 = 0;
+        prim->drawMode = 8;
+    }
+}
 
 void UpdateDustParticles(Primitive*);
 extern EntityInit EntityInit_8018067C;
@@ -503,6 +536,3 @@ void EntityFallingStep(Entity* self) {
         prim->drawMode = 2;
     }
 }
-
-// func_8019DE74: Random
-#include "../random.h"
