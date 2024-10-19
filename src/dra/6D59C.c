@@ -1049,7 +1049,7 @@ block_45:
                 g_Player.unk46 = 0x8012;
                 g_Player.unk54 = 0xFF;
                 PLAYER.step_s = 0x51;
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
                 return 1;
             }
         }

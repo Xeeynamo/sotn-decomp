@@ -14,7 +14,7 @@ s16 D_800ACF7C[] = {
 
 s16 g_SfxPainGrunts[] = {
     SFX_UNK_6ED, SFX_UNK_6EC, SFX_UNK_6EB, SFX_UNK_6EA,
-    SFX_UNK_6E9, SFX_UNK_6E8, SFX_UNK_6E7,
+    SFX_UNK_6E9, SFX_UNK_6E8, SFX_VO_ALU_PAIN_A,
 };
 
 // rotation angles

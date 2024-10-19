@@ -1136,7 +1136,7 @@ void func_80114DF4(s32 arg0) {
                 } else {
                     CreateEntFactoryFromEntity(g_CurrentEntity, 32, 0);
                 }
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
                 PLAYER.step = Player_Hit;
                 PLAYER.step_s = 6;
                 PLAYER.palette = 0x8100;

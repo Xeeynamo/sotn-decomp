@@ -106,7 +106,7 @@ void func_80116208(void) {
             if (g_Player.unk62 == 0) {
                 g_Player.timers[2] = 4;
                 g_Player.unk40 = 0x8166;
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
             }
             if (g_Player.unk62 == 2) {
                 g_Player.timers[2] = 4;

@@ -801,7 +801,7 @@ void EntityAlucard(void) {
                                 g_Player.unk18 = damage.effects;
                                 func_8010E168(1, 0xC);
                                 g_Player.timers[3] = 6;
-                                PlaySfx(SFX_UNK_6E7);
+                                PlaySfx(SFX_VO_ALU_PAIN_A);
                                 func_80118C84(1, 0);
                                 break;
                             case 2:

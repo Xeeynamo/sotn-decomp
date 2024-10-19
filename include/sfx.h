@@ -194,7 +194,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6E7 0x6E7
 #define SFX_UNK_6E8 0x6E8
 #define SFX_UNK_6E9 0x6E9
 #define SFX_UNK_6EA 0x6EA
@@ -523,7 +522,7 @@ enum Sfx {
     SFX_CRASH_CROSS,
     SFX_SAVE_COFFIN_SWISH, // 0x6E0
     SFX_RCEN_GLASS_BREAKS,
-    SFX_RIC_SUC_REVIVE,
+    SFX_RIC_SUC_REVIVE, // RIC and SUC both use this
     SFX_BUBBLE_BURST,
     SFX_PENTAGRAM_ATTACK,
     SFX_UNK_ANIME_EXPLODE,
