@@ -31,6 +31,22 @@ void EntityBackgroundBlock(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
+// D_80180798
+u8 D_80180798[] = {32, 32, 32, 32, 32, 32, 80, 32};
+// D_801807A0
+u8 D_801807A0[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+// D_801807A8
+u16 D_801807A8[] = {
+    0x0000, 0x0000, 0x0600, 0x0100, 0x0000, 0x0000, 0x0600, 0x01FC,
+    0x0000, 0x00FC, 0x0600, 0x01FC, 0x0000, 0x0000, 0x0600, 0x01FC,
+    0x0000, 0x00FC, 0x0600, 0x0300, 0x0000, 0x00FC, 0x0600, 0x01FC,
+    0x0000, 0x00FC, 0x0600, 0x0300, 0x0000, 0x0200, 0x0600, 0x0300,
+    0x0000, 0x01FC, 0x0500, 0x02FC, 0x0000, 0x0000, 0x0500, 0x0400,
+    0x0000, 0x0000, 0x0500, 0x0400, 0x0000, 0x01FC, 0x0500, 0x02FC,
+    0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
+};
+
 extern u16 EntityInit_80180658;
 extern u8 D_80180798[];     // Trigger long dimension size
 extern u8 D_801807A0[];     // Trigger long dimension is horizontal
@@ -95,14 +111,65 @@ void EntityTriggerVolume(Entity* entity) {
     }
 }
 
+// D_80180818
+static u16 D_80180818[] = {
+    0x0E03, 0x0F04, 0x1004, 0x1104, 0x1204, 0x1304, 0x1403, 0x0000,
+};
+
+// D_80180828
+static u16 D_80180828[] = {
+    0x1503, 0x1604, 0x1704, 0x1804, 0x1904, 0x1A04, 0x1B03, 0x0000,
+};
+
+// D_80180838
+u16* D_80180838[] = {
+    D_80180818, D_80180828, NULL, NULL, NULL, NULL, NULL, NULL,
+};
+
+// [height?]
+// D_80180858
+u8 D_80180858[] = {
+    12, 20, 0, 0, 0, 0, 0, 0,
+};
+
+// [params?]
+// D_80180860
+u8 D_80180860[] = {
+    3, 3, 0, 0, 0, 0, 0, 0,
+};
+
+// [animset?]
+// D_80180868
+u16 D_80180868[] = {
+    ANIMSET_OVL(1), ANIMSET_OVL(1), 0, 0, 0, 0, 0, 0,
+};
+
+// [draw mode?]
+// D_80180878
+u8 D_80180878[] = {
+    DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+};
+
+// D_80180880
+s16 D_80180880[] = {
+    -4, -4, 3, -6, 2, 9, -4, 12, 0, 2, 0, 15, 0, 31,
+};
+
 extern s32 D_8007D858[];
 extern s32 EntityInit_80180610;
-extern s32 D_80180838[];    // Candle anim frames
+extern u16* D_80180838[];   // Candle anim frames
 extern u8 D_80180858[];     // Candle hitbox height
 extern u8 D_80180860[];     // Candle death E_EXPLOSION params
 extern u16 D_80180868[];    // Candle anim set
 extern u8 D_80180878[];     // Candle draw mode
-extern u16 D_80180880;      // Candle death particles spawn offset
+extern s16 D_80180880[];    // Candle death particles spawn offset
 
 // E_BREAKABLE
 // func_8019B698
