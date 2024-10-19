@@ -254,7 +254,6 @@ enum SfxModes {
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2
 
-
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
@@ -525,7 +524,7 @@ enum Sfx {
     SFX_VO_ALU_WHAT,
     SFX_VO_ALU_DARK_META,
     SFX_VO_ALU_SOUL_STEAL,
-    SFX_UNUSED_6F5,
+    SFX_UNK_6F5,
     SFX_VO_ALU_DEATH,
     SFX_ALU_WOLF_BARK,
     SFX_UNK_VO_ALU_WHOA,
@@ -533,6 +532,11 @@ enum Sfx {
     SFX_VO_RIC_ATTACK_B,
     SFX_VO_RIC_ATTACK_C,
     SFX_VO_RIC_ATTACK_YELL,
+    SFX_UNK_6FD,
+    SFX_UNK_6FE,
+    SFX_VO_RIC_DEATH,
+    SFX_VO_RIC_HYDRO_STORM, // 0x700
+    SFX_VO_RIC_PAIN_A,
 };
 
 #endif

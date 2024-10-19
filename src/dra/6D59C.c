@@ -694,7 +694,12 @@ void DoGravityJump(void) {
 }
 
 s16 g_SfxAttackGrunts[] = {
-    SFX_VO_ALU_ATTACK_A, SFX_VO_ALU_ATTACK_B, SFX_VO_ALU_ATTACK_C, SFX_VO_ALU_ATTACK_D, 0x0000, 0x0000};
+    SFX_VO_ALU_ATTACK_A,
+    SFX_VO_ALU_ATTACK_B,
+    SFX_VO_ALU_ATTACK_C,
+    SFX_VO_ALU_ATTACK_D,
+    0x0000,
+    0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
