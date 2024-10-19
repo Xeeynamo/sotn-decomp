@@ -37,7 +37,7 @@ segments:
       # Code data
       - [0x0, .data, header]
       - [0xE8, .data, header] # layers
-      - [0x298, .data, gfx_banks] # gfxbanks
+      - [0x298, .data, gfx_banks]
       - [0x3B4, .data, e_laydef] # layout entities header
       - [0x55C, .data, entity]
       - [0x798, .data, en_trigger_volume]
@@ -51,76 +51,76 @@ segments:
       - [0xE0C, .data, en_red_door]
       - [0xE24, .data, ut_common]
       - [0x1024, .data, en_collect]
-      - [0x1314, .data, en_relic_orb] # EntityRelicOrb
-      - [0x1378, .data, en_particles] # EntityUnkId14Spawner
-      - [0x1388, .data, en_particles] # EntityUnkId15, EntityUnkId14
-      - [0x13D4, .data, en_particles] # EntityOlroxDrool
-      - [0x13DC, .data, en_particles] # func_801A6054
-      - [0x13EC, .data, ut_misc] # UnkRecursivePrimFunc1
-      - [0x140C, .data, ut_misc] # UnkRecursivePrimFunc2
-      - [0x142C, .data, en_soul_steal_orb] # EntitySoulStealOrb
-      - [0x14AC, .data, en_room_foreground] # EntityRoomForeground
-      - [0x1538, .data, en_salem_witch] # EntitySalemWitch
-      - [0x162C, .data, en_salem_witch] # EntitySalemWitchGlow
-      - [0x1638, .data, en_salem_witch] # EntitySalemWitchCurse
-      - [0x167C, .data, en_salem_witch] # EntitySalemWitchTriboltLaunch
-      - [0x16C0, .data, en_salem_witch] # EntitySalemWitchTriboltProjectile
-      - [0x16EC, .data, en_gremlin] # EntityGremlin
-      - [0x1704, .data, en_gremlin] # EntityGremlinEffect
-      - [0x1724, .data, en_gremlin] # EntityGremlinFire
-      - [0x173C, .data, en_thornweed_corpseweed] # EntityThornweed, EntityCorpseweed
-      - [0x17F4, .data, en_venus_weed] # EntityVenusWeed
+      - [0x1314, .data, en_relic_orb]
+      - [0x1378, .data, en_particles]     # EntityUnkId14Spawner
+      - [0x1388, .data, en_particles]     # EntityUnkId15, EntityUnkId14
+      - [0x13D4, .data, en_particles]     # EntityOlroxDrool
+      - [0x13DC, .data, en_particles]     # func_801A6054
+      - [0x13EC, .data, ut_misc]          # UnkRecursivePrimFunc1
+      - [0x140C, .data, ut_misc]          # UnkRecursivePrimFunc2
+      - [0x142C, .data, en_soul_steal_orb]
+      - [0x14AC, .data, en_room_foreground]
+      - [0x1538, .data, en_salem_witch]   # EntitySalemWitch
+      - [0x162C, .data, en_salem_witch]   # EntitySalemWitchGlow
+      - [0x1638, .data, en_salem_witch]   # EntitySalemWitchCurse
+      - [0x167C, .data, en_salem_witch]   # EntitySalemWitchTriboltLaunch
+      - [0x16C0, .data, en_salem_witch]   # EntitySalemWitchTriboltProjectile
+      - [0x16EC, .data, en_gremlin]       # EntityGremlin
+      - [0x1704, .data, en_gremlin]       # EntityGremlinEffect
+      - [0x1724, .data, en_gremlin]       # EntityGremlinFire
+      - [0x173C, .data, en_thornweed_corpseweed]
+      - [0x17F4, .data, en_venus_weed]
       # Binary data
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entities data
-      - [0x20D8, cmp] # JP Stage Name (Small)
-      - [0x2508, cmp] # JP Stage Name (Large)
-      - [0x2A60, cmp] # Gremlin 1
-      - [0x3480, cmp] # Salem Witch 1
-      - [0x41F8, cmp] # Salem Witch 2
-      - [0x4DBC, cmp] # Salem Witch 3
-      - [0x5BA0, cmp] # Salem Witch 4
-      - [0x6B1C, cmp] # Salem Witch 5
-      - [0x70F8, cmp] # Thornweed/Corpseweed
-      - [0x7E84, cmp] # Venus Weed 1
-      - [0x8A10, cmp] # Venus Weed 2
-      - [0x9B38, cmp] # EN Stage Name
-      - [0x9FE0, data] # Palette (Unused)
-      - [0xA040, data] # Palette
-      - [0xA240, data] # Palette (Unused)
-      - [0xA300, data] # Palette
-      - [0xA380, data] # Palette
-      - [0xA3C0, data] # Palette
-      - [0xA440, data] # Palette
+      - [0x20D8, cmp]   # JP Stage Name (Small)
+      - [0x2508, cmp]   # JP Stage Name (Large)
+      - [0x2A60, cmp]   # Gremlin 1
+      - [0x3480, cmp]   # Salem Witch 1
+      - [0x41F8, cmp]   # Salem Witch 2
+      - [0x4DBC, cmp]   # Salem Witch 3
+      - [0x5BA0, cmp]   # Salem Witch 4
+      - [0x6B1C, cmp]   # Salem Witch 5
+      - [0x70F8, cmp]   # Thornweed/Corpseweed
+      - [0x7E84, cmp]   # Venus Weed 1
+      - [0x8A10, cmp]   # Venus Weed 2
+      - [0x9B38, cmp]   # EN Stage Name
+      - [0x9FE0, data]  # Palette (Unused)
+      - [0xA040, data]  # Palette
+      - [0xA240, data]  # Palette (Unused)
+      - [0xA300, data]  # Palette
+      - [0xA380, data]  # Palette
+      - [0xA3C0, data]  # Palette
+      - [0xA440, data]  # Palette
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
-      - [0x1B100, .rodata, en_demon_switch_wall] # jtbl_8019B100 [EntityDemonSwitchWall]
-      - [0x1B144, .rodata, en_breakable_wall] # jtbl_8018B144 [EntityBreakableWall]
-      - [0x1B168, .rodata, en_debug_cerberus_gate] # jtbl_8019B168 [EntityCerberusGateDebug]
-      - [0x1B180, .rodata, en_falling_stairs] # jtbl_8019B180 [EntityFallingStairs]
-      - [0x1B194, .rodata, en_red_door] # jtbl_8019B194 [EntityRedDoor]
-      - [0x1B1AC, .rodata, en_collect] # CollectGold strings
-      - [0x1B1FC, .rodata, en_collect] # jtbl_8019B1FC [EntityPrizeDrop]
-      - [0x1B21C, .rodata, en_collect] # jtbl_8019B21C [EntityEquipItemDrop]
-      - [0x1B234, .rodata, en_relic_orb] # EntityRelicOrb string
-      - [0x1B244, .rodata, en_relic_orb] # jtbl_8019B244 [EntityRelicOrb]
-      - [0x1B26C, .rodata, en_message_box] # jtbl_8019B26C [EntityMessageBox]
-      - [0x1B280, .rodata, en_salem_witch] # EntitySalemWitch debug string
-      - [0x1B290, .rodata, en_salem_witch] # jtbl_8019B290 [EntitySalemWitch]
-      - [0x1B2A8, .rodata, en_salem_witch] # jtbl_8019B2A8 [EntitySalemWitchTribolt]
-      - [0x1B2BC, .rodata, en_gremlin] # EntityGremlin debug string
-      - [0x1B2C8, .rodata, en_thornweed_corpseweed] # jtbl_8019B2C8 [EntityThornweed]
-      - [0x1B2E8, .rodata, en_thornweed_corpseweed] # jtbl_8019B2E8 [EntityCorpseweed]
-      - [0x1B304, .rodata, en_venus_weed] # jtbl_8019B304 [EntityVenusWeed]
-      - [0x1B32C, .rodata, en_venus_weed] # jtbl_8019B32C [EntityVenusWeed]
-      - [0x1B344, .rodata, en_venus_weed] # jtbl_8019B344 [EntityVenusWeedFlower]
-      - [0x1B36C, .rodata, en_venus_weed] # jtbl_8019B36C [EntityVenusWeedFlower]
-      - [0x1B384, .rodata, en_venus_weed] # jtbl_8019B384 [EntityVenusWeedFlower]
-      - [0x1B39C, .rodata, en_venus_weed] # jtbl_8019B39C [EntityVenusWeedTendril]
-      - [0x1B3C0, .rodata, en_stage_name] # EntityStageNamePopup strings
-      - [0x1B3E0, .rodata, en_stage_name] # jtbl_8019B3E0 [StageNamePopup]
-      - [0x1B3F4, .rodata, ut_prim_helpers] # UnkPrimHelper SVECTOR
+      - [0x1B100, .rodata, en_demon_switch_wall]      # jtbl_8019B100 [EntityDemonSwitchWall]
+      - [0x1B144, .rodata, en_breakable_wall]         # jtbl_8018B144 [EntityBreakableWall]
+      - [0x1B168, .rodata, en_debug_cerberus_gate]    # jtbl_8019B168 [EntityCerberusGateDebug]
+      - [0x1B180, .rodata, en_falling_stairs]         # jtbl_8019B180 [EntityFallingStairs]
+      - [0x1B194, .rodata, en_red_door]               # jtbl_8019B194 [EntityRedDoor]
+      - [0x1B1AC, .rodata, en_collect]                # CollectGold strings
+      - [0x1B1FC, .rodata, en_collect]                # jtbl_8019B1FC [EntityPrizeDrop]
+      - [0x1B21C, .rodata, en_collect]                # jtbl_8019B21C [EntityEquipItemDrop]
+      - [0x1B234, .rodata, en_relic_orb]              # EntityRelicOrb string
+      - [0x1B244, .rodata, en_relic_orb]              # jtbl_8019B244 [EntityRelicOrb]
+      - [0x1B26C, .rodata, en_message_box]            # jtbl_8019B26C [EntityMessageBox]
+      - [0x1B280, .rodata, en_salem_witch]            # EntitySalemWitch debug string
+      - [0x1B290, .rodata, en_salem_witch]            # jtbl_8019B290 [EntitySalemWitch]
+      - [0x1B2A8, .rodata, en_salem_witch]            # jtbl_8019B2A8 [EntitySalemWitchTribolt]
+      - [0x1B2BC, .rodata, en_gremlin]                # EntityGremlin debug string
+      - [0x1B2C8, .rodata, en_thornweed_corpseweed]   # jtbl_8019B2C8 [EntityThornweed]
+      - [0x1B2E8, .rodata, en_thornweed_corpseweed]   # jtbl_8019B2E8 [EntityCorpseweed]
+      - [0x1B304, .rodata, en_venus_weed]             # jtbl_8019B304 [EntityVenusWeed]
+      - [0x1B32C, .rodata, en_venus_weed]             # jtbl_8019B32C [EntityVenusWeed]
+      - [0x1B344, .rodata, en_venus_weed]             # jtbl_8019B344 [EntityVenusWeedFlower]
+      - [0x1B36C, .rodata, en_venus_weed]             # jtbl_8019B36C [EntityVenusWeedFlower]
+      - [0x1B384, .rodata, en_venus_weed]             # jtbl_8019B384 [EntityVenusWeedFlower]
+      - [0x1B39C, .rodata, en_venus_weed]             # jtbl_8019B39C [EntityVenusWeedTendril]
+      - [0x1B3C0, .rodata, en_stage_name]             # EntityStageNamePopup strings
+      - [0x1B3E0, .rodata, en_stage_name]             # jtbl_8019B3E0 [EntityStageNamePopup]
+      - [0x1B3F4, .rodata, ut_prim_helpers]           # UnkPrimHelper SVECTOR
       - [0x1B3FC, c, en_background_block]
       - [0x1B4DC, c, en_trigger_volume]
       - [0x1B698, c, en_breakable]
