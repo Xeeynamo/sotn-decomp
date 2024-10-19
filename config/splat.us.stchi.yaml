@@ -69,7 +69,7 @@ segments:
       - [0x1704, .data, en_gremlin] # EntityGremlinEffect
       - [0x1724, .data, en_gremlin] # EntityGremlinFire
       - [0x173C, .data, en_thornweed_corpseweed] # EntityThornweed, EntityCorpseweed
-      - [0x17F4, .data, 2B548] # EntityVenusWeed
+      - [0x17F4, .data, en_venus_weed] # EntityVenusWeed
       # Binary data
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entities data
@@ -112,12 +112,12 @@ segments:
       - [0x1B2BC, .rodata, en_gremlin] # EntityGremlin debug string
       - [0x1B2C8, .rodata, en_thornweed_corpseweed] # jtbl_8019B2C8 [EntityThornweed]
       - [0x1B2E8, .rodata, en_thornweed_corpseweed] # jtbl_8019B2E8 [EntityCorpseweed]
-      - [0x1B304, .rodata, 2B548] # jtbl_8019B304 [EntityVenusWeed]
-      - [0x1B32C, .rodata, 2B548] # jtbl_8019B32C [EntityVenusWeed]
-      - [0x1B344, .rodata, 2B548] # jtbl_8019B344 [EntityVenusWeedFlower]
-      - [0x1B36C, .rodata, 2B548] # jtbl_8019B36C [EntityVenusWeedFlower]
-      - [0x1B384, .rodata, 2B548] # jtbl_8019B384 [EntityVenusWeedFlower]
-      - [0x1B39C, .rodata, 2B548] # jtbl_8019B39C [EntityVenusWeedTendril]
+      - [0x1B304, .rodata, en_venus_weed] # jtbl_8019B304 [EntityVenusWeed]
+      - [0x1B32C, .rodata, en_venus_weed] # jtbl_8019B32C [EntityVenusWeed]
+      - [0x1B344, .rodata, en_venus_weed] # jtbl_8019B344 [EntityVenusWeedFlower]
+      - [0x1B36C, .rodata, en_venus_weed] # jtbl_8019B36C [EntityVenusWeedFlower]
+      - [0x1B384, .rodata, en_venus_weed] # jtbl_8019B384 [EntityVenusWeedFlower]
+      - [0x1B39C, .rodata, en_venus_weed] # jtbl_8019B39C [EntityVenusWeedTendril]
       - [0x1B3C0, .rodata, 2D0EC] # EntityStageNamePopup strings
       - [0x1B3E0, .rodata, 2D0EC] # jtbl_8019B3E0 [StageNamePopup]
       - [0x1B3F4, .rodata, 2DF40] # UnkPrimHelper SVECTOR
@@ -147,7 +147,7 @@ segments:
       - [0x2813C, c, en_salem_witch]
       - [0x297C8, c, en_gremlin]
       - [0x2A020, c, en_thornweed_corpseweed]
-      - [0x2B548, c]
+      - [0x2B548, c, en_venus_weed]
       - [0x2D0EC, c]
       - [0x2DF40, c]
       - [0x2E770, sbss]

@@ -1,7 +1,7 @@
 /*
- * File: 2B548.c
+ * File: en_venus_weed.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: ENTITY - Venus Weed
  */
 
 #include "chi.h"
