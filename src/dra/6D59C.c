@@ -694,7 +694,7 @@ void DoGravityJump(void) {
 }
 
 s16 g_SfxAttackGrunts[] = {
-    SFX_VO_ALU_ATTACK_A, SFX_VO_ALU_ATTACK_B, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
+    SFX_VO_ALU_ATTACK_A, SFX_VO_ALU_ATTACK_B, SFX_VO_ALU_ATTACK_C, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -1264,7 +1264,7 @@ block_45:
         }
         break;
     case 135: // Unknown
-        PlaySfx(SFX_UNK_6F0);
+        PlaySfx(SFX_VO_ALU_ATTACK_C);
         g_Player.timers[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;

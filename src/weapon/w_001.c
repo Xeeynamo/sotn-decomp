@@ -317,7 +317,7 @@ s32 func_ptr_80170004(Entity* self) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         }
         if (--self->ext.weapon.lifetime == 0) {
-            g_api.PlaySfx(SFX_UNK_6F0);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
             DestroyEntity(self);
             return;
         }

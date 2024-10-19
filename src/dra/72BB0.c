@@ -171,7 +171,7 @@ void PlayerStepJump(void) {
             if (walkResult != 0) {
                 SetSpeedX(FIX(4.5));
             }
-            PlaySfx(SFX_UNK_6F0);
+            PlaySfx(SFX_VO_ALU_ATTACK_C);
         }
     }
     if (g_Player.unk44 & 0x100) {

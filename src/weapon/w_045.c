@@ -114,7 +114,7 @@ static s32 func_ptr_80170004(Entity* self) {
         } else {
             if (g_Player.padTapped & PAD_SQUARE) {
                 PLAYER.ext.player.anim = 0xCE;
-                g_api.PlaySfx(SFX_UNK_6F0);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
                 PLAYER.animFrameIdx = 0;
                 PLAYER.animFrameDuration = 0;
                 PLAYER.step_s = 1;
@@ -188,7 +188,7 @@ static void func_ptr_80170008(Entity* self) {
     }
     if (g_Player.padTapped & PAD_SQUARE) {
         PLAYER.ext.player.anim = 0xCE;
-        g_api.PlaySfx(SFX_UNK_6F0);
+        g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
         PLAYER.step = 0x28;
         PLAYER.step_s = 1;
         PLAYER.animFrameIdx = 0;
@@ -263,7 +263,7 @@ static s32 func_ptr_8017000C(Entity* self) {
     if (PLAYER.step_s == 0) {
         if (g_Player.padTapped & PAD_SQUARE) {
             PLAYER.ext.player.anim = 0xCE;
-            g_api.PlaySfx(SFX_UNK_6F0);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
             PLAYER.step_s = 1;
             PLAYER.animFrameIdx = 0;
             PLAYER.animFrameDuration = 0;
