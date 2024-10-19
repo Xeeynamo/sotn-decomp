@@ -40,8 +40,8 @@ segments:
       - [0x298, .data, gfx_banks] # gfxbanks
       - [0x3B4, .data, e_laydef] # layout entities header
       - [0x55C, .data, entity]
-      - [0x798, .data, 1B4DC]
-      - [0x818, .data, 1B4DC]
+      - [0x798, .data, en_trigger_volume]
+      - [0x818, .data, en_breakable]
       - [0x89C, .data, 1BD0C]
       - [0x8CC, .data, 1C31C]
       - [0x974, .data, 1D0D8]
@@ -94,7 +94,7 @@ segments:
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
-      - [0x1B100, .rodata, 1BD0C] # jtbl_8019B100 [1BD0C]
+      - [0x1B100, .rodata, 1BD0C] # jtbl_8019B100 [EntityDemonSwitchWall]
       - [0x1B144, .rodata, 1C31C] # jtbl_8018B144 [1C31C]
       - [0x1B168, .rodata, 1CBA8] # jtbl_8019B168 [1CBA8]
       - [0x1B180, .rodata, 1D0D8] # jtbl_8019B180 [1D0D8]
@@ -121,7 +121,8 @@ segments:
       - [0x1B3E0, .rodata, 2D0EC] # jtbl_8019B3E0 [StageNamePopup]
       - [0x1B3F4, .rodata, 2DF40] # UnkPrimHelper SVECTOR
       - [0x1B3FC, c, en_background_block]
-      - [0x1B4DC, c]
+      - [0x1B4DC, c, en_trigger_volume]
+      - [0x1B698, c, en_breakable]
       - [0x1BD0C, c]
       - [0x1C31C, c]
       - [0x1CBA8, c]
