@@ -1114,7 +1114,7 @@ void func_80114DF4(s32 arg0) {
         if (g_Status.hp == 0) {
             if (--D_80137FE0 == 0) {
                 PLAYER.step = Player_Kill;
-                PlaySfx(NA_SE_VO_AL_DYING);
+                PlaySfx(SFX_VO_ALU_DEATH);
                 PLAYER.step_s = 16;
             }
             func_8010E168(1, 4);
@@ -1211,13 +1211,13 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             for (j = 16; j < 64; j++, ent++) {
                 // Entity 32 appears to be EntityPlayerDissolves
                 if (ent->entityId == 32) {
-                    PlaySfx(NA_SE_VO_AL_DYING);
+                    PlaySfx(SFX_VO_ALU_DEATH);
                     PLAYER.step_s = 16;
                     return;
                 }
             }
         }
-        PlaySfx(NA_SE_VO_AL_DYING);
+        PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-3.25);

@@ -31,7 +31,7 @@ void func_80115F54(void) {
         var_s2 = true;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
-        PlaySfx(NA_SE_VO_AL_DYING);
+        PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.player.anim = 0xC1;
