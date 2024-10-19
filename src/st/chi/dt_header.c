@@ -1,3 +1,9 @@
+/*
+ * File: dt_header.c
+ * Overlay: CHI
+ * Description: DATA - Header
+ */
+
 #include "chi.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];

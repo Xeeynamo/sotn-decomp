@@ -1,3 +1,9 @@
+/*
+ * File: dt_entity.c
+ * Overlay: CHI
+ * Description: DATA - Entities
+ */
+
 #include "game.h"
 #include "stage.h"
 

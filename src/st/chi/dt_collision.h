@@ -1,10 +1,10 @@
-#include "chi.h"
-
 /*
- * File: collision_data.c
+ * File: dt_collision.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: DATA - Collision
  */
+
+#include "chi.h"
 
 // D_80180A4C
 u16 g_testCollEnemyLookup[] = {

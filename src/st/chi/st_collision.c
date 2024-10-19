@@ -5,7 +5,7 @@
  */
 
 #include "chi.h"
-#include "collision_data.h"
+#include "dt_collision.h"
 
 void EntityDamageDisplay(Entity*);
 

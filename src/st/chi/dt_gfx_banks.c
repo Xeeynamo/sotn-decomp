@@ -1,7 +1,7 @@
 /*
- * File: gfx_banks.c
+ * File: dt_gfx_banks.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: DATA - Graphics banks
  */
 
 #include "chi.h"

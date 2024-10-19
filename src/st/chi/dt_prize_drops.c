@@ -1,7 +1,7 @@
 /*
- * File: d_prize_drops.c
+ * File: dt_prize_drops.c
  * Overlay: CHI
- * Description: Abandoned Mine
+ * Description: DATA - Prize drops
  */
 
 #include "game.h"
