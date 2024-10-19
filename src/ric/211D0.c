@@ -254,7 +254,7 @@ bool RicDoCrash(void) {
             PLAYER.velocityY = 0;
         }
         func_8015CC28();
-        g_api.PlaySfx(SFX_UNK_701);
+        g_api.PlaySfx(SFX_VO_RIC_PAIN_A);
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
         break;
