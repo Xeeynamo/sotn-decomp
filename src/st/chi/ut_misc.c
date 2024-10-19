@@ -1,7 +1,7 @@
 /*
- * File: en_heart_drop.c
+ * File: ut_misc.c
  * Overlay: CHI
- * Description: ENTITY - Heart prize
+ * Description: UTILITY - Misc functions
  */
 
 #include "chi.h"
