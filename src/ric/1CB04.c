@@ -1169,7 +1169,7 @@ void RicHandleDeadPrologue(void) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_REVIVAL_COLUMN, 0);
             g_DeadPrologueTimer = 0x30;
-            g_api.PlaySfx(0x6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
             dead_prologue_timer = 0xA0;
             PLAYER.step_s++;
         }
@@ -1194,7 +1194,7 @@ void RicHandleDeadPrologue(void) {
         }
         dead_prologue_timer--;
         if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
-            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
         }
         break;
     case 4:
@@ -1207,7 +1207,7 @@ void RicHandleDeadPrologue(void) {
         }
         dead_prologue_timer--;
         if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
-            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
         }
         break;
     case 5:

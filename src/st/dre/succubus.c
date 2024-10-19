@@ -778,7 +778,7 @@ void EntitySuccubus(Entity* self) {
                 SetSubStep(SUCCUBUS_CLONE_ATTACK_ANIM_2);
             }
             if ((self->animFrameIdx == 4) && (self->animFrameDuration == 0)) {
-                PlaySfxPositional(NA_SE_SU_CHARGE_PINKBALLS);
+                PlaySfxPositional(SFX_RIC_SUC_REVIVE);
 
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -1109,7 +1109,7 @@ void EntitySuccubusClone(Entity* self) {
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            PlaySfxPositional(0x6E2);
+            PlaySfxPositional(SFX_RIC_SUC_REVIVE);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {

@@ -194,7 +194,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_PL_RIC_UNK_6E2 0x6E2
 #define SFX_UNK_6E7 0x6E7
 #define SFX_UNK_6E8 0x6E8
 #define SFX_UNK_6E9 0x6E9
@@ -242,7 +241,6 @@ enum SfxModes {
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
 // Blank, may be a leftover from the Jap version.
 #define NA_VO_SU_BLANK 0x86F
