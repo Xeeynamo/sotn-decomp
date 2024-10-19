@@ -633,7 +633,7 @@ void func_80119F70(Entity* self);
 void UnknownEntId48(Entity* self);
 void UnknownEntId49(Entity* self);
 void func_80123A60(Entity* self);
-void func_80119D3C(Entity* self);
+void EntitySmallRisingHeart(Entity* self);
 void EntityBatEcho(Entity* self);
 void func_8011B530(Entity* self);
 void func_8011F074(Entity* self);
