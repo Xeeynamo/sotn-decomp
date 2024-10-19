@@ -676,7 +676,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PLAYER.step = Player_AxearmorHit;
             PLAYER.step_s = 0;
             PLAYER.ext.player.anim = 0xD1;
-            PlaySfx(SFX_UNK_6ED);
+            PlaySfx(SFX_VO_ALU_YELL);
             CreateEntFactoryFromEntity(g_CurrentEntity, 85, 0);
             D_8017A000.func_ptr_80170010();
             if (g_Player.unk72 != 0) {

@@ -121,7 +121,7 @@ void func_80116208(void) {
             g_Player.unk60 = 0;
             SetPlayerAnim(0x2E);
             g_Player.damageTaken = g_Player.unk64;
-            PlaySfx(SFX_UNK_6ED);
+            PlaySfx(SFX_VO_ALU_YELL);
             return;
         }
         if (g_Player.unk60 == 0) {

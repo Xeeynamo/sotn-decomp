@@ -194,7 +194,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_6ED 0x6ED
 #define SFX_UNK_6EE 0x6EE
 #define SFX_UNK_6EF 0x6EF
 #define SFX_UNK_6F0 0x6F0
@@ -265,7 +264,6 @@ enum SfxModes {
 
 // DRA
 #define SFX_UNK_6F7 0x6F7
-
 
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
@@ -529,7 +527,7 @@ enum Sfx {
     SFX_VO_ALU_PAIN_D,
     SFX_VO_ALU_PAIN_E,
     SFX_VO_ALU_SILENCE,
-    SFX_VO_ALU_YELL,
+    SFX_VO_ALU_YELL, // Elevator yell
     SFX_VO_ALU_ATTACK_A,
     SFX_VO_ALU_ATTACK_B,
     SFX_VO_ALU_ATTACK_C, // 0x6F0
