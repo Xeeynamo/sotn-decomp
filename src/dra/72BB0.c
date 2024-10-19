@@ -171,7 +171,7 @@ void PlayerStepJump(void) {
             if (walkResult != 0) {
                 SetSpeedX(FIX(4.5));
             }
-            PlaySfx(SFX_UNK_6F0);
+            PlaySfx(SFX_VO_ALU_ATTACK_C);
         }
     }
     if (g_Player.unk44 & 0x100) {
@@ -676,7 +676,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PLAYER.step = Player_AxearmorHit;
             PLAYER.step_s = 0;
             PLAYER.ext.player.anim = 0xD1;
-            PlaySfx(SFX_UNK_6ED);
+            PlaySfx(SFX_VO_ALU_YELL);
             CreateEntFactoryFromEntity(g_CurrentEntity, 85, 0);
             D_8017A000.func_ptr_80170010();
             if (g_Player.unk72 != 0) {
@@ -799,14 +799,14 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             g_Player.unk40 = 0x8165;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 2), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
         } else if (damage->effects & 0x80) {
             g_Player.timers[0] =
                 GetStatusAilmentTimer(STATUS_AILMENT_POISON, 0xFFF);
             g_Player.unk40 = 0x8164;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x16), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 1), 0);
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
         } else if (damage->effects & 0x8000) {
             PlaySfx(SFX_FM_EXPLODE_SWISHES);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x45), 0);
@@ -1047,7 +1047,7 @@ void func_80114DF4(s32 arg0) {
         func_8010E3B8(FIX(-1.25));
         func_80113E68();
         PLAYER.palette = 0x8161;
-        PlaySfx(SFX_UNK_6EC);
+        PlaySfx(SFX_VO_ALU_SILENCE);
         g_Player.timers[2] = 0;
         g_Player.timers[0] = 0;
         g_Player.timers[1] = 0;
@@ -1114,7 +1114,7 @@ void func_80114DF4(s32 arg0) {
         if (g_Status.hp == 0) {
             if (--D_80137FE0 == 0) {
                 PLAYER.step = Player_Kill;
-                PlaySfx(NA_SE_VO_AL_DYING);
+                PlaySfx(SFX_VO_ALU_DEATH);
                 PLAYER.step_s = 16;
             }
             func_8010E168(1, 4);
@@ -1136,7 +1136,7 @@ void func_80114DF4(s32 arg0) {
                 } else {
                     CreateEntFactoryFromEntity(g_CurrentEntity, 32, 0);
                 }
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
                 PLAYER.step = Player_Hit;
                 PLAYER.step_s = 6;
                 PLAYER.palette = 0x8100;
@@ -1211,13 +1211,13 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             for (j = 16; j < 64; j++, ent++) {
                 // Entity 32 appears to be EntityPlayerDissolves
                 if (ent->entityId == 32) {
-                    PlaySfx(NA_SE_VO_AL_DYING);
+                    PlaySfx(SFX_VO_ALU_DEATH);
                     PLAYER.step_s = 16;
                     return;
                 }
             }
         }
-        PlaySfx(NA_SE_VO_AL_DYING);
+        PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-3.25);

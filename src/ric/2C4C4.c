@@ -347,7 +347,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.subweaponId = PL_W_CRASH_CROSS;
         RicSetSubweaponParams(self);
         LoadImage(&crash_cross_img_vram, crash_cross_img_data);
-        g_api.PlaySfx(0x6DF);
+        g_api.PlaySfx(SFX_CRASH_CROSS);
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         break;

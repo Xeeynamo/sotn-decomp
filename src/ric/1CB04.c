@@ -895,7 +895,7 @@ void RicHandleDead(
         func_8015CAAC(FIX(-0.75));
         RicSetAnimation(D_80155544);
         PLAYER.velocityY = FIX(-1.625);
-        g_api.PlaySfx(SFX_UNK_6FF);
+        g_api.PlaySfx(SFX_VO_RIC_DEATH);
         if (damageEffects & ELEMENT_FIRE) {
             func_8015FA5C(0);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
@@ -1169,7 +1169,7 @@ void RicHandleDeadPrologue(void) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_REVIVAL_COLUMN, 0);
             g_DeadPrologueTimer = 0x30;
-            g_api.PlaySfx(0x6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
             dead_prologue_timer = 0xA0;
             PLAYER.step_s++;
         }
@@ -1194,7 +1194,7 @@ void RicHandleDeadPrologue(void) {
         }
         dead_prologue_timer--;
         if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
-            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
         }
         break;
     case 4:
@@ -1207,7 +1207,7 @@ void RicHandleDeadPrologue(void) {
         }
         dead_prologue_timer--;
         if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
-            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
         }
         break;
     case 5:

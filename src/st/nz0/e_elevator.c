@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 static s32 elevator_target = 0;
 static s16 elevator_target_pos[] = {0x0000, 0x0060, 0x0360, 0x0660};
@@ -166,7 +167,7 @@ void EntityElevator(Entity* self) {
             } else {
                 self->step = ELEVATOR_ASCEND;
             }
-            PlaySfxPositional(0x6E6);
+            PlaySfxPositional(SFX_LOW_SYNTH_BUBBLES);
         }
         self->ext.elevator.elevatorTarget = elevator_target;
         break;

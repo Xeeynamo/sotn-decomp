@@ -8,7 +8,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-#define SE_NO3_ALUCARD_JUMP 0x6EF
 #define SE_MERMAN_DEATH 0x71D
 #define SE_WARG_DEATH_HOWL 0x780
 #define SE_WARG_PAIN 0x781

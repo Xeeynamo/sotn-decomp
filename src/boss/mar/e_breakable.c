@@ -31,5 +31,5 @@ static u8 g_eBreakableDrawModes[] = {
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 #endif
 
-#define SFX_BREAKABLE_HIT 0x67E
+#define SFX_BREAKABLE_HIT SFX_CANDLE_HIT_WHOOSH_A
 #include "../../st/e_breakable.h"
