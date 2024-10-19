@@ -1291,7 +1291,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
     SetPlayerAnim(0xBA);
-    PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
+    PlaySfx(SFX_VO_ALU_DARK_META);
     PlaySfx(SFX_UI_MP_FULL);
     g_Player.timers[11] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
