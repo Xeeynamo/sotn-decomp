@@ -1,7 +1,15 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #27. Used by weapons:
 // Medusa shield, Unknown#211
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
+#include "w_027_1.h"
+#include "w_027_2.h"
+#define g_Animset w_027_1
+#define g_Animset2 w_027_2
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_C1000_8017A040[];
 extern s8 D_C1000_8017AC0C[];
@@ -10,7 +18,7 @@ extern AnimationFrame D_C1000_8017AC8C[];
 extern AnimationFrame D_C1000_8017ACB4[];
 extern s32 D_C1000_8017C6EC; // g_DebugWaitInfoTimer
 
-void DebugShowWaitInfo(const char* msg) {
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_C1000_8017C6EC++ & 4) {
@@ -23,7 +31,7 @@ void DebugShowWaitInfo(const char* msg) {
     FntFlush(-1);
 }
 
-void DebugInputWait(const char* msg) {
+static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
     while (!PadRead(0))
@@ -31,7 +39,7 @@ void DebugInputWait(const char* msg) {
 }
 
 // Duplicate of Weapon 28!
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim = 0;
     bool crouchCheck = false;
     s32 attackButton;
@@ -61,7 +69,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.weapon.lifetime = 128;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == Player_Crouch) && (PLAYER.step_s != 2)) {
@@ -79,7 +87,7 @@ void EntityWeaponAttack(Entity* self) {
             self->palette = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
@@ -165,17 +173,17 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 27; }
+static int GetWeaponId(void) { return 27; }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     Primitive* prim;
     s16 selfPosX;
     s16 selfPosY;
@@ -203,7 +211,8 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk7C = 0x80;
             self->ext.shield.unk7D = 0;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         self->posY.i.hi -= 8;
         self->zPriority = 0x1B6;
@@ -222,11 +231,12 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 0x80;
         prim->priority = 0x1B4;
-        prim->drawMode = 0x75;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(0x641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;
@@ -242,7 +252,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk82 = 0x28;
             self->rotY = self->rotX = 0x100;
             self->ext.shield.unk80 = 8;
-            self->unk4C = D_C1000_8017AC8C;
+            self->anim = D_C1000_8017AC8C;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->flags |= FLAG_UNK_100000;
@@ -251,7 +261,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 2:
         if (--self->ext.shield.unk80 == 0) {
-            self->unk4C = D_C1000_8017ACB4;
+            self->anim = D_C1000_8017ACB4;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->step++;
@@ -268,7 +278,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk82 >= 160) {
             prim->b3 = 6;
             prim = &g_PrimBuf[self->primIndex];
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
             self->ext.shield.unk80 = 4;
             // Blueprint 98 has child 9, which makes func_ptr_80170024.
             g_api.CreateEntFactoryFromEntity(
@@ -280,7 +290,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 4:
         if (self->ext.shield.unk80 == 64) {
-            self->unk4C = D_C1000_8017AC8C;
+            self->anim = D_C1000_8017AC8C;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
         }
@@ -314,7 +324,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     Primitive* prim;
     Primitive* basePrim;
     s16 angle;
@@ -355,7 +365,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.medshieldlaser.childPalette = 0x111;
             self->ext.medshieldlaser.unk7D = 0;
         }
-        self->flags |= FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         if ((self->params & 0xFF) != 0) {
             if (self->facingLeft) {
                 self->posX.i.hi -= 14;
@@ -395,11 +405,11 @@ void func_ptr_80170024(Entity* self) {
             prim->tpage = 0x19;
             prim->clut = self->ext.medshieldlaser.childPalette;
             prim->priority = 0x1BC;
-            prim->drawMode = 0x39;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
         }
         self->ext.medshieldlaser.unkA0 = 0x300;
         self->ext.medshieldlaser.unk80 = 0;
-        g_api.PlaySfx(0x6B2);
+        g_api.PlaySfx(SFX_BIBLE_SCRAPE);
         self->step++;
         break;
     case 1:
@@ -407,7 +417,7 @@ void func_ptr_80170024(Entity* self) {
             !(self->ext.medshieldlaser.unkA4 & 0x800) &&
             (-0x120 <= self->posX.i.hi && self->posX.i.hi <= 0x120) &&
             (0 <= self->posY.i.hi && self->posY.i.hi <= 0x100)) {
-            g_api.PlaySfx(0x6B2);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
         }
         self->ext.medshieldlaser.unkA4 = self->ext.medshieldlaser.unk9C;
         temp_v0_8 = g_api.func_80118B18(
@@ -546,8 +556,8 @@ void func_ptr_80170024(Entity* self) {
     }
 }
 
-void func_ptr_80170028(Entity* self) {
-    Entity* parent = self->ext.generic.unk8C.entityPtr;
+static void func_ptr_80170028(Entity* self) {
+    Entity* parent = self->ext.medshieldlaser.parent;
     if (parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -558,26 +568,26 @@ void func_ptr_80170028(Entity* self) {
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 6;
         self->hitboxWidth = 6;
-        self->ext.generic.unk80.modeS16.unk0 = 6;
+        self->ext.medshieldlaser.unk80 = 6;
         self->step++;
-    } else if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+    } else if (--self->ext.medshieldlaser.unk80 == 0) {
         DestroyEntity(self);
     }
 
     if (self->hitFlags != 0) {
-        if (++self->ext.generic.unkA2 >= 6) {
-            self->ext.generic.unk8C.entityPtr->ext.weapon.unk90 = 0;
+        if (++self->ext.medshieldlaser.unkA2 >= 6) {
+            self->ext.medshieldlaser.parent->ext.weapon.unk90 = 0;
         }
         self->hitFlags = 0;
     }
 }
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

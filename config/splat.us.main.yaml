@@ -22,6 +22,7 @@ options:
     - ".text"
     - ".data"
     - ".bss"
+sha1: 54828d4e44ea9575f2a0917ff63def42a304abff
 segments:
   - [0x800, header]
   - name: main
@@ -127,7 +128,7 @@ segments:
       - [0x7A1C, c, psxsdk/libgte/msc09]
       - [0x7ABC, c, psxsdk/libgte/mtx_00]
       - [0x84DC, c, psxsdk/libgte/mtx_07]
-      - [0x850C, c, psxsdk/libgte/mtx_08]
+      - [0x850C, asm, psxsdk/libgte/mtx_08]
       - [0x863C, c, psxsdk/libgte/mtx_09]
       - [0x866C, c, psxsdk/libgte/mtx_10]
       - [0x869C, c, psxsdk/libgte/mtx_11]
@@ -149,11 +150,11 @@ segments:
       - [0x8C9C, c, psxsdk/libgte/cmb_06]
       - [0x8D2C, c, psxsdk/libgte/cmb_07]
       - [0x8DDC, c, psxsdk/libgte/cmb_09]
-      - [0x8EAC, c, psxsdk/libgte/fgo_01]
-      - [0x913C, c, psxsdk/libgte/fgo_02]
-      - [0x93CC, c, psxsdk/libgte/fgo_04]
-      - [0x956C, c, psxsdk/libgte/fgo_05]
-      - [0x970C, c, psxsdk/libgte/fgo_06]
+      - [0x8EAC, asm, psxsdk/libgte/fgo_01]
+      - [0x913C, asm, psxsdk/libgte/fgo_02]
+      - [0x93CC, asm, psxsdk/libgte/fgo_04]
+      - [0x956C, asm, psxsdk/libgte/fgo_05]
+      - [0x970C, asm, psxsdk/libgte/fgo_06]
       - [0x98AC, c, psxsdk/libgte/ratan]
       - [0x9A2C, asm, psxsdk/libgte/patchgte]
       - [0x9ACC, c, psxsdk/libapi/c68]

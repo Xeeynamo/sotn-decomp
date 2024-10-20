@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
 #include "dra.h"
+#include "dra_bss.h"
 #include "servant.h"
 
 #include <stdio.h>
@@ -13,30 +15,6 @@ u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
 ServantDesc D_80170000;
-
-void EntityWeaponAttack(Entity* self);
-s32 func_ptr_80170004(Entity* self);
-void func_ptr_80170008(Entity* self);
-void func_ptr_8017000C(Entity* self);
-s32 func_ptr_80170010(Entity* self);
-s32 func_ptr_80170014(Entity* self);
-int GetWeaponId(void);
-void LoadWeaponPalette(s32 clutIndex);
-void EntityWeaponShieldSpell(Entity* self);
-void func_ptr_80170024(Entity* self);
-void func_ptr_80170028(Entity* self);
-Weapon D_8017A000 = {
-    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
-    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
-    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
-    func_ptr_80170024,  func_ptr_80170028,
-};
-Weapon D_8017D000 = {
-    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
-    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
-    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
-    func_ptr_80170024,  func_ptr_80170028,
-};
 
 GfxBank* g_FakeGfxBank = NULL;
 GfxBank** g_GfxStageBank[0x40] = {
@@ -69,8 +47,6 @@ u8 D_800C3560[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C4864[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 
-void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
-
 // list of exposed API
 void FreePrimitives(s32 index);
 s32 AllocPrimitives(u8 primType, s32 count);
@@ -86,9 +62,10 @@ void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddToInventory(u16 itemId, s32 itemCategory);
-u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2);
+u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800F2288(s32 arg0);
+bool CalcPlayerDamage(DamageParam* damage);
 void DebugInputWait(const char* msg);
 
 int g_Frame = 0;
@@ -112,12 +89,16 @@ bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
-void InitGfxEquipIcons(FILE* f);
-void InitPalEquipIcons(FILE* f);
+bool InitGfxEquipIcons(const struct FileOpenRead* r);
+bool InitPalEquipIcons(const struct FileOpenRead* r);
 void InitVbVh(void);
-static bool InitSfxData(FileStringified* file);
-static bool InitXaData(FileStringified* file);
-static bool InitBlueprintData(FileStringified* file);
+static bool InitSfxData(struct FileAsString* file);
+static bool InitXaData(struct FileAsString* file);
+static bool InitBlueprintData(struct FileAsString* file);
+
+s32 func_800EDB58(u8 primType, s32 count);
+
+void func_801027C4(u32 arg0);
 
 bool InitGame(void) {
     if (!InitPlatform()) {
@@ -128,21 +109,21 @@ bool InitGame(void) {
     GameApi api;
     api.FreePrimitives = FreePrimitives;
     api.AllocPrimitives = AllocPrimitives;
-    api.CheckCollision = NULL;
+    api.CheckCollision = CheckCollision;
     api.func_80102CD8 = NULL;
-    api.UpdateAnim = NULL;
+    api.UpdateAnim = UpdateAnim;
     api.SetSpeedX = NULL;
     api.GetFreeEntity = NULL;
     api.GetEquipProperties = NULL;
     api.func_800EA5E4 = func_800EA5E4;
     api.LoadGfxAsync = LoadGfxAsync;
     api.PlaySfx = PlaySfx;
-    api.func_800EDB58 = NULL;
+    api.func_800EDB58 = func_800EDB58;
     api.func_800EA538 = func_800EA538;
     api.g_pfn_800EA5AC = func_800EA5AC;
-    api.func_801027C4 = NULL;
+    api.func_801027C4 = func_801027C4;
     api.func_800EB758 = NULL;
-    api.CreateEntFactoryFromEntity = NULL;
+    api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
     api.func_80131F68 = func_80131F68;
     api.func_800EDB08 = NULL;
     api.func_80106A28 = func_80106A28;
@@ -167,22 +148,22 @@ bool InitGame(void) {
     api.AddToInventory = AddToInventory;
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = NULL;
-    api.func_80134714 = func_80134714;
-    api.func_80134678 = NULL;
+    api.PlaySfxVolPan = PlaySfxVolPan;
+    api.SetVolumeCommand22_23 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.func_8010BF64 = NULL;
     api.func_800F1FC4 = NULL;
     api.func_800F2288 = func_800F2288;
-    api.func_8011A3AC = NULL;
+    api.func_8011A3AC = func_8011A3AC;
     api.func_800FF460 = NULL;
     api.func_800FF494 = NULL;
     api.CdSoundCommandQueueEmpty = NULL;
     api.func_80133950 = NULL;
     api.func_800F27F4 = NULL;
     api.func_800FF110 = NULL;
-    api.func_800FD664 = NULL;
-    api.func_800FD5BC = NULL;
+    api.func_800FD664 = func_800FD664;
+    api.CalcPlayerDamage = CalcPlayerDamage;
     api.LearnSpell = NULL;
     api.DebugInputWait = DebugInputWait;
     api.unused12C = NULL;
@@ -194,13 +175,10 @@ bool InitGame(void) {
 
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
-    D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
-    D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
-
     InitStrings();
     InitAssets();
 
-    D_80137590 = g_DemoRecordingBuffer;
+    g_DemoPtr = g_DemoRecordingBuffer;
 
     // forcing g_Vram values while waiting to import the data
     g_Vram.D_800ACD98.x = 0x0380;
@@ -216,24 +194,23 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
-    FileRead(InitGfxEquipIcons, "assets/dra/g_GfxEquipIcon.bin");
-    FileRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin");
+    FileOpenRead(InitGfxEquipIcons, "assets/dra/g_GfxEquipIcon.bin", NULL);
+    FileOpenRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin", NULL);
     InitVbVh();
 
-    if (!FileStringify(InitSfxData, "assets/dra/sfx.json", NULL)) {
+    if (!FileAsString(InitSfxData, "assets/dra/sfx.json", NULL)) {
         ERRORF("failed to init sfx");
         return false;
     }
 
-    if (!FileStringify(InitXaData, "assets/dra/music_xa.json", NULL)) {
+    if (!FileAsString(InitXaData, "assets/dra/music_xa.json", NULL)) {
         ERRORF("failed to init xa data");
         return false;
     }
 
-    // TODO different between RIC and ARC
-    if (!FileStringify(
-            InitBlueprintData, "assets/dra/factory_blueprint.json", NULL)) {
-        ERRORF("failed to init blueprint data");
+    if (!FileAsString(InitBlueprintData, "assets/dra/factory_blueprint.json",
+                      g_FactoryBlueprints)) {
+        ERRORF("failed to init dra blueprint data");
         return false;
     }
 
@@ -242,97 +219,6 @@ bool InitGame(void) {
 
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
-
-bool FileRead(bool (*cb)(FILE* file), const char* path) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        return false;
-    }
-
-    bool r = cb(f);
-    fclose(f);
-    return r;
-}
-bool FileStringify(
-    bool (*cb)(FileStringified* file), const char* path, void* param) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        return false;
-    }
-
-    fseek(f, 0, SEEK_END);
-    size_t len = ftell(f);
-    fseek(f, 0, SEEK_SET);
-
-    void* content = malloc(len + 1);
-    if (!content) {
-        ERRORF("unable to allocate %d bytes for '%s'", len, path);
-        fclose(f);
-        return false;
-    }
-
-    size_t bytesread = fread(content, 1, len, f);
-    if (bytesread != len) {
-        ERRORF("unable to read %d bytes for '%s'", len, path);
-        fclose(f);
-        free(content);
-        return false;
-    }
-
-    ((char*)content)[len] = '\0';
-
-    FileStringified file;
-    file.path = path;
-    file.content = content;
-    file.length = len;
-    file.param = param;
-    bool r = cb(&file);
-    free(content);
-    fclose(f);
-    return r;
-}
-bool FileUseContent(
-    bool (*cb)(FileLoad* file, void* param), const char* path, void* param) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        return false;
-    }
-
-    fseek(f, 0, SEEK_END);
-    size_t len = ftell(f);
-    fseek(f, 0, SEEK_SET);
-
-    void* content = malloc(len);
-    if (!content) {
-        ERRORF("unable to allocate %d bytes for '%s'", len, path);
-        fclose(f);
-        return false;
-    }
-
-    size_t bytesread = fread(content, 1, len, f);
-    if (bytesread != len) {
-        ERRORF("unable to read %d bytes for '%s'", len, path);
-        fclose(f);
-        free(content);
-        return false;
-    }
-
-    FileLoad file;
-    file.path = path;
-    file.content = content;
-    file.length = bytesread;
-    bool r = cb(&file, param);
-
-    free(content);
-    fclose(f);
-    return r;
-}
 
 void InitSotnMenuTable(void);
 void InitStrings(void) {
@@ -351,22 +237,22 @@ void InitStrings(void) {
     }
 }
 
-static bool LoadCmpGfx(FileLoad* file, void* dst) {
-    if (file->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
-        ERRORF("file '%s' too big, max size is %d ", file->path,
+static bool ReadCmpGfx(const struct FileOpenRead* f) {
+    if (f->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
+        ERRORF("file '%s' too big, max size is %d ", f->filename,
                MAX_SIZE_FOR_COMPRESSED_GFX);
         return false;
     }
-    memcpy(dst, file->content, file->length);
+    fread(f->param, f->length, 1, f->file);
     return true;
 }
 
 static void InitAssets() {
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
 }
 
 void (*g_VsyncCallback)() = NULL;
@@ -392,20 +278,6 @@ int MyClearImage(RECT* rect, u_char r, u_char g, u_char b) {
     return 0;
 }
 
-int MyLoadImage(RECT* rect, u_long* p) {
-    DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
-    u16* mem = (u16*)p;
-    u16* vram = g_RawVram;
-    vram += rect->x + rect->y * VRAM_W;
-
-    for (int i = 0; i < rect->h; i++) {
-        memcpy(vram, mem, rect->w * 2);
-        mem += rect->w;
-        vram += VRAM_W;
-    }
-    return 0;
-}
-
 int MyStoreImage(RECT* rect, u_long* p) {
     DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
     u16* mem = (u16*)p;
@@ -420,47 +292,28 @@ int MyStoreImage(RECT* rect, u_long* p) {
     return 0;
 }
 
-void ReadToArray(const char* path, char* content, size_t maxlen) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        exit(0);
+void ReadToArray(const char* filename, char* content, size_t targetlen) {
+    int readlen = FileReadToBuf(filename, content, 0, targetlen);
+    if (readlen != targetlen) {
+        ERRORF(
+            "file read for '%s' failed (%d/%d)", filename, readlen, targetlen);
     }
-
-    fseek(f, 0, SEEK_END);
-    size_t len = ftell(f);
-
-    if (len > maxlen) {
-        ERRORF("file read for '%s' failed (%d/%d)", path, maxlen, len);
-        fclose(f);
-        exit(0);
-    }
-
-    fseek(f, 0, SEEK_SET);
-
-    size_t bytesread = fread(content, 1, len, f);
-    if (bytesread != len) {
-        ERRORF("unable to read %d bytes for '%s'", len, path);
-        fclose(f);
-        exit(0);
-    }
-
-    fclose(f);
 }
 
-void InitGfxEquipIcons(FILE* f) {
-    size_t n = fread(g_GfxEquipIcon, 1, sizeof(g_GfxEquipIcon), f);
+bool InitGfxEquipIcons(const struct FileOpenRead* r) {
+    size_t n = fread(g_GfxEquipIcon, 1, sizeof(g_GfxEquipIcon), r->file);
     if (n != sizeof(g_GfxEquipIcon)) {
         WARNF("unable to read all bytes: %d/%d", n, sizeof(g_GfxEquipIcon));
     }
+    return true;
 }
 
-void InitPalEquipIcons(FILE* f) {
-    size_t n = fread(g_PalEquipIcon, 1, sizeof(g_PalEquipIcon), f);
+bool InitPalEquipIcons(const struct FileOpenRead* r) {
+    size_t n = fread(g_PalEquipIcon, 1, sizeof(g_PalEquipIcon), r->file);
     if (n != sizeof(g_PalEquipIcon)) {
         WARNF("unable to read all bytes: %d/%d", n, sizeof(g_PalEquipIcon));
     }
+    return true;
 }
 
 void InitVbVh() {
@@ -497,7 +350,7 @@ void InitVbVh() {
         }                                                                      \
     }
 
-static bool InitSfxData(FileStringified* file) {
+static bool InitSfxData(struct FileAsString* file) {
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
@@ -518,7 +371,7 @@ static bool InitSfxData(FileStringified* file) {
         DO_ITEM("prog", jitem, item, item->prog);
         DO_ITEM("note", jitem, item, item->note);
         DO_ITEM("volume", jitem, item, item->volume);
-        DO_ITEM("unk4", jitem, item, item->unk4);
+        DO_ITEM("mode", jitem, item, item->mode);
         DO_ITEM("tone", jitem, item, item->tone);
         DO_ITEM("unk6", jitem, item, item->unk6);
     }
@@ -526,7 +379,7 @@ static bool InitSfxData(FileStringified* file) {
     return true;
 }
 
-static bool InitXaData(FileStringified* file) {
+static bool InitXaData(struct FileAsString* file) {
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
@@ -557,7 +410,7 @@ static bool InitXaData(FileStringified* file) {
     return true;
 }
 
-static bool InitBlueprintData(FileStringified* file) {
+static bool InitBlueprintData(struct FileAsString* file) {
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
@@ -572,9 +425,12 @@ static bool InitBlueprintData(FileStringified* file) {
     }
 
     int len = cJSON_GetArraySize(array);
+
+    FactoryBlueprint* blueprints = (FactoryBlueprint*)file->param;
+
     for (int i = 0; i < len; i++) {
         u32 bits = 0;
-        FactoryBlueprint* item = &g_FactoryBlueprints[i];
+        FactoryBlueprint* item = &blueprints[i];
         cJSON* jitem = cJSON_GetArrayItem(array, i);
         DO_ITEM("childId", jitem, item, item->childId);
         DO_ITEM("unk1", jitem, item, item->unk1);

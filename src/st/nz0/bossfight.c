@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 // This file holds functions to handle the Slogra and Gaibon fight.
 // Slogra and Gaibon themselves are in individual files.
@@ -99,7 +101,7 @@ void EntityBossFightManager(Entity* self) {
         newEnt->posY.i.hi = newEntY;
         newEnt->params = 5;
         g_BossFlag |= BOSS_FLAG_DOORS_OPEN; // Reopen the door
-        g_CastleFlags[132] = 1;
+        g_CastleFlags[SG_KILL_ALCH] = 1;
         D_80097928 = 1;
         D_80097910 = 0x32E;
         self->step++;
@@ -159,7 +161,7 @@ void EntityBossRoomBlock(Entity* self) {
         MoveEntity();
         GetPlayerCollisionWith(self, 8, 8, 5);
         if (!(g_Timer & 3)) {
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
         if (--self->ext.GS_Props.timer) {
             break;

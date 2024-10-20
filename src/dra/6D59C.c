@@ -1,9 +1,21 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 #include "player.h"
 
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
+
+// BSS
+extern s16 g_WasFacingLeft;
+extern s16 g_WasFacingLeft2;
+extern s32 g_WasFacingLeft3;
+extern s32 g_WasFacingLeft4;
+extern s16 g_WasFacingLeft5;
+extern s32 g_WasFacingLeft6;
+extern s32 g_WasFacingLeft7;
+
 // Same function in RIC is func_8015C4AC
 void func_8010D59C(void) {
     byte stackpad[40];
@@ -70,6 +82,7 @@ u8 g_shadowOpacityReductionTable[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
                      32, 32, 32, 32, 32, 32, 32, 32};
+
 // Equivalent in RIC is func_8015C6D4
 void func_8010D800(void) {
     byte pad[0x28];
@@ -128,8 +141,8 @@ void func_8010D800(void) {
     }
 }
 
-void func_8010DA2C(s32* arg0) {
-    g_CurrentEntity->unk4C = arg0;
+void func_8010DA2C(AnimationFrame* frames) {
+    g_CurrentEntity->anim = frames;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
@@ -248,27 +261,27 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
         g_CurrentEntity->animFrameDuration =
-            g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+            g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].duration;
         ret = 0;
     } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
-        animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
+        animFrame = &g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx];
         // Effectively a switch statement, but breaks if I actually use one.
         if (animFrame->duration == 0) {
             g_CurrentEntity->animFrameIdx = animFrame->unk2;
             g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+                g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].duration;
             ret = 0;
         } else if (animFrame->duration == 0xFFFF) {
             g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
             ret = -1;
         } else if (animFrame->duration == 0xFFFE) {
-            g_CurrentEntity->unk4C = anims[animFrame->unk2];
+            g_CurrentEntity->anim = anims[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
             ret = -2;
             g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C->duration;
+                g_CurrentEntity->anim[0].duration;
         } else {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
         }
@@ -278,7 +291,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
         frameProps =
-            &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx]
+            &frameProps[(g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx]
                              .unk2 >>
                          9)
                         << 2];
@@ -288,7 +301,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         g_CurrentEntity->hitboxHeight = *frameProps++;
     }
     g_CurrentEntity->animCurFrame =
-        g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+        g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
     return ret;
 }
 
@@ -305,12 +318,12 @@ void func_8010DF70(void) {
     }
 }
 
-void func_8010DFF0(s32 arg0, s32 arg1) {
+void func_8010DFF0(s32 resetAnims, s32 arg1) {
     Primitive* prim;
     s32 i;
 
-    if (arg0 != 0) {
-        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk1 = 1;
+    if (resetAnims) {
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
@@ -322,14 +335,14 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk0 = 1;
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 10;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 10;
 
-    if (arg1 != 0) {
+    if (arg1) {
         if (arg1 < 4) {
-            g_Player.D_80072F00[15] = 4;
+            g_Player.timers[15] = 4;
         } else {
-            g_Player.D_80072F00[15] = arg1;
+            g_Player.timers[15] = arg1;
         }
     }
 }
@@ -351,13 +364,13 @@ void func_8010E0D0(s32 arg0) {
     Entity* entity;
 
     if (arg0 == 1) {
-        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(0x4700, 44), 0);
+        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(44, 0x47), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
 
-        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(0x4000, 44), 0);
+        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(44, 0x40), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
@@ -369,12 +382,12 @@ void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 44), 0);
-        if (arg1 >= g_Player.D_80072F00[13]) {
-            g_Player.D_80072F00[13] = arg1;
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x15), 0);
+        if (arg1 >= g_Player.timers[13]) {
+            g_Player.timers[13] = arg1;
         }
-    } else if (g_Player.D_80072F00[14] <= arg1) {
-        g_Player.D_80072F00[14] = arg1;
+    } else if (g_Player.timers[14] <= arg1) {
+        g_Player.timers[14] = arg1;
     }
 }
 
@@ -482,6 +495,8 @@ void func_8010E42C(u16 arg0) {
     }
 }
 
+u8 D_800ACF4C[] = {0x00, 0x11, 0x04, 0x15, 0x01, 0x10, 0x03, 0x23};
+
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.velocityX = arg1;
     PLAYER.velocityY = 0;
@@ -495,7 +510,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     PLAYER.palette = 0x8100;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 
     if ((u32)(g_Player.unk72 - 1) < 2U) {
         SetPlayerAnim(0xC7);
@@ -510,7 +525,11 @@ void func_8010E4D0(void) {
     func_8010E470(0, 0);
 }
 
-// Corresponding RIC function is func_8015CD98 (much simpler)
+u8 D_800ACF54[] = {
+    0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
+};
+
+// Corresponding RIC function is RicLandToTheGround (much simpler)
 void func_8010E570(s32 arg0) {
     s32 anim;
     s32 atLedge;
@@ -527,7 +546,7 @@ void func_8010E570(s32 arg0) {
         PLAYER.step_s = 2;
         atLedge = 0;
     }
-    switch (g_Player.unk50) {
+    switch (g_Player.prev_step) {
 
     case 9:
         anim = 4;
@@ -575,7 +594,7 @@ void func_8010E6AC(s32 arg0) {
         }
     } else {
         SetPlayerAnim(7);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 1), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
 
     if (g_Player.unk4C != 0) {
@@ -586,7 +605,7 @@ void func_8010E6AC(s32 arg0) {
         PLAYER.animFrameIdx = 1;
     }
 
-    if (g_Player.unk50 == 2) {
+    if (g_Player.prev_step == 2) {
         PLAYER.animFrameIdx = 4;
     }
 }
@@ -594,18 +613,18 @@ void func_8010E6AC(s32 arg0) {
 void func_8010E7AC(void) {
     SetPlayerStep(Player_Fall);
 
-    if (g_Player.unk50 != 1) {
+    if (g_Player.prev_step != 1) {
         SetPlayerAnim(0x1C);
     }
 
     PLAYER.velocityY = 0x20000;
     PLAYER.velocityX = 0;
-    g_Player.D_80072F00[6] = 8;
+    g_Player.timers[6] = 8;
 
     if (g_Player.unk04 & 1) {
-        g_Player.D_80072F00[5] = 8;
+        g_Player.timers[5] = 8;
     } else {
-        g_Player.D_80072F00[5] = 0;
+        g_Player.timers[5] = 0;
     }
 
     g_Player.unk44 = 0x10;
@@ -628,7 +647,7 @@ void func_8010E83C(s32 arg0) {
     PLAYER.velocityY = FIX(-4.875);
     SetPlayerStep(Player_Jump);
 
-    if (g_Player.unk50 == 1) {
+    if (g_Player.prev_step == 1) {
         g_Player.unk44 |= 0x10;
     }
 
@@ -663,12 +682,15 @@ void DoGravityJump(void) {
     }
     // Factory with blueprint 2, creates child entity 3 which is
     // EntityGravityBootBeam
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 2), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
     SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = FIX(-12);
     SetPlayerAnim(0x21);
     g_Player.unk4A = 0;
 }
+
+s16 g_SfxAttackGrunts[] = {
+    SFX_UNK_6EE, SFX_UNK_6EF, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -676,7 +698,7 @@ void func_8010EA54(s32 arg0) {
     if (arg0 != 0) {
         temp_hi = rand() % arg0;
         if (temp_hi < 4) {
-            PlaySfx(D_800ACF60[temp_hi]);
+            PlaySfx(g_SfxAttackGrunts[temp_hi]);
         }
     }
 }
@@ -736,8 +758,8 @@ s32 func_8010EB5C(void) {
         return 3;
     }
     CreateEntFactoryFromEntity(
-        g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), subWpnId << 9);
-    g_Player.D_80072F00[10] = 4;
+        g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
+    g_Player.timers[10] = 4;
     if (PLAYER.step_s < 64) {
         anim = subWpn.anim;
         if (PLAYER.step == 0) {
@@ -789,7 +811,7 @@ void func_8010ED54(u8 anim) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SwordWarp);
     SetPlayerAnim(anim);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1400, 61), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 0x14), 0);
     g_Player.unk48 = 0;
 }
 
@@ -899,7 +921,7 @@ block_32:
         HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
     block_38c:
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-        if (D_80138FC8 == 0xFF) {
+        if (g_ButtonCombo[COMBO_BF].buttonsCorrect == 0xFF) {
             var_s2 = equipped_item->unk17;
             if (var_s2 != 0) {
                 equipped_item = &g_EquipDefs[var_s2];
@@ -942,9 +964,8 @@ block_45:
                 return 0;
             }
         } else {
-            if (g_Player.D_80072F00[1] != 0) {
-                CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0x100, 57), 0);
+            if (g_Player.timers[1]) {
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(57, 1), 0);
                 goto block_70;
             }
             if (var_s7 == 0) {
@@ -1012,7 +1033,7 @@ block_45:
                 g_Player.unk46 = 0x8012;
                 g_Player.unk54 = 0xFF;
                 PLAYER.step_s = 0x51;
-                PlaySfx(0x6E7);
+                PlaySfx(SFX_UNK_6E7);
                 return 1;
             }
         }
@@ -1034,45 +1055,45 @@ block_45:
         D_80139824 = 0x28;
         PLAYER.step = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 20: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 21: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 22: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 28: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0xA;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         CheckMoveDirection();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 27: // Estoc
         animVariant = atLedge;
         CheckMoveDirection();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         if (g_Player.pl_vram_flag & 1) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
@@ -1083,7 +1104,7 @@ block_45:
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         break;
     case 24: // Unknown, not a direct equippable item (but there are 2 of them)
         if (2 < PLAYER.step && PLAYER.step < 5) {
@@ -1094,14 +1115,14 @@ block_45:
         D_80139824 = 0x80;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 26: // Unknown, not a direct equippable item (but there are 2 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 0: // Most normal swords come in this range
     case 1:
@@ -1158,7 +1179,7 @@ block_45:
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
-        g_Player.D_80072F00[9] = 4;
+        g_Player.timers[9] = 4;
         break;
     case 5: // Lots of unknown things
         step = PLAYER.step;
@@ -1227,8 +1248,8 @@ block_45:
         }
         break;
     case 135: // Unknown
-        PlaySfx(0x6F0);
-        g_Player.D_80072F00[9] = 4;
+        PlaySfx(SFX_UNK_6F0);
+        g_Player.timers[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;
     }
@@ -1255,11 +1276,11 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     func_8010E3E0();
     SetPlayerAnim(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
-    PlaySfx(NA_SE_PL_MP_GAUGE);
-    g_Player.D_80072F00[11] =
+    PlaySfx(SFX_UI_MP_FULL);
+    g_Player.timers[11] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1100, 40), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x11), 0);
     func_80118C28(0xB);
 }
 
@@ -1271,7 +1292,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     SetPlayerAnim(0xDA);
     PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
     func_80118C28(0xC);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FC50(void) {
@@ -1279,10 +1300,10 @@ void func_8010FC50(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 117), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 117, 0);
     SetPlayerAnim(0xF0);
     PlaySfx(NA_SE_VO_AL_PUNCH);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FCB8(void) {
@@ -1290,10 +1311,10 @@ void func_8010FCB8(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 117), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
     SetPlayerAnim(0xF1);
     PlaySfx(NA_SE_VO_AL_PUNCH);
-    g_Player.D_80072F00[12] = 4;
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FD24(void) {
@@ -1302,8 +1323,8 @@ void func_8010FD24(void) {
     SetPlayerStep(Player_SpellSwordBrothers);
     func_8010E3E0();
     SetPlayerAnim(0xF1);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700, 40), 0);
-    g_Player.D_80072F00[12] = 4;
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x17), 0);
+    g_Player.timers[12] = 4;
 }
 
 void func_8010FD88(void) {
@@ -1312,9 +1333,9 @@ void func_8010FD88(void) {
     SetSpeedX(0xFFFC8000);
     g_CurrentEntity->velocityY = 0;
     SetPlayerAnim(0xDB);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
     g_Player.unk46 = 0;
-    PlaySfx(NA_SE_AL_BACKSLIDE);
+    PlaySfx(SFX_SCRAPE_C);
 }
 
 bool func_8010FDF8(s32 branchFlags) {
@@ -1370,36 +1391,35 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E570(0);
                     func_8010FAF4();
                 label:
-                    PlaySfx(0x64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                     return 1;
                 }
 
-                if (PLAYER.velocityY > 0x6E000) {
+                if (PLAYER.velocityY > FIX(6.875)) {
                     func_8010E470(1, 0);
-                    func_80134714(0x647);
-                    CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    PlaySfxVolPan(SFX_STOMP_HARD_B);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 } else {
                     if (g_Player.unk44 & 0x10) {
                         func_8010E6AC(1);
                     } else {
                         func_8010E570(0);
                     }
-                    PlaySfx(0x64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 }
 
                 func_8010FAF4();
                 return 1;
             }
 
-            if (PLAYER.velocityY > 0x6E000) {
+            if (PLAYER.velocityY > FIX(6.875)) {
                 if ((PLAYER.step_s == 112) || (PLAYER.step == 4)) {
                     func_8010E470(3, PLAYER.velocityX / 2);
                 } else {
                     func_8010E470(1, 0);
                 }
-                PlaySfx(0x647);
-                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+                PlaySfx(SFX_STOMP_HARD_B);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 return 1;
             }
 
@@ -1409,19 +1429,19 @@ bool func_8010FDF8(s32 branchFlags) {
             }
 
             if (abs(PLAYER.velocityX) > 0x20000) {
-                PlaySfx(0x647);
-                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+                PlaySfx(SFX_STOMP_HARD_B);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
-                PlaySfx(0x64C, 0x30, 0);
+                PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 func_8010E570(0);
             }
             return 1;
         }
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
-            PlaySfx(0x647);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+            PlaySfx(SFX_STOMP_HARD_B);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             return 1;
         }
     }
@@ -1469,6 +1489,8 @@ bool func_8010FDF8(s32 branchFlags) {
     }
     return 0;
 }
+
+s16 D_800ACF6C[] = {0, -8, -16, -22};
 
 s16 func_80110394(void) {
     // Variables that change during execution

@@ -1,6 +1,16 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
+
+// BSS
+extern s32 g_WingSmashButtonCounter;
+extern s32 g_WingSmashButtonTimer;
+extern s32 g_WingSmashTimer;
+extern s32 g_BatScreechDone;
+extern s32 g_MistTimer; // remaining time in mist transformation
+extern s32 D_80138008;
 
 void func_80115F54(void) {
     PlayerDraw* plDraw;
@@ -28,8 +38,8 @@ void func_80115F54(void) {
         PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5900, 44), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x600, 49), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x59), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(49, 6), 0);
         plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
         plDraw->r2 = plDraw->b2 = plDraw->g2 = 128;
         plDraw->r1 = plDraw->b1 = plDraw->g1 = 128;
@@ -52,7 +62,7 @@ void func_80115F54(void) {
             PLAYER.velocityY = 0x1000;
         }
         if (PLAYER.animFrameDuration < 0) {
-            StoreImage(&D_800AE130, &D_80139A7C);
+            StoreImage(&D_800AE130, D_80139A7C);
             PLAYER.step = 0x10;
             D_80137FE4 = 0;
             D_80137FE8 = 0x40;
@@ -75,9 +85,9 @@ void func_80116208(void) {
         func_80113EE0();
         if (g_Player.unk62 == 0) {
             PLAYER.ext.player.anim = 0x37;
-            g_Player.D_80072F00[2] = 8;
+            g_Player.timers[2] = 8;
             g_Player.unk40 = 0x8166;
-            PlaySfx(0x6EB);
+            PlaySfx(SFX_UNK_6EB);
         }
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
@@ -90,16 +100,16 @@ void func_80116208(void) {
             func_80118C84(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
-                func_80115394(&damage, 0xC, 1);
+                func_80115394(&damage, Player_BossGrab, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
-                g_Player.D_80072F00[2] = 4;
+                g_Player.timers[2] = 4;
                 g_Player.unk40 = 0x8166;
-                PlaySfx(0x6E7);
+                PlaySfx(SFX_UNK_6E7);
             }
             if (g_Player.unk62 == 2) {
-                g_Player.D_80072F00[2] = 4;
+                g_Player.timers[2] = 4;
                 g_Player.unk40 = 0x8161;
             }
             g_Player.unk60 = 2;
@@ -111,7 +121,7 @@ void func_80116208(void) {
             g_Player.unk60 = 0;
             SetPlayerAnim(0x2E);
             g_Player.damageTaken = g_Player.unk64;
-            PlaySfx(0x6ED);
+            PlaySfx(SFX_UNK_6ED);
             return;
         }
         if (g_Player.unk60 == 0) {
@@ -129,8 +139,7 @@ void PlayerStepHellfire(void) {
     case 0:
         // Make factory with blueprint #33. Factory makes entities with ID 25.
         // This is EntityHellfireHandler.
-        if (CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 33), 0) ==
-            NULL) {
+        if (CreateEntFactoryFromEntity(g_CurrentEntity, 33, 0) == NULL) {
             func_8010E570(0);
         }
         SetPlayerAnim(1);
@@ -177,10 +186,10 @@ void PlayerStepHellfire(void) {
         break;
     case 4:
         if (PLAYER.animFrameIdx == 10 && PLAYER.animFrameDuration == 1) {
-            g_Player.D_80072F00[12] = 4;
+            g_Player.timers[12] = 4;
             // Make factory with blueprint 37. This creates entity with ID 28,
             // which is EntityExpandingCircle.
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 37), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 37, 0);
         }
         if (PLAYER.animFrameDuration < 0) {
             runFinishingBlock = 1;
@@ -200,12 +209,12 @@ void func_801166A4(void) {
     case 0:
         func_80113EE0();
         g_Player.unk40 = 0x8166;
-        g_Player.D_80072F00[2] = 6;
+        g_Player.timers[2] = 6;
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
         PLAYER.ext.player.anim = 0x33;
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5800, 44), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x58), 0);
         PLAYER.step_s++;
         break;
 
@@ -256,7 +265,7 @@ bool BatFormFinished(void) {
         g_Entities->palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2100, 44), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x21), 0);
         g_Entities->velocityY = g_Entities->velocityY >> 1;
         return true;
     }
@@ -416,8 +425,8 @@ void ControlBatForm(void) {
             SetPlayerAnim(0xC6);
             SetSpeedX(FIX(6));
             PLAYER.step_s = 3;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5c00, 44), 0);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 67), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5c), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 67, 0);
             g_WingSmashTimer = 0x40;
 #if defined(VERSION_US)
             g_WingSmashButtonCounter = 0;
@@ -425,13 +434,13 @@ void ControlBatForm(void) {
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_ECHO_OF_BAT))) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 103), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 103, 0);
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
             SetPlayerAnim(0xC9);
             PLAYER.step_s = 4;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 44), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 5), 0);
         }
     }
 
@@ -454,12 +463,12 @@ void ControlBatForm(void) {
             if (g_Player.unk66 == 0) {
 #if defined(VERSION_US)
                 if (CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0x2000, 44), 0) == NULL) {
+                        g_CurrentEntity, FACTORY(44, 0x20), 0) == NULL) {
                     return;
                 }
 #elif defined(VERSION_HD)
                 CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0x2000, 44), 0);
+                    g_CurrentEntity, FACTORY(44, 0x20), 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;
@@ -552,7 +561,7 @@ void ControlBatForm(void) {
             DecelerateY(0x1200);
             screechDone = 1;
             if (!g_BatScreechDone) {
-                PlaySfx(SOUND_BAT_SCREECH);
+                PlaySfx(SFX_BAT_SCREECH);
             }
             break;
         case PAD_LEFT:
@@ -567,7 +576,7 @@ void ControlBatForm(void) {
             DecelerateY(0x1200);
             screechDone = 1;
             if (!g_BatScreechDone) {
-                PlaySfx(SOUND_BAT_SCREECH);
+                PlaySfx(SFX_BAT_SCREECH);
             }
             break;
         case PAD_RIGHT | PAD_UP:
@@ -646,7 +655,7 @@ void ControlBatForm(void) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
-            PlaySfx(0x644);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             g_Player.D_80072EFC = 0x20;
             g_Player.padSim = 0;
@@ -694,10 +703,10 @@ void ControlBatForm(void) {
                 PLAYER.velocityY = FIX(6);
             }
             if (g_GameTimer % 3 == 0) {
-                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 65), 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 65, 0);
                 if (g_Player.pl_vram_flag & 1) {
                     CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0x900, 69), 0);
+                        g_CurrentEntity, FACTORY(69, 9), 0);
                 }
                 if (g_Player.pl_vram_flag & 2) {
                     x_offset = 3;
@@ -707,7 +716,7 @@ void ControlBatForm(void) {
                     PLAYER.posY.i.hi -= 8;
                     PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
                     CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(0x100, 4), 0);
+                        g_CurrentEntity, FACTORY(4, 1), 0);
                     PLAYER.posY.i.hi += 8;
                     PLAYER.posX.i.hi -= x_offset;
                 }
@@ -721,7 +730,7 @@ void ControlBatForm(void) {
         func_8011690C(0x180);
         if (PLAYER.animFrameDuration < 0) {
             // This actually creates the entity factory to produce the fireball
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 81), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 81, 0);
             SetSpeedX(FIX(-1.5));
             func_8011690C(0);
             SetPlayerAnim(0xC3);
@@ -877,7 +886,7 @@ void func_80117AC0(void) {
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             SetPlayerAnim(0xC8);
-            PlaySfx(0x6EE);
+            PlaySfx(SFX_UNK_6EE);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
             PLAYER.animFrameIdx = 0;
@@ -957,7 +966,7 @@ void ControlMistForm(void) {
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;
         func_8010FAF4();
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 73), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 73, 0);
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = xSpeedOrtho;
         }
@@ -977,7 +986,7 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11CU);
         } else {
             func_800EA5E4(0x11FU);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 83), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 83, 0);
         }
         // Note that this means Power of Mist doesn't make mist infinite!
         // It just lasts 100,000 :)
@@ -1161,7 +1170,7 @@ void func_801182F8(void) {
         if (g_Entities[16].step == 5) {
             PLAYER.palette = 0x8100;
             func_8010FAF4();
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5b00, 44), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5b), 0);
             if (PLAYER.step_s != 0) {
                 func_8010E4D0();
                 return;
@@ -1199,9 +1208,9 @@ void func_80118640(void) {
 
 void func_80118670(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 40), 0);
-        PlaySfx(NA_SE_PL_MP_GAUGE);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 112), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x16), 0);
+        PlaySfx(SFX_UI_MP_FULL);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 112, 0);
     }
     if (PLAYER.animFrameDuration < 0) {
         func_8010E570(0);
@@ -1212,7 +1221,7 @@ void func_801186EC(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 61), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 0x15), 0);
             PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {
@@ -1294,6 +1303,7 @@ void func_80118894(Entity* self) {
     }
 }
 
+extern s32 D_80138038; // BSS
 Entity* func_80118970(void) {
     s32 big_arr[128];
     Entity* ent;
@@ -1414,222 +1424,3 @@ s32 func_80118C84(s32 arg0, s32 arg1) {
     }
     return -1;
 }
-
-// number appears and moves to HP meter, probably for healing effects
-INCLUDE_ASM("dra/nonmatchings/75F54", EntityNumberMovesToHpMeter);
-
-// "Guard" text displays on screen
-INCLUDE_ASM("dra/nonmatchings/75F54", EntityGuardText);
-
-void func_80119D3C(Entity* entity) {
-    s32 temp;
-    s32 cos;
-
-    switch (entity->step) {
-    case 0:
-        entity->posY.i.hi -= 16;
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->ext.generic.unk7C.s = 0;
-        entity->step++;
-        entity->velocityY = FIX(-0.5);
-        entity->ext.generic.unk7E.modeU16 = 0x40;
-        entity->animCurFrame = 0xE;
-        entity->animSet = ANIMSET_DRA(3);
-        entity->ext.generic.unk80.modeS16.unk0 = 0x80;
-        entity->flags = FLAG_UNK_08000000;
-        break;
-
-    case 1:
-        if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
-            entity->drawFlags = FLAG_DRAW_UNK80;
-        }
-        entity->posY.val += entity->velocityY;
-        cos = rcos(entity->ext.generic.unk7C.s);
-        entity->ext.generic.unk7C.s =
-            entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
-        temp = cos * 8;
-
-        if (!(g_GameTimer & 3)) {
-            entity->ext.generic.unk7E.modeU16--;
-        }
-        entity->posX.val += temp;
-        entity->ext.generic.unk80.modeS16.unk0--;
-        if (entity->ext.generic.unk80.modeS16.unk0 == 0) {
-            DestroyEntity(entity);
-        }
-        break;
-    }
-}
-
-// Corresponding RIC function is func_8015FDB0
-s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
-    s16 left;
-    s16 top;
-    s16 right;
-    s32 size;
-    u8* idx;
-    // 800AD094 is a read-only array of bytes in 8-byte groups.
-    // These are sets of 4 pairs of u,v values.
-    // the ->b0 value is very likely fake.
-    idx = D_800AD094;
-    idx += prim->b0 * 8;
-    size = 6;
-    if (prim->b0 >= 3U) {
-        size = 4;
-    }
-    if (prim->b0 == 6) {
-        return -1;
-    }
-    left = xCenter - size;
-    top = yCenter - size;
-    prim->y0 = top;            // a
-    prim->y1 = top;            // 16
-    prim->x0 = left;           // 8
-    prim->x1 = xCenter + size; // 14
-    prim->x2 = left;           // 20
-    prim->y2 = yCenter + size; // 22
-    prim->x3 = xCenter + size; // 2c
-    prim->y3 = yCenter + size; // 2e
-
-    prim->u0 = *idx++;
-    prim->v0 = *idx++;
-    prim->u1 = *idx++;
-    prim->v1 = *idx++;
-    prim->u2 = *idx++;
-    prim->v2 = *idx++;
-    prim->u3 = *idx++;
-    prim->v3 = *idx;
-    if (!(++prim->b1 & 1)) {
-        prim->b0++;
-    }
-    return 0;
-}
-// Entity ID 47. Created by blueprint 119.
-// No calls to FACTORY with 119 exist yet.
-// Corresponding RIC function is func_8015FEA8
-void func_80119F70(Entity* entity) {
-    Primitive* prim;
-    s16 temp_xRand;
-    s32 temp_yRand;
-    s32 i;
-    s16 hitboxY;
-    s16 hitboxX;
-    s32 temp;
-
-    switch (entity->step) {
-    case 0:
-        entity->primIndex = AllocPrimitives(PRIM_GT4, 16);
-        if (entity->primIndex == -1) {
-            DestroyEntity(entity);
-            return;
-        }
-        entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
-        hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
-        hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
-        prim = &g_PrimBuf[entity->primIndex];
-        for (i = 0; i < 16; i++) {
-            temp_xRand = hitboxX + rand() % 24 - 12;
-            temp_yRand = rand();
-            D_8013804C[i].x = temp_xRand;
-            D_8013804C[i].y = hitboxY + temp_yRand % 48 - 24;
-            prim->clut = 0x1B2;
-            prim->tpage = 0x1A;
-            prim->b0 = 0;
-            prim->b1 = 0;
-            prim->g0 = 0;
-            prim->g1 = (rand() & 7) + 1;
-            prim->g2 = 0;
-            prim->priority = PLAYER.zPriority + 4;
-            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_HIDE |
-                             DRAW_UNK02 | DRAW_TRANSP;
-            if (rand() & 1) {
-                prim->drawMode =
-                    DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                    DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
-            }
-            prim = prim->next;
-        }
-        entity->step++;
-        break;
-
-    case 1:
-        if (!(g_Player.unk0C & 0x10000)) {
-            DestroyEntity(entity);
-            return;
-        }
-    }
-
-    prim = &g_PrimBuf[entity->primIndex];
-    for (i = 0; i < 16; i++) {
-        switch (prim->g0) {
-        case 0:
-            if (!(--prim->g1 & 0xFF)) {
-                prim->g0++;
-            }
-            break;
-        case 1:
-            hitboxX = D_8013804C[i].y;
-            hitboxY = D_8013804C[i].x;
-            temp = func_80119E78(prim, hitboxY, hitboxX);
-            D_8013804C[i].y--;
-            if (temp < 0) {
-                prim->drawMode |= DRAW_HIDE;
-                prim->g0++;
-            } else {
-                prim->drawMode &= ~DRAW_HIDE;
-            }
-            break;
-        }
-        prim = prim->next;
-    }
-    return;
-}
-
-void func_8011A290(Entity* entity) {
-    SubweaponDef subwpn;
-
-    func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
-    entity->attack = subwpn.attack;
-    entity->attackElement = subwpn.attackElement;
-    entity->hitboxState = subwpn.hitboxState;
-    entity->nFramesInvincibility = subwpn.nFramesInvincibility;
-    entity->stunFrames = subwpn.stunFrames;
-    entity->hitEffect = subwpn.hitEffect;
-    entity->entityRoomIndex = subwpn.entityRoomIndex;
-    entity->ext.generic.unkB2 = subwpn.crashId;
-    func_80118894(entity);
-}
-
-void func_8011A328(Entity* entity, s32 arg1) {
-    SpellDef spell;
-
-    func_800FD9D4(&spell, arg1);
-    entity->attack = spell.attack;
-    entity->attackElement = spell.attackElement;
-    entity->hitboxState = spell.hitboxState;
-    entity->nFramesInvincibility = spell.nFramesInvincibility;
-    entity->stunFrames = spell.stunFrames;
-    entity->hitEffect = spell.hitEffect;
-    entity->entityRoomIndex = spell.entityRoomIndex;
-    func_80118894(entity);
-}
-
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out) {
-    SpellDef spell;
-
-    *out = g_Status.statsFamiliars[g_Servant - 1];
-    if (arg2 != 0) {
-        func_800FD9D4(&spell, spellId);
-        entity->attack = spell.attack;
-        entity->attackElement = spell.attackElement;
-        entity->hitboxState = spell.hitboxState;
-        entity->nFramesInvincibility = spell.nFramesInvincibility;
-        entity->stunFrames = spell.stunFrames;
-        entity->hitEffect = spell.hitEffect;
-        entity->entityRoomIndex = spell.entityRoomIndex;
-        entity->attack = spell.attack * ((out->level * 4 / 95) + 1);
-        func_80118894(entity);
-    }
-}
-
-void func_8011A4C8(Entity* entity) {}

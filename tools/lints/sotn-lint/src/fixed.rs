@@ -17,7 +17,7 @@ fn fixed(x: f64, group: &str, has_semicolon: &bool) -> String {
     if trimmed_str.ends_with('.') {
         trimmed_str.push('0');
     }
-    if (*has_semicolon) {
+    if *has_semicolon {
         format!("{}FIX({});", group, trimmed_str)
     } else {
         format!("{}FIX({}))", group, trimmed_str)
@@ -158,7 +158,7 @@ mod tests {
     #[test]
     fn test_trailing_zero() {
         let input_line = "if (self->velocityY < -0x20000) {";
-        let expected_line = "if (self->velocityY < FIX(-2.0); {";
+        let expected_line = "if (self->velocityY < FIX(-2.0)) {";
         let result = transform_line_fixed(input_line);
         assert_eq!(result, expected_line);
     }

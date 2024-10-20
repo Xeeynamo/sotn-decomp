@@ -11,12 +11,12 @@ extern ObjInit2 ObjInit2_80180740[];
 
 // func_8019B3FC: [E_BACKGROUND_BLOCK] EntityBackgroundBlock
 void EntityBackgroundBlock(Entity* entity) {
-    ObjInit2* objInit = &ObjInit2_80180740[entity->params];
+    ObjInit* objInit = &ObjInit2_80180740[entity->params];
     if (entity->step == 0) {
         InitializeEntity(&g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.u;
+        entity->unk5A = objInit->unk5A;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
         entity->drawMode = objInit->drawMode;
@@ -28,5 +28,5 @@ void EntityBackgroundBlock(Entity* entity) {
             entity->rotX = 0x200;
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }

@@ -24,6 +24,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: ea268a06a7eb7cd99928ba40e774577c4a1c504d
 segments:
   - name: dra
     type: code
@@ -92,18 +93,26 @@ segments:
       - [0x37E8, .data, 63ED4] # Palette, GFX desc until D_800A3BB8
       - [0x3C50, .data, lba_stage]
       - [0x4A10, .data, config_jp]
-      - [0xC72C, data]
+      - [0xC8BC, .data, d_C910]
       - [0xCA20, .data, cd]
-      - [0xCE48, data]
+      - [0xCE48, .data, d_CD80]
       - [0xCEB8, .data, 692E8]
       - [0xCFDC, .data, 6D59C]
-      - [0xD010, data]
+      - [0xD038, .data, d_CF74]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD57C, .data, 7E4BC]
-      - [0xDC98, data]
-      - [0x10B00, .data, 90264] # D_800B0A3C to D_800B0AEC
-      - [0x10BF8, data]
+      - [0xDC98, .data, d_DBD4]
+      - [0xE358, .data, d_E294]
+      - [0x1085C, .data, d_10798]
+      - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
+      - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
+      - [0x10BF8, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
+      - [0x11140, raw, vh_0] # aPbav
+      - [0x14140, raw, vh_1] # aPbav_0
+      - [0x16140, raw, vh_2] # aPbav_2
+      - [0x18140, raw, vh_3] # aPbav_1
+      - [0x1A140, data] # aPqes_1
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable
       - [0x1D260, .data, 91EBC] # g_VolumeTable
       - [0x1D284, .data, 91EBC] # g_DebugEnabled
@@ -118,11 +127,11 @@ segments:
       - [0x23604, cmp, D_800C3560]
       - [0x24908, cmp, D_800C4864]
       - [0x24B34, cmp, D_800C4A90]
-      - [0x24D90, data]
+      - [0x24D90, .data, d_24CEC]
       - [0x253C8, raw, g_GfxEquipIcon]
-      - [0x2F3C8, data]
+      - [0x2F3C8, .data, d_2F324]
       - [0x38978, raw, g_PalEquipIcon]
-      - [0x3B178, data]
+      - [0x3B178, .data, d_3B0D4]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B808, .rodata, loading]
@@ -145,11 +154,13 @@ segments:
       - [0x4132C, .rodata, 71830]
       - [0x414A4, .rodata, 72BB0]
       - [0x41904, .rodata, 75F54]
+      - [0x41960, .rodata, 78D0C]
       - [0x419C0, .rodata, 7A4D0]
       - [0x41BD0, .rodata, 7E4BC]
       - [0x41CF0, .rodata, 843B0]
+      - [0x41DAC, .rodata, 8A0A4]
       - [0x41DCC, .rodata, 8D3E8]
-      - [0x41E4C, .rodata, 90264]
+      - [0x41E4C, .rodata, 8D3E8]
       - [0x41F50, .rodata, 92F60]
       - [0x41F78, .rodata, 93290]
       - [0x41FA8, .rodata, 93BDC]
@@ -176,20 +187,26 @@ segments:
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]
       - [0x75C44, c, 75F54]
+      - [0x78A04, c, 78D0C]
       - [0x7A1C8, c, 7A4D0]
       - [0x7E168, c, 7E4BC]
       - [0x8403C, c, 843B0]
+      - [0x8A528, c, 8A0A4]
       - [0x8D050, c, 8D3E8]
-      - [0x8FE50, c, 90264]
       - [0x91A98, c, 91EBC]
       - [0x92B3C, c, 92F60]
       - [0x92E6C, c, 93290]
       - [0x937B8, c, 93BDC]
       - [0x94B2C, c, 94F50]
       - [0x94F7C, c, 953A0]
-      - [0x95E88, sbss]
+      - [0x95E88, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B270
     vram:  0x8013B370
+    subsegments:
+      - [0x9B270, raw, vb_0] # D_8013B6A0, TODO verify data length
+      - [0xDCF1C, raw, vb_1] # D_8017D01C, TODO verify data length
+      - [0xEAFEC, raw, vb_2] # D_8018B4E0, TODO verify data length
+      - [0x10978C, raw, vb_3] # D_801A9C80, TODO verify data length
   - [0x115EDC]

@@ -1,19 +1,21 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
-SVECTOR D_800A31B0 = {34, 0xFFEE, 0xFFF5};
-SVECTOR D_800A31B8 = {21, 18, 0xFFE3};
-SVECTOR D_800A31C0 = {0, 0xFFEE, 0xFFDC};
-SVECTOR D_800A31C8 = {0, 0xFFD8, 0};
-SVECTOR D_800A31D0 = {21, 0xFFEE, 29};
+SVECTOR D_800A31B0 = {34, -18, -11};
+SVECTOR D_800A31B8 = {21, 18, -29};
+SVECTOR D_800A31C0 = {0, -18, -36};
+SVECTOR D_800A31C8 = {0, -40, 0};
+SVECTOR D_800A31D0 = {21, -18, 29};
 SVECTOR D_800A31D8 = {34, 18, 11};
 SVECTOR D_800A31E0 = {0, 40, 0};
 SVECTOR D_800A31E8 = {0, 18, 36};
-SVECTOR D_800A31F0 = {0xFFDE, 0xFFEE, 0xFFF5};
-SVECTOR D_800A31F8 = {0xFFEB, 18, 0xFFE3};
-SVECTOR D_800A3200 = {0xFFEB, 0xFFEE, 0x001D};
-SVECTOR D_800A3208 = {0xFFDE, 18, 11};
+SVECTOR D_800A31F0 = {-34, -18, -11};
+SVECTOR D_800A31F8 = {-21, 18, -29};
+SVECTOR D_800A3200 = {-21, -18, 29};
+SVECTOR D_800A3208 = {-34, 18, 11};
 
 SVECTOR* D_800A3210[][3] = {
     {&D_800A31C8, &D_800A31B0, &D_800A31C0},
@@ -42,20 +44,20 @@ SVECTOR* D_800A3210[][3] = {
     {&D_800A31E8, &D_800A31E0, &D_800A31E0},
 };
 
-SVECTOR D_800A3330 = {0xFFF1, 0xFFD2, 0x000A};
-SVECTOR D_800A3338 = {0xFFE7, 0xFFEB, 0xFFF6};
-SVECTOR D_800A3340 = {0xFFE7, 0xFFEB, 0x000A};
-SVECTOR D_800A3348 = {0xFFF4, 0x0032, 0xFFF6};
-SVECTOR D_800A3350 = {0xFFF4, 0x0032, 0x000A};
-SVECTOR D_800A3358 = {0x0000, 0xFFF7, 0xFFF6};
-SVECTOR D_800A3360 = {0xFFF1, 0xFFD2, 0xFFF6};
-SVECTOR D_800A3368 = {0x000F, 0xFFD2, 0xFFF6};
-SVECTOR D_800A3370 = {0x000C, 0x0032, 0xFFF6};
-SVECTOR D_800A3378 = {0x0019, 0xFFEB, 0x000A};
-SVECTOR D_800A3380 = {0x000F, 0xFFD2, 0x000A};
-SVECTOR D_800A3388 = {0x0019, 0xFFEB, 0xFFF6};
-SVECTOR D_800A3390 = {0x000C, 0x0032, 0x000A};
-SVECTOR D_800A3398 = {0x0000, 0xFFF7, 0x000A};
+SVECTOR D_800A3330 = {-15, -46, 10};
+SVECTOR D_800A3338 = {-25, -21, -10};
+SVECTOR D_800A3340 = {-25, -21, 10};
+SVECTOR D_800A3348 = {-12, 50, -10};
+SVECTOR D_800A3350 = {-12, 50, 10};
+SVECTOR D_800A3358 = {0, -9, -10};
+SVECTOR D_800A3360 = {-15, -46, -10};
+SVECTOR D_800A3368 = {15, -46, -10};
+SVECTOR D_800A3370 = {12, 50, -10};
+SVECTOR D_800A3378 = {25, -21, 10};
+SVECTOR D_800A3380 = {15, -46, 10};
+SVECTOR D_800A3388 = {25, -21, -10};
+SVECTOR D_800A3390 = {12, 50, 10};
+SVECTOR D_800A3398 = {0, -9, 10};
 
 SVECTOR* D_800A33A0[][3] = {
     {&D_800A3380, &D_800A3368, &D_800A3360},
@@ -117,7 +119,6 @@ SVECTOR* D_800A35D0[] = {
     &D_800A3380, &D_800A3388, &D_800A3390, &D_800A3398,
 };
 
-extern SVECTOR D_80137E70[14];
 SVECTOR* D_800A3608[] = {
     &D_80137E70[10], &D_80137E70[7],  &D_80137E70[6],  &D_80137E70[10],
     &D_80137E70[6],  &D_80137E70[0],  &D_80137E70[0],  &D_80137E70[6],
@@ -602,7 +603,106 @@ void func_8010427C(void) {
     FreePrimitives(D_80137E48);
 }
 
-INCLUDE_ASM("dra/nonmatchings/63ED4", func_801042C4);
+void func_801042C4(s32 arg0) {
+    VECTOR sp10;
+    Primitive* prim;
+    s32 i;
+    const int PrimCount = 4;
+
+    D_80137EE0 = arg0;
+    D_80097C98 = 0;
+    func_800EA5E4(0x18);
+    if (arg0 == 1) {
+        func_800EA5E4(0x19);
+        func_800EA5E4(0x401E);
+    }
+    D_801379BC = 0;
+    D_80137E54 = 0;
+    PlaySfx(SET_STOP_MUSIC);
+    D_80097928 = 1;
+    func_80103EAC();
+    D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
+    D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
+    D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
+
+    D_801379D0.vx = D_801379D0.vy = 0;
+    D_801379D0.vz = 0x100;
+    D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
+    prim = &g_PrimBuf[D_80137E48];
+    i = 0;
+
+    for (i = 0; i < PrimCount; i++) {
+        prim->x0 = (i & 1) << 7;
+        prim->y0 = (i / 2) * 0xD8;
+        prim->u0 = 0x80;
+        prim->v0 = 0x20;
+
+        if ((i < 2 && !(g_StageId & 0x20)) || (i >= 2 && g_StageId & 0x20)) {
+            prim->g0 = 0x10;
+            prim->r0 = 0x10;
+            prim->b0 = 8;
+        }
+
+        prim->priority = 0x1EB;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+    }
+
+    for (i = 0; i < LEN(D_80137B20); i++) {
+        D_80137B20[i].vx = (D_80137B20[i].vy = (D_80137B20[i].vz = 0));
+        sp10.vx = (*(&D_800A33A0[i][0]))->vx + (*(&D_800A33A0[i][1]))->vx +
+                  (*(&D_800A33A0[i][2]))->vx;
+        sp10.vy = (*(&D_800A33A0[i][0]))->vy + (*(&D_800A33A0[i][1]))->vy +
+                  (*(&D_800A33A0[i][2]))->vy;
+        sp10.vz = (*(&D_800A33A0[i][0]))->vz + (*(&D_800A33A0[i][1]))->vz +
+                  (*(&D_800A33A0[i][2]))->vz;
+
+        func_80017008(&sp10, &D_80137D40[i]);
+    }
+
+    for (i = 0; i < LEN(D_801379E0); i++) {
+        D_801379E0[i].vx = (D_801379E0[i].vy = (D_801379E0[i].vz = 0));
+        sp10.vx = (*(&D_800A3210[i][0]))->vx + (*(&D_800A3210[i][1]))->vx +
+                  (*(&D_800A3210[i][2]))->vx;
+        sp10.vy = (*(&D_800A3210[i][0]))->vy + (*(&D_800A3210[i][1]))->vy +
+                  (*(&D_800A3210[i][2]))->vy;
+        sp10.vz = (*(&D_800A3210[i][0]))->vz + (*(&D_800A3210[i][1]))->vz +
+                  (*(&D_800A3210[i][2]))->vz;
+        func_80017008(&sp10, &D_80137CA0[i]);
+    }
+
+    SetGeomScreen(0x100);
+    D_80137E40 = AllocPrimitives(5U, 0x18);
+    prim = &g_PrimBuf[D_80137E40];
+    if (prim != NULL) {
+        do {
+            prim->u0 = 0xDB;
+            prim->v0 = 0xA8;
+            prim->u1 = 0xBC;
+            prim->v1 = 0xDE;
+            prim->u2 = 0xFA;
+            prim->v2 = 0xDE;
+            prim->tpage = 0x1B;
+            prim->clut = arg0 + 0x1F1;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        } while (prim != NULL);
+    }
+    D_80137E44 = AllocPrimitives(2U, 0x12);
+    prim = &g_PrimBuf[D_80137E44];
+    if (prim != NULL) {
+        do {
+            prim->r0 = 0xFF;
+            prim->g0 = 0xFF;
+            prim->b0 = 0xFF;
+            prim->r1 = 0xFF;
+            prim->g1 = 0xFF;
+            prim->b1 = 0xFF;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        } while (prim != NULL);
+    }
+}
 
 void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 #if defined(VERSION_US)
@@ -747,9 +847,9 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             continue;
         }
         if (temp_v0_5 >= 0) {
-            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 4;
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 4;
         } else {
-            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk - 4;
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter - 4;
         }
         prim->drawMode = DRAW_COLORS;
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
@@ -856,9 +956,9 @@ void func_80105078(s32 arg0, s32 arg1) {
         prim->type = 2;
         if (sp7C < 0xF0) {
             if (temp_v0_4 >= 0) {
-                prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 3;
+                prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 3;
             } else {
-                prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk - 3;
+                prim->priority = g_unkGraphicsStruct.g_zEntityCenter - 3;
             }
             if (arg1 != 0) {
                 if (arg1 & 0x80) {
@@ -919,7 +1019,7 @@ void func_80105428(void) {
         timer_temp = gameTimer & 0x7F;
         D_801379C8.vy = temp_s3 + 6;
         if (timer_temp == 0) {
-            PlaySfx(SE_SAVE_HEARTBEAT);
+            PlaySfx(SFX_SAVE_HEARTBEAT);
         }
         if (gameTimer & 0x40) {
             timer_temp = 0x7F - timer_temp;
@@ -1171,7 +1271,7 @@ void func_80105428(void) {
         if (HandleSaveMenu(2) != 0) {
             if (D_80137E6C == 0) {
                 D_8006C378 = -1;
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
                 MemCardSetPort(D_80097924);
                 D_801379BC++;
             } else {
@@ -1336,7 +1436,7 @@ void func_80105428(void) {
     }
     if (((((s16)temp_s3 + 0x400) ^ ((s16)D_801379C8.vy + 0x400)) & 0x800) &&
         ((u32)(D_801379BC - 3) < 7U)) {
-        PlaySfx(0x6E0);
+        PlaySfx(SFX_UNK_6E0);
     }
 }
 

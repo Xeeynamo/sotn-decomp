@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
+#include "sfx.h"
 
 s32 D_801804D0 = 0;
 u8 D_801804D4[] = {STAGE_MEMORYCARD, STAGE_CAT};
@@ -8,14 +10,14 @@ const char* D_801804D8[] = {
 };
 const char D_801A7B80[] = "SELECT ！！";
 
-void HandleMainMenu(void) {
+void HandleTitleScreen(void) {
     Primitive* prim;
     Primitive* prim15;
     s16 primIndex;
     s32 i;
 
     func_801B1F34();
-    switch (D_8003C9A4) {
+    switch (g_GameEngineStep) {
     case 0:
         if (g_UseDisk != 0) {
             g_CdStep = 1;
@@ -96,27 +98,27 @@ void HandleMainMenu(void) {
         prim->drawMode = DRAW_HIDE;
         func_801B18F4();
         D_801BB014 = 0;
-        D_8003C9A4++;
+        g_GameEngineStep++;
         return;
     case 1:
-        func_801B1A98();
+        SetTitleDisplayBuffer();
         D_801BB014 += 8;
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             prim->drawMode = DRAW_COLORS;
-            func_801B1CFC(prim, D_801BB014);
+            SetPrimGrey(prim, D_801BB014);
             if (i == 7 || i == 8 || i == 9 || i == 10) {
                 prim->r0 = D_801BB014 * 3 / 4;
                 prim->g0 = D_801BB014 * 7 / 8;
                 prim->b0 = D_801BB014 * 3 / 4;
             }
             if (i == 15 || i == 16) {
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
         }
         if (D_801BB014 == 0x80) {
             D_801804D0 = 0x800;
-            D_8003C9A4++;
+            g_GameEngineStep++;
         }
         return;
     case 2:
@@ -217,22 +219,22 @@ void HandleMainMenu(void) {
             }
         }
         if (g_pads[0].tapped & PAD_START) {
-            g_api.PlaySfx(0x63D);
-            D_8003C9A4++;
+            g_api.PlaySfx(SFX_START_SLAM_B);
+            g_GameEngineStep++;
         }
         return;
     case 3:
-        D_8003C9A4 = 6;
+        g_GameEngineStep = 6;
         return;
     case 4:
         if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
-            g_api.PlaySfx(0x688);
+            g_api.PlaySfx(SFX_DEBUG_SELECT);
             if (++D_800987B4 >= 2) {
                 D_800987B4 = 0;
             }
         }
         if (g_pads[0].tapped & (PAD_UP | PAD_LEFT)) {
-            g_api.PlaySfx(0x688);
+            g_api.PlaySfx(SFX_DEBUG_SELECT);
             if (--D_800987B4 < 0) {
                 D_800987B4 = 1;
             }
@@ -241,14 +243,14 @@ void HandleMainMenu(void) {
         if (g_Timer & 0x1C) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
         g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
         func_801B259C(D_801804D8[D_800987B4], 1);
         if (g_pads[0].tapped & (PAD_START | PAD_CIRCLE)) {
-            g_api.PlaySfx(0x63D);
-            D_8003C9A4++;
+            g_api.PlaySfx(SFX_START_SLAM_B);
+            g_GameEngineStep++;
         }
         return;
     case 5:
@@ -271,14 +273,14 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             prim->drawMode = DRAW_COLORS;
-            func_801B1CFC((POLY_GT4*)prim, D_801BB014);
+            SetPrimGrey(prim, D_801BB014);
             if (i == 15 || i == 16) {
-                prim->drawMode = 0x15;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
         }
         if (D_801BB014 == 0) {
             g_StageId = STAGE_MEMORYCARD;
-            D_8003C9A4 = 5;
+            g_GameEngineStep = 5;
         }
         return;
     }
@@ -470,7 +472,7 @@ void func_801B519C(void) {
         prim = &g_PrimBuf[primBufIndex];
         self->primIndex = primBufIndex;
         self->ext.prim = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         uvOfst = 0;
         while (prim) {
             v01 = 0x38 + uvOfst;
@@ -482,16 +484,17 @@ void func_801B519C(void) {
             prim->v0 = prim->v1 = v01;
             prim->v2 = prim->v3 = 0x38 + uvOfst;
             prim->priority = 0x41;
-            prim->drawMode = 0x71;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
         self->step++;
     case 1:
         y = 0xA2;
         prim = self->ext.prim;
-        angle = self->ext.generic.unk88.unk + 0x40;
+        angle = self->ext.unkSelEnts.unk88 + 0x40;
         angle2 = angle;
-        self->ext.generic.unk88.S16.unk0 = angle2;
+        self->ext.unkSelEnts.unk88 = angle2;
         while (prim) {
             s16 xBase;
             s32 sin;

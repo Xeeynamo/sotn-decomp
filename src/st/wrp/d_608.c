@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <common.h>
 
-u32 D_80180608[] = {
+u32 g_HeartDropArray[] = {
     /* 608 */ 0x0000,
     /* 60C */ 0x0200,
     /* 610 */ 0x0400,

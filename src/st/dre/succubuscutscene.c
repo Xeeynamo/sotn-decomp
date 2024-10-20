@@ -1,225 +1,69 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
 
-void func_80194774(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
-s32 func_801947C8(s32 textDialogue) {
-    Primitive* prim;
-    s16 firstPrimIndex;
+#include "../cutscene_unk2.h"
 
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    g_Dialogue.primIndex[2] = firstPrimIndex;
-    if (firstPrimIndex == -1) {
-        g_Dialogue.primIndex[2] = 0;
-        return 0;
-    }
-    g_Dialogue.nextCharDialogue = textDialogue;
-    g_Dialogue.unk3C = 0;
-    g_Dialogue.primIndex[1] = -1;
-    g_Dialogue.primIndex[0] = -1;
-    func_80194774();
+#include "../cutscene_unk3.h"
 
-    if (prim && prim) { // !FAKE
-    }
-
-    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[1] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[2] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[3] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[4] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[5] = prim->next;
-
-    prim->type = 4;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 3;
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
-    prim->x0 = prim->x2 = 4;
-    prim->x1 = prim->x3 = 0xF8;
-    prim->priority = 0x1FD;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 1;
-    prim->x0 = 3;
-    prim->y0 = 0x2F;
-    prim->v0 = 0x4A;
-    prim->r0 = prim->g0 = prim->b0 = 0xFF;
-    prim->priority = 0x1FC;
-    prim->drawMode = DRAW_HIDE;
-    return 1;
-}
-
-void func_8019498C(s16 yOffset) {
-    RECT rect;
-
-    rect.y = (yOffset * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
-
-void func_801949E8(void) {
-    Primitive* prim;
-
-    func_8019498C(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x10;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 // This array is in Data, but the strings within it are rodata. That rodata
 // lives between the jump tables in this file, so we have to import the rodata,
 // and also the data.
-const char* D_80180938[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
+static const char* g_ActorNames[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
 
-// Creates primitives for the actor name at the head of the dialogue
-void func_80194AA0(u16 actorIndex, Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-    s32 x;
-    u16 chCount;
-    const char* actorName;
-    char ch;
+#include "../cutscene_avatar.h"
 
-    actorName = D_80180938[actorIndex];
-    chCount = 0;
-    while (true) {
-        ch = *actorName++;
-        if (ch == DIAG_EOL) {
-            ch = *actorName++;
-            if (ch == DIAG_EOS) {
-                break;
-            }
-        }
-        if (ch == MENUCHAR(' ')) {
-            continue;
-        }
-        chCount++;
-    }
+#include "../cutscene_unk6.h"
 
-    // Create chCount amount of sprites based on the actor name's letter count
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
-    if (primIndex == -1) {
-        DestroyEntity(self);
-        return;
-    }
-
-    // Fill prims to render the actor name on screen
-    prim = &g_PrimBuf[primIndex];
-    g_Dialogue.primIndex[1] = primIndex;
-    actorName = D_80180938[actorIndex];
-    x = 0x38;
-    while (prim != NULL) {
-        ch = *actorName++;
-        if (ch == MENUCHAR(' ')) {
-            x += FONT_SPACE;
-        } else {
-            prim->type = PRIM_SPRT;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->u0 = (ch & 0x0F) * FONT_W;
-            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
-            prim->v1 = FONT_H;
-            prim->u1 = FONT_W;
-            prim->priority = 0x1FF;
-            prim->drawMode = DRAW_HIDE;
-            prim->x0 = x;
-            prim->y0 = g_Dialogue.startY + 6;
-            prim = prim->next;
-            x += FONT_GAP;
-        }
-    }
-}
-
-void func_80194C24(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
-
-void func_80194C50(void) {
+void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
-    u8 entityIndex;
-    Dialogue* ptr;
 
     g_Dialogue.timer++;
     // protect from overflows
-    if (g_Dialogue.timer > 0xFFFE) {
+    if (g_Dialogue.timer >= 0xFFFF) {
         g_Dialogue.unk3C = 0;
         return;
     }
-
     while (true) {
         // Start the dialogue script only if the start timer has passed
-        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
+        startTimer = *g_Dialogue.unk40++ << 8;
+        startTimer |= *g_Dialogue.unk40++;
         if (g_Dialogue.timer < startTimer) {
             // Re-evaluate the condition at the next frame
             g_Dialogue.unk40 -= 2;
             return;
         }
-
         switch (*g_Dialogue.unk40++) {
         case 0:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            entity =
+                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
             DestroyEntity(entity);
             entity->entityId = *g_Dialogue.unk40++;
             entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
             entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
+            entity->posX.i.hi |= *g_Dialogue.unk40++;
             entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+            entity->posY.i.hi |= *g_Dialogue.unk40++;
             break;
-
         case 1:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            entity =
+                &g_Entities[*g_Dialogue.unk40++ & 0xFF] + STAGE_ENTITY_START;
             DestroyEntity(entity);
             break;
-
         case 2:
-            if (!((D_801A3F84 >> *g_Dialogue.unk40) & 1)) {
+            if (!((g_CutsceneFlags >> *g_Dialogue.unk40) & 1)) {
                 g_Dialogue.unk40 -= 3;
                 g_Dialogue.timer--;
                 return;
             }
-            D_801A3F84 &= ~(1 << *g_Dialogue.unk40++);
+            g_CutsceneFlags &= ~(1 << *g_Dialogue.unk40++);
             break;
-
         case 3:
-            D_801A3F84 |= 1 << *g_Dialogue.unk40++;
+            g_CutsceneFlags |= 1 << *g_Dialogue.unk40++;
             break;
         }
     }
@@ -242,33 +86,7 @@ void func_80194F14(Entity* self) {
     }
 }
 
-void func_80194FF4(u8 ySteps) {
-    Primitive* prim;
-    s32 primIndex;
-    s32 i;
-
-    primIndex = g_Dialogue.nextCharY + 1;
-    while (primIndex >= 5) {
-        primIndex -= 5;
-    }
-    if (g_CurrentEntity->step_s == 0) {
-        prim = g_Dialogue.prim[primIndex];
-        prim->v1 -= ySteps;
-        prim->v0 += ySteps;
-        if (prim->v1 == 0) {
-            g_CurrentEntity->step_s++;
-            prim->drawMode = DRAW_HIDE;
-        }
-    }
-
-    for (i = 0; i < 5; i++) {
-        if (i != primIndex) {
-            prim = g_Dialogue.prim[i];
-            prim->y0 -= ySteps;
-        }
-    }
-    g_Dialogue.portraitAnimTimer++;
-}
+#include "../cutscene_scale_avatar.h"
 
 // dialogue with mother opens as alucard walks right ID 20
 // Same pattern as a lot of other cutscenes, main differences
@@ -300,12 +118,13 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if ((self->step != 0) && (g_Dialogue.unk3C != 0)) {
-            func_80194C50();
+            CutsceneRun();
         }
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[212]) || (g_PlayableCharacter != PLAYER_ALUCARD) ||
+        if ((g_CastleFlags[SUCC_CS_DONE]) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             if (!self->params) {
                 DestroyEntity(self);
@@ -313,20 +132,20 @@ void EntitySuccubusCutscene(Entity* self) {
             }
         }
         if (self->params) {
-            bit_shifty = func_801947C8(D_80181B65) & 0xFF;
+            bit_shifty = CutsceneUnk2(D_80181B65);
         } else {
-            bit_shifty = func_801947C8(D_801816C8) & 0xFF;
+            bit_shifty = CutsceneUnk2(D_801816C8);
         }
         if (bit_shifty) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            D_801A3F84 = 0;
+            g_CutsceneFlags = 0;
             D_801A3F88 = 0;
             D_801A3ED4 = 0;
             D_8003C704 = 1;
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
         }
-        if ((g_CastleFlags[212] != 0) ||
+        if ((g_CastleFlags[SUCC_CS_DONE] != 0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             D_801A3ED4 = 1;
@@ -356,7 +175,7 @@ void EntitySuccubusCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801949E8();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -417,11 +236,11 @@ void EntitySuccubusCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_801808A0[i];
-                func_80194774();
-                func_801949E8();
+                CutsceneUnk1();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
-                func_80194AA0(i, self);
+                prim->drawMode = DRAW_DEFAULT;
+                DrawCutsceneAvatar(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;
@@ -502,7 +321,7 @@ void EntitySuccubusCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_80194C24((u8*)bit_shifty);
+                CutsceneUnk6((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;
@@ -539,15 +358,15 @@ void EntitySuccubusCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((D_801A3F84 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
-                D_801A3F84 &= ~(1 << *g_Dialogue.nextCharDialogue);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             case 17:
-                D_801A3F84 |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
@@ -576,17 +395,17 @@ void EntitySuccubusCutscene(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case 21:
-                D_801A3F84 = 0;
+                g_CutsceneFlags = 0;
                 D_801A3ED4 = 0;
                 D_801A3F88 = 0;
                 continue;
             case 22:
-                D_801A3F84 &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
                 continue;
             case 23:
                 return;
             case 24:
-                if (!((D_801A3F84 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     *g_Dialogue.nextCharDialogue--;
                     return;
                 }
@@ -613,7 +432,7 @@ void EntitySuccubusCutscene(Entity* self) {
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
-        func_80194FF4(2U);
+        ScaleCutsceneAvatar(2);
         if (g_Dialogue.portraitAnimTimer >= 6) {
             self->step -= 1;
             return;
@@ -630,7 +449,7 @@ void EntitySuccubusCutscene(Entity* self) {
             self->step = 1;
             for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim != NULL;
                  prim = prim->next) {
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
             }
         }
         break;
@@ -666,7 +485,7 @@ void EntitySuccubusCutscene(Entity* self) {
                 prim->x0 = prim->x1 = 0xF7;
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->x2 = D_801808A8[j];
                 prim->x3 = 0xF70;
 
@@ -753,7 +572,7 @@ void EntitySuccubusCutscene(Entity* self) {
 
     case 7:
         if (self->params) {
-            g_CastleFlags[212] = 1;
+            g_CastleFlags[SUCC_CS_DONE] = 1;
             g_Settings.D_8003CB04 |= 0x2000;
         } else {
             g_Settings.D_8003CB04 |= 0x1000;

@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include "sfx.h"
 
 // intro owl and leaves
 void EntityFlyingOwlAndLeaves(Entity* entity) {
@@ -96,7 +98,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
     }
 
     if (!animFlag) {
-        func_801CAD28(SE_OWL_WING_FLAP);
+        PlaySfxPositional(SFX_WING_FLAP_A);
     }
 }
 

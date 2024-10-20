@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
+#include "sfx.h"
 
 extern u16 g_eInitGeneric2[];
 extern u16 g_eRedDoorTiles[2][8];
@@ -86,16 +88,16 @@ void EntityRedDoor(Entity* self) {
                 prim->y0 = prim->y1 = y;
                 prim->y2 = prim->y3 = y + 62;
             }
-            prim->drawMode = 6;
+            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             prim->r0 = prim->b0 = prim->g0 = 0x7F;
             prim->r1 = prim->b1 = prim->g1 = 0x7F;
             prim->r2 = prim->b2 = prim->g2 = 0x7F;
             prim->r3 = prim->b3 = prim->g3 = 0x7F;
             if (i == 2 && !(self->params & 0x100)) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
             }
             if (i == 1 && (self->params & 0x100)) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
             }
             i++;
             uv += 8;
@@ -103,11 +105,11 @@ void EntityRedDoor(Entity* self) {
         }
         if (EntityIsNearPlayer(self)) {
             if (!(self->params & 0x100)) {
-                g_api.func_80134714(SFX_OPEN_DOOR, 0x60, -6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
                 self->ext.door.angle = 0x1000;
             }
             if (self->params & 0x100) {
-                g_api.func_80134714(SFX_OPEN_DOOR, 0x60, 6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, 6);
                 self->ext.door.angle = 0x800;
             }
             self->animCurFrame = 0;
@@ -120,7 +122,7 @@ void EntityRedDoor(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             i = 0;
             while (prim != NULL) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
                 i++;
                 if (i == 3) {
                     break;
@@ -141,10 +143,10 @@ void EntityRedDoor(Entity* self) {
 #endif
         {
             if (!(self->params & 0x100)) {
-                g_api.func_80134714(SFX_OPEN_DOOR, 0x60, -6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
             }
             if (self->params & 0x100) {
-                g_api.func_80134714(SFX_OPEN_DOOR, 0x60, 6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, 6);
             }
             prim = &g_PrimBuf[self->primIndex];
             i = 0;
@@ -227,13 +229,13 @@ void EntityRedDoor(Entity* self) {
         if (self->ext.door.angle == 0xC00) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; prim != NULL; i++, prim = prim->next) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
             }
             if (!(self->params & 0x100)) {
-                g_api.func_80134714(SFX_DOOR_UNKNOWN, 0x60, -6);
+                g_api.PlaySfxVolPan(SFX_DOOR_CLOSE_A, 0x60, -6);
             }
             if (self->params & 0x100) {
-                g_api.func_80134714(SFX_DOOR_UNKNOWN, 0x60, 6);
+                g_api.PlaySfxVolPan(SFX_DOOR_CLOSE_A, 0x60, 6);
             }
             self->animCurFrame = 1;
             self->step = 1;

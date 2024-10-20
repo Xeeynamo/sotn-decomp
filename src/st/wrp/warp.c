@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 #include <sfx.h>
 
 #ifdef VERSION_PSP
-static u32 D_80180608[] = {
+static u32 g_HeartDropArray[] = {
     0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
     0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
 };
@@ -12,7 +13,7 @@ extern s32 D_psp_0924BC90;
 #else
 // this is supposed to be u16, not u32.
 // the game devs probably put the wrong type.
-extern u32 D_80180608[16];
+extern u32 g_HeartDropArray[16];
 static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
 
@@ -49,6 +50,26 @@ static s32 WarpBackgroundPhase;
 // the brightness of the background layer
 static s32 WarpBackgroundBrightness;
 #endif
+
+// Mask for all of the statuses where the UP button will
+// be ignored when in warp position or on the warp platform
+//
+// Value: 0xC5CF3EF7
+//
+// n.b.! this value is also used in src/st/rwrp/warp.c
+// clang-format off
+#define PLAYER_UNK0C_READY_MASK                                                  \
+    (                                                                            \
+        /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
+        /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
+        /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |     \
+        /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
+        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 |         \
+        /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
+        /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_UNK_20 |  PLAYER_STATUS_UNK10 | \
+        /* 0x00000007 */ PLAYER_STATUS_TRANSFORM                                 \
+    )
+// clang-format on
 
 // Handles everything about the warp room.
 // It is responsible to spawn the colourful background, the stones on the
@@ -141,8 +162,8 @@ void EntityWarpRoom(Entity* self) {
         self->hitboxOffY += 16;
         self->hitboxWidth = 2;
         self->hitboxHeight = 16;
-        g_CastleFlags[0xD0] |= 1;
-        g_CastleFlags[0xD0] |= 1 << self->params;
+        g_CastleFlags[CASTLE_FLAG_208] |= 1;
+        g_CastleFlags[CASTLE_FLAG_208] |= 1 << self->params;
         D_80180648 = 0;
         entity = &PLAYER;
         moveX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -157,7 +178,7 @@ void EntityWarpRoom(Entity* self) {
     case 1:
         // Wait for player to press the UP button
         if (self->hitFlags && g_pads->pressed & PAD_UP &&
-            !(g_Player.unk0C & 0xC5CF3EF7)) {
+            !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             D_8003C8B8 = 0;
@@ -174,13 +195,13 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x80;
         D_8003C8B8 = 0;
         entity = &PLAYER;
-        g_unkGraphicsStruct.g_zEntityCenter.unk = entity->zPriority = 0x5C;
+        g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         prim->g0 = prim->b0 = prim->r0 += 2;
         if (prim->r0 > 96) {
             D_80180648 = 1;
-            g_api.PlaySfx(SE_WARP_ENTER);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step++;
         }
         break;
@@ -190,7 +211,7 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x80;
         D_8003C8B8 = 0;
         entity = &PLAYER;
-        g_unkGraphicsStruct.g_zEntityCenter.unk = entity->zPriority = 0x5C;
+        g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         if (prim->r0 < 0xF0) {
@@ -214,7 +235,7 @@ void EntityWarpRoom(Entity* self) {
             if (move_room > LEN(WarpRoomCoords) - 1) {
                 move_room = 0;
             }
-            if (g_CastleFlags[0xD0] & (1 << move_room)) {
+            if (g_CastleFlags[CASTLE_FLAG_208] & (1 << move_room)) {
                 break;
             }
         }
@@ -289,27 +310,27 @@ void EntityWarpRoom(Entity* self) {
 
     prim = self->ext.warpRoom.primBg;
     for (i = 0; i < 16; i++) {
-        angle = D_80180608[(i + 0) % 16];
+        angle = g_HeartDropArray[(i + 0) % 16];
         prim->r0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 5) % 16];
+        angle = g_HeartDropArray[(i + 5) % 16];
         prim->g0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 10) % 16];
+        angle = g_HeartDropArray[(i + 10) % 16];
         prim->b0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 1) % 16];
+        angle = g_HeartDropArray[(i + 1) % 16];
         prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 6) % 16];
+        angle = g_HeartDropArray[(i + 6) % 16];
         prim->g1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = D_80180608[(i + 11) % 16];
+        angle = g_HeartDropArray[(i + 11) % 16];
         prim->b1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             WarpBackgroundBrightness;
-        D_80180608[i] += 0x20;
+        g_HeartDropArray[i] += 0x20;
         prim = prim->next;
     }
 }
@@ -322,7 +343,7 @@ void EntityWarpSmallRocks(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801804C4);
+        InitializeEntity(g_EInitSmallRocks);
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->rotZ = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;
@@ -379,7 +400,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
-            func_801916C4(SE_WARP_DEBRIS);
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);

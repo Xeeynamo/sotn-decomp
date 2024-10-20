@@ -127,10 +127,10 @@ PrimDecreaseBrightness = 0x801AE70C;
 PhysicsSensors_VenusWeed = 0x801817F4;
 
 // *** sbss ***
-g_LayoutObjHorizontal = 0x801AE770;
-g_LayoutObjVertical = 0x801AE774;
-g_LayoutObjPosHorizontal = 0x801AE778;
-g_LayoutObjPosVertical = 0x801AE77C;
+//g_LayoutObjHorizontal = 0x801AE770;
+//g_LayoutObjVertical = 0x801AE774;
+//g_LayoutObjPosHorizontal = 0x801AE778;
+//g_LayoutObjPosVertical = 0x801AE77C;
 g_ItemIconSlots = 0x801AF3E8;
 
 // ASM-only data is referencing these values, so these

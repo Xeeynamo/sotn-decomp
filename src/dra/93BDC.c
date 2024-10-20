@@ -1,9 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
-
-extern s32 D_8013AE90;
-extern s32 D_8013AEF4;
 
 void CdSoundCommand14(void) {
     s32 i;
@@ -149,14 +148,14 @@ void CdSoundCommand10(void) {
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
-        D_80139A78 = 0;
+        g_XaFadeCounter = 0;
         g_CdSoundCommandStep++;
         break;
 
     case 1:
-        D_80139A78++;
+        g_XaFadeCounter++;
         if (g_volumeL > 0) {
-            temp = g_volumeR * D_80139A6C * D_80139A78;
+            temp = g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter;
             if (temp < 0) {
                 temp += 0x1FF;
             }
@@ -202,13 +201,13 @@ void CdSoundCommand8(void) {
     case 0:
         g_CdSoundCommandStep++;
         D_801390A0 = 1;
-        D_80139A78 = 0;
+        g_XaFadeCounter = 0;
         break;
 
     case 1:
-        D_80139A78++;
+        g_XaFadeCounter++;
         if (g_CdVolume > 0) {
-            temp = g_XaMusicVolume * D_80139A6C * D_80139A78;
+            temp = g_XaMusicVolume * g_XaVolumeMultiplier * g_XaFadeCounter;
             if (temp < 0) {
                 temp += 0x1FF;
             }
@@ -237,54 +236,58 @@ void CdSoundCommand8(void) {
     }
 }
 
-void SetReleaseRate3(void) {
-    D_801390C8->voice = 0x300000;
+#define MASK_22_23 ((1 << 22) | (1 << 23))
+#define MASK_20_21 ((1 << 20) | (1 << 21))
+
+void SetReleaseRateHigh20_21(void) {
+    D_801390C8->voice = MASK_20_21;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 14;
     SpuSetVoiceAttr(D_801390C8);
-    g_KeyOffChannels |= 0x300000;
+    g_KeyOffChannels |= MASK_20_21;
 }
 
-void SetReleaseRate4(void) {
-    D_801390CC->voice = 0xC00000;
+void SetReleaseRateHigh22_23(void) {
+    D_801390CC->voice = MASK_22_23;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 14;
     SpuSetVoiceAttr(D_801390CC);
-    g_KeyOffChannels |= 0xC00000;
+    g_KeyOffChannels |= MASK_22_23;
 }
 
-void SetReleaseRate5(void) {
-    D_801390C8->voice = 0x300000;
+void SetReleaseRateLow_20_21(void) {
+    D_801390C8->voice = MASK_20_21;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 8;
     SpuSetVoiceAttr(D_801390C8);
-    g_KeyOffChannels |= 0x300000;
+    g_KeyOffChannels |= MASK_20_21;
 }
 
-void SetReleaseRate6(void) {
-    D_801390CC->voice = 0xC00000;
+void SetReleaseRateLow_22_23(void) {
+    D_801390CC->voice = MASK_22_23;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 8;
     SpuSetVoiceAttr(D_801390CC);
-    g_KeyOffChannels |= 0xC00000;
+    g_KeyOffChannels |= MASK_22_23;
 }
 
-s32 func_80134678(s16 arg0, u16 arg1) {
+s32 SetVolumeCommand22_23(s16 vol, u16 distance) {
     s32 ret = -2;
     u16 temp;
 
-    if (D_80139804 != 0) {
+    if (g_CurSfxId22_23 != 0) {
         ret = 0;
-        temp = arg1 + 8;
+        temp = distance + 8;
 
         if (temp >= 0x11) {
-            arg1 = 0;
+            distance = 0;
             ret = -1;
         }
 
-        D_8013AE94 = arg1;
-        D_8013AEE0 = arg0;
-        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
+        g_CurSfxDistance22_23 = distance;
+        g_CurSfxVol22_23 = vol;
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
+            SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
 
         if (g_SoundCommandRingBufferWritePos == 0x100) {
@@ -294,7 +297,8 @@ s32 func_80134678(s16 arg0, u16 arg1) {
     return ret;
 }
 
-u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
+// alternate to PlaySfx with extra params
+u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan) {
     u32 ret;
     u32 var_v0;
     s16 temp_v0;
@@ -307,13 +311,13 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
     }
     if (sfxId > SFX_START && sfxId <= SFX_LAST) {
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-        g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = arg1 & 0x7F;
-        var = (arg2 + 8);
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = sfxVol & 0x7F;
+        var = (sfxPan + 8); // Left panning uses signed values, zero is center
         if (var > 16) {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
             ret = -1;
         } else {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = arg2;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = sfxPan;
         }
 
         g_sfxRingBufferWritePos++;
@@ -330,8 +334,8 @@ void PlaySfx(s16 sfxId) {
     if (g_SoundInitialized != 0) {
         if (sfxId > SFX_START && sfxId <= SFX_LAST) {
             g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = 0xFFFF;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = 0xFFFF;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
 
             g_sfxRingBufferWritePos++;
             if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
@@ -370,94 +374,97 @@ void PlaySfx(s16 sfxId) {
     }
 }
 
-void func_8013493C(s16 arg0, s16 arg1) {
-    g_UnkChannelSetting2[arg1] = D_8013B678[arg0];
-    g_ChannelGroupVolume[arg1] = D_801390AC[arg0];
-    g_UnkChannelSetting1[arg1] = D_80139058[arg0];
-    D_8013B66C[arg1] = D_80139814[arg0];
-    D_8013B5EC[arg1] = D_80139018[arg0];
-    D_8013B628[arg1] = D_801390B4[arg0];
+void RestoreSfxScriptData(s16 arg0, s16 arg1) {
+    g_CurrentSfxScriptSfxId[arg1] = g_CurrentSfxScriptSfxIdCopy[arg0];
+    g_SfxScriptVolume[arg1] = g_SfxScriptVolumeCopy[arg0];
+    g_SfxScriptDistance[arg1] = g_SfxScriptDistanceCopy[arg0];
+    g_SfxScriptTimer[arg1] = g_SfxScriptTimerCopy[arg0];
+    g_SfxScriptMode[arg1] = g_SfxScriptModeCopy[arg0];
+    g_CurrentSfxScript[arg1] = D_801390B4[arg0];
 }
 
-void func_801349F4(void) {
+void PauseSfxScripts(void) {
     s16 i;
 
-    for (i = 0; i < 4; i++) {
-        if (g_UnkChannelSetting2[i] == 0) {
+    for (i = 0; i < NUM_CH; i++) {
+        if (g_CurrentSfxScriptSfxId[i] == 0) {
             continue;
         }
-        if (D_8013B5EC[i] == 5) {
+        if (g_SfxScriptMode[i] == SFX_MODE_SCRIPT_NO_PAUSE) {
             continue;
         }
-        D_8013B678[i] = g_UnkChannelSetting2[i];
-        D_801390AC[i] = g_ChannelGroupVolume[i];
-        D_80139058[i] = g_UnkChannelSetting1[i];
-        D_80139814[i] = D_8013B66C[i];
-        D_80139018[i] = D_8013B5EC[i];
-        D_801390B4[i] = D_8013B628[i];
-        g_UnkChannelSetting2[i] = 0;
-        g_ChannelGroupVolume[i] = 0;
-        g_UnkChannelSetting1[i] = 0;
-        D_8013B66C[i] = 0;
-        D_8013B5EC[i] = 0;
-        D_8013B628[i] = 0;
-        D_8013B648[i] = 0;
-        D_8013AEA0[i] = 0;
+        g_CurrentSfxScriptSfxIdCopy[i] = g_CurrentSfxScriptSfxId[i];
+        g_SfxScriptVolumeCopy[i] = g_SfxScriptVolume[i];
+        g_SfxScriptDistanceCopy[i] = g_SfxScriptDistance[i];
+        g_SfxScriptTimerCopy[i] = g_SfxScriptTimer[i];
+        g_SfxScriptModeCopy[i] = g_SfxScriptMode[i];
+        D_801390B4[i] = g_CurrentSfxScript[i];
+        g_CurrentSfxScriptSfxId[i] = 0;
+        g_SfxScriptVolume[i] = 0;
+        g_SfxScriptDistance[i] = 0;
+        g_SfxScriptTimer[i] = 0;
+        g_SfxScriptMode[i] = 0;
+        g_CurrentSfxScript[i] = 0;
+        g_CurrentSfxScriptSfxId2[i] = 0;
+        g_SfxScriptUnk6[i] = 0;
     }
     D_8013B690 = 1;
 }
 
-void func_80134B48(void) {
+void UnpauseSfxScripts(void) {
     s16 i;
     s16 j;
 
     for (i = 0; i < 3; i++) {
-        if (D_8013B678[i]) {
+        if (g_CurrentSfxScriptSfxIdCopy[i]) {
             for (j = 0; j < 3; j++) {
-                if (D_8013B648[j] == 0) {
-                    func_8013493C(i, j);
+                if (g_CurrentSfxScriptSfxId2[j] == 0) {
+                    RestoreSfxScriptData(i, j);
                     break;
                 }
             }
-            D_8013B678[i] = 0;
+            g_CurrentSfxScriptSfxIdCopy[i] = 0;
         }
     }
 
-    if (D_8013B678[3] != 0 && D_8013B648[3] == 0) {
-        func_8013493C(3, 3);
-        D_8013B678[3] = 0;
+    if (g_CurrentSfxScriptSfxIdCopy[3] != 0 &&
+        g_CurrentSfxScriptSfxId2[3] == 0) {
+        RestoreSfxScriptData(3, 3);
+        g_CurrentSfxScriptSfxIdCopy[3] = 0;
     }
     D_8013B690 = 0;
 }
 
-void func_80134C60(void) {
-    u16 temp = (D_8013AE7C * g_SfxData[D_8013B664].volume) >> 7;
-    func_80132A04(0x14, g_SfxData[D_8013B664].vabid, g_SfxData[D_8013B664].prog,
-                  g_SfxData[D_8013B664].tone, g_SfxData[D_8013B664].note,
-                  (temp * (u16)D_801390A4) >> 7, D_80139010);
+void KeyOnChannels20_21(void) {
+    u16 temp = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId20_21].volume) >> 7;
+    func_80132A04(
+        20, g_SfxData[g_CurSfxId20_21].vabid, g_SfxData[g_CurSfxId20_21].prog,
+        g_SfxData[g_CurSfxId20_21].tone, g_SfxData[g_CurSfxId20_21].note,
+        (temp * (u16)g_CurSfxVol20_21) >> 7, g_CurSfxDistance20_21);
 }
 
-void func_80134D14(void) {
+void KeyOnChannels22_23(void) {
     u16 volume;
 
-    volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
-    volume = volume * D_8013AEE0 >> 7;
-    func_80132A04(0x16, g_SfxData[D_80139804].vabid, g_SfxData[D_80139804].prog,
-                  g_SfxData[D_80139804].tone, g_SfxData[D_80139804].note,
-                  volume, D_8013AE94);
-    g_VolR = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 144]) >> 8;
-    g_VolL = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 145]) >> 8;
-    SsUtSetVVol(0x16, g_VolL, g_VolR);
-    SsUtSetVVol(0x17, g_VolL, g_VolR);
+    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
+    volume = volume * g_CurSfxVol22_23 >> 7;
+    func_80132A04(
+        22, g_SfxData[g_CurSfxId22_23].vabid, g_SfxData[g_CurSfxId22_23].prog,
+        g_SfxData[g_CurSfxId22_23].tone, g_SfxData[g_CurSfxId22_23].note,
+        volume, g_CurSfxDistance22_23);
+    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 145]) >> 8;
+    SsUtSetVVol(22, g_VolL, g_VolR);
+    SsUtSetVVol(23, g_VolL, g_VolR);
 }
 
-void func_80134E64(void) {
+void SetVolume22_23(void) {
     u16 volume;
 
-    volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
-    volume = volume * D_8013AEE0 >> 7;
-    g_VolR = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 144]) >> 8;
-    g_VolL = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 145]) >> 8;
-    SsUtSetVVol(0x16, g_VolL, g_VolR);
-    SsUtSetVVol(0x17, g_VolL, g_VolR);
+    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
+    volume = volume * g_CurSfxVol22_23 >> 7;
+    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 145]) >> 8;
+    SsUtSetVVol(22, g_VolL, g_VolR);
+    SsUtSetVVol(23, g_VolL, g_VolR);
 }

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
 // Check if CD data is ready as long as its not related to reading the position
@@ -88,12 +89,39 @@ void func_801B994C(DECENV* dec) {
     dec->isdone = 0;
 }
 
-void func_801B99E4(void);
-INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B99E4);
-
 // access to g_StreamIsRGB24 (in the two places it is accessed) is always as an
 // array but only the first element is ever read.
 extern u32 g_StreamIsRGB24[];
+
+void func_801B99E4(void) {
+    RECT rect;
+
+    if (g_StreamDiskIsReady & 1) {
+        return;
+    }
+
+    if ((*g_StreamIsRGB24 == 1) && D_8003C908) {
+        StCdInterrupt();
+        D_8003C908 = false;
+    }
+
+    rect = g_StreamEnv.dec.slice;
+    LoadImage(&g_StreamEnv.dec.slice,
+              (u_long*)g_StreamEnv.dec.imgbuf[g_StreamEnv.dec.imgid]);
+    g_StreamEnv.dec.imgid = g_StreamEnv.dec.imgid == 0;
+    g_StreamEnv.dec.slice.x = g_StreamEnv.dec.slice.x + g_StreamEnv.dec.slice.w;
+    if (g_StreamEnv.dec.slice.x <
+        g_StreamEnv.dec.rect[g_StreamEnv.dec.rectid].x +
+            g_StreamEnv.dec.rect[g_StreamEnv.dec.rectid].w) {
+        func_801BA648(g_StreamEnv.dec.imgbuf[g_StreamEnv.dec.imgid],
+                      (g_StreamEnv.dec.slice.w * g_StreamEnv.dec.slice.h) / 2);
+        return;
+    }
+    g_StreamEnv.dec.rectid = g_StreamEnv.dec.rectid == 0;
+    g_StreamEnv.dec.slice.x = g_StreamEnv.dec.rect[g_StreamEnv.dec.rectid].x;
+    g_StreamEnv.dec.slice.y = g_StreamEnv.dec.rect[g_StreamEnv.dec.rectid].y;
+    g_StreamEnv.dec.isdone = 1;
+}
 
 void func_801B9B7C(DECENV* env, s16 x0, s16 y0, s16 x1, s32 y1) {
     s16 bitsPerPixel;

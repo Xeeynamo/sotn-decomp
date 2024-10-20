@@ -1,16 +1,18 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include "sfx.h"
 
 void EntityZombie(Entity* self) {
     Entity* newEntity;
     s32 temp_a0;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 4)) {
-        func_801CAD28(SE_ZOMBIE_EXPLODE);
+        PlaySfxPositional(SFX_EXPLODE_SMALL);
         self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(0x62, self, newEntity);
+            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;
             newEntity->params = 3;
             newEntity->posY.i.hi += 12;
@@ -36,7 +38,7 @@ void EntityZombie(Entity* self) {
         break;
 
     case 1:
-        if (func_801C5074(&D_80183CAC) & 1) {
+        if (UnkCollisionFunc3(&D_80183CAC) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
@@ -54,7 +56,7 @@ void EntityZombie(Entity* self) {
 
     case 3:
         AnimateEntity(D_80183C7C, self);
-        temp_a0 = func_801C52EC(&D_80183CBC);
+        temp_a0 = UnkCollisionFunc2(&D_80183CBC);
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.5);
         } else {
@@ -89,25 +91,25 @@ void EntityZombieSpawner(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180AD0);
-        self->ext.generic.unk80.modeS16.unk0 = 1;
+        self->ext.zombieSpawner.spawnDelay = 1;
         self->flags &= FLAG_UNK_2000;
     }
 
-    if (g_CastleFlags[0x37]) {
+    if (g_CastleFlags[CASTLE_FLAG_55]) {
         self->posX.i.hi = 128;
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.zombieSpawner.spawnDelay == 0) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x4C, self, newEntity);
+                CreateEntityFromEntity(E_ZOMBIE, self, newEntity);
                 rnd = (Random() & 0x3F) + 96;
 
-                if (self->ext.generic.unk88.unk != 0) {
+                if (self->ext.zombieSpawner.spawnSide != 0) {
                     newEntity->posX.i.hi += rnd;
                 } else {
                     newEntity->posX.i.hi -= rnd;
                 }
                 newEntity->posY.i.hi -= 48;
-                self->ext.generic.unk88.unk ^= 1;
+                self->ext.zombieSpawner.spawnSide ^= 1;
 
                 // Zombies are prevented from spawning too close to the
                 // edges of the room.
@@ -118,7 +120,7 @@ void EntityZombieSpawner(Entity* self) {
                     DestroyEntity(newEntity);
                 }
             }
-            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x3F) + 32;
+            self->ext.zombieSpawner.spawnDelay = (Random() & 0x3F) + 32;
         }
     }
 }

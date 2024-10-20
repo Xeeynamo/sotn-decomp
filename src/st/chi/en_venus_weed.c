@@ -1226,7 +1226,7 @@ void EntityVenusWeedDart(Entity* self)
                 SetStep(DECAY);
                 break;
             }
-            if (self->unk44) {
+            if (self->hitParams) {
                 self->flags & FLAG_DEAD;    // Weird?
             }
             break;

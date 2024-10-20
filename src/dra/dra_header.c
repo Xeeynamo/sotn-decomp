@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
 typedef void (*Entrypoint)(void);
@@ -36,7 +37,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s32*, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
-void func_8010DFF0(s32 arg0, s32 arg1);
+void func_8010DFF0(s32 resetAnims, s32 arg1);
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);
@@ -46,8 +47,8 @@ void func_8010E0A8(void);
 s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
-u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2);
-s32 func_80134678(s16 arg0, u16 arg1);
+u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
+s32 SetVolumeCommand22_23(s16 vol, u16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_8010BF64(Unkstruct_8010BF64* arg0);
@@ -61,7 +62,7 @@ bool func_80133950(void);
 bool func_800F27F4(s32 arg0);
 s32 func_800FF110(s32 arg0);
 s32 func_800FD664(s32 arg0);
-bool func_800FD5BC(DamageParam* arg0);
+bool CalcPlayerDamage(DamageParam* arg0);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
 
@@ -109,8 +110,8 @@ GameApi g_ApiInit = {
     AddToInventory,
     g_RelicDefs,
     InitStatsAndGear,
-    func_80134714,
-    func_80134678,
+    PlaySfxVolPan,
+    SetVolumeCommand22_23,
     func_800F53A4,
     CheckEquipmentItemCount,
     func_8010BF64,
@@ -124,7 +125,7 @@ GameApi g_ApiInit = {
     func_800F27F4,
     func_800FF110,
     func_800FD664,
-    func_800FD5BC,
+    CalcPlayerDamage,
     LearnSpell,
     DebugInputWait,
 };

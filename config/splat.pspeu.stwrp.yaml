@@ -66,30 +66,11 @@ segments:
       - [0xEA00, .data, wrp/e_red_door] # g_eRedDoorUV
       - [0xEA18, .data, wrp/st_update] # UNK_Invincibility0
       - [0xEA48, .data, wrp/e_particles] # g_ESoulStealOrb*
-      - [0xEAD0, data] # D_psp_09246150
-      - [0xEB00, data] # D_psp_09246180
-      - [0xEB10, data] # D_psp_09246190
-      - [0xEB20, data] # D_psp_092461A0
-      - [0xEB30, data] # D_psp_092461B0
-      - [0xEB40, data] # D_psp_092461C0
-      - [0xEB50, data] # D_psp_092461D0
-      - [0xEB80, data] # D_psp_09246200
-      - [0xEBB0, data] # D_psp_09246230
-      - [0xEBE0, data] # D_psp_09246260
-      - [0xEC10, data] # D_psp_09246290
-      - [0xEC40, data] # D_psp_092462C0
-      - [0xEC60, .data, wrp_psp/wrp_data_EC60] # D_psp_092462E0
-      - [0xEC90, data] # D_psp_09246310
-      - [0xECF0, .data, wrp_psp/wrp_data_ECF0] # g_MariaWeaponData0
-      - [0xED30, data] # D_psp_092463B0
-      - [0xED60, data] # D_psp_092463E0
-      - [0xEDE0, data] # D_psp_09246460
-      - [0xEDF0, data] # D_psp_09246470
-      - [0xEE00, data] # D_psp_09246480
-      - [0xEE10, data] # D_psp_09246490
-      - [0xEE20, data] # D_psp_092464A0
-      - [0xEE50, .data, wrp_psp/wrp_data_EE50] # c_GoldPrizes
-      - [0xEE80, .data, wrp_psp/wrp_data_EE50] # c_HeartPrizes
+      - [0xEAC8, .data, wrp_psp/e_collect] # g_SubweaponAnimPrizeDrop
+      - [0xECF0, .data, wrp_psp/e_collect] # g_MariaSubweaponAnimPrizeDrop
+      - [0xEDD8, .data, wrp_psp/e_collect] # g_goldCollectTexts
+      - [0xEE50, .data, wrp_psp/e_collect] # c_GoldPrizes
+      - [0xEE80, .data, wrp_psp/e_collect] # c_HeartPrizes
       - [0xEEA0, data] # D_psp_09246520
       - [0xEF40, data] # D_psp_092465C0
       - [0xEF60, data] # D_psp_092465E0
@@ -109,7 +90,7 @@ segments:
       - [0xF3A0, data] # D_psp_09246A20
       - [0xF440, data] # D_psp_09246AC0
       - [0xF450, data] # D_psp_09246AD0
-      - [0xF460, data] # D_80181134
+      - [0xF460, data] # eRoomForegroundInit
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
@@ -153,5 +134,7 @@ segments:
       - [0x14498, .rodata, wrp_psp/e_collect]
       - [0x144D0, .rodata, wrp_psp/e_misc]
       - [0x144F8, .rodata, wrp/warp]
-      - [0x14580, .bss, wrp_psp/bss]
+      - [0x14500, .bss, wrp_psp/create_entity]
+      - [0x14520, .bss, wrp_psp/e_collect]
+      - [0x14560, .bss, wrp_psp/bss]
   - [0x14580]

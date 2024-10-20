@@ -1,8 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef GAME_H
 #define GAME_H
 #include "common.h"
 #include "log.h"
-#include "macros.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -78,21 +78,23 @@ typedef struct Prim {
 
 #include "primitive.h"
 
-#define DRAW_DEFAULT 0x00
-#define DRAW_TRANSP 0x01 // make it semi transparent
-#define DRAW_UNK02 0x02  // unknown
-#define DRAW_COLORS 0x04 // use color blending
-#define DRAW_HIDE 0x08   // do not render the primitive
-#define DRAW_TPAGE 0x10  // use custom tpage
-#define DRAW_TPAGE2 0x20 // use custom tpage
-#define DRAW_UNK_40 0x40
-#define DRAW_MENU 0x80       // render only if D_800973EC is set
-#define DRAW_UNK_100 0x100   // unknown
-#define DRAW_UNK_200 0x200   // unknown
-#define DRAW_UNK_400 0x400   // unknown
-#define DRAW_UNK_800 0x800   // unknown
-#define DRAW_UNK_1000 0x1000 // unknown
-#define DRAW_ABSPOS 0x2000   // use absolute coordinates with DRAW_MENU
+typedef enum {
+    DRAW_DEFAULT = 0x00,
+    DRAW_TRANSP = 0x01, // make it semi transparent
+    DRAW_UNK02 = 0x02,  // unknown
+    DRAW_COLORS = 0x04, // use color blending
+    DRAW_HIDE = 0x08,   // do not render the primitive
+    DRAW_TPAGE = 0x10,  // use custom tpage
+    DRAW_TPAGE2 = 0x20, // use custom tpage
+    DRAW_UNK_40 = 0x40,
+    DRAW_MENU = 0x80,       // render only if D_800973EC is set
+    DRAW_UNK_100 = 0x100,   // unknown
+    DRAW_UNK_200 = 0x200,   // unknown
+    DRAW_UNK_400 = 0x400,   // unknown
+    DRAW_UNK_800 = 0x800,   // unknown
+    DRAW_UNK_1000 = 0x1000, // unknown
+    DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU
+} DrawMode;
 
 #include "entity.h"
 
@@ -184,10 +186,6 @@ typedef struct Prim {
 #define FALL_GRAVITY 0x4000
 #define FALL_TERMINAL_VELOCITY 0x60000
 
-#define TOTAL_ENTITY_COUNT 256
-#define STAGE_ENTITY_START 64
-#define MaxEntityCount 32
-
 #define WEAPON_0_START 0xE0
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
@@ -211,7 +209,7 @@ typedef struct Prim {
 #else
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
+#define SPRITESHEET_PTR g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -242,65 +240,86 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_FIRE 0x8000
 
 // Flags for entity->drawFlags
-#define FLAG_DRAW_DEFAULT 0x00
-#define FLAG_DRAW_ROTX 0x01
-#define FLAG_DRAW_ROTY 0x02
-#define FLAG_DRAW_ROTZ 0x04
-#define FLAG_DRAW_UNK8 0x08 // Salem Witch uses this for shadows. Looks like semi-transparency?
-#define FLAG_DRAW_UNK10 0x10
-#define FLAG_DRAW_UNK20 0x20
-#define FLAG_DRAW_UNK40 0x40
-#define FLAG_DRAW_UNK80 0x80
-#define FLAG_DRAW_UNK100 0x100
+typedef enum {
+    FLAG_DRAW_DEFAULT = 0x00,
+    FLAG_DRAW_ROTX = 0x01,
+    FLAG_DRAW_ROTY = 0x02,
+    FLAG_DRAW_ROTZ = 0x04,
+    FLAG_DRAW_UNK8 = 0x08,	 // Salem Witch uses this for shadows. Looks like semi-transparency?
+    FLAG_DRAW_UNK10 = 0x10,
+    FLAG_DRAW_UNK20 = 0x20,
+    FLAG_DRAW_UNK40 = 0x40,
+    FLAG_DRAW_UNK80 = 0x80,
+    FLAG_DRAW_UNK100 = 0x100,
+} DrawFlag;
 
 // Flags for entity->flags
-#define FLAG_UNK_4 0x4
-#define FLAG_UNK_10 0x10
-// Signals that the entity should run its death routine
-#define FLAG_DEAD 0x100
-#define FLAG_UNK_200 0x200
-#define FLAG_UNK_400 0x400
-#define FLAG_UNK_800 0x800
-#define FLAG_UNK_1000 0x1000
-#define FLAG_UNK_2000 0x2000
-#define FLAG_UNK_4000 0x4000
-#define FLAG_UNK_8000 0x8000
-#define FLAG_UNK_10000 0x10000
-#define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
-#define FLAG_UNK_40000 0x40000
-#define FLAG_UNK_80000 0x80000
-#define FLAG_UNK_100000 0x100000
-#define FLAG_UNK_400000 0x400000
-#define FLAG_UNK_800000 0x800000
-#define FLAG_UNK_00200000 0x00200000
+typedef enum {
+    FLAG_UNK_10 = 0x10,
+    FLAG_UNK_20 = 0x20,
+    FLAG_UNK_40 = 0x40,
+    FLAG_UNK_80 = 0x80,
+    // Signals that the entity should run its death routine
+    FLAG_DEAD = 0x100,
+    FLAG_UNK_200 = 0x200,
+    FLAG_UNK_400 = 0x400,
+    FLAG_UNK_800 = 0x800,
+    FLAG_UNK_1000 = 0x1000,
+    FLAG_UNK_2000 = 0x2000,
+    FLAG_UNK_4000 = 0x4000,
+    FLAG_UNK_8000 = 0x8000,
+    FLAG_UNK_10000 = 0x10000,
+    FLAG_UNK_20000 = 0x20000, // func_8011A9D8 will destroy if not set
+    FLAG_POS_PLAYER_LOCKED = 0x40000,
+    FLAG_UNK_80000 = 0x80000,
+    FLAG_UNK_100000 = 0x100000,
+    FLAG_UNK_00200000 = 0x00200000,
+    FLAG_UNK_400000 = 0x400000,
+    // When an entity used AllocPrimitives and their primIndex set.
+    // At their destruction they need to free the prims with FreePrimitives.
+    FLAG_HAS_PRIMS = 0x800000,
+    FLAG_NOT_AN_ENEMY = 0x01000000,
+    FLAG_UNK_02000000 = 0x02000000,
+    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000,
+    FLAG_POS_CAMERA_LOCKED = 0x08000000,
+    FLAG_UNK_10000000 = 0x10000000,	// CHI UpdatePhysicsState: Seems to be "Is Airborne"?
+    FLAG_UNK_20000000 = 0x20000000,
+    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
+    FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
+} EntityFlag;
 
-// When an entity used AllocPrimitives and their primIndex set.
-// At their destruction they need to free the prims with FreePrimitives.
-#define FLAG_HAS_PRIMS 0x00800000
-
-#define FLAG_UNK_01000000 0x01000000
-#define FLAG_UNK_02000000 0x02000000
-#define FLAG_UNK_04000000 0x04000000
-#define FLAG_UNK_08000000 0x08000000
-#define FLAG_UNK_10000000 0x10000000    // CHI UpdatePhysicsState: Seems to be "Is Airborne"?
-#define FLAG_UNK_20000000 0x20000000
-#define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
-#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
-
+// document g_Player.unk0C
 #define PLAYER_STATUS_BAT_FORM 0x00000001
 #define PLAYER_STATUS_MIST_FORM 0x00000002
 #define PLAYER_STATUS_WOLF_FORM 0x00000004
-#define PLAYER_STATUS_UNK_20 0x00000020
 #define PLAYER_STATUS_TRANSFORM                                                \
     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_WOLF_FORM)
+#define PLAYER_STATUS_UNK10 0x10
+#define PLAYER_STATUS_UNK_20 0x00000020
+#define PLAYER_STATUS_UNK40 0x40
 #define PLAYER_STATUS_STONE 0x00000080
+#define PLAYER_STATUS_UNK200 0x200
+#define PLAYER_STATUS_UNK400 0x400
+#define PLAYER_STATUS_UNK800 0x800
+#define PLAYER_STATUS_UNK1000 0x1000
+#define PLAYER_STATUS_UNK2000 0x2000
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
 #define PLAYER_STATUS_UNK10000 0x10000 // possibly freezing?
+#define PLAYER_STATUS_UNK20000 0x20000
+#define PLAYER_STATUS_UNK40000 0x40000
+#define PLAYER_STATUS_UNK80000 0x80000
+#define PLAYER_STATUS_UNK100000 0x100000
+#define PLAYER_STATUS_UNK200000 0x200000
 #define PLAYER_STATUS_UNK400000 0x400000
+#define PLAYER_STATUS_UNK800000 0x800000
 #define PLAYER_STATUS_AXEARMOR 0x01000000
 #define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
+#define PLAYER_STATUS_UNK4000000 0x04000000
+#define NO_AFTERIMAGE 0x08000000
+#define PLAYER_STATUS_UNK10000000 0x10000000
 #define PLAYER_STATUS_UNK40000000 0x40000000
+#define PLAYER_STATUS_UNK80000000 0x80000000
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
@@ -329,15 +348,72 @@ extern u8 g_BmpCastleMap[0x20000];
 #define DIAG_EOL 0xFF            // end of line
 #define DIAG_EOS 0x00            // end of string
 
+// entityId: what entity to spawn based on the Entity Set
+// amount: How many entities to spawn in total
+// nPerCycle: how many entities to spawn at once without waiting for tCycle
+// isNonCritical: 'true' for particles, 'false' for gameplay related entities
+//   false: keep searching for a free entity slot every frame to make the entity
+//   true: when there are no entities available then just forgets about it
+// incParamsKind: the technique used to set the self->params to the new entity
+//   false: it is set from 0 to 'nPerCycle'
+//   true: it is set from 0 to 'amount'
+// tCycle: wait 'tCycle' frames per cycle until 'amount' of entities are made
+// kind: refer to `BlueprintKind` for a list of options
+// f: ???
+// tDelay: how many frames to wait before starting to make the first entity
+#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
+               tCycle, kind, f, tDelay)                                        \
+    {entityId,                                                                 \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (tCycle),                                                                 \
+     ((kind) & 15) | ((f) << 4),                                               \
+     tDelay}
+enum BlueprintKind {
+    B_DECOR,      // cannot collide with any other entity, used for decoration
+    B_WPN,        // can collide to stage items, like candles or enemies
+    B_WPN_UNIQUE, // same as above, but new entity replaces the prev. one
+    B_KIND_3,
+    B_KIND_4,
+    B_KIND_5,
+    B_KIND_6,
+    B_KIND_7,
+    B_KIND_8,
+    B_KIND_9,
+    B_KIND_10,
+    B_KIND_11,
+    B_KIND_12,
+    B_KIND_13,
+    B_KIND_14,
+    B_KIND_15,
+};
+
 #define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
+
+#define PORT_COUNT (2)
+#define BLOCK_PER_CARD (15)
+#define CARD_BLOCK_SIZE (8192)
+
+typedef struct {
+    /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
+    /* 0x258 */ u32 unk258;
+    /* 0x25C */ u32 unk25C;
+    /* 0x260 */ u32 nBlockUsed;
+    /* 0x264 */ s32 nFreeBlock;
+    /* 0x268 */ u8 blocks[BLOCK_PER_CARD];
+} MemcardInfo; /* size=0x278 */
 
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
 #elif defined(VERSION_HD)
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
+
+#define ICON_SLOT_NUM 32
+#define SPU_VOICE_NUM 24
 
 typedef enum {
     Game_Init,
@@ -353,6 +429,17 @@ typedef enum {
     Game_Boot,
     Game_99 = 99,
 } GameState;
+
+typedef enum {
+    Engine_Init,
+    Engine_Normal,
+    Engine_Menu,
+    Engine_3,
+    Engine_5 = 5,
+    Engine_10 = 10,
+    Engine_Map = 20,
+    Engine_0x70 = 0x70
+} GameEngineStep;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
@@ -625,7 +712,8 @@ typedef struct {
     /* 0x0 */ u16 x;
     /* 0x2 */ u16 y;
     /* 0x4 */ u16 roomId;
-    /* 0x6 */ u16 unk6;
+    /* 0x6 */ u16 unk6; // Current Stage ID to reload Tile GFX if you move
+                        // through CD Room but change your mind and go back out.
     /* 0x8 */ u16 stageId;
 } RoomTeleport; // size = 0xA
 
@@ -644,6 +732,10 @@ typedef struct {
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
+#define FRAME(x, y) ((x) | ((y) << 8))
+#define A_LOOP_AT(frame) {0, frame}
+#define A_END {-1, 0}
+#define A_JUMP_AT(anim) {-2, anim}
 typedef struct {
     u16 duration;
     u16 unk2;
@@ -702,6 +794,8 @@ typedef enum {
     Player_Unk50
 } PlayerSteps;
 
+#define ANIM_FRAME_LOAD 0x8000
+
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
@@ -736,13 +830,13 @@ typedef struct Entity {
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;   // Used by CHI EntityDemonSwitch to detect the demon has hit it
+    /* 0x44 */ u16 hitParams;	// Used by CHI EntityDemonSwitch to detect the demon has hit it
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 hitFlags; // 1 = took hit
     /* 0x49 */ u8 nFramesInvincibility;
     /* 0x4A */ s16 unk4A;
-    /* 0x4C */ AnimationFrame* unk4C;
+    /* 0x4C */ AnimationFrame* anim;
     /* 0x50 */ u16 animFrameIdx;
     /* 0x52 */ s16 animFrameDuration;
     /* 0x54 */ s16 animSet;
@@ -763,12 +857,24 @@ typedef struct Entity {
 typedef struct {
     /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;
-    /* 0x04 */ Multi16 unk4;
+    /* 0x04 */ u16 unk5A; // not 5A in this struct, but goes to 5A in entity
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
     /* 0x0C */ u32 unkC;
-    /* 0x10 */ u8* unk10;   // AnimFrames
+    /* 0x10 */ u8* animFrames;
+} ObjInit; // size = 0x14
+
+typedef struct { // only difference from above is this one uses a facingLeft
+    /* 0x00 */ u16 animSet;
+    /* 0x02 */ u16 zPriority;
+    /* 0x04 */ u8 facingLeft;
+    /* 0x05 */ u8 unk5A;
+    /* 0x06 */ u16 palette;
+    /* 0x08 */ u16 drawFlags;
+    /* 0x0A */ u16 drawMode;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u8* animFrames;
 } ObjInit2; // size = 0x14
 
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
@@ -990,6 +1096,9 @@ typedef struct {
     /* 80097C34 */ s32 timerMinutes;
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
+#if defined(VERSION_PSP)
+    s32 mariaSubWeapon;
+#endif
     /* 80097C40 */ u32 D_80097C40;
     /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
@@ -1186,7 +1295,9 @@ typedef enum {
 
     // Aggregate helpers below:
     EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
-    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    // Should be renamed once we know what 8000 and 4000 are
+    EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
 } ColliderEffectFlags;
 
 typedef struct Collider {
@@ -1413,11 +1524,11 @@ typedef struct {
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*AddToInventory)(u16 id, EquipKind kind);
+    /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
-    /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
-    /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
+    /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
+    /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, u16 distance);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
@@ -1432,7 +1543,7 @@ typedef struct {
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
-    /* 8003C894 */ s32 (*func_800FD5BC)(DamageParam* arg0);
+    /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
@@ -1450,7 +1561,7 @@ typedef struct {
 
 typedef struct {
     void (*D_8013C000)(void);
-    void (*D_8013C004)(void);
+    void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
     void (*D_8013C00C)(void);
 } PlayerOvl;
@@ -1496,8 +1607,8 @@ extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
-extern s32 (*g_api_func_80134714)(s32 arg0, s32 arg1, s32 arg2);
-extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);
+extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
+extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, u16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
@@ -1512,7 +1623,7 @@ extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_func_800FF110)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
-extern s32 (*g_api_func_800FD5BC)(DamageParam* arg0);
+extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
@@ -1525,7 +1636,7 @@ typedef struct {
     /* 0x0C */ u8 frameStart;  // when the animation starts
     /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
     /* 0x0E */ s16 unused;     // reserved, always 0
-} WeaponAnimation;
+} WeaponAnimation;             // size = 0x10
 
 #define TILE_SIZE 16
 #define TILE_MASK 0x0F
@@ -1576,7 +1687,6 @@ typedef struct {
     /* 800730CC */ s32 height;
     /* 800730D0 */ s32 unk30;
     /* 800730D4 */ s32 D_800730D4;
-    /* 800730D8 */ BgLayer bg[MAX_BG_LAYER_COUNT];
 } Tilemap;
 
 typedef struct {
@@ -1598,7 +1708,7 @@ typedef struct {
     /* 80072EFC */ s32 D_80072EFC; // stun timer
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
     //  13 = invincibility, 14 = invincibility from consumables
-    /* 80072F00 */ s16 D_80072F00[16]; // poison timer
+    /* 80072F00 */ s16 timers[16]; // poison timer
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
@@ -1634,13 +1744,13 @@ typedef struct {
     /* 80072F6A */ s16 unk4A;
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
-    /* 80072F70 */ u16 unk50;
-    /* 80072F72 */ u16 unk52;
+    /* 80072F70 */ u16 prev_step;
+    /* 80072F72 */ u16 prev_step_s;
     /* 80072F74 */ u16 unk54;
     /* 80072F76 */ u16 unk56;
     /* 80072F78 */ u16 unk58;
     /* 80072F7A */ u16 damageTaken;
-    /* 80072F7C */ u16 unk5C;
+    /* 80072F7C */ u16 unk5C; // ALU: hellfire spell state, RIC: isPrologue
     /* 80072F7E */ u16 unk5E; // status ailment timer
     /* 80072F80 */ u16 unk60;
     /* 80072F82 */ u16 unk62;
@@ -1703,8 +1813,48 @@ enum CASTLE_FLAGS {
     CASTLE_FLAG_CHI_FALLING_STEP = 0x53,
 };
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
-extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
+typedef enum {
+    CLOCK_ROOM_DOORS, // opened by gold and silver ring; drops down to CEN
+    CASTLE_FLAG_2 = 2,
+    CASTLE_FLAG_19 = 19, // Randomized by g_RandomizeCastleFlag13; unused
+    // Start NO3/NP3 flags
+    CASTLE_FLAG_48 = 48,
+    CASTLE_FLAG_49,
+    CASTLE_FLAG_50,
+    JEWEL_SWORD_ROOM,
+    CASTLE_FLAG_52,
+    CASTLE_FLAG_53,
+    CASTLE_FLAG_54, // Unused
+    CASTLE_FLAG_55,
+    DEATH_STAIRWAY_BROKEN, // Piece of stairs right before Death room
+    SG_RETR_ENTR,          // Slogra/Gaibon retreated from Entrance encounter
+    CASTLE_FLAG_58,
+    CASTLE_FLAG_98 = 98, // Set in DRA, unused
+    CASTLE_FLAG_99,      // Set in DRA, unused
+    // Start NZ0 flags
+    CASTLE_FLAG_129 = 129,
+    CASTLE_FLAG_130,
+    CASTLE_FLAG_131,
+    SG_KILL_ALCH, // Slogra & Gaibon were killed in Alchemy Lab
+    CASTLE_FLAG_133,
+    CASTLE_FLAG_149 = 149,
+    CASTLE_FLAG_150,
+    CASTLE_FLAG_155 = 155,
+    CASTLE_FLAG_185 = 185,
+    // WRP
+    CASTLE_FLAG_208 = 208,
+    // RWRP
+    CASTLE_FLAG_209,
+    // Cutscenes the player has finished seeing
+    SUCC_CS_DONE = 212, // Succubus cutscene (as Lisa)
+    HG_CS_DONE = 216,   // Holy Glasses cutscene (in CEN)
+    HEART_FLAGS_START = 256,
+    MAD_COLLISION_FLAGS_START = 288,
+    MAD_RAREDROP_FLAGS_START = 320,
+    COLLISION_FLAGS_START = 400,
+    COLLECT_FLAGS_START = 432,
+} CastleFlagOffsets;
+
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
@@ -1723,12 +1873,12 @@ extern u32 g_RoomCount;
 extern GameApi g_api;
 extern s32 D_8003C8B8;
 extern u32 g_GameTimer; // Increases when unpaused
-extern Unkstruct_8003C908 D_8003C908;
-extern s32 D_8003C90C[2];
+extern bool D_8003C908;
+extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
 extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
-/* 0x8003C9A4 */ extern u32 D_8003C9A4; // when player change stages?
+/* 0x8003C9A4 */ extern u32 g_GameEngineStep;
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer g_GpuBuffers[2];
@@ -1778,7 +1928,34 @@ extern Event g_EvSwCardNew; // 80073078
 extern s32 g_PrevScrollY;
 extern s32 D_80073080;
 extern Tilemap g_Tilemap;
+// this was previously g_Tilemap.bg, but func_801BD8F0 showed that it is a
+// separate symbol.
+extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
+
+#define PLAYER_CHARACTER 0
+#define TOTAL_ENTITY_COUNT 256
+#define STAGE_ENTITY_START 64
+#define MaxEntityCount 32
+#define PLAYER g_Entities[PLAYER_CHARACTER]
+typedef enum {
+    UNK_ENTITY_1 = 1,
+    UNK_ENTITY_2,
+    UNK_ENTITY_3,
+    UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
+    E_WEAPON = 0x10,
+    UNK_ENTITY_11 = 0x11, // related to wolf
+    UNK_ENTITY_12 = 0x12, // related to wolf?
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
+    UNK_ENTITY_100 = 0x100
+} EntityTypes;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+
 extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;

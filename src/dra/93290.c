@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -6,12 +8,6 @@
 s32 AdvanceCdSoundCommandQueue(void);
 
 #define CD_PREGAP_BLOCKS 150
-
-extern s16 D_8013845C;
-extern s16 g_CurrentXaSoundId;
-extern s32 D_8013AE90;
-extern s32 D_8013AEF4;
-extern CdlLOC D_8013B640;
 
 s32 CdSoundCommand6(void) {
     u8 var_v0;
@@ -166,7 +162,7 @@ void StopSeq(void) {
         SsSeqClose(g_SeqAccessNum);
         SetReleaseRate2();
         g_SeqPlayingId = 0;
-        D_801390C4 = 0;
+        g_SeqIsPlaying = 0;
     }
 }
 
@@ -190,7 +186,7 @@ void PlaySeq(u8 arg0) {
         SsSeqPlay(g_SeqAccessNum, 1, 0);
     }
     g_SeqPlayingId = index;
-    D_801390C4 = 0xE;
+    g_SeqIsPlaying = 0xE;
 }
 
 bool CdSoundCommandQueueEmpty(void) { return g_CdSoundCommandQueuePos == 0; }

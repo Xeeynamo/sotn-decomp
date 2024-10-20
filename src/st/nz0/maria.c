@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 void func_801B8E0C(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BEC);
+        InitializeEntity(g_MariaInit);
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.unk0 = 1;
         g_Player.padSim = PAD_LEFT;
@@ -31,7 +33,7 @@ void func_801B8E0C(Entity* self) {
         break;
 
     case 2:
-        if (g_mariaCutsceneFlags & 0x2000) {
+        if (g_CutsceneFlags & 0x2000) {
             D_8003C8B8 = 1;
             if (g_unkGraphicsStruct.unk0 != 0) {
                 g_unkGraphicsStruct.unk0 = 0;
@@ -52,14 +54,14 @@ void EntityMaria(Entity* self) {
     s32 i;
 
     if ((D_801CB684 != 0) && (self->step < 12)) {
-        if (!(g_mariaCutsceneFlags & 1)) {
-            g_mariaCutsceneFlags |= 1;
+        if (!(g_CutsceneFlags & 1)) {
+            g_CutsceneFlags |= 1;
         }
         SetStep(12);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BEC);
+        InitializeEntity(g_MariaInit);
         self->animSet = ANIMSET_OVL(0xF);
         self->animCurFrame = 1;
         self->unk5A = 0x48;
@@ -67,11 +69,11 @@ void EntityMaria(Entity* self) {
         self->posX.i.hi = -0x10;
         break;
     case 1:
-        if (g_mariaCutsceneFlags & 4) {
+        if (g_CutsceneFlags & 4) {
             // Maria comes through the door on the left, the door is in entity
             // slot 192.
             redDoor = &g_Entities[192];
-            g_api.func_80134714(SE_DOOR_OPEN, 0x60, -6);
+            g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
             for (prim = &g_PrimBuf[redDoor->primIndex], i = 0; prim != NULL;
                  prim = prim->next, i++) {
                 if ((i == 1) && !(self->params & FLAG_DEAD)) {
@@ -104,7 +106,7 @@ void EntityMaria(Entity* self) {
         if (self->posX.i.hi >= 25) {
             redDoor = &g_Entities[192];
             redDoor->step = 5;
-            g_mariaCutsceneFlags |= 2;
+            g_CutsceneFlags |= 2;
             self->step++;
         }
         break;
@@ -112,63 +114,63 @@ void EntityMaria(Entity* self) {
         AnimateEntity(D_80181474, self);
         MoveEntity();
         if (self->posX.i.hi > 80) {
-            g_mariaCutsceneFlags |= 1;
+            g_CutsceneFlags |= 1;
             SetStep(5);
             self->velocityX = 0;
         }
         break;
     case 5:
         AnimateEntity(D_80181490, self);
-        if (g_mariaCutsceneFlags & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(6);
             AnimateEntity(D_801814A0, self);
         }
         break;
     case 6:
         AnimateEntity(D_801814A0, self);
-        if (g_mariaCutsceneFlags & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(7);
         }
         break;
     case 7:
         AnimateEntity(D_801814BC, self);
-        if (g_mariaCutsceneFlags & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             SetStep(8);
         }
         break;
     case 8:
         AnimateEntity(D_801814C8, self);
-        if (g_mariaCutsceneFlags & 0x40) {
+        if (g_CutsceneFlags & 0x40) {
             SetStep(9);
         }
         break;
     case 9:
         AnimateEntity(D_801814E8, self);
-        if (g_mariaCutsceneFlags & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             SetStep(10);
         }
         break;
     case 10:
         AnimateEntity(D_801814F8, self);
-        if (g_mariaCutsceneFlags & 0x100) {
+        if (g_CutsceneFlags & 0x100) {
             SetStep(11);
         }
         break;
     case 11:
         AnimateEntity(D_80181510, self);
-        if (g_mariaCutsceneFlags & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(12);
         }
         break;
     case 12:
         AnimateEntity(D_8018151C, self);
-        if (g_mariaCutsceneFlags & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             SetStep(13);
         }
         break;
     case 13:
         AnimateEntity(D_80181530, self);
-        if (g_mariaCutsceneFlags & 0x800) {
+        if (g_CutsceneFlags & 0x800) {
             SetStep(14);
             self->velocityX = FIX(0.75);
         }
@@ -177,7 +179,7 @@ void EntityMaria(Entity* self) {
         AnimateEntity(D_80181538, self);
         MoveEntity();
         if (self->posX.i.hi > 224) {
-            g_mariaCutsceneFlags |= 0x1000;
+            g_CutsceneFlags |= 0x1000;
             self->step++;
         }
         break;

@@ -1,4 +1,3 @@
-
 #include "libsnd_i.h"
 
 void SsSetTickMode(long tick_mode) {

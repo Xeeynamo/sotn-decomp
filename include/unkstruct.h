@@ -12,7 +12,7 @@ typedef struct {
     /* 0x01 */ u8 prog;
     /* 0x02 */ u8 note;
     /* 0x03 */ s8 volume;
-    /* 0x04 */ u8 unk4;
+    /* 0x04 */ u8 mode;
     /* 0x05 */ u8 tone;
     /* 0x06 */ u8 unk6;
 } Unkstruct_800BF554; // size = 0x7
@@ -68,8 +68,8 @@ typedef struct {
 // related to SFX
 typedef struct {
     /* 0x00 */ s16 sndId;
-    /* 0x02 */ u16 unk02;
-    /* 0x04 */ s16 unk04;
+    /* 0x02 */ u16 sndVol;
+    /* 0x04 */ s16 sndPan;
 } SfxRingBufferItem;
 
 typedef struct {
@@ -85,12 +85,6 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } Unkstruct_800FDB18;
-
-typedef struct {
-    s32 D_8003C908;
-    s32 D_8003C90C;
-    s32 D_8003C910;
-} Unkstruct_8003C908;
 
 typedef struct Unkstruct_801C6C6C {
     union {
@@ -137,9 +131,8 @@ typedef struct Unkstruct_801C7954 {
 } Unkstruct_801C7954; // size = 0x10
 
 typedef struct {
-    u8 unk0[7];
-    u8 unk8;
-    u8 pad2[8];
+    u8 unk0[8];
+    u8 unk8[8];
     u8 unk16[1];
     u8 pad3[5];
     u32 unk18;
@@ -151,17 +144,11 @@ typedef struct {
 } Unkstruct_800AE180;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} unk_800B08CC; // size = 0xC
-
-typedef struct {
     /* 0x800973F8 */ s32 D_800973F8;
     /* 0x800973FC */ s32 D_800973FC;
     /* 0x80097400 */ s32 unk0;
     /* 0x80097404 */ s32 unk4;
-    /* 0x80097408 */ Multi g_zEntityCenter;
+    /* 0x80097408 */ s32 g_zEntityCenter;
     /* 0x8009740C */ s32 unkC;
     /* 0x80097410 */ s32 BottomCornerTextTimer;
     /* 0x80097414 */ s32 BottomCornerTextPrims;
@@ -170,23 +157,35 @@ typedef struct {
     /* 0x80097420 */ s32 unk20;
     /* 0x80097424 */ s32 unk24;
 
-    // size must be 8 for the loop in func_800F298C, while
+    // size must be 8 for the loop in RunMainEngine, while
     // PreventEntityFromRespawning suggests it has a size of 32
     /* 0x80097428 */ s32 D_80097428[8];
 } unkGraphicsStruct;
 
 typedef struct {
-    u8 count;
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 w;
-    u8 h;
-    u16 priority;
-    u16 drawMode;
+    /* 0x00 */ u8 count;
+    /* 0x01 */ u8 r;
+    /* 0x02 */ u8 g;
+    /* 0x03 */ u8 b;
+    /* 0x04 */ u8 w;
+    /* 0x05 */ u8 h;
+    /* 0x06 */ u16 priority;
+    /* 0x08 */ u16 drawMode;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u32 flags;
+} unkStr_8011E4BC; // size = 0x10
+
+typedef struct {
+    s32 : 32;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
     s16 unkA;
-    u32 flags;
-} unkStr_8011E4BC;
+    s16 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+} Unkstruct_8012BEF8; // size = 0x1C
 
 typedef struct {
     u8 childId;
@@ -198,18 +197,18 @@ typedef struct {
 } FactoryBlueprint;
 
 typedef struct {
-    s16 xOffset;
-    s16 yOffset;
-    s32 velocityX;
-    s32 velocityY;
-    s16 timerInit;
-    s16 tpage;
-    s16 clut;
-    u8 uBase;
-    u8 vBase;
-} unkStr80154E5C; // size = 0x14
-
-typedef struct {
     s32 unk0;
     s16 unk4;
 } unkstr_800cfe48; // for EntityAlucard
+
+typedef struct {
+    s16 flipX;
+    s16 flipY;
+    s16 clut;
+    s16 unk3;
+    s16 unk4;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 unused;
+} Unkstruct_8017AAD8; // for w_046

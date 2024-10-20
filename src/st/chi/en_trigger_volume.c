@@ -57,7 +57,7 @@ void EntityTriggerVolume(Entity* entity) {
             break;
         }
 
-        if (entity->unk44 != 0) {
+        if (entity->hitParams != 0) {
             temp_v0 = GetSideToPlayer();
             var_v1 = entity->ext.generic.unk7C.s;
             if (var_v1 != 0) {

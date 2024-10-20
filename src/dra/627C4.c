@@ -1,5 +1,6 @@
-#include "common.h"
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -286,7 +287,7 @@ void func_80102EB8(void) {
         func_801072DC(poly1);
         poly1->tpage = 0x10;
         poly1->clut = 0x1A1;
-        poly1->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 32;
+        poly1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
         poly1->drawMode = DRAW_HIDE;
         poly1->p1 = 0;
         SetPrimRect(poly2, 80, 79, 96, 0);
@@ -296,7 +297,7 @@ void func_80102EB8(void) {
         poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
             poly2->r2 = poly2->r3 = 0;
         poly2->tpage = 0x1F;
-        poly2->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 31;
+        poly2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
         poly2->drawMode = DRAW_HIDE;
         poly1 = poly1->next;
         poly2 = poly2->next;
@@ -304,7 +305,7 @@ void func_80102EB8(void) {
 
     for (i = 0; i < 12; i++) {
         func_80107250(poly3, 255);
-        poly3->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 32;
+        poly3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
         poly3->drawMode = DRAW_HIDE;
         poly3 = poly3->next;
     }
@@ -389,9 +390,9 @@ s32 HandleSaveMenu(s32 arg0) {
             prim2->drawMode = DRAW_DEFAULT;
             prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
             if (D_80137E4C == 6) {
-                PlaySfx(SE_UI_START);
+                PlaySfx(SFX_START_SLAM_B);
             } else {
-                PlaySfx(SE_UI_OVERWRITE_MSG);
+                PlaySfx(SFX_UI_ALERT_TINK);
             }
             if (D_80137E4C == 6) {
 #if defined(VERSION_US)
@@ -525,7 +526,7 @@ s32 HandleSaveMenu(s32 arg0) {
         return 0;
     } else if (arg0 == 1) {
         if (temp_t0 == 0) {
-            PlaySfx(SE_UI_OVERWRITE_MSG);
+            PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
 #if defined(VERSION_US)
             func_800F9D88("  Select the slot．", 0, 1);
@@ -567,13 +568,13 @@ s32 HandleSaveMenu(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80097924 != 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80097924 = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80097924 == 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80097924 = 1;
             }
@@ -592,7 +593,7 @@ s32 HandleSaveMenu(s32 arg0) {
                 return 2;
             }
             if (g_pads[0].tapped & CONFIRM) {
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
@@ -602,7 +603,7 @@ s32 HandleSaveMenu(s32 arg0) {
         }
     } else {
         if (temp_t0 == 0) {
-            PlaySfx(SE_UI_OVERWRITE_MSG);
+            PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
             if (arg0 == 2) {
 #if defined(VERSION_US)
@@ -668,13 +669,13 @@ s32 HandleSaveMenu(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80137E6C != 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80137E6C = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80137E6C == 0) {
-                    PlaySfx(SE_UI_OVERWRITE_SELECT);
+                    PlaySfx(SFX_UI_TINK);
                 }
                 D_80137E6C = 1;
             }
@@ -693,7 +694,7 @@ s32 HandleSaveMenu(s32 arg0) {
                 FreePrimitives(D_80137E60);
                 return 1;
             } else if (g_pads[0].tapped & CONFIRM) {
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);

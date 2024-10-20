@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: a919a53a760107972049bfdeadde33376428eace
 segments:
   - name: stsel
     type: code
@@ -127,5 +128,5 @@ segments:
       - [0x39744, c, stream]
       - [0x3AB70, asm, handwritten/func_801BAB70]
       - [0x3ABA4, asm, handwritten/DecDCTvlc]
-      - [0x3AEE4, sbss]
+      - [0x3AEE4, .bss, bss]
   - [0x56B28]

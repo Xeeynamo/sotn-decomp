@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -34,7 +36,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityExpandingCircle,
     func_80127CC8,
     EntityHitByLightning,
-    EntityMpReplenished,
+    EntityPlayerOutline,
     EntityPlayerDissolves,
     EntityHitByIce,
     EntityMist,
@@ -72,8 +74,8 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     func_80124A8C,
     func_8011A4C8};
 
-// Corresponding RIC function is func_801603C4
-void func_8011A4D0(void) {
+// Corresponding RIC function is RicUpdatePlayerEntities
+void UpdatePlayerEntities(void) {
     Entity* entity;
     s32 temp_s2;
     s32 i;
@@ -116,7 +118,7 @@ void func_8011A4D0(void) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
-                if (!(entity->flags & FLAG_UNK_04000000) &&
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
                      entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
                     DestroyEntity(g_CurrentEntity);
@@ -191,7 +193,7 @@ void func_8011A870(void) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
-                if (!(entity->flags & FLAG_UNK_04000000) &&
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                     (entity->posX.i.hi < -0x20 || entity->posX.i.hi > 0x120 ||
                      entity->posY.i.hi < -0x10 || entity->posY.i.hi > 0x100)) {
                     DestroyEntity(entity);
@@ -281,7 +283,7 @@ Entity* CreateEntFactoryFromEntity(
 // variety. It is only responsible for creating child entities.
 void EntityEntFactory(Entity* self) {
     Entity* newEntity;
-    s16 unk96Copy;
+    s16 n;
     s16 i;
     u8 endIndex;
     s16 startIndex;
@@ -298,13 +300,13 @@ void EntityEntFactory(Entity* self) {
         self->ext.factory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
         self->ext.factory.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
         self->ext.factory.unk9A = *data_idx;            // index 5
-        self->flags |= FLAG_UNK_04000000;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
         switch (self->ext.factory.unkA4) {
         case 0:
         case 6:
-            self->flags |= FLAG_UNK_08000000;
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
         case 4:
         case 5:
@@ -358,8 +360,8 @@ void EntityEntFactory(Entity* self) {
         self->ext.factory.unk9A = self->ext.factory.unk98;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    unk96Copy = self->ext.factory.unk96;
-    for (i = 0; i < unk96Copy; i++) {
+    n = self->ext.factory.unk96;
+    for (i = 0; i < n; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=
@@ -451,7 +453,7 @@ void EntityUnarmedAttack(Entity* entity) {
     }
 
     if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         GetEquipProperties(handId, &equip, 0);
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
@@ -482,7 +484,7 @@ void EntityDiveKickAttack(Entity* self) {
         return;
     }
 
-    self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+    self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
     self->facingLeft = PLAYER.facingLeft;
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->posX.i.hi = PLAYER.posX.i.hi;
@@ -512,7 +514,7 @@ void func_8011B480(Entity* entity) {
     if (PLAYER.step != 5 || PLAYER.step_s != 3) {
         DestroyEntity(entity);
     } else {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         entity->facingLeft = PLAYER.facingLeft;
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -531,13 +533,13 @@ void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         func_8011A328(entity, 5);
         entity->step++;
     }
 }
 
-// Entity #2. Many blueprints. Matches RIC func_80160FC4
+// Entity #2. Many blueprints. Matches RIC RicEntitySmokePuff
 void func_8011B5A4(Entity* self) {
     byte stackpad[40];
     s16 posX;
@@ -554,9 +556,9 @@ void func_8011B5A4(Entity* self) {
         }
 
         self->animSet = 5;
-        self->unk4C = D_800AD57C;
+        self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = 0x8195;
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
@@ -675,12 +677,12 @@ void EntityUnkId24(Entity* self) {
     u16 upperparams = self->params >> 8;
     if (self->step == 0) {
         self->animSet = 2;
-        self->unk4C = D_800AD5FC;
+        self->anim = D_800AD5FC;
 
         // Weird thing here where we have to set flags to the same value twice
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
 
         self->velocityY = FIX(-1);
         if (upperparams == 0) {
@@ -834,7 +836,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp7c = D_8013AEBC[2];
             sp7a = D_8013AEBC[3];
             self->facingLeft = 0;
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             goto block_748;
         }
     } else {
@@ -892,8 +894,8 @@ block_748:
 #endif
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (var_s1 = 0; var_s1 < 8; var_s1++) {
             D_800AD630[var_s1] = var_s1 << 9;
@@ -951,7 +953,7 @@ block_748:
             self->ext.playerBlink.unk80 = 8;
             switch ((u32)sp4c[7]) {
             case 0x7000:
-                if (g_Player.D_80072F00[1] == 0) {
+                if (!g_Player.timers[1]) {
                     self->step += 1;
                 }
                 break;
@@ -962,7 +964,7 @@ block_748:
                 }
                 break;
             case 0x7002:
-                sp40 = g_Player.D_80072F00[0];
+                sp40 = g_Player.timers[0];
                 if (sp40 == 0) {
                     self->step += 1;
                 }
@@ -1357,8 +1359,277 @@ block_231:
     DestroyEntity(self);
 }
 
-// blue outline around player when mp refills
-INCLUDE_ASM("dra/nonmatchings/7A4D0", EntityMpReplenished);
+// Draws an outline around the player which grows or shrinks.
+// Outline can be several colors depending on the blueprint used.
+// Entity #31. Blueprints: 40, 57, 61
+// Many use cases. Known examples:
+// MP Refilled, blueprint 40, upperparams = 0
+// Cursed and trying to attack, blueprint 57, upperparams = 1
+// Agunea subweapon, blueprint 61, upperparams = 2
+// Dark Metamorphosis, blueprint 40, upperparams = 17
+// Sword warp spell, blueprint 61, upperparams = 20
+// Sword warp spell, blueprint 61, upperparams = 21
+// Soul steal, blueprint 40, upperparams = 22
+// Sword Brothers, blueprint 40, upperparams = 23
+
+void EntityPlayerOutline(Entity* self) {
+    s16* animFramePtr;
+    u8* spritesheetPtr;
+    s16 xOffset;
+    s16 yOffset;
+    s16 width;
+    Primitive* prim;
+    s16 spriteIdx;
+    s32 i;
+    s16 upperparams;
+    u8 spriteX;
+    s16* primData;
+    s16 xVar;
+    s16 yVar;
+    u8 four;
+    u8 one;
+    s16 height;
+    u8 spriteY;
+    s16 selfX;
+    s16 selfY;
+
+    if ((g_Player.unk0C & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_UNK40000 |
+                           PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
+        !(PLAYER.animCurFrame & 0x7FFF) || (!PLAYER.animSet) ||
+        ((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D))) {
+        DestroyEntity(self);
+        return;
+    }
+    upperparams = (self->params & 0x7F00) >> 8;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    animFramePtr = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
+    spriteIdx = *animFramePtr++;
+    spriteIdx &= 0x7FFF;
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    spritesheetPtr = ((u8**)SPRITESHEET_PTR)[spriteIdx];
+    four = 4;
+    one = 1;
+    spriteX = four + spritesheetPtr[0];
+    spriteY = one + spritesheetPtr[1];
+    width = spriteX - four;
+    height = spriteY - one;
+    xOffset = *animFramePtr++ + spritesheetPtr[2];
+    yOffset = *animFramePtr++ + spritesheetPtr[3];
+    self->rotZ = PLAYER.rotZ;
+    self->drawFlags |= (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+    primData = D_800AD9B8[upperparams];
+    switch (self->step) {
+    case 0: // Initialization
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
+        prim = &g_PrimBuf[self->primIndex];
+        // This is just not a for-loop, that's weird
+        for (i = 0; i < 1; i++) {
+            prim->tpage = 0x18;
+            prim->clut = primData[3]; // Always 259
+            prim->priority = PLAYER.zPriority + 2;
+            // primData[4] is always 49; DRAW_UNK_40 | DRAW_HIDE | DRAW_TRANSP
+            prim->drawMode =
+                primData[4] + (DRAW_UNK_200 | DRAW_UNK_100 | DRAW_COLORS);
+            prim = prim->next;
+        }
+        switch (upperparams) {
+        case 0: // MP refill
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 17: // Dark Metamorphosis
+        case 18:
+        case 20: // Sword Warp Spell (#1)
+        case 22: // Soul Steal
+        case 23: // Sword Brothers
+            self->ext.playerOutline.brightness = 0x80;
+            self->rotX = PLAYER.rotX; // Player rotX is (always?) 0x100
+            self->rotY = PLAYER.rotY; // Player rotY is (always?) 0x100
+            self->rotPivotY = PLAYER.rotPivotY;
+            self->rotPivotX = PLAYER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        case 2: // Agunea
+            self->ext.playerOutline.brightness = 0xC0;
+            self->rotX = PLAYER.rotX; // Player rotX is (always?) 0x100
+            self->rotY = PLAYER.rotY; // Player rotY is (always?) 0x100
+            self->rotPivotY = PLAYER.rotPivotY;
+            self->rotPivotX = PLAYER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        case 1: // Curse attack
+            self->ext.playerOutline.brightness = 0x100;
+            self->rotX = PLAYER.rotX; // Player rotX is (always?) 0x100
+            self->rotY = PLAYER.rotY; // Player rotY is (always?) 0x100
+            self->rotPivotY = PLAYER.rotPivotY;
+            self->rotPivotX = PLAYER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 14:
+        case 15:
+        case 16:
+        case 19:
+        case 21: // Sword Warp Spell (#2)
+            self->ext.playerOutline.brightness = 0x80;
+            self->rotX = PLAYER.rotX + 0x60;
+            self->rotY = PLAYER.rotY + 0x60;
+            self->rotPivotY = PLAYER.rotPivotY;
+            self->rotPivotX = PLAYER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        }
+        self->step++;
+        break;
+
+    case 1: // 8 frames at constant size
+        switch (upperparams) {
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 14:
+        case 15:
+        case 16:
+        case 18:
+        case 21: // Sword Warp Spell (#2)
+            self->ext.playerOutline.brightness += 16;
+        case 0: // MP refill
+        case 1: // Curse attack
+        case 2: // Agunea
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 17: // Dark Metamorphosis
+        case 19:
+        case 20: // Sword Warp Spell (#1)
+        case 22: // Soul Steal
+        case 23: // Sword Brothers
+            if (--self->ext.playerOutline.timer == 0) {
+                self->step++;
+            }
+        }
+        break;
+    case 2: // Outline grows/shrinks, and dims
+        switch (upperparams) {
+        case 0: // MP refill
+        case 2: // Agunea
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 15:
+        case 16:
+        case 17: // Dark Metamorphosis
+        case 18:
+        case 20: // Sword Warp Spell (#1)
+        case 22: // Soul Steal
+        case 23: // Sword Brothers
+            self->rotX += 8;
+            self->rotY += 8;
+            self->ext.playerOutline.brightness -= 5;
+            if (self->ext.playerOutline.brightness < 0) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        case 1: // Curse attack, grows slower and dims faster
+            self->rotX += 2;
+            self->rotY += 2;
+            self->ext.playerOutline.brightness -= 16;
+            if (self->ext.playerOutline.brightness < 0) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 14:
+        case 19:
+        case 21: // Sword Warp Spell (#2)
+            // Shrinks inward, and when at size 0x100, holds there for 8 frames
+            // in step 3
+            self->rotX -= 8;
+            self->rotY -= 8;
+            if (self->rotX <= 0x100) {
+                self->rotY = self->rotX = 0x100;
+                self->ext.playerOutline.timer = 8;
+                self->step++;
+            }
+        }
+        break;
+    case 3: // Outline continues static until done
+        if (--self->ext.playerOutline.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (self->facingLeft) {
+        selfX = selfX - xOffset;
+    } else {
+        selfX = selfX + xOffset;
+    }
+    selfY = selfY + yOffset;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i <= 0; i++) {
+        if (self->facingLeft) {
+            prim->x0 = prim->x2 = (selfX - width) + 1;
+            prim->x1 = prim->x3 = selfX + 1;
+        } else {
+            prim->x0 = prim->x2 = selfX;
+            prim->x1 = prim->x3 = selfX + width;
+        }
+
+        prim->y0 = prim->y1 = selfY;
+        prim->y2 = prim->y3 = selfY + height;
+        if (self->facingLeft) {
+            prim->u0 = prim->u2 = spriteX - 1;
+            prim->u1 = prim->u3 = four - 1;
+        } else {
+            prim->u0 = prim->u2 = four;
+            prim->u1 = prim->u3 = spriteX;
+        }
+        prim->v0 = prim->v1 = one;
+        prim->v2 = prim->v3 = one + height;
+        func_800EB758(self->posX.i.hi, self->posY.i.hi, self, self->drawFlags,
+                      prim, (u16)self->facingLeft);
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 =
+            primData[0] * self->ext.playerOutline.brightness / 256;
+        prim->g0 = prim->g1 = prim->g2 = prim->g3 =
+            primData[1] * self->ext.playerOutline.brightness / 256;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 =
+            primData[2] * self->ext.playerOutline.brightness / 256;
+        prim->priority = PLAYER.zPriority + 2;
+        prim = prim->next;
+    }
+    func_8010DFF0(1, 1);
+}
 
 void func_8011E0E4(Entity* entity) {}
 
@@ -1377,8 +1648,8 @@ void EntityGravityBootBeam(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next) {
             prim->g0 = prim->r0 = 0;
@@ -1439,9 +1710,9 @@ void EntityWingSmashTrail(Entity* entity) {
         return;
     }
     if (entity->step == 0) {
-        entity->flags = FLAG_UNK_08000000;
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
         entity->animSet = PLAYER.animSet;
-        entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+        entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags = PLAYER.drawFlags |
                             (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
@@ -1457,7 +1728,7 @@ void EntityWingSmashTrail(Entity* entity) {
     // This actually makes the wing smashes shrink over time, not rotate.
     entity->rotX -= 8;
     entity->rotY -= 8;
-    entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+    entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
     // Unclear why we count down by 5's instead of just making unk6C start
     // smaller
     if (entity->unk6C >= 5) {

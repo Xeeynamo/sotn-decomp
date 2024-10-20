@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "game.h"
@@ -340,7 +341,7 @@ void AddHearts(s32 value) {
         temp = g_Entities;
         g_api.CreateEntFactoryFromEntity(temp, 99, 0); // g_api is new
 
-        PlaySfx(NA_SE_PL_COLLECT_HEART);
+        PlaySfx(SFX_HEART_PICKUP);
     }
 }
 

@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -53,21 +55,28 @@ s32 g_CapePaletteDefs[] = {
     ITEM_TWILIGHT_CLOAK, 0x40A, CAPE_PAL_TERMINATOR, 0x409,
 };
 
-bool func_800FD5BC(DamageParam* arg0) {
-    if (arg0->damageKind != 5) {
-        if (arg0->damageKind >= 16) {
-            arg0->damageTaken = g_Status.hpMax / 8;
-        } else if (g_Status.hpMax >= (arg0->damageTaken * 20)) {
-            arg0->damageKind = 3;
+// BSS
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
+extern PlayerHud g_PlayerHud;
+extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
+
+bool CalcPlayerDamage(DamageParam* damage) {
+    if (damage->damageKind != 5) {
+        if (damage->damageKind >= 16) {
+            damage->damageTaken = g_Status.hpMax / 8;
+        } else if (g_Status.hpMax >= (damage->damageTaken * 20)) {
+            damage->damageKind = 3;
         } else {
-            arg0->damageKind = 2;
+            damage->damageKind = 2;
         }
     }
-    if (g_Status.hp <= arg0->damageTaken) {
+    if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         return true;
     }
-    g_Status.hp -= arg0->damageTaken;
+    g_Status.hp -= damage->damageTaken;
     return false;
 }
 
@@ -590,8 +599,8 @@ void AddHearts(s32 value) {
         if (g_Status.heartsMax < g_Status.hearts) {
             g_Status.hearts = g_Status.heartsMax;
         }
-        CreateEntFactoryFromEntity(&PLAYER, FACTORY(0, 99), 0);
-        PlaySfx(NA_SE_PL_COLLECT_HEART);
+        CreateEntFactoryFromEntity(&PLAYER, 99, 0);
+        PlaySfx(SFX_HEART_PICKUP);
     }
 }
 
@@ -743,8 +752,8 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (*D_80139828 < 0x200) {
-                *D_80139828 = 0x200;
+            if (D_80139828[0] < 0x200) {
+                D_80139828[0] = 0x200;
             }
         }
     }
@@ -754,14 +763,13 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
 void func_800FEE6C(void) {
-    s32* var_v1 = D_80139828;
-
+    s32* p = D_80139828;
     do {
-        if (*var_v1 != 0) {
-            (*var_v1)--;
+        if (*p) {
+            (*p)--;
         }
-        var_v1++;
-    } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
+        p++;
+    } while ((long long)p < (long long)(D_80139828 + LEN(D_80139828)));
 }
 
 s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
@@ -836,7 +844,7 @@ void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 void func_800FF0B8(void) {
     s32 i;
 
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < LEN(D_80139828); i++) {
         func_800FF0A0(i);
     }
 }
@@ -2211,6 +2219,13 @@ void DrawHudSubweapon() {
     prim->x1 = prim->x3 = statXPos + 0x14;
     prim->clut = clut;
 }
+
+// TODO this can probably be moved into 627C4.c
+// BSS
+extern u32 D_8013799C;
+extern s32 D_801379A0;
+extern s32 D_801379A4;
+extern s32 D_801379A8;
 
 void func_801024DC(void) {
     Primitive* prim;

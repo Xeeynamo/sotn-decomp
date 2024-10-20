@@ -1,14 +1,16 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
+#include "sfx.h"
 
 void func_801A7D64(Entity* self) {
     s32 temp_v0;
-    ObjInit2* obj = &D_80180638[self->params];
+    ObjInit* obj = &D_80180638[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
-        self->unk5A = obj->unk4.s;
+        self->unk5A = obj->unk5A;
         self->palette = obj->palette;
         self->drawFlags = obj->drawFlags;
         self->drawMode = obj->drawMode;
@@ -16,7 +18,7 @@ void func_801A7D64(Entity* self) {
             self->flags = obj->unkC;
         }
     }
-    AnimateEntity(obj->unk10, self);
+    AnimateEntity(obj->animFrames, self);
 }
 
 bool func_801A7E2C(Entity* self) {
@@ -32,66 +34,65 @@ bool func_801A7E2C(Entity* self) {
     }
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("st/st0/nonmatchings/27D64", EntityLockCamera);
-#else
 extern u16 D_801805B0[];
 extern u8 D_8018065C[];
 extern u8 D_80180660[];
 extern u16 D_80180664[];
 
-bool func_801A7E2C(Entity* entity);
-void EntityLockCamera(Entity* entity) {
-    s32 temp_v0_2;
-    s32 temp_v1;
-    u16* temp_v1_2;
-    u16* temp_v1_5;
-    u8 temp_s1;
-    u8 temp_v0;
-    s32 phi_v1;
+void EntityLockCamera(Entity* self) {
+    s32 facingLeft;
+    u16 offset;
+    u16* rect16;
+    u16 params;
+    u8 flag;
 
-    temp_s1 = entity->params;
-    if (entity->step == 0) {
+    params = ((u8)self->params);
+    if (self->step == 0) {
         InitializeEntity(D_801805B0);
-        temp_v1 = temp_s1 & 0xFFFF;
-        entity->unk3C = 1;
-        temp_v0 = D_80180660[temp_v1];
-        entity->ext.generic.unk7C.modeU16 = temp_v0;
-        if (temp_v0) {
-            entity->hitboxWidth = D_8018065C[temp_v1];
-            entity->hitboxHeight = 20;
+
+        self->hitboxState = 1;
+
+        flag = D_80180660[params];
+        self->ext.lockCamera.unk7C = flag;
+
+        if (flag) {
+            self->hitboxWidth = D_8018065C[params];
+            self->hitboxHeight = 20;
         } else {
-            entity->hitboxWidth = 20;
-            entity->hitboxHeight = D_8018065C[temp_v1];
+            self->hitboxWidth = 20;
+            self->hitboxHeight = D_8018065C[params];
         }
     }
 
-    if (entity->params & 0x100) {
-        temp_v1_2 = &D_80180664[(((temp_s1 & 0xFFFF) * 4) & 0xFFFF)];
-        g_Tilemap.x = *temp_v1_2++;
-        g_Tilemap.y = *temp_v1_2++;
-        g_Tilemap.width = *temp_v1_2++;
-        g_Tilemap.height = *temp_v1_2++;
-        DestroyEntity(entity);
+    if (self->params & 0x100) {
+        params *= 4;
+        rect16 = &D_80180664[params];
+        g_Tilemap.x = *rect16++;
+        g_Tilemap.y = *rect16++;
+        g_Tilemap.width = *rect16++;
+        g_Tilemap.height = *rect16++;
+        DestroyEntity(self);
         return;
     }
 
-    if (func_801A7E2C(entity)) {
-        temp_v0_2 = GetSideToPlayer();
-        if (entity->ext.generic.unk7C.modeU16) {
-            phi_v1 = (temp_v0_2 & 2) * 2;
+    if (func_801A7E2C(self) != 0) {
+        facingLeft = GetSideToPlayer();
+        if (self->ext.lockCamera.unk7C) {
+            facingLeft &= 2;
+            offset = facingLeft * 2;
         } else {
-            phi_v1 = (temp_v0_2 & 1) * 4;
+            facingLeft &= 1;
+            offset = facingLeft * 4;
         }
-
-        temp_v1_5 = &D_80180664[(phi_v1 + temp_s1 * 8) & 0xFFFF];
-        g_Tilemap.x = *temp_v1_5++;
-        g_Tilemap.y = *temp_v1_5++;
-        g_Tilemap.width = *temp_v1_5++;
-        g_Tilemap.height = *temp_v1_5++;
+        params <<= 3;
+        params += offset;
+        rect16 = &D_80180664[params];
+        g_Tilemap.x = *rect16++;
+        g_Tilemap.y = *rect16++;
+        g_Tilemap.width = *rect16++;
+        g_Tilemap.height = *rect16++;
     }
 }
-#endif
 
 void func_801A805C(Entity* self) {
     Entity* newEntity;
@@ -105,7 +106,7 @@ void func_801A805C(Entity* self) {
 
     if (self->step != 0) {
         AnimateEntity(D_801806D0[params], self);
-        if (self->unk44 != 0) {
+        if (self->hitParams) {
             params_ = params - 2;
             if (params_ < 2) {
                 self->facingLeft = GetSideToPlayer() & 1;
@@ -140,7 +141,7 @@ void func_801A805C(Entity* self) {
                     posY += 16;
                     paramsPtr++;
                 }
-                g_api.PlaySfx(0x67F);
+                g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_B);
             } else {
                 if (params == 9) {
                     newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -149,7 +150,7 @@ void func_801A805C(Entity* self) {
                         newEntity->params = 0x100;
                     }
                 }
-                g_api.PlaySfx(0x61D);
+                g_api.PlaySfx(SFX_GLASS_BREAK_E);
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -159,8 +160,8 @@ void func_801A805C(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(D_80180574);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        InitializeEntity(g_eBreakableInit);
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = D_8018074C[params];
         self->hitboxHeight = D_801806F8[params];
         self->animSet = D_80180724[params];
@@ -213,7 +214,7 @@ void func_801A8328(Entity* self) {
             LOH(prim->next->b2) = 0x10;
             prim->next->b3 = 0x80;
             prim->priority = self->zPriority;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             velX = ((Random() & 7) << 0xC) + 0x8000;
             self->velocityX = velX;
             if (self->facingLeft == 0) {
@@ -244,7 +245,7 @@ void func_801A8328(Entity* self) {
         g_api.CheckCollision(
             self->posX.i.hi, (s16)(self->posY.i.hi + 8), &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x691);
+            g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);

@@ -1,14 +1,15 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include <log.h>
 #include "pc.h"
+#include <stdlib.h>
+#include <string.h>
 
 u8* g_PlOvlSpritesheet[256];
 static u8* sprite_data = NULL;
 
-void InitPlayerArc(FileLoad* file) {
+void InitPlayerArc(const struct FileUseContent* file) {
     int i;
-
-    g_PlayableCharacter = PLAYER_ALUCARD;
 
     if (sprite_data) {
         free(sprite_data);

@@ -1,4 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
+
+// BSS
+extern u16 D_80137478[ICON_SLOT_NUM];
+extern u16 D_801374B8[ICON_SLOT_NUM];
+extern u16 D_801374F8[ICON_SLOT_NUM];
+extern u16 D_80137538[ICON_SLOT_NUM];
 
 void func_800EA538(s32 arg0) {
     Unkstruct_8006C3C4* var_v0;
@@ -384,6 +392,12 @@ void LoadGfxAsync(s32 gfxId) {
     }
 }
 
+// BSS
+extern u8* g_DecSrcPtr;
+extern u8* g_DecDstPtr;
+extern s32 g_DecReadNibbleFlag;
+extern s32 g_DecWriteNibbleFlag;
+
 void DecompressWriteNibble(s32 ch) {
     u8 temp = ch;
 
@@ -626,7 +640,7 @@ bool func_800EB720(void) {
 }
 
 void func_800EB758(
-    s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX) {
+    s16 pivotX, s16 pivotY, Entity* e, u8 flags, POLY_GT4* p, u8 flipX) {
     const int H_CENTER = FLT(STAGE_WIDTH / 2);
     s16 px, py;
     s16 dx, dy;
@@ -719,84 +733,82 @@ void ResetEntityArray(void) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("dra/nonmatchings/4A538", RenderEntities);
-#else
 typedef struct {
-    /* 0x1F800034 */ u16 unk0;
-    /* 0x1F800036 */ s16 animSet;
-    /* 0x1F800038 */ s16 animCurFrame;
-    /* 0x1F80003A */ u16 w;
-    /* 0x1F80003C */ u16 h;
-    /* 0x1F80003E */ s16 x;
-    /* 0x1F800040 */ s16 y;
-    /* 0x1F800042 */ u16 xPivot;
-    /* 0x1F800044 */ u16 yPivot;
-    /* 0x1F800046 */ u16 unused12;
-    /* 0x1F800048 */ s32 index;
-    /* 0x1F80004C */ s32 unk18;
-    /* 0x1F800050 */ u32 unk1C;
-    /* 0x1F800054 */ s32 unk20;
-    /* 0x1F800058 */ s32 unk24;
-    /* 0x1F80005C */ OT_TYPE* ot;
-    /* 0x1F800060 */ POLY_GT4* poly;
-} EntitiesRenderer; // size=0x30
+    s16 unk0;
+    s16 animSet;
+    s16 animCurFrame;
+    u16 w;
+    u16 h;
+    s16 x;
+    s16 y;
+    s16 xPivot;
+    s16 yPivot;
+    u16 unused12;
+    s32 index;
+    s32 index2;
+    u32 spriteSheetIdx;
+    s32 flipX; // set to 2 when facing left, 0 when not
+    s32 eDrawFlags;
+    OT_TYPE* ot;
+    POLY_GT4* poly;
+} EntitiesRenderer;
 
 void RenderEntities(void) {
+    s16 polyX;
+    s16 polyY;
+    s32 animFrameFlags;
+    Entity* entity;
+    s16* animFrame; // might be a struct
+    u8 uvRight;
+    u8 uvTop;
+    s32 tempFlagCheck;
+    s16** spriteBank;
+    u8* spriteData;
+    PlayerDraw* plDraw;
+    u16 palette;
+    u16 animFrameIdx;
+    u8 uvLeft;
+    u8 uvBottom;
+    POLY_GT4* poly;
+    EntitiesRenderer* r;
 #ifdef VERSION_PC
     POLY_GT4 _poly;
-    POLY_GT4* poly = &_poly;
+    poly = &_poly;
+    setPolyGT4(poly);
     EntitiesRenderer _r;
-    EntitiesRenderer* r = &_r;
+    r = &_r;
 #else
-    POLY_GT4* poly = (POLY_GT4*)0x1F800000;
-    EntitiesRenderer* r = (EntitiesRenderer*)0x1F800034;
+    poly = (POLY_GT4*)SPAD(0);
+    setPolyGT4(poly);
+    // Put this right after that poly. The poly is different size on PSP.
+    r = (EntitiesRenderer*)SP(sizeof(POLY_GT4));
 #endif
 
-    Entity* entity;
-    PlayerDraw* plDraw;
-    s32 temp_s2_2;
-    s16* var_t2;
-    s16 temp_a0_10;
-    s16 temp_a0_2;
-    s32 temp_v1_4;
-    s32 var_a0_2;
-    s16 var_a0;
-    u16 temp_a2;
-    s32 new_var;
-    u16 temp_v0_6;
-    u16 temp_v1_6;
-    u16 temp_v1_8;
-    u16 var_v0_3;
-    s32 var_v0_4;
-    s32 test;
-    u8 texEX;
-    u8 texSY;
-    u8 texEY;
-    u8 texSX;
-    u8* spriteData;
-    s16** spriteBank;
-    u16 animSet;
-    u8** prestuff;
-    u8** stuff;
-
-    entity = g_Entities;
-    setPolyGT4(poly);
-    r->index = 0;
     r->poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->ot = g_CurrentBuffer->ot;
-    for (; r->index < 0x100; r->index++, entity++) {
-        animSet = entity->animSet;
-        r->animSet = animSet;
+
+    for (r->index = 0, entity = &g_Entities[0]; r->index < LEN(g_Entities);
+         r->index++, entity++) {
+#ifdef VERSION_PSP
+        if (entity->animSet == 0) {
+            continue;
+        }
+        if (entity->animCurFrame == 0) {
+            continue;
+        }
+        r->animSet = entity->animSet;
         r->animCurFrame = entity->animCurFrame;
-        if (animSet == 0 | r->animCurFrame == 0) {
+#else
+        if ((r->animSet = entity->animSet) == 0 |
+            (r->animCurFrame = entity->animCurFrame) == 0) {
             continue;
         }
-        r->unk24 = entity->drawFlags;
-        if (r->unk24 & 0x80 && (r->index ^ g_Timer) & 1) {
+#endif
+        r->eDrawFlags = entity->drawFlags;
+        if (r->eDrawFlags & FLAG_DRAW_UNK80 && (r->index ^ g_Timer) & 1) {
             continue;
         }
-        r->unk20 = entity->facingLeft * 2;
+        r->flipX = entity->facingLeft * 2;
         r->x = entity->posX.i.hi + g_backbufferX;
         r->y = entity->posY.i.hi + g_backbufferY;
         if (r->x < -512 || r->x > 512) {
@@ -805,125 +817,129 @@ void RenderEntities(void) {
         if (r->y < -512 || r->y > 512) {
             continue;
         }
-        temp_a0_2 = r->animCurFrame & 0x7FFF;
-        if (temp_a0_2 == 0) {
+        animFrameIdx = r->animCurFrame & 0x7FFF;
+        if (!animFrameIdx) {
             continue;
         }
         if (r->animSet > 0) {
-            var_t2 = D_800A3B70[r->animSet][temp_a0_2];
+            animFrame = D_800A3B70[r->animSet][animFrameIdx];
         } else {
-            spriteBank = g_api.o.spriteBanks;
+            spriteBank = (s16**)g_api.o.spriteBanks;
             spriteBank = &spriteBank[r->animSet & 0x7FFF];
-            spriteBank = (s16**)*spriteBank;
-            var_t2 = spriteBank[temp_a0_2];
+            spriteBank = (s16**)spriteBank[0];
+            animFrame = spriteBank[animFrameIdx];
         }
-        r->unk1C = *var_t2++;
-        if (r->unk1C & 0x8000) {
+        r->spriteSheetIdx = *animFrame++;
+        if (r->spriteSheetIdx & 0x8000) {
             plDraw = &g_PlayerDraw[entity->unk5A];
-            r->unk20 = plDraw->flipX ^ r->unk20;
-            r->unk1C &= 0x7FFF;
+            r->flipX ^= (u16)plDraw->flipX;
+            r->spriteSheetIdx &= 0x7FFF;
             if (r->animSet > 0) {
-                if (r->animSet == 13) { // BAT FORM
-                    stuff = r->unk1C + g_PlOvlAluBatSpritesheet[0];
-                    spriteData = *stuff;
+                if (r->animSet == 13) {
+                    spriteData = (*g_PlOvlAluBatSpritesheet)[r->spriteSheetIdx];
                 } else {
-                    stuff = r->unk1C + g_PlOvlSpritesheet;
-                    spriteData = *stuff;
+                    spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
                 }
+            } else if ((r->animSet & 0x7FFF) == 1) {
+// NOTE: Different on PSP and PS1. PS1 skips the *
+#ifdef VERSION_PSP
+                spriteData = (*g_api.o.unk2c)[r->spriteSheetIdx];
+#else
+                spriteData = g_api.o.unk2c[r->spriteSheetIdx];
+#endif
+            } else if ((r->animSet & 0x7FFF) == 16) {
+#ifdef VERSION_PC
+                spriteData = ((u8**)g_PlOvlSpritesheet)[r->spriteSheetIdx];
+#else
+                spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
+#endif
             } else {
-                temp_v1_4 = (r->animSet & 0x7FFF);
-                if (temp_v1_4 == 1) {
-                    stuff = r->unk1C + g_api.o.unk2c;
-                    spriteData = *stuff;
-                } else if (temp_v1_4 == 16) {
-                    stuff = r->unk1C + g_PlOvlSpritesheet;
-                    spriteData = *stuff;
-                } else {
-                    stuff = r->unk1C + g_api.o.unk30;
-                    spriteData = *stuff;
-                }
+// see above note
+#ifdef VERSION_PSP
+                spriteData = (*g_api.o.unk30)[r->spriteSheetIdx];
+#else
+                spriteData = g_api.o.unk30[r->spriteSheetIdx];
+#endif
             }
-            r->xPivot = spriteData[2] + var_t2[0];
-            r->yPivot = spriteData[3] + var_t2[1];
+            r->xPivot = animFrame[0] + spriteData[2];
+            r->yPivot = animFrame[1] + spriteData[3];
             r->w = spriteData[0];
             r->h = spriteData[1];
             poly->tpage = plDraw->tpage;
-            texSX = (plDraw->rect0.x & 0x3F) * 4;
-            texSY = plDraw->rect0.y;
-            texEX = texSX + r->w;
-            texEY = texSY + r->h;
-            if (!(r->animCurFrame & 0x8000)) {
-                new_var = 4; // FAKE!
-                plDraw->rect0.w = r->w >> 2;
+            uvRight = (plDraw->rect0.x & 0x3F) * 4;
+            uvTop = plDraw->rect0.y & 0xFF;
+            uvLeft = uvRight + r->w;
+            uvBottom = uvTop + r->h;
+            if (!(r->animCurFrame & ANIM_FRAME_LOAD)) {
+                plDraw->rect0.w = r->w / 4;
                 plDraw->rect0.h = r->h;
-                LoadImage(&plDraw->rect0, (u_long*)(spriteData + 4));
-                plDraw->rect1.w = 1;
+                LoadImage(&plDraw->rect0, spriteData + 4);
                 plDraw->rect1.x = plDraw->rect0.x + plDraw->rect0.w;
                 plDraw->rect1.y = plDraw->rect0.y - 1;
+                plDraw->rect1.w = 1;
                 plDraw->rect1.h = plDraw->rect0.h + 4;
                 ClearImage(&plDraw->rect1, 0, 0, 0);
-                plDraw->rect2.h = 4;
                 plDraw->rect2.x = plDraw->rect0.x - 1;
                 plDraw->rect2.y = plDraw->rect0.y + plDraw->rect0.h;
                 plDraw->rect2.w = plDraw->rect0.w + 2;
+                plDraw->rect2.h = 4;
                 ClearImage(&plDraw->rect2, 0, 0, 0);
             }
-            if (r->unk20 & 2) {
-                var_v0_3 = r->x - r->xPivot;
+            if (r->flipX & 2) {
+                polyX = r->x - r->xPivot;
             } else {
-                var_v0_3 = r->x + r->xPivot;
+                polyX = r->x + r->xPivot;
             }
-            var_a0 = var_v0_3;
-            temp_a2 = r->y + r->yPivot;
-            if (r->unk20) {
-                poly->y0 = temp_a2;
-                poly->x1 = var_a0 + 1;
-                poly->y1 = temp_a2;
-                poly->x3 = var_a0 + 1;
-                poly->x0 = var_a0 - r->w + 1;
-                poly->x2 = var_a0 - r->w + 1;
-                poly->y2 = temp_a2 + r->h;
-                poly->y3 = temp_a2 + r->h;
+            polyY = r->y + r->yPivot;
+            if (r->flipX) {
+                poly->x0 = polyX - r->w + 1;
+                poly->y0 = polyY;
+                poly->x1 = polyX + 1;
+                poly->y1 = polyY;
+                poly->x2 = polyX - r->w + 1;
+                poly->y2 = polyY + r->h;
+                poly->x3 = polyX + 1;
+                poly->y3 = polyY + r->h;
             } else {
-                poly->x0 = var_a0;
-                poly->y0 = temp_a2;
-                poly->y1 = temp_a2;
-                poly->x2 = var_a0;
-                poly->x1 = var_a0 + r->w;
-                poly->y2 = temp_a2 + r->h;
-                poly->x3 = var_a0 + r->w;
-                poly->y3 = temp_a2 + r->h;
+                poly->x0 = polyX;
+                poly->y0 = polyY;
+                poly->x1 = polyX + r->w;
+                poly->y1 = polyY;
+                poly->x2 = polyX;
+                poly->y2 = polyY + r->h;
+                poly->x3 = polyX + r->w;
+                poly->y3 = polyY + r->h;
             }
-            if (r->unk20) {
-                poly->u0 = texEX - 1;
-                poly->v0 = texSY;
-                poly->u1 = texSX - 1;
-                poly->v1 = texSY;
-                poly->u2 = texEX - 1;
-                poly->v2 = texEY;
-                poly->u3 = texSX - 1;
-                poly->v3 = texEY;
+            if (r->flipX) {
+                poly->u0 = uvLeft - 1;
+                poly->v0 = uvTop;
+                poly->u1 = uvRight - 1;
+                poly->v1 = uvTop;
+                poly->u2 = uvLeft - 1;
+                poly->v2 = uvBottom;
+                poly->u3 = uvRight - 1;
+                poly->v3 = uvBottom;
             } else {
-                poly->u0 = texSX;
-                poly->v0 = texSY;
-                poly->u1 = texEX;
-                poly->v1 = texSY;
-                poly->u2 = texSX;
-                poly->v2 = texEY;
-                poly->u3 = texEX;
-                poly->v3 = texEY;
+                poly->u0 = uvRight;
+                poly->v0 = uvTop;
+                poly->u1 = uvLeft;
+                poly->v1 = uvTop;
+                poly->u2 = uvRight;
+                poly->v2 = uvBottom;
+                poly->u3 = uvLeft;
+                poly->v3 = uvBottom;
             }
-            func_800EB758(r->x, r->y, entity, (u8)r->unk24, poly, r->unk20);
-            temp_v1_6 = entity->palette;
-            if (temp_v1_6 & 0x8000) {
-                test = temp_v1_6 & 0x7FFF;
+            func_800EB758(r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
+            palette = entity->palette;
+            if (palette & 0x8000) {
+                poly->clut = g_ClutIds[palette & 0x7FFF];
             } else {
-                test = temp_v1_6 + var_t2[2];
+                poly->clut = g_ClutIds[animFrame[2] + palette];
             }
-            poly->clut = g_ClutIds[test];
             if (entity->drawMode) {
                 setSemiTrans(poly, true);
-                poly->tpage += entity->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2);
+                poly->tpage +=
+                    entity->drawMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
             } else {
                 setSemiTrans(poly, false);
             }
@@ -942,17 +958,17 @@ void RenderEntities(void) {
                 poly->b3 = plDraw->g3;
                 setShadeTex(poly, false);
             } else {
-                if (r->unk24 & 8) {
+                if (r->eDrawFlags & FLAG_DRAW_UNK8) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
                             poly->g3 = poly->b3 = entity->unk6C;
-                    if (r->unk24 & 0x10) {
+                    if (r->eDrawFlags & FLAG_DRAW_UNK10) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
-                    if (r->unk24 & 0x20) {
+                    if (r->eDrawFlags & FLAG_DRAW_UNK20) {
                         poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
                     }
-                    if (r->unk24 & 0x40) {
+                    if (r->eDrawFlags & FLAG_DRAW_UNK40) {
                         poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
                     }
                     setShadeTex(poly, false);
@@ -960,180 +976,189 @@ void RenderEntities(void) {
                     setShadeTex(poly, true);
                 }
             }
-            __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
-            addPrim(entity->zPriority + r->ot, r->poly);
+            *r->poly = *poly;
+            addPrim(&r->ot[entity->zPriority], r->poly);
             r->poly++;
             g_GpuUsage.gt4++;
         } else {
-            for (r->unk18 = 0; r->unk18 < r->unk1C; r->unk18++, var_t2 += 11) {
+            for (r->index2 = 0; r->index2 < r->spriteSheetIdx; r->index2++,
+                animFrame += 11) {
                 if (g_GpuUsage.gt4 >= 0x300) {
                     break;
                 }
-                temp_s2_2 = var_t2[0];
-                poly->tpage = var_t2[6];
+                animFrameFlags = animFrame[0];
+                poly->tpage = animFrame[6];
                 poly->tpage += entity->unk5A;
                 r->unk0 = poly->tpage & 3;
                 poly->tpage >>= 2;
-                r->xPivot = var_t2[1];
-                r->yPivot = var_t2[2];
-                r->w = var_t2[3];
-                r->h = var_t2[4];
-                if (temp_s2_2 & 4) {
+                r->xPivot = animFrame[1];
+                r->yPivot = animFrame[2];
+                r->w = animFrame[3];
+                r->h = animFrame[4];
+                if (animFrameFlags & 4) {
                     r->w--;
-                    if (temp_s2_2 & 2) {
+                    if (animFrameFlags & 2) {
                         r->xPivot++;
                     }
                 }
-                if (temp_s2_2 & 8) {
+                if (animFrameFlags & 8) {
                     r->h--;
-                    if (temp_s2_2 & 1) {
+                    if (animFrameFlags & 1) {
                         r->yPivot++;
                     }
                 }
-                if (temp_s2_2 & 0x10) {
+                if (animFrameFlags & 0x10) {
                     r->w--;
-                    if (!(temp_s2_2 & 2)) {
+                    if (!(animFrameFlags & 2)) {
                         r->xPivot++;
                     }
                 }
-                if (temp_s2_2 & 0x20) {
+                if (animFrameFlags & 0x20) {
                     r->h--;
-                    if (!(temp_s2_2 & 1)) {
+                    if (!(animFrameFlags & 1)) {
                         r->yPivot++;
                     }
                 }
-                if (entity->facingLeft != 0) {
-                    var_v0_3 = r->x - r->xPivot;
+                if (entity->facingLeft) {
+                    polyX = r->x - r->xPivot;
                 } else {
-                    var_v0_3 = r->x + r->xPivot;
+                    polyX = r->x + r->xPivot;
                 }
-                temp_a2 = r->y + r->yPivot;
-                if (r->unk20 != 0) {
-                    poly->x0 = var_v0_3 - r->w + 1;
-                    poly->y0 = temp_a2;
-                    poly->x1 = var_v0_3 + 1;
-                    poly->y1 = temp_a2;
-                    poly->x2 = var_v0_3 - r->w + 1;
-                    poly->y2 = temp_a2 + r->h;
-                    poly->x3 = var_v0_3 + 1;
-                    poly->y3 = temp_a2 + r->h;
+                polyY = r->y + r->yPivot;
+                if (r->flipX != 0) {
+                    poly->x0 = polyX - r->w + 1;
+                    poly->y0 = polyY;
+                    poly->x1 = polyX + 1;
+                    poly->y1 = polyY;
+                    poly->x2 = polyX - r->w + 1;
+                    poly->y2 = polyY + r->h;
+                    poly->x3 = polyX + 1;
+                    poly->y3 = polyY + r->h;
                 } else {
-                    poly->x0 = var_v0_3;
-                    poly->y0 = temp_a2;
-                    poly->x1 = var_v0_3 + r->w;
-                    poly->y1 = temp_a2;
-                    poly->x2 = var_v0_3;
-                    poly->y2 = temp_a2 + r->h;
-                    poly->x3 = var_v0_3 + r->w;
-                    poly->y3 = temp_a2 + r->h;
+                    poly->x0 = polyX;
+                    poly->y0 = polyY;
+                    poly->x1 = polyX + r->w;
+                    poly->y1 = polyY;
+                    poly->x2 = polyX;
+                    poly->y2 = polyY + r->h;
+                    poly->x3 = polyX + r->w;
+                    poly->y3 = polyY + r->h;
                 }
-                if (r->unk24 & 7) {
+                if (r->eDrawFlags &
+                    (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
+#ifdef VERSION_PSP
+                    if (!(animFrameFlags & 2)) {
+                        if (entity->rotZ == 0x800) {
+                            poly->x0++;
+                            poly->x1++;
+                            poly->x2++;
+                            poly->x3++;
+                        }
+                    }
+#endif
                     func_800EB758(
-                        r->x, r->y, entity, (u8)r->unk24, poly, r->unk20);
+                        r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
                 }
-                temp_v1_6 = entity->palette;
-                if (temp_v1_6 & 0x8000) {
-                    var_v0_4 = temp_v1_6 & 0x7FFF;
+                palette = entity->palette;
+                if (palette & 0x8000) {
+                    poly->clut = g_ClutIds[palette & 0x7FFF];
                 } else {
-                    var_v0_4 = temp_v1_6 + var_t2[5];
+                    poly->clut = g_ClutIds[animFrame[5] + palette];
                 }
-                poly->clut = g_ClutIds[var_v0_4];
-                texSX = var_t2[7];
-                texSY = var_t2[8];
-                texEX = var_t2[9];
-                temp_v1_8 = r->unk0;
-                texEY = var_t2[10];
-                if (temp_v1_8 & 1) {
-                    texSX -= 0x80;
-                    texEX -= 0x80;
+                uvRight = animFrame[7];
+                uvTop = animFrame[8];
+                uvLeft = animFrame[9];
+                uvBottom = animFrame[10];
+                if (r->unk0 & 1) {
+                    uvRight += 0x80;
+                    uvLeft += 0x80;
                 }
-                if (temp_v1_8 & 2) {
-                    texSY -= 0x80;
-                    texEY -= 0x80;
+                if (r->unk0 & 2) {
+                    uvTop += 0x80;
+                    uvBottom += 0x80;
                 }
-                if (temp_s2_2 & 4) {
-                    texEX--;
+                if (animFrameFlags & 4) {
+                    uvLeft--;
                 }
-                if (temp_s2_2 & 8) {
-                    texEY--;
+                if (animFrameFlags & 8) {
+                    uvBottom--;
                 }
-                if (temp_s2_2 & 0x10) {
-                    texSX++;
+                if (animFrameFlags & 0x10) {
+                    uvRight++;
                 }
-                if (temp_s2_2 & 0x20) {
-                    texSY++;
+                if (animFrameFlags & 0x20) {
+                    uvTop++;
                 }
-                if (((temp_s2_2 & 2) ^ r->unk20) == 0) {
-                    if (!(temp_s2_2 & 1)) {
-                        poly->u0 = texSX;
-                        poly->v0 = texSY;
-                        poly->u1 = texEX;
-                        poly->v1 = texSY;
-                        poly->u2 = texSX;
-                        poly->v2 = texEY;
-                        poly->u3 = texEX;
-                        poly->v3 = texEY;
+                tempFlagCheck = (animFrameFlags & 2) ^ r->flipX;
+                if (!tempFlagCheck) {
+                    if (!(animFrameFlags & 1)) {
+                        poly->u0 = uvRight;
+                        poly->v0 = uvTop;
+                        poly->u1 = uvLeft;
+                        poly->v1 = uvTop;
+                        poly->u2 = uvRight;
+                        poly->v2 = uvBottom;
+                        poly->u3 = uvLeft;
+                        poly->v3 = uvBottom;
                     } else {
-                        poly->v0 = texEY - 1;
-                        poly->v1 = texEY - 1;
-                        poly->u0 = texSX;
-                        poly->u1 = texEX;
-                        poly->u2 = texSX;
-                        poly->v2 = texSY - 1;
-                        poly->u3 = texEX;
-                        poly->v3 = texSY - 1;
+                        poly->u0 = uvRight;
+                        poly->v0 = uvBottom - 1;
+                        poly->u1 = uvLeft;
+                        poly->v1 = uvBottom - 1;
+                        poly->u2 = uvRight;
+                        poly->v2 = uvTop - 1;
+                        poly->u3 = uvLeft;
+                        poly->v3 = uvTop - 1;
                     }
+                } else if (!(animFrameFlags & 1)) {
+                    poly->u0 = uvLeft - 1;
+                    poly->v0 = uvTop;
+                    poly->u1 = uvRight - 1;
+                    poly->v1 = uvTop;
+                    poly->u2 = uvLeft - 1;
+                    poly->v2 = uvBottom;
+                    poly->u3 = uvRight - 1;
+                    poly->v3 = uvBottom;
                 } else {
-                    if (!(temp_s2_2 & 1)) {
-                        poly->u0 = texEX - 1;
-                        poly->v0 = texSY;
-                        poly->u1 = texSX - 1;
-                        poly->v1 = texSY;
-                        poly->u2 = texEX - 1;
-                        poly->v2 = texEY;
-                        poly->u3 = texSX - 1;
-                        poly->v3 = texEY;
-                    } else {
-                        poly->u0 = texEX - 1;
-                        poly->v0 = texEY - 1;
-                        poly->u1 = texSX - 1;
-                        poly->v1 = texEY - 1;
-                        poly->u2 = texEX - 1;
-                        poly->v2 = texSY - 1;
-                        poly->u3 = texSX - 1;
-                        poly->v3 = texSY - 1;
-                    }
+                    poly->u0 = uvLeft - 1;
+                    poly->v0 = uvBottom - 1;
+                    poly->u1 = uvRight - 1;
+                    poly->v1 = uvBottom - 1;
+                    poly->u2 = uvLeft - 1;
+                    poly->v2 = uvTop - 1;
+                    poly->u3 = uvRight - 1;
+                    poly->v3 = uvTop - 1;
                 }
-                if (entity->drawMode != 0) {
+                if (entity->drawMode) {
                     setSemiTrans(poly, true);
                     poly->tpage +=
-                        entity->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2);
+                        entity->drawMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
                 } else {
                     setSemiTrans(poly, false);
                 }
-                if (r->unk24 & 8) {
+                if (r->eDrawFlags & FLAG_DRAW_UNK8) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
                             poly->g3 = poly->b3 = entity->unk6C;
-                    if (r->unk24 & 0x10) {
+                    if (r->eDrawFlags & FLAG_DRAW_UNK10) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
-                    if (r->unk24 & 0x20) {
+                    if (r->eDrawFlags & FLAG_DRAW_UNK20) {
                         poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
                     }
-                    if (r->unk24 & 0x40) {
+                    if (r->eDrawFlags & FLAG_DRAW_UNK40) {
                         poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
                     }
                     setShadeTex(poly, false);
                 } else {
                     setShadeTex(poly, true);
                 }
-                __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
-                var_a0 = entity->zPriority;
-                if (temp_s2_2 & 0x100) {
-                    var_a0 += 4;
+                *r->poly = *poly;
+                polyX = entity->zPriority;
+                if (animFrameFlags & 0x100) {
+                    polyX += 4;
                 }
-                addPrim(var_a0 + r->ot, r->poly);
+                addPrim(&r->ot[polyX], r->poly);
                 r->poly++;
                 g_GpuUsage.gt4++;
                 if (r->animSet == 0xF) {
@@ -1141,31 +1166,31 @@ void RenderEntities(void) {
                         break;
                     }
 
-                    if (entity->facingLeft != 0) {
-                        temp_v1_8 = PLAYER.posX.i.hi;
-                        var_a0_2 = 0x14 - temp_v1_8;
+                    if (entity->facingLeft) {
+                        polyX = 0x14 - PLAYER.posX.i.hi;
                     } else {
-                        temp_v1_8 = PLAYER.posX.i.hi;
-                        var_a0_2 = 0x2C - temp_v1_8;
+                        polyX = 0x2C - PLAYER.posX.i.hi;
                     }
-                    poly->x0 = var_a0_2 + poly->x0;
-                    poly->x1 = var_a0_2 + poly->x1;
-                    poly->x2 = var_a0_2 + poly->x2;
-                    poly->x3 = var_a0_2 + poly->x3;
-                    temp_a0_10 = 0x18 - PLAYER.posY.i.hi;
-                    poly->y0 = temp_a0_10 + poly->y0;
-                    poly->y1 = temp_a0_10 + poly->y1;
-                    poly->y2 = temp_a0_10 + poly->y2;
-                    poly->y3 = temp_a0_10 + poly->y3;
+                    polyY = 0x18 - PLAYER.posY.i.hi;
+                    poly->x0 += polyX;
+                    poly->x1 += polyX;
+                    poly->x2 += polyX;
+                    poly->x3 += polyX;
+                    poly->y0 += polyY;
+                    poly->y1 += polyY;
+                    poly->y2 += polyY;
+                    poly->y3 += polyY;
                     poly->clut = g_ClutIds[0x104];
-                    __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
-                    var_a0 = (entity->zPriority + 0x1A0) - PLAYER.zPriority;
-                    if (temp_s2_2 & 0x100) {
-                        var_a0 = var_a0 + new_var;
+                    *r->poly = *poly;
+                    polyX = (entity->zPriority + 0x1A0) - PLAYER.zPriority;
+                    if (animFrameFlags & 0x100) {
+                        polyX += 4;
                     }
+#if defined(VERSION_US)
                     setSemiTrans(poly, true);
                     poly->tpage += 0x20;
-                    addPrim(var_a0 + r->ot, r->poly);
+#endif
+                    addPrim(&r->ot[polyX], r->poly);
                     r->poly++;
                     g_GpuUsage.gt4++;
                 }
@@ -1173,7 +1198,6 @@ void RenderEntities(void) {
         }
     }
 }
-#endif
 
 #define PL_SPRT(x, y, flipx) (x), ((y) & 0x1FF) | ((flipx) << 9)
 s16 D_800A21B8[] = {
@@ -1263,7 +1287,7 @@ void HideAllBackgroundLayers(void) {
 
     g_Tilemap.flags = 0;
     for (i = 0; i < MAX_BG_LAYER_COUNT; i++) {
-        g_Tilemap.bg[i].flags = 0;
+        g_BgLayers[i].flags = 0;
     }
 }
 
@@ -1422,7 +1446,7 @@ void RenderTilemap(void) {
     }
 
     l = 0;
-    bg = g_Tilemap.bg;
+    bg = g_BgLayers;
     for (; l < MAX_BG_LAYER_COUNT; l++, bg++) {
         if (bg->hideTimer > 0) {
             bg->hideTimer--;
@@ -1567,16 +1591,16 @@ void SetRoomForegroundLayer(LayerDef* layerDef) {
 }
 
 void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef) {
-    g_Tilemap.bg[index].flags = 0;
-    g_Tilemap.bg[index].tileDef = layerDef->tileDef;
-    g_Tilemap.bg[index].layout = layerDef->layout;
-    if (g_Tilemap.bg[index].tileDef != 0) {
-        g_Tilemap.bg[index].order = layerDef->zPriority;
-        g_Tilemap.bg[index].flags = layerDef->flags;
-        g_Tilemap.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
-        g_Tilemap.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
-        g_Tilemap.bg[index].scrollKind = layerDef->rect.params;
-        g_Tilemap.bg[index].hideTimer = 1;
+    g_BgLayers[index].flags = 0;
+    g_BgLayers[index].tileDef = layerDef->tileDef;
+    g_BgLayers[index].layout = layerDef->layout;
+    if (g_BgLayers[index].tileDef != 0) {
+        g_BgLayers[index].order = layerDef->zPriority;
+        g_BgLayers[index].flags = layerDef->flags;
+        g_BgLayers[index].w = layerDef->rect.right - layerDef->rect.left + 1;
+        g_BgLayers[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
+        g_BgLayers[index].scrollKind = layerDef->rect.params;
+        g_BgLayers[index].hideTimer = 1;
     }
 }
 
@@ -1587,7 +1611,7 @@ void LoadRoomLayer(s32 layerIndex) {
     SetRoomBackgroundLayer(0, g_api.o.tileLayers[layerIndex].bg);
 
     for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
-        g_Tilemap.bg[i].flags = 0;
+        g_BgLayers[i].flags = 0;
     }
 }
 

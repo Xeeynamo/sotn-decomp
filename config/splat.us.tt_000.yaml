@@ -24,6 +24,7 @@ options:
     - ".text"
     - ".bss"
   ld_bss_is_noload: False
+sha1: 82dd4ae1c4e3dc0fd483a49e5e4ab4fc5e25ada7
 segments:
   - name: tt_000
     type: code

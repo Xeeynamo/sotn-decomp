@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
 #define OVL_EXPORT(x) NP3_##x
@@ -35,7 +36,15 @@ typedef enum {
     /* 0x2F */ E_SIDE_WATER_SPLASH,
     /* 0x30 */ E_SMALL_WATER_DROP,
     /* 0x31 */ E_WATER_DROP,
-    /* 0x35 */ E_MEDIUM_WATER_SPLASH = 0x35,
+    /* 0x33 */ E_MERMAN_UNK0 = 0x33,
+    /* 0x34 */ E_MERMAN2_UNK1,
+    /* 0x35 */ E_MEDIUM_WATER_SPLASH,
+    /* 0x36 */ E_MERMAN2_UNK2,
+    /* 0x37 */ E_MERMAN2_UNK3,
+    /* 0x38 */ E_MERMAN2_UNK0,
+    /* 0x3A */ E_MERMAN_UNK2 = 0x3A,
+    /* 0x3B */ E_MERMAN_UNK1,
+    /* 0x3C */ E_MERMAN_UNK3,
     /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
     /* 0x40 */ E_BAT,
     /* 0x41 */ E_ID_49, // This should be renamed, it's not ID 49!
@@ -50,7 +59,7 @@ typedef enum {
     /* 0x4A */ E_BLOOD_SPLATTER,
     /* 0x4B */ E_STAIRWAY_PIECE,
     /* 0x4C */ E_FALLING_ROCK,
-    /* 0x4D */ E_ID_4D,
+    /* 0x4D */ E_WARG_EXP_OPAQUE,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,
@@ -73,7 +82,7 @@ extern void func_801BB044(s16);
 extern void func_801BB140(s16);
 extern void func_801BB2F8(s16);
 extern void func_801BB3F4(s16);
-extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
+extern s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern s32 GetDistanceToPlayerX(void);
 extern void EntityUnkId14(Entity* entity);
@@ -92,9 +101,8 @@ extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180A60[];
 extern u16 g_EInitGeneric[];
-extern u16 D_80180A84[];
+extern u16 g_EntityUnkId12Init[];
 extern u16 g_eInitGeneric2[];
-extern u16 D_80180AA8[];
 extern u16 D_80180AB4[];
 extern u16 D_80180AC0[];
 extern u16 D_80180ACC[];
@@ -113,9 +121,6 @@ extern u16 D_80180B98[];
 extern u16 D_80180BB0[];
 extern u16 D_80180BC8[];
 extern ObjInit2 D_80180C10[];
-extern u8 D_80180D98[];
-extern u8 D_80180DA0[];
-extern u16 D_80180DA8[];
 extern SVEC4 D_80180EEC[];
 extern SVEC4 D_80180F6C;
 extern MATRIX D_80180F9C;
@@ -201,27 +206,6 @@ extern u8 D_8018142C[];
 
 // *** EntitySlogra properties END ***
 
-// *** EntityGaibon properties START ***
-
-extern u16 D_80180B68[]; // Init
-extern u16 D_80180B6E;   // Gaibon's palette data
-extern s32 D_801812CC;   // killed in entrance local flag
-extern s32 D_801814B4[]; // Some collision data
-extern u8 D_801814C4[];  // Animation
-extern u8 D_801814D8[];  // Animation
-extern u8 D_8018150C[];  // Animation
-extern u8 D_80181520[];  // Animation
-extern u8 D_80181534[];  // Animation
-extern u8 D_80181540[];  // Animation
-extern u8 D_80181550[];  // Animation
-extern u8 D_80181564[];  // Animation
-extern u8 D_80181570[];  // Animation
-extern u8 D_80181578[];  // Animation
-extern s32 D_80181584[]; // Hitbox related
-extern u8 D_801815B4[];  // Hitbox related
-
-// *** EntityGaibon properties END ***
-
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
@@ -231,10 +215,7 @@ extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
 extern u8 D_8018148C[];
-extern u8 D_801815E0[];
-extern u8 D_801815EC[];
-extern u8 D_801815FC[];
-extern u16 D_80181618[];
+extern u16 g_HeartDropArray[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];
@@ -242,8 +223,6 @@ extern u16 D_80181E74[];
 extern s8 c_HeartPrizes[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
-extern s16 D_80181FB4[];
-extern u32 D_80181FC4[];
 extern u8 D_80182008[];
 extern s32 D_80182204[];
 extern s64 D_801821B4[];
@@ -264,9 +243,6 @@ extern u8 D_80182414[];
 extern s32 D_80182440[];
 extern u8 D_80182454[];
 extern u16 D_80182458[];
-extern s16 D_801824B8[];
-extern s32 D_80182540;
-extern s32 D_80182548;
 extern u8 D_80182554[];
 extern u8 D_80182570[];
 extern u8 D_8018258C[];
@@ -275,33 +251,9 @@ extern u8 D_801825A8[];
 extern u8 D_801825BC[];
 extern u16 D_801825CC;
 
-// *** EntityBoneScimitar properties START ***
-
-extern u16 D_80180AE4[];    // Init
-extern s32 D_80182460;      // Flag for special bone scimitar to appear or not
-extern u8 D_80182464[];     // animation: Walking Forward
-extern u8 D_80182474[];     // animation: Walking Backwards
-extern u8 D_80182484[];     // animation: Swing Sword
-extern u8 D_801824A0[];     // animation: Jumping
-extern u8 D_801824AC[];     // animation: Landing
-extern s8 D_801824C8[];     // Skeleton parts array selector
-extern s32 D_801824D0[];    // Skeleton parts velocityX
-extern s32 D_801824EC[];    // Skeleton parts velocityY
-extern u16 D_80182508[];    // Skeleton parts posX
-extern u16 D_80182518[];    // Skeleton parts posY
-extern s8 D_80182528[2][4]; // Skeleton attack timer cycle
-extern s32 D_80182530;
-
-// *** EntityBoneScimitar properties END ***
-
 // *** EntityBloodyZombie properties START ***
 
 extern u16 D_80180B38[]; // InitProps
-extern s32 D_801D3378;
-extern s32 D_801D337C;
-extern s32 D_801D3380;
-extern s32 D_801D3384;
-extern s32 D_801D3388;
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking
@@ -448,11 +400,6 @@ extern u8 D_80180E78[];
 extern u8 D_80180E94[];
 extern u8 D_80180EA4[][2];
 
-// for func_801B32A8
+// for EntityBackgroundBushes
 
 extern u16 D_80180AA8[];
-extern u8 D_80181008[];
-extern u8 D_80181020[];
-extern s16 D_80181068;
-extern s16* D_80181088;
-extern SVECTOR D_801810B0;

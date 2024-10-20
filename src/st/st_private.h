@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef ST_PRIVATE_H
 #define ST_PRIVATE_H
 
@@ -15,22 +16,5 @@
 #define LAYOUT_OBJ_ID 2
 #define LAYOUT_OBJ_SLOT 3
 #define LAYOUT_OBJ_PARAMS 4
-
-/*
- * A pointer to the current element in `g_pStObjLayoutHorizontal`
- */
-extern u16* g_LayoutObjHorizontal;
-/*
- * A pointer to the current element in `g_pStObjLayoutVertical`
- */
-extern u16* g_LayoutObjVertical;
-/*
- * The direction last traversed in `g_pStObjLayoutHorizontal`
- */
-extern u8 g_LayoutObjPosHorizontal;
-/*
- * The direction last traversed in `g_pStObjLayoutVertical``
- */
-extern u8 g_LayoutObjPosVertical;
 
 #endif // ST_PRIVATE_H

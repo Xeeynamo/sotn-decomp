@@ -1,11 +1,15 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #51. Used by weapons:
 // Estoc, Claymore, Flamberge, Zwei hander, Obsidian sword, Great Sword,
 // Unknown#182, Unknown#183, Unknown#184, Unknown#185
 #include "weapon_private.h"
-#include "shared.h"
+#include "w_051_1.h"
+#include "w_051_2.h"
+#define g_Animset w_051_1
+#define g_Animset2 w_051_2
 #include "sfx.h"
 
-u16 D_169000_8017A950[] = {
+static u16 D_169000_8017A950[] = {
     0x0000, 0x0421, 0x04CA, 0x152F, 0x2173, 0x1218, 0x1EDF, 0x20A4,
     0x03E0, 0x3BF6, 0x0623, 0x0000, 0x45A7, 0x5A4F, 0x5F37, 0x6F99,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -157,17 +161,17 @@ static u16* D_169000_8017ACBC[] = {
 };
 
 static WeaponAnimation D_169000_8017ACD8[] = {
-    {D_169000_8017AC68, hitboxes, 0, SFX_WEAPON_62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 2, SFX_WEAPON_62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 4, SFX_WEAPON_62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 6, SFX_WEAPON_62C, 0x68, 4},
+    {D_169000_8017AC68, hitboxes, 0, SFX_FIRE_SHOT, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 2, SFX_FIRE_SHOT, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 4, SFX_FIRE_SHOT, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 6, SFX_FIRE_SHOT, 0x68, 4},
 };
 
 static WeaponAnimation D_169000_8017AD18[] = {
-    {D_169000_8017ACBC, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
+    {D_169000_8017ACBC, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_WEAPON_SWISH_C, 0xD6, 4},
 };
 
 static s16 D_169000_8017AD58[] = {
@@ -206,7 +210,7 @@ static u16 D_169000_8017AEA4[] = {
     0x00, 0x60, 0xA0, 0x00, 0x40, 0x48, 0x40, 0x00,
 };
 
-static u16* g_Cluts[] = {
+static u16* g_WeaponCluts[] = {
     D_169000_8017A950,
     D_169000_8017A990,
     D_169000_8017A9D0,
@@ -215,6 +219,8 @@ static u16* g_Cluts[] = {
 static s32 g_HandId = 0;
 
 static s32 D_169000_8017C0E0;
+
+#include "shared.h"
 
 void func_169000_8017B1DC(s32 arg0) {
     RECT rect;
@@ -290,7 +296,7 @@ void func_169000_8017B1DC(s32 arg0) {
     LoadImage(&rect, (u_long*)D_8006EDCC);
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s16 subType;
 
@@ -316,16 +322,16 @@ void EntityWeaponAttack(Entity* self) {
             self->unk5A += 2;
         }
         self->palette += anim->palette;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         if (subType == 2) {
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         if (subType == 3) {
-            self->drawMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
         }
         if (subType != 0) {
             _r = D_169000_8017AD58[subType * 0x10 - 2];
@@ -382,13 +388,13 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette += subType * 2;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         if (subType == 2) {
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         if (subType == 3) {
-            self->drawMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
         }
         if (subType != 0) {
             _r = D_169000_8017AD58[subType * 0x10 - 2];
@@ -398,7 +404,7 @@ s32 func_ptr_80170004(Entity* self) {
             _a = 0;
         }
         D_169000_8017C0E0 = 0;
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         SetWeaponProperties(self, 0);
         self->step++;
         break;
@@ -409,8 +415,7 @@ s32 func_ptr_80170004(Entity* self) {
         return;
     }
     if (PLAYER.animFrameIdx == 1 && PLAYER.animFrameDuration == 1) {
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) * 4096) | 0x3E, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3E, 0), 0);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
@@ -420,7 +425,7 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     AnimProperties* anim;
     Primitive* prim;
     s16 rot;
@@ -476,7 +481,7 @@ void func_ptr_80170008(Entity* self) {
         if (color == 3) {
             prim->drawMode &= ~(FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40);
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         if (temp_s6 == 0) {
             self->ext.weapon.equipId =
                 self->ext.weapon.parent->ext.weapon.equipId;
@@ -487,7 +492,7 @@ void func_ptr_80170008(Entity* self) {
             self->hitboxOffX = 8;
         }
         if (!(temp_s6 & 3)) {
-            g_api.PlaySfx(SFX_SUBWPN_THROW);
+            g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         }
         self->ext.weapon.unk82 = color == 0 ? 20 : 30;
         if (self->facingLeft) {
@@ -507,9 +512,7 @@ void func_ptr_80170008(Entity* self) {
     DecelerateX(0x2800);
     if (temp_s6 == 0) {
         u32 tmp = (g_HandId + 1) << 0xC;
-        flags = 0;
-        flags += (self->ext.weapon.unk7E + 1) << 0x10;
-        flags += 0x3E;
+        flags = FACTORY(0x3E, self->ext.weapon.unk7E + 1);
         g_api.CreateEntFactoryFromEntity(self, tmp + flags, 0);
     }
     prim = &g_PrimBuf[self->primIndex];
@@ -557,26 +560,26 @@ void func_ptr_80170008(Entity* self) {
     prim->y3 = y - (((rsin(rot) >> 4) * t) >> 9);
 }
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 51; }
+static int GetWeaponId(void) { return 51; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

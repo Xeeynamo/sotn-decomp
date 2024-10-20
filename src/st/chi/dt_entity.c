@@ -371,23 +371,23 @@ static u8 AnimFrames_80180734[] = {
 ObjInit2 ObjInit2_80180740 = {
     .animSet = ANIMSET_DRA(6),
     .zPriority = 0x1FA,
-    .unk4 = {.s = 0},
+    .facingLeft = false,
     .palette = PAL_DRA(0),
     .drawFlags = DRAW_DEFAULT,
     .drawMode = DRAW_TPAGE,
-    .unk10 = &AnimFrames_80180730,
+    .animFrames = &AnimFrames_80180730,
 };
 
 // D_80180754
 ObjInit2 ObjInit2_80180754 = {
     .animSet = ANIMSET_OVL(1),
     .zPriority = 0xC0,
-    .unk4 = {.s = 0},
+    .facingLeft = false,
     .palette = PAL_DRA(0),
     .drawFlags = DRAW_TRANSP | DRAW_UNK02,
     .drawMode = 0x30,
     .unkC = 0,
-    .unk10 = AnimFrames_80180734,
+    .animFrames = AnimFrames_80180734,
 };
 
 // D_80180768

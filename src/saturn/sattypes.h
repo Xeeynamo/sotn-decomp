@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef SATURN_TYPES_H
 #define SATURN_TYPES_H
 
@@ -21,7 +22,7 @@ typedef unsigned long long u64;
 #define STAGE_ST0 0x1F
 #define TOTAL_ENTITY_COUNT 256
 
-#define NA_SE_PL_COLLECT_HEART 0x67A
+#define SFX_HEART_PICKUP 0x67A
 
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 

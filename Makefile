@@ -14,8 +14,7 @@ CC              := $(CC1PSX)
 LD              := $(CROSS)ld
 CPP             := $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
-AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
-PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
+
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
 CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM
@@ -24,6 +23,7 @@ LD_FLAGS        := -nostdlib --no-check-sections
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
+BIN_DIR         := bin
 SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
@@ -49,6 +49,9 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
 MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 
+VENV_PATH       ?= .venv
+export PATH     := $(VENV_PATH)/bin:$(PATH)
+
 # Tooling
 PYTHON          := python3
 SPLAT           := splat split
@@ -73,6 +76,7 @@ GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
+SHASUM          := shasum
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -122,21 +126,61 @@ CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
 .PHONY: build
 
+##@ Variables
+##@
+##@     VERSION              the game version to build (us, hd, pspeu, saturn, pc) (Default: us)
+##@
+##@ Primary Targets
+##@
+
+all: ##@ (Default) build and check
 all: build check
+
+extract: ##@ split game files into assets and assembly
+extract: extract_$(VERSION)
+
+build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen chi dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
-build_hd: dra tt_000
-clean:
+build_us: main dra weapon ric cen chi dre mad no3 np3 nz0 sel st0 wrp rwrp mar tt_000
+build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
+clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
+	git clean -fdx $(SRC_DIR)/weapon
 	git clean -fdx config/
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
-format: format-src format-tools format-symbols
+##@
+##@ Misc Targets
+##@
+
+# this help target will find targets which are followed by a comment beging with '#' '#' '@' and
+# print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'
+# will act as section dividers.
+.PHONY: help
+help: ##@ Print listing of key targets with their descriptions
+	@printf "\nUsage: make [VERSION=version] <target> …\n"
+	@grep -F -h "##@" $(MAKEFILE_LIST) | grep -F -v grep -F | sed -e 's/\\$$//' | awk 'BEGIN {FS = ":*[[:space:]]*##@[[:space:]]?"}; \
+	{ \
+		if($$2 == "") \
+			printf ""; \
+		else if($$0 ~ /^#/) \
+			printf "\n%s\n", $$2; \
+		else if($$1 == "") \
+			printf "     %-20s%s\n", "", $$2; \
+		else { \
+            system("tput setaf 4; printf \"\n    %-20s \" " $$1 "; tput sgr0"); \
+            printf "%s\n", $$2; \
+        }; \
+	}'
+
+format: ##@ Format source code, clean symbols, other linting
+format: format-src format-tools format-symbols format-license
 
 format-src: bin/clang-format
+	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
 	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
@@ -150,7 +194,6 @@ format-src: bin/clang-format
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
         | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
-	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 format-tools:
 	black tools/*.py
 	black tools/splat_ext/*.py
@@ -171,9 +214,19 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
+	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+format-license:
+	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/game.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/items.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
+	python3 ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
 
 # fast-format
 ff: MAKEFLAGS += --jobs
@@ -182,8 +235,17 @@ ff:
 
 patch:
 	$(DIRT_PATCHER) config/dirt.$(VERSION).json
+check: ##@ compare built files to original game files
 check: config/check.$(VERSION).sha patch $(CHECK_FILES)
-	sha1sum --check $<
+	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
+        printf "%s\t[ ", $$1; \
+        if ($$2 == "OK") \
+            color = 28;   \
+        else \
+            color = 196;   \
+        system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
+        printf " ]\n"; \
+    }' | column --separator '\t' --table
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
@@ -259,8 +321,6 @@ $(BUILD_DIR)/F_NZ0.BIN:
 sel: $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 st0: $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
@@ -280,6 +340,12 @@ $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 $(BUILD_DIR)/F_RWRP.BIN:
 	$(GFXSTAGE) e assets/st/rwrp $@
 
+mar: $(BUILD_DIR)/MAR.BIN $(BUILD_DIR)/F_MAR.BIN
+$(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_MAR.BIN:
+	$(GFXSTAGE) e assets/boss/mar $@
+
 tt_000: $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
@@ -298,6 +364,8 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+bo%_dirs:
+	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
@@ -316,6 +384,8 @@ $(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files
 	$(call link,stsel,$@)
 $(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
+$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
+	$(call link,bo$*,$@)
 
 # Weapon overlays
 WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
@@ -335,7 +405,7 @@ $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data ha
 	touch $@
 $(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
 	touch $@
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_1.animset.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_2.animset.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w0_$*.map \
 		-T weapon0.ld \
@@ -343,7 +413,7 @@ $(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_1.animset.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_2.animset.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w1_$*.map \
 		-T weapon1.ld \
@@ -361,14 +431,6 @@ $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
 	./tools/png2bin.py $< $@
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_1.animset.o: $(ASSETS_DIR)/weapon/%_1.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s -s g_Animset
-	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s -s g_Animset2
-	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s
-
-extract: extract_$(VERSION)
 
 ifneq (,$(filter psp%,$(VERSION)))
 include Makefile.psp.mk
@@ -385,27 +447,27 @@ force_extract:
 	rm -rf src/
 	mv src_tmp src
 
-# Rewrites symbol list from a successful build
-force_symbols:
-	$(PYTHON) ./tools/symbols.py map build/us/dra.map --no-default > config/symbols.us.dra.txt
-	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stchi.map --no-default > config/symbols.us.stchi.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stdre.map --no-default > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stmad.map --no-default > config/symbols.us.stmad.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stno3.map --no-default > config/symbols.us.stno3.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map --no-default > config/symbols.us.stnp3.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map --no-default > config/symbols.us.stnz0.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stsel.map --no-default > config/symbols.us.stsel.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stst0.map --no-default > config/symbols.us.stst0.txt
-	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map --no-default > config/symbols.us.stwrp.txt
-	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map --no-default > config/symbols.us.strwrp.txt
-	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map --no-default > config/symbols.us.tt_000.txt
+force_symbols: ##@ Extract a full list of symbols from a successful build
+	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stnp3.elf > config/symbols.us.stnp3.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stsel.elf > config/symbols.us.stsel.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
 
-context:
+context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
+extract_disk: ##@ Extract game files from a disc image.
 extract_disk: extract_disk_$(VERSION)
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
@@ -434,6 +496,8 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
+	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
+	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
@@ -447,10 +511,16 @@ extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
+python-dependencies:
+	# the python setup cannot depend on the virtualenv
+	# because it may not be set up yet
+	[ -d $(VENV_PATH) ] || python3 -m venv $(VENV_PATH)
+	pip install -r $(TOOLS_DIR)/requirements-python.txt
+
+update-dependencies: ##@ update tools and internal dependencies
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(ALLEGREX_AS) python-dependencies
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
-	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
@@ -483,22 +553,9 @@ $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 	cd tools/sotn-assets; $(GO) install
 
-$(BUILD_DIR)/%.s.o: %.s
-	mkdir -p $(dir $@)
-	$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
-	mkdir -p $(dir $@)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-
-$(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
-
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
 	./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
 	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
@@ -507,6 +564,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
 	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
+	mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 # for now '.dec' files are ignored
@@ -516,11 +574,44 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 
 SHELL = /bin/bash -e -o pipefail
 
+##@
+##@ Disc Dumping Targets
+##@
+
+dump_disk: ##@ dump a physical game disk
+dump_disk: dump_disk_$(VERSION)
+dump_disk_eu: dump_disk_cd
+dump_disk_hk: dump_disk_cd
+dump_disk_jp10: dump_disk_cd
+dump_disk_jp11: dump_disk_cd
+dump_disk_jp: dump_disk_cd
+dump_disk_saturn: dump_disk_cd
+dump_disk_us: dump_disk_cd
+dump_disk_usproto: dump_disk_cd
+dump_disk_psp%: dump_disk_not_supported
+dump_disk_xbla%: dump_disk_not_supported
+dump_disk_cd: disks/sotn.$(VERSION).cue
+dump_disk_not_supported:
+	@echo "Auatomated dumping of $(VERSION) is not supported" >&2 && exit 1
+disks/sotn.%.bin disks/sotn.%.cue:
+	@( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
+	cd disks && \
+        DEVICE="$(shell cdrdao scanbus 2>&1 | grep -vi cdrdao | head -n1 | sed 's/ : [^:]*$$//g')" && \
+        cdrdao read-cd \
+            --read-raw \
+            --datafile sotn.$*.bin \
+            --device "$$DEVICE" \
+            --driver generic-mmc-raw \
+            sotn.$*.toc && \
+        toc2cue sotn.$*.toc sotn.$*.cue && \
+        rm sotn.$*.toc
+
 include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, chi, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
+.PHONY: main, dra, ric, cen, chi dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
-.PHONY: update-dependencies
+.PHONY: update-dependencies python-dendencies
+.PHONY: dump_disk dump_disk_%

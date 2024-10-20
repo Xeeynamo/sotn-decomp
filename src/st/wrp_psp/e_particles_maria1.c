@@ -1,5 +1,9 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
 
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 void func_psp_0923AD68(Entity* self) {
     u16 angle;
     Primitive* prim;

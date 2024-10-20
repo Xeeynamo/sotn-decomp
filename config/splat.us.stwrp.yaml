@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 2ae313f4e394422e4c5f37a2d8e976e92f9e3cda
 segments:
   - name: stwrp
     type: code
@@ -37,7 +38,7 @@ segments:
       - [0xB8, .data, header] # layers
       - [0x1B8, .data, d_1b8] # entity gfx
       - [0x23C, .data, e_laydef] # layout entries header
-      - [0x3E4, .data, d_3e4] # entity inits
+      - [0x3E4, .data, e_init]
       - [0x528, .data, st_debug]
       - [0x5A8, .data, e_breakable]
       - [0x608, .data, d_608]
@@ -54,7 +55,7 @@ segments:
       - [0x1228, .data, e_layout] # layout entries data
       - [0x1420, cmp, D_80181420]
       - [0x1764, cmp, D_80181764]
-      - [0x1D08, cmp, D_80181D08]
+      - [0x1D08, raw, D_80181D08]
       - [0x1D68, .data, tile_data] # tile data
       - [0x2968, .data, tile_data] # tile definitions
       - [0x6D88, .data, sprites]
@@ -84,5 +85,7 @@ segments:
       - [0x12E54, c, e_room_fg]
       - [0x12F40, c, popup]
       - [0x13270, c, prim_helpers]
-      - [0x13AB0, .bss, bss]
+      - [0x13AB0, .bss, create_entity]
+      - [0x13AC0, .bss, bss]
+      - [0x14728, .bss, e_collect]
   - [0x14768]

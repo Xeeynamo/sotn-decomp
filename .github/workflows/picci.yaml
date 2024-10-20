@@ -40,7 +40,10 @@ jobs:
       - name: Extract dependencies
         run: make extract_disk
       - name: Extract game assets
-        run: make -j extract_assets
+        run: |
+          make update-dependencies
+          make -j extract
+          make -j extract_assets
       - name: Export assets
         uses: actions/upload-artifact@v4
         with:

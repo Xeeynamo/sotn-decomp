@@ -37,20 +37,27 @@ segments:
       - [0x1D0, .data, header] # layers
       - [0x558, data]
       - [0x728, .data, e_laydef] # layout entries header
-      - [0x8D0, data]
-      - [0xE50, data]
+      - [0x8D0, .data, e_init]
+      - [0xD98, .data, st_debug]
+      - [0xE18, .data, e_breakable]
+      - [0xE78, data]
       - [0x10C0, data]
       - [0x1300, data]
-      - [0x1520, data]
+      - [0x14B4, .data, gaibon]
+      - [0x1618, data]
+      - [0x164C, .data, st_update]
       - [0x1678, .data, collision]
       - [0x1A38, .data, e_red_door]
-      - [0x1A50, data]
-      - [0x1F40, .data, entity_relic_orb]
-      - [0x1FA4, data]
+      - [0x1A50, .data, st_common]
+      - [0x1C50, .data, e_collect]
+      - [0x1F40, .data, e_misc] # EntityRelicOrb
+      - [0x205C, data]
       - [0x22B0, data]
       - [0x23D0, data]
       - [0x2400, data]
       - [0x2440, data]
+      - [0x2460, .data, e_bone_scimitar]
+      - [0x2554, data]
       - [0x2720, data]
       - [0x2740, data]
       - [0x2A20, data]
@@ -69,21 +76,20 @@ segments:
       - [0x21CF4, .data, tile_data] # tile definitions
       - [0x2A124, .data, sprites]
       - [0x31EA0, data]
-      - [0x31EA8, .rodata, 3246C] # EntityStairwayPiece
-      - [0x31EBC, .rodata, 365FC] # func_801B65FC
+      - [0x31EA8, .rodata, 32830] # EntityStairwayPiece
+      - [0x31EBC, .rodata, 363FC] # func_801B63FC
       - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
       - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
       - [0x31F00, .rodata, e_red_door] # EntityRedDoor
-      - [0x31F18, rodata]
-      - [0x31F68, .rodata, 3DEF4]
-      - [0x31FA0, .rodata, entity_relic_orb]
-      - [0x31FD8, .rodata, entity_message_box]
-      - [0x31FEC, .rodata, 402F4] # EntityStageNamePopup
+      - [0x31F68, .rodata, e_collect]
+      - [0x31FA0, .rodata, e_misc] # EntityRelicOrb
+      - [0x31FD8, .rodata, e_misc] # EntityMessageBox
+      - [0x31FEC, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x32020, .rodata, 44DCC] # EntityMerman2
       - [0x32044, .rodata, 48238] # EntityMerman
-      - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
-      - [0x3208C, .rodata, 4997C]
-      - [0x320A0, .rodata, 49BC8]
+      - [0x3206C, .rodata, e_bone_scimitar] # EntityBoneScimitar data
+      - [0x3208C, .rodata, 4997C] # EntityBat
+      - [0x320A0, .rodata, 49BC8] # EntityZombie
       - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
       - [0x320DC, .rodata, 4B018] # Shared charal string for owl and owl knight
       - [0x320EC, .rodata, 4B018] # EntityOwl
@@ -95,26 +101,28 @@ segments:
       - [0x32380, .rodata, 4F5B8] # EntityGurkhaSword
       - [0x323E4, .rodata, blade] # EntityBlade
       - [0x32464, .rodata, prim_helpers]
-      - [0x3246C, c]
-      - [0x365FC, c]
+      - [0x3246C, c, st_debug]
+      - [0x326FC, c, e_breakable]
+      - [0x32830, c]
+      - [0x363FC, c]
       - [0x36990, c, slogra]
       - [0x378BC, c, gaibon]
-      - [0x390BC, c, random]
-      - [0x390EC, c, update]
-      - [0x393E8, c, update_stage_entities]
+      - [0x390BC, c, st_update]
       - [0x394F0, c, collision]
       - [0x3ACAC, c, create_entity]
       - [0x3B824, c, e_red_door]
-      - [0x3C4D4, c]
-      - [0x3DEF4, c]
-      - [0x3F1A0, c, entity_relic_orb]
-      - [0x3FC70, c, entity_heart_drop]
-      - [0x3FD98, c, entity_message_box]
-      - [0x402F4, c]
+      - [0x3C4D4, c, st_common]
+      - [0x3D984, c, e_collect]
+      - [0x3EEF0, c, blit_char]
+      - [0x3F1A0, c, e_misc]
+      - [0x42860, c, e_stage_name]
+      - [0x434E4, c, e_particles]
+      - [0x43D28, c, e_room_fg]
+      - [0x43E14, c, popup]
       - [0x44144, c, player_water_effect]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
-      - [0x490E8, c] # EntityBoneScimitar
+      - [0x490E8, c, e_bone_scimitar] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]
       - [0x49F98, c] # EntityBloodyZombie
@@ -124,5 +132,8 @@ segments:
       - [0x4F5B8, c]
       - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
-      - [0x52768, sbss]
+      - [0x52768, .bss, create_entity]
+      - [0x5277D, .bss, bss]
+      - [0x53378, .bss, 4D540]
+      - [0x533F4, .bss, e_collect]
   - [0x53434]

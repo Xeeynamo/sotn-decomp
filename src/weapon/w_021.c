@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #21. Used by weapons:
 // Orange, Apple, Banana, Grapes, Strawberry, Pineapple, Peanuts, Toadstool,
 // Shiitake, Cheesecake, Shortcake, Tart, Parfait, Pudding, Ice cream,
@@ -6,7 +7,14 @@
 // tea, Green tea, Natou, Ramen, Miso soup, Sushi, Pork bun, Red bean bun,
 // Chinese bun, Dim Sum set, Pot roast, Sirloin, Turkey, Meal ticket
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_021_1.h"
+#include "w_021_2.h"
+#define g_Animset w_021_1
+#define g_Animset2 w_021_2
+#include "sfx.h"
 
 extern SpriteParts D_97000_8017A040[];
 
@@ -91,7 +99,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
+    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -145,7 +153,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->drawMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->x0 = xpos;
             prim->y0 = 0xD4;
             prim = prim->next;
@@ -159,7 +167,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->drawMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->x0 = xpos;
             prim->y0 = 0xCC;
             prim = prim->next;
@@ -209,7 +217,7 @@ s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
     return 1;
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     Collider sp10;
     s16 xShift;
     s16 yShift;
@@ -239,7 +247,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = ((self->params >> 8) & 0x7F) + 1;
         self->posY.i.hi -= 4;
         SetSpeedX((rand() & 0x3FFF) + FIX(0.875)); // 1 +- 0.125
@@ -387,7 +395,7 @@ void EntityWeaponAttack(Entity* self) {
         return;
     case 4:
         if (--self->ext.food.timer == 0) {
-            PLAYER.unk44 = 0x81;
+            PLAYER.hitParams = 0x81;
             PLAYER.hitPoints = 0;
             PLAYER.hitboxState = 0;
             DestroyEntity(self);
@@ -439,7 +447,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = upperParams - 0x1C;
         self->posY.i.hi -= 4;
         SetSpeedX((rand() & 0x3FFF) + FIX(0.875));
@@ -455,7 +463,7 @@ s32 func_ptr_80170004(Entity* self) {
                 g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
                 g_unkGraphicsStruct.BottomCornerTextTimer = 0;
             }
-            g_api.PlaySfx(0x67C);
+            g_api.PlaySfx(SFX_ITEM_PICKUP);
             temp_s1 = g_api.equipDefs[upperParams].name;
             g_api.AddToInventory(upperParams, EQUIP_HAND);
             func_97000_8017AB54(temp_s1, 1);
@@ -514,7 +522,7 @@ s32 func_ptr_80170004(Entity* self) {
                 g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
                 g_unkGraphicsStruct.BottomCornerTextTimer = 0;
             }
-            g_api.PlaySfx(0x67C);
+            g_api.PlaySfx(SFX_ITEM_PICKUP);
             temp_s1 = g_api.equipDefs[upperParams].name;
             g_api.AddToInventory(upperParams, EQUIP_HAND);
             func_97000_8017AB54(temp_s1, 1);
@@ -524,28 +532,28 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 21; }
+static int GetWeaponId(void) { return 21; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

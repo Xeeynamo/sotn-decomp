@@ -44,9 +44,14 @@ segments:
       - [0x830, data]
       - [0x990, data]
       - [0xAB0, data]
+      - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
-      - [0x1990, data]
+      - [0x1990, .data, st_common]
+      - [0x1B90, .data, e_collect]
+      - [0x1E3C, data]
+      - [0x1E5C, .data, e_misc]
+      - [0x1F54, data]
       - [0x2060, .data, rooms]
       - [0x2084, data]
       - [0x26B8, .data, e_layout] # layout entries data
@@ -75,12 +80,13 @@ segments:
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
       - [0x27C1C, .rodata, 30030] # PrologueScroll
       - [0x27C6C, .rodata, e_red_door] # EntityRedDoor
-      - [0x27C84, rodata]
-      - [0x27C8C, .rodata, 36358]
-      - [0x27CAC, .rodata, 36358] # EntityEquipItemDrop
-      - [0x27CC4, rodata]
+      - [0x27C84, .rodata, e_collect] # c_HeartPrizes
+      - [0x27C8C, .rodata, e_collect]
+      - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
+      - [0x27CC4, .rodata, e_misc]
+      - [0x27CFC, rodata]
       - [0x27D3C, .rodata, prim_helpers]
-      - [0x27D44, rodata]
+      - [0x27D44, .rodata, 3D8F0]
       - [0x27D64, c]
       - [0x28984, c, draculacutscene]
       - [0x2A218, c]
@@ -89,15 +95,17 @@ segments:
       - [0x2C564, c] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
-      - [0x3186C, c, random]
-      - [0x3189C, c, update]
-      - [0x31B98, c, update_stage_entities]
+      - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]
       - [0x330E0, c, create_entity]
       - [0x33C58, c, e_red_door]
-      - [0x34908, c]
-      - [0x36358, c]
+      - [0x34908, c, st_common]
+      - [0x35EC8, c, e_collect]
+      - [0x37308, c, e_misc]
+      - [0x39EA8, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
-      - [0x3EB00, sbss]
+      - [0x3EB00, .bss, create_entity]
+      - [0x400B6, .bss, bss]
+      - [0x42584, .bss, e_collect]
   - [0x425C4]

@@ -1,10 +1,13 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
+#include "sfx.h"
 
-// RIC Entity # 49. Comes from blueprint 57. Factory call in func_8016E324.
-// func_8016E324 is RIC Entity #48. Comes from blueprint 56. Blueprint 56 is
-// subweapon 25. And subweapon 25 is the crash of subweapon 7.
-// And subweapon 7 is the rebound stone. This is an entity spawned from the
-// rebound stone crash.
+// RIC Entity # 49. Comes from blueprint 57. Factory call in
+// RicEntityCrashReboundStone. RicEntityCrashReboundStone is RIC Entity #48.
+// Comes from blueprint 56. Blueprint 56 is subweapon 25. And subweapon 25 is
+// the crash of subweapon 7. And subweapon 7 is the rebound stone. This is an
+// entity spawned from the rebound stone crash.
+static s32 angles_80155EE0[] = {0x00000F80, 0x00000100, 0x00000700, 0x00000880};
 void func_8016D9C4(Entity* self) {
     Primitive* prim;
     PrimLineG2* primLine;
@@ -19,7 +22,7 @@ void func_8016D9C4(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         primLine = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         for (i = 0; i < 4; i++) {
             primLine->preciseX.val = PLAYER.posX.val;
@@ -30,7 +33,7 @@ void func_8016D9C4(Entity* self) {
             primLine->y0 = primLine->y1 = PLAYER.posY.i.hi - 0x1C;
             primLine->r0 = primLine->g0 = primLine->b0 = 0x80;
             primLine->r1 = primLine->g1 = primLine->b1 = 0x70;
-            primLine->angle = D_80155EE0[i];
+            primLine->angle = angles_80155EE0[i];
             primLine->delay = 1;
             primLine = (PrimLineG2*)primLine->next;
         }
@@ -53,7 +56,7 @@ void func_8016D9C4(Entity* self) {
                 }
             }
             primLine->priority = 0xC2;
-            primLine->drawMode = 8;
+            primLine->drawMode = DRAW_HIDE;
             primLine->x0 = primLine->x1 = PLAYER.posX.i.hi;
             primLine->y0 = primLine->y1 = PLAYER.posY.i.hi - 0x1C;
             primLine->r0 = primLine->g0 = primLine->b0 = brightness;
@@ -63,7 +66,7 @@ void func_8016D9C4(Entity* self) {
         self->ext.et_8016D9C4.unk90 = 4;
         self->ext.et_8016D9C4.unk8E = 0;
         self->ext.et_8016D9C4.unk8C = 0;
-        g_api.PlaySfx(0x623);
+        g_api.PlaySfx(SFX_RIC_RSTONE_TINK);
         self->step++;
         break;
     case 1:
@@ -135,16 +138,17 @@ void func_8016D9C4(Entity* self) {
                 angleChange = -0x80;
             }
             primLine->angle = (primLine->angle - angleChange) & 0xFFF;
-            primLine->velocityX = (rcos(primLine->angle) << 8);
-            primLine->velocityY = -(rsin(primLine->angle) << 8);
+            primLine->velocityX.val = (rcos(primLine->angle) << 8);
+            primLine->velocityY.val = -(rsin(primLine->angle) << 8);
             primLine->preciseX.val += primLine->velocityX.val;
             primLine->preciseY.val += primLine->velocityY.val;
             self->posX.i.hi = primLine->preciseX.i.hi;
             self->posY.i.hi = primLine->preciseY.i.hi;
-            CreateEntFactoryFromEntity(self, FACTORY(0, 69), 0);
+            RicCreateEntFactoryFromEntity(
+                self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
             if (primLine->preciseY.val < 0) {
                 primLine->delay = 0;
-                primLine->drawMode |= 8;
+                primLine->drawMode |= DRAW_HIDE;
                 self->ext.et_8016D9C4.unk90--;
             }
         }
@@ -163,7 +167,7 @@ void func_8016D9C4(Entity* self) {
 }
 
 // RIC Entity #50. Blueprint 58. Also created by rebound stone crash. Weird!
-void func_8016DF74(Entity* self) {
+void RicEntityCrashReboundStoneExplosion(Entity* self) {
     Primitive* prim;
     s32 i;
 
@@ -174,29 +178,31 @@ void func_8016DF74(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 0x10; i++) {
             prim->priority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->x0 = prim->x1 = 0x80;
             prim->y0 = prim->y1 = 0;
             prim = prim->next;
         }
-        self->ext.et_8016DF74.unk7C = 0x40;
-        self->ext.et_8016DF74.unk80 = 0x10;
-        self->ext.et_8016DF74.unk7E = 0;
-        self->ext.et_8016DF74.unk84 = 0;
-        self->ext.et_8016DF74.unk82 = 8;
-        g_api.PlaySfx(0x636);
+        self->ext.reboundStoneCrashExplosion.unk7C = 0x40;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
+        self->ext.reboundStoneCrashExplosion.unk7E = 0;
+        self->ext.reboundStoneCrashExplosion.unk84 = 0;
+        self->ext.reboundStoneCrashExplosion.unk82 = 8;
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
     case 1:
-        self->ext.et_8016DF74.unk84 += 0x20;
-        if (self->ext.et_8016DF74.unk84 > 0x120) {
-            self->ext.factory.unkB0 = 0x1D;
-            func_8015FAB8(self);
+        self->ext.reboundStoneCrashExplosion.unk84 += 0x20;
+        if (self->ext.reboundStoneCrashExplosion.unk84 > 0x120) {
+            self->ext.reboundStoneCrashExplosion.subweaponId =
+                PL_W_CRASH_REBOUND_EXPLOSION;
+            RicSetSubweaponParams(self);
             self->posX.val = FIX(128.0);
             self->posY.val = FIX(128.0);
             self->hitboxWidth = 0x80;
@@ -205,10 +211,10 @@ void func_8016DF74(Entity* self) {
         }
         break;
     case 2:
-        if (++self->ext.et_8016DF74.unk86 == 5) {
-            self->ext.et_8016DF74.unk80 = -0x18;
-        } else if (self->ext.et_8016DF74.unk86 >= 0xF) {
-            self->ext.et_8016DF74.unk82 = -0x18;
+        if (++self->ext.reboundStoneCrashExplosion.unk86 == 5) {
+            self->ext.reboundStoneCrashExplosion.unk80 = -0x18;
+        } else if (self->ext.reboundStoneCrashExplosion.unk86 >= 0xF) {
+            self->ext.reboundStoneCrashExplosion.unk82 = -0x18;
             self->step++;
         }
         break;
@@ -218,84 +224,97 @@ void func_8016DF74(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    self->ext.et_8016DF74.unk7C += self->ext.et_8016DF74.unk80;
-    if (self->ext.et_8016DF74.unk7C >= 0x100) {
-        self->ext.et_8016DF74.unk7C = 0xFF;
-        self->ext.et_8016DF74.unk80 = 0;
-    } else if (self->ext.et_8016DF74.unk7C < 0) {
-        self->ext.et_8016DF74.unk80 = 0;
-        self->ext.et_8016DF74.unk7C = 0;
+    self->ext.reboundStoneCrashExplosion.unk7C +=
+        self->ext.reboundStoneCrashExplosion.unk80;
+    if (self->ext.reboundStoneCrashExplosion.unk7C >= 0x100) {
+        self->ext.reboundStoneCrashExplosion.unk7C = 0xFF;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0;
+    } else if (self->ext.reboundStoneCrashExplosion.unk7C < 0) {
+        self->ext.reboundStoneCrashExplosion.unk80 = 0;
+        self->ext.reboundStoneCrashExplosion.unk7C = 0;
     }
-    self->ext.et_8016DF74.unk7E += self->ext.et_8016DF74.unk82;
-    if (self->ext.et_8016DF74.unk7E >= 0x100) {
-        self->ext.et_8016DF74.unk7E = 0xFF;
-        self->ext.et_8016DF74.unk82 = 0;
-    } else if (self->ext.et_8016DF74.unk7E < 0) {
-        self->ext.et_8016DF74.unk82 = 0;
-        self->ext.et_8016DF74.unk7E = 0;
+    self->ext.reboundStoneCrashExplosion.unk7E +=
+        self->ext.reboundStoneCrashExplosion.unk82;
+    if (self->ext.reboundStoneCrashExplosion.unk7E >= 0x100) {
+        self->ext.reboundStoneCrashExplosion.unk7E = 0xFF;
+        self->ext.reboundStoneCrashExplosion.unk82 = 0;
+    } else if (self->ext.reboundStoneCrashExplosion.unk7E < 0) {
+        self->ext.reboundStoneCrashExplosion.unk82 = 0;
+        self->ext.reboundStoneCrashExplosion.unk7E = 0;
         self->step += 1;
     }
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 16; i++) {
-        prim->b0 = prim->b1 = self->ext.et_8016DF74.unk7C;
-        prim->b2 = prim->b3 = self->ext.et_8016DF74.unk7E;
-        prim->r0 = prim->r1 = prim->g0 = prim->g1 = self->ext.et_8016DF74.unk7C;
-        prim->r2 = prim->r3 = prim->g2 = prim->g3 = self->ext.et_8016DF74.unk7E;
+        prim->b0 = prim->b1 = self->ext.reboundStoneCrashExplosion.unk7C;
+        prim->b2 = prim->b3 = self->ext.reboundStoneCrashExplosion.unk7E;
+        prim->r0 = prim->r1 = prim->g0 = prim->g1 =
+            self->ext.reboundStoneCrashExplosion.unk7C;
+        prim->r2 = prim->r3 = prim->g2 = prim->g3 =
+            self->ext.reboundStoneCrashExplosion.unk7E;
         if (self->step < 2U) {
             prim->x2 =
-                ((rcos(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC) + 0x80;
-            prim->x3 =
-                ((rcos((i + 1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC) +
+                ((rcos(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
+                 0xC) +
                 0x80;
-            prim->y2 = ((rsin(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
-            prim->y3 =
-                ((rsin((i + 1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
+            prim->x3 = ((rcos((i + 1) << 7) *
+                         self->ext.reboundStoneCrashExplosion.unk84) >>
+                        0xC) +
+                       0x80;
+            prim->y2 =
+                ((rsin(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
+                 0xC);
+            prim->y3 = ((rsin((i + 1) << 7) *
+                         self->ext.reboundStoneCrashExplosion.unk84) >>
+                        0xC);
         }
         prim = prim->next;
     }
     return;
 }
 
-void func_8016E324(Entity* entity) {
+void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
-        entity->ext.generic.unk7C.s = 0x14;
+        entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.timer.t = 0x14;
         entity->step++;
 
     case 1:
-        entity->ext.generic.unk7C.s--;
-        if ((entity->ext.generic.unk7C.s) == 0) {
+        entity->ext.timer.t--;
+        if ((entity->ext.timer.t) == 0) {
         case 3:
         case 5:
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 57), 0);
+            RicCreateEntFactoryFromEntity(entity, BP_57, 0);
             entity->step++;
         case 2:
         case 4:
         case 6:
-            entity->ext.generic.unk7C.s++;
-            if (entity->ext.generic.unk7C.s >= 11) {
-                entity->ext.generic.unk7C.s = 0;
+            entity->ext.timer.t++;
+            if (entity->ext.timer.t >= 11) {
+                entity->ext.timer.t = 0;
                 entity->posX.val = FIX(128.0);
                 entity->posY.val = 0;
-                CreateEntFactoryFromEntity(entity, FACTORY(0x100, 4), 0);
+                RicCreateEntFactoryFromEntity(entity, FACTORY(BP_EMBERS, 1), 0);
                 entity->step++;
             }
         }
         break;
 
     case 7:
-        entity->ext.generic.unk7C.s++;
-        if (entity->ext.generic.unk7C.s >= 16) {
+        entity->ext.timer.t++;
+        if (entity->ext.timer.t >= 16) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 58), 0);
+            RicCreateEntFactoryFromEntity(
+                entity, BP_CRASH_REBOUND_STONE_EXPLOSION, 0);
         }
         break;
     }
 }
 
-void func_8016E46C(Entity* self) {
+#define BIBLE_PAGE_COUNT 6
+static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+void RicEntityCrashBibleBeam(Entity* self) {
     Primitive* prim;
     s16 var_s7;
     s16 hitboxOffX;
@@ -308,55 +327,55 @@ void func_8016E46C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
+        self->primIndex = g_api.AllocPrimitives(PRIM_G4, BIBLE_PAGE_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        if (self->facingLeft != 0) {
-            self->ext.et_8016E46C.unk7C = -16;
-            self->ext.et_8016E46C.unk7E = -2;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        if (self->facingLeft) {
+            self->ext.bibleBeam.unk7C = -16;
+            self->ext.bibleBeam.unk7E = -2;
         } else {
-            self->ext.et_8016E46C.unk7C = 16;
-            self->ext.et_8016E46C.unk7E = 2;
+            self->ext.bibleBeam.unk7C = 16;
+            self->ext.bibleBeam.unk7E = 2;
         }
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
             var_s3 = i + 2;
-            if (var_s3 >= 6) {
+            if (var_s3 >= BIBLE_PAGE_COUNT) {
                 var_s3 = i - 4;
             }
-            prim->x0 = prim->x1 = D_80175894[i].x;
-            prim->y0 = prim->y1 = D_80175894[i].y;
-            prim->x2 = prim->x3 = D_80175894[var_s3].x;
-            prim->y2 = prim->y3 = D_80175894[var_s3].y;
+            prim->x0 = prim->x1 = bible_pages_pos[i].x;
+            prim->y0 = prim->y1 = bible_pages_pos[i].y;
+            prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
+            prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
             prim->priority = 0xC2;
             prim->blendMode = 0x435;
             prim = prim->next;
         }
         self->step++;
         break;
-
     case 1:
-        if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
-            self->ext.et_8016E46C.unkB0 = 0x11;
-            func_8015FAB8(self);
-            g_api.PlaySfx(0x62F);
-            g_api.PlaySfx(0x635);
+        if (++self->ext.bibleBeam.unk80 >= 0x3C) {
+            self->ext.bibleBeam.subweaponId = PL_W_BIBLE_BEAM;
+            RicSetSubweaponParams(self);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             self->step++;
         }
         break;
     case 2:
-        self->ext.et_8016E46C.unk80++;
-        self->ext.et_8016E46C.unk7E += self->ext.et_8016E46C.unk7C;
-        var_s3 = D_80175894[1].x + self->ext.et_8016E46C.unk7E;
+        self->ext.bibleBeam.unk80++;
+        self->ext.bibleBeam.unk7E += self->ext.bibleBeam.unk7C;
+        var_s3 = bible_pages_pos[1].x + self->ext.bibleBeam.unk7E;
         if (var_s3 < -0x50 || var_s3 > 0x150) {
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_8016E46C.unk80 >= 0x78) {
+        if (++self->ext.bibleBeam.unk80 >= 0x78) {
             DestroyEntity(self);
             return;
         }
@@ -364,42 +383,46 @@ void func_8016E46C(Entity* self) {
     }
     var_s7 = 0;
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
         var_s3 = i + 2;
-        if (var_s3 >= 6) {
+        if (var_s3 >= BIBLE_PAGE_COUNT) {
             var_s3 = i - 4;
         }
-        temp_v1 = (rsin((self->ext.et_8016E46C.unk80 * 20) + (i << 8)) * 96);
+        temp_v1 = (rsin((self->ext.bibleBeam.unk80 * 20) + (i << 8)) * 96);
         prim->r0 = prim->r1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (i << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 15) + (i << 8)) * 96;
         prim->g0 = prim->g1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (i << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 10) + (i << 8)) * 96;
         prim->b0 = prim->b1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (var_s3 << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 15) + (var_s3 << 8)) * 96;
         prim->r2 = prim->r3 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (var_s3 << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 10) + (var_s3 << 8)) * 96;
         prim->g2 = prim->g3 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (var_s3 << 8)) * 96;
+        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 20) + (var_s3 << 8)) * 96;
         prim->b2 = prim->b3 = abs(temp_v1 >> 0xc);
-        prim->x1 = D_80175894[i].x;
-        prim->y0 = prim->y1 = D_80175894[i].y;
-        prim->x3 = D_80175894[var_s3].x;
-        prim->y2 = prim->y3 = D_80175894[var_s3].y;
-        prim->x0 = D_80175894[i].x + self->ext.et_8016E46C.unk7E;
-        prim->x2 = D_80175894[var_s3].x + self->ext.et_8016E46C.unk7E;
-        if (var_s7 < abs(D_80175894[i].y)) {
-            var_s7 = abs(D_80175894[i].y);
+        prim->x1 = bible_pages_pos[i].x;
+        prim->y0 = prim->y1 = bible_pages_pos[i].y;
+        prim->x3 = bible_pages_pos[var_s3].x;
+        prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
+        prim->x0 = bible_pages_pos[i].x + self->ext.bibleBeam.unk7E;
+        prim->x2 = bible_pages_pos[var_s3].x + self->ext.bibleBeam.unk7E;
+        if (var_s7 < abs(bible_pages_pos[i].y)) {
+            var_s7 = abs(bible_pages_pos[i].y);
         }
         prim = prim->next;
     }
-    halfwidth = self->ext.et_8016E46C.unk7E / 2;
-    hitboxOffX = self->facingLeft == 0 ? halfwidth : -halfwidth;
+    halfwidth = self->ext.bibleBeam.unk7E / 2;
+    hitboxOffX = !self->facingLeft ? halfwidth : -halfwidth;
     self->hitboxOffX = hitboxOffX;
     self->hitboxWidth = abs(hitboxOffX);
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
-void func_8016E9E4(Entity* self) {
+static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
+    0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
+};
+static s32 bible_pages_volume;
+void RicEntityCrashBible(Entity* self) {
     Primitive* prim;
     s16 temp_a1_3;
     s16 temp_v0_6;
@@ -414,13 +437,14 @@ void func_8016E9E4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1 + BIBLE_PAGE_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->posX.val = PLAYER.posX.val;
         self->posY.val = PLAYER.posY.val;
         self->velocityY = FIX(-4);
@@ -436,15 +460,14 @@ void func_8016E9E4(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
-
         prim->u0 = prim->u2 = 0x98;
         prim->v0 = prim->v1 = 0xD8;
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = 0xC2;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
             prim->tpage = 0x1C;
             prim->clut = 0x1AE;
             prim->u0 = prim->u2 = 0x20;
@@ -456,7 +479,7 @@ void func_8016E9E4(Entity* self) {
             prim = prim->next;
         }
         self->ext.et_8016E9E4.unk84 = 0x40;
-        D_801758AC = 0x60;
+        bible_pages_volume = 0x60;
         self->step++;
         break;
     case 1:
@@ -477,9 +500,10 @@ void func_8016E9E4(Entity* self) {
         if (++self->ext.et_8016E9E4.unk82 >= 6) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x19F;
-            prim->drawMode |= 0x35;
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
-            for (i = 0; i < 6; i++) {
+            for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
                 prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             }
@@ -509,7 +533,8 @@ void func_8016E9E4(Entity* self) {
         self->ext.et_8016E9E4.unk7C =
             (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 60), 0);
+            // create bible page beam
+            RicCreateEntFactoryFromEntity(self, BP_CRASH_BIBLE_BEAM, 0);
             self->ext.et_8016E9E4.unk82 = 0;
             self->step++;
         }
@@ -539,12 +564,12 @@ void func_8016E9E4(Entity* self) {
         (self->ext.et_8016E9E4.unk7C == 0x900) ||
         (self->ext.et_8016E9E4.unk7C == 0xD00)) {
         if (self->step < 9) {
-            g_api.func_80134714(0x625, D_801758AC, 0);
+            g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, bible_pages_volume, 0);
             if (self->step >= 5) {
-                D_801758AC -= 4;
+                bible_pages_volume -= 4;
             }
-            if (D_801758AC < 0) {
-                D_801758AC = 0;
+            if (bible_pages_volume < 0) {
+                bible_pages_volume = 0;
             }
         }
     }
@@ -563,11 +588,11 @@ void func_8016E9E4(Entity* self) {
 
     temp_s6 = rsin(self->ext.et_8016E9E4.unk7E);
     temp_s5 = rcos(self->ext.et_8016E9E4.unk7E);
-    for (i = 0; i < 6; i++) {
-        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) *
+    for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
                      self->ext.et_8016E9E4.unk80) >>
                     0xC;
-        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) *
+        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
                      self->ext.et_8016E9E4.unk80) >>
                     0xC;
         temp_a1_3 =
@@ -577,8 +602,8 @@ void func_8016E9E4(Entity* self) {
             self->posY.i.hi +
             ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
         temp_v0_5 = ((temp_s5 * temp_v0_4) >> 0xC) + 0x200;
-        D_80175894[i].x = temp_a1_3;
-        D_80175894[i].y = temp_v0_6;
+        bible_pages_pos[i].x = temp_a1_3;
+        bible_pages_pos[i].y = temp_v0_6;
         prim->x0 = prim->x2 = temp_a1_3 - 0x1000 / temp_v0_5;
         prim->x1 = prim->x3 = temp_a1_3 + 0x1000 / temp_v0_5;
         // FAKE, needed for reg match
@@ -591,6 +616,7 @@ void func_8016E9E4(Entity* self) {
 }
 
 void func_8016F198(Entity* self) {
+    const int PrimCount = 16;
     Primitive* prim;
     s16 unk7C;
     s16 temp_s6;
@@ -606,17 +632,17 @@ void func_8016F198(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->priority = 0xC2;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         self->step++;
@@ -647,7 +673,7 @@ void func_8016F198(Entity* self) {
         tpage = 0x100;
     }
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < PrimCount; i++) {
         sine = rsin(i << 8);
         cosine = rcos(i << 8);
         unk7C = self->ext.factory.unk7C;
@@ -706,12 +732,12 @@ void func_8016F198(Entity* self) {
     }
 }
 
-// Entity ID #64, created by blueprint #72. This call is in func_801719A4.
-// When Richter has the stopwatch weapon, and uses it as a crash, it makes
-// 4 floating stopwatches. When they are done they disappear in a spinning
-// sparkle. This entity represents that sparkle. 4 copies of this entity
-// are made when the crash is done.
-void StopwatchCrashDoneSparkle(Entity* self) {
+// Entity ID #64, created by blueprint #72. This call is in
+// RicEntitySubwpnStopwatch. When Richter has the stopwatch weapon, and uses it
+// as a crash, it makes 4 floating stopwatches. When they are done they
+// disappear in a spinning sparkle. This entity represents that sparkle. 4
+// copies of this entity are made when the crash is done.
+void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
     Primitive* prim;
     u32 selfX;
     u32 selfY;
@@ -735,10 +761,12 @@ void StopwatchCrashDoneSparkle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
         prim = &g_PrimBuf[self->primIndex];
-        prim->drawMode = 0x37;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->priority = 0xC2;
         prim->u1 = prim->u3 = 0x3F;
         prim->tpage = 0x1A;
@@ -751,7 +779,8 @@ void StopwatchCrashDoneSparkle(Entity* self) {
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
 
         prim = prim->next;
-        prim->drawMode = 0x3F;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS |
+                         DRAW_UNK02 | DRAW_TRANSP;
         prim->priority = 0xC2;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
@@ -765,7 +794,8 @@ void StopwatchCrashDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->drawMode = 0x47F;
+        prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0xB;
@@ -778,7 +808,8 @@ void StopwatchCrashDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->drawMode = 0x47F;
+        prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0xB;
@@ -793,7 +824,8 @@ void StopwatchCrashDoneSparkle(Entity* self) {
         for (i = 0; i < 16; i++) {
             prim = prim->next;
             prim->priority = PLAYER.zPriority + 3;
-            prim->drawMode = 0x3F;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x1A;
             prim->clut = 0x194;
             rand_uCoord = rand() % 5 * 0x10;
@@ -823,7 +855,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
             self->ext.et_stopWatchSparkle.unk80 = 0x10;
             self->ext.et_stopWatchSparkle.unk82 = 0;
-            g_api.PlaySfx(0x614);
+            g_api.PlaySfx(SFX_ELECTRICITY);
             self->step++;
         }
         break;
@@ -1022,7 +1054,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
                     selfY = self->posY.i.hi;
                     self->posX.i.hi = self->ext.et_stopWatchSparkle.unk90;
                     self->posY.i.hi = self->ext.et_stopWatchSparkle.unk92;
-                    CreateEntFactoryFromEntity(self, FACTORY(0, 73), 0);
+                    RicCreateEntFactoryFromEntity(self, BP_73, 0);
                     self->posX.i.hi = selfX;
                     self->posY.i.hi = selfY;
                 } else {
@@ -1049,16 +1081,15 @@ void StopwatchCrashDoneSparkle(Entity* self) {
 void func_80170548(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->ext.generic.unkB0 = 0x1E;
-        func_8015FAB8(entity);
+        RicSetSubweaponParams(entity);
         entity->hitboxWidth = 8;
         entity->hitboxHeight = 8;
         entity->step++;
         break;
-
     case 1:
-        if (++entity->ext.generic.unk7C.s >= 5) {
+        if (++entity->ext.timer.t >= 5) {
             DestroyEntity(entity);
         }
         break;
@@ -1070,37 +1101,35 @@ void func_801705EC(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000;
-        entity->ext.generic.unk7E.modeU16 = 0;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.et_80161FF0.unk7E = 0;
         entity->step++;
-
     case 1:
     case 3:
     case 5:
     case 7:
-        temp = entity->ext.generic.unk7E.modeU16 + 1;
-        entity->ext.generic.unk7E.modeU16 = temp;
-        CreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
-        entity->ext.generic.unk7C.s = 0;
+        temp = entity->ext.et_80161FF0.unk7E + 1;
+        entity->ext.et_80161FF0.unk7E = temp;
+        RicCreateEntFactoryFromEntity(
+            entity, FACTORY(BP_SUBWPN_STOPWATCH, temp), 0);
+        entity->ext.et_80161FF0.unk7C = 0;
         entity->step++;
         break;
-
     case 2:
     case 4:
     case 6:
-        entity->ext.generic.unk7C.s++;
-        if (entity->ext.generic.unk7C.s >= 16) {
+        entity->ext.et_80161FF0.unk7C++;
+        if (entity->ext.et_80161FF0.unk7C >= 16) {
             entity->step++;
         }
         break;
-
     case 8:
         DestroyEntity(entity);
         break;
     }
 }
 
-s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
+static s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     s16 temp_s3;
     s16 s3_offset = 0x80;
     s8 arg2_copy = arg2;
@@ -1113,18 +1142,20 @@ s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
         arg0[1] = arg0[1] + ((rcos(temp_s3) * *arg3) >> 0xC);
         arg0[3] = arg0[3] + ((rsin(temp_s3) * *arg3) >> 0xC);
         if (arg2_copy & 1) {
-            return func_801706C0(arg0, (temp_s3 - 0x140), arg2 / 2, arg3);
+            return GetAguneaLightningAngle(
+                arg0, (temp_s3 - 0x140), arg2 / 2, arg3);
         } else {
             rand();
             rand();
-            return func_801706C0(arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
+            return GetAguneaLightningAngle(
+                arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
         }
     } else {
         return temp_s3;
     }
 }
 
-void func_80170874(s32 bufSize, s32* buf) {
+static void AguneaShuffleParams(s32 bufSize, s32* buf) {
     s32 i, idx, swapTemp;
 
     for (i = bufSize - 1; i > 0; i--) {
@@ -1138,7 +1169,8 @@ void func_80170874(s32 bufSize, s32* buf) {
     }
 }
 
-void func_8017091C(Entity* self) {
+// Agunea item crash lightning, created by RicEntityAguneaCircle, blueprint 68
+void RicEntityAguneaLightning(Entity* self) {
     u16 sp10[4];
     s16 sp18;
     u16 sp20;
@@ -1161,7 +1193,8 @@ void func_8017091C(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
             prim->tpage = 0x1A;
@@ -1176,7 +1209,7 @@ void func_8017091C(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC1;
-            prim->drawMode = 0x20C;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
@@ -1190,7 +1223,7 @@ void func_8017091C(Entity* self) {
             srand(randomSeed);
             sp10[1] = self->posX.i.hi;
             sp10[3] = self->posY.i.hi;
-            angle = func_801706C0(&sp10, sp20, i, &sp18);
+            angle = GetAguneaLightningAngle(&sp10, sp20, i, &sp18);
             xCoord = sp10[0];
             yCoord = sp10[2];
             var_s6 = (i == 0) ? 2 : 8;
@@ -1274,7 +1307,9 @@ void func_8017091C(Entity* self) {
     }
 }
 
-void EntityStopWatchExpandingCircle(Entity* self) {
+#define LIGHTNING_COUNT 8
+static s32 g_AguneaParams[LIGHTNING_COUNT];
+void RicEntityAguneaCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
     s16 xCoord;
@@ -1290,7 +1325,8 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         prim = &g_PrimBuf[self->primIndex];
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 0x20;
@@ -1329,28 +1365,29 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             prim->drawMode = 0x200 | DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.et_80170F64.unkB0 = 0x1A;
-        func_8015FAB8(self);
+        self->ext.aguneaCrash.subweaponId = PL_W_CRASH_AGUNEA;
+        RicSetSubweaponParams(self);
         self->step++;
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
+        for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
             prim = prim->next;
         }
         prim->drawMode &= ~DRAW_HIDE;
-        if (++self->ext.et_80170F64.unk7C >= 4) {
-            self->ext.et_80170F64.unk7C = 0;
+        if (++self->ext.aguneaCrash.unk7C >= 4) {
+            self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
         break;
     case 2:
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
+        for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
             prim = prim->next;
         }
-        if (self->ext.et_80170F64.unk7C == 0) {
-            prim->drawMode = 0x235;
+        if (self->ext.aguneaCrash.unk7C == 0) {
+            prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
             prim->u0 = prim->u2 = 0;
@@ -1360,43 +1397,45 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
                 prim->r3 = prim->g3 = 0x7F;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0xFF;
-            self->ext.et_80170F64.unk7E = 1;
-            self->ext.et_80170F64.unk80 = 2;
-            self->ext.et_80170F64.unk82 = 0x64;
+            self->ext.aguneaCrash.unk7E = 1;
+            self->ext.aguneaCrash.unk80 = 2;
+            self->ext.aguneaCrash.unk82 = 0x64;
         } else {
-            self->ext.et_80170F64.unk80 += 2;
+            self->ext.aguneaCrash.unk80 += 2;
             prim->drawMode |= DRAW_HIDE;
         }
-        if (++self->ext.et_80170F64.unk7C >= 4) {
+        if (++self->ext.aguneaCrash.unk7C >= 4) {
             // think this loop has to count down since we assign to i
-            for (i = 7; i >= 0; i--) {
-                D_801758B0[i] = i;
+            for (i = LIGHTNING_COUNT - 1; i >= 0; i--) {
+                g_AguneaParams[i] = i;
             }
-            func_80170874(8, &D_801758B0[0]);
-            self->ext.et_80170F64.unk7C = 0;
-            g_api.PlaySfx(0x665);
+            AguneaShuffleParams(LIGHTNING_COUNT, &g_AguneaParams[0]);
+            self->ext.aguneaCrash.unk7C = 0;
+            g_api.PlaySfx(SFX_THUNDER_B);
             self->step++;
         }
         break;
     case 3:
-        CreateEntFactoryFromEntity(
-            self, FACTORY(D_801758B0[self->ext.et_80170F64.unk7C] * 0x100, 68),
+        RicCreateEntFactoryFromEntity(
+            self,
+            FACTORY(BP_CRASH_AGUNEA_THUNDER,
+                    g_AguneaParams[self->ext.aguneaCrash.unk7C]),
             0);
-        if (++self->ext.et_80170F64.unk7C >= 8) {
+        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT) {
             self->hitboxHeight = self->hitboxWidth = 0x80;
-            self->ext.et_80170F64.unk7C = 0;
+            self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
         break;
     case 4:
-        if (++self->ext.et_80170F64.unk7C >= 9) {
+        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT + 1) {
             self->step++;
         }
         break;
     case 5:
-        self->ext.et_80170F64.unk80 += 2;
-        self->ext.et_80170F64.unk82 -= 10;
-        if (self->ext.et_80170F64.unk82 <= 0) {
+        self->ext.aguneaCrash.unk80 += 2;
+        self->ext.aguneaCrash.unk82 -= 10;
+        if (self->ext.aguneaCrash.unk82 <= 0) {
             self->hitboxHeight = self->hitboxWidth = 0;
             self->step++;
         }
@@ -1406,21 +1445,21 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (self->ext.et_80170F64.unk7E != 0) {
+    if (self->ext.aguneaCrash.unk7E != 0) {
         prim = &g_PrimBuf[self->primIndex];
-        prim->x0 = prim->x2 = self->posX.i.hi - self->ext.et_80170F64.unk80;
-        prim->x1 = prim->x3 = self->posX.i.hi + self->ext.et_80170F64.unk80;
-        prim->y0 = prim->y1 = self->posY.i.hi - self->ext.et_80170F64.unk80;
-        prim->y2 = prim->y3 = self->posY.i.hi + self->ext.et_80170F64.unk80;
+        prim->x0 = prim->x2 = self->posX.i.hi - self->ext.aguneaCrash.unk80;
+        prim->x1 = prim->x3 = self->posX.i.hi + self->ext.aguneaCrash.unk80;
+        prim->y0 = prim->y1 = self->posY.i.hi - self->ext.aguneaCrash.unk80;
+        prim->y2 = prim->y3 = self->posY.i.hi + self->ext.aguneaCrash.unk80;
         prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
-            prim->r3 = prim->g3 = (self->ext.et_80170F64.unk82 * 0x7F) / 100;
+            prim->r3 = prim->g3 = (self->ext.aguneaCrash.unk82 * 0x7F) / 100;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            (self->ext.et_80170F64.unk82 * 0xFF) / 100;
+            (self->ext.aguneaCrash.unk82 * 0xFF) / 100;
     }
     return;
 }
 
-void func_8017161C(Entity* self) {
+void RicEntitySubwpnStopwatchCircle(Entity* self) {
     Primitive* prim;
     s16 temp_s0_4;
     s32 sine;
@@ -1436,13 +1475,14 @@ void func_8017161C(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = self->zPriority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->u0 = ((rsin((s16)(i * 0x100)) << 5) >> 0xC) + 0x20;
             prim->v0 = -((rcos((s16)(i * 0x100)) << 5) >> 0xC) - 0x21;
             prim->u1 = ((rsin((s16)((i + 1) * 0x100)) << 5) >> 0xC) + 0x20;
@@ -1489,7 +1529,10 @@ void func_8017161C(Entity* self) {
     return;
 }
 
-void func_801719A4(Entity* self) {
+static u32 D_801758D0;
+static Entity*
+    D_801758D4[3]; // used by RicEntitySubwpnStopwatch, should never underflow
+void RicEntitySubwpnStopwatch(Entity* self) {
     Primitive* prim;
     s16 firstmult;
     s16 secondmult;
@@ -1511,11 +1554,8 @@ void func_801719A4(Entity* self) {
     s32 temp_a1_3;
     s32 temp_t0;
     s32 temp_v1_11;
-    if (g_unkGraphicsStruct.unk0 != 0) {
-        // FAKE, needed to make step load at the right time
-        do {
-            g_unkGraphicsStruct.D_800973FC = 0;
-        } while (0);
+    if (g_unkGraphicsStruct.unk0) {
+        g_unkGraphicsStruct.D_800973FC = 0;
         if ((self->step > 0) && (self->step < 4)) {
             self->step = 4;
         }
@@ -1527,8 +1567,8 @@ void func_801719A4(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
@@ -1542,37 +1582,37 @@ void func_801719A4(Entity* self) {
             prim->u1 = prim->u3 = 0x98;
         }
         prim->priority = PLAYER.zPriority + 1;
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
 
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
 
         prim = prim->next;
 
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         if (self->params & 0xFF00) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
+            RicCreateEntFactoryFromEntity(self, BP_66, 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
-                (&D_801758D0)[self->ext.et_801719A4.unk94] = (u32)self;
+                D_801758D4[self->ext.et_801719A4.unk94 - 1] = self;
             }
             if (self->ext.et_801719A4.unk94 >= 2) {
                 self->ext.et_801719A4.unk98 =
-                    D_801758CC[self->ext.et_801719A4.unk94];
+                    D_801758D4[self->ext.et_801719A4.unk94 - 2];
             }
         } else {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
+            RicCreateEntFactoryFromEntity(self, BP_STOPWATCH_RIPPLE, 0);
             self->ext.et_801719A4.unk94 = 0;
         }
-        self->ext.et_801719A4.unkB0 = 6;
-        func_8015FAB8(self);
-        g_api.PlaySfx(0x6AD);
+        self->ext.et_801719A4.subweaponId = PL_W_STOPWATCH;
+        RicSetSubweaponParams(self);
+        g_api.PlaySfx(SFX_UI_ALERT_TINK);
         if (self->ext.et_801719A4.unk94 < 2) {
             g_unkGraphicsStruct.D_800973FC = 1;
         }
@@ -1590,13 +1630,13 @@ void func_801719A4(Entity* self) {
         self->ext.et_801719A4.unk84.val += 0xFFFF0000;
         if (self->ext.et_801719A4.unk84.val <= 0x100000) {
             self->ext.et_801719A4.unk7C = 5;
-            g_api.PlaySfx(0x6A1);
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->step++;
         }
         break;
     case 3:
         if (++self->ext.et_801719A4.unk7E >= 0x51) {
-            g_api.PlaySfx(0x6A1);
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->ext.et_801719A4.unk7E = 0;
             self->ext.et_801719A4.unk90 = 1;
             if (--self->ext.et_801719A4.unk7C < 0) {
@@ -1633,9 +1673,9 @@ void func_801719A4(Entity* self) {
         break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        self->flags &= ~FLAG_UNK_40000;
+        self->flags &= ~FLAG_POS_PLAYER_LOCKED;
         prim->priority = 0xC2;
-        prim->drawMode &= ~0x200;
+        prim->drawMode &= ~DRAW_UNK_200;
         prim = prim->next;
         prim->drawMode |= DRAW_HIDE;
         prim = prim->next;
@@ -1646,7 +1686,7 @@ void func_801719A4(Entity* self) {
         self->ext.et_801719A4.unk7C = 0;
         if (self->ext.et_801719A4.unk94 != 0) {
             self->step = 7;
-            CreateEntFactoryFromEntity(self, FACTORY(0, 72), 0);
+            RicCreateEntFactoryFromEntity(self, BP_AGUNEA_THUNDER, 0);
         } else {
             self->step++;
         }
@@ -1658,14 +1698,14 @@ void func_801719A4(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 =
                 prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
-            prim->drawMode |= 4;
-            g_api.PlaySfx(0x6A4);
+            prim->drawMode |= DRAW_COLORS;
+            g_api.PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;
     case 6:
         if (++self->ext.et_801719A4.unk7C >= 0xF) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x700, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 7), 0);
             self->step++;
         }
         break;
@@ -1675,7 +1715,7 @@ void func_801719A4(Entity* self) {
             g_unkGraphicsStruct.D_800973FC = 0;
         }
         if (self->ext.et_801719A4.unk94 != 0) {
-            (&D_801758D0)[self->ext.et_801719A4.unk94] = 0;
+            D_801758D4[self->ext.et_801719A4.unk94 - 1] = 0;
         }
         DestroyEntity(self);
         return;
@@ -1688,7 +1728,7 @@ void func_801719A4(Entity* self) {
         if (self->ext.et_801719A4.unk94 < 2) {
             var_s4 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
             var_s6 = PLAYER.posY.val + FIX(-16);
-        } else if (D_801758CC[self->ext.et_801719A4.unk94] != 0) {
+        } else if (D_801758D4[self->ext.et_801719A4.unk94 - 2] != NULL) {
             var_s4 = self->ext.et_801719A4.unk98->posX.val +
                      (PLAYER.facingLeft ? FIX(16) : FIX(-16));
             var_s6 = self->ext.et_801719A4.unk98->posY.val + FIX(-16);
@@ -1712,7 +1752,7 @@ void func_801719A4(Entity* self) {
                     self->facingLeft = PLAYER.facingLeft;
                 }
             }
-        } else if (D_801758CC[self->ext.et_801719A4.unk94] != 0) {
+        } else if (D_801758D4[self->ext.et_801719A4.unk94 - 2] != NULL) {
             parent = self->ext.et_801719A4.unk98;
             if (parent->facingLeft != self->facingLeft) {
                 if (abs(var_s4 - self->posX.val) >= FIX(1)) {
@@ -1917,7 +1957,7 @@ void func_801719A4(Entity* self) {
     }
 }
 
-void func_80172AE8(Entity* entity) {
+void RicEntitySubwpnBibleTrail(Entity* entity) {
     Primitive* prim;
     s32 ret;
 
@@ -1925,54 +1965,45 @@ void func_80172AE8(Entity* entity) {
     case 0:
         ret = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = ret;
-        if (entity->primIndex != -1) {
-            entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->tpage = 0x1C;
-            prim->clut = 0x19D;
-            prim->u2 = 0x20;
-            prim->u0 = 0x20;
-            prim->u3 = 0x30;
-            prim->u1 = 0x30;
-            prim->v1 = 0;
-            prim->v0 = 0;
-            prim->v3 = 0x10;
-            prim->v2 = 0x10;
-            prim->x0 = prim->x2 = entity->posX.i.hi - 8;
-            prim->x1 = prim->x3 = entity->posX.i.hi + 8;
-            prim->y0 = prim->y1 = entity->posY.i.hi - 8;
-            prim->y2 = prim->y3 = entity->posY.i.hi + 8;
-            prim->priority = entity->zPriority;
-            prim->drawMode = 0x115;
-            entity->ext.generic.unk7E.modeU16 = 0x60U;
-            entity->step++;
-        } else {
+        if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
         }
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0x20;
+        prim->u1 = prim->u3 = 0x30;
+        prim->v0 = prim->v1 = 0;
+        prim->v2 = prim->v3 = 0x10;
+        prim->x0 = prim->x2 = entity->posX.i.hi - 8;
+        prim->x1 = prim->x3 = entity->posX.i.hi + 8;
+        prim->y0 = prim->y1 = entity->posY.i.hi - 8;
+        prim->y2 = prim->y3 = entity->posY.i.hi + 8;
+        prim->priority = entity->zPriority;
+        prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        entity->ext.et_BibleSubwpn.unk7E = 0x60;
+        entity->step++;
         break;
-
     case 1:
-        if (++entity->ext.generic.unk7C.s > 5) {
+        if (++entity->ext.et_BibleSubwpn.unk7C > 5) {
             entity->step++;
         }
-        entity->ext.generic.unk7E.modeU16 -= 8;
+        entity->ext.et_BibleSubwpn.unk7E -= 8;
         break;
-
     case 2:
         DestroyEntity(entity);
         return;
-
-    default:
-        break;
     }
     prim = &g_PrimBuf[entity->primIndex];
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            entity->ext.generic.unk7E.modeU8.unk0;
+            entity->ext.et_BibleSubwpn.unk7E;
 }
 
-void EntitySubwpnBible(Entity* self) {
+void RicEntitySubwpnBible(Entity* self) {
     Primitive* prim;
     s16 left;
     s16 top;
@@ -2003,7 +2034,8 @@ void EntitySubwpnBible(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
@@ -2012,10 +2044,10 @@ void EntitySubwpnBible(Entity* self) {
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
-        prim->drawMode = 0x108;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
-        self->ext.et_BibleSubwpn.unkB0 = 5;
-        func_8015FAB8(self);
+        self->ext.et_BibleSubwpn.subweaponId = PL_W_BIBLE;
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         self->step++;
@@ -2033,10 +2065,10 @@ void EntitySubwpnBible(Entity* self) {
         break;
     case 3:
         if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
-            self->flags &= ~FLAG_UNK_04000000;
+            self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            g_api.PlaySfx(0x6B2);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }
@@ -2062,7 +2094,7 @@ void EntitySubwpnBible(Entity* self) {
         cosine = rcos(self->ext.et_BibleSubwpn.unk82);
         temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
         temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
         } else {
             temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
@@ -2098,199 +2130,9 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, FACTORY(0, 62), 0);
+        RicCreateEntFactoryFromEntity(self, BP_BIBLE_TRAIL, 0);
         if (g_GameTimer % 10 == 0) {
             g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }
-    }
-}
-
-void EntityGiantSpinningCross(Entity* self) {
-    MATRIX m;
-    SVECTOR rot;
-    VECTOR trans1;
-    SVECTOR pos;
-    SVECTOR sp50;
-    s32 z;
-    s32 nclip;
-    Primitive* prim;
-    s32 temp_v1;
-    s32 i;
-    u8* primUVCoords;
-    SVECTOR* temp_a3;
-    SVECTOR** vectors_ptr;
-    u16 priority;
-
-    pos = D_80156C50;
-    sp50 = D_80156C58;
-    if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(PRIM_GT4, 46);
-        if (self->primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        prim = &g_PrimBuf[self->primIndex];
-        while (prim != NULL) {
-            prim->tpage = 0x1C;
-            prim->drawMode = 0x100 | DRAW_HIDE;
-            prim = prim->next;
-        }
-        self->ext.giantcross.unkB0 = 0xD;
-        func_8015FAB8(self);
-        self->hitboxHeight = 0x50;
-        self->hitboxWidth = 0xC;
-        self->posY.i.hi = 0x160;
-        self->velocityY = FIX(-6.0);
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        self->facingLeft = 0;
-        self->ext.giantcross.unk7C = 0;
-        self->ext.giantcross.unk7E = 0x400;
-        g_api.PlaySfx(0x661);
-        self->step++;
-        primUVCoords = &D_8015635C[0][0];
-        prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
-            prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
-            switch (primUVCoords[4] & 0xF0) {
-            case 0x10:
-                prim->u0 = primUVCoords[0] + primUVCoords[2];
-                prim->v0 = primUVCoords[1];
-                prim->u1 = primUVCoords[0];
-                prim->v1 = primUVCoords[1];
-                prim->u2 = primUVCoords[0] + primUVCoords[2];
-                prim->v2 = primUVCoords[1] + primUVCoords[3];
-                prim->u3 = primUVCoords[0];
-                prim->v3 = primUVCoords[1] + primUVCoords[3];
-                break;
-            case 0x20:
-                prim->u0 = primUVCoords[0];
-                prim->v0 = primUVCoords[1] + primUVCoords[3];
-                prim->u1 = primUVCoords[0] + primUVCoords[2];
-                prim->v1 = primUVCoords[1] + primUVCoords[3];
-                prim->u2 = primUVCoords[0];
-                prim->v2 = primUVCoords[1];
-                prim->u3 = primUVCoords[0] + primUVCoords[2];
-                prim->v3 = primUVCoords[1];
-                break;
-            case 0x30:
-                prim->u0 = primUVCoords[0] + primUVCoords[2];
-                prim->v0 = primUVCoords[1] + primUVCoords[3];
-                prim->u1 = primUVCoords[0];
-                prim->v1 = primUVCoords[1] + primUVCoords[3];
-                prim->u2 = primUVCoords[0] + primUVCoords[2];
-                prim->v2 = primUVCoords[1];
-                prim->u3 = primUVCoords[0];
-                prim->v3 = primUVCoords[1];
-                break;
-            case 0x40:
-                prim->u3 = primUVCoords[0];
-                prim->v3 = primUVCoords[1];
-                prim->u1 = primUVCoords[0] + primUVCoords[2];
-                prim->v1 = primUVCoords[1];
-                prim->u2 = primUVCoords[0];
-                prim->v2 = primUVCoords[1] + primUVCoords[3];
-                prim->u0 = primUVCoords[0] + primUVCoords[2];
-                prim->v0 = primUVCoords[1] + primUVCoords[3];
-                break;
-            case 0x50:
-                prim->u3 = primUVCoords[0] + primUVCoords[2];
-                prim->v3 = primUVCoords[1];
-                prim->u1 = primUVCoords[0];
-                prim->v1 = primUVCoords[1];
-                prim->u2 = primUVCoords[0] + primUVCoords[2];
-                prim->v2 = primUVCoords[1] + primUVCoords[3];
-                prim->u0 = primUVCoords[0];
-                prim->v0 = primUVCoords[1] + primUVCoords[3];
-                break;
-            case 0x60:
-                prim->u3 = primUVCoords[0];
-                prim->v3 = primUVCoords[1] + primUVCoords[3];
-                prim->u1 = primUVCoords[0] + primUVCoords[2];
-                prim->v1 = primUVCoords[1] + primUVCoords[3];
-                prim->u2 = primUVCoords[0];
-                prim->v2 = primUVCoords[1];
-                prim->u0 = primUVCoords[0] + primUVCoords[2];
-                prim->v0 = primUVCoords[1];
-                break;
-            case 0x70:
-                prim->u3 = primUVCoords[0] + primUVCoords[2];
-                prim->v3 = primUVCoords[1] + primUVCoords[3];
-                prim->u1 = primUVCoords[0];
-                prim->v1 = primUVCoords[1] + primUVCoords[3];
-                prim->u2 = primUVCoords[0] + primUVCoords[2];
-                prim->v2 = primUVCoords[1];
-                prim->u0 = primUVCoords[0];
-                prim->v0 = primUVCoords[1];
-                break;
-            default:
-                prim->u0 = primUVCoords[0];
-                prim->v0 = primUVCoords[1];
-                prim->u1 = primUVCoords[0] + primUVCoords[2];
-                prim->v1 = primUVCoords[1];
-                prim->u2 = primUVCoords[0];
-                prim->v2 = primUVCoords[1] + primUVCoords[3];
-                prim->u3 = primUVCoords[0] + primUVCoords[2];
-                prim->v3 = primUVCoords[1] + primUVCoords[3];
-                break;
-            }
-        }
-        return;
-    }
-    if (self->posY.i.hi < -0x40) {
-        DestroyEntity(self);
-        return;
-    }
-    if (self->posY.i.hi < 0) {
-        self->velocityY -= FIX(0.5);
-    }
-    self->posY.val += self->velocityY;
-    self->ext.giantcross.unk7C += 0x60;
-    self->ext.giantcross.unk7E += 0x60;
-    trans1.vx = -(rcos(self->ext.giantcross.unk7C) * 0x60) >> 0xC;
-    trans1.vy = self->posY.i.hi - 0x80;
-    trans1.vz = ((rsin(self->ext.giantcross.unk7C) * 0x60) >> 0xC) + 0x180;
-    rot.vy = self->ext.giantcross.unk7E;
-    rot.vz = 0x40;
-    rot.vx = 0;
-
-    SetGeomOffset(self->posX.i.hi, 120);
-    gte_SetGeomScreen(320);
-    RotMatrix(&rot, &m);
-    TransMatrix(&m, &trans1);
-    gte_SetRotMatrix(&m);
-    gte_SetTransMatrix(&m);
-    gte_ldv0(&pos);
-    gte_rtps();
-    prim = &g_PrimBuf[self->primIndex];
-    vectors_ptr = &D_8015607C;
-    gte_stsxy2(&prim->x0);
-    gte_stszotz(&z);
-    self->hitboxOffX = prim->x0 - self->posX.i.hi;
-    self->hitboxOffY = prim->y0 - self->posY.i.hi;
-    for (i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
-        gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
-        gte_rtpt();
-        temp_a3 = vectors_ptr[2];
-        prim->type = 4;
-        gte_nclip();
-        prim->drawMode = 8;
-        gte_stopz(&nclip);
-        if (nclip < 0) {
-            continue;
-        }
-        gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
-        gte_ldv0(temp_a3);
-        gte_rtps();
-        prim->drawMode = DRAW_DEFAULT;
-        if (z < 16) {
-            priority = 0x1F6;
-        } else if (z >= 999) {
-            priority = 0x10;
-        } else {
-            priority = 0x120;
-            priority -= z;
-        }
-        prim->priority = priority;
-        gte_stsxy(&prim->x3);
     }
 }

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
 
 void func_801961DC(s16 arg0) {
@@ -62,8 +63,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0x2000;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(D_801A3F84 & 1)) {
-                D_801A3F84 |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 288) {
@@ -78,7 +79,7 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         func_801961DC(0x20);
-        if (D_801A3F84 & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
         }
         break;
@@ -87,8 +88,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0x2000;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(D_801A3F84 & 1)) {
-                D_801A3F84 |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 352) {
@@ -103,7 +104,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 5: // Conversation with fake lisa
         g_Player.D_80072EFC = 1;
-        if (D_801A3F84 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(6);
         }
         break;
@@ -119,7 +120,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 7:
         g_Player.D_80072EFC = 1;
-        if (D_801A3F84 & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(8);
         }
         break;
@@ -139,7 +140,100 @@ void EntityCSMoveAlucard(Entity* self) {
     }
 }
 
-// Delete this once the below entity is decompiled!
-const s32 rodata_pad_118F0 = 0;
 // appears to load from the CD and freeze the game
-INCLUDE_ASM("st/dre/nonmatchings/161DC", EntityUnkId23);
+void EntityUnkId23(Entity* self) {
+    Entity* player = &PLAYER;
+    Entity* ent = &g_Entities[80];
+    s16 diff;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_8018047C);
+        D_8003C8B8 = 0;
+        g_unkGraphicsStruct.unk0 = 1;
+        g_Player.padSim = 0;
+        if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+            g_Player.padSim = PAD_R1;
+        } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+            g_Player.padSim = PAD_L1;
+        } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+            g_Player.padSim = PAD_R2;
+        }
+        g_Player.D_80072EFC = PAD_L2;
+        break;
+
+    case 1:
+        g_Player.padSim = 0;
+        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+            if (g_Timer & 1) {
+                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                    g_Player.padSim = PAD_R1;
+                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                    g_Player.padSim = PAD_L1;
+                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                    g_Player.padSim = PAD_R2;
+                }
+            }
+        } else if ((g_Player.pl_vram_flag & 1) && (g_CutsceneFlags & 2)) {
+            diff = player->posX.i.hi - ent->posX.i.hi;
+            if (diff < -0x50) {
+                g_Player.padSim = PAD_RIGHT;
+                D_801816C0 = 0;
+                self->step += 3;
+            } else if (diff >= 0x51) {
+                g_Player.padSim = PAD_LEFT;
+                D_801816C0 = 1;
+                self->step += 3;
+            } else if (ent->facingLeft) {
+                g_Player.padSim = PAD_RIGHT;
+                self->step++;
+            } else {
+                g_Player.padSim = PAD_LEFT;
+                self->step += 2;
+            }
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 2:
+        g_Player.padSim = PAD_RIGHT;
+        diff = player->posX.i.hi - ent->posX.i.hi;
+        if (diff > 64) {
+            g_Player.padSim = PAD_LEFT;
+            D_801816C0 = 1;
+            self->step += 2;
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 3:
+        g_Player.padSim = PAD_LEFT;
+        diff = player->posX.i.hi - ent->posX.i.hi;
+        if (diff < -64) {
+            g_Player.padSim = PAD_RIGHT;
+            D_801816C0 = 0;
+            self->step++;
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 4:
+        g_Player.padSim = 0;
+        g_Player.D_80072EFC = 1;
+        g_CutsceneFlags |= 1;
+        if (g_CutsceneFlags & 0x20) {
+            self->step++;
+        }
+        break;
+
+    case 5:
+        D_8003C8B8 = 1;
+        if (g_unkGraphicsStruct.unk0 != 0) {
+            g_unkGraphicsStruct.unk0 = 0;
+        }
+        player->posY.i.hi = player->posY.i.hi + 0x100;
+        g_Player.padSim = 0;
+        g_Player.D_80072EFC = 1;
+        break;
+    }
+}

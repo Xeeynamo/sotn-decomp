@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -22,7 +24,7 @@ u8 D_800C09B8[] = {
     0x50, 0x04, 0x00, 0x0D, 0x3D, 0x06, 0x78, 0x01, 0xFF,
 };
 
-u8 D_800C09CC[] = {
+u8 g_SfxNoteUIError[] = {
     0x00, 0x06, 0x3C, 0x0E, 0x6F, 0x03, 0x00, 0x06, 0x3C,
     0x0E, 0x41, 0x03, 0x00, 0x06, 0x3C, 0x0E, 0x1E, 0x04,
     0x00, 0x06, 0x3C, 0x0E, 0x0D, 0x04, 0xFF,
@@ -35,24 +37,24 @@ u8 D_800C09E8[] = {
     0x00, 0x0C, 0x28, 0x00, 0x16, 0x01, 0xFF,
 };
 
-u8 D_800C0A10[] = {
+u8 g_SfxNoteCandleHitA[] = {
     0x00, 0x05, 0x44, 0x04, 0x7F, 0x08, 0x00,
     0x05, 0x41, 0x04, 0x28, 0x01, 0xFF,
 };
 
-u8 D_800C0A20[] = {
+u8 g_SfxNoteGoldPickup[] = {
     0x00, 0x04, 0x4C, 0x02, 0x7A, 0x02, 0x00, 0x04, 0x3C,
     0x02, 0x7C, 0x08, 0x00, 0x04, 0x3C, 0x02, 0x50, 0x06,
     0x00, 0x04, 0x3C, 0x02, 0x21, 0x01, 0xFF,
 };
 
-u8 D_800C0A3C[] = {
+u8 g_SfxNoteBatShoot[] = {
     0x00, 0x0D, 0x40, 0x00, 0x60, 0x02, 0x00, 0x0D, 0x40,
     0x00, 0x5D, 0x03, 0x00, 0x0D, 0x40, 0x00, 0x5A, 0x02,
     0x00, 0x0D, 0x3A, 0x04, 0x6E, 0x01, 0xFF,
 };
 
-u8 D_800C0A58[] = {
+u8 g_SfxNoteDebugSelect[] = {
     0x00, 0x06, 0x32, 0x08, 0x7D, 0x01, 0xFF,
 };
 
@@ -84,20 +86,24 @@ u8 D_800C0ABC[] = {
     0x33, 0x08, 0x00, 0x0D, 0x3A, 0x00, 0x1C, 0x01, 0xFF,
 };
 
-u8 D_800C0ADC[] = {
+u8 g_SfxNoteHeartPickup[] = {
     0x00, 0x0C, 0x36, 0x02, 0x7C, 0x03, 0x00, 0x0C, 0x3A, 0x02,
     0x70, 0x03, 0x00, 0x0C, 0x3E, 0x02, 0x6D, 0x03, 0x00, 0x0C,
     0x42, 0x02, 0x62, 0x02, 0x00, 0x0C, 0x42, 0x02, 0x46, 0x02,
     0x00, 0x0C, 0x42, 0x02, 0x28, 0x01, 0xFF,
 };
 
-u8 D_800C0B04[] = {
-    0x00, 0x0C, 0x35, 0x06, 0x74, 0x04, 0x00, 0x0C, 0x37,
-    0x06, 0x48, 0x04, 0x00, 0x0C, 0x39, 0x06, 0x25, 0x04,
-    0x00, 0x0C, 0x39, 0x06, 0x11, 0x01, 0xFF,
+u8 g_SfxSubweaponPickup[] = {
+    // clang-format off
+    0x00, 0x0C, 0x35, 0x06, 0x74, 0x04,
+    0x00, 0x0C, 0x37, 0x06, 0x48, 0x04,
+    0x00, 0x0C, 0x39, 0x06, 0x25, 0x04,
+    0x00, 0x0C, 0x39, 0x06, 0x11, 0x01,
+    0xFF,
+    // clang-format on
 };
 
-u8 D_800C0B20[] = {
+u8 g_SfxNoteHealthPickup[] = {
     0x00, 0x05, 0x2D, 0x02, 0x7D, 0x02, 0x00, 0x0C, 0x38, 0x04, 0x6B, 0x04,
     0x00, 0x0C, 0x39, 0x04, 0x60, 0x04, 0x00, 0x0C, 0x3A, 0x04, 0x50, 0x04,
     0x00, 0x0C, 0x3B, 0x04, 0x46, 0x04, 0x00, 0x0C, 0x3C, 0x04, 0x3C, 0x03,
@@ -144,12 +150,12 @@ u8 D_800C0BE0[] = {
     0x39, 0x0B, 0x00, 0x04, 0x4D, 0x00, 0x3B, 0x01, 0xFF,
 };
 
-u8 D_800C0C00[] = {
+u8 g_SfxNoteAluSword[] = {
     0x00, 0x04, 0x40, 0x0A, 0x72, 0x01, 0x00, 0x0E, 0x41, 0x08,
     0x77, 0x14, 0x00, 0x0E, 0x39, 0x08, 0x32, 0x01, 0xFF,
 };
 
-u8 D_800C0C14[] = {
+u8 g_SfxNoteMPFull[] = {
     0x00, 0x0E, 0x52, 0x02, 0x4A, 0x05, 0x00, 0x0E, 0x52, 0x02, 0x46,
     0x05, 0x00, 0x0E, 0x52, 0x02, 0x2D, 0x04, 0x00, 0x0E, 0x52, 0x02,
     0x1B, 0x04, 0x00, 0x0E, 0x52, 0x02, 0x13, 0x04, 0x00, 0x0E, 0x52,
@@ -160,7 +166,7 @@ u8 D_800C0C40[] = {
     0x00, 0x0D, 0x4B, 0x0C, 0x78, 0x01, 0xFF,
 };
 
-u8 D_800C0C48[] = {
+u8 g_SfxNoteDracGlassBreak[] = {
     0x00, 0x05, 0x4D, 0x00, 0x78, 0x0A, 0x00,
     0x05, 0x4D, 0x00, 0x46, 0x01, 0xFF,
 };
@@ -171,7 +177,7 @@ u8 D_800C0C58[] = {
     0x00, 0x0C, 0x30, 0x00, 0x42, 0x01, 0xFF,
 };
 
-u8 D_800C0C74[] = {
+u8 g_SfxNoteLevelUp[] = {
     0x00, 0x0E, 0x4B, 0x02, 0x46, 0x04, 0x00, 0x0E, 0x49, 0x02, 0x5F, 0x04,
     0x00, 0x0E, 0x48, 0x02, 0x70, 0x04, 0x00, 0x0E, 0x49, 0x02, 0x7E, 0x04,
     0x00, 0x0E, 0x4A, 0x02, 0x7A, 0x04, 0x00, 0x0E, 0x4B, 0x02, 0x76, 0x04,
@@ -180,7 +186,7 @@ u8 D_800C0C74[] = {
     0x00, 0x05, 0x40, 0x02, 0x12, 0x01, 0xFF,
 };
 
-u8 D_800C0CB8[] = {
+u8 g_SfxNotePentagram[] = {
     0x00, 0x05, 0x39, 0x00, 0x78, 0x01, 0x00, 0x0F, 0x3A, 0x08, 0x78,
     0x20, 0x00, 0x0F, 0x40, 0x08, 0x50, 0x0E, 0x00, 0x0F, 0x42, 0x08,
     0x3C, 0x0C, 0x00, 0x0F, 0x44, 0x08, 0x25, 0x01, 0xFF,
@@ -191,9 +197,13 @@ u8 D_800C0CD8[] = {
     0x0D, 0x3C, 0x0A, 0x7F, 0x01, 0xFF,
 };
 
-u8 D_800C0CE8[] = {
-    0x00, 0x05, 0x56, 0x0A, 0x20, 0x01, 0x00, 0x05, 0x4A, 0x0A,
-    0x68, 0x04, 0x00, 0x05, 0x4A, 0x0A, 0x0E, 0x03, 0xFF,
+u8 g_SfxCursor[] = {
+    // clang-format off
+    0x00, 0x05, 0x56, 0x0A, 0x20, 0x01,
+    0x00, 0x05, 0x4A, 0x0A, 0x68, 0x04,
+    0x00, 0x05, 0x4A, 0x0A, 0x0E, 0x03,
+    0xFF,
+    // clang-format on
 };
 
 u8 D_800C0CFC[] = {
@@ -629,7 +639,7 @@ u8 D_800C1644[] = {
     0x00, 0x00, 0x4D, 0x08, 0x1E, 0x01, 0xFF,
 };
 
-u8 D_800C1690[] = {
+u8 g_SfxNoteBossDefeated[] = {
     0x03, 0x01, 0x45, 0x0E, 0x78, 0x10, 0x03, 0x01, 0x44, 0x0E,
     0x6E, 0x0F, 0x03, 0x01, 0x43, 0x0E, 0x64, 0x0F, 0x03, 0x01,
     0x42, 0x0E, 0x5C, 0x0E, 0x03, 0x01, 0x41, 0x0E, 0x55, 0x0D,
@@ -647,7 +657,7 @@ u8 D_800C16D8[] = {
     0x00, 0x3A, 0x0A, 0x2F, 0x01, 0xFF,
 };
 
-u8 D_800C16E8[] = {
+u8 g_SfxNoteCandleHitB[] = {
     0x00, 0x05, 0x41, 0x04, 0x7F, 0x08, 0x00,
     0x05, 0x3E, 0x04, 0x28, 0x01, 0xFF,
 };
@@ -762,7 +772,7 @@ u8 D_800C1A2C[] = {
     0x03, 0x00, 0x44, 0x0C, 0x7F, 0x01, 0xFF,
 };
 
-u8 D_800C1A48[] = {
+u8 g_SfxNoteSaveCoffin[] = {
     0x00, 0x0E, 0x32, 0x08, 0x19, 0x01, 0x00, 0x0E, 0x34, 0x08,
     0x2D, 0x0A, 0x00, 0x0E, 0x32, 0x08, 0x19, 0x01, 0xFF,
 };
@@ -955,40 +965,183 @@ u8 D_800C1EAC[] = {
     0x3A, 0x0E, 0x00, 0x0E, 0x3C, 0x06, 0x28, 0x0E, 0xFF,
 };
 
-u8* D_800C1ECC[] = {
-    D_800C0ADC, D_800C0ADC, D_800C0CE8, D_800C0B04, D_800C0C14, D_800C0A10,
-    D_800C0A3C, D_800C0D2C, D_800C09E8, D_800C09A4, D_800C09B8, D_800C0C40,
-    D_800C09CC, D_800C0C74, D_800C0A58, D_800C0CFC, D_800C0CD8, D_800C0C48,
-    D_800C097C, D_800C0990, D_800C0B20, D_800C0D84, D_800C0D94, D_800C0F20,
-    D_800C0D40, D_800C0DB4, D_800C0DDC, D_800C0E10, D_800C0E2C, D_800C0E7C,
-    D_800C0EF4, D_800C0F30, D_800C0ED8, D_800C0FBC, D_800C106C, D_800C105C,
-    D_800C1080, D_800C10A8, D_800C1000, D_800C10E0, D_800C0AA8, D_800C0D10,
-    D_800C0B94, D_800C0BB0, D_800C0C00, D_800C0A20, D_800C0BE0, D_800C10F0,
-    D_800C1104, D_800C1118, D_800C0C58, D_800C1138, D_800C1158, D_800C11E0,
-    D_800C1200, D_800C121C, D_800C122C, D_800C1254, D_800C0ABC, D_800C0A98,
-    D_800C0B74, D_800C0B84, D_800C127C, D_800C12B8, D_800C12E0, D_800C12F4,
-    D_800C1308, D_800C131C, D_800C132C, D_800C133C, D_800C1394, D_800C13E0,
-    D_800C13F0, D_800C1428, D_800C1400, D_800C1414, D_800C143C, D_800C144C,
-    D_800C1460, D_800C148C, D_800C14A8, D_800C14B8, D_800C14D8, D_800C1500,
-    D_800C0F10, D_800C152C, D_800C153C, D_800C15AC, D_800C1644, D_800C16C4,
-    D_800C16D8, D_800C16E8, D_800C1268, D_800C16F8, D_800C1738, D_800C1764,
-    D_800C1754, D_800C1774, D_800C17E0, D_800C1890, D_800C18E8, D_800C1A48,
-    D_800C1AB8, D_800C1A5C, D_800C1AD4, D_800C0CB8, D_800C1E10, D_800C1E44,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C1E84, D_800C1784, D_800C0D74,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC,
-    D_800C0ADC, D_800C0BC4, D_800C1010, D_800C0ADC, D_800C0ADC, D_800C0ADC,
-    D_800C0B64, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0A60,
-    D_800C0A70, D_800C0D60, D_800C0ADC, D_800C0ADC, D_800C0FF0, D_800C0ADC,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C1690, D_800C1A2C, D_800C0ADC,
-    D_800C0ADC, D_800C0ADC, D_800C1EAC, D_800C1998, D_800C0ADC, D_800C0ADC,
-    D_800C0ADC, D_800C1B20, D_800C1B3C, D_800C1BEC, D_800C1C9C, D_800C1CEC,
-    D_800C1D30, D_800C1D50, D_800C1D6C, D_800C1D88, D_800C1DA4, D_800C1DB4,
-    D_800C1DC8, D_800C1DD0, D_800C1DD8, D_800C1DE0, D_800C1DE8, D_800C1DF0,
-    D_800C1DF8, D_800C1E00, D_800C1E08, D_800C12A4,
+u8* g_SfxScripts[] = {
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxCursor,
+    g_SfxSubweaponPickup,
+    g_SfxNoteMPFull,
+    g_SfxNoteCandleHitA,
+    g_SfxNoteBatShoot,
+    D_800C0D2C,
+    D_800C09E8,
+    D_800C09A4,
+    D_800C09B8,
+    D_800C0C40,
+    g_SfxNoteUIError,
+    g_SfxNoteLevelUp,
+    g_SfxNoteDebugSelect,
+    D_800C0CFC,
+    D_800C0CD8,
+    g_SfxNoteDracGlassBreak,
+    D_800C097C,
+    D_800C0990,
+    g_SfxNoteHealthPickup,
+    D_800C0D84,
+    D_800C0D94,
+    D_800C0F20,
+    D_800C0D40,
+    D_800C0DB4,
+    D_800C0DDC,
+    D_800C0E10,
+    D_800C0E2C,
+    D_800C0E7C,
+    D_800C0EF4,
+    D_800C0F30,
+    D_800C0ED8,
+    D_800C0FBC,
+    D_800C106C,
+    D_800C105C,
+    D_800C1080,
+    D_800C10A8,
+    D_800C1000,
+    D_800C10E0,
+    D_800C0AA8,
+    D_800C0D10,
+    D_800C0B94,
+    D_800C0BB0,
+    g_SfxNoteAluSword,
+    g_SfxNoteGoldPickup,
+    D_800C0BE0,
+    D_800C10F0,
+    D_800C1104,
+    D_800C1118,
+    D_800C0C58,
+    D_800C1138,
+    D_800C1158,
+    D_800C11E0,
+    D_800C1200,
+    D_800C121C,
+    D_800C122C,
+    D_800C1254,
+    D_800C0ABC,
+    D_800C0A98,
+    D_800C0B74,
+    D_800C0B84,
+    D_800C127C,
+    D_800C12B8,
+    D_800C12E0,
+    D_800C12F4,
+    D_800C1308,
+    D_800C131C,
+    D_800C132C,
+    D_800C133C,
+    D_800C1394,
+    D_800C13E0,
+    D_800C13F0,
+    D_800C1428,
+    D_800C1400,
+    D_800C1414,
+    D_800C143C,
+    D_800C144C,
+    D_800C1460,
+    D_800C148C,
+    D_800C14A8,
+    D_800C14B8,
+    D_800C14D8,
+    D_800C1500,
+    D_800C0F10,
+    D_800C152C,
+    D_800C153C,
+    D_800C15AC,
+    D_800C1644,
+    D_800C16C4,
+    D_800C16D8,
+    g_SfxNoteCandleHitB,
+    D_800C1268,
+    D_800C16F8,
+    D_800C1738,
+    D_800C1764,
+    D_800C1754,
+    D_800C1774,
+    D_800C17E0,
+    D_800C1890,
+    D_800C18E8,
+    g_SfxNoteSaveCoffin,
+    D_800C1AB8,
+    D_800C1A5C,
+    D_800C1AD4,
+    g_SfxNotePentagram,
+    D_800C1E10,
+    D_800C1E44,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C1E84,
+    D_800C1784,
+    D_800C0D74,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0BC4,
+    D_800C1010,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0B64,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0A60,
+    D_800C0A70,
+    D_800C0D60,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0FF0,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteBossDefeated,
+    D_800C1A2C,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C1EAC,
+    D_800C1998,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C1B20,
+    D_800C1B3C,
+    D_800C1BEC,
+    D_800C1C9C,
+    D_800C1CEC,
+    D_800C1D30,
+    D_800C1D50,
+    D_800C1D6C,
+    D_800C1D88,
+    D_800C1DA4,
+    D_800C1DB4,
+    D_800C1DC8,
+    D_800C1DD0,
+    D_800C1DD8,
+    D_800C1DE0,
+    D_800C1DE8,
+    D_800C1DF0,
+    D_800C1DF8,
+    D_800C1E00,
+    D_800C1E08,
+    D_800C12A4,
 };
 
 void ExecCdSoundCommands(void) {
-    if (*(u16*)&g_CdSoundCommandQueuePos == 0)
+    if (g_CdSoundCommandQueuePos == 0)
         return;
 
     switch (g_CdSoundCommandQueue[0]) {
@@ -1024,7 +1177,7 @@ void ExecCdSoundCommands(void) {
     }
 }
 
-void ApplyQuadChannelSetting(
+void PlaySfxScript(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
     u16 volumeMod;
     u16 calcVolume;
@@ -1040,24 +1193,26 @@ void ApplyQuadChannelSetting(
 
     volumeMod = volume;
     if (volumeMod == 0xFFFF) {
-        g_ChannelGroupVolume[channel_group] =
-            (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
-        g_UnkChannelSetting1[channel_group] = 0;
+        g_SfxScriptVolume[channel_group] =
+            (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
+        g_SfxScriptDistance[channel_group] = 0;
     } else {
-        calcVolume = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
-        g_ChannelGroupVolume[channel_group] = (calcVolume * volumeMod) >> 7;
-        g_UnkChannelSetting1[channel_group] = distance;
+        calcVolume = (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
+        g_SfxScriptVolume[channel_group] = (calcVolume * volumeMod) >> 7;
+        g_SfxScriptDistance[channel_group] = distance;
     }
-    g_UnkChannelSetting2[channel_group] = arg0;
-    D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
+    g_CurrentSfxScriptSfxId[channel_group] = arg0;
+    g_SfxScriptMode[channel_group] = g_SfxData[arg0].mode;
     progId = g_SfxData[arg0].prog + 1;
-    D_8013B628[channel_group] = D_800C1ECC[progId];
-    D_8013B66C[channel_group] = 0;
-    D_8013B648[channel_group] = arg0;
-    D_8013AEA0[channel_group] = g_SfxData[arg0].unk6;
+    g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
+    g_SfxScriptTimer[channel_group] = 0;
+    g_CurrentSfxScriptSfxId2[channel_group] = arg0;
+    g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
 }
 
-void func_80135624(
+// channel group is 0-3 so play on one of these pairs:
+// (12,13),(14,15),(16,17),(18,19)
+void KeyOn12_19(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
     if (do_key_off) {
         // do key off for two channels
@@ -1068,7 +1223,7 @@ void func_80135624(
     func_80132A04(
         (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
         g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
-    D_8013B650[channel_group] = arg0;
+    g_CurrentSfxId12_19[channel_group] = arg0;
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
@@ -1079,103 +1234,110 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
         return;
     }
     if (g_SfxData[arg0].vabid == 9) {
-        if (D_801390C4 == 0) {
+        if (g_SeqIsPlaying == 0) {
             for (i = 0; i < 3; i++) {
-                if (arg0 == D_8013B648[i]) {
-                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                if (arg0 == g_CurrentSfxScriptSfxId2[i]) {
+                    PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (D_8013B648[i] == 0) {
-                    ApplyQuadChannelSetting(arg0, i, false, volume, distance);
+                if (g_CurrentSfxScriptSfxId2[i] == 0) {
+                    PlaySfxScript(arg0, i, false, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (D_8013AEA0[i] < g_SfxData[arg0].unk6) {
-                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                if (g_SfxScriptUnk6[i] < g_SfxData[arg0].unk6) {
+                    PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (g_SfxData[arg0].unk6 == D_8013AEA0[i]) {
-                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                if (g_SfxData[arg0].unk6 == g_SfxScriptUnk6[i]) {
+                    PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
             }
             return;
         }
-        if (g_SfxData[arg0].unk6 >= D_8013AEA6) {
-            ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
+        if (g_SfxData[arg0].unk6 >= g_SfxScriptUnk6[3]) {
+            PlaySfxScript(arg0, 3, true, volume, distance);
         }
     } else {
-        switch (g_SfxData[arg0].unk4) {
-        case 1:
-            D_80139804 = arg0;
+        switch (g_SfxData[arg0].mode) {
+        case SFX_MODE_CHANNELS_22_23:
+            g_CurSfxId22_23 = arg0;
             if (volume == 0xFFFF) {
-                D_8013AEE0 = 0x7F;
+                g_CurSfxVol22_23 = 0x7F;
             } else {
-                D_8013AEE0 = volume;
+                g_CurSfxVol22_23 = volume;
             }
-            D_8013AE94 = distance;
-            func_80134D14();
+            g_CurSfxDistance22_23 = distance;
+            KeyOnChannels22_23();
             return;
-        case 3:
-            D_8013B664 = arg0;
+        case SFX_MODE_CHANNELS_20_21:
+            g_CurSfxId20_21 = arg0;
             if (volume == 0xFFFF) {
-                D_801390A4 = 0x7F;
+                g_CurSfxVol20_21 = 0x7F;
             } else {
-                D_801390A4 = volume;
+                g_CurSfxVol20_21 = volume;
             }
-            D_80139010 = distance;
-            func_80134C60();
+            g_CurSfxDistance20_21 = distance;
+            KeyOnChannels20_21();
             return;
-        case 2:
-            SetReleaseRate6();
-            D_80139804 = 0;
+        case SFX_MODE_RELEASE_22_23:
+            SetReleaseRateLow_22_23();
+            g_CurSfxId22_23 = 0;
             return;
-        case 0:
-            D_801397F8 = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+        case SFX_MODE_CHANNELS_12_19:
+            g_CurSfxVol12_19 =
+                (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
             if (volume == 0xFFFF) {
-                D_801396DC = 0;
+                g_CurSfxDistance12_19 = 0;
             } else {
-                D_801396DC = distance;
-                D_801397F8 = (D_801397F8 * volume) >> 7;
+                g_CurSfxDistance12_19 = distance;
+                g_CurSfxVol12_19 = (g_CurSfxVol12_19 * volume) >> 7;
             }
-            if (D_801390C4 == 0) {
+            if (g_SeqIsPlaying == 0) {
                 for (i = 0; i < 4; i++) {
-                    if (arg0 == D_8013B650[i]) {
-                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                    if (arg0 == g_CurrentSfxId12_19[i]) {
+                        KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
-                    if (D_8013B650[i] == 0) {
-                        func_80135624(arg0, i, false, D_801397F8, D_801396DC);
+                    if (g_CurrentSfxId12_19[i] == 0) {
+                        KeyOn12_19(arg0, i, false, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
                     if (D_8013AED4[i] < g_SfxData[arg0].unk6) {
-                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 for (i = 0; i < 3; i++) {
                     if (g_SfxData[arg0].unk6 == D_8013AED4[i]) {
-                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
+                                   g_CurSfxDistance12_19);
                         return;
                     }
                 }
                 return;
             }
-            if (D_8013B650[3] == 0) {
-                func_80135624(arg0, 3, false, D_801397F8, D_801396DC);
+            if (g_CurrentSfxId12_19[3] == 0) {
+                KeyOn12_19(
+                    arg0, 3, false, g_CurSfxVol12_19, g_CurSfxDistance12_19);
                 return;
             }
             if (g_SfxData[arg0].unk6 >= D_8013AED4[3]) {
-                func_80135624(arg0, 3, true, D_801397F8, D_801396DC);
+                KeyOn12_19(
+                    arg0, 3, true, g_CurSfxVol12_19, g_CurSfxDistance12_19);
             }
             break;
         }
@@ -1212,8 +1374,8 @@ void ExecSfx(void) {
             }
         }
         if (isFound == 0) {
-            func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].unk02,
-                          g_SfxRingBuffer[g_SfxRingBufferReadPos].unk04);
+            func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
+                          g_SfxRingBuffer[g_SfxRingBufferReadPos].sndPan);
         }
 
         g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
@@ -1236,19 +1398,19 @@ void func_80135D8C(void) {
     s8 distance;
     s8 distance2;
 
-    if (D_801390C4 == 0) {
+    if (g_SeqIsPlaying == 0) {
         for (i = 0; i < 3; i++) {
-            if (g_UnkChannelSetting2[i] != 0) {
-                if (D_8013B66C[i] == 0) {
-                    // FAKE, should just be &D_8013B628[i]
-                    temp_v1_2 = &D_8013B628;
+            if (g_CurrentSfxScriptSfxId[i] != 0) {
+                if (g_SfxScriptTimer[i] == 0) {
+                    // FAKE, should just be &g_CurrentSfxScript[i]
+                    temp_v1_2 = &g_CurrentSfxScript;
                     temp_t3 = i + temp_v1_2;
 
                     temp_t2 = *temp_t3;
                     *temp_t3 = temp_t2 + 1;
                     vab = temp_t2[0];
                     if (vab == -1) {
-                        g_UnkChannelSetting2[i] = 0;
+                        g_CurrentSfxScriptSfxId[i] = 0;
                         continue;
                     }
                     *temp_t3 = temp_t2 + 2;
@@ -1258,25 +1420,25 @@ void func_80135D8C(void) {
                     *temp_t3 = temp_t2 + 4;
                     tone = temp_t2[3];
                     *temp_t3 = temp_t2 + 5;
-                    volume = g_ChannelGroupVolume[i] * temp_t2[4];
+                    volume = g_SfxScriptVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
-                    D_8013B66C[i] = temp_t2[5];
-                    distance = D_8013B5F6[30 + i];
+                    g_SfxScriptTimer[i] = temp_t2[5];
+                    distance = g_SfxScriptDistance[i];
                     func_80132A04(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
-                    D_8013B66C[i]--;
+                    g_SfxScriptTimer[i]--;
                 }
             }
         }
-    } else if (D_8013AE8A[0] != 0) {
-        if (D_8013B672[0] == 0) {
-            temp_t2_2 = &D_8013B628[3];
+    } else if (g_CurrentSfxScriptSfxId[3] != 0) {
+        if (g_SfxScriptTimer[3] == 0) {
+            temp_t2_2 = &g_CurrentSfxScript[3];
             temp_v1 = *temp_t2_2;
             *temp_t2_2 = temp_v1 + 1;
             vab = temp_v1[0];
             if (vab == -1) {
-                D_8013AE8A[0] = 0;
+                g_CurrentSfxScriptSfxId[3] = 0;
                 return;
             }
             *temp_t2_2 = temp_v1 + 2;
@@ -1285,16 +1447,16 @@ void func_80135D8C(void) {
             note = temp_v1[2];
             *temp_t2_2 = temp_v1 + 4;
             tone = temp_v1[3];
-            distance2 = g_UnkChannelSetting1[3];
+            distance2 = g_SfxScriptDistance[3];
             *temp_t2_2 = temp_v1 + 5;
-            volume = D_8013B626 * temp_v1[4];
+            volume = g_SfxScriptVolume[3] * temp_v1[4];
             *temp_t2_2 = temp_v1 + 6;
-            D_8013B672[0] = temp_v1[5];
+            g_SfxScriptTimer[3] = temp_v1[5];
             distance = distance2;
             func_80132A04(33, vab, prog, tone, note, volume >> 7, distance);
 
         } else {
-            D_8013B672[0]--;
+            g_SfxScriptTimer[3]--;
         }
     }
 }
@@ -1314,35 +1476,35 @@ void func_80136010(void) {
     s8* new_var;
     s16* fakeptr;
 
-    SpuGetAllKeysStatus(&D_80138F64);
-    if (D_801390C4 == 0) {
-        var_a0 = &D_80138F64[12];
-        var_a2 = &D_80138F64[13];
+    SpuGetAllKeysStatus(g_KeyStatus);
+    if (g_SeqIsPlaying == 0) {
+        var_a0 = &g_KeyStatus[12];
+        var_a2 = &g_KeyStatus[13];
         for (i = 0; i < 4; i++) {
             sum = var_a0[i * 2] + var_a2[i * 2];
             if (sum == 0) {
-                D_8013B650[i] = 0;
+                g_CurrentSfxId12_19[i] = 0;
                 D_8013AED4[i] = 0;
             }
         }
-    } else if ((s8)(D_80138F64[18] + D_80138F64[19]) == 0) {
-        D_8013B650[3] = 0;
+    } else if ((s8)(g_KeyStatus[18] + g_KeyStatus[19]) == 0) {
+        g_CurrentSfxId12_19[3] = 0;
         D_8013AED4[3] = 0;
     }
-    if (D_801390C4 == 0) {
-        var_t4 = D_8013B648;
-        new_var = &D_80138F64;
-        var_t3 = &D_80138F64[3];
-        var_t2 = &D_80138F64[2];
-        var_t1 = &D_80138F64[1];
+    if (g_SeqIsPlaying == 0) {
+        var_t4 = g_CurrentSfxScriptSfxId2;
+        new_var = &g_KeyStatus;
+        var_t3 = &g_KeyStatus[3];
+        var_t2 = &g_KeyStatus[2];
+        var_t1 = &g_KeyStatus[1];
         var_t0 = new_var;
 
         for (i = 0; i < 3; i++) {
-            if (g_UnkChannelSetting2[i] == 0) {
+            if (g_CurrentSfxScriptSfxId[i] == 0) {
                 if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
                     *var_t4 = 0;
-                    fakeptr = D_8013AEA0;
-                    D_8013AEA0[i] = 0;
+                    fakeptr = g_SfxScriptUnk6;
+                    g_SfxScriptUnk6[i] = 0;
                 }
             }
             fakeptr++;
@@ -1354,10 +1516,11 @@ void func_80136010(void) {
         }
         return;
     }
-    if ((D_8013AE8A[0] == 0) && ((s8)(D_80138F64[14] + D_80138F64[15] +
-                                      D_80138F64[16] + D_80138F64[17]) == 0)) {
-        D_8013B64E = 0;
-        D_8013AEA6 = 0;
+    if ((g_CurrentSfxScriptSfxId[3] == 0) &&
+        ((s8)(g_KeyStatus[14] + g_KeyStatus[15] + g_KeyStatus[16] +
+              g_KeyStatus[17]) == 0)) {
+        g_CurrentSfxScriptSfxId2[3] = 0;
+        g_SfxScriptUnk6[3] = 0;
     }
 }
 

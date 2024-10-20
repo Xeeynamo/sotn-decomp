@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * Overlay: ST0
  * Enemy: Dracula Boss
  */
 
 #include "st0.h"
+#include "sfx.h"
 
 void EntityDracula(Entity* self) {
     s16 primIndex;
@@ -73,22 +75,23 @@ void EntityDracula(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (D_801C257C & 0x10) {
+            if (g_CutsceneFlags & 0x10) {
                 SetSubStep(1);
             }
             break;
 
         case 1:
-            if ((AnimateEntity(D_80180A0C, self) == 0) && (D_801C257C & 0x20)) {
+            if ((AnimateEntity(D_80180A0C, self) == 0) &&
+                (g_CutsceneFlags & 0x20)) {
                 SetSubStep(2);
             }
             break;
 
         case 2:
             if (AnimateEntity(D_80180A20, self) == 0) {
-                D_801C257C |= 0x100;
+                g_CutsceneFlags |= 0x100;
             }
-            if (D_801C257C & 0x40) {
+            if (g_CutsceneFlags & 0x40) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }
@@ -230,7 +233,7 @@ void EntityDracula(Entity* self) {
             if (AnimateEntity(D_80180934, self) == 0) {
                 SetSubStep(1);
                 self->ext.dracula.unk8C = 2;
-                g_api.PlaySfx(NA_SE_EN_DR_FIREBALL);
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                 g_api.PlaySfx(NA_SE_VO_DR_HERE_IS_TRUE_POWER);
             }
             break;
@@ -306,7 +309,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk94 = 0x40;
             self->ext.dracula.unk98 = 0;
             self->unk6C = 0x80;
-            self->drawFlags |= 8;
+            self->drawFlags |= FLAG_DRAW_UNK8;
             prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
             prim->x1 = prim->x3 = self->posX.i.hi;
@@ -314,7 +317,7 @@ void EntityDracula(Entity* self) {
             prim->y2 = prim->y3 = 0x100;
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
             prim->priority = 0xC0;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -327,7 +330,7 @@ void EntityDracula(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             prim->r1 = prim->g1 = prim->b1 = self->ext.dracula.unk94;
             prim->priority = 0xC0;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             LOW(prim->r3) = LOW(prim->r1);
             prim = prim->next;
             prim->type = PRIM_G4;
@@ -338,7 +341,7 @@ void EntityDracula(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
             prim->r1 = prim->g1 = prim->b1 = 0;
             prim->priority = 0xC0;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r1);
             self->ext.dracula.unk8C = 0x20;
@@ -539,13 +542,13 @@ void EntityDraculaFireball(Entity* self) {
         if (self->params == 2) {
             self->velocityY = FIX(0.5);
         }
-        self->ext.generic.unk8C.modeU16.unk0 = 0x28;
+        self->ext.dracula.unk8C = 0x28;
 
     case 1:
         AnimateEntity(D_8018097C, self);
         MoveEntity();
 
-        if (--self->ext.generic.unk8C.modeS16.unk0 == 0) {
+        if (--self->ext.dracula.unk8C == 0) {
             self->velocityY = 0;
         }
         return;
@@ -573,7 +576,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 0:
         InitializeEntity(D_801805F8);
         entity->hitboxState = 0;
-        entity->drawFlags |= 4;
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
         break;
     case 1:
         if (AnimateEntity(D_801809B0, entity) == 0) {
@@ -660,13 +663,13 @@ void EntityDraculaGlass(Entity* entity) {
         entity->rotZ += 0x20;
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi >= 205) {
-            g_api.PlaySfx(NA_SE_BREAK_GLASS);
+            g_api.PlaySfx(SFX_DRA_GLASS_BREAK); // "What is a man?!"
             entity->posY.i.hi = 204;
             SetStep(2);
         }
         break;
     case 2:
-        entity->drawFlags = 0;
+        entity->drawFlags = FLAG_DRAW_DEFAULT;
         if (AnimateEntity(D_80180A40, entity) == 0) {
             s32 i;
             for (i = 0; i < 8; i++) {

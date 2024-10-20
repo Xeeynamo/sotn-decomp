@@ -180,7 +180,7 @@ void EntityBreakableWall(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->flags |= FLAG_UNK_800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = newPrimIdx;
             prim = &g_PrimBuf[newPrimIdx];
 

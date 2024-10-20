@@ -1,3 +1,4 @@
+#ifndef VERSION_PC
 #ifndef LIBGTE_H
 #define LIBGTE_H
 
@@ -104,6 +105,27 @@ extern long ratan2(long y, long x);
                      "lwc2	$1, 4( %0 )"                                        \
                      :                                                         \
                      : "r"(r0))
+#define gte_ldv1(r0)                                                           \
+    __asm__ volatile("lwc2	$2, 0( %0 );"                                       \
+                     "lwc2	$3, 4( %0 )"                                        \
+                     :                                                         \
+                     : "r"(r0))
+#define gte_ldv2(r0)                                                           \
+    __asm__ volatile("lwc2	$4, 0( %0 );"                                       \
+                     "lwc2	$5, 4( %0 )"                                        \
+                     :                                                         \
+                     : "r"(r0))
+
+#define gte_ldv3(r0, r1, r2)                                                   \
+    __asm__ volatile(                                                          \
+        "lwc2	$0, 0( %0 );"                                                    \
+        "lwc2	$1, 4( %0 );"                                                    \
+        "lwc2	$2, 0( %1 );"                                                    \
+        "lwc2	$3, 4( %1 );"                                                    \
+        "lwc2	$4, 0( %2 );"                                                    \
+        "lwc2	$5, 4( %2 )"                                                     \
+        :                                                                      \
+        : "r"(r0), "r"(r1), "r"(r2))
 
 // NOTE: These are not the official defines in the SDK.
 // They were identified by looking at functions which used them.
@@ -132,17 +154,6 @@ extern long ratan2(long y, long x);
         : "r"(r0)                                                              \
         : "$12", "memory")
 
-#define gte_ldv3(r0, r1, r2)                                                   \
-    __asm__ volatile(                                                          \
-        "lwc2	$0, 0( %0 );"                                                    \
-        "lwc2	$1, 4( %0 );"                                                    \
-        "lwc2	$2, 0( %1 );"                                                    \
-        "lwc2	$3, 4( %1 );"                                                    \
-        "lwc2	$4, 0( %2 );"                                                    \
-        "lwc2	$5, 4( %2 )"                                                     \
-        :                                                                      \
-        : "r"(r0), "r"(r1), "r"(r2))
-
 #define gte_stopz(r0)                                                          \
     __asm__ volatile("swc2	$24, 0( %0 )" : : "r"(r0) : "memory")
 
@@ -157,7 +168,92 @@ extern long ratan2(long y, long x);
 #define gte_stsxy(r0)                                                          \
     __asm__ volatile("swc2	$14, 0( %0 )" : : "r"(r0) : "memory")
 
+#define gte_stsxy3_gt3(r0)                                                     \
+    __asm__ volatile(                                                          \
+        "swc2	$12, 8( %0 );"                                                   \
+        "swc2	$13, 20( %0 );"                                                  \
+        "swc2	$14, 32( %0 )"                                                   \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "memory")
+
+#define gte_ldv3c(r0)                                                          \
+    __asm__ volatile(                                                          \
+        "lwc2	$0, 0( %0 );"                                                    \
+        "lwc2	$1, 4( %0 );"                                                    \
+        "lwc2	$2, 8( %0 );"                                                    \
+        "lwc2	$3, 12( %0 );"                                                   \
+        "lwc2	$4, 16( %0 );"                                                   \
+        "lwc2	$5, 20( %0 )"                                                    \
+        :                                                                      \
+        : "r"(r0))
+
+#define gte_SetTransVector(r0)                                                 \
+    __asm__ volatile(                                                          \
+        "lw	$12, 0( %0 );"                                                     \
+        "lw	$13, 4( %0 );"                                                     \
+        "lw	$14, 8( %0 );"                                                     \
+        "ctc2	$12, $5;"                                                        \
+        "ctc2	$13, $6;"                                                        \
+        "ctc2	$14, $7"                                                         \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "$12", "$13", "$14")
+
 #define gte_SetGeomScreen(r0) __asm__ volatile("ctc2	%0, $26" : : "r"(r0))
+
+#define gte_SetRGBfifo(r, g, b)                                                \
+    __asm__ volatile("lwc2   $20, 0( %0 );"                                    \
+                     "lwc2   $21, 0( %1 );"                                    \
+                     "lwc2   $22, 0( %2 )"                                     \
+                     :                                                         \
+                     : "r"(r), "r"(g), "r"(b))
+
+#define gte_lddp(r0) __asm__ volatile("mtc2	%0, $8" : : "r"(r0))
+
+#define gte_SetIR123(r0, r1, r2)                                               \
+    __asm__ volatile("mtc2	%0, $9;"                                            \
+                     "mtc2	%1, $10;"                                           \
+                     "mtc2	%2, $11"                                            \
+                     :                                                         \
+                     : "r"(r0), "r"(r1), "r"(r2))
+
+#define gte_ldsz3(r0, r1, r2)                                                  \
+    __asm__ volatile("mtc2	%0, $17;"                                           \
+                     "mtc2	%1, $18;"                                           \
+                     "mtc2	%2, $19"                                            \
+                     :                                                         \
+                     : "r"(r0), "r"(r1), "r"(r2))
+
+#define gte_ldsz4(r0, r1, r2, r3)                                              \
+    __asm__ volatile(                                                          \
+        "mtc2	%0, $16;"                                                        \
+        "mtc2	%1, $17;"                                                        \
+        "mtc2	%2, $18;"                                                        \
+        "mtc2	%3, $19"                                                         \
+        :                                                                      \
+        : "r"(r0), "r"(r1), "r"(r2), "r"(r3))
+
+#define gte_ldsxy3(r0, r1, r2)                                                 \
+    __asm__ volatile("mtc2	%0, $12;"                                           \
+                     "mtc2	%1, $13;"                                           \
+                     "mtc2	%2, $14"                                            \
+                     :                                                         \
+                     : "r"(r0), "r"(r1), "r"(r2))
+
+#define gte_SetRii(r0, r1, r2)                                                 \
+    __asm__ volatile("ctc2	%0, $0;"                                            \
+                     "ctc2	%1, $2;"                                            \
+                     "ctc2	%2, $4"                                             \
+                     :                                                         \
+                     : "r"(r0), "r"(r1), "r"(r2))
+
+#define gte_SetMAC123(r0, r1, r2)                                              \
+    __asm__ volatile("mtc2	%0, $25;"                                           \
+                     "mtc2	%1, $26;"                                           \
+                     "mtc2	%2, $27"                                            \
+                     :                                                         \
+                     : "r"(r0), "r"(r1), "r"(r2))
 
 #else
 
@@ -177,4 +273,8 @@ extern long ratan2(long y, long x);
 
 #endif
 
+#endif
+#else
+#include "../../src/pc/psxsdk/PsyCross/src/gte/psx/libgte.h"
+#include "../../src/pc/psxsdk/PsyCross/src/gte/psx/inline_c.h"
 #endif

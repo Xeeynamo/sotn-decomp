@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -38,7 +40,7 @@ u16* D_800AD520[] = {
 extern u8 D_800B0188[];
 // TODO: move to 7A4D0.c
 WeaponAnimation D_800AD53C[] = {
-    {D_800AD520, D_800B0188, 0x0000, 0x60C, 0x24, 1},
+    {D_800AD520, D_800B0188, 0x0000, SFX_WEAPON_SWISH_C, 0x24, 1},
 };
 
 u16 D_800AD54C[] = {
@@ -130,23 +132,37 @@ s16 D_800AD670[42][10] = {
     {0, 0, 0, 351, 256, 256, 256, 28684, 49, 0},
 };
 
-s32 D_800AD9B8[] = {
-    0x00FF0000, 0x010300FF, 0x00FF0031, 0x001F007F, 0x00310103, 0x001F003F,
-    0x010300FF, 0x00000031, 0x001F003F, 0x00310103, 0x003F003F, 0x0103003F,
-    0x00FF0031, 0x003F003F, 0x00310103, 0x003F001F, 0x0103007F, 0x007F0031,
-    0x000F003F, 0x00310103, 0x007F00FF, 0x0103001F, 0x007F0031, 0x000F007F,
-    0x00310103, 0x000F000F, 0x0103007F, 0x003F0031, 0x003F003F, 0x00310103,
-    0x000F007F, 0x0103007F, 0x000F0031, 0x002F00FF, 0x00310103, 0x00FF002F,
-    0x0103002F, 0x005F0031, 0x005F000F, 0x00310103, 0x003F007F, 0x0103000F,
-    0x00FF0031, 0x000F000F, 0x00310103, 0x003F007F, 0x0103003F, 0x00000031,
-    0x00FF00FF, 0x00310103, 0x003F00FF, 0x0103003F, 0x00FF0031, 0x003F003F,
-    0x00310103, 0x007F007F, 0x0103007F, 0x00000031, 0x007F00FF, 0x00310103,
+s16 D_800AD9B8[24][5] = {
+    {0, 255, 255, 259, 49},   // Cyan, MP Refill
+    {255, 127, 31, 259, 49},  // Orange, curse attacking effect
+    {63, 31, 255, 259, 49},   // Light blue, Agunea
+    {0, 63, 31, 259, 49},     // Forest green, no known use
+    {63, 63, 63, 259, 49},    // Dark grey, no known use
+    {255, 63, 63, 259, 49},   // Coral, no known use
+    {31, 63, 127, 259, 49},   // Navy blue, no known use
+    {127, 63, 15, 259, 49},   // Brown, no known use
+    {255, 127, 31, 259, 49},  // Orange, same as entry 1, no known use
+    {127, 127, 15, 259, 49},  // Olive green, no known use
+    {15, 15, 127, 259, 49},   // Dark blue, no known use
+    {63, 63, 63, 259, 49},    // Dark grey, same as entry 4, no known use
+    {127, 15, 127, 259, 49},  // Plum, no known use
+    {15, 255, 47, 259, 49},   // Chartreuse, no known use
+    {47, 255, 47, 259, 49},   // Lime green, no known use
+    {95, 15, 95, 259, 49},    // Eggplant, no known use
+    {127, 63, 15, 259, 49},   // Brown, same as entry 7, no known use
+    {255, 15, 15, 259, 49},   // Red, Dark Metamorphosis
+    {127, 63, 63, 259, 49},   // Mahogany, no known use
+    {0, 255, 255, 259, 49},   // Cyan, same as entry 0, no known use
+    {255, 63, 63, 259, 49},   // Red, sword warp spell
+    {255, 63, 63, 259, 49},   // Red, sword warp spell
+    {127, 127, 127, 259, 49}, // Grey, soul steal
+    {0, 255, 127, 259, 49},   // Light green, Sword Brothers
 };
 
 // clang-format off
-#define UNK_FLAGS_GROUP_1 FLAG_HAS_PRIMS | FLAG_UNK_08000000
-#define UNK_FLAGS_GROUP_2 FLAG_HAS_PRIMS | FLAG_UNK_04000000
-#define UNK_FLAGS_GROUP_3 FLAG_HAS_PRIMS | FLAG_UNK_08000000 | FLAG_UNK_04000000
+#define UNK_FLAGS_GROUP_1 FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED
+#define UNK_FLAGS_GROUP_2 FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA
+#define UNK_FLAGS_GROUP_3 FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA
 static unkStr_8011E4BC D_800ADAA8 = { 8, 0x7F, 0x7F, 0x7F, 2, 2, 2, 51, 0,   UNK_FLAGS_GROUP_1};
 static unkStr_8011E4BC D_800ADAB8 = {16, 0x7F, 0x7F, 0x7F, 1, 1, 2, 51, 1,   UNK_FLAGS_GROUP_3};
 static unkStr_8011E4BC D_800ADAC8 = { 8, 0x7F, 0x7F, 0x7F, 1, 1, 2, 51, 0,   UNK_FLAGS_GROUP_1};
@@ -171,6 +187,22 @@ static unkStr_8011E4BC* D_800ADB98[] = {
 };
 
 extern Unkstruct_800ADEF0 D_800ADEF0[];
+
+// BSS
+extern s32 D_8013808C;
+extern s32 D_80138090;
+extern mistStruct D_80138094[16];
+extern s16 D_801381D4;
+extern s16 D_801381D8;
+extern s16 D_801381DC;
+extern s16 D_801381E0;
+extern s16 D_801381E4;
+extern s16 D_801381E8;
+extern s16 D_801381EC;
+extern s16 D_801381F0;
+extern Primitive D_801381F4[8];
+extern s32 D_80138394;
+extern s32 D_80138398;
 
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
@@ -280,8 +312,9 @@ void func_8011E4BC(Entity* self) {
                 tilePrim->posX.i.hi = (selfXPos + (rand() & 0xF)) - 7;
                 tilePrim->posY.i.hi = selfYPos - (rand() & 0x1F);
                 tilePrim->velocityY.val = 0xFFFF4000 - (rand() & 0x7FFF);
-                if (self->ext.et_8011E4BC.unk8C != NULL) {
-                    tilePrim->velocityX.val = self->ext.et_8011E4BC.unk8C->unk8;
+                if (self->ext.et_8011E4BC.parent != NULL) {
+                    tilePrim->velocityX.val =
+                        self->ext.et_8011E4BC.parent->velocityX;
                 }
                 tilePrim->delay = ((i * 2) + 0xF);
                 break;
@@ -466,6 +499,7 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0(Entity* entity) {}
 
+// RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
     u16 params = self->params;
     s16 paramsHi = self->params >> 8;
@@ -479,23 +513,23 @@ void func_8011EDA8(Entity* self) {
             self->rotY = 0xC0;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->animSet = ANIMSET_DRA(2);
-            self->unk4C = D_800ADC10;
+            self->anim = D_800ADC10;
         }
 
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (params & 3) {
-                self->unk4C = D_800ADBD4;
+                self->anim = D_800ADBD4;
                 self->rotX = 0x120;
                 self->rotY = 0x120;
                 self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
-                self->unk4C = D_800AD57C;
+                self->anim = D_800AD57C;
                 self->palette = 0x8170;
             }
         }
-        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
         if (rand() % 4) {
             self->zPriority = PLAYER.zPriority + 2;
@@ -521,14 +555,14 @@ void func_8011EDA8(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->unk4C != D_800AD57C)) {
+        if ((self->animFrameIdx == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->unk4C == D_800AD57C)) {
+        if ((self->animFrameIdx == 16) && (self->anim == D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -539,14 +573,15 @@ void func_8011EDA8(Entity* self) {
     }
 }
 
-// same as RIC/func_801601DC
+// same as RIC/RicEntityHitByDark
 void func_8011F074(Entity* entity) {
     s16 posX;
     s16 posY;
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_08000000;
+        entity->flags =
+            FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
@@ -559,7 +594,7 @@ void func_8011F074(Entity* entity) {
         }
         entity->rotY = 0x40;
         entity->rotX = 0x40;
-        entity->unk4C = &D_800ADC44;
+        entity->anim = D_800ADC44;
         D_8013808C++;
         entity->unk6C = 0xFF;
         entity->drawFlags =
@@ -616,7 +651,7 @@ void EntityHitByLightning(Entity* self) {
             return;
         }
 
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x3F);
         self->ext.hitbylightning.unk80 = rand();
@@ -639,8 +674,8 @@ void EntityHitByLightning(Entity* self) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
-        PlaySfx(0x69D);
-        PlaySfx(0x665);
+        PlaySfx(SFX_MAGIC_SWITCH);
+        PlaySfx(SFX_THUNDER_B);
         self->step++;
         break;
     case 1:
@@ -756,7 +791,7 @@ void EntityHitByIce(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
@@ -794,7 +829,7 @@ void EntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        PlaySfx(0x69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         self->step++;
         break;
     case 1:
@@ -813,7 +848,7 @@ void EntityHitByIce(Entity* self) {
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            PlaySfx(0x61A);
+            PlaySfx(SFX_GLASS_BREAK_B);
             self->step++;
         }
         break;
@@ -890,8 +925,8 @@ void EntityHitByIce(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
             prim->drawMode |= DRAW_UNK02;
             prim->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);
-            self->flags |= FLAG_UNK_08000000;
-            self->flags &= ~(FLAG_UNK_20000 | FLAG_UNK_40000);
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            self->flags &= ~(FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED);
             if (--prim->v0 == 0) {
                 prim->drawMode |= DRAW_HIDE;
             }
@@ -902,7 +937,7 @@ void EntityHitByIce(Entity* self) {
 
 // Transparent white circle closes over player
 // Entity ID #38. Created by blueprint 53. No known callers.
-// Near-duplicate of RIC EntityShrinkingPowerUpRing.
+// Near-duplicate of RIC RicEntityShrinkingPowerUpRing.
 void EntityTransparentWhiteCircle(Entity* self) {
     s16 selfX;
     s16 selfY;
@@ -938,8 +973,8 @@ void EntityTransparentWhiteCircle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim2 = prim1 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim1 = prim1->next;
@@ -1120,11 +1155,11 @@ void EntityPlayerPinkEffect(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_40000 | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         self->ext.timer.t = data_idx->unk0[0];
         if (data_idx->unk18 != 0x83) {
-            PlaySfx(0x668);
+            PlaySfx(SFX_TRANSFORM);
         }
         if (data_idx->unk18 >= 128) {
             func_8010E168(true, 64);
@@ -1137,15 +1172,14 @@ void EntityPlayerPinkEffect(Entity* self) {
         if (--self->ext.timer.t != 0) {
             return;
         }
-        if (data_idx->pad2[self->ext.factory.unk7E]) {
+        if (data_idx->unk8[self->ext.factory.unk7E]) {
             CreateEntFactoryFromEntity(
                 self,
-                // factory changed
-                (data_idx->pad2[self->ext.factory.unk7E] +
-                 (data_idx->unk16[self->ext.factory.unk7E] << 16)),
+                FACTORY(data_idx->unk8[self->ext.factory.unk7E],
+                        data_idx->unk16[self->ext.factory.unk7E]),
                 0);
-            if (data_idx->pad2[self->ext.factory.unk7E] == 0x28) {
-                PlaySfx(0x67D);
+            if (data_idx->unk8[self->ext.factory.unk7E] == 0x28) {
+                PlaySfx(SFX_UI_MP_FULL);
             }
         }
 
@@ -1161,12 +1195,12 @@ void EntityPlayerPinkEffect(Entity* self) {
                 }
                 break;
             case 0x80:
-                g_Player.D_80072F00[0] = 2;
-                PlaySfx(0x669);
+                g_Player.timers[0] = 2;
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x81:
-                g_Player.D_80072F00[1] = 2;
-                PlaySfx(0x669);
+                g_Player.timers[1] = 2;
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x84:
                 g_Player.unk56 = 1;
@@ -1183,13 +1217,13 @@ void EntityPlayerPinkEffect(Entity* self) {
                 g_Player.unk58 = g_Status.hpMax;
                 break;
             case 0x87:
-                PlaySfx(0x669);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 g_Status.mp = g_Status.mpMax;
                 break;
             default:
                 CreateEntFactoryFromEntity(
-                    self, (D_800AE120[temp2] << 0x10) + 0x2F, 0);
-                PlaySfx(0x669);
+                    self, FACTORY(0x2F, D_800AE120[temp2]), 0);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             case 0x82:
                 break;
             }
@@ -1203,7 +1237,252 @@ void EntityPlayerPinkEffect(Entity* self) {
 }
 
 // player dissolves into pixels
-INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityPlayerDissolves);
+void EntityPlayerDissolves(Entity* self) {
+    const int PrimCount = 36;
+    const int Iterations = 40;
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 xPivot;
+    s16 yPivot;
+    s16 width;
+    s16 height;
+    s16 sp42;
+    s32 sp3C;
+    s16* sp38;
+    Primitive* prim;
+    s32 i;
+    u8* s2;
+    s16 s3;
+    s16 s4;
+    s16 s5;
+    s16 s6;
+    s16 s7;
+    u32* data;
+    u8* plSprite;
+    u8* temp1;
+    u8* temp2;
+
+    if (PLAYER.ext.player.anim != 0x38 && PLAYER.ext.player.anim != 0x39 &&
+        PLAYER.ext.player.anim != 0x3A &&
+        (self->step == 2 || self->step == 3)) {
+        self->step = 4;
+        LoadImage(&D_800AE138, D_80139A7C);
+        self->ext.dissolve.unk7E = rand() & 0xFF;
+        self->ext.dissolve.unk7C = 0x30;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    s5 = self->posX.i.hi = PLAYER.posX.i.hi;
+    s7 = self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    if (!(PLAYER.animCurFrame & 0x7FFF)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    sp38 = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
+    sp42 = *sp38++;
+    sp42 &= 0x7FFF;
+    plSprite = ((u8**)SPRITESHEET_PTR)[sp42];
+    xMargin = 4;
+    yMargin = 1;
+    wSprite = xMargin + plSprite[0];
+    hSprite = yMargin + plSprite[1];
+    width = wSprite - xMargin;
+    height = hSprite - yMargin;
+    s3 = width / 6;
+    s4 = height / 6;
+    xPivot = *sp38++ + plSprite[2];
+    yPivot = *sp38++ + plSprite[3];
+    if (self->facingLeft) {
+        s5 = s5 - xPivot;
+    } else {
+        s5 = s5 + xPivot;
+    }
+    s7 = s7 + yPivot;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCount);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
+        self->ext.dissolve.unk7C = 0;
+        temp1 = D_800AE140;
+        self->ext.dissolve.unk80 = rand() & 7;
+        self->ext.dissolve.unk7E = *(
+            temp1 + (self->ext.dissolve.unk80 * 8) + self->ext.dissolve.unk7C);
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim->u0 = prim->u2 = (xMargin) + (s3 * (i % 6)) + 0x80;
+            prim->u1 = prim->u3 = prim->u0 + s3;
+            prim->v0 = prim->v1 = (yMargin + (s4 * (i / 6)));
+            prim->v2 = prim->v3 = prim->v0 + s4;
+            prim->g0 = (((i / 6) * 2) + (rand() & 3));
+            prim->tpage = 0x18;
+            prim->clut = PLAYER.palette & 0x7FFF;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->step += 1;
+        break;
+    case 1:
+        StoreImage(&D_800AE130, D_80139A7C);
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = s5 - (s3 * (i % 6)) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+                ;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim = prim->next;
+        }
+        self->step += 1;
+        /* fallthrough */
+    case 2:
+        PLAYER.animCurFrame |= ~0x7FFF;
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
+            self->step += 1;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim = prim->next;
+        }
+        break;
+    case 3:
+        PLAYER.animCurFrame |= ~0x7FFF;
+        temp2 = D_800AE140;
+        self->ext.dissolve.unk7E =
+            *(temp2 + self->ext.dissolve.unk80 * 8 + self->ext.dissolve.unk7C);
+        data = D_80139A7C;
+        s2 = (u8*)data;
+        s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
+        s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
+        for (i = 0; i < Iterations; i++) {
+            if (rand() & 3) {
+                if (self->ext.dissolve.unk7E & 1) {
+                    if (*(s2 + (i & 7) * 8 + (i >> 3) * 0x400)) {
+                        *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0xF0;
+                        *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) |= 1;
+                    }
+                } else if (*(s2 + (i & 7) * 8 + (i >> 3) * 0x400)) {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0x0F;
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) |= 0x10;
+                }
+            }
+        }
+        LoadImage(&D_800AE130, data);
+        if (++self->ext.dissolve.unk7C == 8) {
+            self->ext.dissolve.unk7C = 0;
+            self->ext.dissolve.unk80 += 1;
+            self->ext.dissolve.unk80 &= 7;
+            self->step = 2;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim = prim->next;
+        }
+        break;
+    case 4:
+        if (PLAYER.step == 0x10) {
+            if (g_Timer % 2 == 0) {
+                break;
+            }
+        } else if (g_Timer % 3 == 0) {
+            break;
+        }
+        for (sp3C = 0; sp3C < 6; sp3C++) {
+            data = D_80139A7C;
+            s2 = (u8*)data;
+            s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
+            s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
+            for (i = 0; i < Iterations; i++) {
+                if (self->ext.dissolve.unk7E & 1) {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0xF0;
+                } else {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0x0F;
+                }
+            }
+            // some sort of prng state
+            self->ext.dissolve.unk7E += 0x23;
+            self->ext.dissolve.unk7E &= 0xFF;
+        }
+        LoadImage(&D_800AE138, data);
+        if (--self->ext.dissolve.unk7C == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            prim->drawMode &= DRAW_UNK_200;
+            prim->drawMode |= DRAW_UNK02;
+            if (prim->r0 == 0) {
+                if (--prim->g0 == 0) {
+                    prim->r0++;
+                    prim->b0 = ((rand() & 3) + 0xF8);
+                    prim->r1 = 0x20 - (i / 6 * 2);
+                }
+            } else {
+                if (prim->r1) {
+                    prim->r1--;
+                } else {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                if (prim->b0 < 0x30 || prim->b0 > 0xD0) {
+                    prim->b0 += 2;
+                }
+                s6 = (s8)prim->b0 >> 4;
+                prim->y0 += s6;
+                prim->y1 += s6;
+                prim->y2 += s6;
+                prim->y3 += s6;
+            }
+            prim = prim->next;
+        }
+    }
+    func_8010DFF0(1, 1);
+}
 
 void EntityLevelUpAnimation(Entity* self) {
     Primitive* prim;
@@ -1224,10 +1503,10 @@ void EntityLevelUpAnimation(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        PlaySfx(0x687);
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_800000 | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
-        CreateEntFactoryFromEntity(self, 0x4A002CU, 0);
+        PlaySfx(SFX_LEVEL_UP); // Max HP & MP
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 48;
         prim = &g_PrimBuf[self->primIndex];
@@ -1261,7 +1540,7 @@ void EntityLevelUpAnimation(Entity* self) {
         break;
     case 1:
         if (++D_80138090 == 2) {
-            D_80097420 = 3;
+            g_unkGraphicsStruct.unk20 = 3;
         }
         self->ext.factory.unk80 -= 8;
         self->ext.factory.unk82 -= 8;
@@ -1287,7 +1566,7 @@ void EntityLevelUpAnimation(Entity* self) {
         self->ext.factory.unk80 = 8;
         self->ext.factory.unk82 = 4;
         if (--self->ext.timer.t == 0) {
-            CreateEntFactoryFromEntity(self, 0xA0028U, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0x28, 10), 0);
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 14; i++) {
                 prim->drawMode =
@@ -1305,7 +1584,7 @@ void EntityLevelUpAnimation(Entity* self) {
             self->ext.factory.unk7E = 0;
         }
         if (self->ext.factory.unk80 > 0x200) {
-            D_80097420 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
             DestroyEntity(self);
             return;
         }
@@ -1513,7 +1792,7 @@ void EntityMist(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         mistPrim = D_801381F4;
-        for (i = 0; i < 8; i++, mistPrim++) {
+        for (i = 0; i < LEN(D_801381F4); i++, mistPrim++) {
             *mistPrim = *prim;
             prim = prim->next;
         }
@@ -1584,8 +1863,8 @@ void EntityMist(Entity* self) {
         for (j = 0; j < 16; j++) {
             prim = func_80121F58(1, j, prim, self->facingLeft);
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->step++;
         self->ext.mist.timer = 0;
         D_80138394 = 0;
@@ -1741,7 +2020,7 @@ void EntityMist(Entity* self) {
             for (j = 0; j < 16; j++) {
                 prim = func_80121F58(1, j, prim, self->facingLeft);
             }
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             xVar4 = PLAYER.posX.i.hi + self->ext.mist.xCurrent;
             yVar4 = PLAYER.posY.i.hi + self->ext.mist.yCurrent;
@@ -1902,7 +2181,7 @@ void UnknownEntId48(Entity* self) {
         self->enemyId = 4;
         self->hitboxHeight = 8;
         self->hitboxWidth = 8;
-        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->step++;
     }
     if (params == 0) {
@@ -1930,7 +2209,8 @@ void UnknownEntId49(Entity* self) {
         self->palette = PLAYER.palette;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
-        self->flags = 0x04060000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
     self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
@@ -1959,7 +2239,8 @@ void func_80123A60(Entity* entity) {
     entity->posY.i.hi = player->posY.i.hi;
     if (entity->step == 0) {
         func_8011A328(entity, 0xB);
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->step++;
     }
 
@@ -2007,7 +2288,8 @@ void func_80123B40(Entity* self) {
             return;
         }
 
-        self->flags = 0x0C830000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->velocityY = FIX(-3.0);
         SetSpeedX(-0x1AAAA);
         self->ext.et_80123B40.unk28 = 0x80;
@@ -2086,8 +2368,8 @@ void func_80123F78(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 | FLAG_UNK_04000000 |
-                        FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         if (PLAYER.animSet != 1) {
             DestroyEntity(entity);
             break;

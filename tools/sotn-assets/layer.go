@@ -3,13 +3,14 @@ package main
 import (
 	"encoding/binary"
 	"encoding/json"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"slices"
 )
 
 type layer struct {
-	Data       PsxOffset
-	Tiledef    PsxOffset
+	Data       psx.Addr
+	Tiledef    psx.Addr
 	PackedInfo uint32
 	ZPriority  uint16
 	UnkE       uint8
@@ -76,44 +77,44 @@ func (r roomLayers) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m)
 }
 
-func readLayers(file *os.File, off PsxOffset) ([]roomLayers, dataRange, error) {
+func readLayers(file *os.File, off psx.Addr) ([]roomLayers, dataRange, error) {
 	if off == 0 {
 		return nil, dataRange{}, nil
 	}
-	if err := off.moveFile(file); err != nil {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return nil, dataRange{}, err
 	}
 
 	// when the data starts to no longer makes sense, we can assume we reached the end of the array
-	layerOffsets := []PsxOffset{}
-	layersOff := make([]PsxOffset, 2)
+	layerOffsets := []psx.Addr{}
+	layersOff := make([]psx.Addr, 2)
 	for {
 		if err := binary.Read(file, binary.LittleEndian, layersOff); err != nil {
 			return nil, dataRange{}, err
 		}
-		if layersOff[0] <= RamStageBegin || layersOff[0] >= off ||
-			layersOff[1] <= RamStageBegin || layersOff[1] >= off {
+		if layersOff[0] <= psx.RamStageBegin || layersOff[0] >= off ||
+			layersOff[1] <= psx.RamStageBegin || layersOff[1] >= off {
 			break
 		}
 		layerOffsets = append(layerOffsets, layersOff...)
 	}
 
 	// Creates a map of layers, so we can re-use them when a layer is used by multiple rooms
-	pool := map[PsxOffset]*layer{}
-	pool[PsxOffset(0)] = nil
+	pool := map[psx.Addr]*layer{}
+	pool[psx.Addr(0)] = nil
 	for _, layerOffset := range layerOffsets {
 		if _, exists := pool[layerOffset]; exists {
 			continue
 		}
 
-		if err := layerOffset.moveFile(file); err != nil {
+		if err := layerOffset.MoveFile(file, psx.RamStageBegin); err != nil {
 			return nil, dataRange{}, err
 		}
 		var l layer
 		if err := binary.Read(file, binary.LittleEndian, &l); err != nil {
 			return nil, dataRange{}, err
 		}
-		if l.Data != RamNull || l.Tiledef != RamNull || l.PackedInfo != 0 {
+		if l.Data != psx.RamNull || l.Tiledef != psx.RamNull || l.PackedInfo != 0 {
 			pool[layerOffset] = &l
 		} else {
 			pool[layerOffset] = nil
@@ -129,6 +130,6 @@ func readLayers(file *os.File, off PsxOffset) ([]roomLayers, dataRange, error) {
 	}
 	return roomsLayers, dataRange{
 		begin: slices.Min(layerOffsets),
-		end:   off.sum(count * 8),
+		end:   off.Sum(count * 8),
 	}, nil
 }

@@ -1,12 +1,20 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #16. Used by weapons:
 // Bwaka knife, Boomerang, Javelin, Fire boomerang, Iron ball
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_016_1.h"
+#include "w_016_2.h"
+#define g_Animset w_016_1
+#define g_Animset2 w_016_2
+#include "sfx.h"
 
 // Weapon 16
-extern SpriteParts D_74000_8017A040;
+extern SpriteParts D_74000_8017A040[];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     FakePrim* fakePrim;
     s16 angle;
     u16 temp_a0;
@@ -15,7 +23,7 @@ void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        SetSpriteBank1(&D_74000_8017A040);
+        SetSpriteBank1(D_74000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11A;
@@ -33,7 +41,7 @@ void EntityWeaponAttack(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
         fakePrim->drawMode = DRAW_HIDE;
         fakePrim->priority = 0;
@@ -63,8 +71,8 @@ void EntityWeaponAttack(Entity* self) {
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(1);
         self->hitboxHeight = self->hitboxWidth = 4;
-        g_api.PlaySfx(0x69E);
-        g_Player.D_80072F00[10] = 4;
+        g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -94,8 +102,7 @@ void EntityWeaponAttack(Entity* self) {
         //  factory gets unkA8 = 0xE0 or 0xF0, putting it into the range of
         //  weapon functions. Then we use blueprint 0x3A, or 58, so child is E1
         //  or F1. This will make the entity in func_ptr_80170004.
-        g_api.CreateEntFactoryFromEntity(
-            self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+        g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3A, 0), 0);
     }
     self->ext.weapon.lifetime++;
 }
@@ -107,7 +114,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.lifetime = 0x16;
@@ -126,17 +133,185 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170008);
+extern SpriteParts D_74000_8017A040[];
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_8017000C);
+void func_ptr_80170008(Entity* self) {
+    s32 angle;
+    s8 flag;
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170010);
+    flag = (self->params & 0x7F00) != 0;
 
-extern SpriteParts D_74000_8017A040;
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_74000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 0x64;
+        self->palette = 0x11A;
+        if (g_HandId != 0) {
+            self->palette = 0x132;
+            self->unk5A = 0x66;
+            self->animSet += 2;
+        }
+        self->animCurFrame = 0xF;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->drawFlags = DRAW_COLORS;
+
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        if (PLAYER.step != Player_Crouch) {
+            self->posY.i.hi -= 8;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX - 20;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX + 20;
+        }
+        self->ext.weapon_016.unk7C = -0x20;
+        self->ext.weapon_016.unk80 = 0x48;
+        self->ext.weapon_016.unk7E = 0xA;
+        self->ext.weapon_016.unk84 = 0;
+        self->rotZ = 0x400;
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(true);
+        self->hitboxHeight = 0xC;
+        self->hitboxWidth = 0xC;
+        g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
+        if (flag != 0) {
+            g_api.PlaySfx(0x65B);
+        }
+        g_Player.timers[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        self->ext.weapon_016.unk7C += self->ext.weapon_016.unk7E;
+        self->rotZ -= 0x100;
+        angle = self->ext.weapon_016.unk7C;
+        self->velocityX = rcos(angle) * self->ext.weapon_016.unk80;
+        self->velocityY = -rsin(angle) * self->ext.weapon_016.unk80;
+        if (self->facingLeft) {
+            self->posX.val = self->posX.val - self->velocityX;
+        } else {
+            self->posX.val = self->posX.val + self->velocityX;
+        }
+        self->posY.val += self->velocityY;
+        if (self->ext.weapon_016.unk84 < 0x23) {
+            self->ext.weapon_016.unk7E += 2;
+        }
+        if (self->ext.weapon_016.unk84 > 0x23) {
+            self->ext.weapon_016.unk80 += 3;
+            if (self->ext.weapon_016.unk7E > 6) {
+                self->ext.weapon_016.unk7E -= 6;
+            }
+            if (self->ext.weapon_016.unk84 == 0x40) {
+                self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
+            }
+        }
+        if (self->ext.weapon_016.unk84 <= 0x7000) {
+            self->ext.weapon_016.unk84 += 1;
+        }
+        if ((u16)self->ext.weapon_016.unk84 & 1) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+        }
+        if (flag != 0) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x6E, 0);
+        }
+        break;
+    }
+}
+
+static void func_ptr_8017000C(Entity* self) {
+    s16 temp_a0;
+
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_74000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 0x64;
+        self->palette = 0x11B;
+        if (g_HandId != 0) {
+            self->palette = 0x133;
+            self->unk5A = 0x66;
+            self->animSet += 2;
+        }
+        self->animCurFrame = 0x10;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
+        self->drawFlags = DRAW_COLORS;
+        temp_a0 = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        self->posY.i.hi = temp_a0 - 6;
+        if (PLAYER.step != 2) {
+            self->posY.i.hi = temp_a0 - 14;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX - 10;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX + 10;
+        }
+        SetSpeedX(FIX(6));
+        self->velocityY = FIX(-1.125);
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(true);
+        self->hitboxHeight = 12;
+        self->hitboxWidth = 12;
+        g_api.PlaySfx(SFX_WEAPON_SWISH_B);
+        g_Player.timers[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        if (self->velocityY < FIX(7)) {
+            self->velocityY += FIX(3) / 64;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    }
+    self->rotZ = ratan2(self->velocityY, abs(self->velocityX));
+}
+
+extern AnimationFrame D_74000_8017A5B0[];
+extern s32 D_74000_8017BD74;
+
+s32 func_ptr_80170010(Entity* self) {
+    Entity* factory;
+
+    if (self->step == 0) {
+        self->animSet = 2;
+        self->anim = D_74000_8017A5B0;
+        self->zPriority = PLAYER.zPriority - 4;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
+        self->velocityY = FIX(-1.0);
+
+        if (!(D_74000_8017BD74 & 1)) {
+            factory = g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 11), 0);
+            if (factory) {
+                if (g_HandId == 0) {
+                    factory->entityId = 0xEF;
+                } else {
+                    factory->entityId = 0xFF;
+                }
+            }
+        }
+        self->posY.i.hi += -6 + (rand() % 12);
+        self->posX.i.hi += -3 + (rand() & 7);
+        D_74000_8017BD74 += 1;
+        if (!(rand() & 1)) {
+            self->drawMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        }
+        self->step += 1;
+    }
+    self->posY.val += self->velocityY;
+    if (self->animFrameDuration < 0) {
+        DestroyEntity(self);
+    }
+}
 
 // Tracing function calls in emulator indicates that this function manages
 // the physics for the Iron Ball item.
-s32 func_ptr_80170014(Entity* self) {
+static s32 func_ptr_80170014(Entity* self) {
     Collider collider;
     s16 collX;
     s16 collY;
@@ -146,7 +321,7 @@ s32 func_ptr_80170014(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(&D_74000_8017A040);
+        SetSpriteBank1(D_74000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11D;
@@ -158,7 +333,7 @@ s32 func_ptr_80170014(Entity* self) {
         self->animCurFrame = 17;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->velocityY = FIX(-2.25) - (rand() & 0x7FFF); // -2.5 +- 0.25
         SetSpeedX((rand() & 0x7FFF) + FIX(1.25));         // 1.5 +- 0.25
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
@@ -167,7 +342,7 @@ s32 func_ptr_80170014(Entity* self) {
         self->hitboxHeight = self->hitboxWidth = 8;
         g_api.PlaySfx(0x6EE);
         self->ext.weapon.unk7E = 0x40;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         return;
     case 1:
@@ -185,7 +360,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_UNK_0002) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             if (xShift < 0) {
                 self->posX.i.hi += collider.unkC;
@@ -199,7 +374,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi - 6;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             self->posY.i.hi += collider.unk20 + 1;
             self->velocityX /= 2;
@@ -209,7 +384,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi + 7;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             self->posY.i.hi += collider.unk18;
             if (self->ext.weapon.lifetime != 0) {
@@ -220,7 +395,7 @@ s32 func_ptr_80170014(Entity* self) {
             self->ext.weapon.lifetime++;
             // Create factory with blueprint 31. Blueprint 31 has child entity
             // 2, which is func_8011B5A4.
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x900, 31), 0);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(31, 9), 0);
         }
         return;
     case 2:
@@ -295,7 +470,7 @@ s32 func_ptr_80170014(Entity* self) {
                 g_api.CheckCollision(collX, collY, &collider, 0);
                 if (collider.effects & EFFECT_UNK_0002) {
                     if (self->velocityX != 0) {
-                        g_api.PlaySfx(0x655);
+                        g_api.PlaySfx(SFX_EXPLODE_B);
                         g_api.func_80102CD8(1);
                     }
                     if (xShift < 0) {
@@ -328,20 +503,20 @@ s32 func_ptr_80170014(Entity* self) {
     }
 }
 
-int GetWeaponId(void) { return 16; }
+static int GetWeaponId(void) { return 16; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

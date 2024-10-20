@@ -18,7 +18,7 @@ static u8 D_801814B8[] = {0x40, 0x01, 0xFF, 0x00};
 // D_801814BC
 static u8 D_801814BC[] = {0x40, 0x03, 0xFF, 0x00};
 // D_801814C0
-static ObjInit2 D_801814C0[] = {
+static ObjInit D_801814C0[] = {
     {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814AC},
     {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814B4},
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, D_801814B8},
@@ -39,13 +39,13 @@ extern u16 g_eInitGeneric2[];
 // E_ROOM_FOREGROUND
 // func_801A7C8C
 void EntityRoomForeground(Entity* entity) {
-    ObjInit2* objInit = &D_801814C0[entity->params];
+    ObjInit* objInit = &D_801814C0[entity->params];
 
     if (!entity->step) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.u;
+        entity->unk5A = objInit->unk5A;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
         entity->drawMode = objInit->drawMode;
@@ -57,7 +57,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->rotZ = 0x800;
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }
 //TODO: Can't use this include yet, as it still contains D_######## symbol names
 //#include "../e_room_fg.h"

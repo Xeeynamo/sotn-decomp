@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Purpose is not 100% clear. Creates a falling blue droplet that sizzles after
 // hitting the ground. In existing overlays, this entity is not used. But looks
 // like Olrox's drool, so using that until we find any other uses.
 
 extern u32 g_olroxDroolCollOffsets[];
 
+extern u16 g_InitializeEntityData0[];
 void EntityOlroxDrool(Entity* self) {
     s16 primIndex;
     Primitive* prim;

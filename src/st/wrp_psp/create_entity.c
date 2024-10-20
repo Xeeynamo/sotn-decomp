@@ -1,4 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
+
+static u16* g_LayoutObjHorizontal;
+static u16* g_LayoutObjVertical;
+static u8 g_LayoutObjPosHorizontal;
+static u8 g_LayoutObjPosVertical;
 
 #include "../st_private.h"
 

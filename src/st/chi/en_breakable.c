@@ -93,7 +93,7 @@ void EntityBreakable(Entity* entity) {
 
     AnimateEntity(D_80180838[params], entity);
 
-    if (entity->unk44 != 0) {
+    if (entity->hitParams != 0) {
         g_api_PlaySfx(SFX_WEAPON_62C);
         newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
         if (newEntity != NULL) {

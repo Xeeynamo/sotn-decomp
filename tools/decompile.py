@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 import io
@@ -226,20 +226,20 @@ def resolve_jumptables(func: NonMatchingFunc):
                     break
                 print("good nop")
                 # Build a regex to search for the standard jump table setup
-                lw_regex = "lw\s*\\" + jumpreg + ", %lo\(([^)]*)\)\(\$at\)"
+                lw_regex = r'lw\s*\\" + jumpreg + ", %lo\(([^)]*)\)\(\$at\)'
                 lwcheck = re.search(lw_regex, lines[i - 2])
                 if lwcheck == None:
                     break
                 jumptable_name = lwcheck.group(1)
                 print(f"Jumptable: {jumptable_name}")
-                addu_regex = "addu\s*\$at, \$at, \$"
+                addu_regex = r"addu\s*\$at, \$at, \$"
                 adducheck = re.search(addu_regex, lines[i - 3])
                 if adducheck == None:
                     print("Couldn't get the addu")
                     print(lines[i - 3])
                     break
                 print("Good addu")
-                lui_regex = "lui\s*\$at, %hi\(" + jumptable_name + "\)"
+                lui_regex = r'lui\s*\$at, %hi\(" + jumptable_name + "\)'
                 luicheck = re.search(lui_regex, lines[i - 4])
                 if luicheck == None:
                     break

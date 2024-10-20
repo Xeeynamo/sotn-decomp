@@ -34,6 +34,25 @@
 #define __builtin_memcpy memcpy
 #endif
 
+#if defined(VERSION_PC)
+#ifndef _MSC_VER
+#define STATIC_ASSERT _Static_assert
+#define PACKED __attribute__((packed))
+#else
+#define STATIC_ASSERT(x, ...)
+#define PACKED
+#endif
+
+#elif defined(VERSION_PSP)
+#define STATIC_ASSERT(x)
+#define PACKED
+
+#else
+#define STATIC_ASSERT(x, ...)
+#define PACKED
+
+#endif
+
 #define LOH(x) (*(s16*)&(x))
 #define HIH(x) (((s16*)&(x))[1])
 #define LOHU(x) (*(u16*)&(x))
@@ -50,14 +69,19 @@
 int sprintf(char* dst, const char* fmt, ...);
 #endif
 
+// Converts a given value to a fixed-point value, where
+// 16 bits represents the integer part and 16 bits for fractional part
 #define FIX(x) ((s32)((x) * 65536.0))
+// Get the integer part of such a fixed-point value
 #define FIX_TO_I(x) ((s32)((x) >> 16))
+// Get the fractional part of such a fixed-point value
+#define FIX_FRAC(x) (*(s16*)&(x))
 
 // The second argument to CreateEntFactoryFromEntity has weird bit packing,
 // this takes the 2 relevant inputs and packs them up.
-// A0 should be a value like 0x##00 where ## is two hexadecimal digits.
-// BLUEPRINTNUM is which blueprint gets loaded from g_FactoryBlueprints.
-#define FACTORY(A0, BLUEPRINTNUM) (A0 << 8 | BLUEPRINTNUM)
+// id is which blueprint gets loaded from g_FactoryBlueprints.
+#define FACTORY(id, param) ((id) + (param << 16))
+
 // Tests multiple bits of x being set, based on the bitmask defined in y.
 #define TEST_BITS(x, y) ((x & y) == y)
 
@@ -73,6 +97,42 @@ int sprintf(char* dst, const char* fmt, ...);
 #define SP(x) (0x00010000 + (x))
 #else
 #define SP(x) (0x1F800000 + (x))
+#endif
+
+#define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
+#define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
+
+// Creates padding between variables with a unique name and file
+// visibility. On versions where this padding is unnecessary, these
+// macros expand to nothing. "Critical" versions of these macros
+// ensure that the padding is provided, regardless of version, useful
+// for when locations are accessed using a variety of sizes so
+// field offset needs to be maintained. The unknown critical versions
+// expand identically to the critical versions but indicate that it
+// is not known whether or not the padding is necessary outside of
+// reproducing an original binary.
+#define __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)          \
+    type __pad__##size##__##line##__##counter[size]
+#define __CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)                   \
+    __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)
+#define CRITICAL_PAD_TYPE_FIELD(type, size)                                    \
+    __CRITICAL_PAD_TYPE_FIELD(type, size, __LINE__, __COUNTER__)
+#define CRITICAL_PAD_FIELD(size) CRITICAL_PAD_TYPE_FIELD(uint8_t, size)
+
+#define UNKNOWN_CRITICAL_PAD_TYPE(type, size)                                  \
+    CRITICAL_PAD_TYPE_FIELD(type, size)
+#define UNKNOWN_CRITICAL_PAD_FIELD(size) CRITICAL_PAD_FIELD(size)
+
+#ifndef VERSION_PC
+#define PAD_FIELD(size) const CRITICAL_PAD_FIELD(size)
+#define STATIC_PAD_BSS(size) static CRITICAL_PAD_FIELD(size)
+#define STATIC_PAD_DATA(size) STATIC_PAD_BSS(size) = {0}
+#define STATIC_PAD_RODATA(size) const STATIC_PAD_BSS(size) = {0}
+#else
+#define PAD_FIELD(size)
+#define STATIC_PAD_BSS(size)
+#define STATIC_PAD_DATA(size)
+#define STATIC_PAD_RODATA(size)
 #endif
 
 #endif

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <servant.h>
 #include <sfx.h>
 #include <psxsdk/libc.h>
@@ -18,10 +19,12 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
         entity->entityId = entityId;
         entity->zPriority = entityParent->zPriority;
         entity->facingLeft = entityParent->facingLeft;
-        entity->flags = FLAG_UNK_04000000;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         entity->posX.val = entityParent->posX.val;
         entity->posY.val = entityParent->posY.val;
-        entity->ext.generic.unk8C.entityPtr = entityParent;
+        // Not necessarily making batFamBlueTrail here, but
+        // that's an Ext that works. Just needs parent at 0x8C.
+        entity->ext.batFamBlueTrail.parent = entityParent;
         entity->params = params;
     }
 }
@@ -44,10 +47,10 @@ s32 func_801746A0(s32 arg0) {
     if (arg0 == 0)
         return 0;
 
-    if (g_Player.unk50 != PLAYER.step || PLAYER.step != 0)
+    if (g_Player.prev_step != PLAYER.step || PLAYER.step != Player_Stand)
         return 1;
 
-    if (g_Player.unk52 != PLAYER.step_s)
+    if (g_Player.prev_step_s != PLAYER.step_s)
         return 1;
 
     if (PLAYER.step_s != 0 && PLAYER.step_s != 4)

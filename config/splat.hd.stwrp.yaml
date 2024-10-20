@@ -1,0 +1,91 @@
+options:
+  platform:     psx
+  basename:     stwrp
+  base_path:    ..
+  build_path:   build/hd
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
+  asm_path:     asm/hd/st/wrp
+  asset_path:   assets/st/wrp
+  src_path:     src/st/wrp
+  ld_script_path: build/hd/stwrp.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.stwrp.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.stwrp.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.hd.stwrp.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+sha1: 3ae1425d694b0e4d65c6bb71d5a91f1769aec30c
+segments:
+  - name: stwrp
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0xB8, .data, header] # layers
+      - [0x1B8, .data, d_1b8] # entity gfx
+      - [0x23C, .data, e_laydef] # layout entries header
+      - [0x3E4, .data, e_init]
+      - [0x528, .data, st_debug]
+      - [0x5A8, .data, e_breakable]
+      - [0x608, .data, d_608]
+      - [0x648, .data, warp]
+      - [0x690, .data, st_update]
+      - [0x6BC, .data, collision]
+      - [0xA7C, .data, e_red_door]
+      - [0xA94, .data, st_common]
+      - [0xC94, .data, e_collect]
+      - [0xF84, .data, e_misc]
+      - [0xFE8, .data, e_particles]
+      - [0x1124, .data, e_room_fg]
+      - [0x11B0, .data, rooms]
+      - [0x122C, .data, e_layout] # layout entries data
+      - [0x1424, cmp, D_80181420]
+      - [0x1768, cmp, D_80181764]
+      - [0x1D0C, raw, D_80181D08]
+      - [0x1D6C, .data, tile_data] # tile data
+      - [0x296C, .data, tile_data] # tile definitions
+      - [0x6D8C, .data, sprites]
+      - [0x6E34, .rodata, warp] # warp strings
+      - [0x6E74, .rodata, warp] # EntityWarpRoom
+      - [0x6E94, .rodata, warp] # EntityWarpSmallRocks
+      - [0x6EAC, .rodata, e_red_door] # EntityRedDoor
+      - [0x6EC4, .rodata, e_collect] # CollectGold strings
+      - [0x6F14, .rodata, e_collect] # EntityPrizeDrop
+      - [0x6F34, .rodata, e_collect] # EntityEquipItemDrop
+      - [0x6F4C, .rodata, e_misc] # EntityRelicOrb
+      - [0x6F84, .rodata, e_misc] # EntityMessageBox
+      - [0x6F98, .rodata, e_stage_name] # EntityStageNamePopup
+      - [0x6FAC, .rodata, prim_helpers]
+      - [0x6FB4, c, st_debug]
+      - [0x7250, c, e_breakable]
+      - [0x7384, c, warp]
+      - [0x81BC, c, st_update]
+      - [0x85F0, c, collision]
+      - [0x9DAC, c, create_entity]
+      - [0xA924, c, e_red_door]
+      - [0xB5D4, c, st_common]
+      - [0xCA84, c, e_collect]
+      - [0xDFF4, c, e_misc]
+      - [0x1155C, c, e_stage_name]
+      - [0x11C84, c, e_particles]
+      - [0x124C8, c, e_room_fg]
+      - [0x125B4, c, popup]
+      - [0x1298C, c, prim_helpers]
+      - [0x131BC, .bss, create_entity]
+      - [0x131CC, .bss, bss]
+      - [0x13E44, .bss, e_collect]
+  - [0x13E84]

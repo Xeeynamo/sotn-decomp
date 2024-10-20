@@ -1,5 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
+#include "sfx.h"
 
+#if defined(VERSION_US)
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
     0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068, 0x0016, 0x0000,
@@ -47,6 +50,57 @@ static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x006C, 0x0000, 0x0000, 0x0080, 0x0080, 0x0000, 0x0000,
     0x008F, 0x0000, 0x0000, 0x0000,
 };
+
+#elif defined(VERSION_HD)
+static u16 g_testCollEnemyLookup[] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
+    0x002A, 0x0000, 0x0011, 0x0000, 0x000E, 0x0068, 0x0068, 0x0016, 0x0000,
+    0x0000, 0x0000, 0x003D, 0x0000, 0x0028, 0x0052, 0x0000, 0x0000, 0x0000,
+    0x0008, 0x0000, 0x000B, 0x0000, 0x007B, 0x0000, 0x0000, 0x002D, 0x0000,
+    0x0000, 0x006F, 0x007A, 0x0000, 0x0018, 0x0041, 0x0000, 0x0070, 0x0000,
+    0x004D, 0x0000, 0x0000, 0x0035, 0x0015, 0x005C, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0046, 0x0000,
+    0x0000, 0x0005, 0x0056, 0x0042, 0x0025, 0x0034, 0x0000, 0x0002, 0x0059,
+    0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0057, 0x0000, 0x007D, 0x0000,
+    0x0009, 0x0000, 0x0023, 0x0000, 0x001D, 0x0000, 0x0000, 0x002B, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0021, 0x0000, 0x0000, 0x0000, 0x001B, 0x0000,
+    0x0031, 0x0000, 0x0000, 0x0019, 0x0000, 0x008D, 0x000A, 0x002C, 0x0030,
+    0x0020, 0x0000, 0x0004, 0x0048, 0x0000, 0x005E, 0x0037, 0x0036, 0x0069,
+    0x0000, 0x003B, 0x0000, 0x0065, 0x0000, 0x0045, 0x0000, 0x001A, 0x0000,
+    0x006E, 0x0000, 0x0026, 0x0038, 0x0000, 0x004F, 0x0000, 0x004C, 0x0000,
+    0x0000, 0x0040, 0x0000, 0x0076, 0x0000, 0x0000, 0x006D, 0x0000, 0x0000,
+    0x0071, 0x0000, 0x002F, 0x0000, 0x0075, 0x0000, 0x0000, 0x0079, 0x0000,
+    0x007C, 0x0000, 0x0000, 0x0013, 0x000F, 0x0039, 0x0039, 0x0000, 0x005B,
+    0x005B, 0x0000, 0x0000, 0x0067, 0x0000, 0x0077, 0x0000, 0x0001, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0006, 0x0000, 0x0000, 0x000D, 0x0000,
+    0x002E, 0x0000, 0x006A, 0x0029, 0x0000, 0x0000, 0x0054, 0x0000, 0x0053,
+    0x0000, 0x0055, 0x0000, 0x0000, 0x0010, 0x0000, 0x0074, 0x0000, 0x0000,
+    0x008E, 0x0000, 0x0000, 0x0000, 0x0000, 0x004A, 0x0000, 0x0000, 0x0047,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0043, 0x0000, 0x0000, 0x003F, 0x0000,
+    0x0078, 0x008B, 0x0000, 0x0000, 0x0000, 0x004E, 0x0000, 0x0000, 0x008A,
+    0x004B, 0x0000, 0x003E, 0x003C, 0x0089, 0x0000, 0x0000, 0x0000, 0x001F,
+    0x0000, 0x0000, 0x007E, 0x0000, 0x0000, 0x0049, 0x0000, 0x0000, 0x0000,
+    0x0014, 0x0000, 0x0000, 0x000C, 0x0027, 0x0000, 0x0000, 0x0000, 0x0033,
+    0x0000, 0x0024, 0x0012, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0032, 0x0061, 0x0000, 0x0063, 0x0000, 0x0000, 0x0082, 0x0000, 0x0000,
+    0x0000, 0x0051, 0x0000, 0x0073, 0x0000, 0x0000, 0x0000, 0x0050, 0x0000,
+    0x0000, 0x0058, 0x0000, 0x0000, 0x0000, 0x0084, 0x0066, 0x0000, 0x003A,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0022, 0x0064, 0x0064,
+    0x0000, 0x0000, 0x0000, 0x0044, 0x0000, 0x0000, 0x0017, 0x001C, 0x006B,
+    0x0000, 0x008C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0060, 0x0062,
+    0x0088, 0x0000, 0x0000, 0x0000, 0x0086, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0085, 0x0000, 0x0000, 0x0087, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x005F, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x005D,
+    0x0091, 0x0000, 0x0000, 0x0000, 0x0000, 0x0090, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x005A, 0x0000, 0x0000, 0x0083, 0x0000, 0x0000,
+    0x0000, 0x0080, 0x0000, 0x007F, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0092, 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000, 0x0072,
+    0x0000, 0x0000, 0x006C, 0x0000, 0x0000, 0x0081, 0x0081, 0x0000, 0x0000,
+    0x008F, 0x0000, 0x0000, 0x0000,
+};
+
+#endif
 
 static u8 g_testCollLuckCutoff[] = {
     0x00,
@@ -177,7 +231,7 @@ void HitDetection(void) {
                 if ((*scratchpad_1 & miscVar3) &&
                     (!iterEnt1->unk6D[iterEnt2->enemyId])) {
                     if (*scratchpad_1 & 0x80) {
-                        iterEnt1->unk44 = iterEnt2->hitEffect & 0x7F;
+                        iterEnt1->hitParams = iterEnt2->hitEffect & 0x7F;
                         miscVar2 = 0xFF;
                         break;
                     } else {
@@ -208,16 +262,16 @@ void HitDetection(void) {
                                     }
                                     if ((i == 3) &&
                                         (iterEnt1->flags & FLAG_UNK_8000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                     if ((i == 4) &&
                                         (iterEnt1->flags & FLAG_UNK_4000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                 }
-                                iterEnt1->unk44 = i;
+                                iterEnt1->hitParams = i;
                                 miscVar2 = 0xFF;
                                 break;
                             } else {
@@ -262,10 +316,10 @@ void HitDetection(void) {
                             } else {
                                 iterEnt2->hitFlags = 1;
                             }
-                            iterEnt2->unk44 = iterEnt1->attackElement;
+                            iterEnt2->hitParams = iterEnt1->attackElement;
                             iterEnt2->hitPoints = iterEnt1->attack;
                         }
-                        iterEnt1->unk44 = iterEnt2->hitEffect & 0x7F;
+                        iterEnt1->hitParams = iterEnt2->hitEffect & 0x7F;
                         miscVar2 = 0xFF;
                         iterEnt1->hitFlags = 0x80;
                     }
@@ -275,7 +329,7 @@ void HitDetection(void) {
         if (miscVar2) {
             if (iterEnt1->unk5C != NULL) {
                 entFrom5C = iterEnt1->unk5C;
-                entFrom5C->unk44 = (u16)iterEnt1->unk44;
+                entFrom5C->hitParams = (u16)iterEnt1->hitParams;
                 entFrom5C->hitFlags = (u8)iterEnt1->hitFlags;
             } else {
                 entFrom5C = iterEnt1;
@@ -295,10 +349,11 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + COLLISION_FLAGS_START] |=
+                        miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
-                    !(entFrom5C->flags & FLAG_UNK_01000000)) {
+                    !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
                     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
                         g_api.FreePrimitives(
                             g_unkGraphicsStruct.BottomCornerTextPrims);
@@ -306,7 +361,7 @@ void HitDetection(void) {
                     }
                     BottomCornerText(
                         g_api.enemyDefs[entFrom5C->enemyId].name, 0);
-                    entFrom5C->flags |= FLAG_UNK_01000000;
+                    entFrom5C->flags |= FLAG_NOT_AN_ENEMY;
                 }
                 miscVar2 = 0;
                 if ((iterEnt1->hitboxState & 8) &&
@@ -351,7 +406,7 @@ void HitDetection(void) {
                             miscVar1 = 0;
                         }
                         if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
-                            !(entFrom5C->flags & FLAG_UNK_04000000) &&
+                            !(entFrom5C->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                             miscVar1) {
                             otherEntity =
                                 AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -407,9 +462,9 @@ void HitDetection(void) {
                                 // as Alucard, this won't match
                                 g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
                             } else if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_WEAPON_STAB);
+                                g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
-                                g_api.PlaySfx(SE_WEAPON_WHACK);
+                                g_api.PlaySfx(SFX_WEAPON_HIT_A);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
@@ -560,9 +615,9 @@ void HitDetection(void) {
                 }
                 if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     }
                 }
                 otherEntity = entFrom5C;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
 #undef STAGE
@@ -31,7 +32,6 @@ typedef enum {
 } EntityIDs;
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
-s32 GetSideToPlayer();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
@@ -42,14 +42,12 @@ extern const char* D_801A7984;
 extern const char* D_801A7990;
 extern const char* D_801A799C;
 
-extern s8 c_HeartPrizes[10];
-
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 // *** Initializers ***
-extern u16 D_80180574[];
+extern u16 g_eBreakableInit[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 g_eInitGeneric2[];
@@ -61,7 +59,7 @@ extern u16 D_80180610[]; // Init EntityDraculaMegaFireball
 extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
 extern u16 D_80180628[];
 
-extern ObjInit2 D_80180638[];
+extern ObjInit D_80180638[];
 
 // *** func_801A805C properties START ***
 
@@ -149,7 +147,7 @@ extern u32 D_80181CF0[];
 extern s8 D_801A7B7C;
 extern Point32 D_801BEB64[];
 extern s32 D_801C2578;
-extern u32 D_801C257C;
+extern u32 g_CutsceneFlags;
 extern s32 D_801C2578;
 
 // *** EntityDracula properties END ***
@@ -157,8 +155,8 @@ extern s32 D_801C2578;
 extern s16 D_80181990[];
 extern u16 g_InitializeData0[];
 extern u16 D_80181D74[];
-extern s16 D_80181E3C[];
-extern s16 D_80181E3E[];
+extern s16 g_collectXVelTable[];
+extern s16 g_collectYVelTable[];
 extern s16 D_80181EB0[];
 extern u32 D_80181EC0[];
 extern u16 D_80181F04[];
@@ -197,7 +195,7 @@ extern s16 D_80180798[];
 extern const char D_801829D8[];
 extern s32 D_801C24C8;
 extern s32 D_801C2504;
-extern u32 D_801C257C;
+extern u32 g_CutsceneFlags;
 extern s32 D_801C2580;
 
 extern Dialogue g_Dialogue;

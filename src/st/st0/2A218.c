@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 
 void func_801AA218(s16 arg0) {
@@ -71,7 +72,7 @@ void EntityCutscene(Entity* self) {
             g_Player.D_80072EFC = 1;
             g_Player.padSim = PAD_LEFT;
             self->ext.generic.unk7C.s = 0x18;
-            D_801C257C |= 1;
+            g_CutsceneFlags |= 1;
             self->step++;
         }
         func_801AA218(posX);
@@ -102,7 +103,7 @@ void EntityCutscene(Entity* self) {
     case 5:
         g_Player.D_80072EFC = 1;
         player->animCurFrame = self->animCurFrame;
-        if (D_801C257C & 0x400) {
+        if (g_CutsceneFlags & 0x400) {
             player->animCurFrame = 0;
             self->animSet = ANIMSET_OVL(5);
             self->animCurFrame = 1;
@@ -113,7 +114,7 @@ void EntityCutscene(Entity* self) {
     case 6:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_8018083C, self) == 0) {
-            if (D_801C257C & 0x800) {
+            if (g_CutsceneFlags & 0x800) {
                 SetStep(7);
             }
         }
@@ -123,7 +124,7 @@ void EntityCutscene(Entity* self) {
     case 7:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_8018084C, self) == 0) {
-            if (D_801C257C & 0x1000) {
+            if (g_CutsceneFlags & 0x1000) {
                 SetStep(8);
             }
         }
@@ -133,7 +134,7 @@ void EntityCutscene(Entity* self) {
     case 8:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_8018085C, self) == 0) {
-            if (D_801C257C & 0x2000) {
+            if (g_CutsceneFlags & 0x2000) {
                 SetStep(9);
             }
         }
@@ -143,7 +144,7 @@ void EntityCutscene(Entity* self) {
     case 9:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_80180864, self) == 0) {
-            if (D_801C257C & 0x4000) {
+            if (g_CutsceneFlags & 0x4000) {
                 SetStep(10);
             }
         }
@@ -153,7 +154,7 @@ void EntityCutscene(Entity* self) {
     case 10:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_8018086C, self) == 0) {
-            if (D_801C257C & 0x8000) {
+            if (g_CutsceneFlags & 0x8000) {
                 SetStep(11);
             }
         }
@@ -163,7 +164,7 @@ void EntityCutscene(Entity* self) {
     case 11:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_8018087C, self) == 0) {
-            if (D_801C257C & 0x10000) {
+            if (g_CutsceneFlags & 0x10000) {
                 SetStep(12);
             }
         }
@@ -173,7 +174,7 @@ void EntityCutscene(Entity* self) {
     case 12:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_80180884, self) == 0) {
-            if (D_801C257C & 0x20000) {
+            if (g_CutsceneFlags & 0x20000) {
                 SetStep(13);
             }
         }
@@ -183,7 +184,7 @@ void EntityCutscene(Entity* self) {
     case 13:
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_8018088C, self) == 0) {
-            if (D_801C257C & 0x40000) {
+            if (g_CutsceneFlags & 0x40000) {
                 SetStep(14);
             }
         }
@@ -203,7 +204,7 @@ void EntityCutscene(Entity* self) {
     case 15:
         g_Player.D_80072EFC = 1;
         player->animCurFrame = 7;
-        if (D_801C257C & 4) {
+        if (g_CutsceneFlags & 4) {
             g_Player.padSim = PAD_LEFT;
             DestroyEntity(self);
             D_8003C8B8 = 1;

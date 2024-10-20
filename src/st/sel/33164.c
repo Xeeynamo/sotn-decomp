@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
 s32 func_801B3164(void) {
@@ -201,7 +202,39 @@ s32 TryLoadSaveData(void) {
     return 0;
 }
 
-INCLUDE_ASM("st/sel/nonmatchings/33164", func_801B38B4);
+void func_801B38B4(s32 arg0, s32 arg1) {
+    char pad[32];
+    s32 i;
+    s32 j;
+    u32 n;
+
+    g_MemCardRStep = 0;
+
+    D_801BAFFC = arg0 / 15;
+    n = arg0 % 15;
+    D_801BB000 = g_SaveSummary[D_801BAFFC].slot[n];
+    D_801BB004 = arg1 / 15;
+    n = arg1 % 15;
+    D_801BB00C = n;
+
+    D_801BB008 = g_SaveSummary[D_801BB004].slot[n];
+
+    if (g_SaveSummary[D_801BB004].icon[n] == -3) {
+        for (i = 0; i < 15; i++) {
+            for (j = 0; j < 15; j++) {
+                if ((g_SaveSummary[D_801BB004].icon[j] >= 0) &&
+                    (g_SaveSummary[D_801BB004].slot[j] == i)) {
+                    break;
+                }
+            }
+
+            if (j == 15) {
+                D_801BB008 = i;
+                return;
+            }
+        }
+    }
+}
 
 void func_801B3A54(s32 arg0, s32 arg1) {
     char pad[0x20];
@@ -369,7 +402,7 @@ s32 MemCardInitAndFormat(void) {
 #endif
 
 void SEL_Init(s32 objLayoutId) {
-    switch (D_8003C9A4) {
+    switch (g_GameEngineStep) {
     case 0:
         if (g_IsUsingCd) {
             break;
@@ -377,7 +410,7 @@ void SEL_Init(s32 objLayoutId) {
         g_IsTimeAttackUnlocked = true;
         D_8003C728 = 1;
         g_CurrentStream = 0;
-        D_8003C9A4 = 1;
+        g_GameEngineStep = Engine_Normal;
         break;
 
     case 1:
@@ -391,7 +424,7 @@ void SEL_Init(s32 objLayoutId) {
         g_CurrentStream = 0;
         func_801B18F4();
         g_GameState = Game_Title;
-        D_8003C9A4 = 0;
+        g_GameEngineStep = Engine_Init;
         break;
     }
 }

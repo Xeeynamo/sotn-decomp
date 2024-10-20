@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
 #include <stdlib.h>
+#include <string.h>
 
 // Converts UTF-8 strings into a byte sequence that menu.c can render using the
 // original game font.

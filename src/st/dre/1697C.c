@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
+#include "sfx.h"
 
 void EntityFadeToWhite1(Entity* self) {
     Primitive* prim;
@@ -24,9 +26,10 @@ void EntityFadeToWhite1(Entity* self) {
         break;
 
     case 1:
-        if (D_801A3F84 & 0x10) {
-            g_PrimBuf[self->primIndex].drawMode = 0x35;
-            g_api.PlaySfx(SE_DRE_FADE_TO_WHITE);
+        if (g_CutsceneFlags & 0x10) {
+            g_PrimBuf[self->primIndex].drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            g_api.PlaySfx(SFX_FM_EXPLODE_A); // Fade to white
             self->step++;
         }
         break;
@@ -40,8 +43,8 @@ void EntityFadeToWhite1(Entity* self) {
             self->ext.fadeToWhite.unk7C = 1;
             self->ext.fadeToWhite.unk7E = 0x200;
             self->ext.fadeToWhite.unk80 = 0;
-            D_801A3F84 |= 0x20;
-            g_api.PlaySfx(SE_SUC_REVEAL);
+            g_CutsceneFlags |= 0x20;
+            g_api.PlaySfx(SFX_SUC_APPEAR);
             self->step++;
         }
         break;
@@ -58,7 +61,7 @@ void EntityFadeToWhite1(Entity* self) {
         break;
 
     case 4:
-        if (D_801A3F84 & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             self->ext.fadeToWhite.unk7C = 0;
             g_api.PlaySfx(0xA1);
             DestroyEntity(self);
@@ -68,7 +71,7 @@ void EntityFadeToWhite1(Entity* self) {
 
     if (self->ext.fadeToWhite.unk7C != 0) {
         if (--self->ext.fadeToWhite.unk7E == 0) {
-            g_api.PlaySfx(SE_SUC_REVEAL);
+            g_api.PlaySfx(SFX_SUC_APPEAR);
         }
     }
 }
@@ -104,8 +107,9 @@ void EntityFadeToWhite2(Entity* self) {
         break;
 
     case 1:
-        if (D_801A3F84 & 0x10) {
-            g_PrimBuf[self->primIndex].drawMode = 0x35;
+        if (g_CutsceneFlags & 0x10) {
+            g_PrimBuf[self->primIndex].drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             self->step++;
         }
         break;
@@ -118,7 +122,8 @@ void EntityFadeToWhite2(Entity* self) {
         if (prim->r0 > 252) {
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
-            prim->drawMode = 0x55;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             self->step++;
         }
         break;
@@ -129,7 +134,7 @@ void EntityFadeToWhite2(Entity* self) {
             prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0 =
                 prim->b3 + 8;
         if (prim->r0 > 240) {
-            D_801A3F84 |= 0x40;
+            g_CutsceneFlags |= 0x40;
             self->step++;
         }
         break;

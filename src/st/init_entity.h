@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void InitializeEntity(u16 arg0[]) {
     u16 enemyId;
     EnemyDef* enemyDef;
@@ -23,7 +24,6 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->step++;
     g_CurrentEntity->step_s = 0;
     if (!g_CurrentEntity->zPriority) {
-        g_CurrentEntity->zPriority =
-            g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
+        g_CurrentEntity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0xC;
     }
 }

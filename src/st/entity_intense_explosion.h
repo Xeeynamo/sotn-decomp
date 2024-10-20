@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+extern u16 g_InitializeEntityData0[];
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_InitializeEntityData0);
         self->palette = PAL_OVL(0x170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (self->params & 0xF0) {
             self->palette = PAL_OVL(0x195);
             self->drawMode = DRAW_TPAGE;

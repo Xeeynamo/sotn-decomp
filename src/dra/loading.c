@@ -1,4 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
+#include "sfx.h"
 
 RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
@@ -153,6 +156,9 @@ s32 func_800E6300(void) {
     return 0;
 }
 
+// BSS
+extern NowLoadingModel g_NowLoadingModel;
+
 void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);
     s8 var_a0;
@@ -169,24 +175,24 @@ void HandleNowLoading(void) {
         D_80097924 = -1;
         ClearBackbuffer();
         SetStageDisplayBuffer();
-        D_8003C9A4 = 0;
+        g_GameEngineStep = Engine_Init;
         g_GameStep++;
         break;
     case 1:
         if (g_pads[0].repeat & PAD_RIGHT) {
-            PlaySfx(0x688);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 += 1;
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            PlaySfx(0x688);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 += 8;
         }
         if (g_pads[0].repeat & PAD_LEFT) {
-            PlaySfx(0x688);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 1;
         }
         if (g_pads[0].repeat & PAD_UP) {
-            PlaySfx(0x688);
+            PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 8;
         }
         if (D_800987B4 >= 0x3F) {
@@ -214,7 +220,7 @@ void HandleNowLoading(void) {
         if (!(g_pads[0].tapped & PAD_START)) {
             break;
         }
-        PlaySfx(0x63D);
+        PlaySfx(SFX_START_SLAM_B);
         if (g_StageId == STAGE_MEMORYCARD) {
             SetGameState(Game_MainMenu);
         } else if (g_StageId == STAGE_ENDING) {
@@ -362,8 +368,8 @@ void HandleNowLoading(void) {
         if (g_DemoMode == Demo_None) {
             InitStatsAndGear(0);
         }
-        D_8003C908.D_8003C90C = -1;
-        D_8003C908.D_8003C910 = -1;
+        g_EquippedWeaponIds[0] = -1;
+        g_EquippedWeaponIds[1] = -1;
         g_Servant = 0;
         g_ServantLoaded = 0;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
@@ -380,7 +386,7 @@ void HandleNowLoading(void) {
                 if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                     var_s0 = g_EquipDefs[0xD8].weaponId;
                 }
-                D_8003C908.D_8003C90C = var_s0;
+                g_EquippedWeaponIds[0] = var_s0;
             }
             g_GameStep++;
         }
@@ -391,7 +397,7 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017A000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_8003C908.D_8003C90C].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[0]].palette);
             goto block_102;
         } else {
             var_s0 = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
@@ -405,8 +411,8 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017A000.LoadWeaponPalette;
-            D_8003C908.D_8003C90C = var_s0;
-            pfnWeapon(g_EquipDefs[D_8003C908.D_8003C90C].palette);
+            g_EquippedWeaponIds[0] = var_s0;
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[0]].palette);
             var_s0 = g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
@@ -415,9 +421,9 @@ void HandleNowLoading(void) {
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
             if (LoadFileSim(var_s0, 8) >= 0) {
-                D_8003C908.D_8003C910 = var_s0;
+                g_EquippedWeaponIds[1] = var_s0;
                 pfnWeapon = D_8017D000.LoadWeaponPalette;
-                pfnWeapon(g_EquipDefs[D_8003C908.D_8003C910].palette);
+                pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
             block_102:
                 g_GameStep++;
             }
@@ -434,7 +440,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
-            D_8003C908.D_8003C910 = var_s0;
+            g_EquippedWeaponIds[1] = var_s0;
         }
         g_GameStep++;
         break;
@@ -444,10 +450,10 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017D000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_8003C908.D_8003C910].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         } else if (
-            (LoadFileSim(D_8003C908.D_8003C90C, SimFileType_Weapon0Chr) < 0) ||
-            (LoadFileSim(D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
+            (LoadFileSim(g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) < 0) ||
+            (LoadFileSim(g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) < 0)) {
             break;
         }
         CheckWeaponCombo();
@@ -487,7 +493,7 @@ void HandleNowLoading(void) {
         }
         if (g_StageId == STAGE_NO3 && g_PlayableCharacter != PLAYER_ALUCARD) {
             D_8006C374 = 0x11;
-            g_CastleFlags[0x34] = 1;
+            g_CastleFlags[CASTLE_FLAG_52] = 1;
         }
         D_800978C4 = 1;
         SetGameState(Game_Play);
@@ -662,7 +668,7 @@ void MainMenuHandler(void) {
             break;
 
         if (g_UseDisk || LoadFileSim(0, SimFileType_StagePrg) >= 0) {
-            D_8003C9A4 = 0;
+            g_GameEngineStep = Engine_Init;
             g_GameStep++;
         }
         break;
@@ -678,8 +684,6 @@ void MainMenuHandler(void) {
 void HandleEnding(void) {
     RECT* temp_s0;
     RECT* temp_s1;
-    u32 var_a0;
-    u32 var_v0;
 
     switch (g_GameStep) {
     case 0:
@@ -751,7 +755,7 @@ void HandleEnding(void) {
                 break;
             }
         }
-        D_8003C9A4 = 0;
+        g_GameEngineStep = Engine_Init;
         g_GameStep++;
         break;
     case 5:

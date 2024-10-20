@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: b10b9c2be721cf9cbed3aa94be468ba9e23bc68b
 segments:
   - name: stnz0
     type: code
@@ -37,87 +38,93 @@ segments:
       - [0x164, .data, header] # layers
       - [0x47C, data]
       - [0x8EC, .data, e_laydef] # layout entries header
-      - [0xA94, data]
+      - [0xA94, .data, e_init]
+      - [0xDBC, data]
+      - [0xDE4, .data, e_breakable]
+      - [0xE54, data]
+      - [0x1574, .data, st_update]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
-      - [0x1978, data]
+      - [0x1978, .data, st_common]
       - [0x1B78, .data, e_collect]
-      - [0x1E68, .data, entity_relic_orb]
-      - [0x1ECC, data]
+      - [0x1E68, .data, e_misc]
       - [0x1F80, .data, e_particles]
       - [0x2000, .data, e_room_fg]
-      - [0x208C, data]
-      - [0x20B0, data]
-      - [0x2220, data]
-      - [0x2600, data]
-      - [0x2710, data]
+      - [0x208C, .data, e_bone_scimitar]
+      - [0x2180, .data, e_axe_knight]
+      - [0x22D4, .data, e_bloody_zombie]
+      - [0x23DC, .data, e_skeleton]
+      - [0x24CC, data] # spittle bone
+      - [0x2584, data] # subweapon container
+      - [0x2610, data] # bloody skeleton
+      - [0x26B8, data] # magically sealed door
       - [0x272C, .data, rooms]
-      - [0x2830, data, D_80182830]
+      - [0x2830, .data, e_life_up]
       - [0x2884, .data, e_layout] # layout entries data
       - [0x3B0C, data]
       - [0x16A5C, .data, tile_data] # tile data
       - [0x20A5C, .data, tile_data] # tile definitions
       - [0x26E8C, .data, sprites]
       - [0x3058C, rodata]
-      - [0x305A4, .rodata, 30958] # func_801B3C38
+      - [0x305A4, .rodata, 311C0] # EntityWargExplosionPuffOpaque
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
       - [0x305FC, .rodata, slogra] # EntitySlogra
       - [0x30618, .rodata, gaibon] # EntityGaibon .rodata, 33FCC
-      - [0x3063C, .rodata, 36DE4] # func_801B7034
+      - [0x3063C, .rodata, e_elevator] # func_801B7034
       - [0x3064C, rodata]
       - [0x30664, .rodata, mariacutscene]
       - [0x306E8, .rodata, maria]
-      - [0x30728, .rodata, e_red_door] # EntityRedDoor
+      - [0x30728, .rodata, e_red_door]
       - [0x30740, .rodata, e_collect] # CollectGold text
       - [0x30790, .rodata, e_collect] # EntityPrizeDrop
       - [0x307B0, .rodata, e_collect] # EntityEquipItemDrop
-      - [0x307C8, .rodata, entity_relic_orb]
-      - [0x30800, .rodata, entity_message_box]
-      - [0x30814, .rodata, 43708] # EntityBoneScimitar
-      - [0x30834, .rodata, 43F9C] # EntityAxeKnight
-      - [0x30858, .rodata, 44EAC] # EntityBloodyZombie
-      - [0x30880, .rodata, 45F2C] # EntitySkeleton
-      - [0x3089C, .rodata, 4672C] # EntitySpittleBone
-      - [0x308C8, .rodata, 47048] # EntitySubWeaponContainer
-      - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
-      - [0x308E8, .rodata, 47CF0] # EntityMagicallySealedDoor
-      - [0x30900, .rodata, e_stage_name] # EntityStageNamePopup
+      - [0x307C8, .rodata, e_misc]
+      - [0x30800, .rodata, e_misc]
+      - [0x30814, .rodata, e_bone_scimitar]
+      - [0x30834, .rodata, e_axe_knight]
+      - [0x30858, .rodata, e_bloody_zombie]
+      - [0x30880, .rodata, e_skeleton]
+      - [0x3089C, .rodata, e_spittle_bone]
+      - [0x308C8, .rodata, e_subweapon_container]
+      - [0x308D4, .rodata, e_bloody_skeleton]
+      - [0x308E8, .rodata, e_magically_sealed_door]
+      - [0x30900, .rodata, e_stage_name]
       - [0x30934, .rodata, prim_helpers]
-      - [0x3093C, .rodata, lifeupspawn]
+      - [0x3093C, .rodata, e_life_up]
       - [0x30958, c]
+      - [0x30EEC, c, e_breakable]
+      - [0x311C0, c]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
       - [0x34690, c, slogra]
       - [0x35778, c, gaibon]
       - [0x36DE4, c]
+      - [0x37034, c, e_elevator]
       - [0x374CC, c, mariacutscene]
       - [0x38E0C, c, maria]
-      - [0x394D4, c, random]
-      - [0x39504, c, update]
-      - [0x39800, c, update_stage_entities]
+      - [0x394D4, c, st_update]
       - [0x39908, c, collision]
       - [0x3B0C4, c, create_entity]
       - [0x3BC3C, c, e_red_door]
-      - [0x3C8EC, c, 3C8EC]
+      - [0x3C8EC, c, st_common]
       - [0x3D848, c, e_collect]
       - [0x3F308, c, blit_char]
-      - [0x3F5B8, c, entity_relic_orb]
-      - [0x40088, c, entity_heart_drop]
-      - [0x401B0, c, entity_message_box]
-      - [0x4070C, c]
+      - [0x3F5B8, c, e_misc]
       - [0x42AA8, c, e_particles]
       - [0x432EC, c, e_room_fg]
       - [0x433d8, c, popup]
-      - [0x43708, c] # EntityBoneScimitar
-      - [0x43F9C, c] # EntityAxeKnight
-      - [0x44EAC, c] # EntityBloodyZombie
-      - [0x45F2C, c] # EntitySkeleton
-      - [0x4672C, c] # EntitySpittleBone
-      - [0x47048, c] # EntitySubWeaponContainer
-      - [0x47958, c] # EntityBloodSkeleton
-      - [0x47CF0, c] # EntityMagicallySealedDoor
-      - [0x48ADC, c, e_stage_name] # EntityStageNamePopup
+      - [0x43708, c, e_bone_scimitar]
+      - [0x43F9C, c, e_axe_knight]
+      - [0x44EAC, c, e_bloody_zombie]
+      - [0x45F2C, c, e_skeleton]
+      - [0x4672C, c, e_spittle_bone]
+      - [0x47048, c, e_subweapon_container]
+      - [0x47958, c, e_bloody_skeleton]
+      - [0x47CF0, c, e_magically_sealed_door]
+      - [0x48ADC, c, e_stage_name]
       - [0x49930, c, prim_helpers]
-      - [0x4A160, c, lifeupspawn]
-      - [0x4AA14, sbss]
+      - [0x4A160, c, e_life_up]
+      - [0x4AA14, .bss, create_entity]
+      - [0x4AA24, .bss, bss]
+      - [0x4B740, .bss, e_collect]
   - [0x4B780]

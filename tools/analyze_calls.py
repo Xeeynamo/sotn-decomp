@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # Performs analysis of every function in the asm directory. For each function, finds
 # all functions called by this one, and all functions that call this one.
@@ -189,10 +189,19 @@ def is_decompiled(srcfile, fname):
 
 def get_c_filename(asm_filename):
     assert "asm/us" in asm_filename and "/nonmatchings/" in asm_filename
-    # Step 1: Replace asm/us for src
+    # Convert a path in asm/us to a path in src
     srcpath = asm_filename.replace("asm/us", "src")
-    # Step 2: Remove the nonmatchings
-    no_nonmatchings = srcpath.replace("/nonmatchings/", "/")
+    # Count the number of paths after "nonmatchings". If there are two directories,
+    # then the file must be specifying a path in src. If not, then it's a path in the overlay.
+    # Example: specifying wrp/collision should be treated differently than if it was just "collision"
+    paths_after_nonmatchings = srcpath.split("/nonmatchings/")[1].count("/")
+    # Raw file which goes in the default overlay directory
+    if paths_after_nonmatchings == 1 or srcpath.startswith("src/main"):
+        no_nonmatchings = srcpath.replace("/nonmatchings/", "/")
+    # Has an extra directory, so remove overlay specified before /nonmatchings/
+    if paths_after_nonmatchings == 2:
+        overlay = srcpath.split("/")[2]
+        no_nonmatchings = srcpath.replace("/" + overlay + "/nonmatchings/", "/")
     # Little known rpartition drops the function name to get the last directory, which should be c file name.
     c_filename = no_nonmatchings.rpartition("/")[0] + ".c"
     assert os.path.exists(c_filename)
@@ -220,7 +229,12 @@ def find_func_match(caller, candidates):
         for candidate in candidates:
             if candidate.unique_name.startswith("dra."):
                 return candidate
-        print("Can't resolve tie, none in DRA!")
+        # Resolve wrp/rwrp matches by pulling from wrp. This may need to have different logic in future.
+        if "wrp" in caller.asm_filename:
+            for candidate in candidates:
+                if "wrp" in candidate.unique_name:
+                    return candidate
+        print("Unbreakable tie found, exiting!")
         exit(4)
     else:
         print("No candidates!")

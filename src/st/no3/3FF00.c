@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include "sfx.h"
 
 void EntityRoomTransition2(Entity* self) {
     Entity* newEntity;
@@ -9,7 +11,7 @@ void EntityRoomTransition2(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
 
     if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
-        g_api.PlaySfx(SE_DEATH_AMBIENCE);
+        g_api.PlaySfx(SFX_DEATH_AMBIENCE);
         self->ext.roomTransition2.unk80 = 0x200;
     }
     self->ext.roomTransition2.unk80--;
@@ -21,7 +23,7 @@ void EntityRoomTransition2(Entity* self) {
         g_Player.padSim = PAD_RIGHT;
         D_8003C8B8 = 0;
         g_Player.D_80072EFC = 1;
-        D_801D7DD0 |= 0x100;
+        g_CutsceneFlags |= 0x100;
         break;
 
     case 1:
@@ -31,16 +33,16 @@ void EntityRoomTransition2(Entity* self) {
             g_Player.padSim = PAD_RIGHT;
         } else {
             g_Player.padSim = 0;
-            D_801D7DD0 |= 0x80;
+            g_CutsceneFlags |= 0x80;
             self->step++;
         }
         g_Player.D_80072EFC = 1;
         break;
 
     case 2:
-        if (D_801D7DD0 & 0x20) {
+        if (g_CutsceneFlags & 0x20) {
             g_api.InitStatsAndGear(1);
-            g_api.PlaySfx(SE_DEATH_SWIPES);
+            g_api.PlaySfx(SFX_DEATH_SWISH);
             for (localVar = 0; localVar < 6; localVar++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity == NULL) {
@@ -57,7 +59,7 @@ void EntityRoomTransition2(Entity* self) {
         break;
 
     case 3:
-        if (D_801D7DD0 & 0x40 && !(--self->ext.roomTransition2.timer)) {
+        if (g_CutsceneFlags & 0x40 && !(--self->ext.roomTransition2.timer)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
                 prim = &g_PrimBuf[localVar];
@@ -69,7 +71,8 @@ void EntityRoomTransition2(Entity* self) {
                 prim->x0 = 0;
                 prim->y0 = 0;
                 prim->r0 = prim->b0 = prim->g0 = 0;
-                prim->drawMode = 0x35;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 self->step++;
             } else {
                 self->ext.roomTransition2.timer++;
@@ -85,7 +88,7 @@ void EntityRoomTransition2(Entity* self) {
         if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
-            g_Tilemap.bg[0].flags |= 1;
+            g_BgLayers[0].flags |= 1;
             g_api.PlaySfx(0xA1);
             g_api.PlaySfx(0x30F);
         }
@@ -160,7 +163,7 @@ void EntityDeathStolenItem(Entity* self) {
         prim->u1 = prim->u3 = (params & 7) << 4 | 0xF;
         prim->v0 = prim->v1 = (params & 0x18) << 1 | 0x81;
         prim->v2 = prim->v3 = (params & 0x18) << 1 | 0x8F;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         self->step++;
         break;
 
@@ -182,7 +185,7 @@ void EntityDeathStolenItem(Entity* self) {
         temp1 = temp8 >> 4;
         prim->x0 = prim->x2 = self->posX.i.hi - temp1;
         prim->y0 = prim->y1 = self->posY.i.hi - temp1;
-        prim->drawMode = 6;
+        prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         temp2 = temp1 << 1;
         prim->x1 = prim->x3 = prim->x0 + temp2;
         prim->y2 = prim->y3 = prim->y0 + temp2;
@@ -286,7 +289,7 @@ void EntityDeath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (D_801D7DD0 & 0x80) {
+        if (g_CutsceneFlags & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
                 InitializeEntity(g_eInitGeneric2);
@@ -304,10 +307,12 @@ void EntityDeath(Entity* self) {
                 for (i = 0; prim != NULL; i++) {
                     if (i != 0) {
                         prim->clut = self->palette;
-                        prim->drawMode = 0x35;
+                        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE |
+                                         DRAW_COLORS | DRAW_TRANSP;
                     } else {
                         prim->clut = 0x15F;
-                        prim->drawMode = 0x55;
+                        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE |
+                                         DRAW_COLORS | DRAW_TRANSP;
                     }
                     prim->tpage = self->unk5A >> 2;
                     prim->u0 = prim->u2 = 0x10;
@@ -340,7 +345,7 @@ void EntityDeath(Entity* self) {
         self->rotZ -= 0x40;
         if (self->rotZ == 0) {
             SetStep(3);
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
         }
 
         x = (0x1000 - self->rotZ) * 0x1D;
@@ -380,12 +385,12 @@ void EntityDeath(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.death.unk7C += 4;
         if (self->ext.death.unk7C == 96) {
-            D_801D7DD0 |= 1;
+            g_CutsceneFlags |= 1;
         }
 
         if (self->ext.death.unk7C == 128) {
             while (prim != NULL) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             self->animCurFrame = 16;
@@ -419,7 +424,7 @@ void EntityDeath(Entity* self) {
 
     case 6:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 2) {
+        if (g_CutsceneFlags & 2) {
             SetStep(7);
         }
         break;
@@ -434,14 +439,14 @@ void EntityDeath(Entity* self) {
             newEntity->ext.death.unk7C = 1;
         }
 
-        if (D_801D7DD0 & 4) {
+        if (g_CutsceneFlags & 4) {
             SetStep(9);
         }
         break;
 
     case 8:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 4) {
+        if (g_CutsceneFlags & 4) {
             SetStep(9);
         }
         break;
@@ -452,14 +457,14 @@ void EntityDeath(Entity* self) {
         }
         newEntity->ext.death.unk7C = 1;
 
-        if (D_801D7DD0 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(11);
         }
         break;
 
     case 10:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(11);
         }
         break;
@@ -470,14 +475,14 @@ void EntityDeath(Entity* self) {
         }
         newEntity->ext.death.unk7C = 1;
 
-        if (D_801D7DD0 & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(13);
         }
         break;
 
     case 12:
         AnimateEntity(D_80181B28, self);
-        if (D_801D7DD0 & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             SetStep(13);
         }
         break;
@@ -499,7 +504,7 @@ void EntityDeath(Entity* self) {
     case 15:
         if (AnimateEntity(D_80181B70, self) == 0) {
             SetStep(16);
-            D_801D7DD0 |= 0x20;
+            g_CutsceneFlags |= 0x20;
         }
         break;
 
@@ -549,7 +554,7 @@ void EntityDeath(Entity* self) {
         self->ext.death.moveTimer++;
 
         if (self->posY.i.hi < -32) {
-            D_801D7DD0 |= 0x40;
+            g_CutsceneFlags |= 0x40;
             DestroyEntity(self);
             DestroyEntity(&self[1]);
         }
@@ -618,7 +623,7 @@ void EntityUnkId5E(Entity* entity) {
             entity->ext.generic.unk84.U16.unk0 = 0x20;
         }
         entity->unk6C = 0x40;
-        entity->drawMode = 0x30;
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         break;
 
     case 1:
@@ -647,11 +652,12 @@ void func_801C13F8() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID_62, g_CurrentEntity, entity);
+            // Make a EntityWargExplosionPuffOpaque
+            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
             entity->params = 2;
-            entity->ext.generic.unk88.S8.unk1 = 6 - i;
-            entity->ext.generic.unk84.S16.unk0 = temp_s3;
-            entity->ext.generic.unk88.S8.unk0 = temp_s4;
+            entity->ext.wargpuff.unk89 = 6 - i;
+            entity->ext.wargpuff.unk84 = temp_s3;
+            entity->ext.wargpuff.unk88 = temp_s4;
         }
     }
 }
@@ -677,7 +683,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
-        self->ext.et38.unk80 = obj->unk8;
+        self->ext.wargpuff.unk80 = obj->unk8;
         self->step = params + 1;
 
         temp_v0 = self->params & 0xFF00;
@@ -695,13 +701,13 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY = FIX(1.0);
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) != 0) {
             switch (self->step_s) {
             case 0:
                 self->drawFlags = FLAG_DRAW_UNK8;
@@ -726,26 +732,27 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     case 3:
         if (self->step_s == 0) {
-            self->drawFlags |= 4;
-            switch (self->ext.et38.unk88) {
+            self->drawFlags |= FLAG_DRAW_ROTZ;
+            switch (self->ext.wargpuff.unk88) {
             case 1:
-                if (self->ext.et38.unk89 >= 0x4) {
-                    self->ext.et38.unk89 += 0xFD;
-                    self->ext.et38.unk84 -= 0x800;
+                if (self->ext.wargpuff.unk89 >= 0x4) {
+                    self->ext.wargpuff.unk89 += 0xFD;
+                    self->ext.wargpuff.unk84 -= 0x800;
                 }
                 break;
 
             case 2:
-                self->ext.et38.unk84 = (u16)self->ext.et38.unk84 +
-                                       ((u8)self->ext.et38.unk89 * 0xC0);
+                self->ext.wargpuff.unk84 =
+                    (u16)self->ext.wargpuff.unk84 +
+                    ((u8)self->ext.wargpuff.unk89 * 0xC0);
                 break;
             }
-            self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
-            self->rotZ = self->ext.generic.unk84.S16.unk0 & 0xFFF;
-            temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
+            self->ext.wargpuff.unk84 = self->ext.wargpuff.unk84 & 0xFFF;
+            self->rotZ = self->ext.wargpuff.unk84 & 0xFFF;
+            temp_s0 = self->ext.wargpuff.unk89 * 0x140;
             temp_s0 /= 28;
-            self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
-            self->velocityY = -(temp_s0 * rcos(self->ext.et38.unk84));
+            self->velocityX = temp_s0 * rsin(self->ext.wargpuff.unk84);
+            self->velocityY = -(temp_s0 * rcos(self->ext.wargpuff.unk84));
             self->step_s++;
         }
 
@@ -767,7 +774,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->velocityY = velocityY - (adjVelocityY >> 2);
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -778,11 +785,11 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->velocityY = FIX(-0.75);
             self->facingLeft = rnd & 1;
             self->rotX = 0xC0;
-            self->drawFlags |= 1;
+            self->drawFlags |= FLAG_DRAW_ROTX;
             self->step_s++;
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;

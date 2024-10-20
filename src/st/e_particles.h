@@ -1,4 +1,9 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
+
+#if defined(VERSION_HD)
+static u32 padding = 0;
+#endif
 
 u16 g_ESoulStealOrbAngles[] = {
     0x820, 0x840, 0x860, 0x880, 0x8C0, 0x900, 0x940, 0xA00,
@@ -19,9 +24,6 @@ u8 g_ESoulStealOrbAnim[] = {
 };
 
 #ifdef VERSION_PSP
-
-static u8 it_looks_like_being_unused[] = {0x01, 0x0E};
-
 void func_psp_0923AD68(Entity*);
 void func_psp_0923B2F0(Entity*);
 

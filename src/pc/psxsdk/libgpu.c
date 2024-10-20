@@ -38,7 +38,8 @@ int LoadImage(RECT* rect, u_long* p) { return MyLoadImage(rect, p); }
 int MyStoreImage(RECT* rect, u_long* p);
 int StoreImage(RECT* rect, u_long* p) { return MyStoreImage(rect, p); }
 
-int MoveImage(RECT* rect, int x, int y) { NOT_IMPLEMENTED; }
+int MyMoveImage(RECT* rect, int x, int y);
+int MoveImage(RECT* rect, int x, int y) { return MyMoveImage(rect, x, y); }
 
 int MyDrawSync(int mode);
 int DrawSync(int mode) { return MyDrawSync(mode); }
@@ -52,11 +53,25 @@ DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }
 void MyDrawOTag(OT_TYPE* p);
 void DrawOTag(OT_TYPE* p) { MyDrawOTag(p); }
 
+u32 get_tw_(RECT* arg0) {
+    u32 pad[4];
+
+    if (arg0 != 0) {
+        pad[0] = (u8)arg0->x >> 3;
+        pad[2] = (s32)(-arg0->w & 0xFF) >> 3;
+        pad[1] = (u8)arg0->y >> 3;
+        pad[3] = (s32)(-arg0->h & 0xFF) >> 3;
+        return (pad[1] << 0xF) | 0xE2000000 | (pad[0] << 0xA) | (pad[3] << 5) |
+               pad[2];
+    }
+    return 0;
+}
+
 void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     setlen(p, 2);
     p->code[0] =
         (dtd ? 0xE1000200 : 0xE1000000) | (dfe ? 0x400 : 0) | (tpage & 0x1FF);
-    p->code[1] = 0; // TODO get_tw(tw)
+    p->code[1] = get_tw_(tw);
 }
 
 int MyResetGraph(int mode);
@@ -77,7 +92,9 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     return ot;
 }
 
-void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env) { NOT_IMPLEMENTED; }
+void MySetDrawEnv(DR_ENV* dr_env, DRAWENV* env);
+
+void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env) { MySetDrawEnv(dr_env, env); }
 
 int GetGraphType(void) {
     // always 0 in SOTN

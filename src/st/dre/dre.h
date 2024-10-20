@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 #define STAGE_DRE_H
 
@@ -115,7 +116,8 @@ extern u32 D_8018125C[];
 extern s16 D_801812E4[];
 extern u32 D_801812F4[];
 extern s16 D_801815E8[]; // X, Y, params for Entity3DHouseSpawner
-extern s8 D_801816C4;    // Succubus facing assigned to it
+extern s8 D_801816C0;
+extern s8 D_801816C4; // Succubus facing assigned to it
 extern u8 D_80181338[];
 extern u16 D_801811A4[];
 extern u16 D_801810B0[];
@@ -134,7 +136,7 @@ extern Primitive* D_801A3EF0[];
 extern s32 D_801A3F08;
 extern s32 D_801A3F0C;
 extern s32 D_801A3F10[];
-extern u32 D_801A3F84;
+extern u32 g_CutsceneFlags;
 
 // For succubus cutscene
 extern u8 D_8018088C[];
@@ -146,7 +148,7 @@ extern s16 D_801808A8[];
 extern const char D_80181B65[];
 extern const char D_801816C8[];
 extern s32 D_801A3ED4;
-extern u32 D_801A3F84;
+extern u32 g_CutsceneFlags;
 extern s32 D_801A3F88;
 
 extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard

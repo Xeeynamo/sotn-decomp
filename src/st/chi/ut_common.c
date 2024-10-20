@@ -7,10 +7,14 @@
 #include "chi.h"
 
 // func_801A128C: DestroyEntity
+#include "../../destroy_entity.h"
 // func_801A12F8: DestroyEntitiesFromIndex
+#include "../../destroy_entities_from_index.h"
 // func_801A1374: PreventEntityFromRespawning
+#include "../prevent_entity_from_respawning.h"
 // func_801A13BC: AnimateEntity
-#include "../entity.h"
+#include "../animate_entity.h"
+//#include "../entity.h"
 
 // [Duplicate]
 // func_801A1474

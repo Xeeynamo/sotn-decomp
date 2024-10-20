@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <dra.h>
+#include "dra_bss.h"
 #include <log.h>
 #include "pc.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <lba.h>
-
-#define VSYNC_UNK_LEN 1024
+#include "weapon_pc.h"
 
 s32 g_SimVabId = 0;
 
@@ -62,7 +63,18 @@ SimFile D_800A036C[] = {
         SD_MAR_VB_LEN,
         SIM_VB,
     },
-};
+    {
+        "SERVANT/SD_BAT.VH",
+        aPbav_1,
+        SD_TUKA2_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_BAT.VB",
+        D_80280000,
+        SD_TUKA2_VB_LEN,
+        SIM_VB,
+    }};
 
 const char* D_800A04AC[] = {
     "sim:c:\\sound\\data\\sd_eve1.seq",
@@ -172,7 +184,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 void InitStageDummy(Overlay* o);
 void InitStageWrp(Overlay* o);
 void InitStageSel(Overlay* o);
-void InitPlayerArc(FileLoad* file);
+void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
@@ -274,7 +286,8 @@ s32 LoadFileSimToMem(SimKind kind) {
     return 0;
 }
 
-bool LoadFilePc(FileLoad* file, SimFile* sim) {
+bool LoadFilePc(const struct FileUseContent* file) {
+    SimFile* sim = (SimFile*)file->param;
     sim->addr = file->content;
     switch (sim->kind) { // slowly replacing the original func
     case SIM_1:
@@ -305,11 +318,12 @@ bool LoadFilePc(FileLoad* file, SimFile* sim) {
     return true;
 }
 
-int readToBuf(char* filename, char* dest) {
+int readToBuf(const char* filename, char* dest) {
     FILE* file = fopen(filename, "rb");
 
     if (file == NULL) {
-        printf("Failed to open file");
+        printf("Failed to open file %s\n", filename);
+        exit(1);
         return 1;
     }
 
@@ -354,7 +368,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 5:
             InitPlayerRic();
-            return 0;
+            sim.path = "BIN/RIC.BIN";
+            sim.kind = 99;
+            break;
         case 12:
             sim.path = "ST/SEL/F_SEL.BIN";
             sim.kind = SIM_STAGE_CHR;
@@ -394,7 +410,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VH;
-            return readToBuf(sim.path, sim.addr);
+            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            return readToBuf(buf, sim.addr);
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
@@ -431,7 +448,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VB;
-            return readToBuf(sim.path, sim.addr);
+            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            return readToBuf(buf, sim.addr);
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
@@ -450,22 +468,26 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                  g_StagesLba[g_StageId].ovlName);
         break;
     case SimFileType_Weapon0Prg:
-        INFOF("TODO: will load weapon 'w0_%03d'", fileId);
+        HandleWeapon0Prg(fileId);
         return 0;
     case SimFileType_Weapon1Prg:
         INFOF("TODO: will load weapon 'w1_%03d'", fileId);
         return 0;
     case SimFileType_Weapon0Chr:
-        INFOF("TODO: will load weapon 'f0_%03d'", fileId);
+        HandleWeapon0Chr(fileId);
         return 0;
     case SimFileType_Weapon1Chr:
         INFOF("TODO: will load weapon 'f1_%03d'", fileId);
         return 0;
     case SimFileType_FamiliarPrg:
-        INFOF("TODO: will load weapon 'tt_%03d'", fileId);
+        D_80170000 = g_ServantDesc;
         return 0;
     case SimFileType_FamiliarChr:
-        INFOF("TODO: will load weapon 'ft_%03d'", fileId);
+        snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN", 0);
+        u8 temp[0x6000];
+        FileReadToBuf(smolbuf, &temp, 0, 0x6000);
+        LoadTPage(&temp, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+        LoadTPage(&temp[0x4000], 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         return 0;
     }
     if (!sim.path) {

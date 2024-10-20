@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "mad.h"
+#include "sfx.h"
 
 void func_8018D8C8(u16* tilemap);
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018D8C8);
@@ -93,13 +95,13 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
 void func_8018E5AC(Entity* self) {
     s32 temp_v0;
-    ObjInit2* objInit = &D_8018056C[self->params];
+    ObjInit* objInit = &D_8018056C[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->unk5A = objInit->unk4.s;
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
@@ -108,7 +110,7 @@ void func_8018E5AC(Entity* self) {
             self->flags = temp_v0;
         }
     }
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 void func_8018E674(Entity* self) {
@@ -135,7 +137,7 @@ void func_8018E674(Entity* self) {
             }
             break;
         }
-        if (self->unk44) {
+        if (self->hitParams) {
             var_s0 = GetSideToPlayer();
             if (self->ext.generic.unk7C.u) {
                 var_s0 &= 2;
@@ -168,9 +170,9 @@ void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-        if (entity->unk44) { // If the candle is destroyed
+        if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
@@ -181,7 +183,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];

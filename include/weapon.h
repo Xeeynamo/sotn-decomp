@@ -3,6 +3,7 @@
 
 #define WEAPON
 #include <game.h>
+#include <sfx.h>
 
 typedef struct {
     /* 0x00 */ void (*EntityWeaponAttack)(Entity* self);
@@ -24,6 +25,5 @@ typedef struct {
 } Weapon /* 0x40 */;
 
 #define N_WEAPON_PAL 12
-extern u16 D_8006EDCC[][N_WEAPON_PAL * PALETTE_LEN];
-
+extern u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
 #endif

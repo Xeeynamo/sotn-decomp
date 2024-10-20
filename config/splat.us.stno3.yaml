@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 5d06216b895ab5ff892c88b0d9eff67ff16e2bd1
 segments:
   - name: stno3
     type: code
@@ -35,7 +36,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x1C4, .data, header] # layers
-      - [0x5A4, data]
+      - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, e_laydef] # layout entries header
       - [0x924, data]
       - [0xAAC, data]
@@ -48,16 +49,21 @@ segments:
       - [0xEA0, data]
       - [0x11F0, data]
       - [0x1B40, data]
+      - [0x1CC0, .data, st_update]
       - [0x1CEC, .data, collision]
       - [0x20AC, .data, e_red_door]
-      - [0x20C4, data]
-      - [0x25B4, .data, entity_relic_orb]
-      - [0x2618, data]
+      - [0x20C4, .data, st_common]
+      - [0x22C4, .data, e_collect]
+      - [0x25B4, .data, e_misc]
+      - [0x26D0, data]
       - [0x3180, data]
+      - [0x3870, data]
       - [0x39A0, data]
       - [0x3AC0, data]
       - [0x3AF0, data]
       - [0x3B30, data]
+      - [0x3B50, .data, e_bone_scimitar]
+      - [0x3C44, data]
       - [0x3CC4, .data, rooms]
       - [0x3DC8, .data, e_layout] # layout entries data
       - [0x4CE0, data]
@@ -76,14 +82,20 @@ segments:
       - [0x37514, .rodata, 3FF00] # EntityDeath
       - [0x37564, .rodata, 3FF00] # EntityWargExplosionPuffOpaque
       - [0x37578, .rodata, e_red_door] # EntityRedDoor
-      - [0x37590, rodata]
-      - [0x375E0, .rodata, 46684] # EntityPrizeDrop
-      - [0x37600, .rodata, 46684] # EntityEquipItemDrop
-      - [0x37618, .rodata, entity_relic_orb]
-      - [0x37650, .rodata, entity_message_box]
-      - [0x37664, .rodata, 48A84] # EntityStageNamePopup
-      - [0x37698, rodata]
-      - [0x376E8, rodata]
+      - [0x37590, .rodata, e_collect] # CollectGold text
+      - [0x375E0, .rodata, e_collect] # EntityPrizeDrop
+      - [0x37600, .rodata, e_collect] # EntityEquipItemDrop
+      - [0x37618, .rodata, e_misc]
+      - [0x37650, .rodata, e_misc]
+      - [0x37664, .rodata, 4AFF0] # EntityStageNamePopup
+      - [0x37698, rodata] # EntityStrongWarg
+      - [0x376D0, rodata] # EntityStrongWargWaveAttack
+      - [0x376E8, .rodata, 4ED60] # EntityUnkId2F
+      - [0x376FC, rodata] # D_801B76FC
+      - [0x37704, rodata] # EntityWarg
+      - [0x37738, .rodata, 516B4]
+      - [0x3775C, .rodata, 53F38]
+      - [0x37784, .rodata, e_bone_scimitar]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
@@ -92,20 +104,24 @@ segments:
       - [0x3E134, c]
       - [0x3E544, c, deathcutscene]
       - [0x3FF00, c]
-      - [0x4184C, c, random]
-      - [0x4187C, c, update]
-      - [0x41B78, c, update_stage_entities]
+      - [0x4184C, c, st_update]
       - [0x41C80, c, collision]
       - [0x4343C, c, create_entity]
       - [0x43FB4, c, e_red_door]
-      - [0x44C64, c]
-      - [0x46684, c]
-      - [0x47930, c, entity_relic_orb]
-      - [0x48400, c, entity_heart_drop]
-      - [0x48528, c, entity_message_box]
-      - [0x48A84, c]
+      - [0x44C64, c, st_common]
+      - [0x45BC0, c, e_collect]
+      - [0x47680, c, blit_char]
+      - [0x47930, c, e_misc]
+      - [0x4AFF0, c]
+      - [0x4ED60, c]
+      - [0x50A2C, c, player_water_effect]
+      - [0x516B4, c]
+      - [0x53F38, c]
+      - [0x559d0, c, e_bone_scimitar]
       - [0x56264, c]
       - [0x564B0, c]
       - [0x56880, c, prim_helpers]
-      - [0x570B0, sbss]
+      - [0x570B0, .bss, create_entity]
+      - [0x57120, .bss, bss]
+      - [0x57DD8, .bss, e_collect]
   - [0x57E18]

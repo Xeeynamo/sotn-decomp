@@ -1,25 +1,31 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "weapon_private.h"
 
 #include "../destroy_entity.h"
 
-void LoadWeaponPalette(s32 clutIndex) {
+static void LoadWeaponPalette(s32 clutIndex) {
     RECT dstRect;
     u16* src;
     u16* dst;
     s32 i;
 
 #if !defined(W_029)
-    dst = src = g_Cluts[clutIndex];
+    dst = src = g_WeaponCluts[clutIndex];
     dst = D_8006EDCC[g_HandId];
 #else
     dst = D_8006EDCC[g_HandId];
-    src = g_Cluts[clutIndex];
+    src = g_WeaponCluts[clutIndex];
 #endif
     if (src == NULL) {
         return;
     }
 
+    // I think dst is longer than src so this reads out of bounds
+#ifndef VERSION_PC
     for (i = 0; i < LEN(*D_8006EDCC); i++) {
+#else
+    for (i = 0; i < 112; i++) {
+#endif
         *dst++ = *src++;
     }
 
@@ -37,7 +43,7 @@ void LoadWeaponPalette(s32 clutIndex) {
     LoadImage(&dstRect, &D_8006EDCC);
 }
 
-void SetSpriteBank1(SpriteParts* animset) {
+static void SetSpriteBank1(SpriteParts* animset) {
     SpritePart** spriteBankDst = g_api.o.spriteBanks;
 
     spriteBankDst += 0x10;
@@ -47,7 +53,7 @@ void SetSpriteBank1(SpriteParts* animset) {
     *spriteBankDst = animset;
 }
 
-void SetSpriteBank2(SpriteParts* animset) {
+static void SetSpriteBank2(SpriteParts* animset) {
     SpritePart** spriteBankDst = g_api.o.spriteBanks;
 
     spriteBankDst += 0x11;
@@ -58,7 +64,7 @@ void SetSpriteBank2(SpriteParts* animset) {
 }
 
 #if !defined(W_029) && !defined(W_030) && !defined(W_044) && !defined(W_051)
-void SetWeaponAnimation(u8 anim) {
+static void SetWeaponAnimation(u8 anim) {
     g_CurrentEntity->ext.weapon.anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
@@ -66,7 +72,7 @@ void SetWeaponAnimation(u8 anim) {
 #endif
 
 #if !defined(W_044)
-void DecelerateX(s32 amount) {
+static void DecelerateX(s32 amount) {
     if (g_CurrentEntity->velocityX < 0) {
         g_CurrentEntity->velocityX += amount;
         if (g_CurrentEntity->velocityX > 0) {
@@ -80,7 +86,7 @@ void DecelerateX(s32 amount) {
     }
 }
 
-void DecelerateY(s32 amount) {
+static void DecelerateY(s32 amount) {
     if (g_CurrentEntity->velocityY < 0) {
         g_CurrentEntity->velocityY += amount;
         if (g_CurrentEntity->velocityY > 0) {
@@ -94,7 +100,7 @@ void DecelerateY(s32 amount) {
     }
 }
 
-void SetSpeedX(s32 speed) {
+static void SetSpeedX(s32 speed) {
     if (g_CurrentEntity->facingLeft == 1) {
         speed = -speed;
     }
@@ -103,7 +109,7 @@ void SetSpeedX(s32 speed) {
 #endif
 
 #if !defined(W_030) && !defined(W_051)
-void DestroyEntityWeapon(bool arg0) {
+static void DestroyEntityWeapon(bool arg0) {
     if (arg0 == false) {
         DestroyEntity(&g_Entities[E_WEAPON]);
     }
@@ -114,7 +120,7 @@ void DestroyEntityWeapon(bool arg0) {
 }
 #endif
 
-void SetWeaponProperties(Entity* self, s32 kind) {
+static void SetWeaponProperties(Entity* self, s32 kind) {
     Equipment equip;
 
     g_api.GetEquipProperties(g_HandId, &equip, self->ext.weapon.equipId);

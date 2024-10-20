@@ -1,32 +1,31 @@
-g_CastleFlags = 0x8003BDEC;
-D_8003C908    = 0x8003C908;
-g_GpuBuffers  = 0x8003CB08;
-g_api         = 0x8003C774;
-g_Settings    = 0x8003C9F8;
-D_8006C384    = 0x8006C384;
-D_8006C38C    = 0x8006C38C;
-g_Clut        = 0x8006CBCC;
-D_8006ED0C    = 0x8006ED0C;
-D_8006ED2C    = 0x8006ED2C;
-D_8006ED4C    = 0x8006ED4C;
+g_CastleFlags       = 0x8003BDEC;
+D_8003C908          = 0x8003C908;
+g_EquippedWeaponIds = 0x8003C90C;
+g_GpuBuffers        = 0x8003CB08;
+g_api               = 0x8003C774;
+g_Settings          = 0x8003C9F8;
+D_8006C384          = 0x8006C384;
+D_8006C38C          = 0x8006C38C;
+g_Clut              = 0x8006CBCC;
+D_8006ED0C          = 0x8006ED0C;
+D_8006ED2C          = 0x8006ED2C;
+D_8006ED4C          = 0x8006ED4C;
 
-g_Player      = 0x80072BD0;
-g_Tilemap     = 0x80073084;
-g_Camera      = 0x8007308C;
-g_CurrentRoom = 0x800730A0;
+g_Player            = 0x80072BD0;
+g_Tilemap           = 0x80073084;
+g_BgLayers          = 0x800730D8;
+g_Camera            = 0x8007308C;
+g_CurrentRoom       = 0x800730A0;
 
 g_unkGraphicsStruct = 0x800973F8;
+D_80097448          = 0x80097448;
 D_80097488          = 0x80097488;
 g_pads              = 0x80097490;
 g_Status            = 0x80097964;
+D_80097C98          = 0x80097C98;
 
-D_800B0608    = 0x800B0608;
+D_801A0E5C          = 0x801A0E5C;
+D_801A4E6C          = 0x801A4E6C;
+D_801A6E7C          = 0x801A6E7C;
 
-D_801A0E5C    = 0x801A0E5C;
-D_801A4E6C    = 0x801A4E6C;
-D_801A6E7C    = 0x801A6E7C;
-
-D_8017D000    = 0x8017D000;
-D_8017D000    = 0x8017D000;
-
-D_800AFC52    = 0x800AFC52;
+D_8017D000          = 0x8017D000;

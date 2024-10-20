@@ -1,7 +1,15 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // params: message box duration
 // ext.messageBox.label: box size and text to render
+extern u16 g_InitializeData0[];
 void EntityMessageBox(Entity* self) {
+    const u16 VramX = 0;
+    const u16 VramY = 0x180;
+    const int FontW = 12;
+    const int FontH = 16;
+    const int FontLen = FontW * FontH / 2 / sizeof(u16); // 4bpp
+
     Primitive* prim;
     s32 i;
     char* str;
@@ -12,15 +20,19 @@ void EntityMessageBox(Entity* self) {
     u8 ch;
     RECT rect;
 
-    s32 s4;
-    u16 s5;
-    s32 s6;
+    u16 x;
+    u16 y;
+    u16 nCh;
+
+    u16 chjp;
+    u16* srcJpPix;
+    u16* dstJpPix;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
         self->flags |= FLAG_UNK_10000;
-        self->flags ^= FLAG_UNK_08000000;
+        self->flags ^= FLAG_POS_CAMERA_LOCKED;
         if (!self->params) {
             self->params = 96; // default to 96 frames, or 1.5 seconds
         }
@@ -83,13 +95,13 @@ void EntityMessageBox(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 }
                 prim->priority = 0x1FC;
-                prim->drawMode = 0x11;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
             }
         }
         self->step++;
         break;
     case 2:
-#if !defined(VERSION_PSP)
+#if defined(VERSION_US)
         dstPix = g_Pix[0];
         chPix = dstPix;
         str = self->ext.messageBox.label;
@@ -114,20 +126,45 @@ void EntityMessageBox(Entity* self) {
                     str, &xOffset, chPix, (self->ext.messageBox.width >> 1));
             }
         }
-
-        LoadTPage((u_long*)dstPix, 0, 0, 0, 0x180, self->ext.messageBox.width,
-                  self->ext.messageBox.height);
-        self->ext.messageBox.duration = 0;
-        self->step++;
-#else
-        s6 = 0;
-        s4 = 0;
-        s5 = 0x180;
+        LoadTPage((u_long*)dstPix, 0, 0, VramX, VramY,
+                  self->ext.messageBox.width, self->ext.messageBox.height);
+#elif defined(VERSION_PSP)
+        nCh = 0;
+        x = VramX;
+        y = VramY;
         str = self->ext.messageBox.label;
         BlitChar(str, 0, 0, 0x180);
+#elif defined(VERSION_HD)
+        nCh = 0;
+        x = VramX;
+        y = VramY;
+        str = self->ext.messageBox.label;
+        while (true) {
+            chjp = *str++;
+            if (!chjp) {
+                break;
+            }
+            if (chjp == 1) {
+                y += FontH;
+                x = 0;
+            } else {
+                chjp = (*str++ | (chjp << 8));
+                srcJpPix = g_api.func_80106A28(chjp, 1);
+                if (srcJpPix) {
+                    dstJpPix = &msgBoxTpage[nCh * FontLen];
+                    for (i = 0; i < FontLen; i++) {
+                        *dstJpPix++ = *srcJpPix++;
+                    }
+                    LoadTPage(
+                        &msgBoxTpage[nCh * FontLen], 0, 0, x, y, FontW, FontH);
+                    x += 3;
+                    nCh++;
+                }
+            }
+        }
+#endif
         self->ext.messageBox.duration = 0;
         self->step++;
-#endif
         break;
     case 3:
         self->ext.messageBox.duration++;
@@ -153,7 +190,7 @@ void EntityMessageBox(Entity* self) {
         break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         self->ext.messageBox.duration++;
         if (self->ext.messageBox.duration > self->params) {
             DestroyEntity(self);

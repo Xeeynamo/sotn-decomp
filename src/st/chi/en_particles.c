@@ -390,8 +390,8 @@ void func_801A6120(u16 entityId, Entity* src, Entity* dst)
     dst->unk5A = src->unk5A;
     dst->zPriority = src->zPriority;
     dst->animSet = src->animSet;
-    dst->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
-                 FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+    dst->flags = FLAG_UNK_2000 | FLAG_NOT_AN_ENEMY | FLAG_KEEP_ALIVE_OFFCAMERA |
+                 FLAG_POS_CAMERA_LOCKED | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                  FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     if (src->palette & 0x8000) {

@@ -1,4 +1,6 @@
-#include <stage.h>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "mad.h"
+#include "sfx.h"
 
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x002B, 0x0000, 0x0000,
@@ -167,7 +169,7 @@ void HitDetection(void) {
                 if ((*scratchpad_1 & miscVar3) &&
                     (!iterEnt1->unk6D[iterEnt2->enemyId])) {
                     if (*scratchpad_1 & 0x80) {
-                        iterEnt1->unk44 = iterEnt2->hitEffect & 0x7F;
+                        iterEnt1->hitParams = iterEnt2->hitEffect & 0x7F;
                         miscVar2 = 0xFF;
                         break;
                     } else {
@@ -198,16 +200,16 @@ void HitDetection(void) {
                                     }
                                     if ((i == 3) &&
                                         (iterEnt1->flags & FLAG_UNK_8000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                     if ((i == 4) &&
                                         (iterEnt1->flags & FLAG_UNK_4000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                 }
-                                iterEnt1->unk44 = i;
+                                iterEnt1->hitParams = i;
                                 miscVar2 = 0xFF;
                                 break;
                             } else {
@@ -251,10 +253,10 @@ void HitDetection(void) {
                             } else {
                                 iterEnt2->hitFlags = 1;
                             }
-                            iterEnt2->unk44 = iterEnt1->attackElement;
+                            iterEnt2->hitParams = iterEnt1->attackElement;
                             iterEnt2->hitPoints = iterEnt1->attack;
                         }
-                        iterEnt1->unk44 = iterEnt2->hitEffect & 0x7F;
+                        iterEnt1->hitParams = iterEnt2->hitEffect & 0x7F;
                         miscVar2 = 0xFF;
                         iterEnt1->hitFlags = 0x80;
                     }
@@ -264,7 +266,7 @@ void HitDetection(void) {
         if (miscVar2) {
             if (iterEnt1->unk5C != NULL) {
                 entFrom5C = iterEnt1->unk5C;
-                entFrom5C->unk44 = (u16)iterEnt1->unk44;
+                entFrom5C->hitParams = (u16)iterEnt1->hitParams;
                 entFrom5C->hitFlags = (u8)iterEnt1->hitFlags;
             } else {
                 entFrom5C = iterEnt1;
@@ -284,10 +286,11 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x120] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) +
+                                  MAD_COLLISION_FLAGS_START] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
-                    !(entFrom5C->flags & FLAG_UNK_01000000)) {
+                    !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
                     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
                         g_api.FreePrimitives(
                             g_unkGraphicsStruct.BottomCornerTextPrims);
@@ -295,7 +298,7 @@ void HitDetection(void) {
                     }
                     BottomCornerText(
                         g_api.enemyDefs[entFrom5C->enemyId].name, 0);
-                    entFrom5C->flags |= FLAG_UNK_01000000;
+                    entFrom5C->flags |= FLAG_NOT_AN_ENEMY;
                 }
                 miscVar2 = 0;
                 if ((iterEnt1->hitboxState & 8) &&
@@ -340,7 +343,7 @@ void HitDetection(void) {
                             miscVar1 = 0;
                         }
                         if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
-                            !(entFrom5C->flags & FLAG_UNK_04000000) &&
+                            !(entFrom5C->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
                             miscVar1) {
                             otherEntity =
                                 AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -391,9 +394,9 @@ void HitDetection(void) {
                         if (entFrom5C->flags & FLAG_UNK_10) {
                             // Different on PSP vs PSX
                             if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_UNK_MAD_630);
+                                g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
-                                g_api.PlaySfx(0x6DB);
+                                g_api.PlaySfx(SFX_WEAPON_HIT_A);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
@@ -491,8 +494,10 @@ void HitDetection(void) {
                                     if (miscVar1) {
                                         miscVar1--;
                                         flaggy_flags = (1 << (miscVar1 & 7));
-                                        g_CastleFlags[(miscVar1 >> 3) +
-                                                      0x140] |= flaggy_flags;
+                                        g_CastleFlags
+                                            [(miscVar1 >> 3) +
+                                             MAD_RAREDROP_FLAGS_START] |=
+                                            flaggy_flags;
                                     }
                                 } else {
                                     miscVar3 -= sp3C->rareItemDropRate;
@@ -543,9 +548,9 @@ void HitDetection(void) {
                 }
                 if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     }
                 }
                 otherEntity = entFrom5C;

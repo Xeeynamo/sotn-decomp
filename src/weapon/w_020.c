@@ -1,7 +1,15 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #20. Used by weapons:
 // Karma Coin
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_020_1.h"
+#include "w_020_2.h"
+#define g_Animset w_020_1
+#define g_Animset2 w_020_2
+#include "sfx.h"
 
 extern SpriteParts D_90000_8017A040[];
 extern AnimationFrame D_90000_8017A850[];
@@ -18,7 +26,7 @@ extern s32 D_90000_8017AADC[];
 extern s32 D_90000_8017AB44[];
 extern s32 D_90000_8017C238;
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     Collider sp10;
     Entity* child;
     Primitive* prim;
@@ -70,8 +78,8 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_100000;
-        self->unk4C = D_90000_8017A850;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_100000;
+        self->anim = D_90000_8017A850;
         SetSpeedX((rand() & 0x3FFF) + 0xE000);
         self->velocityY = FIX(-4.0);
         self->facingLeft = 0;
@@ -90,8 +98,8 @@ void EntityWeaponAttack(Entity* self) {
         if (sp10.effects & 1) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
-            self->unk4C = D_90000_8017A864;
-            g_api.PlaySfx(0x6A9);
+            self->anim = D_90000_8017A864;
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
             self->step += 1;
             return;
         }
@@ -124,8 +132,8 @@ void EntityWeaponAttack(Entity* self) {
         return;
     case 2:
         if (((self->animFrameIdx % 8) == 5) && (self->animFrameDuration == 1)) {
-            g_api.func_80134714(
-                0x6A9, D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
+            g_api.PlaySfxVolPan(SFX_GOLD_PICKUP,
+                                D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
             self->ext.karmacoin.unk84++;
         }
         if (self->animFrameDuration < 0) {
@@ -134,10 +142,10 @@ void EntityWeaponAttack(Entity* self) {
             // heads/tails
             if (rand() & 1) {
                 // Heads
-                self->unk4C = D_90000_8017A8C8;
+                self->anim = D_90000_8017A8C8;
             } else {
                 // Tails
-                self->unk4C = D_90000_8017A8D8;
+                self->anim = D_90000_8017A8D8;
             }
             self->step += 1;
         }
@@ -145,40 +153,40 @@ void EntityWeaponAttack(Entity* self) {
     case 3:
         if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
-            if (self->unk4C == D_90000_8017A8C8) {
-                g_api.PlaySfx(0x682);
+            if (self->anim == D_90000_8017A8C8) {
+                g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
             } else {
-                g_api.PlaySfx(0x682);
+                g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
             }
         }
         if (self->animFrameDuration < 0) {
             // Tails: A small head pops up, and lightning strikes the coin
-            if (self->unk4C == D_90000_8017A8D8) {
-                g_Player.D_80072F00[10] = 4;
-                self->unk4C = D_90000_8017A8E8;
+            if (self->anim == D_90000_8017A8D8) {
+                g_Player.timers[10] = 4;
+                self->anim = D_90000_8017A8E8;
                 self->animFrameDuration = self->animFrameIdx = 0;
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
                 g_api.func_80118C28(7);
-                g_api.PlaySfx(0x665);
+                g_api.PlaySfx(SFX_THUNDER_B);
                 SetWeaponProperties(self, 0);
                 self->step = 4;
             } else {
                 // Heads: A giant angelic figure appears, with a soul-steal
                 // effect. Not clear what part of the function triggers
                 // soul-steal.
-                g_Player.D_80072F00[12] = 4;
+                g_Player.timers[12] = 4;
                 self->drawFlags = FLAG_DRAW_UNK80;
                 self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                 self->posY.i.hi = 0;
                 self->posX.i.hi = 0x80;
                 self->zPriority = 0x1BA;
                 self->animCurFrame = 0x1D;
-                self->flags &= ~(FLAG_UNK_08000000 | FLAG_UNK_100000);
+                self->flags &= ~(FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000);
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
                 g_api.func_80118C28(8);
-                g_api.PlaySfx(0x6B1);
+                g_api.PlaySfx(SFX_TRANSFORM_3X);
                 prim = &g_PrimBuf[self->primIndex];
                 prim->r0 = prim->g0 = prim->b0 = 0x5F;
                 prim->r1 = prim->g1 = prim->b1 = 0x5F;
@@ -276,8 +284,8 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.karmacoin.unk92 -= 4;
         if (self->ext.karmacoin.unk92 < 0x28) {
             self->ext.karmacoin.unk92 = 0x28;
-            child = g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x54, 0);
+            child =
+                g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x54, 0), 0);
             self->step++;
         }
         self->ext.karmacoin.unk94 = self->ext.karmacoin.unk92;
@@ -336,7 +344,7 @@ void EntityWeaponAttack(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim->drawMode |= DRAW_HIDE;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step += 1;
         }
         break;
@@ -422,7 +430,7 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -430,19 +438,19 @@ void func_ptr_80170008(Entity* self) {
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority;
 
         if (D_90000_8017C238 % 4 == 1) {
             self->velocityX = FIX(8.0 / 128);
             self->velocityY = FIX(34.0 / 128);
-            self->unk4C = D_90000_8017A9D8;
+            self->anim = D_90000_8017A9D8;
             self->posX.i.hi = 140;
             self->posY.i.hi = 100;
             self->zPriority = PLAYER.zPriority - 4;
         } else {
             self->zPriority = PLAYER.zPriority;
-            self->unk4C = D_90000_8017A954;
+            self->anim = D_90000_8017A954;
             self->animFrameIdx = rand() & 0x1F;
             self->posX.i.hi = (D_90000_8017C238 % 3) * 10 + 148;
             self->posY.i.hi = (D_90000_8017C238 % 3) * 10 + 76;
@@ -460,26 +468,26 @@ void func_ptr_80170008(Entity* self) {
     self->posY.val += self->velocityY;
 }
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 20; }
+static int GetWeaponId(void) { return 20; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

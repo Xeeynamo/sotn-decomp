@@ -1,16 +1,9 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
-void func_801B642C(void) {
-    g_Dialogue.nextLineX = 2;
-    g_Dialogue.nextCharX = 2;
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
-u8 func_801B6480(const char* textDialogue) {
+u8 CutsceneUnk2(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -24,7 +17,7 @@ u8 func_801B6480(const char* textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_801B642C();
+    CutsceneUnk1();
 
     //! FAKE:
     if (prim && prim) {
@@ -72,33 +65,9 @@ u8 func_801B6480(const char* textDialogue) {
     return true;
 }
 
-void func_801B6648(s16 yOffset) {
-    RECT rect;
+#include "../cutscene_unk3.h"
 
-    rect.y = (yOffset * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
-
-void func_801B66A4(void) {
-    Primitive* prim;
-
-    func_801B6648(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x10;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 u8 D_80180824[] = {
     0x00,
@@ -137,97 +106,40 @@ u16 D_80180838[] = {
     0x0034, 0x0041, 0x0029, 0x0048,
 };
 
-const char* g_DiagActors[] = {
+const char* g_ActorNames[] = {
     _S("Alucard"),
     _S("Maria"),
     _S("Richter"),
 };
 
-// Creates primitives for the actor name at the head of the dialogue
-void func_801B675C(u16 actorIndex, Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-    s32 x;
-    u16 chCount;
-    const char* actorName;
-    char ch;
+#include "../cutscene_avatar.h"
 
-    actorName = g_DiagActors[actorIndex];
-    chCount = 0;
-    while (true) {
-        ch = *actorName++;
-        if (ch == DIAG_EOL) {
-            ch = *actorName++;
-            if (ch == DIAG_EOS) {
-                break;
-            }
-        }
-        if (ch == MENUCHAR(' ')) {
-            continue;
-        }
-        chCount++;
-    }
+#include "../cutscene_unk6.h"
 
-    // Create chCount amount of sprites based on the actor name's letter count
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
-    if (primIndex == -1) {
-        DestroyEntity(self);
-        return;
-    }
-
-    // Fill prims to render the actor name on screen
-    prim = &g_PrimBuf[primIndex];
-    g_Dialogue.primIndex[1] = primIndex;
-    actorName = g_DiagActors[actorIndex];
-    x = 0x38;
-    while (prim != NULL) {
-        ch = *actorName++;
-        if (ch == MENUCHAR(' ')) {
-            x += FONT_SPACE;
-        } else {
-            prim->type = PRIM_SPRT;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->u0 = (ch & 0x0F) * FONT_W;
-            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
-            prim->v1 = FONT_H;
-            prim->u1 = FONT_W;
-            prim->priority = 0x1FF;
-            prim->drawMode = DRAW_HIDE;
-            prim->x0 = x;
-            prim->y0 = g_Dialogue.startY + 6;
-            prim = prim->next;
-            x += FONT_GAP;
-        }
-    }
-}
-
-void func_801B68E0(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
-
-void func_801B690C(u8 ySteps, Entity* self) {
+// n.b.! unlike the stage version of this function, a `self`
+// parameter is used to store the substep instead of
+// `g_CurrentEntity`., entity
+static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
+    const int PrimCount = 5;
     s32 primIndex = g_Dialogue.nextCharY + 1;
     Primitive* prim;
     s32 i;
 
-    while (primIndex >= 5) {
-        primIndex -= 5;
+    while (primIndex >= PrimCount) {
+        primIndex -= PrimCount;
     }
 
     if (self->step_s == 0) {
         prim = g_Dialogue.prim[primIndex];
-        prim->v1 -= ySteps;
         prim->v0 = ySteps + prim->v0;
+        prim->v1 -= ySteps;
         if (prim->v1 == 0) {
             self->step_s++;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < PrimCount; i++) {
         if (i != primIndex) {
             prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
@@ -248,10 +160,10 @@ void func_801B69F8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (func_801B6480(D_8018B304)) {
+        if (CutsceneUnk2(D_8018B304)) {
             D_801BC350 = D_801D6B00 = D_801BC3E8 = 0;
             D_8003C704 = 1;
-            entity->flags |= FLAG_UNK_800000 | FLAG_UNK_2000;
+            entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
             ++entity->step;
         }
@@ -278,7 +190,7 @@ void func_801B69F8(Entity* entity) {
                 if (++g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801B66A4();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY < 4) {
                         continue;
@@ -337,11 +249,11 @@ void func_801B69F8(Entity* entity) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80180838[j];
-                func_801B642C();
-                func_801B66A4();
+                CutsceneUnk1();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->blendMode = 0;
-                func_801B675C(j, entity);
+                DrawCutsceneAvatar(j, entity);
                 g_Dialogue.portraitAnimTimer = 6;
                 entity->step = 3;
                 return;
@@ -415,7 +327,7 @@ void func_801B69F8(Entity* entity) {
                 i |= g_Dialogue.nextCharDialogue++[0];
                 i <<= 4;
                 i |= g_Dialogue.nextCharDialogue++[0];
-                func_801B68E0(i);
+                CutsceneUnk6(i);
                 continue;
             case 13:
                 continue;
@@ -522,7 +434,7 @@ void func_801B69F8(Entity* entity) {
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
-        func_801B690C(2, entity);
+        ScaleCutsceneAvatar(2, entity);
         if (g_Dialogue.portraitAnimTimer >= 6) {
             entity->step -= 1;
         }
@@ -709,7 +621,7 @@ s32 func_801B79D4(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (func_801B76F0(D_8018BC54)) {
-            entity->flags |= 0x800000;
+            entity->flags |= FLAG_HAS_PRIMS;
             entity->primIndex = (s32)g_Dialogue.prim[1];
             ++entity->step;
             func_801B786C(0);

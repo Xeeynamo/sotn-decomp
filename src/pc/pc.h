@@ -1,9 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef PC_H
 #define PC_H
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 
+#ifndef VERSION_PC
 #define VERSION_PC
+#endif
 #define VERSION_US
 #define VERSION "us"
 
@@ -18,24 +21,34 @@
 #define VRAM_H 512
 #define VRAM_STRIDE 2048
 
-typedef struct {
-    const char* path;
-    const void* content;
+struct FileOpenRead {
+    const char* filename;
+    FILE* file;
     size_t length;
-} FileLoad;
+    void* param;
+};
 
-typedef struct {
-    const char* path;
+struct FileAsString {
+    const char* filename;
     const char* content;
     size_t length;
     void* param;
-} FileStringified;
+};
 
-bool FileRead(bool (*cb)(FILE* file), const char* path);
-bool FileStringify(
-    bool (*cb)(FileStringified* file), const char* path, void* param);
-bool FileUseContent(
-    bool (*cb)(FileLoad* file, void* param), const char* path, void* param);
+typedef struct FileUseContent {
+    const char* filename;
+    const void* content;
+    size_t length;
+    void* param;
+} FileLoad;
+
+bool FileOpenRead(
+    bool (*cb)(const struct FileOpenRead*), const char* filename, void* param);
+int FileReadToBuf(const char* filename, void* dst, int offset, size_t maxlen);
+bool FileAsString(bool (*cb)(const struct FileAsString* file),
+                  const char* filename, void* param);
+bool FileUseContent(bool (*cb)(const struct FileUseContent* file, void* param),
+                    const char* filename, void* param);
 
 const char* AnsiToSotnMenuString(const char* str);
 

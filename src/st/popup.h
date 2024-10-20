@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#if !defined(VERSION_PSP)
+#if defined(VERSION_US)
 void BottomCornerText(u8* str, u8 lower_left) {
     u8 toPrint[64];
     Primitive* prim;
@@ -72,7 +73,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
+    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -218,7 +219,12 @@ void BottomCornerText(u8* str, u8 lower_left) {
         prim->g0 = prim->g1 = 0x5F;
     }
 
+#if defined(VERSION_HD)
+    ch = 8;
+    textWidth *= ch;
+#else
     textWidth *= 8;
+#endif
 
     if (lower_left) {
         textWidth += 4;
@@ -235,7 +241,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
+    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
     prim = prim->next;
 
     prim->tpage = 0x1F;

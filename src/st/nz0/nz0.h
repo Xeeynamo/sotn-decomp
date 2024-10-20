@@ -1,4 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
+
+#define STAGE_IS_NZ0
 
 #define OVL_EXPORT(x) NZ0_##x
 
@@ -25,13 +28,48 @@ typedef enum {
 
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_ID_15,
-    /* 0x28 */ E_BONE_SCIMITAR_HEAD = 0x28,
-    /* 0x2A */ E_AXE_KNIGHT_AXE = 0x2A,
+    /* 0x16 */ E_PURPLE_BRICK_BG,
+    /* 0x17 */ E_LEFT_SECRET_WALL,
+    /* 0x18 */ E_BOTT_SECRET_FLOOR,
+    /* 0x19 */ E_BP_FLOOR_BUTTON,
+    /* 0x1A */ E_BP_SPIKES,
+    /* 0x1B */ E_MOVABLE_BOX,
+    /* 0x1C */ E_CANNON_LEVER,
+    /* 0x1D */ E_CANNON,
+    /* 0x1E */ E_CANNON_SHOT,
+    /* 0x1F */ E_CANNON_WALL,
+    /* 0x20 */ E_BLOOD_SKEL_ELEV_BUTTON,
+    /* 0x21 */ E_ELEVATOR_2,
+    /* 0x22 */ E_WALL_DEBRIS,
+    /* 0x23 */ E_RED_EYE_BUST,
+    /* 0x24 */ E_FLOOR_BUTTON,
+    /* 0x25 */ E_FLOOR_SPIKES,
+    /* 0x26 */ E_BLOOD_SKELETON,
+    /* 0x27 */ E_BONE_SCIMITAR,
+    /* 0x28 */ E_BONE_SCIMITAR_HEAD,
+    /* 0x29 */ E_AXE_KNIGHT,
+    /* 0x2A */ E_AXE_KNIGHT_AXE,
+    /* 0x2B */ E_BLOODY_ZOMBIE,
+    /* 0x2C */ E_func_801C5D20,
+    /* 0x2D */ E_BLOOD_SPLATTER,
+    /* 0x2E */ E_SKELETON,
+    /* 0x2F */ E_SKELETON_THROWN_BONE,
+    /* 0x30 */ E_SKELETON_PIECES,
     /* 0x31 */ E_SPITTLEBONE = 0x31,
     /* 0x32 */ E_ROTATE_SPITTLEBONE,
     /* 0x33 */ E_SPITTLEBONE_SPIT,
-    /* 0x38 */ E_FIRE = 0x38,
-    /* 0x3F */ E_BOSS_ROOM_BLOCK = 0x3F,
+    /* 0x34 */ E_GLOBE_TABLE,
+    /* 0x35 */ E_LIFE_MAX_TANK,
+    /* 0x36 */ E_BLUE_FLAME_TABLE,
+    /* 0x37 */ E_RELIC_CONTAINER,
+    /* 0x38 */ E_WARG_EXP_OPAQUE,
+    /* 0x39 */ E_SUBWPN_CONTAINER,
+    /* 0x3A */ E_func_801C7538,
+    /* 0x3B */ E_func_801C7654,
+    /* 0x3C */ E_func_801C77B8,
+    /* 0x3D */ E_func_801C7884,
+    /* 0x3E */ E_BOSS_FIGHT_MANAGER,
+    /* 0x3F */ E_BOSS_ROOM_BLOCK,
     /* 0x40 */ E_SLOGRA,
     /* 0x41 */ E_SLOGRA_SPEAR,
     /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE,
@@ -50,7 +88,7 @@ typedef enum {
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
-s32 func_801BD720(u16* hitSensors, s16 sensorCount);
+s32 UnkCollisionFunc(u16* hitSensors, s16 sensorCount);
 s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
@@ -61,7 +99,6 @@ void func_801C4CC0(void);
 extern u8 D_8003BE6F[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 g_InitializeEntityData0[];
-extern u16 D_80180BEC[];
 extern u16 g_EInitGeneric[]; // Init Elevator2
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180C34[];
@@ -79,28 +116,6 @@ extern s32 D_801826AC;
 
 // *** EntityBloodSkeleton properties END ***
 
-// *** EntityBoneScimitar properties START ***
-
-extern u16 D_80180C4C[];    // Init
-extern s32 D_8018208C;      // Flag for special bone scimitar to appear or not
-extern u8 D_80182090[];     // animation: Walking Forward
-extern u8 D_801820A0[];     // animation: Walking Backwards
-extern u8 D_801820B0[];     // animation: Swing Sword
-extern u8 D_801820CC[];     // animation: Jumping
-extern u8 D_801820D8[];     // animation: Landing
-extern s8 D_801820F4[];     // Skeleton parts array selector
-extern s32 D_801820FC[];    // Skeleton parts velocityX
-extern s32 D_80182118[];    // Skeleton parts velocityY
-extern u16 D_80182134[];    // Skeleton parts posX
-extern u16 D_80182144[];    // Skeleton parts posY
-extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
-extern s32 D_8018215C;
-extern s32 D_8018216C;
-extern s32 D_80182174;
-
-// *** EntityBoneScimitar properties END ***
-
-extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
@@ -158,7 +173,7 @@ extern u16 D_80180D30[];
 
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
-extern ObjInit2 D_80180D64[];
+extern ObjInit D_80180D64[];
 extern s32 D_80180E04[];
 extern u8 D_80180E24[];
 extern u8 D_80180E2C[];
@@ -195,8 +210,7 @@ extern const u8 D_80181378[];
 extern const u8 D_80181388[];
 extern s32 g_ElevatorTarget;
 extern s16 g_ElevatorTargetPos[];
-extern u16 D_801813B0[];
-extern const char* D_8018146C[];
+extern u16 g_HeartDropArray[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
@@ -205,65 +219,8 @@ extern s32* D_80180EB8;
 extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
-extern ObjInit2 D_80182014[];
+extern ObjInit D_80182014[];
 
-// *** EntityAxeKnight properties START ***
-
-extern u16 D_80180C64[]; // Init
-extern s32 D_80182180[];
-extern s32 D_80182188[];
-extern u8 D_80182210[]; // Animation: Walking
-extern u8 D_80182220[]; // Animation: Ducking Throw
-extern u8 D_80182244[]; // Animation: Standing Throw
-extern u8 D_80182268[]; // Animation: Dying
-extern s32 D_80182274[];
-extern u8 D_80182284[];
-
-// *** EntityAxeKnight properties END ***
-
-extern s32 D_80182198[];
-extern s32 D_8018219A[];
-
-extern u8 D_801822B4[];
-extern u16 D_801822D4[];
-extern const u8 D_801822E4[];
-extern const u8 D_801822EC[];
-extern const u8 D_801822FC[];
-extern const u8 D_80182320[];
-extern const u8 D_80182334[];
-extern const u8 D_8018237C[];
-extern s32 D_801823C4;
-
-// *** EntitySkeleton properties START ***
-
-typedef enum {
-    SKELETON_INIT,
-    SKELETON_IDLE,
-    SKELETON_WALK_TOWARDS_PLAYER,
-    SKELETON_WALK_AWAY_FROM_PLAYER,
-    SKELETON_ATTACK,
-    SKELETON_JUMP,
-    SKELETON_DESTROY
-} SKELETON_STEPS;
-
-extern u8 D_801823DC[];  // animation: Walking Forward
-extern u8 D_801823EC[];  // animation: Walking Backwards
-extern u8 D_801823FC[];  // animation: Throwing bone
-extern u8 D_8018240C[];  // animation: Jumping?
-extern u8 D_80182418[];  // animation: Jumping?
-extern s8 D_80182430[];  // skeleton pieces array selector
-extern s32 D_80182438[]; // velocityX
-extern s32 D_80182450[]; // velocityY
-extern u16 D_80182468[]; // posX
-extern u16 D_80182474[]; // posY
-extern u8 D_80182480[2][4];
-extern s32 D_801824A8;
-extern s32 D_801824C0;
-
-// *** EntitySkeleton properties END ***
-
-extern s32 D_801824B8;
-extern s32 D_801824C0;
 extern s32 D_801824CC;
 extern s16 D_801824DC[];
 extern u8 D_801824E2[];
@@ -271,20 +228,13 @@ extern u16 D_801824E4[];
 extern u8 D_80181F30[];
 extern u8 D_80180CF4[];
 extern s32 D_80182600[];
-extern s32 D_8018216C;
-extern s32 D_80182174;
 extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
-extern u16 D_80182424[];
 extern u16 D_80180CA0[];
-extern u32 D_80182488[];
-extern u16 D_80180C58[];
-extern u16 D_80180C58[];
-extern s16 D_801820E4[];
 extern s32 D_80182504[];
 extern u8 D_80182524[];
 
@@ -345,10 +295,6 @@ extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];
-extern u32 D_801822BC[];
-extern u32 D_801822C8[];
-extern s32 D_8018238C;
-extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
@@ -386,10 +332,10 @@ extern u16 D_801813D4[];
 extern u16 D_801813D8[];
 extern s16 D_801813DC[];
 extern const char D_80183B0C[];
-extern u32 g_mariaCutsceneFlags;
+extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
-extern u16 D_80180BEC[];
+extern u16 g_MariaInit[];
 extern u8 D_80181474[];
 extern u8 D_80181490[];
 extern u8 D_801814A0[];

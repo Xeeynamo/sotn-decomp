@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
+#include "sfx.h"
 
-extern s32 D_80180660;
+extern s32 g_HeartDropArray;
 
 void EntityUnkId1C(Entity* self) {
     Entity* newEntity;
@@ -8,18 +10,18 @@ void EntityUnkId1C(Entity* self) {
     s8* hitbox;
     s32 i;
 
-    if (D_80180660 == 0) {
+    if (g_HeartDropArray == 0) {
         self->flags |= FLAG_DEAD;
     }
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != 5) {
-            if (D_80180660 != 0) {
-                D_80180660--;
+            if (g_HeartDropArray != 0) {
+                g_HeartDropArray--;
             }
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
-            g_api.func_80134714(0x6D9, 0x54, 0);
+            g_api.PlaySfxVolPan(0x6D9, 0x54, 0);
             SetStep(5);
         }
     }
@@ -77,7 +79,7 @@ void EntityUnkId1C(Entity* self) {
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            func_801A046C(0x6E2);
+            PlaySfxPositional(0x6E2);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
@@ -95,9 +97,9 @@ void EntityUnkId1C(Entity* self) {
             }
         }
         if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
-            func_801A046C(0x872);
-            func_801A046C(0x87C);
-            func_801A046C(0x62C);
+            PlaySfxPositional(0x872);
+            PlaySfxPositional(0x87C);
+            PlaySfxPositional(SFX_FIRE_SHOT);
             self->ext.generic.unk84.S8.unk1 = 1;
         }
         break;

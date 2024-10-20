@@ -1,5 +1,40 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 #include "game.h"
+#include "sfx.h"
+
+extern u32 g_CutsceneFlags;
+extern s32 D_8019D428;
+
+// tile layout
+static s16 D_8018068C[] = {
+    0x014A, 0x014B, 0x014E, 0x014F, 0x014C, 0x014D, 0x0150, 0x0151, 0x00F5,
+    0x00F6, 0x012B, 0x012C, 0x00FC, 0x00FD, 0x012F, 0x0130, 0x0101, 0x00FF,
+    0x0201, 0x00FF, 0x0201, 0x0307, 0x0407, 0x0507, 0x0607, 0x0707, 0x0807,
+    0x0907, 0x0A10, 0x00FF, 0x0A01, 0x0B06, 0x0C06, 0x0D06, 0x0E10, 0x0F0A,
+    0x0E0A, 0x0F0A, 0x0E20, 0x00FF, 0x0E01, 0x1004, 0x1104, 0x120B, 0x00FF,
+    0x0000, 0x1301, 0x00FF, 0x1201, 0x00FF, 0x1220, 0x1103, 0x1003, 0x1403,
+    0x1503, 0x1640, 0x1506, 0x0D05, 0x0C05, 0x0B05, 0x0A20, 0x00FF, 0x0A10,
+    0x1710, 0x0A08, 0x00FF, 0x0A01, 0x0B02, 0x0C02, 0x1806, 0x1906, 0x1850,
+    0x0C03, 0x0B03, 0x0A08, 0x00FF, 0x0A01, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
+    0x1B06, 0x1A10, 0x1B20, 0x0E03, 0x0D03, 0x0C03, 0x00FF, 0x1C04, 0x1D04,
+    0x1E04, 0x1F04, 0x00FF, 0x0000, 0x2002, 0x2104, 0x2204, 0x2304, 0x2404,
+    0x2504, 0x2604, 0x2704, 0x2002, 0x0000, 0x2808, 0x2908, 0x2A60, 0x00FF,
+    0x0C01, 0x00FF,
+};
+
+static u8 D_80180768[] = {
+    0x08, 0x03, 0x04, 0x04, 0x04, 0x05, 0x04, 0x06, 0x04, 0x07, 0x04, 0x08,
+    0x04, 0x09, 0x02, 0x0A, 0x01, 0x0B, 0x10, 0x0A, 0xFF, 0x00, 0x00, 0x00,
+};
+
+static u8 D_80180780[] = {
+    0x04, 0x0A, 0x04, 0x09, 0x04, 0x08, 0x04, 0x07, 0x04, 0x06, 0x04, 0x05,
+    0x04, 0x04, 0x04, 0x03, 0x02, 0x0C, 0x04, 0x03, 0xFF, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
+    0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
+    0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x01,
+};
 
 void func_8018F890(s16 arg0) {
     s16 temp_v0 = arg0 - g_Tilemap.height;
@@ -56,7 +91,7 @@ void EntityPlatform(Entity* self) {
             self->animCurFrame = 9;
             self->zPriority = 0x80;
 
-            if (g_CastleFlags[216] != 0) {
+            if (g_CastleFlags[HG_CS_DONE] != 0) {
                 self->step = 9;
             }
 
@@ -71,7 +106,7 @@ void EntityPlatform(Entity* self) {
             prim->v0 = prim->v1 = 0xA1;
             prim->v2 = prim->v3 = 0xA7;
             prim->priority = 0x7F;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
         }
         break;
 
@@ -136,8 +171,8 @@ void EntityPlatform(Entity* self) {
             g_Player.padSim = PAD_LEFT;
             player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
             self->step++;
-            g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
-            D_8019D424 |= 1;
+            g_api.PlaySfx(SFX_METAL_CLANG_A);
+            g_CutsceneFlags |= 1;
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
             func_8018F8EC(0);
         }
@@ -153,11 +188,11 @@ void EntityPlatform(Entity* self) {
             player->posY.i.hi--;
             D_80097488.y.i.hi--;
         } else {
-            g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
+            g_api.PlaySfx(SFX_DOOR_CLOSE_A);
             if (player->facingLeft == 0) {
                 g_Player.padSim = PAD_LEFT;
             }
-            D_8019D424 |= 4;
+            g_CutsceneFlags |= 4;
             self->step++;
         }
         func_8018F890(0x200);
@@ -168,7 +203,7 @@ void EntityPlatform(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
 
-        if (D_8019D424 & 8) {
+        if (g_CutsceneFlags & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
             g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
@@ -178,9 +213,9 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 6:
-        if (D_8019D424 & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
-            g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
+            g_api.PlaySfx(SFX_METAL_CLANG_A);
         }
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
@@ -198,7 +233,7 @@ void EntityPlatform(Entity* self) {
             }
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             self->step++;
-            g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
+            g_api.PlaySfx(SFX_DOOR_CLOSE_A);
         }
         func_8018F890(0x300);
         g_Player.padSim = 0;
@@ -241,7 +276,7 @@ void EntityRoomDarkness(Entity* self) {
     switch (self->step) {
     case 0:
         /* Has player seen Maria Holy Glasses Cutscene? */
-        if (g_CastleFlags[216] != 0) {
+        if (g_CastleFlags[HG_CS_DONE] != 0) {
             DestroyEntity(self);
             return;
         }
@@ -269,7 +304,8 @@ void EntityRoomDarkness(Entity* self) {
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 255;
             prim->priority = 0x88;
-            prim->drawMode = 0x57;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
             prim->x0 = prim->x2 = temp_t0;
             prim->x1 = prim->x3 = temp_a0;
@@ -279,12 +315,13 @@ void EntityRoomDarkness(Entity* self) {
                 255;
             prim->r2 = prim->r3 = prim->g2 = prim->g3 = prim->b2 = prim->b3 = 0;
             prim->priority = 0x88;
-            prim->drawMode = 0x57;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
         break;
 
     case 1:
-        if (D_8019D424 & 4) {
+        if (g_CutsceneFlags & 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
@@ -311,12 +348,12 @@ void EntityRoomDarkness(Entity* self) {
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
         /* Has player seen Maria Holy Glasses Cutscene? */
-        if (g_CastleFlags[216] != 0) {
+        if (g_CastleFlags[HG_CS_DONE] != 0) {
             DestroyEntity(self);
             return;
         }
         InitializeEntity(D_80180428);
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
         self->unk5A = 0x48;
@@ -332,7 +369,7 @@ s16 func_8019040C(Primitive* prim, s16 arg1) {
     prim->x2 = arg1;
     prim->x0 = arg1;
     ret += 0x20;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->v0 = prim->v1 = 0x50;
     prim->v2 = prim->v3 = 0x60;
     prim->y0 = prim->y1 = 0x2C;
@@ -354,7 +391,7 @@ s16 func_8019040C(Primitive* prim, s16 arg1) {
 s16 func_801904B8(Primitive* prim, s16 arg1) {
     prim->u0 = prim->u2 = 0x50;
     prim->u1 = prim->u3 = 0x60;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
     prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
     prim->y2 = prim->y3 = arg1;
@@ -442,7 +479,7 @@ void EntityElevatorStationary(Entity* self) {
             player->posY.i.hi++;
             posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if ((g_Timer % 16) == 0) {
-                func_8019A328(SE_CEN_ELEVATOR_MOVE);
+                PlaySfxPositional(SFX_METAL_CLANG_A);
             }
             if (posY == 0x74) {
                 self->step_s++;
@@ -458,7 +495,7 @@ void EntityElevatorStationary(Entity* self) {
                 self->step = 1;
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                g_api.PlaySfx(SE_CEN_ELEVATOR_DOOR);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
         break;
@@ -475,14 +512,14 @@ void EntityElevatorStationary(Entity* self) {
                 self->step_s++;
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                g_api.PlaySfx(SE_CEN_ELEVATOR_DOOR);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
             break;
 
         case 1:
             self->posY.val -= FIX(0.5);
             if ((g_Timer % 16) == 0) {
-                func_8019A328(SE_CEN_ELEVATOR_MOVE);
+                PlaySfxPositional(SFX_METAL_CLANG_A);
             }
             break;
 
@@ -501,7 +538,7 @@ void EntityElevatorStationary(Entity* self) {
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->y2 = prim->y3 = temp - 0x1F;
     prim->y0 = prim->y1 = temp - 0x2F;
     prim = prim->next;
@@ -626,7 +663,7 @@ void EntityMovingElevator(Entity* self) {
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
-    prim->drawMode = 2;
+    prim->drawMode = DRAW_UNK02;
     prim->y2 = prim->y3 = temp - 0x1F;
     prim->y0 = prim->y1 = temp - 0x2F;
     prim = prim->next;

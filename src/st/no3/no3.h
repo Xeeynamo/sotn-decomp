@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
 #define OVL_EXPORT(x) NO3_##x
@@ -5,33 +6,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-#define SE_BARRIER_MOVE 0x607
-// It's possible that SE_BARRIER_MOVE_2 does not
-// trigger in-game because NP3 uses 0x609 instead
-#define SE_BARRIER_MOVE_2 0x608
-#define SE_SKEL_DEATH 0x62B
-#define SE_DEATH_AMBIENCE 0x631
-// Also used for barrier in "Cube of Zoe" room
-#define SE_CASTLE_GATE_CLOSE 0x63D
-#define SE_WALL_BREAK 0x644
-// Normally used for Richter, but this sound is just
-// a louder version of Alucard Floor Hit (Normal)
-#define SE_NO3_ALUCARD_FLOOR_HIT 0x64B
-// #define 0x655
-#define SE_MERMAN_EXPLODE 0x65B
-#define SE_ZOMBIE_EXPLODE 0x65E
-// #define 0x660
-#define SE_MERMAN_FIRE 0x662
-#define SE_THUNDER 0x665
-#define SE_SKEL_SWORD_SWING 0x66D
-#define SE_LEVER_SWITCH_MOVE 0x675
-#define SE_FLOOR_SWITCH_CLICK 0x676
-// #define 0x684
-#define SE_OWL_WING_FLAP 0x68C
-#define SE_WARG_DEATH_EXPLODE 0x697
-#define SE_BAT_DEATH 0x69C
-#define SE_DEATH_SWIPES 0x6A2
-// #define 0x6C7
 #define SE_NO3_ALUCARD_JUMP 0x6EF
 #define SE_MERMAN_DEATH 0x71D
 #define SE_WARG_DEATH_HOWL 0x780
@@ -73,17 +47,31 @@ typedef enum EntityIDs {
     /* 0x15 */ E_ID_15 = 0x15,
     /* 0x17 */ E_BG_LIGHTNING = 0x17,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
+    /* 0x30 */ E_ID_30 = 0x30,
+    /* 0x32 */ E_ID_32 = 0x32,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
-    /* 0x3D */ E_MEDIUM_WATER_SPLASH = 0x3D,
+    /* 0x3A */ E_ID_3A,
+    /* 0x3B */ E_MERMAN_UNK0,
+    /* 0x3C */ E_MERMAN2_UNK1,
+    /* 0x3D */ E_MEDIUM_WATER_SPLASH,
+    /* 0x3E */ E_MERMAN2_UNK2,
+    /* 0x3F */ E_MERMAN2_UNK3,
+    /* 0x40 */ E_MERMAN2_UNK0,
+    /* 0x41 */ E_ID_41,
+    /* 0x42 */ E_MERMAN_UNK2,
+    /* 0x43 */ E_MERMAN_UNK1,
+    /* 0x44 */ E_MERMAN_UNK3,
+    /* 0x47 */ E_BONE_SCIMITAR_HEAD = 0x47,
+    /* 0x4C */ E_ZOMBIE = 0x4C,
     /* 0x59 */ E_ID_59 = 0x59,
     /* 0x5B */ E_ID_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
     /* 0x5E */ E_ID_5E,
-    /* 0x62 */ E_ID_62 = 0x62,
+    /* 0x62 */ E_WARG_EXP_OPAQUE = 0x62,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -95,15 +83,22 @@ extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern s16 D_80182A38[];
 extern u8 D_80182A48[];
+extern u16 D_80182A4C[];
+extern u16 D_80182E1C[];
+extern u16 D_80182F9C[];
+extern u16 D_80182FA8[];
+extern u16 D_80182FC8[];
+extern u16 D_80182FE8[];
 extern u16 D_80180AD0[];
 extern u16 g_EInitGeneric[];
 extern u16 D_80180AF4[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180B18[];
+extern u16 D_80180B24[];
+extern u16 D_80180B30[];
 extern u16 D_80180B48[];
 extern u16 D_80180B54[];
 extern u16 D_80180B6C[];
-extern u16 D_80180B84[];
 extern u16 D_80180B90[];
 extern u16 D_80180BA8[];
 extern ObjInit2 D_80180BFC[];
@@ -145,9 +140,7 @@ extern u16 D_8018139C[];
 extern u16 D_8018139E[];
 extern u16 D_801813A8;
 extern u16 D_801813AA;
-extern u16 D_801813AC[];
-extern u16 D_801813AA;
-extern u16 D_801813AC[];
+extern s16 D_801813AC[];
 extern Point16 D_801813DC[];
 extern Point16 D_80181468[];
 extern u16 D_801814EC[];
@@ -156,10 +149,12 @@ extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
 extern s32 D_801819EC[];
-extern const char* D_80181ACC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
+extern s16 D_801832EC[];
+extern s16 D_801836BC[];
+extern u16 D_80180B9C;
 
 // *** EntityDeath Animations *** //
 extern u8 D_80181B04[];
@@ -179,7 +174,7 @@ extern u8 D_80181BE0[];
 extern u8 D_80181B40[];
 extern u8 D_80181B4C[];
 extern Unkstruct_80180FE0 D_80181C5C[];
-extern u16 D_80181C8C[];
+extern u16 g_HeartDropArray[];
 extern s16 D_801820C4[];
 extern s16 D_801832D8[];
 extern u8 D_801832E8[];
@@ -193,7 +188,9 @@ extern u8* D_801825A0[];
 extern u16 D_80182628[];
 extern s32 D_80182638[];
 extern u8 D_8018267C[];
-extern ObjInit2 D_80182764[];
+extern ObjInit D_80182764[];
+extern u16 D_80183080[];
+extern u16 D_801830A0[];
 extern u8 D_8018383C[];
 extern s32 D_801838F4[];
 extern s16 D_80183858[];
@@ -219,9 +216,6 @@ extern s32 D_80183A0C[];
 extern u8 D_80183AF0[];
 extern u8 D_80183B04[];
 extern u16 D_80180B60[];
-extern s16 D_80183BA8[];
-extern s32 D_80183C30;
-extern s32 D_80183C38;
 extern u8 D_80183C44[];
 extern u8 D_80183C60[];
 extern u8 D_80183C7C[];
@@ -232,8 +226,7 @@ extern s32 D_80183CBC;
 extern s32 D_801D7D20;
 extern s32 D_801D7D54;
 extern s32 D_801D7D58;
-extern u32 D_801D7DD0;
-extern u16 g_ItemIconSlots[0x20];
+extern u32 g_CutsceneFlags;
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
@@ -256,10 +249,11 @@ extern u16 D_80181A38[];
 extern s16 D_80181A3C[];
 extern const char D_801813F0[];
 extern s32 D_801D7D20;
-extern u32 D_801D7DD0;
+extern u32 g_CutsceneFlags;
 extern s32 D_801D7DD4;
 extern u16 D_801D7D60;
 extern const char D_80184CE0[];
 extern s32 D_801D7D5C;
+extern u16 D_80180B3C[];
 
 extern Dialogue g_Dialogue;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef WEAPON_PRIVATE_H
 #define WEAPON_PRIVATE_H
 
@@ -14,35 +15,61 @@
 #define HAND_ID 0
 #endif
 
-// exported
-void EntityWeaponAttack(Entity* self);
-void LoadWeaponPalette(s32 clutIndex);
-s32 func_ptr_80170004(Entity* self);
-void func_ptr_80170008(Entity* self);
-void func_ptr_8017000C(Entity* self);
-s32 func_ptr_80170010(Entity* self);
-s32 func_ptr_80170014(Entity* self);
-int GetWeaponId(void);
-void EntityWeaponShieldSpell(Entity* self);
-void func_ptr_80170024(Entity* self);
-void func_ptr_80170028(Entity* self);
-void WeaponUnused2C(void);
-void WeaponUnused30(void);
-void WeaponUnused34(void);
-void WeaponUnused38(void);
-void WeaponUnused3C(void);
+#define WFACTORY(id, param) (((g_HandId + 1) << 12) + FACTORY(id, param))
 
-// internals
-extern SpriteParts* g_Animset[];
-extern SpriteParts* g_Animset2[];
-extern u16* g_Cluts[];
-extern s32 g_HandId;
+// create function names like w_000_EntityWeaponAttack
+#ifdef VERSION_PC
+#define CONCATENATE_DETAIL(x, y, z) x##y##_##z
+#define CONCATENATE(x, y, z) CONCATENATE_DETAIL(x, y, z)
+#define OVL_EXPORT(x) CONCATENATE(WEAPON, WEAPON_ID, x)
+#else
+#define OVL_EXPORT(x) x
+#endif
+
+// exported
+static void EntityWeaponAttack(Entity* self);
+static void LoadWeaponPalette(s32 clutIndex);
+#ifndef FUNC_04_VOID
+static s32 func_ptr_80170004(Entity* self);
+#else
+static void func_ptr_80170004(Entity* self);
+#endif
+static void func_ptr_80170008(Entity* self);
+#ifdef FUNC_0C_S32
+static s32 func_ptr_8017000C(Entity* self);
+#else
+static void func_ptr_8017000C(Entity* self);
+#endif
+static s32 func_ptr_80170010(Entity* self);
+static s32 func_ptr_80170014(Entity* self);
+static int GetWeaponId(void);
+#ifdef SHIELDSPELL_S32
+static s32 EntityWeaponShieldSpell(Entity* self);
+#else
+static void EntityWeaponShieldSpell(Entity* self);
+#endif
+static void func_ptr_80170024(Entity* self);
+static void func_ptr_80170028(Entity* self);
+static void WeaponUnused2C(void);
+static void WeaponUnused30(void);
+static void WeaponUnused34(void);
+static void WeaponUnused38(void);
+static void WeaponUnused3C(void);
 
 void DestroyEntity(Entity* entity);
-void SetSpriteBank1(SpriteParts* animset);
-void SetSpriteBank2(SpriteParts* animset);
-void DecelerateX(s32 amount);
-void DecelerateY(s32 amount);
-void SetSpeedX(s32 speed);
+static void SetSpriteBank1(SpriteParts* animset);
+static void SetSpriteBank2(SpriteParts* animset);
+static void DecelerateX(s32 amount);
+static void DecelerateY(s32 amount);
+static void SetSpeedX(s32 speed);
+
+Weapon OVL_EXPORT(header) = {
+    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
+    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
+    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
+    func_ptr_80170024,  func_ptr_80170028, WeaponUnused2C,
+    WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
+    WeaponUnused3C,
+};
 
 #endif

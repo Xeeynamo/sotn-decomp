@@ -33,12 +33,18 @@ set(SOURCE_FILES_PC
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/pc.c
+    src/pc/io.c
     src/pc/str.c
     src/pc/sim_pc.c
     src/pc/pl_arc.c
     src/pc/pl_ric.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
+    src/pc/weapon_pc.c
+    src/pc/psxsdk/PsyCross/src/gte/PsyX_GTE.cpp
+    src/pc/psxsdk/PsyCross/src/gte/inline_c.c
+    src/pc/psxsdk/PsyCross/src/gte/libgte_.c
+
 )
 
 if(WIN32)
@@ -106,7 +112,7 @@ set(SOURCE_FILES_LIBSND_LLE
     src/main/psxsdk/libsnd/vs_vtb.c
     src/main/psxsdk/libsnd/vs_vtbp.c
     src/main/psxsdk/libsnd/vs_vtc.c
-    
+
     # libspu
     src/main/psxsdk/libspu/s_cb.c
     src/main/psxsdk/libspu/s_crwa.c
@@ -178,33 +184,65 @@ set(SOURCE_FILES_DRA
     src/dra/config_us.c
     src/dra/menu.c
     src/dra/5D5BC.c
+    src/dra/d_C910.c
     src/dra/627C4.c
     src/dra/63ED4.c
+    src/dra/d_CD80.c
     src/dra/692E8.c
     src/dra/6D59C.c
     src/dra/704D0.c
     src/dra/71830.c
     src/dra/72BB0.c
     src/dra/75F54.c
+    src/dra/78D0C.c
+    src/dra/d_CF74.c
     src/dra/7A4D0.c
     src/dra/7E4BC.c
     src/dra/d_DBD4.c
     src/dra/d_E294.c
+    src/dra/d_10798.c
     src/dra/843B0.c
+    src/dra/8A0A4.c
     src/dra/8D3E8.c
-    src/dra/90264.c
     src/dra/91EBC.c
     src/dra/92F60.c
     src/dra/93290.c
     src/dra/93BDC.c
     src/dra/94F50.c
     src/dra/953A0.c
-    src/dra/d_C910.c
-    src/dra/d_CD80.c
-    src/dra/d_D094.c
     src/dra/d_24CEC.c
     src/dra/d_2F324.c
     src/dra/d_3B0D4.c
+    src/dra/bss.c
+)
+
+set(SOURCE_FILES_RIC
+    src/ric/pl_header.c
+    src/ric/1AC60.c
+    src/ric/1FCD0.c
+    src/ric/20920.c
+    src/ric/24788.c
+    src/ric/2A060.c
+    src/ric/319C4.c
+    src/ric/spriteparts.c
+    src/ric/1CB04.c
+    src/ric/202A8.c
+    src/ric/21250.c
+    src/ric/26C84.c
+    src/ric/2C4C4.c
+    src/ric/e_giant_spinning_cross.c
+    src/ric/bss.c
+    src/ric/d_18568.c
+    src/ric/pl_anims.c
+)
+
+set(SOURCE_FILES_TT_000
+    src/servant/tt_000/10E8.c
+    src/servant/tt_000/448.c
+    src/servant/tt_000/45E4.c
+    src/servant/tt_000/4A8.c
+    src/servant/tt_000/608.c
+    src/servant/tt_000/spriteparts.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
@@ -222,7 +260,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/d_1b8.c
     src/st/wrp/e_laydef.c
-    src/st/wrp/d_3e4.c
+    src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
     src/st/wrp/d_608.c
@@ -247,6 +285,31 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/bss.c
 )
 
+set(SOURCE_FILES_WEAPON
+    src/weapon/w_000.c
+    src/weapon/w_002.c
+    src/weapon/w_007.c
+    src/weapon/w_012.c
+    src/weapon/w_034.c
+    src/weapon/w_041.c
+    src/weapon/w_045.c
+    src/weapon/w_046.c
+    src/weapon/w_051.c
+    src/weapon/w_052.c
+)
+
+# WEAPON_ID needs to be a string and not just a number
+set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_000)
+set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_002)
+set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_007)
+set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_012)
+set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_034)
+set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_041)
+set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_045)
+set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
+set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
+set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_052)
+
 # organization is:
 # two executables, sdl2 and null, plus a shared library "core"
 # any executable links core (which is pc shared code + sotn psx code)
@@ -257,13 +320,15 @@ set(SOURCE_FILES_STAGE_WRP
 
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
+    ${SOURCE_FILES_RIC}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
-    ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_WRP}
+    ${SOURCE_FILES_WEAPON}
+    ${SOURCE_FILES_TT_000}
 )
 
 add_library(core ${SOURCE_FILES_CORE})
@@ -288,6 +353,14 @@ target_compile_definitions(core PRIVATE
 
 add_executable(${PROJECT_NAME}
     src/pc/sdl2.c
+    src/pc/render_soft.c
+    src/pc/render_shared.c
+    src/pc/render_gl.c
+    src/pc/psxsdk/mednafen/gpu.cpp
+    src/pc/psxsdk/mednafen/gpu_line.cpp
+    src/pc/psxsdk/mednafen/gpu_polygon.cpp
+    src/pc/psxsdk/mednafen/gpu_sprite.cpp
+    src/pc/sdl2_macros.c
     )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

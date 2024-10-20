@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 u16 g_ButtonMask[] = {
@@ -85,21 +87,21 @@ void HandlePlay(void) {
 
     switch (g_GameStep) {
     case Play_Reset:
-        D_8003C9A4 = 0;
+        g_GameEngineStep = Engine_Init;
         D_8003C738 = 0;
         if (D_8003C730 == 0) {
             for (i = 0; i < LEN(g_CastleFlags); i++) {
                 g_CastleFlags[i] = 0;
             }
-            g_CastleFlags[0xB9] = 1;
-            g_CastleFlags[0x9B] = 1;
+            g_CastleFlags[CASTLE_FLAG_185] = 1;
+            g_CastleFlags[CASTLE_FLAG_155] = 1;
             if (g_PlayableCharacter != 0) {
-                g_CastleFlags[0x35] = 1;
-                g_CastleFlags[0x62] = 1;
-                g_CastleFlags[0x63] = 1;
-                g_CastleFlags[0x85] = 1;
-                g_CastleFlags[0x95] = 1;
-                g_CastleFlags[0x96] = 1;
+                g_CastleFlags[CASTLE_FLAG_53] = 1;
+                g_CastleFlags[CASTLE_FLAG_98] = 1;
+                g_CastleFlags[CASTLE_FLAG_99] = 1;
+                g_CastleFlags[CASTLE_FLAG_133] = 1;
+                g_CastleFlags[CASTLE_FLAG_149] = 1;
+                g_CastleFlags[CASTLE_FLAG_150] = 1;
             }
 
             for (i = 0, ptr = &g_MenuNavigation; i < sizeof(MenuNavigation);
@@ -152,7 +154,7 @@ void HandlePlay(void) {
         break;
     case Play_Default:
         DemoUpdate();
-        func_800F298C();
+        RunMainEngine();
         break;
     case Play_PrepareNextStage:
         PlaySfx(SET_UNK_12);
@@ -177,8 +179,9 @@ void HandlePlay(void) {
         DestroyAllPrimitives();
         func_800EDAE4();
         func_801024DC();
-        if (g_CastleFlags[0x13] & 0x80) {
-            g_CastleFlags[0x13] = g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
+        if (g_CastleFlags[CASTLE_FLAG_19] & 0x80) {
+            g_CastleFlags[CASTLE_FLAG_19] =
+                g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;
@@ -334,7 +337,7 @@ void HandlePlay(void) {
             func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
         }
         g_GameStep = 1;
-        D_8003C9A4 = 0;
+        g_GameEngineStep = Engine_Init;
         D_8003C738 = 0;
         func_800EAD7C();
         break;
@@ -402,7 +405,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_Init:
     case Gameover_Init_Alt:
-        PlaySfx(0x11);
+        PlaySfx(SET_UNK_11);
         if (g_StageId != STAGE_ST0) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
@@ -469,8 +472,8 @@ void HandleGameOver(void) {
         if (func_80131F68()) {
             break;
         }
-        PlaySfx(0x12);
-        PlaySfx(0xB);
+        PlaySfx(SET_UNK_12);
+        PlaySfx(SET_UNK_0B);
         g_GameStep++;
         break;
     case Gameover_3:

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern u16 g_InitializeEntityData0[];
 extern s32 g_ExplosionYVelocities[];
 extern u8* g_ExplosionAnimations[];
@@ -13,7 +14,7 @@ void EntityExplosion(Entity* entity) {
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->animSet = ANIMSET_DRA(2);
-        entity->drawMode = 0x30;
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (entity->params & 0xF0) {
             entity->palette = PAL_OVL(0x195);
             entity->drawMode = DRAW_TPAGE;

@@ -150,5 +150,6 @@ segments:
       - [0x2B548, c, en_venus_weed]
       - [0x2D0EC, c, en_stage_name]
       - [0x2DF40, c, ut_prim_helpers]
-      - [0x2E770, sbss]
+      - [0x2E770, .bss, ut_create_entity]
+      - [0x2E780, bss]
   - [0x2F428]

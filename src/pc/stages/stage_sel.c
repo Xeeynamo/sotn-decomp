@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include "../../st/sel/sel.h"
 #include "../pc.h"
 #include "sfx.h"
+#include <string.h>
 
-extern void* SEL_g_EntityGfxs[] = {NULL, NULL};
+void* SEL_g_EntityGfxs[] = {NULL, NULL};
 
 // stubs
 RECT D_80182584 = {0};
@@ -62,9 +64,9 @@ s32 D_801BAF10;
 s32 D_801BAF14;
 s32 D_801BAF18[NUM_GFX][2];
 s32 D_801BAFC0;
-s32 D_801BAFC4;
-s32 D_801BAFC8;
-s32 D_801BAFCC;
+s32 MainMenuMaskPrimIndex;
+s32 g_SelNextCrossPressEngStep;
+s32 g_SelEng220NextStep;
 u8* D_801BAFD0; // Pointer to texture pattern
 s32 D_801BAFD4;
 s32 D_801BAFD8;
@@ -105,7 +107,7 @@ s32 g_StreamRewindSwitch[1];
 s32 D_801D104C[0x1680];
 s32 D_801D6B04;
 s32 g_InputCursorPos;
-s32 D_801D6B0C;
+s32 g_MainMenuCursor;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 
@@ -128,7 +130,6 @@ void InitStageSel(Overlay* o) {
     }
 }
 
-void func_801B38B4(void) { NOT_IMPLEMENTED; }
 void func_801B9C80(void) {
     // handles the video playback
     // reset D_8003C728 to signal the end of video playback

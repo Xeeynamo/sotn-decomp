@@ -1,8 +1,13 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
-void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
+// BSS
+extern s32 D_80138454;
+
+void func_80131EBC(const char* str, s16 id) { D_80138784[id + 1] = str; }
 
 // gets used later with MakeCdLoc
 void SetCdPos(s32 value) { g_CurCdPos = value; }
@@ -86,14 +91,14 @@ void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        g_ChannelGroupVolume[i] = 0;
-        g_UnkChannelSetting1[i] = 0;
-        g_UnkChannelSetting2[i] = 0;
-        D_8013B66C[i] = 0;
-        D_8013B5EC[i] = 0;
-        D_8013B628[i] = 0;
-        D_8013B648[i] = 0;
-        D_8013AEA0[i] = 0;
+        g_SfxScriptVolume[i] = 0;
+        g_SfxScriptDistance[i] = 0;
+        g_CurrentSfxScriptSfxId[i] = 0;
+        g_SfxScriptTimer[i] = 0;
+        g_SfxScriptMode[i] = 0;
+        g_CurrentSfxScript[i] = 0;
+        g_CurrentSfxScriptSfxId2[i] = 0;
+        g_SfxScriptUnk6[i] = 0;
     }
 }
 
@@ -103,24 +108,21 @@ void InitSoundVars2(void) {
     InitSoundVars3();
     D_8013B690 = 0;
 
-    for (i = 0; i < 4; i++) {
-        D_8013B650[i] = 0;
+    for (i = 0; i < NUM_CH_2; i++) {
+        g_CurrentSfxId12_19[i] = 0;
         D_8013AED4[i] = 0;
     }
-    D_80139804 = 0;
-    D_8013B664 = 0;
+    g_CurSfxId22_23 = 0;
+    g_CurSfxId20_21 = 0;
 }
 
 void InitSoundVars1(void) {
     InitSoundVars2();
     g_CdSoundCommand16 = 0;
-    D_80138454 = 0;
-    do {
+    for (D_80138454 = 0; D_80138454 < LEN(g_SeqPointers); D_80138454++) {
         g_SeqPointers[D_80138454] = 0;
-    } while (++D_80138454 < 0xA);
-
-    for (D_80138454 = 0; D_80138454 < LEN(g_CdSoundCommandQueue);
-         D_80138454++) {
+    }
+    for (D_80138454 = 0; D_80138454 < MAX_SND_COUNT; D_80138454++) {
         g_CdSoundCommandQueue[D_80138454] = 0;
     }
 
@@ -135,19 +137,19 @@ void InitSoundVars1(void) {
     g_SoundCommandRingBufferWritePos = 0;
     for (D_80138454 = 0; D_80138454 < LEN(g_SfxRingBuffer); D_80138454++) {
         g_SfxRingBuffer[D_80138454].sndId = 0;
-        g_SfxRingBuffer[D_80138454].unk02 = 0;
-        g_SfxRingBuffer[D_80138454].unk04 = 0;
+        g_SfxRingBuffer[D_80138454].sndVol = 0;
+        g_SfxRingBuffer[D_80138454].sndPan = 0;
     }
 
-    D_80139A6C = 0x20;
-    D_8013AE7C = 0x7F;
+    g_XaVolumeMultiplier = 0x20;
+    g_SfxVolumeMultiplier = 0x7F;
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;
-    D_801390C4 = 0;
-    D_8013AEE0 = 0;
-    D_8013AE94 = 0;
-    D_801390A4 = 0;
-    D_80139010 = 0;
+    g_SeqIsPlaying = 0;
+    g_CurSfxVol22_23 = 0;
+    g_CurSfxDistance22_23 = 0;
+    g_CurSfxVol20_21 = 0;
+    g_CurSfxDistance20_21 = 0;
     D_80139A74 = 0;
     D_8013B69C = 0;
     g_SeqAccessNum = 0;
@@ -190,7 +192,7 @@ void SetMonoStereo(u8 soundMode) {
             audioVolume.val3 = 128; // CD Right sound transferred to left
             audioVolume.val1 = 128; // CD Left sound transferred to right
             CdMix(&audioVolume);
-            D_8013AE7C = 108;
+            g_SfxVolumeMultiplier = 108;
             D_801390A8 = 0;
         }
         break;
@@ -202,7 +204,7 @@ void SetMonoStereo(u8 soundMode) {
             audioVolume.val3 = 0;
             audioVolume.val1 = 0;
             CdMix(&audioVolume);
-            D_8013AE7C = 127;
+            g_SfxVolumeMultiplier = 127;
             D_801390A8 = 1;
         }
         break;
@@ -235,11 +237,13 @@ void SoundInit(void) {
 }
 
 s32 func_801326D8(void) {
-    if (D_8013901C != 0)
+    if (D_8013901C)
         return 1;
-    if (g_SeqPlayingId != 0)
+    if (g_SeqPlayingId)
         return 3;
-    return (D_801390D8 != 0) * 2;
+    if (D_801390D8)
+        return 2;
+    return 0;
 }
 
 void SoundWait(void) {
@@ -257,13 +261,13 @@ void MuteSound(void) {
     InitSoundVars1();
 }
 
-void func_801327B4(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
-                   s16 note, s16 voll, s16 volr) {
+void KeyOnRange(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
+                s16 note, s16 voll, s16 volr) {
     s32 i = minVoice;
     s32 didStuff = 0;
 
     for (; i < maxVoice; i += 2) {
-        if (D_80138F64[i] != 0) {
+        if (g_KeyStatus[i] != 0) {
             continue;
         }
         SsUtKeyOnV(i, vabId, prog, tone, note, 0, voll, volr);
@@ -353,24 +357,26 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
         g_VolL = (volume * g_CdVolumeTable[distance * 2 + 145]) >> 7;
     }
 
-    if (voice >= 0 && voice < 0x18) {
+    // hardware voices 0-24
+    if (voice >= 0 && voice < 24) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, g_VolL, g_VolR);
         SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, g_VolL, g_VolR);
         return;
     }
 
+    // virtual voices 30-33 map to hardware channels 0-4,4-8,8-12,14-18
     switch (voice) {
-    case 0x1E:
-        func_801327B4(0, 4, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 30:
+        KeyOnRange(0, 4, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
-    case 0x1F:
-        func_801327B4(4, 8, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 31:
+        KeyOnRange(4, 8, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
-    case 0x20:
-        func_801327B4(8, 12, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 32:
+        KeyOnRange(8, 12, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
-    case 0x21:
-        func_801327B4(14, 18, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 33:
+        KeyOnRange(14, 18, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
     }
 }
@@ -392,9 +398,9 @@ void AddCdSoundCommand(s16 arg0) {
             g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
                 CD_SOUND_COMMAND_14;
             g_CdSoundCommandQueuePos++;
-            if (g_CdSoundCommandQueuePos == 0x100) {
+            if (g_CdSoundCommandQueuePos == MAX_SND_COUNT) {
                 D_8013AEE8++;
-                for (i = 1; i < 0x100; i++) {
+                for (i = 1; i < MAX_SND_COUNT; i++) {
                     g_CdSoundCommandQueue[i] = 0;
                 }
 
@@ -407,9 +413,9 @@ void AddCdSoundCommand(s16 arg0) {
     }
     g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = arg0;
     g_CdSoundCommandQueuePos++;
-    if (g_CdSoundCommandQueuePos == 0x100) {
+    if (g_CdSoundCommandQueuePos == MAX_SND_COUNT) {
         D_8013AEE8++;
-        for (i = 1; i < 0x100; i++) {
+        for (i = 1; i < MAX_SND_COUNT; i++) {
             g_CdSoundCommandQueue[i] = 0;
         }
 
@@ -420,7 +426,7 @@ void AddCdSoundCommand(s16 arg0) {
 u16 AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
-    for (i = 0; i < 255; i++) {
+    for (i = 0; i < MAX_SND_COUNT - 1; i++) {
         g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
     }
     return --g_CdSoundCommandQueuePos;

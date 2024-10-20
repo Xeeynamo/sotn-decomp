@@ -1,20 +1,27 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
+
+// BSS
+#if defined(VERSION_US)
+extern s32 D_80137FDC;
+#endif
 
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
     D_801396EA = 1;
     D_801396E4 = PLAYER.animCurFrame;
-    D_801396E6.S16.unk0 = PLAYER.drawFlags;
+    D_801396E6 = PLAYER.drawFlags;
     D_801396E8 = PLAYER.palette;
 }
 
 void func_8011197C(void) {
     D_801396EA = 0;
-    PLAYER.unk44 = 0;
+    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = D_801396E4;
-    PLAYER.drawFlags = D_801396E6.S8.unk0;
+    PLAYER.drawFlags = D_801396E6;
     PLAYER.palette = D_801396E8;
 }
 
@@ -88,11 +95,11 @@ bool func_801119C4(void) {
 }
 
 void func_80111CC0(void) {
-    if (g_Player.D_80072F00[1] != 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700, 44), 0);
+    if (g_Player.timers[1]) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
     }
-    if (g_Player.D_80072F00[0] != 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 44), 0);
+    if (g_Player.timers[0]) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x16), 0);
     }
 }
 
@@ -247,7 +254,7 @@ void func_801120B4(void) {
             }
             PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
             PLAYER.posY.i.hi -= 0x10;
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0xd00, 4), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 13), 0);
             D_800ACF74 = 0x60;
             PLAYER.posY.i.hi += 0x10;
             PLAYER.posX.i.hi -= x_offset;
@@ -312,10 +319,10 @@ void func_801120B4(void) {
         break;
     case 0x4:
         if (PLAYER.ext.player.anim == 0xF2 && --D_800ACF78 == 0) {
-            if (g_StageId == 1) {
+            if (g_StageId == STAGE_NO1) {
                 PlaySfx(0x7AD);
             }
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 122), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 122, 0);
             D_800ACF78 = 0x200;
         }
         local_flags = 1;
@@ -414,7 +421,7 @@ void func_801120B4(void) {
         local_flags = 0;
         if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
             (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 69), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
         if ((u16)PLAYER.animFrameIdx >= (u16)g_Player.unk54) {
             local_flags = 0x19;
@@ -434,10 +441,10 @@ void func_801120B4(void) {
     case 0x58:
         func_8010DFF0(1, 1);
         if (D_80139824 > 0) {
-            D_80139824 -= 1;
+            D_80139824--;
         }
         if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
-            (D_80139824 != 0)) {
+            D_80139824) {
             PLAYER.animFrameIdx = 2;
         }
         if (PLAYER.animFrameIdx == 6) {
@@ -455,10 +462,10 @@ void func_801120B4(void) {
     case 0x5A:
         func_8010DFF0(1, 1);
         if (D_80139824 > 0) {
-            D_80139824 -= 1;
+            D_80139824--;
         }
         if (PLAYER.animFrameIdx == 6 && PLAYER.animFrameDuration == 1 &&
-            (D_80139824 != 0)) {
+            D_80139824) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameIdx == 0xA) {

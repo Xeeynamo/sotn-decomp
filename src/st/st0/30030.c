@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 #include "disk.h"
 
@@ -42,7 +43,7 @@ void func_801B0180(void) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_801B01C0(void) {
+void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -61,7 +62,7 @@ void func_801B01F8(s32 arg0) {
     }
     g_GpuBuffers[1].draw.clip.h = 0x00CF;
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
-    func_801B01C0();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
 
@@ -76,7 +77,7 @@ void func_801B0280(void) {
     func_801B01F8(0);
 }
 
-void func_801B0324(void) {
+void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
@@ -87,7 +88,7 @@ void func_801B0324(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B01C0();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
@@ -242,7 +243,7 @@ void PrologueScroll(void) {
 
     case 2: // 0x801B07DC
         // transition to black
-        func_801B0324();
+        SetTitleDisplayBuffer();
 
         prim = &g_PrimBuf[D_801BEE08];
         for (i = 0; i < 12; i++) {

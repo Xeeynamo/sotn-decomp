@@ -1,7 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "lba.h"
-
-#define VSYNC_UNK_LEN 1024
 
 s32 g_SimVabId = 0;
 
@@ -266,6 +265,12 @@ u32 D_800A04F8 = 0;
 u32 D_800A04FC = 0;
 RECT D_800A0500 = {112, 32, 128, 1};
 RECT D_800A0508 = {368, 32, 128, 1};
+
+// BSS
+extern SimFile* g_SimFile;
+extern SimFile D_80136450;
+extern s16 D_80136460[VSYNC_UNK_LEN];
+extern s16 D_80136C60[VSYNC_UNK_LEN];
 
 void VSyncHandler(void) {
     RECT* rect;

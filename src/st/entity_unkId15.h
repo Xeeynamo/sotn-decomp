@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern s16 unk15_rot[];
 extern s32 unk15_yVel[];
 
 // looks like a particle of dust fading away
 void EntityUnkId15(Entity* self) {
     if (!self->step) {
-        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->flags =
+            FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_OVL(0x195);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;

@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 #define GAIBON self[8]
 
@@ -161,7 +163,7 @@ void EntitySlogra(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        func_801BCF74(&D_8018106C);
+        UnkCollisionFunc2(&D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 if (self->ext.GS_Props.attackMode == 0) {
@@ -196,14 +198,14 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_SPEAR_POKE:
         if (self->step_s == 0) {
-            func_801C29B0(NA_SE_EN_SLOGRA_HISSING);
+            PlaySfxPositional(NA_SE_EN_SLOGRA_HISSING);
             self->step_s++;
         }
         if (AnimateEntity(D_801810B4, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            func_801C29B0(NA_SE_EN_SLOGRA_SPEAR_SLASH);
+            PlaySfxPositional(NA_SE_EN_SLOGRA_SPEAR_SLASH);
         }
         break;
 
@@ -215,7 +217,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_FIRE_PROJECTILE:
             if (AnimateEntity(D_8018108C, self) == 0) {
-                func_801C29B0(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
+                PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
@@ -262,7 +264,7 @@ void EntitySlogra(Entity* self) {
             } else {
                 self->velocityX = FIX(0.5);
             }
-            func_801C29B0(NA_SE_EN_SLOGRA_HURT);
+            PlaySfxPositional(NA_SE_EN_SLOGRA_HURT);
             self->step_s++;
 
         case SLOGRA_KNOCKBACK_ARC:
@@ -319,7 +321,7 @@ void EntitySlogra(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        func_801BCF74(&D_8018106C);
+        UnkCollisionFunc2(&D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
             if (GetDistanceToPlayerX() < 72) {
                 self->ext.GS_Props.flag ^= 1;
@@ -347,7 +349,7 @@ void EntitySlogra(Entity* self) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
-            func_801C29B0(NA_SE_EN_SLOGRA_BEAK_ATTACK);
+            PlaySfxPositional(NA_SE_EN_SLOGRA_BEAK_ATTACK);
         }
         break;
 
@@ -372,7 +374,7 @@ void EntitySlogra(Entity* self) {
             self->velocityY += FIX(0.25);
             if (self->posY.i.hi + g_Tilemap.scrollY.i.hi > 416) {
                 self->posY.i.hi = 416 - g_Tilemap.scrollY.i.hi;
-                func_801C29B0(NA_SE_EN_SLOGRA_FLOOR_STOMP);
+                PlaySfxPositional(SFX_DOOR_CLOSE_A); // Slogra Floor Stomp
                 g_api.func_80102CD8(1);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
@@ -398,7 +400,7 @@ void EntitySlogra(Entity* self) {
                 self->ext.GS_Props.nearDeath = 1;
             }
             self->ext.GS_Props.timer = 64;
-            func_801C29B0(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
+            PlaySfxPositional(SFX_STUTTER_EXPLODE_A);
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
@@ -506,7 +508,7 @@ void EntitySlograSpear(Entity* self) {
             self->velocityY += FIX(0.15625);
             self->rotZ += 0x80;
             if (!(self->rotZ & 0xFFF)) {
-                func_801C29B0(0x625);
+                PlaySfxPositional(SFX_ARROW_SHOT_A);
             }
         }
     }

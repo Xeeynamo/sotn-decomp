@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: 11A64.c
  * Overlay: DRE
@@ -5,16 +6,17 @@
  */
 
 #include "dre.h"
+#include "sfx.h"
 
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
-    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->params * 10];
+    ObjInit* obj = (ObjInit*)&D_80180528[entity->params * 10];
 
     if (entity->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
-        entity->unk5A = obj->unk4.s;
+        entity->unk5A = obj->unk5A;
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
         entity->drawMode = obj->drawMode;
@@ -29,7 +31,7 @@ void EntityUnkId11(Entity* entity) {
         }
     }
 
-    AnimateEntity(obj->unk10, entity);
+    AnimateEntity(obj->animFrames, entity);
 }
 
 void func_80191B44(Entity* entity) {
@@ -59,7 +61,7 @@ void func_80191B44(Entity* entity) {
             break;
         }
 
-        if (entity->unk44 != 0) {
+        if (entity->hitParams) {
             ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
@@ -100,8 +102,8 @@ void EntityBreakable(Entity* entity) {
 
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
-        if (entity->unk44 != 0) {
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+        if (entity->hitParams) {
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_v0 != NULL) {
                 CreateEntityFromCurrentEntity(2, temp_v0);
@@ -111,7 +113,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 20;
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         entity->drawMode = g_eBreakableDrawModes[temp_s0];
         entity->hitboxHeight = g_eBreakableHitboxes[temp_s0];
         entity->animSet = g_eBreakableanimSets[temp_s0];

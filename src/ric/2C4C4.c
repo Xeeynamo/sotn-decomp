@@ -1,8 +1,13 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
+#include "sfx.h"
+
+// Unused?
+static s16 D_80155D94[] = {16, 0, -1, 0};
 
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
-void EntityHolyWater(Entity* self) {
+void RicEntitySubwpnHolyWater(Entity* self) {
     s16 argY;
     s32 collision_result;
     s32 tempXVel;
@@ -14,7 +19,7 @@ void EntityHolyWater(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(0x12);
         self->animCurFrame = 0x23;
         self->zPriority = PLAYER.zPriority + 2;
@@ -35,8 +40,8 @@ void EntityHolyWater(Entity* self) {
         trigtemp = trigresult * 16;
         self->velocityY = -((trigresult * 32 + trigtemp) << 9) >> 8;
 
-        self->ext.factory.unkB0 = 3;
-        func_8015FAB8(self);
+        self->ext.holywater.subweaponId = PL_W_HOLYWATER;
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         self->ext.holywater.unk80 = 0x200;
@@ -44,7 +49,7 @@ void EntityHolyWater(Entity* self) {
         break;
     case 1:
         self->posY.val += self->velocityY;
-        collision_result = CheckHolyWaterCollision(0, 0);
+        collision_result = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
 
         if (self->velocityX < 0) {
@@ -59,7 +64,7 @@ void EntityHolyWater(Entity* self) {
         }
         if ((collision_result & 1) || (self->hitFlags != 0)) {
             g_api.CreateEntFactoryFromEntity(self, 0x28U, 0);
-            g_api.PlaySfx(0x68A);
+            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
             self->ext.holywater.timer = 0x50;
             self->animSet = 0;
             self->hitboxState = 0;
@@ -76,13 +81,13 @@ void EntityHolyWater(Entity* self) {
         break;
     case 3:
         if (!(self->ext.holywater.timer & 3)) {
-            CreateEntFactoryFromEntity(
-                self, (self->ext.holywater.unk82 << 0x10) | 7, 0);
+            RicCreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
             // weirdly nonmatching with ++;
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
             self->velocityX -= (self->velocityX / 32);
         }
-        collision_result = CheckHolyWaterCollision(6, 0);
+        collision_result = RicCheckHolyWaterCollision(6, 0);
         tempXVel = self->velocityX;
         if (self->velocityX < 0) {
             if ((collision_result & 0xF000) == 0xC000) {
@@ -114,8 +119,8 @@ void EntityHolyWater(Entity* self) {
         break;
     case 4:
         if (!(self->ext.holywater.timer & 3)) {
-            CreateEntFactoryFromEntity(
-                self, FACTORY(self->ext.holywater.unk82 * 0x100, 7), 0);
+            RicCreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
         }
         self->velocityY += FIX(12.0 / 128);
@@ -123,7 +128,7 @@ void EntityHolyWater(Entity* self) {
             self->velocityY = FIX(4);
         }
         self->posY.val += self->velocityY;
-        collision_result = CheckHolyWaterCollision(0, 0);
+        collision_result = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
         if (self->velocityX < 0) {
             argY = -4;
@@ -151,11 +156,13 @@ void EntityHolyWater(Entity* self) {
         self->hitboxState = 0;
         self->posY.i.hi -= 5;
     }
-    g_Player.D_80072F00[3] = 2;
+    g_Player.timers[PL_T_3] = 2;
 }
 
 // Entity ID #8. Blueprint 7.
-void EntityHolyWaterFlame(Entity* self) {
+static Point32 D_80155D9C[] = {{28, 0}, {28, 16}, {28, 32}, {28, 48},
+                               {60, 0}, {60, 16}, {60, 32}, {60, 48}};
+void RicEntitySubwpnHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
     s16 pad[2];
@@ -201,27 +208,27 @@ void EntityHolyWaterFlame(Entity* self) {
             prim->clut = 0x1B0;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x7F;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
             i++;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-        self->ext.timer.t = 1;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->ext.holywater.timer = 1;
         self->step += 1;
         break;
-
     case 1:
-        if (--self->ext.timer.t == 0) {
-            self->ext.factory.unkB0 = 0xB;
-            func_8015FAB8(self);
+        if (--self->ext.holywater.timer == 0) {
+            self->ext.holywater.subweaponId = PL_W_HOLYWATER_FLAMES;
+            RicSetSubweaponParams(self);
             self->hitboxWidth = 4;
-            self->ext.factory.unk84 = (s16)self->hitboxState;
-            self->posY.i.hi = self->posY.i.hi - 0xA;
-            CreateEntFactoryFromEntity(self, 0x30004U, 0);
-            self->ext.timer.t = 0x50;
-            self->posY.i.hi = self->posY.i.hi + 0xA;
-            self->ext.holywaterflame.unk80 = (rand() & 0xF) + 0x12;
-            self->ext.holywaterflame.angle = rand() & 0xFFF;
+            self->ext.holywater.hitboxState = self->hitboxState;
+            self->posY.i.hi = self->posY.i.hi - 10;
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 3), 0);
+            self->ext.holywater.timer = 0x50;
+            self->posY.i.hi = self->posY.i.hi + 10;
+            self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
+            self->ext.holywater.angle = rand() & 0xFFF;
             self->step += 1;
         }
         break;
@@ -231,8 +238,8 @@ void EntityHolyWaterFlame(Entity* self) {
         } else {
             var_s4 = -1;
         }
-        angleTemp = self->ext.holywaterflame.angle;
-        self->ext.holywaterflame.angle += 0xC0;
+        angleTemp = self->ext.holywater.angle;
+        self->ext.holywater.angle += 0xC0;
         angle = angleTemp;
         for (i = 0; i < 4; i++) {
             sp10[i] = self->posX.i.hi + (rsin(angle) >> 0xA);
@@ -240,8 +247,8 @@ void EntityHolyWaterFlame(Entity* self) {
         }
         sp10[4] = self->posX.i.hi;
         sp10[0] = var_s4 + self->posX.i.hi;
-        temp_v0_2 = rsin((s16)((self->ext.timer.t * 64) + 0x800)) >> 8;
-        temp_v0_2 += self->ext.holywaterflame.unk80;
+        temp_v0_2 = rsin((s16)((self->ext.holywater.timer * 64) + 0x800)) >> 8;
+        temp_v0_2 += self->ext.holywater.unk80;
         temp_v0_2 = temp_v0_2 * 3 >> 1;
         sp20[0] = self->posY.i.hi - temp_v0_2;
         sp20[4] = self->posY.i.hi;
@@ -249,21 +256,21 @@ void EntityHolyWaterFlame(Entity* self) {
         sp20[1] = (sp20[0] + sp20[2]) / 2;
         sp20[3] = (sp20[2] + sp20[4]) / 2;
         prim = &g_PrimBuf[self->primIndex];
-        if (--self->ext.timer.t < 0) {
+        if (--self->ext.holywater.timer < 0) {
             DestroyEntity(self);
             return;
         }
-        if (self->ext.timer.t & 3) {
+        if (self->ext.holywater.timer & 3) {
             self->hitboxState = 0;
         } else {
-            self->hitboxState = self->ext.holywaterflame.unk84;
+            self->hitboxState = self->ext.holywater.hitboxState;
         }
-        if (self->ext.timer.t < 0x15) {
+        if (self->ext.holywater.timer < 0x15) {
             self->hitboxState = 0;
         }
         i = 0;
         while (prim != NULL) {
-            if (upperParams * 2 + 0x18 >= self->ext.timer.t) {
+            if (upperParams * 2 + 0x18 >= self->ext.holywater.timer) {
                 if (prim->g0 >= 10) {
                     prim->g0 -= 5;
                 }
@@ -279,8 +286,8 @@ void EntityHolyWaterFlame(Entity* self) {
             }
             prim->x0 = sp10[i] - 8;
             prim->x1 = sp10[i] + 8;
-            prim->y0 = sp10[i + 8];
-            prim->y1 = sp10[i + 8];
+            prim->y0 = sp20[i];
+            prim->y1 = sp20[i];
             prim->x2 = sp10[i + 1] - 8;
             prim->x3 = sp10[i + 1] + 8;
             prim->y2 = sp20[i + 1];
@@ -302,12 +309,20 @@ void EntityHolyWaterFlame(Entity* self) {
         self->hitboxHeight = temp_v0_2 >> 1;
         self->hitboxOffY = (-temp_v0_2 >> 1);
     }
-    g_Player.D_80072F00[3] = 2;
+    g_Player.timers[PL_T_3] = 2;
 }
 
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
 // That's the crash for subweapon 4. That's the cross.
-void EntitySubwpnCrashCross(Entity* self) {
+static u16 crash_cross_img_data[] = {
+    0x94A5, 0x98C6, 0x9CE7, 0xA108, 0xA529, 0xA94A, 0xAD6B, 0xB18C,
+    0xB5AD, 0xB9CE, 0xBDEF, 0xC210, 0xC631, 0xCA52, 0xCE73, 0xD294,
+    0xD6B5, 0xDAD6, 0xDEF7, 0xE318, 0xE318, 0xE318, 0xE318, 0xE318,
+    0xE318, 0xE318, 0xE318, 0xE318, 0xE318, 0xDEF7, 0xDAD6, 0xD6B5,
+    0xD294, 0xCE73, 0xCA52, 0xC631, 0xC210, 0xBDEF, 0xB9CE, 0xB5AD,
+    0xB18C, 0xAD6B, 0xA94A, 0xA529, 0xA108, 0x9CE7, 0x98C6, 0x94A5};
+static RECT crash_cross_img_vram = {0x0301, 0x01F8, 0x0030, 0x0001};
+void RicEntitySubwpnCrashCross(Entity* self) {
     Primitive* prim;
     s16 right;
     s16 left;
@@ -325,14 +340,15 @@ void EntitySubwpnCrashCross(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
-        self->ext.factory.unkB0 = 0xC;
-        func_8015FAB8(self);
-        LoadImage(&D_80155E3C, D_80155DDC);
+        self->ext.crashcross.subweaponId = PL_W_CRASH_CROSS;
+        RicSetSubweaponParams(self);
+        LoadImage(&crash_cross_img_vram, crash_cross_img_data);
         g_api.PlaySfx(0x6DF);
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         break;
     case 1:
@@ -341,8 +357,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
         self->ext.crashcross.unk82 += one;
         if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 14), 0);
-            CreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
+            RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSSES_ONLY, 0);
+            RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSS_PARTICLES, 0);
             self->step += 1;
         }
         break;
@@ -368,7 +384,7 @@ void EntitySubwpnCrashCross(Entity* self) {
             if (right >= 0x100) {
                 right = 0xFF;
             }
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step += 1;
         }
         break;
@@ -418,15 +434,14 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->x0 = prim->x2 = left;
         prim->x1 = prim->x3 = right;
     }
-    prim->drawMode = 0x31;
+    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
     prim->priority = self->zPriority;
-    g_Player.D_80072F00[3] = 2;
-    return;
+    g_Player.timers[PL_T_3] = 2;
 }
 
-// Entity ID #21. Blueprint 22. Called in func_8015B348.
+// Entity ID #21. Blueprint 22. Called in RicHandleDeadPrologue.
 // Creates the white column around Richter when he is revived in the Prologue.
-void EntityRichterRevivalColumn(Entity* self) {
+void RicEntityRevivalColumn(Entity* self) {
     Primitive* prim;
     u32 three = 3;
     u32 one = 1;
@@ -442,7 +457,7 @@ void EntityRichterRevivalColumn(Entity* self) {
         self->posY.i.hi = 0x78;
         self->ext.ricColumn.unk80 = 1;
         self->zPriority = 0xC2;
-        LoadImage(&D_80155E3C, &D_80155DDC);
+        LoadImage(&crash_cross_img_vram, crash_cross_img_data);
         self->step += 1;
         break;
     case 1:
@@ -488,14 +503,20 @@ void EntityRichterRevivalColumn(Entity* self) {
     prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
     prim->tpage = 0x11C;
     if (g_Timer & 1) {
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
     } else {
         prim->drawMode = DRAW_HIDE;
     }
     prim->priority = self->zPriority;
 }
 
-void EntityCrossBoomerang(Entity* self) {
+static AnimationFrame anim_cross_boomerang[] = {
+    {36, FRAME(1, 0)}, {1, FRAME(2, 0)}, {1, FRAME(3, 0)},
+    {1, FRAME(4, 0)},  {1, FRAME(5, 0)}, {1, FRAME(6, 0)},
+    {1, FRAME(7, 0)},  {1, FRAME(8, 0)}, A_LOOP_AT(0)};
+static Point16 D_80175088[4][128];
+static s32 D_80175888;
+void RicEntitySubwpnCross(Entity* self) {
     s32 xAccel;
     Point16* temp_a0;
     s16 playerHitboxX;
@@ -505,24 +526,26 @@ void EntityCrossBoomerang(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_100000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        // gets used by shadow, must align with that entity
         self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
         D_80175888++;
         D_80175888 &= 3;
-        CreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
+        RicCreateEntFactoryFromEntity(self, BP_5, 0);
         self->animSet = ANIMSET_OVL(0x11);
         self->unk5A = 0x66;
-        self->unk4C = D_80155E44;
+        self->anim = anim_cross_boomerang;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
-        SetSpeedX(FIX(3.5625));
-        self->drawFlags = 4;
+        RicSetSpeedX(FIX(3.5625));
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotZ = 0xC00;
-        self->ext.factory.unkB0 = 4;
-        func_8015FAB8(self);
+        self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
+        RicSetSubweaponParams(self);
         self->hitboxHeight = self->hitboxWidth = 8;
         self->posY.i.hi -= 8;
-        g_api.PlaySfx(0x69F);
+        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
         self->step++;
         break;
     case 1:
@@ -578,8 +601,8 @@ void EntityCrossBoomerang(Entity* self) {
             return;
         }
         // Alternatively, if we're offscreen, we will also be destroyed.
-        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
-            (self->facingLeft != 0 && self->posX.i.hi >= 0x121)) {
+        if ((!self->facingLeft && self->posX.i.hi < -0x20) ||
+            (self->facingLeft && self->posX.i.hi >= 0x121)) {
             self->step = 7;
             self->ext.crossBoomerang.timer = 0x20;
             return;
@@ -601,27 +624,27 @@ void EntityCrossBoomerang(Entity* self) {
     }
     // We will increment through these states, creating trails.
     // Factory 3 is entity #4, func_80169C10. Appears to make tiny sparkles.
-    // Factory 4 is entity #5, func_8016147C. Appears to make a "shadow" of the
-    // cross boomerang.
+    // Factory 4 is entity #5, RicEntityHitByCutBlood. Appears to make a
+    // "shadow" of the cross boomerang.
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
         }
     }
     // Applies a flickering effect
@@ -638,7 +661,7 @@ void EntityCrossBoomerang(Entity* self) {
     temp_a0->y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     self->ext.crossBoomerang.unk80++;
     self->ext.crossBoomerang.unk80 &= 0x3F;
-    g_Player.D_80072F00[3] = 2;
+    g_Player.timers[PL_T_3] = 2;
 }
 
 void func_80169C10(Entity* entity) {
@@ -652,7 +675,7 @@ void func_80169C10(Entity* entity) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
             entity->velocityY = FIX(0.5);
             entity->posX.i.hi =
                 ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
@@ -665,7 +688,7 @@ void func_80169C10(Entity* entity) {
             prim->b1 = 0;
             prim->priority = entity->zPriority;
             prim->priority = prim->priority + 4;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
         } else {
@@ -683,55 +706,60 @@ void func_80169C10(Entity* entity) {
     }
 }
 
-void func_80169D74(Entity* entity) {
-    Multi temp;
-    s16* ptr;
+// made by blueprint #5, see step 0 of RicEntitySubwpnCross
+static s16 D_80155E68[] = {9, 10, 11, 12};
+void RicEntitySubwpnCrossTrail(Entity* self) {
+    s16* temp;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->ext.generic.unk84.unk =
-            entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-        entity->animSet = ANIMSET_OVL(17);
-        entity->animCurFrame = D_80155E68[entity->params];
-        entity->unk5A = 0x66;
-        entity->palette = 0x81B0;
-        entity->drawMode = DRAW_TPAGE;
-        entity->facingLeft = PLAYER.facingLeft;
-        entity->zPriority = PLAYER.zPriority;
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->rotZ = 0xC00;
-        entity->step++;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        // the parent pointer is set in RicEntityFactory.
+        // the value of unk84 is set in RicEntitySubwpnCross
+        self->ext.crossBoomerang.unk84 =
+            self->ext.factory.parent->ext.crossBoomerang.unk84;
+        self->animSet = ANIMSET_OVL(17);
+        self->animCurFrame = D_80155E68[self->params];
+        self->unk5A = 0x66;
+        self->palette = 0x81B0;
+        self->drawMode = DRAW_TPAGE;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = 0xC00;
+        self->step++;
         break;
 
     case 1:
-        entity->rotZ -= 0x80;
-        if (entity->ext.generic.unk8C.entityPtr->step == 7) {
-            entity->step++;
-            entity->ext.generic.unk7C.s = (entity->params + 1) * 4;
+        self->rotZ -= 0x80;
+        if (self->ext.factory.parent->step == 7) {
+            self->step++;
+            self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
         break;
 
     case 2:
-        entity->rotZ -= 0x80;
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
-            DestroyEntity(entity);
+        self->rotZ -= 0x80;
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
             return;
         }
         break;
     }
-    temp = entity->ext.generic.unk84;
-    ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - g_Tilemap.scrollX.i.hi;
-    entity->posY.i.hi = ptr[1] - g_Tilemap.scrollY.i.hi;
-    entity->ext.generic.unk80.modeS16.unk0 =
-        (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
+
+    // get the x and y position from the parent (must align)
+    temp = &self->ext.crossBoomerang.unk84[0];
+    temp += self->ext.crossBoomerang.unk80 * 2;
+    self->posX.i.hi = *temp - g_Tilemap.scrollX.i.hi;
+    temp++;
+    self->posY.i.hi = *temp - g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
 }
 
 // Entity ID #32. Comes from blueprint 34.
 // Surprisingly pretty different from DRA version.
-void EntitySubwpnCrashCrossParticles(Entity* self) {
+void RicEntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
     s32 var_a2;
     s32 temp_s0;
@@ -749,7 +777,8 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.timer.t = 0xC0;
         self->step += 1;
         return;
@@ -781,21 +810,21 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
             prim->tpage = 0x1A;
             prim->b0 = 0;
             priority = (temp_s0 + PLAYER.zPriority) - 0x20;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim->g3 = (temps0copy >> 2) + 4;
             prim->priority = priority;
             prim->r1++;
         } else {
             prim->g1 -= prim->g3;
             if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim->r0 = 0;
             }
         }
         if (prim->r0 == 0) {
             continue;
         }
-        temp_a1 = &D_801548F4;
+        temp_a1 = &uv_anim_801548F4;
         temp_a3 = prim->g0;
         temp_t0 = prim->g1;
         temp_a1 += prim->b0 * 8; // weird array indexing
@@ -828,7 +857,13 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
 
 // RIC entity #36. Uses RIC blueprint 67. Comes from subweapon 28.
 // Subweapon 28 is the crash of subweapon 9, which is the Agunea (thunder).
-void EntitySubwpnCrashAgunea(Entity* self) {
+static u8 D_80155E70[][4] = {
+    {0x4F, 0x4F, 0x4F, 0x00}, {0x4F, 0x4F, 0x4F, 0x00},
+    {0x4F, 0x4F, 0x4F, 0x00}, {0x3F, 0x3F, 0x5F, 0x00},
+    {0x3F, 0x3F, 0x5F, 0x00}, {0x3F, 0x3F, 0x5F, 0x00},
+    {0x2F, 0x2F, 0x6F, 0x00}, {0x2F, 0x2F, 0x6F, 0x00},
+    {0x1F, 0x1F, 0x7F, 0x00}, {0x1F, 0x1F, 0x7F, 0x00}};
+void RicEntitySubwpnAxe(Entity* self) {
     s32 sp10;
     s32 sp18;
     Primitive* prevPrim;
@@ -861,13 +896,13 @@ void EntitySubwpnCrashAgunea(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
-        SetSpeedX(FIX(-2));
+        RicSetSpeedX(FIX(-2));
         self->velocityY = FIX(-6);
         tempLeft = self->facingLeft;
-        self->ext.aguneaCrash.unk7C = tempLeft ? 0x400 : 0xC00;
+        self->ext.subwpnAxe.unk7C = tempLeft ? 0x400 : 0xC00;
         sp10 = 0;
         prim = &g_PrimBuf[self->primIndex];
         self->posY.i.hi -= 0xC;
@@ -883,22 +918,23 @@ void EntitySubwpnCrashAgunea(Entity* self) {
             prim->v3 = 0x28;
             prim->priority = PLAYER.zPriority - 2;
             if (sp10 != 0) {
-                prim->drawMode = 0x13D;
-                self->ext.aguneaCrash.unk8B[sp10] = 0;
-                self->ext.aguneaCrash.unk8B[sp10 + 4] = 0;
-                self->ext.aguneaCrash.unk8B[sp10 + 8] = 0;
+                prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
+                self->ext.subwpnAxe.unk8B[sp10] = 0;
+                self->ext.subwpnAxe.unk8B[sp10 + 4] = 0;
+                self->ext.subwpnAxe.unk8B[sp10 + 8] = 0;
             } else {
                 prim->drawMode = 0x100 | DRAW_HIDE;
             }
             prim = prim->next;
             sp10++;
         }
-        self->ext.factory.unkB0 = 2;
-        func_8015FAB8(self);
+        self->ext.factory.unkB0 = PL_W_AXE;
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        g_api.PlaySfx(0x60C);
-        self->ext.aguneaCrash.unk98 = 0x7F;
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
+        self->ext.subwpnAxe.unk98 = 0x7F;
         self->step++;
         break;
     case 1:
@@ -907,12 +943,13 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         } else {
             var_a1 = 0x80;
         }
-        self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
-        if (!(self->ext.aguneaCrash.unk7C & 0x3FF)) {
-            g_api.func_80134714(0x60C, self->ext.aguneaCrash.unk98, 0);
-            self->ext.aguneaCrash.unk98 -= 8;
-            if (self->ext.aguneaCrash.unk98 < 0) {
-                self->ext.aguneaCrash.unk98 = 0;
+        self->ext.subwpnAxe.unk7C = var_a1 + self->ext.subwpnAxe.unk7C;
+        if (!(self->ext.subwpnAxe.unk7C & 0x3FF)) {
+            g_api.PlaySfxVolPan(
+                SFX_WEAPON_SWISH_C, self->ext.subwpnAxe.unk98, 0);
+            self->ext.subwpnAxe.unk98 -= 8;
+            if (self->ext.subwpnAxe.unk98 < 0) {
+                self->ext.subwpnAxe.unk98 = 0;
             }
         }
         self->velocityY += FIX(34.0 / 128);
@@ -938,7 +975,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         } else {
             var_a1 = -0xC0;
         }
-        self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
+        self->ext.subwpnAxe.unk7C = var_a1 + self->ext.subwpnAxe.unk7C;
         self->velocityY += FIX(18.0 / 128);
         if (self->velocityY > FIX(8)) {
             self->velocityY = FIX(8);
@@ -954,9 +991,9 @@ void EntitySubwpnCrashAgunea(Entity* self) {
 
     if (self->animFrameDuration == 0) {
         sp18 = self->animFrameIdx;
-        self->ext.aguneaCrash.unk8B[sp18 + 1] = 0;
-        self->ext.aguneaCrash.unk8B[sp18 + 5] = 1;
-        self->ext.aguneaCrash.unk8B[sp18 + 9] = 1;
+        self->ext.subwpnAxe.unk8B[sp18 + 1] = 0;
+        self->ext.subwpnAxe.unk8B[sp18 + 5] = 1;
+        self->ext.subwpnAxe.unk8B[sp18 + 9] = 1;
         sp18++;
         sp18 &= 3;
         self->animFrameIdx = sp18;
@@ -971,7 +1008,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 var_s0 = 0x560;
                 var_s1 = 0x2A0;
                 var_s2 = 0xAA0;
@@ -982,7 +1019,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
                 var_s3 = 0xAA0;
                 var_s2 = 0xD60;
             }
-            var_a1 = self->ext.aguneaCrash.unk7C;
+            var_a1 = self->ext.subwpnAxe.unk7C;
             temp_s4 = self->posX.i.hi;
             temp_s5 = self->posY.i.hi;
             var_s0 += var_a1;
@@ -999,9 +1036,9 @@ void EntitySubwpnCrashAgunea(Entity* self) {
             prim->x3 = temp_s4 + (((rcos(var_s3) << 4) * twentyone) >> 0x10);
             prim->y3 = temp_s5 - (((rsin(var_s3) << 4) * twentyone) >> 0x10);
             prim->drawMode &= ~DRAW_HIDE;
-        } else if (self->ext.aguneaCrash.unk8B[sp10 + 4] != 0) {
-            if (self->ext.aguneaCrash.unk8B[sp10 + 8] != 0) {
-                self->ext.aguneaCrash.unk8B[sp10 + 8] = 0;
+        } else if (self->ext.subwpnAxe.unk8B[sp10 + 4] != 0) {
+            if (self->ext.subwpnAxe.unk8B[sp10 + 8] != 0) {
+                self->ext.subwpnAxe.unk8B[sp10 + 8] = 0;
                 prim->x0 = prevPrim->x0;
                 prim->y0 = prevPrim->y0;
                 prim->x1 = prevPrim->x1;
@@ -1011,8 +1048,8 @@ void EntitySubwpnCrashAgunea(Entity* self) {
                 prim->x3 = prevPrim->x3;
                 prim->y3 = prevPrim->y3;
             }
-            temp_v0_4 = self->ext.aguneaCrash.unk8B[sp10];
-            self->ext.aguneaCrash.unk8B[sp10] = temp_v0_4 + 1;
+            temp_v0_4 = self->ext.subwpnAxe.unk8B[sp10];
+            self->ext.subwpnAxe.unk8B[sp10] = temp_v0_4 + 1;
             temp_v1_3 = temp_v0_4 & 0xFF;
             if ((temp_v1_3) < 0xA) {
                 // whyyyyyy
@@ -1036,7 +1073,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
                 prim->b3 = bVal;
                 prim->drawMode &= ~DRAW_HIDE;
             } else {
-                self->ext.aguneaCrash.unk8B[sp10 + 4] = 0;
+                self->ext.subwpnAxe.unk8B[sp10 + 4] = 0;
                 prim->drawMode |= DRAW_HIDE;
             }
         }
@@ -1047,7 +1084,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
 
 // RIC entity #37. Comes from blueprint 41. That's subweapon 20.
 // Subweapon 20 is crash of subweapon 2, which is the axe.
-void EntitySubwpnCrashAxe(Entity* self) {
+void RicEntityCrashAxe(Entity* self) {
     s32 sp10;
     s32 sp18;
     Primitive* prevPrim;
@@ -1082,8 +1119,8 @@ void EntitySubwpnCrashAxe(Entity* self) {
             return;
         }
         sp10 = 0;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = 0;
         prim = &g_PrimBuf[self->primIndex];
         self->ext.axeCrash.unk7C = ((u8)self->params << 9) + 0xC00;
@@ -1096,7 +1133,8 @@ void EntitySubwpnCrashAxe(Entity* self) {
                 prim->v2 = prim->v3 = 0x28;
                 prim->priority = PLAYER.zPriority + 4;
                 if (sp10 != 0) {
-                    prim->drawMode = 0x13D;
+                    prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                     DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
                     self->ext.axeCrash.unk8B[sp10] = 0;
                     self->ext.axeCrash.unk8B[sp10 + 4] = 0;
                     self->ext.axeCrash.unk8B[sp10 + 8] = 0;
@@ -1107,8 +1145,8 @@ void EntitySubwpnCrashAxe(Entity* self) {
                 sp10++;
             } while (prim != NULL);
         }
-        self->ext.factory.unkB0 = 2;
-        func_8015FAB8(self);
+        self->ext.axeCrash.subweaponId = PL_W_AXE;
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->ext.axeCrash.unk9C = 16;
@@ -1146,11 +1184,11 @@ void EntitySubwpnCrashAxe(Entity* self) {
     case 3:
         if (--self->ext.factory.unkA2 == 0) {
             if ((u8)self->params == 0) {
-                g_api.PlaySfx(0x635);
-                g_api.PlaySfx(0x62F);
+                g_api.PlaySfx(SFX_TELEPORT_BANG_A);
+                g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;
-            self->flags &= ~(FLAG_UNK_04000000 | FLAG_UNK_20000);
+            self->flags &= ~(FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000);
         }
         temp_s1 = self->ext.axeCrash.unk9C;
         self->ext.axeCrash.unk9C += 2;
@@ -1182,7 +1220,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 var_s0 = 0x560;
                 var_s1 = 0x2A0;
                 var_s3 = 0xAA0;
@@ -1209,7 +1247,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
             prim->y2 = temp_s5 - (((rsin(var_s3) << 4) * twentyone) >> 0x10);
             prim->x3 = temp_s4 + (((rcos(var_v0) << 4) * twentyone) >> 0x10);
             prim->y3 = temp_s5 - (((rsin(var_v0) << 4) * twentyone) >> 0x10);
-            prim->drawMode &= 0xFFF7;
+            prim->drawMode &= ~DRAW_HIDE;
         } else if (self->ext.axeCrash.unk8B[sp10 + 4] != 0) {
             if (self->ext.axeCrash.unk8B[sp10 + 8] != 0) {
                 self->ext.axeCrash.unk8B[sp10 + 8] = 0;
@@ -1256,9 +1294,222 @@ void EntitySubwpnCrashAxe(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016B0C0);
+// RIC Entity #38. Blueprint 43 AND 44.
+// Applies to subweapon 1, and its crash, subweapon 21. Very neat!
+// Not quite the same as the one in DRA, but close.
+static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
+static s32 D_8017588C;
+void RicEntitySubwpnDagger(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s16 offsetX;
+    s16 offsetY;
+    s16 angle_a;
+    s16 angle_b;
+    s16 angle_c;
+    s16 angle_d;
+    s16 selfY;
+    s16 selfX;
+    s16 var_s1;
+    s32 cosine;
+    s32 sine;
+    s32 i;
 
-void ReboundStoneBounce1(s32 arg0) {
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->facingLeft = PLAYER.facingLeft;
+        // Not sure what this unkB0 does, but it seems to be
+        // a standard part of the Ext, and may not be entity specific.
+        // This line is not in the DRA version of dagger.
+        self->ext.subweapon.subweaponId = PL_W_DAGGER;
+
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 2;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        // This conditional block is very different from DRA
+        if (self->params & 0xFF00) {
+            self->posY.i.hi += D_80155E98[D_8017588C & 7];
+            D_8017588C++;
+        } else {
+            self->posY.i.hi -= 9;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x1AB;
+        prim->u0 = prim->u1 = 0x18;
+        prim->v0 = prim->v2 = 0x18;
+        prim->u2 = prim->u3 = 0x20;
+        prim->v1 = prim->v3 = 0;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+
+        prim = prim->next;
+        prim->type = PRIM_LINE_G2;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
+        prim->r0 = 0x7F;
+        prim->g0 = 0x3F;
+        prim->b0 = 0;
+        RicSetSpeedX(FIX(8));
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
+        self->step++;
+        return;
+    case 1:
+        self->ext.subweapon.timer++;
+        if (self->velocityX > 0) {
+            var_s1 = 8;
+        }
+        if (self->velocityX < 0) {
+            var_s1 = -8;
+        }
+        if (self->hitFlags == 1) {
+            self->ext.subweapon.timer = 4;
+            self->step = 3;
+            self->hitboxState = 0;
+            return;
+        }
+        for (i = 0; i < 8; i++) {
+            if (self->velocityX > 0) {
+                self->posX.i.hi++;
+            }
+            if (self->velocityX < 0) {
+                self->posX.i.hi--;
+            }
+            g_api.CheckCollision(
+                self->posX.i.hi + var_s1, self->posY.i.hi, &collider, 0);
+            if ((self->hitFlags == 2) || (collider.effects & 3)) {
+                self->ext.subweapon.timer = 64;
+                self->velocityY = FIX(-2.5);
+                self->hitboxState = 0;
+                self->velocityX = -(self->velocityX >> 3);
+                self->posX.i.hi += var_s1;
+                RicCreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
+                self->posX.i.hi -= var_s1;
+                g_api.PlaySfx(SFX_UI_TINK);
+                self->step++;
+                return;
+            }
+        }
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        offsetX = 12;
+        offsetY = 8;
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+            offsetY = -offsetY;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = selfX - offsetX;
+        prim->y0 = selfY - 4;
+        prim->x1 = selfX + offsetX;
+        prim->y1 = selfY - 4;
+        prim->x2 = selfX - offsetX;
+        prim->y2 = selfY + 4;
+        prim->x3 = selfX + offsetX;
+        prim->y3 = selfY + 4;
+        // Difference here vs DRA in how g_GameTimer works with clut
+        prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->x0 = selfX - offsetY;
+        prim->y0 = selfY - 1;
+        prim->x1 = selfX - (offsetX * (self->ext.subweapon.timer / 2));
+        prim->y1 = selfY - 1;
+        prim->drawMode &= ~DRAW_HIDE;
+        if (self->step != 1) {
+            prim->drawMode |= DRAW_HIDE;
+        }
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (--self->ext.subweapon.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.subweapon.timer == 0x20) {
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x60;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(0.125);
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        offsetX = 12;
+        if (!self->facingLeft) {
+            angle_a = 0x72E;
+            angle_b = 0xD2;
+            angle_c = 0x8D2;
+            angle_d = -0xD2;
+            self->rotZ -= 0x80;
+        } else {
+            angle_b = 0x72E;
+            angle_a = 0xD2;
+            angle_d = 0x8D2;
+            angle_c = -0xD2;
+            self->rotZ += 0x80;
+        }
+        angle_a += self->rotZ;
+        angle_b += self->rotZ;
+        angle_c += self->rotZ;
+        angle_d += self->rotZ;
+        // offsetX is not used at all down here, but this block is needed.
+        // It doesn't show up in the asm at all, but moves everything else into
+        // alignment. Yet another lesson from PSP.
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        cosine = (rcos(angle_a) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_a) * 0xCA0) >> 0x14;
+        prim->x0 = selfX + cosine;
+        prim->y0 = selfY - sine;
+        cosine = (rcos(angle_b) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_b) * 0xCA0) >> 0x14;
+        prim->x1 = selfX + cosine;
+        prim->y1 = selfY - sine;
+        cosine = (rcos(angle_c) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_c) * 0xCA0) >> 0x14;
+        prim->x2 = selfX + cosine;
+        prim->y2 = selfY - sine;
+        cosine = (rcos(angle_d) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_d) * 0xCA0) >> 0x14;
+        prim->x3 = selfX + cosine;
+        prim->y3 = selfY - sine;
+        // same deal here with g_GameTimer
+        prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
+        if (self->ext.subweapon.timer < 0x21) {
+            prim->r0 -= 2;
+            prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
+                prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
+        }
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->drawMode |= DRAW_HIDE;
+        return;
+
+    case 3:
+        if (--self->ext.subweapon.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
+
+static void ReboundStoneBounce1(s32 arg0) {
     g_CurrentEntity->ext.generic.unk7C.s =
         (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
@@ -1267,7 +1518,7 @@ void ReboundStoneBounce1(s32 arg0) {
     }
 }
 
-void ReboundStoneBounce2(s16 arg0) {
+static void ReboundStoneBounce2(s16 arg0) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->ext.generic.unk7C.s =
             (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
@@ -1278,7 +1529,7 @@ void ReboundStoneBounce2(s16 arg0) {
 
 // RIC entity #42. Blueprint 50. Comes from subweapon 7.
 // Rebound stone!
-void EntitySubwpnReboundStone(Entity* self) {
+void RicEntitySubwpnReboundStone(Entity* self) {
     Collider collider;
     u16 playerX;
     u16 playerY;
@@ -1311,7 +1562,8 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 0xFF;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             if (i != 0) {
                 prim->drawMode |= DRAW_HIDE;
             }
@@ -1319,16 +1571,17 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->y0 = prim->y1 = playerY;
             prim->timer = 20;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->zPriority = PLAYER.zPriority + 2;
 
         facingLeft = PLAYER.facingLeft;
-        self->ext.reboundStone.stoneAngle = facingLeft == 0 ? 0xE80 : 0x980;
+        self->ext.reboundStone.stoneAngle = !facingLeft ? 0xE80 : 0x980;
         self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
 
         self->ext.reboundStone.lifeTimer = 0x40;
-        self->ext.factory.unkB0 = 7;
-        func_8015FAB8(self);
+        self->ext.reboundStone.subweaponId = PL_W_REBNDSTONE;
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
@@ -1336,7 +1589,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         break;
 
     case 1:
@@ -1493,8 +1746,8 @@ void EntitySubwpnReboundStone(Entity* self) {
         }
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
-            g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
+            g_api.PlaySfx(SFX_UI_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
@@ -1560,7 +1813,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 }
 
 // RIC entity #43. Blueprint 49. Subweapon 8. Vibhuti!
-void EntitySubwpnThrownVibhuti(Entity* self) {
+void RicEntitySubwpnThrownVibhuti(Entity* self) {
     Collider collider;
     FakePrim* fakeprim;
     s16 collisionOffsetX;
@@ -1577,14 +1830,14 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-        self->ext.factory.unkB0 = 8;
-        func_8015FAB8(self);
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->ext.subweapon.subweaponId = PL_W_VIBHUTI;
+        RicSetSubweaponParams(self);
         self->hitboxWidth = self->hitboxHeight = 4;
         self->posY.i.hi -= 15;
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
-        self->ext.vibhuti.timer = 0x80;
+        self->ext.subweapon.timer = 0x80;
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
         if (PLAYER.facingLeft) {
             self->posX.i.hi -= 13;
@@ -1594,7 +1847,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
         while (1) {
-            fakeprim->drawMode = 2;
+            fakeprim->drawMode = DRAW_UNK02;
             fakeprim->priority = PLAYER.zPriority - 1;
             if (fakeprim->next == NULL) {
                 fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
@@ -1622,7 +1875,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->step++;
         break;
     case 1:
@@ -1632,7 +1885,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             collisionOffsetX = 2;
         }
 
-        if (--self->ext.vibhuti.timer == 0) {
+        if (--self->ext.subweapon.timer == 0) {
             DestroyEntity(self);
             return;
         }
@@ -1671,7 +1924,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                     }
                 }
             }
-            if ((self->ext.vibhuti.timer & 7) == i) {
+            if ((self->ext.subweapon.timer & 7) == i) {
                 self->posX.i.hi = fakeprim->posX.i.hi;
                 self->posY.i.hi = fakeprim->posY.i.hi;
                 if (fakeprim->drawMode & DRAW_HIDE) {
@@ -1687,10 +1940,10 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                 }
             }
             if ((self->hitFlags != 0) &&
-                (((self->ext.vibhuti.timer + 1) & 7) == i)) {
+                (((self->ext.subweapon.timer + 1) & 7) == i)) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
-            if ((self->ext.vibhuti.timer - 1) == i) {
+            if ((self->ext.subweapon.timer - 1) == i) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
             fakeprim->x0 = fakeprim->posX.i.hi;
@@ -1727,7 +1980,7 @@ s32 RicPrimDecreaseBrightness(Primitive* prim, u8 amount) {
 
 // RIC Entity #44. Blueprint 51. Subweapon 9. Agunea (non-crash). DRA
 // blueprint 25. DRA entity 21.
-void EntitySubwpnAgunea(Entity* self) {
+void RicEntitySubwpnAgunea(Entity* self) {
     Entity* ent;
     Primitive* prim;
     s32 heartCost;
@@ -1746,27 +1999,28 @@ void EntitySubwpnAgunea(Entity* self) {
             DestroyEntity(self);
             return;
         } else {
-            self->flags =
-                FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
-            self->ext.factory.unkB0 = 9;
-            func_8015FAB8(self);
+            self->ext.agunea.subweaponId = PL_W_AGUNEA;
+            RicSetSubweaponParams(self);
             self->hitboxHeight = 4;
             self->hitboxWidth = 4;
             self->hitboxOffX = 4;
             self->hitboxOffY = 0;
-            self->posY.i.hi = self->ext.et_80128C2C.unk82 =
+            self->posY.i.hi = self->ext.agunea.unk82 =
                 PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
-            self->posX.i.hi = self->ext.et_80128C2C.unk80 = PLAYER.posX.i.hi;
+            self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
             prim = &g_PrimBuf[self->primIndex];
             prim->type = 2;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x331;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_TRANSP;
             prim->r1 = 0x60;
             prim->g1 = 0;
             prim->b1 = 0x80;
-            SetSpeedX(FIX(6));
-            g_api.PlaySfx(0x60C);
+            RicSetSpeedX(FIX(6));
+            g_api.PlaySfx(SFX_WEAPON_SWISH_C);
             self->step++;
         }
         break;
@@ -1778,13 +2032,13 @@ void EntitySubwpnAgunea(Entity* self) {
         }
         if (self->hitFlags != 0) {
             self->step = 3;
-            self->ext.et_80128C2C.parent1 = self->ext.et_80128C2C.parent2;
+            self->ext.agunea.parent = self->ext.agunea.parent2;
         }
         break;
     case 4:
-        self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
-        self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
-        if (++self->ext.et_80128C2C.unk7C >= 16) {
+        self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if (++self->ext.agunea.unk7C >= 16) {
             if (g_PrimBuf[self->primIndex].r1 < 5) {
                 DestroyEntity(self);
                 return;
@@ -1802,36 +2056,36 @@ void EntitySubwpnAgunea(Entity* self) {
             (PAD_UP + PAD_SQUARE)) {
             self->step = 4;
         }
-        ent = self->ext.et_80128C2C.parent1;
+        ent = self->ext.agunea.parent;
         if (ent->entityId == 0 ||
-            self->ext.et_80128C2C.unk7C != 0 &&
+            self->ext.agunea.unk7C != 0 &&
                 (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
                  ent->hitboxState == 0)) {
             self->step = 2;
             return;
         }
 
-        tempX = self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
-        tempY = self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
-        if ((self->ext.et_80128C2C.unk7C % 12) == 0) {
+        tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if ((self->ext.agunea.unk7C % 12) == 0) {
             self->posX.i.hi += ((rand() & 0xF) - 8);
             self->posY.i.hi += ((rand() & 0xF) - 8);
 
             if (g_Status.hearts >= 5) {
                 g_Status.hearts -= 5;
-                CreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
-                g_api.PlaySfx(0x665);
-            } else if (self->ext.et_80128C2C.unk84 == 0) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
-                g_api.PlaySfx(0x665);
-                self->ext.et_80128C2C.unk84++;
+                RicCreateEntFactoryFromEntity(self, BP_AGUNEA_HIT_ENEMY, 0);
+                g_api.PlaySfx(SFX_THUNDER_B);
+            } else if (self->ext.agunea.unk84 == 0) {
+                RicCreateEntFactoryFromEntity(self, BP_AGUNEA_HIT_ENEMY, 0);
+                g_api.PlaySfx(SFX_THUNDER_B);
+                self->ext.agunea.unk84++;
             } else {
                 self->step = 4;
             }
         }
         self->posX.i.hi = tempX;
         self->posY.i.hi = tempY;
-        self->ext.et_80128C2C.unk7C++;
+        self->ext.agunea.unk7C++;
         break;
     }
     prim = &g_PrimBuf[self->primIndex];
@@ -1848,8 +2102,8 @@ void EntitySubwpnAgunea(Entity* self) {
     if (tempX < 5) {
         prim->drawMode |= DRAW_HIDE;
     }
-    prim->x0 = self->ext.et_80128C2C.unk80;
-    prim->y0 = self->ext.et_80128C2C.unk82;
+    prim->x0 = self->ext.agunea.unk80;
+    prim->y0 = self->ext.agunea.unk82;
     prim->x1 = self->posX.i.hi;
     prim->y1 = self->posY.i.hi;
     return;
@@ -1857,7 +2111,7 @@ void EntitySubwpnAgunea(Entity* self) {
 
 // RIC entity 45. Blueprint 52. That blueprint comes from RIC
 // EntitySubwpnAgunea.
-void EntityAguneaHitEnemy(Entity* self) {
+void RicEntityAguneaHitEnemy(Entity* self) {
     Entity* temp_s6;
     Primitive* prim;
     Primitive* temp_s3;
@@ -1896,7 +2150,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
 
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
@@ -2010,7 +2264,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             yOffset = (var_s2 * rsin(temp_s2)) >> 0xC;
             temp_s3->x3 = xOffset + temp_s3->x2;
             temp_s3->y3 = temp_s3->y2 - yOffset;
-            temp_s3->drawMode = 6;
+            temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
             self->ext.et_801291C4.unk88--;
         }
         return;
@@ -2060,7 +2314,13 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
 }
 
-void func_8016D328(Entity* entity) {
+// White cloud that comes out of Richter's finger with the Vibhuti crash
+static AnimationFrame D_80155EA8[] = {
+    {3, FRAME(1, 0)},  {3, FRAME(2, 0)},  {3, FRAME(3, 0)},  {3, FRAME(4, 0)},
+    {3, FRAME(5, 0)},  {3, FRAME(6, 0)},  {3, FRAME(7, 0)},  {3, FRAME(8, 0)},
+    {3, FRAME(9, 0)},  {3, FRAME(10, 0)}, {3, FRAME(11, 0)}, {3, FRAME(12, 0)},
+    {3, FRAME(13, 0)}, A_LOOP_AT(0)};
+void RicEntityVibhutiCrashCloud(Entity* entity) {
     s16 primIndex;
     s32 newVelocity;
 
@@ -2069,20 +2329,20 @@ void func_8016D328(Entity* entity) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
             entity->posX.val =
-                entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk84;
             entity->posY.val =
-                entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
-            entity->facingLeft = entity->ext.generic.unk8C.entityPtr->ext
-                                     .generic.unk8C.modeU16.unk0;
-            entity->ext.generic.unkB0 = 0x18;
-            func_8015FAB8(entity);
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk88;
+            entity->facingLeft =
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk8C;
+            entity->ext.factory.unkB0 = PL_W_CRASH_VIBHUTI;
+            RicSetSubweaponParams(entity);
             entity->unk5A = 0x79;
             entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
-            entity->unk4C = &D_80155EA8;
-            entity->drawMode = 0x30;
+            entity->anim = D_80155EA8;
+            entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             entity->drawFlags = FLAG_DRAW_UNK8;
             entity->unk6C = 0x60;
             entity->hitboxWidth = 8;
@@ -2098,7 +2358,7 @@ void func_8016D328(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->ext.generic.unk7C.s >= 39) {
+        if (++entity->ext.vibCrashCloud.unk7C >= 39) {
             DestroyEntity(entity);
         } else {
             entity->posX.val += entity->velocityX;
@@ -2108,7 +2368,8 @@ void func_8016D328(Entity* entity) {
     }
 }
 
-void EntitySubwpnCrashVibhuti(Entity* self) {
+static s32 crash_vibhuti_timer;
+void RicEntityCrashVibhuti(Entity* self) {
     FakePrim* prim;
     s32 magnitude;
     s32 angle;
@@ -2123,16 +2384,17 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
             g_Player.unk4E = 1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 9; i++) {
             prim->r0 = prim->g0 = prim->b0 = 0xFF;
             prim->w = prim->h = 1;
             prim->priority = PLAYER.zPriority + 8;
-            prim->drawMode = 0xA;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
             prim = prim->next;
         }
-        D_80175890 = 0;
+        crash_vibhuti_timer = 0;
         self->step++;
         return;
     case 1:
@@ -2165,8 +2427,8 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
         }
         /* fallthrough */
     case 2:
-        if (!(++D_80175890 & 7)) {
-            g_api.PlaySfx(0x672);
+        if (!(++crash_vibhuti_timer & 7)) {
+            g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 9; i++) {
@@ -2177,7 +2439,9 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
                     self->ext.vibhutiCrash.unk84 = prim->posX.val;
                     self->ext.vibhutiCrash.unk88 = prim->posY.val;
                     self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
-                    CreateEntFactoryFromEntity(self, FACTORY(0, 55), 0);
+                    // Creates RicEntityVibhutiCrashCloud
+                    RicCreateEntFactoryFromEntity(
+                        self, BP_VITHUBI_CRASH_CLOUD, 0);
                 } else {
                     prim->posX.val += prim->velocityX.val;
                     prim->posY.val += prim->velocityY.val;
@@ -2199,19 +2463,18 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
     }
 }
 
-void func_8016D920(Entity* entity) {
+void RicEntityCrashReboundStoneParticles(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000;
-        entity->ext.generic.unkB0 = 0x19;
-        func_8015FAB8(entity);
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
+        RicSetSubweaponParams(entity);
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 4;
         entity->step++;
         break;
-
     case 1:
-        if (++entity->ext.generic.unk7C.s >= 4) {
+        if (++entity->ext.subweapon.timer >= 4) {
             DestroyEntity(entity);
         }
         break;

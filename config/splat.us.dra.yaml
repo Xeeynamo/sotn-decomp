@@ -24,6 +24,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 2eac5f7162e77416166c2511c787995488f01c37
 segments:
   - name: dra
     type: code
@@ -96,21 +97,21 @@ segments:
       - [0x8410, .data, config_us] # spells
       - [0x8720, .data, config_us] # relics
       - [0x8900, .data, config_us] # enemies
-      - [0xC910, .data, d_C910] # exp table and other stuff
+      - [0xC910, .data, d_C910]
       - [0xC958, .data, cd]
       - [0xCD80, .data, d_CD80]
       - [0xCDF8, .data, 692E8]
       - [0xCF18, .data, 6D59C]
-      - [0xCF4C, data]
-      - [0xD014, .data, d_D094]
+      - [0xCF74, .data, d_CF74]
       - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
       - [0xE294, .data, d_E294]
-      - [0x10798, data]
-      - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
-      - [0x10B34, data]
+      - [0x10798, .data, d_10798]
+      - [0x10924, .data, 8D3E8] # D_800B0924 to D_800B09F8
+      - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
+      - [0x10B34, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
       - [0x1107C, raw, vh_0] # aPbav
       - [0x1407C, raw, vh_1] # aPbav_0
       - [0x1607C, raw, vh_2] # aPbav_2
@@ -165,7 +166,7 @@ segments:
       # - [0x3C4C8, .rodata, demo] # func_800F0608
       - [0x3C514, .rodata, 5087C] # func_800F0940
       # - [0x3C534, .rodata, 5087C] # func_800F2860
-      # - [0x3C55C, .rodata, 5087C] # func_800F298C
+      # - [0x3C55C, .rodata, 5087C] # RunMainEngine
       - [0x3C5D4, .rodata, menu] # func_800F7F64
       # - [0x3C6AC, .rodata, menu] # MenuDraw
       # - [0x3C6EC, .rodata, menu] # func_800F9F40
@@ -203,8 +204,8 @@ segments:
       # - [0x41A00, .rodata, 75F54] # func_80116994
       # - [0x41A20, .rodata, 75F54] # func_80116B0C
       # - [0x41A38, .rodata, 75F54] # func_80117DEC
-      # - [0x41A44, .rodata, 75F54] # EntityNumberMovesToHpMeter
-      # - [0x41A74, .rodata, 75F54] # EntityGuardText
+      - [0x41A44, .rodata, 78D0C] # EntityNumberMovesToHpMeter
+      # - [0x41A74, .rodata, 78D0C] # EntityGuardText
       - [0x41AA4, .rodata, 7A4D0] # func_8011A4D0
       # - [0x41AB4, .rodata, 7A4D0] # EntityEntFactory
       # - [0x41AF4, .rodata, 7A4D0] # EntityPlayerBlinkWhite
@@ -217,11 +218,11 @@ segments:
       # - [0x41E34, .rodata, 843B0] # EntitySubwpnCrashCross
       # - [0x41E48, .rodata, 843B0] # EntityHellfireHandler
       # - [0x41E7C, .rodata, 843B0] # func_80128C2C
-      # - [0x41E90, .rodata, 843B0] # EntityStopWatch
+      - [0x41E90, .rodata, 8A0A4] # EntityStopWatch
       - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
       # - [0x41EC8, .rodata, 8D3E8] # func_8012EF2C
       # - [0x41EF0, .rodata, 8D3E8] # func_8012F894
-      - [0x41F30, .rodata, 90264] # func_80130264
+      - [0x41F30, .rodata, 8D3E8] # func_80130264
       # - [0x41F70, .rodata, 90264] # func_80130618
       # - [0x41FB0, .rodata, 90264] # func_801309B4
       # - [0x41FD8, .rodata, 90264] # func_80130E94
@@ -254,18 +255,19 @@ segments:
       - [0x71830, c, 71830]
       - [0x72BB0, c, 72BB0]
       - [0x75F54, c, 75F54]
+      - [0x78D0C, c, 78D0C]
       - [0x7A4D0, c, 7A4D0]
       - [0x7E4BC, c, 7E4BC]
       - [0x843B0, c, 843B0]
+      - [0x8A0A4, c, 8A0A4]
       - [0x8D3E8, c, 8D3E8]
-      - [0x90264, c, 90264]
       - [0x91EBC, c, 91EBC]
       - [0x92F60, c, 92F60]
       - [0x93290, c, 93290]
       - [0x93BDC, c, 93BDC]
       - [0x94F50, c, 94F50]
       - [0x953A0, c, 953A0]
-      - [0x962AC, sbss]
+      - [0x962AC, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B6A0

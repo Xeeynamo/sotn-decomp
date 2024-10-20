@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
 void func_801CD540(Entity* self) {
@@ -34,6 +35,13 @@ void func_801CD620(Entity* self) {
         InitializeEntity(g_EInitGeneric);
     }
 }
+
+static s32 D_801D3378;
+static s32 D_801D337C;
+static s32 D_801D3380;
+static s32 D_801D3384;
+static s32 D_801D3388;
+STATIC_PAD_BSS(104);
 
 void func_801CD658(void) {
     g_CurrentBuffer = g_CurrentBuffer->next;
@@ -216,7 +224,7 @@ void func_801CDE10(s16* arg0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
             temp_a0->ext.GH_Props.rotZ =
-                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.generic.unkA6;
+                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.GH_Props.unkA6;
         }
         arg0++;
     }
@@ -229,7 +237,7 @@ void func_801CDE88(s16* arg0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
             temp_a0->ext.GH_Props.rotZ =
-                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.generic.unkA6;
+                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.GH_Props.unkA6;
             func_801CD83C(temp_a0);
         }
         arg0++;
@@ -288,7 +296,7 @@ void func_801CE04C(Entity* entity, Collider* collider) {
             }
         }
     }
-    entity->ext.generic.unk88.S16.unk0 = var_s0;
+    entity->ext.GH_Props.unk88 = var_s0;
 }
 
 s32 func_801CE120(Entity* self, s32 facing) {

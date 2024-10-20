@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
+#include "sfx.h"
 
 void EntityHammerWeapon(Entity* self) {
     s16 temp_s0;
@@ -11,7 +13,7 @@ void EntityHammerWeapon(Entity* self) {
         InitializeEntity(D_80180B98);
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
 
     case 1:
         angle = *(u16*)&self->ext.stub[0x20];
@@ -126,7 +128,7 @@ void EntityGurkha(Entity* self) {
         func_801CE1E8(0xC);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 24)) {
-        func_801C2598(0x742);
+        PlaySfxPositional(0x742);
         func_801CE1E8(0x18);
     }
     switch (self->step) {
@@ -138,7 +140,7 @@ void EntityGurkha(Entity* self) {
         self->facingLeft = self->params;
         /* fallthrough */
     case 1:
-        if (func_801BC8E4(D_80182EF4) & 1) {
+        if (UnkCollisionFunc3(D_80182EF4) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
@@ -277,7 +279,7 @@ void EntityGurkha(Entity* self) {
             collider.unk18 = 9;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801C2598(0x648);
+                PlaySfxPositional(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
@@ -338,7 +340,7 @@ void EntityGurkha(Entity* self) {
             func_801CE258(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801C2598(0x740);
+                PlaySfxPositional(0x740);
                 // we appear to write 0x10 twice here, weird
                 self->ext.GH_Props.unk80 = 0x10;
                 (self + 15)->ext.GH_Props.unkA6 = 0;
@@ -456,7 +458,7 @@ void EntityGurkha(Entity* self) {
         break;
     case 12:
         if (self->step_s == 0) {
-            func_801C2598(0x741);
+            PlaySfxPositional(0x741);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
@@ -492,9 +494,9 @@ void EntityGurkha(Entity* self) {
             self->velocityY += FIX(24.0 / 128);
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801C2598(0x65B);
+                    PlaySfxPositional(SFX_FM_EXPLODE_B);
                 } else {
-                    func_801C2598(0x657);
+                    PlaySfxPositional(SFX_EXPLODE_D);
                 }
             }
             return;
@@ -520,7 +522,7 @@ void EntityGurkhaSword(Entity* self) {
         InitializeEntity(D_80180BB0);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         break;
 
     case 1:
@@ -557,7 +559,7 @@ void EntityGurkhaSword(Entity* self) {
         }
 
         if ((g_Timer % 16) == 0) {
-            func_801C2598(0x625);
+            PlaySfxPositional(SFX_ARROW_SHOT_A);
         }
 
         if (abs(self->velocityX) == 0x80000) {
@@ -587,7 +589,7 @@ void EntityGurkhaSword(Entity* self) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->drawFlags = 0;
+                self->drawFlags = FLAG_DRAW_DEFAULT;
             }
         }
         break;

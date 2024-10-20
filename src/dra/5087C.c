@@ -1,71 +1,73 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
+#include "dra_bss.h"
 #include "menu.h"
 #include "sfx.h"
 
 RoomTeleport D_800A245C[] = {
-    {496, 392, 0x00A0, 0x0000, STAGE_NZ0},
-    {240, 648, 0x0000, 0x0000, STAGE_NO2},
-    {16, 132, 0x0038, 0x0000, STAGE_NO1},
-    {496, 132, 0x0078, 0x0000, STAGE_NP3},
-    {240, 132, 0x0000, 0x0000, STAGE_NO4},
-    {128, 36, 0x0000, 0x0000, STAGE_CEN},
-    {16, 1672, 0x0068, 0x0002, STAGE_NO1},
-    {128, 212, 0x00A8, 0x0008, STAGE_NO0},
-    {128, 77, 16, 0x0028, STAGE_BO6},
-    {240, 388, 0x0030, 0x000D, STAGE_TOP},
-    {16, 132, 16, 0x000D, STAGE_NO1},
-    {16, 644, 0x0000, 0x0041, STAGE_NO0},
-    {16, 132, 0x00A0, 0x0041, STAGE_NO4},
-    {752, 132, 0x0050, 0x0041, STAGE_NZ0},
-    {240, 132, 0x0018, 0x0041, STAGE_WRP},
-    {16, 180, 0x0000, 0x0012, STAGE_DRE},
-    {16, 388, 0x0050, 0x0003, STAGE_CHI},
-    {112, 644, 0x0000, 0x0041, STAGE_NO3},
-    {240, 132, 0x0088, 0x0005, STAGE_CAT},
-    {16, 132, 128, 0x0005, STAGE_NO4},
-    {16, 132, 0x0020, 0x0005, STAGE_WRP},
-    {16, 132, 0x0078, 0x000C, STAGE_NP3},
-    {16, 132, 0x0030, 0x000C, STAGE_NO0},
-    {240, 132, 0x0060, 0x000C, STAGE_DAI},
-    {16, 132, 0x0068, 0x0004, STAGE_NO0},
-    {240, 132, 0x0030, 0x0004, STAGE_DAI},
-    {1264, 132, 0x0030, 0x0004, STAGE_ARE},
-    {16, 132, 0x0008, 0x0004, STAGE_WRP},
-    {240, 388, 0x0038, 0x000E, STAGE_TOP},
-    {272, 644, 0x0068, 0x000E, STAGE_NO1},
-    {240, 1412, 0x0030, 0x000E, STAGE_NO2},
-    {16, 132, 128, 0x000E, STAGE_NP3},
-    {752, 132, 0x0038, 0x000E, STAGE_CHI},
-    {16, 132, 0x0078, 0x0006, STAGE_NO2},
-    {16, 132, 0x0020, 0x0006, STAGE_ARE},
-    {16, 132, 0x0008, 0x0006, STAGE_NZ0},
-    {16, 1924, 16, 0x0006, STAGE_TOP},
-    {320, 696, 16, 0x000B, STAGE_RTOP},
-    {320, 847, 16, 0x002B, STAGE_TOP},
+    {496, 392, 0x00A0, STAGE_NO0, STAGE_NZ0},
+    {240, 648, 0x0000, STAGE_NO0, STAGE_NO2},
+    {16, 132, 0x0038, STAGE_NO0, STAGE_NO1},
+    {496, 132, 0x0078, STAGE_NO0, STAGE_NP3},
+    {240, 132, 0x0000, STAGE_NO0, STAGE_NO4},
+    {128, 36, 0x0000, STAGE_NO0, STAGE_CEN},
+    {16, 1672, 0x0068, STAGE_LIB, STAGE_NO1},
+    {128, 212, 0x00A8, STAGE_CEN, STAGE_NO0},
+    {128, 77, 16, STAGE_RCEN, STAGE_BO6},
+    {240, 388, 0x0030, STAGE_NZ1, STAGE_TOP},
+    {16, 132, 16, STAGE_NZ1, STAGE_NO1},
+    {16, 644, 0x0000, STAGE_NO3, STAGE_NO0},
+    {16, 132, 0x00A0, STAGE_NO3, STAGE_NO4},
+    {752, 132, 0x0050, STAGE_NO3, STAGE_NZ0},
+    {240, 132, 0x0018, STAGE_NO3, STAGE_WRP},
+    {16, 180, 0x0000, STAGE_DRE, STAGE_DRE},
+    {16, 388, 0x0050, STAGE_CAT, STAGE_CHI},
+    {112, 644, 0x0000, STAGE_NO3, STAGE_NO3},
+    {240, 132, 0x0088, STAGE_CHI, STAGE_CAT},
+    {16, 132, 128, STAGE_CHI, STAGE_NO4},
+    {16, 132, 0x0020, STAGE_CHI, STAGE_WRP},
+    {16, 132, 0x0078, STAGE_NZ0, STAGE_NP3},
+    {16, 132, 0x0030, STAGE_NZ0, STAGE_NO0},
+    {240, 132, 0x0060, STAGE_NZ0, STAGE_DAI},
+    {16, 132, 0x0068, STAGE_NO2, STAGE_NO0},
+    {240, 132, 0x0030, STAGE_NO2, STAGE_DAI},
+    {1264, 132, 0x0030, STAGE_NO2, STAGE_ARE},
+    {16, 132, 0x0008, STAGE_NO2, STAGE_WRP},
+    {240, 388, 0x0038, STAGE_WRP, STAGE_TOP},
+    {272, 644, 0x0068, STAGE_WRP, STAGE_NO1},
+    {240, 1412, 0x0030, STAGE_WRP, STAGE_NO2},
+    {16, 132, 128, STAGE_WRP, STAGE_NP3},
+    {752, 132, 0x0038, STAGE_WRP, STAGE_CHI},
+    {16, 132, 0x0078, STAGE_DAI, STAGE_NO2},
+    {16, 132, 0x0020, STAGE_DAI, STAGE_ARE},
+    {16, 132, 0x0008, STAGE_DAI, STAGE_NZ0},
+    {16, 1924, 16, STAGE_DAI, STAGE_TOP},
+    {320, 696, 16, STAGE_TOP, STAGE_RTOP},
+    {320, 847, 16, STAGE_RTOP, STAGE_TOP},
     {16, 132, 0x0028, 0x001F, STAGE_LIB},
-    {3824, 132, 0x0040, 0x0001, STAGE_NO0},
-    {752, 132, 0x0060, 0x0001, STAGE_LIB},
-    {240, 132, 16, 0x0001, STAGE_WRP},
-    {240, 132, 0x0058, 0x0001, STAGE_NZ1},
-    {896, 952, 16, 0x000B, STAGE_TOP},
-    {16, 132, 0x0000, 0x000B, STAGE_NZ1},
-    {16, 132, 0x0000, 0x000B, STAGE_WRP},
-    {752, 648, 0x0088, 0x000B, STAGE_DAI},
-    {240, 132, 0x0050, 0x0009, STAGE_NP3},
-    {16, 388, 0x0088, 0x0009, STAGE_NO0},
-    {240, 132, 0x0000, 0x0009, STAGE_CHI},
-    {16, 180, 0x0000, 0x0009, STAGE_DRE},
-    {496, 388, 0x0048, 0x000A, STAGE_DAI},
-    {16, 388, 16, 0x000A, STAGE_NO2},
-    {16, 132, 0x0090, 0x0041, STAGE_NO3},
-    {16, 132, 0x0000, 0x0040, STAGE_MAD},
-    {16, 644, 0x0000, 0x0007, STAGE_NO0},
-    {16, 132, 0x00A0, 0x0007, STAGE_NO4},
-    {752, 132, 0x0050, 0x0007, STAGE_NZ0},
-    {240, 132, 0x0018, 0x0007, STAGE_WRP},
-    {128, 164, 0x0128, 0x0012, STAGE_NO4},
-    {448, 1716, 0x0058, 0x0000, STAGE_DAI},
-    {16, 132, 0x0028, 0x0000, STAGE_LIB},
+    {3824, 132, 0x0040, STAGE_NO1, STAGE_NO0},
+    {752, 132, 0x0060, STAGE_NO1, STAGE_LIB},
+    {240, 132, 16, STAGE_NO1, STAGE_WRP},
+    {240, 132, 0x0058, STAGE_NO1, STAGE_NZ1},
+    {896, 952, 16, STAGE_TOP, STAGE_TOP},
+    {16, 132, 0x0000, STAGE_TOP, STAGE_NZ1},
+    {16, 132, 0x0000, STAGE_TOP, STAGE_WRP},
+    {752, 648, 0x0088, STAGE_TOP, STAGE_DAI},
+    {240, 132, 0x0050, STAGE_NO4, STAGE_NP3},
+    {16, 388, 0x0088, STAGE_NO4, STAGE_NO0},
+    {240, 132, 0x0000, STAGE_NO4, STAGE_CHI},
+    {16, 180, 0x0000, STAGE_NO4, STAGE_DRE},
+    {496, 388, 0x0048, STAGE_ARE, STAGE_DAI},
+    {16, 388, 16, STAGE_ARE, STAGE_NO2},
+    {16, 132, 0x0090, STAGE_NO3, STAGE_NO3}, // Entrance Forest Spawn Point
+    {16, 132, 0x0000, STAGE_MAD, STAGE_MAD}, // Debug Stage
+    {16, 644, 0x0000, STAGE_NP3, STAGE_NO0},
+    {16, 132, 0x00A0, STAGE_NP3, STAGE_NO4},
+    {752, 132, 0x0050, STAGE_NP3, STAGE_NZ0},
+    {240, 132, 0x0018, STAGE_NP3, STAGE_WRP},
+    {128, 164, 0x0128, STAGE_DRE, STAGE_NO4},
+    {448, 1716, 0x0058, 0x0000, STAGE_DAI}, // Unused?
+    {16, 132, 0x0028, 0x0000, STAGE_LIB},   // Library Card Destination
     {16, 132, 0x0038, 0x0000, STAGE_NO1},
     {16, 132, 128, 0x000C, STAGE_NZ0},
     {240, 132, 16, 0x0036, STAGE_CAT},
@@ -224,6 +226,21 @@ u8 D_800A2C0C[] = {
 
 u8* D_800A2D44[] = {D_800A2C0C};
 
+// BSS
+extern s32 D_80137598;
+extern s32 D_8013759C;
+extern s32 D_801375A0;
+extern s32 D_801375A4;
+extern s32 D_801375A8;
+extern s32 D_801375AC;
+extern s32 D_801375B0;
+extern s32 D_801375B4;
+extern s32 D_801375B8;
+extern RoomLoadDefHolder D_801375BC;
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+extern s32 D_801375C8;
+
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
     s32 res;
@@ -247,50 +264,50 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
 void func_800F0940(void) {
     s32 temp;
 
-    switch (g_Tilemap.bg[0].scrollKind) {
+    switch (g_BgLayers[0].scrollKind) {
     case 1:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
         return;
     case 2:
-        g_Tilemap.bg[0].scrollX.i.hi = (g_Tilemap.scrollX.i.hi / 2);
-        g_Tilemap.bg[0].scrollY.i.hi = (g_Tilemap.scrollY.i.hi / 2) + 0x76;
+        g_BgLayers[0].scrollX.i.hi = (g_Tilemap.scrollX.i.hi / 2);
+        g_BgLayers[0].scrollY.i.hi = (g_Tilemap.scrollY.i.hi / 2) + 0x76;
         return;
     case 3:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
         return;
     case 4:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
         if (g_StageId == STAGE_RCHI) {
-            g_Tilemap.bg[0].scrollY.i.hi += 0x80;
+            g_BgLayers[0].scrollY.i.hi += 0x80;
         }
         return;
     case 5:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
         if (g_StageId == STAGE_RDAI) {
-            g_Tilemap.bg[0].scrollX.i.hi += 0x80;
+            g_BgLayers[0].scrollX.i.hi += 0x80;
         }
         return;
     case 6:
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
         temp = (g_Tilemap.scrollY.i.hi / 2 - ((g_Tilemap.vSize - 1) << 7)) +
-               (g_Tilemap.bg[0].h << 7);
-        g_Tilemap.bg[0].scrollY.i.hi = temp;
+               (g_BgLayers[0].h << 7);
+        g_BgLayers[0].scrollY.i.hi = temp;
         if (g_StageId == STAGE_RDAI) {
-            g_Tilemap.bg[0].scrollX.i.hi += 0x80;
-            g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
+            g_BgLayers[0].scrollX.i.hi += 0x80;
+            g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
         }
         return;
     case 7:
-        g_Tilemap.bg[0].scrollY.i.hi = 4;
-        g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
+        g_BgLayers[0].scrollY.i.hi = 4;
+        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
         return;
     default:
-        g_Tilemap.bg[0].scrollX.i.hi = 0;
-        g_Tilemap.bg[0].scrollY.i.hi = 4;
+        g_BgLayers[0].scrollX.i.hi = 0;
+        g_BgLayers[0].scrollY.i.hi = 4;
         return;
     }
 }
@@ -328,9 +345,6 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
 }
 
 extern s16 D_80072F98;
-extern s32 D_801375A4;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
 
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
@@ -490,8 +504,8 @@ void func_800F1424(void) {
     if (g_pads[1].tapped & PAD_L1) {
         g_Tilemap.flags ^= 1;
     }
-    if ((g_pads[1].tapped & PAD_L2) && (g_Tilemap.bg[0].tileDef != 0)) {
-        g_Tilemap.bg[0].flags ^= 1;
+    if ((g_pads[1].tapped & PAD_L2) && (g_BgLayers[0].tileDef != 0)) {
+        g_BgLayers[0].flags ^= 1;
     }
 }
 
@@ -960,7 +974,7 @@ void func_800F2404(s32 arg0) {
 
     g_unkGraphicsStruct.BottomCornerTextTimer = 0;
     g_unkGraphicsStruct.BottomCornerTextPrims = 0;
-    g_unkGraphicsStruct.g_zEntityCenter.unk = 148;
+    g_unkGraphicsStruct.g_zEntityCenter = 148;
     for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
         g_unkGraphicsStruct.D_80097428[i] = 0;
     }
@@ -1133,21 +1147,21 @@ void func_800F2860(void) {
     }
 }
 
-void func_800F298C(void) {
+void RunMainEngine(void) {
     Entity* ent;
     Primitive* prim;
     LayerDef* layer;
     s32 i;
     s32 ent_unk68;
-    void (*RichterInitializer)(int isPrologue);
+    void (*playerInit)(int isPrologue);
     void (*RichterUpdater)(void);
     s32 tempX;
     s32 tempY;
     s32* ptr_791c;
     // This function is a state machine, this variable is some kind of
     // overall state of the game engine
-    switch (D_8003C9A4) {
-    case 0:
+    switch (g_GameEngineStep) {
+    case Engine_Init:
         if (g_IsUsingCd) {
             return;
         }
@@ -1162,11 +1176,11 @@ void func_800F298C(void) {
         DrawHud();
         func_800F2404(0);
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
-            RichterInitializer = g_PlOvl.D_8013C004;
+            playerInit = g_PlOvl.D_8013C004;
             if (g_StageId == STAGE_ST0) {
-                RichterInitializer(1);
+                playerInit(1);
             } else {
-                RichterInitializer(0);
+                playerInit(0);
             }
         } else {
             func_80109594();
@@ -1187,7 +1201,7 @@ void func_800F298C(void) {
         D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
 #if defined(VERSION_US)
-            D_80097910 = 0x32A;
+            D_80097910 = SE_INTRO_WIND;
 #elif defined(VERSION_HD)
             D_80097910 = 0x327;
 #endif
@@ -1282,9 +1296,9 @@ void func_800F298C(void) {
             }
         }
         RefreshCapePalette();
-        D_8003C9A4++;
+        g_GameEngineStep++; // Move to Engine_Normal
         return;
-    case 1:
+    case Engine_Normal:
         g_GameTimer++;
 #if defined(VERSION_HD)
         func_800F1424();
@@ -1307,7 +1321,7 @@ void func_800F298C(void) {
             g_PlOvl.D_8013C008();
         } else {
             EntityAlucard();
-            func_8011A4D0();
+            UpdatePlayerEntities();
         }
         g_api.o.UpdateRoomPosition();
         g_api.o.Update();
@@ -1372,8 +1386,8 @@ void func_800F298C(void) {
 
             if (g_unkGraphicsStruct.unk20 != 0) {
                 func_8010E0D0(g_unkGraphicsStruct.unk20);
-                PlaySfx(SET_UNK_0E);
-                D_8003C9A4 = 5;
+                PlaySfx(SET_PAUSE_SFX_SCRIPTS);
+                g_GameEngineStep = Engine_5;
                 return;
             }
             i = func_800F0CD8(1);
@@ -1389,7 +1403,7 @@ void func_800F298C(void) {
                     g_GameStep = Play_PrepareNextStage;
                     return;
                 }
-                D_8003C9A4 = 3;
+                g_GameEngineStep = Engine_3;
                 g_MenuStep = MENU_STEP_INIT;
                 return;
             }
@@ -1403,23 +1417,23 @@ void func_800F298C(void) {
 
             for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
                 ent_unk68 = ent->unk68;
-                if (ent_unk68 != 0) {
+                if (ent_unk68) {
                     ent->posX.val += ent_unk68 * D_801375B4 * 0x100;
                     ent->posY.val += ent_unk68 * D_801375B8 * 0x100;
                 } else {
-                    if (ent->flags & FLAG_UNK_08000000) {
+                    if (ent->flags & FLAG_POS_CAMERA_LOCKED) {
                         ent->posX.i.hi += D_801375B4;
                         ent->posY.i.hi += D_801375B8;
                     }
-                    if ((ent->flags & FLAG_UNK_40000) != 0) {
+                    if (ent->flags & FLAG_POS_PLAYER_LOCKED) {
                         ent->posX.val -= D_801375A4;
                         ent->posY.val -= D_801375A8;
                     }
                 }
             }
             func_80121F14(D_801375B4 << 0x10, D_801375B8 << 0x10);
-            D_801375A4 = D_801375A6;
-            D_801375A8 = D_801375AA;
+            D_801375A4 = D_801375A4 >> 16;
+            D_801375A8 = D_801375A8 >> 16;
             // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
             for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
                 if (prim->drawMode & DRAW_UNK02) {
@@ -1472,7 +1486,7 @@ void func_800F298C(void) {
                 func_80105428();
             }
             if (g_Player.unk0C & 0x80000) {
-                D_8003C9A4 = 10;
+                g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
             if (g_unkGraphicsStruct.D_800973FC != 0) {
@@ -1508,10 +1522,10 @@ void func_800F298C(void) {
                             return;
                         }
                         D_800974A4 = 1;
-                        D_8003C9A4 = 0x70;
-                        PlaySfx(0xa7);
-                        PlaySfx(0xa3);
-                        PlaySfx(SET_UNK_0E);
+                        g_GameEngineStep = Engine_0x70;
+                        PlaySfx(SET_RELEASE_RATE_LOW_22_23);
+                        PlaySfx(SET_RELEASE_RATE_LOW_20_21);
+                        PlaySfx(SET_PAUSE_SFX_SCRIPTS);
 #if defined(VERSION_US)
                         if (g_StageId == STAGE_ST0) {
                             MuteCd();
@@ -1519,30 +1533,30 @@ void func_800F298C(void) {
 #endif
                         return;
                     }
-                    PlaySfx(0xa7);
-                    PlaySfx(0xa3);
-                    PlaySfx(SET_UNK_0E);
+                    PlaySfx(SET_RELEASE_RATE_LOW_22_23);
+                    PlaySfx(SET_RELEASE_RATE_LOW_20_21);
+                    PlaySfx(SET_PAUSE_SFX_SCRIPTS);
                     func_801027C4(1);
-                    D_8003C9A4++;
+                    g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
                            (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
                     func_801027C4(6);
                     D_800974A4 = 1;
-                    D_8003C9A4 = 20;
+                    g_GameEngineStep = 20;
                 }
                 break;
             }
             break;
-        case 0x70:
+        case Engine_0x70:
             DrawHudSubweapon();
             if (g_pads[0].tapped & PAD_START) {
                 if (func_8010183C(1) != 0) {
                     D_800974A4 = 0;
-                    D_8003C9A4 = 1;
-                    PlaySfx(SET_UNK_0F);
-                    PlaySfx(0xA4);
-                    PlaySfx(0xA8);
+                    g_GameEngineStep = Engine_Normal;
+                    PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+                    PlaySfx(SET_KEY_ON_20_21);
+                    PlaySfx(SET_KEY_ON_22_23);
 #if defined(VERSION_US)
                     if (g_StageId == STAGE_ST0) {
                         UnMuteCd();
@@ -1552,24 +1566,24 @@ void func_800F298C(void) {
             }
             func_801028AC(1);
             break;
-        case 0x2:
+        case Engine_Menu:
             MenuHandle();
             func_801028AC(1);
             break;
-        case 0x14:
+        case Engine_Map:
             if (D_8013AED0 != 0) {
                 DrawMapCursor();
             }
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
                 func_801027C4(7);
                 D_800974A4 = 0;
-                D_8003C9A4 = 1;
+                g_GameEngineStep = Engine_Normal;
             }
             g_api.o.UpdateStageEntities();
             func_80102D70();
             func_801028AC(1);
             break;
-        case 0x3:
+        case Engine_3:
             switch (g_MenuStep) {
             case 0:
                 if (D_80097C98 == 2) {
@@ -1669,7 +1683,7 @@ void func_800F298C(void) {
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
                 g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
                 func_8011A9D8();
-                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
                 func_800F0CD8(0);
                 func_8010BFFC();
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -1702,8 +1716,8 @@ void func_800F298C(void) {
                 }
                 i = 0;
                 func_80121F14(-D_801375A4, -D_801375A8);
-                D_801375A4 = D_801375A6;
-                D_801375A8 = D_801375AA;
+                D_801375A4 = D_801375A4 >> 16;
+                D_801375A8 = D_801375A8 >> 16;
                 // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
                 for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
                     if (prim->drawMode & DRAW_UNK_100) {
@@ -1759,7 +1773,7 @@ void func_800F298C(void) {
                 func_800E414C();
                 func_800F24F4();
                 if (D_80097C98 == 3) {
-                    D_8003C9A4 = 1;
+                    g_GameEngineStep = Engine_Normal;
                 }
 #if defined(VERSION_US)
                 func_8011A9D8();
@@ -1775,7 +1789,7 @@ void func_800F298C(void) {
                 break;
             case 5:
                 if (func_801025F4() != 0) {
-                    D_8003C9A4 = 1;
+                    g_GameEngineStep = Engine_Normal;
                 }
                 break;
             }
@@ -1796,7 +1810,7 @@ void func_800F298C(void) {
                         } else {
                             if (g_unkGraphicsStruct.unk20 != 0xFF) {
                                 func_8010DF70(g_unkGraphicsStruct.unk20);
-                                func_8011A4D0();
+                                UpdatePlayerEntities();
                             }
                             g_api.o.UpdateStageEntities();
                             func_80102D70();
@@ -1819,8 +1833,8 @@ void func_800F298C(void) {
                 }
             } else {
                 func_8010E168(1, 0x30);
-                D_8003C9A4 = 1;
-                PlaySfx(SET_UNK_0F);
+                g_GameEngineStep = Engine_Normal;
+                PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             }
             DrawHudSubweapon();
             return;

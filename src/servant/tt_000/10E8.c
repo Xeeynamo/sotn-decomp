@@ -1,9 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <servant.h>
 #include <sfx.h>
 #include <psxsdk/libc.h>
-
-#define SFX_BAT_SCREECH SOUND_BAT_SCREECH
-#define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
 
 #ifndef VERSION_PSP
 s32 D_801748D8[0x80];
@@ -51,7 +49,7 @@ void func_801733B4(void);
 void func_801733BC(void);
 void func_801733C4(void);
 void func_801733CC(void);
-void func_801733D4(Entity* self);
+void BatFamiliarBlueTrail(Entity* self);
 void func_80173C0C(void);
 void func_80173C14(void);
 void func_80173C1C(void);
@@ -59,10 +57,10 @@ void func_80173C24(void);
 void func_80173C2C(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    func_80171ED4, func_80172120, func_80172C30, func_8017339C,
-    func_801733A4, func_801733AC, func_801733B4, func_801733BC,
-    func_801733C4, func_801733CC, func_801733D4, func_80173C0C,
-    func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
+    func_80171ED4, func_80172120, func_80172C30,        func_8017339C,
+    func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
+    func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
+    func_80173C14, func_80173C1C, func_80173C24,        func_80173C2C,
 };
 #endif
 
@@ -109,8 +107,8 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
-    if (entity->unk4C != anim) {
-        entity->unk4C = anim;
+    if (entity->anim != anim) {
+        entity->anim = anim;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
     }
@@ -239,26 +237,32 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 
 void func_80171560(Entity* self) {}
 
-void func_80171568(Entity* self) {
+// Only ever called by func_80172120 so that is the parent
+void CreateBlueTrailEntity(Entity* parent) {
     Entity* entity;
     s32 i;
 
+    // Look for empty ent slot 5, 6, or 7
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
+        // if ID is zero, it's vacant and we'll use it.
         if (!entity->entityId) {
             break;
         }
     }
-
+    // If we found a vacant entity in that loop, we use it.
     if (!entity->entityId) {
+        // Make sure it's empty
         DestroyEntity(entity);
+        // The entity we're making is the Servant function 0xA,
+        // BatFamiliarBlueTrail
         entity->entityId = 0xDA;
-        entity->zPriority = self->zPriority;
-        entity->facingLeft = self->facingLeft;
-        entity->flags = FLAG_UNK_04000000;
-        entity->posX.val = self->posX.val;
-        entity->posY.val = self->posY.val;
-        entity->ext.generic.unk8C.entityPtr = self;
+        entity->zPriority = parent->zPriority;
+        entity->facingLeft = parent->facingLeft;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->posX.val = parent->posX.val;
+        entity->posY.val = parent->posY.val;
+        entity->ext.batFamBlueTrail.parent = parent;
     }
 }
 
@@ -318,7 +322,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->u1 = prim->u3 = D_80170608[index].texRight;
     prim->v2 = prim->v3 = D_80170608[index].texBottom;
     prim->priority = entity->zPriority + 1;
-    prim->drawMode = 0x102;
+    prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
 }
 
 void func_801718A0(Entity* entity) {
@@ -359,7 +363,7 @@ void func_801719E0(Entity* self) {
                 return;
             }
             func_8017170C(self, 0);
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             self->ext.bat.unk84 = rand() % 4096;
@@ -376,7 +380,7 @@ void func_801719E0(Entity* self) {
                 return;
             }
             func_8017170C(self, 0);
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             if (!self->ext.bat.unk82) {
@@ -422,14 +426,14 @@ void func_801719E0(Entity* self) {
         self->ext.bat.unk8E = 0;
         switch (self->entityId) {
         case 0xD1:
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
-            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, D_801704A8);
             if (!self->ext.bat.unk82) {
@@ -462,6 +466,9 @@ void func_801719E0(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
+void ProcessEvent(Entity* self, bool resetEvent);
+extern u16 D_80170448[48];
+
 void func_80171ED4(s32 arg0) {
     u16* dst;
     u16* src;
@@ -470,6 +477,13 @@ void func_80171ED4(s32 arg0) {
     s32 x;
     SpriteParts** spriteBanks;
     Entity* e;
+
+#ifdef VERSION_PC
+    // i exceeds the size of D_80170448
+    const int len = LEN(D_80170448);
+#else
+    const int len = 256;
+#endif
 
     if ((arg0 == 1) || (arg0 == 3)) {
         ProcessEvent(NULL, true);
@@ -481,7 +495,7 @@ void func_80171ED4(s32 arg0) {
     dst = &g_Clut[0x1400];
     src = D_80170448;
 
-    for (i = 0; i < 256; i++) {
+    for (i = 0; i < len; i++) {
         *dst++ = *src++;
     }
 
@@ -537,13 +551,13 @@ void func_80171ED4(s32 arg0) {
     D_80174D3C = 0;
 }
 
+s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
+s16 func_80173F30(Entity* entity, s16 x, s16 y);
+
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
 #else
 void func_80172120(Entity* self) {
-    s32 var_v0;
-    s32 var_v1;
-
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
     if (D_80174D3C != 0) {
         self->zPriority = PLAYER.zPriority - 2;
@@ -557,18 +571,14 @@ void func_80172120(Entity* self) {
             D_80174B04 = 0xC0;
             break;
         case 2:
-            var_v1 = 0x40;
-            if (self->posX.i.hi > 0x80) {
-                var_v1 += 0x80;
-            }
-            D_80174B04 = var_v1;
+            D_80174B04 = (self->posX.i.hi > 0x80) ? 0xC0 : 0x40;
             break;
         }
         D_80174B08 = 0xA0;
     } else {
         D_80174B18 = -0x12;
-        if (PLAYER.facingLeft != 0) {
-            D_80174B18 = 0x12;
+        if (PLAYER.facingLeft) {
+            D_80174B18 = -D_80174B18;
         }
         D_80174B04 = PLAYER.posX.i.hi + D_80174B18;
         D_80174B08 = PLAYER.posY.i.hi - 0x22;
@@ -586,116 +596,106 @@ void func_80172120(Entity* self) {
         if (g_Player.unk0C & 1) {
             self->ext.bat.unk8C = 0;
             self->step = 5;
+            break;
+        }
+        if (D_8003C708.flags & 0x20) {
+            if (PLAYER.posX.i.hi >= self->posX.i.hi) {
+                self->facingLeft = true;
+            } else {
+                self->facingLeft = false;
+            }
         } else {
-            if (D_8003C708.flags & 0x20) {
-                if (PLAYER.posX.i.hi < self->posX.i.hi) {
-                    self->facingLeft = false;
+            if (PLAYER.facingLeft == self->facingLeft) {
+                if (abs(D_80174AFC - self->posX.i.hi) <= 0) {
+                    self->facingLeft = PLAYER.facingLeft ? false : true;
                 } else {
-                    self->facingLeft = true;
-                }
-            } else {
-                if (PLAYER.facingLeft == self->facingLeft) {
-                    var_v0 = D_80174AFC - self->posX.i.hi;
-                    if (var_v0 < 0) {
-                        var_v0 = -var_v0;
-                    }
-                    if (var_v0 <= 0) {
-                        self->facingLeft = !self->facingLeft;
-                    } else {
-                        if (self->facingLeft) {
-                            if (D_80174AFC < self->posX.i.hi) {
-                                self->facingLeft = !self->facingLeft;
-                            }
-                        } else if (self->posX.i.hi < D_80174AFC) {
-                            self->facingLeft = 1;
-                        }
-                    }
-                } else if (self->facingLeft) {
-                    var_v0 = self->posX.i.hi - D_80174AFC;
-                    if (var_v0 >= 0x20) {
-                        self->facingLeft = PLAYER.facingLeft;
-                    }
-                } else {
-                    var_v0 = D_80174AFC - self->posX.i.hi;
-                    if (var_v0 >= 0x20) {
-                        self->facingLeft = PLAYER.facingLeft;
+                    if (self->facingLeft && D_80174AFC < self->posX.i.hi) {
+                        self->facingLeft = PLAYER.facingLeft ? false : true;
+                    } else if (
+                        !self->facingLeft && D_80174AFC > self->posX.i.hi) {
+                        self->facingLeft = PLAYER.facingLeft ? false : true;
                     }
                 }
+            } else if (
+                self->facingLeft && (self->posX.i.hi - D_80174AFC) > 0x1F) {
+                self->facingLeft = PLAYER.facingLeft;
+            } else if (
+                !self->facingLeft && (D_80174AFC - self->posX.i.hi) > 0x1F) {
+                self->facingLeft = PLAYER.facingLeft;
             }
-            D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
-            D_80174B10 = func_80173F74(
-                D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
-            self->ext.bat.unk86 = D_80174B10;
-            D_80174B04 = D_80174AFC - self->posX.i.hi;
-            D_80174B08 = D_80174B00 - self->posY.i.hi;
-            D_80174B14 =
-                SquareRoot12((D_80174B04 * D_80174B04 + D_80174B08 * D_80174B08)
-                             << 0xC) >>
-                0xC;
-            if (D_80174B14 < 0x1E) {
-                self->velocityY = -(rsin(D_80174B10) * 8);
-                self->velocityX = rcos(D_80174B10) * 8;
-                self->ext.bat.unk8A = 0x20;
-            } else if (D_80174B14 < 0x3C) {
-                self->velocityY = -(rsin(D_80174B10) * 0x10);
-                self->velocityX = rcos(D_80174B10) * 0x10;
-                self->ext.bat.unk8A = 0x40;
-            } else if (D_80174B14 < 0x64) {
-                self->velocityY = -(rsin(D_80174B10) << 5);
-                self->velocityX = rcos(D_80174B10) << 5;
-                self->ext.bat.unk8A = 0x60;
-            } else if (D_80174B14 < 0x100) {
-                self->velocityY = -(rsin(D_80174B10) << 6);
-                self->velocityX = rcos(D_80174B10) << 6;
-                self->ext.bat.unk8A = 0x80;
-            } else {
-                self->ext.bat.unk8A = 0x80;
-                self->velocityX = (D_80174AFC - self->posX.i.hi) << 0xE;
-                self->velocityY = (D_80174B00 - self->posY.i.hi) << 0xE;
+        }
+        D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
+        D_80174B10 =
+            func_80173F74(D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
+        self->ext.bat.unk86 = D_80174B10;
+        D_80174B04 = D_80174AFC - self->posX.i.hi;
+        D_80174B08 = D_80174B00 - self->posY.i.hi;
+        D_80174B14 =
+            SquareRoot12(
+                (D_80174B04 * D_80174B04 + D_80174B08 * D_80174B08) << 12) >>
+            12;
+        if (D_80174B14 < 30) {
+            self->velocityY = -(rsin(D_80174B10) << 3);
+            self->velocityX = rcos(D_80174B10) << 3;
+            self->ext.bat.unk8A = 0x20;
+        } else if (D_80174B14 < 60) {
+            self->velocityY = -(rsin(D_80174B10) << 4);
+            self->velocityX = rcos(D_80174B10) << 4;
+            self->ext.bat.unk8A = 0x40;
+        } else if (D_80174B14 < 100) {
+            self->velocityY = -(rsin(D_80174B10) << 5);
+            self->velocityX = rcos(D_80174B10) << 5;
+            self->ext.bat.unk8A = 0x60;
+        } else if (D_80174B14 < 0x100) {
+            self->velocityY = -(rsin(D_80174B10) << 6);
+            self->velocityX = rcos(D_80174B10) << 6;
+            self->ext.bat.unk8A = 0x80;
+        } else {
+            self->velocityX = (D_80174AFC - self->posX.i.hi) << 0xE;
+            self->velocityY = (D_80174B00 - self->posY.i.hi) << 0xE;
+            self->ext.bat.unk8A = 0x80;
+        }
+        if (self->velocityY > FIX(1.0)) {
+            func_801710E8(self, D_801705EC);
+        } else if (D_80174B14 < 60) {
+            func_801710E8(self, D_801704A8);
+        } else if (D_80174B14 > 100) {
+            func_801710E8(self, D_80170514);
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (D_8003C704) {
+            break;
+        }
+        D_80174B24 = D_80174AFC - self->posX.i.hi;
+        D_80174B28 = D_80174B00 - self->posY.i.hi;
+        D_80174B2C =
+            SquareRoot12(
+                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
+            12;
+        if (D_80174B2C < 0x18) {
+            if (self->ext.bat.unk8E) {
+                self->ext.bat.unk8E = 0;
+                func_801710E8(self, D_8017054C);
             }
-            if (self->velocityY > FIX(1.0)) {
-                func_801710E8(self, D_801705EC);
-            } else if (D_80174B14 < 0x3C) {
-                func_801710E8(self, D_801704A8);
-            } else if (D_80174B14 >= 0x65) {
-                func_801710E8(self, D_80170514);
-            }
-            self->posX.val += self->velocityX;
-            self->posY.val += self->velocityY;
-            if (D_8003C704 == 0) {
-                D_80174B24 = D_80174AFC - self->posX.i.hi;
-                D_80174B28 = D_80174B00 - self->posY.i.hi;
-                D_80174B2C =
-                    SquareRoot12(
-                        (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28)
-                        << 0xC) >>
-                    0xC;
-                if (D_80174B2C < 0x18) {
-                    if (self->ext.bat.unk8E) {
-                        self->ext.bat.unk8E = 0;
-                        func_801710E8(self, D_8017054C);
-                    }
-                    self->ext.bat.unk8C++;
-                    if (D_80170658[D_80174C30.level / 10][0] <
-                        self->ext.bat.unk8C) {
-                        self->ext.bat.unk8C = 0;
-                        self->ext.bat.target = func_8017110C(self);
-                        if (self->ext.bat.target) {
-                            self->step++;
-                        }
-                    }
-                } else {
-                    self->ext.bat.unk8E = 1;
+            self->ext.bat.unk8C++;
+            if (self->ext.bat.unk8C > D_80170658[D_80174C30.level / 10][0]) {
+                self->ext.bat.unk8C = 0;
+                // Pay attention - this is not a ==
+                if (self->ext.bat.target = func_8017110C(self)) {
+                    self->step++;
                 }
             }
+        } else {
+            self->ext.bat.unk8E = 1;
         }
         break;
     case 2:
         self->ext.bat.unk8C++;
         if (self->ext.bat.unk8C == 1) {
-            g_api.PlaySfx(SFX_BAT_NOTIFY);
+            g_api.PlaySfx(SFX_UI_ALERT_TINK);
             func_8017170C(self, 1);
-        } else if (self->ext.bat.unk8C >= 0x1F) {
+        } else if (self->ext.bat.unk8C > 30) {
             self->ext.bat.unk8C = 0;
             func_8017170C(self, 0);
             D_80174B1C = self->ext.bat.target->posX.i.hi;
@@ -705,19 +705,19 @@ void func_80172120(Entity* self) {
             g_api.func_8011A3AC(self, 15, 1, &D_80174C30);
             self->ext.bat.unk86 = 0xC00;
             func_801710E8(self, D_801705EC);
-            func_80171568(self);
+            CreateBlueTrailEntity(self);
             self->step++;
         }
         break;
     case 3:
         D_80174B1C = self->ext.bat.target->posX.i.hi;
         D_80174B20 = self->ext.bat.target->posY.i.hi;
-        D_80174B0C = func_80173F30(self, (s16)D_80174B1C, (s16)D_80174B20);
+        D_80174B0C = func_80173F30(self, D_80174B1C, D_80174B20);
         D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
-                                   (s16)D_80170658[D_80174C30.level / 10][1]);
+                                   D_80170658[D_80174C30.level / 10][1]);
         self->ext.bat.unk86 = D_80174B10;
-        self->velocityX = rcos(D_80174B10) << 6;
-        self->velocityY = -(rsin(D_80174B10) << 6);
+        self->velocityX = rcos(D_80174B10) << 2 << 4;
+        self->velocityY = -(rsin(D_80174B10) << 2 << 4);
         if (self->velocityX > 0) {
             self->facingLeft = 1;
         }
@@ -730,8 +730,8 @@ void func_80172120(Entity* self) {
         D_80174B28 = D_80174B20 - self->posY.i.hi;
         D_80174B2C =
             SquareRoot12(
-                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 0xC) >>
-            0xC;
+                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
+            12;
         if (!func_801713C8(self->ext.bat.target) || D_80174B2C < 8) {
             self->ext.bat.unk8C = 0;
             self->step++;
@@ -742,13 +742,13 @@ void func_80172120(Entity* self) {
         D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
         D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86, 0x10);
         self->ext.bat.unk86 = D_80174B10;
-        self->velocityX = rcos(D_80174B10) << 6;
-        self->velocityY = -(rsin(D_80174B10) << 6);
-        self->facingLeft = self->velocityX >= 0;
+        self->velocityX = rcos(D_80174B10) << 2 << 4;
+        self->velocityY = -(rsin(D_80174B10) << 2 << 4);
+        self->facingLeft = (self->velocityX >= 0) ? true : false;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->ext.bat.unk8C++;
-        if (self->ext.bat.unk8C >= 0x1F) {
+        if (self->ext.bat.unk8C > 30) {
             self->hitboxWidth = 0;
             self->hitboxHeight = 0;
             self->step = 1;
@@ -759,7 +759,7 @@ void func_80172120(Entity* self) {
         if (self->ext.bat.unk8C == 1) {
             g_api.PlaySfx(SFX_BAT_SCREECH);
             func_8017170C(self, 3);
-        } else if (self->ext.bat.unk8C >= 0x1F) {
+        } else if (self->ext.bat.unk8C > 30) {
             func_8017170C(self, 0);
             self->entityId = 0xD2;
             self->step = 0;
@@ -832,7 +832,7 @@ void func_80172C30(Entity* self) {
             if (g_Player.unk0C & 0x800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 81), 0);
+                g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
                 self->ext.bat.unkA8 = 1;
             }
         } else if (self->ext.bat.unkA8) {
@@ -917,7 +917,9 @@ void func_801733C4(void) {}
 
 void func_801733CC(void) {}
 
-void func_801733D4(Entity* self) {
+// When bat familiar swoops toward enemy to attack, it leaves a trail of blue
+// bat outlines behind it, not unlike Alucard's wing smash bat outlines.
+void BatFamiliarBlueTrail(Entity* self) {
     const s32 nPrim = 16;
     const s32 XS = 11; // X start, left
     const s32 XE = 13; // X end, right
@@ -933,7 +935,7 @@ void func_801733D4(Entity* self) {
             DestroyEntity(self);
             return;
         } else {
-            self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             D_80174B48 = &g_PrimBuf[self->primIndex];
             for (i = 0; i < nPrim; i++) {
                 D_80174B48->tpage = 0x1B;
@@ -952,12 +954,12 @@ void func_801733D4(Entity* self) {
         }
         break;
     case 1:
-        if (self->ext.factory.parent->step != 3) {
+        if (self->ext.batFamBlueTrail.parent->step != 3) {
             self->step++;
         }
-        D_80174B8C[D_80174C2C].x = self->ext.factory.parent->posX.i.hi;
-        D_80174B8C[D_80174C2C].y = self->ext.factory.parent->posY.i.hi;
-        D_80174BCC[D_80174C2C] = self->ext.factory.parent->facingLeft;
+        D_80174B8C[D_80174C2C].x = self->ext.batFamBlueTrail.parent->posX.i.hi;
+        D_80174B8C[D_80174C2C].y = self->ext.batFamBlueTrail.parent->posY.i.hi;
+        D_80174BCC[D_80174C2C] = self->ext.batFamBlueTrail.parent->facingLeft;
         D_80174BEC[D_80174C2C] = 256;
         D_80174C0C[D_80174C2C] = 192;
         D_80174B4C[D_80174C2C] = 1;
@@ -1066,7 +1068,7 @@ void func_80173C2C(Entity* entity) {
 }
 
 #ifndef VERSION_PSP
-u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
+u32 Tt000UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s32 ret;
 
@@ -1074,24 +1076,24 @@ u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     if (self->animFrameDuration == -1) {
         ret = -1;
     } else if (self->animFrameDuration == 0) {
-        self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+        self->animFrameDuration = self->anim[self->animFrameIdx].duration;
     } else if (--self->animFrameDuration == 0) {
         self->animFrameIdx++;
-        animFrame = &self->unk4C[self->animFrameIdx];
+        animFrame = &self->anim[self->animFrameIdx];
         // Effectively a switch statement, but breaks if I actually use one.
         if (animFrame->duration == 0) {
             self->animFrameIdx = animFrame->unk2;
-            self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+            self->animFrameDuration = self->anim[self->animFrameIdx].duration;
             ret = 0;
         } else if (animFrame->duration == 0xFFFF) {
             self->animFrameIdx--;
             self->animFrameDuration = -1;
             ret = -1;
         } else if (animFrame->duration == 0xFFFE) {
-            self->unk4C = frames[animFrame->unk2];
+            self->anim = frames[animFrame->unk2];
             self->animFrameIdx = 0;
             ret = -2;
-            self->animFrameDuration = self->unk4C->duration;
+            self->animFrameDuration = self->anim->duration;
         } else {
             self->animFrameDuration = animFrame->duration;
         }
@@ -1101,13 +1103,13 @@ u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
         frameProps =
-            &frameProps[(self->unk4C[self->animFrameIdx].unk2 >> 9) << 2];
+            &frameProps[(self->anim[self->animFrameIdx].unk2 >> 9) << 2];
         self->hitboxOffX = *frameProps++;
         self->hitboxOffY = *frameProps++;
         self->hitboxWidth = *frameProps++;
         self->hitboxHeight = *frameProps++;
     }
-    self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
+    self->animCurFrame = self->anim[self->animFrameIdx].unk2 & 0x1FF;
     return ret;
 }
 #endif
@@ -1193,7 +1195,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
         if (D_8003C704 != 0) {
             D_80171090 = 99;
             DestroyEntity(entity);

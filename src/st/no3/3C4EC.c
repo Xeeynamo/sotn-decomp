@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
 // pushes alucard to the right
@@ -87,7 +88,7 @@ void EntityCastleDoorTransition(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (g_CastleFlags[52]) {
+        if (g_CastleFlags[CASTLE_FLAG_52]) {
             DestroyEntity(entity);
             return;
         }
@@ -145,7 +146,7 @@ void EntityForegroundTree(Entity* self) {
         InitializeEntity(D_80180AD0);
         EntRange = &g_Entities[192];
         self->unk68 = var_s3;
-        self->flags |= FLAG_UNK_08000000;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
     label:
         if (*ptrParams <= 352) {
             ent = AllocEntity(EntRange, &EntRange[64]);
@@ -224,7 +225,7 @@ void EntityUnkId50(Entity* self) {
         temp = &g_Entities[192];
         self->unk68 = 0xC0;
         self->ext.et_801BCC4C.unk7C = 0;
-        self->flags |= FLAG_UNK_08000000;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
     label:
         while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
@@ -282,7 +283,7 @@ void EntityUnkId52(Entity* self) {
         ptr = D_801817F8;
         temp = &g_Entities[192];
         self->ext.et_801BCC4C.unk7C = 0;
-        self->flags |= FLAG_UNK_08000000;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
     label:
         while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
@@ -348,7 +349,7 @@ void EntityBackgroundTrees(Entity* self) {
             self->posX.i.hi = 128;
             self->primIndex = primIndex;
             self->unk68 = 0x10;
-            self->flags |= FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+            self->flags |= FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
             while (prim != NULL) {
                 prim->x0 = prim->x2 = var_a2;

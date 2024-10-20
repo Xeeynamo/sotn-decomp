@@ -24,6 +24,7 @@ options:
     - ".rodata"
     - ".text"
     - ".bss"
+sha1: b8dcd64f95d197d3f59ab3e46f67897ecdc477cb
 segments:
   - name: f_000
     type: grey4
@@ -78,7 +79,7 @@ segments:
     subsegments:
       - [0x12040, animset, w_002_1]
       - [0x12884, animset, w_002_2]
-      - [0x12884, data, w_002]
+      - [0x12884, .data, w_002]
       - [0x12BDC, c, w_002]
       - [0x13200, sbss, w_002]
   - name: f_003
@@ -169,7 +170,7 @@ segments:
     subsegments:
       - [0x35040, animset, w_007_1]
       - [0x35884, animset, w_007_2]
-      - [0x35884, data, w_007]
+      - [0x35884, .data, w_007]
       - [0x35CA0, c, w_007]
       - [0x36918, sbss, w_007]
   - name: f_008
@@ -263,7 +264,7 @@ segments:
     subsegments:
       - [0x58040, animset, w_012_1]
       - [0x582B0, animset, w_012_2]
-      - [0x582B0, data, w_012]
+      - [0x582B0, .data, w_012]
       - [0x58ACC, c, w_012]
       - [0x59B28, sbss, w_012]
   - name: f_013
@@ -671,7 +672,7 @@ segments:
     subsegments:
       - [0xF2040, animset, w_034_1]
       - [0xF2784, animset, w_034_2]
-      - [0xF2784, data, w_034]
+      - [0xF2784, .data, w_034]
       - [0xF2950, c, w_034]
       - [0xF33F0, sbss, w_034]
   - name: f_035
@@ -797,7 +798,7 @@ segments:
     subsegments:
       - [0x123040, animset, w_041_1]
       - [0x123284, animset, w_041_2]
-      - [0x123284, data, w_041]
+      - [0x123284, .data, w_041]
       - [0x123560, .rodata, w_041]
       - [0x123574, c, w_041]
       - [0x124200, sbss, w_041]
@@ -852,7 +853,7 @@ segments:
     subsegments:
       - [0x138040, animset, w_044_1]
       - [0x138040, animset, w_044_2]
-      - [0x138040, data, w_044]
+      - [0x138040, .data, w_044]
       - [0x1382A8, .rodata, w_044]
       - [0x1382C0, c, w_044]
       - [0x138F24, sbss, w_044]
@@ -871,7 +872,7 @@ segments:
     subsegments:
       - [0x13F040, animset, w_045_1]
       - [0x13F330, animset, w_045_2]
-      - [0x13F330, data, w_045]
+      - [0x13F330, .data, w_045]
       - [0x13F378, c, w_045]
       - [0x1403B8, sbss, w_045]
   - name: f_046
@@ -889,7 +890,7 @@ segments:
     subsegments:
       - [0x146040, animset, w_046_1]
       - [0x1462B0, animset, w_046_2]
-      - [0x1462B0, data, w_046]
+      - [0x1462B0, .data, w_046]
       - [0x146C64, c, w_046]
       - [0x147EC0, sbss, w_046]
   - name: f_047
@@ -998,7 +999,7 @@ segments:
     subsegments:
       - [0x170040, animset, w_052_1]
       - [0x170808, animset, w_052_2]
-      - [0x170808, data, w_052]
+      - [0x170808, .data, w_052]
       - [0x170C24, .rodata, w_052]
       - [0x170CB0, c, w_052]
       - [0x172B84, sbss, w_052]

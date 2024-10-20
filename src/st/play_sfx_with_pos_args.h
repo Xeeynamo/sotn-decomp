@@ -30,6 +30,6 @@ void PlaySfxWithPosArgs(s16 sfxId) {
     }
     var_a3 = 127 - (var_v0_4 >> 1);
     if (var_a3 > 0) {
-        g_api.func_80134714(sfxId, var_a3, var_a2);
+        g_api.PlaySfxVolPan(sfxId, var_a3, var_a2);
     }
 }

@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
-void func_801BE544(void) {
+// similar but not an exact duplicate
+void CutsceneUnk1(void) {
     g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
     g_Dialogue.nextCharX = 0x182; // for all other cutscenes (so far)!
     g_Dialogue.nextCharY = 0;
@@ -10,68 +12,9 @@ void func_801BE544(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-s32 func_801BE598(s32 textDialogue) {
-    Primitive* prim;
-    s16 firstPrimIndex;
+#include "../cutscene_unk2.h"
 
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    g_Dialogue.primIndex[2] = firstPrimIndex;
-    if (firstPrimIndex == -1) {
-        g_Dialogue.primIndex[2] = 0;
-        return 0;
-    }
-    g_Dialogue.nextCharDialogue = textDialogue;
-    g_Dialogue.unk3C = 0;
-    g_Dialogue.primIndex[1] = -1;
-    g_Dialogue.primIndex[0] = -1;
-    func_801BE544();
-
-    //! FAKE:
-    if (prim && prim) {
-    }
-
-    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[1] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[2] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[3] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[4] = prim->next;
-
-    prim->drawMode = DRAW_HIDE;
-    prim = g_Dialogue.prim[5] = prim->next;
-
-    prim->type = 4;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 3;
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
-    prim->x0 = prim->x2 = 4;
-    prim->x1 = prim->x3 = 0xF8;
-    prim->priority = 0x1FD;
-    prim->drawMode = DRAW_HIDE;
-
-    prim = prim->next;
-    prim->type = 1;
-    prim->x0 = 3;
-    prim->y0 = 0x2F;
-    prim->v0 = 0x4A;
-    prim->r0 = prim->g0 = prim->b0 = 0xFF;
-    prim->priority = 0x1FC;
-    prim->drawMode = DRAW_HIDE;
-    return 1;
-}
-
-void func_801BE75C(s16 yOffset) {
+void CutsceneUnk3(s16 yOffset) {
     RECT rect;
 
     rect.x = 384;
@@ -81,10 +24,10 @@ void func_801BE75C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_801BE7BC(void) {
+void CutsceneUnk4(void) {
     Primitive* prim;
 
-    func_801BE75C(g_Dialogue.nextCharY);
+    CutsceneUnk3(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x16;
     prim->clut = g_Dialogue.clutIndex;
@@ -99,123 +42,11 @@ void func_801BE7BC(void) {
     prim->drawMode = DRAW_DEFAULT;
 }
 
-// Creates primitives for the actor name at the head of the dialogue
-void func_801BE870(u16 actorIndex, Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-    s32 x;
-    u16 chCount;
-    const char* actorName;
-    char ch;
+#include "../cutscene_avatar.h"
 
-    actorName = D_80181ACC[actorIndex];
-    chCount = 0;
-    while (true) {
-        ch = *actorName++;
-        if (ch == DIAG_EOL) {
-            ch = *actorName++;
-            if (ch == DIAG_EOS) {
-                break;
-            }
-        }
-        if (ch == MENUCHAR(' ')) {
-            continue;
-        }
-        chCount++;
-    }
+#include "../cutscene_unk6.h"
 
-    // Create chCount amount of sprites based on the actor name's letter count
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
-    if (primIndex == -1) {
-        DestroyEntity(self);
-        return;
-    }
-
-    // Fill prims to render the actor name on screen
-    prim = &g_PrimBuf[primIndex];
-    g_Dialogue.primIndex[1] = primIndex;
-    actorName = D_80181ACC[actorIndex];
-    x = 0x38;
-    while (prim != NULL) {
-        ch = *actorName++;
-        if (ch == MENUCHAR(' ')) {
-            x += FONT_SPACE;
-        } else {
-            prim->type = PRIM_SPRT;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->u0 = (ch & 0x0F) * FONT_W;
-            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
-            prim->v1 = FONT_H;
-            prim->u1 = FONT_W;
-            prim->priority = 0x1FF;
-            prim->drawMode = DRAW_HIDE;
-            prim->x0 = x;
-            prim->y0 = g_Dialogue.startY + 6;
-            prim = prim->next;
-            x += FONT_GAP;
-        }
-    }
-}
-
-void func_801BE9F4(s32 arg0) {
-    g_Dialogue.unk40 = arg0 + 0x100000;
-    g_Dialogue.timer = 0;
-    g_Dialogue.unk3C = 1;
-}
-
-void func_801BEA20(void) {
-    Entity* entity;
-    u16 startTimer;
-    u8 entityIndex;
-
-    g_Dialogue.timer++;
-    // protect from overflows
-    if (g_Dialogue.timer > 0xFFFE) {
-        g_Dialogue.unk3C = 0;
-        return;
-    }
-
-    while (true) {
-        // Start the dialogue script only if the start timer has passed
-        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
-        if (g_Dialogue.timer < startTimer) {
-            // Re-evaluate the condition at the next frame
-            g_Dialogue.unk40 -= 2;
-            return;
-        }
-
-        switch (*g_Dialogue.unk40++) {
-        case 0:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
-            DestroyEntity(entity);
-
-            entity->entityId = *g_Dialogue.unk40++;
-            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
-            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
-            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
-            break;
-        case 1:
-            entityIndex = *g_Dialogue.unk40++;
-            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
-            DestroyEntity(entity);
-            break;
-        case 2:
-            if (!((D_801D7DD0 >> *g_Dialogue.unk40) & 1)) {
-                g_Dialogue.unk40--;
-                return;
-            }
-            D_801D7DD0 &= ~(1 << *g_Dialogue.unk40++);
-            break;
-        case 3:
-            D_801D7DD0 |= 1 << *g_Dialogue.unk40++;
-            break;
-        }
-    }
-}
+#include "../cutscene.h"
 
 void func_801BECCC(Entity* self) {
     if (g_pads[0].tapped == PAD_START) {
@@ -234,34 +65,7 @@ void func_801BECCC(Entity* self) {
     }
 }
 
-// Animates the portrait size of the actor by enlarging or shrinking it
-void func_801BEDAC(u8 ySteps) {
-    Primitive* prim;
-    s32 primIndex;
-    s32 i;
-
-    primIndex = g_Dialogue.nextCharY + 1;
-    while (primIndex >= 5) {
-        primIndex -= 5;
-    }
-    if (g_CurrentEntity->step_s == 0) {
-        prim = g_Dialogue.prim[primIndex];
-        prim->v1 -= ySteps;
-        prim->v0 += ySteps;
-        if (prim->v1 == 0) {
-            g_CurrentEntity->step_s++;
-            prim->drawMode = DRAW_HIDE;
-        }
-    }
-
-    for (i = 0; i < 5; i++) {
-        if (i != primIndex) {
-            prim = g_Dialogue.prim[i];
-            prim->y0 -= ySteps;
-        }
-    }
-    g_Dialogue.portraitAnimTimer++;
-}
+#include "../cutscene_scale_avatar.h"
 
 void EntityDeathCutscene(Entity* self) {
     RECT rect;
@@ -281,21 +85,22 @@ void EntityDeathCutscene(Entity* self) {
             func_801BECCC(self);
         }
         if ((self->step != 0) && (D_801D7D60 != 0)) {
-            func_801BEA20();
+            CutsceneRun();
         }
     }
     switch (self->step) {
     case 0:
         CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
-        if ((g_CastleFlags[53]) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
+        if ((g_CastleFlags[CASTLE_FLAG_53]) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             g_Entities[192].params = 0;
             return;
         }
         g_Entities[192].params = 0x100;
-        if (func_801BE598(D_80184CE0) & 0xFF) {
+        if (CutsceneUnk2(D_80184CE0)) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            D_801D7DD0 = 0;
+            g_CutsceneFlags = 0;
             D_801D7DD4 = 0;
             D_801D7D20 = 0;
             D_8003C704 = 1;
@@ -327,7 +132,7 @@ void EntityDeathCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801BE7BC();
+                CutsceneUnk4();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -388,11 +193,11 @@ void EntityDeathCutscene(Entity* self) {
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80181A38[i];
-                func_801BE544();
-                func_801BE7BC();
+                CutsceneUnk1();
+                CutsceneUnk4();
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
-                func_801BE870(i, self);
+                prim->drawMode = DRAW_DEFAULT;
+                DrawCutsceneAvatar(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;
@@ -473,7 +278,7 @@ void EntityDeathCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_801BE9F4((u8*)bit_shifty);
+                CutsceneUnk6((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;
@@ -510,15 +315,15 @@ void EntityDeathCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((D_801D7DD0 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
-                D_801D7DD0 &= ~(1 << *g_Dialogue.nextCharDialogue);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             case 17:
-                D_801D7DD0 |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_CutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
@@ -547,17 +352,17 @@ void EntityDeathCutscene(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case 21:
-                D_801D7DD0 = 0;
+                g_CutsceneFlags = 0;
                 D_801D7D20 = 0;
                 D_801D7DD4 = 0;
                 continue;
             case 22:
-                D_801D7DD0 &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                g_CutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
                 continue;
             case 23:
                 return;
             case 24:
-                if (!((D_801D7DD0 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_CutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
                     *g_Dialogue.nextCharDialogue--;
                     return;
                 }
@@ -585,7 +390,7 @@ void EntityDeathCutscene(Entity* self) {
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
-        func_801BEDAC(2U);
+        ScaleCutsceneAvatar(2);
         if (g_Dialogue.portraitAnimTimer >= 6) {
             self->step -= 1;
             return;
@@ -602,7 +407,7 @@ void EntityDeathCutscene(Entity* self) {
             self->step = 1;
             for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim != NULL;
                  prim = prim->next) {
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
             }
         }
         break;
@@ -638,7 +443,7 @@ void EntityDeathCutscene(Entity* self) {
                 prim->x0 = prim->x1 = 0xF7;
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->x2 = D_80181A3C[j];
                 prim->x3 = 0xF70;
 
@@ -724,7 +529,7 @@ void EntityDeathCutscene(Entity* self) {
         break;
 
     case 7:
-        g_CastleFlags[53] = 1;
+        g_CastleFlags[CASTLE_FLAG_53] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
         D_8003C704 = 0;

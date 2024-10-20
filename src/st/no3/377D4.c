@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: 377D4.c
  * Overlay: NO3
@@ -5,6 +6,7 @@
  */
 
 #include "no3.h"
+#include "sfx.h"
 
 // vase in the room with the door to the caverns
 void EntityCavernDoorVase(Entity* self) {
@@ -14,8 +16,8 @@ void EntityCavernDoorVase(Entity* self) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->facingLeft = objInit->unk4.U8.unk0;
-        self->unk5A = objInit->unk4.U8.unk1;
+        self->facingLeft = objInit->facingLeft;
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
@@ -24,7 +26,7 @@ void EntityCavernDoorVase(Entity* self) {
         }
     }
 
-    AnimateEntity(objInit->unk10, self);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 void EntityUnkId12(Entity* entity) {
@@ -55,7 +57,7 @@ void EntityUnkId12(Entity* entity) {
             break;
         }
 
-        if (entity->unk44 != 0) {
+        if (entity->hitParams) {
             ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
@@ -94,9 +96,9 @@ void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-        if (entity->unk44) { // If the candle is destroyed
+        if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
@@ -107,7 +109,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
@@ -169,7 +171,7 @@ void EntityShuttingWindow(Entity* self) {
             prim->v0 = 4;
             prim->v2 = prim->v3 = 0x7C;
             prim->priority = 0x5F;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
 
@@ -186,7 +188,7 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
-            func_801CAD28(SE_NO3_WINDOW_CLOSE);
+            PlaySfxPositional(SE_NO3_WINDOW_CLOSE);
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
@@ -271,7 +273,7 @@ void EntityCastleDoor(Entity* self) {
             prim->tpage = 0xF;
             prim->clut = 0x41;
             prim->priority = 0x6A;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             //! FAKE:
             tilePos = prim->u2 = *var_a0++;
             prim->u0 = tilePos;
@@ -282,7 +284,7 @@ void EntityCastleDoor(Entity* self) {
             prim = prim->next;
             var_a0++;
         }
-        if (g_CastleFlags[52] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_52] != 0) {
             self->ext.castleDoor.rotZ = 0;
             self->step = 5;
         }
@@ -297,7 +299,7 @@ void EntityCastleDoor(Entity* self) {
         self->ext.castleDoor.rotZ = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
-        g_CastleFlags[52] = 1;
+        g_CastleFlags[CASTLE_FLAG_52] = 1;
         break;
 
     case 2:
@@ -320,7 +322,7 @@ void EntityCastleDoor(Entity* self) {
         if (self->ext.castleDoor.rotZ > 0) {
             self->ext.castleDoor.rotZ = 0;
             self->step += 2;
-            g_api.PlaySfx(SE_CASTLE_GATE_CLOSE);
+            g_api.PlaySfx(SFX_START_SLAM_B);
             tilePos = 0x445;
             for (i = 0, tilePtr = D_80181130; i < 8; tilePtr++, i++) {
                 g_Tilemap.fg[tilePos] = *tilePtr;
@@ -381,14 +383,135 @@ void EntityCastleDoor(Entity* self) {
         if (temp_s3 <= 0) {
             prim->drawMode = DRAW_HIDE;
         } else {
-            prim->drawMode = 6;
+            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         }
         prim = prim->next;
     }
 }
 
+extern u16 D_80180B18[];
+extern SVECTOR D_801811E8;
+extern s16 D_801811A0;
+extern s16* D_801811C0;
+extern u8 D_80181140[];
+extern u8 D_80181158[];
+
 // bushes in parallax background
-INCLUDE_ASM("st/no3/nonmatchings/377D4", EntityBackgroundBushes);
+void EntityBackgroundBushes(Entity* self) {
+    byte stackpad[8];
+
+    // Lots of ugly pointers
+    u8* var_s1;
+    s16* var_s4;
+    s16* var_s5;
+    s16** var_s8;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+    s32 yOffset;
+    s16 xPos;
+    s16 yPos;
+    s32 rotTransXYResult;
+    s32 unused1; // return args for rottranspers
+    s32 unused2; // we don't use them.
+    VECTOR trans;
+    MATRIX m;
+
+    if (!self->step) {
+        InitializeEntity(D_80180B18);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+    SetGeomScreen(0x400);
+    SetGeomOffset(0x80, self->posY.i.hi);
+    RotMatrix(&D_801811E8, &m);
+    SetRotMatrix(&m);
+    if (self->params) {
+        trans.vx = self->posX.i.hi - 0x200;
+    } else {
+        trans.vx = self->posX.i.hi + 0x200;
+    }
+    trans.vy = 0;
+    var_s5 = &D_801811A0;
+    var_s8 = &D_801811C0;
+    prim = self->ext.prim;
+    for (i = 0; i < 4; i++, var_s8++, var_s5 += 4) {
+        trans.vz = *var_s5 + 0x400;
+        TransMatrix(&m, &trans);
+        SetTransMatrix(&m);
+        RotTransPers(&D_801811E8, &rotTransXYResult, &unused1, &unused2);
+        // Split out the upper and lower halfword of rotTransXYResult
+        xPos = rotTransXYResult & 0xFFFF;
+        yPos = rotTransXYResult >> 16;
+        xPos = xPos % var_s5[3];
+        xPos -= var_s5[3];
+        yPos = self->posY.i.hi;
+        var_s4 = *var_s8;
+        while (xPos < 0x140) {
+            var_s1 = &D_80181140[0];
+            var_s1 += ((*var_s4++) * 4);
+            prim->u0 = prim->u2 = var_s1[0];
+            prim->u1 = prim->u3 = prim->u0 + var_s1[2];
+            prim->v0 = prim->v1 = var_s1[1];
+            prim->v2 = prim->v3 = prim->v0 + var_s1[3];
+            prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
+            prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
+            prim->y0 = prim->y1 = yPos - var_s1[3];
+            prim->y2 = prim->y3 = yPos;
+            prim->clut = var_s5[2];
+            prim->priority = var_s5[1];
+            prim->drawMode = DRAW_UNK02;
+            prim = prim->next;
+
+            if (prim == NULL) {
+                return;
+            }
+            if (i > 1) {
+                yOffset = var_s1[3];
+                var_s1 = &D_80181158[0];
+                prim->u0 = prim->u2 = var_s1[0];
+                prim->u1 = prim->u3 = prim->u0 + var_s1[2];
+                prim->v0 = prim->v1 = var_s1[1];
+                prim->v2 = prim->v3 = prim->v0 + var_s1[3];
+                var_s1 += (i - 2) * 4;
+                prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
+                prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
+                prim->y0 = prim->y1 = (yPos - yOffset) - var_s1[3];
+                prim->y2 = prim->y3 = (yPos - yOffset);
+                prim->clut = 0x17;
+                if (i > 2) {
+                    prim->clut = 0x49;
+                }
+                prim->priority = var_s5[1];
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+                if (prim == NULL) {
+                    return;
+                }
+            }
+            xPos += *var_s4++;
+            if (*var_s4 == -1) {
+                var_s4 = *var_s8;
+            }
+        }
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void EntityUnkId1C(Entity* self, s16 primIndex) {
     volatile char pad[8]; //! FAKE
@@ -462,7 +585,7 @@ void EntityUnkId1C(Entity* self, s16 primIndex) {
         prim->x0 = prim->x2 = temp_a1;
         prim->y0 = prim->y1 = temp_a2 - 56;
         prim->y2 = prim->y3 = temp_a2;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim = prim->next;
         temp_a1 += 64;
     }
@@ -502,7 +625,7 @@ void EntityTransparentWater(Entity* self) {
             prim->tpage = 0xF;
             prim->clut = 0x18;
             prim->priority = 0xB0;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         break;
@@ -560,17 +683,58 @@ void EntityTransparentWater(Entity* self) {
         prim->v2 = prim->v3 = temp_t1;
         prim->y0 = prim->y1 = temp_a0;
         prim->y2 = prim->y3 = temp_a0 + 0x3E;
-        prim->drawMode = 0x33;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
     }
 
     while (prim != NULL) {
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
 
-INCLUDE_ASM("st/no3/nonmatchings/377D4", func_801B94F0);
+void func_801B94F0(Primitive* prim) {
+    s32 xVar;
+    s32 yVar;
+
+    switch (prim->p3) {
+    case 1:
+        xVar = (Random() & 0xF) - 8;
+        prim->x0 = g_CurrentEntity->posX.i.hi + xVar;
+        prim->y0 = 0x9C;
+        prim->x1 = 0;
+        prim->y1 = 0;
+        if (xVar > 0) {
+            LOW(prim->x3) = Random() << 6;
+        } else {
+            LOW(prim->x3) = -Random() * 0x40;
+        }
+        LOW(prim->x2) = (Random() << 8) + FIX(-4);
+        prim->blendMode = 2;
+        prim->p3++;
+        /* fallthrough */
+    case 2:
+        xVar = (prim->x0 << 0x10) + (u16)prim->x1;
+        yVar = (prim->y0 << 0x10) + (u16)prim->y1;
+        xVar += LOW(prim->x3);
+        yVar += LOW(prim->x2);
+        prim->x0 = (xVar >> 0x10);
+        prim->x1 = xVar & 0xFFFF;
+        prim->y0 = (yVar >> 0x10);
+        prim->y1 = yVar & 0xFFFF;
+
+        LOW(prim->x2) += FIX(1.0 / 4.0);
+        if (LOW(prim->x2) <= 0x60000) {
+            return;
+        }
+        prim->p3++;
+        break;
+    case 3:
+        prim->blendMode = 8;
+        prim->p3 = 0;
+        break;
+    }
+}
 
 // lever and platform to open caverns door
 void EntityCavernDoorLever(Entity* entity) {
@@ -582,9 +746,9 @@ void EntityCavernDoorLever(Entity* entity) {
         InitializeEntity(D_80180B18);
         entity->animCurFrame = 18;
         entity->rotZ = -0x200;
-        entity->drawFlags |= 4;
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
-        if (g_CastleFlags[0x30] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
             entity->rotZ = 0;
         }
 
@@ -593,12 +757,12 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->rotZ += 4;
             if (entity->rotZ > 0) {
                 entity->rotZ = 0;
-                if (g_CastleFlags[0x30] == 0) {
-                    g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
+                if (g_CastleFlags[CASTLE_FLAG_48] == 0) {
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
-                g_CastleFlags[0x30] = 1;
+                g_CastleFlags[CASTLE_FLAG_48] = 1;
             } else if (!(g_Timer & 0xF)) {
-                g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
         break;
@@ -615,42 +779,40 @@ void EntityCavernDoorLever(Entity* entity) {
 // platform attached to lever at cavern door
 void EntityCavernDoorPlatform(Entity* self) {
     Entity* player;
-    s32 temp;
-    s32 temp2;
+    s32 xDiff;
+    s32 collision;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B18);
         self->animCurFrame = 17;
-        self->ext.generic.unk88.unk = self->posX.val;
-        self->ext.generic.unk88.unk = self->posX.val; // ? WTF
+        self->ext.cavernDoor.xCoord.val = self->posX.val;
+        self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
 
     case 1:
-        player = &PLAYER;
-        self->ext.generic.unk84.S8.unk0 = temp2 =
-            GetPlayerCollisionWith(self, 6, 5, 4);
+        collision = GetPlayerCollisionWith(self, 6, 5, 4);
+        self->ext.cavernDoor.collision = collision;
 
-        if (temp2 != 0) {
-            temp = self->posX.i.hi;
-            temp -= self->ext.generic.unk88.S16.unk2;
-            player->posX.i.hi += temp;
-            player->posY.i.hi++;
+        if (collision != 0) {
+            xDiff = self->posX.i.hi - FIX_TO_I(self->ext.cavernDoor.xCoord.val);
+            player = &PLAYER;
+            player->posX.i.hi += xDiff;
+            player->posY.i.hi += 1;
         }
-        self->ext.generic.unk88.unk = self->posX.val;
-        self->ext.generic.unk8C.modeS32 = self->posY.val;
+        self->ext.cavernDoor.xCoord.val = self->posX.val;
+        self->ext.cavernDoor.yCoord.val = self->posY.val;
     }
 }
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
-    s16 primIndex;
-    u16* tileLayoutPtr;
+    s32 primIndex;
+    s16* tileLayoutPtr;
     Entity* entity;
-    POLY_GT4* poly;
-    s32 tilePos;
+    Primitive* prim;
     s32 i;
-    s32 temp;
-    s32 temp2;
+    s32 tilePos;
+    s32 tileSteps;
 
     switch (self->step) {
     case 0:
@@ -659,101 +821,100 @@ void EntityCavernDoor(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &D_80181230[0];
-        if (g_CastleFlags[48] != 0) {
-            tileLayoutPtr = &D_80181230[3];
+        if (g_CastleFlags[CASTLE_FLAG_48]) {
             self->step = 128;
             self->animCurFrame = 0;
+            tileLayoutPtr += 3;
         } else {
             primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
-
-            poly = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            *(s32*)&self->ext.generic.unk7C = poly;
             self->flags |= FLAG_HAS_PRIMS;
-            while (poly != NULL) {
-                poly->u0 = poly->v0 = 1;
-                poly->r0 = 64;
-                poly->b0 = 128;
-                poly->g0 = 96;
-                poly->pad2 = self->zPriority + 0x18;
-                poly->pad3 = 8;
-                poly->p3 = 0;
-                poly = (POLY_GT4*)poly->tag;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.cavernDoor.prim = prim;
+            while (prim != NULL) {
+                prim->u0 = prim->v0 = 1;
+                prim->r0 = 64;
+                prim->b0 = 128;
+                prim->g0 = 96;
+                prim->priority = self->zPriority + 0x18;
+                prim->drawMode = DRAW_HIDE;
+                prim->p3 = 0;
+                prim = prim->next;
             }
         }
 
         for (tilePos = 0x76, i = 0; i < 3; i++) {
-            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-            tileLayoutPtr++;
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
             tilePos += 0x10;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[48] != 0) {
-            g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
+        if (g_CastleFlags[CASTLE_FLAG_48]) {
+            g_api.PlaySfx(SFX_SWITCH_CLICK);
             self->step++;
         }
         break;
 
     case 2:
         self->posY.val += FIX(0.375);
-        if (++self->ext.generic.unk80.modeS32 & 1) {
+        self->ext.cavernDoor.jiggler++;
+        // While the door opens, it jiggles left and right by repeatedly
+        // incrementing and decrementing its x position.
+        if (self->ext.cavernDoor.jiggler & 1) {
             self->posX.i.hi++;
         } else {
             self->posX.i.hi--;
         }
 
-        temp = self->posY.i.hi - 136;
-        if (temp < 0) {
-            temp2 = self->posY.i.hi - 121;
-        } else {
-            temp2 = self->posY.i.hi - 136;
-        }
-
-        temp = temp2 >> 4;
-        if (temp >= 4) {
-            temp = 3;
+        tileSteps = (self->posY.i.hi - 136);
+        tileSteps /= 16;
+        if (tileSteps > 3) {
+            tileSteps = 3;
             self->step = 3;
         }
-
-        for (tilePos = 0x76, tileLayoutPtr = &D_80181230[3], i = 0; i < temp;
-             tileLayoutPtr++, tilePos += 0x10, i++) {
-            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
+        tilePos = 0x76;
+        tileLayoutPtr = &D_80181230[0];
+        tileLayoutPtr += 3;
+        for (i = 0; i < tileSteps; tilePos += 0x10, i++) {
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
         }
 
-        if (!(g_Timer & 1)) {
-            poly =
-                FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
-            if (poly != NULL) {
-                poly->p3 = 1;
-            }
-
-            if (!(g_Timer & 15)) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (entity != NULL) {
-                    CreateEntityFromEntity(6, self, entity);
-                    entity->posY.i.hi = 156;
-                    entity->posX.i.hi += -8 + (Random() & 15);
-                    entity->zPriority = self->zPriority + 2;
-                    entity->params = 0x10;
-                    entity->drawFlags |= 3;
-                    entity->rotX = entity->rotY = 192;
-                }
-            }
+        if (g_Timer & 1) {
+            break;
         }
+        prim = self->ext.cavernDoor.prim;
+        prim = FindFirstUnkPrim(prim);
+        if (prim != NULL) {
+            prim->p3 = 1;
+        }
+
+        if (g_Timer & 15) {
+            break;
+        }
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity == NULL) {
+            break;
+        }
+        CreateEntityFromEntity(6, self, entity);
+        entity->posY.i.hi = 156;
+        entity->posX.i.hi += -8 + (Random() & 15);
+        entity->zPriority = self->zPriority + 2;
+        entity->params = 0x10;
+        entity->drawFlags |= (FLAG_DRAW_ROTX + FLAG_DRAW_ROTY);
+        entity->rotX = entity->rotY = 192;
         break;
     }
 
     if (self->flags & FLAG_HAS_PRIMS) {
-        for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
-             poly = (POLY_GT4*)poly->tag) {
-            if (poly->p3 != 0) {
-                func_801B94F0(poly);
+        for (prim = self->ext.cavernDoor.prim; prim != NULL;
+             prim = prim->next) {
+            if (prim->p3) {
+                func_801B94F0(prim);
             }
         }
     }
@@ -780,7 +941,7 @@ void func_801B9C44(WeightSelect weight) {
         prim->x1 = prim->x3 = posX + 8;
         posY -= 32;
         prim->y0 = prim->y1 = posY;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim = prim->next;
     }
     posY -= 32;
@@ -801,7 +962,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (g_CastleFlags[0x31] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -813,8 +974,8 @@ void EntityClickSwitch(Entity* entity) {
             entity->posY.val += FIX(0.75);
             if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Tilemap.scrollY.i.hi;
-                g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
-                g_CastleFlags[0x31] = 1;
+                g_api.PlaySfx(SFX_SWITCH_CLICK);
+                g_CastleFlags[CASTLE_FLAG_49] = 1;
                 entity->step++;
             }
         }
@@ -858,14 +1019,14 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (g_CastleFlags[49] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
             self->step = 3;
             self->posY.i.hi += 111;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[49] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
             self->step++;
         }
         break;
@@ -933,14 +1094,14 @@ void EntityPathBlockTallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (g_CastleFlags[49] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
             self->step = 3;
             self->posY.i.hi -= 128;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[49] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
             self->step++;
         }
         break;
@@ -1019,7 +1180,6 @@ void EntityTrapDoor(Entity* entity) {
 
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {
-    const int jewelSwordRoomUnlock = 51;
     const int rockBroken = (1 << 0);
     const int wolfFlag = (1 << 2);
     u16* tileLayoutPtr;
@@ -1038,13 +1198,13 @@ void EntityMermanRockLeftSide(Entity* self) {
         tileLayoutPtr = &D_8018127C;
         tilePos = 0x1F1;
         for (i = 0; i < 3; i++) {
-            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
+            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
 
-        if (g_CastleFlags[jewelSwordRoomUnlock] & rockBroken) {
+        if (g_CastleFlags[JEWEL_SWORD_ROOM] & rockBroken) {
             tileLayoutPtr = &D_80181264;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -1069,7 +1229,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(SE_WALL_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1101,7 +1261,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = ITEM_POT_ROAST;
             }
-            g_CastleFlags[jewelSwordRoomUnlock] |= rockBroken;
+            g_CastleFlags[JEWEL_SWORD_ROOM] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
@@ -1110,7 +1270,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     case 2:
         if ((self->hitFlags != 0) &&
             (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
-            g_CastleFlags[jewelSwordRoomUnlock] |= wolfFlag;
+            g_CastleFlags[JEWEL_SWORD_ROOM] |= wolfFlag;
         }
         break;
     }
@@ -1118,7 +1278,6 @@ void EntityMermanRockLeftSide(Entity* self) {
 
 // right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
-    const int jewelSwordRoomUnlock = 51;
     const int rockBroken = (1 << 1);
     const int batFlag = (1 << 3);
     u16* tileLayoutPtr;
@@ -1137,13 +1296,13 @@ void EntityMermanRockRightSide(Entity* self) {
         tileLayoutPtr = &D_801812B8;
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++) {
-            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
+            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
 
-        if (g_CastleFlags[jewelSwordRoomUnlock] & rockBroken) {
+        if (g_CastleFlags[JEWEL_SWORD_ROOM] & rockBroken) {
             tileLayoutPtr = &D_801812A0;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -1168,7 +1327,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(SE_WALL_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1196,7 +1355,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
-            g_CastleFlags[jewelSwordRoomUnlock] |= rockBroken;
+            g_CastleFlags[JEWEL_SWORD_ROOM] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
@@ -1205,7 +1364,7 @@ void EntityMermanRockRightSide(Entity* self) {
     case 2:
         if ((self->hitFlags != 0) &&
             (g_Player.unk0C & PLAYER_STATUS_BAT_FORM)) {
-            g_CastleFlags[jewelSwordRoomUnlock] |= batFlag;
+            g_CastleFlags[JEWEL_SWORD_ROOM] |= batFlag;
         }
         break;
     }
@@ -1220,14 +1379,14 @@ void EntityUnkId26(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGeneric);
-        if (g_CastleFlags[58] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_58] != 0) {
             self->step = 2;
         }
         break;
 
     case 1:
-        if ((g_CastleFlags[51] & 12) == 12) {
-            func_801CAD28(SE_WALL_BREAK);
+        if ((g_CastleFlags[JEWEL_SWORD_ROOM] & 12) == 12) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -1243,12 +1402,12 @@ void EntityUnkId26(Entity* self) {
         for (tileLayoutPtr = &D_8018131E, i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
-                g_Tilemap.bg[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                g_BgLayers[0].layout[tileLayoutPos] = *tileLayoutPtr;
                 tileLayoutPos += 0x30;
             }
         }
 
-        g_CastleFlags[58] |= 1;
+        g_CastleFlags[CASTLE_FLAG_58] |= 1;
         g_api.func_800F1FC4(0x3A);
         self->step++;
         break;
@@ -1270,7 +1429,7 @@ void EntityFallingRock2(Entity* self) {
         self->animCurFrame = animFrame;
         self->animCurFrame += 31;
         self->zPriority = 0x9F;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         break;
 
     case 1:
@@ -1311,7 +1470,6 @@ void EntityFallingRock2(Entity* self) {
 // ID 0x5C
 // Stairway piece you can break before Death encounter
 void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
-    const int stairwayPieceBroken = 56;
     Primitive *prim, *prim2, *prim3;
     Entity* newEntity;
     Collider collider;
@@ -1329,7 +1487,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         self->posX.i.hi = 1432 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 200 - g_Tilemap.scrollY.i.hi;
         self->hitPoints = 16;
-        if (g_CastleFlags[stairwayPieceBroken]) {
+        if (g_CastleFlags[DEATH_STAIRWAY_BROKEN]) {
             self->hitboxState = 0;
             g_Tilemap.fg[0x4D9] = 0x3EE;
             g_Tilemap.fg[0x539] = 0x3D2;
@@ -1343,7 +1501,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     case 1:
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(SE_NO3_ALUCARD_FLOOR_HIT);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
         }
 
         if (self->flags & FLAG_DEAD) {
@@ -1352,10 +1510,10 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 2:
-        g_api.PlaySfx(SE_WALL_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         g_Tilemap.fg[0x4D9] = 0x3EE;
         g_Tilemap.fg[0x539] = 0x3D2;
-        g_CastleFlags[stairwayPieceBroken] = true;
+        g_CastleFlags[DEATH_STAIRWAY_BROKEN] = true;
 
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
@@ -1402,7 +1560,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         LOH(prim->next->r2) = 16;
         LOH(prim->next->b2) = 16;
         prim->priority = self->zPriority;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         self->step++;
 
     case 3:
@@ -1424,7 +1582,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 4:
-        g_api.PlaySfx(SE_WALL_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -1461,7 +1619,7 @@ void EntityFallingRock(Entity* self) {
         self->animCurFrame = animFrame + 31;
         self->rotY = 0x60;
         self->rotX = 0x60;
-        self->drawFlags |= 7;
+        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
@@ -1505,7 +1663,7 @@ void EntityDeathSkySwirl(Entity* self) {
     MATRIX mtx;
 
     if (self->step == 0) {
-        if (g_CastleFlags[53]) {
+        if (g_CastleFlags[CASTLE_FLAG_53]) {
             DestroyEntity(self);
             return;
         }
@@ -1528,7 +1686,7 @@ void EntityDeathSkySwirl(Entity* self) {
         prim->priority = 0x1F;
         prim->drawMode = DRAW_DEFAULT;
     }
-    g_Tilemap.bg[0].flags &= 0xFFFE;
+    g_BgLayers[0].flags &= 0xFFFE;
     self->ext.deathSkySwirl.unk84 -= 32;
     SetGeomScreen(256);
     SetGeomOffset(128, 192);
@@ -1550,7 +1708,7 @@ void EntityDeathSkySwirl(Entity* self) {
     prim2 = prim->next;
     prim2 = func_801BB548(&D_8018134C, &D_80181354, &D_8018135C, &D_80181364,
                           prim, 3, prim2, 0x1F800000);
-    prim->drawMode = 8;
+    prim->drawMode = DRAW_HIDE;
     while (prim2 != NULL) {
         prim2->drawMode = DRAW_HIDE;
         prim2 = prim2->next;
@@ -1561,9 +1719,9 @@ void EntityUnkId29(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B18);
         self->zPriority = 0x2A;
-        self->flags &= ~FLAG_UNK_08000000;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->facingLeft = Random() & 1;
-        g_api.func_80134714(SE_THUNDER, 0x40, (self->posX.i.hi >> 0x4) - 8);
+        g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
     if (AnimateEntity(D_80181390, self) == 0) {
         DestroyEntity(self);
@@ -1574,7 +1732,7 @@ void EntityUnkId2A(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
-        entity->flags &= ~FLAG_UNK_08000000;
+        entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
         entity->animCurFrame = entity->params + 0x22;
         entity->posX.i.hi = D_8018139C[entity->params << 1];
         entity->posY.i.hi = D_8018139E[entity->params << 1];
@@ -1596,7 +1754,7 @@ void EntitySwitch(Entity* entity) {
         InitializeEntity(D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (g_CastleFlags[0x32] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_50] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -1608,8 +1766,8 @@ void EntitySwitch(Entity* entity) {
             entity->posY.val += FIX(0.25);
             if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
-                g_CastleFlags[0x32] = 1;
-                g_api.PlaySfx(SE_BARRIER_MOVE_2);
+                g_CastleFlags[CASTLE_FLAG_50] = 1;
+                g_api.PlaySfx(SFX_STONE_MOVE_B);
                 entity->step++;
             }
         }
@@ -1633,7 +1791,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         self->animCurFrame = 37;
         self->zPriority = 0x5E;
 
-        if (g_CastleFlags[50] != 0) {
+        if (g_CastleFlags[CASTLE_FLAG_50] != 0) {
             for (
                 tilePos = 0x48, i = 7, self->step = 128, self->animCurFrame = 0;
                 i >= 0; tilePos += 0x10, i--) {
@@ -1671,8 +1829,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[50] != 0) {
-            g_api.PlaySfx(SE_BARRIER_MOVE);
+        if (g_CastleFlags[CASTLE_FLAG_50] != 0) {
+            g_api.PlaySfx(SFX_STONE_MOVE_A);
             self->step++;
         }
         break;
@@ -1715,7 +1873,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     newEntity->posX.i.hi += -8 + (Random() & 0xF);
                     newEntity->params = 0x10;
                     newEntity->rotX = newEntity->rotY = 192;
-                    newEntity->drawFlags |= 3;
+                    newEntity->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
                 }
             }
         }

@@ -71,7 +71,7 @@ void EntityDemonSwitch(Entity* entity) {
             }
             // fallthrough
     case PRESS:
-        if (entity->unk44 == 7) {
+        if (entity->hitParams == 7) {
             g_api.PlaySfx(SFX_SWITCH_PRESSED);
             g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] = 1;
             // Update the map "explored" state

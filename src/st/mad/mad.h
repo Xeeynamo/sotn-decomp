@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #ifndef MAD_H
 #define MAD_H
 
@@ -11,6 +12,10 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) MAD_##x
+
+// This is 0xA9 in all other overlays, there may be an underlying reason.
+// For now it's just an overriding define.
+#define NUM_HAND_ITEMS 0xAD
 
 typedef enum {
     E_NONE,
@@ -34,10 +39,6 @@ typedef enum {
     E_ID_15
 } EntityIDs;
 
-typedef struct {
-    s8 count[2];
-} HeartCounts;
-
 void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
@@ -58,32 +59,31 @@ extern s32 D_80096ED0_mad;
 extern u16 g_InitializeData0[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180538[];
-extern ObjInit2 D_8018056C[];
+extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];
 extern u8 D_801805BC[];
 extern u16 D_801805C4[];
-extern u16 D_80180D1C[];
-extern u16 D_80180D4C[];
+extern u16 aluric_subweapons_idx[];
+extern u16 aluric_subweapons_id[];
 extern u16 D_80180E10[];
-extern s16 D_80180ED8[];
 extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
-extern s16 D_80180EDA[];
-extern u16 D_80180F5C[];
+extern s16 g_collectXVelTable[];
+extern s16 g_collectYVelTable[];
+extern u16 g_HeartDropArray[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
-extern ObjInit2 D_801810F4[];
+extern ObjInit D_801810F4[];
 extern u16 g_InitializeEntityData0[];
-extern s16 D_801809EC[];
-extern u8 D_80181010[];
-extern u16 g_testCollEnemyLookup[];
-extern u8 g_testCollLuckCutoff[];
-extern u8 g_testColluCoords[];
-extern u8 g_testCollvCoords[];
-extern u16 g_testCollElementLookup[10];
-extern u8 g_testColliFrames[10];
-extern u16 g_testCollPrizeTable[];
-extern u16 g_testCollRandTable;
+extern u8 g_UnkEntityAnimData[];
+// extern u16 g_testCollEnemyLookup[];
+// extern u8 g_testCollLuckCutoff[];
+// extern u8 g_testColluCoords[];
+// extern u8 g_testCollvCoords[];
+// extern u16 g_testCollElementLookup[10];
+// extern u8 g_testColliFrames[10];
+// extern u16 g_testCollPrizeTable[];
+// extern u16 g_testCollRandTable;
 extern RoomHeader g_rooms[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
@@ -101,9 +101,6 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
-
-extern HeartCounts D_8018D830;
-extern HeartCounts D_8018D834;
 
 extern s16 D_80199DE8;
 

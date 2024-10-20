@@ -1,7 +1,17 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #29. Used by weapons:
 // Fire shield, Unknown#213
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_029_1.h"
+#include "w_029_2.h"
+#define g_Animset w_029_1
+#define g_Animset2 w_029_2
+#include "items.h"
+#include "sfx.h"
+
 extern s32 D_CF000_8017AC78;
 extern s32 D_CF000_8017ACC0;
 extern u16 D_CF000_8017ACF8[];
@@ -24,7 +34,7 @@ typedef struct {
 } FireShieldDragon;
 extern FireShieldDragon D_CF000_8017C9A0[][20];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim;
     s32 handButton;
     s32 unkAC_offset;
@@ -56,7 +66,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->velocityY = FIX(-3.5);
         self->ext.weapon.lifetime = 128;
-        self->flags = FLAG_UNK_08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animCurFrame = 0x3E;
     }
     if ((PLAYER.step == 2) && (PLAYER.step_s != 2)) {
@@ -74,7 +84,7 @@ void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk80 = 0x110;
             self->unk5A = 0x64;
         }
-        self->flags = FLAG_UNK_40000 + FLAG_UNK_20000;
+        self->flags = FLAG_POS_PLAYER_LOCKED + FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
@@ -128,13 +138,13 @@ void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
         self->rotZ = self->rotZ + 0x80;
         if (--self->ext.weapon.lifetime < 16) {
-            self->drawFlags |= 0x80;
+            self->drawFlags |= FLAG_DRAW_UNK80;
         }
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
@@ -145,10 +155,7 @@ void EntityWeaponAttack(Entity* self) {
     if (self->step != 4) {
         g_api.PlayAnimation(&D_CF000_8017AC78, &D_CF000_8017ACC0);
         if (g_GameTimer % 5 == 0) {
-            // Need to enable FACTORY() in weapon overlay
-            // TODO: FACTORY()
-            g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 12) + 0x38, 0);
+            g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
         }
     }
     self->palette =
@@ -160,7 +167,7 @@ void EntityWeaponAttack(Entity* self) {
 }
 
 s32 func_ptr_80170004(Entity* self) {
-    if (self->ext.weapon.parent->ext.weapon.equipId != 15) {
+    if (self->ext.weapon.parent->ext.weapon.equipId != ITEM_FIRE_SHIELD) {
         DestroyEntity(self);
         return;
     }
@@ -170,7 +177,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.unk80 = self->ext.weapon.parent->ext.weapon.unk80;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
-        self->flags = 0x08000000;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_UNK10;
         self->unk6C = 0x80;
         self->ext.weapon.unk7E = 0x14;
@@ -189,17 +196,17 @@ s32 func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk80 + D_CF000_8017AD04[g_GameTimer / 2 % 5];
 }
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 29; }
+static int GetWeaponId(void) { return 29; }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     Primitive* prim;
     s32 var_v0;
     u16 selfX;
@@ -227,7 +234,8 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk7D = 0;
         }
         self->posY.i.hi -= 8;
-        self->flags = 0x04810000;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
@@ -246,11 +254,12 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 0x80;
         prim->priority = self->zPriority - 4;
-        prim->drawMode = 0x75;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(0x641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;
@@ -288,14 +297,14 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->rotY = self->rotX;
         if (self->rotX <= 0) {
             self->rotX = 0;
-            self->unk4C = D_CF000_8017AD24;
+            self->anim = D_CF000_8017AD24;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            self->flags |= 0x100000;
+            self->flags |= FLAG_UNK_100000;
             self->ext.weapon.unk80 = 0x20;
             self->palette = self->ext.weapon.childPalette;
             self->zPriority = 0x1B6;
-            g_api.PlaySfx(0x668);
+            g_api.PlaySfx(SFX_TRANSFORM);
             self->step++;
         }
         break;
@@ -313,8 +322,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (--self->ext.weapon.unk80 == 0) {
-            prim->drawMode |= 8;
-            g_api.PlaySfx(0x660);
+            prim->drawMode |= DRAW_HIDE;
+            g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 14) + 102, 0);
@@ -347,7 +356,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     // All these variables are kind of guessing names, behavior of this
     // function is a little unclear.
     Primitive* firstPrim;
@@ -390,7 +399,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.weapon.childPalette = 0x110;
             self->ext.shield.unk7D = 0;
         }
-        self->flags |= 0x04800000;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->ext.shield.unk9C = 0x40;
 
         for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
@@ -481,7 +490,7 @@ void func_ptr_80170024(Entity* self) {
                 var_s7->unkC -= 4;
                 if (var_s7->unkC < 0x40) {
                     if (!(self->params & 0x7F)) {
-                        g_api.PlaySfx(0x660);
+                        g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                     }
                     var_s7->state++;
                 }
@@ -557,7 +566,7 @@ void func_ptr_80170024(Entity* self) {
     g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 14) + 100, 0);
 }
 
-void func_ptr_80170028(Entity* self) {
+static void func_ptr_80170028(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -576,12 +585,12 @@ void func_ptr_80170028(Entity* self) {
     }
 }
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

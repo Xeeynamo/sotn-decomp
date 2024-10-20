@@ -1,6 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+
+// BSS
+extern Point16 D_8013839C[32];
+extern s32 D_8013841C;
+extern RECT D_80138424;
 
 // teleport effect like when using library card (ID 0x42)
 void EntityTeleport(Entity* self) {
@@ -19,12 +25,12 @@ void EntityTeleport(Entity* self) {
     upperParams = self->params & 0xFE00;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 36);
+        self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
         if (self->primIndex == -1) {
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 2; i++) {
             prim->x0 = 0xC0 * i;
@@ -45,7 +51,7 @@ void EntityTeleport(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8013839C); i++) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
             yVar = rand();
             yVar = 0xE0 - (yVar & 0x3F);
@@ -72,15 +78,15 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk88 = 0x80;
             self->ext.teleport.unk90 = 0xFF;
             self->step = 0x14;
-            PlaySfx(0x8BB);
+            PlaySfx(SFX_UNK_8BB);
         } else {
             self->ext.teleport.unk7C = 1;
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            PlaySfx(0x635);
-            PlaySfx(0x8BA);
+            PlaySfx(SFX_TELEPORT_BANG_A);
+            PlaySfx(NA_SE_PL_TELEPORT);
         }
         break;
     case 1:
@@ -166,7 +172,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            PlaySfx(0x636);
+            PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
         }
@@ -196,7 +202,7 @@ void EntityTeleport(Entity* self) {
     func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     if (wasCase3) {
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8013839C); i++) {
             switch (prim->g0) {
             case 0:
                 if (--prim->g1 == 0) {
@@ -243,7 +249,7 @@ void func_80124A8C(Entity* entity) {
         SetSpeedX(0x4000);
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
-        entity->unk4C = D_800AE294;
+        entity->anim = D_800AE294;
         entity->flags = FLAG_UNK_100000;
         entity->facingLeft = 0;
         entity->posY.i.hi -= 16;
@@ -263,7 +269,7 @@ void func_80124A8C(Entity* entity) {
 
 // dagger thrown when using subweapon
 void EntitySubwpnThrownDagger(Entity* self) {
-    Collider sp34;
+    Collider collider;
     Primitive* prim;
     s16 offsetX;
     s16 offsetY;
@@ -274,9 +280,9 @@ void EntitySubwpnThrownDagger(Entity* self) {
     s16 selfY;
     s16 selfX;
     s16 var_s5;
-    s32 temp_s7;
-    s32 temp_s6;
-    s32 var_i;
+    s32 cosine;
+    s32 sine;
+    s32 i;
 
     switch (self->step) {
     case 0:
@@ -285,7 +291,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->facingLeft = PLAYER.facingLeft;
         func_8011A290(self);
         self->hitboxWidth = 4;
@@ -304,8 +310,9 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->v1 = prim->v3 = 0;
         prim->priority = PLAYER.zPriority + 2;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+
         prim = prim->next;
-        prim->type = 2;
+        prim->type = PRIM_LINE_G2;
         prim->priority = PLAYER.zPriority + 2;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
@@ -313,12 +320,12 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        PlaySfx(0x60C);
-        g_Player.D_80072F00[10] = 4;
-        self->step += 1;
+        PlaySfx(SFX_WEAPON_SWISH_C);
+        g_Player.timers[10] = 4;
+        self->step++;
         return;
     case 1:
-        self->ext.timer.t += 1;
+        self->ext.timer.t++;
         if (self->velocityX > 0) {
             var_s5 = 8;
         }
@@ -331,25 +338,25 @@ void EntitySubwpnThrownDagger(Entity* self) {
             self->hitboxState = 0;
             return;
         }
-        for (var_i = 0; var_i < 8; var_i++) {
+        for (i = 0; i < 8; i++) {
             if (self->velocityX > 0) {
-                self->posX.i.hi += 1;
+                self->posX.i.hi++;
             }
             if (self->velocityX < 0) {
-                self->posX.i.hi -= 1;
+                self->posX.i.hi--;
             }
             CheckCollision(
-                (s16)self->posX.i.hi + var_s5, (s16)self->posY.i.hi, &sp34, 0);
-            if (self->hitFlags == 2 || sp34.effects & 3) {
-                self->ext.timer.t = 0x40;
+                self->posX.i.hi + var_s5, self->posY.i.hi, &collider, 0);
+            if (self->hitFlags == 2 || collider.effects & 3) {
+                self->ext.timer.t = 64;
                 self->velocityX = -(self->velocityX >> 3);
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += var_s5;
-                CreateEntFactoryFromEntity(self, 0xAU, 0);
+                CreateEntFactoryFromEntity(self, 10, 0);
                 self->posX.i.hi -= var_s5;
-                PlaySfx(0x6A4);
-                self->step += 1;
+                PlaySfx(SFX_UI_TINK);
+                self->step++;
                 return;
             }
         }
@@ -390,7 +397,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if ((s16)self->ext.timer.t == 0x20) {
+        if (self->ext.timer.t == 0x20) {
             prim->drawMode |=
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
@@ -426,26 +433,26 @@ void EntitySubwpnThrownDagger(Entity* self) {
             offsetX = -offsetX;
         }
         prim = &g_PrimBuf[self->primIndex];
-        temp_s7 = (rcos(angle_a) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_a) * 0xCA0) >> 0x14;
-        prim->x0 = selfX + (s16)temp_s7;
-        prim->y0 = selfY - (s16)temp_s6;
-        temp_s7 = (rcos(angle_b) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_b) * 0xCA0) >> 0x14;
-        prim->x1 = selfX + (s16)temp_s7;
-        prim->y1 = selfY - (s16)temp_s6;
-        temp_s7 = (rcos(angle_c) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_c) * 0xCA0) >> 0x14;
-        prim->x2 = selfX + (s16)temp_s7;
-        prim->y2 = selfY - (s16)temp_s6;
-        temp_s7 = (rcos(angle_d) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_d) * 0xCA0) >> 0x14;
-        prim->x3 = selfX + (s16)temp_s7;
-        prim->y3 = selfY - (s16)temp_s6;
+        cosine = (rcos(angle_a) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_a) * 0xCA0) >> 0x14;
+        prim->x0 = selfX + cosine;
+        prim->y0 = selfY - sine;
+        cosine = (rcos(angle_b) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_b) * 0xCA0) >> 0x14;
+        prim->x1 = selfX + cosine;
+        prim->y1 = selfY - sine;
+        cosine = (rcos(angle_c) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_c) * 0xCA0) >> 0x14;
+        prim->x2 = selfX + cosine;
+        prim->y2 = selfY - sine;
+        cosine = (rcos(angle_d) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_d) * 0xCA0) >> 0x14;
+        prim->x3 = selfX + cosine;
+        prim->y3 = selfY - sine;
         prim->clut = 0x1AB;
 
         (g_GameTimer >> 1) & 1; // no-op
-        if ((s16)self->ext.timer.t < 0x21) {
+        if (self->ext.timer.t < 0x21) {
             prim->r0 -= 2;
             prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
                 prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
@@ -463,7 +470,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
 }
 
 // axe thrown when using subweapon
-// near-duplicate of EntitySubwpnCrashAgunea
+// near-duplicate of RicEntitySubwpnAxe
 void EntitySubwpnThrownAxe(Entity* self) {
     s32 sp10;
     s32 sp18;
@@ -497,8 +504,8 @@ void EntitySubwpnThrownAxe(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-2));
         self->velocityY = FIX(-6);
@@ -536,8 +543,8 @@ void EntitySubwpnThrownAxe(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        PlaySfx(0x60C);
-        g_Player.D_80072F00[10] = 4;
+        PlaySfx(SFX_WEAPON_SWISH_C);
+        g_Player.timers[10] = 4;
         self->ext.axeCrash.unk98 = 0x7F;
         self->step++;
         break;
@@ -549,7 +556,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         }
         self->ext.axeCrash.unk7C = var_a1 + self->ext.axeCrash.unk7C;
         if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            func_80134714(0x60C, self->ext.axeCrash.unk98, 0);
+            PlaySfxVolPan(SFX_WEAPON_SWISH_C, self->ext.axeCrash.unk98, 0);
             self->ext.axeCrash.unk98 -= 8;
             if (self->ext.axeCrash.unk98 < 0) {
                 self->ext.axeCrash.unk98 = 0;
@@ -755,7 +762,7 @@ void EntityHolyWater(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = FLAG_UNK_08000000;
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
         entity->animSet = ANIMSET_DRA(9);
         entity->animCurFrame = 0x1D;
         entity->zPriority = PLAYER.zPriority - 2;
@@ -765,7 +772,7 @@ void EntityHolyWater(Entity* entity) {
         func_8011A290(entity);
         entity->hitboxHeight = 4;
         entity->hitboxWidth = 4;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         entity->step++;
         break;
 
@@ -793,8 +800,8 @@ void EntityHolyWater(Entity* entity) {
 
         temp2 = temp & 1;
         if (temp2 != 0) {
-            PlaySfx(0x69A);
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 59), 0);
+            PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
+            CreateEntFactoryFromEntity(entity, 59, 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
             entity->step = 2;
@@ -803,7 +810,7 @@ void EntityHolyWater(Entity* entity) {
 
     case 2:
         if (!(entity->ext.generic.unk7C.s & 3)) {
-            CreateEntFactoryFromEntity(entity, FACTORY(D_8013841C << 8, 28),
+            CreateEntFactoryFromEntity(entity, FACTORY(28, D_8013841C),
                                        entity->ext.generic.unkB2 << 9);
             D_8013841C++;
         }
@@ -888,7 +895,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 prim->priority = PLAYER.zPriority + 2;
             }
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
         return;
@@ -970,19 +977,19 @@ void EntityHolyWaterFlame(Entity* self) {
                              DRAW_UNK02 | DRAW_COLORS | DRAW_HIDE;
             prim = prim->next;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->posY.i.hi = self->posY.i.hi - 0xA;
-        CreateEntFactoryFromEntity(self, 0x70004U, 0);
-        self->ext.holywaterflame.timer = 0x50;
+        CreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
+        self->ext.holywater.timer = 0x50;
         self->posY.i.hi = self->posY.i.hi + 0xA;
-        self->ext.holywaterflame.unk80 = (rand() & 0xF) + 0x12;
+        self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
         self->step += 1;
         return;
     case 1:
-        angleTemp = self->ext.holywaterflame.angle;
-        self->ext.holywaterflame.angle += 0x180;
+        angleTemp = self->ext.holywater.angle;
+        self->ext.holywater.angle += 0x180;
         angle = angleTemp;
         for (i = 0; i < 4; i++) {
             sp10[i] = self->posX.i.hi + (rsin(angle) >> 0xA);
@@ -991,26 +998,26 @@ void EntityHolyWaterFlame(Entity* self) {
         sp10[0] = self->posX.i.hi;
         sp10[4] = self->posX.i.hi;
         temp_v0_4 =
-            (rsin((s16)((self->ext.holywaterflame.timer * 64) + 0x800)) >> 8) +
-            self->ext.holywaterflame.unk80;
+            (rsin((s16)((self->ext.holywater.timer * 64) + 0x800)) >> 8) +
+            self->ext.holywater.unk80;
         sp20[0] = self->posY.i.hi - temp_v0_4;
         sp20[4] = self->posY.i.hi;
         sp20[2] = (sp20[0] + sp20[4]) / 2;
         sp20[1] = (sp20[0] + sp20[2]) / 2;
         sp20[3] = (sp20[2] + sp20[4]) / 2;
         prim = &g_PrimBuf[self->primIndex];
-        if (self->ext.holywaterflame.timer & 3) {
+        if (self->ext.holywater.timer & 3) {
             self->hitboxState = 0;
         } else {
             self->hitboxState = 2;
         }
-        if (--self->ext.holywaterflame.timer < 0x11) {
+        if (--self->ext.holywater.timer < 0x11) {
             DestroyEntity(self);
             return;
         }
         i = 0;
         while (prim != NULL) {
-            if (self->ext.holywaterflame.timer < 0x29) {
+            if (self->ext.holywater.timer < 0x29) {
                 if (prim->g0 >= 17) {
                     prim->g0 -= 5;
                 }
@@ -1080,18 +1087,17 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        PlaySfx(0x6DF);
-        PlaySfx(0x636);
+        PlaySfx(SFX_UNK_6DF);
+        PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
-        g_Player.D_80072F00[12] = 4;
+        g_Player.timers[12] = 4;
         break;
     case 1:
         self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
         self->ext.crashcross.unk82 += three * 2;
         if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
-            CreateEntFactoryFromEntity(
-                self, FACTORY(0, 7), self->ext.factory.unkB2 << 9);
-            CreateEntFactoryFromEntity(self, FACTORY(0, 8), 0);
+            CreateEntFactoryFromEntity(self, 7, self->ext.factory.unkB2 << 9);
+            CreateEntFactoryFromEntity(self, 8, 0);
             self->step += 1;
         }
         break;
@@ -1117,7 +1123,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(0x62F);
+            PlaySfx(SFX_WEAPON_APPEAR);
         }
         break;
     case 4:
@@ -1176,7 +1182,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     if (self->step == 0) {
         self->primIndex = AllocPrimitives(PRIM_GT4, 64);
         if (self->primIndex != -1) {
-            self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             // entity lives for 192 frames
             self->ext.generic.unk7C.s = 192;
             self->step++;
@@ -1261,8 +1267,8 @@ void EntityHellfireHandler(Entity* self) {
             g_Player.unk5C = -1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
-                      FLAG_UNK_20000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->posY.i.hi = 120;
         // I think this is to make the yellow laser beam?
         // it ends up looking like the library card effect.
@@ -1277,7 +1283,7 @@ void EntityHellfireHandler(Entity* self) {
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                          DRAW_TPAGE | DRAW_TRANSP;
         prim->priority = self->zPriority = 0x1C0;
-        PlaySfx(NA_SE_PL_WARP);
+        PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
     case 1:
@@ -1313,7 +1319,7 @@ void EntityHellfireHandler(Entity* self) {
     case 5:
         PLAYER.palette = 0x810D;
         if (self->ext.hellfireHandler.unk80 == 0x10) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 38), 0);
+            CreateEntFactoryFromEntity(self, 38, 0);
         }
         if (--self->ext.hellfireHandler.unk80 == 0) {
             self->ext.hellfireHandler.unk7C = 0;
@@ -1341,14 +1347,14 @@ void EntityHellfireHandler(Entity* self) {
             // When you press up during hellfire, you get different fireballs.
             if (g_Player.padPressed & PAD_UP) {
                 // Blueprint 35 makes child 27, the big black fireballs
-                CreateEntFactoryFromEntity(self, FACTORY(0, 35), 0);
+                CreateEntFactoryFromEntity(self, 35, 0);
             } else {
                 // Blueprint 34 makes child 26, the small, normal fireballs
-                CreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
+                CreateEntFactoryFromEntity(self, 34, 0);
             }
         }
         if (self->ext.hellfireHandler.unk80 == 0x50) {
-            CreateEntFactoryFromEntity(self, FACTORY(0xA00, 4), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(4, 10), 0);
         }
         if (self->ext.hellfireHandler.unk80 < 0x48) {
             self->ext.hellfireHandler.unk7C -= four;
@@ -1397,11 +1403,11 @@ void EntityHellfireNormalFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params == 0) {
-            PlaySfx(0x660);
+            PlaySfx(SFX_FIREBALL_SHOT_A);
         }
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
         entity->animSet = ANIMSET_DRA(9);
-        entity->unk4C = &D_800B0798;
+        entity->anim = D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(D_800B0830[entity->params]);
@@ -1449,10 +1455,10 @@ void EntityBatFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        PlaySfx(NA_SE_PL_BT_FIREBALL);
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        PlaySfx(SFX_QUICK_STUTTER_EXPLODE_A);
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->animSet = 9;
-        self->unk4C = D_800B0798;
+        self->anim = D_800B0798;
         self->zPriority = PLAYER.zPriority - 2;
 
         // Wow, this is weird logic! But it's in the assembly.
@@ -1470,7 +1476,7 @@ void EntityBatFireball(Entity* self) {
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -1499,10 +1505,10 @@ void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params != 0) {
-            PlaySfx(0x683);
+            PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
         }
 
-        entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
         if (entity->params != 0) {
             entity->posY.i.hi = entity->posY.i.hi + 16;
@@ -1512,7 +1518,7 @@ void EntityHellfireBigFireball(Entity* entity) {
 
         entity->animSet = ANIMSET_DRA(9);
         entity->rotZ = 0;
-        entity->unk4C = &D_800B07C8;
+        entity->anim = D_800B07C8;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
@@ -1534,7 +1540,7 @@ void EntityHellfireBigFireball(Entity* entity) {
                 entity->velocityX += FIX(0.09375);
             }
             if (!(g_GameTimer & 1) && (rand() & 1)) {
-                CreateEntFactoryFromEntity(entity, FACTORY(0x100, 36), 0);
+                CreateEntFactoryFromEntity(entity, FACTORY(36, 1), 0);
             }
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
@@ -1588,7 +1594,8 @@ void EntityExpandingCircle(Entity* entity) {
             prim->priority = PLAYER.zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            entity->flags = FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                            FLAG_HAS_PRIMS;
             entity->step++;
             break;
         }
@@ -1646,12 +1653,12 @@ void func_80127CC8(Entity* entity) {
 
         if (ret == -1) {
             DestroyEntity(entity);
-            g_Player.unk5C = 0xFFFF;
+            g_Player.unk5C = -1;
             return;
         }
 
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
-                        FLAG_HAS_PRIMS;
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = 192;
         prim->g0 = prim->g1 = prim->g2 = prim->g3 = 64;
@@ -1746,7 +1753,8 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->y0 = prim->y1 = playerY;
             prim->timer = 0x14;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->zPriority = PLAYER.zPriority + 2;
 
         facingLeft = PLAYER.facingLeft;
@@ -1757,13 +1765,13 @@ void EntitySubwpnReboundStone(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
-        g_Player.D_80072F00[10] = 4;
+        g_Player.timers[10] = 4;
         CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        PlaySfx(SFX_SUBWPN_THROW);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         break;
 
     case 1:
@@ -1920,8 +1928,8 @@ void EntitySubwpnReboundStone(Entity* self) {
         }
         if (self->ext.reboundStone.unk82 != 0) {
         block_93:
-            CreateEntFactoryFromEntity(self, FACTORY(0, 10), 0);
-            PlaySfx(REBOUND_STONE_BOUNCE);
+            CreateEntFactoryFromEntity(self, 10, 0);
+            PlaySfx(SFX_UI_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
@@ -2005,12 +2013,12 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         func_8011A290(self);
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
         self->hitboxWidth = self->hitboxHeight = 4;
-        self->ext.vibhuti.timer = 0x80;
+        self->ext.subweapon.timer = 0x80;
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
         fakeprimY = selfY - 8;
         while (1) {
@@ -2042,8 +2050,8 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        PlaySfx(SFX_SUBWPN_THROW);
-        g_Player.D_80072F00[10] = 4;
+        PlaySfx(SFX_WEAPON_SWISH_C);
+        g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
@@ -2053,7 +2061,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             collisionOffsetX = 2;
         }
 
-        if (--self->ext.vibhuti.timer == 0) {
+        if (!--self->ext.subweapon.timer) {
             DestroyEntity(self);
             return;
         }
@@ -2092,7 +2100,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                     }
                 }
             }
-            if ((self->ext.vibhuti.timer & 7) == i) {
+            if ((self->ext.subweapon.timer & 7) == i) {
                 self->posX.i.hi = fakeprim->posX.i.hi;
                 self->posY.i.hi = fakeprim->posY.i.hi;
                 if (fakeprim->drawMode & DRAW_HIDE) {
@@ -2108,10 +2116,10 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                 }
             }
             if ((self->hitFlags != 0) &&
-                (((self->ext.vibhuti.timer + 1) & 7) == i)) {
+                (((self->ext.subweapon.timer + 1) & 7) == i)) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
-            if ((self->ext.vibhuti.timer - 1) == i) {
+            if ((self->ext.subweapon.timer - 1) == i) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
             fakeprim->x0 = fakeprim->posX.i.hi;
@@ -2167,17 +2175,17 @@ void EntitySubwpnAgunea(Entity* self) {
             DestroyEntity(self);
             return;
         } else {
-            self->flags =
-                FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
             func_8011A290(self);
             self->hitboxHeight = 4;
             self->hitboxWidth = 4;
             self->hitboxOffX = 4;
             self->hitboxOffY = 0;
-            self->posY.i.hi = self->ext.et_80128C2C.unk82 =
+            self->posY.i.hi = self->ext.agunea.unk82 =
                 PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
-            self->posX.i.hi = self->ext.et_80128C2C.unk80 = PLAYER.posX.i.hi;
+            self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
             prim = &g_PrimBuf[self->primIndex];
             prim->type = 2;
             prim->priority = PLAYER.zPriority + 2;
@@ -2187,9 +2195,9 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->g1 = 0;
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
-            PlaySfx(0x60C);
-            CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
-            g_Player.D_80072F00[10] = 4;
+            PlaySfx(SFX_WEAPON_SWISH_C);
+            CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
+            g_Player.timers[10] = 4;
             self->step++;
         }
         break;
@@ -2201,13 +2209,13 @@ void EntitySubwpnAgunea(Entity* self) {
         }
         if (self->hitFlags != 0) {
             self->step = 3;
-            self->ext.et_80128C2C.parent1 = self->ext.et_80128C2C.parent2;
+            self->ext.agunea.parent = self->ext.agunea.parent2;
         }
         break;
     case 4:
-        self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
-        self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
-        if (++self->ext.et_80128C2C.unk7C >= 16) {
+        self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if (++self->ext.agunea.unk7C >= 16) {
             if (g_PrimBuf[self->primIndex].r1 < 5) {
                 DestroyEntity(self);
                 return;
@@ -2225,25 +2233,25 @@ void EntitySubwpnAgunea(Entity* self) {
             (PAD_UP + PAD_SQUARE)) {
             self->step = 4;
         }
-        ent = self->ext.et_80128C2C.parent1;
+        ent = self->ext.agunea.parent;
         if (ent->entityId == 0 ||
-            self->ext.et_80128C2C.unk7C != 0 &&
+            self->ext.agunea.unk7C != 0 &&
                 (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
                  ent->flags & FLAG_DEAD)) {
             self->step = 2;
             return;
         }
 
-        tempX = self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
-        tempY = self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
-        if ((self->ext.et_80128C2C.unk7C % 12) == 0) {
+        tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if ((self->ext.agunea.unk7C % 12) == 0) {
             self->posX.i.hi += ((rand() & 0xF) - 8);
             self->posY.i.hi += ((rand() & 0xF) - 8);
-            if (self->ext.et_80128C2C.unk84 == 0) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                PlaySfx(0x665);
-                CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
-                self->ext.et_80128C2C.unk84++;
+            if (self->ext.agunea.unk84 == 0) {
+                CreateEntFactoryFromEntity(self, 23, 0);
+                PlaySfx(SFX_THUNDER_B);
+                CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
+                self->ext.agunea.unk84++;
             } else {
                 heartCost = 5;
                 // 0x4d is the item ID for the heart broach.
@@ -2260,9 +2268,9 @@ void EntitySubwpnAgunea(Entity* self) {
                 }
                 if (g_Status.hearts >= heartCost) {
                     g_Status.hearts -= heartCost;
-                    CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                    PlaySfx(0x665);
-                    CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                    CreateEntFactoryFromEntity(self, 23, 0);
+                    PlaySfx(SFX_THUNDER_B);
+                    CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
                 } else {
                     self->step = 4;
                 }
@@ -2270,7 +2278,7 @@ void EntitySubwpnAgunea(Entity* self) {
         }
         self->posX.i.hi = tempX;
         self->posY.i.hi = tempY;
-        self->ext.et_80128C2C.unk7C++;
+        self->ext.agunea.unk7C++;
         break;
     }
     prim = &g_PrimBuf[self->primIndex];
@@ -2287,15 +2295,15 @@ void EntitySubwpnAgunea(Entity* self) {
     if (tempX < 5) {
         prim->drawMode |= DRAW_HIDE;
     }
-    prim->x0 = self->ext.et_80128C2C.unk80;
-    prim->y0 = self->ext.et_80128C2C.unk82;
+    prim->x0 = self->ext.agunea.unk80;
+    prim->y0 = self->ext.agunea.unk82;
     prim->x1 = self->posX.i.hi;
     prim->y1 = self->posY.i.hi;
     return;
 }
 
 void EntityAguneaHitEnemy(Entity* self) {
-    Entity* temp_s6;
+    Entity* sine;
     Primitive* prim;
     Primitive* temp_s3;
     Primitive* var_a0;
@@ -2310,7 +2318,7 @@ void EntityAguneaHitEnemy(Entity* self) {
     s32 i;
     s32 randy;
 
-    temp_s6 = self->ext.et_801291C4.parent;
+    sine = self->ext.et_801291C4.parent;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
 
@@ -2333,7 +2341,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
 
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
@@ -2392,8 +2400,8 @@ void EntityAguneaHitEnemy(Entity* self) {
         for (i = 0; i < 2; i++) {
             prim = self->ext.et_801291C4.unk80;
             temp_s2 = self->ext.et_801291C4.unk84;
-            somethingX = temp_s6->posX.i.hi - prim->x2;
-            somethingY = temp_s6->posY.i.hi - prim->y2;
+            somethingX = sine->posX.i.hi - prim->x2;
+            somethingY = sine->posY.i.hi - prim->y2;
             var_s3 = 0;
             if ((abs(somethingX) < 8) && (abs(somethingY) < 8)) {
                 self->step++;
@@ -2541,12 +2549,13 @@ void func_80129864(Entity* self) {
         self->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft
         self->ext.et_80129864.unk80 = D_800B0858[(u8)self->params];
         self->animSet = 9;
-        self->unk4C = D_800B0798;
+        self->anim = D_800B0798;
         self->palette = PAL_OVL(0x19F);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->zPriority = 0x1C3;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_800000 |
-                      FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->drawFlags = FLAG_DRAW_ROTZ;
         if (self->params & 0x7F00) {
             func_8011A328(self, 3);
@@ -2627,8 +2636,8 @@ void func_80129864(Entity* self) {
         }
         break;
     case 3:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000 | FLAG_UNK_100000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS |
+                      FLAG_UNK_100000 | FLAG_UNK_10000;
         s1 = rcos(self->ext.et_80129864.unk82) >> 8;
         self->ext.et_80129864.unk82 += 0x80;
         self->ext.et_80129864.unk80 += s1;
@@ -2681,8 +2690,15 @@ void func_80129864(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             break;
         case 1:
-            temp_u = D_800B0846[self->animCurFrame * 2];
-            temp_v = D_800B0846[self->animCurFrame * 2 + 1];
+#ifdef VERSION_PC
+            // self->animCurFrame starts at 0. Seems like an out of bounds
+            // bug in original?
+            temp_u = D_800B0848[(self->animCurFrame) * 2];
+            temp_v = D_800B0848[(self->animCurFrame) * 2 + 1];
+#else
+            temp_u = D_800B0848[(self->animCurFrame - 1) * 2];
+            temp_v = D_800B0848[(self->animCurFrame - 1) * 2 + 1];
+#endif
             prim->u0 = prim->u2 = temp_u;
             prim->u1 = prim->u3 = temp_u + 31;
             prim->v0 = prim->v1 = temp_v;
@@ -2733,8 +2749,8 @@ void EntitySummonSpirit(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000 |
-                      FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 3;
         self->ext.summonspirit.spawnTimer = 10;
         func_80118C28(13);
@@ -2799,8 +2815,8 @@ void EntitySummonSpirit(Entity* self) {
         }
         self->ext.summonspirit.timer = 0;
         // This just adds FLAG_HAS_PRIMS. Not sure why it wasn't an |=.
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->step++;
         break;
 
@@ -2810,13 +2826,13 @@ void EntitySummonSpirit(Entity* self) {
             // Both blueprints have child 61, but 118 has a couple 4s in the
             // other args. 61 is func_80129864. Not yet decompiled.
             if (self->params) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 118), 0);
+                CreateEntFactoryFromEntity(self, 118, 0);
             } else {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 116), 0);
+                CreateEntFactoryFromEntity(self, 116, 0);
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
-            CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
-            PlaySfx(0x67D);
+            CreateEntFactoryFromEntity(self, FACTORY(44, 0x67), 0);
+            PlaySfx(SFX_UI_MP_FULL);
             self->step++;
         }
         break;
@@ -2841,660 +2857,4 @@ void EntitySummonSpirit(Entity* self) {
         prim->y0 = selfY - (((rsin((i + 1) << 9) >> 4) * timer) >> 8);
         prim = prim->next;
     }
-}
-
-// expanding circle effect when activating stopwatch
-void EntityStopWatchExpandingCircle(Entity* self) {
-    Primitive* prim;
-    s32 sine;
-    s32 cosine;
-    s32 i;
-    u16 selfPosX;
-    u16 selfPosY;
-    s16 minus20;
-
-    switch (self->step) {
-    case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 16);
-        if (self->primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
-                      FLAG_UNK_20000;
-        prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 16; i++, prim = prim->next) {
-            prim->tpage = 0x1A;
-            prim->clut = 0x15F;
-            self->zPriority = 0xC2;
-            prim->priority = 0xC2;
-            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
-                             DRAW_COLORS | DRAW_TRANSP;
-            prim->u0 = ((rsin((s16)(i << 8)) << 5) >> 0xC) + 0x20;
-            prim->v0 = -((rcos((s16)(i << 8)) << 5) >> 0xC) - 0x21;
-            prim->u1 = ((rsin((s16)(i + 1 << 8)) << 5) >> 0xC) + 0x20;
-            prim->v1 = -((rcos((s16)(i + 1 << 8)) << 5) >> 0xC) - 0x21;
-            prim->v2 = prim->v3 = 0xE0;
-            prim->u2 = prim->u3 = 0x20;
-            prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
-                0x40;
-            prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
-            prim->b2 = prim->b3 = 0x20;
-        }
-        self->ext.et_stopwatchCircle.size = 0x20;
-        self->step++;
-        break;
-    case 1:
-        self->ext.et_stopwatchCircle.size += 0x18;
-        if (++self->ext.et_stopwatchCircle.timer >= 0x1F) {
-            DestroyEntity(self);
-            return;
-        }
-        break;
-    }
-    selfPosX = self->posX.i.hi;
-    selfPosY = self->posY.i.hi;
-    prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 16; i++, prim = prim->next) {
-        sine = rsin(i << 8);
-        cosine = rcos(i << 8);
-        minus20 = self->ext.et_stopwatchCircle.size - 0x20;
-        prim->x0 =
-            selfPosX + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
-        prim->y0 =
-            selfPosY - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
-        prim->x2 = selfPosX + ((sine * (minus20)) >> 0xC);
-        prim->y2 = selfPosY - ((cosine * minus20) >> 0xC);
-        sine = rsin((i + 1) << 8);
-        cosine = rcos((i + 1) << 8);
-        prim->x1 =
-            selfPosX + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
-        prim->y1 =
-            selfPosY - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
-        prim->x3 = selfPosX + ((sine * minus20) >> 0xC);
-        prim->y3 = selfPosY - ((cosine * minus20) >> 0xC);
-    }
-}
-
-// stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
-INCLUDE_ASM("dra/nonmatchings/843B0", EntityStopWatch);
-
-void func_8012B78C(Entity* entity) {
-    Primitive* prim;
-    s32 ret;
-
-    switch (entity->step) {
-    case 0:
-        ret = AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = ret;
-        if (entity->primIndex != -1) {
-            entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->tpage = 0x1C;
-            prim->clut = 0x19D;
-            prim->u0 = prim->u2 = 32;
-            prim->u1 = prim->u3 = 48;
-            prim->v0 = prim->v1 = 0;
-            prim->v2 = prim->v3 = 16;
-            prim->x0 = prim->x2 = entity->posX.i.hi - 8;
-            prim->x1 = prim->x3 = entity->posX.i.hi + 8;
-            prim->y0 = prim->y1 = entity->posY.i.hi - 8;
-            prim->y2 = prim->y3 = entity->posY.i.hi + 8;
-            prim->priority = entity->zPriority;
-            prim->drawMode =
-                DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->ext.generic.unk7E.modeU16 = 96;
-            entity->step++;
-        } else {
-            DestroyEntity(entity);
-            return;
-        }
-        break;
-
-    case 1:
-        if (++entity->ext.generic.unk7C.s > 5) {
-            entity->step++;
-        }
-        entity->ext.generic.unk7E.modeU16 -= 8;
-        break;
-
-    case 2:
-        DestroyEntity(entity);
-        return;
-
-    default:
-        break;
-    }
-    prim = &g_PrimBuf[entity->primIndex];
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            entity->ext.generic.unk7E.modeU8.unk0;
-}
-
-// book rotates around player
-void EntitySubwpnBible(Entity* self) {
-    Primitive* prim;
-    s16 left;
-    s16 top;
-    s16 bottom;
-    s16 right;
-
-    s32 sine;
-    s32 cosine;
-    s32 cos_s2;
-    s32 sin_s3;
-    s32 cos_s3;
-    s32 sin_s2;
-
-    s32 temp_a3;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_a1;
-
-    s32 temp_v0;
-
-    s32 var_s4;
-
-    switch (self->step) {
-    case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
-        if (self->primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        prim = &g_PrimBuf[self->primIndex];
-        prim->tpage = 0x1E;
-        prim->clut = 0x17F;
-        prim->u0 = prim->u2 = 0x98;
-        prim->v0 = prim->v1 = 0xD8;
-        prim->u1 = prim->u3 = 0xA8;
-        prim->v2 = prim->v3 = 0xF0;
-        prim->priority = PLAYER.zPriority + 1;
-        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
-        self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
-        func_8011A290(self);
-        self->hitboxWidth = 6;
-        self->hitboxHeight = 6;
-        self->step++;
-        break;
-    case 1:
-        prim = &g_PrimBuf[self->primIndex];
-        prim->drawMode &= ~DRAW_HIDE;
-        self->ext.et_BibleSubwpn.unk86++;
-        g_Player.D_80072F00[10] = 4;
-        self->step++;
-    case 2:
-        self->ext.et_BibleSubwpn.unk7C++;
-        if (++self->ext.et_BibleSubwpn.unk7E >= 0x30) {
-            self->step++;
-        }
-        break;
-    case 3:
-        if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
-            self->flags &= ~FLAG_UNK_04000000;
-            self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
-            self->velocityY = FIX(-12);
-            PlaySfx(0x6B2);
-            self->ext.et_BibleSubwpn.unk86++;
-            self->step++;
-        }
-        break;
-    }
-    switch (self->ext.et_BibleSubwpn.unk86) {
-    case 0:
-        break;
-    case 1:
-        // All this logic is a mess, could use a cleanup
-        sine = rsin(self->ext.et_BibleSubwpn.unk80);
-        cosine = rcos(self->ext.et_BibleSubwpn.unk80);
-        temp_s2 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        temp_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        cos_s2 = cosine * temp_s2;
-        sin_s3 = sine * temp_s3;
-        cos_s3 = cosine * temp_s3;
-        temp_a1 = cos_s2 + sin_s3;
-        sin_s2 = sine * temp_s2;
-        temp_s2 = temp_a1 >> 0xC;
-        temp_s3 = (cos_s3 - sin_s2) >> 0xC;
-        sine = rsin(self->ext.et_BibleSubwpn.unk82);
-        cosine = rcos(self->ext.et_BibleSubwpn.unk82);
-        temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
-        temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
-        if (self->facingLeft != 0) {
-            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
-        } else {
-            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
-        }
-
-        self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
-        self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
-        self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
-        if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
-            // temp_v0 needed because otherwise unk84 gets loaded with lhu
-            // instead of lh
-            temp_v0 = -self->ext.et_BibleSubwpn.unk84;
-            self->ext.et_BibleSubwpn.unk84 = temp_v0;
-        }
-        self->posX.i.hi = PLAYER.posX.i.hi + temp_a1;
-        self->posY.i.hi = PLAYER.posY.i.hi + temp_a3;
-        self->zPriority = PLAYER.zPriority + (temp_s3 < 0 ? 2 : -2);
-        break;
-    case 2:
-        self->posX.val += self->velocityX;
-        self->posY.val += self->velocityY;
-        self->velocityY += FIX(-2);
-        break;
-    }
-    if (self->ext.et_BibleSubwpn.unk86 != 0) {
-        prim = &g_PrimBuf[self->primIndex];
-        left = self->posX.i.hi - 8;
-        right = self->posX.i.hi + 8;
-        top = self->posY.i.hi - 12;
-        bottom = self->posY.i.hi + 12;
-        prim->x0 = prim->x2 = left;
-        prim->x1 = prim->x3 = right;
-        prim->y0 = prim->y1 = top;
-        prim->y2 = prim->y3 = bottom;
-        prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, FACTORY(0, 79), 0);
-        if (g_GameTimer % 10 == 0) {
-            PlaySfx(BIBLE_SUBWPN_SWOOSH);
-        }
-    }
-}
-
-// echo of bat effect
-INCLUDE_ASM("dra/nonmatchings/843B0", EntityBatEcho);
-
-void func_8012C600(void) {
-    s32 x, y;
-    s32 i;
-    s32 t0 = PLAYER.posX.i.hi;
-    s32 t1 = PLAYER.posY.i.hi;
-
-    x = g_Entities[20].posX.i.hi + 8;
-    for (i = 0; i < 9; i++) {
-        if (x <= g_Entities[i + 21].posX.i.hi + 4) {
-            x = g_Entities[i + 21].posX.i.hi + 4;
-        }
-    }
-    D_8013AEBC[0] = x - t0;
-
-    x = g_Entities[20].posX.i.hi - 8;
-    for (i = 0; i < 9; i++) {
-        if (x >= g_Entities[i + 21].posX.i.hi - 4) {
-            x = g_Entities[i + 21].posX.i.hi - 4;
-        }
-    }
-    D_8013AEBC[2] = x - t0;
-
-    y = g_Entities[21].posY.i.hi;
-    for (i = 0; i < 9; i++) {
-        if (y >= g_Entities[i + 21].posY.i.hi) {
-            y = g_Entities[i + 21].posY.i.hi;
-        }
-    }
-    y = y - 4;
-    if (y >= g_Entities[30].posY.i.hi - 12) {
-        y = g_Entities[30].posY.i.hi - 12;
-    }
-    if (y >= g_Entities[20].posY.i.hi - 8) {
-        y = g_Entities[20].posY.i.hi - 8;
-    }
-    D_8013AEBC[3] = y - t1;
-    if (D_8013AEBC[3] < -24) {
-        D_8013AEBC[3] = -24;
-    }
-
-    y = g_Entities[21].posY.i.hi;
-    for (i = 0; i < 9; i++) {
-        if (y <= g_Entities[i + 21].posY.i.hi) {
-            y = g_Entities[i + 21].posY.i.hi;
-        }
-    }
-    y = y + 4;
-
-    if (y <= PLAYER.posY.i.hi + 28) {
-        y = PLAYER.posY.i.hi + 28;
-    }
-    if (y <= g_Entities[17].posY.i.hi + 28) {
-        y = g_Entities[17].posY.i.hi + 28;
-    }
-    D_8013AEBC[1] = y - t1;
-    if (D_8013AEBC[1] > 0x27) {
-        D_8013AEBC[1] = 0x27;
-    }
-
-    if (!PLAYER.facingLeft) {
-        if (D_8013AEBC[2] < -0x2C) {
-            D_8013AEBC[2] = -0x2C;
-        }
-        if (D_8013AEBC[0] > 0x14) {
-            D_8013AEBC[0] = 0x14;
-        }
-    } else {
-        if (D_8013AEBC[2] < -0x14) {
-            D_8013AEBC[2] = -0x14;
-        }
-        if (D_8013AEBC[0] > 0x2C) {
-            D_8013AEBC[0] = 0x2C;
-        }
-    }
-}
-
-bool WolfFormFinished(void) {
-    if (PLAYER.step_s == 0) {
-        return false;
-    }
-    if (PLAYER.step_s == 8) {
-        return false;
-    }
-    if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
-        g_Player.padTapped & PAD_R2 ||
-        HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
-        SetPlayerStep(Player_UnmorphWolf);
-        SetPlayerAnim(0xCA);
-        D_800AFDA4[1] = 1;
-        PLAYER.palette = 0x810D;
-        g_Player.unk66 = 0;
-        g_Player.unk68 = 0;
-        // Create factory for EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2400, 44), 0);
-        PLAYER.velocityY >>= 1;
-        return true;
-    }
-    return false;
-}
-
-void func_8012C97C(void) {
-    if (g_Entities[PLAYER_CHARACTER].step_s == 0) {
-        return;
-    }
-    if (g_Entities[PLAYER_CHARACTER].step_s >= 8 &&
-        g_Entities[PLAYER_CHARACTER].step_s < 10) {
-        return;
-    }
-    if (D_80097448[1] < 13) {
-        return;
-    }
-    if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {
-        return;
-    }
-    if (!IsRelicActive(RELIC_SKILL_OF_WOLF)) {
-        return;
-    }
-    if (g_Player.pl_vram_flag & 1) {
-        return;
-    }
-    if (!(g_Player.padPressed & PAD_TRIANGLE)) {
-        return;
-    }
-    if (D_80138440 != 0) {
-        return;
-    }
-
-    PLAYER.step_s = 9;
-    D_800B0914 = 0;
-    SetPlayerAnim(0xEC);
-    PLAYER.velocityY = 0;
-}
-
-void func_8012CA64(void) {
-    u8 anim;
-
-    PLAYER.step_s = 1;
-    D_800B0914 = 0;
-
-    anim = 0xDE;
-    if (g_Player.pl_vram_flag & 0x20) {
-        anim = 0xDF;
-    }
-    SetPlayerAnim(anim);
-
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX /= 2;
-
-    D_800B0918 = 0x200;
-    if (g_Player.pl_vram_flag & 0x40) {
-        D_800B0914 = 1;
-        SetPlayerAnim(0xE9);
-    }
-}
-
-void func_8012CB0C(void) {
-    PLAYER.ext.player.anim = 0xDE;
-    PLAYER.velocityY = 0;
-    D_800B0914 = 0;
-    PLAYER.animFrameIdx = 0;
-    PLAYER.animFrameDuration = 0;
-    PLAYER.step_s = 7;
-}
-
-void func_8012CB4C(void) {
-    PLAYER.step_s = 2;
-    if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
-        (PLAYER.facingLeft == 0 && g_Player.padPressed & PAD_LEFT)) {
-        SetPlayerAnim(0xE1);
-        D_800B0914 = 0;
-        D_8013842C = 0;
-        return;
-    } else if (D_8013842C != 0) {
-        SetPlayerAnim(0xE2);
-        D_800B0914 = 2;
-        SetSpeedX(0x20000);
-        return;
-    } else {
-        SetPlayerAnim(0xE0);
-        D_800B0914 = 1;
-        D_8013842C = 0xC;
-    }
-}
-
-void func_8012CC30(s32 arg0) {
-    if (arg0 == 0) {
-        D_80138444 = 1;
-        if (g_ButtonCombo[COMBO_QCF].buttonsCorrect == COMBO_COMPLETE &&
-            IsRelicActive(RELIC_SKILL_OF_WOLF) &&
-            CastSpell(SPELL_WOLF_CHARGE)) {
-            CheckMoveDirection();
-            PLAYER.step_s = 2;
-            D_800B0914 = 4;
-            SetSpeedX(0x50000);
-            g_CurrentEntity->velocityY = 0;
-            SetPlayerAnim(0xED);
-            LearnSpell(4);
-        }
-    } else {
-        D_80138444 = 1;
-    }
-}
-
-void func_8012CCE4(void) {
-    PLAYER.velocityY = FIX(-3.5);
-    if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
-        SetPlayerAnim(0xE7);
-        // Might be possible to rewrite this block to reduce duplication with
-        // some clever && and ||
-        if (PLAYER.facingLeft) {
-            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
-                PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
-            }
-            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
-                PLAYER.velocityY = FIX(-0.5);
-            }
-        } else {
-            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
-                PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
-            }
-            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
-                PLAYER.velocityY = FIX(-0.5);
-            }
-        }
-        D_800B0914 = 2;
-    } else if (
-        (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) &&
-        ((PLAYER.step_s != 2) || (D_800B0914 != 0)) && (PLAYER.step_s != 9)) {
-        SetPlayerAnim(0xE7);
-        D_800B0914 = 1;
-        if (g_Player.padPressed & PAD_UP) {
-            PLAYER.velocityY = FIX(-4.875);
-        }
-    } else {
-        SetPlayerAnim(0xE6);
-        D_800B0914 = 0;
-        if (g_Player.padPressed & PAD_UP) {
-            PLAYER.velocityY = FIX(-4.875);
-        }
-    }
-    PLAYER.step_s = 4;
-    D_80138430 += 0x80;
-}
-
-void func_8012CED4(void) {
-    if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
-        SetPlayerAnim(0xE7);
-        D_800B0914 = 1;
-    } else {
-        SetPlayerAnim(0xE8);
-        SetSpeedX(0x10000);
-        D_800B0914 = 0;
-        if (D_80138438 & 0x40) {
-            PLAYER.animFrameIdx = 4;
-            PLAYER.velocityX = 0;
-            PLAYER.animFrameDuration = 1;
-        }
-    }
-    PLAYER.step_s = 5;
-    g_Player.D_80072F00[5] = 8;
-    PLAYER.velocityY = 0;
-    D_80138430 -= 0x100;
-}
-
-void func_8012CFA8(void) {
-    SetPlayerAnim(0xEA);
-    PLAYER.step_s = 6;
-    D_800B0914 = 0;
-    PLAYER.velocityX = 0;
-    g_Player.D_80072F00[5] = 8;
-}
-
-void func_8012CFF0(void) {
-    PLAYER.step_s = 3;
-    SetPlayerAnim(0xE3);
-    D_800B0914 = 0;
-}
-
-void func_8012D024(void) {
-    DecelerateX(0x2000);
-    if (g_Player.padTapped & PAD_CROSS) {
-        func_8012CCE4();
-        return;
-    }
-    if (!(g_Player.pl_vram_flag & 1)) {
-        func_8012CED4();
-        return;
-    }
-    if (g_Player.padTapped & PAD_SQUARE) {
-        func_8012CC30(0);
-        return;
-    }
-    if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) {
-        func_8012CB4C();
-        return;
-    }
-    if (g_Player.padPressed & PAD_DOWN) {
-        func_8012CFF0();
-        return;
-    }
-    if (D_800B0914 != 0) {
-        return;
-    }
-    if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
-        --D_800B0918 == 0) {
-        D_800B0914 = 1;
-        SetPlayerAnim(0xE9);
-        return;
-    }
-    if (g_Player.pl_vram_flag & 0x40) {
-        D_800B0914 = 1;
-        SetPlayerAnim(0xE9);
-    }
-}
-
-void func_8012D178(void) {
-    s32 var_v0;
-
-    if (g_Player.padTapped & PAD_CROSS) {
-        func_8012CCE4();
-    } else if (!(g_Player.pl_vram_flag & 1)) {
-        func_8012CFA8();
-    } else {
-#if defined(VERSION_US)
-        if (PLAYER.facingLeft != 0) {
-            var_v0 = g_Player.padPressed & PAD_LEFT;
-        } else {
-            var_v0 = g_Player.padPressed & PAD_RIGHT;
-        }
-#elif defined(VERSION_HD)
-        var_v0 = g_Player.padPressed & (PAD_LEFT | PAD_RIGHT);
-#endif
-        if (var_v0 != 0) {
-            func_8012CB4C();
-        } else if (g_Player.unk04 & 0x40) {
-            func_8012CA64();
-        } else if (g_GameTimer % 6 == 0) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 69), 0);
-        }
-    }
-}
-
-void func_8012D28C(bool exitEarly) {
-    bool bitNotFound;
-    s32 i;
-
-    func_80102CD8(2);
-    PlaySfx(0x644);
-    PLAYER.velocityX = 0;
-    g_Player.D_80072EFC = 0x20;
-    g_Player.padSim = 0;
-    // Odd logic, if we exit early, we force an R2-tap. Strange!
-    if (exitEarly) {
-        g_Player.padTapped = PAD_R2;
-        WolfFormFinished();
-        return;
-    }
-    // Start a routine where we look through this array for a value.
-    bitNotFound = 0;
-    for (i = 3; i < 7; i++) {
-        if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
-            break;
-        }
-    }
-    // If we made it through that loop without finding one, skip i=7,8,9
-    // and keep searching.
-    if (i == 7) {
-        for (i = 10; i < 14; i++) {
-            if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
-                break;
-            }
-        }
-    }
-    // If we even made it through that one, then conclude the bit was not found.
-    if (i == 14) {
-        bitNotFound++;
-    }
-
-    SetSpeedX(FIX(1));
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x900, 4), 0);
-    D_800B0914 = 0;
-    // Finally make use of that bit to control if X is positive or negative.
-    if (bitNotFound) {
-        func_8012CED4();
-        SetSpeedX(FIX(1));
-    } else {
-        func_8012CFA8();
-        SetSpeedX(FIX(-1));
-    }
-    PLAYER.velocityY = FIX(-3.5);
 }

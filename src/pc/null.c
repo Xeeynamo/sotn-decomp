@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // something is off with the headers in this target
 #include "../../include/common.h"
 #include "../../include/psxsdk/libgpu.h"
@@ -17,8 +18,9 @@ void MyPadInit(int mode) {}
 
 u_long MyPadRead(int id) { return 0; }
 
+int MyLoadImage(RECT* rect, u_long* p) { return 0; }
 int MyDrawSync(int mode) { return 0; }
-
+void MySetDrawEnv(DR_ENV* dr_env, DRAWENV* env) {}
 DISPENV* MyPutDispEnv(DISPENV* env) { return NULL; }
 
 void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {}
@@ -46,3 +48,5 @@ int main(int argc, char* argv[]) {
     }
     ResetGame();
 }
+
+int MyMoveImage(RECT* rect, int x, int y) {}

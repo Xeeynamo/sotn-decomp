@@ -253,7 +253,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 
 	sb.WriteString("static MyLayer layers[] = {\n")
-	sb.WriteString("    {},\n")
+	sb.WriteString("    { NULL, NULL, 0, 0, 0, 0 },\n")
 	for _, l := range layers[1:] {
 		sb.WriteString(fmt.Sprintf("    { %s, %s, 0x%08X, 0x%02X, %d, %d },\n",
 			makeSymbolFromFileName(l["data"].(string)),
@@ -327,6 +327,25 @@ func buildSpriteGroup(sb *strings.Builder, sprites []*[]sprite, mainSymbol strin
 		}
 		sb.WriteString("};\n")
 	}
+}
+
+func buildFrameSet(inputFileName, outputFileName, prefix string) error {
+	data, err := os.ReadFile(inputFileName)
+	if err != nil {
+		return fmt.Errorf("unable to open %q: %v", inputFileName, err)
+	}
+
+	var sprites []*[]sprite
+	if err := json.Unmarshal(data, &sprites); err != nil {
+		return fmt.Errorf("unable to parse %q: %v", inputFileName, err)
+	}
+	sb := strings.Builder{}
+	sb.WriteString("// clang-format off\n")
+	r := rand.New(rand.NewSource(int64(len(data))))
+	if len(sprites) > 0 {
+		buildSpriteGroup(&sb, sprites, prefix, r)
+	}
+	return os.WriteFile(outputFileName, []byte(sb.String()), 0644)
 }
 
 func buildSprites(fileName string, outputDir string) error {

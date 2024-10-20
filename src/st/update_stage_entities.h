@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
 extern u16 UNK_Invincibility0[];
@@ -11,7 +12,11 @@ void UpdateStageEntities(void) {
             continue;
 
         if (entity->step) {
+#ifdef VERSION_BETA
+            if (D_80096ED0_mad && !(entity->flags & FLAG_UNK_10000))
+#else
             if (!(entity->flags & FLAG_UNK_10000))
+#endif
                 continue;
             if (entity->flags & 0xF) {
                 iFramePalette = entity->nFramesInvincibility << 1;
@@ -26,7 +31,7 @@ void UpdateStageEntities(void) {
 
         g_CurrentEntity = entity;
         entity->pfnUpdate(entity);
-        entity->unk44 = 0;
+        entity->hitParams = 0;
         entity->hitFlags = 0;
     }
 }

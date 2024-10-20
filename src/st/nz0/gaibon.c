@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
+#include "sfx.h"
 
 #define SLOGRA self[-8]
 
@@ -106,7 +108,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_IDLE:
         AnimateEntity(D_80181250, self);
         if (!self->animFrameDuration && self->animFrameIdx == 1) {
-            func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+            PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if (self->hitFlags) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
@@ -148,7 +150,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_80181250, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (!(--self->ext.GS_Props.timer)) {
@@ -163,7 +165,7 @@ void EntityGaibon(Entity* self) {
                 SetStep(4);
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             break;
         }
@@ -205,7 +207,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_80181298, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             // Reuse of speedLimit variable, unrelated to speed
             speedLimit = 0xF;
@@ -217,7 +219,7 @@ void EntityGaibon(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_SMALL_FIREBALL, self, other);
-                    func_801C29B0(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                    PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -244,7 +246,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             break;
         }
@@ -310,11 +312,11 @@ void EntityGaibon(Entity* self) {
                     if (!self->ext.GS_Props.nearDeath) {
                         CreateEntityFromEntity(
                             E_GAIBON_SMALL_FIREBALL, self, other);
-                        func_801C29B0(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                        PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     } else {
                         CreateEntityFromEntity(
                             E_GAIBON_BIG_FIREBALL, self, other);
-                        func_801C29B0(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                        PlaySfxPositional(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
                     if (self->facingLeft) {
@@ -348,7 +350,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
-                    func_801C29B0(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                    PlaySfxPositional(SFX_EXPLODE_B);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -419,7 +421,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(D_801812AC, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
@@ -440,7 +442,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(D_801812AC, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
+                PlaySfxPositional(SFX_WING_FLAP_B);
             }
             if (GetSideToPlayer() & 1) {
                 self->velocityX -= FIX(5.0 / 128);
@@ -477,8 +479,8 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
-            if (func_801BCCFC(D_80181240) & 1) {
-                func_801C29B0(NA_SE_EN_GAIBON_SCREAM);
+            if (UnkCollisionFunc3(D_80181240) & 1) {
+                PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
                 SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;
@@ -487,17 +489,17 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.flag = 0;
                 SetSubStep(GAIBON_NEAR_DEATH_TRANSFORM);
                 if (self->flags & FLAG_DEAD) {
-                    func_801C29B0(NA_SE_EN_GAIBON_COLLAPSE);
+                    PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                     SetStep(GAIBON_DYING);
                 } else {
-                    func_801C29B0(NA_SE_EN_GAIBON_SCREAM);
+                    PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
                 }
             }
             break;
         case GAIBON_NEAR_DEATH_TRANSFORM:
             if (AnimateEntity(D_801812FC, self) == 0) {
                 self->ext.GS_Props.flag++;
-                self->palette = D_80180D36 + self->ext.GS_Props.flag;
+                self->palette = D_80180D30[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     self->flags &= ~0xF;
                     SetStep(4);
@@ -515,18 +517,18 @@ void EntityGaibon(Entity* self) {
                 self->flags &= ~0xF;
                 // do-while needed on PSX but not PSP
                 do {
-                    self->palette = D_80180D36;
-                    func_801C29B0(NA_SE_EN_GAIBON_FLAME_OUT);
+                    self->palette = D_80180D30[3];
+                    PlaySfxPositional(SFX_EXPLODE_SMALL);
                     self->step_s++;
                 } while (0);
             }
             break;
         case GAIBON_DYING_TURN_INTO_BONES:
             if (!(self->ext.GS_Props.timer & 7)) {
-                func_801C29B0(NA_SE_EN_GAIBON_FLAME);
+                PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_FIRE, self, other);
+                    CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, other);
                     other->posY.i.hi += 28;
                     // Scatter bones randomly between +- 32
                     other->posX.i.hi += ((Random() & 63) - 32);
@@ -618,7 +620,7 @@ void func_801B69E8(Entity* self) {
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
         self->entityId = 2;
         self->params = 0;
@@ -651,7 +653,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
-        self->drawFlags = 0;
+        self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
         self->params = 1;
         return;
@@ -674,7 +676,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->rotX = 0x100;
             self->unk6C = 0x80;
             self->palette = 0x81F3;
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             self->step = 2;
             self->hitboxState = 0;
             self->flags |= FLAG_UNK_2000;

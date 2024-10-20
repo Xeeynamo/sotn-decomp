@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
 // warp.c
@@ -8,10 +9,10 @@ s32 WarpBackgroundBrightness;
 s32 D_80180648;
 
 // st_debug.c
-u8 D_80180530[8];
+u8 g_EntityUnkId12Data[8];
 
 // e_misc.c
-u8 D_80180608[8]; // different than the D_80180608 in warp.c ???
+u8 g_HeartDropArray[8]; // different than the g_HeartDropArray in warp.c ???
 
 // ????
 u8 D_psp_0924BCD0[0x1000];
@@ -40,10 +41,4 @@ s32 D_psp_0924BC68;
 s32 D_psp_0924BC60;
 
 // st_update.c
-u16 g_ItemIconSlots[0x20];
-
-// create_entity.c
-u16* g_LayoutObjHorizontal;
-u16* g_LayoutObjVertical;
-u8 g_LayoutObjPosHorizontal;
-u8 g_LayoutObjPosVertical;
+// u16 g_ItemIconSlots[0x20];

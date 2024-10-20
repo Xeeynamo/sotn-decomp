@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 
 #include "ric.h"
 
-void func_8015C2A8(void) {
+void RicHandleHighJump(void) {
     bool loadAnim = 0;
     s32 temp;
 
@@ -13,16 +14,16 @@ void func_8015C2A8(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 temp = g_Player.padPressed & PAD_RIGHT;
             } else {
                 temp = g_Player.padPressed & PAD_LEFT;
             }
             if (temp == 0) {
-                func_8015C93C(0x1000);
+                RicDecelerateX(0x1000);
             }
         } else {
-            func_8015C93C(0x1000);
+            RicDecelerateX(0x1000);
         }
 
         if (g_Player.pl_vram_flag & 2) {
@@ -56,8 +57,8 @@ void func_8015C2A8(void) {
     }
 
     if (loadAnim) {
-        func_8015C920(&D_80155534);
-        SetPlayerStep(4);
+        RicSetAnimation(D_80155534);
+        RicSetStep(PL_S_JUMP);
     }
 }
 
@@ -171,7 +172,7 @@ void func_8015C6D4(void) {
     }
 }
 
-void SetPlayerStep(PlayerSteps step) {
+void RicSetStep(int step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }

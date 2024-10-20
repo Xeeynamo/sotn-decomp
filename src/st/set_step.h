@@ -1,8 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void SetStep(u8 step) {
-    Entity* entity = g_CurrentEntity;
-
-    entity->step = step;
-    entity->step_s = 0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
