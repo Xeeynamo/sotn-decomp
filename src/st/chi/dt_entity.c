@@ -23,7 +23,7 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
-void EntityTriggerVolume(Entity*);
+void EntityCameraLock(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
@@ -71,7 +71,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock,
-    EntityTriggerVolume,
+    EntityCameraLock,
     EntityUnkId13,  // EntityFlameTrail
     EntityUnkId14,
     EntityUnkId15,  // EntityGreyPuff

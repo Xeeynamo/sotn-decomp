@@ -1,7 +1,10 @@
 /*
- * File: en_trigger_volume.c
+ * File: en_camera_lock.c
  * Overlay: CHI
- * Description: ENTITY - Trigger Volume
+ * Description: ENTITY - Camera lock
+ * Locks the camera as if it's constrained to specific room dimensions. Once the
+ * trigger volume is hit by the player, the camera unlocks to new room dimensions.
+ * Useful for preventing the camera from scrolling over hidden rooms.
  */
 
 #include "chi.h"
@@ -27,9 +30,9 @@ extern u8 D_80180798[];     // Trigger long dimension size
 extern u8 D_801807A0[];     // Trigger long dimension is horizontal
 extern u16 D_801807A8[];
 
-// E_TRIGGER_VOLUME
+// E_CAMERA_LOCK
 // func_8019B4DC
-void EntityTriggerVolume(Entity* entity) {
+void EntityCameraLock(Entity* entity) {
     s32 temp_v0;
     u16* temp_v0_2;
     u16 temp_s1 = entity->params;
