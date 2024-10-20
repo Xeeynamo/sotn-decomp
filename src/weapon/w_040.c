@@ -162,7 +162,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->anim = D_11C000_8017A80C;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            g_api.PlaySfx(0x6E7);
+            g_api.PlaySfx(SFX_VO_ALU_PAIN_A);
             self->step++;
         }
         break;

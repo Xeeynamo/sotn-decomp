@@ -276,7 +276,7 @@ void func_801C6678(Entity* self) {
         self->rotY = 0x200;
         self->unk6C = 0;
         self->hitboxState = 0;
-        self->drawFlags = self->drawFlags | 0xB;
+        self->drawFlags |= FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         return;
     }
 

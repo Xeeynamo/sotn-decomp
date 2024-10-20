@@ -262,12 +262,12 @@ void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
 }
 
 void func_801CDFD8(Entity* self, s32 arg1) {
-    if (self->ext.et_801CDFD8.unkB4 == 0) {
-        func_801CDD00(self, self->ext.et_801CDFD8.unkA4, arg1);
-        self->ext.et_801CDFD8.unkB4 = arg1;
+    if (self->ext.GH_Props.unkB4[0] == 0) {
+        func_801CDD00(self, self->ext.GH_Props.unkA4, arg1);
+        self->ext.GH_Props.unkB4[0] = arg1;
     }
-    self->ext.et_801CDFD8.unkB4--;
-    self->ext.et_801CDFD8.unk9C += self->ext.et_801CDFD8.unkA6;
+    self->ext.GH_Props.unkB4[0]--;
+    self->ext.GH_Props.rotZ += self->ext.GH_Props.unkA6;
     func_801CD83C(self);
 }
 
@@ -403,8 +403,8 @@ s32 func_801CE4CC(Entity* self) {
     s32 step;
     s32 x;
 
-    if (g_CurrentEntity->ext.et_801CE4CC.unk8E != 0) {
-        g_CurrentEntity->ext.et_801CE4CC.unk8E--;
+    if (g_CurrentEntity->ext.GH_Props.unk8E != 0) {
+        g_CurrentEntity->ext.GH_Props.unk8E--;
     }
 
     x = self->posX.i.hi - PLAYER.posX.i.hi;
@@ -417,7 +417,7 @@ s32 func_801CE4CC(Entity* self) {
         return;
     }
 
-    if (g_CurrentEntity->ext.et_801CE4CC.unk84 == 1) {
+    if (g_CurrentEntity->ext.GH_Props.unk84 == 1) {
         entity = g_CurrentEntity + 10;
     } else {
         entity = g_CurrentEntity + 13;
@@ -449,8 +449,8 @@ s32 func_801CE4CC(Entity* self) {
         }
     }
 
-    if ((g_CurrentEntity->ext.et_801CE4CC.unk8E == 0) && (x < 96)) {
-        g_CurrentEntity->ext.et_801CE4CC.unk8E = 3;
+    if ((g_CurrentEntity->ext.GH_Props.unk8E == 0) && (x < 96)) {
+        g_CurrentEntity->ext.GH_Props.unk8E = 3;
         step = 6;
     }
     if (step != g_CurrentEntity->step) {
@@ -458,7 +458,7 @@ s32 func_801CE4CC(Entity* self) {
     }
     if (g_CurrentEntity->step == 7) {
         if (step == 5) {
-            g_CurrentEntity->ext.et_801CE4CC.unkB0 = 1;
+            g_CurrentEntity->ext.GH_Props.unkB0[0] = 1;
         }
     }
 }

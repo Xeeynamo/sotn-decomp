@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
+#include "sfx.h"
 
 void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->anim = anim;
@@ -275,7 +276,7 @@ void RicSetHighJump(void) {
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
-    g_api.PlaySfx(SFX_GRUNT_C);
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
     g_Player.timers[PL_T_12] = 4;
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;

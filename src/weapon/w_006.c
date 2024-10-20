@@ -10,6 +10,7 @@ extern s32 g_HandId;
 #include "w_006_2.h"
 #define g_Animset w_006_1
 #define g_Animset2 w_006_2
+#include "sfx.h"
 
 extern u16 D_2E000_8017ABD4[];
 extern s32 D_2E000_8017ABF0[];
@@ -108,7 +109,7 @@ static void func_ptr_80170004(Entity* self) {
         self->rotZ = rand();
 
         if (!(self->params & ~0x8000)) {
-            g_api.PlaySfx(SFX_UNK_6EE);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
         }
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);

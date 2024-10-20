@@ -705,7 +705,7 @@ void EntitySuccubus(Entity* self) {
             self->hitboxState = 0;
             g_MultipleCount = 6;
             PlaySfxPositional(NA_VO_SU_GRUNT_1);
-            PlaySfxPositional(NA_SE_SU_CREATE_CLONES);
+            PlaySfxPositional(SFX_PSWORD_TWIRL);
             self->step_s++;
 
         case SUCCUBUS_CLONE_ATTACK_WAIT:
@@ -778,7 +778,7 @@ void EntitySuccubus(Entity* self) {
                 SetSubStep(SUCCUBUS_CLONE_ATTACK_ANIM_2);
             }
             if ((self->animFrameIdx == 4) && (self->animFrameDuration == 0)) {
-                PlaySfxPositional(NA_SE_SU_CHARGE_PINKBALLS);
+                PlaySfxPositional(SFX_RIC_SUC_REVIVE);
 
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -1051,7 +1051,7 @@ void EntitySuccubusClone(Entity* self) {
             }
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
-            g_api.PlaySfxVolPan(0x6D9, 0x54, 0);
+            g_api.PlaySfxVolPan(SFX_BOSS_CLONE_DISAPPEAR, 0x54, 0);
             SetStep(5);
         }
     }
@@ -1109,7 +1109,7 @@ void EntitySuccubusClone(Entity* self) {
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            PlaySfxPositional(0x6E2);
+            PlaySfxPositional(SFX_RIC_SUC_REVIVE);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {

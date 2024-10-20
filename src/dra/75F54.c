@@ -31,7 +31,7 @@ void func_80115F54(void) {
         var_s2 = true;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
-        PlaySfx(NA_SE_VO_AL_DYING);
+        PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.player.anim = 0xC1;
@@ -87,7 +87,7 @@ void func_80116208(void) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.timers[2] = 8;
             g_Player.unk40 = 0x8166;
-            PlaySfx(SFX_UNK_6EB);
+            PlaySfx(SFX_VO_ALU_PAIN_E);
         }
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
@@ -97,7 +97,7 @@ void func_80116208(void) {
     case 1:
         if (g_Player.unk60 == 3) {
             temp_s0 = HandleDamage(&damage, 2, g_Player.unk64, 1);
-            func_80118C84(damage.damageTaken, 0);
+            CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
                 func_80115394(&damage, Player_BossGrab, 1);
@@ -106,7 +106,7 @@ void func_80116208(void) {
             if (g_Player.unk62 == 0) {
                 g_Player.timers[2] = 4;
                 g_Player.unk40 = 0x8166;
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
             }
             if (g_Player.unk62 == 2) {
                 g_Player.timers[2] = 4;
@@ -121,7 +121,7 @@ void func_80116208(void) {
             g_Player.unk60 = 0;
             SetPlayerAnim(0x2E);
             g_Player.damageTaken = g_Player.unk64;
-            PlaySfx(SFX_UNK_6ED);
+            PlaySfx(SFX_VO_ALU_YELL);
             return;
         }
         if (g_Player.unk60 == 0) {
@@ -220,7 +220,7 @@ void func_801166A4(void) {
 
     case 1:
         if (PLAYER.animFrameDuration < 0) {
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
             func_8010E570(0);
         }
         break;
@@ -886,7 +886,7 @@ void func_80117AC0(void) {
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             SetPlayerAnim(0xC8);
-            PlaySfx(SFX_UNK_6EE);
+            PlaySfx(SFX_VO_ALU_ATTACK_A);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
             PLAYER.animFrameIdx = 0;
@@ -1412,7 +1412,7 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-s32 func_80118C84(s32 arg0, s32 arg1) {
+s32 CreateHPNumMove(s32 arg0, s32 arg1) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
 
     if (entity != NULL) {
@@ -1420,8 +1420,8 @@ s32 func_80118C84(s32 arg0, s32 arg1) {
         entity->entityId = ENTITY_13;
         entity->posX.val = PLAYER.posX.val;
         entity->posY.val = PLAYER.posY.val;
-        entity->ext.generic.unk80.modeS16.unk0 = arg0;
-        entity->ext.generic.unk80.modeS16.unk2 = arg1;
+        entity->ext.hpNumMove.number = arg0;
+        entity->ext.hpNumMove.type = arg1;
         return 0;
     }
     return -1;

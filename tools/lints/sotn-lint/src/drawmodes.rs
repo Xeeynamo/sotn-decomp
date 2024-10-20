@@ -118,6 +118,21 @@ mod tests {
         let expected_line = "self->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
+    }
 
+    #[test]
+    fn test_equality() {
+        let input_line = "if (self->drawMode == 8) {";
+        let expected_line = "if (self->drawMode == DRAW_HIDE) {";
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_inequality() {
+        let input_line = "if (self->drawMode != 8) {";
+        let expected_line = "if (self->drawMode != DRAW_HIDE) {";
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result, expected_line)
     }
 }

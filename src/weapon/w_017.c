@@ -6,6 +6,7 @@
 #include "w_017_2.h"
 #define g_Animset w_017_1
 #define g_Animset2 w_017_2
+#include "sfx.h"
 
 typedef struct {
     /* 0x00 */ s32 x0;
@@ -200,7 +201,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         g_api.func_80118C28(4);
-        g_api.PlaySfx(SE_WPN_PENTAGRAM);
+        g_api.PlaySfx(SFX_PENTAGRAM_ATTACK);
         g_api.func_80102CD8(3);
         SetWeaponProperties(self, 0);
         self->ext.weapon.lifetime = 24;

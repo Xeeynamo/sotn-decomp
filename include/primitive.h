@@ -182,7 +182,7 @@ typedef struct AxePrim {
     /* 0x19 */ u8 v1;
     /* 0x1A */ u16 tpage;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E*/ s16 unk1E;
+    /* 0x1E */ s16 unk1E;
     /* 0x20 */ s16 x2;
     /* 0x22 */ s16 y2;
     /* 0x24 */ u8 step;
@@ -190,7 +190,8 @@ typedef struct AxePrim {
     /* 0x28 */ s32 pad;
     /* 0x2C */ s16 timer;
     /* 0x2E */ s16 unk2E;
-    /* 0x30 */ s16 unk30;
+    /* 0x30 */ u8 u3;
+    /* 0x31 */ u8 v3;
     /* 0x32 */ u16 drawMode;
 } AxePrim;
 

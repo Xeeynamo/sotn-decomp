@@ -29,7 +29,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        temp_s0 = self->ext.hpNumMove.unk80;
+        temp_s0 = self->ext.hpNumMove.number;
         self->primIndex = AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -63,13 +63,13 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
             prim->clut = 0x1B2;
-            if (self->ext.hpNumMove.unk80 == 0) {
+            if (self->ext.hpNumMove.number == 0) {
                 prim->clut = 0x1B4;
             }
-            if (self->ext.hpNumMove.unk82 == 1) {
+            if (self->ext.hpNumMove.type == 1) {
                 prim->clut = 0x1B8;
             }
-            if (self->ext.hpNumMove.unk82 == 2) {
+            if (self->ext.hpNumMove.type == 2) {
                 prim->clut = 0x1B6;
             }
             prim->tpage = 0x1A;
@@ -99,17 +99,17 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             prim->r0 = 0xFF;
             prim->g0 = 0x40;
             prim->b0 = 0x40;
-            if (self->ext.hpNumMove.unk80 == 0) {
+            if (self->ext.hpNumMove.number == 0) {
                 prim->r0 = 0x40;
                 prim->g0 = 0x40;
                 prim->b0 = 0xFF;
             }
-            if (self->ext.hpNumMove.unk82 == 1) {
+            if (self->ext.hpNumMove.type == 1) {
                 prim->r0 = 0x40;
                 prim->g0 = 0xFF;
                 prim->b0 = 0x40;
             }
-            if (self->ext.hpNumMove.unk82 == 2) {
+            if (self->ext.hpNumMove.type == 2) {
                 prim->r0 = 0xFF;
                 prim->g0 = 0x40;
                 prim->b0 = 0xFF;
@@ -127,7 +127,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     case 1:
         self->ext.hpNumMove.unk8C++;
         self->ext.hpNumMove.unk8E++;
-        if (self->ext.hpNumMove.unk82 != 2) {
+        if (self->ext.hpNumMove.type != 2) {
             self->posY.i.hi--;
         }
         if (--self->ext.hpNumMove.unk90 == 0) {
@@ -146,7 +146,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     case 3:
         self->ext.hpNumMove.unk8C++;
         self->ext.hpNumMove.unk8E++;
-        if (self->ext.hpNumMove.unk82 != 2) {
+        if (self->ext.hpNumMove.type != 2) {
             self->posY.i.hi--;
         }
         if (--self->ext.hpNumMove.unk90 == 0) {
@@ -192,7 +192,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         self->posX.i.hi += rcos(temp_v0_10) >> 9;
         self->posY.i.hi -= rsin(self->ext.hpNumMove.unk98) >> 9;
         if (self->ext.hpNumMove.unk90 == 0) {
-            if (self->ext.hpNumMove.unk82 != 2) {
+            if (self->ext.hpNumMove.type != 2) {
                 self->step++;
                 break;
             }

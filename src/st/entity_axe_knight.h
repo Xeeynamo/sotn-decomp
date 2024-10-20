@@ -118,6 +118,9 @@ s32 func_801C4198(Entity* axeKnight) {
             prim = &g_PrimBuf[primIndex];
             axeKnight->ext.axeknight.prim = prim;
             dataPtr++;
+            // Prims appear to come in pairs here.
+            // "prim" is a Primitive, while prim->next is an AxePrim.
+            // Notice at the end of this loop we do ->next twice.
             while (prim != NULL) {
                 UnkPolyFunc2(prim);
                 dataPtr++;
@@ -128,14 +131,14 @@ s32 func_801C4198(Entity* axeKnight) {
                     prim->next->x1 += *dataPtr++;
                 }
                 prim->next->y0 = axeKnight->posY.i.hi + *dataPtr++;
-                LOH(prim->next->r2) = *dataPtr++;
+                ((AxePrim*)prim->next)->unk1C = *dataPtr++;
                 if (axeKnight->facingLeft) {
-                    prim->next->x1 -= LOH(prim->next->r2) / 2;
+                    prim->next->x1 -= ((AxePrim*)prim->next)->unk1C / 2;
                 } else {
-                    prim->next->x1 += LOH(prim->next->r2) / 2;
+                    prim->next->x1 += ((AxePrim*)prim->next)->unk1C / 2;
                 }
-                LOH(prim->next->b2) = *dataPtr++;
-                prim->next->y0 += LOH(prim->next->b2) / 2;
+                ((AxePrim*)prim->next)->unk1E = *dataPtr++;
+                prim->next->y0 += ((AxePrim*)prim->next)->unk1E / 2;
                 prim->clut = clutBase + *dataPtr++;
                 if (axeKnight->params) {
                     prim->clut += 2;
@@ -190,11 +193,11 @@ s32 func_801C4198(Entity* axeKnight) {
 }
 
 void func_801C4550(void) {
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2 -= 3;
+    if (g_CurrentEntity->ext.axeknight.unk82 > 0) {
+        g_CurrentEntity->ext.axeknight.unk82 -= 3;
     } else {
         SetStep(steps[(Random() & 7)]);
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2 = 256;
+        g_CurrentEntity->ext.axeknight.unk82 = 256;
     }
 }
 
@@ -210,7 +213,7 @@ void EntityAxeKnight(Entity* self) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_SCREAM);
             AxeKnightDeath();
             self->hitboxState = 0;
-            self->ext.generic.unk80.modeS16.unk0 = 65;
+            self->ext.axeknight.unk80 = 65;
             self->zPriority -= 0x10;
             SetStep(AXE_KNIGHT_DYING);
         }
@@ -221,8 +224,8 @@ void EntityAxeKnight(Entity* self) {
         InitializeEntity(g_EInitAxeKnight);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
-        self->ext.generic.unk7C.S8.unk1 = 0;
-        self->ext.generic.unk80.modeS16.unk2 = 512;
+        self->ext.axeknight.unk7D = 0;
+        self->ext.axeknight.unk82 = 512;
 
     case AXE_KNIGHT_IDLE:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
@@ -254,7 +257,7 @@ void EntityAxeKnight(Entity* self) {
             }
             if (GetDistanceToPlayerX() < 96) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 1;
+                self->ext.axeknight.unk7C = 1;
             }
         }
 
@@ -300,7 +303,7 @@ void EntityAxeKnight(Entity* self) {
 
             if (GetDistanceToPlayerX() > 80) {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 0;
+                self->ext.axeknight.unk7C = 0;
             }
         }
 
@@ -329,10 +332,10 @@ void EntityAxeKnight(Entity* self) {
         label:
             if (GetDistanceToPlayerX() < 89) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 1;
+                self->ext.axeknight.unk7C = 1;
             } else {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 0;
+                self->ext.axeknight.unk7C = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
@@ -378,10 +381,10 @@ void EntityAxeKnight(Entity* self) {
         if (animStatus == 0) {
             if (GetDistanceToPlayerX() > 88) {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 0;
+                self->ext.axeknight.unk7C = 0;
             } else {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
-                self->ext.generic.unk7C.S8.unk0 = 1;
+                self->ext.axeknight.unk7C = 1;
             }
             break;
         }
@@ -404,9 +407,9 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_DYING:
-        if (self->ext.generic.unk80.modeS16.unk0 != 0) {
-            temp = --self->ext.generic.unk80.modeS16.unk0;
-            if (!(self->ext.generic.unk80.modeS16.unk0 & 7)) {
+        if (self->ext.axeknight.unk80 != 0) {
+            temp = --self->ext.axeknight.unk80;
+            if (!(self->ext.axeknight.unk80 & 7)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -447,53 +450,53 @@ void EntityAxeKnightRotateAxe(void) {
     g_CurrentEntity->rotZ &= 0xFFF;
 }
 
-void EntityAxeKnightThrowingAxe(Entity* entity) {
+void EntityAxeKnightThrowingAxe(Entity* self) {
     s32 velocityX;
 
-    if (entity->flags & FLAG_DEAD) {
+    if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_WEAPON_BREAK);
         EntityExplosionSpawn(0, 0);
         return;
     }
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitAxeKnightAxe);
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->velocityY = init_velocity_y[entity->params];
-        velocityX = init_velocity_x[entity->params];
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->velocityY = init_velocity_y[self->params];
+        velocityX = init_velocity_x[self->params];
 
-        if (entity->facingLeft == 0) {
-            entity->velocityX = -velocityX;
+        if (self->facingLeft) {
+            self->velocityX = velocityX;
         } else {
-            entity->velocityX = velocityX;
+            self->velocityX = -velocityX;
         }
 
-        entity->ext.generic.unk7C.s = -0x40;
+        self->ext.timer.t = -0x40;
 
-        if (entity->params == 2) {
-            entity->step++;
+        if (self->params == 2) {
+            self->step++;
             return;
         }
         break;
 
     case 1:
         EntityAxeKnightRotateAxe();
-        if ((u16)entity->ext.generic.unk7C.s < 0x20) {
-            if (entity->facingLeft != 0) {
-                entity->velocityX -= FIX(0.125);
+        if (0 <= self->ext.timer.t && self->ext.timer.t < 0x20) {
+            if (self->facingLeft) {
+                self->velocityX -= FIX(0.125);
             } else {
-                entity->velocityX += FIX(0.125);
+                self->velocityX += FIX(0.125);
             }
         }
 
-        entity->ext.generic.unk7C.s++;
+        self->ext.timer.t++;
         MoveEntity();
         break;
 
     case 2:
         EntityAxeKnightRotateAxe();
-        entity->velocityY += FIX(0.125);
+        self->velocityY += FIX(0.125);
         MoveEntity();
         break;
     }

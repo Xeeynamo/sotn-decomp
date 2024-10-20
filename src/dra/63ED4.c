@@ -1436,7 +1436,7 @@ void func_80105428(void) {
     }
     if (((((s16)temp_s3 + 0x400) ^ ((s16)D_801379C8.vy + 0x400)) & 0x800) &&
         ((u32)(D_801379BC - 3) < 7U)) {
-        PlaySfx(SFX_UNK_6E0);
+        PlaySfx(SFX_SAVE_COFFIN_SWISH);
     }
 }
 

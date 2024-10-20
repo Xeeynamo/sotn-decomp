@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_032_2.h"
 #define g_Animset w_032_1
 #define g_Animset2 w_032_2
+#include "sfx.h"
 
 extern WeaponAnimation D_E4000_8017A8F8[];
 
@@ -62,7 +63,7 @@ void EntityWeaponAttack(Entity* self) {
             (PLAYER.animFrameIdx == anim->soundFrame)) {
             g_api.PlaySfx(anim->soundId);
             if (anim->soundId == SFX_WEAPON_SWISH_B) {
-                g_api.PlaySfx(SFX_UNK_6EF);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             }
         }
         if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {

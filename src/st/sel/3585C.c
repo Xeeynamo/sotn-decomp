@@ -1,67 +1,68 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
-void func_801B4B9C(Entity* entity, s16 step);
+void SEL_SetStep(Entity* entity, s16 step);
 extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
 
+// Compare to func_801B5350
 void func_801B585C(u16 arg0) {
-    Entity* e = &g_Entities[UNK_ENTITY_5];
+    Entity* self = &g_Entities[UNK_ENTITY_5];
 
-    switch (e->step) {
+    switch (self->step) {
     case 0:
-        e->animSet = ANIMSET_DRA(1);
-        e->posY.i.hi = 159;
-        e->zPriority = 0xC0;
-        e->animCurFrame = 0;
-        e->unk5A = 0;
-        e->ext.generic.unk80.entityPtr = NULL;
-        e->palette = 0x8100;
-        e->step++;
+        self->animSet = ANIMSET_DRA(1);
+        self->posY.i.hi = 159;
+        self->zPriority = 0xC0;
+        self->animCurFrame = 0;
+        self->unk5A = 0;
+        self->ext.unkSelEnts.unk80.val = 0;
+        self->palette = 0x8100;
+        self->step++;
         break;
 
     case 1:
-        AnimateEntity(D_80180504, e);
+        AnimateEntity(D_80180504, self);
         if (D_801BC3E8 & 4) {
-            e->step++;
+            self->step++;
         }
         break;
 
     case 2:
-        AnimateEntity(D_80180504, e);
-        e->ext.generic.unk80.modeS32 += 0x18000;
-        if (e->ext.generic.unk80.modeS16.unk2 >= 0x49) {
-            func_801B4B9C(e, 3);
+        AnimateEntity(D_80180504, self);
+        self->ext.unkSelEnts.unk80.val += FIX(1.5);
+        if (self->ext.unkSelEnts.unk80.i.hi > 72) {
+            SEL_SetStep(self, 3);
         }
         break;
 
     case 3:
-        if (!(AnimateEntity(D_80180538, e) & 0xFF)) {
-            func_801B4B9C(e, 4);
+        if (!(AnimateEntity(D_80180538, self) & 0xFF)) {
+            SEL_SetStep(self, 4);
         }
         break;
 
     case 4:
-        AnimateEntity(D_80180554, e);
+        AnimateEntity(D_80180554, self);
         if (D_801BC3E8 & 8) {
-            func_801B4B9C(e, 5);
+            SEL_SetStep(self, 5);
         }
         break;
 
     case 5:
-        e->facingLeft = 1;
-        if (!(AnimateEntity(D_80180528, e) & 0xFF)) {
-            func_801B4B9C(e, 6);
+        self->facingLeft = 1;
+        if (!(AnimateEntity(D_80180528, self) & 0xFF)) {
+            SEL_SetStep(self, 6);
         }
-        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
 
     case 6:
-        AnimateEntity(D_80180504, e);
-        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
-        if (arg0 && e->ext.generic.unk80.modeS16.unk2 < 0x20 ||
-            !arg0 && e->ext.generic.unk80.modeS16.unk2 < -0x10) {
-            e->step = 255;
+        AnimateEntity(D_80180504, self);
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        if (arg0 && self->ext.unkSelEnts.unk80.i.hi < 0x20 ||
+            !arg0 && self->ext.unkSelEnts.unk80.i.hi < -0x10) {
+            self->step = 255;
         }
         break;
     }
@@ -332,18 +333,16 @@ void func_801B5A7C(void) {
 
 void func_801B60D4(void) {
     Entity* ent;
-    Entity* ent4;
     s32 i;
-    s32 var_v1;
 
     switch (g_GameEngineStep) {
     case 0:
         if (!g_IsUsingCd) {
             D_8003C728 = 1;
-            if (D_800978B4 == 0) {
-                g_CurrentStream = 2;
-            } else {
+            if (D_800978B4 != 0) {
                 g_CurrentStream = 3;
+            } else {
+                g_CurrentStream = 2;
             }
             g_GameEngineStep++;
         }
@@ -364,15 +363,16 @@ void func_801B60D4(void) {
         break;
 
     case 2:
-        ent = g_Entities;
-        for (i = 0; i < 9; i++) {
+        // Important! This loop confirms that SEL uses the first 8
+        // entities for its internal uses.
+        for (ent = g_Entities, i = 0; i <= 8; i++, ent++) {
             DestroyEntity(ent);
-            ent++;
         }
 
         D_801D6B24 = 0;
         D_801BD030 = 0;
-        g_Entities[8].params = D_800978B4 - 1;
+        ent = &g_Entities[8];
+        ent->params = D_800978B4 - 1;
         g_api.func_800EA5E4(ANIMSET_DRA(0x16));
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(5));
@@ -381,34 +381,29 @@ void func_801B60D4(void) {
         break;
 
     case 3:
-        ent4 = &g_Entities[4];
         func_801B5A7C();
-        SEL_EntityCutscene(ent4);
+        ent = &g_Entities[4];
+        SEL_EntityCutscene(ent);
         func_801B4C68();
         func_801B519C();
         func_801B4D78();
         func_801B4DE0();
-        ent = ent4 - 1;
-        for (i = 3; i < 8; i++) {
-            var_v1 = D_801D6B24;
-            if (var_v1 < 0) {
-                var_v1 += 0xFFFF;
-            }
+        ent = &g_Entities[3];
+        for (i = 3; i < 8; i++, ent++) {
+            // This FIX(1) is 0x10000, not sure if it should be FIX(1) since
+            // dividing FIX() doesn't make sense.
             ent->posX.i.hi =
-                (s16)(var_v1 >> 0x10) + ent->ext.generic.unk80.modeS16.unk2;
-            ent++;
+                (D_801D6B24 / FIX(1)) + ent->ext.unkSelEnts.unk80.i.hi;
         }
 
         if (D_801BD030 != 0) {
-            ent = g_Entities;
-            for (i = 0; i < 9; i++) {
+            // This is kind of weird, we destroy the first 8...
+            for (ent = g_Entities, i = 0; i <= 8; i++, ent++) {
                 DestroyEntity(ent);
-                ent++;
             }
-
-            for (i = 0; i < 9; i++) {
+            /// ... and then another 8. Why not just 16 all at once?
+            for (i = 0; i <= 8; i++, ent++) {
                 DestroyEntity(ent);
-                ent++;
             }
 
             g_GameEngineStep++;
@@ -431,9 +426,10 @@ void func_801B60D4(void) {
         break;
 
     case 7:
-        ent4 = &g_Entities[4];
-        if (func_801B79D4(ent4) != 0) {
-            g_Entities[1].step = 0;
+        ent = &g_Entities[4];
+        if (func_801B79D4(ent) != 0) {
+            ent = &g_Entities[1];
+            ent->step = 0;
             D_801BC3E4 = 1;
             g_GameEngineStep++;
         }

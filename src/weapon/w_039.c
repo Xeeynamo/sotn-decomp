@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_039_2.h"
 #define g_Animset w_039_1
 #define g_Animset2 w_039_2
+#include "sfx.h"
 
 extern WeaponAnimation D_115000_8017ADC0[2];
 
@@ -142,7 +143,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
 
         if (--D_115000_8017BA28 == 0) {
-            g_api.PlaySfx(SFX_UNK_6F0);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
             DestroyEntity(self);
             return;
         }

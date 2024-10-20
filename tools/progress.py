@@ -82,13 +82,12 @@ class DecompProgressStats:
         if not os.path.exists(nonmatchings):
             nonmatchings_psp = f"{asm_path}/psp"
             if not os.path.exists(nonmatchings_psp):
+                if not os.path.exists(f"{asm_path}/matchings"):
+                    print(f"error: {asm_path} not found")
+                    exit(1)
                 # nonmatchings path does not exist, the overlay is 100% decompiled
                 return ""
             nonmatchings = nonmatchings_psp
-
-        nonmatchings_subdir = os.path.join(nonmatchings, os.path.basename(asm_path))
-        if os.path.exists(nonmatchings_subdir):
-            nonmatchings = nonmatchings_subdir
 
         # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
         if nonmatchings.endswith("/main"):
