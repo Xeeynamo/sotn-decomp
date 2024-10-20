@@ -7,7 +7,7 @@
 #include "chi.h"
 
 // D_80180A4C
-u16 g_testCollEnemyLookup[] = {
+static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000,
     0x0000, 0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068,
     0x0016, 0x0000, 0x0000, 0x0000, 0x003E, 0x0000, 0x0023, 0x0050,
@@ -61,27 +61,27 @@ u16 g_testCollEnemyLookup[] = {
 };
 
 // D_80180D6C
-u8 g_testCollLuckCutoff[] = {
+static u8 g_testCollLuckCutoff[] = {
     0x00, 0x40, 0x20, 0x10 
 };
 
 // D_80180D70
-u8 g_testColluCoords[] = {
+static u8 g_testColluCoords[] = {
     0x80, 0x80, 0xA0, 0xA0, 0xC0, 0xC0, 0x00, 0x00 
 };
 
 // D_80180D78
-u8 g_testCollvCoords[] = {
+static u8 g_testCollvCoords[] = {
     0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00 
 };
 
 // D_80180D80
-u16 g_testCollElementLookup[] = {
+static u16 g_testCollElementLookup[] = {
     ELEMENT_FIRE,  ELEMENT_THUNDER, ELEMENT_ICE,    ELEMENT_HOLY,  ELEMENT_DARK,
     ELEMENT_STONE, ELEMENT_CURSE,   ELEMENT_POISON, ELEMENT_WATER, ELEMENT_CUT,
 };
 
 // D_80180D94
-u8 g_testColliFrames[] = {
+static u8 g_testColliFrames[] = {
     0x02, 0x04, 0x03, 0x05, 0x06, 0x07, 0x08, 0x0A, 0x02, 0x01
 };
