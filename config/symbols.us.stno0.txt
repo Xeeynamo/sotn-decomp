@@ -168,6 +168,7 @@ MakeExplosions = 0x801CC1D0;
 EntityBigRedFireball = 0x801CC288;
 ClutLerp = 0x801CC460;
 PlaySfxPositional = 0x801CC658;
+UpdateClockHands = 0x801CCC2C;
 EntityClockHands = 0x801CD750;
 EntityBirdcageDoor = 0x801CD864;
 UpdateStatueTiles = 0x801CDAD4;
