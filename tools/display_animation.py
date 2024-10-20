@@ -151,6 +151,9 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                 v_1 = frame_params[10]
                 assert u_1 - u_0 == width
                 assert v_1 - v_0 == height
+                print(
+                    f"Loading texture: {tpage=}, {clut=}, {u_0=}, {v_0=}, {width=}, {height=}"
+                )
                 image = self.textureDisplayer.get_image(
                     tpage, clut, u_0, v_0, width, height
                 )
@@ -167,7 +170,9 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                     pil_image,
                 )
                 frame_params = frame_params[11:]
-            ax.set_title(f"Frame #{self.anim_index} of {len(self.framearray)}")
+            ax.set_title(
+                f'Frame #{self.anim_index} of {len(self.framearray)}; "{frame_name}"'
+            )
             ax.imshow(overall_image)
             plt.draw()
 

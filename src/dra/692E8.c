@@ -578,7 +578,7 @@ void EntityAlucard(void) {
             if (g_Player.unk56 != 0) {
                 g_Status.hp += g_Player.unk58;
                 func_800FE8F0();
-                func_80118C84(g_Player.unk58, 1);
+                CreateHPNumMove(g_Player.unk58, 1);
                 if (g_Player.unk56 == 1) {
                     PlaySfx(SFX_HEALTH_PICKUP);
                     if (!(g_Player.status & PLAYER_STATUS_STONE)) {
@@ -793,7 +793,7 @@ void EntityAlucard(void) {
                                     g_CurrentEntity, FACTORY(0x2C, 0x43), 0);
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2C, 0x51), 0);
-                                func_80118C84(0, 0);
+                                CreateHPNumMove(0, 0);
                                 func_8010E168(1, 0xC);
                                 break;
                             case 1:
@@ -802,7 +802,7 @@ void EntityAlucard(void) {
                                 func_8010E168(1, 0xC);
                                 g_Player.timers[3] = 6;
                                 PlaySfx(SFX_VO_ALU_PAIN_A);
-                                func_80118C84(1, 0);
+                                CreateHPNumMove(1, 0);
                                 break;
                             case 2:
                                 g_Player.unk18 = damage.effects;
@@ -817,10 +817,10 @@ void EntityAlucard(void) {
                             case 3:
                                 g_Player.unk18 = damage.effects;
                                 SetPlayerStep(Player_Hit);
-                                func_80118C84(damage.damageTaken, 0);
+                                CreateHPNumMove(damage.damageTaken, 0);
                                 break;
                             case 4:
-                                func_80118C84(damage.damageTaken, 0);
+                                CreateHPNumMove(damage.damageTaken, 0);
                                 SetPlayerStep(Player_Kill);
                                 break;
                             case 5:
@@ -828,7 +828,7 @@ void EntityAlucard(void) {
                                     g_CurrentEntity, FACTORY(0x2C, 0x44), 0);
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2C, 0x48), 0);
-                                func_80118C84(damage.unkC, 1);
+                                CreateHPNumMove(damage.unkC, 1);
                                 func_8010E168(1, 0xC);
                                 break;
                             case 6:
@@ -837,11 +837,11 @@ void EntityAlucard(void) {
                             case 7:
                                 g_Player.unk18 = damage.effects;
                                 SetPlayerStep(Player_StatusStone);
-                                func_80118C84(damage.damageTaken, 0);
+                                CreateHPNumMove(damage.damageTaken, 0);
                                 break;
                             case 8:
                                 g_Player.unk18 = damage.effects;
-                                func_80118C84(damage.damageTaken, 0);
+                                CreateHPNumMove(damage.damageTaken, 0);
                                 var_fp = 1;
                                 break;
                             case 9:
