@@ -373,7 +373,7 @@ void EntityOwl(Entity* self) {
             self->velocityY -= FIX(0.125);
             break;
         case 1:
-            if (self->ext.generic.unk80.modeS32 & 0x50) {
+            if (LOW(self->ext.owl.unk80) & 0x50) {
                 self->ext.owl.unk82 = 0x80;
                 self->step++;
             }
