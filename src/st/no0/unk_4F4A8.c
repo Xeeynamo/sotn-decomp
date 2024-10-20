@@ -107,31 +107,3 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D6254);
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D6474);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D66F8);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D75E4);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7670);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7B40);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7C20);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7D00);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D7DAC);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D8150);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D8DF0);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D8FFC);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D91C4);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D9264);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DA488);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DA6B4);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801DADD0);
