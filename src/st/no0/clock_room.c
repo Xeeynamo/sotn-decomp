@@ -4,7 +4,23 @@
 
 INCLUDE_ASM("st/no0/nonmatchings/clock_room", func_us_801CCAAC);
 
-INCLUDE_ASM("st/no0/nonmatchings/clock_room", func_us_801CCBE4);
+void UpdateBirdcages(Entity* self, u32 timerMinutes) {
+    // self + 7 is birdcage door 1
+    self += 7;
+    if (timerMinutes - 10 < 20) {
+        self->ext.birdcage.state = true;
+    } else {
+        self->ext.birdcage.state = false;
+    }
+
+    // self + 8 is birdcage door 2
+    self += 1;
+    if (timerMinutes - 30 < 20) {
+        self->ext.birdcage.state = true;
+    } else {
+        self->ext.birdcage.state = false;
+    }
+}
 
 void UpdateClockHands(Entity* self, PlayerStatus* status) {
     // self + 5 is the minute hand
