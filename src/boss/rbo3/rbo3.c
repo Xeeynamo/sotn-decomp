@@ -2,23 +2,18 @@
 
 #include "rbo3.h"
 
-extern u16 D_us_80180468;
-extern s8 D_us_80190E80;
-extern s8 D_us_80190E8C;
-extern s8 D_us_80190E98;
-
 void func_us_80191438(Entity* self) {
     s16 params;
     s16 y;
 
     params = self->params;
-    FntPrint(&D_us_80190E80, params);
-    FntPrint(&D_us_80190E8C, g_Tilemap.left);
-    FntPrint(&D_us_80190E98, g_Tilemap.right);
+    FntPrint("set:%04x\n", params);
+    FntPrint("sx:%04x\n", g_Tilemap.left);
+    FntPrint("ex:%04x\n", g_Tilemap.right);
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180468);
+        InitializeEntity(g_EInitCommon);
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 176;
@@ -145,14 +140,14 @@ void func_us_80191438(Entity* self) {
 
 extern Entity D_8007A958;
 extern Entity D_8007C0D8;
-extern u16 D_us_80180480;
-extern u8 D_us_801805F0;
-extern u8 D_us_801805FC;
-extern u8 D_us_8018060C;
-extern u8 D_us_80180618;
-extern u8 D_us_80180624;
-extern u8 D_us_80180630;
-extern u8 D_us_8018063C;
+extern EInit D_us_80180480;
+extern u8 D_us_801805F0[];
+extern u8 D_us_801805FC[];
+extern u8 D_us_8018060C[];
+extern u8 D_us_80180618[];
+extern u8 D_us_80180624[];
+extern u8 D_us_80180630[];
+extern u8 D_us_8018063C[];
 extern s8 D_us_80180648[];
 extern u8 D_us_80180670[];
 extern s32 D_us_80180728;
@@ -174,7 +169,7 @@ void EntityMedusa(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180480);
+        InitializeEntity(D_us_80180480);
         self->animCurFrame = 1;
         self->hitboxState = 0;
         CreateEntityFromEntity(UNK_ENTITY_25, self, self + 1);
@@ -189,14 +184,14 @@ void EntityMedusa(Entity* self) {
 
     case 2:
         // n.b.! AnimateEntity is not declared
-        if (!AnimateEntity(&D_us_801805F0, self)) {
+        if (!AnimateEntity(D_us_801805F0, self)) {
             self->hitboxState = 3;
             SetStep(3);
         }
         break;
 
     case 3:
-        AnimateEntity(&D_us_801805FC, self);
+        AnimateEntity(D_us_801805FC, self);
         if (self->step_s == 0) {
             self->ext.GS_Props.timer = 64;
             self->step_s++;
@@ -248,7 +243,7 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
         }
         self->ext.GS_Props.flag = 1;
-        if (AnimateEntity(&D_us_80180624, self) == 0) {
+        if (AnimateEntity(D_us_80180624, self) == 0) {
             self->ext.GS_Props.flag = 0;
             SetStep(3);
         }
@@ -260,7 +255,7 @@ void EntityMedusa(Entity* self) {
             }
             self->step_s++;
         }
-        if (AnimateEntity(&D_us_8018060C, self) == 0) {
+        if (AnimateEntity(D_us_8018060C, self) == 0) {
             SetStep(3);
             if (g_Player.status & PLAYER_STATUS_STONE) {
                 SetStep(8);
@@ -268,7 +263,7 @@ void EntityMedusa(Entity* self) {
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            entity = AllocEntity(&D_8007A958, &D_8007A958 + 32);
+            entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
                 CreateEntityFromEntity(UNK_ENTITY_24, self, entity);
                 entity->facingLeft = self->facingLeft;
@@ -287,13 +282,13 @@ void EntityMedusa(Entity* self) {
             PlaySfxPositional(SFX_RBO3_UNK_7FD);
             self->step_s++;
         }
-        if (AnimateEntity(&D_us_80180618, self) == 0) {
+        if (AnimateEntity(D_us_80180618, self) == 0) {
             SetStep(3);
         }
         if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
             PlaySfxPositional(SFX_RBO3_UNK_7D1);
             for (i = 0; i < 2; i++) {
-                entity = AllocEntity(&D_8007A958, &D_8007A958 + 32);
+                entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(UNK_ENTITY_26, self, entity);
                     entity->rotZ = i * 1024 - 512;
@@ -316,7 +311,7 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
         }
 
-        if (!AnimateEntity(&D_us_80180630, self)) {
+        if (!AnimateEntity(D_us_80180630, self)) {
             self->facingLeft = GetSideToPlayer() & 1;
             SetStep(4);
         }
@@ -330,7 +325,7 @@ void EntityMedusa(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            if (!AnimateEntity(&D_us_8018063C, self)) {
+            if (!AnimateEntity(D_us_8018063C, self)) {
                 self->ext.GS_Props.timer = 80;
                 PlaySfxPositional(SFX_RBO3_UNK_7C5);
                 self->step_s++;
@@ -338,7 +333,7 @@ void EntityMedusa(Entity* self) {
             break;
 
         case 2:
-            entity = AllocEntity(&D_8007C0D8, &D_8007C0D8 + 64);
+            entity = AllocEntity(&g_Entities[0xC0], &g_Entities[0x100]);
             if (entity != NULL) {
                 CreateEntityFromEntity(UNK_ENTITY_27, self, entity);
                 entity->params = 0;
@@ -402,7 +397,7 @@ void EntityMedusa(Entity* self) {
     self->hitboxHeight = *rect++;
 }
 
-extern u16 D_us_80180498[];
+extern EInit D_us_80180498;
 
 void func_us_80192020(Entity* self) {
     Primitive* prim;
@@ -412,7 +407,7 @@ void func_us_80192020(Entity* self) {
     s16 angle;
     u16 var_v0;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         SetStep(2);
     }
 
@@ -495,7 +490,7 @@ void func_us_80192020(Entity* self) {
     }
 }
 
-extern u16 D_us_8018048C;
+extern EInit D_us_8018048C;
 extern s8 D_us_80180684[];
 extern u8 D_us_801806B0[];
 
@@ -506,7 +501,7 @@ void func_us_801922EC(Entity* self) {
     s8* rect;
 
     if (!self->step) {
-        InitializeEntity(&D_us_8018048C);
+        InitializeEntity(D_us_8018048C);
     }
 
     prev = self - 1;
@@ -538,7 +533,7 @@ void func_us_801922EC(Entity* self) {
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_801923DC);
 
-extern u16 D_us_8018042C[];
+extern EInit D_us_8018042C;
 extern Unkstruct_80180FE0 D_us_8018071C[];
 
 // Entity ID 0x1B
@@ -591,7 +586,7 @@ void func_us_80192998(Entity* self) {
 }
 
 extern Entity D_8007A958;
-extern u16 D_us_80180444;
+extern EInit D_us_80180444;
 extern s32 D_us_80180728;
 extern s32 D_us_8018072C;
 
@@ -602,7 +597,7 @@ void func_us_80192B38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180444);
+        InitializeEntity(D_us_80180444);
         // fallthrough
     case 1:
         entity = &PLAYER;
@@ -644,7 +639,7 @@ void func_us_80192B38(Entity* self) {
     case 5:
         x = 256 - g_Tilemap.scrollX.i.hi;
         y = 128 - g_Tilemap.scrollY.i.hi;
-        entity = AllocEntity(&D_8007A958, &D_8007A958 + 32);
+        entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
         if (entity == NULL) {
             break;
         }
@@ -675,7 +670,7 @@ void func_us_80192B38(Entity* self) {
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_80192D64);
 
-extern u16 D_us_80180444;
+extern EInit D_us_80180444;
 
 void func_us_80193050(Entity* self) {
     Primitive* prim;
@@ -686,7 +681,7 @@ void func_us_80193050(Entity* self) {
         return;
     }
 
-    InitializeEntity(&D_us_80180444);
+    InitializeEntity(D_us_80180444);
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
 
     if (primIndex == -1) {
