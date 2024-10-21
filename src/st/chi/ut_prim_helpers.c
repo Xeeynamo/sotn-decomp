@@ -4,8 +4,6 @@
  * Description: UTILITY - Primitive helper functions
  */
 
-#include "chi.h"
-
 // func_801ADF40: UnkPrimHelper
 // func_801AE328: UpdateAnimation
 // func_801AE478: FindFirstUnkPrim

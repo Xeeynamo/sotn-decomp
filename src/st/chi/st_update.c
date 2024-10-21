@@ -4,8 +4,6 @@
  * Description: STAGE - Update functions
  */
 
-#include "chi.h"
-
 // func_8019DE74: Random
 #include "../random.h"
 

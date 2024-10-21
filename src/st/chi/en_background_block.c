@@ -6,8 +6,8 @@
 
 #include "chi.h"
 
-extern s32 g_eInitGeneric2;
 extern ObjInit2 ObjInit2_80180740[];
+extern s32 g_eInitGeneric2;
 
 // [Needs shared file changes to be moved to shared file]
 // func_8019B3FC: [E_BACKGROUND_BLOCK] EntityBackgroundBlock

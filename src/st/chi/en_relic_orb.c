@@ -6,8 +6,6 @@
 
 #include "chi.h"
 
-extern u16 g_InitializeData0[];
-
 // D_80181314: g_RelicOrbTexts
 // D_80181318: g_RelicOrbTextBg1EY
 // D_80181328: g_RelicOrbTextBg1SY
