@@ -459,7 +459,7 @@ void HitDetection(void) {
                                 // normally this is Alucard shouting "Dark
                                 // Metamorphosis" but obviously if not playing
                                 // as Alucard, this won't match
-                                g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
+                                g_api.PlaySfx(SFX_RIC_WHIP_HIT);
                             } else if (iterEnt2->hitEffect & 0x80) {
                                 g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {

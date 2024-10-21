@@ -113,7 +113,7 @@ bool RicDoAttack(void) {
         if (poisoned) {
             g_api.PlaySfx(SFX_RIC_FLAME_WHIP);
         } else {
-            g_api.PlaySfx(0x706);
+            g_api.PlaySfx(SFX_RIC_WHIP_ATTACK);
         }
         if (sfxGrunt == 0) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
@@ -273,7 +273,7 @@ void RicSetSlide(void) {
     RicSetSpeedX(FIX(5.5));
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
-    g_api.PlaySfx(0x707);
+    g_api.PlaySfx(SFX_RIC_SLIDE_SKID);
     g_Player.timers[PL_T_12] = 4;
 }
 
@@ -300,7 +300,7 @@ void RicSetBladeDash(void) {
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
     func_8015CC28();
     g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
-    g_api.PlaySfx(0x707);
+    g_api.PlaySfx(SFX_RIC_SLIDE_SKID);
 }
 
 bool RicCheckInput(s32 checks) {

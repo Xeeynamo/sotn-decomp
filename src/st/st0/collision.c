@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 #include <stage.h>
+#include "sfx.h"
 
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
@@ -352,7 +353,7 @@ void HitDetection(void) {
                         }
                     } else {
                         miscVar1 &= 0x3FFF;
-                        g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
+                        g_api.PlaySfx(SFX_RIC_WHIP_HIT);
                         if (entFrom5C->hitPoints != 0x7FFE) {
                             if (entFrom5C->hitPoints < (miscVar1 * 2)) {
                                 entFrom5C->hitFlags |= 3;
