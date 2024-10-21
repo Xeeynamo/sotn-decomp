@@ -194,7 +194,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_SLOGRA_HISSING 0x709
 #define NA_SE_EN_GAIBON_SCREAM 0x70B
 #define NA_SE_EN_SLOGRA_HURT_2 0x70A
 #define NA_SE_EN_SLOGRA_HURT 0x70C
@@ -540,6 +539,7 @@ enum Sfx {
     SFX_RIC_WHIP_ATTACK,
     SFX_RIC_SLIDE_SKID,
     SFX_RIC_HYDRO_STORM_ATTACK,
+    // vabid 3
     SFX_SLOGRA_ROAR,
     SFX_SLOGRA_ROAR_DEFEAT,
     SFX_SLOGRA_PAIN_A,

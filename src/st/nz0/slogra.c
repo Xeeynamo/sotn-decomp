@@ -198,7 +198,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_SPEAR_POKE:
         if (self->step_s == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_HISSING);
+            PlaySfxPositional(SFX_SLOGRA_ROAR);
             self->step_s++;
         }
         if (AnimateEntity(D_801810B4, self) == 0) {
