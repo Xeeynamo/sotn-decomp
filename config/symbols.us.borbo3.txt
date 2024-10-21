@@ -107,3 +107,4 @@ UnkPolyFunc2 = 0x8019E960;
 UnkPolyFunc0 = 0x8019E9B4;
 PrimDecreaseBrightness = 0x8019E9E0;
 EntityLifeUpSpawn = 0x8019EA44;
+g_ItemIconSlots = 0x801A05F0;
