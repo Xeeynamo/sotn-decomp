@@ -1,4 +1,6 @@
 g_EInitBreakable = 0x80180414;
+g_EInitUnkId12 = 0x8018045C;
+g_EInitDamageNum = 0x80180474;
 g_eBreakableAnimations = 0x801805A0;
 g_eBreakableHitboxes = 0x801805C0;
 g_eBreakableExplosionTypes = 0x801805C8;

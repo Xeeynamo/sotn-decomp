@@ -40,7 +40,8 @@ segments:
     subsegments:
       - [0x0, data, header]
       - [0x750, .data, st_update]
-      - [0x77C, data]
+      - [0x77C, .data, collision]
+      - [0xB3C, data]
       - [0x10EA8, .rodata, rbo3]
       - [0x10F3C, .rodata, e_red_door]
       - [0x10F54, .rodata, e_collect]
