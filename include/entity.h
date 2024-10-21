@@ -1828,12 +1828,6 @@ typedef struct {
     /* 0x80 */ s32 unk80;
 } ET_DemonSwitchWall;
 
-//TODO: Are these next 2 structs the same one?
-typedef struct {
-    /* 0x7C */ char pad_0[0x20];
-    /* 0x9C */ s16 rotZSpeed;
-} ET_BreakableBlock;
-
 // CHI Room5, Bottom, Breakable Wall
 typedef struct {
     /* 0x7C */ char pad_7C[0x8];
@@ -2102,7 +2096,6 @@ typedef union { // offset=0x7C
     ET_DisableAfterImage disableAfterImage;
     ET_BreakableDebris breakableDebris;
     ET_DemonSwitchWall demonSwitchWall;
-    ET_BreakableBlock breakableBlock;
     ET_BreakableWall breakableWall;
     ET_FallingStairs fallingStairs;
     ET_SalemWitch salemWitch;
