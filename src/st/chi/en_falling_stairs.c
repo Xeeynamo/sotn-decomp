@@ -171,7 +171,7 @@ void EntityFallingStairs(Entity* self)
             }
 
             g_api.func_80102CD8(1); // Not sure what this does. Removing it doesn't make an obvious difference
-            g_api.PlaySfx(NA_SE_SECRET_STAIRS);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
             // Spawn a long dust cloud
@@ -253,7 +253,7 @@ void EntityFallingStairs(Entity* self)
                     // Check for if right side hit the ledge below
                     if (scrolledY > RightSideHitHeight) {
                         self->posY.i.hi = RightSideHitHeight - g_Tilemap.scrollY.i.hi;
-                        g_api.PlaySfx(NA_SE_SECRET_STAIRS_THUMP);
+                        g_api.PlaySfx(SFX_EXPLODE_B);
                         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
                         // Spawn a short dust cloud
@@ -291,7 +291,7 @@ void EntityFallingStairs(Entity* self)
                     yPos = 0x2C0 - g_Tilemap.scrollY.i.hi;
                     if (self->rotZ < 0) {
                         self->rotZ = 0; // Don't over-rotate
-                        g_api.PlaySfx(NA_SE_SECRET_STAIRS_THUMP);
+                        g_api.PlaySfx(SFX_EXPLODE_B);
                         g_api.func_80102CD8(1);
                         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
@@ -430,7 +430,7 @@ void EntityFallingStep(Entity* self) {
     case BREAK_AWAY:
         self->animCurFrame = 0x24;
         g_Tilemap.fg[TilePos] = 0;
-        g_api.PlaySfx(NA_SE_SECRET_STAIRS);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         primIdx = g_api.func_800EDB58(PRIM_TILE_ALT, 96);
         if (primIdx != -1) {
             self->flags |= FLAG_HAS_PRIMS;

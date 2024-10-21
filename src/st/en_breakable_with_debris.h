@@ -1,9 +1,5 @@
 #include <stage.h>
 
-#ifndef SFX_BREAKABLE_WITH_DEBRIS_HIT
-#define SFX_BREAKABLE_WITH_DEBRIS_HIT SFX_FIRE_SHOT
-#endif
-
 extern u16 g_eBreakableWithDebrisInit[];
 
 void EntityBreakableWithDebris(Entity* self) {
@@ -39,7 +35,7 @@ void EntityBreakableWithDebris(Entity* self) {
     AnimateEntity(g_eBreakableAnimations[breakableType], self);
 
     if (self->hitParams) {
-        g_api_PlaySfx(SFX_BREAKABLE_WITH_DEBRIS_HIT);
+        g_api_PlaySfx(SFX_FIRE_SHOT);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, entity);

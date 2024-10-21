@@ -235,7 +235,7 @@ void EntityBreakableWall(Entity* self) {
             return;
         case IDLE:
             if (self->flags & FLAG_DEAD) {
-                g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+                g_api.PlaySfx(SFX_WALL_DEBRIS_B);
                 
                 self->ext.breakableWall.breakCount++;
 

@@ -72,7 +72,7 @@ void EntityDemonSwitch(Entity* entity) {
             // fallthrough
     case PRESS:
         if (entity->hitParams == 7) {
-            g_api.PlaySfx(SFX_SWITCH_PRESSED);
+            g_api.PlaySfx(SFX_ANIME_SWORD_B);
             g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] = 1;
             // Update the map "explored" state
             // This is read from an array of data in DRA, and in
@@ -200,18 +200,18 @@ void EntityDemonSwitchWall(Entity* self) {
             //    temp -= 8;
             //}
             //if (temp == 0) {
-            //    g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+            //    g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             //}
             //MoveEntity();
 
             // This is just what's in the PSX version
             if ((self->ext.demonSwitchWall.unk80 & 7) == 0) {
-                g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+                g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             }
             MoveEntity();
 #else
             if ((self->ext.demonSwitchWall.unk80 & 7) == 0) {
-                g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+                g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             }
             MoveEntity();
 #endif

@@ -108,7 +108,7 @@ void EntityThornweed(Entity* self)
                 entity->posY.i.hi -= 4;
                 entity->params = 0;
             }
-            g_api.PlaySfx(NA_SE_EN_THORNWEED_DEATH);
+            g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
             DestroyEntity(self);
             return;
         }
@@ -184,7 +184,7 @@ void EntityThornweed(Entity* self)
                     entity->posY.i.hi -= 0xC;
                     entity->params = 2;
                 }
-                g_api.PlaySfx(NA_SE_EN_THORNWEED_DEATH);
+                g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
                 DestroyEntity(self);
                 return;
             }
@@ -588,7 +588,7 @@ void EntityCorpseweed(Entity* self)
                     y = self->posY.i.hi + 8;
                     g_api.CheckCollision(x, y, &collider, 0);
                     if (collider.effects & 1) {
-                        g_api.PlaySfx(NA_SE_EN_CORPSEWEED_DEATH);
+                        g_api.PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
                         self->posY.i.hi += collider.unk18;
                         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
@@ -605,7 +605,7 @@ void EntityCorpseweed(Entity* self)
                         entity = self - 1;
                         entity->flags |= FLAG_DEAD;
 
-                        PlaySfxPositional(NA_SE_EN_CORPSEWEED_COLLAPSE);
+                        PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                         self->step_s++;
                     }
                     break;
@@ -846,7 +846,7 @@ void EntityCorpseweedProjectile(Entity* self)
             y = self->posY.i.hi + 1;
             g_api.CheckCollision(x, y, &collider, 0);
             if (collider.effects & 1) {
-                g_api.PlaySfx(NA_SE_EN_CORPSEWEED_COLLAPSE);
+                g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
                 self->posY.i.hi += collider.unk18;
                 SetStep(DEATH);
             }

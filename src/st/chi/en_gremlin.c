@@ -156,7 +156,7 @@ void EntityGremlin(Entity* self)
 
             // Check to drop flame
             if (!self->ext.gremlin.timer) {
-                PlaySfxPositional(NA_SE_EN_GREMLIN_FLAME);
+                PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
 
                 // Set next time
                 self->ext.gremlin.timer = (Random() & 0x1F) + 0x28;

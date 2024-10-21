@@ -396,7 +396,7 @@ void EntitySalemWitch(Entity* self)
                     // fallthrough
                 case ATTACK_CURSE_CAST:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
-                        PlaySfxPositional(NA_SE_EN_SALEM_WITCH_HAND_MOVEMENT);
+                        PlaySfxPositional(SFX_SMALL_BURST);
                     }
                     if (!AnimateEntity(AnimFrames_CurseHandMovements, self)) {
                         SetSubStep(ATTACK_CURSE_CHARGE);
@@ -405,7 +405,7 @@ void EntitySalemWitch(Entity* self)
 
                 case ATTACK_CURSE_CHARGE:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
-                        PlaySfxPositional(NA_SE_EN_ELECTRIC_ZAP);
+                        PlaySfxPositional(SFX_ELECTRICITY);
                     }
                     if (!AnimateEntity(AnimFrames_CurseKanjiFlash, self)) {
                         SetSubStep(ATTACK_CURSE_SPAWN_PROJECTILE_AND_RESET);
@@ -418,7 +418,7 @@ void EntitySalemWitch(Entity* self)
                     }
                     if (!self->animFrameDuration &&
                         self->animFrameIdx == CurseProjectileSpawnAnimFrameIdx) {
-                        PlaySfxPositional(NA_SE_EN_SALEM_WITCH_CURSE_LAUNCH);
+                        PlaySfxPositional(SFX_GUNSHOT);
                         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (entity != NULL) {
                             CreateEntityFromEntity(E_SALEM_WITCH_CURSE, self, entity);
@@ -533,7 +533,7 @@ void EntitySalemWitch(Entity* self)
                     break;
 
                 case DEATH_EXPLODE:
-                    PlaySfxPositional(NA_SE_FIRE_BURST);
+                    PlaySfxPositional(SFX_FM_EXPLODE_B);
 
                     // Fire particles
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -872,7 +872,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
             self->unk6C = 0x60;
             self->drawFlags |= FLAG_DRAW_UNK8;
 
-            PlaySfxPositional(NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH);
+            PlaySfxPositional(SFX_CANDLE_HIT);
             // fallthrough
         case CHARGE:
             if (AnimateEntity(&AnimFrames_TriboltCharge, self) == 0) {
@@ -890,7 +890,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
             self->step += 1;
             self->drawFlags |= FLAG_DRAW_UNK8;
 
-            PlaySfxPositional(NA_SE_EN_DR_FIREBALL);
+            PlaySfxPositional(SFX_FIREBALL_SHOT_A);
 
             for (i = 0; i < ProjectileCount; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
