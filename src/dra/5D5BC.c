@@ -599,7 +599,8 @@ void AddHearts(s32 value) {
         if (g_Status.heartsMax < g_Status.hearts) {
             g_Status.hearts = g_Status.heartsMax;
         }
-        CreateEntFactoryFromEntity(&PLAYER, 99, 0);
+        // Creates a heart rising from the player, which flickers away
+        CreateEntFactoryFromEntity(&PLAYER, FACTORY(99, 0), 0);
         PlaySfx(SFX_HEART_PICKUP);
     }
 }

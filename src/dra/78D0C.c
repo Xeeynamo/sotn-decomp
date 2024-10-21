@@ -539,7 +539,10 @@ void EntityGuardText(Entity* self) {
     }
 }
 
-void func_80119D3C(Entity* entity) {
+// Small heart that rises and then flickers away.
+// Created by Factory 99 in AddHearts().
+// That call is in the Blood Cloak, Alucard Shield, and Herald Shield.
+void EntitySmallRisingHeart(Entity* entity) {
     s32 temp;
     s32 cos;
 

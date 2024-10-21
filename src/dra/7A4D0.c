@@ -56,7 +56,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     UnknownEntId48,
     UnknownEntId49,
     func_80123A60,
-    func_80119D3C,
+    EntitySmallRisingHeart,
     EntityBatEcho,
     func_8011B530,
     func_8011F074,
