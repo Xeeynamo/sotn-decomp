@@ -104,7 +104,7 @@ extern u16 D_80180C34[];
 
 // *** EntityBloodSkeleton properties START ***
 
-extern u16 g_EInitBloodySkeleton[]; // InitProps
+extern u16 g_EInitBloodSkeleton[]; // InitProps
 
 // *** EntityBloodSkeleton properties END ***
 

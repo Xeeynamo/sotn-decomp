@@ -15,8 +15,7 @@ void func_801B6DE4(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        self->ext.generic.unk80.modeS32 =
-            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        self->ext.elevator.yPos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         self->hitboxHeight = 8;
         self->hitboxOffY = -22;
         self->hitboxWidth = 6;
@@ -44,8 +43,8 @@ void func_801B6DE4(Entity* self) {
         if (temp_s1) {
             self->posY.val += FIX(1.0);
             y = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-            if ((self->ext.generic.unk80.modeS32 + 4) < y) {
-                self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0 -
+            if ((self->ext.elevator.yPos + 4) < y) {
+                self->posY.i.hi = (u16)(self->ext.elevator.yPos -
                                         (g_Tilemap.scrollY.i.hi - 4));
                 self->step++;
                 PlaySfxPositional(SFX_SWITCH_CLICK);
@@ -57,9 +56,9 @@ void func_801B6DE4(Entity* self) {
         if (!temp_s1) {
             self->posY.val += 0xFFFF0000;
             y = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-            if (y < self->ext.generic.unk80.modeS32) {
-                self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0) -
-                                  g_Tilemap.scrollY.i.hi;
+            if (y < self->ext.elevator.yPos) {
+                self->posY.i.hi =
+                    (u16)(self->ext.elevator.yPos) - g_Tilemap.scrollY.i.hi;
                 self->step = 1;
             }
         }

@@ -20,7 +20,7 @@ void EntityPushAlucard(Entity* entity) {
         break;
 
     case 1:
-        player->posX.val += 0x60000;
+        player->posX.val += FIX(6);
         if (tilemap->scrollX.i.hi > 0x800) {
             g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
             g_Player.padSim = PAD_RIGHT;
@@ -32,10 +32,10 @@ void EntityPushAlucard(Entity* entity) {
         break;
 
     case 2:
-        player->posX.val += 0x88000;
+        player->posX.val += FIX(8.5);
         g_unkGraphicsStruct.unkC += 4;
         if (g_unkGraphicsStruct.unkC == 192) {
-            entity->ext.generic.unk80.modeS32 = 0x48000;
+            entity->ext.alucardController.unk80 = FIX(4.5);
             entity->step++;
         }
         g_Player.D_80072EFC = 1;
@@ -45,12 +45,12 @@ void EntityPushAlucard(Entity* entity) {
     case 3:
         if (g_unkGraphicsStruct.unkC > 128) {
             g_unkGraphicsStruct.unkC -= 1;
-            entity->ext.generic.unk80.modeS32 = 0x38000;
+            entity->ext.alucardController.unk80 = FIX(3.5);
         } else {
-            entity->ext.generic.unk80.modeS32 = 0x48000;
+            entity->ext.alucardController.unk80 = FIX(4.5);
         }
-        player->posX.val += entity->ext.generic.unk80.modeS32;
-        if (entity->ext.generic.unk80.modeS32 == 0x48000) {
+        player->posX.val += entity->ext.alucardController.unk80;
+        if (entity->ext.alucardController.unk80 == FIX(4.5)) {
             entity->step++;
         }
         g_Player.D_80072EFC = 1;
@@ -58,11 +58,11 @@ void EntityPushAlucard(Entity* entity) {
         break;
 
     case 4:
-        player->posX.val += 0x48000;
+        player->posX.val += FIX(4.5);
         if (tilemap->scrollX.i.hi > 0xF80) {
             g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
-            entity->ext.generic.unk7C.S8.unk0 = 0;
+            entity->ext.alucardController.unk7C = false;
             entity->step++;
         }
         g_Player.D_80072EFC = 1;
@@ -71,15 +71,15 @@ void EntityPushAlucard(Entity* entity) {
 
     case 5:
         if ((player->velocityY > 0) &&
-            (entity->ext.generic.unk7C.U8.unk0 == 0)) {
+            (entity->ext.alucardController.unk7C == false)) {
             g_Player.padSim = PAD_CROSS;
-            entity->ext.generic.unk7C.S8.unk0 = 1;
+            entity->ext.alucardController.unk7C = true;
         } else {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
         g_api.func_8010E0A8();
         g_Player.D_80072EFC = 1;
-        player->posX.val += 0x48000;
+        player->posX.val += FIX(4.5);
     }
 }
 
