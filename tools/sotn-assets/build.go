@@ -406,7 +406,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 			if lastEntry.X != -1 || lastEntry.Y != -1 {
 				return fmt.Errorf("layout entity bank %d needs to have a X:-1 and Y:-1 entry at the end", i)
 			}
-
+			sb.WriteString(fmt.Sprintf("//%d\n", nWritten)) //label each block with offsets
 			for _, e := range entries {
 				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, 0x%04X, 0x%04X, 0x%04X,\n",
 					uint16(e.X), uint16(e.Y), int(e.ID)|(int(e.Flags)<<8), int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
@@ -480,16 +480,16 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbHeader.WriteString("#include <stage.h>\n\n")
 	sbHeader.WriteString("#include \"common.h\"\n\n")
 	sbHeader.WriteString("// clang-format off\n")
-	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_x[];\n", symbolName))
+	sbHeader.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))
 	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
-		sbHeader.WriteString(fmt.Sprintf("    (LayoutEntity*)&%s_x[%d],\n", symbolName, offsets[i]))
+		sbHeader.WriteString(fmt.Sprintf("    &%s_x[%d],\n", symbolName, offsets[i] / 5))
 	}
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
-	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_y[];\n", symbolName))
+	sbHeader.WriteString(fmt.Sprintf("extern LayoutEntity %s_y[];\n", symbolName))
 	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutVertical[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
-		sbHeader.WriteString(fmt.Sprintf("    (LayoutEntity*)&%s_y[%d],\n", symbolName, offsets[i]))
+		sbHeader.WriteString(fmt.Sprintf("    &%s_y[%d],\n", symbolName, offsets[i] / 5))
 	}
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 

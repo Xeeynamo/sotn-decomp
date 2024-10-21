@@ -6,6 +6,8 @@
 // helpful for understanding the overall layouts of stages in the game.
 // If enemies are always in their own area, that would be good to know.
 
+// This seems like a totally unused entity. Not created in any way, not in
+// e_layout.c.
 void EntityUnkId16(Entity* self) {
     switch (self->step) {
     case 0:
