@@ -1887,6 +1887,11 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_SmallRisingHeart;
 
+typedef struct {
+    /* 0x00 */ s8 currentAngle;
+    /* 0x01 */ s8 targetAngle;
+} ET_801CC9B4;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1902,6 +1907,7 @@ typedef union { // offset=0x7C
     ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
+    ET_801CC9B4 et_801CC9B4;
     ET_HellfireHandler hellfireHandler;
     ET_8016D9C4 et_8016D9C4;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
