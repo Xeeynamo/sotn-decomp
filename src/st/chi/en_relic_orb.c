@@ -15,6 +15,5 @@ extern u16 g_InitializeData0[];
 // D_80181348: g_RelicOrbTextBg2EY
 // D_80181358: g_RelicOrbSparkleX
 // D_80181368: g_RelicOrbSparkleY
-// [Duplicate]
 // func_801A3F58: [E_RELIC_ORB] EntityRelicOrb
 #include "../entity_relic_orb.h"
