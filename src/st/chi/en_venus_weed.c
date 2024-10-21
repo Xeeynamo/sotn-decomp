@@ -404,7 +404,7 @@ void EntityVenusWeed(Entity* self)
             break;
 
         case VENUS_WEED_DROP_TO_GROUND:
-            if (UpdatePhysicsState(&PhysicsSensors) & 1) {
+            if (UnkCollisionFunc3(&PhysicsSensors) & 1) {
                 SetStep(VENUS_WEED_THORNWEED_DISGUISE);
             }
             break;
@@ -1033,7 +1033,7 @@ void EntityVenusWeedTendril(Entity* self)
             break;
 
         case VENUS_WEED_TENDRIL_DROP_TO_GROUND:
-            if (UpdatePhysicsState(PhysicsSensors) & 1) {
+            if (UnkCollisionFunc3(PhysicsSensors) & 1) {
                 SetStep(VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION);
             }
             break;
@@ -1057,7 +1057,7 @@ void EntityVenusWeedTendril(Entity* self)
             }
 
             AnimateEntity(AnimFrames_TendrilBounce, self);
-            func_801A1914(WalkSensors_Tendril); // "Walk", respecting walls/etc
+            UnkCollisionFunc2(WalkSensors_Tendril); // "Walk", respecting walls/etc
             
             // Set velocity according to remaining distance
             entity = self - 1 - self->params;   // Flower

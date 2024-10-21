@@ -125,7 +125,7 @@ void EntityThornweed(Entity* self)
             break;
 
         case DROP_TO_GROUND:
-            if (UpdatePhysicsState(&PhysicsSensors) & 1) {
+            if (UnkCollisionFunc3(&PhysicsSensors) & 1) {
                 SetStep(WAIT_TO_WAKE);
             }
             break;
