@@ -425,7 +425,7 @@ void EntityVenusWeed(Entity* self)
                     entity->params = 0;
                 }
 
-                PlaySfxWithPosArgs(NA_SE_EN_EXPLOSIVE_DEATH);
+                PlaySfxPositional(NA_SE_EN_EXPLOSIVE_DEATH);
                 DestroyEntity(self);
                 return;
             }
@@ -625,7 +625,7 @@ void EntityVenusWeed(Entity* self)
                         entity->posY.i.hi -= 0xC;
                     }
 
-                    PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_DEATH_EXPLOSION);
+                    PlaySfxPositional(NA_SE_EN_VENUS_WEED_DEATH_EXPLOSION);
 
                     // Destroy
                     PreventEntityFromRespawning(self);
@@ -729,7 +729,7 @@ void EntityVenusWeedFlower(Entity* self)
 
     // Hurt check
     if (self->hitFlags & 3) {
-        PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_HURT);
+        PlaySfxPositional(NA_SE_EN_VENUS_WEED_HURT);
 
         // Tell root to wiggle for a bit
         entity = self - 1;  // Root
@@ -737,7 +737,7 @@ void EntityVenusWeedFlower(Entity* self)
     }
     // Death check
     if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
-        PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_DEATH);
+        PlaySfxPositional(NA_SE_EN_VENUS_WEED_DEATH);
         SetStep(DEATH);
     }
 
@@ -760,7 +760,7 @@ void EntityVenusWeedFlower(Entity* self)
                 self->drawFlags = 0;
                 self->hitboxState = 3;
 
-                PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_REVEAL);
+                PlaySfxPositional(NA_SE_EN_VENUS_WEED_REVEAL);
                 SetStep(REVEAL);
             }
             break;
@@ -827,7 +827,7 @@ void EntityVenusWeedFlower(Entity* self)
                     break;
 
                 case SPIKES_SPAWN:
-                    PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_ATTACK_CHARGE);
+                    PlaySfxPositional(NA_SE_EN_VENUS_WEED_ATTACK_CHARGE);
 
                     // Spawn spikes
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -902,7 +902,7 @@ void EntityVenusWeedFlower(Entity* self)
                     break;
 
                 case DARTS_CHARGE:
-                    PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_ATTACK_CHARGE);
+                    PlaySfxPositional(NA_SE_EN_VENUS_WEED_ATTACK_CHARGE);
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
                         CreateEntityFromEntity(E_VENUS_WEED_SPIKE, self, entity);
@@ -916,7 +916,7 @@ void EntityVenusWeedFlower(Entity* self)
                         self->step_s++;
                     }
                     if (!self->animFrameDuration && self->animFrameIdx == DartsSfxAnimFrameIdx) {
-                        PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_DARTS_LAUNCH);
+                        PlaySfxPositional(NA_SE_EN_VENUS_WEED_DARTS_LAUNCH);
 
                         // Calculate launch start pos
                         if (self->facingLeft) {
@@ -985,7 +985,7 @@ void EntityVenusWeedFlower(Entity* self)
                 entity->flags |= FLAG_DEAD;
             }
 
-            PlaySfxWithPosArgs(NA_SE_FIRE_BURST);
+            PlaySfxPositional(NA_SE_FIRE_BURST);
             self->hitboxState = 0;
 
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1095,7 +1095,7 @@ void EntityVenusWeedTendril(Entity* self)
                         SetSubStep(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
                     }
                     if (!self->animFrameDuration && self->animFrameIdx == SpikeSfxAnimFrameIdx) {
-                        PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_ATTACK_TENDRIL_SPIKE);
+                        PlaySfxPositional(NA_SE_EN_VENUS_WEED_ATTACK_TENDRIL_SPIKE);
                     }
                     break;
 
@@ -1123,7 +1123,7 @@ void EntityVenusWeedTendril(Entity* self)
                     entity->params = 2;
                     entity->posY.i.hi -= 0xC;
                 }
-                PlaySfxWithPosArgs(NA_SE_EN_VENUS_WEED_TENDRIL_DEATH);
+                PlaySfxPositional(NA_SE_EN_VENUS_WEED_TENDRIL_DEATH);
                 DestroyEntity(self);
                 return;
             }
@@ -1205,7 +1205,7 @@ void EntityVenusWeedDart(Entity* self)
             y = self->posY.i.hi + self->ext.venusWeedDart.nextPosDeltaY;
             g_api_CheckCollision(x, y, &collider, 0);
             if (collider.effects & 1) {
-                PlaySfxWithPosArgs(NA_SE_DART_WALL_HIT);
+                PlaySfxPositional(NA_SE_DART_WALL_HIT);
                 // Correct position to be against the edge
                 if (self->velocityY > 0) {
                     self->posY.i.hi += collider.unk18;

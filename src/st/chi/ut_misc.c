@@ -29,5 +29,5 @@ static u16 g_UnkRecursPrim2Inds[] = {
 // func_801A7158: ClutLerp
 #include "../clut_lerp.h"
 
-// func_801A7350: PlaySfxWithPosArgs
-#include "../play_sfx_with_pos_args.h"
+// func_801A7350: PlaySfxPositional
+#include "../play_sfx_positional.h"

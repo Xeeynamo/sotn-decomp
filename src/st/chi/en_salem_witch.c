@@ -391,12 +391,12 @@ void EntitySalemWitch(Entity* self)
             self->ext.salemWitch.timer++;
             switch (self->step_s) {
                 case ATTACK_CURSE_INIT:
-                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_ATTACK);
+                    PlaySfxPositional(NA_SE_EN_SALEM_WITCH_ATTACK);
                     self->step_s++;
                     // fallthrough
                 case ATTACK_CURSE_CAST:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
-                        PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_HAND_MOVEMENT);
+                        PlaySfxPositional(NA_SE_EN_SALEM_WITCH_HAND_MOVEMENT);
                     }
                     if (!AnimateEntity(AnimFrames_CurseHandMovements, self)) {
                         SetSubStep(ATTACK_CURSE_CHARGE);
@@ -405,7 +405,7 @@ void EntitySalemWitch(Entity* self)
 
                 case ATTACK_CURSE_CHARGE:
                     if (!(self->ext.salemWitch.timer & 0xF)) {  // This triggers 3x during the animation
-                        PlaySfxWithPosArgs(NA_SE_EN_ELECTRIC_ZAP);
+                        PlaySfxPositional(NA_SE_EN_ELECTRIC_ZAP);
                     }
                     if (!AnimateEntity(AnimFrames_CurseKanjiFlash, self)) {
                         SetSubStep(ATTACK_CURSE_SPAWN_PROJECTILE_AND_RESET);
@@ -418,7 +418,7 @@ void EntitySalemWitch(Entity* self)
                     }
                     if (!self->animFrameDuration &&
                         self->animFrameIdx == CurseProjectileSpawnAnimFrameIdx) {
-                        PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_CURSE_LAUNCH);
+                        PlaySfxPositional(NA_SE_EN_SALEM_WITCH_CURSE_LAUNCH);
                         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (entity != NULL) {
                             CreateEntityFromEntity(E_SALEM_WITCH_CURSE, self, entity);
@@ -437,7 +437,7 @@ void EntitySalemWitch(Entity* self)
         case ATTACK_TRIBOLT:
             switch (self->step_s) {
                 case ATTACK_TRIBOLT_INIT:
-                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_ATTACK);
+                    PlaySfxPositional(NA_SE_EN_SALEM_WITCH_ATTACK);
                     self->step_s++;
                     // fallthrough
                 case ATTACK_TRIBOLT_HANDS_UP:
@@ -483,7 +483,7 @@ void EntitySalemWitch(Entity* self)
 
                     self->ext.salemWitch.timer = HurtDuration;
                     self->animCurFrame = AnimFrameHurt;
-                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_HURT);
+                    PlaySfxPositional(NA_SE_EN_SALEM_WITCH_HURT);
                     self->step_s++;
                     // fallthrough
                 case HURT_WAIT:
@@ -519,7 +519,7 @@ void EntitySalemWitch(Entity* self)
 
                     self->ext.salemWitch.timer = DeathDuration;
                     self->animCurFrame = AnimFrameHurt;
-                    PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_DEATH);
+                    PlaySfxPositional(NA_SE_EN_SALEM_WITCH_DEATH);
                     self->step_s++;
                     // fallthrough
                 case DEATH_WAIT:
@@ -533,7 +533,7 @@ void EntitySalemWitch(Entity* self)
                     break;
 
                 case DEATH_EXPLODE:
-                    PlaySfxWithPosArgs(NA_SE_FIRE_BURST);
+                    PlaySfxPositional(NA_SE_FIRE_BURST);
 
                     // Fire particles
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -872,7 +872,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
             self->unk6C = 0x60;
             self->drawFlags |= FLAG_DRAW_UNK8;
 
-            PlaySfxWithPosArgs(NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH);
+            PlaySfxPositional(NA_SE_EN_SALEM_WITCH_TRIBOLT_LAUNCH);
             // fallthrough
         case CHARGE:
             if (AnimateEntity(&AnimFrames_TriboltCharge, self) == 0) {
@@ -890,7 +890,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
             self->step += 1;
             self->drawFlags |= FLAG_DRAW_UNK8;
 
-            PlaySfxWithPosArgs(NA_SE_EN_DR_FIREBALL);
+            PlaySfxPositional(NA_SE_EN_DR_FIREBALL);
 
             for (i = 0; i < ProjectileCount; i++) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);

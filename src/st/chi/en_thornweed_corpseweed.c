@@ -546,7 +546,7 @@ void EntityCorpseweed(Entity* self)
                     // Spawn projectile entity
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        PlaySfxWithPosArgs(NA_SE_EN_CORPSEWEED_ATTACK);
+                        PlaySfxPositional(NA_SE_EN_CORPSEWEED_ATTACK);
 
                         CreateEntityFromEntity(E_CORPSEWEED_PROJECTILE, self, entity);
                         entity->zPriority = self->zPriority + 1;
@@ -605,7 +605,7 @@ void EntityCorpseweed(Entity* self)
                         entity = self - 1;
                         entity->flags |= FLAG_DEAD;
 
-                        PlaySfxWithPosArgs(NA_SE_EN_CORPSEWEED_COLLAPSE);
+                        PlaySfxPositional(NA_SE_EN_CORPSEWEED_COLLAPSE);
                         self->step_s++;
                     }
                     break;
