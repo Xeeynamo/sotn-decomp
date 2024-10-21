@@ -1836,7 +1836,7 @@ typedef struct {
     /* 0x94 */ s16 resetTimer;
 } ET_BreakableWall;
 
-// CHI Falling Stairs
+// CHI Room3, Middle, Falling Stairs
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s32 primBatchCount;
@@ -1845,6 +1845,7 @@ typedef struct {
     /* 0x88 */ Primitive* prim;
 } ET_FallingStairs;
 
+// CHI Room 3/8, Salem Witch
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
@@ -1862,6 +1863,7 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_SalemWitchTribolt;
 
+// CHI Room 7/11, Gremlin
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
@@ -1872,6 +1874,7 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_GremlinFire;
 
+// CHI Room 4, Thornweed
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
@@ -1879,6 +1882,7 @@ typedef struct {
     /* 0x86 */ u8 isCorpseweedSpawned;
 } ET_Thornweed;
 
+// CHI Room 4, Corpseweed
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
@@ -1894,6 +1898,7 @@ typedef struct {
     /* 0x92 */ s16 bobbingAngle;
 } ET_Corpseweed;
 
+// CHI Room 4, Venus Weed
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ Primitive* stemPrim;
