@@ -7,7 +7,7 @@
 #include "game.h"
 #include "stage.h"
 
-void EntityBreakable(Entity*);
+void EntityBreakableWithDebris(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
@@ -54,7 +54,7 @@ void EntityVenusWeedSpike(Entity*);
 
 // D_8018055C
 PfnEntityUpdate PfnEntityUpdates[] = {
-    EntityBreakable,
+    EntityBreakableWithDebris,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -101,10 +101,10 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityVenusWeedSpike,
 };
 
-//TODO: Used in EntityBreakable
-//TODO: Used in func_8018DB18
+//TODO: Used in EntityBreakableWithDebris
+//TODO: Used in EntityBreakableDebris
 // D_80180610
-EntityInit EntityInit_80180610 = {
+EntityInit g_eBreakableWithDebrisInit = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
     .unk5A = 0,

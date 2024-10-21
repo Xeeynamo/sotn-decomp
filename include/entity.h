@@ -1815,6 +1815,11 @@ typedef struct {
     /* 0x80 */ u8 unk80;
 } ET_DisableAfterImage;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 angle;
+} ET_BreakableDebris;
+
 // ====== CHI ENTITIES ======
 
 // CHI Room3, Top, Demon Switch Wall
@@ -2095,6 +2100,7 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
+    ET_BreakableDebris breakableDebris;
     ET_DemonSwitchWall demonSwitchWall;
     ET_BreakableBlock breakableBlock;
     ET_BreakableWall breakableWall;
