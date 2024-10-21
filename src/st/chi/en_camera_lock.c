@@ -30,6 +30,7 @@ extern u8 D_80180798[];     // Trigger long dimension size
 extern u8 D_801807A0[];     // Trigger long dimension is horizontal
 extern u16 D_801807A8[];
 
+// [Needs shared file changes to be moved to shared file]
 // E_CAMERA_LOCK
 // func_8019B4DC
 void EntityCameraLock(Entity* entity) {
