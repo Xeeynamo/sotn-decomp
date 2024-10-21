@@ -408,8 +408,17 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 			}
 			sb.WriteString(fmt.Sprintf("//%d\n", nWritten)) //label each block with offsets
 			for _, e := range entries {
-				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, 0x%04X, 0x%04X, 0x%04X,\n",
-					uint16(e.X), uint16(e.Y), int(e.ID)|(int(e.Flags)<<8), int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
+				var entityIDStr string
+				if int(e.Flags) != 0 {
+					// This will only ever be 0xA001.
+					entityIDStr = fmt.Sprintf("0x%04X", (int(e.Flags) << 8) | int(e.ID))
+				} else {
+				// TODO: See if we can make this pull from the overlay's EntityIDs enum
+				// Should be a separate function call
+					entityIDStr = fmt.Sprintf("0x%02X", int(e.ID))
+				}
+				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s, 0x%04X, 0x%04X,\n",
+					uint16(e.X), uint16(e.Y), entityIDStr, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
 			}
 			nWritten += len(entries)
 		}
@@ -494,7 +503,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 
 	sbData := strings.Builder{}
-	sbData.WriteString("#include \"common.h\"\n\n")
+	sbData.WriteString(fmt.Sprintf("#include \"%s.h\"\n\n", ovlName))
 	sbData.WriteString("// clang-format off\n")
 	sbData.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
 	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true), false); err != nil {
