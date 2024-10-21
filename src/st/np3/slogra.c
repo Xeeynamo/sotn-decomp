@@ -215,7 +215,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_KNOCKBACK:
         if (self->step_s == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_HURT);
+            PlaySfxPositional(SFX_SLOGRA_PAIN_B);
             self->step_s++;
         }
         if (self->ext.GS_Props.nearDeath != 0) {
