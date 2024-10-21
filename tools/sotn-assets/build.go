@@ -395,6 +395,53 @@ func buildSprites(fileName string, outputDir string) error {
 
 func buildEntityLayouts(fileName string, outputDir string) error {
 	ovlName := path.Base(outputDir)
+
+	// Get the EntityIDs enum from the .h file and invert it to get a lookup table
+	// Keys are integers, values are the names from the enum.
+	hFile, err := os.ReadFile(outputDir + ovlName + ".h")
+	if err != nil {
+		return err
+	}
+	lines := strings.Split(string(hFile), "\n")
+	// Extract all the lines that are part of the enum.
+	// Do this by searching for the first "EntityIDs" (in typedef enum EntityIDs {)
+	// and the last "EntityIDs" (in } EntityIDs;)
+	enumData := []string{}
+	inEnum := false
+	for _,line := range lines {
+		if strings.Contains(line, "EntityIDs"){
+			if inEnum{
+				break
+			} else {
+				inEnum = true
+			}
+		} else if inEnum {
+			enumData = append(enumData, line)
+		}
+	}
+	// Now we have the enum's lines loaded. Iterate through populating a map.
+	entityNames := make(map[int]string, 255)
+	// Increments in the enum, updates if enum has a direct assign
+	index := -1 // start at -1 so first increment takes it to 0 to begin
+	for _,line := range enumData {
+		line = strings.Split(line, ",")[0] // go up to the comma
+		parts := strings.Split(line, " = ")
+		if len(parts) > 1 {
+			hexVal := strings.Replace(parts[1], "0x", "", -1)
+			parsed, err := strconv.ParseInt(hexVal, 16, 16)
+			if err != nil {
+				return err
+			}
+			index = int(parsed)
+		} else {
+			index ++
+		}
+		parts = strings.Split(parts[0], " ")
+		name := parts[len(parts) - 1]
+		entityNames[index] = name
+	}
+	// Done loading entities from EntityIDs now!
+
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
 		nWritten := 0
 		for i, entries := range banks {
@@ -415,7 +462,11 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 				} else {
 				// TODO: See if we can make this pull from the overlay's EntityIDs enum
 				// Should be a separate function call
-					entityIDStr = fmt.Sprintf("0x%02X", int(e.ID))
+					entityIDStr = entityNames[int(e.ID)]
+					// If not in enum, then just use the hex value.
+					if entityIDStr == "" {
+						entityIDStr = fmt.Sprintf("0x%02X", int(e.ID))
+					}
 				}
 				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s, 0x%04X, 0x%04X,\n",
 					uint16(e.X), uint16(e.Y), entityIDStr, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))

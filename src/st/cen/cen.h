@@ -9,7 +9,7 @@
 
 #define CASTLE_FLAG_BANK 0x00
 
-typedef enum {
+typedef enum EntityIDs{
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID_01,
     /* 0x02 */ E_EXPLOSION,

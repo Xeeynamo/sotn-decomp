@@ -6,7 +6,7 @@
 
 #define OVL_EXPORT(x) ST0_##x
 
-typedef enum {
+typedef enum EntityIDs{
     E_NONE,
     E_BREAKABLE,
     E_EXPLOSION,
