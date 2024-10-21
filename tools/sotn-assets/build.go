@@ -460,8 +460,6 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 					// This will only ever be 0xA001.
 					entityIDStr = fmt.Sprintf("0x%04X", (int(e.Flags) << 8) | int(e.ID))
 				} else {
-				// TODO: See if we can make this pull from the overlay's EntityIDs enum
-				// Should be a separate function call
 					entityIDStr = entityNames[int(e.ID)]
 					// If not in enum, then just use the hex value.
 					if entityIDStr == "" {
