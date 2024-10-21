@@ -41,7 +41,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
-        InitializeEntity(g_EInitBloodySkeleton);
+        InitializeEntity(g_EInitBloodSkeleton);
         self->facingLeft = (u32)Random() % 2;
         self->animCurFrame = 1;
         self->flags &=
@@ -78,10 +78,10 @@ void EntityBloodSkeleton(Entity* self) {
 
     case BLOOD_SKELETON_DISASSEMBLE:
         if (AnimateEntity(anim_disassemble, self) == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = 0xF0;
+            self->ext.bloodSkeleton.timer = 0xF0;
             self->flags &= ~FLAG_DEAD;
             if (self->params != 0) {
-                self->ext.generic.unk80.modeS16.unk0 = 4;
+                self->ext.bloodSkeleton.timer = 4;
             }
             SetStep(BLOOD_SKELETON_REASSEMBLE);
         }
@@ -90,7 +90,7 @@ void EntityBloodSkeleton(Entity* self) {
     case BLOOD_SKELETON_REASSEMBLE:
         switch (self->step_s) {
         case 0:
-            if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+            if (--self->ext.bloodSkeleton.timer == 0) {
                 self->rotZ = 0;
                 self->drawFlags |= FLAG_DRAW_ROTZ;
                 PlaySfxPositional(SFX_RED_SKEL_REBUILD);
@@ -101,15 +101,15 @@ void EntityBloodSkeleton(Entity* self) {
 
         case 1:
             if ((g_Timer % 3) == 0) {
-                self->ext.generic.unk80.modeS16.unk0++;
-                if (self->ext.generic.unk80.modeS16.unk0 % 2) {
+                self->ext.bloodSkeleton.timer++;
+                if (self->ext.bloodSkeleton.timer % 2) {
                     self->rotZ = 0x10;
                 } else {
                     self->rotZ = -0x10;
                 }
             }
 
-            if (self->ext.generic.unk80.modeS16.unk0 >= 9) {
+            if (self->ext.bloodSkeleton.timer >= 9) {
                 self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->rotZ = 0;
                 self->step_s++;
