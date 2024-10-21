@@ -1,6 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "rbo3.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/st_debug", func_801A7D64);
+extern ObjInit D_us_801804CC[];
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/st_debug", EntityUnkId12);
+void func_801A7D64(Entity* self) {
+    ObjInit* objInit = &D_us_801804CC[self->params];
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+        self->unk5A = objInit->unk5A;
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->drawMode = objInit->drawMode;
+        if (objInit->unkC != 0) {
+            self->flags = objInit->unkC;
+        }
+    }
+
+    AnimateEntity(objInit->animFrames, self);
+}
+
+#include "../../st/entity_unk_id12.h"
