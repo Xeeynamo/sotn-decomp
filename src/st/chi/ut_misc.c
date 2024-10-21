@@ -12,7 +12,6 @@ static u16 g_UnkRecursPrimVecOrder[] = {
     0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008
 };
 
-// [Duplicate]
 // func_801A6478: UnkRecursivePrimFunc1
 #include "../unk_recursive_primfunc_1.h"
 
@@ -22,7 +21,6 @@ static u16 g_UnkRecursPrim2Inds[] = {
     0x0003, 0x0004, 0x0006, 0x0007, 0x0004, 0x0005, 0x0007, 0x0008
 };
 
-// [Duplicate]
 // func_801A6A58: UnkRecursivePrimFunc2
 #include "../unk_recursive_primfunc_2.h"
 
