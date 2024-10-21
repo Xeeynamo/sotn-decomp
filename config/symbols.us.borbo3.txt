@@ -1,4 +1,7 @@
 g_EInitBreakable = 0x80180414;
+g_EInitUnkId12 = 0x8018045C;
+g_EInitCommon = 0x80180468;
+g_EInitDamageNum = 0x80180474;
 g_eBreakableAnimations = 0x801805A0;
 g_eBreakableHitboxes = 0x801805C0;
 g_eBreakableExplosionTypes = 0x801805C8;
@@ -107,3 +110,4 @@ UnkPolyFunc2 = 0x8019E960;
 UnkPolyFunc0 = 0x8019E9B4;
 PrimDecreaseBrightness = 0x8019E9E0;
 EntityLifeUpSpawn = 0x8019EA44;
+g_ItemIconSlots = 0x801A05F0;
