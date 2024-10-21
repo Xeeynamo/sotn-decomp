@@ -428,6 +428,8 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 		parts := strings.Split(line, " = ")
 		if len(parts) > 1 {
 			hexVal := strings.Replace(parts[1], "0x", "", -1)
+			// Windows nonsense, remove any \r that exists
+			hexVal = strings.Replace(hexVal, "\r", "", -1)
 			parsed, err := strconv.ParseInt(hexVal, 16, 16)
 			if err != nil {
 				return err
