@@ -480,7 +480,7 @@ void EntityGaibon(Entity* self) {
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
             if (UnkCollisionFunc3(D_80181240) & 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
+                PlaySfxPositional(SFX_SLOGRA_PAIN_A);
                 SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;
@@ -492,7 +492,7 @@ void EntityGaibon(Entity* self) {
                     PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                     SetStep(GAIBON_DYING);
                 } else {
-                    PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
+                    PlaySfxPositional(SFX_SLOGRA_PAIN_A);
                 }
             }
             break;

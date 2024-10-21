@@ -194,7 +194,6 @@ enum SfxModes {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_GAIBON_SCREAM 0x70B
 #define NA_SE_EN_SLOGRA_HURT 0x70C
 #define NA_SE_EN_SPITTLEBONE_ACID_SPLAT 0x73C
 #define NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM 0x746
@@ -541,7 +540,7 @@ enum Sfx {
     // vabid 3
     SFX_SLOGRA_ROAR,
     SFX_SLOGRA_ROAR_DEFEAT,
-    SFX_SLOGRA_PAIN_A,
+    SFX_SLOGRA_PAIN_A, // Used for Gaibon
     SFX_SLOGRA_PAIN_B,
     SFX_CLOCK_BELL = 1958,
     SFX_CLOCK_ROOM_TICK = 1961
