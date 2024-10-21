@@ -62,7 +62,7 @@ void EntitySlogra(Entity* self) {
             if ((self->hitPoints < (hitPoints >> 2)) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
                 self->hitboxState = 0;
-                PlaySfxPositional(NA_SE_EN_SLOGRA_HURT_2);
+                PlaySfxPositional(SFX_SLOGRA_ROAR_DEFEAT);
                 SetStep(SLOGRA_LOSE_SPEAR);
             }
         }
