@@ -75,6 +75,33 @@ void func_us_801CC8F8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/4C750", func_us_801CC9B4);
+extern s16 D_us_80181C14[];
+extern s16 D_us_80181C24[];
+
+// updates entity movement direction
+void func_us_801CC9B4(Entity* self) {
+    s32 angleIndex;
+    u8 adjustedAngle;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 5;
+        self->zPriority = 1;
+        self->ext.stub[0] = 0;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        return;
+    }
+    if (!(g_GameTimer & 0xF)) {
+        angleIndex = (Random() & 7);
+        self->ext.stub[1] = GetAnglePointToEntityShifted(
+            D_us_80181C14[angleIndex], D_us_80181C24[angleIndex]);
+    }
+    adjustedAngle = AdjustValueWithinThreshold(
+        8U, (u8)self->ext.stub[0], (u8)self->ext.stub[1]);
+    SetEntityVelocityFromAngle(adjustedAngle & 0xFF, 4);
+    MoveEntity();
+    self->ext.stub[0] = (s8)adjustedAngle;
+}
 
 INCLUDE_RODATA("st/no0/nonmatchings/4C750", D_us_801C14A8);
