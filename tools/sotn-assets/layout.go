@@ -7,12 +7,15 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
 	"os"
+	"path"
+	"strconv"
+	"strings"
 )
 
 type layoutEntry struct {
 	X       int16  `json:"x"`
 	Y       int16  `json:"y"`
-	ID      uint8  `json:"id"`
+	ID      string  `json:"id"`
 	Flags   uint8  `json:"flags"` // TODO properly de-serialize this
 	Slot    uint8  `json:"slot"`
 	SpawnID uint8  `json:"spawnId"`
@@ -25,15 +28,78 @@ type layouts struct {
 	Indices  []int           `json:"indices"`
 }
 
+func fetchEntityIDsFromHFile(overlay string) (map[int]string, error) {
+	// Get the EntityIDs enum from the .h file and invert it to get a lookup table
+	// Keys are integers, values are the names from the enum.
+	hFile, err := os.ReadFile("src/st/" + overlay + "/" + overlay + ".h")
+	if err != nil {
+		return nil, err
+	}
+	lines := strings.Split(string(hFile), "\n")
+	// Extract all the lines that are part of the enum.
+	// Do this by searching for the first "EntityIDs" (in typedef enum EntityIDs {)
+	// and the last "EntityIDs" (in } EntityIDs;)
+	enumData := []string{}
+	inEnum := false
+	for _,line := range lines {
+		if strings.Contains(line, "EntityIDs"){
+			if inEnum{
+				break
+			} else {
+				inEnum = true
+			}
+		} else if inEnum {
+			enumData = append(enumData, line)
+		}
+	}
+	// Now we have the enum's lines loaded. Iterate through populating a map.
+	entityNames := make(map[int]string, 255)
+	// Increments in the enum, updates if enum has a direct assign
+	index := -1 // start at -1 so first increment takes it to 0 to begin
+	for _,line := range enumData {
+		line = strings.Split(line, ",")[0] // go up to the comma
+		parts := strings.Split(line, " = ")
+		if len(parts) > 1 {
+			hexVal := strings.Replace(parts[1], "0x", "", -1)
+			// Windows nonsense, remove any \r that exists
+			hexVal = strings.Replace(hexVal, "\r", "", -1)
+			parsed, err := strconv.ParseInt(hexVal, 16, 16)
+			if err != nil {
+				return nil, err
+			}
+			index = int(parsed)
+		} else {
+			index ++
+		}
+		parts = strings.Split(parts[0], " ")
+		name := parts[len(parts) - 1]
+		entityNames[index] = name
+	}
+    return entityNames, nil
+}
+
 func readEntityLayoutEntry(file *os.File) (layoutEntry, error) {
+	ovlName := strings.ToLower(path.Base(path.Dir(file.Name())))
+	entityIDs, _ := fetchEntityIDsFromHFile(ovlName)
+
 	bs := make([]byte, 10)
 	if _, err := io.ReadFull(file, bs); err != nil {
 		return layoutEntry{}, err
 	}
+
+	var entityIDStr string
+	id := int(bs[4])
+	// Try to load the proper enum
+	entityIDStr = entityIDs[id]
+	// If enum unknown or flags are set, override, don't use enums
+	if entityIDStr == "" || bs[5] != 0 {
+		entityIDStr = fmt.Sprintf("0x%02X", id)
+	}
+
 	return layoutEntry{
 		X:       int16(binary.LittleEndian.Uint16(bs[0:2])),
 		Y:       int16(binary.LittleEndian.Uint16(bs[2:4])),
-		ID:      bs[4],
+		ID:      entityIDStr,
 		Flags:   bs[5],
 		Slot:    bs[6],
 		SpawnID: bs[7],
