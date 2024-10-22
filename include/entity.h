@@ -1836,6 +1836,11 @@ typedef struct {
     /* 0x94 */ s16 resetTimer;
 } ET_BreakableWall;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x20];
+    /* 0x9C */ s16 rotSpeed;
+} ET_BreakableWallDebris;
+
 // CHI Room3, Middle, Falling Stairs
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
@@ -2102,6 +2107,7 @@ typedef union { // offset=0x7C
     ET_BreakableDebris breakableDebris;
     ET_DemonSwitchWall demonSwitchWall;
     ET_BreakableWall breakableWall;
+    ET_BreakableWallDebris breakableWallDebris;
     ET_FallingStairs fallingStairs;
     ET_SalemWitch salemWitch;
     ET_SalemWitchTribolt salemWitchTribolt;

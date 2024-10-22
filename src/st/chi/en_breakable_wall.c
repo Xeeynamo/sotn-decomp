@@ -8,85 +8,104 @@
 
 extern EntityInit EntityInit_8018067C;
 
-// [Step enum]
 // E_BREAKABLE_WALL_DEBRIS
 // params: animCurFrame to use
+//         (== 0xD) Different starting X velocity
+//         (< 0xB) Different starting Y velocity
+//         (>= 0xC) Will break into smaller pieces when it hits the ground
 // func_8019C31C
-void EntityBreakableWallDebris(Entity* entity) {
-    Collider collider;
-    s32 temp_a0_2;
-    s32 temp_a0_3;
-    s32 temp_v1_3;
-    s32 var_s2;
-    u16 temp_v1;
-    u16 temp_v1_2;
-    u8 temp_a0;
-    Entity* temp_v0;
-    Entity* temp_v0_2;
+// https://decomp.me/scratch/NKGUh
+void EntityBreakableWallDebris(Entity* self) {
+    const int Gravity = 0x2000;
 
-    temp_v1 = entity->step;
-    switch (temp_v1) {
-        case 0:
+    typedef enum Step {
+        INIT = 0,
+        CHECK_FLAG = 1,
+        MOVEMENT = 2,
+    };
+
+    Collider collider;
+    s32 velX;
+    s32 velY;
+    s32 newVelY;
+    s32 i;
+    u16 params;
+    u8 animCurFrame;
+    Entity* entity;
+
+    switch (self->step) {
+        case INIT:
             InitializeEntity(&EntityInit_8018067C);
-            temp_a0 = entity->params;
-            entity->drawFlags = 4;
-            entity->zPriority = 0x69;
-            entity->animCurFrame = temp_a0;
-            if (entity->rotZ & 1) {
-                entity->facingLeft = 1;
-                entity->rotZ = entity->rotZ & 0xFFF0;
+            animCurFrame = self->params;
+            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->zPriority = 0x69;
+            self->animCurFrame = animCurFrame;
+            if (self->rotZ & 1) {
+                self->facingLeft = true;
+                self->rotZ &= 0xFFF0;
             }
-            temp_a0_2 = (Random() & 0xF) << 0xC;
-            entity->velocityX = temp_a0_2;
-            if (entity->animCurFrame == 0xD) {
-                entity->velocityX = temp_a0_2 + 0x4000;
+
+            velX = (Random() & 0xF) << 0xC;
+            self->velocityX = velX;
+            if (self->animCurFrame == 0xD) {
+                self->velocityX = velX + 0x4000;
             }
-            temp_a0_3 = ((Random() & 7) << 0xB) - 0x4000;
-            entity->velocityY = temp_a0_3;
-            if (entity->animCurFrame < 0xB) {
-                entity->velocityY = temp_a0_3 + 0xFFFF0000;
+
+            velY = ((Random() & 7) << 0xB) - 0x4000;
+            self->velocityY = velY;
+            if (self->animCurFrame < 0xB) {
+                self->velocityY = velY + 0xFFFF0000;
             }
-            entity->ext.generic.unk9C.modeS16.unk0 = ((Random() & 3) + 1) * 32;
+
+            self->ext.breakableWallDebris.rotSpeed = ((Random() & 3) + 1) * 32;
             return;
-        case 1:
-            temp_v1_2 = entity->params;
-            if (temp_v1_2 & 0x100) {
-                entity->params = temp_v1_2 & 0xFF;
-                entity->step = entity->step + 1;
+
+        case CHECK_FLAG:
+            params = self->params;
+
+            if (params & 0x100) {
+                self->params = params & 0xFF;
+                self->step++;
                 return;
             }
             return;
-        case 2:
-            entity->rotZ += entity->ext.generic.unk9C.modeS16.unk0;
+
+        case MOVEMENT:
+            self->rotZ += self->ext.breakableWallDebris.rotSpeed;
+
             MoveEntity();
-            entity->velocityY = entity->velocityY + 0x2000;
-            g_api_CheckCollision(entity->posX.i.hi, (s32) (s16) (entity->posY.i.hi + 6), &collider, 0);
+
+            self->velocityY += Gravity;
+
+            g_api_CheckCollision(self->posX.i.hi, (s16)(self->posY.i.hi + 6), &collider, 0);
             if (collider.effects & 1) {
-                entity->posY.i.hi = entity->posY.i.hi + collider.unk18;
-                if (entity->animCurFrame >= 0xC) {
-                    var_s2 = 0;
-                    do {
-                        temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                        var_s2 += 1;
-                        if (temp_v0 != NULL) {
-                            CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, entity, temp_v0);
-                            temp_v0->params = ((Random() & 3) + 9) | 0x100;
+                self->posY.i.hi += collider.unk18;
+                if (self->animCurFrame >= 0xC) {
+                    // Break into a couple pieces
+                    for (i = 0; i < 2; i++) {
+                        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (entity != NULL) {
+                            CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, self, entity);
+                            entity->params = ((Random() & 3) + 9) | 0x100;
                         }
-                    } while (var_s2 < 2);
-                    DestroyEntity(entity);
-                    return;
-                }
-                temp_v1_3 = entity->velocityY;
-                if (temp_v1_3 <= 0x7FFF) {
-                    temp_v0_2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                    if (temp_v0_2 != NULL) {
-                        CreateEntityFromEntity(E_INTENSE_EXPLOSION, entity, temp_v0_2);
-                        temp_v0_2->params = 0xC010;
                     }
-                    DestroyEntity(entity);
+                    DestroyEntity(self);
                     return;
                 }
-                entity->velocityY = -temp_v1_3 * 2 / 3;
+                newVelY = self->velocityY;
+                if (newVelY <= 0x7FFF) {
+                    // Poof, gone
+                    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (entity != NULL) {
+                        CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
+                        entity->params = 0xC010;
+                    }
+                    DestroyEntity(self);
+                    return;
+                }
+
+                // Bounce
+                self->velocityY = -newVelY * 2 / 3;
             }
             break;
     }
@@ -126,7 +145,7 @@ void EntityBreakableWall(Entity* self) {
 
     const int startTileIdx = 0x160;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         IDLE = 1,
         BREAK_1 = 2,    // Dynamically calculated, never set directly
@@ -234,6 +253,7 @@ void EntityBreakableWall(Entity* self) {
                 entity->rotZ = *pSrcTile++;
             }
             return;
+            
         case IDLE:
             if (self->flags & FLAG_DEAD) {
                 g_api.PlaySfx(SFX_WALL_DEBRIS_B);
@@ -259,7 +279,7 @@ void EntityBreakableWall(Entity* self) {
                     entity->step++;
                 }
 
-                // Smoke entity?
+                // Smoke
                 xPos = self->posX.i.hi + 0x20;
                 yPos = self->posY.i.hi;
                 xPos -= self->ext.breakableWall.breakCount * 0xC;
@@ -272,7 +292,7 @@ void EntityBreakableWall(Entity* self) {
                     entity->params |= 0xC000;
                 }
                 
-                // Rotating brick entities?
+                // Rotating bricks?
                 for (c = 0; c < 3; c++) {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
@@ -287,6 +307,7 @@ void EntityBreakableWall(Entity* self) {
                 self->step += self->ext.breakableWall.breakCount;
             }
             return;
+
         case BREAK_1:   // Dynamically calculated, never set directly
             prim = self->ext.prim;
             prim = prim->next;
@@ -294,6 +315,7 @@ void EntityBreakableWall(Entity* self) {
             self->ext.breakableWall.resetTimer = ResetTime;
             self->step = WAIT_FOR_RESET;
             return;
+
         case BREAK_2:   // Dynamically calculated, never set directly
             prim = self->ext.prim;
             prim->u1 = prim->u3 -= 0x10;
@@ -308,6 +330,7 @@ void EntityBreakableWall(Entity* self) {
             self->ext.breakableWall.resetTimer = ResetTime;
             self->step = WAIT_FOR_RESET;
             return;
+
         case BREAK_3:   // Dynamically calculated, never set directly
             prim = self->ext.prim;
             prim->drawMode = DRAW_HIDE;
@@ -319,6 +342,7 @@ void EntityBreakableWall(Entity* self) {
             g_api.func_800F1FC4(CASTLE_FLAG_CHI_BREAKABLE_WALL);
             DestroyEntity(self);
             return;
+
         case WAIT_FOR_RESET:
             if (!--self->ext.breakableWall.resetTimer) {
                 self->step = IDLE;
