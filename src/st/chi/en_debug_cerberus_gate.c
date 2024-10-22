@@ -17,18 +17,27 @@ extern u16 g_Tilemap_scrollX_i_hi;
 // PSP:func_psp_0924B458:Match
 // PSP:https://decomp.me/scratch/IWYbc
 void EntityCerberusGateDebug(Entity* self) {
-    s32 tileIdx;        // s2
-    s32 primIdx;        // s6
-    Primitive* prim;    // s0
+    typedef enum Step {
+        INIT = 0,
+        WAIT_FOR_INPUT = 1,
+        DROP = 2,
+        ADD_COLLISION = 3,
+        RAISE = 4,
+        WAIT_TO_DESTROY = 5,
+    };
+
+    s32 tileIdx;
+    s32 primIdx;
+    Primitive* prim;
     Collider collider;
     Entity* entity;
 
-    s32 i;              // s1
-    s16 s3;             // s3
-    s16 s4;
+    s32 i;
+    s16 x;
+    s16 y;
 
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(&EntityInit_8018067C);
         self->zPriority = 0x6A;
         if (self->params) {
@@ -64,18 +73,18 @@ void EntityCerberusGateDebug(Entity* self) {
         prim->v2 = prim->v3 = 0xDC;
 
         if (self->params) {
-            s3 = 0x1F0;
+            x = 0x1F0;
         } else {
-            s3 = 0;
+            x = 0;
         }
-        s3 = s3 - g_Tilemap.scrollX.i.hi;
-        prim->x0 = prim->x2 = s3;
-        prim->x1 = prim->x3 = s3 + 0x10;
+        x = x - g_Tilemap.scrollX.i.hi;
+        prim->x0 = prim->x2 = x;
+        prim->x1 = prim->x3 = x + 0x10;
 
         prim->y0 = prim->y1 = 0x1C;
         prim->y2 = prim->y3 = 0x5C;
         prim->priority = 0x6B;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         prim = prim->next;
 
         while (prim != NULL) {
@@ -85,25 +94,27 @@ void EntityCerberusGateDebug(Entity* self) {
             prim->g0 = 0x40;
             prim->b0 = 0x20;
             prim->priority = 0x6C;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         return;
-    case 1:
-        if (!(g_pads->pressed & 0x1000)) {
+
+    case WAIT_FOR_INPUT:
+        if (!(g_pads->pressed & PAD_UP)) {
             return;
         }
         self->step++;
         return;
-    case 2:
+
+    case DROP:
         self->posY.val += self->velocityY;
         self->velocityY += 0x8000;
-        s3 = self->posX.i.hi;
-        s4 = self->posY.i.hi + 0x22;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi + 0x22;
         if (self->posY.i.hi <= 0x60) {
             return;
         }
-        g_api.CheckCollision(s3, s4, &collider, 0);
+        g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects == 0) {
             return;
         }
@@ -124,7 +135,8 @@ void EntityCerberusGateDebug(Entity* self) {
         }
         self->step++;
         return;
-    case 3:
+
+    case ADD_COLLISION:
         if (self->params) {
             tileIdx = 0xDF;
         } else {
@@ -135,7 +147,8 @@ void EntityCerberusGateDebug(Entity* self) {
         }
         self->step++;
         return;
-    case 4:
+
+    case RAISE:
         self->posY.val -= 0x4000;
 
         if (!(g_Timer & 7)) {
@@ -146,48 +159,46 @@ void EntityCerberusGateDebug(Entity* self) {
                 if (prim != NULL) {
                     prim->p3 = 1;
 
-                    s3 = (self->posX.i.hi + (Random() & 0xF)) - 8;
-                    s4 = 0x5C;
-                    prim->x0 = s3;
-                    prim->y0 = s4;
-                    prim->drawMode = 2;
+                    x = (self->posX.i.hi + (Random() & 0xF)) - 8;
+                    y = 0x5C;
+                    prim->x0 = x;
+                    prim->y0 = y;
+                    prim->drawMode = DRAW_UNK02;
                 }
             }
         }
 
-        s4 = (0x7A - self->posY.i.hi) >> 4;
+        y = (0x7A - self->posY.i.hi) >> 4;
         if (self->params) {
             tileIdx = 0x13F;
         } else {
             tileIdx = 0x120;
         }
 
-        for (i = 0; i < s4; tileIdx -= 0x20, i++) {
+        for (i = 0; i < y; tileIdx -= 0x20, i++) {
             g_Tilemap.fg[tileIdx] = 0x32E;
         }
-        self->ext.factory.unk80 = 0x20;
+        self->ext.debugCerberusGate.timer = 0x20;
         if (self->posY.i.hi < 0x3A) {
             self->step++;
         }
         /* fallthrough */
-    case 5:
+    case WAIT_TO_DESTROY:
         prim = self->ext.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 prim->y0 += 2;
                 if (prim->y0 > 0xA0) {
-                    prim->drawMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                     prim->p3 = 0;
                 }
             }
             prim = prim->next;
         }
-        if (--self->ext.factory.unk80) {
+        if (--self->ext.debugCerberusGate.timer) {
             return;
         }
         DestroyEntity(self);
-        return;
-    default:
         return;
     }
 }

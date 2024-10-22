@@ -1841,6 +1841,12 @@ typedef struct {
     /* 0x9C */ s16 rotSpeed;
 } ET_BreakableWallDebris;
 
+// CHI Unused Debug Cerberus Gate
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+} ET_DebugCerberusGate;
+
 // CHI Room3, Middle, Falling Stairs
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
@@ -2108,6 +2114,7 @@ typedef union { // offset=0x7C
     ET_DemonSwitchWall demonSwitchWall;
     ET_BreakableWall breakableWall;
     ET_BreakableWallDebris breakableWallDebris;
+    ET_DebugCerberusGate debugCerberusGate;
     ET_FallingStairs fallingStairs;
     ET_SalemWitch salemWitch;
     ET_SalemWitchTribolt salemWitchTribolt;
