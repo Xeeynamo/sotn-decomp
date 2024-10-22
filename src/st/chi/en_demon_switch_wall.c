@@ -49,37 +49,37 @@ extern EntityInit EntityInit_8018067C;
 
 // E_DEMON_SWITCH
 // func_8019BDF8
-void EntityDemonSwitch(Entity* entity) {
-    enum Step {
+void EntityDemonSwitch(Entity* self) {
+    typedef enum Step {
         INIT = 0,
         PRESS = 1,
     };
 
-    switch (entity->step)
+    switch (self->step)
     {
     case INIT:
             InitializeEntity(&EntityInit_8018067C);
             
-            entity->animCurFrame = 3;
-            entity->hitPoints = 32767;
-            entity->hitboxState = 3;
-            entity->hitboxWidth = 6;
-            entity->hitboxHeight = 8;
+            self->animCurFrame = 3;
+            self->hitPoints = 32767;
+            self->hitboxState = 3;
+            self->hitboxWidth = 6;
+            self->hitboxHeight = 8;
             
             if (g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] != 0) {
-                entity->animCurFrame = 4;
+                self->animCurFrame = 4;
             }
             // fallthrough
     case PRESS:
-        if (entity->hitParams == 7) {
+        if (self->hitParams == 7) {
             g_api.PlaySfx(SFX_ANIME_SWORD_B);
             g_CastleFlags[CASTLE_FLAG_CHI_DEMON_BUTTON] = 1;
             // Update the map "explored" state
             // This is read from an array of data in DRA, and in
             // this case results in exploring the room to the right
             g_api.func_800F1FC4(CASTLE_FLAG_CHI_DEMON_BUTTON);
-            entity->animCurFrame = 4;
-            entity->step++; // Inactive
+            self->animCurFrame = 4;
+            self->step++; // Inactive
         }
         break;
     }
@@ -111,7 +111,7 @@ static u16 WallTilesNoCollision[] = {
 // PSP:func_psp_0924ED28:No match
 // PSP:https://decomp.me/scratch/DxiYq
 void EntityDemonSwitchWall(Entity* self) {
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         IDLE_CLOSED = 1,
         PREP_TO_OPEN = 2,

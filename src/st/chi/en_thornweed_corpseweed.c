@@ -83,7 +83,7 @@ void EntityThornweed(Entity* self)
     const int CorpseweedSpawnDelay = 0x40;
     const int DeathExplosionDelay = 0x80;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         DROP_TO_GROUND = 1,
         WAIT_TO_WAKE = 2,
@@ -252,7 +252,7 @@ void EntityCorpseweed(Entity* self)
     const int DeathHeadFallAccel = 0x1800;
     const int DeathHeadRotateSpeed = 0x20;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         GROW_LEAVES = 1,
         GROW_STEM = 2,
@@ -262,27 +262,27 @@ void EntityCorpseweed(Entity* self)
         DEATH = 6,
     };
 
-    enum GrowLeaves_Substep {
+    typedef enum GrowLeaves_Substep {
         GROW_LEAVES_H = 0,
         GROW_LEAVES_V = 1,
         GROW_LEAVES_DONE = 2,
     };
 
-    enum GrowStem_Substep {
+    typedef enum GrowStem_Substep {
         GROW_STEM_H1 = 0,
         GROW_STEM_UNEVEN_V = 1,
         GROW_STEM_FINISH_V = 2,
         GROW_STEM_H2 = 3,
     };
 
-    enum Attack_Substep {
+    typedef enum Attack_Substep {
         ATTACK_INIT = 0,
         ATTACK_DELAY = 1,
         ATTACK_PROJECTILE = 2,
         ATTACK_RESET_DELAY = 3,
     };
 
-    enum Death_Substep {
+    typedef enum Death_Substep {
         DEATH_INIT = 0,
         DEATH_DROP_HEAD = 1,
         DEATH_SHRINK_AND_FADE = 2,
@@ -763,13 +763,13 @@ void EntityCorpseweedProjectile(Entity* self)
     const int SpeedX = 0x800;
     const int Gravity = FIX(0.125);
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         AIRBORNE = 1,
         DEATH = 2,
     };
 
-    enum Death_Substep {
+    typedef enum Death_Substep {
         DEATH_INIT = 0,
         DEATH_RIGHT = 1,
         DEATH_LEFT = 2,

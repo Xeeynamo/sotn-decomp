@@ -113,7 +113,7 @@ void EntitySalemWitch(Entity* self)
     const int ShadowTickSpeed = 4;              // Amount removed from timer per update
     const int ShadowDestroyThreshold = 0x20;    // When timer is below this, destroy shadow
 
-    enum Step {
+    typedef enum Step {
         INIT            = 0x0,
         WAIT_TO_AGGRO   = 0x3,
         IDLE            = 0x5,
@@ -128,21 +128,21 @@ void EntitySalemWitch(Entity* self)
         DEBUG           = 0xFF,
     };
 
-    enum Attack_Substep {
+    typedef enum Attack_Substep {
         ATTACK_INIT             = 0,
         ATTACK_MOVE_TO_POSITION = 1,
         ATTACK_REEVALUATE_MOVE  = 2,
         ATTACK_PERFORM          = 3,
     };
 
-    enum Attack_Curse_Substep {
+    typedef enum Attack_Curse_Substep {
         ATTACK_CURSE_INIT                       = 0,
         ATTACK_CURSE_CAST                       = 1,
         ATTACK_CURSE_CHARGE                     = 2,
         ATTACK_CURSE_SPAWN_PROJECTILE_AND_RESET = 3,
     };
 
-    enum Attack_Tribolt_Substep {
+    typedef enum Attack_Tribolt_Substep {
         ATTACK_TRIBOLT_INIT             = 0,
         ATTACK_TRIBOLT_HANDS_UP         = 1,
         ATTACK_TRIBOLT_SPAWN_PROJECTILE = 2,
@@ -150,12 +150,12 @@ void EntitySalemWitch(Entity* self)
         ATTACK_TRIBOLT_RESET            = 4,
     };
 
-    enum Hurt_Substep {
+    typedef enum Hurt_Substep {
         HURT_INIT = 0,
         HURT_WAIT = 1,
     };
 
-    enum Death_Substep {
+    typedef enum Death_Substep {
         DEATH_INIT      = 0,
         DEATH_WAIT      = 1,
         DEATH_EXPLODE   = 2,
@@ -664,7 +664,7 @@ void EntitySalemWitchCurse(Entity* self)
     const int TrailStartBrightness = 0x60;
     const int TrailDarkenSpeed = 4;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         UPDATE = 1,
     };
@@ -852,7 +852,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self)
     const int BurstStartRotation = 0x80;
     const int BurstRotateSpeed = 0x40;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         CHARGE = 1,
         SPAWN_PROJECTILES = 2,
@@ -941,7 +941,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
     const int LinearSpeed = 0x30;
     const int SpinSpeed = 0x400;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         UPDATE = 1,
         TRAIL_INIT = 8,

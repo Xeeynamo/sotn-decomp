@@ -8,7 +8,7 @@
 
 #define TENDRIL_COUNT 10
 
-enum VenusWeedStep {
+typedef enum VenusWeedStep {
         VENUS_WEED_INIT = 0,
         VENUS_WEED_DROP_TO_GROUND = 1,
         VENUS_WEED_THORNWEED_DISGUISE = 2,
@@ -18,7 +18,7 @@ enum VenusWeedStep {
         VENUS_WEED_DEATH = 8,
 };
 
-enum VenusWeedTendrilStep {
+typedef enum VenusWeedTendrilStep {
     VENUS_WEED_TENDRIL_INIT = 0,
     VENUS_WEED_TENDRIL_DROP_TO_GROUND = 1,
     VENUS_WEED_TENDRIL_MOVE_TO_RANDOM_POSITION = 2,
@@ -26,7 +26,7 @@ enum VenusWeedTendrilStep {
     VENUS_WEED_TENDRIL_DEATH = 8,
 };
 
-enum VenusWeedTendrilAttack_Substep {
+typedef enum VenusWeedTendrilAttack_Substep {
     VENUS_WEED_TENDRIL_ATTACK_INIT = 0,
     VENUS_WEED_TENDRIL_ATTACK_DELAY = 1,
     VENUS_WEED_TENDRIL_ATTACK_CHARGE = 2,
@@ -329,7 +329,7 @@ void EntityVenusWeed(Entity* self)
     const int AttackDuration = 0x30;
     const int DeathFinalClut = PAL_DRA(0x210);
 
-    enum Grow_Substep {
+    typedef enum Grow_Substep {
         GROW_LEAVES = 0,
         GROW_STEM = 1,
         GROW_FLOWER = 2,
@@ -337,7 +337,7 @@ void EntityVenusWeed(Entity* self)
         GROW_DONE = 4,
     };
 
-    enum Death_Substep {
+    typedef enum Death_Substep {
         DEATH_INIT = 0,
         DEATH_COLOR_CYCLE = 1,
         DEATH_SHRINK = 2,
@@ -692,7 +692,7 @@ void EntityVenusWeedFlower(Entity* self)
     const int DartsAngleDelta = 0x60;
     const int DartsCount = 5;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         GROW = 1,
         REVEAL = 2,
@@ -702,7 +702,7 @@ void EntityVenusWeedFlower(Entity* self)
         DEATH = 8,
     };
 
-    enum Spikes_Substep {
+    typedef enum Spikes_Substep {
         SPIKES_INIT = 0,
         SPIKES_CHARGE = 1,
         SPIKES_SPAWN = 2,
@@ -711,7 +711,7 @@ void EntityVenusWeedFlower(Entity* self)
         SPIKES_RESET_TO_IDLE = 5,
     };
 
-    enum Darts_Substep {  
+    typedef enum Darts_Substep {  
         DARTS_INIT = 0,
         DARTS_DELAY = 1,
         DARTS_CHARGE = 2,
@@ -1161,7 +1161,7 @@ void EntityVenusWeedDart(Entity* self)
     const int ClutIdxPlayerHit = 0x00;
     const int ClutIdxMax = 0x30;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         FLY = 1,
         DECAY = 2,
@@ -1282,7 +1282,7 @@ void EntityVenusWeedSpike(Entity* self)
 {
     const int SpikeParts = 5;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         EXTEND = 1,
     };

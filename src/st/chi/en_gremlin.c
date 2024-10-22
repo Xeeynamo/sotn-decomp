@@ -27,7 +27,7 @@ void EntityGremlin(Entity* self)
     const int DecelerateSpeed = 16;
     const int AnimFrameDeath = 0x13;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         IDLE = 1,
         HURT_DEATH = 2,
@@ -249,7 +249,7 @@ void EntityGremlinEffect(Entity* self)
     const int AnimFrameGremlinHurt = 0x13;
     const int GremlinHurtFrameOffsetY = -0x10;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         GLOW = 1,
         FIRE = 2,
@@ -322,13 +322,13 @@ void EntityGremlinFire(Entity* self)
     const int FireDuration = 0x400;
     const int BounceSpeed = 0x40;
 
-    enum Step {
+    typedef enum Step {
         INIT = 0,
         IDLE = 1,
         DEATH = 2,
     };
 
-    enum Death_Substep {
+    typedef enum Death_Substep {
         DEATH_INIT = 0,
         DEATH_SHRINK = 1,
     };
