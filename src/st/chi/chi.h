@@ -33,7 +33,7 @@ typedef enum {
     /* 0x10 */ E_DUMMY_10,
     /* 0x11 */ E_BACKGROUND_BLOCK,
     /* 0x12 */ E_CAMERA_LOCK,
-    /* 0x13 */ E_FLAME_TRAIL,
+    /* 0x13 */ E_PARTICLE_TRAIL,
     /* 0x14 */ E_ID_14,
     /* 0x15 */ E_ID_15, // E_GREY_PUFF
     /* 0x16 */ E_DEMON_SWITCH_WALL,

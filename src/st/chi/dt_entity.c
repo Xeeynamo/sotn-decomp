@@ -72,7 +72,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityBackgroundBlock,
     EntityCameraLock,
-    EntityUnkId13,  // EntityFlameTrail
+    EntityUnkId13,  // EntityParticleTrail
     EntityUnkId14,
     EntityUnkId15,  // EntityGreyPuff
     EntityDemonSwitchWall,

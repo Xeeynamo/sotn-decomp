@@ -10,7 +10,7 @@
 #include "../check_coll_offsets.h"
 
 // [Rename in repo]
-// func_801A519C: [E_FLAME_TRAIL] EntityUnkId13 (EntityFlameTrail)
+// func_801A519C: [E_PARTICLE_TRAIL] EntityUnkId13 (EntityParticleTrail)
 #include "../entity_unkId13.h"
 
 //D_80181378
