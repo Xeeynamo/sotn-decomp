@@ -118,16 +118,16 @@ void func_us_801C2184(Entity* self) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 0xA;
-            g_Entities[1].ext.stub[0x00] = 1;
+            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 1;
             SetStep(2);
         }
 
         break;
     case 1:
-        if (*(u8*)&self[-1].ext.stub[0x4]) {
+        if ((self - 1)->ext.cenElevator.unk80) {
             offset = self->posX.i.hi - player->posX.i.hi;
             if (g_pads->pressed & PAD_DOWN && abs(offset) < 8) {
-                g_Entities[1].ext.stub[0x00] = 1;
+                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 1;
                 g_Player.D_80072EFC = 2;
                 g_Player.padSim = PAD_DOWN;
 #ifndef VERSION_PSP
@@ -179,7 +179,7 @@ void func_us_801C2184(Entity* self) {
             if (!AnimateEntity(D_us_80180FD8, self)) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                g_Entities[1].ext.stub[0x00] = 0;
+                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
