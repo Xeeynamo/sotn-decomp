@@ -992,7 +992,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->ext.subweapon.timer = 0x160;
         if ((self->params < 32) && !(self->params & 3)) {
-            g_api.PlaySfx(0x708);
+            g_api.PlaySfx(SFX_RIC_HYDRO_STORM_ATTACK);
         }
         self->step++;
         break;

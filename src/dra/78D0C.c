@@ -539,41 +539,44 @@ void EntityGuardText(Entity* self) {
     }
 }
 
-void func_80119D3C(Entity* entity) {
+// Small heart that rises and then flickers away.
+// Created by Factory 99 in AddHearts().
+// That call is in the Blood Cloak, Alucard Shield, and Herald Shield.
+void EntitySmallRisingHeart(Entity* self) {
     s32 temp;
     s32 cos;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->posY.i.hi -= 16;
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->ext.generic.unk7C.s = 0;
-        entity->step++;
-        entity->velocityY = FIX(-0.5);
-        entity->ext.generic.unk7E.modeU16 = 0x40;
-        entity->animCurFrame = 0xE;
-        entity->animSet = ANIMSET_DRA(3);
-        entity->ext.generic.unk80.modeS16.unk0 = 0x80;
-        entity->flags = FLAG_POS_CAMERA_LOCKED;
+        self->posY.i.hi -= 16;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->ext.smallRisingHeart.swayAngle = 0;
+        self->step++;
+        self->velocityY = FIX(-0.5);
+        self->ext.smallRisingHeart.swaySpeed = 0x40;
+        self->animCurFrame = 0xE;
+        self->animSet = ANIMSET_DRA(3);
+        self->ext.smallRisingHeart.timer = 0x80;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         break;
 
     case 1:
-        if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
-            entity->drawFlags = FLAG_DRAW_UNK80;
+        if (self->ext.smallRisingHeart.timer < 32) {
+            self->drawFlags = FLAG_DRAW_UNK80;
         }
-        entity->posY.val += entity->velocityY;
-        cos = rcos(entity->ext.generic.unk7C.s);
-        entity->ext.generic.unk7C.s =
-            entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
+        self->posY.val += self->velocityY;
+        cos = rcos(self->ext.smallRisingHeart.swayAngle);
+        self->ext.smallRisingHeart.swayAngle +=
+            self->ext.smallRisingHeart.swaySpeed;
         temp = cos * 8;
 
         if (!(g_GameTimer & 3)) {
-            entity->ext.generic.unk7E.modeU16--;
+            self->ext.smallRisingHeart.swaySpeed--;
         }
-        entity->posX.val += temp;
-        entity->ext.generic.unk80.modeS16.unk0--;
-        if (entity->ext.generic.unk80.modeS16.unk0 == 0) {
-            DestroyEntity(entity);
+        self->posX.val += temp;
+        self->ext.smallRisingHeart.timer--;
+        if (self->ext.smallRisingHeart.timer == 0) {
+            DestroyEntity(self);
         }
         break;
     }

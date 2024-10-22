@@ -43,7 +43,7 @@ def convert_rgb555(in_array):
         for i in range(0, len(in_row), 2):
             two_bytes = in_row[i : i + 2]
             two_bytes = two_bytes[::-1]
-            bits = int.from_bytes(two_bytes)
+            bits = int.from_bytes(two_bytes, "big")
             s = bits >> 15  # semi transparent flag
             b = bits >> 10 & 0b11111  # bits 14-10
             g = (bits >> 5) & 0b11111  # bits 9-5

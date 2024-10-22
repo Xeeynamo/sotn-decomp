@@ -26,13 +26,6 @@ typedef struct ET_Generic {
             /* 0x7F */ u8 unk1;
         } modeU8;
     } unk7E; // posY
-    union {
-        /* 0x80 */ s32 modeS32;
-        /* 0x80 */ struct Entity* entityPtr;
-        struct {
-            /* 0x80 */ s16 unk0;
-        } modeS16;
-    } unk80; // size = 0x4
 } ET_Generic;
 
 typedef struct {
@@ -682,6 +675,13 @@ typedef struct {
 } ET_RoomTransition2;
 
 typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ char pad_84[0x8];
+    /* 0x8C */ s32 accelY;
+} ET_80192998;
+
+typedef struct {
     /* 0x7C */ u8 pad0[0x4];
     /* 0x80 */ u8* anim;
     /* 0x84 */ s16 unk84;
@@ -716,7 +716,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0x4];
+    /* 0x80 */ s32 yPos;
     /* 0x84 */ s32 elevatorTarget;
 } ET_Elevator;
 
@@ -796,7 +796,9 @@ typedef struct {
 } ET_CastleDoorTransition;
 
 typedef struct {
-    /* 0x7C */ s8 unk7C;
+    /* 0x7C */ u8 unk7C;
+    s32 : 24;
+    /* 0x80 */ s32 unk80;
 } ET_AlucardController;
 
 typedef struct {
@@ -1549,6 +1551,7 @@ typedef struct {
 
 typedef struct {
     byte pad[4];
+    // Needs further study; there is a use of LOW(unk80).
     u16 unk80;
     u16 unk82;
     s16 unk84;
@@ -1873,6 +1876,29 @@ typedef struct {
     /* 0x80 */ u8 unk80;
 } ET_CEN_Elevator;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_BloodSkeleton;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 angle;
+} ET_UnusedCENEnt;
+
+typedef struct {
+    // not a physical angular direction, but the swaying left and right
+    // moves in a sinusoidal manner so uses an angle internally.
+    /* 0x7C */ s16 swayAngle;
+    /* 0x7E */ s16 swaySpeed;
+    /* 0x80 */ s16 timer;
+} ET_SmallRisingHeart;
+
+typedef struct {
+    /* 0x00 */ s8 currentAngle;
+    /* 0x01 */ s8 targetAngle;
+} ET_801CC9B4;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1888,6 +1914,7 @@ typedef union { // offset=0x7C
     ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
+    ET_801CC9B4 et_801CC9B4;
     ET_HellfireHandler hellfireHandler;
     ET_8016D9C4 et_8016D9C4;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
@@ -1966,6 +1993,7 @@ typedef union { // offset=0x7C
     ET_Succubus succubus;
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
+    ET_80192998 e_80192998;
     ET_WargExplosionPuffOpaque wargpuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
@@ -2030,6 +2058,9 @@ typedef union { // offset=0x7C
     ET_DeathScythe deathScythe;
     ET_Unused_MAD_ST0 unusedMadST0;
     ET_CEN_Elevator cenElevator;
+    ET_BloodSkeleton bloodSkeleton;
+    ET_UnusedCENEnt unusedCENEnt;
+    ET_SmallRisingHeart smallRisingHeart;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

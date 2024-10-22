@@ -62,7 +62,7 @@ void EntitySlogra(Entity* self) {
             if ((self->hitPoints < (hitPoints >> 2)) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
                 self->hitboxState = 0;
-                PlaySfxPositional(NA_SE_EN_SLOGRA_HURT_2);
+                PlaySfxPositional(SFX_SLOGRA_ROAR_DEFEAT);
                 SetStep(SLOGRA_LOSE_SPEAR);
             }
         }
@@ -162,7 +162,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_SPEAR_POKE:
         if (self->step_s == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_HISSING);
+            PlaySfxPositional(SFX_SLOGRA_ROAR);
             self->step_s++;
         }
         if (AnimateEntity(D_80181328, self) == 0) {
@@ -215,7 +215,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_KNOCKBACK:
         if (self->step_s == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_HURT);
+            PlaySfxPositional(SFX_SLOGRA_PAIN_B);
             self->step_s++;
         }
         if (self->ext.GS_Props.nearDeath != 0) {
