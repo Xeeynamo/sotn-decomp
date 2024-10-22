@@ -64,4 +64,30 @@ typedef enum {
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
+extern u16 g_eBreakableWithDebrisInit[];
+extern u16 g_InitializeData0[];
+extern u16 g_InitializeEntityData0[];
+extern u16 EntityInit_80180634[];
+extern u16 g_EInitGeneric[];
+extern u16 g_InitDataEnt13[];
+extern u16 EntityInit_80180658[];
+extern u16 g_eInitGeneric2[];
+extern u16 g_eDamageDisplayInit[];
+extern u16 EntityInit_8018067C[];
+extern u16 EntityInit_80180688[];
+extern u16 EntityInit_80180694[];
+extern u16 EntityInit_801806A0[];
+extern u16 EntityInit_801806AC[];
+extern u16 EntityInit_801806B8[];
+extern u16 EntityInit_801806C4[];
+extern u16 EntityInit_801806D0[];
+extern u16 EntityInit_801806DC[];
+extern u16 EntityInit_801806E8[];
+extern u16 EntityInit_801806F4[];
+extern u16 EntityInit_80180700[];
+extern u16 EntityInit_8018070C[];
+extern u16 EntityInit_80180718[];
+extern u16 EntityInit_80180724[];
+extern ObjInit2 ObjInit2_80180740[];
+
 #endif

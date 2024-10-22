@@ -110,7 +110,6 @@ EntityInit g_eBreakableWithDebrisInit = {
     .enemyId = 0,
 };
 
-//TODO: (More were unlisted)
 // D_8018061C
 EntityInit g_InitializeData0 = {
     .animSet = ANIMSET_DRA(3),
@@ -120,7 +119,6 @@ EntityInit g_InitializeData0 = {
     .enemyId = 1,
 };
 
-//TODO: (More were unlisted)
 // D_80180628
 EntityInit g_InitializeEntityData0 = {
     .animSet = ANIMSET_DRA(3),
@@ -139,7 +137,7 @@ EntityInit EntityInit_80180634 = {
     .enemyId = 4,
 };
 
-// EntityInit_80180640
+// D_80180640
 EntityInit g_EInitGeneric = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
@@ -330,26 +328,26 @@ static u8 AnimFrames_80180734[] = {
 };
 
 // D_80180740
-ObjInit2 ObjInit2_80180740 = {
-    .animSet = ANIMSET_DRA(6),
-    .zPriority = 0x1FA,
-    .facingLeft = false,
-    .palette = PAL_DRA(0),
-    .drawFlags = DRAW_DEFAULT,
-    .drawMode = DRAW_TPAGE,
-    .animFrames = &AnimFrames_80180730,
-};
-
-// D_80180754
-ObjInit2 ObjInit2_80180754 = {
-    .animSet = ANIMSET_OVL(1),
-    .zPriority = 0xC0,
-    .facingLeft = false,
-    .palette = PAL_DRA(0),
-    .drawFlags = DRAW_TRANSP | DRAW_UNK02,
-    .drawMode = 0x30,
-    .unkC = 0,
-    .animFrames = AnimFrames_80180734,
+ObjInit2 ObjInit2_80180740[] = {
+    {
+        .animSet = ANIMSET_DRA(6),
+        .zPriority = 0x1FA,
+        .facingLeft = false,
+        .palette = PAL_DRA(0),
+        .drawFlags = DRAW_DEFAULT,
+        .drawMode = DRAW_TPAGE,
+        .animFrames = &AnimFrames_80180730,
+    },
+    {
+        .animSet = ANIMSET_OVL(1),
+        .zPriority = 0xC0,
+        .facingLeft = false,
+        .palette = PAL_DRA(0),
+        .drawFlags = DRAW_TRANSP | DRAW_UNK02,
+        .drawMode = 0x30,
+        .unkC = 0,
+        .animFrames = AnimFrames_80180734,
+    }
 };
 
 // D_80180768

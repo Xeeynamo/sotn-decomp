@@ -40,7 +40,6 @@ void UpdateDustParticles(Primitive* prim)
 }
 
 void UpdateDustParticles(Primitive*);
-extern EntityInit EntityInit_8018067C;
 
 // D_80180974
 static u16 FallingStairsNotFallenTileIndices[] = {

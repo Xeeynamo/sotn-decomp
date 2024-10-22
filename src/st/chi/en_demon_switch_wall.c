@@ -45,8 +45,6 @@ void UpdateFallingPebble(Primitive* prim) {
     }
 }
 
-extern EntityInit EntityInit_8018067C;
-
 // E_DEMON_SWITCH
 // func_8019BDF8
 void EntityDemonSwitch(Entity* self) {
@@ -88,8 +86,6 @@ void EntityDemonSwitch(Entity* self) {
 #if defined(VERSION_PSP)
 extern s32 D_psp_0926BC50;
 #endif
-
-extern EntityInit EntityInit_8018067C;
 
 // D_8018089C
 static u16 WallTilesCollision[] = {

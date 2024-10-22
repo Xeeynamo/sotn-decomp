@@ -6,7 +6,5 @@
 
 #include "chi.h"
 
-extern u16 g_InitializeData0[];
-
 // func_801A77DC: [E_ENEMY_BLOOD] EntityEnemyBlood
 #include "../entity_enemy_blood.h"

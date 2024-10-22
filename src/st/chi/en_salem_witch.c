@@ -24,8 +24,6 @@ void SalemWitchTrySpawnShadow()
     }
 }
 
-extern EntityInit EntityInit_80180688;
-
 // D_80181538
 static u8 AnimFrames_TurnAround[] = {
     0x01, 0x01, 0x01, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x03, 0x01, 0x03, 0x02,
@@ -643,7 +641,6 @@ static u8 AnimFrames_CurseProjectile[] = {
     0x00, 0x00, 0x00, 0x00
 };
 
-extern EntityInit EntityInit_80180694;
 extern signed short* sprites_chi_4[];
 
 // [Should sprite groups be structs, similar to EntityInit?]
@@ -842,8 +839,6 @@ static u8 AnimFrames_TriboltBurst[] = {
     0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06, 0xFF, 0x00, 0x00, 0x00
 };
 
-extern EntityInit g_EInitGeneric;
-
 // E_SALEM_WITCH_TRIBOLT_LAUNCH
 // func_801A93D4
 void EntitySalemWitchTriboltLaunch(Entity* self)
@@ -929,7 +924,6 @@ static u8 AnimFrames_TriboltTrail[] = {
 };
 
 extern Entity D_8007D858;
-extern u16 EntityInit_801806A0;
 
 // E_SALEM_WITCH_TRIBOLT_PROJECTILE
 // params: Index of projectile in group

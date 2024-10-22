@@ -67,8 +67,6 @@ static u8 HitboxIndices[] = {
     0x04, 0x05, 0x05, 0x06, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x05, 0x0A, 0x00, 0x00, 0x00
 };
 
-extern EntityInit EntityInit_801806D0;
-
 // E_THORNWEED
 // params: 0 = Thornweed, 1 = Corpseweed
 // func_801AA020
@@ -200,8 +198,6 @@ void EntityThornweed(Entity* self)
     self->hitboxWidth = *hitboxData++;
     self->hitboxHeight = *hitboxData++;
 }
-
-extern EntityInit EntityInit_801806E8;
 
 // E_CORPSEWEED
 // func_801AA390
@@ -743,8 +739,6 @@ void EntityCorpseweed(Entity* self)
         DestroyEntity(self);
     }
 }
-
-extern EntityInit EntityInit_801806F4;
 
 // E_CORPSEWEED_PROJECTILE
 // func_801AB0C0

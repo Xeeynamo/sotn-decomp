@@ -6,9 +6,6 @@
 
 #include "chi.h"
 
-extern EntityInit EntityInit_8018067C;
-extern u16 g_Tilemap_scrollX_i_hi;
-
 // E_CERBERUS_GATE_DEBUG
 // params: True to use version for right side
 // func_8019CBA8

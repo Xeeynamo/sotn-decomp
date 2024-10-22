@@ -6,8 +6,6 @@
 
 #include "chi.h"
 
-extern EntityInit EntityInit_8018067C;
-
 // E_BREAKABLE_WALL_DEBRIS
 // params: animCurFrame to use
 //         (== 0xD) Different starting X velocity
@@ -110,8 +108,6 @@ void EntityBreakableWallDebris(Entity* self) {
             break;
     }
 }
-
-extern EntityInit EntityInit_8018067C;
 
 // D_801808CC
 static u16 BreakableWallTilesCollision[] = {

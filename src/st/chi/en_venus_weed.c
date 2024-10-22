@@ -300,8 +300,6 @@ static s16 TendrilSpikeStartTimeOffset[] = {
     0x0000, 0x0000
 };
 
-extern EntityInit EntityInit_80180700;
-
 // E_VENUS_WEED
 // func_801AB7CC
 // https://decomp.me/scratch/QrYmQ
@@ -667,8 +665,6 @@ void EntityVenusWeed(Entity* self)
     }
 }
 
-extern EntityInit EntityInit_8018070C;
-
 // E_VENUS_WEED_FLOWER
 // func_801AC074
 // https://decomp.me/scratch/0O3ex
@@ -1003,8 +999,6 @@ void EntityVenusWeedFlower(Entity* self)
     }
 }
 
-extern EntityInit EntityInit_80180718;
-
 // E_VENUS_WEED_TENDRIL
 // params: Index in group
 //         Used to slightly influence position
@@ -1141,8 +1135,6 @@ void EntityVenusWeedTendril(Entity* self)
     self->hitboxHeight = *hitboxData++;
 }
 
-extern EntityInit EntityInit_80180724;
-
 // E_VENUS_WEED_DART
 // params: Index in group
 //         Slightly influences acceleration
@@ -1269,8 +1261,6 @@ void EntityVenusWeedDart(Entity* self)
         DestroyEntity(self);
     }
 }
-
-extern EntityInit EntityInit_8018070C;
 
 // E_VENUS_WEED_SPIKE
 // params: Index in group

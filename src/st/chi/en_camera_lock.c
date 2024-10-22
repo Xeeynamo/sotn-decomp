@@ -25,7 +25,6 @@ static u16 D_801807A8[] = {
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
 
-extern u16 EntityInit_80180658;
 extern u8 D_80180798[];     // Trigger long dimension size
 extern u8 D_801807A0[];     // Trigger long dimension is horizontal
 extern u16 D_801807A8[];
