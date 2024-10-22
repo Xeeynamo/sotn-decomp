@@ -101,8 +101,6 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityVenusWeedSpike,
 };
 
-//TODO: Used in EntityBreakableWithDebris
-//TODO: Used in EntityBreakableDebris
 // D_80180610
 EntityInit g_eBreakableWithDebrisInit = {
     .animSet = ANIMSET_OVL(1),
@@ -112,9 +110,6 @@ EntityInit g_eBreakableWithDebrisInit = {
     .enemyId = 0,
 };
 
-//TODO: Used in func_801A2D84
-//TODO: Used in func_801A3740
-//TODO: Used in func_801A3FDC
 //TODO: (More were unlisted)
 // D_8018061C
 EntityInit g_InitializeData0 = {
@@ -125,9 +120,6 @@ EntityInit g_InitializeData0 = {
     .enemyId = 1,
 };
 
-//TODO: Used in func_801A3520
-//TODO: Used in EntityOlroxDrool
-//TODO: Used in func_801A5F54
 //TODO: (More were unlisted)
 // D_80180628
 EntityInit g_InitializeEntityData0 = {
@@ -138,7 +130,6 @@ EntityInit g_InitializeEntityData0 = {
     .enemyId = 2,
 };
 
-//TODO: No match, no errors
 // D_80180634
 EntityInit EntityInit_80180634 = {
     .animSet = ANIMSET_DRA(0),
@@ -148,8 +139,6 @@ EntityInit EntityInit_80180634 = {
     .enemyId = 4,
 };
 
-//TODO: Used in func_801A941C
-//TODO: Used in func_801AD2BC
 // EntityInit_80180640
 EntityInit g_EInitGeneric = {
     .animSet = ANIMSET_DRA(0),
@@ -159,7 +148,6 @@ EntityInit g_EInitGeneric = {
     .enemyId = 5,
 };
 
-//TODO: Used in EntityUnkId13
 // D_8018064C
 EntityInit g_InitDataEnt13 = {
     .animSet = ANIMSET_DRA(0),
@@ -169,7 +157,6 @@ EntityInit g_InitDataEnt13 = {
     .enemyId = 2,
 };
 
-//TODO: Used in EntityUnkId12
 // D_80180658
 EntityInit EntityInit_80180658 = {
     .animSet = ANIMSET_DRA(0),
@@ -179,9 +166,6 @@ EntityInit EntityInit_80180658 = {
     .enemyId = 1,
 };
 
-//TODO: Used in func_801A7C8C
-//TODO: Used in EntityBackgroundBlock
-//TODO: Used in EntityRedDoor
 // D_80180664
 EntityInit g_eInitGeneric2 = {
     .animSet = ANIMSET_DRA(0),
@@ -191,7 +175,6 @@ EntityInit g_eInitGeneric2 = {
     .enemyId = 3,
 };
 
-//TODO: Used in EntityDamageDisplay
 // D_80180670
 EntityInit g_eDamageDisplayInit = {
     .animSet = ANIMSET_DRA(0),
@@ -201,8 +184,6 @@ EntityInit g_eDamageDisplayInit = {
     .enemyId = 3,
 };
 
-//TODO: Used in EntityDemonSwitchWall
-//TODO: Used in EntityBreakableWallDebris
 // D_8018067C
 EntityInit EntityInit_8018067C = {
     .animSet = ANIMSET_OVL(1),
@@ -212,9 +193,6 @@ EntityInit EntityInit_8018067C = {
     .enemyId = 5,
 };
 
-//TODO: Used in func_801A813C
-//TODO: Used in func_801A8DE8
-//TODO: (More were unlisted)
 // D_80180688
 EntityInit EntityInit_80180688 = {
     .animSet = ANIMSET_OVL(3),
@@ -224,7 +202,6 @@ EntityInit EntityInit_80180688 = {
     .enemyId = 221,
 };
 
-//TODO: Used in func_801A8EAC
 // D_80180694
 EntityInit EntityInit_80180694 = {
     .animSet = ANIMSET_OVL(3),
@@ -234,7 +211,6 @@ EntityInit EntityInit_80180694 = {
     .enemyId = 222,
 };
 
-//TODO: Used in func_801A9588
 // D_801806A0
 EntityInit EntityInit_801806A0 = {
     .animSet = ANIMSET_OVL(4),
@@ -244,8 +220,6 @@ EntityInit EntityInit_801806A0 = {
     .enemyId = 223,
 };
 
-//TODO: Used in func_801A97C8
-//TODO: Used in func_801A9D40
 // D_801806AC
 EntityInit EntityInit_801806AC = {
     .animSet = ANIMSET_OVL(2),
@@ -255,7 +229,6 @@ EntityInit EntityInit_801806AC = {
     .enemyId = 225,
 };
 
-//TODO: No match, no errors
 // D_801806B8
 EntityInit EntityInit_801806B8 = {
     .animSet = ANIMSET_OVL(2),
@@ -265,7 +238,6 @@ EntityInit EntityInit_801806B8 = {
     .enemyId = 5,
 };
 
-//TODO: Used in func_801A9E94
 // D_801806C4
 EntityInit EntityInit_801806C4 = {
     .animSet = ANIMSET_OVL(2),
@@ -275,7 +247,6 @@ EntityInit EntityInit_801806C4 = {
     .enemyId = 226,
 };
 
-//TODO: Used in func_801AA0F0
 // D_801806D0
 EntityInit EntityInit_801806D0 = {
     .animSet = ANIMSET_OVL(7),
@@ -285,7 +256,6 @@ EntityInit EntityInit_801806D0 = {
     .enemyId = 157,
 };
 
-//TODO: No match, no errors
 // D_801806DC
 EntityInit EntityInit_801806DC = {
     .animSet = ANIMSET_OVL(7),
@@ -295,7 +265,6 @@ EntityInit EntityInit_801806DC = {
     .enemyId = 158,
 };
 
-//TODO: Used in func_801AA404
 // D_801806E8
 EntityInit EntityInit_801806E8 = {
     .animSet = ANIMSET_OVL(7),
@@ -305,7 +274,6 @@ EntityInit EntityInit_801806E8 = {
     .enemyId = 159,
 };
 
-//TODO: Used in func_801AB0C0
 // D_801806F4
 EntityInit EntityInit_801806F4 = {
     .animSet = ANIMSET_OVL(7),
@@ -315,7 +283,6 @@ EntityInit EntityInit_801806F4 = {
     .enemyId = 160,
 };
 
-//TODO: Used in func_801AB844
 // D_80180700
 EntityInit EntityInit_80180700 = {
     .animSet = ANIMSET_OVL(8),
@@ -325,8 +292,6 @@ EntityInit EntityInit_80180700 = {
     .enemyId = 161,
 };
 
-//TODO: Used in func_801AC124
-//TODO: Used in func_801ACEF4
 // D_8018070C
 EntityInit EntityInit_8018070C = {
     .animSet = ANIMSET_OVL(8),
@@ -336,7 +301,6 @@ EntityInit EntityInit_8018070C = {
     .enemyId = 162,
 };
 
-//TODO: Used in func_801AC7A0
 // D_80180718
 EntityInit EntityInit_80180718 = {
     .animSet = ANIMSET_OVL(8),
@@ -346,7 +310,6 @@ EntityInit EntityInit_80180718 = {
     .enemyId = 163,
 };
 
-//TODO: Used in func_801ACB6C
 // D_80180724
 EntityInit EntityInit_80180724 = {
     .animSet = ANIMSET_OVL(8),
@@ -366,7 +329,6 @@ static u8 AnimFrames_80180734[] = {
     0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00, 0x00, 0x00, 0x00,
 };
 
-// Used in EntityBackgroundBlock
 // D_80180740
 ObjInit2 ObjInit2_80180740 = {
     .animSet = ANIMSET_DRA(6),
