@@ -6,6 +6,9 @@ extern u8* g_ExplosionAnimations[];
 // when `AnimateEntity` is not declared, the default declaration
 // is used which assumes a 32 bit return type. This prototype
 // can be forced by setting MISSING_ANIMATE_ENTITY_PROTOTYPE
+// params: (& 0xFF) The explosion type
+//         (& 0xF0) These explosion types use a different (hardcoded) palette and drawMode
+//         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
 typedef u32 (*AnimateEntityMissingProto)(u8[], Entity*);
 
 void EntityExplosion(Entity* entity) {

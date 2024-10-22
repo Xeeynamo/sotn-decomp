@@ -271,7 +271,7 @@ Entity* func_801939C4(void) {
 static void DestroyCurrentEntity(u16 id) { DestroyEntity(g_CurrentEntity); }
 #endif
 
-// if self->params & 0x8000 then the item will not disappear
+// params: (& 0x8000) The item will not disappear
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -614,6 +614,8 @@ void func_80194314(Entity* entity) {
 
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
+// params: (& 0x7FFF) Item ID
+//         (& 0x8000) If true, item ID is actually a relic ID
 void EntityEquipItemDrop(Entity* self) {
     Collider collider;
     Primitive* prim;

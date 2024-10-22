@@ -10,6 +10,7 @@ extern EntityInit EntityInit_8018067C;
 
 // [Step enum]
 // E_BREAKABLE_WALL_DEBRIS
+// params: animCurFrame to use
 // func_8019C31C
 void EntityBreakableWallDebris(Entity* entity) {
     Collider collider;

@@ -2,6 +2,8 @@
 
 extern u16 g_eBreakableWithDebrisInit[];
 
+// params: (>> 12) represents the breakable type.
+//         Any non-zero value is considered a "tall" breakable, meaning it breaks into more debris, some of which spawns higher up
 void EntityBreakableWithDebris(Entity* self) {
     const int DebrisBaseCount = 4;
     const int DebrisTallExtraCount = 3;
@@ -71,6 +73,9 @@ void EntityBreakableWithDebris(Entity* self) {
     }
 }
 
+// params: Index of breakable debris to use
+//         (>= 4) Considered a "tall" breakable debris
+//         (== 6) The "last standing" debris, that doesn't move
 void EntityBreakableDebris(Entity* entity) {
     Collider collider;
     Primitive* prim;

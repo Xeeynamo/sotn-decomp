@@ -32,6 +32,8 @@ static bool EntityIsNearPlayer(Entity* self) {
     return true;
 }
 
+// params: (& 0x100) Opens to the right
+//         (& 0xFF) Index into map-specific tiles to place behind the door (g_eRedDoorTiles)
 void EntityRedDoor(Entity* self) {
     Primitive* prim;
     s32 i;

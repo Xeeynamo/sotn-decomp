@@ -1007,6 +1007,7 @@ extern EntityInit EntityInit_80180718;
 
 // E_VENUS_WEED_TENDRIL
 // params: Index in group
+//         Used to slightly influence position
 // func_801AC730
 // https://decomp.me/scratch/dVIWY
 // PSP:func_psp_0923C4E8:No match
@@ -1144,6 +1145,7 @@ extern EntityInit EntityInit_80180724;
 
 // E_VENUS_WEED_DART
 // params: Index in group
+//         Slightly influences acceleration
 // func_801ACB6C
 // https://decomp.me/scratch/AyVyt
 // PSP:func_psp_0923CAC8:Match

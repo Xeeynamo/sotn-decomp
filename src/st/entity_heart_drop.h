@@ -10,6 +10,7 @@ static u16 g_HeartDropArray[] = {
     0x0103, 0x00D6, 0x00E6, 0x0017, 0x0017, 0x0089, 0x0139, 0x0000};
 #endif
 
+// params: Local index of this drop
 void EntityHeartDrop(Entity* self) {
     u16 index;
     u8 value;

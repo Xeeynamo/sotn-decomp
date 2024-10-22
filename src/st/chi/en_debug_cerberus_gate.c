@@ -11,6 +11,7 @@ extern u16 g_Tilemap_scrollX_i_hi;
 
 // [Steps enum]
 // E_CERBERUS_GATE_DEBUG
+// params: True to use version for right side
 // func_8019CBA8
 // https://decomp.me/scratch/BFa12
 // PSP:func_psp_0924B458:Match

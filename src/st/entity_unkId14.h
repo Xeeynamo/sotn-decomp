@@ -5,6 +5,7 @@ extern u16 unk14_lifetime[];
 
 // Appears to be related to some sort of explosion or puff of smoke.
 // ID is 0x14.
+// params: Index used for animCurFrame and animFrameDuration
 void EntityUnkId14(Entity* self) {
     if (!self->step) {
         self->velocityY = unk14_yVel[self->ext.generic.unk94];

@@ -32,6 +32,7 @@ extern u16 D_801807A8[];
 
 // [Needs shared file changes to be moved to shared file]
 // E_CAMERA_LOCK
+// params: Which camera lock config to use
 // func_8019B4DC
 void EntityCameraLock(Entity* entity) {
     s32 temp_v0;

@@ -3,6 +3,7 @@ extern s16 unk15_rot[];
 extern s32 unk15_yVel[];
 
 // looks like a particle of dust fading away
+// params: Index of rotX and velocityY to use
 void EntityUnkId15(Entity* self) {
     if (!self->step) {
         self->flags =

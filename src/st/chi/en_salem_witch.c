@@ -70,6 +70,7 @@ static u8 AnimFrames_TriboltReset[] = {
 
 // [Find/create/use enum/const for E_EXPLOSION spawn params?]
 // E_SALEM_WITCH
+// params: animCurFrame (for shadows only)
 // func_801A813C
 // https://decomp.me/scratch/XsSqC
 // PSP:func_psp_09238760:Match
@@ -931,6 +932,8 @@ extern Entity D_8007D858;
 extern u16 EntityInit_801806A0;
 
 // E_SALEM_WITCH_TRIBOLT_PROJECTILE
+// params: Index of projectile in group
+//         Used to determine trajectory
 // func_801A9588
 void EntitySalemWitchTriboltProjectile(Entity* self)
 {

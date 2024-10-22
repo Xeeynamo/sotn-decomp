@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-// params: message box duration
+// params: message box duration, in frames
 // ext.messageBox.label: box size and text to render
 extern u16 g_InitializeData0[];
 void EntityMessageBox(Entity* self) {

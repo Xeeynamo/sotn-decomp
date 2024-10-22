@@ -11,6 +11,8 @@ extern s32 g_eInitGeneric2;
 
 // [Needs shared file changes to be moved to shared file]
 // func_8019B3FC: [E_BACKGROUND_BLOCK] EntityBackgroundBlock
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
 void EntityBackgroundBlock(Entity* entity) {
     ObjInit* objInit = &ObjInit2_80180740[entity->params];
     if (entity->step == 0) {

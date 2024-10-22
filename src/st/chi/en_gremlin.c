@@ -15,6 +15,7 @@ static u8 AnimFrames_Running[] = {
 extern EntityInit EntityInit_801806AC;
 
 // E_GREMLIN
+// params: True for facing left
 // func_801A97C8
 // https://decomp.me/scratch/kNQO9
 // PSP:func_psp_09248BD0:Match
@@ -241,6 +242,7 @@ static u8 AnimFrames_Glow[] = {
 };
 
 // E_GREMLIN_EFFECT
+// params: True to be fire, false to be glow
 // func_801A9D40
 void EntityGremlinEffect(Entity* self)
 {

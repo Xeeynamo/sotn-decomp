@@ -22,6 +22,9 @@ extern ObjInit eRoomForegroundInit[];
 #endif
 
 extern u16 g_eInitGeneric2[];
+
+// params: Which foreground ObjInit to use
+//         (> 4) These entries use an alternate hardcoded drawFlags and rotZ
 void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &eRoomForegroundInit[entity->params];
 
