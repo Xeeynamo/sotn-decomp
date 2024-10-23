@@ -358,7 +358,7 @@ void EntityVenusWeed(Entity* self)
 
     switch (self->step) {
         case VENUS_WEED_INIT:
-            InitializeEntity(&EntityInit_80180700);
+            InitializeEntity(&g_InitVenusWeedRoot);
             self->hitboxOffX = 1;
             self->hitboxOffY = -7;
 
@@ -739,7 +739,7 @@ void EntityVenusWeedFlower(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_8018070C);
+            InitializeEntity(&g_InitVenusWeedFlower);
             self->hitboxOffX = HitboxOffsetX;
             self->hitboxOffY = HitboxOffsetY;
             self->hitboxWidth = HitboxWidth;
@@ -1023,7 +1023,7 @@ void EntityVenusWeedTendril(Entity* self)
 
     switch (self->step) {
         case VENUS_WEED_TENDRIL_INIT:
-            InitializeEntity(&EntityInit_80180718);
+            InitializeEntity(&g_InitVenusWeedTendril);
             self->animCurFrame = 0;
             break;
 
@@ -1169,7 +1169,7 @@ void EntityVenusWeedDart(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_80180724);
+            InitializeEntity(&g_InitVenusWeedDart);
             self->animCurFrame = AnimFrameIndexInit;
             self->drawFlags = FLAG_DRAW_ROTZ;
             rot = self->rotZ;
@@ -1286,7 +1286,7 @@ void EntityVenusWeedSpike(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_8018070C);
+            InitializeEntity(&g_InitVenusWeedFlower);
             
             self->flags |= FLAG_UNK_2000 | FLAG_UNK_00200000;
             self->hitboxState = 0;

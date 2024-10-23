@@ -112,7 +112,7 @@ void EntityThornweed(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806D0);
+            InitializeEntity(&g_InitThornweed);
             if (self->params) {
                 self->animCurFrame = AnimFrame_CorpseweedInit;
             } else {
@@ -298,7 +298,7 @@ void EntityCorpseweed(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806E8);
+            InitializeEntity(&g_InitCorpseweed);
             self->animCurFrame = AnimFrameInit;
             self->hitboxOffX = 2;
             self->hitboxOffY = 9;
@@ -792,7 +792,7 @@ void EntityCorpseweedProjectile(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806F4);
+            InitializeEntity(&g_InitCorpseweedProjectile);
             x = GetDistanceToPlayerX();
             if (x > RangeMaxX) {
                 x = RangeMaxX;

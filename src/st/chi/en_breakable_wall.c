@@ -33,7 +33,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_8018067C);
+            InitializeEntity(&g_InitTilemap);
             animCurFrame = self->params;
             self->drawFlags = FLAG_DRAW_ROTZ;
             self->zPriority = 0x69;
@@ -162,7 +162,7 @@ void EntityBreakableWall(Entity* self) {
     
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_8018067C);
+            InitializeEntity(&g_InitTilemap);
             self->animCurFrame = 2;
             self->animCurFrame = 0;
             self->hitPoints = 0x20;
@@ -249,7 +249,7 @@ void EntityBreakableWall(Entity* self) {
                 entity->rotZ = *pSrcTile++;
             }
             return;
-            
+
         case IDLE:
             if (self->flags & FLAG_DEAD) {
                 g_api.PlaySfx(SFX_WALL_DEBRIS_B);

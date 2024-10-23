@@ -122,7 +122,7 @@ void EntityFallingStairs(Entity* self)
             // Change position to be prepared for stairs falling
             self->posX.i.hi = NotFallenPosX - g_Tilemap.scrollX.i.hi;
             self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
-            InitializeEntity(&EntityInit_8018067C);
+            InitializeEntity(&g_InitTilemap);
 
             self->drawFlags |= FLAG_DRAW_ROTZ;
             self->animCurFrame = 0;
@@ -405,7 +405,7 @@ void EntityFallingStep(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(&EntityInit_8018067C);
+        InitializeEntity(&g_InitTilemap);
         self->animCurFrame = 0;
         self->drawFlags |= 4;
         g_Tilemap.fg[TilePos] = TileInitVal;

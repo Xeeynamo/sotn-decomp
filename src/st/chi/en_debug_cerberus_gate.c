@@ -34,7 +34,7 @@ void EntityCerberusGateDebug(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&EntityInit_8018067C);
+        InitializeEntity(&g_InitTilemap);
         self->zPriority = 0x6A;
         if (self->params) {
             self->animCurFrame = 6;

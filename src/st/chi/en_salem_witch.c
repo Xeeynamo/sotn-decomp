@@ -174,7 +174,7 @@ void EntitySalemWitch(Entity* self)
     }
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_80180688);
+            InitializeEntity(&g_InitSalemWitch);
             self->hitboxOffY = 0xA;
             entity = self + 1;
             CreateEntityFromCurrentEntity(E_SALEM_WITCH_GLOW, entity);
@@ -546,7 +546,7 @@ void EntitySalemWitch(Entity* self)
             break;
 
         case SHADOW_INIT:
-            InitializeEntity(&EntityInit_80180688);
+            InitializeEntity(&g_InitSalemWitch);
             self->flags |= 0x2000;
             self->hitboxState = 0;
             self->animCurFrame = self->params;
@@ -609,7 +609,7 @@ void EntitySalemWitchGlow(Entity* self)
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(&EntityInit_80180688);
+        InitializeEntity(&g_InitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
@@ -672,7 +672,7 @@ void EntitySalemWitchCurse(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_80180694);
+            InitializeEntity(&g_InitSalemWitchCurse);
 
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             if (self->facingLeft) {
@@ -948,7 +948,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806A0);
+            InitializeEntity(&g_InitSalemWitchTribolt);
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
             self->rotX = 0x80;
             launchDir = self->params - 1;
@@ -989,7 +989,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self)
             break;
 
         case TRAIL_INIT:
-            InitializeEntity(&EntityInit_801806A0);
+            InitializeEntity(&g_InitSalemWitchTribolt);
             self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
             self->animCurFrame = self->params;

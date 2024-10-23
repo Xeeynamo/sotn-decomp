@@ -128,6 +128,7 @@ EntityInit g_InitializeEntityData0 = {
     .enemyId = 2,
 };
 
+// Unused
 // D_80180634
 EntityInit EntityInit_80180634 = {
     .animSet = ANIMSET_DRA(0),
@@ -155,6 +156,7 @@ EntityInit g_InitDataEnt13 = {
     .enemyId = 2,
 };
 
+// Camera Lock
 // D_80180658
 EntityInit EntityInit_80180658 = {
     .animSet = ANIMSET_DRA(0),
@@ -182,8 +184,9 @@ EntityInit g_eDamageDisplayInit = {
     .enemyId = 3,
 };
 
+// Graphics that are supposed to simulate the tilemap or similar (ie. the Demon Switch)
 // D_8018067C
-EntityInit EntityInit_8018067C = {
+EntityInit g_InitTilemap = {
     .animSet = ANIMSET_OVL(1),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -192,7 +195,7 @@ EntityInit EntityInit_8018067C = {
 };
 
 // D_80180688
-EntityInit EntityInit_80180688 = {
+EntityInit g_InitSalemWitch = {
     .animSet = ANIMSET_OVL(3),
     .animCurFrame = 1,
     .unk5A = 72,
@@ -201,7 +204,7 @@ EntityInit EntityInit_80180688 = {
 };
 
 // D_80180694
-EntityInit EntityInit_80180694 = {
+EntityInit g_InitSalemWitchCurse = {
     .animSet = ANIMSET_OVL(3),
     .animCurFrame = 0,
     .unk5A = 72,
@@ -210,7 +213,7 @@ EntityInit EntityInit_80180694 = {
 };
 
 // D_801806A0
-EntityInit EntityInit_801806A0 = {
+EntityInit g_InitSalemWitchTribolt = {
     .animSet = ANIMSET_OVL(4),
     .animCurFrame = 0,
     .unk5A = 92,
@@ -219,7 +222,7 @@ EntityInit EntityInit_801806A0 = {
 };
 
 // D_801806AC
-EntityInit EntityInit_801806AC = {
+EntityInit g_InitGremlin = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
     .unk5A = 72,
@@ -227,6 +230,7 @@ EntityInit EntityInit_801806AC = {
     .enemyId = 225,
 };
 
+// Unused (Same enemyId as g_InitTilemap)
 // D_801806B8
 EntityInit EntityInit_801806B8 = {
     .animSet = ANIMSET_OVL(2),
@@ -237,7 +241,7 @@ EntityInit EntityInit_801806B8 = {
 };
 
 // D_801806C4
-EntityInit EntityInit_801806C4 = {
+EntityInit g_InitGremlinFire = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
     .unk5A = 72,
@@ -246,7 +250,7 @@ EntityInit EntityInit_801806C4 = {
 };
 
 // D_801806D0
-EntityInit EntityInit_801806D0 = {
+EntityInit g_InitThornweed = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
     .unk5A = 76,
@@ -254,6 +258,7 @@ EntityInit EntityInit_801806D0 = {
     .enemyId = 157,
 };
 
+// Unused (Alternate Corpseweed)
 // D_801806DC
 EntityInit EntityInit_801806DC = {
     .animSet = ANIMSET_OVL(7),
@@ -264,7 +269,7 @@ EntityInit EntityInit_801806DC = {
 };
 
 // D_801806E8
-EntityInit EntityInit_801806E8 = {
+EntityInit g_InitCorpseweed = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
     .unk5A = 76,
@@ -273,7 +278,7 @@ EntityInit EntityInit_801806E8 = {
 };
 
 // D_801806F4
-EntityInit EntityInit_801806F4 = {
+EntityInit g_InitCorpseweedProjectile = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
     .unk5A = 76,
@@ -282,7 +287,7 @@ EntityInit EntityInit_801806F4 = {
 };
 
 // D_80180700
-EntityInit EntityInit_80180700 = {
+EntityInit g_InitVenusWeedRoot = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
     .unk5A = 80,
@@ -291,7 +296,7 @@ EntityInit EntityInit_80180700 = {
 };
 
 // D_8018070C
-EntityInit EntityInit_8018070C = {
+EntityInit g_InitVenusWeedFlower = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
     .unk5A = 80,
@@ -300,7 +305,7 @@ EntityInit EntityInit_8018070C = {
 };
 
 // D_80180718
-EntityInit EntityInit_80180718 = {
+EntityInit g_InitVenusWeedTendril = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 0,
     .unk5A = 80,
@@ -309,7 +314,7 @@ EntityInit EntityInit_80180718 = {
 };
 
 // D_80180724
-EntityInit EntityInit_80180724 = {
+EntityInit g_InitVenusWeedDart = {
     .animSet = ANIMSET_OVL(8),
     .animCurFrame = 55,
     .unk5A = 80,
@@ -327,6 +332,7 @@ static u8 AnimFrames_80180734[] = {
     0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00, 0x00, 0x00, 0x00,
 };
 
+// Background Block
 // D_80180740
 ObjInit2 ObjInit2_80180740[] = {
     {

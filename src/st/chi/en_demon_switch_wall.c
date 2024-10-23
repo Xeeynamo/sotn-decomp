@@ -56,7 +56,7 @@ void EntityDemonSwitch(Entity* self) {
     switch (self->step)
     {
     case INIT:
-            InitializeEntity(&EntityInit_8018067C);
+            InitializeEntity(&g_InitTilemap);
             
             self->animCurFrame = 3;
             self->hitPoints = 32767;
@@ -128,7 +128,7 @@ void EntityDemonSwitchWall(Entity* self) {
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_8018067C);
+            InitializeEntity(&g_InitTilemap);
 
             self->animCurFrame = 1; // Default: Collision (closed)
 

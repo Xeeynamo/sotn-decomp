@@ -51,7 +51,7 @@ void EntityGremlin(Entity* self)
     }
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806AC);
+            InitializeEntity(&g_InitGremlin);
             self->animCurFrame = 1;
             self->hitboxOffX = 6;
             self->facingLeft = self->params;
@@ -257,7 +257,7 @@ void EntityGremlinEffect(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806AC);
+            InitializeEntity(&g_InitGremlin);
             self->hitboxState = 0;
             self->flags |= FLAG_UNK_2000;
 
@@ -338,7 +338,7 @@ void EntityGremlinFire(Entity* self)
 
     switch (self->step) {
         case INIT:
-            InitializeEntity(&EntityInit_801806C4);
+            InitializeEntity(&g_InitGremlinFire);
             self->ext.gremlinFire.timer = FireDuration;
             // fallthrough
         case IDLE:
