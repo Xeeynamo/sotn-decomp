@@ -41,7 +41,6 @@ typedef enum EntityIDs {
     /* 0x0E */ E_SAVE_GAME_POPUP,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
