@@ -6,7 +6,7 @@ void func_us_801C2A34(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
-        self->animSet = -0x7FFF;
+        self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x21;
         self->zPriority = 0x50;
         self->unk5A = 0;
@@ -16,7 +16,7 @@ void func_us_801C2A34(Entity* self) {
     }
     angle = rsin((((g_Timer % 120) << 0xC) + 0x3C) / 120);
     if (!angle) {
-        g_api_PlaySfx(SFX_LOW_CLOCK_TICK);
+        g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
     }
     self->rotZ = (angle >> 6) + (angle >> 7);
 }
@@ -24,7 +24,8 @@ void func_us_801C2A34(Entity* self) {
 void func_us_801C2B24(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
-    s16 volume;
+    u8 volume;
+    s16 distance;
 
     if (!self->step) {
         InitializeEntity(D_us_80180A88);
@@ -33,28 +34,30 @@ void func_us_801C2B24(Entity* self) {
         switch (self->params) {
         case 0:
             g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
-            return;
+            break;
         case 1:
-            volume =
+            distance =
                 ((tilemap->scrollX.i.hi + player->posX.i.hi - 0x1C0) * 2) / 5;
-            if (volume < 0) {
+            if (distance < 0) {
                 volume = 0;
-            } else if (volume >= 0x80) {
+            } else if (distance >= 0x80) {
                 volume = 0x7F;
+            } else {
+                volume = (u8)distance;
             }
-            volume = volume & 0xFF;
             g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, 8);
-            return;
+            break;
         case 2:
-            volume = ((0x140 - player->posX.i.hi) * 2) / 5;
-            if (volume < 0) {
+            distance = ((0x140 - player->posX.i.hi) * 2) / 5;
+            if (distance < 0) {
                 volume = 0;
-            } else if (volume >= 0x80) {
+            } else if (distance >= 0x80) {
                 volume = 0x7F;
+            } else {
+                volume = (u8)distance;
             }
-            volume = volume & 0xFF;
             g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, -8);
-            return;
+            break;
         }
     }
 }
@@ -64,7 +67,7 @@ void func_us_801C2CD8(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        self->animSet = -0x7FFF;
+        self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x2D;
         self->zPriority = 0x9E;
         if (g_CastleFlags[CASTLE_FLAG_1]) {
@@ -79,7 +82,7 @@ void func_us_801C2CD8(Entity* self) {
             player->posY.val += FIX(0.5);
             self->ext.timer.t++;
             if (self->ext.timer.t > 8) {
-                g_api_PlaySfx(SFX_LEVER_METAL_BANG);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 g_CastleFlags[CASTLE_FLAG_1] = 1;
                 self->step++;
             }
