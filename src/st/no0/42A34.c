@@ -1,7 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2A34);
+void func_us_801C2A34(Entity* self) {
+    s16 angle;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = -0x7FFF;
+        self->animCurFrame = 0x21;
+        self->zPriority = 0x50;
+        self->unk5A = 0;
+        self->palette = 0;
+        self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+        self->unk6C = 0x60;
+    }
+    angle = rsin((((g_Timer % 120) << 0xC) + 0x3C) / 120);
+    if (!angle) {
+        g_api_PlaySfx(SFX_LOW_CLOCK_TICK);
+    }
+    self->rotZ = (angle >> 6) + (angle >> 7);
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2B24);
 
