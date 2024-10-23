@@ -55,3 +55,6 @@ extern u16 g_EInitSkeletonBone[];
 
 // Clock room
 extern u16 g_Statues[];
+
+// Clocks?
+extern u16 D_us_80180A88[];

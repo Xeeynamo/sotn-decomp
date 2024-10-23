@@ -21,7 +21,43 @@ void func_us_801C2A34(Entity* self) {
     self->rotZ = (angle >> 6) + (angle >> 7);
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2B24);
+void func_us_801C2B24(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* player = &PLAYER;
+    s16 volume;
+
+    if (!self->step) {
+        InitializeEntity(D_us_80180A88);
+    }
+    if (g_Timer % 60 == 0) {
+        switch (self->params) {
+        case 0:
+            g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
+            return;
+        case 1:
+            volume =
+                ((tilemap->scrollX.i.hi + player->posX.i.hi - 0x1C0) * 2) / 5;
+            if (volume < 0) {
+                volume = 0;
+            } else if (volume >= 0x80) {
+                volume = 0x7F;
+            }
+            volume = volume & 0xFF;
+            g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, 8);
+            return;
+        case 2:
+            volume = ((0x140 - player->posX.i.hi) * 2) / 5;
+            if (volume < 0) {
+                volume = 0;
+            } else if (volume >= 0x80) {
+                volume = 0x7F;
+            }
+            volume = volume & 0xFF;
+            g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, -8);
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2CD8);
 
