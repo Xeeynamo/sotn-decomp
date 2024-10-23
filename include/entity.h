@@ -1079,6 +1079,7 @@ typedef struct {
 #endif
     s16 subweaponId;
 } ET_RICStopWatch;
+
 typedef struct {
     s16 timer;
     s16 index;
@@ -2105,7 +2106,7 @@ SYNC_FIELD(ET_EntFactory, ET_ReboundStoneCrashExplosion, parent);
 SYNC_FIELD(ET_EntFactory, ET_8016E9E4, parent);
 SYNC_FIELD(ET_EntFactory, ET_BibleBeam, parent);
 SYNC_FIELD(ET_EntFactory, ET_BibleSubwpn, parent);
-SYNC_FIELD(ET_EntFactory, ET_StopWatch, parent);
+SYNC_FIELD(ET_EntFactory, ET_RICStopWatch, parent);
 SYNC_FIELD(ET_EntFactory, ET_stopwatchCircle, parent);
 SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
@@ -2118,7 +2119,7 @@ SYNC_FIELD(ET_Subweapon, ET_AxeCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrossBoomerang, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_BibleSubwpn, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_BibleBeam, subweaponId);
-SYNC_FIELD(ET_Subweapon, ET_StopWatch, subweaponId);
+SYNC_FIELD(ET_Subweapon, ET_RICStopWatch, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_ReboundStone, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_ReboundStoneCrashExplosion, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_VibhutiCrashCloud, subweaponId);
