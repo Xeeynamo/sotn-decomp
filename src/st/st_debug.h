@@ -3,6 +3,8 @@
 extern ObjInit g_eBackgroundBlockInit[];
 extern u16 g_eInitGeneric2[];
 
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
 void EntityBackgroundBlock(Entity* self) {
     ObjInit* objInit = &g_eBackgroundBlockInit[self->params];
     if (!self->step) {

@@ -69,7 +69,7 @@ extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern u16 g_EInitGeneric[];
 extern u16 g_InitDataEnt13[];
-extern u16 EntityInit_80180658[];
+extern u16 g_EntityUnkId12Init[];
 extern u16 g_eInitGeneric2[];
 extern u16 g_eDamageDisplayInit[];
 extern u16 g_InitTilemap[];
@@ -87,6 +87,6 @@ extern u16 g_InitVenusWeedRoot[];
 extern u16 g_InitVenusWeedFlower[];
 extern u16 g_InitVenusWeedTendril[];
 extern u16 g_InitVenusWeedDart[];
-extern ObjInit2 ObjInit2_80180740[];
+extern ObjInit g_eBackgroundBlockInit[];
 
 #endif

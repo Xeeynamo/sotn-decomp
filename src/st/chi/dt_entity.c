@@ -23,7 +23,7 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
-void EntityCameraLock(Entity*);
+void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
@@ -71,7 +71,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock,
-    EntityCameraLock,
+    EntityUnkId12,  // EntityCameraLock
     EntityUnkId13,  // EntityParticleTrail
     EntityUnkId14,
     EntityUnkId15,  // EntityGreyPuff
@@ -158,7 +158,7 @@ EntityInit g_InitDataEnt13 = {
 
 // Camera Lock
 // D_80180658
-EntityInit EntityInit_80180658 = {
+EntityInit g_EntityUnkId12Init = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -334,7 +334,7 @@ static u8 AnimFrames_80180734[] = {
 
 // Background Block
 // D_80180740
-ObjInit2 ObjInit2_80180740[] = {
+ObjInit2 g_eBackgroundBlockInit[] = {
     {
         .animSet = ANIMSET_DRA(6),
         .zPriority = 0x1FA,
