@@ -18,3 +18,6 @@ CreateEventEntity = 0x80178FDC;
 IsMovementAllowed = 0x80179098;
 CheckAllEntitiesValid = 0x801791B0;
 ServantUnk0 = 0x8017925C;
+thisFamiliar = 0x800736C8;
+s_FaerieStats = 0x801792E4;
+g_ServantSpriteParts = 0x80170040;
