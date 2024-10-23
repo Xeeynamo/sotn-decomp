@@ -1,11 +1,107 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2A34);
+void func_us_801C2A34(Entity* self) {
+    s16 angle;
 
-INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2B24);
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 0x21;
+        self->zPriority = 0x50;
+        self->unk5A = 0;
+        self->palette = 0;
+        self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+        self->unk6C = 0x60;
+    }
+    angle = rsin((((g_Timer % 120) << 0xC) + 0x3C) / 120);
+    if (!angle) {
+        g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
+    }
+    self->rotZ = (angle >> 6) + (angle >> 7);
+}
 
-INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2CD8);
+void func_us_801C2B24(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* player = &PLAYER;
+    u8 volume;
+    s16 distance;
+
+    if (!self->step) {
+        InitializeEntity(D_us_80180A88);
+    }
+    if (g_Timer % 60 == 0) {
+        switch (self->params) {
+        case 0:
+            g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
+            break;
+        case 1:
+            distance =
+                ((tilemap->scrollX.i.hi + player->posX.i.hi - 0x1C0) * 2) / 5;
+            if (distance < 0) {
+                volume = 0;
+            } else if (distance >= 0x80) {
+                volume = 0x7F;
+            } else {
+                volume = (u8)distance;
+            }
+            g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, 8);
+            break;
+        case 2:
+            distance = ((0x140 - player->posX.i.hi) * 2) / 5;
+            if (distance < 0) {
+                volume = 0;
+            } else if (distance >= 0x80) {
+                volume = 0x7F;
+            } else {
+                volume = (u8)distance;
+            }
+            g_api.PlaySfxVolPan(SFX_LOW_CLOCK_TICK, volume, -8);
+            break;
+        }
+    }
+}
+
+void func_us_801C2CD8(Entity* self) {
+    s32 var = GetPlayerCollisionWith(self, 16, 8, 5);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 0x2D;
+        self->zPriority = 0x9E;
+        if (g_CastleFlags[CASTLE_FLAG_1]) {
+            self->posY.i.hi += 4;
+            self->step = 3;
+        }
+        break;
+    case 1:
+        if (var & 4) {
+            Entity* player = &PLAYER;
+            self->posY.val += FIX(0.5);
+            player->posY.val += FIX(0.5);
+            self->ext.timer.t++;
+            if (self->ext.timer.t > 8) {
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
+                g_CastleFlags[CASTLE_FLAG_1] = 1;
+                self->step++;
+            }
+        }
+        break;
+    case 2:
+        var = self->ext.timer.t++;
+        if (var & 1) {
+            g_backbufferY = 1;
+        } else {
+            g_backbufferY = -1;
+        }
+        if (var > 64) {
+            g_backbufferY = 0;
+            self->step++;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2E7C);
 
