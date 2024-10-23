@@ -61,6 +61,21 @@ static void* Cluts[] = {
 // D_80180218: rooms_layers
 #include "layers.h"
 
+// Gfx Bank Data -- These addresses are to the binary data
+// These symbols currently cannot be renamed due to limitations in our current toolchain
+extern u8 D_801820D8[]; // JP Stage Name (Small) -- Unused (US)
+extern u8 D_80182508[]; // JP Stage Name (Large)
+extern u8 D_80182A60[]; // Gremlin
+extern u8 D_80183480[]; // Salem Witch (Body/Arm)
+extern u8 D_801841F8[]; // Salem Witch (Shine/Curse/Body)
+extern u8 D_80184DBC[]; // Salem Witch (Fire)
+extern u8 D_80185BA0[]; // Salem Witch (Explosion)
+extern u8 D_80186B1C[]; // Salem Witch (Shine)
+extern u8 D_801870F8[]; // Thornweed/Corpseweed
+extern u8 D_80187E84[]; // Venus Weed (Flower/Stem/Woman/Projectiles)
+extern u8 D_80188A10[]; // Venus Weed (Woman)
+extern u8 D_80189B38[]; // EN Stage Name
+
 // D_80180298
 static GfxBank GfxBank_Null = {
     .kind = GFX_BANK_NONE,
@@ -71,28 +86,23 @@ static GfxBank GfxBank_Null = {
 };
 static u_long GfxBank_Null_TERM = GFX_TERMINATE();
 
-extern u8 D_80189B38[];
-extern u8 D_80182508[];
-
 // D_801802AC
 static GfxBank GfxBank_StageName = {
     .kind = GFX_BANK_COMPRESSED,
     .entries =
         {
-            GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80189B38), // EN Stage Name
-            GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_80182508), // JP Stage Name (Large)
+            GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80189B38),
+            GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_80182508),
         },
 };
 static u_long GfxBank_StageName_TERM = GFX_TERMINATE();
-
-extern u8 D_80182A60[];
 
 // D_801802CC
 static GfxBank GfxBank_Gremlin1 = {
     .kind = GFX_BANK_COMPRESSED,
     .entries =
         {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80182A60), // Gremlin
+            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80182A60),
         },
 };
 static u_long GfxBank_Gremlin1_TERM = GFX_TERMINATE();
@@ -102,43 +112,33 @@ static GfxBank GfxBank_Gremlin2 = {
     .kind = GFX_BANK_COMPRESSED,
     .entries =
         {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80182A60), // Gremlin
+            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80182A60),
         },
 };
 static u_long GfxBank_Gremlin2_TERM = GFX_TERMINATE();
-
-extern u8 D_80183480[];
-extern u8 D_801841F8[];
-extern u8 D_80185BA0[];
-extern u8 D_80186B1C[];
-extern u8 D_80184DBC[];
 
 // D_801802F4
 static GfxBank GfxBank_SalemWitch = {
     .kind = GFX_BANK_COMPRESSED,
     .entries =
         {
-            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80183480),     // Body/Arm
-            GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, D_801841F8),     // Shine/Curse/Body
-            GFX_ENTRY(0x180, 0x80, 0x80, 0x80, D_80185BA0),     // Explosion
-            GFX_ENTRY(0x180, 0xA0, 0x80, 0x80, D_80186B1C),     // Shine
-            GFX_ENTRY(0x100, 0x1C0, 0x80, 0x80, D_80184DBC),    // Fire
+            GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80183480),
+            GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, D_801841F8),
+            GFX_ENTRY(0x180, 0x80, 0x80, 0x80, D_80185BA0),
+            GFX_ENTRY(0x180, 0xA0, 0x80, 0x80, D_80186B1C),
+            GFX_ENTRY(0x100, 0x1C0, 0x80, 0x80, D_80184DBC),
         },
 };
 static u_long GfxBank_SalemWitch_TERM = GFX_TERMINATE();
-
-extern u8 D_801870F8[];
-extern u8 D_80187E84[];
-extern u8 D_80188A10[];
 
 // D_80180338
 static GfxBank GfxBank_AllWeeds = {
     .kind = GFX_BANK_COMPRESSED,
     .entries =
         {
-            GFX_ENTRY(0x100, 0xC0, 0x80, 0x80, D_801870F8),     // Thornweed/Corpseweed
-            GFX_ENTRY(0x100, 0x100, 0x80, 0x80, D_80187E84),    // Venus Weed Flower/Stem/Woman/Projectiles
-            GFX_ENTRY(0x100, 0x120, 0x80, 0x80, D_80188A10),    // Venus Weed Woman
+            GFX_ENTRY(0x100, 0xC0, 0x80, 0x80, D_801870F8),
+            GFX_ENTRY(0x100, 0x100, 0x80, 0x80, D_80187E84),
+            GFX_ENTRY(0x100, 0x120, 0x80, 0x80, D_80188A10),
         },
 };
 static u_long GfxBank_AllWeeds_TERM = GFX_TERMINATE();
