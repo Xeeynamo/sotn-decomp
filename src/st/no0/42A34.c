@@ -59,7 +59,46 @@ void func_us_801C2B24(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2CD8);
+void func_us_801C2CD8(Entity* self) {
+    s32 var = GetPlayerCollisionWith(self, 16, 8, 5);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = -0x7FFF;
+        self->animCurFrame = 0x2D;
+        self->zPriority = 0x9E;
+        if (g_CastleFlags[CASTLE_FLAG_1]) {
+            self->posY.i.hi += 4;
+            self->step = 3;
+        }
+        break;
+    case 1:
+        if (var & 4) {
+            Entity* player = &PLAYER;
+            self->posY.val += FIX(0.5);
+            player->posY.val += FIX(0.5);
+            self->ext.timer.t++;
+            if (self->ext.timer.t > 8) {
+                g_api_PlaySfx(SFX_LEVER_METAL_BANG);
+                g_CastleFlags[CASTLE_FLAG_1] = 1;
+                self->step++;
+            }
+        }
+        break;
+    case 2:
+        var = self->ext.timer.t++;
+        if (var & 1) {
+            g_backbufferY = 1;
+        } else {
+            g_backbufferY = -1;
+        }
+        if (var > 64) {
+            g_backbufferY = 0;
+            self->step++;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/42A34", func_us_801C2E7C);
 
