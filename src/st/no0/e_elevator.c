@@ -261,4 +261,94 @@ void func_us_801C26B8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_elevator", func_us_801C27A4);
+void func_us_801C27A4(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s16 yOffset;
+    Entity* player = &PLAYER;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitElevator);
+        self->animCurFrame = 3;
+        self->zPriority = player->zPriority + 2;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            while (prim != NULL) {
+                prim->tpage = 0x12;
+                prim->u0 = prim->u2 = 0x50;
+                prim->u1 = prim->u3 = 0x60;
+                prim->v0 = prim->v1 = 6;
+                prim->v2 = prim->v3 = 0x26;
+                prim->clut = 0x223;
+                prim->priority = 0x6A;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+
+        if (player->posY.i.hi > 192) {
+            self->posY.i.hi = player->posY.i.hi;
+            player->posX.i.hi = self->posX.i.hi;
+            self->animCurFrame = 10;
+            g_Entities[1].ext.entSlot1.unk0 = 1;
+            SetStep(2);
+        } else {
+            self->posY.i.hi = player->posY.i.hi;
+            player->posX.i.hi = self->posX.i.hi;
+            self->animCurFrame = 10;
+            g_Entities[1].ext.entSlot1.unk0 = 1;
+            SetStep(3);
+        }
+
+        break;
+    case 3:
+        g_Player.D_80072EFC = 2;
+        g_Player.padSim = 0;
+        self->posY.val += FIX(0.5);
+        player->posY.i.hi = self->posY.i.hi + 4;
+        g_Player.pl_vram_flag = 0x41;
+        break;
+    case 2:
+        g_Player.D_80072EFC = 2;
+        g_Player.padSim = 0;
+        self->posY.val -= FIX(0.5);
+        player->posY.i.hi = self->posY.i.hi + 4;
+        g_Player.pl_vram_flag = 0x41;
+        break;
+    }
+
+    yOffset = self->posY.i.hi - 0x28;
+    prim = self->ext.prim;
+    while (prim != NULL) {
+        prim->drawMode = DRAW_DEFAULT;
+        prim->x0 = prim->x2 = self->posX.i.hi - 8;
+        prim->x1 = prim->x3 = self->posX.i.hi + 8;
+        prim->y2 = prim->y3 = yOffset;
+        yOffset -= 0x20;
+        prim->y0 = prim->y1 = yOffset;
+        prim = prim->next;
+    }
+
+    // Code mistake? Don't think this code can ever run
+    // but it's present in the PSP
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+
+#if defined(VERSION_PSP)
+    if (abs(self->posY.i.hi) > 0x180) {
+#else
+    if (ABS(self->posY.i.hi) > 0x180) {
+#endif
+        DestroyEntity(self);
+    }
+}
