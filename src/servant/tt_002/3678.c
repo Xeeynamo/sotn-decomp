@@ -124,7 +124,7 @@ void func_us_801746E8(InitializeMode mode) {
 
     s_zPriority = (s32)entity->zPriority;
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
-    
+
     entity++;
     DestroyEntity(entity);
     entity->entityId = 0xD9;
