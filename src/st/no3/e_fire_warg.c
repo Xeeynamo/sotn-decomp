@@ -1098,7 +1098,7 @@ void EntityFireWargWaveAttack(Entity* self) {
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
         CreateEntityFromCurrentEntity(E_ID_2F, newEntity);
         newEntity->facingLeft = self->facingLeft;
-        InitializeEntity(&D_80180B3C);
+        InitializeEntity(D_80180B3C);
 
         self->ext.timer.t = 8;
         self->hitboxWidth = 8;
