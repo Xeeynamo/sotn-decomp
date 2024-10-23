@@ -923,8 +923,6 @@ static u8 AnimFrames_TriboltTrail[] = {
     0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0xFF, 0x00
 };
 
-extern Entity D_8007D858;
-
 // E_SALEM_WITCH_TRIBOLT_PROJECTILE
 // params: Index of projectile in group
 //         Used to determine trajectory

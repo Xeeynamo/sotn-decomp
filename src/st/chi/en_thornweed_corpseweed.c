@@ -6,8 +6,6 @@
 
 #include "chi.h"
 
-extern Entity D_8007D858;
-
 // D_8018173C
 static s16 PhysicsSensors[] = {
     0, 1, 0, 4, 2, -4, -4, 0,

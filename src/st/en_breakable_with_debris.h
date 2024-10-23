@@ -1,7 +1,5 @@
 #include <stage.h>
 
-extern u16 g_eBreakableWithDebrisInit[];
-
 // params: (>> 12) represents the breakable type.
 //         Any non-zero value is considered a "tall" breakable, meaning it breaks into more debris, some of which spawns higher up
 void EntityBreakableWithDebris(Entity* self) {

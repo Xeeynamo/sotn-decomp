@@ -10,11 +10,14 @@
 #include "chi.h"
 
 // D_80180798
+// Trigger long dimension size
 static u8 D_80180798[] = {32, 32, 32, 32, 32, 32, 80, 32};
 // D_801807A0
+// Trigger long dimension is horizontal
 static u8 D_801807A0[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 // D_801807A8
+// Tilemap data
 static u16 D_801807A8[] = {
     0x0000, 0x0000, 0x0600, 0x0100, 0x0000, 0x0000, 0x0600, 0x01FC,
     0x0000, 0x00FC, 0x0600, 0x01FC, 0x0000, 0x0000, 0x0600, 0x01FC,
@@ -24,10 +27,6 @@ static u16 D_801807A8[] = {
     0x0000, 0x0000, 0x0500, 0x0400, 0x0000, 0x01FC, 0x0500, 0x02FC,
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
-
-extern u8 D_80180798[];     // Trigger long dimension size
-extern u8 D_801807A0[];     // Trigger long dimension is horizontal
-extern u16 D_801807A8[];
 
 // [Needs shared file changes to be moved to shared file]
 // E_CAMERA_LOCK

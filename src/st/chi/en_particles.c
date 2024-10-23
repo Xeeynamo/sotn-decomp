@@ -62,8 +62,6 @@ static u16 unk14_lifetime[] = {
 // func_801A55B4: [E_ID_15 (E_GREY_PUFF)] EntityUnkId15 (EntityDustPuff)
 #include "../entity_unkId15.h"
 
-extern u16 g_InitializeEntityData0[];
-
 // D_801813D4
 static u32 g_olroxDroolCollOffsets[] = {
     0x00000000, 0x000000FF

@@ -6,8 +6,6 @@
 
 #include "chi.h"
 
-extern u16 g_InitializeData0[];
-
 // D_8018142C
 static u16 g_ESoulStealOrbAngles[] = {
     0x0820, 0x0840, 0x0860, 0x0880, 0x08C0, 0x0900, 0x0940, 0x0A00

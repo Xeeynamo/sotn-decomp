@@ -8,9 +8,9 @@
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern signed short* spriteBanks[];
-extern void* Cluts[];
+static void* Cluts[];
 extern MyRoomDef rooms_layers[];
-extern GfxBank* OVL_EXPORT(g_EntityGfxs)[];
+static GfxBank* OVL_EXPORT(g_EntityGfxs)[];
 void UpdateStageEntities();
 void HitDetection();
 

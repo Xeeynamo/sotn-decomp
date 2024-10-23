@@ -4,10 +4,8 @@
  * Description: DATA - Prize drops
  */
 
-#include "game.h"
-#include "stage.h"
+#include "chi.h"
 
-//TODO: Used by EntityHeartDrop
 // D_801809E4
 u16 g_HeartDropArray[] = {
     0x00C8, 0x0098, 0x00F2, 0x00C5, 0x0170, 0x0094, 0x00A5, 0x00A5,
