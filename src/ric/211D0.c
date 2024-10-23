@@ -1451,7 +1451,7 @@ void RicEntitySubwpnBible(Entity* self);
 void RicEntitySubwpnBibleTrail(Entity* self);
 void RicEntitySubwpnStopwatch(Entity* self);
 void RicEntitySubwpnStopwatchCircle(Entity* self);
-void func_801705EC(Entity* self);
+void RicEntityCrashStopwatch(Entity* self);
 void func_8016F198(Entity* self);
 void RicEntityAguneaCircle(Entity* self);
 void RicEntityAguneaLightning(Entity* self);
@@ -1520,7 +1520,7 @@ static PfnEntityUpdate entity_functions[] = {
     RicEntitySubwpnBibleTrail,
     RicEntitySubwpnStopwatch,
     RicEntitySubwpnStopwatchCircle,
-    func_801705EC,
+    RicEntityCrashStopwatch,
     func_8016F198,
     RicEntityAguneaCircle,
     RicEntityAguneaLightning,
@@ -1630,6 +1630,7 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_CRASH_CROSS_ROTATING, 1, 1, NON_CRITICAL, true, 0, B_KIND_9, 0, 0),
     B_MAKE(E_CRASH_CROSS_BEAM, 6, 1, true, true, 24, B_KIND_9, 0, 0),
     B_MAKE(E_NOT_IMPLEMENTED_1, 16, 16, NON_CRITICAL, true, 0, B_KIND_8, 1, 0),
+    //0x10
     B_MAKE(E_NOT_IMPLEMENTED_2, 15, 15, true, true, 0, B_KIND_8, 1, 0),
     B_MAKE(E_ARM_BRANDISH_WHIP, 1, 1, NON_CRITICAL, true, 0, B_KIND_12, 1, 0),
     B_MAKE(E_80167964, 1, 1, true, true, 0, B_KIND_8, 0, 0),
@@ -1646,6 +1647,7 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_MARIA, 1, 1, NON_CRITICAL, true, 0, B_KIND_5, 0, 0),
     B_MAKE(E_MARIA_POWERS, 4, 1, true, true, 4, B_KIND_3, 0, 0),
     B_MAKE(E_80160D2C, 1, 1, true, true, 0, B_WPN, 0, 0),
+    //0x20
     B_MAKE(E_NOT_IMPLEMENTED_4, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_BLINK_WHITE, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_SUBWPN_CRASH_CROSS_PARTICLES, 1, 1, true, true, 0, B_DECOR, 0, 0),
@@ -1662,6 +1664,7 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_80160F0C, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_HIT_BY_CUT_BLOOD, 12, 1, true, true, 2, B_KIND_8, 3, 0),
     B_MAKE(E_HIT_BY_ICE, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    //0x30
     B_MAKE(E_HIT_BY_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_SUBWPN_VIBHUTI, 1, 1, true, true, 0, B_WPN, 1, 8),
     B_MAKE(E_SUBWPN_REBOUND_STONE, 1, 1, true, true, 0, B_WPN, 1, 4),
@@ -1678,8 +1681,9 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_SUBWPN_BIBLE, 1, 1, true, true, 0, B_WPN, 0, 0),
     B_MAKE(E_SUBWPN_BIBLE_TRAIL, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_SUBWPN_STOPWATCH, 1, 1, true, true, 0, B_WPN, 0, 0),
+    //0x40
     B_MAKE(E_SUBWPN_STOPWATCH_CIRCLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_801705EC, 1, 1, NON_CRITICAL, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_CRASH_STOPWATCH, 1, 1, NON_CRITICAL, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_8016F198, 2, 1, true, true, 2, B_DECOR, 0, 0),
     B_MAKE(E_AGUNEA_CIRCLE, 1, 1, NON_CRITICAL, true, 0, B_WPN, 0, 20),
     B_MAKE(E_AGUNEA_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),

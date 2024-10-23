@@ -370,66 +370,60 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     }
 }
 
-void func_801641A0(Entity* entity) {
+void func_801641A0(Entity* self) {
     Primitive* prim;
     s16 primIndex;
 
-    entity->posX.i.hi = PLAYER.posX.i.hi;
-    entity->posY.i.hi = PLAYER.posY.i.hi - 8;
-    switch (entity->step) {
+    self->posX.i.hi = PLAYER.posX.i.hi - 0;
+    self->posY.i.hi = PLAYER.posY.i.hi - 8;
+    switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = primIndex;
-        if (primIndex != -1) {
-            entity->ext.et_80161FF0.unk7C = 16;
-            entity->ext.et_80161FF0.unk7E = 12;
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->u0 = prim->u2 = 64;
-            prim->v0 = prim->v1 = 192;
-            prim->u1 = prim->u3 = 127;
-            prim->v2 = prim->v3 = 255;
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = 128;
-            prim->tpage = 0x1A;
-            prim->clut = 0x160;
-            prim->priority = PLAYER.zPriority + 8;
-            prim->drawMode =
-                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->flags = FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
-                            FLAG_HAS_PRIMS;
-            entity->step++;
-            goto def;
-        } else {
-            DestroyEntity(entity);
-            break;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
         }
+        self->ext.circleExpand.width = 16;
+        self->ext.circleExpand.height = 12;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->u2 = 64;
+        prim->v0 = prim->v1 = 192;
+        prim->u1 = prim->u3 = 127;
+        prim->v2 = prim->v3 = 255;
+        PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) = 128;
+        prim->tpage = 0x1A;
+        prim->clut = 0x160;
+        prim->priority = PLAYER.zPriority + 8;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->flags =
+            FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->step++;
+        break;
 
     case 1:
-        entity->ext.et_80161FF0.unk7C += 2;
-        entity->ext.et_80161FF0.unk7E += 2;
-        if (entity->ext.et_80161FF0.unk7C >= 57) {
-            DestroyEntity(entity);
-            break;
+        self->ext.circleExpand.width += 2;
+        self->ext.circleExpand.height += 2;
+        if (self->ext.circleExpand.width > 56) {
+            DestroyEntity(self);
+            return;
         }
-
-    default:
-    def:
-        prim = &g_PrimBuf[entity->primIndex];
-        prim->x0 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
-        prim->y0 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
-        prim->x1 = entity->posX.i.hi + entity->ext.et_80161FF0.unk7C;
-        prim->y1 = entity->posY.i.hi - entity->ext.et_80161FF0.unk7E;
-        prim->x2 = entity->posX.i.hi - entity->ext.et_80161FF0.unk7C;
-        prim->y2 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
-        prim->x3 = entity->posX.i.hi + entity->ext.et_80161FF0.unk7C;
-        prim->y3 = entity->posY.i.hi + entity->ext.et_80161FF0.unk7E;
-        if (prim->b3 >= 12) {
-            prim->b3 += 244;
-        }
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        break;
     }
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y0 = self->posY.i.hi - self->ext.circleExpand.height;
+    prim->x1 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y1 = self->posY.i.hi - self->ext.circleExpand.height;
+    prim->x2 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y2 = self->posY.i.hi + self->ext.circleExpand.height;
+    prim->x3 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
+    if (prim->b3 >= 12) {
+        prim->b3 -= 12;
+    }
+    // remember last element of PGREY(prim,3) is prim->b3
+    PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3);
 }
 
 // Entity ID # 34. Created by blueprints 36, 37, 38, 39.

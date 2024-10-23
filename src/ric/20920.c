@@ -113,10 +113,10 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 void func_8015CC28(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7E.modeU8.unk1 = 0;
-    entity->ext.generic.unk7E.modeU8.unk0 = 0;
-    entity->ext.generic.unk7C.U8.unk1 = 0;
-    entity->ext.generic.unk7C.U8.unk0 = 0;
+    entity->ext.entSlot1.unk3 = 0;
+    entity->ext.entSlot1.unk2 = 0;
+    entity->ext.entSlot1.unk1 = 0;
+    entity->ext.entSlot1.unk0 = 0;
 }
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }

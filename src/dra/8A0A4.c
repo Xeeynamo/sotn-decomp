@@ -134,7 +134,7 @@ void EntityStopWatch(Entity* self) {
         prim->priority = PLAYER.zPriority + 3;
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
 
-        CreateEntFactoryFromEntity(self, 0x4B, 0);
+        CreateEntFactoryFromEntity(self, FACTORY(75, 0), 0);
         PlaySfx(SFX_UI_ALERT_TINK);
         g_unkGraphicsStruct.D_800973FC = 1;
         goto label;
@@ -428,57 +428,50 @@ void EntityStopWatch(Entity* self) {
     }
 }
 
-void func_8012B78C(Entity* entity) {
+// DRA entity #44. Comes from blueprint 79.
+// Identical to RIC
+void EntitySubwpnBibleTrail(Entity* self) {
     Primitive* prim;
     s32 ret;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         ret = AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = ret;
-        if (entity->primIndex != -1) {
-            entity->flags =
-                FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->tpage = 0x1C;
-            prim->clut = 0x19D;
-            prim->u0 = prim->u2 = 32;
-            prim->u1 = prim->u3 = 48;
-            prim->v0 = prim->v1 = 0;
-            prim->v2 = prim->v3 = 16;
-            prim->x0 = prim->x2 = entity->posX.i.hi - 8;
-            prim->x1 = prim->x3 = entity->posX.i.hi + 8;
-            prim->y0 = prim->y1 = entity->posY.i.hi - 8;
-            prim->y2 = prim->y3 = entity->posY.i.hi + 8;
-            prim->priority = entity->zPriority;
-            prim->drawMode =
-                DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->ext.generic.unk7E.modeU16 = 96;
-            entity->step++;
-        } else {
-            DestroyEntity(entity);
+        self->primIndex = ret;
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
             return;
         }
+        self->flags =
+            FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0x20;
+        prim->u1 = prim->u3 = 0x30;
+        prim->v0 = prim->v1 = 0;
+        prim->v2 = prim->v3 = 0x10;
+        prim->x0 = prim->x2 = self->posX.i.hi - 8;
+        prim->x1 = prim->x3 = self->posX.i.hi + 8;
+        prim->y0 = prim->y1 = self->posY.i.hi - 8;
+        prim->y2 = prim->y3 = self->posY.i.hi + 8;
+        prim->priority = self->zPriority;
+        prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->ext.et_BibleSubwpn.unk7E = 0x60;
+        self->step++;
         break;
-
     case 1:
-        if (++entity->ext.generic.unk7C.s > 5) {
-            entity->step++;
+        if (++self->ext.et_BibleSubwpn.unk7C > 5) {
+            self->step++;
         }
-        entity->ext.generic.unk7E.modeU16 -= 8;
+        self->ext.et_BibleSubwpn.unk7E -= 8;
         break;
-
     case 2:
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
-
-    default:
-        break;
     }
-    prim = &g_PrimBuf[entity->primIndex];
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            entity->ext.generic.unk7E.modeU8.unk0;
+    prim = &g_PrimBuf[self->primIndex];
+    PCOL(prim) = self->ext.et_BibleSubwpn.unk7E;
 }
 
 // book rotates around player
@@ -608,7 +601,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, 79, 0);
+        CreateEntFactoryFromEntity(self, FACTORY(79, 0), 0);
         if (g_GameTimer % 10 == 0) {
             PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }

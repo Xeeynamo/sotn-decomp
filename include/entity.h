@@ -19,13 +19,6 @@ struct Entity;
 
 typedef struct ET_Generic {
     /* 0x7C */ Multi16 unk7C; // posX
-    union {
-        /* 0x7E */ u16 modeU16;
-        struct {
-            /* 0x7E */ u8 unk0;
-            /* 0x7F */ u8 unk1;
-        } modeU8;
-    } unk7E; // posY
 } ET_Generic;
 
 typedef struct {
@@ -1065,7 +1058,7 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[2];
 #endif
-    s16 unk7C;
+    s16 t;
     s16 unk7E;
     s16 unk80;
     s16 unk82;
@@ -1074,7 +1067,7 @@ typedef struct {
     /* 0x8C */ struct Entity* parent;
     s16 unk90;
     s16 unk92;
-    s16 unk94;
+    s16 crashIndex;
     s16 unk96;
     struct Entity* unk98;
     s32 : 32;
@@ -1085,7 +1078,12 @@ typedef struct {
     s32 : 32;
 #endif
     s16 subweaponId;
-} ET_StopWatch;
+} ET_RICStopWatch;
+typedef struct {
+    s16 timer;
+    s16 index;
+} ET_StopwatchCrash;
+
 typedef struct {
     s16 t;
     s16 unk7E;
@@ -1095,7 +1093,7 @@ typedef struct {
     f32 unk88;
     s16 unk8C;
     s16 unk8E;
-} ET_stopwatch;
+} ET_DRAStopWatch;
 typedef struct {
     s16 unk7C;
     s16 unk7E;
@@ -1136,26 +1134,6 @@ typedef struct {
 #endif
     s16 subweaponId;
 } ET_BibleSubwpn;
-
-typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[2];
-#endif
-    s16 unk7C; // TODO rename as timer
-    s16 unk7E;
-    /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-} ET_80161FF0;
 
 typedef struct {
 #ifdef PLATFORM_64BIT
@@ -1899,6 +1877,25 @@ typedef struct {
     /* 0x01 */ s8 targetAngle;
 } ET_801CC9B4;
 
+typedef struct {
+    u8 r, g, b;
+} ET_EntranceUnk16;
+
+typedef struct {
+    s16 width;
+    s16 height;
+} ET_ExpandingCircle;
+
+typedef struct {
+    s16 size;
+    s16 timer;
+} ET_RicMariaPower;
+
+typedef struct {
+    s16 timer;
+    s16 boolDidSound;
+} ET_RicMaria;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -1978,11 +1975,11 @@ typedef union { // offset=0x7C
     ET_801291C4 et_801291C4;
     ET_8017091C et_8017091C;
     ET_AguneaCrash aguneaCrash;
-    ET_stopwatch stopwatch;
-    ET_StopWatch et_801719A4;
+    ET_RICStopWatch ricStopWatch;
+    ET_StopwatchCrash stopwatchCrash;
+    ET_DRAStopWatch stopwatch;
     ET_stopwatchCircle et_stopwatchCircle;
     ET_stopwatchSparkle et_stopWatchSparkle;
-    ET_80161FF0 et_80161FF0;
     ET_80162870 et_80162870;
     ET_Whip whip;
     ET_RichterPowerUpRing ricPowerRing;
@@ -2061,6 +2058,10 @@ typedef union { // offset=0x7C
     ET_BloodSkeleton bloodSkeleton;
     ET_UnusedCENEnt unusedCENEnt;
     ET_SmallRisingHeart smallRisingHeart;
+    ET_EntranceUnk16 entrance16;
+    ET_ExpandingCircle circleExpand;
+    ET_RicMariaPower ricMariaPower;
+    ET_RicMaria ricMaria;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
@@ -2091,7 +2092,6 @@ SYNC_FIELD(ET_EntFactory, ET_HolyWater, parent);
 SYNC_FIELD(ET_EntFactory, ET_GiantSpinningCross, parent);
 SYNC_FIELD(ET_EntFactory, ET_CrashCross, parent);
 SYNC_FIELD(ET_EntFactory, ET_RicRevivalColumn, parent);
-SYNC_FIELD(ET_EntFactory, ET_80161FF0, parent);
 SYNC_FIELD(ET_EntFactory, ET_80162870, parent);
 SYNC_FIELD(ET_EntFactory, ET_PlayerBlink, parent);
 SYNC_FIELD(ET_EntFactory, ET_RichterPowerUpRing, parent);
