@@ -97,8 +97,8 @@ segments:
       - [0x37650, .rodata, e_misc]
       - [0x37664, .rodata, 4AFF0] # EntityStageNamePopup
       - [0x37698, .rodata, e_fire_warg] # EntityFireWarg
-      - [0x376D0, rodata] # EntityFireWargWaveAttack
-      - [0x376E8, .rodata, 4ED60] # EntityUnkId2F
+      - [0x376D0, .rodata, e_fire_warg] # EntityFireWargWaveAttack
+      - [0x376E8, .rodata, e_fire_warg] # EntityUnkId2F
       - [0x376FC, .rodata, 4F58C] # EntityWarg RECT
       - [0x37704, .rodata, 4F58C] # EntityWarg
       - [0x37738, .rodata, e_merman2]
@@ -124,7 +124,6 @@ segments:
       - [0x47930, c, e_misc]
       - [0x4AFF0, c]
       - [0x4C5A4, c, e_fire_warg]
-      - [0x4ED60, c]
       - [0x4F58C, c]
       - [0x50A2C, c, player_water_effect]
       - [0x516B4, c, e_merman2]

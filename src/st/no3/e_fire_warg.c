@@ -1071,7 +1071,366 @@ void func_801CE740(Entity* self) {
     }
 }
 
-const u32 rodata_padding = 0; // remove when wave attack decompiled
+// flame-like attack on ground from Fire Warg
+void EntityFireWargWaveAttack(Entity* self) {
+    Entity* newEntity;
+    Primitive* prim;
+    u32 primIdx;
+    s32 unk5A;
+    u16 unk5APlus3;
+    u16 palette;
+    u8 p0Offset;
 
-// flame-like attack on ground from strong warg
-INCLUDE_ASM("st/no3/nonmatchings/e_fire_warg", EntityFireWargWaveAttack);
+    // These are both !FAKE; psp matches without them. ps1 needs them. I dunno.
+    // permuter found them.
+    s32 twobits;
+    s32 leftside;
+
+    switch (self->step) {
+    case 0:
+        newEntity = AllocEntity(self, &g_Entities[192]);
+
+        if (newEntity == NULL) {
+            DestroyEntity(self);
+            break;
+        }
+
+        PlaySfxPositional(SFX_FIREBALL_SHOT_A);
+        CreateEntityFromCurrentEntity(E_ID_2F, newEntity);
+        newEntity->facingLeft = self->facingLeft;
+        InitializeEntity(&D_80180B3C);
+
+        self->ext.timer.t = 8;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 0;
+
+        primIdx = g_api.AllocPrimitives(PRIM_GT4, 6);
+
+        if (primIdx != -1) {
+            prim = &g_PrimBuf[primIdx];
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            unk5APlus3 = self->unk5A + 3;
+            palette = self->palette + 4;
+
+            for (p0Offset = 0; prim != NULL; p0Offset += 4, prim = prim->next) {
+                prim->tpage = unk5APlus3 >> 2;
+                prim->clut = palette;
+                leftside = ((unk5APlus3 & 1) << 7) + 0x21;
+                prim->u1 = prim->u0 = leftside;
+                prim->u3 = prim->u2 = prim->u0 + 0x2D;
+                twobits = unk5APlus3 & 2;
+                prim->v1 = prim->v3 = ((twobits) << 6) + 0x59;
+                prim->v0 = prim->v2 = prim->v1 + 0x26;
+
+                prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
+                prim->x1 = prim->x3 = prim->x0 + 0x20;
+
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
+
+                prim->r0 = prim->r2 = 0x40;
+                prim->g0 = prim->g2 = 0x40;
+                prim->b0 = prim->b2 = 0x40;
+                prim->r1 = prim->r3 = 0x40;
+                prim->g1 = prim->g3 = 0x40;
+                prim->b1 = prim->b3 = 0x40;
+
+                prim->priority = self->zPriority;
+                prim->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | FLAG_DRAW_ROTX |
+                                 FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+
+                prim->p1 = p0Offset;
+                prim->p2 = 0;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+    case 1:
+        func_801CE740(self);
+
+        self->posY.i.hi -= 1;
+        self->hitboxHeight += 1;
+
+        if (self->facingLeft) {
+            self->posX.i.hi += 4;
+        } else {
+            self->posX.i.hi -= 4;
+        }
+
+        self->hitboxWidth += 4;
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 0x14;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        func_801CE740(self);
+
+        if (self->hitboxHeight < 0xC0) {
+            self->posY.i.hi -= 1;
+            self->hitboxHeight += 1;
+        }
+
+        if (self->facingLeft) {
+            self->posX.i.hi += 2;
+        } else {
+            self->posX.i.hi -= 2;
+        }
+
+        self->hitboxWidth -= 1;
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 0x10;
+            self->step += 1;
+        }
+        break;
+    case 3:
+        func_801CE740(self);
+
+        self->posY.i.hi += 1;
+        self->hitboxHeight -= 1;
+
+        if (self->facingLeft) {
+            self->posX.i.hi += 1;
+        } else {
+            self->posX.i.hi -= 1;
+        }
+
+        self->hitboxWidth -= 1;
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 0x20;
+            self->hitboxState = 0;
+            self->step += 1;
+        }
+        break;
+    case 4:
+        func_801CE740(self);
+        if (!--self->ext.timer.t) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+// func_psp_0924D030
+void EntityUnkId2F(Entity* self) {
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B3C);
+        self->attack /= 2;
+        self->ext.timer.t = 8;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 0;
+
+        break;
+    case 1:
+        self->posY.i.hi -= 4;
+        self->hitboxHeight += 2;
+        if (self->facingLeft) {
+            self->posX.i.hi += 6;
+        } else {
+            self->posX.i.hi -= 6;
+        }
+        self->hitboxWidth += 2;
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 20;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (self->hitboxHeight < 192) {
+            self->posY.i.hi -= 4;
+            self->hitboxHeight += 2;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi += 1;
+        } else {
+            self->posX.i.hi -= 1;
+        }
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 16;
+            self->step++;
+        }
+        break;
+    case 3:
+        self->posY.i.hi += 4;
+        self->hitboxHeight -= 2;
+        if (self->facingLeft) {
+            self->posX.i.hi += 1;
+        } else {
+            self->posX.i.hi -= 1;
+        }
+        self->hitboxWidth -= 1;
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 32;
+            self->hitboxState = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        if (!--self->ext.timer.t) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+// beams that go up when strong warg dies
+void EntityFireWargDeathBeams(Entity* self) {
+    Primitive* prim;
+    s16 baseX;
+    u16 hiddenPrimCount;
+    u16 palette;
+    s32 primIndex;
+    s32 temp_s1;
+    u16 temp_s1_u16;
+
+    switch (self->step) {
+    case 0:
+        palette = self->palette + 4;
+        temp_s1 = self->unk5A + 3;
+        temp_s1_u16 = (u16)temp_s1;
+
+        InitializeEntity(g_EInitCommon);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[primIndex];
+
+        while (prim != NULL) {
+            prim->tpage = temp_s1_u16 / 4;
+            prim->clut = palette;
+            prim->u0 = prim->u1 = ((temp_s1 & 1) << 7) + 0x21;
+            prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
+            prim->v0 = prim->v2 = ((temp_s1 & 2) << 6) + 0x7F;
+            prim->u3 = prim->u2 = prim->u0 + 0x2D;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        break;
+    case 1:
+        if ((self->ext.fireWargDeathBeams.unk7C == 0) &&
+            (self->ext.fireWargDeathBeams.unk7E < 0x14)) {
+            prim = &g_PrimBuf[self->primIndex];
+
+            while (prim != NULL) {
+                if (prim->drawMode == DRAW_HIDE) {
+                    if (self->ext.fireWargDeathBeams.unk7E & 1) {
+                        PlaySfxPositional(SFX_EXPLODE_B);
+                    }
+
+                    if (self->facingLeft != 0) {
+                        baseX = self->posX.i.hi -
+                                D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                           0xF];
+                        prim->x0 = prim->x2 = baseX + 0x10;
+                        prim->x1 = prim->x3 = baseX - 0x10;
+                    } else {
+                        baseX = self->posX.i.hi +
+                                D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                           0xF];
+                        prim->x0 = prim->x2 = baseX - 0x10;
+                        prim->x1 = prim->x3 = baseX + 0x10;
+                    }
+
+                    prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                        self->posY.i.hi + 0x28;
+                    prim->b1 = prim->b3 = prim->g1 = prim->g3 = prim->r1 =
+                        prim->r3 = prim->b0 = prim->b2 = prim->g0 = prim->g2 =
+                            prim->r0 = prim->r2 = 0x40;
+
+                    prim->priority =
+                        self->zPriority +
+                        D_801830A0[self->ext.fireWargDeathBeams.unk7E & 0xF];
+                    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                     DRAW_UNK02 | DRAW_TRANSP;
+                    prim->p1 = (Random() & 3) + 0x10;
+                    prim->p2 = 0;
+                    break;
+                }
+
+                prim = prim->next;
+            }
+
+            self->ext.fireWargDeathBeams.unk7C = 4;
+            self->ext.fireWargDeathBeams.unk7E++;
+        } else {
+            self->ext.fireWargDeathBeams.unk7C--;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+        hiddenPrimCount = 0;
+
+        while (prim != NULL) {
+            if (prim->drawMode != DRAW_HIDE) {
+                prim->p2++;
+                prim->x0 = prim->x2 = prim->x2 + 1;
+                prim->x1 = prim->x3 = prim->x3 - 1;
+
+                if (prim->p2 > 8) {
+                    prim->r0 = prim->r1 = prim->r1 - 0x10;
+                    prim->g0 = prim->g1 = prim->g1 - 0x10;
+                    prim->b0 = prim->b1 = prim->b1 - 0x10;
+
+                    if (prim->r2) {
+                        prim->r2 = prim->r3 = prim->r3 - 0x14;
+                        prim->g2 = prim->g3 = prim->g3 - 0x14;
+                        prim->b2 = prim->b3 = prim->b3 - 0x14;
+                    }
+                } else {
+                    prim->r0 = prim->r2 = prim->r1 = prim->r3 = prim->r3 + 0x10;
+                    prim->g0 = prim->g2 = prim->g1 = prim->g3 = prim->g3 + 0x10;
+                    prim->b0 = prim->b2 = prim->b1 = prim->b3 = prim->b3 + 0x10;
+                }
+
+                prim->y0 = prim->y1 = prim->y1 - prim->p1;
+
+                if (prim->p2 > 0x10) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+            } else {
+                hiddenPrimCount++;
+            }
+            prim = prim->next;
+        }
+
+        if (hiddenPrimCount == 4 && self->ext.fireWargDeathBeams.unk7E > 0x13) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
+
+void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
+                   u8 arg5, s16 xOfst) {
+    s32 i;
+    s16 y = entity->posY.i.hi + yDist;
+    s16 x = entity->posX.i.hi + xDist;
+
+    for (i = 0; i < count; ++i) {
+        Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEnt != NULL) {
+            newEnt->entityId = E_ID_14;
+            newEnt->pfnUpdate = EntityExplosionVariants;
+            newEnt->params = params;
+            newEnt->posX.i.hi = x + i * xOfst;
+            newEnt->posY.i.hi = y;
+            newEnt->ext.destructAnim.index = D_801832E8[i];
+            newEnt->rotY = newEnt->rotX = D_801832D8[D_801832E8[i] + arg5];
+            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            newEnt->zPriority = entity->zPriority + 1;
+        }
+    }
+}
