@@ -124,10 +124,8 @@ void func_us_801746E8(InitializeMode mode) {
 
     s_zPriority = (s32)entity->zPriority;
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
-    // There is a better way to do this, but I don't know what it is
-    // It's adding 0xBC to the pointer, which is close to entity++, but not
-    // quite right
-    entity = (Entity*)((int*)entity + 0x2F);
+    
+    entity++;
     DestroyEntity(entity);
     entity->entityId = 0xD9;
     entity->unk5A = 0x6C;
