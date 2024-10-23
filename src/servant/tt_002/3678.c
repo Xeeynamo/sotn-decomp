@@ -2,10 +2,10 @@
 #include "common.h"
 #include <servant.h>
 
-extern s32 D_us_801792DC;
+extern s32 s_ServantId;
 extern u16 D_us_801722E8[];
 extern Entity thisFamiliar;
-extern s32 D_us_801792E0;
+extern s32 s_zPriority;
 extern FamiliarStats s_FaerieStats;
 extern s32 D_us_8017931C;
 extern s32 D_us_80179320;
@@ -44,16 +44,15 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173BD0);
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173D60);
 
-void func_us_801746E8(InitializeMode mode)
-{
+void func_us_801746E8(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;
     s32 i;
     SpriteParts** spriteBanks;
-    Entity* entity;  
+    Entity* entity;
 
-    D_us_801792DC = g_Servant;
+    s_ServantId = g_Servant;
 
     if ((mode == MENU_SWITCH_SERVANT) || (mode == MENU_SAME_SERVANT)) {
         ProcessEvent(NULL, true);
@@ -61,9 +60,9 @@ void func_us_801746E8(InitializeMode mode)
             return;
         }
     }
-    
-    dst = &g_Clut[0x1400];
-    src = D_us_801722E8;
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    src = D_us_801722E8; // clut data for faerie, will rename at data import
     for (i = 0; i < 0x100; i++) {
         *dst++ = *src++;
     }
@@ -73,15 +72,15 @@ void func_us_801746E8(InitializeMode mode)
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = &g_Clut[0x1400];
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
     LoadImage(&rect, (u_long*)dst);
-    
+
     spriteBanks = g_api.o.spriteBanks;
     spriteBanks += 20;
     *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
 
     entity = &thisFamiliar;
-    
+
     DestroyEntity(entity);
     entity->unk5A = 0x6C;
     entity->palette = 0x140;
@@ -89,46 +88,55 @@ void func_us_801746E8(InitializeMode mode)
     entity->zPriority = PLAYER.zPriority - 2;
     entity->facingLeft = PLAYER.facingLeft;
     entity->params = 0;
-    
+
     if (mode == MENU_SWITCH_SERVANT) {
-        if (D_8003C708.flags & 0x20 || D_8003C708.flags & 0x40) {
-            entity->entityId = 0xD1;
+
+// PSP version does this in 2 chunks, the PSX version uses an lw instruction
+#ifdef VERSION_PSP
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
+            D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40) {
+#else
+        if (LOW(D_8003C708.flags) &
+            (LAYOUT_RECT_PARAMS_UNKNOWN_20 | LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
+#endif
+
+            entity->entityId = ENTITY_ID_SERVANT;
         } else {
             entity->entityId = 0xD8;
         }
         entity->posX.val = FIX(128);
         entity->posY.val = FIX(-32);
     } else {
-        entity->entityId = 0xD1;
-        if (D_8003C708.flags & 0x20) {
-            if(ServantUnk0())
-            {
+        entity->entityId = ENTITY_ID_SERVANT;
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
+            if (ServantUnk0()) {
                 entity->posX.val = FIX(192);
-            }
-            else
-            {
-               entity->posX.val = FIX(64);
+            } else {
+                entity->posX.val = FIX(64);
             }
             entity->posY.val = FIX(160);
         } else {
-            entity->posX.val = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(24) : FIX(-24));
+            entity->posX.val =
+                PLAYER.posX.val + (PLAYER.facingLeft ? FIX(24) : FIX(-24));
             entity->posY.val = PLAYER.posY.val + FIX(-32);
         }
-    } 
-     
-    D_us_801792E0 = (s32) entity->zPriority;
+    }
+
+    s_zPriority = (s32)entity->zPriority;
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
     // There is a better way to do this, but I don't know what it is
+    // It's adding 0xBC to the pointer, which is close to entity++, but not
+    // quite right
     entity = (Entity*)((int*)entity + 0x2F);
     DestroyEntity(entity);
     entity->entityId = 0xD9;
     entity->unk5A = 0x6C;
     entity->palette = 0x140;
-    entity->animSet = -0x7FEC;
+    entity->animSet = ANIMSET_OVL(20);
     entity->zPriority = PLAYER.zPriority - 3;
     entity->facingLeft = PLAYER.facingLeft;
     entity->params = 0;
-    
+
     D_us_8017931C = 0;
     D_us_80179320 = 0;
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
