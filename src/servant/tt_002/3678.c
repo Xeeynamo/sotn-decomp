@@ -62,7 +62,7 @@ void func_us_801746E8(InitializeMode mode)
         }
     }
     
-    dst = &g_Clut[0x2800];
+    dst = &g_Clut[0x1400];
     src = D_us_801722E8;
     for (i = 0; i < 0x100; i++) {
         *dst++ = *src++;
@@ -73,7 +73,7 @@ void func_us_801746E8(InitializeMode mode)
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = &g_Clut[0x2800];
+    dst = &g_Clut[0x1400];
     LoadImage(&rect, (u_long*)dst);
     
     spriteBanks = g_api.o.spriteBanks;
