@@ -77,7 +77,6 @@ g_UnkPrimHelperRot = 0x801C184C;
 PlayerIsWithinHitbox = 0x801C1968;
 func_801B0AA4 = 0x801C19EC;
 EntityBreakable = 0x801C1E48;
-CreateExplosionPuff = 0x801C3334;
 EntityExplosionPuffOpaque = 0x801C33F4;
 Random = 0x801C3788;
 Update = 0x801C37B8;

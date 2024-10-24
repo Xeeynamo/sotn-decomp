@@ -117,7 +117,7 @@ segments:
       - [0x26E8C, .data, sprites]
       - [0x3058C, .rodata, 311C0] # EntityRedEyeBust
       - [0x30598, .rodata, 337B4] # EntityRelicContainer
-      - [0x305A4, .rodata, e_explosion_puff_opaque] # EntityWargExplosionPuffOpaque
+      - [0x305A4, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
       - [0x305FC, .rodata, slogra] # EntitySlogra
