@@ -135,7 +135,7 @@ enum RicEntities {
     E_SUBWPN_BIBLE_TRAIL,            // RicEntitySubwpnBibleTrail
     E_SUBWPN_STOPWATCH,              // RicEntitySubwpnStopwatch
     E_SUBWPN_STOPWATCH_CIRCLE,       // RicEntitySubwpnStopwatchCircle
-    E_801705EC,                      // func_801705EC
+    E_CRASH_STOPWATCH,               // RicEntityCrashStopwatch
     E_8016F198,                      // func_8016F198
     E_AGUNEA_CIRCLE,                 // RicEntityAguneaCircle
     E_AGUNEA_LIGHTNING,              // RicEntityAguneaLightning
@@ -166,6 +166,7 @@ enum RicBlueprints {
     BP_CRASH_CROSS,
     BP_CRASH_CROSSES_ONLY,
     BP_NOT_IMPLEMENTED_1,
+    // 0x10
     BP_NOT_IMPLEMENTED_2,
     BP_ARM_BRANDISH_WHIP,
     BP_18,
@@ -182,6 +183,7 @@ enum RicBlueprints {
     BP_MARIA,
     BP_MARIA_POWERS_INVOKED,
     BP_31,
+    // 0x20
     BP_NOT_IMPLEMENTED_4,
     BP_RIC_BLINK,
     BP_CRASH_CROSS_PARTICLES,
@@ -198,6 +200,7 @@ enum RicBlueprints {
     BP_HIGH_JUMP,
     BP_HIT_BY_CUT,
     BP_HIT_BY_ICE,
+    // 0x30
     BP_HIT_BY_THUNDER,
     BP_VIBHUTI,
     BP_REBOUND_STONE,
@@ -214,7 +217,8 @@ enum RicBlueprints {
     BP_BIBLE,
     BP_BIBLE_TRAIL,
     BP_SUBWPN_STOPWATCH,
-    BP_STOPWATCH_RIPPLE,
+    // 0x40
+    BP_STOPWATCH_CIRCLE,
     BP_CRASH_STOPWATCH,
     BP_66,
     BP_CRASH_AGUNEA,

@@ -1178,7 +1178,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
         if (self->primIndex != -1) {
             self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
             // entity lives for 192 frames
-            self->ext.generic.unk7C.s = 192;
+            self->ext.timer.t = 192;
             self->step++;
             return;
         }
@@ -1187,12 +1187,12 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     }
     // This is some kind of time to live, since it decrements and if 0 gets
     // destroyed.
-    if (--self->ext.generic.unk7C.s == 0) {
+    if (--self->ext.timer.t == 0) {
         DestroyEntity(self);
         return;
     }
     // On every third frame, as long as we have over 9 frames left alive
-    if ((self->ext.generic.unk7C.s >= 9) && !(self->ext.generic.unk7C.s & 3)) {
+    if ((self->ext.timer.t >= 9) && !(self->ext.timer.t & 3)) {
         // iterate through primtives until we find one where r0 == 0, and set to
         // 1
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
@@ -1406,7 +1406,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(D_800B0830[entity->params]);
         entity->velocityY = D_800B083C[entity->params];
-        entity->ext.generic.unk7C.s = 0x14;
+        entity->ext.timer.t = 0x14;
         func_8011A328(entity, 2);
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 4;
@@ -1415,8 +1415,8 @@ void EntityHellfireNormalFireball(Entity* entity) {
 
     case 1:
         if (entity->hitFlags == 0) {
-            entity->ext.generic.unk7C.s--;
-            if ((entity->ext.generic.unk7C.s) == 0) {
+            entity->ext.timer.t--;
+            if ((entity->ext.timer.t) == 0) {
                 entity->step++;
             }
             entity->posX.val += entity->velocityX;
@@ -1544,85 +1544,70 @@ void EntityHellfireBigFireball(Entity* entity) {
 }
 
 // circle expands out of player
-void EntityExpandingCircle(Entity* entity) {
+void EntityExpandingCircle(Entity* self) {
     Primitive* prim;
-    s32 primIndex;
 
     if (PLAYER.facingLeft == 0) {
-        entity->posX.i.hi = PLAYER.posX.i.hi - 10;
+        self->posX.i.hi = PLAYER.posX.i.hi - 10;
     } else {
-        entity->posX.i.hi = PLAYER.posX.i.hi + 10;
+        self->posX.i.hi = PLAYER.posX.i.hi + 10;
     }
-    entity->posY.i.hi = PLAYER.posY.i.hi + 2;
+    self->posY.i.hi = PLAYER.posY.i.hi + 2;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        primIndex = AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = primIndex;
-        if (primIndex != -1) {
-            entity->ext.generic.unk7C.s = 22;
-            entity->ext.generic.unk7E.modeU16 = 26;
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->u2 = 64;
-            prim->u3 = 127;
-            prim->u1 = 127;
-            prim->v1 = 192;
-            prim->v0 = 192;
-            prim->v3 = 255;
-            prim->v2 = 255;
-            prim->r3 = 128;
-            prim->r2 = 128;
-            prim->r1 = 128;
-            prim->r0 = 128;
-            prim->g3 = 128;
-            prim->g2 = 128;
-            prim->g1 = 128;
-            prim->g0 = 128;
-            prim->u0 = 64;
-            prim->b3 = 64;
-            prim->b2 = 64;
-            prim->b1 = 64;
-            prim->b0 = 64;
-            prim->tpage = 0x1A;
-            prim->clut = 0x15F;
-            prim->priority = PLAYER.zPriority + 1;
-            prim->drawMode =
-                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            entity->flags = FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
-                            FLAG_HAS_PRIMS;
-            entity->step++;
-            break;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
         }
-        DestroyEntity(entity);
-        return;
+        self->ext.circleExpand.width = 22;
+        self->ext.circleExpand.height = 26;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->u2 = 64;
+        prim->u1 = prim->u3 = 127;
+        prim->v0 = prim->v1 = 192;
+        prim->v2 = prim->v3 = 255;
+        PRED(prim) = 128;
+        PGRN(prim) = 128;
+        PBLU(prim) = 64;
+
+        prim->tpage = 0x1A;
+        prim->clut = 0x15F;
+        prim->priority = PLAYER.zPriority + 1;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->flags =
+            FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->step++;
+        break;
 
     case 1:
-        entity->ext.generic.unk7C.s += 2;
-        entity->ext.generic.unk7E.modeU16 += 2;
-        if (entity->ext.generic.unk7C.s >= 0x39) {
-            DestroyEntity(entity);
+        self->ext.circleExpand.width += 2;
+        self->ext.circleExpand.height += 2;
+        if (self->ext.circleExpand.width > 56) {
+            DestroyEntity(self);
             return;
         }
         break;
-
-    default:
-        break;
     }
 
-    prim = &g_PrimBuf[entity->primIndex];
-    prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-    prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y0 = self->posY.i.hi - self->ext.circleExpand.height;
 
-    if (entity->ext.generic.unk7C.s >= 0x29) {
-        prim->r3 += 244;
-        prim->g3 += 244;
-        prim->b3 += 250;
+    prim->x1 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y1 = self->posY.i.hi - self->ext.circleExpand.height;
+
+    prim->x2 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y2 = self->posY.i.hi + self->ext.circleExpand.height;
+
+    prim->x3 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
+
+    if (self->ext.circleExpand.width > 40) {
+        prim->r3 -= 12;
+        prim->g3 -= 12;
+        prim->b3 -= 6;
         prim->r0 = prim->r1 = prim->r2 = prim->r3;
         prim->g0 = prim->g1 = prim->g2 = prim->g3;
         prim->b0 = prim->b1 = prim->b2 = prim->b3;
@@ -1665,7 +1650,7 @@ void func_80127CC8(Entity* entity) {
         break;
 
     case 1:
-        if (entity->ext.generic.unk7C.s++ >= 0xE) {
+        if (entity->ext.timer.t++ >= 0xE) {
             DestroyEntity(entity);
             return;
         }

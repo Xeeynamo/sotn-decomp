@@ -354,14 +354,14 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
 void func_8010E0A8(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7E.modeU8.unk0 = 0;
+    entity->ext.entSlot1.unk2 = 0;
 }
 
 void func_8010E0B8(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7C.U8.unk1 = 0;
-    entity->ext.generic.unk7C.U8.unk0 = 0;
+    entity->ext.entSlot1.unk1 = 0;
+    entity->ext.entSlot1.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
