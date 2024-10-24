@@ -55,3 +55,4 @@ EntityGurkhaBodyParts = 0x801CF254;
 EntityGurkha = 0x801CF94C;
 EntityGurkhaSword = 0x801D0730;
 EntityBlade = 0x801D0D40;
+D_80180FE0 = 0x8018129C;

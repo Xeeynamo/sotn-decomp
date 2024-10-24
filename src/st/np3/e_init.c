@@ -77,7 +77,7 @@ void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
-void EntityWargExplosionPuffOpaque(Entity* self);
+void EntityExplosionPuffOpaque(Entity* self);
 void EntitySlogra(Entity* self);
 void EntitySlograSpear(Entity* self);
 void EntitySlograSpearProjectile(Entity* self);
@@ -170,7 +170,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBloodSplatter,
     EntityStairwayPiece,
     EntityFallingRock,
-    EntityWargExplosionPuffOpaque,
+    EntityExplosionPuffOpaque,
     EntitySlogra,
     EntitySlograSpear,
     EntitySlograSpearProjectile, // 0x50
