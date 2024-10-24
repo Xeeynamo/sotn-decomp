@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
-void AxeKnightDeath() {
+void CreateExplosionPuff() {
     Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
@@ -85,7 +85,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
             case 2:
                 self->unk6C += 0xFC;
-                return;
+                break;
             }
         } else {
             DestroyEntity(self);
