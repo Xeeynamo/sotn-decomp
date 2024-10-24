@@ -32,13 +32,13 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 1:
         if (entity->posX.i.hi < 224) {
-            entity->ext.generic.unk7C.s = 0;
+            entity->ext.timer.t = 0;
             entity->step++;
         }
         break;
 
     case 2:
-        if (!(entity->ext.generic.unk7C.s++ & 7)) {
+        if (!(entity->ext.timer.t++ & 7)) {
             g_api.PlaySfx(SE_TREE_BRANCH);
         }
         if (entity->posX.i.hi < 192) {

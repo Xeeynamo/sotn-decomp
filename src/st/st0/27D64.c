@@ -187,7 +187,7 @@ void func_801A8328(Entity* self) {
         if (firstPrimIndex != -1) {
             prim = &g_PrimBuf[firstPrimIndex];
             self->primIndex = firstPrimIndex;
-            LOW(self->ext.generic.unk7C.s) = prim;
+            self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             UnkPolyFunc2(prim);
             prim->tpage = 0x16;
@@ -218,7 +218,7 @@ void func_801A8328(Entity* self) {
     case 1:
         MoveEntity();
 
-        prim = LOW(self->ext.generic.unk7C.s);
+        prim = self->ext.prim;
         self->velocityY += FIX(0.125);
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;

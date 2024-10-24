@@ -4,23 +4,6 @@
 struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
-typedef union {
-    s16 s;
-    u16 u;
-    struct {
-        s8 unk0, unk1;
-    } S8;
-    struct {
-        u8 unk0, unk1;
-    } U8;
-} Multi16;
-
-struct Entity;
-
-typedef struct ET_Generic {
-    /* 0x7C */ Multi16 unk7C; // posX
-} ET_Generic;
-
 typedef struct {
     /* 0x7C */ u16 timer;
     /* 0x7E */ s16 unk7E;
@@ -847,7 +830,7 @@ typedef struct {
 } ET_EntitySlot16;
 
 typedef struct {
-    /* 0x7C */ s16 unk7C;
+    /* 0x7C */ u16 unk7C;
 } ET_Entity12;
 
 typedef struct {
@@ -860,6 +843,11 @@ typedef struct {
 typedef struct {
     s16 t;
 } ET_TimerOnly;
+
+// silly unsigned alternative needed in ST0 EntityCutscene
+typedef struct {
+    u16 t;
+} ET_UTimerOnly;
 
 typedef struct {
     /* 0x7C */ s8 unk7C;
@@ -1482,13 +1470,6 @@ typedef struct {
     s16 unk84;
 } ET_DracFinal;
 
-// To be used for EntityEquipItemDrop and/or EntityPrizeDrop, when they are
-// moved off of Generic.
-typedef struct {
-    byte pad[0x18];
-    s32 unk94;
-} ET_Drop;
-
 typedef struct {
     /* 0x7C */ byte pad[4];
     /* 0x80 */ s16 angle;
@@ -1837,11 +1818,12 @@ typedef struct {
 } ET_Warg;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ u16 extStep;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u16 timer;
 } ET_DeathScythe;
 
+// A couple entities in MAD and ST0 which exist, but are not referenced
 typedef struct {
     /* 0x7C */ u8 animframe;
     /* 0x7D */ s32 : 24;
@@ -1897,16 +1879,23 @@ typedef struct {
     s16 boolDidSound;
 } ET_RicMaria;
 
+// This is the Bat enemy, seen in the Entrance and elsewhere.
+// ET_Bat is already taken by the familiar. Perhaps that should be
+// ET_BatFam and this be ET_Bat? Seems familiars should all be labeled since
+// there are fewer of those than there are enemies.
+typedef struct {
+    s32 accelY;
+} ET_BatEnemy;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
-    char stub[0x3C];
     ET_TimerOnly timer;
+    ET_UTimerOnly utimer;
     ET_EntFactory factory;
-    ET_Generic generic;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
     ET_Entity12 ent12; // entityID 12
@@ -2016,7 +2005,6 @@ typedef union { // offset=0x7C
     ET_SpittleBone spittleBone;
     ET_Player player;
     ET_801AF774 et_801AF774;
-    ET_Drop drop;
     ET_BigRedFireball bigredfireball;
     ET_SummonSpirit summonspirit;
     ET_3DBackgroundhouse bghouse;
@@ -2063,6 +2051,7 @@ typedef union { // offset=0x7C
     ET_ExpandingCircle circleExpand;
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
+    ET_BatEnemy batEnemy;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

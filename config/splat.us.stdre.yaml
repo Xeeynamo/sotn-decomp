@@ -40,7 +40,7 @@ segments:
       - [0x128, data]
       - [0x220, .data, e_laydef] # layout entries header
       - [0x3C8, data]
-      - [0x590, data]
+      - [0x580, .data, st_debug]
       - [0x610, data]
       - [0x630, data]
       - [0x640, data]
@@ -71,7 +71,7 @@ segments:
       - [0xB548, .data, tile_data] # tile data
       - [0xBD48, .data, tile_data] # tile definitions
       - [0x10168, .data, sprites]
-      - [0x1171C, .rodata, 11A64]
+      - [0x1171C, .rodata, 11E34]
       - [0x11728, .rodata, succubus] # EntitySuccubus
       - [0x11808, .rodata, cutscene]
       - [0x1181C, .rodata, cutscene] #D_80180938, names
@@ -85,8 +85,10 @@ segments:
       - [0x11A14, .rodata, e_misc]
       - [0x11A28, .rodata, 20734] # EntityStageNamePopup
       - [0x11A5C, .rodata, prim_helpers]
-      - [0x11A64, c]
-      - [0x11A64, c, succubus]
+      - [0x11A64, c, st_debug]
+      - [0x11D00, c, e_breakable]
+      - [0x11E34, c]
+      - [0x12104, c, succubus]
       - [0x14774, c, cutscene]
       - [0x161DC, c]
       - [0x1697C, c]

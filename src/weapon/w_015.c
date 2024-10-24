@@ -117,7 +117,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
-        self->ext.generic.unk7C.s = 10;
+        self->ext.timer.t = 10;
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_UNK8;
         self->unk6C = 0x80;
@@ -127,7 +127,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->unk6C += 0xF8;
     }
 
-    if (--self->ext.generic.unk7C.s == 0) {
+    if (--self->ext.timer.t == 0) {
         DestroyEntity(self);
     }
 }
