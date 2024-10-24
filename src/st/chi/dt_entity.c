@@ -131,7 +131,7 @@ EntityInit g_InitializeEntityData0 = {
 
 // Unused
 // D_80180634
-EntityInit EntityInit_80180634 = {
+EntityInit g_EntityInit_80180634 = {
     .animSet = ANIMSET_DRA(0),
     .animCurFrame = 0,
     .unk5A = 0,
@@ -234,7 +234,7 @@ EntityInit g_InitGremlin = {
 
 // Unused (Same enemyId as g_InitTilemap)
 // D_801806B8
-EntityInit EntityInit_801806B8 = {
+EntityInit g_EntityInit_801806B8 = {
     .animSet = ANIMSET_OVL(2),
     .animCurFrame = 0,
     .unk5A = 72,
@@ -262,7 +262,7 @@ EntityInit g_InitThornweed = {
 
 // Unused (Alternate Corpseweed)
 // D_801806DC
-EntityInit EntityInit_801806DC = {
+EntityInit g_EntityInit_801806DC = {
     .animSet = ANIMSET_OVL(7),
     .animCurFrame = 0,
     .unk5A = 76,
