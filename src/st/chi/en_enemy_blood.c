@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: en_soul_steal_orb.c
  * Overlay: CHI

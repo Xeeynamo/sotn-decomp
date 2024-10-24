@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: dt_entity.c
  * Overlay: CHI
@@ -71,10 +72,10 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock,
-    EntityUnkId12,  // EntityCameraLock
-    EntityUnkId13,  // EntityParticleTrail
+    EntityUnkId12, // EntityCameraLock
+    EntityUnkId13, // EntityParticleTrail
     EntityUnkId14,
-    EntityUnkId15,  // EntityGreyPuff
+    EntityUnkId15, // EntityGreyPuff
     EntityDemonSwitchWall,
     EntityDemonSwitch,
     EntityBreakableWall,
@@ -184,7 +185,8 @@ EntityInit g_eDamageDisplayInit = {
     .enemyId = 3,
 };
 
-// Graphics that are supposed to simulate the tilemap or similar (ie. the Demon Switch)
+// Graphics that are supposed to simulate the tilemap or similar
+// (ie. the Demon Switch)
 // D_8018067C
 EntityInit g_InitTilemap = {
     .animSet = ANIMSET_OVL(1),
@@ -324,7 +326,10 @@ EntityInit g_InitVenusWeedDart = {
 
 // D_80180730
 static u8 AnimFrames_80180730[] = {
-    0x40, 0x01, 0xFF, 0x00,
+    0x40,
+    0x01,
+    0xFF,
+    0x00,
 };
 
 // D_80180734
@@ -353,8 +358,7 @@ ObjInit2 g_eBackgroundBlockInit[] = {
         .drawMode = 0x30,
         .unkC = 0,
         .animFrames = AnimFrames_80180734,
-    }
-};
+    }};
 
 // D_80180768
 u16 g_eRedDoorTiles[3][8] = {

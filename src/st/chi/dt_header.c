@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: dt_header.c
  * Overlay: CHI
@@ -33,9 +34,9 @@ Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 
 // Palettes -- These addresses are to the binary data
-extern u16* Palette_80189FE0[0x30];   // Unused (US)
+extern u16* Palette_80189FE0[0x30]; // Unused (US)
 extern u16* Palette_8018A040[0x100];
-extern u16* Palette_8018A240[0x60];   // Unused (US)
+extern u16* Palette_8018A240[0x60]; // Unused (US)
 extern u16* Palette_8018A300[0x40];
 extern u16* Palette_8018A380[0x20];
 extern u16* Palette_8018A3C0[0x40];
@@ -62,7 +63,7 @@ static void* Cluts[] = {
 #include "layers.h"
 
 // Gfx Bank Data -- These addresses are to the binary data
-// These symbols currently cannot be renamed due to limitations in our current toolchain
+// These symbols cannot be renamed due to limitations in our current toolchain
 extern u8 D_801820D8[]; // JP Stage Name (Small) -- Unused (US)
 extern u8 D_80182508[]; // JP Stage Name (Large)
 extern u8 D_80182A60[]; // Gremlin
@@ -143,6 +144,7 @@ static GfxBank GfxBank_AllWeeds = {
 };
 static u_long GfxBank_AllWeeds_TERM = GFX_TERMINATE();
 
+// clang-format off
 // D_80180364
 static GfxBank* OVL_EXPORT(g_EntityGfxs)[] = {
     &GfxBank_Null,
@@ -166,3 +168,4 @@ static GfxBank* OVL_EXPORT(g_EntityGfxs)[] = {
     &GfxBank_Null,
     &GfxBank_Null,
 };
+// clang-format on

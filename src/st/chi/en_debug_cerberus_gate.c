@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: en_debug_cerberus_gate.c
  * Overlay: CHI
@@ -104,7 +105,7 @@ void EntityCerberusGateDebug(Entity* self) {
 
     case DROP:
         self->posY.val += self->velocityY;
-        self->velocityY += 0x8000;
+        self->velocityY += FIX(0.5);
         x = self->posX.i.hi;
         y = self->posY.i.hi + 0x22;
         if (self->posY.i.hi <= 0x60) {
@@ -126,7 +127,7 @@ void EntityCerberusGateDebug(Entity* self) {
             entity->posY.i.hi += 0x20;
             entity->params = 0x10;
         }
-        if (self->velocityY <= -0x2000) {
+        if (self->velocityY <= FIX(-0.125)) {
             return;
         }
         self->step++;
@@ -145,10 +146,10 @@ void EntityCerberusGateDebug(Entity* self) {
         return;
 
     case RAISE:
-        self->posY.val -= 0x4000;
+        self->posY.val -= FIX(0.25);
 
         if (!(g_Timer & 7)) {
-            if ((g_Timer % 2)) {
+            if (g_Timer % 2) {
                 prim = self->ext.prim;
                 prim = prim->next;
                 prim = FindFirstUnkPrim(prim);

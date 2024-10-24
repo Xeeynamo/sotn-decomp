@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /*
  * File: en_bottom_corner_text.c
  * Overlay: CHI

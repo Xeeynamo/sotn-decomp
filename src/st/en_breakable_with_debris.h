@@ -1,7 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
 // params: (>> 12) represents the breakable type.
-//         Any non-zero value is considered a "tall" breakable, meaning it breaks into more debris, some of which spawns higher up
+//                 Any non-zero value is considered a "tall" breakable,
+//                 meaning it breaks into more debris,
+//                 some of which spawns higher up
 void EntityBreakableWithDebris(Entity* self) {
     const int DebrisBaseCount = 4;
     const int DebrisTallExtraCount = 3;
@@ -42,7 +45,8 @@ void EntityBreakableWithDebris(Entity* self) {
             entity->params = g_eBreakableExplosionTypes[breakableType] | 0x10;
         }
 
-        for (ptr = &g_eBreakableDebrisOffsets, i = 0; i < DebrisBaseCount; i++) {
+        for (ptr = &g_eBreakableDebrisOffsets, i = 0; i < DebrisBaseCount;
+             i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_BREAKABLE_DEBRIS, self, entity);
@@ -153,7 +157,8 @@ void EntityBreakableDebris(Entity* self) {
                 prim->next->b3 = 0x10;
 
                 prim->priority = 0x72;
-                prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS | DRAW_TPAGE | DRAW_TPAGE2;
+                prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS |
+                                 DRAW_TPAGE | DRAW_TPAGE2;
             }
         }
         break;
@@ -162,7 +167,8 @@ void EntityBreakableDebris(Entity* self) {
         MoveEntity();
         self->rotZ += self->ext.breakableDebris.angle;
         self->velocityY += FIX(0.25);
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
         if (collider.effects & 1) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY / 2;
@@ -170,7 +176,8 @@ void EntityBreakableDebris(Entity* self) {
             if (self->velocityY > FIX(-0.625)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->params = 16;
                 }
                 DestroyEntity(self);

@@ -1,4 +1,3 @@
-// Binary data
 Palette_80189FE0 = 0x80189FE0;
 Palette_8018A040 = 0x8018A040;
 Palette_8018A240 = 0x8018A240;
