@@ -1,19 +1,19 @@
 options:
-  platform:     psx
-  basename:     stno3
-  base_path:    ..
-  build_path:   build/us
-  target_path:  disks/us/ST/NO3/NO3.BIN
-  asm_path:     asm/us/st/no3
-  asset_path:   assets/st/no3
-  src_path:     src/st/no3
+  platform: psx
+  basename: stno3
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NO3/NO3.BIN
+  asm_path: asm/us/st/no3
+  asset_path: assets/st/no3
+  src_path: src/st/no3
   ld_script_path: build/us/stno3.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.stno3.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno3.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.stno3.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stno3.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
@@ -31,7 +31,7 @@ segments:
   - name: stno3
     type: code
     start: 0x00000000
-    vram:  0x80180000
+    vram: 0x80180000
     align: 4
     subalign: 4
     subsegments:
@@ -88,7 +88,7 @@ segments:
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
       - [0x37514, .rodata, 3FF00] # EntityDeath
-      - [0x37564, .rodata, 3FF00] # EntityWargExplosionPuffOpaque
+      - [0x37564, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x37578, .rodata, e_red_door] # EntityRedDoor
       - [0x37590, .rodata, e_collect] # CollectGold text
       - [0x375E0, .rodata, e_collect] # EntityPrizeDrop
@@ -114,6 +114,7 @@ segments:
       - [0x3E134, c]
       - [0x3E544, c, cutscene]
       - [0x3FF00, c]
+      - [0x413F8, c, e_explosion_puff_opaque]
       - [0x4184C, c, st_update]
       - [0x41C80, c, collision]
       - [0x4343C, c, create_entity]

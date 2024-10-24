@@ -4,6 +4,7 @@
 #define OVL_EXPORT(x) NP3_##x
 
 #define CASTLE_FLAG_BANK 0x34
+#define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

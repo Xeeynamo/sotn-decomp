@@ -20,6 +20,8 @@
 #define SE_CASTLE_GATE_MOVE 0x7A5
 #define SE_WATER_SPLASH 0x7C2
 
+#define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
+
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
