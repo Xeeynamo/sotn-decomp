@@ -1,3 +1,5 @@
+thisFamiliar = 0x800736C8;
+g_ServantSpriteParts = 0x80170040;
 g_Events = 0x80172D2C;
 g_PlaySfxStep = 0x8017365C;
 g_EntityRanges = 0x80173660;
@@ -18,3 +20,6 @@ CreateEventEntity = 0x80178FDC;
 IsMovementAllowed = 0x80179098;
 CheckAllEntitiesValid = 0x801791B0;
 ServantUnk0 = 0x8017925C;
+s_ServantId = 0x801792DC;
+s_zPriority = 0x801792E0;
+s_FaerieStats = 0x801792E4;
