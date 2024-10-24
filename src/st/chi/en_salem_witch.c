@@ -6,7 +6,6 @@
 
 #include "chi.h"
 
-// [Move to same file as salem witch]
 // func_801A80A8
 void SalemWitchTrySpawnShadow()
 {
@@ -66,7 +65,6 @@ static u8 AnimFrames_TriboltReset[] = {
     0x04, 0x02, 0x05, 0x01, 0x05, 0x02, 0x06, 0x01, 0x06, 0x02, 0xFF, 0x00
 };
 
-// [Find/create/use enum/const for E_EXPLOSION spawn params?]
 // E_SALEM_WITCH
 // params: animCurFrame (for shadows only)
 // func_801A813C
@@ -643,8 +641,6 @@ static u8 AnimFrames_CurseProjectile[] = {
 
 extern signed short* sprites_chi_4[];
 
-// [Should sprite groups be structs, similar to EntityInit?]
-// [Are sprite groups specific to a PART of the texture page? Is that why we need the 0x7F offset?]
 // E_SALEM_WITCH_CURSE
 // func_801A8EAC
 // PSP:func_psp_09239AC8:Match
@@ -652,7 +648,6 @@ extern signed short* sprites_chi_4[];
 void EntitySalemWitchCurse(Entity* self)
 {
     const int ProjectileSpeed = FIX(3.5);
-    //TODO: Should sprite groups be structs?
     const int SpriteUvOffset = 8;
     const int ProjectileSpriteMinIdx = 1;
     const int ProjectileSpriteMaxIdx = 7;

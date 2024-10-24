@@ -35,8 +35,6 @@ typedef enum VenusWeedTendrilAttack_Substep {
 
 extern signed short* sprites_chi_7[];
 
-// [Draw entity sprite parts?]
-// [Use SpritePart struct?]
 // func_801AB548
 // https://decomp.me/scratch/yZqKn
 // PSP:func_psp_0923A7F0:Match

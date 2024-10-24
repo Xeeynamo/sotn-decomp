@@ -9,7 +9,6 @@
 // func_801A50AC: CheckColliderOffsets
 #include "../check_coll_offsets.h"
 
-// [Rename in repo]
 // func_801A519C: [E_PARTICLE_TRAIL] EntityUnkId13 (EntityParticleTrail)
 #include "../entity_unkId13.h"
 
@@ -58,7 +57,6 @@ static u16 unk14_lifetime[] = {
 // func_801A54C4: [E_ID_14] EntityUnkId14
 #include "../entity_unkId14.h"
 
-// [Rename in shared files]
 // func_801A55B4: [E_ID_15 (E_GREY_PUFF)] EntityUnkId15 (EntityDustPuff)
 #include "../entity_unkId15.h"
 

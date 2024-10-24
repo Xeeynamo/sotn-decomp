@@ -136,7 +136,6 @@ void EntityBreakableWall(Entity* self) {
     const int WallHeightTiles = 4;
     const int WallTotalTiles = WallWidthTiles * WallHeightTiles;
     const int ResetTime = 20;
-    //TODO: Defined elsewhere?
     const int RoomWidthTiles = 16;
 
     const int startTileIdx = 0x160;

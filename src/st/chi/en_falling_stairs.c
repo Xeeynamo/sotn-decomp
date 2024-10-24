@@ -6,7 +6,6 @@
 
 #include "chi.h"
 
-// [Move into same file as EntityFallingStairs]
 // func_8019D0D8
 // https://decomp.me/scratch/0asn9
 // PSP:func_psp_0924D7F8:No match
