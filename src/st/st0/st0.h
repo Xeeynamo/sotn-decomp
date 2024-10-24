@@ -160,8 +160,6 @@ extern u32 D_80181CF0[];
 extern s8 D_801A7B7C;
 extern Point32 D_801BEB64[];
 extern s32 D_801C2578;
-extern u32 g_CutsceneFlags;
-extern s32 D_801C2578;
 
 // *** EntityDracula properties END ***
 
@@ -177,9 +175,7 @@ extern u8 D_801824CC[];
 
 extern s8 D_801A7BDC;
 extern Point32 D_801BEB64[];
-extern s32 g_SkipCutscene;
 extern s32 D_801C2578;
-extern s32 g_IsCutsceneDone;
 
 // *** EntitySoulStealOrb properties START ***
 

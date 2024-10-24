@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
-#define STAGE_DRE_H
+#define STAGE_IS_DRE
 
 #define OVL_EXPORT(x) DRE_##x
 
@@ -58,7 +58,6 @@ void EntityGreyPuff(Entity* entity);
 extern u16 g_EInitObtainable[];
 extern u16 D_8018047C[];
 extern u16 g_EInitInteractable[];
-extern u16 D_801804A0[];
 extern u16 D_801804D0[]; // EntitySuccubus
 extern u16 D_801804DC[];
 extern u16 D_80180500[];

@@ -705,6 +705,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
     return step;
 }
 
+// This function is not called from anywhere. Don't know what it's for.
 s32 func_801AC458(s16 arg0) {
     s32 ret = arg0;
     Entity* e;
@@ -728,7 +729,8 @@ s32 func_801AC458(s16 arg0) {
             ret++;
         }
         if (e2->animFrameIdx == 6 && e2->animFrameDuration == 0) {
-            g_CurrentEntity->ext.stub[0x24] = 1;
+            // Using dracula ext since this function is right after dracula.
+            g_CurrentEntity->ext.dracula.unkA0 = 1;
         }
         break;
 

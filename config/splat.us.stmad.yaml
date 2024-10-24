@@ -39,6 +39,8 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0xB8, data]
+      - [0x5B4, .data, st_debug]
+      - [0x634, data]
       - [0x6B4, .data, st_update]
       - [0x6DC, .data, collision]
       - [0x9D4, .data, e_red_door]
@@ -82,6 +84,8 @@ segments:
       - [0xD8AC, rodata]
       - [0xD8C0, .rodata, prim_helpers]
       - [0xD8C8, c]
+      - [0xE5AC, c, st_debug]
+      - [0xE830, c, e_breakable]
       - [0xE964, c, st_update]
       - [0xEDB8, c, collision]
       - [0x10544, c, create_entity]

@@ -23,7 +23,7 @@ void EntityCutscene(Entity* self) {
     self->posY.i.hi = player->posY.i.hi - 1;
 
     if ((self->step != 14) && g_SkipCutscene && g_IsCutsceneDone &&
-        (self->step >= 5)) {
+        (self->step > 4)) {
         self->step = 15;
         self->animSet = ANIMSET_DRA(0);
         self->animCurFrame = 0;
@@ -37,8 +37,8 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 1:
-        if (self->step_s != 0) {
-            if ((player->step < 3) || (player->step == 25)) {
+        if (self->step_s) {
+            if ((player->step <= 2) || (player->step == 25)) {
                 posX = player->posX.i.hi + tilemap->scrollX.i.hi;
                 if (posX > 0x8000) {
                     posX = 0;
@@ -48,7 +48,7 @@ void EntityCutscene(Entity* self) {
                 } else {
                     g_Player.padSim = PAD_RIGHT;
                 }
-                g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+                g_Entities[1].ext.entSlot1.unk0 = 1;
                 g_Player.D_80072EFC = 0xFF;
                 func_801AA218(posX);
                 SetStep(2);
@@ -67,11 +67,11 @@ void EntityCutscene(Entity* self) {
             posX = 0;
         }
 
-        if ((g_Player.padSim == 0x8000) && (posX <= 0xA0) ||
-            (g_Player.padSim == 0x2000) && (posX >= 0x9F)) {
+        if ((g_Player.padSim == PAD_LEFT) && (posX <= 0xA0) ||
+            (g_Player.padSim == PAD_RIGHT) && (posX >= 0x9F)) {
             g_Player.D_80072EFC = 1;
             g_Player.padSim = PAD_LEFT;
-            self->ext.generic.unk7C.s = 0x18;
+            self->ext.utimer.t = 0x18;
             g_CutsceneFlags |= 1;
             self->step++;
         }
@@ -86,7 +86,7 @@ void EntityCutscene(Entity* self) {
         func_801AA218(posX);
         g_Player.D_80072EFC = 1;
         g_Player.padSim = 0;
-        if (!--self->ext.generic.unk7C.u) {
+        if (!--self->ext.utimer.t) {
             SetStep(4);
         }
         break;
