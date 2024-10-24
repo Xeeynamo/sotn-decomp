@@ -2045,7 +2045,7 @@
 | 1.00 | true     | EntitySubwpnBible                   | asm/us/dra/matchings/8A0A4/EntitySubwpnBible.s 
 | 0.92 | true     | RicEntitySubwpnBible                | asm/us/ric/matchings/319C4/RicEntitySubwpnBible.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8012B78C                       | asm/us/dra/matchings/8A0A4/func_8012B78C.s 
+| 1.00 | true     | EntitySubwpnBibleTrail              | asm/us/dra/matchings/8A0A4/EntitySubwpnBibleTrail.s 
 | 0.96 | true     | RicEntitySubwpnBibleTrail           | asm/us/ric/matchings/319C4/RicEntitySubwpnBibleTrail.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityGiantSpinningCross            | asm/us/dra/matchings/8D3E8/EntityGiantSpinningCross.s 
