@@ -37,7 +37,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
         InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_80180FE0[params];
-        self->palette = obj->palette + 0x2C0;
+        self->palette = obj->palette + E_PUFF_OPAQUE_PALETTE_OFFSET;
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
@@ -58,7 +58,11 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
     case 1:
         MoveEntity();
+#if defined(STAGE_IS_NZ0)
+        self->velocityY = FIX(-1);
+#else
         self->velocityY = FIX(1);
+#endif
         if (AnimateEntity(self->ext.wargpuff.anim, self) == 0) {
             DestroyEntity(self);
         }
