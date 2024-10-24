@@ -1806,12 +1806,6 @@ extern s32 g_IsTimeAttackUnlocked;
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
-enum CASTLE_FLAGS {
-    CASTLE_FLAG_CHI_DEMON_BUTTON = 0x50,
-    CASTLE_FLAG_CHI_BREAKABLE_WALL = 0x51,
-    CASTLE_FLAG_CHI_FALLING_STAIRS = 0x52,
-    CASTLE_FLAG_CHI_FALLING_STEP = 0x53,
-};
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 typedef enum {
     CLOCK_ROOM_DOORS, // opened by gold and silver ring; drops down to CEN
@@ -1829,6 +1823,11 @@ typedef enum {
     DEATH_STAIRWAY_BROKEN, // Piece of stairs right before Death room
     SG_RETR_ENTR,          // Slogra/Gaibon retreated from Entrance encounter
     CASTLE_FLAG_58,
+    // Start CHI flags
+    CASTLE_FLAG_CHI_DEMON_BUTTON = 80,
+    CASTLE_FLAG_CHI_BREAKABLE_WALL = 81,
+    CASTLE_FLAG_CHI_FALLING_STAIRS = 82,
+    CASTLE_FLAG_CHI_FALLING_STEP = 83,
     CASTLE_FLAG_98 = 98, // Set in DRA, unused
     CASTLE_FLAG_99,      // Set in DRA, unused
     // Start NZ0 flags
