@@ -626,7 +626,7 @@ void EntityHolyWaterBreakGlass(Entity* self);
 void EntityStopWatch(Entity* self);
 void EntityStopWatchExpandingCircle(Entity* self);
 void EntitySubwpnBible(Entity* self);
-void func_8012B78C(Entity* self);
+void EntitySubwpnBibleTrail(Entity* self);
 void EntityBatFireball(Entity* self);
 void func_80123B40(Entity* self);
 void func_80119F70(Entity* self);

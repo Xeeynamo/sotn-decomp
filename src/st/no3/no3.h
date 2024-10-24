@@ -41,7 +41,6 @@ typedef enum EntityIDs {
     /* 0x0E */ E_SAVE_GAME_POPUP,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
@@ -52,7 +51,8 @@ typedef enum EntityIDs {
     /* 0x29 */ E_LIGHTNING_THUNDER = 0x29,
     /* 0x2A */ E_LIGHTNING_CLOUD,
     /* 0x2E */ E_ID_2E = 0x2E,
-    /* 0x30 */ E_ID_30 = 0x30,
+    /* 0x2E */ E_ID_2F,
+    /* 0x30 */ E_ID_30,
     /* 0x31 */ E_ID_31,
     /* 0x32 */ E_ID_32,
     /* 0x33 */ E_ID_33,

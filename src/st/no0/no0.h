@@ -5,6 +5,10 @@
 
 #define OVL_EXPORT(x) NO0_##x
 
+#ifndef ABS
+#define ABS(x) (((x) >= 0) ? (x) : (-(x)))
+#endif
+
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
@@ -51,3 +55,6 @@ extern u16 g_EInitSkeletonBone[];
 
 // Clock room
 extern u16 g_Statues[];
+
+// Clocks?
+extern u16 D_us_80180A88[];

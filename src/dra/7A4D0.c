@@ -49,7 +49,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityStopWatch,
     EntityStopWatchExpandingCircle,
     EntitySubwpnBible,
-    func_8012B78C,
+    EntitySubwpnBibleTrail,
     EntityBatFireball,
     func_80123B40,
     func_80119F70,
