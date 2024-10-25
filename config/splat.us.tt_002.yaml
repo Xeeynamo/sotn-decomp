@@ -50,10 +50,11 @@ segments:
       - [0x38D0, rodata] # jtbl_us_801738D0
       - [0x3900, rodata] # jtbl_us_80173900
       - [0x3918, rodata] # jtbl_us_80173918
-      - [0x3958, rodata] # jtbl_us_80173958
+      - [0x3958, .rodata, 7AC4] # func_us_80177AC4
       - [0x3970, .rodata, 8A30] # func_us_80178A30
       - [0x3994, c, 3994]
       - [0x39D0, c, 39D0]
+      - [0x7AC4, c, 7AC4]
       - [0x8A30, c, 8A30]
       - [0x92D0, sbss]
   - [0xA000]
