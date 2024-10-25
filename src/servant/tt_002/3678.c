@@ -258,6 +258,3 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
 
 #include "../servant_unk0.h"
 
-INCLUDE_RODATA("servant/tt_002/nonmatchings/3678", func_us_80173994);
-
-INCLUDE_RODATA("servant/tt_002/nonmatchings/3678", func_us_801739C8);

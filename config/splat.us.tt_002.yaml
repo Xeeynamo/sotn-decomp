@@ -39,7 +39,20 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0x3678, .rodata, 3678]
+      - [0x3678, .rodata] # jtbl_us_80173678
+      - [0x36A8, rodata] # jtbl_us_801736A8
+      - [0x3818, rodata] # jtbl_us_80173818
+      - [0x3830, rodata] # jtbl_us_80173830
+      - [0x3850, rodata] # jtbl_us_80173850
+      - [0x3870, rodata] # jtbl_us_80173870
+      - [0x3890, rodata] # jtbl_us_80173890
+      - [0x38B8, rodata] # jtbl_us_801738B8
+      - [0x38D0, rodata] # jtbl_us_801738D0
+      - [0x3900, rodata] # jtbl_us_80173900
+      - [0x3918, rodata] # jtbl_us_80173918
+      - [0x3958, rodata] # jtbl_us_80173958
+      - [0x3970, rodata] # jtbl_us_80173970
+      - [0x3994, c, 3994]
       - [0x39D0, c, 3678]
       - [0x92D0, sbss]
   - [0xA000]
