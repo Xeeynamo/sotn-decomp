@@ -174,7 +174,11 @@ void func_us_80176B6C(Entity* self) {
     s32 temp_unk0;
     s32 temp_unk2;
     s32 i;
+#ifdef VERSION_PSP
+    s32 temp_zPriority;
+#else
     s16 temp_zPriority;
+#endif
 
     if (!self->step) {
         func_us_801739D0(self);
