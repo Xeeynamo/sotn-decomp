@@ -4,6 +4,16 @@
 struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
+// Placeholders for M2C to use. No code should be merged which uses them.
+typedef union {
+    u8 u8[0x3C];
+    s8 s8[0x3C];
+    u16 u16[0x1E];
+    s16 s16[0x1E];
+    u32 u32[0xF];
+    s32 s32[0xF];
+} ET_Placeholder;
+
 typedef struct {
     /* 0x7C */ u16 timer;
     /* 0x7E */ s16 unk7E;
@@ -1893,6 +1903,7 @@ typedef struct {
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
+    ET_Placeholder ILLEGAL;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
