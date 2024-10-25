@@ -1,17 +1,15 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
 	"os"
-	"path"
-	"path/filepath"
 	"strconv"
 )
 
@@ -33,41 +31,15 @@ type assetConfig struct {
 }
 
 var extractHandlers = map[string]func(assets.ExtractEntry) error{
-	"frameset": func(e assets.ExtractEntry) error {
-		var set []*[]sprite
-		var err error
-		if e.Start != e.End {
-			r := bytes.NewReader(e.Data)
-			set, _, err = readFrameSet(r, e.RamBase, e.RamBase.Sum(e.Start))
-			if err != nil {
-				return err
-			}
-		} else {
-			set = make([]*[]sprite, 0)
-		}
-		content, err := json.MarshalIndent(set, "", "  ")
-		if err != nil {
-			return err
-		}
-
-		outPath := path.Join(e.AssetDir, fmt.Sprintf("%s.frameset.json", e.Name))
-		dir := filepath.Dir(outPath)
-		if err := os.MkdirAll(dir, 0755); err != nil {
-			fmt.Printf("failed to create directory %s: %v\n", dir, err)
-			return err
-		}
-		return os.WriteFile(outPath, content, 0644)
-	},
-	"cutscene": cutscene.Handler.Extract,
+	"frameset":    spriteset.Handler.Extract,
+	"cutscene":    cutscene.Handler.Extract,
+	"spriteBanks": spritebanks.Handler.Extract,
 }
 
 var buildHandlers = map[string]func(assets.BuildEntry) error{
-	"frameset": func(e assets.BuildEntry) error {
-		inFileName := path.Join(e.AssetDir, fmt.Sprintf("%s.frameset.json", e.Name))
-		outFileName := path.Join(e.SrcDir, fmt.Sprintf("%s.h", e.Name))
-		return buildFrameSet(inFileName, outFileName, e.Name)
-	},
-	"cutscene": cutscene.Handler.Build,
+	"frameset":    spriteset.Handler.Build,
+	"cutscene":    cutscene.Handler.Build,
+	"spriteBanks": spritebanks.Handler.Build,
 }
 
 func parseArgs(entry []string) (offset int64, kind string, args []string, err error) {
@@ -106,7 +78,6 @@ func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
 	handler func(assets.ExtractEntry) error,
 	assetDir string,
-	srcDir string,
 	name string,
 	data []byte,
 	start int,
@@ -152,18 +123,19 @@ func extractAssetFile(file assetFileEntry) error {
 			if size < 0 {
 				return fmt.Errorf("offset 0x%X should be smaller than 0x%X, asset %v", off, off2, segment.Assets[i-1])
 			}
-			if kind == "skip" {
-				continue
-			}
-			if handler, found := extractHandlers[kind]; found {
-				name := strconv.FormatUint(uint64(off), 16)
-				if len(args) > 0 {
-					name = args[0]
-					args = args[1:]
+			if kind != "skip" {
+				if handler, found := extractHandlers[kind]; found {
+					name := strconv.FormatUint(uint64(off), 16)
+					if len(args) > 0 {
+						name = args[0]
+						args = args[1:]
+					}
+					start := int(off) - segment.Start
+					end := start + size
+					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
+				} else {
+					return fmt.Errorf("handler %q not found", kind)
 				}
-				start := int(off) - segment.Start
-				end := start + size
-				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram)
 			}
 			off = off2
 			kind = kind2

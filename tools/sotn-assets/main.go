@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
@@ -20,7 +21,7 @@ type ovl struct {
 	ranges            []datarange.DataRange
 	rooms             dataContainer[[]room]
 	layers            dataContainer[[]roomLayers]
-	sprites           dataContainer[spriteDefs]
+	sprites           dataContainer[spritebanks.SpriteBanks]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
 	layoutsExtraRange datarange.DataRange
@@ -85,7 +86,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	sprites, spritesRange, err := readSpritesBanks(file, psx.RamStageBegin, header.Sprites)
+	sprites, spritesRange, err := spritebanks.ReadSpritesBanks(file, psx.RamStageBegin, header.Sprites)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
 	}
@@ -123,7 +124,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		}),
 		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
 		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
-		sprites:           dataContainer[spriteDefs]{dataRange: spritesRange, content: sprites},
+		sprites:           dataContainer[spritebanks.SpriteBanks]{dataRange: spritesRange, content: sprites},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
@@ -336,7 +337,7 @@ func handlerStage(args []string) error {
 		case "layers":
 			return buildLayers(path.Base(file), file, outputDir)
 		case "sprites":
-			return buildSprites(file, outputDir)
+			return spritebanks.BuildSprites(file, outputDir)
 		}
 		return fmt.Errorf("unknown kind, valid values are 'room', 'layer', 'sprites'")
 	}
