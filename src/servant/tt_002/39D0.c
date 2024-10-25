@@ -188,7 +188,3 @@ void func_us_80176B6C(Entity* self) {
 }
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80176C98);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177380);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177958);
