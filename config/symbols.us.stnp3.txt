@@ -4,6 +4,7 @@ g_TrapDoorFlag = 0x80181104;
 g_SplashSfx = 0x8018122C;
 g_SurfacingSfx = 0x8018122E;
 g_WaterXTbl = 0x80181230;
+D_80180FE0 = 0x8018129C;
 NP3_PrizeDrops = 0x80181618;
 g_ESoulStealOrbAngles = 0x8018205C;
 g_ESoulStealOrbSprt = 0x8018206C;

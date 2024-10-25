@@ -56,7 +56,7 @@ void EntityTableWithGlobe(Entity*);
 void EntityLifeMaxTank(Entity*);
 void EntityBlueFlameTable(Entity*);
 void EntityRelicContainer(Entity*);
-void EntityWargExplosionPuffOpaque(Entity*);
+void EntityExplosionPuffOpaque(Entity*);
 void EntitySubWeaponContainer(Entity*);
 void EntitySubWpnContGlass(Entity*);
 void func_801C7654(Entity*);
@@ -135,7 +135,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityLifeMaxTank,
     EntityBlueFlameTable,
     EntityRelicContainer,
-    EntityWargExplosionPuffOpaque,
+    EntityExplosionPuffOpaque,
     EntitySubWeaponContainer,
     EntitySubWpnContGlass,
     func_801C7654,

@@ -681,7 +681,7 @@ typedef struct {
     /* 0x86 */ u8 pad86[2];
     /* 0x88 */ u8 unk88;
     /* 0x89 */ u8 unk89;
-} ET_WargExplosionPuffOpaque;
+} ET_ExplosionPuffOpaque;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -1992,7 +1992,7 @@ typedef union { // offset=0x7C
     ET_StageTitleCard stageTitleCard;
     ET_RoomTransition2 roomTransition2;
     ET_80192998 e_80192998;
-    ET_WargExplosionPuffOpaque wargpuff;
+    ET_ExplosionPuffOpaque opaquePuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
     ET_801BCC4C et_801BCC4C;

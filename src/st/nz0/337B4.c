@@ -122,21 +122,3 @@ void EntityBlueFlameTable(Entity* self) {
         break;
     }
 }
-
-void AxeKnightDeath() {
-    Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-    s32 i;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
-            entity->params = 2;
-            entity->ext.wargpuff.unk89 = 6 - i;
-            entity->ext.wargpuff.unk84 = temp_s3;
-            entity->ext.wargpuff.unk88 = temp_s4;
-        }
-    }
-}

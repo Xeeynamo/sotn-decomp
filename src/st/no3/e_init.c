@@ -98,7 +98,7 @@ void EntityDeathScytheShadow(Entity* self);
 void EntityFlyingOwlAndLeaves(Entity* self);
 void EntityFallingLeaf(Entity* self);
 void EntityWargExplosionPuffTransparent(Entity* self);
-void EntityWargExplosionPuffOpaque(Entity* self);
+void EntityExplosionPuffOpaque(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
@@ -198,4 +198,4 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFlyingOwlAndLeaves,
     EntityFallingLeaf, // 0x60
     EntityWargExplosionPuffTransparent,
-    EntityWargExplosionPuffOpaque};
+    EntityExplosionPuffOpaque};

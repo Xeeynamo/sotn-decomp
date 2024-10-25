@@ -1,19 +1,19 @@
 options:
-  platform:     psx
-  basename:     stnp3
-  base_path:    ..
-  build_path:   build/us
-  target_path:  disks/us/ST/NP3/NP3.BIN
-  asm_path:     asm/us/st/np3
-  asset_path:   assets/st/np3
-  src_path:     src/st/np3
+  platform: psx
+  basename: stnp3
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NP3/NP3.BIN
+  asm_path: asm/us/st/np3
+  asset_path: assets/st/np3
+  src_path: src/st/np3
   ld_script_path: build/us/stnp3.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.stnp3.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnp3.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.stnp3.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stnp3.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
@@ -30,7 +30,7 @@ segments:
   - name: stnp3
     type: code
     start: 0x00000000
-    vram:  0x80180000
+    vram: 0x80180000
     align: 4
     subalign: 4
     subsegments:
@@ -80,7 +80,7 @@ segments:
       - [0x2A124, .data, sprites]
       - [0x31EA0, data]
       - [0x31EA8, .rodata, entrance_stage_entities] # EntityStairwayPiece
-      - [0x31EBC, .rodata, 363FC] # func_801B63FC
+      - [0x31EBC, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
       - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
       - [0x31F00, .rodata, e_red_door] # EntityRedDoor
@@ -107,7 +107,7 @@ segments:
       - [0x3246C, c, st_debug]
       - [0x326FC, c, e_breakable]
       - [0x32830, c, entrance_stage_entities]
-      - [0x363FC, c]
+      - [0x363FC, c, e_explosion_puff_opaque]
       - [0x36990, c, slogra]
       - [0x378BC, c, gaibon]
       - [0x390BC, c, st_update]

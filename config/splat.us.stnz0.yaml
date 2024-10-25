@@ -1,19 +1,19 @@
 options:
-  platform:     psx
-  basename:     stnz0
-  base_path:    ..
-  build_path:   build/us
-  target_path:  disks/us/ST/NZ0/NZ0.BIN
-  asm_path:     asm/us/st/nz0
-  asset_path:   assets/st/nz0
-  src_path:     src/st/nz0
+  platform: psx
+  basename: stnz0
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NZ0/NZ0.BIN
+  asm_path: asm/us/st/nz0
+  asset_path: assets/st/nz0
+  src_path: src/st/nz0
   ld_script_path: build/us/stnz0.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.stnz0.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnz0.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.stnz0.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stnz0.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
@@ -31,7 +31,7 @@ segments:
   - name: stnz0
     type: code
     start: 0x00000000
-    vram:  0x80180000
+    vram: 0x80180000
     align: 4
     subalign: 4
     subsegments:
@@ -44,7 +44,7 @@ segments:
       - [0xDE4, .data, e_breakable]
       - [0xE54, .data, 311C0]
       - [0xF50, .data, 337B4]
-      - [0xFA4, .data, 33C3C]
+      - [0xFA4, .data, e_explosion_puff_opaque]
       - [0x1010, .data, bossfight]
       - [0x13A4, .data, e_elevator]
       - [0x13BC, .data, d_prize_drops]
@@ -117,7 +117,7 @@ segments:
       - [0x26E8C, .data, sprites]
       - [0x3058C, .rodata, 311C0] # EntityRedEyeBust
       - [0x30598, .rodata, 337B4] # EntityRelicContainer
-      - [0x305A4, .rodata, 33C3C] # EntityWargExplosionPuffOpaque
+      - [0x305A4, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
       - [0x305FC, .rodata, slogra] # EntitySlogra
@@ -147,7 +147,7 @@ segments:
       - [0x30EEC, c, e_breakable]
       - [0x311C0, c]
       - [0x337B4, c]
-      - [0x33C3C, c]
+      - [0x33B78, c, e_explosion_puff_opaque]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
       - [0x34690, c, slogra]
       - [0x35778, c, gaibon]
