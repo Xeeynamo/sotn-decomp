@@ -46,15 +46,17 @@ segments:
       - [0x3850, rodata] # jtbl_us_80173850
       - [0x3870, rodata] # jtbl_us_80173870
       - [0x3890, rodata] # jtbl_us_80173890
-      - [0x38B8, rodata] # jtbl_us_801738B8
-      - [0x38D0, rodata] # jtbl_us_801738D0
+      - [0x38B8, .rodata, 6504] # func_us_80176504
+      - [0x38D0, .rodata, 6C98] # func_us_80176C98
       - [0x3900, .rodata, 7380] # func_us_80177380
       - [0x3918, .rodata, 7958] # func_us_80177958
       - [0x3958, .rodata, 7AC4] # func_us_80177AC4
       - [0x3970, .rodata, 8A30] # func_us_80178A30
       - [0x3994, c, 3994]
+      
       - [0x39D0, c, 39D0]
-
+      - [0x6504, c, 6504]
+      - [0x6C98, c, 6C98]
       - [0x7380, c, 7380]
       - [0x7958, c, 7958]
       - [0x7AC4, c, 7AC4]
