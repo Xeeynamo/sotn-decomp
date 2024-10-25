@@ -1002,9 +1002,9 @@ void EntityFloorButton(Entity* self) {
             if ((self->ext.nz0311c0.unk80 + 4) < posY) {
                 self->posY.i.hi =
                     (self->ext.nz0311c0.unk80 + 4) - g_Tilemap.scrollY.i.hi;
-                self[1].ext.stub[0xC] = 1;
+                (self + 1)->ext.nz0311c0.unk88 = 1;
                 self->step++;
-                LOW(self[1].ext.stub[0x8]) ^= 1;
+                (self + 1)->ext.nz0311c0.unk84 ^= 1;
             }
         }
 

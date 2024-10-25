@@ -31,16 +31,16 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         if (g_DemoMode != Demo_None) {
-            self->ext.generic.unk7C.s = 64;
+            self->ext.utimer.t = 64;
         } else {
-            self->ext.generic.unk7C.s = 128;
+            self->ext.utimer.t = 128;
         }
         break;
 
     case 1:
         g_Player.padSim = 0;
-        if (self->ext.generic.unk7C.u != 0) {
-            self->ext.generic.unk7C.u--;
+        if (self->ext.utimer.t != 0) {
+            self->ext.utimer.t--;
         }
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
@@ -52,7 +52,7 @@ void EntityCSMoveAlucard(Entity* self) {
                     g_Player.padSim = 2;
                 }
             }
-        } else if (self->ext.generic.unk7C.u == 0) {
+        } else if (self->ext.utimer.t == 0) {
             self->step++;
             g_Player.padSim = 0x2000;
         }

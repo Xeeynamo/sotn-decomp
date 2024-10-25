@@ -243,7 +243,7 @@ void EntityDeathStolenItem(Entity* self) {
 }
 
 void EntityDeath(Entity* self) {
-    Entity* newEntity = &self[1];
+    Entity* newEntity = self + 1;
     Primitive* prim;
     s16 left, right;
     s32 primIndex;
@@ -301,7 +301,7 @@ void EntityDeath(Entity* self) {
                 self->ext.death.unk7C = 0;
                 self->flags |= FLAG_HAS_PRIMS;
                 DestroyEntity(newEntity);
-                CreateEntityFromCurrentEntity(E_DEATH_5B, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE, newEntity);
                 prim = &g_PrimBuf[primIndex];
 
                 for (i = 0; prim != NULL; i++) {
@@ -562,46 +562,51 @@ void EntityDeath(Entity* self) {
     }
 }
 
-void EntityUnkId5B(Entity* entity) {
-    Entity* newEntity;
+// Not 100% sure about this entity, but since it's making scythe shadows,
+// going to guess it's the scythe.
+void EntityDeathScythe(Entity* self) {
+    u16 tempstep;
+    // this is Death.
+    Entity* otherEntity = self - 1;
+    self->posX.i.hi = otherEntity->posX.i.hi;
+    self->posY.i.hi = otherEntity->posY.i.hi;
 
-    entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.i.hi;
-
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        entity->animSet = ANIMSET_OVL(8);
-        entity->palette = 0x2D6;
-        entity->animCurFrame = 0;
-        entity->unk5A = 0x44;
+        self->animSet = ANIMSET_OVL(8);
+        self->animCurFrame = 0;
+        self->palette = 0x2D6;
+        self->unk5A = 0x44;
         break;
 
     case 1:
-        if (entity->ext.generic.unk7C.u != 0) {
-            switch (entity->ext.generic.unk7C.u) {
+        tempstep = self->ext.deathScythe.extStep;
+        if (tempstep) {
+            switch (tempstep) {
             case 1:
-                AnimateEntity(D_80181B40, entity);
+                AnimateEntity(D_80181B40, self);
                 break;
             case 2:
-                AnimateEntity(D_80181B4C, entity);
+                AnimateEntity(D_80181B4C, self);
                 break;
             case 3:
-                AnimateEntity(D_80181B4C, entity);
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEntity == NULL) {
+                AnimateEntity(D_80181B4C, self);
+                otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (otherEntity == NULL) {
                     break;
                 }
-                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
-                newEntity->animCurFrame = entity->animCurFrame;
-                newEntity->params = 1;
+                CreateEntityFromCurrentEntity(
+                    E_DEATH_SCYTHE_SHADOW, otherEntity);
+                otherEntity->animCurFrame = self->animCurFrame;
+                otherEntity->params = 1;
                 break;
             }
         } else {
-            entity->animCurFrame = 0;
+            self->animCurFrame = 0;
         }
     }
-    entity->ext.generic.unk7C.s = 0;
+    self->ext.deathScythe.extStep = 0;
 }
 
 // When meeting Death, the scythe spins around, leaving behind semi-transparent

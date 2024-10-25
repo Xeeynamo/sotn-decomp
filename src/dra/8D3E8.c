@@ -2051,19 +2051,19 @@ void EntityGiantSpinningCross(Entity* self) {
         func_8011A290(self);
         self->hitboxHeight = 0x50;
         self->hitboxWidth = 0xC;
+        self->facingLeft = 0;
         self->posY.i.hi = 0x160;
         self->velocityY = FIX(-6);
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
         PlaySfx(SFX_FIREBALL_SHOT_B);
         self->step++;
-        primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];
+        primUVCoords = &D_800B0F94[0][0];
         for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next,
             primUVCoords += 5) {
-            prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
+            prim->clut = (primUVCoords[4] & 0xF) + 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
                 prim->u0 = primUVCoords[0] + primUVCoords[2];
@@ -2175,7 +2175,7 @@ void EntityGiantSpinningCross(Entity* self) {
     gte_ldv0(&pos);
     gte_rtps();
     prim = &g_PrimBuf[self->primIndex];
-    vectors_ptr = &D_800B0CB4;
+    vectors_ptr = (SVECTOR**)&D_800B0CB4;
     gte_stsxy2(&prim->x0);
     gte_stszotz(&z);
     self->hitboxOffX = prim->x0 - self->posX.i.hi;

@@ -91,7 +91,7 @@ void NO3_EntityCutscene(Entity* self);
 void EntityRoomTransition2(Entity* self);
 void EntityDeathStolenItem(Entity* self);
 void EntityDeath(Entity* self);
-void EntityUnkId5B(Entity* self);
+void EntityDeathScythe(Entity* self);
 void EntityStairwayPiece(Entity* self);
 void EntityFallingRock(Entity* self);
 void EntityDeathScytheShadow(Entity* self);
@@ -191,7 +191,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityRoomTransition2,
     EntityDeathStolenItem,
     EntityDeath,
-    EntityUnkId5B,
+    EntityDeathScythe,
     EntityStairwayPiece,
     EntityFallingRock,
     EntityDeathScytheShadow,

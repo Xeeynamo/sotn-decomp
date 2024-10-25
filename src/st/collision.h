@@ -584,7 +584,8 @@ void HitDetection(void) {
                                 CreateEntityFromEntity(
                                     3, iterEnt1, otherEntity);
                             }
-                            otherEntity->ext.drop.unk94 = miscVar1;
+                            otherEntity->ext.equipItemDrop.castleFlag =
+                                miscVar1;
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
                             otherEntity->velocityY = FIX(-3.5);
