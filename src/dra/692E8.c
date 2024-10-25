@@ -474,8 +474,8 @@ void func_8010A234(s32 arg0) {
         PLAYER.unk5A = 0;
         PLAYER.rotZ = 0;
         PLAYER.drawFlags &=
-            (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-             FLAG_DRAW_UNK80 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+            (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 | FLAG_BLINK |
+             FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;

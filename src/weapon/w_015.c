@@ -94,7 +94,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->hitFlags != 0) {
             self->ext.weapon.lifetime = 24;
             self->hitboxState = 0;
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
             self->step++;
         }
         break;

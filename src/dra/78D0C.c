@@ -562,7 +562,7 @@ void EntitySmallRisingHeart(Entity* self) {
 
     case 1:
         if (self->ext.smallRisingHeart.timer < 32) {
-            self->drawFlags = FLAG_DRAW_UNK80;
+            self->drawFlags = FLAG_BLINK;
         }
         self->posY.val += self->velocityY;
         cos = rcos(self->ext.smallRisingHeart.swayAngle);

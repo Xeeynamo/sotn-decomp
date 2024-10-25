@@ -376,7 +376,7 @@ static void EntityWeaponAttack(Entity* self) {
             return;
         }
         if (self->ext.food.timer == 24) {
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
         }
         if (--self->ext.food.timer == 0) {
             DestroyEntity(self);

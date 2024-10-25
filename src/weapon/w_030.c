@@ -373,7 +373,7 @@ void func_ptr_80170008(Entity* self) {
     case 7:
     case 8:
         stopAnimationUpdate = true;
-        self->drawFlags |= FLAG_DRAW_UNK80;
+        self->drawFlags |= FLAG_BLINK;
         if (--self->ext.weapon_030.unk7E == 0) {
             if (self->step == 7) {
                 DestroyEntity(self);
@@ -540,7 +540,7 @@ void func_ptr_8017000C(Entity* self) {
         self->posY.val += self->velocityY;
         return;
     case 2:
-        self->drawFlags |= FLAG_DRAW_UNK80;
+        self->drawFlags |= FLAG_BLINK;
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
             return;

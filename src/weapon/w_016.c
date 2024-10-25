@@ -403,7 +403,7 @@ static s32 func_ptr_80170014(Entity* self) {
             if (--self->ext.weapon.unk7E == 0) {
                 self->step = 3;
                 self->ext.weapon.unk7E = 0x20;
-                self->drawFlags = FLAG_DRAW_UNK80;
+                self->drawFlags = FLAG_BLINK;
             }
         }
         collX = self->posX.i.hi;

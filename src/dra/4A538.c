@@ -805,7 +805,7 @@ void RenderEntities(void) {
         }
 #endif
         r->eDrawFlags = entity->drawFlags;
-        if (r->eDrawFlags & FLAG_DRAW_UNK80 && (r->index ^ g_Timer) & 1) {
+        if (r->eDrawFlags & FLAG_BLINK && (r->index ^ g_Timer) & 1) {
             continue;
         }
         r->flipX = entity->facingLeft * 2;

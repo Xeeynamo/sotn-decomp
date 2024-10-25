@@ -152,7 +152,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->velocityY += FIX(20.0 / 128);
         self->rotZ += 0x80;
         if (--self->ext.timer.t < 0x10) {
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
         }
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);

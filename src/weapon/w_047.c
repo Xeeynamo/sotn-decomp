@@ -285,7 +285,7 @@ void EntityWeaponAttack(Entity* self) {
     case 3:
         break;
     case 4:
-        self->drawFlags |= FLAG_DRAW_UNK80;
+        self->drawFlags |= FLAG_BLINK;
         if (--self->ext.weapon_047.unk7C == 0) {
             DestroyEntity(self);
         }
