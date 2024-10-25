@@ -24,7 +24,7 @@ extern AnimationFrame* D_us_80172B14[];
 void func_us_80173994(Entity*, s32);
 void func_us_801739D0(Entity*);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801739D0);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_801739D0);
 
 // This is a duplicate CreateEventEntity which is lower in the file, but we need
 // both to match the binary for PSX
@@ -54,9 +54,9 @@ void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
     }
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173BD0);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80173BD0);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173D60);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80173D60);
 
 void func_us_801746E8(InitializeMode mode) {
     u16* src;
@@ -154,21 +154,21 @@ void func_us_801746E8(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174998);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80174998);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174F0C);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80174F0C);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801753E4);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_801753E4);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175730);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80175730);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175A78);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80175A78);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175DBC);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80175DBC);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176178);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80176178);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176504);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80176504);
 
 void func_us_80176B6C(Entity* self) {
     s32 temp_unk0;
@@ -210,17 +210,17 @@ void func_us_80176B6C(Entity* self) {
     ServantUpdateAnim(self, 0, D_us_80172B14);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176C98);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80176C98);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177380);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177958);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177958);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177AC4);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177AC4);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177F64);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80177F84);
 
 #ifndef VERSION_PSP
 #include "../servant_update_anim.h"
@@ -242,7 +242,7 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
 
 // There is some .rodata jumptable stuff going on with ProcessSfxState
 // where the table is in the middle of the .rodata function
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
+INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80178A30);
 // #include "../play_sfx.h"
 #endif
 
