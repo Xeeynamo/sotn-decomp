@@ -341,7 +341,7 @@
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/cen/matchings/e_room_fg/EntityRoomForeground.s 
 | 0.92 | true     | EntityBackgroundBlock               | asm/us/st/cen/matchings/st_debug/EntityBackgroundBlock.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/dre/matchings/20734/EntityRoomForeground.s 
-| 0.92 | true     | EntityUnkId11                       | asm/us/st/dre/matchings/succubus/EntityUnkId11.s 
+| 0.92 | true     | EntityUnkId11                       | asm/us/st/dre/matchings/st_debug/EntityUnkId11.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/no0/matchings/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/no3/matchings/4AFF0/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/np3/matchings/e_room_fg/EntityRoomForeground.s 
@@ -1504,8 +1504,8 @@
 | 1.00 | true     | EntityUnkId12                       | asm/us/boss/mar/matchings/st_debug/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/boss/rbo3/matchings/st_debug/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/cen/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | func_80191B44                       | asm/us/st/dre/matchings/succubus/func_80191B44.s 
-| 1.00 | true     | func_8018E674                       | asm/us/st/mad/matchings/D8C8/func_8018E674.s 
+| 1.00 | true     | EntityUnkId12                       | asm/us/st/dre/matchings/st_debug/EntityUnkId12.s 
+| 1.00 | true     | EntityUnkId12                       | asm/us/st/mad/matchings/st_debug/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/no3/matchings/377D4/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/np3/matchings/st_debug/EntityUnkId12.s 
 | 1.00 | true     | EntityUnkId12                       | asm/us/st/rwrp/matchings/rwrp/st_debug/EntityUnkId12.s 
@@ -1523,8 +1523,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/mar/matchings/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/rbo3/matchings/e_breakable/EntityBreakable.s 
-| 1.00 | true     | EntityBreakable                     | asm/us/st/dre/matchings/succubus/EntityBreakable.s 
-| 1.00 | true     | EntityBreakable                     | asm/us/st/mad/matchings/D8C8/EntityBreakable.s 
+| 1.00 | true     | EntityBreakable                     | asm/us/st/dre/matchings/e_breakable/EntityBreakable.s 
+| 1.00 | true     | EntityBreakable                     | asm/us/st/mad/matchings/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/st/no3/matchings/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/st/np3/matchings/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/st/rwrp/matchings/wrp/e_breakable/EntityBreakable.s 
@@ -1533,7 +1533,7 @@
 | 1.00 | true     | func_us_8018AC0C                    | asm/us/boss/mar/matchings/st_debug/func_us_8018AC0C.s 
 | 1.00 | true     | func_801A7D64                       | asm/us/boss/rbo3/matchings/st_debug/func_801A7D64.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/st/mad/matchings/17B94/EntityRoomForeground.s 
-| 1.00 | true     | func_8018E5AC                       | asm/us/st/mad/matchings/D8C8/func_8018E5AC.s 
+| 1.00 | true     | func_8018E5AC                       | asm/us/st/mad/matchings/st_debug/func_8018E5AC.s 
 | 0.92 | true     | EntityCavernDoorVase                | asm/us/st/no3/matchings/377D4/EntityCavernDoorVase.s 
 | 0.92 | true     | func_801B246C                       | asm/us/st/np3/matchings/st_debug/func_801B246C.s 
 | 1.00 | true     | func_801B0958                       | asm/us/st/nz0/matchings/30958/func_801B0958.s 
@@ -2360,14 +2360,14 @@
 | 1.00 | true     | EntityMermanWaterSplash             | asm/us/st/no3/matchings/53F38/EntityMermanWaterSplash.s 
 | 1.00 | true     | EntityMermanWaterSplash             | asm/us/st/np3/matchings/e_merman2/EntityMermanWaterSplash.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityBat                           | asm/us/st/no3/matchings/56264/EntityBat.s 
-| 1.00 | true     | EntityBat                           | asm/us/st/np3/matchings/4997C/EntityBat.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | EntityZombie                        | asm/us/st/no3/matchings/564B0/EntityZombie.s 
 | 1.00 | true     | EntityZombie                        | asm/us/st/np3/matchings/49BC8/EntityZombie.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityZombieSpawner                 | asm/us/st/no3/matchings/564B0/EntityZombieSpawner.s 
 | 1.00 | true     | EntityZombieSpawner                 | asm/us/st/np3/matchings/49BC8/EntityZombieSpawner.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityBat                           | asm/us/st/no3/matchings/e_bat/EntityBat.s 
+| 1.00 | true     | EntityBat                           | asm/us/st/np3/matchings/e_bat/EntityBat.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801CC5A4                       | asm/us/st/no3/matchings/e_fire_warg/func_801CC5A4.s 
 | 1.00 | true     | func_801CF438                       | asm/us/st/no3/matchings/e_fire_warg/func_801CF438.s 
