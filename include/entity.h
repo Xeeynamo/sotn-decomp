@@ -609,6 +609,10 @@ typedef struct {
     /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;
 
+typedef struct {
+    struct Entity* unk7C;
+} ET_Faerie;
+
 struct draculaPrimitive;
 typedef struct ET_Dracula {
     /* 0x7C */ char pad_7C[4];
@@ -1965,6 +1969,7 @@ typedef union { // offset=0x7C
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_BatEcho batEcho;
     ET_Ghost ghost;
+    ET_Faerie faerie;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
