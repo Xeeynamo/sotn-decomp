@@ -31,15 +31,15 @@ type assetConfig struct {
 }
 
 var extractHandlers = map[string]func(assets.ExtractEntry) error{
-	"frameset":    spriteset.Handler.Extract,
 	"cutscene":    cutscene.Handler.Extract,
 	"spriteBanks": spritebanks.Handler.Extract,
+	"spriteset":   spriteset.Handler.Extract,
 }
 
 var buildHandlers = map[string]func(assets.BuildEntry) error{
-	"frameset":    spriteset.Handler.Build,
 	"cutscene":    cutscene.Handler.Build,
 	"spriteBanks": spritebanks.Handler.Build,
+	"spriteset":   spriteset.Handler.Build,
 }
 
 func parseArgs(entry []string) (offset int64, kind string, args []string, err error) {

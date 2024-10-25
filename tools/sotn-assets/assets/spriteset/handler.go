@@ -69,7 +69,7 @@ func (h *handler) Build(e assets.BuildEntry) error {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.frameset.json", name))
+	return path.Join(dir, fmt.Sprintf("%s.animset.json", name))
 }
 
 func sourcePath(dir, name string) string {
