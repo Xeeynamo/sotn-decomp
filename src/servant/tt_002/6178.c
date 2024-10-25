@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "faerie.h"
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/6504", func_us_80176504);
+INCLUDE_ASM("servant/tt_002/nonmatchings/6178", func_us_80176178);
+INCLUDE_ASM("servant/tt_002/nonmatchings/6178", func_us_80176504);
 
 void func_us_80176B6C(Entity* self) {
     s32 temp_unk0;

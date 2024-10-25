@@ -132,15 +132,3 @@ void func_us_801746E8(InitializeMode mode) {
 }
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80174998);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80174F0C);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_801753E4);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80175730);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80175A78);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80175DBC);
-
-INCLUDE_ASM("servant/tt_002/nonmatchings/39D0", func_us_80176178);
