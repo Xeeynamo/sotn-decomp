@@ -22,9 +22,58 @@ extern UnkFaerieStruct D_us_80172368[];
 extern AnimationFrame* D_us_80172B14[];
 
 void func_us_80173994(Entity*, s32);
-void func_us_801739D0(Entity*);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801739D0);
+void func_us_801739D0(Entity* arg0) {
+    if (!arg0->ext.faerieUnk0.unk7E) {
+
+        switch (arg0->entityId) {
+        case 0xD1:
+        case 0xD8:
+            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+
+            func_us_80173994(arg0, 0xE);
+
+            arg0->ext.faerieUnk0.unk84 = rand() % 4096;
+            arg0->ext.faerieUnk0.unk86 = 0;
+            arg0->ext.faerieUnk0.unk88 = 8;
+            arg0->ext.faerieUnk0.unk8A = 0x20;
+            arg0->step++;
+            break;
+        case 0xD9:
+            // loc 0xD8
+            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            arg0->step++;
+            break;
+        }
+    } else {
+        switch (arg0->entityId) {
+        case 0xD1:
+            arg0->ext.faerieUnk0.unk96 = 0x78;
+            // fallthrough
+        case 0xD2:
+        case 0xD3:
+        case 0xD4:
+        case 0xD5:
+        case 0xD6:
+        case 0xD7:
+        case 0xDA:
+        case 0xDB:
+            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            func_us_80173994(arg0, 0xE);
+            arg0->step++;
+            break;
+        case 0xD9:
+            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            arg0->step++;
+        }
+    }
+    arg0->ext.faerieUnk0.unk7E = arg0->entityId;
+    D_us_8017931C = 0;
+}
 
 // This is a duplicate CreateEventEntity which is lower in the file, but we need
 // both to match the binary for PSX
