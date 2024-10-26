@@ -603,8 +603,22 @@ typedef struct {
 } ET_Ghost;
 
 typedef struct {
-    struct Entity* unk7C;
+    /* 0x7C */ struct Entity* unk7C;
 } ET_Faerie;
+
+// There appears to be a 2nd Ext used in the Faerie code
+typedef struct {
+    /* 0x7C */ s16 pad7c;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 pad80;
+    /* 0x82 */ s16 pad82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 pad8C[5];
+    /* 0x96 */ s16 unk96;
+} ET_FaerieUnk0;
 
 struct draculaPrimitive;
 typedef struct ET_Dracula {
@@ -1970,6 +1984,7 @@ typedef union { // offset=0x7C
     ET_BatEcho batEcho;
     ET_Ghost ghost;
     ET_Faerie faerie;
+    ET_FaerieUnk0 faerieUnk0;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
