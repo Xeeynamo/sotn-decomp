@@ -66,7 +66,6 @@ anim_bird_cage = 0x80181C5C;
 anim_gear_1 = 0x80181C78;
 anim_gear_2 = 0x80181C84;
 g_StoneDoorTiles = 0x80181C90;
-anim_bone_rot = 0x801821DC;
 steps = 0x801825AC;
 init_velocity_x = 0x801825B4;
 init_velocity_y = 0x801825C0;
@@ -209,3 +208,8 @@ g_LayoutObjPosVertical = 0x801DE8D8;
 g_Statues = 0x801DF548;
 g_ItemIconSlots = 0x801DF54C;
 EntitySlingerPieces = 0x801D7B40;
+EntitySlinger = 0x801D7670;
+g_EInitSlinger = 0x80180BB4;
+
+sensors_ground = 0x80182254;
+sensors_move = 0x8018225C;
