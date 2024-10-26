@@ -281,7 +281,7 @@ void func_801BC5C0(Entity* self) {
                     LOW(prim->x2) = var_s3[1];
                     LOW(prim->x3) = var_s3[3];
                     prim->priority = (ptr_sp5c[j] + 0x80);
-                    prim->drawMode = 2U;
+                    prim->drawMode = DRAW_UNK02;
                     var_s2 = (var_s5 + j)[1];
                     if (var_s2 != 0x80) {
                         prim->r0 = prim->g0 = prim->b0 = var_s5[j];
