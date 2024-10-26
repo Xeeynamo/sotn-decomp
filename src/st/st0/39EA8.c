@@ -64,5 +64,3 @@ void EntityCutscenePhotographFire(Entity* entity) {
         break;
     }
 }
-
-INCLUDE_ASM("st/st0/nonmatchings/39EA8", func_801BC5C0);
