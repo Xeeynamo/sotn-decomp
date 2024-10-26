@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
@@ -32,12 +33,14 @@ type assetConfig struct {
 
 var extractHandlers = map[string]func(assets.ExtractEntry) error{
 	"cutscene":     cutscene.Handler.Extract,
+	"rooms":        rooms.Handler.Extract,
 	"sprite_banks": spritebanks.Handler.Extract,
 	"spriteset":    spriteset.Handler.Extract,
 }
 
 var buildHandlers = map[string]func(assets.BuildEntry) error{
 	"cutscene":     cutscene.Handler.Build,
+	"rooms":        rooms.Handler.Build,
 	"sprite_banks": spritebanks.Handler.Build,
 	"spriteset":    spriteset.Handler.Build,
 }
