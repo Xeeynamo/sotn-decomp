@@ -367,7 +367,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_api.PlaySfx(0x856);
                 temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (temp_s2 != NULL) {
-                    CreateEntityFromEntity(E_DRACULA_UNK2F, self, temp_s2);
+                    CreateEntityFromEntity(E_DRACULA_UNK2E, self, temp_s2);
                     if (self->facingLeft != 0) {
                         temp_s2->posX.i.hi += 40;
                     } else {

@@ -41,8 +41,8 @@ typedef enum EntityIDs {
     E_SECRET_STAIRS,
     E_DRACULA_UNK2B = 0x2B,
     E_DRACULA_UNK2C,
+    E_ID_2D,
     E_DRACULA_UNK2E,
-    E_DRACULA_UNK2F
 } EntityIDs;
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
