@@ -210,6 +210,3 @@ g_ItemIconSlots = 0x801DF54C;
 EntitySlingerPieces = 0x801D7B40;
 EntitySlinger = 0x801D7670;
 g_EInitSlinger = 0x80180BB4;
-
-sensors_ground = 0x80182254;
-sensors_move = 0x8018225C;

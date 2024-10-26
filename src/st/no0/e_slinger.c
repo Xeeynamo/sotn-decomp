@@ -37,14 +37,19 @@ static u16 dead_parts_pos_x[] = {-4, 0, 4, -4, -4, 4, 0, 0};
 static u16 dead_parts_pos_y[] = {-16, -8, -4, -4, 9, 9, 0, 0};
 static u8 attack_timer_cycles[2][4] = {
     {0x80, 0x08, 0x08, 0x40}, {0xF0, 0xC0, 0xA0, 0x80}};
-// static u32 bone_projectile_velocity_x[] = {
-//     FIX(-.125), FIX(-.5),  FIX(-1), FIX(-1.5),
-//     FIX(-2),    FIX(-2.5), FIX(-3), FIX(-3.5)};
 static s16 sensors_ground[][2] = {{0, 19}, {8, 0}};
-// static s16 sensors_special[] = {0, 19, 8, 0};
 static s16 sensors_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
-INCLUDE_ASM("st/no0/nonmatchings/e_slinger", func_us_801D75E4);
+void SlingerAttackCheck(Entity* self) {
+    s32 groundCollision = UnkCollisionFunc2(sensors_ground);
+    s16 moveCollision = UnkCollisionFunc(sensors_move, 3);
+
+    if ((groundCollision & 0xFFFF) == 128 && (moveCollision & 2) != 0) {
+        SetStep(SLINGER_JUMP);
+    } else if (--self->ext.skeleton.attackTimer == 0) {
+        SetStep(SLINGER_ATTACK);
+    }
+}
 
 extern u16 g_EInitSlinger[];
 void EntitySlinger(Entity* self) {
@@ -82,7 +87,7 @@ void EntitySlinger(Entity* self) {
         if (GetDistanceToPlayerX() < 76) {
             self->step = SLINGER_WALK_AWAY_FROM_PLAYER;
         }
-        func_us_801D75E4(self);
+        SlingerAttackCheck(self);
         break;
     case SLINGER_WALK_AWAY_FROM_PLAYER:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -98,7 +103,7 @@ void EntitySlinger(Entity* self) {
         if (GetDistanceToPlayerX() > 92) {
             self->step = SLINGER_WALK_TOWARDS_PLAYER;
         }
-        func_us_801D75E4(self);
+        SlingerAttackCheck(self);
         break;
     case SLINGER_ATTACK:
         animStatus = AnimateEntity(anim_throw_bone, self);
