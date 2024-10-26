@@ -21,7 +21,6 @@ type ovl struct {
 	ranges            []datarange.DataRange
 	rooms             dataContainer[[]room]
 	layers            dataContainer[[]roomLayers]
-	sprites           dataContainer[spritebanks.SpriteBanks]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
 	layoutsExtraRange datarange.DataRange
@@ -100,7 +99,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	sprites, spritesRange, err := spritebanks.ReadSpritesBanks(file, psx.RamStageBegin, header.Sprites)
+	_, spritesRange, err := spritebanks.ReadSpritesBanks(file, psx.RamStageBegin, header.Sprites)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
 	}
@@ -138,7 +137,6 @@ func getOvlAssets(fileName string) (ovl, error) {
 		}),
 		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
 		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
-		sprites:           dataContainer[spritebanks.SpriteBanks]{dataRange: spritesRange, content: sprites},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
@@ -213,14 +211,6 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		}
 	}
 
-	content, err = json.MarshalIndent(o.sprites.content, "", "  ")
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(path.Join(outputDir, "sprites.json"), content, 0644); err != nil {
-		return fmt.Errorf("unable to create sprites file: %w", err)
-	}
-
 	return nil
 }
 
@@ -263,7 +253,6 @@ func info(fileName string) error {
 		{o.layouts.dataRange, "e_layout", "layout entries data"},
 		{o.tileMaps.dataRange, "tile_data", "tile data"},
 		{o.tileDefs.dataRange, "tile_data", "tile definitions"},
-		{o.sprites.dataRange, "sprites", ""},
 	}
 
 	fmt.Printf("data coverage: %+v\n", o.ranges)
