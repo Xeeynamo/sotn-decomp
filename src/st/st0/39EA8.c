@@ -260,10 +260,10 @@ void EntityCutscenePhotograph(Entity* self) {
         g_GpuBuffers[1].draw.clip.h = 0xF0;
         self->rotZ = 0;
         self->rotX = 0x100;
-        self->ext.cutscenePhoto.unk8C = 0;
-        self->ext.cutscenePhoto.unk80 = 0x20;
+        self->ext.cutscenePhoto.cameraDistance = 0;
+        self->ext.cutscenePhoto.rotationTimer = 0x20;
 
-        g_api.PlaySfx(0x654);
+        g_api.PlaySfx(SFX_EXPLODE_A);
         self->step++;
         /* fallthrough */
     case 5:
@@ -284,7 +284,7 @@ void EntityCutscenePhotograph(Entity* self) {
         transVector.vx = 0;
         transVector.vy = 0;
         transVector.vz = 0x400;
-        transVector.vz += self->ext.cutscenePhoto.unk8C;
+        transVector.vz += self->ext.cutscenePhoto.cameraDistance;
         TransMatrix(&m, &transVector);
         SetTransMatrix(&m);
         gte_ldv3(&D_8018243C, &D_80182444, &D_8018244C);
@@ -294,13 +294,13 @@ void EntityCutscenePhotograph(Entity* self) {
         gte_rtps();
         gte_stsxy(&prim->x3);
 
-        if (!self->ext.cutscenePhoto.unk80) {
+        if (!self->ext.cutscenePhoto.rotationTimer) {
             self->rotZ += 2;
-            self->ext.cutscenePhoto.unk8C += 8;
+            self->ext.cutscenePhoto.cameraDistance += 8;
         } else {
-            self->ext.cutscenePhoto.unk80--;
+            self->ext.cutscenePhoto.rotationTimer--;
         }
-        if (self->ext.cutscenePhoto.unk8C <= 0x600) {
+        if (self->ext.cutscenePhoto.cameraDistance <= 0x600) {
             return;
         }
         self->step++;
@@ -421,7 +421,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->priority = 0x1FC;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         self->animFrameIdx = 0;
-        g_api.PlaySfx(0x8BE);
+        g_api.PlaySfx(NA_SE_CS_BURNING_PHOTOGRAPH);
         self->step++;
         /* fallthrough */
     case 8:

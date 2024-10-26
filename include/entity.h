@@ -1932,16 +1932,11 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 rotationTimer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 : 32;
     /* 0x84 */ s32 : 32;
-    /* 0x8C */ s16 unk8C;
-    /* 0x8E */ s16 : 16;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
+    /* 0x8C */ s16 cameraDistance;
 } ET_CutscenePhotograph;
 
 // ====== RIC ENTITIES ======
