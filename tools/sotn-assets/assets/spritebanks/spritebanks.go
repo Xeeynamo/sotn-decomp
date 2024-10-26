@@ -7,7 +7,6 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
-	"math/rand"
 	"os"
 	"path"
 	"sort"
@@ -97,7 +96,6 @@ func BuildSprites(fileName string, outputDir string) error {
 		return err
 	}
 
-	r := rand.New(rand.NewSource(int64(len(data))))
 	sbHeader := strings.Builder{}
 	sbHeader.WriteString("// clang-format off\n")
 	sbData := strings.Builder{}
@@ -111,7 +109,7 @@ func BuildSprites(fileName string, outputDir string) error {
 		}
 		symbol := fmt.Sprintf("sprites_%s_%d", ovlName, i)
 		sbHeader.WriteString(fmt.Sprintf("extern s16* %s[];\n", symbol))
-		spriteset.BuildSpriteSet(&sbData, ss, symbol, r)
+		spriteset.BuildSpriteSet(&sbData, ss, symbol)
 		symbols = append(symbols, symbol)
 	}
 

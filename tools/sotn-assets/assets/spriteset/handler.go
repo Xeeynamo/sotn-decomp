@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"math/rand"
 	"os"
 	"path"
 	"path/filepath"
@@ -61,9 +60,8 @@ func (h *handler) Build(e assets.BuildEntry) error {
 	}
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
-	r := rand.New(rand.NewSource(int64(len(data))))
 	if len(ss) > 0 {
-		BuildSpriteSet(&sb, ss, e.Name, r)
+		BuildSpriteSet(&sb, ss, e.Name)
 	}
 	return os.WriteFile(out, []byte(sb.String()), 0644)
 }

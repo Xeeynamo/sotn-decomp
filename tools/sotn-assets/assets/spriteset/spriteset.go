@@ -6,7 +6,6 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
-	"math/rand"
 	"strings"
 )
 
@@ -59,11 +58,11 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 	return bank, datarange.MergeDataRanges(append(spriteRanges, headerRange)), nil
 }
 
-func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string, r *rand.Rand) {
+func BuildSpriteSet(sb *strings.Builder, set SpriteSet, mainSymbol string) {
 	var symbols []string
-	for _, spriteGroup := range set {
+	for i, spriteGroup := range set {
 		if spriteGroup != nil {
-			symbol := fmt.Sprintf("spriteGroup_%08X", r.Int31())
+			symbol := fmt.Sprintf("%s_%d", mainSymbol, i)
 			size := len(*spriteGroup)*11 + 1
 			if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
 				size += 2
