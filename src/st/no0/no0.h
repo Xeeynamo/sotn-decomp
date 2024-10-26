@@ -34,6 +34,8 @@ typedef enum EntityIDs {
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x1D */ E_CLOCK_ROOM_SHADOW = 0x20,
+    /* 0x3B */ E_SLINGER_THROWN_BONE = 0x3B,
+    /* 0x3C */ E_SLINGER_PIECES,
     /* 0x48 */ E_AXE_KNIGHT_AXE = 0x48,
     /* 0x49 */ E_WARG_EXP_OPAQUE,
     /* 0x4D */ E_SKELETON = 0x4D,
