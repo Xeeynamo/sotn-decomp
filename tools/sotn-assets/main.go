@@ -29,19 +29,38 @@ type ovl struct {
 	tileDefs          dataContainer[map[psx.Addr]tileDef]
 }
 
+type stageHeader struct {
+	FnUpdate              psx.Addr
+	FnHitDetection        psx.Addr
+	FnUpdateRoomPos       psx.Addr
+	FnInitRoomEntities    psx.Addr
+	Rooms                 psx.Addr // ✅
+	Sprites               psx.Addr // ✅
+	Cluts                 psx.Addr // 🫥
+	Layouts               psx.Addr // ✅
+	Layers                psx.Addr // ✅
+	Graphics              psx.Addr // 🫥 WIP
+	FnUpdateStageEntities psx.Addr
+}
+
+func getStageHeader(fileName string) (stageHeader, error) {
+	file, err := os.Open(fileName)
+	if err != nil {
+		return stageHeader{}, fmt.Errorf("failed to read stage header: %w", err)
+	}
+	defer file.Close()
+
+	var header stageHeader
+	if err := binary.Read(file, binary.LittleEndian, &header); err != nil {
+		return stageHeader{}, fmt.Errorf("failed to read stage header: %w", err)
+	}
+	return header, nil
+}
+
 func getOvlAssets(fileName string) (ovl, error) {
-	type stageHeader struct {
-		FnUpdate              psx.Addr
-		FnHitDetection        psx.Addr
-		FnUpdateRoomPos       psx.Addr
-		FnInitRoomEntities    psx.Addr
-		Rooms                 psx.Addr // ✅
-		Sprites               psx.Addr // ✅
-		Cluts                 psx.Addr // 🫥
-		Layouts               psx.Addr // ✅
-		Layers                psx.Addr // ✅
-		Graphics              psx.Addr // 🫥 WIP
-		FnUpdateStageEntities psx.Addr
+	header, err := getStageHeader(fileName)
+	if err != nil {
+		return ovl{}, fmt.Errorf("failed to get ovl assets: %w", err)
 	}
 
 	file, err := os.Open(fileName)
@@ -49,11 +68,6 @@ func getOvlAssets(fileName string) (ovl, error) {
 		return ovl{}, err
 	}
 	defer file.Close()
-
-	var header stageHeader
-	if err := binary.Read(file, binary.LittleEndian, &header); err != nil {
-		return ovl{}, err
-	}
 
 	rooms, roomsRange, err := readRooms(file, header.Rooms)
 	if err != nil {
@@ -225,6 +239,14 @@ func extract(fileName string, outputDir string) error {
 }
 
 func info(fileName string) error {
+	stHeader, err := getStageHeader(fileName)
+	if err != nil {
+		return fmt.Errorf("unable to retrieve stage info: %w", err)
+	}
+	fmt.Println("asset config hints:")
+	fmt.Printf("  - [0x%X, sprite_banks]\n", stHeader.Sprites.Real(psx.RamStageBegin))
+	fmt.Printf("  - [0x%X, skip]\n", stHeader.Sprites.Sum(24*4).Real(psx.RamStageBegin))
+
 	o, err := getOvlAssets(fileName)
 	if err != nil {
 		return fmt.Errorf("unable to retrieve OVL assets: %w", err)
