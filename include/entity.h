@@ -1915,6 +1915,21 @@ typedef struct {
     s32 accelY;
 } ET_BatEnemy;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim1;
+    /* 0x80 */ struct Primitive* unk80;
+    /* 0x84 */ s16 unk84[4];
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+} ET_801BC5C0;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2083,6 +2098,7 @@ typedef union { // offset=0x7C
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
     ET_BatEnemy batEnemy;
+    ET_801BC5C0 et_801BC5C0;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -90,6 +90,7 @@ segments:
       - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, .rodata, e_misc]
       - [0x27CFC, rodata]
+      - [0x27D30, .rodata, 3C5C0] # "d_step" string
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
       - [0x27D64, c]
@@ -108,6 +109,7 @@ segments:
       - [0x35EC8, c, e_collect]
       - [0x37308, c, e_misc]
       - [0x39EA8, c]
+      - [0x3C5C0, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
       - [0x3EB00, .bss, create_entity]
