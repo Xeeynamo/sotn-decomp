@@ -31,15 +31,15 @@ type assetConfig struct {
 }
 
 var extractHandlers = map[string]func(assets.ExtractEntry) error{
-	"cutscene":    cutscene.Handler.Extract,
-	"spriteBanks": spritebanks.Handler.Extract,
-	"spriteset":   spriteset.Handler.Extract,
+	"cutscene":     cutscene.Handler.Extract,
+	"sprite_banks": spritebanks.Handler.Extract,
+	"spriteset":    spriteset.Handler.Extract,
 }
 
 var buildHandlers = map[string]func(assets.BuildEntry) error{
-	"cutscene":    cutscene.Handler.Build,
-	"spriteBanks": spritebanks.Handler.Build,
-	"spriteset":   spriteset.Handler.Build,
+	"cutscene":     cutscene.Handler.Build,
+	"sprite_banks": spritebanks.Handler.Build,
+	"spriteset":    spriteset.Handler.Build,
 }
 
 func parseArgs(entry []string) (offset int64, kind string, args []string, err error) {
@@ -85,6 +85,11 @@ func enqueueExtractAssetEntry(
 	args []string,
 	ramBase psx.Addr) {
 	eg.Go(func() error {
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Printf("unable to extract asset %q: %v", name, err)
+			}
+		}()
 		if err := handler(assets.ExtractEntry{
 			Data:     data,
 			Start:    start,
