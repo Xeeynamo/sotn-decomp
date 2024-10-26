@@ -16,7 +16,7 @@ lazy_static! {
         (1 << 4, "FLAG_DRAW_UNK10"),
         (1 << 5, "FLAG_DRAW_UNK20"),
         (1 << 6, "FLAG_DRAW_UNK40"),
-        (1 << 7, "FLAG_DRAW_UNK80"),
+        (1 << 7, "FLAG_BLINK"),
         (1 << 8, "FLAG_DRAW_UNK100"),
     ];
 }
@@ -86,7 +86,7 @@ mod tests {
     #[test]
     fn test_draw_flags_set() {
         let input_line = "self->drawFlags |= 0x80;";
-        let expected_line = "self->drawFlags |= FLAG_DRAW_UNK80;";
+        let expected_line = "self->drawFlags |= FLAG_BLINK;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -94,7 +94,7 @@ mod tests {
     #[test]
     fn test_draw_flags_clear() {
         let input_line = "PLAYER.drawFlags &= 0xFF7F;";
-        let expected_line = "PLAYER.drawFlags &= ~FLAG_DRAW_UNK80;";
+        let expected_line = "PLAYER.drawFlags &= ~FLAG_BLINK;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

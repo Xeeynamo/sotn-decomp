@@ -176,7 +176,7 @@ static void EntityWeaponAttack(Entity* self) {
                 // effect. Not clear what part of the function triggers
                 // soul-steal.
                 g_Player.timers[12] = 4;
-                self->drawFlags = FLAG_DRAW_UNK80;
+                self->drawFlags = FLAG_BLINK;
                 self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                 self->posY.i.hi = 0;
                 self->posX.i.hi = 0x80;

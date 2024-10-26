@@ -853,7 +853,7 @@ void EntityMerman2(Entity* self) {
                     self->hitboxHeight = 21;
                     self->flags &= ~FLAG_HAS_PRIMS;
                     self->drawFlags &=
-                        FLAG_DRAW_UNK80 | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                        FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                         FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
                         FLAG_DRAW_ROTX;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
@@ -1029,7 +1029,7 @@ void EntityMerman2(Entity* self) {
             if (self->rotZ > 0x1000) {
                 self->posY.i.hi -= 10;
                 self->drawFlags &=
-                    FLAG_DRAW_UNK80 | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                    FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                     FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
                     FLAG_DRAW_ROTX;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);

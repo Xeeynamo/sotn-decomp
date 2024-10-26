@@ -445,7 +445,7 @@ static void func_ptr_80170008(Entity* self) {
 
     case 2:
         if (self->ext.timer.t == 0x10) {
-            self->drawFlags = FLAG_DRAW_UNK80;
+            self->drawFlags = FLAG_BLINK;
         }
 
         if (--self->ext.timer.t == 0) {
