@@ -122,8 +122,8 @@ void EntitySkeleton(Entity* self) {
         }
 
         if ((animStatus & 0x80) && (self->animCurFrame == 10)) {
-            if (((u32)(((u16)self->posX.i.hi + 16) & 0xFFFF) <= 288) &&
-                ((u16)self->posY.i.hi <= 240)) {
+            if ((self->posX.i.hi >= -16 && self->posX.i.hi <= 272) &&
+                (self->posY.i.hi >= 0 && self->posY.i.hi <= 240)) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) { // Spawn bone
                     PlaySfxPositional(SFX_BONE_THROW);
