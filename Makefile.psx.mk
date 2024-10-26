@@ -133,3 +133,9 @@ $(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
+
+
+# anything from MAD is an exception and it should be ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
+	touch $@
+

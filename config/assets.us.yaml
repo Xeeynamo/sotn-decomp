@@ -6,6 +6,8 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
           - [0x13F0, cutscene, cutscene_data]
           - [0x1658, skip]
   - target: disks/us/ST/DRE/DRE.BIN
@@ -15,8 +17,19 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
           - [0x16C8, cutscene, cutscene_data]
           - [0x1D05, skip]
+  - target: disks/us/ST/MAD/MAD.BIN
+    asset_path: assets/st/mad
+    src_path: src/st/mad
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
   - target: disks/us/ST/NO3/NO3.BIN
     asset_path: assets/st/no3
     src_path: src/st/no3
@@ -24,8 +37,19 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
           - [0x4CE0, cutscene, cutscene_data]
           - [0x4E60, skip]
+  - target: disks/us/ST/NP3/NP3.BIN
+    asset_path: assets/st/np3
+    src_path: src/st/np3
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
   - target: disks/us/ST/NZ0/NZ0.BIN
     asset_path: assets/st/nz0
     src_path: src/st/nz0
@@ -33,7 +57,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x2C, spriteBanks, sprite_banks]
+          - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
           - [0x3B0C, cutscene, cutscene_data]
           - [0x3CB8, skip]
@@ -44,8 +68,28 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
           - [0x29D8, cutscene, cutscene_data]
           - [0x2C4C, skip]
+  - target: disks/us/ST/WRP/WRP.BIN
+    asset_path: assets/st/wrp
+    src_path: src/st/wrp
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
+  - target: disks/us/ST/RWRP/RWRP.BIN
+    asset_path: assets/st/rwrp
+    src_path: src/st/rwrp
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
   - target: disks/us/BOSS/MAR/MAR.BIN
     asset_path: assets/boss/mar
     src_path: src/boss/mar
@@ -53,8 +97,19 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
           - [0x1424, cutscene, cutscene_data]
           - [0x15DC, skip]
+  - target: disks/us/BOSS/RBO3/RBO3.BIN
+    asset_path: assets/boss/rbo3
+    src_path: src/boss/rbo3
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
