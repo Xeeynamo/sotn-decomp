@@ -344,11 +344,7 @@ void func_us_801C27A4(Entity* self) {
         prim = prim->next;
     }
 
-#if defined(VERSION_PSP)
     if (abs(self->posY.i.hi) > 0x180) {
-#else
-    if (ABS(self->posY.i.hi) > 0x180) {
-#endif
         DestroyEntity(self);
     }
 }

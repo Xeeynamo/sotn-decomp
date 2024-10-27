@@ -5,10 +5,6 @@
 
 #define OVL_EXPORT(x) NO0_##x
 
-#ifndef ABS
-#define ABS(x) (((x) >= 0) ? (x) : (-(x)))
-#endif
-
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
