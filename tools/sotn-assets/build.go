@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"golang.org/x/sync/errgroup"
 	"hash/fnv"
 	"io"
@@ -394,14 +393,6 @@ func buildAll(inputDir string, outputDir string) error {
 	eg := errgroup.Group{}
 	eg.Go(func() error {
 		if err := buildLayers(inputDir, path.Join(inputDir, "layers.json"), outputDir); err != nil {
-			if !errors.Is(err, fs.ErrNotExist) {
-				return err
-			}
-		}
-		return nil
-	})
-	eg.Go(func() error {
-		if err := spritebanks.BuildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
 			if !errors.Is(err, fs.ErrNotExist) {
 				return err
 			}

@@ -39,7 +39,7 @@ func (h *handler) Extract(e assets.ExtractEntry) error {
 }
 
 func (h *handler) Build(e assets.BuildEntry) error {
-	return BuildSprites(assetPath(e.AssetDir, e.Name), e.SrcDir)
+	return buildSprites(assetPath(e.AssetDir, e.Name), e.SrcDir)
 }
 
 func assetPath(dir, name string) string {
