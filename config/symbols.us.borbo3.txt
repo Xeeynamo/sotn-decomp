@@ -1,4 +1,5 @@
 g_EInitBreakable = 0x80180414;
+g_EInitInteractable = 0x80180444;
 g_EInitUnkId12 = 0x8018045C;
 g_EInitCommon = 0x80180468;
 g_EInitDamageNum = 0x80180474;

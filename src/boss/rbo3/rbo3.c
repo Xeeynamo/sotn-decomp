@@ -438,19 +438,19 @@ void func_us_80192020(Entity* self) {
         angle = ratan2(posY, posX);
         if (self->facingLeft) {
             var_v0 = angle - 1;
-            if (var_v0 < 0x5FF) {
-                angle = 0x600;
+            if (var_v0 < (FLT(3.0 / 8.0) - 1)) {
+                angle = FLT(3.0 / 8.0);
             }
-            var_v0 = angle + 0x5FF;
-            if (var_v0 < 0x5FF) {
-                angle = -0x600;
+            var_v0 = angle + FLT(3.0 / 8.0) - 1;
+            if (var_v0 < FLT(3.0 / 8.0) - 1) {
+                angle = FLT(-3.0 / 8.0);
             }
         } else {
-            if (angle > 0x200) {
-                angle = 0x200;
+            if (angle > FLT(1.0 / 8.0)) {
+                angle = FLT(1.0 / 8.0);
             }
-            if (angle < -0x200) {
-                angle = -0x200;
+            if (angle < -FLT(1.0 / 8.0)) {
+                angle = -FLT(1.0 / 8.0);
             }
         }
         self->velocityX = rcos(angle) << 7;
@@ -531,7 +531,186 @@ void func_us_801922EC(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_801923DC);
+extern EInit D_us_801804A4;
+
+void func_us_801923DC(Entity* self) {
+    const int PrimCount = 13;
+    s32 i;
+    s32 primIndex;
+    s16 angle;
+    s32 xOffset;
+    s32 yOffset;
+    s32 x;
+    s32 y;
+    Primitive* prim;
+    s16* offsets;
+    Entity* next;
+    s32 tempY;
+    Entity* player;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801804A4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+
+        for (i = 0; i < PrimCount; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+
+            prim->u0 = prim->u1 = i * 4 + 144;
+            prim->u2 = prim->u3 = i * 4 + 148;
+            prim->v0 = prim->v2 = 208;
+            prim->v1 = prim->v3 = 192;
+            prim->r0 = prim->g0 = prim->b0 = 192 - (i * 16);
+
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+
+            prim = prim->next;
+        }
+
+        offsets = &self->ext.medusaUnk1A.offsets;
+        for (i = 0; i < (PrimCount + 1); i++) {
+            offsets[0] = self->posX.i.hi;
+            offsets[1] = self->posY.i.hi;
+            offsets += 2;
+        }
+
+        angle = self->rotZ;
+        self->velocityX = rcos(angle) * 160;
+        self->velocityY = rsin(angle) * 160;
+        self->ext.factory.unk82 = angle;
+        self->ext.factory.unk80 = 0x40;
+
+    case 1:
+        MoveEntity();
+        player = &PLAYER;
+        angle = GetAngleBetweenEntities(self, player);
+        tempY = 96 - self->ext.factory.unk80;
+        angle = GetNormalizedAngle(tempY, self->ext.factory.unk82, angle);
+        self->velocityX = rcos(angle) * 160;
+        self->velocityY = rsin(angle) * 160;
+        self->ext.factory.unk82 = angle;
+
+        if (!--self->ext.factory.unk80 || self->hitFlags & 0x80) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        xOffset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        yOffset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if ((xOffset < -64) || (yOffset < -64) || (xOffset > 576) ||
+            (yOffset > 320)) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    if (!(g_Timer & 7)) {
+        PlaySfxPositional(SFX_ELECTRICITY);
+    }
+
+    // this is the same as self->ext.unkB8. for this
+    // entity 0xB8 is not an entity pointer but the
+    // last pair of offsets.
+    offsets = &self->ext.medusaUnk1A
+                   .offsets[sizeof(self->ext.medusaUnk1A.offsets) / 2];
+
+    for (i = 0; i < PrimCount; i++) {
+        offsets[0] = offsets[-2] - g_ScrollDeltaX;
+        offsets[1] = offsets[-1] - g_ScrollDeltaY;
+        offsets -= 2;
+    }
+
+    offsets = self->ext.medusaUnk1A.offsets;
+
+    offsets[0] = self->posX.i.hi;
+    offsets[1] = self->posY.i.hi;
+    offsets = self->ext.medusaUnk1A.offsets;
+    prim = self->ext.prim;
+    x = offsets[0];
+    y = offsets[1];
+    prim = self->ext.prim;
+
+    xOffset = offsets[2] - x;
+    yOffset = offsets[3] - y;
+    angle = ratan2(yOffset, xOffset);
+    angle -= FLT(1.0 / 4.0);
+    xOffset = (rcos(angle) * 5) >> 12;
+    yOffset = (rsin(angle) * 5) >> 12;
+    prim->x0 = x + xOffset;
+    prim->y0 = y + yOffset;
+    prim->x1 = x - xOffset;
+    prim->y1 = y - yOffset;
+    prim->priority = self->zPriority;
+    offsets += 2;
+
+    for (i = 0; i < (PrimCount - 2); i++) {
+        xOffset = offsets[0] - x;
+        yOffset = offsets[1] - y;
+        angle = ratan2(yOffset, xOffset);
+        angle -= FLT(1.0 / 4.0);
+
+        x = (offsets[0] + x) / 2;
+        y = (offsets[1] + y) / 2;
+
+        xOffset = ((12 - i) * rcos(angle)) >> 12;
+        yOffset = ((12 - i) * rsin(angle)) >> 12;
+
+        prim->x2 = x + xOffset;
+        prim->y2 = y + yOffset;
+        prim->x3 = x - xOffset;
+        prim->y3 = y - yOffset;
+
+        prim->priority = self->zPriority;
+        prim = prim->next;
+
+        prim->x0 = x + xOffset;
+        prim->y0 = y + yOffset;
+        prim->x1 = x - xOffset;
+        prim->y1 = y - yOffset;
+
+        x = offsets[0];
+        y = offsets[1];
+        offsets += 2;
+    }
+
+    prim->x1 = prim->x2 = offsets[0];
+    prim->y2 = prim->y3 = offsets[1];
+    prim->priority = self->zPriority;
+
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+
+    for (prim = self->ext.prim; prim != NULL; prim = prim->next) {
+        if (g_Timer & 1) {
+            prim->v0 = prim->v2 = 208;
+            prim->v1 = prim->v3 = 192;
+        } else {
+            prim->v0 = prim->v2 = 192;
+            prim->v1 = prim->v3 = 208;
+        }
+    }
+}
 
 extern EInit D_us_8018042C;
 extern Unkstruct_80180FE0 D_us_8018071C[];
@@ -586,7 +765,7 @@ void func_us_80192998(Entity* self) {
 }
 
 extern Entity D_8007A958;
-extern EInit D_us_80180444;
+extern EInit g_EInitInteractable;
 extern s32 D_us_80180728;
 extern s32 D_us_8018072C;
 
@@ -597,7 +776,7 @@ void func_us_80192B38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180444);
+        InitializeEntity(g_EInitInteractable);
         // fallthrough
     case 1:
         entity = &PLAYER;
@@ -647,7 +826,7 @@ void func_us_80192B38(Entity* self) {
         // n.b.! CreateEntityFromEntity cannot be defined
         CreateEntityFromEntity(D_psp_09254D20, self, entity);
 #else
-        CreateEntityFromEntity(30, self, entity);
+        CreateEntityFromEntity(UNK_ENTITY_30, self, entity);
 #endif
         entity->posX.i.hi = x;
         entity->posY.i.hi = y;
@@ -665,50 +844,5 @@ void func_us_80192B38(Entity* self) {
             self->step++;
         }
         break;
-    }
-}
-
-INCLUDE_ASM("boss/rbo3/nonmatchings/rbo3", func_us_80192D64);
-
-extern EInit D_us_80180444;
-
-void func_us_80193050(Entity* self) {
-    Primitive* prim;
-    s16 primIndex;
-    s32 x;
-
-    if (self->step != 0) {
-        return;
-    }
-
-    InitializeEntity(D_us_80180444);
-    primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
-
-    if (primIndex == -1) {
-        DestroyEntity(self);
-        return;
-    }
-
-    prim = &g_PrimBuf[primIndex];
-    self->primIndex = primIndex;
-    self->flags |= FLAG_HAS_PRIMS;
-    x = 0;
-
-    while (prim != NULL) {
-        prim->x0 = prim->x2 = x;
-        x += 62;
-        prim->x1 = prim->x3 = x;
-        prim->tpage = 0xF;
-        prim->clut = 0xC5;
-        prim->u0 = prim->u2 = 65;
-        prim->u1 = prim->u3 = 127;
-        prim->v0 = prim->v1 = 169;
-        prim->v2 = prim->v3 = 198;
-        prim->y0 = prim->y1 = 64;
-        prim->y2 = prim->y3 = 18;
-        prim->priority = 0x10;
-        prim->drawMode = DRAW_DEFAULT;
-
-        prim = prim->next;
     }
 }
