@@ -68,7 +68,7 @@ segments:
       - [0x41394, .rodata, e_collect]
       - [0x4141C, .rodata, e_misc]
       - [0x41468, .rodata, clock_room]
-      - [0x414A8, .rodata, 4C750]
+      - [0x414A8, .rodata, 4E2E0]
       - [0x414B8, .rodata, e_stage_name]
       - [0x414EC, .rodata, unk_4F4A8]
       - [0x4171C, .rodata, e_slinger]

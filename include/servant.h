@@ -3,10 +3,6 @@
 #include <common.h>
 #include <game.h>
 
-#ifndef ABS
-#define ABS(x) (((x) >= 0) ? (x) : (-(x)))
-#endif
-
 // Unsure if these values are shared or are specific to SERVANT
 // May need to move if these init values are used for more entities
 typedef enum {

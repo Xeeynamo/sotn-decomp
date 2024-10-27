@@ -103,5 +103,3 @@ void func_us_801CC9B4(Entity* self) {
     MoveEntity();
     self->ext.et_801CC9B4.currentAngle = (u8)adjustedAngle;
 }
-
-INCLUDE_RODATA("st/no0/nonmatchings/4C750", D_us_801C14A8);

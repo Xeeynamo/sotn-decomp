@@ -166,9 +166,6 @@ static Entity* FindValidTarget(
     s32 i;
     s32 index;
     u32 matches = 0;
-#if !defined(VERSION_PSP)
-    s32 posDelta;
-#endif
 
     // Hunt through these entities looking for ones that match all criteria.
     // Call them a success and increment successes.
@@ -196,23 +193,11 @@ static Entity* FindValidTarget(
             g_GhostAbilityStats[s_GhostStats.level / 10][BAD_ATTACKS_INDEX] ==
                 0)
             continue;
-#if defined(VERSION_PSP)
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
             continue;
-#else
-        posDelta = self->posX.i.hi - entity->posX.i.hi;
-        if (ABS(posDelta) >= 49)
-            continue;
-#endif
 
-#if defined(VERSION_PSP)
         if (abs(self->posY.i.hi - entity->posY.i.hi) >= 49)
             continue;
-#else
-        posDelta = self->posY.i.hi - entity->posY.i.hi;
-        if (ABS(posDelta) >= 49)
-            continue;
-#endif
 
         if (!self->facingLeft && self->posX.i.hi < entity->posX.i.hi)
             continue;
