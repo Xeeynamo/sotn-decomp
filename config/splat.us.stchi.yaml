@@ -73,25 +73,25 @@ segments:
       # Binary data
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entities data
-      - [0x20D8, cmp, dt_gfx_jp_stage_name_sm]
-      - [0x2508, cmp, dt_gfx_jp_stage_name_lg]
-      - [0x2A60, cmp, dt_gfx_gremlin]
-      - [0x3480, cmp, dt_gfx_salem_witch_1]
-      - [0x41F8, cmp, dt_gfx_salem_witch_2]
-      - [0x4DBC, cmp, dt_gfx_salem_witch_3]
-      - [0x5BA0, cmp, dt_gfx_salem_witch_4]
-      - [0x6B1C, cmp, dt_gfx_salem_witch_5]
-      - [0x70F8, cmp, dt_gfx_thornweed_corpseweed]
-      - [0x7E84, cmp, dt_gfx_venus_weed_1]
-      - [0x8A10, cmp, dt_gfx_venus_weed_2]
-      - [0x9B38, cmp, dt_gfx_en_stage_name]
-      - [0x9FE0, raw, dt_palette_unused0] # Unused
-      - [0xA040, raw, dt_palette_salem_witch_projectiles]
-      - [0xA240, raw, dt_palette_unused1] # Unused
-      - [0xA300, raw, dt_palette_gremlin]
-      - [0xA380, raw, dt_palette_salem_witch]
-      - [0xA3C0, raw, dt_palette_thornweed_corpseweed]
-      - [0xA440, raw, dt_palette_venus_weed]
+      - [0x20D8, cmp, bn_gfx_stage_name_jp_sm]
+      - [0x2508, cmp, bn_gfx_stage_name_jp_lg]
+      - [0x2A60, cmp, bn_gfx_gremlin]
+      - [0x3480, cmp, bn_gfx_salem_witch_1]
+      - [0x41F8, cmp, bn_gfx_salem_witch_2]
+      - [0x4DBC, cmp, bn_gfx_salem_witch_3]
+      - [0x5BA0, cmp, bn_gfx_salem_witch_4]
+      - [0x6B1C, cmp, bn_gfx_salem_witch_5]
+      - [0x70F8, cmp, bn_gfx_thornweed_corpseweed]
+      - [0x7E84, cmp, bn_gfx_venus_weed_1]
+      - [0x8A10, cmp, bn_gfx_venus_weed_2]
+      - [0x9B38, cmp, bn_gfx_stage_name_en]
+      - [0x9FE0, raw, bn_pal_unused_0]  # Unused
+      - [0xA040, raw, bn_pal_salem_witch_projectiles]
+      - [0xA240, raw, bn_pal_unused_1]  # Unused
+      - [0xA300, raw, bn_pal_gremlin]
+      - [0xA380, raw, bn_pal_salem_witch]
+      - [0xA3C0, raw, bn_pal_thornweed_corpseweed]
+      - [0xA440, raw, bn_pal_venus_weed]
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
