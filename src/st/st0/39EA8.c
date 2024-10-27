@@ -34,7 +34,148 @@ void EntityRoomForeground(Entity* entity) {
 
 INCLUDE_ASM("st/st0/nonmatchings/39EA8", EntityClouds);
 
-INCLUDE_ASM("st/st0/nonmatchings/39EA8", EntityClockTower3D);
+typedef struct {
+    u8 u0, v0, u1, v1, u2, v2;
+    u16 clut;
+} ClockTowerData;
+
+extern ClockTowerData D_80182184[];
+
+typedef struct {
+    u8 u, v, w, h;
+    u16 clut;
+} ClockTowerData2;
+extern ClockTowerData2 D_8018219C[];
+
+extern u8 D_80182398;
+extern u8 D_801823D0;
+extern s32 D_80182414[];
+
+void EntityClockTower3D(Entity* self) {
+    s32 unusedHalfZ;
+    SVECTOR rotVector;
+    VECTOR transVector;
+    MATRIX matrix;
+
+    s32 unusedScratch0;
+    s32 unusedScratch4;
+    s32 xBase;
+    s32 primIndex;
+    s32 var_s4;
+    ClockTowerData2* var_s3;
+    ClockTowerData* var_s2;
+    u8* var_s1; // not a struct, weird state machine sort of
+    Primitive* prim;
+
+    if (!self->step) {
+        InitializeEntity(D_801805D4);
+        xBase = 0x480;
+        self->posX.i.hi = xBase - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.clockTower.prim = prim;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            PGREY(prim, 0) = 0x80;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim = prim->next;
+        }
+    }
+    SetGeomScreen(0x300);
+    SetGeomOffset(0x80, 0x80);
+
+    rotVector.vx = 0;
+    rotVector.vy = -0x90;
+    rotVector.vz = 0;
+
+    rotVector.vx += self->ext.clockTower.unk9C;
+    rotVector.vy += self->ext.clockTower.unk9E;
+    rotVector.vz += self->ext.clockTower.unkA0;
+
+    RotMatrix(&rotVector, &matrix);
+    SetRotMatrix(&matrix);
+    transVector.vx = self->posX.i.hi - 0x80;
+    transVector.vy = self->posY.i.hi - 0x80;
+    transVector.vz = 0x580;
+    transVector.vz += self->ext.clockTower.unkAE;
+    TransMatrix(&matrix, &transVector);
+    SetTransMatrix(&matrix);
+    unusedHalfZ = transVector.vz / 2;
+
+    // Weird, we allocate two 32-bit values (could be pointers, idk) on
+    // scratchpad but we never end up using them. These are orphan variables.
+    unusedScratch0 = (s32)SP(0);
+    unusedScratch4 = (s32)SP(sizeof(s32));
+
+    prim = self->ext.clockTower.prim;
+    var_s1 = &D_80182398;
+    while (*var_s1 != 0xFF) {
+        if (*var_s1 & 0x80) {
+            var_s4 = D_80182414[var_s1[1]];
+            var_s1 += 2;
+        }
+        var_s2 = &D_80182184[0];
+        var_s2 += *var_s1++;
+        prim->u0 = var_s2->u0;
+        prim->v0 = var_s2->v0;
+        prim->u1 = var_s2->u1;
+        prim->v1 = var_s2->v1;
+        prim->u2 = var_s2->u2;
+        prim->v2 = var_s2->v2;
+        prim->clut = var_s2->clut;
+        prim->type = PRIM_GT3;
+        gte_ldv3(var_s4 + var_s1[0] * 8, var_s4 + var_s1[1] * 8,
+                 var_s4 + var_s1[2] * 8);
+        gte_rtpt();
+        gte_stsxy3_gt3(prim);
+        prim->drawMode = DRAW_UNK02;
+        prim->priority = var_s1[3] + 0x40;
+        var_s1 += 4;
+        prim = prim->next;
+    }
+    var_s1 = &D_801823D0;
+    while (*var_s1 != 0xFF) {
+        if (*var_s1 & 0x80) {
+            var_s4 = D_80182414[var_s1[1]];
+            var_s1 += 2;
+        }
+        var_s3 = &D_8018219C[0];
+        var_s3 += (*var_s1++);
+        prim->u0 = prim->u2 = var_s3->u;
+        prim->v0 = prim->v1 = var_s3->v;
+        prim->u1 = prim->u3 = var_s3->u + var_s3->w;
+        prim->v2 = prim->v3 = var_s3->v + var_s3->h;
+        prim->clut = var_s3->clut;
+        prim->type = PRIM_GT4;
+        gte_ldv3(var_s4 + var_s1[0] * 8, var_s4 + var_s1[1] * 8,
+                 var_s4 + var_s1[2] * 8);
+        gte_rtpt();
+        gte_stsxy3_gt3(prim);
+        gte_ldv0(var_s4 + var_s1[3] * 8);
+        gte_rtps();
+        gte_stsxy(&prim->x3);
+        prim->priority = var_s1[4] + 0x40;
+        prim->drawMode = DRAW_UNK02;
+        var_s1 += 5;
+        prim = prim->next;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+    if ((g_Tilemap.scrollX.i.hi + PLAYER.posX.i.hi) < 0x100) {
+        DestroyEntity(self);
+    }
+}
 
 extern u8 D_80182438[3];
 extern SVECTOR D_8018243C;

@@ -1939,6 +1939,25 @@ typedef struct {
     /* 0x8C */ s16 cameraDistance;
 } ET_CutscenePhotograph;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s16 : 16;
+    /* 0xAE */ s16 unkAE;
+} ET_ClockTower;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2109,6 +2128,7 @@ typedef union { // offset=0x7C
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;
+    ET_ClockTower clockTower;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
