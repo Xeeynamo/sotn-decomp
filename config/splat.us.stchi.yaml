@@ -73,18 +73,18 @@ segments:
       # Binary data
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entities data
-      - [0x20D8, cmp]   # JP Stage Name (Small)
-      - [0x2508, cmp]   # JP Stage Name (Large)
-      - [0x2A60, cmp]   # Gremlin 1
-      - [0x3480, cmp]   # Salem Witch 1
-      - [0x41F8, cmp]   # Salem Witch 2
-      - [0x4DBC, cmp]   # Salem Witch 3
-      - [0x5BA0, cmp]   # Salem Witch 4
-      - [0x6B1C, cmp]   # Salem Witch 5
-      - [0x70F8, cmp]   # Thornweed/Corpseweed
-      - [0x7E84, cmp]   # Venus Weed 1
-      - [0x8A10, cmp]   # Venus Weed 2
-      - [0x9B38, cmp]   # EN Stage Name
+      - [0x20D8, cmp, dt_gfx_jp_stage_name_sm]
+      - [0x2508, cmp, dt_gfx_jp_stage_name_lg]
+      - [0x2A60, cmp, dt_gfx_gremlin]
+      - [0x3480, cmp, dt_gfx_salem_witch_1]
+      - [0x41F8, cmp, dt_gfx_salem_witch_2]
+      - [0x4DBC, cmp, dt_gfx_salem_witch_3]
+      - [0x5BA0, cmp, dt_gfx_salem_witch_4]
+      - [0x6B1C, cmp, dt_gfx_salem_witch_5]
+      - [0x70F8, cmp, dt_gfx_thornweed_corpseweed]
+      - [0x7E84, cmp, dt_gfx_venus_weed_1]
+      - [0x8A10, cmp, dt_gfx_venus_weed_2]
+      - [0x9B38, cmp, dt_gfx_en_stage_name]
       - [0x9FE0, raw, dt_palette_unused0] # Unused
       - [0xA040, raw, dt_palette_salem_witch_projectiles]
       - [0xA240, raw, dt_palette_unused1] # Unused
