@@ -376,7 +376,7 @@ void EntityBackgroundVortex(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim->type = 7;
+        prim->type = PRIM_ENV;
         draw_env.isbg = 0;
         draw_env.r0 = 0;
         draw_env.g0 = 0;
@@ -398,7 +398,7 @@ void EntityBackgroundVortex(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim->type = 7;
+        prim->type = PRIM_ENV;
         prim->priority = 0x59;
         prim->drawMode = DRAW_UNK_800;
         prim = prim->next;
@@ -492,7 +492,7 @@ void EntityBackgroundVortex(Entity* self) {
                 gte_ldrgb(&scratchColor[i]);
                 gte_dpcs();
                 gte_strgb(&prim->r0);
-                prim->type = 4;
+                prim->type = PRIM_GT4;
                 gte_ldv0(&D_801C1BC8[vectorIndex2]);
                 gte_rtps();
                 gte_stsxy(&prim->x1);
