@@ -1958,6 +1958,28 @@ typedef struct {
     /* 0xAE */ s16 unkAE;
 } ET_ClockTower;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 unkAA;
+    /* 0xAC */ s16 : 16;
+    /* 0xAE */ s16 unkAE;
+} ET_BackgroundVortex;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2129,6 +2151,7 @@ typedef union { // offset=0x7C
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;
     ET_ClockTower clockTower;
+    ET_BackgroundVortex bgVortex;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
