@@ -1,0 +1,19 @@
+files:
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
+    asset_path: assets/st/cen
+    src_path: src/st/cen
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
+    asset_path: assets/st/wrp
+    src_path: src/st/wrp
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]

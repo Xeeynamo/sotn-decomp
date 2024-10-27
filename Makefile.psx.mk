@@ -95,11 +95,12 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/BOSS/MAR/MAR.BIN -o assets/boss/mar
-	$(SOTNASSETS) config extract config/assets.us.yaml
+	$(SOTNASSETS) config extract config/assets.$(VERSION).yaml
 extract_assets_hd: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
 	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin -o assets/st/cen
 	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin -o assets/st/wrp
+	$(SOTNASSETS) config extract config/assets.$(VERSION).yaml
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
 	$(SOTNASSETS) stage build_all -i assets/st/dre -o src/st/dre/
@@ -114,6 +115,7 @@ build_assets: $(SOTNASSETS)
 build_assets_hd: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
+	$(SOTNASSETS) config build config/assets.$(VERSION).yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
@@ -133,3 +135,9 @@ $(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
+
+
+# anything from MAD is an exception and it should be ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
+	touch $@
+

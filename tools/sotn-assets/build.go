@@ -4,17 +4,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
+	"golang.org/x/sync/errgroup"
 	"hash/fnv"
 	"io"
 	"io/fs"
-	"math/rand"
 	"os"
 	"path"
 	"sort"
 	"strconv"
 	"strings"
-
-	"golang.org/x/sync/errgroup"
 )
 
 func makeSymbolFromFileName(fileName string) string {
@@ -283,116 +282,6 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	return os.WriteFile(path.Join(outputDir, "layers.h"), []byte(sb.String()), 0644)
 }
 
-func buildSpriteGroup(sb *strings.Builder, sprites []*[]sprite, mainSymbol string, r *rand.Rand) {
-	symbols := []string{}
-	for _, spriteGroup := range sprites {
-		if spriteGroup != nil {
-			symbol := fmt.Sprintf("spriteGroup_%08X", r.Int31())
-			size := len(*spriteGroup)*11 + 1
-			if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
-				size += 2
-			} else {
-				size += 1
-			}
-			sb.WriteString(fmt.Sprintf("static s16 %s[%d];\n", symbol, size))
-			symbols = append(symbols, symbol)
-		} else {
-			symbols = append(symbols, "")
-		}
-	}
-	sb.WriteString(fmt.Sprintf("s16* %s[] = {\n", mainSymbol))
-	for _, symbol := range symbols {
-		if len(symbol) > 0 {
-			sb.WriteString(fmt.Sprintf("    %s,\n", symbol))
-		} else {
-			sb.WriteString("    0,\n")
-		}
-	}
-	sb.WriteString("};\n")
-	for i, spriteGroup := range sprites {
-		if spriteGroup == nil {
-			continue
-		}
-		sb.WriteString(fmt.Sprintf("static s16 %s[] = {\n", symbols[i]))
-		sb.WriteString(fmt.Sprintf("    %d,\n", len(*spriteGroup)))
-		for _, sprite := range *spriteGroup {
-			sb.WriteString(fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d,\n",
-				sprite.Flags, sprite.X, sprite.Y, sprite.Width, sprite.Height,
-				sprite.Clut, sprite.Tileset, sprite.Left, sprite.Top, sprite.Right, sprite.Bottom))
-		}
-		if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
-			sb.WriteString("    0, 0\n")
-		} else {
-			sb.WriteString("    0\n")
-		}
-		sb.WriteString("};\n")
-	}
-}
-
-func buildFrameSet(inputFileName, outputFileName, prefix string) error {
-	data, err := os.ReadFile(inputFileName)
-	if err != nil {
-		return fmt.Errorf("unable to open %q: %v", inputFileName, err)
-	}
-
-	var sprites []*[]sprite
-	if err := json.Unmarshal(data, &sprites); err != nil {
-		return fmt.Errorf("unable to parse %q: %v", inputFileName, err)
-	}
-	sb := strings.Builder{}
-	sb.WriteString("// clang-format off\n")
-	r := rand.New(rand.NewSource(int64(len(data))))
-	if len(sprites) > 0 {
-		buildSpriteGroup(&sb, sprites, prefix, r)
-	}
-	return os.WriteFile(outputFileName, []byte(sb.String()), 0644)
-}
-
-func buildSprites(fileName string, outputDir string) error {
-	ovlName := path.Base(outputDir)
-	data, err := os.ReadFile(fileName)
-	if err != nil {
-		return err
-	}
-
-	var spritesBanks spriteDefs
-	if err := json.Unmarshal(data, &spritesBanks); err != nil {
-		return err
-	}
-
-	r := rand.New(rand.NewSource(int64(len(data))))
-	sbHeader := strings.Builder{}
-	sbHeader.WriteString("// clang-format off\n")
-	sbData := strings.Builder{}
-	sbData.WriteString("// clang-format off\n")
-	sbData.WriteString("#include \"common.h\"\n")
-	symbols := []string{}
-	for i, sprites := range spritesBanks.Banks {
-		if len(sprites) == 0 {
-			symbols = append(symbols, "")
-			continue
-		}
-		symbol := fmt.Sprintf("sprites_%s_%d", ovlName, i)
-		sbHeader.WriteString(fmt.Sprintf("extern s16* %s[];\n", symbol))
-		buildSpriteGroup(&sbData, sprites, symbol, r)
-		symbols = append(symbols, symbol)
-	}
-
-	sbHeader.WriteString("s16** OVL_EXPORT(spriteBanks)[] = {\n")
-	for _, index := range spritesBanks.Indices {
-		if index >= 0 {
-			sbHeader.WriteString(fmt.Sprintf("    %s,\n", symbols[index]))
-		} else {
-			sbHeader.WriteString(fmt.Sprintf("    0,\n"))
-		}
-	}
-	sbHeader.WriteString("};\n")
-	if err := os.WriteFile(path.Join(outputDir, "sprites.c"), []byte(sbData.String()), 0644); err != nil {
-		return err
-	}
-	return os.WriteFile(path.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
-}
-
 func buildEntityLayouts(fileName string, outputDir string) error {
 	ovlName := path.Base(outputDir)
 
@@ -412,8 +301,8 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 				var entityIDStr string
 				if int(e.Flags) != 0 {
 					// This will only ever be 0xA001.
-					id, _ := strconv.ParseInt(strings.Replace(e.ID,"0x","",-1), 16, 16)
-					entityIDStr = fmt.Sprintf("0x%04X", (int(e.Flags) << 8) | int(id))
+					id, _ := strconv.ParseInt(strings.Replace(e.ID, "0x", "", -1), 16, 16)
+					entityIDStr = fmt.Sprintf("0x%04X", (int(e.Flags)<<8)|int(id))
 				} else {
 					entityIDStr = e.ID
 				}
@@ -492,13 +381,13 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbHeader.WriteString(fmt.Sprintf("extern LayoutEntity %s_x[];\n", symbolName))
 	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutHorizontal[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
-		sbHeader.WriteString(fmt.Sprintf("    &%s_x[%d],\n", symbolName, offsets[i] / 5))
+		sbHeader.WriteString(fmt.Sprintf("    &%s_x[%d],\n", symbolName, offsets[i]/5))
 	}
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 	sbHeader.WriteString(fmt.Sprintf("extern LayoutEntity %s_y[];\n", symbolName))
 	sbHeader.WriteString(fmt.Sprintf("LayoutEntity* %s_pStObjLayoutVertical[] = {\n", strings.ToUpper(ovlName)))
 	for _, i := range el.Indices {
-		sbHeader.WriteString(fmt.Sprintf("    &%s_y[%d],\n", symbolName, offsets[i] / 5))
+		sbHeader.WriteString(fmt.Sprintf("    &%s_y[%d],\n", symbolName, offsets[i]/5))
 	}
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 
@@ -545,7 +434,7 @@ func buildAll(inputDir string, outputDir string) error {
 		return nil
 	})
 	eg.Go(func() error {
-		if err := buildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
+		if err := spritebanks.BuildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
 			if !errors.Is(err, fs.ErrNotExist) {
 				return err
 			}

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
@@ -20,7 +21,6 @@ type ovl struct {
 	ranges            []datarange.DataRange
 	rooms             dataContainer[[]room]
 	layers            dataContainer[[]roomLayers]
-	sprites           dataContainer[spriteDefs]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
 	layoutsExtraRange datarange.DataRange
@@ -28,19 +28,38 @@ type ovl struct {
 	tileDefs          dataContainer[map[psx.Addr]tileDef]
 }
 
+type stageHeader struct {
+	FnUpdate              psx.Addr
+	FnHitDetection        psx.Addr
+	FnUpdateRoomPos       psx.Addr
+	FnInitRoomEntities    psx.Addr
+	Rooms                 psx.Addr // ✅
+	Sprites               psx.Addr // ✅
+	Cluts                 psx.Addr // 🫥
+	Layouts               psx.Addr // ✅
+	Layers                psx.Addr // ✅
+	Graphics              psx.Addr // 🫥 WIP
+	FnUpdateStageEntities psx.Addr
+}
+
+func getStageHeader(fileName string) (stageHeader, error) {
+	file, err := os.Open(fileName)
+	if err != nil {
+		return stageHeader{}, fmt.Errorf("failed to read stage header: %w", err)
+	}
+	defer file.Close()
+
+	var header stageHeader
+	if err := binary.Read(file, binary.LittleEndian, &header); err != nil {
+		return stageHeader{}, fmt.Errorf("failed to read stage header: %w", err)
+	}
+	return header, nil
+}
+
 func getOvlAssets(fileName string) (ovl, error) {
-	type stageHeader struct {
-		FnUpdate              psx.Addr
-		FnHitDetection        psx.Addr
-		FnUpdateRoomPos       psx.Addr
-		FnInitRoomEntities    psx.Addr
-		Rooms                 psx.Addr // ✅
-		Sprites               psx.Addr // ✅
-		Cluts                 psx.Addr // 🫥
-		Layouts               psx.Addr // ✅
-		Layers                psx.Addr // ✅
-		Graphics              psx.Addr // 🫥 WIP
-		FnUpdateStageEntities psx.Addr
+	header, err := getStageHeader(fileName)
+	if err != nil {
+		return ovl{}, fmt.Errorf("failed to get ovl assets: %w", err)
 	}
 
 	file, err := os.Open(fileName)
@@ -48,11 +67,6 @@ func getOvlAssets(fileName string) (ovl, error) {
 		return ovl{}, err
 	}
 	defer file.Close()
-
-	var header stageHeader
-	if err := binary.Read(file, binary.LittleEndian, &header); err != nil {
-		return ovl{}, err
-	}
 
 	rooms, roomsRange, err := readRooms(file, header.Rooms)
 	if err != nil {
@@ -85,7 +99,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	sprites, spritesRange, err := readSpritesBanks(file, psx.RamStageBegin, header.Sprites)
+	_, spritesRange, err := spritebanks.ReadSpritesBanks(file, psx.RamStageBegin, header.Sprites)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
 	}
@@ -123,7 +137,6 @@ func getOvlAssets(fileName string) (ovl, error) {
 		}),
 		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
 		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
-		sprites:           dataContainer[spriteDefs]{dataRange: spritesRange, content: sprites},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
@@ -198,14 +211,6 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		}
 	}
 
-	content, err = json.MarshalIndent(o.sprites.content, "", "  ")
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(path.Join(outputDir, "sprites.json"), content, 0644); err != nil {
-		return fmt.Errorf("unable to create sprites file: %w", err)
-	}
-
 	return nil
 }
 
@@ -224,6 +229,14 @@ func extract(fileName string, outputDir string) error {
 }
 
 func info(fileName string) error {
+	stHeader, err := getStageHeader(fileName)
+	if err != nil {
+		return fmt.Errorf("unable to retrieve stage info: %w", err)
+	}
+	fmt.Println("asset config hints:")
+	fmt.Printf("  - [0x%X, sprite_banks]\n", stHeader.Sprites.Real(psx.RamStageBegin))
+	fmt.Printf("  - [0x%X, skip]\n", stHeader.Sprites.Sum(24*4).Real(psx.RamStageBegin))
+
 	o, err := getOvlAssets(fileName)
 	if err != nil {
 		return fmt.Errorf("unable to retrieve OVL assets: %w", err)
@@ -240,7 +253,6 @@ func info(fileName string) error {
 		{o.layouts.dataRange, "e_layout", "layout entries data"},
 		{o.tileMaps.dataRange, "tile_data", "tile data"},
 		{o.tileDefs.dataRange, "tile_data", "tile definitions"},
-		{o.sprites.dataRange, "sprites", ""},
 	}
 
 	fmt.Printf("data coverage: %+v\n", o.ranges)
@@ -336,7 +348,7 @@ func handlerStage(args []string) error {
 		case "layers":
 			return buildLayers(path.Base(file), file, outputDir)
 		case "sprites":
-			return buildSprites(file, outputDir)
+			return spritebanks.BuildSprites(file, outputDir)
 		}
 		return fmt.Errorf("unknown kind, valid values are 'room', 'layer', 'sprites'")
 	}

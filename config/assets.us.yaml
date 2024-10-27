@@ -6,6 +6,8 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
           - [0x13F0, cutscene, cutscene_data]
           - [0x1658, skip]
   - target: disks/us/ST/DRE/DRE.BIN
@@ -15,8 +17,19 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
           - [0x16C8, cutscene, cutscene_data]
           - [0x1D05, skip]
+  - target: disks/us/ST/MAD/MAD.BIN
+    asset_path: assets/st/mad
+    src_path: src/st/mad
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
   - target: disks/us/ST/NO3/NO3.BIN
     asset_path: assets/st/no3
     src_path: src/st/no3
@@ -24,8 +37,19 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
           - [0x4CE0, cutscene, cutscene_data]
           - [0x4E60, skip]
+  - target: disks/us/ST/NP3/NP3.BIN
+    asset_path: assets/st/np3
+    src_path: src/st/np3
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
   - target: disks/us/ST/NZ0/NZ0.BIN
     asset_path: assets/st/nz0
     src_path: src/st/nz0
@@ -33,6 +57,8 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
           - [0x3B0C, cutscene, cutscene_data]
           - [0x3CB8, skip]
   - target: disks/us/ST/ST0/ST0.BIN
@@ -42,8 +68,28 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
           - [0x29D8, cutscene, cutscene_data]
           - [0x2C4C, skip]
+  - target: disks/us/ST/WRP/WRP.BIN
+    asset_path: assets/st/wrp
+    src_path: src/st/wrp
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
+  - target: disks/us/ST/RWRP/RWRP.BIN
+    asset_path: assets/st/rwrp
+    src_path: src/st/rwrp
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
   - target: disks/us/BOSS/MAR/MAR.BIN
     asset_path: assets/boss/mar
     src_path: src/boss/mar
@@ -51,8 +97,19 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
           - [0x1424, cutscene, cutscene_data]
           - [0x15DC, skip]
+  - target: disks/us/BOSS/RBO3/RBO3.BIN
+    asset_path: assets/boss/rbo3
+    src_path: src/boss/rbo3
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
@@ -60,354 +117,354 @@ files:
       - start: 0x04000
         vram: 0x8017A000
         assets:
-          - [0x04040, frameset, w_000_1]
-          - [0x04A44, frameset, w_000_2]
+          - [0x04040, spriteset, w_000_1]
+          - [0x04A44, spriteset, w_000_2]
           - [0x04A44, skip]
       - start: 0x0B000
         vram: 0x8017A000
         assets:
-          - [0x0B040, frameset, w_001_1]
-          - [0x0BA44, frameset, w_001_2]
+          - [0x0B040, spriteset, w_001_1]
+          - [0x0BA44, spriteset, w_001_2]
           - [0x0BA44, skip]
       - start: 0x12000
         vram: 0x8017A000
         assets:
-          - [0x12040, frameset, w_002_1]
-          - [0x12884, frameset, w_002_2]
+          - [0x12040, spriteset, w_002_1]
+          - [0x12884, spriteset, w_002_2]
           - [0x12884, skip]
       - start: 0x19000
         vram: 0x8017A000
         assets:
-          - [0x19040, frameset, w_003_1]
-          - [0x19884, frameset, w_003_2]
+          - [0x19040, spriteset, w_003_1]
+          - [0x19884, spriteset, w_003_2]
           - [0x19884, skip]
       - start: 0x20000
         vram: 0x8017A000
         assets:
-          - [0x20040, frameset, w_004_1]
-          - [0x20EAC, frameset, w_004_2]
+          - [0x20040, spriteset, w_004_1]
+          - [0x20EAC, spriteset, w_004_2]
           - [0x20EAC, skip]
       - start: 0x27000
         vram: 0x8017A000
         assets:
-          - [0x27040, frameset, w_005_1]
-          - [0x27EAC, frameset, w_005_2]
+          - [0x27040, spriteset, w_005_1]
+          - [0x27EAC, spriteset, w_005_2]
           - [0x27EAC, skip]
       - start: 0x2E000
         vram: 0x8017A000
         assets:
-          - [0x2E040, frameset, w_006_1]
-          - [0x2E884, frameset, w_006_2]
+          - [0x2E040, spriteset, w_006_1]
+          - [0x2E884, spriteset, w_006_2]
           - [0x2E884, skip]
       - start: 0x35000
         vram: 0x8017A000
         assets:
-          - [0x35040, frameset, w_007_1]
-          - [0x35884, frameset, w_007_2]
+          - [0x35040, spriteset, w_007_1]
+          - [0x35884, spriteset, w_007_2]
           - [0x35884, skip]
       - start: 0x3C000
         vram: 0x8017A000
         assets:
-          - [0x3C040, frameset, w_008_1]
-          - [0x3C804, frameset, w_008_2]
+          - [0x3C040, spriteset, w_008_1]
+          - [0x3C804, spriteset, w_008_2]
           - [0x3C804, skip]
       - start: 0x43000
         vram: 0x8017A000
         assets:
-          - [0x43040, frameset, w_009_1]
-          - [0x43804, frameset, w_009_2]
+          - [0x43040, spriteset, w_009_1]
+          - [0x43804, spriteset, w_009_2]
           - [0x43804, skip]
       - start: 0x4A000
         vram: 0x8017A000
         assets:
-          - [0x4A040, frameset, w_010_1]
-          - [0x4A8EC, frameset, w_010_2]
+          - [0x4A040, spriteset, w_010_1]
+          - [0x4A8EC, spriteset, w_010_2]
           - [0x4A8EC, skip]
       - start: 0x51000
         vram: 0x8017A000
         assets:
-          - [0x51040, frameset, w_011_1]
-          - [0x51958, frameset, w_011_2]
+          - [0x51040, spriteset, w_011_1]
+          - [0x51958, spriteset, w_011_2]
           - [0x51958, skip]
       - start: 0x58000
         vram: 0x8017A000
         assets:
-          - [0x58040, frameset, w_012_1]
-          - [0x582B0, frameset, w_012_2]
+          - [0x58040, spriteset, w_012_1]
+          - [0x582B0, spriteset, w_012_2]
           - [0x582B0, skip]
       - start: 0x5F000
         vram: 0x8017A000
         assets:
-          - [0x5F040, frameset, w_013_1]
-          - [0x5F2B0, frameset, w_013_2]
+          - [0x5F040, spriteset, w_013_1]
+          - [0x5F2B0, spriteset, w_013_2]
           - [0x5F2B0, skip]
       - start: 0x66000
         vram: 0x8017A000
         assets:
-          - [0x66040, frameset, w_014_1]
-          - [0x662B0, frameset, w_014_2]
+          - [0x66040, spriteset, w_014_1]
+          - [0x662B0, spriteset, w_014_2]
           - [0x662B0, skip]
       - start: 0x6D000
         vram: 0x8017A000
         assets:
-          - [0x6D040, frameset, w_015_1]
-          - [0x6D2B0, frameset, w_015_2]
+          - [0x6D040, spriteset, w_015_1]
+          - [0x6D2B0, spriteset, w_015_2]
           - [0x6D478, skip]
       - start: 0x74000
         vram: 0x8017A000
         assets:
-          - [0x74040, frameset, w_016_1]
-          - [0x742B0, frameset, w_016_2]
+          - [0x74040, spriteset, w_016_1]
+          - [0x742B0, spriteset, w_016_2]
           - [0x742B0, skip]
       - start: 0x7B000
         vram: 0x8017A000
         assets:
-          - [0x7B040, frameset, w_017_1]
-          - [0x7B040, frameset, w_017_2]
+          - [0x7B040, spriteset, w_017_1]
+          - [0x7B040, spriteset, w_017_2]
           - [0x7B040, skip]
       - start: 0x82000
         vram: 0x8017A000
         assets:
-          - [0x82040, frameset, w_018_1]
-          - [0x82488, frameset, w_018_2]
+          - [0x82040, spriteset, w_018_1]
+          - [0x82488, spriteset, w_018_2]
           - [0x82488, skip]
       - start: 0x89000
         vram: 0x8017A000
         assets:
-          - [0x89040, frameset, w_019_1]
-          - [0x8930C, frameset, w_019_2]
+          - [0x89040, spriteset, w_019_1]
+          - [0x8930C, spriteset, w_019_2]
           - [0x8930C, skip]
       - start: 0x90000
         vram: 0x8017A000
         assets:
-          - [0x90040, frameset, w_020_1]
-          - [0x90630, frameset, w_020_2]
+          - [0x90040, spriteset, w_020_1]
+          - [0x90630, spriteset, w_020_2]
           - [0x90630, skip]
       - start: 0x97000
         vram: 0x8017A000
         assets:
-          - [0x97040, frameset, w_021_1]
-          - [0x97564, frameset, w_021_2]
+          - [0x97040, spriteset, w_021_1]
+          - [0x97564, spriteset, w_021_2]
           - [0x97564, skip]
       - start: 0x9E000
         vram: 0x8017A000
         assets:
-          - [0x9E040, frameset, w_022_1]
-          - [0x9E540, frameset, w_022_2]
+          - [0x9E040, spriteset, w_022_1]
+          - [0x9E540, spriteset, w_022_2]
           - [0x9E540, skip]
       - start: 0xA5000
         vram: 0x8017A000
         assets:
-          - [0xA5040, frameset, w_023_1]
-          - [0xA58A4, frameset, w_023_2]
+          - [0xA5040, spriteset, w_023_1]
+          - [0xA58A4, spriteset, w_023_2]
           - [0xA58A4, skip]
       - start: 0xAC000
         vram: 0x8017A000
         assets:
-          - [0xAC040, frameset, w_024_1]
-          - [0xAC804, frameset, w_024_2]
+          - [0xAC040, spriteset, w_024_1]
+          - [0xAC804, spriteset, w_024_2]
           - [0xAC804, skip]
       - start: 0xB3000
         vram: 0x8017A000
         assets:
-          - [0xB3040, frameset, w_025_1]
-          - [0xB3804, frameset, w_025_2]
+          - [0xB3040, spriteset, w_025_1]
+          - [0xB3804, spriteset, w_025_2]
           - [0xB3804, skip]
       - start: 0xBA000
         vram: 0x8017A000
         assets:
-          - [0xBA040, frameset, w_026_1]
-          - [0xBA804, frameset, w_026_2]
+          - [0xBA040, spriteset, w_026_1]
+          - [0xBA804, spriteset, w_026_2]
           - [0xBA804, skip]
       - start: 0xC1000
         vram: 0x8017A000
         assets:
-          - [0xC1040, frameset, w_027_1]
-          - [0xC1A18, frameset, w_027_2]
+          - [0xC1040, spriteset, w_027_1]
+          - [0xC1A18, spriteset, w_027_2]
           - [0xC1A18, skip]
       - start: 0xC8000
         vram: 0x8017A000
         assets:
-          - [0xC8040, frameset, w_028_1]
-          - [0xC8804, frameset, w_028_2]
+          - [0xC8040, spriteset, w_028_1]
+          - [0xC8804, spriteset, w_028_2]
           - [0xC8804, skip]
       - start: 0xCF000
         vram: 0x8017A000
         assets:
-          - [0xCF040, frameset, w_029_1]
-          - [0xCF884, frameset, w_029_2]
+          - [0xCF040, spriteset, w_029_1]
+          - [0xCF884, spriteset, w_029_2]
           - [0xCF884, skip]
       - start: 0xD6000
         vram: 0x8017A000
         assets:
-          - [0xD6040, frameset, w_030_1]
-          - [0xD6040, frameset, w_030_2]
+          - [0xD6040, spriteset, w_030_1]
+          - [0xD6040, spriteset, w_030_2]
           - [0xD6040, skip]
       - start: 0xDD000
         vram: 0x8017A000
         assets:
-          - [0xDD040, frameset, w_031_1]
-          - [0xDD704, frameset, w_031_2]
+          - [0xDD040, spriteset, w_031_1]
+          - [0xDD704, spriteset, w_031_2]
           - [0xDD704, skip]
       - start: 0xE4000
         vram: 0x8017A000
         assets:
-          - [0xE4040, frameset, w_032_1]
-          - [0xE4704, frameset, w_032_2]
+          - [0xE4040, spriteset, w_032_1]
+          - [0xE4704, spriteset, w_032_2]
           - [0xE4704, skip]
       - start: 0xEB000
         vram: 0x8017A000
         assets:
-          - [0xEB040, frameset, w_033_1]
-          - [0xEBA9C, frameset, w_033_2]
+          - [0xEB040, spriteset, w_033_1]
+          - [0xEBA9C, spriteset, w_033_2]
           - [0xEBA9C, skip]
       - start: 0xF2000
         vram: 0x8017A000
         assets:
-          - [0xF2040, frameset, w_034_1]
-          - [0xF2784, frameset, w_034_2]
+          - [0xF2040, spriteset, w_034_1]
+          - [0xF2784, spriteset, w_034_2]
           - [0xF2784, skip]
       - start: 0xF9000
         vram: 0x8017A000
         assets:
-          - [0xF9040, frameset, w_035_1]
-          - [0xF9404, frameset, w_035_2]
+          - [0xF9040, spriteset, w_035_1]
+          - [0xF9404, spriteset, w_035_2]
           - [0xF9404, skip]
       - start: 0x100000
         vram: 0x8017A000
         assets:
-          - [0x100040, frameset, w_036_1]
-          - [0x100404, frameset, w_036_2]
+          - [0x100040, spriteset, w_036_1]
+          - [0x100404, spriteset, w_036_2]
           - [0x100404, skip]
       - start: 0x107000
         vram: 0x8017A000
         assets:
-          - [0x107040, frameset, w_037_1]
-          - [0x107504, frameset, w_037_2]
+          - [0x107040, spriteset, w_037_1]
+          - [0x107504, spriteset, w_037_2]
           - [0x107504, skip]
       - start: 0x10E000
         vram: 0x8017A000
         assets:
-          - [0x10E040, frameset, w_038_1]
-          - [0x10EC08, frameset, w_038_2]
+          - [0x10E040, spriteset, w_038_1]
+          - [0x10EC08, spriteset, w_038_2]
           - [0x10EC08, skip]
       - start: 0x115000
         vram: 0x8017A000
         assets:
-          - [0x115040, frameset, w_039_1]
-          - [0x115C08, frameset, w_039_2]
+          - [0x115040, spriteset, w_039_1]
+          - [0x115C08, spriteset, w_039_2]
           - [0x115C08, skip]
       - start: 0x11C000
         vram: 0x8017A000
         assets:
-          - [0x11C040, frameset, w_040_1]
-          - [0x11C504, frameset, w_040_2]
+          - [0x11C040, spriteset, w_040_1]
+          - [0x11C504, spriteset, w_040_2]
           - [0x11C504, skip]
       - start: 0x123000
         vram: 0x8017A000
         assets:
-          - [0x123040, frameset, w_041_1]
-          - [0x123284, frameset, w_041_2]
+          - [0x123040, spriteset, w_041_1]
+          - [0x123284, spriteset, w_041_2]
           - [0x123284, skip]
       - start: 0x12A000
         vram: 0x8017A000
         assets:
-          - [0x12A040, frameset, w_042_1]
-          - [0x12A3E4, frameset, w_042_2]
+          - [0x12A040, spriteset, w_042_1]
+          - [0x12A3E4, spriteset, w_042_2]
           - [0x12A3E4, skip]
       - start: 0x131000
         vram: 0x8017A000
         assets:
-          - [0x131040, frameset, w_043_1]
-          - [0x131A44, frameset, w_043_2]
+          - [0x131040, spriteset, w_043_1]
+          - [0x131A44, spriteset, w_043_2]
           - [0x131A44, skip]
       - start: 0x138000
         vram: 0x8017A000
         assets:
-          - [0x138040, frameset, w_044_1]
-          - [0x138040, frameset, w_044_2]
+          - [0x138040, spriteset, w_044_1]
+          - [0x138040, spriteset, w_044_2]
           - [0x138040, skip]
       - start: 0x13F000
         vram: 0x8017A000
         assets:
-          - [0x13F040, frameset, w_045_1]
-          - [0x13F330, frameset, w_045_2]
+          - [0x13F040, spriteset, w_045_1]
+          - [0x13F330, spriteset, w_045_2]
           - [0x13F330, skip]
       - start: 0x146000
         vram: 0x8017A000
         assets:
-          - [0x146040, frameset, w_046_1]
-          - [0x1462B0, frameset, w_046_2]
+          - [0x146040, spriteset, w_046_1]
+          - [0x1462B0, spriteset, w_046_2]
           - [0x1462B0, skip]
       - start: 0x14D000
         vram: 0x8017A000
         assets:
-          - [0x14D040, frameset, w_047_1]
-          - [0x14D0D4, frameset, w_047_2]
+          - [0x14D040, spriteset, w_047_1]
+          - [0x14D0D4, spriteset, w_047_2]
           - [0x14D228, skip]
       - start: 0x154000
         vram: 0x8017A000
         assets:
-          - [0x154040, frameset, w_048_1]
-          - [0x154A44, frameset, w_048_2]
+          - [0x154040, spriteset, w_048_1]
+          - [0x154A44, spriteset, w_048_2]
           - [0x154A44, skip]
       - start: 0x15B000
         vram: 0x8017A000
         assets:
-          - [0x15B040, frameset, w_049_1]
-          - [0x15BA44, frameset, w_049_2]
+          - [0x15B040, spriteset, w_049_1]
+          - [0x15BA44, spriteset, w_049_2]
           - [0x15BC00, skip]
       - start: 0x162000
         vram: 0x8017A000
         assets:
-          - [0x162040, frameset, w_050_1]
-          - [0x162A44, frameset, w_050_2]
+          - [0x162040, spriteset, w_050_1]
+          - [0x162A44, spriteset, w_050_2]
           - [0x162A44, skip]
       - start: 0x169000
         vram: 0x8017A000
         assets:
-          - [0x169040, frameset, w_051_1]
-          - [0x169950, frameset, w_051_2]
+          - [0x169040, spriteset, w_051_1]
+          - [0x169950, spriteset, w_051_2]
           - [0x169950, skip]
       - start: 0x170000
         vram: 0x8017A000
         assets:
-          - [0x170040, frameset, w_052_1]
-          - [0x170808, frameset, w_052_2]
+          - [0x170040, spriteset, w_052_1]
+          - [0x170808, spriteset, w_052_2]
           - [0x170808, skip]
       - start: 0x177000
         vram: 0x8017A000
         assets:
-          - [0x177040, frameset, w_053_1]
-          - [0x177A44, frameset, w_053_2]
+          - [0x177040, spriteset, w_053_1]
+          - [0x177A44, spriteset, w_053_2]
           - [0x177A44, skip]
       - start: 0x17E000
         vram: 0x8017A000
         assets:
-          - [0x17E040, frameset, w_054_1]
-          - [0x17EA44, frameset, w_054_2]
+          - [0x17E040, spriteset, w_054_1]
+          - [0x17EA44, spriteset, w_054_2]
           - [0x17EA44, skip]
       - start: 0x185000
         vram: 0x8017A000
         assets:
-          - [0x185040, frameset, w_055_1]
-          - [0x185A44, frameset, w_055_2]
+          - [0x185040, spriteset, w_055_1]
+          - [0x185A44, spriteset, w_055_2]
           - [0x185A44, skip]
       - start: 0x18C000
         vram: 0x8017A000
         assets:
-          - [0x18C040, frameset, w_056_1]
-          - [0x18CA44, frameset, w_056_2]
+          - [0x18C040, spriteset, w_056_1]
+          - [0x18CA44, spriteset, w_056_2]
           - [0x18CA44, skip]
       - start: 0x193000
         vram: 0x8017A000
         assets:
-          - [0x193040, frameset, w_057_1]
-          - [0x193A44, frameset, w_057_2]
+          - [0x193040, spriteset, w_057_1]
+          - [0x193A44, spriteset, w_057_2]
           - [0x193A44, skip]
       - start: 0x19A000
         vram: 0x8017A000
         assets:
-          - [0x19A040, frameset, w_058_1]
-          - [0x19A808, frameset, w_058_2]
+          - [0x19A040, spriteset, w_058_1]
+          - [0x19A808, spriteset, w_058_2]
           - [0x19A808, skip]
