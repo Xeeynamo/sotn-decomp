@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Optional
 from splat.segtypes.n64.segment import N64Segment
+from splat.segtypes.segment import Segment
 from splat.util import options, log
 
 
@@ -8,28 +9,14 @@ class PSXSegCmp(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(
             rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml
-        ),
-        self.name = self.get_symbol_name()
-
-    # does splat provide this without extracting the symbols for every file?
-    # this might become extremely inefficient over time.
-    def get_symbol_name(self) -> str:
-        expected_addr = f"0x{self.vram_start:X}"
-        for symbol_addr_path in options.opts.symbol_addrs_paths:
-            with open(symbol_addr_path) as f:
-                for line in f:
-                    if line.isspace():
-                        continue
-                    tokens = line.strip().split("=")
-                    if len(tokens) < 2:
-                        continue
-                    addr = tokens[1].replace(";", "").strip()
-                    if addr == expected_addr:
-                        return tokens[0].strip()
-        return f"D_{self.vram_start:X}"
+        )
 
     def out_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / self.name
+        use_name = self.name
+        symbol_name = self.get_symbol(self.vram_start, in_segment=True)
+        if symbol_name is not None:
+            use_name = str(symbol_name)
+        return options.opts.asset_path / self.dir / use_name
 
     def cmp_path(self) -> Optional[Path]:
         return f"{self.out_path()}.bin"
