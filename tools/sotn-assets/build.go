@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"golang.org/x/sync/errgroup"
 	"hash/fnv"
 	"io"
@@ -59,31 +58,6 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	sb.WriteString("};\n")
 
 	return os.WriteFile(path.Join(outputDir, fmt.Sprintf("%s.h", symbol)), []byte(sb.String()), 0644)
-}
-
-func buildRooms(fileName string, outputDir string) error {
-	ovlName := path.Base(outputDir)
-	data, err := os.ReadFile(fileName)
-	if err != nil {
-		return err
-	}
-
-	var rooms []room
-	if err := json.Unmarshal(data, &rooms); err != nil {
-		return err
-	}
-
-	content := strings.Builder{}
-	content.WriteString("// clang-format off\n")
-	content.WriteString(fmt.Sprintf("unsigned char %s_rooms[] = {\n", strings.ToUpper(ovlName)))
-	for _, room := range rooms {
-		s := fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d,\n",
-			room.Left, room.Top, room.Right, room.Bottom,
-			room.LayerID, room.TileDefID, room.EntityGfxID, room.EntityLayoutID)
-		content.WriteString(s)
-	}
-	content.WriteString("    0x40\n};\n")
-	return os.WriteFile(path.Join(outputDir, "rooms.c"), []byte(content.String()), 0644)
 }
 
 func buildTiledefs(fileName string, symbol string, outputDir string) error {
@@ -418,23 +392,7 @@ func buildAll(inputDir string, outputDir string) error {
 
 	eg := errgroup.Group{}
 	eg.Go(func() error {
-		if err := buildRooms(path.Join(inputDir, "rooms.json"), outputDir); err != nil {
-			if !errors.Is(err, fs.ErrNotExist) {
-				return err
-			}
-		}
-		return nil
-	})
-	eg.Go(func() error {
 		if err := buildLayers(inputDir, path.Join(inputDir, "layers.json"), outputDir); err != nil {
-			if !errors.Is(err, fs.ErrNotExist) {
-				return err
-			}
-		}
-		return nil
-	})
-	eg.Go(func() error {
-		if err := spritebanks.BuildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
 			if !errors.Is(err, fs.ErrNotExist) {
 				return err
 			}

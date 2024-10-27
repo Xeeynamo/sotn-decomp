@@ -8,6 +8,8 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0x1308, rooms, rooms]
+          - [0x1334, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
     asset_path: assets/st/wrp
     src_path: src/st/wrp
@@ -17,3 +19,5 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0x11B0, rooms, rooms]
+          - [0x122C, skip]

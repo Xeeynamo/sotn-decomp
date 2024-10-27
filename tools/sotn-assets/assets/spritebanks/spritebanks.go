@@ -84,7 +84,7 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 	}, datarange.MergeDataRanges(spriteRanges), nil
 }
 
-func BuildSprites(fileName string, outputDir string) error {
+func buildSprites(fileName string, outputDir string) error {
 	ovlName := path.Base(outputDir)
 	data, err := os.ReadFile(fileName)
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
@@ -19,7 +20,6 @@ type dataContainer[T any] struct {
 
 type ovl struct {
 	ranges            []datarange.DataRange
-	rooms             dataContainer[[]room]
 	layers            dataContainer[[]roomLayers]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
@@ -68,7 +68,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	}
 	defer file.Close()
 
-	rooms, roomsRange, err := readRooms(file, header.Rooms)
+	_, roomsRange, err := rooms.ReadRooms(file, header.Rooms)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to read rooms: %w", err)
 	}
@@ -115,10 +115,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		// it should be usually be right after header.Graphics
 		layoutOff = graphicsRange.End() // ⚠️ assumption
 	}
-	nLayouts := maxBy(rooms, func(r room) int { // ⚠️ assumption
-		return int(r.EntityLayoutID)
-	}) + 1
-	nLayouts = 53 // it seems there are always 53 elements?!
+	nLayouts := 53 // it seems there are always 53 elements?!
 	entityLayouts, layoutsRange, err := readEntityLayout(file, layoutOff, nLayouts, true)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
@@ -135,7 +132,6 @@ func getOvlAssets(fileName string) (ovl, error) {
 			tileMapsRange,
 			tileDefsRange,
 		}),
-		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
 		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
@@ -150,15 +146,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return err
 	}
 
-	content, err := json.MarshalIndent(o.rooms.content, "", "  ")
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(path.Join(outputDir, "rooms.json"), content, 0644); err != nil {
-		return fmt.Errorf("unable to create rooms file: %w", err)
-	}
-
-	content, err = json.MarshalIndent(o.layers.content, "", "  ")
+	content, err := json.MarshalIndent(o.layers.content, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -249,7 +237,6 @@ func info(fileName string) error {
 	}{
 		{o.layers.dataRange, "header", "layers"},
 		{o.layoutsExtraRange, "e_laydef", "layout entries header"},
-		{o.rooms.dataRange, "rooms", ""},
 		{o.layouts.dataRange, "e_layout", "layout entries data"},
 		{o.tileMaps.dataRange, "tile_data", "tile data"},
 		{o.tileDefs.dataRange, "tile_data", "tile definitions"},
@@ -325,32 +312,6 @@ func handlerStage(args []string) error {
 			os.Exit(1)
 		}
 		return extract(stageOvl, assetDir)
-	}
-	commands["build"] = func(args []string) error {
-		var file string
-		var kind string
-		var outputDir string
-		buildCmd := flag.NewFlagSet("build", flag.ExitOnError)
-		buildCmd.StringVar(&file, "file", "", "File to process")
-		buildCmd.StringVar(&kind, "kind", "", "Kind of the file to process")
-		buildCmd.StringVar(&outputDir, "o", "", "Where to store the processed source files")
-		buildCmd.Parse(args)
-
-		if file == "" || kind == "" || outputDir == "" {
-			fmt.Fprintln(os.Stderr, "file, kind, and output_dir are required for build")
-			buildCmd.PrintDefaults()
-			os.Exit(1)
-		}
-
-		switch kind {
-		case "rooms":
-			return buildRooms(file, outputDir)
-		case "layers":
-			return buildLayers(path.Base(file), file, outputDir)
-		case "sprites":
-			return spritebanks.BuildSprites(file, outputDir)
-		}
-		return fmt.Errorf("unknown kind, valid values are 'room', 'layer', 'sprites'")
 	}
 	commands["build_all"] = func(args []string) error {
 		buildCmd := flag.NewFlagSet("build_all", flag.ExitOnError)
