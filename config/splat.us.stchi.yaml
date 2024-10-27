@@ -85,13 +85,13 @@ segments:
       - [0x7E84, cmp]   # Venus Weed 1
       - [0x8A10, cmp]   # Venus Weed 2
       - [0x9B38, cmp]   # EN Stage Name
-      - [0x9FE0, data]  # Palette (Unused)
-      - [0xA040, data]  # Palette
-      - [0xA240, data]  # Palette (Unused)
-      - [0xA300, data]  # Palette
-      - [0xA380, data]  # Palette
-      - [0xA3C0, data]  # Palette
-      - [0xA440, data]  # Palette
+      - [0x9FE0, raw, dt_palette_unused0] # Unused
+      - [0xA040, raw, dt_palette_salem_witch_projectiles]
+      - [0xA240, raw, dt_palette_unused1] # Unused
+      - [0xA300, raw, dt_palette_gremlin]
+      - [0xA380, raw, dt_palette_salem_witch]
+      - [0xA3C0, raw, dt_palette_thornweed_corpseweed]
+      - [0xA440, raw, dt_palette_venus_weed]
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]

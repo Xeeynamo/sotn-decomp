@@ -34,22 +34,22 @@ Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 
 // Palettes -- These addresses are to the binary data
-extern u16* Palette_80189FE0[0x30]; // Unused (US)
-extern u16* Palette_8018A040[0x100];
-extern u16* Palette_8018A240[0x60]; // Unused (US)
-extern u16* Palette_8018A300[0x40];
-extern u16* Palette_8018A380[0x20];
-extern u16* Palette_8018A3C0[0x40];
-extern u16* Palette_8018A440[0x290];
+extern u16* _binary_assets_st_chi_dt_palette_unused0_bin_start[0x30];   // Unused (US)
+extern u16* _binary_assets_st_chi_dt_palette_salem_witch_projectiles_bin_start[0x100];
+extern u16* _binary_assets_st_chi_dt_palette_unused1_bin_start[0x60];   // Unused (US)
+extern u16* _binary_assets_st_chi_dt_palette_gremlin_bin_start[0x40];
+extern u16* _binary_assets_st_chi_dt_palette_salem_witch_bin_start[0x20];
+extern u16* _binary_assets_st_chi_dt_palette_thornweed_corpseweed_bin_start[0x40];
+extern u16* _binary_assets_st_chi_dt_palette_venus_weed_bin_start[0x290];
 
 // D_801800A0
 static u16** PaletteCommand0[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    PAL_BULK(0x2000, Palette_8018A300),
-    PAL_BULK(0x2040, Palette_8018A380),
-    PAL_BULK(0x2060, Palette_8018A3C0),
-    PAL_BULK(0x20A0, Palette_8018A440),
-    PAL_BULK(0x2E00, Palette_8018A040),
+    PAL_BULK(0x2000, _binary_assets_st_chi_dt_palette_gremlin_bin_start),
+    PAL_BULK(0x2040, _binary_assets_st_chi_dt_palette_salem_witch_bin_start),
+    PAL_BULK(0x2060, _binary_assets_st_chi_dt_palette_thornweed_corpseweed_bin_start),
+    PAL_BULK(0x20A0, _binary_assets_st_chi_dt_palette_venus_weed_bin_start),
+    PAL_BULK(0x2E00, _binary_assets_st_chi_dt_palette_salem_witch_projectiles_bin_start),
     PAL_TERMINATE(),
 };
 
