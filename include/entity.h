@@ -1930,6 +1930,15 @@ typedef struct {
     /* 0xA6 */ s16 unkA6;
 } ET_801BC5C0;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 rotationTimer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x8C */ s16 cameraDistance;
+} ET_CutscenePhotograph;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2099,6 +2108,7 @@ typedef union { // offset=0x7C
     ET_RicMaria ricMaria;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
+    ET_CutscenePhotograph cutscenePhoto;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

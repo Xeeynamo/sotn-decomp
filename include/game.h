@@ -24,20 +24,6 @@
 
 typedef long Event;
 
-typedef enum {
-    PRIM_NONE,
-    PRIM_TILE,
-    PRIM_LINE_G2,
-    PRIM_G4,
-    PRIM_GT4,
-    PRIM_GT3,
-    PRIM_SPRT,
-    PRIM_ENV,
-    PRIM_TILE_ALT = PRIM_TILE | 0x10,
-    PRIM_LINE_G2_ALT = PRIM_LINE_G2 | 0x10,
-    PRIM_G4_ALT = PRIM_G4 | 0x10
-} PrimitiveType;
-
 typedef struct Vertex {
     /* 0x0 */ u8 r;
     /* 0x1 */ u8 g;

@@ -89,7 +89,7 @@ segments:
       - [0x27C8C, .rodata, e_collect]
       - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, .rodata, e_misc]
-      - [0x27CFC, rodata]
+      - [0x27CFC, .rodata, 39EA8] # EntityCutscenePhotograph
       - [0x27D30, .rodata, 3C5C0] # "d_step" string
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
