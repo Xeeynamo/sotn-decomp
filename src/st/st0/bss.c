@@ -11,9 +11,7 @@ union DiagCombo {
 u16 msgBoxTpage[768];
 u32 D_801C06B0[4];
 u32 D_801C06C0[1346];
-u16 D_801C1BC8;
-u16 D_801C1BCA;
-u16 D_801C1BCC[1022];
+SVECTOR D_801C1BC8[0x100];
 u32 D_801C23C8[64];
 u32 g_SkipCutscene;
 union DiagCombo g_Dialogue;

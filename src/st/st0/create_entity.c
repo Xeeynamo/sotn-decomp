@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-u32 D_801BEB00[25];
+u32 D_801BEB04[24];
 Point32 D_801BEB64[0x53];
 u32 D_801BEDFC;
 u32 D_801BEE00;

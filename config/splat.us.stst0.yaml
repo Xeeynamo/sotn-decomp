@@ -112,7 +112,7 @@ segments:
       - [0x3C5C0, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
-      - [0x3EB00, .bss, create_entity]
+      - [0x3EB04, .bss, create_entity]
       - [0x400B6, .bss, bss]
       - [0x42584, .bss, e_collect]
   - [0x425C4]
