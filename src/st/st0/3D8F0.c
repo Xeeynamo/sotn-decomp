@@ -55,7 +55,7 @@ void func_801BD8F0(Entity* self) {
         self->step++;
         return;
     case 2:
-        sp48 = g_api.func_800EDB58(4, 15 * 15);
+        sp48 = g_api.func_800EDB58(PRIM_GT4, 15 * 15);
         if (sp48 == -1) {
             SetStep(7);
             return;
@@ -310,7 +310,7 @@ void EntityBackgroundVortex(Entity* self) {
         InitializeEntity(D_801805D4);
         self->posX.i.hi = 0x80;
         self->posY.i.hi = 0x1A0;
-        primIndex = g_api.func_800EDB58(4, 0x110);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x110);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
