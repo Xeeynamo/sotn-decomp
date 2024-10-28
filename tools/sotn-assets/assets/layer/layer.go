@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-type Layer struct {
+type layerDef struct {
 	Data       psx.Addr
 	Tiledef    psx.Addr
 	PackedInfo uint32
@@ -24,7 +24,7 @@ type Layer struct {
 	UnkF       uint8
 }
 
-type LayerUnpacked struct {
+type layerUnpacked struct {
 	Data          string `json:"data"`
 	Tiledef       string `json:"tiledef"`
 	Left          int    `json:"left"`
@@ -40,12 +40,12 @@ type LayerUnpacked struct {
 	UnkF          int    `json:"unkF"`
 }
 
-type RoomLayers struct {
-	fg *Layer
-	bg *Layer
+type roomLayers struct {
+	fg *layerDef
+	bg *layerDef
 }
 
-func (l *Layer) TilemapFileSize() int {
+func (l *layerDef) tilemapFileSize() int {
 	sx := int((l.PackedInfo >> 0) & 0x3F)
 	sy := int((l.PackedInfo >> 6) & 0x3F)
 	ex := int((l.PackedInfo >> 12) & 0x3F)
@@ -55,10 +55,10 @@ func (l *Layer) TilemapFileSize() int {
 	return w * h * 512
 }
 
-func (l *Layer) Unpack() LayerUnpacked {
-	return LayerUnpacked{
-		Data:          GetTilemapFileName(l.Data),
-		Tiledef:       GetTiledefFileName(l.Tiledef),
+func (l *layerDef) unpack() layerUnpacked {
+	return layerUnpacked{
+		Data:          tilemapFileName(l.Data),
+		Tiledef:       tiledefFileName(l.Tiledef),
 		Left:          int((l.PackedInfo >> 0) & 0x3F),
 		Top:           int((l.PackedInfo >> 6) & 0x3F),
 		Right:         int((l.PackedInfo >> 12) & 0x3F),
@@ -73,18 +73,18 @@ func (l *Layer) Unpack() LayerUnpacked {
 	}
 }
 
-func (r RoomLayers) MarshalJSON() ([]byte, error) {
+func (r roomLayers) MarshalJSON() ([]byte, error) {
 	m := map[string]interface{}{}
 	if r.fg != nil {
-		m["fg"] = r.fg.Unpack()
+		m["fg"] = r.fg.unpack()
 	}
 	if r.bg != nil {
-		m["bg"] = r.bg.Unpack()
+		m["bg"] = r.bg.unpack()
 	}
 	return json.Marshal(m)
 }
 
-func ReadLayers(r io.ReadSeeker, off psx.Addr) ([]RoomLayers, datarange.DataRange, error) {
+func readLayers(r io.ReadSeeker, off psx.Addr) ([]roomLayers, datarange.DataRange, error) {
 	if off == 0 {
 		return nil, datarange.DataRange{}, nil
 	}
@@ -107,7 +107,7 @@ func ReadLayers(r io.ReadSeeker, off psx.Addr) ([]RoomLayers, datarange.DataRang
 	}
 
 	// Creates a map of layers, so we can re-use them when a layer is used by multiple rooms
-	pool := map[psx.Addr]*Layer{}
+	pool := map[psx.Addr]*layerDef{}
 	pool[psx.Addr(0)] = nil
 	for _, layerOffset := range layerOffsets {
 		if _, exists := pool[layerOffset]; exists {
@@ -117,7 +117,7 @@ func ReadLayers(r io.ReadSeeker, off psx.Addr) ([]RoomLayers, datarange.DataRang
 		if err := layerOffset.MoveFile(r, psx.RamStageBegin); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
-		var l Layer
+		var l layerDef
 		if err := binary.Read(r, binary.LittleEndian, &l); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
@@ -130,7 +130,7 @@ func ReadLayers(r io.ReadSeeker, off psx.Addr) ([]RoomLayers, datarange.DataRang
 
 	// creates the real array with all the layers mapped
 	count := len(layerOffsets) >> 1
-	roomsLayers := make([]RoomLayers, count)
+	roomsLayers := make([]roomLayers, count)
 	for i := 0; i < count; i++ {
 		roomsLayers[i].fg = pool[layerOffsets[i*2+0]]
 		roomsLayers[i].bg = pool[layerOffsets[i*2+1]]
@@ -138,11 +138,11 @@ func ReadLayers(r io.ReadSeeker, off psx.Addr) ([]RoomLayers, datarange.DataRang
 	return roomsLayers, datarange.New(slices.Min(layerOffsets), off.Sum(count*8)), nil
 }
 
-func BuildLayers(inputDir string, fileName string, outputDir string) error {
-	getHash := func(l LayerUnpacked) string {
+func buildLayers(inputDir string, fileName string, outputDir string) error {
+	getHash := func(l layerUnpacked) string {
 		return fmt.Sprintf("%s-%s-%d-%d-%d-%d", l.Data, l.Tiledef, l.Left, l.Top, l.Right, l.Bottom)
 	}
-	pack := func(l LayerUnpacked) map[string]interface{} {
+	pack := func(l layerUnpacked) map[string]interface{} {
 		return map[string]interface{}{
 			"data":    makeSymbolFromFileName(l.Data),
 			"tiledef": makeSymbolFromFileName(l.Tiledef),
@@ -159,7 +159,7 @@ func BuildLayers(inputDir string, fileName string, outputDir string) error {
 		return err
 	}
 
-	var roomsLayers []map[string]*LayerUnpacked
+	var roomsLayers []map[string]*layerUnpacked
 	if err := json.Unmarshal(data, &roomsLayers); err != nil {
 		return err
 	}
@@ -333,7 +333,7 @@ func buildTiledefs(fileName string, symbol string, outputDir string) error {
 		return err
 	}
 
-	var tiledef TileDefPaths
+	var tiledef tileDefPaths
 	if err := json.Unmarshal(data, &tiledef); err != nil {
 		return err
 	}

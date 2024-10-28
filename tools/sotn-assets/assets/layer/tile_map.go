@@ -7,18 +7,18 @@ import (
 	"io"
 )
 
-func readTilemap(r io.ReadSeeker, layer *Layer) ([]byte, datarange.DataRange, error) {
+func readTilemap(r io.ReadSeeker, layer *layerDef) ([]byte, datarange.DataRange, error) {
 	if err := layer.Data.MoveFile(r, psx.RamStageBegin); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
-	data := make([]byte, layer.TilemapFileSize())
+	data := make([]byte, layer.tilemapFileSize())
 	if _, err := r.Read(data); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
 	return data, datarange.FromAddr(layer.Data, len(data)), nil
 }
 
-func ReadAllTileMaps(r io.ReadSeeker, roomLayers []RoomLayers) (map[psx.Addr][]byte, datarange.DataRange, error) {
+func readAllTileMaps(r io.ReadSeeker, roomLayers []roomLayers) (map[psx.Addr][]byte, datarange.DataRange, error) {
 	var ranges []datarange.DataRange
 	processed := map[psx.Addr][]byte{}
 	for _, rl := range roomLayers {
