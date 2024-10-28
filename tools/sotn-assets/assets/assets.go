@@ -1,8 +1,11 @@
 package assets
 
-import "github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+import (
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+)
 
-type ExtractEntry struct {
+type ExtractArgs struct {
 	Data     []byte
 	Start    int
 	End      int
@@ -11,23 +14,39 @@ type ExtractEntry struct {
 	Args     []string
 	RamBase  psx.Addr
 }
+type Extractor interface {
+	Extract(a ExtractArgs) error
+}
 
-type BuildEntry struct {
+type BuildArgs struct {
 	AssetDir string
 	SrcDir   string
 	Name     string
 }
-
-type Extracter interface {
-	Extract(e ExtractEntry) error
+type Builder interface {
+	Build(a BuildArgs) error
 }
 
-type Builder interface {
-	Build(e BuildEntry) error
+type InfoArgs struct {
+	StageFilePath string
+	StageData     []byte
+}
+type InfoEntry struct {
+	DataRange datarange.DataRange
+	Name      string
+	Comment   string
+}
+type InfoResult struct {
+	AssetEntries []InfoEntry
+	SplatEntries []InfoEntry
+}
+type InfoGatherer interface {
+	Info(a InfoArgs) (InfoResult, error)
 }
 
 type Handler interface {
 	Name() string
-	Extracter
+	Extractor
 	Builder
+	InfoGatherer
 }

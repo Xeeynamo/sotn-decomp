@@ -1,11 +1,11 @@
-package main
+package graphics
 
 import (
 	"encoding/binary"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"os"
+	"io"
 )
 
 type GfxKind uint16
@@ -37,16 +37,16 @@ type Gfx struct {
 	indices []int
 }
 
-func ReadGraphics(file *os.File, off psx.Addr) (Gfx, datarange.DataRange, error) {
-	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
+func ReadGraphics(r io.ReadSeeker, off psx.Addr) (Gfx, datarange.DataRange, error) {
+	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
 		return Gfx{}, datarange.DataRange{}, err
 	}
 
 	// all the offsets are before the array, so it is easy to find where the offsets array ends
-	blockOffsets := []psx.Addr{}
+	var blockOffsets []psx.Addr
 	for {
 		var offBank psx.Addr
-		if err := binary.Read(file, binary.LittleEndian, &offBank); err != nil {
+		if err := binary.Read(r, binary.LittleEndian, &offBank); err != nil {
 			return Gfx{}, datarange.DataRange{}, err
 		}
 		if offBank >= off {
@@ -58,20 +58,20 @@ func ReadGraphics(file *os.File, off psx.Addr) (Gfx, datarange.DataRange, error)
 	// the order of each GfxBlock must be preserved
 	pool := map[psx.Addr]int{}
 	pool[psx.RamNull] = -1
-	blocks := []GfxBlock{}
-	ranges := []datarange.DataRange{}
+	var blocks []GfxBlock
+	var ranges []datarange.DataRange
 	for _, blockOffset := range util.SortUniqueOffsets(blockOffsets) {
 		if blockOffset == psx.RamNull { // exception for ST0
 			continue
 		}
-		if err := blockOffset.MoveFile(file, psx.RamStageBegin); err != nil {
+		if err := blockOffset.MoveFile(r, psx.RamStageBegin); err != nil {
 			return Gfx{}, datarange.DataRange{}, err
 		}
 		var block GfxBlock
-		if err := binary.Read(file, binary.LittleEndian, &block.kind); err != nil {
+		if err := binary.Read(r, binary.LittleEndian, &block.kind); err != nil {
 			return Gfx{}, datarange.DataRange{}, err
 		}
-		if err := binary.Read(file, binary.LittleEndian, &block.flags); err != nil {
+		if err := binary.Read(r, binary.LittleEndian, &block.flags); err != nil {
 			return Gfx{}, datarange.DataRange{}, err
 		}
 
@@ -84,7 +84,7 @@ func ReadGraphics(file *os.File, off psx.Addr) (Gfx, datarange.DataRange, error)
 
 		for {
 			var entry GfxEntry
-			if err := binary.Read(file, binary.LittleEndian, &entry); err != nil {
+			if err := binary.Read(r, binary.LittleEndian, &entry); err != nil {
 				return Gfx{}, datarange.DataRange{}, err
 			}
 			if entry.X == 0xFFFF && entry.Y == 0xFFFF {

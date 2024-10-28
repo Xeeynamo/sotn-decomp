@@ -5,18 +5,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"os"
 	"path"
 	"path/filepath"
 )
 
+const banksCount = 24 // the number seems to be fixed
+
 type handler struct{}
 
 var Handler = &handler{}
 
-func (h *handler) Name() string { return "sprites" }
+func (h *handler) Name() string { return "sprite_banks" }
 
-func (h *handler) Extract(e assets.ExtractEntry) error {
+func (h *handler) Extract(e assets.ExtractArgs) error {
 	if e.Start == e.End {
 		return fmt.Errorf("a group of sprites cannot be 0 bytes long")
 	}
@@ -38,8 +43,34 @@ func (h *handler) Extract(e assets.ExtractEntry) error {
 	return os.WriteFile(outFileName, content, 0644)
 }
 
-func (h *handler) Build(e assets.BuildEntry) error {
+func (h *handler) Build(e assets.BuildArgs) error {
 	return buildSprites(assetPath(e.AssetDir, e.Name), e.SrcDir)
+}
+
+func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
+	r := bytes.NewReader(a.StageData)
+	header, err := sotn.ReadStageHeader(r)
+	if err != nil {
+		return assets.InfoResult{}, err
+	}
+	_, dataRange, err := ReadSpritesBanks(r, psx.RamStageBegin, header.Sprites)
+	if err != nil {
+		return assets.InfoResult{}, err
+	}
+	return assets.InfoResult{
+		AssetEntries: []assets.InfoEntry{
+			{
+				DataRange: datarange.FromAddr(header.Sprites, banksCount*4),
+				Name:      "sprite_banks",
+			},
+		},
+		SplatEntries: []assets.InfoEntry{
+			{
+				DataRange: dataRange,
+				Name:      "sprites",
+			},
+		},
+	}, nil
 }
 
 func assetPath(dir, name string) string {

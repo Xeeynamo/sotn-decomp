@@ -84,19 +84,19 @@ func (r RoomLayers) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m)
 }
 
-func ReadLayers(file *os.File, off psx.Addr) ([]RoomLayers, datarange.DataRange, error) {
+func ReadLayers(r io.ReadSeeker, off psx.Addr) ([]RoomLayers, datarange.DataRange, error) {
 	if off == 0 {
 		return nil, datarange.DataRange{}, nil
 	}
-	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
+	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
 
 	// when the data starts to no longer makes sense, we can assume we reached the end of the array
-	layerOffsets := []psx.Addr{}
+	var layerOffsets []psx.Addr
 	layersOff := make([]psx.Addr, 2)
 	for {
-		if err := binary.Read(file, binary.LittleEndian, layersOff); err != nil {
+		if err := binary.Read(r, binary.LittleEndian, layersOff); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
 		if layersOff[0] <= psx.RamStageBegin || layersOff[0] >= off ||
@@ -114,11 +114,11 @@ func ReadLayers(file *os.File, off psx.Addr) ([]RoomLayers, datarange.DataRange,
 			continue
 		}
 
-		if err := layerOffset.MoveFile(file, psx.RamStageBegin); err != nil {
+		if err := layerOffset.MoveFile(r, psx.RamStageBegin); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
 		var l Layer
-		if err := binary.Read(file, binary.LittleEndian, &l); err != nil {
+		if err := binary.Read(r, binary.LittleEndian, &l); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
 		if l.Data != psx.RamNull || l.Tiledef != psx.RamNull || l.PackedInfo != 0 {
@@ -208,7 +208,7 @@ func BuildLayers(inputDir string, fileName string, outputDir string) error {
 		return err
 	}
 
-	layers := []map[string]interface{}{} // first layer is always empty
+	var layers []map[string]interface{} // first layer is always empty
 	layers = append(layers, map[string]interface{}{})
 	roomLayersId := make([]int, len(roomsLayers)*2)
 	pool := map[string]int{}

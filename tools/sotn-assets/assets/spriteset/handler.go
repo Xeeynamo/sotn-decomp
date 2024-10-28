@@ -15,9 +15,9 @@ type handler struct{}
 
 var Handler = &handler{}
 
-func (h *handler) Name() string { return "sprites" }
+func (h *handler) Name() string { return "spriteset" }
 
-func (h *handler) Extract(e assets.ExtractEntry) error {
+func (h *handler) Extract(e assets.ExtractArgs) error {
 	if e.Name == "" {
 		return fmt.Errorf("data at 0x%X must have a name", e.Start)
 	}
@@ -46,7 +46,7 @@ func (h *handler) Extract(e assets.ExtractEntry) error {
 	return os.WriteFile(outFileName, content, 0644)
 }
 
-func (h *handler) Build(e assets.BuildEntry) error {
+func (h *handler) Build(e assets.BuildArgs) error {
 	in := assetPath(e.AssetDir, e.Name)
 	out := sourcePath(e.SrcDir, e.Name)
 	data, err := os.ReadFile(in)
@@ -64,6 +64,10 @@ func (h *handler) Build(e assets.BuildEntry) error {
 		BuildSpriteSet(&sb, ss, e.Name)
 	}
 	return os.WriteFile(out, []byte(sb.String()), 0644)
+}
+
+func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
+	return assets.InfoResult{}, nil
 }
 
 func assetPath(dir, name string) string {

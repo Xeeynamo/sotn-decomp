@@ -23,8 +23,7 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 		return SpriteBanks{}, datarange.DataRange{}, err
 	}
 
-	// start with a capacity of 24 as that'sprites the length for all the stage overlays
-	offBanks := make([]psx.Addr, 0, 24)
+	offBanks := make([]psx.Addr, 0, banksCount)
 	for {
 		addr := psx.ReadAddr(r)
 		if addr != psx.RamNull && !addr.InRange(baseAddr, psx.RamGameEnd) {
@@ -94,6 +93,9 @@ func buildSprites(fileName string, outputDir string) error {
 	var spritesBanks SpriteBanks
 	if err := json.Unmarshal(data, &spritesBanks); err != nil {
 		return err
+	}
+	if len(spritesBanks.Indices) != banksCount {
+		return fmt.Errorf("the number of banks must be exactly %d, got %d", banksCount, len(spritesBanks.Banks))
 	}
 
 	sbHeader := strings.Builder{}

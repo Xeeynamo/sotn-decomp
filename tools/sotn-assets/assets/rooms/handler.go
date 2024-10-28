@@ -8,6 +8,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"io"
 	"os"
 	"path"
@@ -32,9 +33,9 @@ var Handler = &handler{}
 
 func (h *handler) Name() string { return "rooms" }
 
-func (h *handler) Extract(e assets.ExtractEntry) error {
+func (h *handler) Extract(e assets.ExtractArgs) error {
 	r := bytes.NewReader(e.Data)
-	rooms, _, err := ReadRooms(r, e.RamBase.Sum(e.Start))
+	rooms, _, err := readRooms(r, e.RamBase.Sum(e.Start))
 	if err != nil {
 		return fmt.Errorf("failed to read rooms: %w", err)
 	}
@@ -51,7 +52,7 @@ func (h *handler) Extract(e assets.ExtractEntry) error {
 	return os.WriteFile(outFileName, content, 0644)
 }
 
-func (h *handler) Build(e assets.BuildEntry) error {
+func (h *handler) Build(e assets.BuildArgs) error {
 	inPath := assetPath(e.AssetDir, e.Name)
 	outPath := sourcePath(e.SrcDir, e.Name)
 	ovlName := path.Base(path.Dir(outPath))
@@ -78,6 +79,32 @@ func (h *handler) Build(e assets.BuildEntry) error {
 	return os.WriteFile(outPath, []byte(content.String()), 0644)
 }
 
+func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
+	r := bytes.NewReader(a.StageData)
+	header, err := sotn.ReadStageHeader(r)
+	if err != nil {
+		return assets.InfoResult{}, err
+	}
+	_, dataRange, err := readRooms(r, header.Rooms)
+	if err != nil {
+		return assets.InfoResult{}, err
+	}
+	return assets.InfoResult{
+		AssetEntries: []assets.InfoEntry{
+			{
+				DataRange: dataRange,
+				Name:      "rooms",
+			},
+		},
+		SplatEntries: []assets.InfoEntry{
+			{
+				DataRange: dataRange,
+				Name:      "rooms",
+			},
+		},
+	}, nil
+}
+
 func assetPath(dir, name string) string {
 	return path.Join(dir, fmt.Sprintf("%s.json", name))
 }
@@ -90,7 +117,7 @@ func (r Room) isTerminator() bool {
 	return r.Left == 0x40
 }
 
-func ReadRooms(r io.ReadSeeker, off psx.Addr) ([]Room, datarange.DataRange, error) {
+func readRooms(r io.ReadSeeker, off psx.Addr) ([]Room, datarange.DataRange, error) {
 	if off == 0 {
 		return nil, datarange.DataRange{}, nil
 	}

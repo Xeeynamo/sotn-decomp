@@ -82,8 +82,7 @@ func fetchEntityIDsFromHFile(overlay string) (map[int]string, error) {
 	return entityNames, nil
 }
 
-func readEntityLayoutEntry(file *os.File) (layoutEntry, error) {
-	ovlName := strings.ToLower(path.Base(path.Dir(file.Name())))
+func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {
 	entityIDs, _ := fetchEntityIDsFromHFile(ovlName)
 
 	bs := make([]byte, 10)
@@ -145,15 +144,15 @@ func hydrateYOrderFields(x Layouts, y Layouts) error {
 	return nil
 }
 
-func ReadEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (Layouts, []datarange.DataRange, error) {
-	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
+func ReadEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, isX bool) (Layouts, []datarange.DataRange, error) {
+	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
 		return Layouts{}, nil, err
 	}
 
 	// there are two copies of the layout, one ordered by X and the other one ordered by Y
 	// we will only read the first one, which is ordered by Y
 	blockOffsets := make([]psx.Addr, count)
-	if err := binary.Read(file, binary.LittleEndian, blockOffsets); err != nil {
+	if err := binary.Read(r, binary.LittleEndian, blockOffsets); err != nil {
 		return Layouts{}, nil, err
 	}
 
@@ -162,12 +161,12 @@ func ReadEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (Layouts
 	var blocks [][]layoutEntry
 	var xRanges []datarange.DataRange
 	for _, blockOffset := range util.SortUniqueOffsets(blockOffsets) {
-		if err := blockOffset.MoveFile(file, psx.RamStageBegin); err != nil {
+		if err := blockOffset.MoveFile(r, psx.RamStageBegin); err != nil {
 			return Layouts{}, nil, err
 		}
 		var entries []layoutEntry
 		for {
-			entry, err := readEntityLayoutEntry(file)
+			entry, err := readEntityLayoutEntry(r, ovlName)
 			if err != nil {
 				return Layouts{}, nil, err
 			}
@@ -198,7 +197,7 @@ func ReadEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (Layouts
 
 	endOfArray := off.Sum(count * 4)
 	if isX { // we want to do the same thing with the vertically aligned layout
-		yLayouts, yRanges, err := ReadEntityLayout(file, endOfArray, count, false)
+		yLayouts, yRanges, err := ReadEntityLayout(r, ovlName, endOfArray, count, false)
 		if err != nil {
 			return Layouts{}, nil, fmt.Errorf("ReadEntityLayout failed on Y: %w", err)
 		}

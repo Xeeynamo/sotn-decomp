@@ -1,16 +1,15 @@
 package main
 
 import (
-	"encoding/binary"
 	"encoding/json"
 	"flag"
 	"fmt"
+	graphics2 "github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/graphics"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path"
@@ -24,56 +23,23 @@ type dataContainer[T any] struct {
 type ovl struct {
 	ranges            []datarange.DataRange
 	layers            dataContainer[[]layer.RoomLayers]
-	graphics          dataContainer[gfx]
+	graphics          dataContainer[graphics2.Gfx]
 	layouts           dataContainer[layout.Layouts]
 	layoutsExtraRange datarange.DataRange
 	tileMaps          dataContainer[map[psx.Addr][]byte]
 	tileDefs          dataContainer[map[psx.Addr]layer.TileDef]
 }
 
-type stageHeader struct {
-	FnUpdate              psx.Addr
-	FnHitDetection        psx.Addr
-	FnUpdateRoomPos       psx.Addr
-	FnInitRoomEntities    psx.Addr
-	Rooms                 psx.Addr // ✅
-	Sprites               psx.Addr // ✅
-	Cluts                 psx.Addr // 🫥
-	Layouts               psx.Addr // ✅
-	Layers                psx.Addr // ✅
-	Graphics              psx.Addr // 🫥 WIP
-	FnUpdateStageEntities psx.Addr
-}
-
-func getStageHeader(fileName string) (stageHeader, error) {
-	file, err := os.Open(fileName)
-	if err != nil {
-		return stageHeader{}, fmt.Errorf("failed to read stage header: %w", err)
-	}
-	defer file.Close()
-
-	var header stageHeader
-	if err := binary.Read(file, binary.LittleEndian, &header); err != nil {
-		return stageHeader{}, fmt.Errorf("failed to read stage header: %w", err)
-	}
-	return header, nil
-}
-
 func getOvlAssets(fileName string) (ovl, error) {
-	header, err := getStageHeader(fileName)
-	if err != nil {
-		return ovl{}, fmt.Errorf("failed to get ovl assets: %w", err)
-	}
-
 	file, err := os.Open(fileName)
 	if err != nil {
 		return ovl{}, err
 	}
 	defer file.Close()
 
-	_, roomsRange, err := rooms.ReadRooms(file, header.Rooms)
+	header, err := sotn.ReadStageHeader(file)
 	if err != nil {
-		return ovl{}, fmt.Errorf("unable to read rooms: %w", err)
+		return ovl{}, err
 	}
 
 	layers, layersRange, err := layer.ReadLayers(file, header.Layers)
@@ -102,12 +68,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	_, spritesRange, err := spritebanks.ReadSpritesBanks(file, psx.RamStageBegin, header.Sprites)
-	if err != nil {
-		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
-	}
-
-	graphics, graphicsRange, err := readGraphics(file, header.Graphics)
+	graphics, graphicsRange, err := graphics2.ReadGraphics(file, header.Graphics)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all graphics: %w", err)
 	}
@@ -119,16 +80,15 @@ func getOvlAssets(fileName string) (ovl, error) {
 		layoutOff = graphicsRange.End() // ⚠️ assumption
 	}
 	nLayouts := 53 // it seems there are always 53 elements?!
-	entityLayouts, layoutsRange, err := layout.ReadEntityLayout(file, layoutOff, nLayouts, true)
+	ovlName := path.Base(path.Dir(fileName))
+	entityLayouts, layoutsRange, err := layout.ReadEntityLayout(file, ovlName, layoutOff, nLayouts, true)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
 	}
 
 	return ovl{
 		ranges: datarange.ConsolidateDataRanges([]datarange.DataRange{
-			roomsRange,
 			layersRange,
-			spritesRange,
 			graphicsRange,
 			layoutsRange[0],
 			layoutsRange[1],
@@ -136,7 +96,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 			tileDefsRange,
 		}),
 		layers:            dataContainer[[]layer.RoomLayers]{dataRange: layersRange, content: layers},
-		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
+		graphics:          dataContainer[graphics2.Gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layout.Layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
 		tileMaps:          dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
@@ -219,51 +179,6 @@ func extract(fileName string, outputDir string) error {
 	return nil
 }
 
-func info(fileName string) error {
-	stHeader, err := getStageHeader(fileName)
-	if err != nil {
-		return fmt.Errorf("unable to retrieve stage info: %w", err)
-	}
-	fmt.Println("asset config hints:")
-	fmt.Printf("  - [0x%X, sprite_banks]\n", stHeader.Sprites.Real(psx.RamStageBegin))
-	fmt.Printf("  - [0x%X, skip]\n", stHeader.Sprites.Sum(24*4).Real(psx.RamStageBegin))
-
-	o, err := getOvlAssets(fileName)
-	if err != nil {
-		return fmt.Errorf("unable to retrieve OVL assets: %w", err)
-	}
-
-	entries := []struct {
-		dataRange datarange.DataRange
-		name      string
-		comment   string
-	}{
-		{o.layers.dataRange, "header", "layers"},
-		{o.layoutsExtraRange, "e_laydef", "layout entries header"},
-		{o.layouts.dataRange, "e_layout", "layout entries data"},
-		{o.tileMaps.dataRange, "tile_data", "tile data"},
-		{o.tileDefs.dataRange, "tile_data", "tile definitions"},
-	}
-
-	fmt.Printf("data coverage: %+v\n", o.ranges)
-	fmt.Println("subsegment hints:")
-	fmt.Println("  - [0x0, .data, header]")
-	for i := 0; i < len(entries); i++ {
-		e := entries[i]
-		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.Begin().Real(psx.RamStageBegin), e.name)
-		if e.comment != "" {
-			s = fmt.Sprintf("%s # %s", s, e.comment)
-		}
-		fmt.Println(s)
-
-		// if there is a gap between the current entry and the next one, mark it as unrecognized data
-		if i == len(entries)-1 || e.dataRange.End() != entries[i+1].dataRange.Begin() {
-			fmt.Printf("  - [0x%X, data]\n", e.dataRange.End().Real(psx.RamStageBegin))
-		}
-	}
-	return nil
-}
-
 func testStuff() {
 	_ = []string{
 		"ARE", "CAT", "CEN", "CHI", "DAI", "DRE", "LIB", "MAD",
@@ -294,13 +209,6 @@ func testStuff() {
 
 func handlerStage(args []string) error {
 	commands := map[string]func(args []string) error{}
-	commands["info"] = func(args []string) error {
-		var stageOvl string
-		extractCmd := flag.NewFlagSet("info", flag.ExitOnError)
-		extractCmd.StringVar(&stageOvl, "stage_ovl", "", "The overlay file to process")
-		extractCmd.Parse(args)
-		return info(stageOvl)
-	}
 	commands["extract"] = func(args []string) error {
 		var stageOvl string
 		var assetDir string
@@ -388,6 +296,7 @@ func main() {
 	commands := map[string]func(args []string) error{
 		"stage":  handlerStage,
 		"config": handlerConfig,
+		"info":   handlerInfo,
 	}
 
 	args := os.Args[1:]
@@ -395,7 +304,7 @@ func main() {
 		command := args[0]
 		if f, found := commands[command]; found {
 			if err := f(args[1:]); err != nil {
-				fmt.Fprintln(os.Stderr, err)
+				_, _ = fmt.Fprintln(os.Stderr, err)
 				os.Exit(1)
 			}
 			return
