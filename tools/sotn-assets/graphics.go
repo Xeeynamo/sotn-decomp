@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 )
 
@@ -59,7 +60,7 @@ func readGraphics(file *os.File, off psx.Addr) (gfx, datarange.DataRange, error)
 	pool[psx.RamNull] = -1
 	blocks := []gfxBlock{}
 	ranges := []datarange.DataRange{}
-	for _, blockOffset := range sortUniqueOffsets(blockOffsets) {
+	for _, blockOffset := range util.SortUniqueOffsets(blockOffsets) {
 		if blockOffset == psx.RamNull { // exception for ST0
 			continue
 		}

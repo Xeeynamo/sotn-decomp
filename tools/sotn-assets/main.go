@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path"
 )
@@ -22,7 +24,7 @@ type ovl struct {
 	ranges            []datarange.DataRange
 	layers            dataContainer[[]roomLayers]
 	graphics          dataContainer[gfx]
-	layouts           dataContainer[layouts]
+	layouts           dataContainer[layout.Layouts]
 	layoutsExtraRange datarange.DataRange
 	tileMaps          dataContainer[map[psx.Addr][]byte]
 	tileDefs          dataContainer[map[psx.Addr]tileDef]
@@ -116,7 +118,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		layoutOff = graphicsRange.End() // ⚠️ assumption
 	}
 	nLayouts := 53 // it seems there are always 53 elements?!
-	entityLayouts, layoutsRange, err := readEntityLayout(file, layoutOff, nLayouts, true)
+	entityLayouts, layoutsRange, err := layout.ReadEntityLayout(file, layoutOff, nLayouts, true)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
 	}
@@ -134,7 +136,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		}),
 		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
-		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
+		layouts:           dataContainer[layout.Layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
 		tileMaps:          dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
 		tileDefs:          dataContainer[map[psx.Addr]tileDef]{dataRange: tileDefsRange, content: tileDefs},
@@ -334,9 +336,9 @@ func handlerStage(args []string) error {
 		if f, found := commands[command]; found {
 			return f(args[1:])
 		}
-		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommands are %s\n", command, joinMapKeys(commands, ", "))
+		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommands are %s\n", command, util.JoinMapKeys(commands, ", "))
 	} else {
-		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommands are %s\n", joinMapKeys(commands, ", "))
+		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommands are %s\n", util.JoinMapKeys(commands, ", "))
 	}
 	os.Exit(1)
 	return nil
@@ -373,9 +375,9 @@ func handlerConfig(args []string) error {
 			}
 			return nil
 		}
-		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommand are %s\n", command, joinMapKeys(commands, ", "))
+		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommand are %s\n", command, util.JoinMapKeys(commands, ", "))
 	} else {
-		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommand are %s\n", joinMapKeys(commands, ", "))
+		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommand are %s\n", util.JoinMapKeys(commands, ", "))
 	}
 	os.Exit(1)
 	return nil
@@ -397,9 +399,9 @@ func main() {
 			}
 			return
 		}
-		fmt.Fprintf(os.Stderr, "unknown command %q. Valid commands are %s\n", command, joinMapKeys(commands, ", "))
+		fmt.Fprintf(os.Stderr, "unknown command %q. Valid commands are %s\n", command, util.JoinMapKeys(commands, ", "))
 	} else {
-		fmt.Fprintf(os.Stderr, "Need a command. Valid commands are %s\n", joinMapKeys(commands, ", "))
+		fmt.Fprintf(os.Stderr, "Need a command. Valid commands are %s\n", util.JoinMapKeys(commands, ", "))
 	}
 	os.Exit(1)
 }
