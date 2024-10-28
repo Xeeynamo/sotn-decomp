@@ -43,11 +43,12 @@ segments:
       - [0x390, data] #e_init
       - [0x510, .data, st_debug]
       - [0x590, data] # e_breakable
-      - [0x5F0, data]
+      - [0x5F0, .data, d_prize_drops]
+      - [0x5FC, data]
       - [0x750, .data, st_update]
       - [0x77C, .data, collision]
       - [0xB3C, .data, e_red_door] # e_red_door
-      - [0xB54, data] # st_common 
+      - [0xB54, .data, st_common] # st_common 
       - [0xD54, data] # e_collect
       - [0x1044, data, e_misc]
       - [0x1160, .data, e_particles]
