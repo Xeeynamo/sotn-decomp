@@ -1984,6 +1984,13 @@ typedef struct {
 
 // ==========================
 
+typedef struct {
+    /* 0x7C */ struct Entity* next;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 offsets[26];
+} ET_MedusaUnk1A;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2152,6 +2159,7 @@ typedef union { // offset=0x7C
     ET_CutscenePhotograph cutscenePhoto;
     ET_ClockTower clockTower;
     ET_BackgroundVortex bgVortex;
+    ET_MedusaUnk1A medusaUnk1A;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
