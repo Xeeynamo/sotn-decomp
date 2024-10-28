@@ -15,6 +15,8 @@ typedef enum {
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0xA,
     /* 0x0B */ E_RELIC_ORB,
     /* 0x11 */ E_MEDUSA,
+    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x18 */ UNK_ENTITY_24 = 24,
     /* 0x19 */ UNK_ENTITY_25,
     /* 0x1A */ UNK_ENTITY_26,
