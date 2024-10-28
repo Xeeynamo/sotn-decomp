@@ -113,7 +113,19 @@ void func_us_801D51EC(void) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5250);
+void func_us_801D5250(void) {
+    Primitive* prim = g_CurrentEntity->ext.prim;
+    Collider collider;
+    s32 i;
+
+    for (i = 0; i < 10; i++) {
+        g_api.CheckCollision(prim->x0, prim->y0 + 3, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            prim->y0 += collider.unk18;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D52E0);
 
