@@ -27,7 +27,7 @@ type layoutEntry struct {
 	YOrder  *int   `json:"yOrder,omitempty"`
 }
 
-type Layouts struct {
+type layouts struct {
 	Entities [][]layoutEntry `json:"entities"`
 	Indices  []int           `json:"indices"`
 }
@@ -113,7 +113,7 @@ func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, err
 // the Y-ordered entries list has a different order than the X-ordered one. The order cannot consistently get
 // restored by just sorting entries by Y as usually entries with the same Y results swapped.
 // This algorithm will fill the optional field YOrder, only useful to restore the original order.
-func hydrateYOrderFields(x Layouts, y Layouts) error {
+func hydrateYOrderFields(x layouts, y layouts) error {
 	if len(x.Indices) != len(y.Indices) {
 		return fmt.Errorf("number of X and Y layout indices do not match")
 	}
@@ -144,16 +144,16 @@ func hydrateYOrderFields(x Layouts, y Layouts) error {
 	return nil
 }
 
-func ReadEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, isX bool) (Layouts, []datarange.DataRange, error) {
+func readEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, isX bool) (layouts, []datarange.DataRange, error) {
 	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
-		return Layouts{}, nil, err
+		return layouts{}, nil, err
 	}
 
 	// there are two copies of the layout, one ordered by X and the other one ordered by Y
 	// we will only read the first one, which is ordered by Y
 	blockOffsets := make([]psx.Addr, count)
 	if err := binary.Read(r, binary.LittleEndian, blockOffsets); err != nil {
-		return Layouts{}, nil, err
+		return layouts{}, nil, err
 	}
 
 	// the order of each layout entry must be preserved
@@ -162,13 +162,13 @@ func ReadEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, 
 	var xRanges []datarange.DataRange
 	for _, blockOffset := range util.SortUniqueOffsets(blockOffsets) {
 		if err := blockOffset.MoveFile(r, psx.RamStageBegin); err != nil {
-			return Layouts{}, nil, err
+			return layouts{}, nil, err
 		}
 		var entries []layoutEntry
 		for {
 			entry, err := readEntityLayoutEntry(r, ovlName)
 			if err != nil {
-				return Layouts{}, nil, err
+				return layouts{}, nil, err
 			}
 			if entry.X == -1 && entry.Y == -1 {
 				entries = append(entries, entry)
@@ -180,7 +180,7 @@ func ReadEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, 
 		// sanity check on the first entry
 		if entries[0].X != -2 || entries[0].Y != -2 {
 			err := fmt.Errorf("first layout entry does not mark the beginning of the array: %v", entries[0])
-			return Layouts{}, nil, err
+			return layouts{}, nil, err
 		}
 
 		pool[blockOffset] = len(blocks)
@@ -190,19 +190,19 @@ func ReadEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, 
 	// the very last entry needs to be aligned by 4
 	xRanges[len(xRanges)-1] = xRanges[len(xRanges)-1].Align4()
 
-	l := Layouts{Entities: blocks}
+	l := layouts{Entities: blocks}
 	for _, blockOffset := range blockOffsets {
 		l.Indices = append(l.Indices, pool[blockOffset])
 	}
 
 	endOfArray := off.Sum(count * 4)
 	if isX { // we want to do the same thing with the vertically aligned layout
-		yLayouts, yRanges, err := ReadEntityLayout(r, ovlName, endOfArray, count, false)
+		yLayouts, yRanges, err := readEntityLayout(r, ovlName, endOfArray, count, false)
 		if err != nil {
-			return Layouts{}, nil, fmt.Errorf("ReadEntityLayout failed on Y: %w", err)
+			return layouts{}, nil, fmt.Errorf("readEntityLayout failed on Y: %w", err)
 		}
 		if err := hydrateYOrderFields(l, yLayouts); err != nil {
-			return Layouts{}, nil, fmt.Errorf("unable to populate YOrder field: %w", err)
+			return layouts{}, nil, fmt.Errorf("unable to populate YOrder field: %w", err)
 		}
 		xMerged := datarange.MergeDataRanges(xRanges)
 		yMerged := yRanges[1]
@@ -215,7 +215,7 @@ func ReadEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, 
 	}
 }
 
-func BuildEntityLayouts(fileName string, outputDir string) error {
+func buildEntityLayouts(fileName string, outputDir string) error {
 	ovlName := path.Base(outputDir)
 
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
@@ -291,7 +291,7 @@ func BuildEntityLayouts(fileName string, outputDir string) error {
 		return err
 	}
 
-	var el Layouts
+	var el layouts
 	if err := json.Unmarshal(data, &el); err != nil {
 		return err
 	}

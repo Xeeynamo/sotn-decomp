@@ -58,13 +58,14 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		return assets.InfoResult{}, err
 	}
 	return assets.InfoResult{
-		AssetEntries: []assets.InfoEntry{
+		AssetEntries: []assets.InfoAssetEntry{
 			{
 				DataRange: datarange.FromAddr(header.Sprites, banksCount*4),
+				Kind:      "sprite_banks",
 				Name:      "sprite_banks",
 			},
 		},
-		SplatEntries: []assets.InfoEntry{
+		SplatEntries: []assets.InfoSplatEntry{
 			{
 				DataRange: dataRange,
 				Name:      "sprites",

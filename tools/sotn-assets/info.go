@@ -22,8 +22,8 @@ func info(w io.Writer, filePath string) error {
 		return fmt.Errorf("unable to read file %q: %s", filePath, err)
 	}
 
-	var assetEntries []assets.InfoEntry
-	var splatEntries []assets.InfoEntry
+	var assetEntries []assets.InfoAssetEntry
+	var splatEntries []assets.InfoSplatEntry
 	for _, h := range handlers {
 		info, err := h.Info(assets.InfoArgs{
 			StageFilePath: filePath,
@@ -42,7 +42,7 @@ func info(w io.Writer, filePath string) error {
 	return nil
 }
 
-func infoAssetEntries(w io.Writer, entries []assets.InfoEntry) {
+func infoAssetEntries(w io.Writer, entries []assets.InfoAssetEntry) {
 	if len(entries) == 0 {
 		return
 	}
@@ -51,12 +51,7 @@ func infoAssetEntries(w io.Writer, entries []assets.InfoEntry) {
 	})
 	_, _ = fmt.Fprintln(w, "  - [0x0, .data, header]")
 	for i, e := range entries {
-		s := fmt.Sprintf("  - [0x%X, %s, %s]", e.DataRange.Begin().Real(psx.RamStageBegin), e.Name, e.Name)
-		if e.Comment != "" {
-			s = fmt.Sprintf("%s # %s", s, e.Comment)
-		}
-		_, _ = fmt.Fprintln(w, s)
-
+		_, _ = fmt.Fprintf(w, "  - [0x%X, %s, %s]\n", e.DataRange.Begin().Real(psx.RamStageBegin), e.Kind, e.Name)
 		// if there is a gap between the current entry and the next one, mark it as unrecognized data
 		if i == len(entries)-1 || e.DataRange.End() != entries[i+1].DataRange.Begin() {
 			_, _ = fmt.Fprintf(w, "  - [0x%X, skip]\n", e.DataRange.End().Real(psx.RamStageBegin))
@@ -64,7 +59,7 @@ func infoAssetEntries(w io.Writer, entries []assets.InfoEntry) {
 	}
 }
 
-func infoSplatEntries(w io.Writer, entries []assets.InfoEntry) {
+func infoSplatEntries(w io.Writer, entries []assets.InfoSplatEntry) {
 	if len(entries) == 0 {
 		return
 	}

@@ -31,14 +31,19 @@ type InfoArgs struct {
 	StageFilePath string
 	StageData     []byte
 }
-type InfoEntry struct {
+type InfoAssetEntry struct {
+	DataRange datarange.DataRange
+	Kind      string
+	Name      string
+}
+type InfoSplatEntry struct {
 	DataRange datarange.DataRange
 	Name      string
 	Comment   string
 }
 type InfoResult struct {
-	AssetEntries []InfoEntry
-	SplatEntries []InfoEntry
+	AssetEntries []InfoAssetEntry
+	SplatEntries []InfoSplatEntry
 }
 type InfoGatherer interface {
 	Info(a InfoArgs) (InfoResult, error)

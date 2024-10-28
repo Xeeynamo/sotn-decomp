@@ -90,13 +90,14 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		return assets.InfoResult{}, err
 	}
 	return assets.InfoResult{
-		AssetEntries: []assets.InfoEntry{
+		AssetEntries: []assets.InfoAssetEntry{
 			{
 				DataRange: dataRange,
+				Kind:      "rooms",
 				Name:      "rooms",
 			},
 		},
-		SplatEntries: []assets.InfoEntry{
+		SplatEntries: []assets.InfoSplatEntry{
 			{
 				DataRange: dataRange,
 				Name:      "rooms",

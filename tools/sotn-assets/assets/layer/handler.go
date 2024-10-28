@@ -53,7 +53,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	}
 
 	return assets.InfoResult{
-		SplatEntries: []assets.InfoEntry{
+		SplatEntries: []assets.InfoSplatEntry{
 			{
 				DataRange: layersRange,
 				Name:      "header",

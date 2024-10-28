@@ -4,9 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	graphics2 "github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/graphics"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
@@ -21,13 +19,10 @@ type dataContainer[T any] struct {
 }
 
 type ovl struct {
-	ranges            []datarange.DataRange
-	layers            dataContainer[[]layer.RoomLayers]
-	graphics          dataContainer[graphics2.Gfx]
-	layouts           dataContainer[layout.Layouts]
-	layoutsExtraRange datarange.DataRange
-	tileMaps          dataContainer[map[psx.Addr][]byte]
-	tileDefs          dataContainer[map[psx.Addr]layer.TileDef]
+	ranges   []datarange.DataRange
+	layers   dataContainer[[]layer.RoomLayers]
+	tileMaps dataContainer[map[psx.Addr][]byte]
+	tileDefs dataContainer[map[psx.Addr]layer.TileDef]
 }
 
 func getOvlAssets(fileName string) (ovl, error) {
@@ -68,39 +63,15 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	graphics, graphicsRange, err := graphics2.ReadGraphics(file, header.Graphics)
-	if err != nil {
-		return ovl{}, fmt.Errorf("unable to gather all graphics: %w", err)
-	}
-
-	layoutOff := header.Layouts
-	if layoutOff == psx.RamNull {
-		// some overlays have this field nulled, we have to find the offset ourselves
-		// it should be usually be right after header.Graphics
-		layoutOff = graphicsRange.End() // ⚠️ assumption
-	}
-	nLayouts := 53 // it seems there are always 53 elements?!
-	ovlName := path.Base(path.Dir(fileName))
-	entityLayouts, layoutsRange, err := layout.ReadEntityLayout(file, ovlName, layoutOff, nLayouts, true)
-	if err != nil {
-		return ovl{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
-	}
-
 	return ovl{
 		ranges: datarange.ConsolidateDataRanges([]datarange.DataRange{
 			layersRange,
-			graphicsRange,
-			layoutsRange[0],
-			layoutsRange[1],
 			tileMapsRange,
 			tileDefsRange,
 		}),
-		layers:            dataContainer[[]layer.RoomLayers]{dataRange: layersRange, content: layers},
-		graphics:          dataContainer[graphics2.Gfx]{dataRange: graphicsRange, content: graphics},
-		layouts:           dataContainer[layout.Layouts]{dataRange: layoutsRange[1], content: entityLayouts},
-		layoutsExtraRange: layoutsRange[0],
-		tileMaps:          dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
-		tileDefs:          dataContainer[map[psx.Addr]layer.TileDef]{dataRange: tileDefsRange, content: tileDefs},
+		layers:   dataContainer[[]layer.RoomLayers]{dataRange: layersRange, content: layers},
+		tileMaps: dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
+		tileDefs: dataContainer[map[psx.Addr]layer.TileDef]{dataRange: tileDefsRange, content: tileDefs},
 	}, nil
 }
 
@@ -115,14 +86,6 @@ func extractOvlAssets(o ovl, outputDir string) error {
 	}
 	if err := os.WriteFile(path.Join(outputDir, "layers.json"), content, 0644); err != nil {
 		return fmt.Errorf("unable to create layers file: %w", err)
-	}
-
-	content, err = json.MarshalIndent(o.layouts.content, "", "  ")
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(path.Join(outputDir, "entity_layouts.json"), content, 0644); err != nil {
-		return fmt.Errorf("unable to create entity layouts file: %w", err)
 	}
 
 	for offset, bytes := range o.tileMaps.content {
