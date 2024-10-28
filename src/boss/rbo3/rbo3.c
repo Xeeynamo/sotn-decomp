@@ -712,7 +712,7 @@ void func_us_801923DC(Entity* self) {
     }
 }
 
-extern EInit D_us_8018042C;
+extern EInit g_EInitParticle;
 extern Unkstruct_80180FE0 D_us_8018071C[];
 
 // Entity ID 0x1B
@@ -723,7 +723,7 @@ void func_us_80192998(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018042C);
+        InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;
