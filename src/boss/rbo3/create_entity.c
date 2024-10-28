@@ -32,5 +32,3 @@ INCLUDE_ASM(
     "boss/rbo3/nonmatchings/create_entity", CreateEntityFromCurrentEntity);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/create_entity", CreateEntityFromEntity);
-
-INCLUDE_ASM("boss/rbo3/nonmatchings/create_entity", EntityIsNearPlayer);

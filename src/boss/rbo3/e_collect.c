@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "rbo3.h"
 
 #include "../../st/prize_drop_fall.h"
@@ -40,8 +39,8 @@ INCLUDE_RODATA("boss/rbo3/nonmatchings/e_collect", D_us_80190F9C);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", EntityPrizeDrop);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", EntityExplosion);
+#include "../../st/entity_explosion.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", BlinkItem);
+#include "../../st/blink_item.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", EntityEquipItemDrop);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "rbo3.h"
 
 INCLUDE_RODATA("boss/rbo3/nonmatchings/e_misc", D_us_80190FDC);
 
@@ -7,11 +7,11 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityRelicOrb);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityHeartDrop);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityMessageBox);
+#include "../../st/entity_message_box.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", CheckColliderOffsets);
+#include "../../st/check_coll_offsets.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityUnkId13);
+#include "../../st/entity_unkId13.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityExplosionVariantsSpawner);
 
@@ -23,24 +23,24 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityGreyPuff);
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityOlroxDrool);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", UnkCollisionFunc5);
+#include "../../st/unk_collision_func5.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", UnkCollisionFunc4);
+#include "../../st/unk_collision_func4.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityIntenseExplosion);
+#include "../../st/entity_intense_explosion.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", InitializeUnkEntity);
+#include "../../st/initialize_unk_entity.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", MakeEntityFromId);
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", MakeExplosions);
+#include "../../st/make_explosions.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", EntityBigRedFireball);
+#include "../../st/entity_big_red_fireball.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", UnkRecursivePrimFunc1);
+#include "../../st/unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", UnkRecursivePrimFunc2);
+#include "../../st/unk_recursive_primfunc_2.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", ClutLerp);
+#include "../../st/clut_lerp.h"
 
-INCLUDE_ASM("boss/rbo3/nonmatchings/e_misc", PlaySfxPositional);
+#include "../../st/play_sfx_positional.h"
