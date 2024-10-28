@@ -103,7 +103,52 @@ void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
     }
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173BD0);
+void func_us_80173BD0(Entity* arg0) {
+    if (abs(arg0->velocityY) > abs(arg0->velocityX)) {
+        if (abs(arg0->velocityY) < 0x8000) {
+            if (arg0->ext.faerieUnk0.unk80 == 1) {
+                arg0->ext.faerieUnk0.unk80 = 0;
+                func_us_80173994(arg0, 0x29);
+            } else if (arg0->ext.faerieUnk0.unk80 == 2) {
+                arg0->ext.faerieUnk0.unk80 = 0;
+                func_us_80173994(arg0, 0xE);
+            }
+        } else if (abs(arg0->velocityY) > 0x10000) {
+            if (arg0->velocityY >= 0) {
+                arg0->ext.faerieUnk0.unk80 = 2;
+                func_us_80173994(arg0, 0xB);
+            } else {
+                arg0->ext.faerieUnk0.unk80 = 2;
+                func_us_80173994(arg0, 0xC);
+            }
+        }
+    } else {
+        if (abs(arg0->velocityX) > 0x9000) {
+            if (arg0->ext.faerieUnk0.unk80 == 0) {
+                arg0->ext.faerieUnk0.unk80 = 1;
+                func_us_80173994(arg0, 0xF);
+            } else if (arg0->ext.faerieUnk0.unk80 == 2) {
+                arg0->ext.faerieUnk0.unk80 = 0;
+                func_us_80173994(arg0, 0xE);
+            }
+        } else if (abs(arg0->velocityX) < 0x6000) {
+            if (arg0->ext.faerieUnk0.unk80 == 1) {
+                arg0->ext.faerieUnk0.unk80 = 0;
+                func_us_80173994(arg0, 0x29);
+            } else if (arg0->ext.faerieUnk0.unk80 == 2) {
+                arg0->ext.faerieUnk0.unk80 = 0;
+                func_us_80173994(arg0, 0xE);
+            }
+        }
+        if (abs(arg0->velocityX) > 0x8000) {
+            if (arg0->velocityX >= 0) {
+                arg0->facingLeft = 1;
+            } else {
+                arg0->facingLeft = 0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173D60);
 

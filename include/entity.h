@@ -610,7 +610,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 pad7c;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 pad80;
+    /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 pad82;
     /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
