@@ -9,13 +9,6 @@ import (
 	"sort"
 )
 
-func handlerInfo(args []string) error {
-	if len(args) != 1 {
-		return fmt.Errorf("usage: sotn-assets info <stage_file_path>")
-	}
-	return info(os.Stdout, args[0])
-}
-
 func info(w io.Writer, filePath string) error {
 	data, err := os.ReadFile(filePath)
 	if err != nil {

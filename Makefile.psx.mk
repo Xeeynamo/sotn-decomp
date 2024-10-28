@@ -21,8 +21,8 @@ extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
-	make extract_assets_hd
-	make build_assets_hd
+	make extract_assets
+	make build_assets
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
@@ -86,14 +86,9 @@ $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgp
 
 extract_assets: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) config extract config/assets.$(VERSION).yaml
-extract_assets_hd: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) config extract config/assets.$(VERSION).yaml
+	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
 build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) config build config/assets.$(VERSION).yaml
-build_assets_hd: $(SOTNASSETS)
-	$(SOTNASSETS) config build config/assets.$(VERSION).yaml
+	$(SOTNASSETS) build config/assets.$(VERSION).yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)

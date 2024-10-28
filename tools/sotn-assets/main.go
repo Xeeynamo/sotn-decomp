@@ -7,6 +7,9 @@ import (
 )
 
 func handlerConfigExtract(args []string) error {
+	if len(args) != 1 {
+		return fmt.Errorf("usage: sotn-assets build <asset_config_path>")
+	}
 	c, err := readConfig(args[0])
 	if err != nil {
 		return err
@@ -15,6 +18,9 @@ func handlerConfigExtract(args []string) error {
 }
 
 func handlerConfigBuild(args []string) error {
+	if len(args) != 1 {
+		return fmt.Errorf("usage: sotn-assets build <asset_config_path>")
+	}
 	c, err := readConfig(args[0])
 	if err != nil {
 		return err
@@ -22,33 +28,18 @@ func handlerConfigBuild(args []string) error {
 	return buildFromConfig(c)
 }
 
-func handlerConfig(args []string) error {
-	commands := map[string]func(args []string) error{
-		"extract": handlerConfigExtract,
-		"build":   handlerConfigBuild,
+func handlerInfo(args []string) error {
+	if len(args) != 1 {
+		return fmt.Errorf("usage: sotn-assets info <stage_file_path>")
 	}
-
-	if len(args) > 0 {
-		command := args[0]
-		if f, found := commands[command]; found {
-			if err := f(args[1:]); err != nil {
-				fmt.Fprintln(os.Stderr, err)
-				os.Exit(1)
-			}
-			return nil
-		}
-		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommand are %s\n", command, util.JoinMapKeys(commands, ", "))
-	} else {
-		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommand are %s\n", util.JoinMapKeys(commands, ", "))
-	}
-	os.Exit(1)
-	return nil
+	return info(os.Stdout, args[0])
 }
 
 func main() {
 	commands := map[string]func(args []string) error{
-		"config": handlerConfig,
-		"info":   handlerInfo,
+		"extract": handlerConfigExtract,
+		"build":   handlerConfigBuild,
+		"info":    handlerInfo,
 	}
 
 	args := os.Args[1:]
