@@ -23,6 +23,8 @@ func TestGatherAssetInfo(t *testing.T) {
 			assert.Contains(t, stdout, "asset config hints:\n")
 			assert.Contains(t, stdout, "  - [0x2C, sprite_banks, sprite_banks]")
 			assert.Contains(t, stdout, "  - [0x8C, skip]")
+			assert.Contains(t, stdout, "  - [0x164, layers, layers]\n")
+			assert.Contains(t, stdout, "  - [0x8EC, layout, entity_layouts]\n")
 			assert.Contains(t, stdout, "  - [0x272C, rooms, rooms]")
 			assert.Contains(t, stdout, "  - [0x2830, skip]")
 			if t.Failed() {
