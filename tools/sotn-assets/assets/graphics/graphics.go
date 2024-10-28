@@ -8,17 +8,17 @@ import (
 	"os"
 )
 
-type gfxKind uint16
+type GfxKind uint16
 
 const (
-	gfxBankNone = gfxKind(iota)
-	gfxBank4bpp
-	gfxBank8bpp
-	gfxBank16bpp
-	gfxBankCompressed
+	GfxBankNone = GfxKind(iota)
+	GfxBank4bpp
+	GfxBank8bpp
+	GfxBank16bpp
+	GfxBankCompressed
 )
 
-type gfxEntry struct {
+type GfxEntry struct {
 	X      uint16
 	Y      uint16
 	Width  uint16
@@ -26,20 +26,20 @@ type gfxEntry struct {
 	Data   psx.Addr
 }
 
-type gfxBlock struct {
-	kind    gfxKind
+type GfxBlock struct {
+	kind    GfxKind
 	flags   uint16
-	entries []gfxEntry
+	entries []GfxEntry
 }
 
-type gfx struct {
-	blocks  []gfxBlock
+type Gfx struct {
+	blocks  []GfxBlock
 	indices []int
 }
 
-func readGraphics(file *os.File, off psx.Addr) (gfx, datarange.DataRange, error) {
+func ReadGraphics(file *os.File, off psx.Addr) (Gfx, datarange.DataRange, error) {
 	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
-		return gfx{}, datarange.DataRange{}, err
+		return Gfx{}, datarange.DataRange{}, err
 	}
 
 	// all the offsets are before the array, so it is easy to find where the offsets array ends
@@ -47,7 +47,7 @@ func readGraphics(file *os.File, off psx.Addr) (gfx, datarange.DataRange, error)
 	for {
 		var offBank psx.Addr
 		if err := binary.Read(file, binary.LittleEndian, &offBank); err != nil {
-			return gfx{}, datarange.DataRange{}, err
+			return Gfx{}, datarange.DataRange{}, err
 		}
 		if offBank >= off {
 			break
@@ -55,27 +55,27 @@ func readGraphics(file *os.File, off psx.Addr) (gfx, datarange.DataRange, error)
 		blockOffsets = append(blockOffsets, offBank)
 	}
 
-	// the order of each gfxBlock must be preserved
+	// the order of each GfxBlock must be preserved
 	pool := map[psx.Addr]int{}
 	pool[psx.RamNull] = -1
-	blocks := []gfxBlock{}
+	blocks := []GfxBlock{}
 	ranges := []datarange.DataRange{}
 	for _, blockOffset := range util.SortUniqueOffsets(blockOffsets) {
 		if blockOffset == psx.RamNull { // exception for ST0
 			continue
 		}
 		if err := blockOffset.MoveFile(file, psx.RamStageBegin); err != nil {
-			return gfx{}, datarange.DataRange{}, err
+			return Gfx{}, datarange.DataRange{}, err
 		}
-		var block gfxBlock
+		var block GfxBlock
 		if err := binary.Read(file, binary.LittleEndian, &block.kind); err != nil {
-			return gfx{}, datarange.DataRange{}, err
+			return Gfx{}, datarange.DataRange{}, err
 		}
 		if err := binary.Read(file, binary.LittleEndian, &block.flags); err != nil {
-			return gfx{}, datarange.DataRange{}, err
+			return Gfx{}, datarange.DataRange{}, err
 		}
 
-		if block.kind == gfxKind(0xFFFF) && block.flags == 0xFFFF { // exception for ST0
+		if block.kind == GfxKind(0xFFFF) && block.flags == 0xFFFF { // exception for ST0
 			pool[blockOffset] = len(blocks)
 			blocks = append(blocks, block)
 			ranges = append(ranges, datarange.FromAddr(blockOffset, 4))
@@ -83,9 +83,9 @@ func readGraphics(file *os.File, off psx.Addr) (gfx, datarange.DataRange, error)
 		}
 
 		for {
-			var entry gfxEntry
+			var entry GfxEntry
 			if err := binary.Read(file, binary.LittleEndian, &entry); err != nil {
-				return gfx{}, datarange.DataRange{}, err
+				return Gfx{}, datarange.DataRange{}, err
 			}
 			if entry.X == 0xFFFF && entry.Y == 0xFFFF {
 				break
@@ -97,7 +97,7 @@ func readGraphics(file *os.File, off psx.Addr) (gfx, datarange.DataRange, error)
 		ranges = append(ranges, datarange.FromAddr(blockOffset, 4+len(block.entries)*12+4))
 	}
 
-	var g gfx
+	var g Gfx
 	for _, blockOffset := range blockOffsets {
 		g.indices = append(g.indices, pool[blockOffset])
 	}
