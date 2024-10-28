@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
@@ -22,12 +23,12 @@ type dataContainer[T any] struct {
 
 type ovl struct {
 	ranges            []datarange.DataRange
-	layers            dataContainer[[]roomLayers]
+	layers            dataContainer[[]layer.RoomLayers]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layout.Layouts]
 	layoutsExtraRange datarange.DataRange
 	tileMaps          dataContainer[map[psx.Addr][]byte]
-	tileDefs          dataContainer[map[psx.Addr]tileDef]
+	tileDefs          dataContainer[map[psx.Addr]layer.TileDef]
 }
 
 type stageHeader struct {
@@ -75,17 +76,17 @@ func getOvlAssets(fileName string) (ovl, error) {
 		return ovl{}, fmt.Errorf("unable to read rooms: %w", err)
 	}
 
-	layers, layersRange, err := readLayers(file, header.Layers)
+	layers, layersRange, err := layer.ReadLayers(file, header.Layers)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to read layers: %w", err)
 	}
 
-	tileMaps, tileMapsRange, err := readAllTileMaps(file, layers)
+	tileMaps, tileMapsRange, err := layer.ReadAllTileMaps(file, layers)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all the tile maps: %w", err)
 	}
 
-	tileDefs, tileDefsRange, err := readAllTiledefs(file, layers)
+	tileDefs, tileDefsRange, err := layer.ReadAllTiledefs(file, layers)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all the tile defs: %w", err)
 	}
@@ -93,7 +94,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.End() < tileDefsRange.Begin() {
 		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := readTiledef(file, offset)
+		unusedTileDef, unusedTileDefRange, err := layer.ReadTiledef(file, offset)
 		if err != nil {
 			return ovl{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
 		}
@@ -134,12 +135,12 @@ func getOvlAssets(fileName string) (ovl, error) {
 			tileMapsRange,
 			tileDefsRange,
 		}),
-		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
+		layers:            dataContainer[[]layer.RoomLayers]{dataRange: layersRange, content: layers},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layout.Layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
 		tileMaps:          dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
-		tileDefs:          dataContainer[map[psx.Addr]tileDef]{dataRange: tileDefsRange, content: tileDefs},
+		tileDefs:          dataContainer[map[psx.Addr]layer.TileDef]{dataRange: tileDefsRange, content: tileDefs},
 	}, nil
 }
 
@@ -165,29 +166,29 @@ func extractOvlAssets(o ovl, outputDir string) error {
 	}
 
 	for offset, bytes := range o.tileMaps.content {
-		fileName := path.Join(outputDir, getTilemapFileName(offset))
+		fileName := path.Join(outputDir, layer.GetTilemapFileName(offset))
 		if err := os.WriteFile(fileName, bytes, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
 	}
 
 	for offset, tileDefsData := range o.tileDefs.content {
-		defs := tileDefPaths{
-			Tiles:      getTiledefIndicesFileName(offset),
-			Pages:      getTiledefPagesFileName(offset),
-			Cluts:      getTiledefClutsFileName(offset),
-			Collisions: getTiledefCollisionsFileName(offset),
+		defs := layer.TileDefPaths{
+			Tiles:      layer.GetTiledefIndicesFileName(offset),
+			Pages:      layer.GetTiledefPagesFileName(offset),
+			Cluts:      layer.GetTiledefClutsFileName(offset),
+			Collisions: layer.GetTiledefCollisionsFileName(offset),
 		}
-		if err := os.WriteFile(path.Join(outputDir, defs.Tiles), tileDefsData.tiles, 0644); err != nil {
+		if err := os.WriteFile(path.Join(outputDir, defs.Tiles), tileDefsData.Tiles, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Tiles, err)
 		}
-		if err := os.WriteFile(path.Join(outputDir, defs.Pages), tileDefsData.pages, 0644); err != nil {
+		if err := os.WriteFile(path.Join(outputDir, defs.Pages), tileDefsData.Pages, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Pages, err)
 		}
-		if err := os.WriteFile(path.Join(outputDir, defs.Cluts), tileDefsData.cluts, 0644); err != nil {
+		if err := os.WriteFile(path.Join(outputDir, defs.Cluts), tileDefsData.Cluts, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Cluts, err)
 		}
-		if err := os.WriteFile(path.Join(outputDir, defs.Collisions), tileDefsData.cols, 0644); err != nil {
+		if err := os.WriteFile(path.Join(outputDir, defs.Collisions), tileDefsData.Cols, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
 		}
 
@@ -195,7 +196,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		if err != nil {
 			return err
 		}
-		fileName := path.Join(outputDir, getTiledefFileName(offset))
+		fileName := path.Join(outputDir, layer.GetTiledefFileName(offset))
 		if err := os.WriteFile(fileName, content, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
