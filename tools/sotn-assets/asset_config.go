@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
@@ -31,19 +34,21 @@ type assetConfig struct {
 	Files []assetFileEntry `yaml:"files"`
 }
 
-var extractHandlers = map[string]func(assets.ExtractEntry) error{
-	"cutscene":     cutscene.Handler.Extract,
-	"rooms":        rooms.Handler.Extract,
-	"sprite_banks": spritebanks.Handler.Extract,
-	"spriteset":    spriteset.Handler.Extract,
-}
-
-var buildHandlers = map[string]func(assets.BuildEntry) error{
-	"cutscene":     cutscene.Handler.Build,
-	"rooms":        rooms.Handler.Build,
-	"sprite_banks": spritebanks.Handler.Build,
-	"spriteset":    spriteset.Handler.Build,
-}
+var handlers = func() map[string]assets.Handler {
+	m := make(map[string]assets.Handler)
+	for _, handler := range []assets.Handler{
+		cutscene.Handler,
+		layer.Handler,
+		layout.Handler,
+		rooms.Handler,
+		skip.Handler,
+		spritebanks.Handler,
+		spriteset.Handler,
+	} {
+		m[handler.Name()] = handler
+	}
+	return m
+}()
 
 func parseArgs(entry []string) (offset int64, kind string, args []string, err error) {
 	if len(entry) < 2 {
@@ -79,7 +84,7 @@ func readConfig(path string) (*assetConfig, error) {
 
 func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
-	handler func(assets.ExtractEntry) error,
+	handler assets.Extractor,
 	assetDir string,
 	name string,
 	data []byte,
@@ -93,7 +98,7 @@ func enqueueExtractAssetEntry(
 				fmt.Printf("unable to extract asset %q: %v", name, err)
 			}
 		}()
-		if err := handler(assets.ExtractEntry{
+		if err := handler.Extract(assets.ExtractArgs{
 			Data:     data,
 			Start:    start,
 			End:      end,
@@ -132,7 +137,7 @@ func extractAssetFile(file assetFileEntry) error {
 				return fmt.Errorf("offset 0x%X should be smaller than 0x%X, asset %v", off, off2, segment.Assets[i-1])
 			}
 			if kind != "skip" {
-				if handler, found := extractHandlers[kind]; found {
+				if handler, found := handlers[kind]; found {
 					name := strconv.FormatUint(uint64(off), 16)
 					if len(args) > 0 {
 						name = args[0]
@@ -155,12 +160,12 @@ func extractAssetFile(file assetFileEntry) error {
 
 func enqueueBuildAssetEntry(
 	eg *errgroup.Group,
-	handler func(assets.BuildEntry) error,
+	handler assets.Builder,
 	assetDir,
 	sourceDir,
 	name string) {
 	eg.Go(func() error {
-		err := handler(assets.BuildEntry{
+		err := handler.Build(assets.BuildArgs{
 			AssetDir: assetDir,
 			SrcDir:   sourceDir,
 			Name:     name,
@@ -199,7 +204,7 @@ func buildAssetFile(file assetFileEntry) error {
 			if kind == "skip" {
 				continue
 			}
-			if handler, found := buildHandlers[kind]; found {
+			if handler, found := handlers[kind]; found {
 				name := strconv.FormatUint(uint64(off), 16)
 				if len(args) > 0 {
 					name = args[0]

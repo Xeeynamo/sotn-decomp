@@ -8,6 +8,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0xDC, layers, layers]
+          - [0x134, skip]
+          - [0x1EC, layout, entity_layouts]
+          - [0x394, skip]
           - [0x1308, rooms, rooms]
           - [0x1334, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
@@ -19,5 +23,9 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0xB8, layers, layers]
+          - [0x1B8, skip]
+          - [0x23C, layout, entity_layouts]
+          - [0x3E4, skip]
           - [0x11B0, rooms, rooms]
           - [0x122C, skip]

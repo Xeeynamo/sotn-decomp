@@ -20,7 +20,7 @@ var Handler = &handler{}
 
 func (h *handler) Name() string { return "cutscene" }
 
-func (h *handler) Extract(e assets.ExtractEntry) error {
+func (h *handler) Extract(e assets.ExtractArgs) error {
 	if e.Start == e.End {
 		return fmt.Errorf("a cutscene script cannot be 0 bytes")
 	}
@@ -56,7 +56,7 @@ type scriptSrc struct {
 	Script [][]string `yaml:"script"`
 }
 
-func (h *handler) Build(e assets.BuildEntry) error {
+func (h *handler) Build(e assets.BuildArgs) error {
 	inFileName := assetPath(e.AssetDir, e.Name)
 	data, err := os.ReadFile(inFileName)
 	if err != nil {
@@ -108,6 +108,10 @@ func (h *handler) Build(e assets.BuildEntry) error {
 		sb.WriteString("),\n")
 	}
 	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()), 0644)
+}
+
+func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
+	return assets.InfoResult{}, nil
 }
 
 func assetPath(dir, name string) string {

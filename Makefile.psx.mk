@@ -21,8 +21,8 @@ extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
-	make extract_assets_hd
-	make build_assets_hd
+	make extract_assets
+	make build_assets
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
@@ -86,36 +86,9 @@ $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgp
 
 extract_assets: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/CEN/CEN.BIN -o assets/st/cen
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/DRE/DRE.BIN -o assets/st/dre
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/NO3/NO3.BIN -o assets/st/no3
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/NP3/NP3.BIN -o assets/st/np3
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/NZ0/NZ0.BIN -o assets/st/nz0
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/BOSS/MAR/MAR.BIN -o assets/boss/mar
-	$(SOTNASSETS) config extract config/assets.$(VERSION).yaml
-extract_assets_hd: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin -o assets/st/cen
-	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin -o assets/st/wrp
-	$(SOTNASSETS) config extract config/assets.$(VERSION).yaml
+	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
 build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
-	$(SOTNASSETS) stage build_all -i assets/st/dre -o src/st/dre/
-	$(SOTNASSETS) stage build_all -i assets/st/no3 -o src/st/no3/
-	$(SOTNASSETS) stage build_all -i assets/st/np3 -o src/st/np3/
-	$(SOTNASSETS) stage build_all -i assets/st/nz0 -o src/st/nz0/
-	$(SOTNASSETS) stage build_all -i assets/st/st0 -o src/st/st0/
-	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
-	$(SOTNASSETS) stage build_all -i assets/st/rwrp -o src/st/rwrp/
-	$(SOTNASSETS) stage build_all -i assets/boss/mar -o src/boss/mar/
-	$(SOTNASSETS) config build config/assets.$(VERSION).yaml
-build_assets_hd: $(SOTNASSETS)
-	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
-	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
-	$(SOTNASSETS) config build config/assets.$(VERSION).yaml
+	$(SOTNASSETS) build config/assets.$(VERSION).yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)

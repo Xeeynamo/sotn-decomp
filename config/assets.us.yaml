@@ -8,6 +8,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0xDC, layers, layers]
+          - [0x134, skip]
+          - [0x1EC, layout, entity_layouts]
+          - [0x394, skip]
           - [0x12D4, rooms, rooms]
           - [0x1300, skip]
           - [0x13F0, cutscene, cutscene_data]
@@ -21,6 +25,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0xE8, layers, layers]
+          - [0x128, skip]
+          - [0x220, layout, entity_layouts]
+          - [0x3C8, skip]
           - [0x1498, rooms, rooms]
           - [0x14AC, skip]
           - [0x16C8, cutscene, cutscene_data]
@@ -34,6 +42,7 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          # TODO broken
           - [0x1130, rooms, rooms]
           - [0x11D4, skip]
   - target: disks/us/ST/NO3/NO3.BIN
@@ -45,6 +54,10 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
+          - [0x1C4, layers, layers]
+          - [0x5A4, skip]
+          - [0x77C, layout, entity_layouts]
+          - [0x924, skip]
           - [0x3CC4, rooms, rooms]
           - [0x3DC8, skip]
           - [0x4CE0, cutscene, cutscene_data]
@@ -58,6 +71,10 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
+          - [0x1D0, layers, layers]
+          - [0x558, skip]
+          - [0x728, layout, entity_layouts]
+          - [0x8D0, skip]
           - [0x3A7C, rooms, rooms]
           - [0x3B68, skip]
   - target: disks/us/ST/NZ0/NZ0.BIN
@@ -69,6 +86,10 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
+          - [0x164, layers, layers]
+          - [0x47C, skip]
+          - [0x8EC, layout, entity_layouts]
+          - [0xA94, skip]
           - [0x272C, rooms, rooms]
           - [0x2830, skip]
           - [0x3B0C, cutscene, cutscene_data]
@@ -82,6 +103,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0x124, layers, layers]
+          - [0x1A4, skip]
+          - [0x314, layout, entity_layouts]
+          - [0x4BC, skip]
           - [0x2060, rooms, rooms]
           - [0x2084, skip]
           - [0x29D8, cutscene, cutscene_data]
@@ -95,6 +120,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0xB8, layers, layers]
+          - [0x1B8, skip]
+          - [0x23C, layout, entity_layouts]
+          - [0x3E4, skip]
           - [0x11AC, rooms, rooms]
           - [0x1228, skip]
   - target: disks/us/ST/RWRP/RWRP.BIN
@@ -106,6 +135,10 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA0, skip]
+          - [0xB8, layers, layers]
+          - [0x1B8, skip]
+          - [0x23C, layout, entity_layouts]
+          - [0x3E4, skip]
           - [0x11AC, rooms, rooms]
           - [0x1228, skip]
   - target: disks/us/BOSS/MAR/MAR.BIN
@@ -117,6 +150,10 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
+          - [0xCC, layers, layers]
+          - [0xF4, skip]
+          - [0x168, layout, entity_layouts]
+          - [0x310, skip]
           - [0x12EC, rooms, rooms]
           - [0x1308, skip]
           - [0x1424, cutscene, cutscene_data]
@@ -130,6 +167,12 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
+          - [0xE0, layers, layers]
+          - [0x108, skip]
+          - [0x1EC, layout, entity_layouts]
+          - [0x394, skip]
+          - [0x126C, rooms, rooms]
+          - [0x1288, skip]
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
