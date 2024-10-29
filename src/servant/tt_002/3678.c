@@ -11,6 +11,17 @@ extern s32 s_zPriority;
 extern FamiliarStats s_FaerieStats;
 extern s32 D_us_8017931C;
 extern s32 D_us_80179320;
+extern s32 D_us_80179310;
+extern s16 D_us_80179314;
+extern s16 D_us_80179318;
+extern s32 s_AllowedAngle;
+extern s32 s_AngleToTarget;
+extern s32 s_DistToTargetLocation;
+extern s16 s_TargetLocOffset_calc;
+extern s32 s_TargetLocationX;
+extern s32 s_TargetLocationX_calc;
+extern s32 s_TargetLocationY;
+extern s32 s_TargetLocationY_calc;
 
 // this may actually be a multi dimensional array instead of a struct
 typedef struct {
@@ -21,6 +32,8 @@ typedef struct {
 extern UnkFaerieStruct D_us_80172368[];
 extern AnimationFrame* D_us_80172B14[];
 
+void func_us_801739C8(Entity*);
+void func_us_80173D60(Entity*);
 void func_us_80173994(Entity*, s32);
 
 void func_us_801739D0(Entity* arg0) {
@@ -37,7 +50,7 @@ void func_us_801739D0(Entity* arg0) {
             arg0->ext.faerie.randomMovementAngle = rand() % 4096;
             arg0->ext.faerie.targetAngle = 0;
             arg0->ext.faerie.unk88 = 8;
-            arg0->ext.faerie.unk8A = 0x20;
+            arg0->ext.faerie.maxAngle = 0x20;
             arg0->step++;
             break;
         case 0xD9:
@@ -59,7 +72,7 @@ void func_us_801739D0(Entity* arg0) {
         case 0xD6:
         case 0xD7:
         case 0xDA:
-        case 0xDB: 
+        case 0xDB:
             arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             func_us_80173994(arg0, 0xE);
@@ -248,7 +261,123 @@ void func_us_801746E8(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174998);
+void func_us_80174998(Entity* self) {
+    g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
+
+    if (D_us_80179320) {
+        self->zPriority = PLAYER.zPriority - 2;
+        s_zPriority = self->zPriority;
+    }
+
+    if (D_8003C708.flags & FLAG_UNK_20) {
+        switch (ServantUnk0()) {
+        case 0:
+            s_TargetLocationX = 0x40;
+            break;
+        case 1:
+            s_TargetLocationX = 0xC0;
+            break;
+        case 2:
+            s_TargetLocationX = self->posX.i.hi > 0x80 ? 0xC0 : 0x40;
+            break;
+        }
+        s_TargetLocationY = 0xA0;
+    } else {
+        s_TargetLocOffset_calc = -0x18;
+        if (PLAYER.facingLeft) {
+            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+        }
+        s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x20;
+        s_AngleToTarget = self->ext.faerie.randomMovementAngle;
+
+        self->ext.faerie.randomMovementAngle += 0x10;
+        self->ext.faerie.randomMovementAngle &= 0xfff;
+        s_DistToTargetLocation = self->ext.faerie.unk88;
+
+        s_TargetLocationX =
+            s_TargetLocationX_calc +
+            ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 0xC);
+        s_TargetLocationY =
+            s_TargetLocationY_calc -
+            ((rsin(s_AngleToTarget) * (s_DistToTargetLocation / 2)) >> 0xC);
+    }
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        self->ext.faerie.unk80 = 0;
+        func_us_80173994(self, 0xE);
+
+        D_us_80179310 = g_Status.hp;
+        D_us_80179314 = 0;
+        D_us_80179318 = 0;
+        self->ext.faerie.unkCounter = 0;
+        break;
+    case 1:
+        s_AngleToTarget = (s16)CalculateAngleToEntity(
+            self, (s16)s_TargetLocationX, (s16)s_TargetLocationY);
+        s_AllowedAngle = (s16)GetTargetPositionWithDistanceBuffer(
+            (s16)s_AngleToTarget, self->ext.faerie.targetAngle,
+            self->ext.faerie.maxAngle);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+
+        if (s_DistToTargetLocation < 0x28) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 3);
+            self->velocityX = rcos(s_AllowedAngle) << 3;
+            self->ext.faerie.maxAngle = 0x20;
+        } else if (s_DistToTargetLocation < 0x3C) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 4);
+            self->velocityX = rcos(s_AllowedAngle) << 4;
+            self->ext.faerie.maxAngle = 0x40;
+        } else if (s_DistToTargetLocation < 0x64) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 5);
+            self->velocityX = rcos(s_AllowedAngle) << 5;
+            self->ext.faerie.maxAngle = 0x60;
+        } else if (s_DistToTargetLocation < 0x100) {
+            self->velocityY = -(rsin(s_AllowedAngle) << 6);
+            self->velocityX = rcos(s_AllowedAngle) << 6;
+            self->ext.faerie.maxAngle = 0x80;
+        } else {
+            self->velocityX = (s_TargetLocationX - self->posX.i.hi) << 0xE;
+            self->velocityY = (s_TargetLocationY - self->posY.i.hi) << 0xE;
+            self->ext.faerie.maxAngle = 0x80;
+        }
+
+        func_us_80173BD0(self);
+
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+
+        if (!g_CutsceneHasControl && !IsMovementAllowed(1) &&
+            !CheckAllEntitiesValid() && !(D_8003C708.flags & FLAG_UNK_20)) {
+            self->ext.faerie.unkCounter += 1;
+        } else {
+            self->ext.faerie.unkCounter = 0;
+        }
+        if (self->ext.faerie.unkCounter > 0x708) {
+            self->entityId = 0xDA;
+            self->step = 0;
+            return;
+        }
+        if (D_us_8017931C >= 2) {
+            self->entityId = 0xDB;
+            self->step = 0;
+            self->params = D_us_8017931C - 2;
+        }
+        break;
+    }
+
+    ProcessEvent(self, false);
+
+    if (!g_CutsceneHasControl) {
+        func_us_80173D60(self);
+    }
+    func_us_801739C8(self);
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174F0C);
 
