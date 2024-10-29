@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"hash/fnv"
 	"io"
@@ -32,58 +33,17 @@ type layouts struct {
 	Indices  []int           `json:"indices"`
 }
 
-func fetchEntityIDsFromHFile(overlay string) (map[int]string, error) {
-	// Get the EntityIDs enum from the .h file and invert it to get a lookup table
-	// Keys are integers, values are the names from the enum.
-	hFile, err := os.ReadFile("src/st/" + overlay + "/" + overlay + ".h")
+func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
+	f, err := os.Open("src/st/" + overlay + "/" + overlay + ".h")
 	if err != nil {
 		return nil, err
 	}
-	lines := strings.Split(string(hFile), "\n")
-	// Extract all the lines that are part of the enum.
-	// Do this by searching for the first "EntityIDs" (in typedef enum EntityIDs {)
-	// and the last "EntityIDs" (in } EntityIDs;)
-	var enumData []string
-	inEnum := false
-	for _, line := range lines {
-		if strings.Contains(line, "EntityIDs") {
-			if inEnum {
-				break
-			} else {
-				inEnum = true
-			}
-		} else if inEnum {
-			enumData = append(enumData, line)
-		}
-	}
-	// Now we have the enum's lines loaded. Iterate through populating a map.
-	entityNames := make(map[int]string, 255)
-	// Increments in the enum, updates if enum has a direct assign
-	index := -1 // start at -1 so first increment takes it to 0 to begin
-	for _, line := range enumData {
-		line = strings.Split(line, ",")[0] // go up to the comma
-		parts := strings.Split(line, " = ")
-		if len(parts) > 1 {
-			hexVal := strings.Replace(parts[1], "0x", "", -1)
-			// Windows nonsense, remove any \r that exists
-			hexVal = strings.Replace(hexVal, "\r", "", -1)
-			parsed, err := strconv.ParseInt(hexVal, 16, 16)
-			if err != nil {
-				return nil, err
-			}
-			index = int(parsed)
-		} else {
-			index++
-		}
-		parts = strings.Split(parts[0], " ")
-		name := parts[len(parts)-1]
-		entityNames[index] = name
-	}
-	return entityNames, nil
+	defer f.Close()
+	return sotn.ParseCEnum(f, "EntityIDs")
 }
 
 func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {
-	entityIDs, _ := fetchEntityIDsFromHFile(ovlName)
+	entityIDs, _ := fetchEntityIDsFromHeaderFile(ovlName)
 
 	bs := make([]byte, 10)
 	if _, err := io.ReadFull(file, bs); err != nil {
