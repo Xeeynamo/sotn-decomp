@@ -8,7 +8,7 @@ import (
 
 func handlerConfigExtract(args []string) error {
 	if len(args) != 1 {
-		return fmt.Errorf("usage: sotn-assets build <asset_config_path>")
+		return fmt.Errorf("usage: sotn-assets extract <asset_config_path>")
 	}
 	c, err := readConfig(args[0])
 	if err != nil {
