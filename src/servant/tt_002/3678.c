@@ -24,7 +24,7 @@ extern AnimationFrame* D_us_80172B14[];
 void func_us_80173994(Entity*, s32);
 
 void func_us_801739D0(Entity* arg0) {
-    if (!arg0->ext.faerieUnk0.unk7E) {
+    if (!arg0->ext.faerie.unk7E) {
 
         switch (arg0->entityId) {
         case 0xD1:
@@ -34,10 +34,10 @@ void func_us_801739D0(Entity* arg0) {
 
             func_us_80173994(arg0, 0xE);
 
-            arg0->ext.faerieUnk0.unk84 = rand() % 4096;
-            arg0->ext.faerieUnk0.unk86 = 0;
-            arg0->ext.faerieUnk0.unk88 = 8;
-            arg0->ext.faerieUnk0.unk8A = 0x20;
+            arg0->ext.faerie.randomMovementAngle = rand() % 4096;
+            arg0->ext.faerie.targetAngle = 0;
+            arg0->ext.faerie.unk88 = 8;
+            arg0->ext.faerie.unk8A = 0x20;
             arg0->step++;
             break;
         case 0xD9:
@@ -50,7 +50,7 @@ void func_us_801739D0(Entity* arg0) {
     } else {
         switch (arg0->entityId) {
         case 0xD1:
-            arg0->ext.faerieUnk0.unk96 = 0x78;
+            arg0->ext.faerie.unk96 = 0x78;
             // fallthrough
         case 0xD2:
         case 0xD3:
@@ -59,7 +59,7 @@ void func_us_801739D0(Entity* arg0) {
         case 0xD6:
         case 0xD7:
         case 0xDA:
-        case 0xDB:
+        case 0xDB: 
             arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             func_us_80173994(arg0, 0xE);
@@ -71,7 +71,7 @@ void func_us_801739D0(Entity* arg0) {
             arg0->step++;
         }
     }
-    arg0->ext.faerieUnk0.unk7E = arg0->entityId;
+    arg0->ext.faerie.unk7E = arg0->entityId;
     D_us_8017931C = 0;
 }
 
@@ -106,37 +106,37 @@ void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
 void func_us_80173BD0(Entity* arg0) {
     if (abs(arg0->velocityY) > abs(arg0->velocityX)) {
         if (abs(arg0->velocityY) < FIX(0.5)) {
-            if (arg0->ext.faerieUnk0.unk80 == 1) {
-                arg0->ext.faerieUnk0.unk80 = 0;
+            if (arg0->ext.faerie.unk80 == 1) {
+                arg0->ext.faerie.unk80 = 0;
                 func_us_80173994(arg0, 0x29);
-            } else if (arg0->ext.faerieUnk0.unk80 == 2) {
-                arg0->ext.faerieUnk0.unk80 = 0;
+            } else if (arg0->ext.faerie.unk80 == 2) {
+                arg0->ext.faerie.unk80 = 0;
                 func_us_80173994(arg0, 0xE);
             }
         } else if (abs(arg0->velocityY) > FIX(1)) {
             if (arg0->velocityY >= 0) {
-                arg0->ext.faerieUnk0.unk80 = 2;
+                arg0->ext.faerie.unk80 = 2;
                 func_us_80173994(arg0, 0xB);
             } else {
-                arg0->ext.faerieUnk0.unk80 = 2;
+                arg0->ext.faerie.unk80 = 2;
                 func_us_80173994(arg0, 0xC);
             }
         }
     } else {
         if (abs(arg0->velocityX) > FIX(0.5625)) {
-            if (arg0->ext.faerieUnk0.unk80 == 0) {
-                arg0->ext.faerieUnk0.unk80 = 1;
+            if (arg0->ext.faerie.unk80 == 0) {
+                arg0->ext.faerie.unk80 = 1;
                 func_us_80173994(arg0, 0xF);
-            } else if (arg0->ext.faerieUnk0.unk80 == 2) {
-                arg0->ext.faerieUnk0.unk80 = 0;
+            } else if (arg0->ext.faerie.unk80 == 2) {
+                arg0->ext.faerie.unk80 = 0;
                 func_us_80173994(arg0, 0xE);
             }
         } else if (abs(arg0->velocityX) < FIX(0.375)) {
-            if (arg0->ext.faerieUnk0.unk80 == 1) {
-                arg0->ext.faerieUnk0.unk80 = 0;
+            if (arg0->ext.faerie.unk80 == 1) {
+                arg0->ext.faerie.unk80 = 0;
                 func_us_80173994(arg0, 0x29);
-            } else if (arg0->ext.faerieUnk0.unk80 == 2) {
-                arg0->ext.faerieUnk0.unk80 = 0;
+            } else if (arg0->ext.faerie.unk80 == 2) {
+                arg0->ext.faerie.unk80 = 0;
                 func_us_80173994(arg0, 0xE);
             }
         }
@@ -276,15 +276,15 @@ void func_us_80176B6C(Entity* self) {
 
     if (!self->step) {
         func_us_801739D0(self);
-        self->ext.faerie.unk7C = &thisFamiliar;
+        self->ext.faerieUnk0.unk7C = &thisFamiliar;
         self->step += 1;
     }
-    self->posX.val = self->ext.faerie.unk7C->posX.val;
-    self->posY.val = self->ext.faerie.unk7C->posY.val;
-    self->facingLeft = self->ext.faerie.unk7C->facingLeft;
+    self->posX.val = self->ext.faerieUnk0.unk7C->posX.val;
+    self->posY.val = self->ext.faerieUnk0.unk7C->posY.val;
+    self->facingLeft = self->ext.faerieUnk0.unk7C->facingLeft;
 
     for (i = 6; i <= 0x2D; i++) {
-        if (self->ext.faerie.unk7C->anim == D_us_80172B14[i])
+        if (self->ext.faerieUnk0.unk7C->anim == D_us_80172B14[i])
             break;
     }
 

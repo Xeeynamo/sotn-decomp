@@ -602,23 +602,25 @@ typedef struct {
     /* 0xA2 */ struct Entity* attackTarget;
 } ET_Ghost;
 
+// There appears to be a 2nd Ext used in the Faerie code
 typedef struct {
     /* 0x7C */ struct Entity* unk7C;
-} ET_Faerie;
+} ET_FaerieUnk0;
 
-// There appears to be a 2nd Ext used in the Faerie code
 typedef struct {
     /* 0x7C */ s16 pad7c;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 pad82;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 unk86;
+    /* 0x84 */ s16 randomMovementAngle;
+    /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ s16 pad8C[5];
     /* 0x96 */ s16 unk96;
-} ET_FaerieUnk0;
+    /* 0x98 */ s16 pad98[4];
+    /* 0xA0 */ s16 unkCounter;
+} ET_Faerie;
 
 struct draculaPrimitive;
 typedef struct ET_Dracula {
