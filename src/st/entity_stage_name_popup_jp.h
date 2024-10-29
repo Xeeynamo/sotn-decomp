@@ -80,7 +80,7 @@ void EntityStageNamePopup(Entity* self) {
         prim = prim->next;
         prim = prim->next;
         self->ext.stpopupj.unk84 = prim;
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim->tpage = 0x1A;
         prim->clut = 0x15F;
         prim->u0 = 0;

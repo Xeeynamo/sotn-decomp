@@ -644,7 +644,7 @@ void EntityBatEcho(Entity* self) {
         prim = (Primitive*)&g_PrimBuf[self->primIndex];
         self->ext.batEcho.unk84 = prim;
         for (i = 0; i < 0x11; i++) {
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             prim->drawMode = DRAW_HIDE;
             prim->y2 = D_800B0884[i];
             prim->x2 = (i * 3) + 1;
@@ -765,7 +765,7 @@ void EntityBatEcho(Entity* self) {
         prim->b1 = temp->b1 =
             (-unkstruct->unk10 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
 
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim = prim->next;
         *(s32*)&prim->x0 = *(s32*)&temp->x0;
         *(s32*)&prim->x1 = *(s32*)&temp->x1;
@@ -776,7 +776,7 @@ void EntityBatEcho(Entity* self) {
         prim->y2 = var_s6;
         var_s6 = temp->y1 + unkstruct->unk8;
         prim->y3 = var_s6;
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim = prim->next;
     }
 }

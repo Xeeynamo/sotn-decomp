@@ -804,7 +804,7 @@ void EntityHitByIce(Entity* self) {
                 prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
                                  DRAW_COLORS | DRAW_TRANSP;
             }
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->priority = PLAYER.zPriority + 2;
             prim = prim->next;
         }
