@@ -36,6 +36,11 @@ void func_us_801739C8(Entity*);
 void func_us_80173D60(Entity*);
 void func_us_80173994(Entity*, s32);
 
+static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
+static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
+static s16 GetTargetPositionWithDistanceBuffer(
+    s16 currentX, s16 targetX, s16 distanceBuffer);
+
 void func_us_801739D0(Entity* arg0) {
     if (!arg0->ext.faerie.unk7E) {
 
@@ -314,10 +319,10 @@ void func_us_80174998(Entity* self) {
         self->ext.faerie.unkCounter = 0;
         break;
     case 1:
-        s_AngleToTarget = (s16)CalculateAngleToEntity(
-            self, (s16)s_TargetLocationX, (s16)s_TargetLocationY);
-        s_AllowedAngle = (s16)GetTargetPositionWithDistanceBuffer(
-            (s16)s_AngleToTarget, self->ext.faerie.targetAngle,
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle,
             self->ext.faerie.maxAngle);
         self->ext.faerie.targetAngle = s_AllowedAngle;
 
