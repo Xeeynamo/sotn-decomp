@@ -105,7 +105,7 @@ void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
 
 void func_us_80173BD0(Entity* arg0) {
     if (abs(arg0->velocityY) > abs(arg0->velocityX)) {
-        if (abs(arg0->velocityY) < 0x8000) {
+        if (abs(arg0->velocityY) < FIX(0.5)) {
             if (arg0->ext.faerieUnk0.unk80 == 1) {
                 arg0->ext.faerieUnk0.unk80 = 0;
                 func_us_80173994(arg0, 0x29);
@@ -113,7 +113,7 @@ void func_us_80173BD0(Entity* arg0) {
                 arg0->ext.faerieUnk0.unk80 = 0;
                 func_us_80173994(arg0, 0xE);
             }
-        } else if (abs(arg0->velocityY) > 0x10000) {
+        } else if (abs(arg0->velocityY) > FIX(1)) {
             if (arg0->velocityY >= 0) {
                 arg0->ext.faerieUnk0.unk80 = 2;
                 func_us_80173994(arg0, 0xB);
@@ -123,7 +123,7 @@ void func_us_80173BD0(Entity* arg0) {
             }
         }
     } else {
-        if (abs(arg0->velocityX) > 0x9000) {
+        if (abs(arg0->velocityX) > FIX(0.5625)) {
             if (arg0->ext.faerieUnk0.unk80 == 0) {
                 arg0->ext.faerieUnk0.unk80 = 1;
                 func_us_80173994(arg0, 0xF);
@@ -131,7 +131,7 @@ void func_us_80173BD0(Entity* arg0) {
                 arg0->ext.faerieUnk0.unk80 = 0;
                 func_us_80173994(arg0, 0xE);
             }
-        } else if (abs(arg0->velocityX) < 0x6000) {
+        } else if (abs(arg0->velocityX) < FIX(0.375)) {
             if (arg0->ext.faerieUnk0.unk80 == 1) {
                 arg0->ext.faerieUnk0.unk80 = 0;
                 func_us_80173994(arg0, 0x29);
@@ -140,7 +140,7 @@ void func_us_80173BD0(Entity* arg0) {
                 func_us_80173994(arg0, 0xE);
             }
         }
-        if (abs(arg0->velocityX) > 0x8000) {
+        if (abs(arg0->velocityX) > FIX(0.5)) {
             if (arg0->velocityX >= 0) {
                 arg0->facingLeft = 1;
             } else {
