@@ -3,11 +3,14 @@ use std::io::{BufRead, BufReader, Write};
 
 mod fixed;
 mod line_transformer;
+mod enum_statement;
+mod enum_line_transformer;
 mod bit_flag_line_transformer;
 mod relics;
 mod drawmodes;
 mod flags;
 mod drawflags;
+mod primitive_type;
 
 use line_transformer::LineTransformer;
 use fixed::FixedTransformer;
@@ -15,6 +18,7 @@ use relics::RelicsTransformer;
 use drawmodes::DrawModeTransformer;
 use flags::FlagsTransformer;
 use drawflags::DrawFlagsTransformer;
+use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
 
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>) -> usize {
@@ -56,6 +60,7 @@ fn process_directory(dir_path: &str) {
     let draw_mode_transformer = DrawModeTransformer::new();
     let flags_transformer = FlagsTransformer::new();
     let draw_flags_transformer = DrawFlagsTransformer::new();
+    let primitive_type_transformer = PrimitiveTypeTransformer::new();
 
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
@@ -63,6 +68,7 @@ fn process_directory(dir_path: &str) {
         Box::new(draw_mode_transformer),
         Box::new(flags_transformer),
         Box::new(draw_flags_transformer),
+        Box::new(primitive_type_transformer),
         ];
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");

@@ -842,7 +842,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
                 (s32*)&prim->x1, &sp78, &sp7C, &sp80);
         }
         func_801072DC(prim);
-        prim->type = 5;
+        prim->type = PRIM_GT3;
         if (sp7C >= 0xF0) {
             continue;
         }
@@ -953,7 +953,7 @@ void func_80105078(s32 arg0, s32 arg1) {
             RotAverage3(&sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0,
                         (s32*)&prim->x2, (s32*)&prim->x1, &sp78, &sp80);
         }
-        prim->type = 2;
+        prim->type = PRIM_LINE_G2;
         if (sp7C < 0xF0) {
             if (temp_v0_4 >= 0) {
                 prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 3;

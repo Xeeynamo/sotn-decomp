@@ -9,6 +9,7 @@ use num::Unsigned;
 use regex::Regex;
 
 use crate::line_transformer::LineTransformer;
+use crate::enum_statement::EnumStatementMatcher;
 
 pub trait EnumValue: Unsigned + 'static + Sync + Eq + Ord + PrimInt + FromStr { }
 
@@ -69,9 +70,8 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
         let mut _enum_values: Vec<&'static (U, &'static str)> = Vec::new();
         _enum_values.extend_from_slice(&enum_values[..]);
         _enum_values.sort_by(|(a, _), (b, _)| b.cmp(a));
-        let pattern = format!(r"([.>]{}\s*((?:(?:[&|=!^~]?)=)|(?:[&|^]))\s*)([~]?)((?:0x[A-Fa-f0-9]+)|0|(?:[1-9][0-9]*))([;),? ])", field_name.to_string());
-        let regex = Regex::new(&pattern).unwrap();
 
+        let regex = EnumStatementMatcher::new(None, field_name).regex().clone();
         let safe_mask: U = enum_values.iter().fold(U::zero(), |mask, (bit, _)| mask | *bit);
 
         Self {
@@ -108,6 +108,7 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
                 field_value = !field_value;
             }
 
+            // if more than half the bits are set, use the inverted value
             let invert: String;
             if field_value.count_ones() > ((size_of::<U>() as u32) * 8 / 2) {
                 invert = "~".to_string();

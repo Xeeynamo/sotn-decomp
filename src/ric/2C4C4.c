@@ -2011,7 +2011,7 @@ void RicEntitySubwpnAgunea(Entity* self) {
                 PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
             self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
             prim = &g_PrimBuf[self->primIndex];
-            prim->type = 2;
+            prim->type = PRIM_LINE_G2;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                              DRAW_TPAGE | DRAW_TRANSP;

@@ -43,11 +43,11 @@ static u8 SetCutsceneScript(u8* script) {
     prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[5] = prim->next;
 
-    prim->type = 4;
+    prim->type = PRIM_GT4;
     prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
-    prim->type = 3;
+    prim->type = PRIM_G4;
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
@@ -57,7 +57,7 @@ static u8 SetCutsceneScript(u8* script) {
     prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
-    prim->type = 1;
+    prim->type = PRIM_TILE;
     prim->x0 = 3;
     prim->y0 = 0x2F;
     prim->v0 = 0x4A;

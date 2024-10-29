@@ -1681,7 +1681,7 @@ s32 func_800EDB58(u8 primType, s32 count) {
     isLooping = 1;
     while (isLooping) {
         var_v1--;
-        if (prim->type != 0) {
+        if (prim->type != PRIM_NONE) {
             var_v1 = i;
             primStartIdx = var_v1 + 1;
             var_v1 = count;
@@ -1760,7 +1760,7 @@ s32 func_800EDD9C(u8 type, s32 count) {
     i = LEN(g_PrimBuf) - 1;
 
     while (i >= 0) {
-        if (prim->type == 0) {
+        if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
                 prim->type = type;

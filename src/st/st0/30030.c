@@ -188,7 +188,7 @@ void PrologueScroll(void) {
         }
 
         for (i = 0; i < 4; i++) {
-            prim->type = 4;
+            prim->type = PRIM_GT4;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x80;
 

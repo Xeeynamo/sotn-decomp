@@ -40,13 +40,13 @@ void EntityTeleport(Entity* self) {
             prim->y0 = 0;
             prim->u0 = 0xC0;
             prim->v0 = 0xF0;
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             prim->priority = 0x1FD;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
             prim = prim->next;
         }
         for (i = 0; i < 2; i++) {
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->priority = 0x1F8;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
@@ -863,7 +863,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 }
                 fakeprim->velocityY.val = -((rand() * 2) + FIX(2.5));
                 fakeprim->drawMode = DRAW_HIDE | DRAW_UNK02;
-                fakeprim->type = 1;
+                fakeprim->type = PRIM_TILE;
             } else {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 =
                     (rand() & 0xF) | 0x30;
@@ -885,7 +885,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 prim->y1 = posY + D_800B0658[arrIndex][3];
                 prim->x3 = prim->x2 = posX + D_800B0658[arrIndex][4];
                 prim->y3 = prim->y2 = posY + D_800B0658[arrIndex][5];
-                prim->type = 3;
+                prim->type = PRIM_G4;
                 prim->priority = PLAYER.zPriority + 2;
             }
         }
@@ -2166,7 +2166,7 @@ void EntitySubwpnAgunea(Entity* self) {
                 PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
             self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
             prim = &g_PrimBuf[self->primIndex];
-            prim->type = 2;
+            prim->type = PRIM_LINE_G2;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                              DRAW_TPAGE | DRAW_TRANSP;
@@ -2510,7 +2510,7 @@ void func_80129864(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 8; i++) {
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             prim->u0 = 1;
             prim->v0 = 1;
             prim->drawMode = DRAW_UNK02;
@@ -2755,7 +2755,7 @@ void EntitySummonSpirit(Entity* self) {
         selfY = self->posY.i.hi;
         prim = &g_PrimBuf[self->primIndex];
 
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
         prim->x2 = prim->x0 = selfX - 0x20;
         prim->x3 = prim->x1 = selfX + 0x1F;
