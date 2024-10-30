@@ -41,6 +41,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c]
+      - [0x1E50, c]
       - [0x3650, c]
       - [0x65E0, c]
       - [0x67F0, c]
