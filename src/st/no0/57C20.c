@@ -20,7 +20,7 @@ void func_us_801D7C20(Entity* self) {
         GetDistanceToPlayerX();
         self->velocityX = self->facingLeft ? FIX(1.75) : -FIX(1.75);
         self->velocityY = 0;
-        self->drawFlags = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
     }
 }
 
