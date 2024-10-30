@@ -4,7 +4,7 @@ options:
   base_path:    ..
   build_path:   build/pspeu
   target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
-  asm_path:     asm/pspeu/dra
+  asm_path:     asm/pspeu/dra_psp
   asset_path:   assets/dra_psp
   src_path:     src/dra_psp
   ld_script_path: build/pspeu/dra.ld
@@ -31,7 +31,7 @@ options:
     .set noreorder /* don't insert nops after branches */
     .include "macro.inc"
 segments:
-  - [0x0, bin, header]
+  - [0x0, bin, mwo_header]
   - name: dra
     type: code
     start: 0x00000080

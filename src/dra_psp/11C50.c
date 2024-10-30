@@ -12,12 +12,12 @@ void func_psp_090ED060();
 void func_psp_090E0F00();
 void func_psp_090ED058();
 
-INCLUDE_ASM("dra/nonmatchings/11C50", func_psp_090EE5D0);
+INCLUDE_ASM("dra_psp/nonmatchings/11C50", func_psp_090EE5D0);
 
-INCLUDE_ASM("dra/nonmatchings/11C50", func_psp_090EEA88);
+INCLUDE_ASM("dra_psp/nonmatchings/11C50", func_psp_090EEA88);
 
-INCLUDE_ASM("dra/nonmatchings/11C50", func_psp_090EEDF8);
+INCLUDE_ASM("dra_psp/nonmatchings/11C50", func_psp_090EEDF8);
 
-INCLUDE_ASM("dra/nonmatchings/11C50", func_psp_090EEE78);
+INCLUDE_ASM("dra_psp/nonmatchings/11C50", func_psp_090EEE78);
 
-INCLUDE_ASM("dra/nonmatchings/11C50", func_psp_090EEFA8);
+INCLUDE_ASM("dra_psp/nonmatchings/11C50", func_psp_090EEFA8);

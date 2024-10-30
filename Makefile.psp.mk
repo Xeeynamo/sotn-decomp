@@ -67,7 +67,9 @@ $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CON
 	$(SPLAT_PIP) $<
 
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $$(call list_o_files_psp,dra_psp)
-	$(call link,dra_psp,$@)
+	$(info COWABUNGA)
+	$(info $(ASM_DIR)/dra_psp/data)
+	$(call link,dra,$@)
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
