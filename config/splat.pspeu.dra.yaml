@@ -1,31 +1,31 @@
 options:
-  platform:     psp
-  basename:     dra
-  base_path:    ..
-  build_path:   build/pspeu
-  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
-  asm_path:     asm/pspeu/dra_psp
-  asset_path:   assets/dra_psp
-  src_path:     src/dra_psp
+  platform: psp
+  basename: dra
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
+  asm_path: asm/pspeu/dra_psp
+  asset_path: assets/dra_psp
+  src_path: src/dra_psp
   ld_script_path: build/pspeu/dra.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.dra.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.dra.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.dra.txt
-  find_file_boundaries: yes
-  use_legacy_include_asm: no
-  migrate_rodata_to_functions: no
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.dra.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
-  symbol_name_format : psp_$VRAM
+  symbol_name_format: psp_$VRAM
   section_order:
-    - ".text"
-    - ".data"
-    - ".rodata"
-    - ".bss"
-  ld_bss_is_noload: True
-  disasm_unknown: True
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
@@ -34,7 +34,7 @@ segments:
   - [0x0, bin, mwo_header]
   - name: dra
     type: code
-    start: 0x00000080
+    start: 0x80
     vram:  0x090DCA00
     bss_size: 0x6BF80
     align: 128
