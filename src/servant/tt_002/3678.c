@@ -444,7 +444,150 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177958);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177AC4);
+// It's likely that this Entity uses a different extension as
+// randomMovementAngle and targetAngle don't make sense
+// but I need more context to get it right.
+void func_us_80177AC4(Entity* arg0) {
+    Primitive* currentPrim;
+    s32 i;
+    s32 var_v1;
+
+    switch (arg0->step) {
+    case 0:
+        arg0->primIndex = g_api.AllocPrimitives(PRIM_G4, 10);
+        if (arg0->primIndex == -1) {
+            DestroyEntity(arg0);
+            return;
+        }
+        arg0->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        arg0->posX.i.hi += arg0->facingLeft ? -4 : 4;
+
+        currentPrim = &g_PrimBuf[arg0->primIndex];
+
+        currentPrim->r1 = currentPrim->r3 = currentPrim->g1 = currentPrim->g3 =
+            currentPrim->b1 = currentPrim->b3 = 0xFF;
+        currentPrim->priority = 0x1C0;
+        currentPrim->drawMode =
+            FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
+            FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
+
+        currentPrim = currentPrim->next;
+
+        currentPrim->r1 = currentPrim->r3 = currentPrim->g1 = currentPrim->g3 =
+            currentPrim->b1 = currentPrim->b3 = 0xFF;
+        currentPrim->priority = 0x1C0;
+        currentPrim->drawMode =
+            FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
+            FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
+
+        for (i = 0; i < 8; i++) {
+            currentPrim = currentPrim->next;
+            currentPrim->x0 = currentPrim->x1 = arg0->posX.i.hi;
+            currentPrim->y0 = currentPrim->y1 = 0;
+            currentPrim->x2 = arg0->posX.i.hi + ((rcos(i << 8) * 0x60) >> 0xC);
+            currentPrim->x3 =
+                arg0->posX.i.hi + ((rcos((i + 1) << 8) * 0x60) >> 0xC);
+            currentPrim->y2 = (rsin(i << 8) * 3) << 5 >> 0xC;
+            currentPrim->y3 = (rsin((i + 1) << 8) * 3) << 5 >> 0xC;
+            currentPrim->priority = 0x1C0;
+            currentPrim->drawMode =
+                FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
+                FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
+        }
+        arg0->ext.faerie.unk80 = 0x10;
+        arg0->ext.faerie.unk82 = 0;
+        arg0->ext.faerie.randomMovementAngle = 0x40;
+        arg0->ext.faerie.targetAngle = 0;
+        arg0->step++;
+        break;
+    case 1:
+        arg0->ext.faerie.targetAngle += 4;
+        arg0->ext.faerie.unk82 += 0x10;
+
+        if (arg0->ext.faerie.unk82 >= 0x100) {
+            arg0->step++;
+        }
+        break;
+    case 2:
+        arg0->ext.faerie.unk7c++;
+        if (arg0->ext.faerie.unk7c > 0xF) {
+            arg0->step++;
+        }
+        break;
+    case 3:
+        arg0->ext.faerie.randomMovementAngle += 4;
+        if (arg0->ext.faerie.randomMovementAngle >= 0x100) {
+            arg0->ext.faerie.randomMovementAngle = 0xFF;
+        }
+
+        arg0->ext.faerie.unk80 += 4;
+        if (arg0->ext.faerie.unk80 >= 0x100) {
+            arg0->ext.faerie.unk7c = 0;
+            arg0->step++;
+        }
+        break;
+    case 4:
+        arg0->ext.faerie.unk7c++;
+        if (arg0->ext.faerie.unk7c > 0x3C) {
+            arg0->step++;
+        }
+        break;
+    case 5:
+        arg0->ext.faerie.targetAngle--;
+        if (arg0->ext.faerie.targetAngle < 0) {
+            arg0->ext.faerie.targetAngle = 0;
+        }
+
+        arg0->ext.faerie.randomMovementAngle -= 4;
+        if (arg0->ext.faerie.randomMovementAngle <= 0x40) {
+            arg0->ext.faerie.randomMovementAngle = 0x40;
+        }
+
+        arg0->ext.faerie.unk80 -= 8;
+        if (arg0->ext.faerie.unk80 <= 0) {
+            DestroyEntity(arg0);
+            return;
+        }
+        break;
+    }
+    currentPrim = &g_PrimBuf[arg0->primIndex];
+
+    var_v1 = arg0->posX.i.hi - arg0->ext.faerie.unk80;
+    if (var_v1 < 0) {
+        var_v1 = 0;
+    }
+    currentPrim->x0 = currentPrim->x2 = var_v1;
+    currentPrim->x1 = currentPrim->x3 = arg0->posX.i.hi;
+    currentPrim->y0 = currentPrim->y1 = 0;
+    currentPrim->y2 = currentPrim->y3 = arg0->ext.faerie.unk82;
+    currentPrim->r0 = currentPrim->r2 = currentPrim->g0 = currentPrim->g2 =
+        currentPrim->b0 = currentPrim->b2 =
+            arg0->ext.faerie.randomMovementAngle;
+
+    currentPrim = currentPrim->next;
+
+    var_v1 = arg0->posX.i.hi + arg0->ext.faerie.unk80;
+    if (var_v1 > 0x100) {
+        var_v1 = 0x100;
+    }
+    currentPrim->x0 = currentPrim->x2 = var_v1;
+    currentPrim->x1 = currentPrim->x3 = arg0->posX.i.hi;
+    currentPrim->y0 = currentPrim->y1 = 0;
+    currentPrim->y2 = currentPrim->y3 = arg0->ext.faerie.unk82;
+    currentPrim->r0 = currentPrim->r2 = currentPrim->g0 = currentPrim->g2 =
+        currentPrim->b0 = currentPrim->b2 =
+            arg0->ext.faerie.randomMovementAngle;
+
+    for (i = 0; i < 8; i++) {
+        currentPrim = currentPrim->next;
+
+        currentPrim->r0 = currentPrim->r1 = currentPrim->g0 = currentPrim->g1 =
+            currentPrim->b0 = currentPrim->b1 = arg0->ext.faerie.targetAngle;
+        currentPrim->r2 = currentPrim->r3 = currentPrim->g2 = currentPrim->g3 =
+            currentPrim->b2 = currentPrim->b3 = 0;
+    }
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
 

@@ -238,6 +238,7 @@ typedef enum {
     // renderEntities uses this to disable rendering on even/odd g_Timer
     FLAG_BLINK = 0x80,
     FLAG_DRAW_UNK100 = 0x100,
+    FLAG_DRAW_UNK400 = 0x400
 } DrawFlag;
 
 // Flags for entity->flags
