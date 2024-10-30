@@ -1,4 +1,4 @@
-#include "../dra/dra/h"
+#include "../dra/dra.h"
 
 INCLUDE_ASM("dra_psp/nonmatchings/262A0", DealDamage);
 
