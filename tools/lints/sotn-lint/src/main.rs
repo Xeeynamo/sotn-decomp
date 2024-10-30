@@ -9,6 +9,7 @@ mod enum_statement;
 mod fixed;
 mod flags;
 mod line_transformer;
+mod pl_vram_flag;
 mod player_status;
 mod primitive_type;
 mod relics;
@@ -18,6 +19,7 @@ use drawmodes::DrawModeTransformer;
 use fixed::FixedTransformer;
 use flags::FlagsTransformer;
 use line_transformer::LineTransformer;
+use pl_vram_flag::PlayerVramFlagTransformer;
 use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
@@ -64,6 +66,7 @@ fn process_directory(dir_path: &str) {
     let draw_flags_transformer = DrawFlagsTransformer::new();
     let primitive_type_transformer = PrimitiveTypeTransformer::new();
     let player_status_transformer = PlayerStatusTransformer::new();
+    let pl_vram_flag_transformer = PlayerVramFlagTransformer::new();
 
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
@@ -73,6 +76,7 @@ fn process_directory(dir_path: &str) {
         Box::new(draw_flags_transformer),
         Box::new(primitive_type_transformer),
         Box::new(player_status_transformer),
+        Box::new(pl_vram_flag_transformer),
         ];
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");

@@ -314,6 +314,35 @@ typedef enum {
     PLAYER_STATUS_UNK80000000 = 0x80000000,
 } PlayerStateStatus;
 
+// Flags for g_Player.pl_vram_flag
+// 0x01: touching the ground
+// 0x02: touching the ceiling
+// 0x04: touching the right wall
+// 0x08: touching the left wall
+// 0x20: in-air or near the edge
+// 0x0800: touching the ceiling slope
+// 0x1000: standing on a slightly ascending or descending slope
+// 0x4000: standing on a raising slope
+// 0x8000: standing on any slope
+typedef enum {
+    TOUCHING_GROUND = 0x1,
+    TOUCHING_CEILING = 0x2,
+    TOUCHING_R_WALL = 0x4,
+    TOUCHING_L_WALL = 0x8,
+    VRAM_UNK10 = 0x10,
+    IN_AIR_OR_EDGE = 0x20,
+    VRAM_UNK40 = 0x40,
+    VRAM_UNK80 = 0x80,
+    VRAM_UNK100 = 0x100,
+    VRAM_UNK200 = 0x200,
+    VRAM_UNK400 = 0x400,
+    TOUCHING_CEILING_SLOPE = 0x800,
+    STANDING_SLIGHT_SLOPE = 0x1000,
+    VRAM_UNK2000 = 0x2000,
+    STANDING_RAISING_SLOPE = 0x4000,
+    STANDING_ANY_SLOPE = 0x8000
+} PlayerVramFlag;
+
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
@@ -1716,18 +1745,7 @@ typedef struct {
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
     //  13 = invincibility, 14 = invincibility from consumables
     /* 80072F00 */ s16 timers[16]; // poison timer
-
-    // 0x01: touching the ground
-    // 0x02: touching the ceiling
-    // 0x04: touching the right wall
-    // 0x08: touching the left wall
-    // 0x20: in-air or near the edge
-    // 0x0800: touching the ceiling slope
-    // 0x1000: standing on a slightly ascending or descending slope
-    // 0x4000: standing on a raising slope
-    // 0x8000: standing on any slope
-    /* 80072F20 */ s32 pl_vram_flag;
-
+    /* 80072F20 */ PlayerVramFlag pl_vram_flag;
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ PlayerStateStatus status;
