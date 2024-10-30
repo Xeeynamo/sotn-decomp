@@ -18,12 +18,11 @@ void func_us_801D7C20(Entity* self) {
         InitializeEntity(D_us_80180BCC);
         self->posY.val -= FIX(1.0 / 16);
         GetDistanceToPlayerX();
-        self->velocityX = self->facingLeft ? FIX(1.75) : -FIX(1.75);
+        self->velocityX = self->facingLeft ? FIX(1.75) : FIX(-1.75);
         self->velocityY = 0;
         self->drawFlags = FLAG_DRAW_ROTZ;
     }
 }
-
 
 INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7D00);
 
