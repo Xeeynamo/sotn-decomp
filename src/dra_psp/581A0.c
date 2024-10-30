@@ -1,4 +1,4 @@
-#include "../dra/dra.h"
+#include "common.h"
 
 INCLUDE_ASM("dra_psp/nonmatchings/581A0", func_psp_09134B20);
 
