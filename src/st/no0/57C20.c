@@ -11,7 +11,7 @@ void func_us_801D7C20(Entity* self) {
         }
         self->rotZ += 0x80;
         MoveEntity(0);
-        if (self->posY.i.hi >= 0xF1) {
+        if (self->posY.i.hi > 0xF0) {
             DestroyEntity(self);
         }
     } else {
