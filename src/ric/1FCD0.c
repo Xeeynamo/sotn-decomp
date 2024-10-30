@@ -72,7 +72,7 @@ void RicHandleSlideKick(void) {
     RicDecelerateX(0x1000);
     PLAYER.velocityY += 0x1000;
 
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
         g_CurrentEntity->velocityX /= 2;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
@@ -81,7 +81,7 @@ void RicHandleSlideKick(void) {
         return;
     }
 
-    if (g_Player.pl_vram_flag & 0xC) {
+    if (g_Player.pl_vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
         PLAYER.velocityX = 0;
     }
 
@@ -90,7 +90,7 @@ void RicHandleSlideKick(void) {
             RicDecelerateX(0x2000);
         }
         if ((PLAYER.velocityX > (s32)0xFFFD0000) ||
-            (g_Player.pl_vram_flag & 8)) {
+            (g_Player.pl_vram_flag & TOUCHING_L_WALL)) {
             PLAYER.velocityX /= 2;
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
             RicSetAnimation(D_80155788);
@@ -104,7 +104,8 @@ void RicHandleSlideKick(void) {
         if (g_Player.padPressed & PAD_LEFT) {
             RicDecelerateX(0x2000);
         }
-        if ((PLAYER.velocityX <= 0x2FFFF) || (g_Player.pl_vram_flag & 4)) {
+        if ((PLAYER.velocityX <= 0x2FFFF) ||
+            (g_Player.pl_vram_flag & TOUCHING_R_WALL)) {
             PLAYER.velocityX /= 2;
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
             RicSetAnimation(D_80155788);
@@ -121,18 +122,19 @@ void RicHandleBladeDash(void) {
     if (PLAYER.animFrameDuration < 0) {
         g_Player.unk46 = 0;
         RicSetStand(0);
-    } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
+    } else if (PLAYER.animFrameIdx >= 0x12 &&
+               !(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         g_Player.unk46 = 0;
         RicSetFall();
     } else {
         if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
-            g_Player.pl_vram_flag & 1) {
+            g_Player.pl_vram_flag & TOUCHING_GROUND) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
 
         if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
-            (g_Player.pl_vram_flag & 1)) {
+            (g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         }
     }

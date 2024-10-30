@@ -329,7 +329,7 @@ void EntityGuardText(Entity* self) {
         self->step++;
         return;
     case 1:
-        if ((g_Player.pl_vram_flag & 1) || (g_Player.unk04 & 1)) {
+        if ((g_Player.pl_vram_flag & TOUCHING_GROUND) || (g_Player.unk04 & 1)) {
             self->step++;
         }
         return;

@@ -65,7 +65,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_CurrentEntity->unk5A = 0x64;
     }
 
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
         PLAYER.step = 0x28;
         PLAYER.step_s = 0;
         PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -93,7 +93,7 @@ static s32 func_ptr_80170004(Entity* self) {
         g_CurrentEntity->unk5A = 0x64;
     }
     DecelerateX(FIX(0.125));
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         PLAYER.step = 0x2A;
         PLAYER.step_s = 0;
         PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -168,7 +168,7 @@ static void func_ptr_80170008(Entity* self) {
         g_CurrentEntity->unk5A = 0x64;
     }
     SetSpeedX(FIX(2.5));
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         PLAYER.step = 0x2A;
         PLAYER.step_s = 0;
         PLAYER.velocityY = 0;
@@ -229,7 +229,7 @@ static s32 func_ptr_8017000C(Entity* self) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
         if (PLAYER.step_s != 0) {
             PLAYER.step = 0x28;
             PLAYER.velocityY = 0;
@@ -306,10 +306,10 @@ static s32 func_ptr_80170010(Entity* self) {
         if (PLAYER.velocityY > FIX(7)) {
             PLAYER.velocityY = FIX(7);
         }
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
             PLAYER.velocityY = FIX(1);
         }
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
             if (PLAYER.entityRoomIndex == PLAYER.facingLeft) {
                 PLAYER.rotZ = -0x380;
             } else {
@@ -327,7 +327,7 @@ static s32 func_ptr_80170010(Entity* self) {
     case 2:
         PLAYER.drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTZ;
         PLAYER.unk6C = (rsin(D_13F000_8017B3BC) >> 7) - 0x40;
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             PLAYER.step = Player_AxearmorJump;
             PLAYER.step_s = 0;
             PLAYER.velocityY = 0;

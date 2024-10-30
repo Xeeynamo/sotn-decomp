@@ -338,12 +338,13 @@ bool RicCheckInput(s32 checks) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if ((checks & CHECK_80) && (g_Player.pl_vram_flag & 2) &&
+    if ((checks & CHECK_80) && (g_Player.pl_vram_flag & TOUCHING_CEILING) &&
         (PLAYER.velocityY < FIX(-1))) {
         PLAYER.velocityY = FIX(-1);
     }
     if (PLAYER.velocityY >= 0) {
-        if ((checks & CHECK_GROUND) && (g_Player.pl_vram_flag & 1)) {
+        if ((checks & CHECK_GROUND) &&
+            (g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             switch (g_Player.unk46) {
             case 0:
             default:
@@ -430,8 +431,8 @@ bool RicCheckInput(s32 checks) {
                 g_Player.unk44 = 0;
                 return true;
             }
-        } else if (
-            checks & CHECK_GROUND_AFTER_HIT && (g_Player.pl_vram_flag & 1)) {
+        } else if (checks & CHECK_GROUND_AFTER_HIT &&
+                   (g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             RicSetCrouch(1, PLAYER.velocityX);
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
             if (g_Player.unk5C && (g_Status.hp < 2)) {
@@ -444,7 +445,7 @@ bool RicCheckInput(s32 checks) {
             return true;
         }
     }
-    if (checks & CHECK_FALL && !(g_Player.pl_vram_flag & 1)) {
+    if (checks & CHECK_FALL && !(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         if (g_Player.unk46 != 0) {
             if (g_Player.unk46 == 1) {
                 PLAYER.step_s = 0x40;

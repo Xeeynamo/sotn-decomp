@@ -408,7 +408,7 @@ s32 func_800F0CD8(s32 arg0) {
             }
         }
         var_s0 = 48;
-        if (!(g_Player.pl_vram_flag & 1) &&
+        if (!(g_Player.pl_vram_flag & TOUCHING_GROUND) &&
             !(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
             var_s0 = 24;

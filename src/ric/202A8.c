@@ -28,7 +28,7 @@ void RicHandleHighJump(void) {
             RicDecelerateX(0x1000);
         }
 
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
             func_80158B04(3);
             g_Player.pl_high_jump_timer = 0;
             PLAYER.step_s = 2;
@@ -39,7 +39,7 @@ void RicHandleHighJump(void) {
         break;
 
     case 1:
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
             PLAYER.step_s = 2;
             func_80158B04(3);
             g_Player.pl_high_jump_timer = 0;

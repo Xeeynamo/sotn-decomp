@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 s32 IsMovementAllowed(s32 arg0) {
-    if (PLAYER.velocityY < 0 && !(g_Player.pl_vram_flag & 1)) {
+    if (PLAYER.velocityY < 0 && !(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         return 1;
     }
 
-    if (PLAYER.velocityY > 0 && !(g_Player.pl_vram_flag & 2)) {
+    if (PLAYER.velocityY > 0 && !(g_Player.pl_vram_flag & TOUCHING_CEILING)) {
         return 1;
     }
 
-    if (PLAYER.velocityX < 0 && !(g_Player.pl_vram_flag & 8))
+    if (PLAYER.velocityX < 0 && !(g_Player.pl_vram_flag & TOUCHING_L_WALL))
         return 1;
 
-    if (PLAYER.velocityX > 0 && !(g_Player.pl_vram_flag & 4))
+    if (PLAYER.velocityX > 0 && !(g_Player.pl_vram_flag & TOUCHING_R_WALL))
         return 1;
 
     if (arg0 == 0)

@@ -198,7 +198,7 @@ void func_80109594() {
     }
 
     g_Player.unk04 = 1;
-    g_Player.pl_vram_flag = 1;
+    g_Player.pl_vram_flag = TOUCHING_GROUND;
     func_8010E570(0);
 
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
@@ -390,7 +390,7 @@ void func_80109A44(s32 isTransformed) {
             !(g_Player.colliders2[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
             g_Player.colliders[1].effects & 1 &&
             !(g_Player.colliders[1].effects & EFFECT_SOLID_FROM_BELOW)) {
-            g_Player.pl_vram_flag = 3;
+            g_Player.pl_vram_flag = TOUCHING_CEILING | TOUCHING_GROUND;
             PLAYER.posX.val -= speed;
             return;
         }
@@ -479,7 +479,7 @@ void func_8010A234(s32 arg0) {
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
             func_8010E7AC();
@@ -1325,7 +1325,7 @@ void func_8010BFFC(void) {
     bool collided = false;
     u16 original_Y = PLAYER.posY.i.hi;
 
-    if ((g_Player.pl_vram_flag & 1) || (D_801396EA != 0) ||
+    if ((g_Player.pl_vram_flag & TOUCHING_GROUND) || (D_801396EA != 0) ||
 #if defined(VERSION_US)
         (g_Player.status &
          (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) ||

@@ -898,7 +898,7 @@ void func_8012C97C(void) {
     if (!IsRelicActive(RELIC_SKILL_OF_WOLF)) {
         return;
     }
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
         return;
     }
     if (!(g_Player.padPressed & PAD_TRIANGLE)) {
@@ -921,7 +921,7 @@ void func_8012CA64(void) {
     D_800B0914 = 0;
 
     anim = 0xDE;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.pl_vram_flag & IN_AIR_OR_EDGE) {
         anim = 0xDF;
     }
     SetPlayerAnim(anim);
@@ -930,7 +930,7 @@ void func_8012CA64(void) {
     PLAYER.velocityX /= 2;
 
     D_800B0918 = 0x200;
-    if (g_Player.pl_vram_flag & 0x40) {
+    if (g_Player.pl_vram_flag & VRAM_UNK40) {
         D_800B0914 = 1;
         SetPlayerAnim(0xE9);
     }
@@ -991,17 +991,25 @@ void func_8012CCE4(void) {
         // Might be possible to rewrite this block to reduce duplication with
         // some clever && and ||
         if (PLAYER.facingLeft) {
-            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
+            if ((g_Player.pl_vram_flag &
+                 (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
+                  STANDING_SLIGHT_SLOPE)) == 0xC000) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
-            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
+            if ((g_Player.pl_vram_flag &
+                 (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
+                  STANDING_SLIGHT_SLOPE)) == 0x8000) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         } else {
-            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
+            if ((g_Player.pl_vram_flag &
+                 (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
+                  STANDING_SLIGHT_SLOPE)) == 0x8000) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
-            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
+            if ((g_Player.pl_vram_flag &
+                 (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
+                  STANDING_SLIGHT_SLOPE)) == 0xC000) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         }
@@ -1065,7 +1073,7 @@ void func_8012D024(void) {
         func_8012CCE4();
         return;
     }
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         func_8012CED4();
         return;
     }
@@ -1090,7 +1098,7 @@ void func_8012D024(void) {
         SetPlayerAnim(0xE9);
         return;
     }
-    if (g_Player.pl_vram_flag & 0x40) {
+    if (g_Player.pl_vram_flag & VRAM_UNK40) {
         D_800B0914 = 1;
         SetPlayerAnim(0xE9);
     }
@@ -1101,7 +1109,7 @@ void func_8012D178(void) {
 
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
-    } else if (!(g_Player.pl_vram_flag & 1)) {
+    } else if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         func_8012CFA8();
     } else {
 #if defined(VERSION_US)
