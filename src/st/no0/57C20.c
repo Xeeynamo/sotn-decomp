@@ -1,7 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7C20);
+extern Entity D_us_80180BCC[];
+
+void func_us_801D7C20(Entity* self) {
+    if (self->step != 0) {
+        if (self->flags & FLAG_DEAD) {
+            EntityExplosionSpawn(0, 0);
+            return;
+        }
+        self->rotZ += 0x80;
+        MoveEntity(0);
+        if (self->posY.i.hi > 0xF0) {
+            DestroyEntity(self);
+        }
+    } else {
+        InitializeEntity(D_us_80180BCC);
+        self->posY.val -= FIX(1.0 / 16);
+        GetDistanceToPlayerX();
+        self->velocityX = self->facingLeft ? FIX(1.75) : FIX(-1.75);
+        self->velocityY = 0;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7D00);
 
