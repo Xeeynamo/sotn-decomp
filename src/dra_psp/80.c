@@ -17,4 +17,3 @@ INCLUDE_ASM("dra_psp/nonmatchings/80", func_psp_090DDAA8);
 INCLUDE_ASM("dra_psp/nonmatchings/80", func_psp_090DDAE0);
 
 INCLUDE_ASM("dra_psp/nonmatchings/80", func_psp_090DDEE8);
-
