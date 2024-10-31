@@ -3,4 +3,4 @@
 
 void func_psp_090F6B20(void) {}
 
-INCLUDE_ASM("dra_psp/nonmatchings/1A1A0", HandlePlay);
+INCLUDE_ASM("dra_psp/psp/dra_psp/1A1A0", HandlePlay);
