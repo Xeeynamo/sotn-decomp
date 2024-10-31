@@ -23,6 +23,10 @@ extern s32 s_TargetLocationX_calc;
 extern s32 s_TargetLocationY;
 extern s32 s_TargetLocationY_calc;
 
+extern u8 D_80097A1A[];
+extern s32 D_us_80172BCC;
+extern s32 D_us_80172BD8;
+
 // this may actually be a multi dimensional array instead of a struct
 typedef struct {
     s16 unk0;
@@ -45,7 +49,7 @@ void func_us_801739D0(Entity* arg0) {
     if (!arg0->ext.faerie.unk7E) {
 
         switch (arg0->entityId) {
-        case 0xD1:
+        case ENTITY_ID_SERVANT:
         case 0xD8:
             arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
@@ -67,7 +71,7 @@ void func_us_801739D0(Entity* arg0) {
         }
     } else {
         switch (arg0->entityId) {
-        case 0xD1:
+        case ENTITY_ID_SERVANT:
             arg0->ext.faerie.unk96 = 0x78;
             // fallthrough
         case 0xD2:
@@ -94,7 +98,7 @@ void func_us_801739D0(Entity* arg0) {
 }
 
 // This is a duplicate CreateEventEntity which is lower in the file, but we need
-// both to match the binary for PSX
+// both to match the binary for PSX.
 void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
@@ -316,7 +320,7 @@ void func_us_80174998(Entity* self) {
         D_us_80179310 = g_Status.hp;
         D_us_80179314 = 0;
         D_us_80179318 = 0;
-        self->ext.faerie.unkCounter = 0;
+        self->ext.faerie.unkCounterA0 = 0;
         break;
     case 1:
         s_AngleToTarget =
@@ -358,11 +362,11 @@ void func_us_80174998(Entity* self) {
 
         if (!g_CutsceneHasControl && !IsMovementAllowed(1) &&
             !CheckAllEntitiesValid() && !(D_8003C708.flags & FLAG_UNK_20)) {
-            self->ext.faerie.unkCounter += 1;
+            self->ext.faerie.unkCounterA0 += 1;
         } else {
-            self->ext.faerie.unkCounter = 0;
+            self->ext.faerie.unkCounterA0 = 0;
         }
-        if (self->ext.faerie.unkCounter > 0x708) {
+        if (self->ext.faerie.unkCounterA0 > 0x708) {
             self->entityId = 0xDA;
             self->step = 0;
             return;
@@ -388,9 +392,189 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174F0C);
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801753E4);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175730);
+// This is a dupe of func_us_80175A78 with a slightly different offset
+// for the create entity params
+void func_us_80175730(Entity* self) {
+    const int paramOffset = 1;
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175A78);
+    s_TargetLocOffset_calc = -0x18;
+    if (!PLAYER.facingLeft) {
+        s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+    }
+    s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+    s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        func_us_80173994(self, 0xE);
+        break;
+
+    case 1:
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 5);
+        self->velocityX = rcos(s_AllowedAngle) << 5;
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 2) {
+            self->step++;
+        }
+        break;
+    case 2:
+        if (!D_80097A1A[paramOffset]) {
+            func_us_80173994(self, 0x14);
+            self->step = 5;
+            break;
+        }
+        if (SearchForEntityInRange(1, 0x27)) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        func_us_80173994(self, 0x12);
+        if (s_ServantId == FAM_ACTIVE_YOUSEI) {
+            g_api.PlaySfx(D_us_80172BCC);
+        }
+        self->step++;
+        break;
+
+    case 3:
+        self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        if (self->animFrameIdx == 0xB) {
+            if (s_ServantId == FAM_ACTIVE_FAERIE) {
+                g_api.PlaySfx(D_us_80172BCC);
+            }
+
+            D_80097A1A[paramOffset]--;
+            g_api.CreateEntFactoryFromEntity(
+                self, FACTORY(0x37, paramOffset), 0);
+
+            CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+            break;
+        }
+        break;
+    case 4:
+    case 6:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        break;
+    case 5:
+        self->facingLeft = PLAYER.facingLeft;
+        if (self->animFrameIdx == 0x20) {
+            g_api.PlaySfx(D_us_80172BD8);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+        }
+        break;
+    }
+
+    func_us_80173D60(self);
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
+
+// This is a dupe of func_us_80175730 with a slightly different offset
+// for the create entity params
+void func_us_80175A78(Entity* self) {
+    const int paramOffset = 0;
+
+    s_TargetLocOffset_calc = -0x18;
+    if (!PLAYER.facingLeft) {
+        s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+    }
+    s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+    s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        func_us_80173994(self, 0xE);
+        break;
+
+    case 1:
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 5);
+        self->velocityX = rcos(s_AllowedAngle) << 5;
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 2) {
+            self->step++;
+        }
+        break;
+    case 2:
+        if (!D_80097A1A[paramOffset]) {
+            func_us_80173994(self, 0x14);
+            self->step = 5;
+            break;
+        }
+        if (SearchForEntityInRange(1, 0x27)) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        func_us_80173994(self, 0x12);
+        if (s_ServantId == FAM_ACTIVE_YOUSEI) {
+            g_api.PlaySfx(D_us_80172BCC);
+        }
+        self->step++;
+        break;
+
+    case 3:
+        self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        if (self->animFrameIdx == 0xB) {
+            if (s_ServantId == FAM_ACTIVE_FAERIE) {
+                g_api.PlaySfx(D_us_80172BCC);
+            }
+
+            D_80097A1A[paramOffset]--;
+            g_api.CreateEntFactoryFromEntity(
+                self, FACTORY(0x37, paramOffset), 0);
+
+            CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+            break;
+        }
+        break;
+    case 4:
+    case 6:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        break;
+    case 5:
+        self->facingLeft = PLAYER.facingLeft;
+        if (self->animFrameIdx == 0x20) {
+            g_api.PlaySfx(D_us_80172BD8);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+        }
+        break;
+    }
+
+    func_us_80173D60(self);
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175DBC);
 
