@@ -97,7 +97,7 @@ func enqueueExtractAssetEntry(
 	eg.Go(func() error {
 		defer func() {
 			if err := recover(); err != nil {
-				fmt.Printf("unable to extract asset %q: %v", name, err)
+				fmt.Printf("unable to extract asset %q in %q: %v", name, assetDir, err)
 			}
 		}()
 		if err := handler.Extract(assets.ExtractArgs{
@@ -109,7 +109,7 @@ func enqueueExtractAssetEntry(
 			Name:     name,
 			Args:     args,
 		}); err != nil {
-			return fmt.Errorf("unable to extract asset %q: %v", name, err)
+			return fmt.Errorf("unable to extract asset %q in %q: %v", name, assetDir, err)
 		}
 		return nil
 	})
