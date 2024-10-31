@@ -917,7 +917,7 @@ loop_5:
         LoadPendingGfx();
         ReadPads();
 #if defined(VERSION_US)
-        if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
+        if ((g_pads[0].pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
             if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
             }
@@ -932,8 +932,8 @@ loop_5:
         if (g_softResetTimer >= 0x80) {
             g_softResetTimer = 0;
 #elif defined(VERSION_HD)
-        if (g_pads->pressed == PAD_RESETCOMBO && g_pads->tapped & PAD_START &&
-            D_800978C4 != 0) {
+        if (g_pads[0].pressed == PAD_RESETCOMBO &&
+            g_pads[0].tapped & PAD_START && D_800978C4 != 0) {
 #endif
             ClearBackbuffer();
             func_801073C0();

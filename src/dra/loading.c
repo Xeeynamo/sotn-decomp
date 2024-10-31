@@ -70,25 +70,25 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
             ClearImage(&D_800A0240, 0, 0, 0);
             return;
         }
-        if (g_pads->pressed & PAD_UP) {
+        if (g_pads[0].pressed & PAD_UP) {
             self->verticalWave++;
             if (self->verticalWave > 0x40) {
                 self->verticalWave = 0x40;
             }
         }
-        if (g_pads->pressed & PAD_DOWN) {
+        if (g_pads[0].pressed & PAD_DOWN) {
             self->verticalWave--;
             if (self->verticalWave < -0x40) {
                 self->verticalWave = -0x40;
             }
         }
-        if (g_pads->pressed & PAD_RIGHT) {
+        if (g_pads[0].pressed & PAD_RIGHT) {
             self->horizontalWave++;
             if (self->horizontalWave > 0x40) {
                 self->horizontalWave = 0x40;
             }
         }
-        if (g_pads->pressed & PAD_LEFT) {
+        if (g_pads[0].pressed & PAD_LEFT) {
             self->horizontalWave--;
             if (self->horizontalWave < -0x40) {
                 self->horizontalWave = -0x40;

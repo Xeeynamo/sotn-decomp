@@ -395,25 +395,7 @@ void EntityOwl(Entity* self) {
         }
         break;
     case 16:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame = self->animCurFrame + 1;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame = self->animCurFrame - 1;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
 
@@ -996,25 +978,7 @@ void EntityOwlKnight(Entity* self) {
         }
         break;
     case 32:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame = self->animCurFrame + 1;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame = self->animCurFrame - 1;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     hitboxPtr = D_801828B8;
     index = D_801828C8[self->animCurFrame + 1] - 7;

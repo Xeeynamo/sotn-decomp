@@ -223,27 +223,8 @@ void EntityBossFightManager(Entity* self) {
             return;
         }
         break;
-    case 0xFF: // Unreachable debug state
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-                return;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+    case 0xFF:
+#include "../pad2_anim_debug.h"
     }
 }
 

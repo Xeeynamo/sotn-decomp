@@ -36,8 +36,6 @@ typedef struct {
     s16 x, y;
 } WarpCoord;
 
-extern s32 D_8003C8B8;
-
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
 extern u16 g_EInitInteractable[];

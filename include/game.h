@@ -1177,7 +1177,7 @@ typedef struct {
     /* 0x0C */ u8* collision;
 } TileDefinition; // size = 0x10
 
-#define LAYOUT_RECT_PARAMS_UNKNOWN_10 0x10
+#define LAYOUT_RECT_PARAMS_HIDEONMAP 0x10
 #define LAYOUT_RECT_PARAMS_UNKNOWN_20 0x20
 #define LAYOUT_RECT_PARAMS_UNKNOWN_40 0x40
 
@@ -1873,7 +1873,7 @@ extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern u32 g_RoomCount;
 extern GameApi g_api;
-extern s32 D_8003C8B8;
+extern bool g_PauseAllowed;
 extern u32 g_GameTimer; // Increases when unpaused
 extern bool D_8003C908;
 extern s32 g_EquippedWeaponIds[2];

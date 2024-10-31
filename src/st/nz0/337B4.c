@@ -25,11 +25,12 @@ void EntityRelicContainer(Entity* self) {
             self->zPriority = 0x6A;
             self->hitboxWidth = 8;
             self->hitboxHeight = 12;
-            self->hitboxOffY = -0xA;
             self->hitboxOffX = 0;
+            self->hitboxOffY = -0xA;
             self->hitboxState = 2;
-            CreateEntityFromEntity(E_RELIC_CONTAINER, self, self + 1);
-            self[1].params = 0x100;
+            newEntity = self + 1;
+            CreateEntityFromEntity(E_RELIC_CONTAINER, self, newEntity);
+            newEntity->params = 0x100;
         }
 
     case 1:
@@ -38,7 +39,7 @@ void EntityRelicContainer(Entity* self) {
             break;
         }
         AnimateEntity(anim_relic_container, self);
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             self->hitboxState = 0;
             SetStep(2);
         }
@@ -46,19 +47,20 @@ void EntityRelicContainer(Entity* self) {
 
     case 2:
         if (self->params > 0x1) {
-            CreateEntityFromEntity(E_RELIC_ORB, self, self + 1);
+            newEntity = self + 1;
+            CreateEntityFromEntity(E_RELIC_ORB, self, newEntity);
+            newEntity->params = D_80180F9C[self->params];
         } else {
-            CreateEntityFromEntity(E_HEART_DROP, self, self + 1);
+            newEntity = self + 1;
+            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            newEntity->params = D_80180F9C[self->params];
         }
 
-        (self + 1)->params = D_80180F9C[self->params];
-        do { // !FAKE
-        } while (0);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->params = 2;
             newEntity->posY.i.hi -= 8;
+            newEntity->params = 2;
         }
         PlaySfxPositional(SFX_GLASS_BREAK_E);
         self->step++;
@@ -68,26 +70,7 @@ void EntityRelicContainer(Entity* self) {
         break;
 
     case 255:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            newEntity = self;
-            newEntity->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
 

@@ -40,7 +40,7 @@ void EntityUnkId12(Entity* self) {
             }
             break;
         case 6:
-            if (g_pads->pressed & PAD_TRIANGLE) {
+            if (g_pads[0].pressed & PAD_TRIANGLE) {
                 g_Tilemap.x = 0;
                 g_Tilemap.width = 1280;
                 self->step++;

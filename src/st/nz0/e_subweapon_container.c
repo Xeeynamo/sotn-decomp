@@ -31,11 +31,10 @@ void EntitySubWeaponContainer(Entity* self) {
     SubWpnContDebris* glassPieceTBL;
     Entity* newEntity;
     Primitive* prim;
-    s16 primIndex;
+    s32 primIndex;
     s32 rnd;
     s32 rndPosX;
     s32 rndPosY;
-    s32 absRnd;
     s32 i;
     s32 pad[23];
 
@@ -51,23 +50,25 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxOffX = 0;
         self->hitboxState = 2;
         self->palette += self->params;
+        newEntity = self + 1;
         CreateEntityFromEntity(
-            E_func_801C7884, self, &self[1]); // Create SubWeapon
-        self[1].posY.i.hi -= 72;
-        self[1].params = D_801825CC[self->params];
-        self[1].zPriority = self->zPriority - 2;
+            E_func_801C7884, self, newEntity); // Create SubWeapon
+        newEntity->posY.i.hi -= 72;
+        newEntity->params = D_801825CC[self->params];
+        newEntity->zPriority = self->zPriority - 2;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
-        self->flags |= FLAG_HAS_PRIMS;
+
         while (prim != NULL) {
-            prim->priority = self->zPriority + 0xFFFF;
+            prim->priority = self->zPriority - 1;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
@@ -82,9 +83,8 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
                 newEntity->params = Random() & 3;
-                if (newEntity->params == 0) {
-                    absRnd = abs(rnd);
-                    if (absRnd >= 9) {
+                if (!newEntity->params) {
+                    if (abs(rnd) > 8) {
                         newEntity->params = 1;
                     }
                 }
@@ -92,19 +92,19 @@ void EntitySubWeaponContainer(Entity* self) {
             }
         }
 
-        if (self->hitFlags != 0) { // container got hit!
+        if (self->hitFlags) { // container got hit!
             self->step++;
         }
         break;
 
     case SUBWPNCONT_BREAK: // Break container into pieces
         // Spawn falling glass pieces
-        glassPieceTBL = D_80182584;
-        i = 0;
+
         g_api.FreePrimitives(self->primIndex);
         self->flags &= ~FLAG_HAS_PRIMS;
         g_api.PlaySfx(SFX_MAGIC_GLASS_BREAK);
-        while (i < LEN(D_80182584)) {
+        for (glassPieceTBL = D_80182584, i = 0; i < LEN(D_80182584); i++,
+            glassPieceTBL++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_FALLING_GLASS, self, newEntity);
@@ -115,8 +115,6 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->facingLeft = glassPieceTBL->facingLeft;
                 newEntity->ext.subwpnContGlass.palette = self->params;
             }
-            glassPieceTBL++;
-            i++;
         }
 
         for (i = 0; i < 96; i++) { // Spawn falling liquid
@@ -142,6 +140,8 @@ void EntitySubWeaponContainer(Entity* self) {
         /**
          * Debug: Press SQUARE / CIRCLE on the second controller
          * to advance/rewind current animation frame
+         * NOTE: THIS IS DIFFERENT FROM NORMAL CASES OF THIS
+         * We are incrementing newEntity's animationFrame, not self's!
          */
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {

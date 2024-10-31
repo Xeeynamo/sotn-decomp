@@ -126,7 +126,7 @@ void func_us_801C2184(Entity* self) {
     case 1:
         if ((self - 1)->ext.cenElevator.unk80) {
             offset = self->posX.i.hi - player->posX.i.hi;
-            if (g_pads->pressed & PAD_DOWN && abs(offset) < 8) {
+            if (g_pads[0].pressed & PAD_DOWN && abs(offset) < 8) {
                 g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 1;
                 g_Player.D_80072EFC = 2;
                 g_Player.padSim = PAD_DOWN;

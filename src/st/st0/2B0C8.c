@@ -255,7 +255,7 @@ void EntityStageTitleCard(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
             self->ext.stageTitleCard.unk88 = 0x10;
         } else {
             goto label;
@@ -374,7 +374,7 @@ void EntityStageTitleCard(Entity* self) {
         PrimDecreaseBrightness(prim, 4);
         if (PrimDecreaseBrightness(prim->next, 3) == 0) {
             PreventEntityFromRespawning(fakeEntity);
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             DestroyEntity(fakeEntity);
         }
     default:

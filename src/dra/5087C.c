@@ -845,7 +845,7 @@ void func_800F2014(void) {
     s32 idx;
     s32 currMapRect;
 
-    if ((D_8013AED0 != 0) && (g_StageId != STAGE_ST0)) {
+    if (g_canRevealMap && (g_StageId != STAGE_ST0)) {
         x = (g_PlayerX >> 8) + g_Tilemap.left;
         y = (g_PlayerY >> 8) + g_Tilemap.top;
         idx = (x >> 2) + (y * 16);
@@ -1167,7 +1167,7 @@ void RunMainEngine(void) {
         }
         D_8006BB00 = 0;
         D_801375C8 = 0;
-        D_8003C8B8 = 1;
+        g_PauseAllowed = true;
         g_StageId = func_800F16D0();
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
@@ -1514,7 +1514,7 @@ void RunMainEngine(void) {
                 }
             }
             if (!(g_Player.status & PLAYER_STATUS_UNK40000)) {
-                if ((g_pads[0].tapped & PAD_START) && (D_8003C8B8 != 0)) {
+                if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed) {
                     func_801027A4();
                     if ((g_StageId == STAGE_ST0) ||
                         (g_PlayableCharacter != PLAYER_ALUCARD)) {
@@ -1540,10 +1540,10 @@ void RunMainEngine(void) {
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
-                           (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
+                           (g_StageId != STAGE_ST0) && g_PauseAllowed) {
                     func_801027C4(6);
                     D_800974A4 = 1;
-                    g_GameEngineStep = 20;
+                    g_GameEngineStep = Engine_Map;
                 }
                 break;
             }
@@ -1571,7 +1571,7 @@ void RunMainEngine(void) {
             func_801028AC(1);
             break;
         case Engine_Map:
-            if (D_8013AED0 != 0) {
+            if (g_canRevealMap) {
                 DrawMapCursor();
             }
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
