@@ -31,6 +31,7 @@ type layerUnpacked struct {
 	Right         int    `json:"right"`
 	Bottom        int    `json:"bottom"`
 	ScrollMode    int    `json:"scrollMode"`
+	HideOnMap     bool   `json:"hideOnMap"`
 	IsSaveRoom    bool   `json:"isSaveRoom"`
 	IsLoadingRoom bool   `json:"isLoadingRoom"`
 	UnusedFlag    bool   `json:"unusedFlag"`
@@ -61,7 +62,8 @@ func (l *layerDef) unpack() layerUnpacked {
 		Top:           int((l.PackedInfo >> 6) & 0x3F),
 		Right:         int((l.PackedInfo >> 12) & 0x3F),
 		Bottom:        int((l.PackedInfo >> 18) & 0x3F),
-		ScrollMode:    int((l.PackedInfo >> 24) & 0x1F),
+		ScrollMode:    int((l.PackedInfo >> 24) & 0xF),
+		HideOnMap:	   int((l.PackedInfo>>24)&0x10) != 0,
 		IsSaveRoom:    int((l.PackedInfo>>24)&0x20) != 0,
 		IsLoadingRoom: int((l.PackedInfo>>24)&0x40) != 0,
 		UnusedFlag:    int((l.PackedInfo>>24)&0x80) != 0,
@@ -143,8 +145,11 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		return map[string]interface{}{
 			"data":    makeSymbolFromFileName(l.Data),
 			"tiledef": makeSymbolFromFileName(l.Tiledef),
-			"params": l.Left | (l.Top << 6) | (l.Right << 12) | (l.Bottom << 18) | (l.ScrollMode << 24) |
-				(util.Btoi(l.IsSaveRoom) << 29) | (util.Btoi(l.IsLoadingRoom) << 30) | (util.Btoi(l.UnusedFlag) << 31),
+			"left":      l.Left,
+			"top":       l.Top,
+			"right":     l.Right,
+			"bottom":    l.Bottom,
+			"params":	(l.ScrollMode) | (util.Btoi(l.HideOnMap) << 4) | (util.Btoi(l.IsSaveRoom) << 5) | (util.Btoi(l.IsLoadingRoom) << 6) | (util.Btoi(l.UnusedFlag) << 7),
 			"zPriority": l.ZPriority,
 			"flags":     l.Flags,
 		}
@@ -247,12 +252,16 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		sb.WriteString(fmt.Sprintf("extern TileDefinition %s[];\n", symbol))
 	}
 
-	sb.WriteString("static MyLayer layers[] = {\n")
+	sb.WriteString("static LayerDef layers[] = {\n")
 	sb.WriteString("    { NULL, NULL, 0, 0, 0 },\n")
 	for _, l := range layers[1:] {
-		sb.WriteString(fmt.Sprintf("    { %s, %s, 0x%08X, 0x%02X, 0x%04X},\n",
+		sb.WriteString(fmt.Sprintf("    { %s, %s, {%d, %d, %d, %d, 0x%02X}, 0x%02X, 0x%04X},\n",
 			makeSymbolFromFileName(l["data"].(string)),
 			makeSymbolFromFileName(l["tiledef"].(string)),
+			l["left"],
+			l["top"],
+			l["right"],
+			l["bottom"],
 			l["params"],
 			l["zPriority"],
 			l["flags"],
@@ -260,7 +269,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	sb.WriteString("MyRoomDef OVL_EXPORT(rooms_layers)[] = {\n")
+	sb.WriteString("RoomDef OVL_EXPORT(rooms_layers)[] = {\n")
 	for _, rl := range roomsLayers {
 		if l, found := rl["fg"]; found {
 			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]))

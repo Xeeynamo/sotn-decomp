@@ -16,18 +16,6 @@ typedef struct {
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 
-typedef struct {
-    u16* layout;
-    TileDefinition* tileDef;
-    u32 params;
-    u16 zPriority;
-    u16 flags;
-} MyLayer;
-typedef struct {
-    MyLayer* fg;
-    MyLayer* bg;
-} MyRoomDef;
-
 extern u16 g_ItemIconSlots[32];
 
 /*

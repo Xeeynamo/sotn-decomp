@@ -6,7 +6,7 @@ void HitDetection(void);
 extern RoomHeader g_Rooms[];
 extern SpriteParts* g_SpriteBanks;
 extern u_long* g_Cluts;
-extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* g_EntityGfxs;
 void UpdateStageEntities(void);
 

@@ -11,7 +11,7 @@ extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long** OVL_EXPORT(cluts)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern u_long* OVL_EXPORT(gfxBanks)[];
-extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern RoomHeader OVL_EXPORT(rooms)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
