@@ -1552,7 +1552,7 @@ void RenderTilemap(void) {
 
 void SetRoomForegroundLayer(LayerDef* layerDef) {
     D_8003C708.flags = 0;
-    D_8013AED0 = 1;
+    g_canRevealMap = true; // Default to allowing revealing map
     g_Tilemap.tileDef = layerDef->tileDef;
     g_Tilemap.flags = 0;
     if (g_Tilemap.tileDef == 0) {
@@ -1572,9 +1572,12 @@ void SetRoomForegroundLayer(LayerDef* layerDef) {
         g_Tilemap.order = 0x60;
         D_8003C708.flags = layerDef->rect.params;
     }
-    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_UNKNOWN_10) {
+    // If this flag is set, disable revealing on map.
+    // Used for hidden rooms including the "running through trees" at start,
+    // and for the Nightmare stage.
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_HIDEONMAP) {
         g_Tilemap.order = 0x60;
-        D_8013AED0 = 0;
+        g_canRevealMap = 0;
     };
     g_Tilemap.flags = layerDef->flags;
     g_Tilemap.left = layerDef->rect.left;

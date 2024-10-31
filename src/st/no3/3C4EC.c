@@ -16,7 +16,7 @@ void EntityPushAlucard(Entity* entity) {
         player->posX.i.hi = 0;
         g_unkGraphicsStruct.unkC = 0;
         player->animCurFrame = 0;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         break;
 
     case 1:
@@ -116,7 +116,7 @@ void EntityCastleDoorTransition(Entity* entity) {
             EntityExplosionVariantsSpawner(
                 &PLAYER, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             entity->step++;
         }
         player->posX.val += entity->ext.castleDoorTransition.playerVelocity;

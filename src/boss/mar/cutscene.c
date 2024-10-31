@@ -576,7 +576,7 @@ void func_us_8018C90C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitMaria);
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_RIGHT;
         g_Player.D_80072EFC = 1;
@@ -595,7 +595,7 @@ void func_us_8018C90C(Entity* self) {
         break;
     case 2:
         if (g_CutsceneFlags & 2) {
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
 
             if (g_unkGraphicsStruct.pauseEnemies) {
                 g_unkGraphicsStruct.pauseEnemies = false;

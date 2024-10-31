@@ -26,7 +26,7 @@ void EntityCSMoveAlucard(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_8018047C);
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
@@ -128,7 +128,7 @@ void EntityCSMoveAlucard(Entity* self) {
     case 8:
         func_801961DC(0x80);
         if (g_unkGraphicsStruct.unkC == 0x80) {
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies != 0) {
                 g_unkGraphicsStruct.pauseEnemies = 0;
             }
@@ -149,7 +149,7 @@ void EntityUnkId23(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_8018047C);
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
@@ -227,7 +227,7 @@ void EntityUnkId23(Entity* self) {
         break;
 
     case 5:
-        D_8003C8B8 = 1;
+        g_PauseAllowed = true;
         if (g_unkGraphicsStruct.pauseEnemies != 0) {
             g_unkGraphicsStruct.pauseEnemies = 0;
         }

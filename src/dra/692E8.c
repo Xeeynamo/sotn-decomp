@@ -723,10 +723,10 @@ void EntityAlucard(void) {
                     break;
                 }
             } else {
-                g_Player.padPressed = g_pads->pressed;
+                g_Player.padPressed = g_pads[0].pressed;
                 g_Player.padPressed = g_Player.padPressed & 0xFF00;
                 for (var_s0 = 0; var_s0 < 8; var_s0++) {
-                    if (g_pads->pressed & g_Settings.buttonMask[var_s0]) {
+                    if (g_pads[0].pressed & g_Settings.buttonMask[var_s0]) {
                         g_Player.padPressed |= D_800ACE00[var_s0];
                     }
                 }

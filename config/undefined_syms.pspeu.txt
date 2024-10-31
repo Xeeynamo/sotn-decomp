@@ -31,6 +31,6 @@ g_ItemIconSlots     = 0x0924BC20;
 g_PlayableCharacter = 0x091CF020;
 D_091CF6DC          = 0x091CF6DC;
 D_091CF698          = 0x091CF698;
-D_8003C8B8 = 0x091CE580;
+g_PauseAllowed = falsex091CE580;
 D_8003BEBC = 0x09234800;
 D_80097C98 = 0x091ed280;

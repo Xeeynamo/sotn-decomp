@@ -163,7 +163,7 @@ void EntityRWarpRoom(Entity* self) {
             self->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x10;
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
             D_80180648 = 1;
             self->step = 6;
             break;
@@ -176,7 +176,9 @@ void EntityRWarpRoom(Entity* self) {
             !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
-            PLAYER.velocityY = PLAYER.velocityX = D_8003C8B8 = 0;
+            g_PauseAllowed = false;
+            PLAYER.velocityX = 0;
+            PLAYER.velocityY = 0;
             self->step++;
         }
         break;
@@ -184,7 +186,7 @@ void EntityRWarpRoom(Entity* self) {
         // raise alucard on the platform?
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_api.func_8010DFF0(0, 1);
         self->posY.i.hi--;
         moveY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -197,7 +199,7 @@ void EntityRWarpRoom(Entity* self) {
         // Move Alucard in the background and fade him to white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_unkGraphicsStruct.g_zEntityCenter = PLAYER.zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
@@ -212,7 +214,7 @@ void EntityRWarpRoom(Entity* self) {
         // Fade the entire room into white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
@@ -260,7 +262,7 @@ void EntityRWarpRoom(Entity* self) {
         PLAYER.zPriority = 0x94;
         g_Player.padSim = 0;
         D_80097408[0] = 0x94;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;
         prim->g0 = prim->b0 = prim->r0 = 0;
@@ -277,7 +279,7 @@ void EntityRWarpRoom(Entity* self) {
         // Finalize warp by fading in from white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim = prim->next;
         temp = prim->r0;
@@ -285,7 +287,7 @@ void EntityRWarpRoom(Entity* self) {
         if (temp < 0) {
             temp = 0;
             prim->drawMode = DRAW_HIDE;
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             self->step++;
         }
         if (temp < 0x28) {
@@ -310,7 +312,7 @@ void EntityRWarpRoom(Entity* self) {
                 !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
-                D_8003C8B8 = 0;
+                g_PauseAllowed = false;
                 self->step = 2;
             }
         }

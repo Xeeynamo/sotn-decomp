@@ -452,6 +452,8 @@ void EntityDracula(Entity* self) {
         /**
          * Debug: Press SQUARE / CIRCLE on the second controller
          * to advance/rewind current animation frame
+         * NOTE: This case is slightly different from other cases:
+         * It does not have the "charal" print statement.
          */
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params == 0) {

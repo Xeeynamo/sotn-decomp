@@ -486,7 +486,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->ext.dracFinalForm.unk84 = 0;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_RECORD);
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
             D_80181148 = 0x800;
             self->step_s++;
             /* fallthrough */
@@ -590,26 +590,7 @@ void EntityDraculaFinalForm(Entity* self) {
         }
         break;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s != 0) {
-                return;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
 

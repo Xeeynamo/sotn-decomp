@@ -414,7 +414,7 @@ s16 g_SfxScriptUnk6[NUM_CH];
 padding u16 D_8013AEA8[10];
 s32 D_8013AEBC[4];
 s32 D_8013AECC;
-s32 D_8013AED0;
+bool g_canRevealMap;
 s16 D_8013AED4[NUM_CH_2];
 u8 D_8013AEDC;
 u8 D_8013AEDD[3];

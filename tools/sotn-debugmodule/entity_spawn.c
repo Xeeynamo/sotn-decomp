@@ -217,27 +217,27 @@ void UpdateEntityPlacement(int mode) {
 
     DbgDrawMenuRect(4, 44, 96 + 10, 16);
     FntPrint("(%d, %d)\n", g_SpawnX, g_SpawnY);
-    if (g_pads->pressed & PAD_LEFT) {
+    if (g_pads[0].pressed & PAD_LEFT) {
         g_SpawnX = g_SpawnPlaceEntity->posX.i.hi--;
     }
-    if (g_pads->pressed & PAD_RIGHT) {
+    if (g_pads[0].pressed & PAD_RIGHT) {
         g_SpawnX = g_SpawnPlaceEntity->posX.i.hi++;
     }
-    if (g_pads->pressed & PAD_UP) {
+    if (g_pads[0].pressed & PAD_UP) {
         g_SpawnY = g_SpawnPlaceEntity->posY.i.hi--;
     }
-    if (g_pads->pressed & PAD_DOWN) {
+    if (g_pads[0].pressed & PAD_DOWN) {
         g_SpawnY = g_SpawnPlaceEntity->posY.i.hi++;
     }
-    if (g_pads->tapped & PAD_CIRCLE) {
+    if (g_pads[0].tapped & PAD_CIRCLE) {
         DestroyEntity(g_SpawnPlaceEntity);
         g_IsSpawnPlaceMode = false;
         g_SpawnPlaceEntity = NULL;
     }
-    if (g_pads->tapped & PAD_SQUARE) {
+    if (g_pads[0].tapped & PAD_SQUARE) {
         SpawnEntity(mode, g_SpawnEntityId, g_SpawnEntityParams);
     }
-    if (g_pads->tapped & PAD_CROSS) {
+    if (g_pads[0].tapped & PAD_CROSS) {
         PauseDebugMode();
         g_IsSpawnPlaceMode = false;
         g_SpawnPlaceEntity = NULL;
@@ -289,14 +289,14 @@ void UpdateEntitySpawn(void) {
     FntPrint("Entity preview: %s\n", g_IsSpawnPreviewEnabled ? "ON" : "OFF");
     FntPrint("Place entity (Square=spam)\n", g_SpawnEntityParams);
 
-    if (g_pads->repeat & PAD_UP) {
+    if (g_pads[0].repeat & PAD_UP) {
         g_SpawnOption--;
         if (g_SpawnOption < 0) {
             g_SpawnOption = NOptions - 1;
         }
         PLAY_MENU_SOUND();
     }
-    if (g_pads->repeat & PAD_DOWN) {
+    if (g_pads[0].repeat & PAD_DOWN) {
         g_SpawnOption++;
         if (g_SpawnOption >= NOptions) {
             g_SpawnOption = 0;
@@ -308,8 +308,8 @@ void UpdateEntitySpawn(void) {
     prevParams = g_SpawnEntityParams;
     switch (g_SpawnOption) {
     case 0:
-        if (g_pads->repeat & PAD_LEFT || g_pads->repeat & PAD_RIGHT ||
-            g_pads->repeat & PAD_CROSS) {
+        if (g_pads[0].repeat & PAD_LEFT || g_pads[0].repeat & PAD_RIGHT ||
+            g_pads[0].repeat & PAD_CROSS) {
             g_Mode++;
             if (g_PlayableCharacter == PLAYER_ALUCARD) {
                 if (g_Mode > 1) {
@@ -326,7 +326,7 @@ void UpdateEntitySpawn(void) {
         }
         break;
     case 1: // ID option
-        if (g_pads->repeat & PAD_LEFT) {
+        if (g_pads[0].repeat & PAD_LEFT) {
             g_SpawnEntityId--;
             if (g_SpawnEntityId < 1) {
                 g_SpawnEntityId = 1;
@@ -334,7 +334,7 @@ void UpdateEntitySpawn(void) {
                 g_SpawnEntityParams = 0;
             }
         }
-        if (g_pads->repeat & PAD_RIGHT) {
+        if (g_pads[0].repeat & PAD_RIGHT) {
             g_SpawnEntityId++;
             if (g_SpawnEntityId >= entityDefs->length) {
                 g_SpawnEntityId = entityDefs->length - 1;
@@ -342,27 +342,27 @@ void UpdateEntitySpawn(void) {
                 g_SpawnEntityParams = 0;
             }
         }
-        if (g_pads->tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_CROSS) {
             SpawnEntity(g_Mode, g_SpawnEntityId, g_SpawnEntityParams);
         }
         break;
     case 2: // Params option
-        if (g_pads->repeat & PAD_LEFT) {
+        if (g_pads[0].repeat & PAD_LEFT) {
             g_SpawnEntityParams--;
         }
-        if (g_pads->repeat & PAD_RIGHT) {
+        if (g_pads[0].repeat & PAD_RIGHT) {
             g_SpawnEntityParams++;
         }
-        if (g_pads->repeat & PAD_SQUARE) {
+        if (g_pads[0].repeat & PAD_SQUARE) {
             g_SpawnEntityParams ^= 0x8000;
         }
-        if (g_pads->tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_CROSS) {
             SpawnEntity(g_Mode, g_SpawnEntityId, g_SpawnEntityParams);
         }
         break;
     case 3:
-        if (g_pads->repeat & PAD_LEFT || g_pads->repeat & PAD_RIGHT ||
-            g_pads->repeat & PAD_CROSS) {
+        if (g_pads[0].repeat & PAD_LEFT || g_pads[0].repeat & PAD_RIGHT ||
+            g_pads[0].repeat & PAD_CROSS) {
             g_IsSpawnPreviewEnabled ^= 1;
             if (g_IsSpawnPreviewEnabled) {
                 prevId = -1;
@@ -373,13 +373,13 @@ void UpdateEntitySpawn(void) {
         }
         break;
     case 4: // Place option
-        if (g_pads->tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_CROSS) {
             g_IsSpawnPlaceMode = true;
             g_SpawnPlaceEntity =
                 SpawnEntity(g_Mode, g_SpawnEntityId, g_SpawnEntityParams);
             DelEntityPreview();
         }
-        if (g_pads->tapped & PAD_SQUARE) {
+        if (g_pads[0].tapped & PAD_SQUARE) {
             SpawnEntity(g_Mode, g_SpawnEntityId, g_SpawnEntityParams);
         }
         break;

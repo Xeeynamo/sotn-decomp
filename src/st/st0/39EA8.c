@@ -210,7 +210,7 @@ void EntityCutscenePhotograph(Entity* self) {
 
     g_Player.D_80072EFC = 4;
     g_Player.padSim = 0;
-    D_8003C8B8 = 0;
+    g_PauseAllowed = false;
     switch (self->step) {
     case 0:
         InitializeEntity(D_801805D4);

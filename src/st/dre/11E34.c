@@ -53,30 +53,7 @@ void EntityBackgroundClouds(Entity* self) {
         break;
 
     case 255:
-        /**
-         * Debug: Press SQUARE / CIRCLE on the second controller
-         * to advance/rewind current animation frame
-         */
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params == 0) {
-                self->animCurFrame++;
-                self->params |= 1;
-            } else {
-                break;
-            }
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     g_GpuBuffers[0].draw.r0 = 40;
     g_GpuBuffers[0].draw.g0 = 24;

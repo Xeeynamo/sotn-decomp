@@ -55,7 +55,7 @@ void EntityCutscene(Entity* self) {
             }
         } else {
             if ((player->posX.i.hi + tilemap->scrollX.i.hi) < 0xE1) {
-                D_8003C8B8 = 0;
+                g_PauseAllowed = false;
                 self->step_s++;
             }
         }
@@ -207,7 +207,7 @@ void EntityCutscene(Entity* self) {
         if (g_CutsceneFlags & 4) {
             g_Player.padSim = PAD_LEFT;
             DestroyEntity(self);
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
         }
         break;
     }

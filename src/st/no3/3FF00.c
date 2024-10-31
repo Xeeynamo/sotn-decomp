@@ -21,7 +21,7 @@ void EntityRoomTransition2(Entity* self) {
         InitializeEntity(g_EInitSpawner);
         tilemap->y = 0xFC;
         g_Player.padSim = PAD_RIGHT;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_Player.D_80072EFC = 1;
         g_CutsceneFlags |= 0x100;
         break;
@@ -103,7 +103,7 @@ void EntityRoomTransition2(Entity* self) {
             DestroyEntity(self);
             gents = &g_Entities[192];
             tilemap->y = 0;
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             DestroyEntity(gents);
             CreateEntityFromCurrentEntity(E_BG_LIGHTNING, gents);
         }

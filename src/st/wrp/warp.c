@@ -166,18 +166,18 @@ void EntityWarpRoom(Entity* self) {
         if (moveX > 0x60 && moveX < 0xA0) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x10;
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
             self->step = 5;
             D_80180648 = 1;
             break;
         }
     case 1:
         // Wait for player to press the UP button
-        if (self->hitFlags && g_pads->pressed & PAD_UP &&
+        if (self->hitFlags && g_pads[0].pressed & PAD_UP &&
             !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
 #ifdef VERSION_US
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
@@ -189,7 +189,7 @@ void EntityWarpRoom(Entity* self) {
         // Move Alucard in the background and fade him to white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
@@ -205,7 +205,7 @@ void EntityWarpRoom(Entity* self) {
         // Fade the entire room into white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
@@ -250,7 +250,7 @@ void EntityWarpRoom(Entity* self) {
     case 5:
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;
         prim->g0 = prim->b0 = prim->r0 = 0;
@@ -266,7 +266,7 @@ void EntityWarpRoom(Entity* self) {
         // Finalize warp by fading in from white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim = prim->next;
         move_room = prim->r0;
@@ -274,7 +274,7 @@ void EntityWarpRoom(Entity* self) {
         if (move_room < 0) {
             move_room = 0;
             prim->drawMode = DRAW_HIDE;
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             self->step = 1;
         }
         if (move_room < 0x28) {

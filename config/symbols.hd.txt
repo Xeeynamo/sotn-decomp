@@ -787,6 +787,7 @@ g_api_unused130 = 0x8003C8A4;
 g_api_unused134 = 0x8003C8A8;
 g_api_unused138 = 0x8003C8AC;
 g_api_unused13C = 0x8003C8B4;
+g_PauseAllowed = 0x8003C8B8;
 g_GameTimer = 0x8003C8C4;
 _svm_damper = 0x8003C954;
 g_Timer = 0x8003C998;

@@ -25,7 +25,7 @@ s16 D_8003C710;
 s16 D_8003C712;
 s32 D_8003C728;
 s32 D_8003C730;
-s32 D_8003C8B8;
+bool g_PauseAllowed;
 s32 g_IsUsingCd;
 Entity* g_CurrentEntity;
 GpuUsage g_GpuUsage;

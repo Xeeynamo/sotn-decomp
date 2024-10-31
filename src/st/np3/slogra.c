@@ -384,26 +384,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_DEBUG:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params == 0) {
-                self->animCurFrame++;
-                self->params |= 1;
-            } else {
-                break;
-            }
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     hitbox = D_801813EC;
     hitbox += 4 * D_8018142C[self->animCurFrame];
