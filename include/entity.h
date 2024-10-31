@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include "common.h"
 
 struct Entity;
@@ -2226,3 +2229,5 @@ SYNC_FIELD(ET_Subweapon, ET_Agunea, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_AguneaCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_GiantSpinningCross, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrashCross, subweaponId);
+
+#endif // ENTITY_H
