@@ -320,7 +320,7 @@ void func_us_80174998(Entity* self) {
         D_us_80179310 = g_Status.hp;
         D_us_80179314 = 0;
         D_us_80179318 = 0;
-        self->ext.faerie.unkCounter = 0;
+        self->ext.faerie.unkCounterA0 = 0;
         break;
     case 1:
         s_AngleToTarget =
@@ -362,11 +362,11 @@ void func_us_80174998(Entity* self) {
 
         if (!g_CutsceneHasControl && !IsMovementAllowed(1) &&
             !CheckAllEntitiesValid() && !(D_8003C708.flags & FLAG_UNK_20)) {
-            self->ext.faerie.unkCounter += 1;
+            self->ext.faerie.unkCounterA0 += 1;
         } else {
-            self->ext.faerie.unkCounter = 0;
+            self->ext.faerie.unkCounterA0 = 0;
         }
-        if (self->ext.faerie.unkCounter > 0x708) {
+        if (self->ext.faerie.unkCounterA0 > 0x708) {
             self->entityId = 0xDA;
             self->step = 0;
             return;
@@ -438,7 +438,7 @@ void func_us_80175730(Entity* self) {
             return;
         }
         func_us_80173994(self, 0x12);
-        if (s_ServantId == 6) {
+        if (s_ServantId == FAM_ACTIVE_YOUSEI) {
             g_api.PlaySfx(D_us_80172BCC);
         }
         self->step++;
@@ -447,7 +447,7 @@ void func_us_80175730(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
-            if (s_ServantId == 3) {
+            if (s_ServantId == FAM_ACTIVE_FAERIE) {
                 g_api.PlaySfx(D_us_80172BCC);
             }
 
@@ -456,15 +456,15 @@ void func_us_80175730(Entity* self) {
                 self, FACTORY(0x37, paramOffset), 0);
 
             CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
-            self->ext.faerie.pad8C[0] = 0;
+            self->ext.faerie.unkCounter8C = 0;
             self->step++;
             break;
         }
         break;
     case 4:
     case 6:
-        self->ext.faerie.pad8C[0]++;
-        if (self->ext.faerie.pad8C[0] > 0x3C) {
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -474,7 +474,7 @@ void func_us_80175730(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.pad8C[0] = 0;
+            self->ext.faerie.unkCounter8C = 0;
             self->step++;
         }
         break;
@@ -530,7 +530,7 @@ void func_us_80175A78(Entity* self) {
             return;
         }
         func_us_80173994(self, 0x12);
-        if (s_ServantId == 6) {
+        if (s_ServantId == FAM_ACTIVE_YOUSEI) {
             g_api.PlaySfx(D_us_80172BCC);
         }
         self->step++;
@@ -539,7 +539,7 @@ void func_us_80175A78(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
-            if (s_ServantId == 3) {
+            if (s_ServantId == FAM_ACTIVE_FAERIE) {
                 g_api.PlaySfx(D_us_80172BCC);
             }
 
@@ -548,15 +548,15 @@ void func_us_80175A78(Entity* self) {
                 self, FACTORY(0x37, paramOffset), 0);
 
             CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
-            self->ext.faerie.pad8C[0] = 0;
+            self->ext.faerie.unkCounter8C = 0;
             self->step++;
             break;
         }
         break;
     case 4:
     case 6:
-        self->ext.faerie.pad8C[0]++;
-        if (self->ext.faerie.pad8C[0] > 0x3C) {
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -566,7 +566,7 @@ void func_us_80175A78(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.pad8C[0] = 0;
+            self->ext.faerie.unkCounter8C = 0;
             self->step++;
         }
         break;
