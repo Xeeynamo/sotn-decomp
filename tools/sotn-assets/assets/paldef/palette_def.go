@@ -18,7 +18,6 @@ import (
 
 const palBulkCopy = 5           // PAL_BULK_COPY
 const palTerminate = 0xFFFFFFFF // PAL_BULK_COPY
-const baseDst = 0x2000
 
 type handler struct{}
 
@@ -65,7 +64,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	content.WriteString("    MAKE_PAL_OP(PAL_BULK_COPY, 0),\n")
 	for _, entry := range entries {
 		content.WriteString(fmt.Sprintf("    PAL_BULK(0x%04X, %s),\n",
-			entry.Destination+baseDst,
+			entry.Destination,
 			util.RemoveFileNameExt(entry.Name)))
 	}
 	content.WriteString("    PAL_TERMINATE(),\n")
@@ -157,9 +156,6 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]paletteEntr
 		}
 		_ = binary.Read(r, binary.LittleEndian, &length)
 		_ = binary.Read(r, binary.LittleEndian, &addr)
-		if dst < baseDst {
-			return nil, fmt.Errorf("invalid palette entry at %s, destination out of range: got 0x%04X, expected more than 0x%04X", baseAddr.Sum(i*4*3+4), dst, baseDst)
-		}
 		if dst > 0x8000 {
 			return nil, fmt.Errorf("invalid palette entry at %s, destination out of range: got 0x%08X, expected less than 0x8000", baseAddr.Sum(i*4*3+4), dst)
 		}
@@ -170,7 +166,7 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]paletteEntr
 			return nil, fmt.Errorf("invalid palette entry at %s, address out of the stage range: got %s", baseAddr.Sum(i*4*3+4), addr)
 		}
 		entries = append(entries, paletteEntry{
-			Destination: int(dst - baseDst),
+			Destination: int(dst),
 			Length:      int(length),
 			Name:        fmt.Sprintf("D_%08X.bin", uint32(addr)),
 			addr:        addr,
