@@ -63,7 +63,7 @@ func (l *layerDef) unpack() layerUnpacked {
 		Right:         int((l.PackedInfo >> 12) & 0x3F),
 		Bottom:        int((l.PackedInfo >> 18) & 0x3F),
 		ScrollMode:    int((l.PackedInfo >> 24) & 0xF),
-		HideOnMap:	   int((l.PackedInfo>>24)&0x10) != 0,
+		HideOnMap:     int((l.PackedInfo>>24)&0x10) != 0,
 		IsSaveRoom:    int((l.PackedInfo>>24)&0x20) != 0,
 		IsLoadingRoom: int((l.PackedInfo>>24)&0x40) != 0,
 		UnusedFlag:    int((l.PackedInfo>>24)&0x80) != 0,
