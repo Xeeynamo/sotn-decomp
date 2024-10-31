@@ -67,6 +67,11 @@ segments:
       - [0x15F0, raw, cutscene_alucard]
       - [0x2370, raw, cutscene_maria]
       - [0x30F0, data]
+      - [0x4EE0, pal, D_80184EE0]
+      - [0x4FE0, pal, D_80184FE0] # unused
+      - [0x50E0, pal, D_801850E0]
+      - [0x51E0, pal, D_801851E0] # unused
+      - [0x52E0, pal, D_801852E0]
       - [0x5300, .data, tile_data] # tile data
       - [0x5700, .data, tile_data] # tile definitions
       - [0x9710, .data, sprites]

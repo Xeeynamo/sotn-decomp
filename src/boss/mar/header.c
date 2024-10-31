@@ -24,20 +24,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
 };
 
 #include "sprite_banks.h"
-
-extern u16* D_us_80184EE0[];
-extern u16* D_us_801850E0[];
-extern u16* D_us_801852E0[];
-static u16** D_us_8018008C[] = {
-    0x00000005, 0x00002000,    0x00000080,      D_us_80184EE0,
-    0x00002080, 0x00000080,    D_us_801850E0,   0x00002100,
-    0x00000010, D_us_801852E0, PAL_TERMINATE(),
-};
-
-u_long* OVL_EXPORT(cluts)[] = {
-    D_us_8018008C,
-};
-
+#include "palette_def.h"
 #include "layers.h"
 
 static u_long* D_us_801800F4_TERM = GFX_TERMINATE();

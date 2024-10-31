@@ -76,6 +76,34 @@ segments:
       - [0x3A7C, .data, rooms]
       - [0x3B68, .data, e_layout] # layout entries data
       - [0x49E0, data]
+      - [0x14914, pal, D_80194914]
+      - [0x15A94, pal, D_80195A94]
+      - [0x15B54, pal, D_80195B54] # unused
+      - [0x15B74, pal, D_80195B74]
+      - [0x15BB4, pal, D_80195BB4]
+      - [0x15BF4, pal, D_80195BF4]
+      - [0x15C34, pal, D_80195C34]
+      - [0x15C74, pal, D_80195C74]
+      - [0x15CB4, pal, D_80195CB4]
+      - [0x15CF4, pal, D_80195CF4]
+      - [0x15D34, pal, D_80195D34]
+      - [0x15D74, pal, D_80195D74]
+      - [0x15DB4, pal, D_80195DB4]
+      - [0x15DF4, pal, D_80195DF4]
+      - [0x15E34, pal, D_80195E34]
+      - [0x15E74, pal, D_80195E74]
+      - [0x15EB4, pal, D_80195EB4]
+      - [0x15EF4, pal, D_80195EF4]
+      - [0x16154, pal, D_80196154]
+      - [0x161B4, pal, D_801961B4]
+      - [0x16214, pal, D_80196214]
+      - [0x16274, pal, D_80196274]
+      - [0x162D4, pal, D_801962D4]
+      - [0x163B4, pal, D_801963B4]
+      - [0x165B4, pal, D_801965B4] # unused
+      - [0x16674, pal, D_80196674] # overlaps with D_801966D4
+      - [0x166D4, pal, D_801966D4]
+      - [0x167D4, pal, D_801967D4]
       - [0x168F4, .data, tile_data] # tile data
       - [0x21CF4, .data, tile_data] # tile definitions
       - [0x2A124, .data, sprites]

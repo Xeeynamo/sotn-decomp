@@ -23,17 +23,5 @@ static Overlay OVL_EXPORT(Overlay) = {
 };
 
 #include "sprite_banks.h"
-
-extern u16* D_80181D08[0x100];
-
-static u_long* Clut[] = {
-    MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    PAL_BULK(0x2E00, D_80181D08),
-    PAL_TERMINATE(),
-};
-
-u_long* OVL_EXPORT(cluts)[] = {
-    Clut,
-};
-
+#include "palette_def.h"
 #include "layers.h"

@@ -56,7 +56,8 @@ segments:
       - [0x1228, .data, rwrp/e_layout] # layout entries data
       - [0x1420, cmp, D_80181420]
       - [0x1764, cmp, D_80181764]
-      - [0x1D08, raw, D_80181D08]
+      - [0x1D08, pal, D_80181D08]
+      - [0x1F08, pal, D_80181F08] # unused
       - [0x1FC8, .data, rwrp/tile_data] # tile data
       - [0x2BC8, .data, rwrp/tile_data] # tile definitions
       - [0x6FE8, .data, rwrp/sprites]

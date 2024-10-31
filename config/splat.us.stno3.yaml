@@ -76,6 +76,35 @@ segments:
       - [0x11B88, raw, cutscene_alucard]
       - [0x12908, raw, cutscene_death]
       - [0x13688, data]
+      - [0x166B8, pal, D_801966B8]
+      - [0x17838, pal, D_80197838]
+      - [0x178F8, pal, D_801978F8] # unused
+      - [0x17918, pal, D_80197918]
+      - [0x17958, pal, D_80197958]
+      - [0x17998, pal, D_80197998]
+      - [0x179D8, pal, D_801979D8]
+      - [0x17A18, pal, D_80197A18]
+      - [0x17A58, pal, D_80197A58]
+      - [0x17A98, pal, D_80197A98]
+      - [0x17AD8, pal, D_80197AD8]
+      - [0x17B18, pal, D_80197B18]
+      - [0x17B58, pal, D_80197B58]
+      - [0x17B98, pal, D_80197B98]
+      - [0x17BD8, pal, D_80197BD8]
+      - [0x17C18, pal, D_80197C18]
+      - [0x17C58, pal, D_80197C58]
+      - [0x17C98, pal, D_80197C98]
+      - [0x17EF8, pal, D_80197EF8]
+      - [0x17F58, pal, D_80197F58]
+      - [0x17FB8, pal, D_80197FB8]
+      - [0x180B8, pal, D_801980B8]
+      - [0x18118, pal, D_80198118]
+      - [0x18218, pal, D_80198218] # unused
+      - [0x18318, pal, D_80198318]
+      - [0x18418, pal, D_80198418] # unused
+      - [0x18518, pal, D_80198518]
+      - [0x18578, pal, D_80198578]
+      - [0x18778, pal, D_80198778] # unused
       - [0x18838, .data, tile_data] # tile data
       - [0x26638, .data, tile_data] # tile definitions
       - [0x2EA68, .data, sprites]

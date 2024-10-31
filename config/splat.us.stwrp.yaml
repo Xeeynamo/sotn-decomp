@@ -55,7 +55,8 @@ segments:
       - [0x1228, .data, e_layout] # layout entries data
       - [0x1420, cmp, D_80181420]
       - [0x1764, cmp, D_80181764]
-      - [0x1D08, raw, D_80181D08]
+      - [0x1D08, pal, D_80181D08]
+      - [0x1D28, pal, D_80181D28]
       - [0x1D68, .data, tile_data] # tile data
       - [0x2968, .data, tile_data] # tile definitions
       - [0x6D88, .data, sprites]
