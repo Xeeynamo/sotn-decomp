@@ -5,7 +5,7 @@ extern RoomHeader g_Rooms[];
 extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
-extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 void func_8018E1D4();

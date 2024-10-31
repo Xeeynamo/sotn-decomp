@@ -4,7 +4,7 @@
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
-extern MyRoomDef OVL_EXPORT(rooms_layers)[];
+extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern void* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 

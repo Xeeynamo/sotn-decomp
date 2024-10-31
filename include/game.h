@@ -1187,7 +1187,7 @@ typedef struct {
     /* 0x08 */ u32 right : 6;
     /* 0x0C */ u32 bottom : 6;
     /* 0x10 */ u8 params : 8;
-} LayoutRect; // size = 0x14
+} LayoutRect; // size = 0x4
 
 typedef struct {
     /* 0x00 */ u16* layout;
