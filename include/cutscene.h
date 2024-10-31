@@ -1,3 +1,6 @@
+#ifndef CUTSCENE_H
+#define CUTSCENE_H
+
 #include <game.h>
 
 typedef enum {
@@ -51,3 +54,5 @@ typedef enum {
 #define LOAD_PORTRAIT(addr, id) CSOP_LOAD_PORTRAIT, script_word(addr), id
 #define SCRIPT_UNKNOWN_20(x) CSOP_SCRIPT_UNKNOWN_20, script_half(x)
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
+
+#endif // CUTSCENE_H

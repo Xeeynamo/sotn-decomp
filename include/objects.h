@@ -2,6 +2,8 @@
  * File: objects.h
  * Description: SOTN Object header
  */
+#ifndef OBJECTS_H
+#define OBJECTS_H
 
 void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
@@ -18,3 +20,5 @@ void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
+
+#endif // OBJECTS_H

@@ -1,6 +1,8 @@
 /** Unkstruct section:
  * These are to be merged later on
  */
+#ifndef UNKSTRUCT_H
+#define UNKSTRUCT_H
 
 typedef struct {
     /* 0x0 */ s32 x;
@@ -212,3 +214,5 @@ typedef struct {
     u8 b;
     u8 unused;
 } Unkstruct_8017AAD8; // for w_046
+
+#endif // UNKSTRUCT_H

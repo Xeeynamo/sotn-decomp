@@ -1,3 +1,6 @@
+#ifndef LIBC_H
+#define LIBC_H
+
 extern void exit();
 extern void puts(char*);
 // setjmp
@@ -20,3 +23,5 @@ extern void free(void*);
 int printf(char*, ...);
 
 int abs(int x);
+
+#endif // LIBC_H
