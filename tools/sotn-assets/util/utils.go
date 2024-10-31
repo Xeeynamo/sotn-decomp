@@ -91,3 +91,7 @@ func WriteJsonFile(name string, v any) error {
 	}
 	return WriteFile(name, content)
 }
+
+func RemoveFileNameExt(name string) string {
+	return strings.TrimSuffix(name, filepath.Ext(name))
+}

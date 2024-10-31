@@ -60,7 +60,11 @@ func infoSplatEntries(w io.Writer, entries []assets.InfoSplatEntry) {
 		return entries[i].DataRange.Begin() < entries[j].DataRange.Begin()
 	})
 	for i, e := range entries {
-		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.DataRange.Begin().Real(psx.RamStageBegin), e.Name)
+		kind := ".data"
+		if e.Kind != "" {
+			kind = e.Kind
+		}
+		s := fmt.Sprintf("  - [0x%X, %s, %s]", e.DataRange.Begin().Real(psx.RamStageBegin), kind, e.Name)
 		if e.Comment != "" {
 			s = fmt.Sprintf("%s # %s", s, e.Comment)
 		}

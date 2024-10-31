@@ -95,23 +95,29 @@ segments:
       - [0x13BA4, raw, cutscene_maria]
       - [0x14924, raw, cutscene_alucard]
       - [0x156A4, cmp, D_801956A4]
-      - [0x15C3C, raw, D_80195C3C]
-      - [0x15CDC, raw, D_80195CDC]
-      - [0x15D3C, raw, D_80195D3C]
-      - [0x15DBC, raw, D_80195DBC]
-      - [0x15E1C, raw, D_80195E1C]
-      - [0x15E3C, raw, D_80195E3C]
-      - [0x15E9C, raw, D_80195E9C]
-      - [0x15F1C, raw, D_80195F1C]
-      - [0x15F9C, raw, D_80195F9C]
-      - [0x1601C, raw, D_8019601C]
-      - [0x162DC, raw, D_801962DC]
-      - [0x1641C, raw, D_8019641C]
-      - [0x1647C, raw, D_8019647C]
-      - [0x1657C, raw, D_8019657C]
-      - [0x1663C, raw, D_8019663C]
-      - [0x1665C, raw, D_8019665C]
-      - [0x1685C, raw, D_8019685C]
+      - [0x15C3C, pal, D_80195C3C] 
+      - [0x15CBC, pal, D_80195CBC] # unused
+      - [0x15CDC, pal, D_80195CDC] 
+      - [0x15CFC, pal, D_80195CFC] # unused
+      - [0x15D3C, pal, D_80195D3C] 
+      - [0x15DBC, pal, D_80195DBC] 
+      - [0x15E1C, pal, D_80195E1C] 
+      - [0x15E3C, pal, D_80195E3C] 
+      - [0x15E9C, pal, D_80195E9C] 
+      - [0x15F1C, pal, D_80195F1C] 
+      - [0x15F9C, pal, D_80195F9C] 
+      - [0x1601C, pal, D_8019601C] 
+      - [0x1621C, pal, D_8019621C] # unused
+      - [0x162DC, pal, D_801962DC] 
+      - [0x1641C, pal, D_8019641C] 
+      - [0x1647C, pal, D_8019647C] 
+      - [0x1657C, pal, D_8019657C] 
+      - [0x1661C, pal, D_8019661C] # unused
+      - [0x1663C, pal, D_8019663C] 
+      - [0x1665C, pal, D_8019665C] 
+      - [0x1675C, pal, D_8019675C] # unused
+      - [0x1685C, pal, D_8019685C] 
+      - [0x1695C, pal, D_8019695C] # unused
       - [0x16A5C, .data, tile_data] # tile data
       - [0x20A5C, .data, tile_data] # tile definitions
       - [0x26E8C, .data, sprites]

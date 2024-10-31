@@ -85,7 +85,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
           - [0x164, layers, layers]
           - [0x47C, skip]
           - [0x8EC, layout, entity_layouts]
