@@ -49,7 +49,7 @@ void func_us_801739D0(Entity* arg0) {
     if (!arg0->ext.faerie.unk7E) {
 
         switch (arg0->entityId) {
-        case 0xD1:
+        case ENTITY_ID_SERVANT:
         case 0xD8:
             arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
@@ -71,7 +71,7 @@ void func_us_801739D0(Entity* arg0) {
         }
     } else {
         switch (arg0->entityId) {
-        case 0xD1:
+        case ENTITY_ID_SERVANT:
             arg0->ext.faerie.unk96 = 0x78;
             // fallthrough
         case 0xD2:
@@ -394,7 +394,7 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801753E4);
 
 // This is a dupe of func_us_80175A78 with a slightly different offset
 // for the create entity params
-void func_us_80175730(Entity* arg0) {
+void func_us_80175730(Entity* self) {
     const int paramOffset = 1;
 
     s_TargetLocOffset_calc = -0x18;
@@ -403,91 +403,90 @@ void func_us_80175730(Entity* arg0) {
     }
     s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
-    switch (arg0->step) {
+    switch (self->step) {
     case 0:
-        func_us_801739D0(arg0);
-        func_us_80173994(arg0, 0xE);
+        func_us_801739D0(self);
+        func_us_80173994(self, 0xE);
         break;
 
     case 1:
         s_AngleToTarget =
-            CalculateAngleToEntity(arg0, s_TargetLocationX, s_TargetLocationY);
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
         s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
-            s_AngleToTarget, arg0->ext.faerie.targetAngle, 0x180);
-        arg0->ext.faerie.targetAngle = s_AllowedAngle;
-        arg0->velocityY = -(rsin(s_AllowedAngle) << 5);
-        arg0->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(arg0);
-        arg0->posX.val += arg0->velocityX;
-        arg0->posY.val += arg0->velocityY;
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 5);
+        self->velocityX = rcos(s_AllowedAngle) << 5;
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
         s_DistToTargetLocation =
-            CalculateDistance(arg0, s_TargetLocationX, s_TargetLocationY);
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
         if (s_DistToTargetLocation < 2) {
-            arg0->step++;
+            self->step++;
         }
         break;
     case 2:
         if (!D_80097A1A[paramOffset]) {
-            func_us_80173994(arg0, 0x14);
-            arg0->step = 5;
+            func_us_80173994(self, 0x14);
+            self->step = 5;
             break;
         }
         if (SearchForEntityInRange(1, 0x27)) {
-            arg0->entityId = 0xD1;
-            arg0->step = 0;
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
             return;
         }
-        func_us_80173994(arg0, 0x12);
+        func_us_80173994(self, 0x12);
         if (s_ServantId == 6) {
-            g_api_PlaySfx(D_us_80172BCC);
+            g_api.PlaySfx(D_us_80172BCC);
         }
-        arg0->step++;
+        self->step++;
         break;
 
     case 3:
-        arg0->facingLeft = PLAYER.facingLeft ? 0 : 1;
-        if (arg0->animFrameIdx == 0xB) {
+        self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        if (self->animFrameIdx == 0xB) {
             if (s_ServantId == 3) {
-                g_api_PlaySfx(D_us_80172BCC);
+                g_api.PlaySfx(D_us_80172BCC);
             }
 
             D_80097A1A[paramOffset]--;
             g_api.CreateEntFactoryFromEntity(
-                arg0, FACTORY(0x37, paramOffset), 0);
+                self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Dupe(arg0, 0xDF, paramOffset + 3);
-            arg0->ext.faerie.pad8C[0] = 0;
-            arg0->step++;
+            CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
+            self->ext.faerie.pad8C[0] = 0;
+            self->step++;
             break;
         }
         break;
     case 4:
     case 6:
-        arg0->ext.faerie.pad8C[0]++;
-        if (arg0->ext.faerie.pad8C[0] > 0x3C) {
-            arg0->entityId = 0xD1;
-            arg0->step = 0;
+        self->ext.faerie.pad8C[0]++;
+        if (self->ext.faerie.pad8C[0] > 0x3C) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
             return;
         }
         break;
     case 5:
-        arg0->facingLeft = PLAYER.facingLeft;
-        if (arg0->animFrameIdx == 0x20) {
+        self->facingLeft = PLAYER.facingLeft;
+        if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            arg0->ext.faerie.pad8C[0] = 0;
-            arg0->step++;
+            self->ext.faerie.pad8C[0] = 0;
+            self->step++;
         }
         break;
     }
 
-    func_us_80173D60(arg0);
-    ServantUpdateAnim(arg0, NULL, D_us_80172B14);
-    return;
+    func_us_80173D60(self);
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
 }
 
 // This is a dupe of func_us_80175730 with a slightly different offset
 // for the create entity params
-void func_us_80175A78(Entity* arg0) {
+void func_us_80175A78(Entity* self) {
     const int paramOffset = 0;
 
     s_TargetLocOffset_calc = -0x18;
@@ -496,86 +495,85 @@ void func_us_80175A78(Entity* arg0) {
     }
     s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
-    switch (arg0->step) {
+    switch (self->step) {
     case 0:
-        func_us_801739D0(arg0);
-        func_us_80173994(arg0, 0xE);
+        func_us_801739D0(self);
+        func_us_80173994(self, 0xE);
         break;
 
     case 1:
         s_AngleToTarget =
-            CalculateAngleToEntity(arg0, s_TargetLocationX, s_TargetLocationY);
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
         s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
-            s_AngleToTarget, arg0->ext.faerie.targetAngle, 0x180);
-        arg0->ext.faerie.targetAngle = s_AllowedAngle;
-        arg0->velocityY = -(rsin(s_AllowedAngle) << 5);
-        arg0->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(arg0);
-        arg0->posX.val += arg0->velocityX;
-        arg0->posY.val += arg0->velocityY;
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 5);
+        self->velocityX = rcos(s_AllowedAngle) << 5;
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
         s_DistToTargetLocation =
-            CalculateDistance(arg0, s_TargetLocationX, s_TargetLocationY);
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
         if (s_DistToTargetLocation < 2) {
-            arg0->step++;
+            self->step++;
         }
         break;
     case 2:
         if (!D_80097A1A[paramOffset]) {
-            func_us_80173994(arg0, 0x14);
-            arg0->step = 5;
+            func_us_80173994(self, 0x14);
+            self->step = 5;
             break;
         }
         if (SearchForEntityInRange(1, 0x27)) {
-            arg0->entityId = 0xD1;
-            arg0->step = 0;
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
             return;
         }
-        func_us_80173994(arg0, 0x12);
+        func_us_80173994(self, 0x12);
         if (s_ServantId == 6) {
-            g_api_PlaySfx(D_us_80172BCC);
+            g_api.PlaySfx(D_us_80172BCC);
         }
-        arg0->step++;
+        self->step++;
         break;
 
     case 3:
-        arg0->facingLeft = PLAYER.facingLeft ? 0 : 1;
-        if (arg0->animFrameIdx == 0xB) {
+        self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        if (self->animFrameIdx == 0xB) {
             if (s_ServantId == 3) {
-                g_api_PlaySfx(D_us_80172BCC);
+                g_api.PlaySfx(D_us_80172BCC);
             }
 
             D_80097A1A[paramOffset]--;
             g_api.CreateEntFactoryFromEntity(
-                arg0, FACTORY(0x37, paramOffset), 0);
+                self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Dupe(arg0, 0xDF, paramOffset + 3);
-            arg0->ext.faerie.pad8C[0] = 0;
-            arg0->step++;
+            CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
+            self->ext.faerie.pad8C[0] = 0;
+            self->step++;
             break;
         }
         break;
     case 4:
     case 6:
-        arg0->ext.faerie.pad8C[0]++;
-        if (arg0->ext.faerie.pad8C[0] > 0x3C) {
-            arg0->entityId = 0xD1;
-            arg0->step = 0;
+        self->ext.faerie.pad8C[0]++;
+        if (self->ext.faerie.pad8C[0] > 0x3C) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
             return;
         }
         break;
     case 5:
-        arg0->facingLeft = PLAYER.facingLeft;
-        if (arg0->animFrameIdx == 0x20) {
+        self->facingLeft = PLAYER.facingLeft;
+        if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            arg0->ext.faerie.pad8C[0] = 0;
-            arg0->step++;
+            self->ext.faerie.pad8C[0] = 0;
+            self->step++;
         }
         break;
     }
 
-    func_us_80173D60(arg0);
-    ServantUpdateAnim(arg0, NULL, D_us_80172B14);
-    return;
+    func_us_80173D60(self);
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
 }
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80175DBC);
