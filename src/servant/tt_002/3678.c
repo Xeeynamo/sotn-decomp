@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 #include <servant.h>
+#include "sfx.h"
 
 extern s32 s_ServantId;
 extern u16 D_us_801722E8[];
@@ -26,6 +27,8 @@ extern s32 s_TargetLocationY_calc;
 extern u8 D_80097A1A[];
 extern s32 D_us_80172BCC;
 extern s32 D_us_80172BD8;
+
+extern s32 D_us_80172BE4[];
 
 // this may actually be a multi dimensional array instead of a struct
 typedef struct {
@@ -390,7 +393,85 @@ void func_us_80174998(Entity* self) {
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174F0C);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_801753E4);
+void func_us_801753E4(Entity* self) {
+    const int paramOffset = 3;
+
+    s32 rnd;
+    s32 i;
+
+    s_TargetLocOffset_calc = -0x18;
+    if (!PLAYER.facingLeft) {
+        s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+    }
+    s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+    s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        func_us_80173994(self, 0xE);
+        break;
+    case 1:
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 5);
+        self->velocityX = rcos(s_AllowedAngle) << 5;
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 2) {
+            self->step++;
+        }
+        break;
+    case 2:
+        self->facingLeft = PLAYER.facingLeft;
+        if (D_80097A1A[paramOffset]) {
+            func_us_80173994(self, 0x17);
+
+            for (rnd = rand() % 0x100, i = 0; true; i++) {
+                if (rnd <= D_us_80172BE4[i * 2]) {
+                    g_api.PlaySfx(D_us_80172BE4[(i * 2) + 1]);
+                    break;
+                }
+            }
+
+            self->step++;
+        } else {
+            func_us_80173994(self, 0x10);
+            g_api.PlaySfx(D_us_80172BD8);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step += 2;
+        }
+        break;
+    case 3:
+        if (self->animFrameIdx == 5) {
+            D_80097A1A[paramOffset]--;
+            g_api.CreateEntFactoryFromEntity(
+                self, FACTORY(0x37, paramOffset), 0);
+            CreateEventEntity_Dupe(self, 0xDF, 1);
+            g_api.PlaySfx(SFX_TT_002_UNK_675);
+            g_api.func_80102CD8(4);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        break;
+    }
+
+    func_us_80173D60(self);
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
 
 // This is a dupe of func_us_80175A78 with a slightly different offset
 // for the create entity params
