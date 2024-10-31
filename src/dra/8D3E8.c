@@ -624,7 +624,7 @@ void func_8012EAD0(void) {
             }
         }
         if ((g_Player.pl_vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) ==
-            3) {
+            (TOUCHING_CEILING | TOUCHING_GROUND)) {
             g_Player.unk68 = 1;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;

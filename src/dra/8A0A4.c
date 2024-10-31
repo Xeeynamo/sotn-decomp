@@ -993,23 +993,25 @@ void func_8012CCE4(void) {
         if (PLAYER.facingLeft) {
             if ((g_Player.pl_vram_flag &
                  (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
-                  STANDING_SLIGHT_SLOPE)) == 0xC000) {
+                  STANDING_SLIGHT_SLOPE)) ==
+                (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE)) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
             if ((g_Player.pl_vram_flag &
                  (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
-                  STANDING_SLIGHT_SLOPE)) == 0x8000) {
+                  STANDING_SLIGHT_SLOPE)) == STANDING_ANY_SLOPE) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         } else {
             if ((g_Player.pl_vram_flag &
                  (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
-                  STANDING_SLIGHT_SLOPE)) == 0x8000) {
+                  STANDING_SLIGHT_SLOPE)) == STANDING_ANY_SLOPE) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
             if ((g_Player.pl_vram_flag &
                  (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
-                  STANDING_SLIGHT_SLOPE)) == 0xC000) {
+                  STANDING_SLIGHT_SLOPE)) ==
+                (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE)) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         }

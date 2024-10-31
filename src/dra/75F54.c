@@ -809,7 +809,7 @@ void func_801177A0(void) {
         }
 
         if ((g_Player.pl_vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) ==
-            3) {
+            (TOUCHING_CEILING | TOUCHING_GROUND)) {
             g_Player.unk68 = 1;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
@@ -870,7 +870,8 @@ void func_80117AC0(void) {
     if ((s32)collider.effects & EFFECT_SOLID) {
         collisionCount += 1;
     }
-    if ((g_Player.pl_vram_flag & (VRAM_UNK40 | TOUCHING_GROUND)) == 0x41) {
+    if ((g_Player.pl_vram_flag & (VRAM_UNK40 | TOUCHING_GROUND)) ==
+        (VRAM_UNK40 | TOUCHING_GROUND)) {
         collisionCount += 1;
     }
     PLAYER.rotZ = 0;
@@ -1152,7 +1153,8 @@ void func_801182F8(void) {
             }
         }
     }
-    if ((g_Player.pl_vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) == 3) {
+    if ((g_Player.pl_vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) ==
+        (TOUCHING_CEILING | TOUCHING_GROUND)) {
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;

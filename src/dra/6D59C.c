@@ -931,7 +931,8 @@ block_32:
     if (var_s2 == 0 ||
         // Sword of Dawn
         ((equipped_id == 0x11) &&
-         ((g_Player.pl_vram_flag & (VRAM_UNK40 | TOUCHING_GROUND)) != 1)) ||
+         ((g_Player.pl_vram_flag & (VRAM_UNK40 | TOUCHING_GROUND)) !=
+          TOUCHING_GROUND)) ||
         !(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
         goto block_38c;
     }
