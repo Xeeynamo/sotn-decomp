@@ -21,8 +21,7 @@ typedef struct {
     TileDefinition* tileDef;
     u32 params;
     u16 zPriority;
-    u8 unkE;
-    u8 unkF;
+    u16 flags;
 } MyLayer;
 typedef struct {
     MyLayer* fg;

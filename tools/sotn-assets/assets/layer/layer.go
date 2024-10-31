@@ -20,8 +20,7 @@ type layerDef struct {
 	Tiledef    psx.Addr
 	PackedInfo uint32
 	ZPriority  uint16
-	UnkE       uint8
-	UnkF       uint8
+	Flags      uint16
 }
 
 type layerUnpacked struct {
@@ -36,8 +35,7 @@ type layerUnpacked struct {
 	IsLoadingRoom bool   `json:"isLoadingRoom"`
 	UnusedFlag    bool   `json:"unusedFlag"`
 	ZPriority     int    `json:"zPriority"`
-	UnkE          int    `json:"unkE"`
-	UnkF          int    `json:"unkF"`
+	Flags         int    `json:"flags"`
 }
 
 type roomLayers struct {
@@ -68,8 +66,7 @@ func (l *layerDef) unpack() layerUnpacked {
 		IsLoadingRoom: int((l.PackedInfo>>24)&0x40) != 0,
 		UnusedFlag:    int((l.PackedInfo>>24)&0x80) != 0,
 		ZPriority:     int(l.ZPriority),
-		UnkE:          int(l.UnkE),
-		UnkF:          int(l.UnkF),
+		Flags:         int(l.Flags),
 	}
 }
 
@@ -149,8 +146,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 			"params": l.Left | (l.Top << 6) | (l.Right << 12) | (l.Bottom << 18) | (l.ScrollMode << 24) |
 				(util.Btoi(l.IsSaveRoom) << 29) | (util.Btoi(l.IsLoadingRoom) << 30) | (util.Btoi(l.UnusedFlag) << 31),
 			"zPriority": l.ZPriority,
-			"unkE":      l.UnkE,
-			"unkF":      l.UnkF,
+			"flags":     l.Flags,
 		}
 	}
 
@@ -252,15 +248,14 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 
 	sb.WriteString("static MyLayer layers[] = {\n")
-	sb.WriteString("    { NULL, NULL, 0, 0, 0, 0 },\n")
+	sb.WriteString("    { NULL, NULL, 0, 0, 0 },\n")
 	for _, l := range layers[1:] {
-		sb.WriteString(fmt.Sprintf("    { %s, %s, 0x%08X, 0x%02X, %d, %d },\n",
+		sb.WriteString(fmt.Sprintf("    { %s, %s, 0x%08X, 0x%02X, 0x%04X},\n",
 			makeSymbolFromFileName(l["data"].(string)),
 			makeSymbolFromFileName(l["tiledef"].(string)),
 			l["params"],
 			l["zPriority"],
-			l["unkE"],
-			l["unkF"],
+			l["flags"],
 		))
 	}
 	sb.WriteString("};\n")
