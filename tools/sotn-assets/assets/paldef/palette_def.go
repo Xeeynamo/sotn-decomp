@@ -13,6 +13,7 @@ import (
 	"io"
 	"os"
 	"path"
+	"sort"
 	"strings"
 )
 
@@ -69,7 +70,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	content.WriteString("    PAL_TERMINATE(),\n")
 	content.WriteString("};\n")
-	content.WriteString("u_long** OVL_EXPORT(cluts)[] = {&pal_def};\n")
+	content.WriteString("u_long* OVL_EXPORT(cluts)[] = {pal_def};\n")
 	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(content.String()), 0644)
 }
 
@@ -95,11 +96,6 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	}
 	palDefRange := datarange.New(palDefAddr, header.Cluts.Sum(4))
 	var splatEntries []assets.InfoSplatEntry
-	splatEntries = append(splatEntries, assets.InfoSplatEntry{
-		DataRange: palDefRange,
-		Name:      "header",
-		Comment:   "palette definitions",
-	})
 	for _, entry := range entries {
 		splatEntries = append(splatEntries, assets.InfoSplatEntry{
 			DataRange: datarange.FromAddr(entry.addr, entry.Length*2),
@@ -107,6 +103,12 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 			Name:      util.RemoveFileNameExt(entry.Name),
 		})
 	}
+	splatEntries = addGuessedUnusedPalettes(splatEntries)
+	splatEntries = append(splatEntries, assets.InfoSplatEntry{
+		DataRange: palDefRange,
+		Name:      "header",
+		Comment:   "palette definitions",
+	})
 	return assets.InfoResult{
 		AssetEntries: []assets.InfoAssetEntry{
 			{
@@ -173,4 +175,27 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]paletteEntr
 		})
 	}
 	return entries, nil
+}
+
+func addGuessedUnusedPalettes(entries []assets.InfoSplatEntry) []assets.InfoSplatEntry {
+	sort.Slice(entries, func(i, j int) bool {
+		return entries[i].DataRange.Begin() < entries[j].DataRange.Begin()
+	})
+	newEntries := make([]assets.InfoSplatEntry, 0, len(entries))
+	newEntries = append(newEntries, entries[0])
+	for i := 1; i < len(entries); i++ {
+		// if there is a gap between two entries then we add the new guessed unused palette
+		addrLeft := entries[i-1].DataRange.End()
+		addrRight := entries[i].DataRange.Begin()
+		if addrLeft != addrRight {
+			newEntries = append(newEntries, assets.InfoSplatEntry{
+				DataRange: datarange.New(addrLeft, addrRight),
+				Name:      fmt.Sprintf("D_%08X", uint32(addrLeft)),
+				Kind:      "pal",
+				Comment:   "unused",
+			})
+		}
+		newEntries = append(newEntries, entries[i])
+	}
+	return newEntries
 }
