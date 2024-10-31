@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 )
 
@@ -18,9 +18,6 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "spriteset" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	if e.Name == "" {
-		return fmt.Errorf("data at 0x%X must have a name", e.Start)
-	}
 	var sprites []*spriteParts
 	var err error
 	if e.Start != e.End {
@@ -32,18 +29,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	} else {
 		sprites = make([]*spriteParts, 0)
 	}
-	content, err := json.MarshalIndent(sprites, "", "  ")
-	if err != nil {
-		return err
-	}
-
-	outFileName := assetPath(e.AssetDir, e.Name)
-	dir := filepath.Dir(outFileName)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		fmt.Printf("failed to create directory %s: %v\n", dir, err)
-		return err
-	}
-	return os.WriteFile(outFileName, content, 0644)
+	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), sprites)
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {

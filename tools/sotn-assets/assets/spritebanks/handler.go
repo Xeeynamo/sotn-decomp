@@ -2,15 +2,13 @@ package spritebanks
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
-	"os"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"path"
-	"path/filepath"
 )
 
 const banksCount = 24 // the number seems to be fixed
@@ -30,17 +28,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("failed to read sprites: %w", err)
 	}
-	content, err := json.MarshalIndent(banks, "", "  ")
-	if err != nil {
-		return err
-	}
-	outFileName := assetPath(e.AssetDir, e.Name)
-	dir := filepath.Dir(outFileName)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		fmt.Printf("failed to create directory %s: %v\n", dir, err)
-		return err
-	}
-	return os.WriteFile(outFileName, content, 0644)
+	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), banks)
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
@@ -75,15 +63,5 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	if name == "" {
-		name = "sprite_banks"
-	}
 	return path.Join(dir, fmt.Sprintf("%s.json", name))
-}
-
-func sourcePath(dir, name string) string {
-	if name == "" {
-		name = "sprite_banks"
-	}
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
 }

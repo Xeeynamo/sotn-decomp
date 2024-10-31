@@ -2,14 +2,13 @@ package layout
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/graphics"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
-	"os"
 	"path"
 )
 
@@ -29,14 +28,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return err
 	}
 	layouts, _, err := readEntityLayout(r, ovlName, layoutOff, entryCount, true)
-	if err != nil {
-		return err
-	}
-	content, err := json.MarshalIndent(layouts, "", "  ")
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(assetPath(e.AssetDir, e.Name), content, 0644)
+	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), layouts)
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {

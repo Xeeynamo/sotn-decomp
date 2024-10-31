@@ -9,10 +9,10 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 )
 
@@ -39,17 +39,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("failed to read rooms: %w", err)
 	}
-	content, err := json.MarshalIndent(rooms, "", "  ")
-	if err != nil {
-		return err
-	}
-	outFileName := assetPath(e.AssetDir, e.Name)
-	dir := filepath.Dir(outFileName)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		fmt.Printf("failed to create directory %s: %v\n", dir, err)
-		return err
-	}
-	return os.WriteFile(outFileName, content, 0644)
+	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), rooms)
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
