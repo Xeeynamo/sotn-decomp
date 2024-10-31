@@ -6,6 +6,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
@@ -40,6 +41,7 @@ var handlers = func() map[string]assets.Handler {
 		cutscene.Handler,
 		layer.Handler,
 		layout.Handler,
+		paldef.Handler,
 		rooms.Handler,
 		skip.Handler,
 		spritebanks.Handler,
@@ -95,7 +97,7 @@ func enqueueExtractAssetEntry(
 	eg.Go(func() error {
 		defer func() {
 			if err := recover(); err != nil {
-				fmt.Printf("unable to extract asset %q: %v", name, err)
+				fmt.Printf("unable to extract asset %q in %q: %v", name, assetDir, err)
 			}
 		}()
 		if err := handler.Extract(assets.ExtractArgs{
@@ -107,7 +109,7 @@ func enqueueExtractAssetEntry(
 			Name:     name,
 			Args:     args,
 		}); err != nil {
-			return fmt.Errorf("unable to extract asset %q: %v", name, err)
+			return fmt.Errorf("unable to extract asset %q in %q: %v", name, assetDir, err)
 		}
 		return nil
 	})

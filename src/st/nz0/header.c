@@ -8,7 +8,7 @@ void InitRoomEntities();
 void UpdateStageEntities();
 
 extern s16** OVL_EXPORT(spriteBanks)[];
-extern u_long** OVL_EXPORT(cluts)[];
+extern u_long* OVL_EXPORT(cluts)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern u_long* OVL_EXPORT(gfxBanks)[];
 extern MyRoomDef OVL_EXPORT(rooms_layers)[];
@@ -29,50 +29,7 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
 };
 
 #include "sprite_banks.h"
-
-extern u16* D_80195C3C[0x40];
-extern u16* D_80195CDC[0x10];
-extern u16* D_80195D3C[0x40];
-extern u16* D_80195DBC[0x30];
-extern u16* D_80195E1C[0x10];
-extern u16* D_80195E3C[0x30];
-extern u16* D_80195E9C[0x40];
-extern u16* D_80195F1C[0x40];
-extern u16* D_80195F9C[0x40];
-extern u16* D_8019601C[0x100];
-extern u16* D_801962DC[0xA0];
-extern u16* D_8019641C[0x30];
-extern u16* D_8019647C[0x80];
-extern u16* D_8019657C[0x50];
-extern u16* D_8019663C[0x10];
-extern u16* D_8019665C[0x80];
-extern u16* D_8019685C[0x80];
-static u_long* D_8018008C[] = {
-    MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    PAL_BULK(0x2000, D_80195C3C),
-    PAL_BULK(0x2040, D_80195CDC),
-    PAL_BULK(0x2050, D_80195D3C),
-    PAL_BULK(0x2090, D_80195DBC),
-    PAL_BULK(0x20C0, D_80195E1C),
-    PAL_BULK(0x20D0, D_80195E3C),
-    PAL_BULK(0x2110, D_80195F1C),
-    PAL_BULK(0x2150, D_80195F9C),
-    PAL_BULK(0x2190, D_80195E9C),
-    PAL_BULK(0x21D0, D_801962DC),
-    PAL_BULK(0x2270, D_8019641C),
-    PAL_BULK(0x22A0, D_8019647C),
-    PAL_BULK(0x2320, D_8019657C),
-    PAL_BULK(0x2370, D_8019663C),
-    PAL_BULK(0x2380, D_8019665C),
-    PAL_BULK(0x2400, D_8019685C),
-    PAL_BULK(0x2E00, D_8019601C),
-    PAL_TERMINATE(),
-};
-
-u_long** OVL_EXPORT(cluts)[] = {
-    &D_8018008C,
-};
-
+#include "palette_def.h"
 #include "layers.h"
 
 static u_long* D_8018047C[] = {

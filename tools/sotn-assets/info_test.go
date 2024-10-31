@@ -22,7 +22,7 @@ func TestGatherAssetInfo(t *testing.T) {
 		t.Run("asset config hints", func(t *testing.T) {
 			assert.Contains(t, stdout, "asset config hints:\n")
 			assert.Contains(t, stdout, "  - [0x2C, sprite_banks, sprite_banks]")
-			assert.Contains(t, stdout, "  - [0x8C, skip]")
+			assert.Contains(t, stdout, "  - [0x8C, paldef, palette_def]")
 			assert.Contains(t, stdout, "  - [0x164, layers, layers]\n")
 			assert.Contains(t, stdout, "  - [0x8EC, layout, entity_layouts]\n")
 			assert.Contains(t, stdout, "  - [0x272C, rooms, rooms]")
@@ -34,6 +34,7 @@ func TestGatherAssetInfo(t *testing.T) {
 		t.Run("splat config hints", func(t *testing.T) {
 			assert.Contains(t, stdout, "splat config hints:\n")
 			assert.Contains(t, stdout, "  - [0x0, .data, header]\n")
+			assert.Contains(t, stdout, "  - [0x8C, .data, header] # palette definitions\n")
 			assert.Contains(t, stdout, "  - [0x164, .data, header] # layers\n")
 			assert.Contains(t, stdout, "  - [0x8EC, .data, e_laydef] # layout entries header\n")
 			assert.Contains(t, stdout, "  - [0xA94, data]\n")
@@ -41,6 +42,10 @@ func TestGatherAssetInfo(t *testing.T) {
 			assert.Contains(t, stdout, "  - [0x2830, data]\n")
 			assert.Contains(t, stdout, "  - [0x2884, .data, e_layout] # layout entries data\n")
 			assert.Contains(t, stdout, "  - [0x3B0C, data]\n")
+			assert.Contains(t, stdout, "  - [0x15C3C, pal, D_80195C3C]\n")
+			assert.Contains(t, stdout, "  - [0x1601C, pal, D_8019601C]\n")
+			assert.Contains(t, stdout, "  - [0x1621C, pal, D_8019621C] # unused\n")
+			assert.Contains(t, stdout, "  - [0x162DC, pal, D_801962DC]\n")
 			assert.Contains(t, stdout, "  - [0x16A5C, .data, tile_data] # tile data\n")
 			assert.Contains(t, stdout, "  - [0x20A5C, .data, tile_data] # tile definitions\n")
 			assert.Contains(t, stdout, "  - [0x26E8C, .data, sprites]\n")

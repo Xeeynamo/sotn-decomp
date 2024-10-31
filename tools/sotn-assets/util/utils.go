@@ -1,7 +1,11 @@
 package util
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 )
@@ -68,4 +72,26 @@ func SortUniqueOffsets(slice []psx.Addr) []psx.Addr {
 		return 0
 	})
 	return newSlice
+}
+
+// WriteFile ensures the directory of the file to create exists
+func WriteFile(name string, content []byte) error {
+	dir := filepath.Dir(name)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return fmt.Errorf("failed to create directory %q: %v\n", dir, err)
+	}
+	return os.WriteFile(name, content, 0644)
+}
+
+// WriteJsonFile converts the passed object as a JSON and internally calls WriteFile
+func WriteJsonFile(name string, v any) error {
+	content, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		return err
+	}
+	return WriteFile(name, content)
+}
+
+func RemoveFileNameExt(name string) string {
+	return strings.TrimSuffix(name, filepath.Ext(name))
 }

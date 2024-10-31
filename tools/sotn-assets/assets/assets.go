@@ -38,6 +38,7 @@ type InfoAssetEntry struct {
 }
 type InfoSplatEntry struct {
 	DataRange datarange.DataRange
+	Kind      string
 	Name      string
 	Comment   string
 }

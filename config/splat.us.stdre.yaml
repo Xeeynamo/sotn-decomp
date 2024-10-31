@@ -68,6 +68,15 @@ segments:
       - [0x8D8C, raw, cutscene_mother]
       - [0x9B0C, raw, cutscene_succubus]
       - [0xA88C, data]
+      - [0xABE8, pal, D_8018ABE8]
+      - [0xADE8, pal, D_8018ADE8] # unused
+      - [0xAEA8, pal, D_8018AEA8]
+      - [0xAF48, pal, D_8018AF48]
+      - [0xB048, pal, D_8018B048] # unused
+      - [0xB148, pal, D_8018B148]
+      - [0xB248, pal, D_8018B248] # unused
+      - [0xB348, pal, D_8018B348]
+      - [0xB448, pal, D_8018B448] # unused
       - [0xB548, .data, tile_data] # tile data
       - [0xBD48, .data, tile_data] # tile definitions
       - [0x10168, .data, sprites]

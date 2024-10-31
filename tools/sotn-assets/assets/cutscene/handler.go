@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"gopkg.in/yaml.v2"
 	"io"
 	"os"
 	"path"
-	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -29,12 +29,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return err
 	}
-	outFileName := assetPath(e.AssetDir, e.Name)
-	dir := filepath.Dir(outFileName)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		fmt.Printf("failed to create directory %s: %v\n", dir, err)
-		return err
-	}
 	yaml := "script:\n"
 	for _, command := range script {
 		if len(command) == 0 {
@@ -49,7 +43,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			yaml += fmt.Sprintf("  - [%s]\n", strings.Join(command, ", "))
 		}
 	}
-	return os.WriteFile(outFileName, []byte(yaml), 0644)
+	return util.WriteFile(assetPath(e.AssetDir, e.Name), []byte(yaml))
 }
 
 type scriptSrc struct {

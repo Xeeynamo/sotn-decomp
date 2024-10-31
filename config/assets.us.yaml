@@ -7,7 +7,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
+          - [0xA0, paldef, palette_def]
           - [0xDC, layers, layers]
           - [0x134, skip]
           - [0x1EC, layout, entity_layouts]
@@ -24,7 +24,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
+          - [0xA0, paldef, palette_def]
           - [0xE8, layers, layers]
           - [0x128, skip]
           - [0x220, layout, entity_layouts]
@@ -53,7 +53,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
           - [0x1C4, layers, layers]
           - [0x5A4, skip]
           - [0x77C, layout, entity_layouts]
@@ -70,7 +70,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
           - [0x1D0, layers, layers]
           - [0x558, skip]
           - [0x728, layout, entity_layouts]
@@ -85,7 +85,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
           - [0x164, layers, layers]
           - [0x47C, skip]
           - [0x8EC, layout, entity_layouts]
@@ -102,7 +102,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
+          - [0xA0, paldef, palette_def]
           - [0x124, layers, layers]
           - [0x1A4, skip]
           - [0x314, layout, entity_layouts]
@@ -119,7 +119,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
+          - [0xA0, paldef, palette_def]
           - [0xB8, layers, layers]
           - [0x1B8, skip]
           - [0x23C, layout, entity_layouts]
@@ -134,7 +134,7 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
+          - [0xA0, paldef, palette_def]
           - [0xB8, layers, layers]
           - [0x1B8, skip]
           - [0x23C, layout, entity_layouts]
@@ -149,7 +149,8 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
+          - [0xBC, skip]
           - [0xCC, layers, layers]
           - [0xF4, skip]
           - [0x168, layout, entity_layouts]
@@ -167,6 +168,8 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, skip]
+          - [0xAC, paldef, palette_def]
+          - [0xD0, skip]
           - [0xE0, layers, layers]
           - [0x108, skip]
           - [0x1EC, layout, entity_layouts]

@@ -2,15 +2,14 @@ package layer
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path"
-	"path/filepath"
 )
 
 type handler struct{}
@@ -49,18 +48,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	outFileName := path.Join(e.AssetDir, "layers.json")
-	dir := filepath.Dir(outFileName)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		fmt.Printf("failed to create directory %s: %v\n", dir, err)
-		return err
-	}
-
-	content, err := json.MarshalIndent(l, "", "  ")
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(outFileName, content, 0644); err != nil {
+	if err := util.WriteJsonFile(path.Join(e.AssetDir, "layers.json"), l); err != nil {
 		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
@@ -90,14 +78,8 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		if err := os.WriteFile(path.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
 		}
-
-		content, err = json.MarshalIndent(defs, "", "  ")
-		if err != nil {
-			return err
-		}
-		fileName := path.Join(e.AssetDir, tiledefFileName(offset))
-		if err := os.WriteFile(fileName, content, 0644); err != nil {
-			return fmt.Errorf("unable to create %q: %w", fileName, err)
+		if err := util.WriteJsonFile(path.Join(e.AssetDir, tiledefFileName(offset)), defs); err != nil {
+			return fmt.Errorf("unable to create layers file: %w", err)
 		}
 	}
 	return nil

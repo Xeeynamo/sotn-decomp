@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
   symbol_name_format: us_$VRAM
   disassemble_all: True
   section_order:
@@ -53,6 +54,9 @@ segments:
       - [0x1044, data, e_misc]
       - [0x1160, .data, e_particles]
       - [0x11E0, data]
+      - [0x7350, pal, D_80187350]
+      - [0x7550, pal, D_80187550] # unused
+      - [0x7610, pal, D_80187610]
       - [0x10E80, .rodata, rbo3]
       - [0x10F0C, .rodata, 12D64]
       - [0x10F3C, .rodata, e_red_door]

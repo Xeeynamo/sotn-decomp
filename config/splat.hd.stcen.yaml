@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
   symbol_name_format: hd_$VRAM
   section_order:
     - .data
@@ -57,6 +58,12 @@ segments:
       - [0x1308, .data, rooms]
       - [0x1334, .data, e_layout]
       - [0x1424, data]
+      - [0x65AC, pal, D_801865AC]
+      - [0x66AC, pal, D_801866AC] # unused
+      - [0x67AC, pal, D_801867AC]
+      - [0x68AC, pal, D_801868AC] # unused
+      - [0x69AC, pal, D_801869AC]
+      - [0x69CC, pal, D_801869CC]
       - [0x6A0C, .data, tile_data]
       - [0xC62C, .data, sprites]
       - [0xD434, .rodata, cutscene]

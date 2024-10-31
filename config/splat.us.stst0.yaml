@@ -66,7 +66,19 @@ segments:
       #- [0x17F80, cmp]
       - [0x187BC, data]
       #- [0x1A40C, cmp]
-      - [0x1A750, data]
+      - [0x1A750, pal, D_8019A750]
+      - [0x1A830, pal, D_8019A830]
+      - [0x1A930, pal, D_8019A930] # unused
+      - [0x1AA30, pal, D_8019AA30]
+      - [0x1AB30, pal, D_8019AB30] # unused
+      - [0x1AC30, pal, D_8019AC30]
+      - [0x1AD30, pal, D_8019AD30]
+      - [0x1AD70, pal, D_8019AD70]
+      - [0x1ADD0, pal, D_8019ADD0]
+      - [0x1AE70, pal, D_8019AE70]
+      - [0x1AF30, pal, D_8019AF30]
+      - [0x1B010, pal, D_8019B010]
+      - [0x1B210, pal, D_8019B210] # unused
       - [0x1B2D0, .data, tile_data] # tile data
       - [0x1E6D0, .data, tile_data] # tile definitions
       - [0x226E0, .data, sprites]
