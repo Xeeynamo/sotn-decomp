@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
@@ -39,6 +40,7 @@ var handlers = func() map[string]assets.Handler {
 	m := make(map[string]assets.Handler)
 	for _, handler := range []assets.Handler{
 		cutscene.Handler,
+		gfxbanks.Handler,
 		layer.Handler,
 		layout.Handler,
 		paldef.Handler,

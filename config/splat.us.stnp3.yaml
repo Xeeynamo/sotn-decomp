@@ -35,8 +35,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0x8C, .data, header] # palette definitions
       - [0x1D0, .data, header] # layers
-      - [0x558, data]
+      - [0x558, .data, header] # graphics banks
       - [0x728, .data, e_laydef] # layout entries header
       - [0x8D0, .data, e_init]
       - [0xD98, .data, st_debug]
@@ -75,7 +76,26 @@ segments:
       - [0x3760, data]
       - [0x3A7C, .data, rooms]
       - [0x3B68, .data, e_layout] # layout entries data
-      - [0x49E0, data]
+      - [0x49E0, cmp, D_801849E0]
+      - [0x4D24, cmp, D_80184D24]
+      - [0x773C, cmp, D_8018773C]
+      - [0x83DC, cmp, D_801883DC]
+      - [0x9018, cmp, D_80189018]
+      - [0xA028, cmp, D_8018A028]
+      - [0xA92C, cmp, D_8018A92C]
+      - [0xB508, cmp, D_8018B508]
+      - [0xBFCC, cmp, D_8018BFCC]
+      - [0xC69C, cmp, D_8018C69C]
+      - [0xD354, cmp, D_8018D354]
+      - [0xE3D8, cmp, D_8018E3D8]
+      - [0xF250, cmp, D_8018F250]
+      - [0xFF68, cmp, D_8018FF68]
+      - [0x10EE4, cmp, D_80190EE4]
+      - [0x119D8, cmp, D_801919D8]
+      - [0x123C0, cmp, D_801923C0]
+      - [0x12C84, cmp, D_80192C84]
+      - [0x139F4, cmp, D_801939F4]
+      - [0x141B4, cmp, D_801941B4]
       - [0x14914, pal, D_80194914]
       - [0x15A94, pal, D_80195A94]
       - [0x15B54, pal, D_80195B54] # unused

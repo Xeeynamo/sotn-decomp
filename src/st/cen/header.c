@@ -30,42 +30,5 @@ Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 #include "palette_def.h"
 #include "layers.h"
-
-static u32 D_8019C704[24];
-
-static u_long* D_80180134[] = {
-    GFX_BANK_NONE,
-    GFX_ENTRY(0, 0, 0, 0, NULL),
-    GFX_TERMINATE(),
-};
-
-extern u8 D_80183A40[];
-extern u8 D_80184B70[];
-static u_long* D_80180148[] = {
-    GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80183A40),
-    GFX_ENTRY(0x100, 0xA0, 0x80, 0x80, D_80184B70),
-    GFX_TERMINATE(),
-};
-
-extern u8 D_80181658[];
-extern u8 D_8018199C[];
-static u_long* D_80180168[] = {
-    GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80181658),
-    GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_8018199C),
-    GFX_TERMINATE(),
-};
-
-extern u8 D_80185830[];
-static u_long* D_80180188[] = {
-    GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x80, 0x80, 0x80, D_80185830),
-    GFX_TERMINATE(),
-};
-
-u_long* OVL_EXPORT(gfxBanks)[] = {
-    &D_80180134, &D_80180148, &D_80180188, &D_80180134, &D_80180134,
-    &D_80180168, &D_80180134, &D_80180134, &D_80180134, &D_80180134,
-    &D_80180134, &D_80180134, &D_80180134, &D_80180134, &D_80180134,
-    &D_80180134, &D_80180134, &D_80180134, &D_80180134, &D_80180134};
+#include "graphics_banks.h"
+STATIC_PAD_BSS(96);
