@@ -32,10 +32,13 @@ u16 func_80131F38(void) {
 }
 
 bool func_80131F68(void) {
-    if (D_8013B61C == 0) {
-        return D_8013901C != 0;
+    bool ret;
+    if (D_8013B61C) {
+        ret = 1;
+    } else {
+        ret = (D_8013901C != 0);
     }
-    return true;
+    return ret;
 }
 
 s16 GetCdVolume(void) { return g_CdVolume; }
@@ -43,13 +46,14 @@ s16 GetCdVolume(void) { return g_CdVolume; }
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
 void func_80131FCC(void) {
-    if (D_8013B680 == 0) {
+    switch (D_8013B680) {
+    case 0:
         D_80138F7C = 0;
-    } else {
-        s32 temp_v1 = D_8013B680;
-        s32 temp_v0 = D_8013B680;
-        if (temp_v0 >= 0 && temp_v1 < 3)
-            D_80138F7C++;
+        break;
+    case 1:
+    case 2:
+        D_80138F7C++;
+        break;
     }
     D_8013B680 = 0;
 }
@@ -63,8 +67,11 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
             D_8013B680 = 2;
             return D_8013B680;
         }
-    } else if (*g_CdCommandResult & CdlStatShellOpen ||
-               *g_CdCommandResult & CdlStatSeekError) {
+    } else if (*g_CdCommandResult & CdlStatShellOpen) {
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if (*g_CdCommandResult & CdlStatSeekError) {
         CdControl(CdlNop, 0, 0);
         D_8013B680 = 2;
         return D_8013B680;

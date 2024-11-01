@@ -23,6 +23,14 @@ parser.add_argument(
     action="store_true",
     help="Print the request instead of posting it to the server",
 )
+parser.add_argument(
+    "--markdown",
+    dest="markdown",
+    default=False,
+    required=False,
+    action="store_true",
+    help="Like a dry-run but format the output as a markdown",
+)
 args = parser.parse_args()
 if args.version == None:
     args.version = os.getenv("VERSION")
@@ -76,19 +84,19 @@ class DecompProgressStats:
         Returns one of the following valid paths:
         `asm/us/main/nonmatchings`
         `asm/us/st/wrp/nonmatchings`
+        `asm/pspeu/dra_psp/psp/dra_psp`
         `asm/pspeu/st/wrp_psp/psp/wrp_psp`
         """
         nonmatchings = f"{asm_path}/nonmatchings"
         if not os.path.exists(nonmatchings):
-            nonmatchings_psp = f"{asm_path}/psp"
-            if not os.path.exists(nonmatchings_psp):
-                if not os.path.exists(f"{asm_path}/matchings"):
-                    print(f"error: {asm_path} not found")
-                    exit(1)
-                # nonmatchings path does not exist, the overlay is 100% decompiled
-                return ""
-            nonmatchings = nonmatchings_psp
-
+            nonmatchings_psp = f"{asm_path}/psp/{os.path.basename(asm_path)}"
+            if os.path.exists(nonmatchings_psp) and os.path.exists(
+                f"{asm_path}/matchings"
+            ):
+                nonmatchings = nonmatchings_psp
+            else:
+                print("unable to determine nonmatchings path")
+                exit(1)
         # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
         if nonmatchings.endswith("/main"):
             nonmatchings = nonmatchings[:-5]
@@ -125,7 +133,6 @@ class DecompProgressStats:
     ):
         totalStats = ProgressStats()
         progressPerFolder: dict[str, ProgressStats] = dict()
-
         for file in [file for segment in map_file for file in segment]:
             if len(file) == 0:
                 continue
@@ -302,6 +309,34 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
             print(f"{overlay.upper()} no new progress")
 
 
+def report_markdown(progresses: dict[str, DecompProgressStats]):
+    for overlay in progresses:
+        stat = progresses[overlay]
+        if stat.code_matching != stat.code_matching_prev:
+            coverage = stat.code_matching / stat.code_total
+            coverage_diff = (
+                stat.code_matching - stat.code_matching_prev
+            ) / stat.code_total
+            funcs = stat.functions_matching / stat.functions_total
+            funcs_diff = (
+                stat.functions_matching - stat.functions_prev
+            ) / stat.functions_total
+            print(
+                str.join(
+                    "",
+                    [
+                        f"## **{overlay.upper()}** *{args.version}*\n\n",
+                        f"code coverage {coverage*100:.2f}%",
+                        f"({coverage_diff*100:+.3f}%)\n\n",
+                        f"functions {funcs*100:.2f}%",
+                        f"({funcs_diff*100:+.3f}%)\n",
+                    ],
+                )
+            )
+        else:
+            continue  # no new progress
+
+
 def report_frogress(entry, version):
     api_base_url = os.getenv("FROGRESS_API_BASE_URL")
     url = f"{api_base_url}/data/{slug}/{version}/"
@@ -376,9 +411,11 @@ if __name__ == "__main__":
     progress = remove_not_existing_overlays(progress)
 
     entry = get_progress_entry(progress)
-    if args.dryrun == False:
-        report_discord(progress)
-        report_frogress(entry, args.version)
-    else:
+    if args.dryrun:
         report_stdout(entry)
         report_human_readable_dryrun(progress)
+    elif args.markdown:
+        report_markdown(progress)
+    else:
+        report_discord(progress)
+        report_frogress(entry, args.version)
