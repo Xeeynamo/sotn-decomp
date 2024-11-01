@@ -1987,18 +1987,22 @@ typedef struct {
 } ET_BackgroundVortex;
 
 typedef struct {
-    s32 pad0[1];
-    s16 attackTimer;
-    s32 pad6[3];
-    s32 thrownVase;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 attackTimer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 unk90;
 } ET_OuijaTable;
 
 typedef struct {
-    s32 pad0[2];
-    s32 spawned;
-    struct Entity* parent;
-    s32 pad16[1];
-    s32 isThrown;
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 spawned;
+    /* 0x88 */ struct Entity* parent;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 isThrown;
 } ET_OuijaTableContents;
 
 // ====== RIC ENTITIES ======
