@@ -158,7 +158,7 @@
 | dra    | func_psp_090E7E38                   |       31 |          3 |        |                                 |       |
 | dra    | func_psp_09102AF0                   |       31 |          4 |        |                                 |       |
 | dra    | func_psp_090EF1A0                   |       31 |          5 |        |                                 |       |
-| dra    | func_psp_09140640                   |       31 |          5 |        |                                 |       |
+| dra    | func_psp_09140640                   |       31 |          5 |        | https://decomp.me/scratch/dlne1 | 0.977 |
 | dra    | func_psp_0910A138                   |       31 |          7 |        |                                 |       |
 | dra    | func_psp_09142CA8                   |       32 |          2 |        |                                 |       |
 | dra    | func_psp_09142D10                   |       32 |          2 |        |                                 |       |
