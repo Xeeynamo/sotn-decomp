@@ -80,8 +80,8 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-FILES_WITH_O4 = $(BUILD_DIR)/src/dra_psp/61F30.c.o
-OPTIMIZATION = $(if $(filter $@,$(FILES_WITH_O4)), -O4, -Op)
+FILES_WITH_O4 = 61F30.c.o 63C90.c.o
+OPTIMIZATION = $(if $(filter $(notdir $@),$(FILES_WITH_O4)), -O4, -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)

@@ -5,6 +5,7 @@ LoadImage = 0x0891BFE4;
 ClearImage = 0x0891CA60;
 ClearOTag = 0x0891D0E0;
 FntPrint = 0x08925e98;
+SsUtSetReverbDepth = 0x89261D4;
 main_ = 0x08926994;
 SquareRoot0 = 0x08927CC4;
 SquareRoot12 = 0x08927CCC;
