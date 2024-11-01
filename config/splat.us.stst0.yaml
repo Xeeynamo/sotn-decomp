@@ -35,8 +35,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0xA0, .data, header] # palette definitions
       - [0x124, .data, header] # layers
-      - [0x1A4, data]
+      - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, e_laydef] # layout entries header
       - [0x4BC, data]
       - [0x580, data]
@@ -58,14 +59,31 @@ segments:
       - [0x26B8, .data, e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
       - [0x2C4C, data]
-      #- [0x3D1C, cmp]
-      - [0x487C, data]
+      - [0x2C58, data] # cutscene data?
+      - [0x3D1C, cmp, D_80183D1C]
+      - [0x487C, cmp, D_8018487C]
+      - [0x586C, cmp, D_8018586C]
+      - [0x68D4, cmp, D_801868D4]
+      - [0x7454, cmp, D_80187454]
+      - [0x85BC, cmp, D_801885BC]
+      - [0x9488, cmp, D_80189488]
+      - [0xA218, cmp, D_8018A218]
+      - [0xAD38, cmp, D_8018AD38]
+      - [0xBB28, cmp, D_8018BB28]
+      - [0xCAA8, cmp, D_8018CAA8]
+      - [0xDE38, cmp, D_8018DE38]
+      - [0xE3D0, cmp, D_8018E3D0]
       - [0xF130, raw, cutscene_richter]
       - [0xFEB0, raw, cutscene_dracula]
-      - [0x10C30, data]
-      #- [0x17F80, cmp]
-      - [0x187BC, data]
-      #- [0x1A40C, cmp]
+      - [0x10C30, cmp, D_80190C30] # unused
+      - [0x111D8, cmp, D_801911D8]
+      - [0x11B8C, cmp, D_80191B8C]
+      - [0x13DB0, cmp, D_80193DB0]
+      - [0x14448, cmp, D_80194448]
+      - [0x17F80, cmp, D_80197F80]
+      - [0x187BC, cmp, D_801987BC]
+      - [0x19628, cmp, D_80199628]
+      - [0x1A40C, cmp, D_8019A40C]
       - [0x1A750, pal, D_8019A750]
       - [0x1A830, pal, D_8019A830]
       - [0x1A930, pal, D_8019A930] # unused

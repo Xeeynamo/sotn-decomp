@@ -25,3 +25,4 @@ Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 #include "palette_def.h"
 #include "layers.h"
+#include "graphics_banks.h"

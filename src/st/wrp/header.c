@@ -30,23 +30,4 @@ Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 #include "palette_def.h"
 #include "layers.h"
-
-static u_long* D_801801B8[] = {
-    GFX_BANK_NONE,
-    GFX_ENTRY(0, 0, 0, 0, NULL),
-    GFX_TERMINATE(),
-};
-
-extern u8 D_80181420[];
-extern u8 D_80181764[];
-static u_long* D_801801CC[] = {
-    GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x40, 0x80, 0x80, D_80181420),
-    GFX_ENTRY(0x100, 0x60, 0x80, 0x80, D_80181764),
-    GFX_TERMINATE(),
-};
-u_long* OVL_EXPORT(gfxBanks)[] = {
-    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
-    D_801801CC, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
-    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
-    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8};
+#include "graphics_banks.h"

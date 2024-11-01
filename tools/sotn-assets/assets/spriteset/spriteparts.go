@@ -32,7 +32,6 @@ func readSpriteParts(r io.ReadSeeker, baseAddr, addr psx.Addr) (spriteParts, dat
 	if err := binary.Read(r, binary.LittleEndian, &count); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
-
 	sprites := make([]sprite, count)
 	if err := binary.Read(r, binary.LittleEndian, sprites); err != nil {
 		return nil, datarange.DataRange{}, err

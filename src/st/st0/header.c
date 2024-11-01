@@ -6,7 +6,7 @@ extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern GfxBank* g_EntityGfxs[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 void PrologueScroll();
 
@@ -20,7 +20,7 @@ static Overlay OVL_EXPORT(Overlay) = {
     .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
     .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = g_EntityGfxs,
+    .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
     .StageEndCutScene = PrologueScroll,
 };
@@ -28,3 +28,4 @@ static Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 #include "palette_def.h"
 #include "layers.h"
+#include "graphics_banks.h"

@@ -57,7 +57,12 @@ segments:
       - [0x127C, .data, e_room_fg]
       - [0x1308, .data, rooms]
       - [0x1334, .data, e_layout]
-      - [0x1424, data]
+      - [0x1424, data] # cutscene script?
+      - [0x1678, cmp, D_80181678]
+      - [0x19BC, cmp, D_801819BC]
+      - [0x3A60, cmp, D_80183A60]
+      - [0x4B90, cmp, D_80184B90]
+      - [0x5850, cmp, D_80185850]
       - [0x65AC, pal, D_801865AC]
       - [0x66AC, pal, D_801866AC] # unused
       - [0x67AC, pal, D_801867AC]
