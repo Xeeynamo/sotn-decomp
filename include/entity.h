@@ -1986,6 +1986,21 @@ typedef struct {
     /* 0xAE */ s16 unkAE;
 } ET_BackgroundVortex;
 
+typedef struct {
+    s32 pad0[1];
+    s16 attackTimer;
+    s32 pad6[3];
+    s32 thrownVase;
+} ET_OuijaTable;
+
+typedef struct {
+    s32 pad0[2];
+    s32 spawned;
+    struct Entity* parent;
+    s32 pad16[1];
+    s32 isThrown;
+} ET_OuijaTableContents;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2166,6 +2181,8 @@ typedef union { // offset=0x7C
     ET_ClockTower clockTower;
     ET_BackgroundVortex bgVortex;
     ET_MedusaUnk1A medusaUnk1A;
+    ET_OuijaTable ouijaTable;
+    ET_OuijaTableContents ouijaTableContents;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
