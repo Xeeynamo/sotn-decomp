@@ -407,11 +407,11 @@ void func_us_80174F0C(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        self->ext.faerie.unkCounter8C = 0;
+        self->ext.faerie.frameCounter = 0;
         break;
     case 1:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C <= 0x18) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter <= 24) {
             break;
         }
         self->step++;
@@ -476,24 +476,24 @@ void func_us_80174F0C(Entity* self) {
         }
         break;
     case 0x7:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             CreateEventEntity_Dupe(self, 0xDF, 0);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
     case 0x8:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             CreateEventEntity_Dupe(self, 0xDD, 0);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
     case 0x9:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x5A) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 90) {
             if (SearchForEntityInRange(1, 0x29)) {
                 D_800973FC = 0;
             }
@@ -504,20 +504,20 @@ void func_us_80174F0C(Entity* self) {
 
             g_Status.hp = g_Status.hpMax;
             g_Status.mp = g_Status.mpMax;
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
     case 0xA:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x5A) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 90) {
             D_80097420[0] = 0;
             self->step++;
         }
         break;
     case 0xB:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -586,7 +586,7 @@ void func_us_801753E4(Entity* self) {
         } else {
             func_us_80173994(self, 0x10);
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step += 2;
         }
         break;
@@ -598,13 +598,13 @@ void func_us_801753E4(Entity* self) {
             CreateEventEntity_Dupe(self, 0xDF, 1);
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             g_api.func_80102CD8(4);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
     case 4:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -680,15 +680,15 @@ void func_us_80175730(Entity* self) {
                 self, FACTORY(0x37, paramOffset), 0);
 
             CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
         }
         break;
     case 4:
     case 6:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -698,7 +698,7 @@ void func_us_80175730(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
@@ -772,15 +772,15 @@ void func_us_80175A78(Entity* self) {
                 self, FACTORY(0x37, paramOffset), 0);
 
             CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
         }
         break;
     case 4:
     case 6:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -790,7 +790,7 @@ void func_us_80175A78(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
@@ -870,14 +870,14 @@ void func_us_80175DBC(Entity* self) {
                 self, FACTORY(0x37, D_us_80172494[self->params * 4 + 2]), 0);
             CreateEventEntity_Dupe(
                 self, 0xDF, D_us_80172494[self->params * 4 + 3]);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
     case 4:
     case 6:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -887,7 +887,7 @@ void func_us_80175DBC(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
@@ -960,14 +960,14 @@ void func_us_80176178(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, D_us_801724C4[self->params * 2 + 1]), 0);
             CreateEventEntity_Dupe(self, 0xDF, 2);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
     case 4:
     case 6:
-        self->ext.faerie.unkCounter8C++;
-        if (self->ext.faerie.unkCounter8C > 0x3C) {
+        self->ext.faerie.frameCounter++;
+        if (self->ext.faerie.frameCounter > 60) {
             self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
@@ -977,7 +977,7 @@ void func_us_80176178(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
             g_api.PlaySfx(D_us_80172BD8);
-            self->ext.faerie.unkCounter8C = 0;
+            self->ext.faerie.frameCounter = 0;
             self->step++;
         }
         break;
@@ -1120,7 +1120,7 @@ void func_us_80177AC4(Entity* arg0) {
         break;
     case 4:
         arg0->ext.faerie.unk7c++;
-        if (arg0->ext.faerie.unk7c > 0x3C) {
+        if (arg0->ext.faerie.unk7c > 60) {
             arg0->step++;
         }
         break;
