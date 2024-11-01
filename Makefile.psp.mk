@@ -1,6 +1,6 @@
 # Configuration
 BUILD_DIR       := build/pspeu
-PSP_EU_TARGETS  := stwrp tt_000
+PSP_EU_TARGETS  := dra stwrp tt_000
 
 # Flags
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
@@ -50,6 +50,7 @@ $(MWCCGAP_APP):
 	git submodule init $(MWCCGAP_DIR)
 	git submodule update $(MWCCGAP_DIR)
 
+dra_psp: $(BUILD_DIR)/dra.bin
 tt_000_psp: $(BUILD_DIR)/tt_000.bin
 stwrp_psp: $(BUILD_DIR)/wrp.bin
 
@@ -58,10 +59,15 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
 $(BUILD_DIR)/wrp.bin: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 
+$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
+	$(SPLAT_PIP) $<
 $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
 	$(SPLAT_PIP) $<
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT_PIP) $<
+
+$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $$(call list_o_files_psp,dra_psp)
+	$(call link,dra,$@)
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
