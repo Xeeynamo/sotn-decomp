@@ -1999,7 +1999,8 @@ typedef struct {
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
-    ET_Placeholder ILLEGAL;
+    // ET_Placeholder ILLEGAL;
+    ET_Faerie faerie;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
@@ -2061,7 +2062,7 @@ typedef union { // offset=0x7C
     ET_BatFamBlueTrail batFamBlueTrail;
     ET_BatEcho batEcho;
     ET_Ghost ghost;
-    ET_Faerie faerie;
+
     ET_FaerieUnk0 faerieUnk0;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
