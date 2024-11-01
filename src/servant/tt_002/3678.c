@@ -2,6 +2,7 @@
 #include "common.h"
 #include <servant.h>
 #include "sfx.h"
+#include "items.h"
 
 extern s32 s_ServantId;
 extern u16 D_us_801722E8[];
@@ -32,6 +33,12 @@ extern s32 D_us_80172BE4[];
 extern s16 D_us_80172494[];
 extern s16 D_us_801724C4[];
 extern s32 D_us_80172BD0;
+
+extern s32 D_800973FC;
+// this is likely incorrect typing
+extern s32 D_80097420[];
+extern s32 D_us_80172BD4;
+extern s32 D_us_80172BDC;
 
 // this may actually be a multi dimensional array instead of a struct
 typedef struct {
@@ -394,7 +401,140 @@ void func_us_80174998(Entity* self) {
     ServantUpdateAnim(self, NULL, D_us_80172B14);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80174F0C);
+void func_us_80174F0C(Entity* self) {
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        self->ext.faerie.unkCounter8C = 0;
+        break;
+    case 1:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C <= 0x18) {
+            break;
+        }
+        self->step++;
+        // fallthrough
+    case 2:
+        if (!g_Status.equipHandCount[ITEM_LIFE_APPLE]) {
+            self->step = 0x5A;
+            break;
+        }
+        self->step++;
+        // fallthrough
+    case 3:
+        if (!g_unkGraphicsStruct.unk20) {
+            g_Status.equipHandCount[ITEM_LIFE_APPLE]--;
+            g_unkGraphicsStruct.unk20 = 0xfff;
+            self->step++;
+        }
+        break;
+    case 4:
+        s_TargetLocationX_calc = PLAYER.posX.i.hi;
+        s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x20;
+        s_AngleToTarget = self->ext.faerie.randomMovementAngle;
+        self->ext.faerie.randomMovementAngle += 0x10;
+        self->ext.faerie.randomMovementAngle &= 0xFFF;
+        s_DistToTargetLocation = self->ext.faerie.unk88;
+        s_TargetLocationX =
+            s_TargetLocationX_calc +
+            ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 0xC);
+        s_TargetLocationY =
+            s_TargetLocationY_calc -
+            ((rsin(s_AngleToTarget) * (s_DistToTargetLocation / 2)) >> 0xC);
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 5);
+        self->velocityX = rcos(s_AllowedAngle) << 5;
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 2) {
+            self->step++;
+        }
+        break;
+    case 0x5:
+        self->facingLeft = PLAYER.facingLeft;
+        func_us_80173994(self, 0x13);
+        if (s_ServantId == FAM_ACTIVE_YOUSEI) {
+            g_api.PlaySfx(D_us_80172BD4);
+        }
+        self->step++;
+        break;
+    case 0x6:
+        if (self->animFrameIdx == 0xA) {
+            if (s_ServantId == FAM_ACTIVE_FAERIE) {
+                g_api.PlaySfx(D_us_80172BD4);
+            }
+            self->step++;
+        }
+        break;
+    case 0x7:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
+            CreateEventEntity_Dupe(self, 0xDF, 0);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+        }
+        break;
+    case 0x8:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
+            CreateEventEntity_Dupe(self, 0xDD, 0);
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+        }
+        break;
+    case 0x9:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x5A) {
+            if (SearchForEntityInRange(1, 0x29)) {
+                D_800973FC = 0;
+            }
+
+            for (i = 8; i < 0x40; i++) {
+                DestroyEntity(&g_Entities[i]);
+            }
+
+            g_Status.hp = g_Status.hpMax;
+            g_Status.mp = g_Status.mpMax;
+            self->ext.faerie.unkCounter8C = 0;
+            self->step++;
+        }
+        break;
+    case 0xA:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x5A) {
+            D_80097420[0] = 0;
+            self->step++;
+        }
+        break;
+    case 0xB:
+        self->ext.faerie.unkCounter8C++;
+        if (self->ext.faerie.unkCounter8C > 0x3C) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        break;
+
+    case 0x5A:
+        func_us_80173994(self, 0x20);
+        g_api.PlaySfx(D_us_80172BDC);
+        self->step++;
+        break;
+    case 0x5B:
+        break;
+    }
+
+    ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
 
 void func_us_801753E4(Entity* self) {
     const int paramOffset = 3;
