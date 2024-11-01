@@ -59,6 +59,87 @@ func TestGatherAssetInfo(t *testing.T) {
 	})
 }
 
+func TestStagesCompatibility(t *testing.T) {
+	changeDirToRepoRoot()
+	files := []string{
+		"disks/us/BOSS/BO0/BO0.BIN",
+		"disks/us/BOSS/BO1/BO1.BIN",
+		"disks/us/BOSS/BO2/BO2.BIN",
+		"disks/us/BOSS/BO3/BO3.BIN",
+		"disks/us/BOSS/BO4/BO4.BIN",
+		"disks/us/BOSS/BO5/BO5.BIN",
+		"disks/us/BOSS/BO6/BO6.BIN",
+		"disks/us/BOSS/BO7/BO7.BIN",
+		"disks/us/BOSS/MAR/MAR.BIN",
+		"disks/us/BOSS/RBO0/RBO0.BIN",
+		"disks/us/BOSS/RBO1/RBO1.BIN",
+		"disks/us/BOSS/RBO2/RBO2.BIN",
+		"disks/us/BOSS/RBO3/RBO3.BIN",
+		"disks/us/BOSS/RBO4/RBO4.BIN",
+		"disks/us/BOSS/RBO5/RBO5.BIN",
+		"disks/us/BOSS/RBO6/RBO6.BIN",
+		"disks/us/BOSS/RBO7/RBO7.BIN",
+		"disks/us/BOSS/RBO8/RBO8.BIN",
+		"disks/us/ST/SEL/SEL.BIN",
+		"disks/us/ST/ARE/ARE.BIN",
+		"disks/us/ST/CAT/CAT.BIN",
+		"disks/us/ST/CEN/CEN.BIN",
+		"disks/us/ST/CHI/CHI.BIN",
+		"disks/us/ST/DAI/DAI.BIN",
+		"disks/us/ST/DRE/DRE.BIN",
+		"disks/us/ST/LIB/LIB.BIN",
+		"disks/us/ST/NO0/NO0.BIN",
+		"disks/us/ST/NO1/NO1.BIN",
+		"disks/us/ST/NO2/NO2.BIN",
+		"disks/us/ST/NO3/NO3.BIN",
+		"disks/us/ST/NO4/NO4.BIN",
+		"disks/us/ST/NP3/NP3.BIN",
+		"disks/us/ST/NZ0/NZ0.BIN",
+		"disks/us/ST/NZ1/NZ1.BIN",
+		"disks/us/ST/ST0/ST0.BIN",
+		"disks/us/ST/TOP/TOP.BIN",
+		"disks/us/ST/WRP/WRP.BIN",
+		"disks/us/ST/RARE/RARE.BIN",
+		"disks/us/ST/RCAT/RCAT.BIN",
+		"disks/us/ST/RCEN/RCEN.BIN",
+		"disks/us/ST/RCHI/RCHI.BIN",
+		"disks/us/ST/RDAI/RDAI.BIN",
+		"disks/us/ST/RLIB/RLIB.BIN",
+		"disks/us/ST/RNO0/RNO0.BIN",
+		"disks/us/ST/RNO1/RNO1.BIN",
+		"disks/us/ST/RNO2/RNO2.BIN",
+		"disks/us/ST/RNO3/RNO3.BIN",
+		"disks/us/ST/RNO4/RNO4.BIN",
+		"disks/us/ST/RNZ0/RNZ0.BIN",
+		"disks/us/ST/RNZ1/RNZ1.BIN",
+		"disks/us/ST/RTOP/RTOP.BIN",
+		"disks/us/ST/RWRP/RWRP.BIN",
+		"disks/us/ST/MAD/MAD.BIN",
+		"disks/us/ST/TE1/TE1.BIN",
+		"disks/us/ST/TE2/TE2.BIN",
+		"disks/us/ST/TE3/TE3.BIN",
+		"disks/us/ST/TE4/TE4.BIN",
+		"disks/us/ST/TE5/TE5.BIN",
+	}
+	succeeded := 0
+	for _, p := range files {
+		t.Run(fmt.Sprintf("can gather info for %q", p), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					assert.Fail(t, fmt.Sprintf("%v", err))
+				}
+			}()
+			buf := new(bytes.Buffer)
+			err := info(buf, p)
+			assert.NoError(t, err)
+			if err == nil {
+				succeeded++
+			}
+		})
+	}
+	assert.Equal(t, len(files), succeeded, "not all succeeded")
+}
+
 func changeDirToRepoRoot() {
 	chdirMutex.Lock()
 	defer chdirMutex.Unlock()
