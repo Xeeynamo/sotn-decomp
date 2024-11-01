@@ -5,7 +5,7 @@ extern RoomHeader OVL_EXPORT(rooms)[];
 extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern void* OVL_EXPORT(gfxBanks)[];
+extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 
 static Overlay OVL_EXPORT(Overlay) = {
@@ -25,3 +25,4 @@ static Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 #include "palette_def.h"
 #include "layers.h"
+#include "graphics_banks.h"

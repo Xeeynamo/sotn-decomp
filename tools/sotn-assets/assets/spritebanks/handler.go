@@ -49,7 +49,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		AssetEntries: []assets.InfoAssetEntry{
 			{
 				DataRange: datarange.FromAddr(header.Sprites, banksCount*4),
-				Kind:      "sprite_banks",
+				Kind:      h.Name(),
 				Name:      "sprite_banks",
 			},
 		},

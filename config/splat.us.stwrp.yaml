@@ -36,7 +36,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0xA0, .data, header] # palette definitions
       - [0xB8, .data, header] # layers
+      - [0x1B8, .data, header] # graphics banks
       - [0x23C, .data, e_laydef] # layout entries header
       - [0x3E4, .data, e_init]
       - [0x528, .data, st_debug]

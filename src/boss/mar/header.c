@@ -26,22 +26,4 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 #include "palette_def.h"
 #include "layers.h"
-
-static u_long* D_us_801800F4_TERM = GFX_TERMINATE();
-
-extern u_long* D_us_801830F0;
-extern u_long* D_us_80184220;
-static u_long* D_us_801800F8[] = {
-    // TODO GfxBank
-    0x00000004, 0x00800100, 0x00800080,     &D_us_801830F0,
-    0x00A00100, 0x00800080, &D_us_80184220, 0xFFFFFFFF,
-};
-
-u_long* OVL_EXPORT(gfxBanks)[] = {
-    &D_us_801800F4_TERM, &D_us_801800F8,      &D_us_801800F4_TERM,
-    &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,
-    &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,
-    &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,
-    &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,
-    &D_us_801800F4_TERM, &D_us_801800F4_TERM, &D_us_801800F4_TERM,
-    &D_us_801800F4_TERM, &D_us_801800F4_TERM};
+#include "graphics_banks.h"

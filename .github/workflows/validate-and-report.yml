@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ matrix.version }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
@@ -84,6 +85,23 @@ jobs:
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
+      - name: Post the progress update as a comment to the pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { execSync } = require('child_process');
+            const output = execSync('.venv/bin/python3 tools/progress.py --markdown').toString().trim();
+            if (output) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: output
+              });
+            }
+
 
   generate-progress-report:
     strategy:

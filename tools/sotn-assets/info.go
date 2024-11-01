@@ -42,7 +42,6 @@ func infoAssetEntries(w io.Writer, entries []assets.InfoAssetEntry) {
 	sort.Slice(entries, func(i, j int) bool {
 		return entries[i].DataRange.Begin() < entries[j].DataRange.Begin()
 	})
-	_, _ = fmt.Fprintln(w, "  - [0x0, .data, header]")
 	for i, e := range entries {
 		_, _ = fmt.Fprintf(w, "  - [0x%X, %s, %s]\n", e.DataRange.Begin().Real(psx.RamStageBegin), e.Kind, e.Name)
 		// if there is a gap between the current entry and the next one, mark it as unrecognized data
@@ -59,6 +58,7 @@ func infoSplatEntries(w io.Writer, entries []assets.InfoSplatEntry) {
 	sort.Slice(entries, func(i, j int) bool {
 		return entries[i].DataRange.Begin() < entries[j].DataRange.Begin()
 	})
+	_, _ = fmt.Fprintln(w, "  - [0x0, .data, header]")
 	for i, e := range entries {
 		kind := ".data"
 		if e.Kind != "" {

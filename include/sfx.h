@@ -254,9 +254,6 @@ enum SfxModes {
 #define SFX_RBO3_UNK_802 0x802
 #define SFX_RBO3_UNK_804 0x804
 
-// SERVANT TT_002 - Faerie
-#define SFX_TT_002_UNK_675 0x675
-
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2
