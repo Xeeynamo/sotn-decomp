@@ -1,3 +1,5 @@
+LD              := $(CROSS)ld
+
 # flags
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
