@@ -67,8 +67,11 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
             D_8013B680 = 2;
             return D_8013B680;
         }
-    } else if (*g_CdCommandResult & CdlStatShellOpen ||
-               *g_CdCommandResult & CdlStatSeekError) {
+    } else if (*g_CdCommandResult & CdlStatShellOpen){
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if(*g_CdCommandResult & CdlStatSeekError) {
         CdControl(CdlNop, 0, 0);
         D_8013B680 = 2;
         return D_8013B680;

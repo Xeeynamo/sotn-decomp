@@ -30,4 +30,32 @@ void func_80131FCC(void) {
     D_8013B680 = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C90", func_psp_09140698);
+u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
+    g_CdCommandStatus = CdSync(1, g_CdCommandResult);
+
+    if (com == CdlGetlocL) {
+        if (g_CdCommandStatus != CdlComplete) {
+            CdControl(CdlNop, 0, 0);
+            D_8013B680 = 2;
+            return D_8013B680;
+        }
+    } else if (*g_CdCommandResult & CdlStatShellOpen){
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if(*g_CdCommandResult & CdlStatSeekError) {
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    }
+
+    if (g_CdCommandStatus == CdlComplete) {
+        if (CdControl(com, param, result)) {
+            D_8013B680 = 0;
+            return D_8013B680;
+        }
+    }
+
+    D_8013B680 = 1;
+    return D_8013B680;
+}
