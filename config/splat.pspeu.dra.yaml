@@ -169,7 +169,6 @@ segments:
       - [0x61F30, c, dra_psp/61F30]
       - [0x62FE0, c, dra_psp/62FE0]
       - [0x63C90, c, dra_psp/63C90]
-      - [0x63E40, c, dra_psp/63E40]
       - [0x63E60, c, dra_psp/63E60]
       - [0x63FE0, c, dra_psp/63FE0]
       - [0x64370, c, dra_psp/64370]

@@ -59,3 +59,8 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
     D_8013B680 = 1;
     return D_8013B680;
 }
+
+void SetMaxVolume(void) {
+    g_volumeL = g_volumeR = 127;
+    SsSetMVol(g_volumeL, g_volumeR);
+}
