@@ -46,12 +46,12 @@ s16 GetCdVolume(void) { return g_CdVolume; }
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
 void func_80131FCC(void) {
-    switch(D_8013B680){
-        case 0:
+    switch (D_8013B680) {
+    case 0:
         D_80138F7C = 0;
         break;
-        case 1:
-        case 2:
+    case 1:
+    case 2:
         D_80138F7C++;
         break;
     }
@@ -67,11 +67,11 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
             D_8013B680 = 2;
             return D_8013B680;
         }
-    } else if (*g_CdCommandResult & CdlStatShellOpen){
+    } else if (*g_CdCommandResult & CdlStatShellOpen) {
         CdControl(CdlNop, 0, 0);
         D_8013B680 = 2;
         return D_8013B680;
-    } else if(*g_CdCommandResult & CdlStatSeekError) {
+    } else if (*g_CdCommandResult & CdlStatSeekError) {
         CdControl(CdlNop, 0, 0);
         D_8013B680 = 2;
         return D_8013B680;
