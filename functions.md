@@ -69,9 +69,8 @@
 | dra    | func_psp_09102BF0                   |       18 |          1 |        |                                 |       |
 | dra    | func_80102CD8                       |       18 |          1 |        |                                 |       |
 | dra    | func_psp_0913D6D0                   |       18 |          1 |        |                                 |       |
-| dra    | func_psp_0913F8D8                   |       18 |          1 |        |                                 |       |
 | dra    | func_psp_09140BF8                   |       18 |          1 |        | https://decomp.me/scratch/uWRH2 | 0.329 |
-| dra    | func_80131F68                       |       18 |          2 |        |                                 |       |
+| dra    | func_80131F68                       |       18 |          2 |        | https://decomp.me/scratch/eERF0 | 0.38  |
 | dra    | func_psp_0913D5A8                   |       18 |          3 |        |                                 |       |
 | dra    | func_psp_090EBE20                   |       18 |          4 |        |                                 |       |
 | wrp    | e_misc.rodata                       |       20 |          0 | Yes    |                                 |       |
@@ -142,7 +141,6 @@
 | dra    | func_psp_09140D68                   |       27 |          4 |        |                                 |       |
 | wrp    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09100818                   |       28 |          1 |        |                                 |       |
-| dra    | func_psp_0913F908                   |       28 |          1 |        |                                 |       |
 | dra    | func_psp_091428D0                   |       28 |          3 |        |                                 |       |
 | dra    | func_psp_09142928                   |       28 |          3 |        |                                 |       |
 | wrp    | CollectLifeVessel                   |       28 |          4 |        | https://decomp.me/scratch/y8pEq | 0.986 |
