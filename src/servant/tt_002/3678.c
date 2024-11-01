@@ -727,7 +727,7 @@ void func_us_80175DBC(Entity* self) {
             g_Status.equipHandCount[D_us_80172494[self->params * 4 + 1]]--;
 
             g_api.CreateEntFactoryFromEntity(
-                self, 0x37 + (D_us_80172494[self->params * 4 + 2] << 0x10), 0);
+                self, FACTORY(0x37, D_us_80172494[self->params * 4 + 2]), 0);
             CreateEventEntity_Dupe(
                 self, 0xDF, D_us_80172494[self->params * 4 + 3]);
             self->ext.faerie.unkCounter8C = 0;
@@ -818,7 +818,7 @@ void func_us_80176178(Entity* self) {
             g_api.PlaySfx(D_us_80172BD0);
             g_Status.equipHandCount[D_us_801724C4[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
-                self, 0x37 + (D_us_801724C4[self->params * 2 + 1] << 0x10), 0);
+                self, FACTORY(0x37, D_us_801724C4[self->params * 2 + 1]), 0);
             CreateEventEntity_Dupe(self, 0xDF, 2);
             self->ext.faerie.unkCounter8C = 0;
             self->step++;
