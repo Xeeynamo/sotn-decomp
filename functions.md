@@ -7,7 +7,6 @@
 | dra    | func_psp_090E29A8                   |        8 |          1 |        |                                 |       |
 | dra    | func_psp_0913F8C8                   |        8 |          1 |        |                                 |       |
 | dra    | func_psp_0913F8D0                   |        8 |          1 |        |                                 |       |
-| dra    | func_psp_09140638                   |        8 |          1 |        |                                 |       |
 |        | unused_339C                         |        8 |          1 |        |                                 |       |
 |        | unused_33A4                         |        8 |          1 |        |                                 |       |
 |        | unused_33AC                         |        8 |          1 |        |                                 |       |
@@ -48,7 +47,6 @@
 | dra    | func_psp_09101288                   |       14 |          1 |        |                                 |       |
 | dra    | func_800EB4F8                       |       14 |          1 |        |                                 |       |
 | dra    | func_psp_091405E0                   |       14 |          1 |        |                                 |       |
-| dra    | func_psp_091407C0                   |       14 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD58                   |       15 |          2 |        |                                 |       |
 | wrp    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090F0308                   |       16 |          1 |        |                                 |       |
@@ -70,7 +68,6 @@
 | dra    | func_80102CD8                       |       18 |          1 |        |                                 |       |
 | dra    | func_psp_0913D6D0                   |       18 |          1 |        |                                 |       |
 | dra    | func_psp_09140BF8                   |       18 |          1 |        | https://decomp.me/scratch/uWRH2 | 0.329 |
-| dra    | func_80131F68                       |       18 |          2 |        | https://decomp.me/scratch/eERF0 | 0.38  |
 | dra    | func_psp_0913D5A8                   |       18 |          3 |        |                                 |       |
 | dra    | func_psp_090EBE20                   |       18 |          4 |        |                                 |       |
 | wrp    | e_misc.rodata                       |       20 |          0 | Yes    |                                 |       |
@@ -158,7 +155,6 @@
 | dra    | func_psp_090E7E38                   |       31 |          3 |        |                                 |       |
 | dra    | func_psp_09102AF0                   |       31 |          4 |        |                                 |       |
 | dra    | func_psp_090EF1A0                   |       31 |          5 |        |                                 |       |
-| dra    | func_psp_09140640                   |       31 |          5 |        | https://decomp.me/scratch/dlne1 | 0.977 |
 | dra    | func_psp_0910A138                   |       31 |          7 |        |                                 |       |
 | dra    | func_psp_09142CA8                   |       32 |          2 |        |                                 |       |
 | dra    | func_psp_09142D10                   |       32 |          2 |        |                                 |       |
@@ -428,7 +424,6 @@
 | dra    | func_psp_090E83E8                   |       86 |         12 |        |                                 |       |
 | dra    | func_psp_09141FA8                   |       87 |          9 |        |                                 |       |
 | dra    | func_psp_0910BAC8                   |       87 |         11 |        |                                 |       |
-| dra    | func_psp_09140698                   |       87 |         12 |        |                                 |       |
 | dra    | func_psp_090ED818                   |       88 |          7 |        |                                 |       |
 | dra    | func_psp_091140D8                   |       88 |         14 |        |                                 |       |
 | dra    | func_psp_090EC248                   |       89 |          3 |        |                                 |       |
