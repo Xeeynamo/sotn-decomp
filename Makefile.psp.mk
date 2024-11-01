@@ -4,7 +4,7 @@ PSP_EU_TARGETS  := dra stwrp tt_000
 
 # Flags
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -Op -c -lang c -sdatathreshold 0 -char unsigned
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned
 MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
 
 # Tools
@@ -80,9 +80,12 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
+FILES_WITH_O4 = $(BUILD_DIR)/src/dra_psp/61F30.c.o
+OPTIMIZATION = $(if $(filter $@,$(FILES_WITH_O4)), -O4, -Op)
+
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu $(OPTIMIZATION) $(MWCCPSP_FLAGS)
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)
