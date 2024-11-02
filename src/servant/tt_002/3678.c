@@ -57,8 +57,7 @@ static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
 static s16 GetTargetPositionWithDistanceBuffer(
     s16 currentX, s16 targetX, s16 distanceBuffer);
 
-static void SetAnimationFrame(Entity* self, s32 animationIndex)
-{
+static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != D_us_80172B14[animationIndex]) {
         self->anim = D_us_80172B14[animationIndex];
         self->animFrameIdx = 0;
