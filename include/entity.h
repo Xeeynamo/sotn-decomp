@@ -2238,6 +2238,7 @@ SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
 SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
+SYNC_FIELD(ET_EntFactory, ET_OuijaTableContents, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);
