@@ -17,8 +17,7 @@ class PSXSegCmpgfx(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(
             rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml
-        ),
-        self.name = self.get_symbol_name()
+        )
 
     # does splat provide this without extracting the symbols for every file?
     # this might become extremely inefficient over time.
@@ -35,13 +34,13 @@ class PSXSegCmpgfx(N64Segment):
                     addr = tokens[1].replace(";", "").strip()
                     if addr == expected_addr:
                         return tokens[0].strip()
-        return f"D_{self.vram_start:X}"
+        return None
 
     def out_path(self) -> Optional[Path]:
         return options.opts.asset_path / self.dir / self.name
 
     def cmp_path(self) -> Optional[Path]:
-        return f"{self.out_path()}.gfx"
+        return f"{self.out_path()}.gfxbin"
 
     def png_path(self) -> Optional[Path]:
         return f"{self.out_path()}.png"

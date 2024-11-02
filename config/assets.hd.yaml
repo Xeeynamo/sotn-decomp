@@ -2,6 +2,7 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
     asset_path: assets/st/cen
     src_path: src/st/cen
+    splat_config_path: config/splat.hd.stcen.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -17,6 +18,7 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
     asset_path: assets/st/wrp
     src_path: src/st/wrp
+    splat_config_path: config/splat.hd.stwrp.yaml
     segments:
       - start: 0
         vram: 0x80180000

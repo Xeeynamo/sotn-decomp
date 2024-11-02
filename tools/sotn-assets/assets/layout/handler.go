@@ -7,6 +7,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"path"
@@ -85,7 +86,7 @@ func layoutOffset(r io.ReadSeeker) (psx.Addr, error) {
 	// ⚠️ assumption
 	// some overlays have this field nulled, we have to find the offset ourselves
 	// it should be usually be right after header.Graphics
-	_, graphicsRange, err := gfxbanks.ReadGraphics(r, psx.RamStageBegin, header.Graphics)
+	_, graphicsRange, err := gfxbanks.ReadGraphics(r, psx.RamStageBegin, header.Graphics, &splat.Config{})
 	if err != nil {
 		return psx.RamNull, fmt.Errorf("unable to gather all graphics: %w", err)
 	}
