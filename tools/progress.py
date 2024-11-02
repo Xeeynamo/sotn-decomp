@@ -351,6 +351,7 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
 
 
 def report_markdown(progresses: dict[str, DecompProgressStats]):
+    report = ""
     for overlay in progresses:
         stat = progresses[overlay]
         if (
@@ -367,7 +368,7 @@ def report_markdown(progresses: dict[str, DecompProgressStats]):
             ) / stat.functions_total
             data = stat.data_imported / stat.data_total
             data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
-            report = f"## **{overlay.upper()}** *{args.version}*\n\n"
+            report += f"## **{overlay.upper()}** *{args.version}*\n\n"
             if stat.code_matching != stat.code_matching_prev:
                 report += (
                     f"coverage {coverage*100:.2f}% ({coverage_diff*100:+.2f}%)\n\n"
@@ -375,10 +376,11 @@ def report_markdown(progresses: dict[str, DecompProgressStats]):
                 report += f"funcs {funcs*100:.2f}% ({funcs_diff*100:+.2f}%)\n\n"
             if stat.data_imported != stat.data_prev:
                 report += f"data {data*100:.2f}% ({data_diff*100:+.2f}%)\n\n"
-            report += "\n"
-            print(report)
+            report += "\n\n"
         else:
             continue  # no new progress
+    if len(report) > 0:
+        print(report)
 
 
 def report_frogress(entry, version):
