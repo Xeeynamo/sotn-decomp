@@ -680,7 +680,7 @@
 | dra    | func_psp_0910A198                   |      566 |        106 |        | https://decomp.me/scratch/IXTZU | 0.986 |
 | dra    | RenderTilemap                       |      571 |         35 |        |                                 |       |
 | dra    | func_psp_091190E0                   |      574 |         58 |        | https://decomp.me/scratch/5MNdo | 0.966 |
-| wrp    | EntityEquipItemDrop                 |      584 |         67 | Yes    | https://decomp.me/scratch/PULKm | 0.993 |
+| wrp    | EntityEquipItemDrop                 |      584 |         67 | Yes    | https://decomp.me/scratch/gZ0R6 | 0.993 |
 | dra    | func_psp_090DDEE8                   |      610 |         40 |        |                                 |       |
 | dra    | func_psp_090DFFD0                   |      610 |         53 |        | https://decomp.me/scratch/k9mkf | 0.915 |
 | dra    | func_psp_09128B00                   |      610 |         64 |        |                                 |       |
