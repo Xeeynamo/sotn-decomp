@@ -190,6 +190,7 @@ EntityAxeKnight = 0x801DB4DC;
 EntityAxeKnightRotateAxe = 0x801DBBE0;
 EntityAxeKnightThrowingAxe = 0x801DBC38;
 EntityOuijaTable = 0x801DBDCC;
+EntityOuijaTableComponent = 0x801DC194;
 SkeletonAttackCheck = 0x801DCAB0;
 EntitySkeleton = 0x801DCB48;
 EntitySkeletonPieces = 0x801DD018;
