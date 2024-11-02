@@ -332,20 +332,13 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
             ) / stat.functions_total
             data = stat.data_imported / stat.data_total
             data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
-            print(
-                str.join(
-                    " ",
-                    [
-                        f"{overlay.upper()} ({args.version}):",
-                        f"coverage {coverage*100:.2f}%",
-                        f"({coverage_diff*100:+.3f}%)",
-                        f"funcs {funcs*100:.2f}%",
-                        f"({funcs_diff*100:+.3f}%)",
-                        f"data {data*100:.2f}%",
-                        f"({data_diff*100:+.3f}%)",
-                    ],
-                )
-            )
+            report = f"{overlay.upper()} ({args.version}): "
+            if stat.code_matching != stat.code_matching_prev:
+                report += f"coverage {coverage*100:.2f}% ({coverage_diff*100:+.2f}%) "
+                report += f"funcs {funcs*100:.2f}% ({funcs_diff*100:+.2f}%) "
+            if stat.data_imported != stat.data_prev:
+                report += f"data {data*100:.2f}% ({data_diff*100:+.2f}%) "
+            print(report)
         else:
             print(f"{overlay.upper()} no new progress")
 
@@ -364,20 +357,14 @@ def report_markdown(progresses: dict[str, DecompProgressStats]):
             ) / stat.functions_total
             data = stat.data_imported / stat.data_total
             data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
-            print(
-                str.join(
-                    "",
-                    [
-                        f"## **{overlay.upper()}** *{args.version}*\n\n",
-                        f"code coverage {coverage*100:.2f}%",
-                        f"({coverage_diff*100:+.3f}%)\n\n",
-                        f"functions {funcs*100:.2f}%",
-                        f"({funcs_diff*100:+.3f}%)\n\n",
-                        f"data {data*100:.2f}%",
-                        f"({data_diff*100:+.3f}%)\n",
-                    ],
-                )
-            )
+            report = f"## **{overlay.upper()}** *{args.version}*:"
+            if stat.code_matching != stat.code_matching_prev:
+                report += f"coverage {coverage*100:.2f}% ({coverage_diff*100:+.2f}%) "
+                report += f"funcs {funcs*100:.2f}% ({funcs_diff*100:+.2f}%) "
+            if stat.data_imported != stat.data_prev:
+                report += f"data {data*100:.2f}% ({data_diff*100:+.2f}%) "
+            report += "\n"
+            print(report)
         else:
             continue  # no new progress
 
@@ -394,28 +381,21 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
     report = ""
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev:
+        if stat.code_matching != stat.code_matching_prev or stat.data_imported != stat.data_prev:
             coverage = stat.code_matching / stat.code_total
             coverage_diff = coverage - (stat.code_matching_prev / stat.code_total)
             funcs = stat.functions_matching / stat.functions_total
             funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
             data = stat.data_imported / stat.data_total
             data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
-            report += (
-                str.join(
-                    " ",
-                    [
-                        f"**{overlay.upper()} ({args.version})**:",
-                        f"coverage {coverage*100:.2f}%",
-                        f"({coverage_diff*100:+.2f}%)",
-                        f"funcs {funcs*100:.2f}%",
-                        f"({funcs_diff*100:+.2f}%)",
-                        f"data {data*100:.2f}%",
-                        f"({data_diff*100:+.2f}%)",
-                    ],
-                )
-                + "\n"
-            )
+
+            report += f"**{overlay.upper()} ({args.version})**:"
+            if stat.code_matching != stat.code_matching_prev:
+                report += f"coverage {coverage*100:.2f}% ({coverage_diff*100:+.2f}%) "
+                report += f"funcs {funcs*100:.2f}% ({funcs_diff*100:+.2f}%) "
+            if stat.data_imported != stat.data_prev:
+                report += f"data {data*100:.2f}% ({data_diff*100:+.2f}%) "
+            report += "\n"
     if len(report) == 0:
         # nothing to report, do not send any message to Discord
         return
