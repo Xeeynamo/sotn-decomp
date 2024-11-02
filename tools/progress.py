@@ -321,7 +321,10 @@ def report_stdout(entry):
 def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev or stat.data_imported != stat.data_prev:
+        if (
+            stat.code_matching != stat.code_matching_prev
+            or stat.data_imported != stat.data_prev
+        ):
             coverage = stat.code_matching / stat.code_total
             coverage_diff = (
                 stat.code_matching - stat.code_matching_prev
@@ -346,7 +349,10 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
 def report_markdown(progresses: dict[str, DecompProgressStats]):
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev or stat.data_imported != stat.data_prev:
+        if (
+            stat.code_matching != stat.code_matching_prev
+            or stat.data_imported != stat.data_prev
+        ):
             coverage = stat.code_matching / stat.code_total
             coverage_diff = (
                 stat.code_matching - stat.code_matching_prev
@@ -381,7 +387,10 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
     report = ""
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev or stat.data_imported != stat.data_prev:
+        if (
+            stat.code_matching != stat.code_matching_prev
+            or stat.data_imported != stat.data_prev
+        ):
             coverage = stat.code_matching / stat.code_total
             coverage_diff = coverage - (stat.code_matching_prev / stat.code_total)
             funcs = stat.functions_matching / stat.functions_total
