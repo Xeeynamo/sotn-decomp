@@ -619,7 +619,7 @@ typedef struct {
     /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 maxAngle;
-    /* 0x8C */ s16 unkCounter8C;
+    /* 0x8C */ s16 frameCounter;
     /* 0x8E */ s16 pad8E[4];
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s16 pad98[4];
