@@ -58,12 +58,15 @@ def get_git_commit_message() -> str:
 class DecompProgressStats:
     name: str
     exists: bool
+    data_imported: int
+    data_total: int
     code_matching: int
     code_total: int
     functions_matching: int
     functions_total: int
     code_matching_prev: int
     functions_prev: int
+    data_prev: int
 
     def get_asm_path(self, ovl_path) -> Path:
         """
@@ -100,11 +103,12 @@ class DecompProgressStats:
         # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
         if nonmatchings.endswith("/main"):
             nonmatchings = nonmatchings[:-5]
-
         return Path(nonmatchings)
 
     def __init__(self, module_name: str, path: str):
         self.name = module_name
+        self.data_imported = 0
+        self.data_total = 0
         self.code_matching = 0
         self.code_total = 0
         self.functions_matching = 0
@@ -126,6 +130,18 @@ class DecompProgressStats:
         self.calculate_progress(
             map_file.filterBySectionType(".text"), asm_path, nonmatchings, depth
         )
+        self.add_segment_progress(map_file.filterBySectionType(".data"))
+        self.add_segment_progress(map_file.filterBySectionType(".rodata"))
+        self.add_segment_progress(map_file.filterBySectionType(".bss"))
+
+    def add_segment_progress(self, map_file: MapFile):
+        for file in [file for segment in map_file for file in segment]:
+            self.data_total += file.size
+            if "src/" in str(file.filepath) or "assets/" in str(file.filepath):
+                self.data_imported += file.size
+            else:
+                continue
+        return
 
     # modified version of mapfile_parser.MapFile.getProgress
     def calculate_progress(
@@ -179,6 +195,8 @@ class DecompProgressWeaponStats:
     code_total: int
     functions_matching: int
     functions_total: int
+    data_imported: int
+    data_total: int
     code_matching_prev: int
     functions_prev: int
 
@@ -189,6 +207,8 @@ class DecompProgressWeaponStats:
         self.code_total = 0
         self.functions_matching = 0
         self.functions_total = 0
+        self.data_imported = 0
+        self.data_total = 0
         for i in range(0, 59):
             stats = DecompProgressStats(f"weapon/w0_{i:03d}", "weapon")
             if stats.exists:
@@ -196,6 +216,8 @@ class DecompProgressWeaponStats:
                 self.code_total += stats.code_total
                 self.functions_matching += stats.functions_matching
                 self.functions_total += stats.functions_total
+                self.data_imported += stats.data_imported
+                self.data_total += stats.data_total
 
 
 def remove_not_existing_overlays(progresses):
@@ -228,8 +250,10 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
             or res[slug][version][category] == None
         ):
             return progress
-        last_measures = res[slug][version][category][0]["measures"]
-        assert last_measures != None
+        if len(res[slug][version][category]) > 0:
+            last_measures = res[slug][version][category][0]["measures"]
+        else:
+            last_measures = {}
 
         for ovl in progress:
             if ovl in last_measures:
@@ -245,9 +269,13 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
     def set_func_prev(ovl_name, value):
         progresses[ovl_name].functions_prev = value
 
+    def set_data_prev(ovl_name, value):
+        progresses[ovl_name].data_prev = value
+
     progress = remove_not_existing_overlays(progresses)
     fetch_metrics("code", set_code_prev)
     fetch_metrics("functions", set_func_prev)
+    fetch_metrics("data", set_data_prev)
 
 
 def get_progress_entry(progresses: dict[str, DecompProgressStats]):
@@ -267,12 +295,21 @@ def get_progress_entry(progresses: dict[str, DecompProgressStats]):
             obj[f"{overlay_progress.name}/total"] = overlay_progress.functions_total
         return obj
 
+    def as_data(progresses: DecompProgressStats):
+        obj = {}
+        for key in progresses:
+            overlay_progress = progresses[key]
+            obj[overlay_progress.name] = overlay_progress.data_imported
+            obj[f"{overlay_progress.name}/total"] = overlay_progress.data_total
+        return obj
+
     return {
         "timestamp": mapfile_parser.utils.getGitCommitTimestamp(),
         "git_hash": mapfile_parser.utils.getGitCommitHash(),
         "categories": {
             "code": as_code(progresses),
             "functions": as_functions(progresses),
+            "data": as_data(progresses),
         },
     }
 
@@ -284,7 +321,7 @@ def report_stdout(entry):
 def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev:
+        if stat.code_matching != stat.code_matching_prev or stat.data_imported != stat.data_prev:
             coverage = stat.code_matching / stat.code_total
             coverage_diff = (
                 stat.code_matching - stat.code_matching_prev
@@ -293,6 +330,8 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
             funcs_diff = (
                 stat.functions_matching - stat.functions_prev
             ) / stat.functions_total
+            data = stat.data_imported / stat.data_total
+            data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
             print(
                 str.join(
                     " ",
@@ -302,6 +341,8 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
                         f"({coverage_diff*100:+.3f}%)",
                         f"funcs {funcs*100:.2f}%",
                         f"({funcs_diff*100:+.3f}%)",
+                        f"data {data*100:.2f}%",
+                        f"({data_diff*100:+.3f}%)",
                     ],
                 )
             )
@@ -312,7 +353,7 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
 def report_markdown(progresses: dict[str, DecompProgressStats]):
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev:
+        if stat.code_matching != stat.code_matching_prev or stat.data_imported != stat.data_prev:
             coverage = stat.code_matching / stat.code_total
             coverage_diff = (
                 stat.code_matching - stat.code_matching_prev
@@ -321,6 +362,8 @@ def report_markdown(progresses: dict[str, DecompProgressStats]):
             funcs_diff = (
                 stat.functions_matching - stat.functions_prev
             ) / stat.functions_total
+            data = stat.data_imported / stat.data_total
+            data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
             print(
                 str.join(
                     "",
@@ -329,7 +372,9 @@ def report_markdown(progresses: dict[str, DecompProgressStats]):
                         f"code coverage {coverage*100:.2f}%",
                         f"({coverage_diff*100:+.3f}%)\n\n",
                         f"functions {funcs*100:.2f}%",
-                        f"({funcs_diff*100:+.3f}%)\n",
+                        f"({funcs_diff*100:+.3f}%)\n\n",
+                        f"data {data*100:.2f}%",
+                        f"({data_diff*100:+.3f}%)\n",
                     ],
                 )
             )
@@ -354,6 +399,8 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
             coverage_diff = coverage - (stat.code_matching_prev / stat.code_total)
             funcs = stat.functions_matching / stat.functions_total
             funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
+            data = stat.data_imported / stat.data_total
+            data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
             report += (
                 str.join(
                     " ",
@@ -363,6 +410,8 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
                         f"({coverage_diff*100:+.2f}%)",
                         f"funcs {funcs*100:.2f}%",
                         f"({funcs_diff*100:+.2f}%)",
+                        f"data {data*100:.2f}%",
+                        f"({data_diff*100:+.2f}%)",
                     ],
                 )
                 + "\n"
