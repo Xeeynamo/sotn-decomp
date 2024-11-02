@@ -58,13 +58,13 @@ segments:
       - [0x12D4, .data, rooms]
       - [0x1300, .data, e_layout] # layout entries data
       - [0x13F0, .data, cutscene_data]
-      - [0x1658, cmp, D_80181658]
-      - [0x199C, cmp, D_8018199C]
+      - [0x1658, cmpgfx, D_80181658, 128, 128, 4]
+      - [0x199C, cmpgfx, D_8018199C, 128, 128, 4]
       - [0x1F40, raw, cutscene_alucard]
       - [0x2CC0, raw, cutscene_maria]
-      - [0x3A40, cmp, D_80183A40]
-      - [0x4B70, cmp, D_80184B70]
-      - [0x5830, cmp, D_80185830]
+      - [0x3A40, cmpgfx, D_80183A40, 128, 128, 4, 0x698C]
+      - [0x4B70, cmpgfx, D_80184B70, 128, 128, 4, 0x698C]
+      - [0x5830, cmpgfx, D_80185830, 128, 128, 4, 0x69AC]
       - [0x658C, pal, D_8018658C]
       - [0x668C, pal, D_8018668C] # unused
       - [0x678C, pal, D_8018678C]

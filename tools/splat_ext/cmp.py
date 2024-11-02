@@ -133,3 +133,9 @@ class SOTNDecompress:
             self.write_flag = 0
             self.decompressed_data[self.dst_pos] += ch << 4
             self.dst_pos += 1
+
+    def last_processed_pos(self):
+        return self.src_pos
+
+    def unprocessed_length(self):
+        return len(self.compressed_data) - self.last_processed_pos()
