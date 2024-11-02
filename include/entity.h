@@ -1997,6 +1997,9 @@ typedef struct {
 } ET_OuijaTable;
 
 typedef struct {
+#ifdef PLATFORM_64BIT
+    s32 _align_parent[2];
+#endif
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
