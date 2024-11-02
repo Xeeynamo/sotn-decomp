@@ -93,7 +93,7 @@ jobs:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Post the progress update as a comment to the pull request
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
