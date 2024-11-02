@@ -51,12 +51,22 @@ extern AnimationFrame* D_us_80172B14[];
 
 void func_us_801739C8(Entity*);
 void func_us_80173D60(Entity*);
-void func_us_80173994(Entity*, s32);
 
 static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
 static s16 GetTargetPositionWithDistanceBuffer(
     s16 currentX, s16 targetX, s16 distanceBuffer);
+
+static void SetAnimationFrame(Entity* self, s32 animationIndex)
+{
+    if (self->anim != D_us_80172B14[animationIndex]) {
+        self->anim = D_us_80172B14[animationIndex];
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+    }
+}
+
+void func_us_801739C8(Entity* arg0) {}
 
 void func_us_801739D0(Entity* arg0) {
     if (!arg0->ext.faerie.unk7E) {
@@ -67,7 +77,7 @@ void func_us_801739D0(Entity* arg0) {
             arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
 
-            func_us_80173994(arg0, 0xE);
+            SetAnimationFrame(arg0, 0xE);
 
             arg0->ext.faerie.randomMovementAngle = rand() % 4096;
             arg0->ext.faerie.targetAngle = 0;
@@ -97,7 +107,7 @@ void func_us_801739D0(Entity* arg0) {
         case 0xDB:
             arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
-            func_us_80173994(arg0, 0xE);
+            SetAnimationFrame(arg0, 0xE);
             arg0->step++;
             break;
         case 0xD9:
@@ -143,36 +153,36 @@ void func_us_80173BD0(Entity* arg0) {
         if (abs(arg0->velocityY) < FIX(0.5)) {
             if (arg0->ext.faerie.unk80 == 1) {
                 arg0->ext.faerie.unk80 = 0;
-                func_us_80173994(arg0, 0x29);
+                SetAnimationFrame(arg0, 0x29);
             } else if (arg0->ext.faerie.unk80 == 2) {
                 arg0->ext.faerie.unk80 = 0;
-                func_us_80173994(arg0, 0xE);
+                SetAnimationFrame(arg0, 0xE);
             }
         } else if (abs(arg0->velocityY) > FIX(1)) {
             if (arg0->velocityY >= 0) {
                 arg0->ext.faerie.unk80 = 2;
-                func_us_80173994(arg0, 0xB);
+                SetAnimationFrame(arg0, 0xB);
             } else {
                 arg0->ext.faerie.unk80 = 2;
-                func_us_80173994(arg0, 0xC);
+                SetAnimationFrame(arg0, 0xC);
             }
         }
     } else {
         if (abs(arg0->velocityX) > FIX(0.5625)) {
             if (arg0->ext.faerie.unk80 == 0) {
                 arg0->ext.faerie.unk80 = 1;
-                func_us_80173994(arg0, 0xF);
+                SetAnimationFrame(arg0, 0xF);
             } else if (arg0->ext.faerie.unk80 == 2) {
                 arg0->ext.faerie.unk80 = 0;
-                func_us_80173994(arg0, 0xE);
+                SetAnimationFrame(arg0, 0xE);
             }
         } else if (abs(arg0->velocityX) < FIX(0.375)) {
             if (arg0->ext.faerie.unk80 == 1) {
                 arg0->ext.faerie.unk80 = 0;
-                func_us_80173994(arg0, 0x29);
+                SetAnimationFrame(arg0, 0x29);
             } else if (arg0->ext.faerie.unk80 == 2) {
                 arg0->ext.faerie.unk80 = 0;
-                func_us_80173994(arg0, 0xE);
+                SetAnimationFrame(arg0, 0xE);
             }
         }
         if (abs(arg0->velocityX) > FIX(0.5)) {
@@ -328,7 +338,7 @@ void func_us_80174998(Entity* self) {
     case 0:
         func_us_801739D0(self);
         self->ext.faerie.unk80 = 0;
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
 
         D_us_80179310 = g_Status.hp;
         D_us_80179314 = 0;
@@ -461,7 +471,7 @@ void func_us_80174F0C(Entity* self) {
         break;
     case 0x5:
         self->facingLeft = PLAYER.facingLeft;
-        func_us_80173994(self, 0x13);
+        SetAnimationFrame(self, 0x13);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
             g_api.PlaySfx(D_us_80172BD4);
         }
@@ -525,7 +535,7 @@ void func_us_80174F0C(Entity* self) {
         break;
 
     case 0x5A:
-        func_us_80173994(self, 0x20);
+        SetAnimationFrame(self, 0x20);
         g_api.PlaySfx(D_us_80172BDC);
         self->step++;
         break;
@@ -551,7 +561,7 @@ void func_us_801753E4(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
         break;
     case 1:
         s_AngleToTarget =
@@ -573,7 +583,7 @@ void func_us_801753E4(Entity* self) {
     case 2:
         self->facingLeft = PLAYER.facingLeft;
         if (D_80097A1A[paramOffset]) {
-            func_us_80173994(self, 0x17);
+            SetAnimationFrame(self, 0x17);
 
             for (rnd = rand() % 0x100, i = 0; true; i++) {
                 if (rnd <= D_us_80172BE4[i * 2]) {
@@ -584,7 +594,7 @@ void func_us_801753E4(Entity* self) {
 
             self->step++;
         } else {
-            func_us_80173994(self, 0x10);
+            SetAnimationFrame(self, 0x10);
             g_api.PlaySfx(D_us_80172BD8);
             self->ext.faerie.frameCounter = 0;
             self->step += 2;
@@ -630,7 +640,7 @@ void func_us_80175730(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
         break;
 
     case 1:
@@ -652,7 +662,7 @@ void func_us_80175730(Entity* self) {
         break;
     case 2:
         if (!D_80097A1A[paramOffset]) {
-            func_us_80173994(self, 0x14);
+            SetAnimationFrame(self, 0x14);
             self->step = 5;
             break;
         }
@@ -661,7 +671,7 @@ void func_us_80175730(Entity* self) {
             self->step = 0;
             return;
         }
-        func_us_80173994(self, 0x12);
+        SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
             g_api.PlaySfx(D_us_80172BCC);
         }
@@ -722,7 +732,7 @@ void func_us_80175A78(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
         break;
 
     case 1:
@@ -744,7 +754,7 @@ void func_us_80175A78(Entity* self) {
         break;
     case 2:
         if (!D_80097A1A[paramOffset]) {
-            func_us_80173994(self, 0x14);
+            SetAnimationFrame(self, 0x14);
             self->step = 5;
             break;
         }
@@ -753,7 +763,7 @@ void func_us_80175A78(Entity* self) {
             self->step = 0;
             return;
         }
-        func_us_80173994(self, 0x12);
+        SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
             g_api.PlaySfx(D_us_80172BCC);
         }
@@ -814,7 +824,7 @@ void func_us_80175DBC(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
         break;
     case 1:
         s_AngleToTarget =
@@ -836,7 +846,7 @@ void func_us_80175DBC(Entity* self) {
     case 2:
         self->facingLeft = PLAYER.facingLeft;
         if (!g_Status.equipHandCount[D_us_80172494[self->params * 4 + 1]]) {
-            func_us_80173994(self, 0x10);
+            SetAnimationFrame(self, 0x10);
             self->step = 5;
             break;
         }
@@ -846,7 +856,7 @@ void func_us_80175DBC(Entity* self) {
             return;
         }
 
-        func_us_80173994(self, 0x12);
+        SetAnimationFrame(self, 0x12);
         self->step++;
         break;
     case 3:
@@ -909,7 +919,7 @@ void func_us_80176178(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
         break;
     case 1:
         s_AngleToTarget =
@@ -937,7 +947,7 @@ void func_us_80176178(Entity* self) {
             }
             self->params = temp;
             if (!g_Status.equipHandCount[D_us_801724C4[self->params * 2]]) {
-                func_us_80173994(self, 0x14);
+                SetAnimationFrame(self, 0x14);
                 self->step = 5;
                 break;
             }
@@ -949,7 +959,7 @@ void func_us_80176178(Entity* self) {
             return;
         }
 
-        func_us_80173994(self, 0x12);
+        SetAnimationFrame(self, 0x12);
         self->step++;
         break;
     case 3:
@@ -1016,7 +1026,7 @@ void func_us_80176B6C(Entity* self) {
     temp_unk0 = abs(D_us_80172368[i - 6].unk0);
     temp_unk2 = D_us_80172368[i - 6].unk2;
 
-    func_us_80173994(self, temp_unk0);
+    SetAnimationFrame(self, temp_unk0);
 
     if (temp_unk2) {
         temp_zPriority = s_zPriority - 1;
@@ -1219,7 +1229,3 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
 #endif
 
 #include "../servant_unk0.h"
-
-INCLUDE_RODATA("servant/tt_002/nonmatchings/3678", func_us_80173994);
-
-INCLUDE_RODATA("servant/tt_002/nonmatchings/3678", func_us_801739C8);
