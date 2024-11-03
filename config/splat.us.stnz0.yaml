@@ -72,7 +72,7 @@ segments:
       - [0x2884, .data, e_layout] # layout entries data
       - [0x3B0C, .data, cutscene_data]
       - [0x3CB8, data]
-      - [0x3CCC, cmpgfx, stage_title_jp, 128, 128, 4] # unused
+      - [0x3CCC, cmpgfx, stage_title_nz0_jp, 128, 128, 4] # unused
       - [0x4154, cmpgfx, e_blood_skeleton_g, 128, 128, 4, 0x15C3C]
       - [0x4CE4, cmpgfx, e_slinger_g, 128, 128, 4, 0x15CDC]
       - [0x58C0, cmpgfx, e_axe_knight_g0, 128, 128, 4, 0x15D3C]
@@ -92,11 +92,11 @@ segments:
       - [0xF528, cmpgfx, e_gaibon_g0, 128, 128, 4, 0x1647C]
       - [0x10298, cmpgfx, e_gaibon_g1, 128, 128, 4, 0x1647C]
       - [0x10A58, cmpgfx, e_sealed_door_g, 128, 128, 4, 0x165BC]
-      - [0x11B18, cmpgfx, e_maria_g0, 128, 128, 4, 0x1663C]
-      - [0x12E2C, cmpgfx, e_maria_g1, 128, 128, 4, 0x1663C]
+      - [0x11B18, cmpgfx, e_maria_nz0_g0, 128, 128, 4, 0x1663C]
+      - [0x12E2C, cmpgfx, e_maria_nz0_g1, 128, 128, 4, 0x1663C]
       - [0x13BA4, raw, cutscene_maria]
       - [0x14924, raw, cutscene_alucard]
-      - [0x156A4, cmpgfx, stage_title_us, 128, 128, 4]
+      - [0x156A4, cmpgfx, stage_title_nz0_us, 128, 128, 4]
       - [0x15C3C, pal, e_blood_skeleton_p]
       - [0x15CBC, pal, D_80195CBC] # unused
       - [0x15CDC, pal, e_slinger_p]
@@ -115,7 +115,7 @@ segments:
       - [0x1647C, pal, e_gaibon_p]
       - [0x1657C, pal, e_sealed_door_p]
       - [0x1661C, pal, D_8019661C] # unused
-      - [0x1663C, pal, e_maria_p]
+      - [0x1663C, pal, e_maria_nz0_p]
       - [0x1665C, pal, D_8019665C]
       - [0x1675C, pal, D_8019675C] # unused
       - [0x1685C, pal, D_8019685C]
