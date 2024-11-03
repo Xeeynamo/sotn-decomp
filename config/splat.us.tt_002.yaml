@@ -41,6 +41,7 @@ segments:
       - [0x0, .data, 3678]
       - [0x40, .data, faerie_spriteparts]
       - [0x22E8, data]
+      - [0x2D2C, .data, servant_events]
       - [0x3678, .rodata, 3678]
       - [0x39D0, c, 3678]
       - [0x92D0, sbss]
