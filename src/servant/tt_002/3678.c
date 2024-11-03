@@ -5,7 +5,7 @@
 #include "items.h"
 
 extern s32 s_ServantId;
-extern u16 D_us_801722E8[];
+extern u16 g_FaerieClut[];
 // During cleanup, rename this.  May not actually be this familiar, unknown
 // where it's set
 extern Entity thisFamiliar;
@@ -228,7 +228,7 @@ void ServantInit(InitializeMode mode) {
     }
 
     dst = &g_Clut[CLUT_INDEX_SERVANT];
-    src = D_us_801722E8; // clut data for faerie, will rename at data import
+    src = g_FaerieClut; // clut data for faerie, will rename at data import
     for (i = 0; i < 0x100; i++) {
         *dst++ = *src++;
     }
