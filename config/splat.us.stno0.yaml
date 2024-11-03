@@ -60,6 +60,7 @@ segments:
       - [0x2268, data]
       - [0x2478, .data, e_axe_knight]
       - [0x25CC, data]
+      - [0x2618, .data, e_flea_man]
       - [0x2680, .data, e_skeleton]
       - [0x2770, .data, e_magically_sealed_door]
       - [0x27E0, data]

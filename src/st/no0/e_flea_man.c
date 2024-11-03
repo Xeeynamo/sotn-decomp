@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-extern u8 D_us_80182640[];
-extern u16 D_us_8018264C[];
-extern s16 D_us_8018265C[];
-extern s16 D_us_80182668[];
-
-extern s32 D_us_80182618[]; // velocityX
-extern s32 D_us_8018262C[]; // velocityY
+static s32 fidgetVelocityX[] = {FIX(-2), FIX(-0.875), FIX(1.5), 0, FIX(-2.5)};
+static s32 fidgetVelocityY[] = {
+    FIX(-0.5), FIX(-6), FIX(-3), FIX(-3.5), FIX(-4)};
+static u8 anim_stand[] = {0x04, 0x10, 0x04, 0x11, 0x04, 0x12, 0x04, 0x13, 0x00};
+static s16 sensors_ground[][2] = {{0, 10}, {0, 4}, {6, -4}, {-12, 0}};
+extern s16 sensors_move_y[][2] = {{0, -8}, {4, 0}, {-8, 0}};
+extern s16 sensors_move_x[][2] = {
+    {-9, 6}, {0, -12}, {262, 260}, {516, 774}, {1029, 1285}, {0, 0}};
 
 // Checks for collisions while the entity is moving downward, updating position
 // if collision occurs. This is similar to other function CheckFieldCollision
@@ -43,7 +44,6 @@ void SetFacingLeft(void) {
     g_CurrentEntity->facingLeft = (GetSideToPlayer() & 1) ^ 1;
 }
 
-// Flea Man
 void EntityFleaMan(Entity* self) {
     u32 distanceX;
     u8 rand;
@@ -83,7 +83,7 @@ void EntityFleaMan(Entity* self) {
         break;
 
     case 1:
-        AnimateEntity(D_us_80182640, self);
+        AnimateEntity(anim_stand, self);
         SetFacingLeft();
         if (GetDistanceToPlayerX() < 0x60 && GetDistanceToPlayerY() < 0x40) {
             self->step = 3;
@@ -143,14 +143,14 @@ void EntityFleaMan(Entity* self) {
             }
         }
 
-        distanceX = D_us_80182618[index];
+        distanceX = fidgetVelocityX[index];
         if (self->facingLeft) {
             self->velocityX = -distanceX;
         } else {
             self->velocityX = distanceX;
         }
 
-        self->velocityY = D_us_8018262C[index];
+        self->velocityY = fidgetVelocityY[index];
         if (index == 1) {
             PlaySfxPositional(SFX_BLIPS_C);
         } else if (index == 0 || index == 2) {
@@ -169,11 +169,11 @@ void EntityFleaMan(Entity* self) {
             index = 18;
         }
         self->animCurFrame = index;
-        if (UnkCollisionFunc3(D_us_8018264C) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->step = 3;
         }
-        CheckFieldCollisionY(D_us_8018265C, 3);
-        CheckFieldCollision(D_us_80182668, 2);
+        CheckFieldCollisionY(sensors_move_y, 3);
+        CheckFieldCollision(sensors_move_x, 2);
         break;
     }
 }
