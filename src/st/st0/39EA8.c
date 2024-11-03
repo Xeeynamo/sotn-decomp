@@ -68,7 +68,7 @@ void EntityClockTower3D(Entity* self) {
     Primitive* prim;
 
     if (!self->step) {
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         xBase = 0x480;
         self->posX.i.hi = xBase - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x80 - g_Tilemap.scrollY.i.hi;
@@ -213,7 +213,7 @@ void EntityCutscenePhotograph(Entity* self) {
     g_PauseAllowed = false;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
             self->step = 0;
@@ -645,7 +645,7 @@ void EntityCutscenePhotograph(Entity* self) {
 void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         entity->animSet = ANIMSET_OVL(7);
         entity->unk5A = 0x57;
         entity->palette = 0x8285;

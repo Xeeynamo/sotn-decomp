@@ -14,6 +14,9 @@ void func_801AA218(s16 arg0) {
     }
 }
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
 void EntityCutscene(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
@@ -31,7 +34,7 @@ void EntityCutscene(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180598);
+        InitializeEntity(g_EInitCutscene);
         self->unk5A = 0x46;
         self->palette = 0x120;
         break;

@@ -43,7 +43,7 @@ void func_801BC5C0(Entity* self) {
     FntPrint("d_step %x\n", self->step);
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         self->zPriority = 0xC0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x34);
         if (primIndex == -1) {

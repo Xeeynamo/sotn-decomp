@@ -61,16 +61,15 @@ extern bool g_isDraculaFirstFormDefeated;
 
 // *** Initializers ***
 extern EInit OVL_EXPORT(EInitBreakable);
-extern u16 g_EInitParticle[];
-extern u16 D_80180598[]; // Init EntityCutscene
-extern u16 g_EInitCommon[];
-extern u16 D_801805D4[]; // Init EntityStageTitleCard
-extern u16 D_801805E0[]; // Init EntityDracula
-extern u16 D_801805EC[]; // Init EntityDraculaFireball
-extern u16 D_80180604[]; // Init EntityDraculaFinalForm
-extern u16 D_80180610[]; // Init EntityDraculaMegaFireball
-extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
-extern u16 D_80180628[];
+extern EInit g_EInitParticle;
+extern EInit g_EInitCutscene; // Init EntityCutscene
+extern EInit g_EInitCommon;
+extern EInit g_EInit3DObject; // Init EntityStageTitleCard
+extern EInit g_EInitDracula;
+extern EInit g_EInitDraculaFireball;     // Init EntityDraculaFireball
+extern EInit g_EInitDraculaFinalForm;    // Init EntityDraculaFinalForm
+extern EInit g_EInitDraculaMegaFireball; // Init EntityDraculaMegaFireball
+extern EInit g_EInitSecretStairs;
 
 extern ObjInit D_80180638[];
 

@@ -2,6 +2,7 @@
 #include "st0.h"
 #include "sfx.h"
 
+extern u32 g_CutsceneFlags;
 void EntityDracula(Entity* self) {
     s16 primIndex;
     Entity* newEntity;
@@ -38,7 +39,7 @@ void EntityDracula(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805E0);
+        InitializeEntity(g_EInitDracula);
         self->animCurFrame = 0x4F;
         self->ext.dracula.unkA1 = 1;
         self->hitboxState = 0;
@@ -485,7 +486,7 @@ void EntityDraculaBody(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805E0);
+        InitializeEntity(g_EInitDracula);
         self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
         self->hitboxOffX = 3;
@@ -524,7 +525,7 @@ void EntityDraculaFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805EC);
+        InitializeEntity(g_EInitDraculaFireball);
 
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-2);
@@ -552,7 +553,7 @@ void EntityDraculaFireball(Entity* self) {
     }
 }
 
-extern u16 D_801805F8[];
+extern EInit g_EInitDraculaMeteorball;
 extern u8 D_80180990[];
 extern u8 D_801809B0[];
 extern s16 D_80180A60[];
@@ -571,7 +572,7 @@ void EntityDraculaMeteorball(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801805F8);
+        InitializeEntity(g_EInitDraculaMeteorball);
         entity->hitboxState = 0;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
         break;
@@ -613,7 +614,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     }
 }
 
-extern u16 D_801805EC[];
+extern EInit g_EInitDraculaFireball;
 extern u8 D_801809E0[];
 void func_801AD838(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
@@ -622,7 +623,7 @@ void func_801AD838(Entity* entity) {
     }
 
     if (entity->step == 0) {
-        InitializeEntity(D_801805EC);
+        InitializeEntity(g_EInitDraculaFireball);
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
         entity->velocityY = FIX(-1);
@@ -634,12 +635,12 @@ void func_801AD838(Entity* entity) {
     }
 }
 
-extern u16 D_801805EC[];
+extern EInit g_EInitDraculaFireball;
 extern u8 D_80180A40[];
 void EntityDraculaGlass(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801805EC);
+        InitializeEntity(g_EInitDraculaFireball);
         entity->animCurFrame = 0x59;
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->hitboxState = 0;

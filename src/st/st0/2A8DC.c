@@ -7,7 +7,7 @@ void EntitySecretButton(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180628);
+        InitializeEntity(g_EInitSecretStairs);
         self->animCurFrame = 5;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -92,7 +92,7 @@ void EntitySecretButton(Entity* self) {
 void EntitySecretStairsCeiling(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180628);
+        InitializeEntity(g_EInitSecretStairs);
         entity->animCurFrame = 3;
         entity->zPriority += 2;
         if (g_isSecretStairsButtonPressed) {
@@ -133,7 +133,7 @@ void EntitySecretStairs(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180628);
+        InitializeEntity(g_EInitSecretStairs);
         self->animCurFrame = 1;
         if (self->params == 0) {
             self->ext.secretStairs.unk84 = true;

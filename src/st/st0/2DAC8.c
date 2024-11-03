@@ -105,7 +105,7 @@ void EntityDraculaFinalForm(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180604);
+        InitializeEntity(g_EInitDraculaFinalForm);
         self->hitboxHeight = 16;
         self->hitboxWidth = 16;
         self->hitboxOffX = -24;
@@ -598,7 +598,7 @@ void EntityDraculaMegaFireball(Entity* self) {
     s16 angle;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180610);
+        InitializeEntity(g_EInitDraculaMegaFireball);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         if (self->params == 0) {
@@ -631,6 +631,7 @@ void EntityDraculaMegaFireball(Entity* self) {
     }
 }
 
+extern EInit g_EInitDraculaRainAttack;
 void EntityDraculaRainAttack(Entity* self) {
     Entity* newEntity;
     s32 velY;
@@ -650,7 +651,7 @@ void EntityDraculaRainAttack(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018061C);
+        InitializeEntity(g_EInitDraculaRainAttack);
         if (self->params != 0) {
             self->hitboxState = 0;
             self->animCurFrame = 0x59;
@@ -814,7 +815,7 @@ void func_801AF774(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805E0);
+        InitializeEntity(g_EInitDracula);
         self->hitboxState = 0;
         self->animCurFrame = 0;
         self->drawMode |= (DRAW_TPAGE | 0x20);

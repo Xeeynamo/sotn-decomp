@@ -24,7 +24,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
 
 #include "../player_is_within_hitbox.h"
 
-extern u16 D_801805B0[];
+extern u16 g_EInitLockCamera[];
 static u8 D_8018065C[] = {32, 0};
 static u8 D_80180660[] = {0, 0};
 static u16 D_80180664[] = {
@@ -40,7 +40,7 @@ void EntityLockCamera(Entity* self) {
 
     params = (u8)self->params;
     if (self->step == 0) {
-        InitializeEntity(D_801805B0);
+        InitializeEntity(g_EInitLockCamera);
 
         self->hitboxState = 1;
 
@@ -203,7 +203,7 @@ void func_801A8328(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->params & 0x100) {
-            InitializeEntity(D_801805D4);
+            InitializeEntity(g_EInit3DObject);
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x5B;
             self->palette = 0x212;

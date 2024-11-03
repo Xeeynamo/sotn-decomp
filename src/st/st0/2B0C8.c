@@ -16,7 +16,7 @@ void EntityStageTitleFadeout(Entity* self) {
             return;
         }
 
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 5);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
@@ -199,7 +199,7 @@ void EntityStageTitleCard(Entity* self) {
     switch (self->step) {
     case 0:
         if (D_80180908 == 0) {
-            InitializeEntity(D_801805D4);
+            InitializeEntity(g_EInit3DObject);
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
             if (primIndex == -1) {
                 D_80180908 = 1;

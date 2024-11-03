@@ -43,7 +43,7 @@ void func_801BD8F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         g_GpuBuffers[0].draw.r0 = 0;
         g_GpuBuffers[0].draw.g0 = 0;
         g_GpuBuffers[0].draw.b0 = 0;
@@ -307,7 +307,7 @@ void EntityBackgroundVortex(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         self->posX.i.hi = 0x80;
         self->posY.i.hi = 0x1A0;
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x110);
