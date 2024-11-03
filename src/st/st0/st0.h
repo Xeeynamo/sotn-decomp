@@ -164,15 +164,3 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
-
-// For ST0_EntityCutscene
-extern u8 D_80180784[];
-extern u8 D_80180788[];
-extern u16 D_8018078C[];
-extern u16 D_80180790[];
-extern u16 D_80180794[];
-extern s16 D_80180798[];
-extern s32 g_SkipCutscene;
-extern s32 D_801C2504;
-extern u32 g_CutsceneFlags;
-extern s32 g_IsCutsceneDone;
