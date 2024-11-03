@@ -5,15 +5,13 @@
 #define BEAKER self + 2
 #define WALKING_TABLE self + 3
 
-// Main
-extern u16 D_us_80180C14[];
-extern s16 D_us_801825CC[];
-extern u16 D_us_801825D4[];
-extern u8 D_us_801825F4[];
-
-// Components
-extern u16 D_us_80180C20[];
-extern u16 D_us_801825E4[];
+static s16 sensors_special[] = {0, 17, 8, 0};
+static s16 sensors_ground[][2] = {{0, 16}, {0, 4}, {8, -4}, {-16, 0}};
+static u16 sensors_ground_components[][2] = {{0, 4}, {0, 4}, {4, -4}, {-8, 0}};
+static u8 anim_walk[] = {
+    0x02, 0x05, 0x03, 0x06, 0x04, 0x07, 0x05, 0x08, 0x06, 0x09, 0x05, 0x08,
+    0x04, 0x07, 0x03, 0x06, 0x02, 0x05, 0x03, 0x04, 0x04, 0x03, 0x05, 0x02,
+    0x06, 0x01, 0x05, 0x02, 0x04, 0x03, 0x03, 0x04, 0x00, 0x00, 0x00, 0x00};
 
 typedef enum {
     /* 0 */ OUIJA_TABLE_INIT,
@@ -63,12 +61,12 @@ void EntityOuijaTable(Entity* self) {
 
     switch (self->step) {
     case OUIJA_TABLE_INIT:
-        InitializeEntity(D_us_80180C14);
+        InitializeEntity(g_EInitOuijaTable);
         self->animCurFrame = 5;
         self->hitboxOffY = 2;
         return;
     case OUIJA_TABLE_INIT_SUBENTITIES:
-        if (UnkCollisionFunc3(D_us_801825D4) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             // Spawn objects on the table
             otherEntity = VASE;
             CreateEntityFromEntity(E_OUIJA_TABLE_COMPONENT, self, otherEntity);
@@ -119,10 +117,10 @@ void EntityOuijaTable(Entity* self) {
             self->ext.ouijaTable.attackTimer = 128;
             self->step_s += 1;
         }
-        if (AnimateEntity(D_us_801825F4, self) == 0) {
+        if (AnimateEntity(anim_walk, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        UnkCollisionFunc2(D_us_801825CC);
+        UnkCollisionFunc2(sensors_special);
 
         if (self->facingLeft) {
             self->velocityX = FIX(0.5);
@@ -166,7 +164,7 @@ void EntityOuijaTableComponent(Entity* self) {
 
     switch (self->step) {
     case OUIJA_COMPONENT_INIT:
-        InitializeEntity(D_us_80180C20);
+        InitializeEntity(g_EInitOuijaTableComponent);
         switch (self->params) {
         // Vase
         case 0:
@@ -287,7 +285,7 @@ void EntityOuijaTableComponent(Entity* self) {
             // When hit, components rotate and fall to floor
             // After hitting the floor, begin death timer
             self->rotZ += 64;
-            if (UnkCollisionFunc3(D_us_801825E4) & 1) {
+            if (UnkCollisionFunc3(sensors_ground_components) & 1) {
                 self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->animCurFrame++;
                 self->ext.ouijaTableContents.timer = 32;
