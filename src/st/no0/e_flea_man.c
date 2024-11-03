@@ -40,7 +40,7 @@ static void CheckFieldCollisionY(s16 hitSensors[], s16 sensorCount) {
     }
 }
 
-static void SetFacingLeft(void) {
+static void UpdateFacingDirection(void) {
     g_CurrentEntity->facingLeft = (GetSideToPlayer() & 1) ^ 1;
 }
 
@@ -84,7 +84,7 @@ void EntityFleaMan(Entity* self) {
 
     case 1:
         AnimateEntity(anim_stand, self);
-        SetFacingLeft();
+        UpdateFacingDirection();
         if (GetDistanceToPlayerX() < 0x60 && GetDistanceToPlayerY() < 0x40) {
             self->step = 3;
         }
@@ -96,7 +96,7 @@ void EntityFleaMan(Entity* self) {
         break;
 
     case 3:
-        SetFacingLeft();
+        UpdateFacingDirection();
         if (self->hitParams && self->hitParams < 4) {
             index = 2;
         } else {
