@@ -17,7 +17,7 @@ void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void func_801A7D64(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
@@ -65,7 +65,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     EntityDummy,
-    func_801A7D64,
+    OVL_EXPORT(EntityBackgroundBlock),
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
@@ -98,3 +98,34 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
+EInit g_EInitObtainable = {0x8003, 0x0000, 0x007C, 0x0100, 0x0001};
+EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
+EInit D_80180598 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
+EInit g_EInitUnkId13 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
+EInit D_801805B0 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
+EInit g_EInitCommon = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+EInit g_EInitDamageNum = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
+EInit D_801805D4 = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
+EInit D_801805E0 = {0x8001, 0x0000, 0x0048, 0x0200, 0x00A9};
+EInit D_801805EC = {0x8001, 0x0000, 0x0048, 0x0200, 0x00AA};
+EInit D_801805F8 = {0x8001, 0x0000, 0x0048, 0x0200, 0x00AB};
+EInit D_80180604 = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AC};
+EInit D_80180610 = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AD};
+EInit D_8018061C = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AE};
+EInit D_80180628 = {0x8006, 0x0000, 0x004C, 0x0228, 0x0005};
+
+static u8 D_80180634[] = {0x40, 0x01, 0xFF, 0x00};
+ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
+    {.animSet = ANIMSET_DRA(6),
+     .zPriority = 0x01FA,
+     .unk5A = 0x0000,
+     .palette = PAL_DRA(0),
+     .drawFlags = FLAG_DRAW_DEFAULT,
+     .drawMode = DRAW_TPAGE,
+     .unkC = 0x00000000,
+     D_80180634},
+};
+
+u16 OVL_EXPORT(RedDoorTiles)[][8] = {
+    {0x001, 0x001, 0x001, 0x001, 0x000, 0x000, 0x000, 0x000},
+};

@@ -40,7 +40,7 @@ segments:
       - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
-      - [0x580, data]
+      - [0x65C, data]
       - [0x770, data]
       - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, data]
