@@ -55,6 +55,9 @@ extern u16 g_EInitSkeleton[];
 extern u16 g_EInitSkeletonPieces[];
 extern u16 g_EInitSkeletonBone[];
 
+// Flea Man
+extern u16 g_EInitFleaMan[];
+
 // Clock room
 extern u16 g_Statues[];
 
