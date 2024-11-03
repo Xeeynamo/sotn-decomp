@@ -6,13 +6,13 @@ static s32 fidgetVelocityY[] = {
     FIX(-0.5), FIX(-6), FIX(-3), FIX(-3.5), FIX(-4)};
 static u8 anim_stand[] = {0x04, 0x10, 0x04, 0x11, 0x04, 0x12, 0x04, 0x13, 0x00};
 static s16 sensors_ground[][2] = {{0, 10}, {0, 4}, {6, -4}, {-12, 0}};
-extern s16 sensors_move_y[][2] = {{0, -8}, {4, 0}, {-8, 0}};
-extern s16 sensors_move_x[][2] = {
+static s16 sensors_move_y[][2] = {{0, -8}, {4, 0}, {-8, 0}};
+static s16 sensors_move_x[][2] = {
     {-9, 6}, {0, -12}, {262, 260}, {516, 774}, {1029, 1285}, {0, 0}};
 
 // Checks for collisions while the entity is moving downward, updating position
 // if collision occurs. This is similar to other function CheckFieldCollision
-void CheckFieldCollisionY(s16 hitSensors[], s16 sensorCount) {
+static void CheckFieldCollisionY(s16 hitSensors[], s16 sensorCount) {
     Collider collider;
     s32 velocityY;
     s16 currentPosX;
@@ -40,7 +40,7 @@ void CheckFieldCollisionY(s16 hitSensors[], s16 sensorCount) {
     }
 }
 
-void SetFacingLeft(void) {
+static void SetFacingLeft(void) {
     g_CurrentEntity->facingLeft = (GetSideToPlayer() & 1) ^ 1;
 }
 
