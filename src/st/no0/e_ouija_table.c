@@ -7,7 +7,7 @@
 
 static s16 sensors_special[] = {0, 17, 8, 0};
 static s16 sensors_ground[][2] = {{0, 16}, {0, 4}, {8, -4}, {-16, 0}};
-extern u16 sensors_ground_components[][2] = {{0, 4}, {0, 4}, {4, -4}, {-8, 0}};
+static u16 sensors_ground_components[][2] = {{0, 4}, {0, 4}, {4, -4}, {-8, 0}};
 static u8 anim_walk[] = {
     0x02, 0x05, 0x03, 0x06, 0x04, 0x07, 0x05, 0x08, 0x06, 0x09, 0x05, 0x08,
     0x04, 0x07, 0x03, 0x06, 0x02, 0x05, 0x03, 0x04, 0x04, 0x03, 0x05, 0x02,
