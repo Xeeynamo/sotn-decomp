@@ -2001,9 +2001,6 @@ typedef struct {
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 spawned;
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[1];
-#endif
     /* 0x88 */ struct Entity* parent;
     /* 0x8C */ s16 : 16;
     /* 0x8E */ s16 unk8E;
@@ -2241,7 +2238,6 @@ SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
 SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
-SYNC_FIELD(ET_EntFactory, ET_OuijaTableContents, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);
