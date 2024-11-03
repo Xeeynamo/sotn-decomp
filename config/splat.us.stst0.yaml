@@ -84,7 +84,7 @@ segments:
       - [0xE3D0, cmpgfx, e_dracula2_g9, 128, 128, 4, 0x1A7D0]
       - [0xF130, raw, cutscene_richter]
       - [0xFEB0, raw, cutscene_dracula]
-      - [0x10C30, cmpgfx, stage_title_jp, 128, 128, 4, 0x1AD30] # unused
+      - [0x10C30, cmpgfx, stage_title_st0_jp, 128, 128, 4, 0x1AD30] # unused
       - [0x111D8, cmpgfx, e_breakables_g, 128, 128, 4, 0x1AC30]
       - [0x11B8C, cmpgfx, D_80191B8C, 128, 128, 4, 0x1AD70] # unseen?
       - [0x13DB0, cmpgfx, bg_moon, 128, 128, 4, 0x1B010] # unseen?
@@ -95,7 +95,7 @@ segments:
       - [0x17F80, cmpgfx, richter_cutscene, 128, 128, 4]
       - [0x187BC, cmpgfx, e_secret_stairs_g, 128, 128, 4, 0x1AF50]
       - [0x19628, cmpgfx, e_smoke_g, 128, 128, 4, 0x1ADD0]
-      - [0x1A40C, cmpgfx, stage_title_us, 128, 128, 4, 0x1AD50]
+      - [0x1A40C, cmpgfx, stage_title_st0_us, 128, 128, 4, 0x1AD50]
       - [0x1A750, pal, e_dracula_p]
       - [0x1A830, pal, D_8019A830]
       - [0x1A930, pal, D_8019A930] # unused
