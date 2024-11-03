@@ -49,9 +49,32 @@ typedef struct {
 extern UnkFaerieStruct D_us_80172368[];
 extern AnimationFrame* D_us_80172B14[];
 
+void func_us_80173994(Entity*, s32);
 void func_us_801739C8(Entity*);
 void func_us_80173D60(Entity*);
-void func_us_80173994(Entity*, s32);
+
+static void ServantInit(InitializeMode mode);
+static void func_us_80174998(Entity* self);
+static void func_us_80174F0C(Entity* self);
+static void func_us_801753E4(Entity* self);
+static void func_us_80175730(Entity* self);
+static void func_us_80175A78(Entity* self);
+static void func_us_80175DBC(Entity* self);
+static void func_us_80176178(Entity* self);
+static void func_us_80176504(Entity* self);
+static void func_us_80176B6C(Entity* self);
+static void func_us_80176C98(Entity* self);
+static void func_us_80177380(Entity* self);
+static void func_us_80177958(Entity* self);
+static void func_us_80177AC4(Entity* self);
+static void func_us_80177F64(Entity* self);
+static void func_us_80177F84(Entity* self);
+
+ServantDesc faerie_ServantDesc = {
+    ServantInit,      func_us_80174998, func_us_80174F0C, func_us_801753E4,
+    func_us_80175730, func_us_80175A78, func_us_80175DBC, func_us_80176178,
+    func_us_80176504, func_us_80176B6C, func_us_80176C98, func_us_80177380,
+    func_us_80177958, func_us_80177AC4, func_us_80177F64, func_us_80177F84};
 
 static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
 static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
@@ -187,7 +210,7 @@ void func_us_80173BD0(Entity* arg0) {
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80173D60);
 
-void func_us_801746E8(InitializeMode mode) {
+void ServantInit(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;

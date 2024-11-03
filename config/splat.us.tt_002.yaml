@@ -38,7 +38,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, 3678]
+      - [0x40, data]
       - [0x3678, .rodata, 3678]
       - [0x39D0, c, 3678]
       - [0x92D0, sbss]

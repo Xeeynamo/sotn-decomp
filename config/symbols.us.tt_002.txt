@@ -34,3 +34,4 @@ s_AngleToTarget = 0x80179334;
 s_AllowedAngle = 0x80179338;
 s_DistToTargetLocation = 0x8017933C;
 s_TargetLocOffset_calc = 0x80179340;
+ServantInit = 0x801746E8;
