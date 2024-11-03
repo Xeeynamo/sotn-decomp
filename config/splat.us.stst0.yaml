@@ -44,9 +44,11 @@ segments:
       - [0x674, .data, 27D64] # func_801A805C
       - [0x784, .data, cutscene]
       - [0x828, .data, cutscene] # "Richter, Dracula"
-      - [0x830, data]
-      - [0x990, data]
-      - [0xAB0, data]
+      - [0x830, .data, 2A218]
+      - [0x89C, .data, 2A8DC]
+      - [0x908, .data, 2B0C8]
+      - [0x90C, data]
+      - [0x1568, data]
       - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]

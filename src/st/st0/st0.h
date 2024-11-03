@@ -56,7 +56,6 @@ extern const char* D_801A7984;
 extern const char* D_801A7990;
 extern const char* D_801A799C;
 
-extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 // *** Initializers ***
@@ -73,25 +72,6 @@ extern EInit g_EInitSecretStairs;
 
 extern ObjInit D_80180638[];
 
-// *** EntityCutscene properties START ***
-
-extern u8 D_80180830[]; // Animation
-extern u8 D_8018083C[]; // Animation
-extern u8 D_8018084C[]; // Animation
-extern u8 D_8018085C[]; // Animation
-extern u8 D_80180864[]; // Animation
-extern u8 D_8018086C[]; // Animation
-extern u8 D_8018087C[]; // Animation
-extern u8 D_80180884[]; // Animation
-extern u8 D_8018088C[]; // Animation
-extern u8 D_80180894[]; // Animation
-
-// *** EntityCutscene properties END ***
-
-extern Point16 D_801808A0[];
-extern u16 D_801808B0[];
-extern s16 D_801808F8[];
-extern s32 D_80180908;
 extern s32 D_80180910;
 
 // *** EntityDracula properties START ***

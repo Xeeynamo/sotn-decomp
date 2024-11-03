@@ -2,6 +2,7 @@
 #include "st0.h"
 #include "sfx.h"
 
+static s32 D_80180908 = 0;
 void EntityStageTitleFadeout(Entity* self) {
     s16 primIndex;
     Primitive* prim;
