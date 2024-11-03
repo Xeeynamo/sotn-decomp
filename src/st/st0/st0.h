@@ -74,20 +74,6 @@ extern u16 D_80180628[];
 
 extern ObjInit D_80180638[];
 
-// *** func_801A805C properties START ***
-
-extern s32 D_801806D0[]; // animation
-extern u8 D_801806F8[];  // hitboxHeight
-extern u8 D_80180704[];  // params
-extern u16 D_80180710[]; // palette
-extern s16 D_80180724[]; // animSet
-extern s16 D_80180738[]; // unk5A
-extern s8 D_8018074C[];  // drawMode
-extern s16 D_80180758[]; // hitboxOffY
-extern u8 D_80180770[];  // params
-
-// *** func_801A805C properties END ***
-
 // *** EntityCutscene properties START ***
 
 extern u8 D_80180830[]; // Animation

@@ -25,10 +25,12 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
 #include "../player_is_within_hitbox.h"
 
 extern u16 D_801805B0[];
-extern u8 D_8018065C[];
-extern u8 D_80180660[];
-extern u16 D_80180664[];
-
+static u8 D_8018065C[] = {32, 0};
+static u8 D_80180660[] = {0, 0};
+static u16 D_80180664[] = {
+    0x0000, 0x0000, 0x0500, 0x0200, // 0
+    0x0000, 0x0000, 0x0500, 0x0100, // 1
+};
 void EntityLockCamera(Entity* self) {
     s32 facingLeft;
     u16 offset;
@@ -36,7 +38,7 @@ void EntityLockCamera(Entity* self) {
     u16 params;
     u8 flag;
 
-    params = ((u8)self->params);
+    params = (u8)self->params;
     if (self->step == 0) {
         InitializeEntity(D_801805B0);
 
@@ -84,6 +86,34 @@ void EntityLockCamera(Entity* self) {
     }
 }
 
+static u8 D_80180674[] = {0x04, 0x13, 0x04, 0x14, 0x00};
+static u8 D_8018067C[] = {0x04, 0x15, 0x04, 0x16, 0x04, 0x17, 0x00};
+static u8 D_80180684[] = {0x05, 0x01, 0x05, 0x02, 0x05, 0x03, 0x05, 0x04, 0x00};
+static u8 D_80180690[] = {0x05, 0x05, 0x05, 0x06, 0x05, 0x07, 0x05, 0x08, 0x00};
+static u8 D_8018069C[] = {0x05, 0x09, 0x05, 0x0A, 0x05, 0x0B, 0x05, 0x0C, 0x00};
+static u8 D_801806A8[] = {0x05, 0x0D, 0x05, 0x0E, 0x05, 0x0F, 0x05, 0x10, 0x00};
+static u8 D_801806B4[] = {0x05, 0x11, 0x05, 0x12, 0x05, 0x13, 0x00};
+static u8 D_801806BC[] = {0x05, 0x17, 0x00};
+static u8 D_801806C0[] = {0x05, 0x16, 0x00};
+static u8 D_801806C4[] = {
+    0x05, 0x14, 0xFF, 0xFF, 0x05, 0x15, 0x05, 0x15, 0xFF, 0x00};
+static u8* anims_801A805C[] = {
+    D_80180674, D_8018067C, D_80180684, D_80180690, D_8018069C,
+    D_801806A8, D_801806B4, D_801806BC, D_801806C0, D_801806C4};
+static u8 hitbox_height[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8};
+static u8 explosion_params[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2};
+static u16 palette[] = {0x0100, 0x0100, 0x0212, 0x0212, 0x0212,
+                        0x0212, 0x0212, 0x0212, 0x0212, 0x0212};
+static s16 animset[] = {
+    ANIMSET_OVL(3), ANIMSET_OVL(3), ANIMSET_OVL(4), ANIMSET_OVL(4),
+    ANIMSET_OVL(4), ANIMSET_OVL(4), ANIMSET_OVL(4), ANIMSET_OVL(4),
+    ANIMSET_OVL(4), ANIMSET_OVL(4)};
+static s16 D_80180738[] = {0x007C, 0x007C, 0x005B, 0x005B, 0x005B,
+                           0x005B, 0x005B, 0x005B, 0x005B, 0x005B};
+static s8 draw_mode[] = {
+    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30};
+static s16 hitbox_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
+static u16 D_80180770[][5] = {{0, 1, 2, 2, 3}, {0, 1, 2, 3, 0}};
 void func_801A805C(Entity* self) {
     Entity* newEntity;
     s32 entityCount;
@@ -95,7 +125,7 @@ void func_801A805C(Entity* self) {
     u16 params = self->params >> 0xC;
 
     if (self->step != 0) {
-        AnimateEntity(D_801806D0[params], self);
+        AnimateEntity(anims_801A805C[params], self);
         if (self->hitParams) {
             params_ = params - 2;
             if (params_ < 2) {
@@ -109,9 +139,9 @@ void func_801A805C(Entity* self) {
                 }
 
                 if (params == 3) {
-                    temp = &D_80180770[10];
+                    temp = D_80180770[1];
                 } else {
-                    temp = &D_80180770;
+                    temp = D_80180770[0];
                 }
 
                 for (i = 0, paramsPtr = temp; i < entityCount; i++) {
@@ -145,19 +175,19 @@ void func_801A805C(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
-                newEntity->params = D_80180704[params];
+                newEntity->params = explosion_params[params];
             }
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->drawMode = D_8018074C[params];
-        self->hitboxHeight = D_801806F8[params];
-        self->animSet = D_80180724[params];
+        self->drawMode = draw_mode[params];
+        self->hitboxHeight = hitbox_height[params];
+        self->animSet = animset[params];
         self->unk5A = D_80180738[params];
-        self->palette = D_80180710[params];
-        self->hitboxOffY = D_80180758[params];
+        self->palette = palette[params];
+        self->hitboxOffY = hitbox_y[params];
     }
 }
 

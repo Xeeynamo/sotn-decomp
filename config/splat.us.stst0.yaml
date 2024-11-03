@@ -40,8 +40,9 @@ segments:
       - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
-      - [0x65C, data]
-      - [0x770, data]
+      - [0x65C, .data, 27D64] # EntityLockCamera
+      - [0x674, .data, 27D64] # func_801A805C
+      - [0x784, data]
       - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, data]
       - [0x990, data]
