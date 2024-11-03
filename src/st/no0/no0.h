@@ -55,6 +55,10 @@ extern u16 g_EInitSkeleton[];
 extern u16 g_EInitSkeletonPieces[];
 extern u16 g_EInitSkeletonBone[];
 
+// Ouija Table
+extern u16 g_EInitOuijaTable[];
+extern u16 g_EInitOuijaTableComponent[];
+
 // Flea Man
 extern u16 g_EInitFleaMan[];
 
