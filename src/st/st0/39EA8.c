@@ -52,6 +52,9 @@ extern u8 D_801823D0;
 extern s32 D_80182414[];
 
 void EntityClockTower3D(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
     s32 unusedHalfZ;
     SVECTOR rotVector;
     VECTOR transVector;

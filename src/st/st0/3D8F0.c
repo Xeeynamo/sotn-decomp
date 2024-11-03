@@ -279,6 +279,9 @@ extern SVECTOR D_801C1BC8[];
 extern u8 D_801C23C8[16];
 
 void EntityBackgroundVortex(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
     u8 brightness; // writes into an array, later that array is used for colors
     u8 leftV;
     u8 rightV;

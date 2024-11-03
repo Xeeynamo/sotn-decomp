@@ -5,7 +5,7 @@ extern SVECTOR D_801824E8[];
 extern SVECTOR* D_80182568[];
 
 // Defines for the locations of scratchpad values
-#define offsetof(st, m) (void*)((size_t) & (((st*)0)->m)) // __builtin_offsetof
+#define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
 typedef struct {
     MATRIX m[2];
     SVECTOR vec[1];
@@ -17,6 +17,9 @@ typedef struct {
 } ST0_SCRATCHPAD;
 
 void func_801BC5C0(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[sizeof(ST0_SCRATCHPAD)];
+#endif
     s16 var_s7;
     s16 var_s6;
     u8* var_s5;

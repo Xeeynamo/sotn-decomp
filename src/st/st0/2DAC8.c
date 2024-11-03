@@ -811,7 +811,7 @@ void func_801AF774(Entity* self) {
     s16* temp_a3;
     s32 xBase;
     s32 yBase;
-    inline s32 add(a, b) { return a + b; }
+    inline s32 add(s32 a, s32 b) { return a + b; }
 
     switch (self->step) {
     case 0:
