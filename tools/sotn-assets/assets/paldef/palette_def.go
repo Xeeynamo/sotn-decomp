@@ -9,6 +9,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
@@ -39,7 +40,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if palDefAddr.Real(psx.RamStageBegin) != e.Start {
 		return fmt.Errorf("invalid palette entry offset, got %s but expected %s", palDefAddr, e.RamBase.Sum(e.Start))
 	}
-	entries, err := readPaletteEntries(r, e.RamBase, palDefAddr)
+	entries, err := readPaletteEntries(r, e.RamBase, palDefAddr, e.SplatConfig)
 	if err != nil {
 		return err
 	}
@@ -90,7 +91,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if !palDefAddr.InRange(psx.RamStageBegin, psx.RamStageEnd) {
 		return assets.InfoResult{}, fmt.Errorf("invalid palette entry at %s, address out of the stage range: got %s", header.Cluts, palDefAddr)
 	}
-	entries, err := readPaletteEntries(r, psx.RamStageBegin, palDefAddr)
+	entries, err := readPaletteEntries(r, psx.RamStageBegin, palDefAddr, nil)
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
@@ -136,7 +137,7 @@ type paletteEntry struct {
 	addr        psx.Addr
 }
 
-func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]paletteEntry, error) {
+func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr, splatConfig *splat.Config) ([]paletteEntry, error) {
 	var entries []paletteEntry
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return nil, fmt.Errorf("invalid offset: %w", err)
@@ -167,10 +168,14 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]paletteEntr
 		if !addr.InRange(psx.RamStageBegin, psx.RamStageEnd) {
 			return nil, fmt.Errorf("invalid palette entry at %s, address out of the stage range: got %s", baseAddr.Sum(i*4*3+4), addr)
 		}
+		name := splatConfig.GetSymbolName(addr.Real(baseAddr))
+		if name == "" {
+			name = fmt.Sprintf("D_%08X", uint32(addr))
+		}
 		entries = append(entries, paletteEntry{
 			Destination: int(dst),
 			Length:      int(length),
-			Name:        fmt.Sprintf("D_%08X.bin", uint32(addr)),
+			Name:        name + ".palbin",
 			addr:        addr,
 		})
 	}

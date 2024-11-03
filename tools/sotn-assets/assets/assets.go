@@ -3,16 +3,18 @@ package assets
 import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 )
 
 type ExtractArgs struct {
-	Data     []byte
-	Start    int
-	End      int
-	AssetDir string
-	Name     string
-	Args     []string
-	RamBase  psx.Addr
+	Data        []byte
+	Start       int
+	End         int
+	AssetDir    string
+	Name        string
+	Args        []string
+	SplatConfig *splat.Config
+	RamBase     psx.Addr
 }
 type Extractor interface {
 	Extract(a ExtractArgs) error

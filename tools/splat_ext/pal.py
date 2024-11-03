@@ -14,11 +14,10 @@ class PSXSegPal(N64Segment):
         return options.opts.asset_path / self.dir / self.name
 
     def src_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}.bin"
+        return options.opts.asset_path / self.dir / f"{self.name}.palbin"
 
     def split(self, rom_bytes):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
-
         with open(path, "wb") as f:
             f.write(rom_bytes[self.rom_start : self.rom_end])
