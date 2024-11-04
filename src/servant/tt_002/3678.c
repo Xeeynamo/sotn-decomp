@@ -1075,15 +1075,18 @@ void func_us_80176C98(Entity* self) {
         func_us_80173994(self, 0xE);
         break;
     case 1:
-        s_AngleToTarget = CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
-        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        s_AngleToTarget = 
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = 
+            GetTargetPositionWithDistanceBuffer(s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 3);
         self->velocityX = (rcos(s_AllowedAngle) << 3);
         func_us_80173BD0(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        s_DistToTargetLocation = CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        s_DistToTargetLocation = 
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
         if (s_DistToTargetLocation < 2) {
             if (PLAYER.step_s == 0) {
                 self->facingLeft = PLAYER.facingLeft;
@@ -1092,35 +1095,39 @@ void func_us_80176C98(Entity* self) {
             }
             func_us_80173994(self, 0x18);
             self->ext.faerie.frameCounter = 0;
-            
+
             self->flags |= FLAG_POS_PLAYER_LOCKED;
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
 
 #ifdef VERSION_PSP
-            if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20
-                || D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 
-                || (D_us_8017931C == 1) 
-                || s_FaerieStats.level < 5) {
+            if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
+                D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
+                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
-            } else if (s_ServantId != FAM_STATS_NOSE_DEMON || PLAYER.step_s != 4){
+            } else if (
+                s_ServantId != FAM_STATS_NOSE_DEMON || PLAYER.step_s != 4) {
                 self->step = 5;
-            } else if (s_FaerieStats.level > 9 || g_Timer & 1 || s_FaerieStats.level > 4 || (g_Timer & 7)){
+            } else if (s_FaerieStats.level > 9 || g_Timer & 1 ||
+                       s_FaerieStats.level > 4 || (g_Timer & 7)) {
                 self->step = 5;
             } else {
                 self->ext.faerie.unkB4 = 0;
                 if (s_FaerieStats.level < 16) {
                     self->ext.faerie.frameCounter = 0x708;
                 } else {
-                    self->ext.faerie.frameCounter = 0x7a8 - (s_FaerieStats.level << 0x4);
+                    self->ext.faerie.frameCounter =
+                        0x7a8 - (s_FaerieStats.level << 0x4);
                 }
                 self->step++;
             }
 #else
-            if ((*((FgLayer32*)&D_8003C708)).flags & (LAYOUT_RECT_PARAMS_UNKNOWN_20 | LAYOUT_RECT_PARAMS_UNKNOWN_40)
-                || (D_us_8017931C == 1) 
-                || s_FaerieStats.level < 5) {
+            if ((*((FgLayer32*)&D_8003C708)).flags &
+                    (LAYOUT_RECT_PARAMS_UNKNOWN_20 |
+                    LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
+                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
-            } else if (s_ServantId != FAM_STATS_NOSE_DEMON || s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
+            } else if (s_ServantId != FAM_STATS_NOSE_DEMON || 
+                       s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
                 self->step = 5;
             } else if (s_FaerieStats.level < 0x5A && rand() % 8) {
                 self->step = 5;
@@ -1134,8 +1141,6 @@ void func_us_80176C98(Entity* self) {
                 self->step++;
             }
 #endif
-
-
         }
         break;
     case 2:
@@ -1203,8 +1208,7 @@ void func_us_80176C98(Entity* self) {
         self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
         self->velocityY = FIX(1);
         for (rnd = rand() % 0x100, i = 0; true; i++) {
-            if(rnd <= *(D_us_80172C04 + (i * 2)))
-            {
+            if(rnd <= *(D_us_80172C04 + (i * 2))) {
 #ifdef VERSION_PSP
                 g_api.PlaySfx(*(D_us_80172C08 + (i * 2 + 1)));
 #else
@@ -1213,13 +1217,13 @@ void func_us_80176C98(Entity* self) {
                 break;
             }
         }
-        
+
         self->step++;
         break;
     case 10:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY -= 0x800;
+        self->velocityY -= FIX(0.03125);
         
         if (D_us_801792D0 == -1) {
             self->entityId = 0xD1;
@@ -1230,11 +1234,11 @@ void func_us_80176C98(Entity* self) {
     }
     ProcessEvent(self, false);
     func_us_80173D60(self);
-    #ifdef VERSION_PSP
-    if ((self->step == 3 || self->step == 4) && *((s32*)0x9234CB8) < 0x200){
+#ifdef VERSION_PSP
+    if ((self->step == 3 || self->step == 4) && *((s32*)0x9234CB8) < 0x200) {
         *((s32*)0x9234CB8) = 0x200;
     }
-    #endif
+#endif
     func_us_801739C8(self);
     D_us_801792D0 = ServantUpdateAnim(self, NULL, D_us_80172B14);
 }
