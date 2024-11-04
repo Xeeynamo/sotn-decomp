@@ -1704,6 +1704,11 @@ typedef struct {
 } FgLayer; /* size=0x8 */
 
 typedef struct {
+    /* D_8003C708 */ u32 flags;
+    /* D_8003C70C */ u32 zPriority;
+} FgLayer32;
+
+typedef struct {
     /* 80072BD0 */ Collider colliders[4];
     /* 80072C60 */ Collider colliders2[4];
     /* 80072CF0 */ Collider colliders3[14];
