@@ -44,6 +44,6 @@ segments:
       - [0x2368, data]
       - [0x2D2C, .data, servant_events]
       - [0x3678, .rodata, 3678]
-      - [0x39D0, c, 3678]
+      - [0x3994, c, 3678]
       - [0x92D0, sbss]
   - [0xA000]

@@ -8,6 +8,7 @@ g_EventQueue = 0x80173668;
 g_CurrentServant = 0x8017366C;
 g_CurrentRoomX = 0x80173670;
 g_CurrentRoomY = 0x80173674;
+SetAnimationFrame = 0x80173994;
 CreateEventEntity_Dupe = 0x80173B14;
 ServantInit = 0x801746E8;
 ServantUpdateAnim = 0x8017865C;
