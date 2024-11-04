@@ -1103,8 +1103,7 @@ void func_us_80176C98(Entity* self) {
                 D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
                 (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
-            } else if (
-                s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
+            } else if (s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
                 self->step = 5;
             } else if (s_FaerieStats.level > 9 || g_Timer & 1 ||
                        s_FaerieStats.level > 4 || (g_Timer & 7)) {
