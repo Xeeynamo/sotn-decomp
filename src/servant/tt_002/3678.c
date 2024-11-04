@@ -1075,17 +1075,17 @@ void func_us_80176C98(Entity* self) {
         func_us_80173994(self, 0xE);
         break;
     case 1:
-        s_AngleToTarget = 
+        s_AngleToTarget =
             CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
-        s_AllowedAngle = 
-            GetTargetPositionWithDistanceBuffer(s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 3);
         self->velocityX = (rcos(s_AllowedAngle) << 3);
         func_us_80173BD0(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        s_DistToTargetLocation = 
+        s_DistToTargetLocation =
             CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
         if (s_DistToTargetLocation < 2) {
             if (PLAYER.step_s == 0) {
@@ -1123,10 +1123,10 @@ void func_us_80176C98(Entity* self) {
 #else
             if ((*((FgLayer32*)&D_8003C708)).flags &
                     (LAYOUT_RECT_PARAMS_UNKNOWN_20 |
-                    LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
+                     LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
                 (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
-            } else if (s_ServantId != FAM_STATS_NOSE_DEMON || 
+            } else if (s_ServantId != FAM_STATS_NOSE_DEMON ||
                        s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
                 self->step = 5;
             } else if (s_FaerieStats.level < 0x5A && rand() % 8) {
@@ -1208,7 +1208,7 @@ void func_us_80176C98(Entity* self) {
         self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
         self->velocityY = FIX(1);
         for (rnd = rand() % 0x100, i = 0; true; i++) {
-            if(rnd <= *(D_us_80172C04 + (i * 2))) {
+            if (rnd <= *(D_us_80172C04 + (i * 2))) {
 #ifdef VERSION_PSP
                 g_api.PlaySfx(*(D_us_80172C08 + (i * 2 + 1)));
 #else
@@ -1224,7 +1224,7 @@ void func_us_80176C98(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY -= FIX(0.03125);
-        
+
         if (D_us_801792D0 == -1) {
             self->entityId = 0xD1;
             self->step = 0;
