@@ -1,5 +1,6 @@
 
-#include <game.h>
+#include <common.h>
+#include <include_asm.h>
 #include <psxsdk/libetc.h>
 
 int ResetCallback(void) { return D_8002D340->ResetCallback(); }
