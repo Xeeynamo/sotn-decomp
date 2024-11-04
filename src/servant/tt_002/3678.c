@@ -40,7 +40,6 @@ extern s32 D_80097420[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
 extern s32 D_us_80172C04[];
-extern s32 D_us_80172C08[];
 extern u16 D_us_80172D28;
 extern u16 D_us_80172D2A;
 extern u32 D_us_801792D0;
@@ -1105,7 +1104,7 @@ void func_us_80176C98(Entity* self) {
                 (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
             } else if (
-                s_ServantId != FAM_STATS_NOSE_DEMON || PLAYER.step_s != 4) {
+                s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
                 self->step = 5;
             } else if (s_FaerieStats.level > 9 || g_Timer & 1 ||
                        s_FaerieStats.level > 4 || (g_Timer & 7)) {
@@ -1126,7 +1125,7 @@ void func_us_80176C98(Entity* self) {
                      LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
                 (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
-            } else if (s_ServantId != FAM_STATS_NOSE_DEMON ||
+            } else if (s_ServantId != FAM_ACTIVE_YOUSEI ||
                        s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
                 self->step = 5;
             } else if (s_FaerieStats.level < 0x5A && rand() % 8) {
@@ -1208,12 +1207,8 @@ void func_us_80176C98(Entity* self) {
         self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
         self->velocityY = FIX(1);
         for (rnd = rand() % 0x100, i = 0; true; i++) {
-            if (rnd <= *(D_us_80172C04 + (i * 2))) {
-#ifdef VERSION_PSP
-                g_api.PlaySfx(*(D_us_80172C08 + (i * 2 + 1)));
-#else
-                g_api.PlaySfx(*(D_us_80172C08 + (i * 2)));
-#endif
+            if (rnd <= D_us_80172C04[i * 2]) {
+                g_api.PlaySfx(D_us_80172C04[i * 2 + 1]);
                 break;
             }
         }
