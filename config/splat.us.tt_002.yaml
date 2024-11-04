@@ -38,7 +38,11 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, 3678]
+      - [0x40, .data, faerie_spriteparts]
+      - [0x22E8, .data, faerie_clutdata]
+      - [0x2368, data]
+      - [0x2D2C, .data, servant_events]
       - [0x3678, .rodata, 3678]
       - [0x3994, c, 3678]
       - [0x92D0, sbss]
