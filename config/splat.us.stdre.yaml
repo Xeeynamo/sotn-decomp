@@ -64,23 +64,24 @@ segments:
       - [0x1608, .data, e_layout] # layout entries data
       - [0x16C0, data]
       - [0x16C8, .data, cutscene_data]
-      - [0x1D08, cmp, D_80181D08] # unused
-      - [0x1F80, cmp, D_80181F80]
-      - [0x2524, cmp, D_80182524]
-      - [0x2F60, cmp, D_80182F60]
-      - [0x3A2C, cmp, D_80183A2C]
-      - [0x46CC, cmp, D_801846CC]
-      - [0x5320, cmp, D_80185320]
-      - [0x5EA0, cmp, D_80185EA0]
-      - [0x6A50, cmp, D_80186A50]
-      - [0x7510, cmp, D_80187510]
+      - [0x1D08, data] # unused
+      - [0x1D30, cmpgfx, stage_title_jp, 128, 128, 4] # unused
+      - [0x1F80, cmpgfx, stage_placeholder, 128, 128, 4]
+      - [0x2524, cmpgfx, e_succubus_g0, 128, 128, 4, 0xAEA8]
+      - [0x2F60, cmpgfx, e_succubus_g1, 128, 128, 4, 0xAEC8]
+      - [0x3A2C, cmpgfx, e_succubus_g2, 128, 128, 4, 0xAEC8]
+      - [0x46CC, cmpgfx, e_succubus_g3, 128, 128, 4, 0xAEC8]
+      - [0x5320, cmpgfx, e_succubus_g4, 128, 128, 4, 0xAEA8]
+      - [0x5EA0, cmpgfx, e_succubus_g5, 128, 128, 4, 0xAEA8]
+      - [0x6A50, cmpgfx, e_succubus_g6, 128, 128, 4, 0xAEA8]
+      - [0x7510, cmpgfx, e_succubus_g7, 128, 128, 4, 0xAF28]
       - [0x800C, raw, cutscene_alucard]
       - [0x8D8C, raw, cutscene_mother]
       - [0x9B0C, raw, cutscene_succubus]
-      - [0xA88C, cmp, D_8018A88C]
+      - [0xA88C, cmpgfx, stage_title_us, 128, 128, 4]
       - [0xABE8, pal, D_8018ABE8]
       - [0xADE8, pal, D_8018ADE8] # unused
-      - [0xAEA8, pal, D_8018AEA8]
+      - [0xAEA8, pal, e_succubus_p]
       - [0xAF48, pal, D_8018AF48]
       - [0xB048, pal, D_8018B048] # unused
       - [0xB148, pal, D_8018B148]

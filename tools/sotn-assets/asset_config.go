@@ -13,6 +13,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
 	"os"
@@ -26,10 +27,11 @@ type assetSegmentEntry struct {
 }
 
 type assetFileEntry struct {
-	Target    string              `yaml:"target"`
-	AssetDir  string              `yaml:"asset_path"`
-	SourceDir string              `yaml:"src_path"`
-	Segments  []assetSegmentEntry `yaml:"segments"`
+	Target          string              `yaml:"target"`
+	AssetDir        string              `yaml:"asset_path"`
+	SourceDir       string              `yaml:"src_path"`
+	SplatConfigPath string              `yaml:"splat_config_path"`
+	Segments        []assetSegmentEntry `yaml:"segments"`
 }
 
 type assetConfig struct {
@@ -95,7 +97,8 @@ func enqueueExtractAssetEntry(
 	start int,
 	end int,
 	args []string,
-	ramBase psx.Addr) {
+	ramBase psx.Addr,
+	splatConfig *splat.Config) {
 	eg.Go(func() error {
 		defer func() {
 			if err := recover(); err != nil {
@@ -103,13 +106,14 @@ func enqueueExtractAssetEntry(
 			}
 		}()
 		if err := handler.Extract(assets.ExtractArgs{
-			Data:     data,
-			Start:    start,
-			End:      end,
-			AssetDir: assetDir,
-			RamBase:  ramBase,
-			Name:     name,
-			Args:     args,
+			Data:        data,
+			Start:       start,
+			End:         end,
+			AssetDir:    assetDir,
+			RamBase:     ramBase,
+			Name:        name,
+			Args:        args,
+			SplatConfig: splatConfig,
 		}); err != nil {
 			return fmt.Errorf("unable to extract asset %q in %q: %v", name, assetDir, err)
 		}
@@ -122,6 +126,10 @@ func extractAssetFile(file assetFileEntry) error {
 	data, err := os.ReadFile(file.Target)
 	if err != nil {
 		return err
+	}
+	splatConfig, err := splat.ReadConfig(file.SplatConfigPath)
+	if err != nil {
+		return fmt.Errorf("unable to read splat config at %q: %v", file.SplatConfigPath, err)
 	}
 	for _, segment := range file.Segments {
 		if len(segment.Assets) == 0 {
@@ -149,7 +157,7 @@ func extractAssetFile(file assetFileEntry) error {
 					}
 					start := int(off) - segment.Start
 					end := start + size
-					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
+					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram, splatConfig)
 				} else {
 					return fmt.Errorf("handler %q not found", kind)
 				}
