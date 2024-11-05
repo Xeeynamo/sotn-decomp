@@ -1091,7 +1091,7 @@ void func_us_80176504(Entity* arg0) {
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
             SetAnimationFrame(arg0, 0xE);
-            arg0->entityId = 0xD1;
+            arg0->entityId = ENTITY_ID_SERVANT;
             arg0->step = 0;
             return;
         }
@@ -1159,7 +1159,7 @@ void func_us_80176504(Entity* arg0) {
     case 5:
         SetAnimationFrame(arg0, 0xE);
         g_PauseAllowed = true;
-        arg0->entityId = 0xD1;
+        arg0->entityId = ENTITY_ID_SERVANT;
         arg0->step = 0;
         break;
     }
@@ -1221,7 +1221,7 @@ void func_us_80176C98(Entity* self) {
     }
     if (IsMovementAllowed(1)) {
         if (self->step < 2) {
-            self->entityId = 0xD1;
+            self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
         }
@@ -1397,7 +1397,7 @@ void func_us_80176C98(Entity* self) {
         self->velocityY -= FIX(0.03125);
 
         if (D_us_801792D0 == -1) {
-            self->entityId = 0xD1;
+            self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
         }
