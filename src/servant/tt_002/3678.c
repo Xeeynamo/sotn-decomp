@@ -1224,16 +1224,16 @@ void func_us_80177F84(Entity* self) {
     s32 posX;
     s16 posY;
     s16 posX2;
-    u16 var_v0;
+    u16 posX4;
     Unkstruct_801724CC* unkStruct;
-    s32 temp;
-    
+
     posX2 = self->posX.i.hi;
     posY = self->posY.i.hi;
     unkStruct = &D_us_801724CC[LOH(self->params)];
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, unkStruct->count + 1);
+        self->primIndex =
+            g_api.func_800EDB58(PRIM_TILE_ALT, unkStruct->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1246,52 +1246,49 @@ void func_us_80177F84(Entity* self) {
         while (true) {
             fakePrim->drawMode = unkStruct->unk14 + 8;
             fakePrim->priority = unkStruct->priority + PLAYER.zPriority;
-            if(fakePrim->next == NULL){
+            if (fakePrim->next == NULL) {
                 fakePrim->w = 0;
                 fakePrim->y0 = fakePrim->x0 = 0;
                 fakePrim->drawMode &= ~DRAW_HIDE;
                 break;
             }
-                
+
             fakePrim->posX.i.hi = posX2;
             fakePrim->posY.i.hi = posY;
             fakePrim->posY.i.lo = 0;
             fakePrim->posX.i.lo = 0;
             switch (unkStruct->unk6) {
             case 0:
-                
                 if (!self->facingLeft) {
                     fakePrim->posX.i.hi = posX + 4;
                 } else {
                     fakePrim->posX.i.hi = posX - 4;
                 }
                 fakePrim->posY.i.hi = posY - 0x1A;
-                fakePrim->velocityX = ((rand() % 0x2000) - 0x1000) << 4;
-                fakePrim->velocityY = 0;
+                fakePrim->velocityX.val = ((rand() % 0x2000) - 0x1000) << 4;
+                fakePrim->velocityY.val = 0;
                 break;
-            case 1:                                 /* switch 1 */
-                
+            case 1:
                 if (!self->facingLeft) {
                     posX3 = posX - 0x18;
                 } else {
                     posX3 = posX + 0x18;
                 }
                 posY2 = posY + 0x10;
-                fakePrim->posX.i.hi = (u16) (posX3 - 8 + (rand() % 16));
+                fakePrim->posX.i.hi = (u16)(posX3 - 8 + (rand() % 16));
                 fakePrim->posY.i.hi = posY2;
                 fakePrim->velocityX.val = ((rand() % 0x2000) - 0x1000) << 4;
                 fakePrim->velocityY.val = -((rand() % 0x1000) + 0x1800) << 4;
                 fakePrim->delay = 0x2D;
                 break;
-            case 2:                                 /* switch 1 */
-                
+            case 2:
                 if (!self->facingLeft) {
-                    var_v0 = posX + 0xE;
+                    posX4 = posX + 0xE;
                 } else {
-                    var_v0 = posX - 0xE;
+                    posX4 = posX - 0xE;
                 }
                 posY2 = posY - 8;
-                fakePrim->posX.i.hi = var_v0;
+                fakePrim->posX.i.hi = posX4;
                 fakePrim->posY.i.hi = posY2;
                 fakePrim->velocityX.val = (rand() % 0x800) << 4;
                 if (self->facingLeft) {
@@ -1332,22 +1329,22 @@ void func_us_80177F84(Entity* self) {
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
         
         while (true) {
-
-            if(fakePrim->next == NULL){
+            if (fakePrim->next == NULL) {
                 fakePrim->w = 0;
                 fakePrim->y0 = fakePrim->x0 = 0;
                 fakePrim->drawMode &= ~DRAW_HIDE;
                 break;
             }
-            
+
             fakePrim->posX.i.hi = fakePrim->x0;
             fakePrim->posY.i.hi = fakePrim->y0;
             switch (unkStruct->unk6) {
             case 0:
-                if ((fakePrim->drawMode & 8) == 0) {
+                if (!(fakePrim->drawMode & DRAW_HIDE)) {
                     fakePrim->posX.val += fakePrim->velocityX.val;
                     fakePrim->posY.val += fakePrim->velocityY.val;
-                    fakePrim->velocityX.val = AccumulateTowardZero(fakePrim->velocityX.val, 0x1000);
+                    fakePrim->velocityX.val =
+                        AccumulateTowardZero(fakePrim->velocityX.val, 0x1000);
                     fakePrim->velocityY.val -= FIX(2.0 / 16);
                     if (fakePrim->posY.i.hi < 0) {
                         fakePrim->drawMode |= DRAW_HIDE;
@@ -1355,7 +1352,7 @@ void func_us_80177F84(Entity* self) {
                 }
                 break;
             case 1:
-                if ((fakePrim->drawMode & 8) == 0) {
+                if (!(fakePrim->drawMode & DRAW_HIDE)) {
                     fakePrim->posX.val += fakePrim->velocityX.val;
                     fakePrim->posY.val += fakePrim->velocityY.val;
                     fakePrim->velocityY.val += FIX(2.0 / 16);
@@ -1365,7 +1362,7 @@ void func_us_80177F84(Entity* self) {
                 }
                 break;
             case 2:
-                if ((fakePrim->drawMode & 8) == 0) {
+                if (!(fakePrim->drawMode & DRAW_HIDE)) {
                     fakePrim->posX.val += fakePrim->velocityX.val;
                     fakePrim->posY.val += fakePrim->velocityY.val;
                     if (fakePrim->r0 != 0) {
@@ -1386,8 +1383,7 @@ void func_us_80177F84(Entity* self) {
             }
             fakePrim->x0 = fakePrim->posX.i.hi;
             fakePrim->y0 = fakePrim->posY.i.hi;
-            temp = self->ext.faerie.unk7E;
-            self->ext.faerie.unk7E = temp | ((fakePrim->drawMode >> 3) ^ 1) & 1;
+            self->ext.faerie.unk7E |= !(fakePrim->drawMode & DRAW_HIDE);
             fakePrim = fakePrim->next;
         }
     }
