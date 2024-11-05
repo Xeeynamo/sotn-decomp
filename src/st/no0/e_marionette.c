@@ -59,6 +59,58 @@ u8 func_us_801D6254(s16 arg0[]) {
     return ret;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_marionette", func_us_801D6474);
+void func_us_801D6474(Primitive* prim) {
+    Collider collider;
+    Entity* newEntity;
+    s16 xVal;
+    s16 yVal;
+
+    UnkPrimHelper(prim);
+    switch (prim->next->u2) {
+    case 0:
+        LOW(prim->next->u0) = ((Random() & 31) << 12) - 0x10000;
+        LOW(prim->next->r1) = -(Random() & 31) << 12;
+        if (LOH(prim->next->r2) + LOH(prim->next->b2) >= 48) {
+            prim->next->u2 = 1;
+            prim->next->x3 = 256;
+        } else {
+            prim->next->u2 = 2;
+            prim->next->x3 = ((Random() & 15) * 4) + 8;
+        }
+        // fallthrough
+    case 1:
+        xVal = prim->next->x1;
+        yVal = prim->next->y0 + 4;
+        g_api.CheckCollision(xVal, yVal, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            prim->next->y0 += collider.unk18;
+            if (LOW(prim->next->r1) < 16384) {
+                prim->next->x3 = 1;
+            }
+            LOW(prim->next->r1) = -LOW(prim->next->r1);
+            LOW(prim->next->r1) -= LOW(prim->next->r1) / 2;
+        }
+        // fallthrough
+    case 2:
+        if (LOW(prim->next->u0) > 0) {
+            HIH(prim->next->u1) -= 32;
+        } else {
+            HIH(prim->next->u1) += 32;
+        }
+        LOW(prim->next->r1) += 6144;
+        prim->next->x3 -= 1;
+        if (!prim->next->x3) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(2, newEntity);
+                newEntity->posX.i.hi = prim->next->x1;
+                newEntity->posY.i.hi = prim->next->y0;
+                newEntity->params = 0;
+            }
+            UnkPolyFunc0(prim);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/e_marionette", func_us_801D66F8);
