@@ -1327,7 +1327,7 @@ void func_us_80177F84(Entity* self) {
     case 2:
         self->ext.faerie.unk7E = 0;
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        
+
         while (true) {
             if (fakePrim->next == NULL) {
                 fakePrim->w = 0;
@@ -1386,9 +1386,9 @@ void func_us_80177F84(Entity* self) {
             self->ext.faerie.unk7E |= !(fakePrim->drawMode & DRAW_HIDE);
             fakePrim = fakePrim->next;
         }
-    }
-    if (self->ext.faerie.unk7E == 0) {
-        DestroyEntity(self);
+        if (self->ext.faerie.unk7E == 0) {
+            DestroyEntity(self);
+        }
     }
 }
 

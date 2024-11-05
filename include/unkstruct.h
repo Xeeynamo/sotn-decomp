@@ -147,7 +147,6 @@ typedef struct Unkstruct_801C7954 {
     /* 0x0E */ u16 x2;
 } Unkstruct_801C7954; // size = 0x10
 
-
 typedef struct {
     u8 unk0[8];
     u8 unk8[8];
