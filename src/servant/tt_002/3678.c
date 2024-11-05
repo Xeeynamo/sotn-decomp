@@ -37,6 +37,7 @@ extern s32 D_us_80172BD0;
 extern s32 D_800973FC;
 // this is likely incorrect typing
 extern s32 D_80097420[];
+extern Unkstruct_801724CC D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
 
@@ -1182,7 +1183,185 @@ void func_us_80177AC4(Entity* arg0) {
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
+void func_us_80177F84(Entity* self) {
+    FakePrim* fakePrim;
+    s32 i;
+    u16 posY2;
+    s16 posX3;
+    s32 posX;
+    s16 posY;
+    s16 posX2;
+    u16 var_v0;
+    Unkstruct_801724CC* unkStruct;
+    s32 temp;
+    
+    posX2 = self->posX.i.hi;
+    posY = self->posY.i.hi;
+    unkStruct = &D_us_801724CC[LOH(self->params)];
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, unkStruct->count + 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        posX = posX2;
+        self->flags = unkStruct->flags;
+        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+
+        while (true) {
+            fakePrim->drawMode = unkStruct->unk14 + 8;
+            fakePrim->priority = unkStruct->priority + PLAYER.zPriority;
+            if(fakePrim->next == NULL){
+                fakePrim->w = 0;
+                fakePrim->y0 = fakePrim->x0 = 0;
+                fakePrim->drawMode &= ~DRAW_HIDE;
+                break;
+            }
+                
+            fakePrim->posX.i.hi = posX2;
+            fakePrim->posY.i.hi = posY;
+            fakePrim->posY.i.lo = 0;
+            fakePrim->posX.i.lo = 0;
+            switch (unkStruct->unk6) {
+            case 0:
+                
+                if (!self->facingLeft) {
+                    fakePrim->posX.i.hi = posX + 4;
+                } else {
+                    fakePrim->posX.i.hi = posX - 4;
+                }
+                fakePrim->posY.i.hi = posY - 0x1A;
+                fakePrim->velocityX = ((rand() % 0x2000) - 0x1000) << 4;
+                fakePrim->velocityY = 0;
+                break;
+            case 1:                                 /* switch 1 */
+                
+                if (!self->facingLeft) {
+                    posX3 = posX - 0x18;
+                } else {
+                    posX3 = posX + 0x18;
+                }
+                posY2 = posY + 0x10;
+                fakePrim->posX.i.hi = (u16) (posX3 - 8 + (rand() % 16));
+                fakePrim->posY.i.hi = posY2;
+                fakePrim->velocityX.val = ((rand() % 0x2000) - 0x1000) << 4;
+                fakePrim->velocityY.val = -((rand() % 0x1000) + 0x1800) << 4;
+                fakePrim->delay = 0x2D;
+                break;
+            case 2:                                 /* switch 1 */
+                
+                if (!self->facingLeft) {
+                    var_v0 = posX + 0xE;
+                } else {
+                    var_v0 = posX - 0xE;
+                }
+                posY2 = posY - 8;
+                fakePrim->posX.i.hi = var_v0;
+                fakePrim->posY.i.hi = posY2;
+                fakePrim->velocityX.val = (rand() % 0x800) << 4;
+                if (self->facingLeft) {
+                    fakePrim->velocityX.val = -fakePrim->velocityX.val;
+                }
+                fakePrim->velocityY.val = -((rand() % 0x1000) + 0x800) << 4;
+                fakePrim->delay = 0x28;
+                break;
+            }
+            fakePrim->x0 = fakePrim->posX.i.hi;
+            fakePrim->y0 = fakePrim->posY.i.hi;
+            fakePrim->r0 = unkStruct->r;
+            fakePrim->g0 = unkStruct->g;
+            fakePrim->b0 = unkStruct->b;
+            fakePrim->w = unkStruct->w;
+            fakePrim->h = unkStruct->h;
+            fakePrim = fakePrim->next;
+        }
+        self->step++;
+    case 1:
+        if (--self->ext.faerie.unk82 <= 0) {
+            fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+            for (i = 0; i < self->ext.faerie.unk80; i++) {
+                fakePrim = fakePrim->next;
+            }
+            for (i = 0; i < unkStruct->unk2; i++) {
+                fakePrim->drawMode &= ~DRAW_HIDE;
+                fakePrim = fakePrim->next;
+            }
+            self->ext.faerie.unk80 += unkStruct->unk2;
+            if (self->ext.faerie.unk80 >= unkStruct->count) {
+                self->step++;
+            }
+            self->ext.faerie.unk82 = unkStruct->unk4;
+        }
+    case 2:
+        self->ext.faerie.unk7E = 0;
+        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        
+        while (true) {
+
+            if(fakePrim->next == NULL){
+                fakePrim->w = 0;
+                fakePrim->y0 = fakePrim->x0 = 0;
+                fakePrim->drawMode &= ~DRAW_HIDE;
+                break;
+            }
+            
+            fakePrim->posX.i.hi = fakePrim->x0;
+            fakePrim->posY.i.hi = fakePrim->y0;
+            switch (unkStruct->unk6) {
+            case 0:
+                if ((fakePrim->drawMode & 8) == 0) {
+                    fakePrim->posX.val += fakePrim->velocityX.val;
+                    fakePrim->posY.val += fakePrim->velocityY.val;
+                    fakePrim->velocityX.val = AccumulateTowardZero(fakePrim->velocityX.val, 0x1000);
+                    fakePrim->velocityY.val -= FIX(2.0 / 16);
+                    if (fakePrim->posY.i.hi < 0) {
+                        fakePrim->drawMode |= DRAW_HIDE;
+                    }
+                }
+                break;
+            case 1:
+                if ((fakePrim->drawMode & 8) == 0) {
+                    fakePrim->posX.val += fakePrim->velocityX.val;
+                    fakePrim->posY.val += fakePrim->velocityY.val;
+                    fakePrim->velocityY.val += FIX(2.0 / 16);
+                    if (--fakePrim->delay < 0) {
+                        fakePrim->drawMode |= DRAW_HIDE;
+                    }
+                }
+                break;
+            case 2:
+                if ((fakePrim->drawMode & 8) == 0) {
+                    fakePrim->posX.val += fakePrim->velocityX.val;
+                    fakePrim->posY.val += fakePrim->velocityY.val;
+                    if (fakePrim->r0 != 0) {
+                        fakePrim->r0--;
+                    }
+                    if (fakePrim->g0 != 0) {
+                        fakePrim->g0--;
+                    }
+                    if (fakePrim->b0 != 0) {
+                        fakePrim->b0--;
+                    }
+                    fakePrim->velocityY.val += FIX(1.5 / 16);
+                    if (--fakePrim->delay < 0) {
+                        fakePrim->drawMode |= DRAW_HIDE;
+                    }
+                }
+                break;
+            }
+            fakePrim->x0 = fakePrim->posX.i.hi;
+            fakePrim->y0 = fakePrim->posY.i.hi;
+            temp = self->ext.faerie.unk7E;
+            self->ext.faerie.unk7E = temp | ((fakePrim->drawMode >> 3) ^ 1) & 1;
+            fakePrim = fakePrim->next;
+        }
+    }
+    if (self->ext.faerie.unk7E == 0) {
+        DestroyEntity(self);
+    }
+}
 
 #ifndef VERSION_PSP
 #include "../servant_update_anim.h"

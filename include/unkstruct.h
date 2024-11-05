@@ -113,6 +113,21 @@ typedef struct {
 } Unkstruct_80102CD8;
 
 typedef struct {
+    /* 0x00 */ s16 count;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ s16 w;
+    /* 0x0A */ s16 h;
+    /* 0x0C */ s16 r;
+    /* 0x0E */ s16 g;
+    /* 0x10 */ s16 b;
+    /* 0x12 */ u16 priority;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u32 flags;
+} Unkstruct_801724CC; // size = 0x1A
+
+typedef struct {
     /* 0x0 */ s16 animSet;
     /* 0x2 */ s16 unk2; // Entity::unk5A
     /* 0x4 */ u16 palette;
@@ -131,6 +146,7 @@ typedef struct Unkstruct_801C7954 {
     /* 0x0C */ u16 x3;
     /* 0x0E */ u16 x2;
 } Unkstruct_801C7954; // size = 0x10
+
 
 typedef struct {
     u8 unk0[8];
