@@ -39,6 +39,10 @@ extern s32 D_800973FC;
 extern s32 D_80097420[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
+extern s32 D_us_80172C04[];
+extern u16 D_us_80172D28;
+extern u16 D_us_80172D2A;
+extern u32 D_us_801792D0;
 
 // this may actually be a multi dimensional array instead of a struct
 typedef struct {
@@ -49,7 +53,7 @@ typedef struct {
 extern UnkFaerieStruct D_us_80172368[];
 extern AnimationFrame* D_us_80172B14[];
 
-void func_us_80173994(Entity*, s32);
+void SetAnimationFrame(Entity*, s32);
 void func_us_801739C8(Entity*);
 void func_us_80173D60(Entity*);
 
@@ -1062,7 +1066,209 @@ void func_us_80176B6C(Entity* self) {
     ServantUpdateAnim(self, 0, D_us_80172B14);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176C98);
+void func_us_80176C98(Entity* self) {
+    s32 rnd;
+    s32 i;
+
+    g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
+    if (D_us_80179320 != 0) {
+        self->zPriority = PLAYER.zPriority - 2;
+        s_zPriority = self->zPriority;
+    }
+    if (IsMovementAllowed(1)) {
+        if (self->step < 2) {
+            self->entityId = 0xD1;
+            self->step = 0;
+            return;
+        }
+
+        if (self->step < 9) {
+            self->step = 9;
+        }
+    }
+    if (PLAYER.step_s == 0) {
+        s_TargetLocOffset_calc = -6;
+        if (PLAYER.facingLeft) {
+            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+        }
+        s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationY = PLAYER.posY.i.hi - 12;
+    } else {
+        s_TargetLocOffset_calc = 16;
+        if (PLAYER.facingLeft) {
+            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+        }
+        s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationY = PLAYER.posY.i.hi - 8;
+    }
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        SetAnimationFrame(self, 0xE);
+        break;
+    case 1:
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 3);
+        self->velocityX = (rcos(s_AllowedAngle) << 3);
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 2) {
+            if (PLAYER.step_s == 0) {
+                self->facingLeft = PLAYER.facingLeft;
+            } else {
+                self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+            }
+            SetAnimationFrame(self, 0x18);
+            self->ext.faerie.frameCounter = 0;
+
+            self->flags |= FLAG_POS_PLAYER_LOCKED;
+            self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+
+#ifdef VERSION_PSP
+            if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
+                D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
+                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                self->step = 5;
+            } else if (s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
+                self->step = 5;
+            } else if (s_FaerieStats.level > 9 || g_Timer & 1 ||
+                       s_FaerieStats.level > 4 || (g_Timer & 7)) {
+                self->step = 5;
+            } else {
+                self->ext.faerie.unkB4 = 0;
+                if (s_FaerieStats.level < 16) {
+                    self->ext.faerie.frameCounter = 0x708;
+                } else {
+                    self->ext.faerie.frameCounter =
+                        0x7a8 - (s_FaerieStats.level << 0x4);
+                }
+                self->step++;
+            }
+#else
+            if ((*((FgLayer32*)&D_8003C708)).flags &
+                    (LAYOUT_RECT_PARAMS_UNKNOWN_20 |
+                     LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
+                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                self->step = 5;
+            } else if (s_ServantId != FAM_ACTIVE_YOUSEI ||
+                       s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
+                self->step = 5;
+            } else if (s_FaerieStats.level < 0x5A && rand() % 8) {
+                self->step = 5;
+            } else {
+                self->ext.faerie.unkB4 = 0;
+                if (PLAYER.step_s == 4) {
+                    self->ext.faerie.frameCounter = D_us_80172D2A;
+                } else {
+                    self->ext.faerie.frameCounter = D_us_80172D28;
+                }
+                self->step++;
+            }
+#endif
+        }
+        break;
+    case 2:
+        --self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter < 0) {
+            self->ext.faerie.frameCounter = 0;
+            if (g_api.func_800F27F4(0)) {
+                SetAnimationFrame(self, 0x19);
+                self->ext.faerie.unkB4 = 1;
+                self->step++;
+            }
+        }
+        break;
+    case 3:
+        ++self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter > 0x420) {
+            SetAnimationFrame(self, 0x1A);
+            self->ext.faerie.frameCounter = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        ++self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter > 0x15E0) {
+            SetAnimationFrame(self, 0x19);
+            self->ext.faerie.frameCounter = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        ++self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter > 0x500) {
+            SetAnimationFrame(self, 0x18);
+            self->ext.faerie.frameCounter = 0;
+            self->ext.faerie.unkB4 = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        self->ext.faerie.frameCounter = (rand() % 0x800) + 0x400;
+        self->step++;
+        /* fallthrough */
+    case 7:
+        --self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter < 0) {
+            self->ext.faerie.frameCounter = (rand() % 0x80) + 0x80;
+            SetAnimationFrame(self, 0x19);
+            self->step++;
+        }
+        break;
+    case 8:
+        --self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter < 0) {
+            SetAnimationFrame(self, 0x18);
+            self->step = 6;
+        }
+        break;
+    case 9:
+        if (self->ext.faerie.unkB4) {
+            g_api.func_800F27F4(1);
+        }
+        self->flags &= ~FLAG_POS_PLAYER_LOCKED;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        SetAnimationFrame(self, 0x1B);
+        self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
+        self->velocityY = FIX(1);
+        for (rnd = rand() % 0x100, i = 0; true; i++) {
+            if (rnd <= D_us_80172C04[i * 2]) {
+                g_api.PlaySfx(D_us_80172C04[i * 2 + 1]);
+                break;
+            }
+        }
+
+        self->step++;
+        break;
+    case 10:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY -= FIX(0.03125);
+
+        if (D_us_801792D0 == -1) {
+            self->entityId = 0xD1;
+            self->step = 0;
+            return;
+        }
+        break;
+    }
+    ProcessEvent(self, false);
+    func_us_80173D60(self);
+#ifdef VERSION_PSP
+    if ((self->step == 3 || self->step == 4) && *((s32*)0x9234CB8) < 0x200) {
+        *((s32*)0x9234CB8) = 0x200;
+    }
+#endif
+    func_us_801739C8(self);
+    D_us_801792D0 = ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
 

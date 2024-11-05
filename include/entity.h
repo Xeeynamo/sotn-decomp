@@ -624,6 +624,8 @@ typedef struct {
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s16 pad98[4];
     /* 0xA0 */ s16 unkCounterA0;
+    /* 0xA2 */ s16 padA2[9];
+    /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
 
 struct draculaPrimitive;
