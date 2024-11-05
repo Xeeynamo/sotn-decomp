@@ -1998,12 +1998,18 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 spawned;
     /* 0x88 */ struct Entity* parent;
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 unk8E;
     /* 0x90 */ s32 isThrown;
 } ET_OuijaTableContents;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_FleaMan;
 
 // ====== RIC ENTITIES ======
 
@@ -2187,6 +2193,7 @@ typedef union { // offset=0x7C
     ET_MedusaUnk1A medusaUnk1A;
     ET_OuijaTable ouijaTable;
     ET_OuijaTableContents ouijaTableContents;
+    ET_FleaMan fleaMan;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

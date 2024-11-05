@@ -2,6 +2,7 @@ files:
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen
+    splat_config_path: config/splat.us.stcen.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -19,6 +20,7 @@ files:
   - target: disks/us/ST/DRE/DRE.BIN
     asset_path: assets/st/dre
     src_path: src/st/dre
+    splat_config_path: config/splat.us.stdre.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -36,6 +38,7 @@ files:
   - target: disks/us/ST/MAD/MAD.BIN
     asset_path: assets/st/mad
     src_path: src/st/mad
+    splat_config_path: config/splat.us.stmad.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -48,6 +51,7 @@ files:
   - target: disks/us/ST/NO3/NO3.BIN
     asset_path: assets/st/no3
     src_path: src/st/no3
+    splat_config_path: config/splat.us.stno3.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -65,6 +69,7 @@ files:
   - target: disks/us/ST/NP3/NP3.BIN
     asset_path: assets/st/np3
     src_path: src/st/np3
+    splat_config_path: config/splat.us.stnp3.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -80,6 +85,7 @@ files:
   - target: disks/us/ST/NZ0/NZ0.BIN
     asset_path: assets/st/nz0
     src_path: src/st/nz0
+    splat_config_path: config/splat.us.stnz0.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -97,6 +103,7 @@ files:
   - target: disks/us/ST/ST0/ST0.BIN
     asset_path: assets/st/st0
     src_path: src/st/st0
+    splat_config_path: config/splat.us.stst0.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -114,6 +121,7 @@ files:
   - target: disks/us/ST/WRP/WRP.BIN
     asset_path: assets/st/wrp
     src_path: src/st/wrp
+    splat_config_path: config/splat.us.stwrp.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -129,6 +137,7 @@ files:
   - target: disks/us/ST/RWRP/RWRP.BIN
     asset_path: assets/st/rwrp
     src_path: src/st/rwrp
+    splat_config_path: config/splat.us.strwrp.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -144,6 +153,7 @@ files:
   - target: disks/us/BOSS/MAR/MAR.BIN
     asset_path: assets/boss/mar
     src_path: src/boss/mar
+    splat_config_path: config/splat.us.bomar.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -162,6 +172,7 @@ files:
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
+    splat_config_path: config/splat.us.borbo3.yaml
     segments:
       - start: 0
         vram: 0x80180000
@@ -179,6 +190,7 @@ files:
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
+    splat_config_path: config/splat.us.weapon.yaml
     segments:
       - start: 0x04000
         vram: 0x8017A000

@@ -34,7 +34,8 @@ typedef enum EntityIDs {
     /* 0x3C */ E_SLINGER_PIECES,
     /* 0x48 */ E_AXE_KNIGHT_AXE = 0x48,
     /* 0x49 */ E_WARG_EXP_OPAQUE,
-    /* 0x4B */ E_OUIJA_TABLE_COMPONENT = 0x4B,
+    /* 0x4A */ E_OUIJA_TABLE = 0x4A,
+    /* 0x4B */ E_OUIJA_TABLE_COMPONENT,
     /* 0x4D */ E_SKELETON = 0x4D,
     /* 0x4E */ E_SKELETON_THROWN_BONE,
     /* 0x4F */ E_SKELETON_PIECES,
@@ -53,6 +54,13 @@ extern u16 g_EInitAxeKnightAxe[];
 extern u16 g_EInitSkeleton[];
 extern u16 g_EInitSkeletonPieces[];
 extern u16 g_EInitSkeletonBone[];
+
+// Ouija Table
+extern u16 g_EInitOuijaTable[];
+extern u16 g_EInitOuijaTableComponent[];
+
+// Flea Man
+extern u16 g_EInitFleaMan[];
 
 // Clock room
 extern u16 g_Statues[];
