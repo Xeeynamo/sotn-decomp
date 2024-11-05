@@ -6,6 +6,11 @@
 #include <stage.h>
 
 #define LOAD_ASSET(path, dst) FileReadToBuf(path, dst, 0, sizeof(dst))
+#define LOAD_ASSET_GFX(bpath, dst) LOAD_ASSET(bpath "/" #dst ".gfxbin", dst)
+#define LOAD_ASSET_PAL(bpath, dst) LOAD_ASSET(bpath "/" #dst ".palbin", dst)
+
+extern u8 stage_placeholder[1444];
+extern u8 stage_title_jp[836];
 
 // load a rooms.layers.json file and all its dependencies to the returned
 // pre-allocated RoomDef array. Returns NULL in case of a failure.

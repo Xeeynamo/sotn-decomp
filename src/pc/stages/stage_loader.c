@@ -5,6 +5,10 @@
 #include <cJSON/cJSON.h>
 #include "stage_loader.h"
 
+// this is shared across all the overlays
+u8 stage_placeholder[1444];
+u8 stage_title_jp[836];
+
 // Use a pre-allocated pool of bytes instead of relying on malloc. This is done
 // because the JSON size is unknown and because it is easier to not take track
 // of previously allocated memory.

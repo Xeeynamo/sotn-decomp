@@ -6,15 +6,15 @@
 #include "stage_loader.h"
 #include "../st/cen/cen.h"
 
-u16 D_8018658C[0x80];
-u16 D_8018678C[0x80];
-u16 D_8018698C[0x10];
-u16 D_801869AC[0x20];
-u8 D_80183A40[4400];
-u8 D_80184B70[3264];
-u8 D_80181658[836];
-u8 D_8018199C[8356];
-u8 D_80185830[3420];
+u8 e_elevator_cen_g[3420];
+u8 e_maria_cen_g0[4400];
+u8 e_maria_cen_g1[3264];
+u8 D_8018658C[256];
+u8 D_8018668C[256];
+u8 D_8018678C[256];
+u8 D_8018688C[256];
+u8 e_elevator_cen_p[64];
+u8 e_maria_cen_p[32];
 
 extern Overlay OVL_EXPORT(Overlay);
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
@@ -25,15 +25,17 @@ extern LayoutEntity** g_pStObjLayoutHorizontal;
 extern LayoutEntity** g_pStObjLayoutVertical;
 void InitStageCEN(Overlay* o) {
     LoadReset();
-    LOAD_ASSET("assets/st/cen/D_8018658C.bin", D_8018658C);
-    LOAD_ASSET("assets/st/cen/D_8018678C.bin", D_8018678C);
-    LOAD_ASSET("assets/st/cen/D_8018698C.bin", D_8018698C);
-    LOAD_ASSET("assets/st/cen/D_801869AC.bin", D_801869AC);
-    LOAD_ASSET("assets/st/cen/D_80183A40.bin", D_80183A40);
-    LOAD_ASSET("assets/st/cen/D_80184B70.bin", D_80184B70);
-    LOAD_ASSET("assets/st/cen/D_80181658.bin", D_80181658);
-    LOAD_ASSET("assets/st/cen/D_8018199C.bin", D_8018199C);
-    LOAD_ASSET("assets/st/cen/D_80185830.bin", D_80185830);
+    LOAD_ASSET_GFX("assets/st/wrp", stage_placeholder);
+    LOAD_ASSET_GFX("assets/st/wrp", stage_title_jp);
+    LOAD_ASSET_GFX("assets/st/cen", e_elevator_cen_g);
+    LOAD_ASSET_GFX("assets/st/cen", e_maria_cen_g0);
+    LOAD_ASSET_GFX("assets/st/cen", e_maria_cen_g1);
+    LOAD_ASSET_PAL("assets/st/cen", D_8018658C);
+    LOAD_ASSET_PAL("assets/st/cen", D_8018668C);
+    LOAD_ASSET_PAL("assets/st/cen", D_8018678C);
+    LOAD_ASSET_PAL("assets/st/cen", D_8018688C);
+    LOAD_ASSET_PAL("assets/st/cen", e_elevator_cen_p);
+    LOAD_ASSET_PAL("assets/st/cen", e_maria_cen_p);
     memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
