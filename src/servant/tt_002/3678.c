@@ -53,7 +53,7 @@ typedef struct {
 extern UnkFaerieStruct D_us_80172368[];
 extern AnimationFrame* D_us_80172B14[];
 
-void func_us_80173994(Entity*, s32);
+void SetAnimationFrame(Entity*, s32);
 void func_us_801739C8(Entity*);
 void func_us_80173D60(Entity*);
 
@@ -1104,7 +1104,7 @@ void func_us_80176C98(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_801739D0(self);
-        func_us_80173994(self, 0xE);
+        SetAnimationFrame(self, 0xE);
         break;
     case 1:
         s_AngleToTarget =
@@ -1125,7 +1125,7 @@ void func_us_80176C98(Entity* self) {
             } else {
                 self->facingLeft = PLAYER.facingLeft ? 0 : 1;
             }
-            func_us_80173994(self, 0x18);
+            SetAnimationFrame(self, 0x18);
             self->ext.faerie.frameCounter = 0;
 
             self->flags |= FLAG_POS_PLAYER_LOCKED;
@@ -1179,7 +1179,7 @@ void func_us_80176C98(Entity* self) {
         if (self->ext.faerie.frameCounter < 0) {
             self->ext.faerie.frameCounter = 0;
             if (g_api.func_800F27F4(0)) {
-                func_us_80173994(self, 0x19);
+                SetAnimationFrame(self, 0x19);
                 self->ext.faerie.unkB4 = 1;
                 self->step++;
             }
@@ -1188,7 +1188,7 @@ void func_us_80176C98(Entity* self) {
     case 3:
         ++self->ext.faerie.frameCounter;
         if (self->ext.faerie.frameCounter > 0x420) {
-            func_us_80173994(self, 0x1A);
+            SetAnimationFrame(self, 0x1A);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1196,7 +1196,7 @@ void func_us_80176C98(Entity* self) {
     case 4:
         ++self->ext.faerie.frameCounter;
         if (self->ext.faerie.frameCounter > 0x15E0) {
-            func_us_80173994(self, 0x19);
+            SetAnimationFrame(self, 0x19);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1204,7 +1204,7 @@ void func_us_80176C98(Entity* self) {
     case 5:
         ++self->ext.faerie.frameCounter;
         if (self->ext.faerie.frameCounter > 0x500) {
-            func_us_80173994(self, 0x18);
+            SetAnimationFrame(self, 0x18);
             self->ext.faerie.frameCounter = 0;
             self->ext.faerie.unkB4 = 0;
             self->step++;
@@ -1218,14 +1218,14 @@ void func_us_80176C98(Entity* self) {
         --self->ext.faerie.frameCounter;
         if (self->ext.faerie.frameCounter < 0) {
             self->ext.faerie.frameCounter = (rand() % 0x80) + 0x80;
-            func_us_80173994(self, 0x19);
+            SetAnimationFrame(self, 0x19);
             self->step++;
         }
         break;
     case 8:
         --self->ext.faerie.frameCounter;
         if (self->ext.faerie.frameCounter < 0) {
-            func_us_80173994(self, 0x18);
+            SetAnimationFrame(self, 0x18);
             self->step = 6;
         }
         break;
@@ -1235,7 +1235,7 @@ void func_us_80176C98(Entity* self) {
         }
         self->flags &= ~FLAG_POS_PLAYER_LOCKED;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-        func_us_80173994(self, 0x1B);
+        SetAnimationFrame(self, 0x1B);
         self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
         self->velocityY = FIX(1);
         for (rnd = rand() % 0x100, i = 0; true; i++) {
