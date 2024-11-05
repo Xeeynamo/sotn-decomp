@@ -1244,7 +1244,7 @@ void func_us_80177F84(Entity* self) {
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
 
         while (true) {
-            fakePrim->drawMode = unkStruct->unk14 + 8;
+            fakePrim->drawMode = unkStruct->drawMode + DRAW_HIDE;
             fakePrim->priority = unkStruct->priority + PLAYER.zPriority;
             if (fakePrim->next == NULL) {
                 fakePrim->w = 0;

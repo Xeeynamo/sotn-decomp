@@ -123,7 +123,7 @@ typedef struct {
     /* 0x0E */ s16 g;
     /* 0x10 */ s16 b;
     /* 0x12 */ u16 priority;
-    /* 0x14 */ s16 unk14;
+    /* 0x14 */ s16 drawMode;
     /* 0x16 */ u32 flags;
 } Unkstruct_801724CC; // size = 0x1A
 
