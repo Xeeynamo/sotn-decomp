@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
-#include <servant.h>
+#include "faerie.h"
 #include "sfx.h"
 #include "items.h"
 
@@ -40,16 +40,11 @@ extern s32 D_80097420[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
 
-typedef struct {
-    s16 animIndex;
-    s16 zPriorityFlag;
-} FaerieAnimIndex;
-
 extern FaerieAnimIndex D_us_80172368[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
 
 void func_us_80173994(Entity*, s32);
-void func_us_801739C8(Entity*);
+void unused_39C8(Entity*);
 void func_us_80173D60(Entity*);
 
 static void ServantInit(InitializeMode mode);
@@ -88,7 +83,7 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     }
 }
 
-void func_us_801739C8(Entity* arg0) {}
+void unused_39C8(Entity* arg0) {}
 
 void func_us_801739D0(Entity* arg0) {
     if (!arg0->ext.faerie.unk7E) {
@@ -429,7 +424,7 @@ void func_us_80174998(Entity* self) {
     if (!g_CutsceneHasControl) {
         func_us_80173D60(self);
     }
-    func_us_801739C8(self);
+    unused_39C8(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
