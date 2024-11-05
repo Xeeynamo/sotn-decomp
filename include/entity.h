@@ -624,7 +624,10 @@ typedef struct {
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s16 pad98[4];
     /* 0xA0 */ s16 unkCounterA0;
-    /* 0xA2 */ s16 padA2[9];
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s16* unkA4;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 padAA[5];
     /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
 
