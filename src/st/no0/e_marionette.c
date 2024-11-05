@@ -8,7 +8,7 @@ u8 func_us_801D6254(s16 arg0[]) {
     u8 ret = 0;
     s32 i;
     s16 posX;
-    s16 posX2; // Possible !FAKE here
+    s16 posX2;
     s16 posY;
     s16 posY2;
 
@@ -24,14 +24,14 @@ u8 func_us_801D6254(s16 arg0[]) {
         xDir = -*arg0;
     }
 
-    posX = posX2; // Possible !FAKE here
+    posX = posX2;
     g_api.CheckCollision(posX, posY, &collider, 0);
     if (collider.effects & EFFECT_SOLID) {
         g_CurrentEntity->posY.i.hi += collider.unk18;
         g_CurrentEntity->velocityY = 0;
         ret |= 1;
     }
-    posX = posX2; // Possible !FAKE here
+    posX = posX2;
     g_api.CheckCollision(posX, posY2, &collider, 0);
     if (collider.effects & EFFECT_SOLID) {
         g_CurrentEntity->posY.i.hi += collider.unk20;
