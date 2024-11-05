@@ -1,6 +1,6 @@
 RBO3_pStObjLayoutHorizontal = 0x801801EC;
 RBO3_pStObjLayoutVertical = 0x801802C0;
-RBO3_EntityUpdates = 0x80180390;
+RBO3_EntityUpdates = 0x80180394;
 g_EInitBreakable = 0x80180414;
 g_EInitObtainable = 0x80180420;
 g_EInitParticle = 0x8018042C;
@@ -140,4 +140,8 @@ UnkPolyFunc2 = 0x8019E960;
 UnkPolyFunc0 = 0x8019E9B4;
 PrimDecreaseBrightness = 0x8019E9E0;
 EntityLifeUpSpawn = 0x8019EA44;
+g_LayoutObjHorizontal = 0x8019F978;
+g_LayoutObjVertical = 0x8019F97C;
+g_LayoutObjPosHorizontal = 0x8019F980;
+g_LayoutObjPosVertical = 0x8019F984;
 g_ItemIconSlots = 0x801A05F0;
