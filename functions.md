@@ -729,7 +729,7 @@
 | tt_000 | UpdateServantDefault                |     1199 |        126 | Yes    |                                 |       |
 | dra    | func_psp_090E31F8                   |     1204 |        134 |        |                                 |       |
 | dra    | HandleNowLoading                    |     1204 |        196 |        |                                 |       |
-| wrp    | EntityRedDoor                       |     1248 |        112 | Yes    | https://decomp.me/scratch/lxAtb | 0.997 |
+| wrp    | WRP_EntityRedDoor                   |     1248 |        112 | Yes    |                                 |       |
 | dra    | func_psp_0910BE88                   |     1306 |        206 | Yes    |                                 |       |
 | dra    | func_psp_09114A38                   |     1517 |        244 |        |                                 |       |
 | dra    | RenderEntities                      |     1539 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
