@@ -163,7 +163,7 @@ void func_us_801D9264(Entity* self) {
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
-            colRet = UnkCollisionFunc2(D_us_8018234C);
+            colRet = UnkCollisionFunc2(&D_us_8018234C);
             if (colRet & 0x80) {
                 self->facingLeft ^= 1;
             }
@@ -510,7 +510,8 @@ void func_us_801D9264(Entity* self) {
             posX = Random() & 0x3F;
             posY = self->ext.et_801D9264.y;
             if (!(g_Timer & 0xF)) {
-                newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START], &g_Entities[TOTAL_ENTITY_COUNT]);
+                newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
+                                        &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
@@ -518,7 +519,8 @@ void func_us_801D9264(Entity* self) {
                     newEntity->params = 3;
                 }
             }
-            newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START], &g_Entities[TOTAL_ENTITY_COUNT]);
+            newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
+                                    &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_ID_46, newEntity);
                 newEntity->posX.i.hi = (self->posX.i.hi - 0x20) + posX;
