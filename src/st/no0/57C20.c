@@ -146,7 +146,7 @@ void func_us_801D9264(Entity* self) {
         case 3:
             AnimateEntity(&D_us_801823B8, self);
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
-                PlaySfxPositional(0x68C);
+                PlaySfxPositional(SFX_WING_FLAP_A);
             }
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             posY -= self->ext.et_801D9264.y;
@@ -163,7 +163,7 @@ void func_us_801D9264(Entity* self) {
         case 4:
             AnimateEntity(&D_us_801823B8, self);
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
-                PlaySfxPositional(0x68C);
+                PlaySfxPositional(SFX_WING_FLAP_A);
             }
             colRet = UnkCollisionFunc2(&D_us_8018234C);
             if (colRet & 0x80) {
@@ -186,7 +186,7 @@ void func_us_801D9264(Entity* self) {
         case 5:
             self->animCurFrame = 6;
             if (UnkCollisionFunc3(&D_us_80182354) & 1) {
-                PlaySfxPositional(0x655);
+                PlaySfxPositional(SFX_EXPLODE_B);
                 SetSubStep(6);
             }
             break;
@@ -225,7 +225,7 @@ void func_us_801D9264(Entity* self) {
         case 2:
             self->animCurFrame = 6;
             if (UnkCollisionFunc3(&D_us_80182354) & 1) {
-                PlaySfxPositional(0x655);
+                PlaySfxPositional(SFX_EXPLODE_B);
                 SetSubStep(3);
             }
             break;
@@ -278,7 +278,7 @@ void func_us_801D9264(Entity* self) {
                 angle = -0x280;
             }
             if (GetDistanceToPlayerY() < 0x60) {
-                PlaySfxPositional(0x690);
+                PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x44, self, newEntity);
@@ -301,7 +301,7 @@ void func_us_801D9264(Entity* self) {
         }
         if ((GetDistanceToPlayerY() < 0x60) && (self->animCurFrame == 0x24) &&
             (self->animFrameDuration == 0)) {
-            PlaySfxPositional(0x690);
+            PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
                 if (newEntity != NULL) {
@@ -325,7 +325,7 @@ void func_us_801D9264(Entity* self) {
         if ((GetDistanceToPlayerY() < 0x60) &&
             (self->animFrameIdx == 0x9 && self->animFrameDuration == 0)) {
             PlaySfxPositional(0x758);
-            PlaySfxPositional(0x684);
+            PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x45, self, newEntity);
@@ -366,7 +366,7 @@ void func_us_801D9264(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-            if ((u16)self->animCurFrame - 9 < 0xAU) {
+            if (self->animCurFrame > 10 && self->animCurFrame < 15) {
                 self->animCurFrame = 0x14;
             }
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
@@ -506,7 +506,7 @@ void func_us_801D9264(Entity* self) {
             /* fallthrough */
         case 2:
             if (!(g_Timer & 7)) {
-                PlaySfxPositional(0x65B);
+                PlaySfxPositional(SFX_FM_EXPLODE_B);
             }
             prim = self->ext.et_801D9264.unkA4;
             posX = Random() & 0x3F;
@@ -549,29 +549,9 @@ void func_us_801D9264(Entity* self) {
         }
         break;
     case 255:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params == 0) {
-                self->animCurFrame++;
-                self->params |= 1;
-            } else {
-                break;
-            }
-
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+        #include "../pad2_anim_debug.h"
     }
-    if ((u16)self->animCurFrame - 0xBU < 4) {
+    if (self->animCurFrame > 10 && self->animCurFrame < 15) {
         LOH(self->hitboxOffX) = -0x12;
         LOH(self->hitboxOffY) = 0x11;
         self->hitboxWidth = 0x16;
