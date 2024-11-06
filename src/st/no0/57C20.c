@@ -549,7 +549,7 @@ void func_us_801D9264(Entity* self) {
         }
         break;
     case 255:
-        #include "../pad2_anim_debug.h"
+#include "../pad2_anim_debug.h"
     }
     if (self->animCurFrame > 10 && self->animCurFrame < 15) {
         LOH(self->hitboxOffX) = -0x12;
