@@ -2042,7 +2042,7 @@ typedef struct {
     /* 0x84 */ s16 offsets[26];
 } ET_MedusaUnk1A;
 
-typedef union {
+typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
     ET_TimerOnly timer;

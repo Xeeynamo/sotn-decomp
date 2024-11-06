@@ -73,11 +73,9 @@ void func_us_801D9264(Entity* self) {
     DRAWENV drawEnv;
     DR_ENV* dr_env;
     Entity* newEntity;
-    
     Primitive* prim;
     s16 angle;
     s32 i;
-    
     s32 posX;
     s32 posY;
     s32 colRet;
@@ -113,7 +111,8 @@ void func_us_801D9264(Entity* self) {
         if (self->ext.et_801D9264.timer == 0x20) {
             self->facingLeft ^= 1;
         }
-        if ((self->facingLeft == ((GetSideToPlayer() & 1) ^ 1)) && (GetDistanceToPlayerX() < 0x48)) {
+        if ((self->facingLeft == ((GetSideToPlayer() & 1) ^ 1)) &&
+            (GetDistanceToPlayerX() < 0x48)) {
             SetStep(5);
         }
         if (!--self->ext.et_801D9264.timer) {
@@ -235,7 +234,7 @@ void func_us_801D9264(Entity* self) {
                     self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 }
                 SetSubStep(0);
-                
+
                 if (self->ext.et_801D9264.pad8 == 1) {
                     SetStep(6);
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -377,11 +376,11 @@ void func_us_801D9264(Entity* self) {
             self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             dr_env = g_api.func_800EDB08((POLY_GT4*) prim);
-            if (dr_env == NULL){
+            if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;
             }
-            
+
             prim->type = PRIM_ENV;
             prim->priority = 0xF;
             if (self->params) {
@@ -389,12 +388,12 @@ void func_us_801D9264(Entity* self) {
             }
             prim->drawMode = DRAW_DEFAULT;
             drawEnv = g_CurrentBuffer->draw;
-            
+
             drawEnv.isbg = 1;
             drawEnv.r0 = drawEnv.g0 = drawEnv.b0 = 0;
 
             posY = self->params ? 0x180 : 0x100;
-            
+
             clipRect.x = 0;
             clipRect.y = posY;
             clipRect.w = 0x80;
@@ -403,19 +402,19 @@ void func_us_801D9264(Entity* self) {
             drawEnv.ofs[0] = 0;
             drawEnv.ofs[1] = 0x100;
             SetDrawEnv(dr_env, &drawEnv);
-            
+
             prim = prim->next;
             if (g_api.func_800EDB08((POLY_GT4*) prim) == NULL) {
                 DestroyEntity(self);
                 return;
             }
             prim->type = PRIM_ENV;
-            
+
             prim->priority = 0x12;
             if (self->params) {
                 prim->priority += 4;
             }
-            
+
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
             self->ext.et_801D9264.pad28 = prim;
@@ -434,7 +433,7 @@ void func_us_801D9264(Entity* self) {
             prim->y0 = prim->y1 = temp_v0_15 - 0x48;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK02;
-            
+
             prim = prim->next;
             prim->type = PRIM_TILE;
             posY = (self->params != 0) << 7;
@@ -442,31 +441,31 @@ void func_us_801D9264(Entity* self) {
             prim->y0 = posY;
             prim->v0 = prim->u0 = 0x80;
             prim->r0 = prim->g0 = prim->b0 = 0;
-            
+
             prim->priority = 0x11;
             if (self->params) {
                 prim->priority += 4;
             }
-            
+
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-            
+
             prim = prim->next;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            
+
             self->zPriority = 0x10;
-            
+
             if (self->params) {
                 self->zPriority += 4;
             }
-            
+
             posY = self->params ? 0x100 : 0x80;
-            
+
             self->posX.i.hi = 0x20;
             self->posY.i.hi = posY - 0x28;
-            
+
             self->palette = *D_us_80180BDE;
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
             self->step_s++;
@@ -475,14 +474,14 @@ void func_us_801D9264(Entity* self) {
             prim = self->ext.prim;
             self->animCurFrame = 0;
             prim->type = PRIM_ENV;
-            
+
             dr_env = LOW(prim->r1);
             drawEnv = g_CurrentBuffer->draw;
             drawEnv.isbg = 0;
             drawEnv.dtd = 0;
-            
+
             posY = self->params ? 0x180 : 0x100;
-            
+
             clipRect.x = 0;
             clipRect.y = posY;
             clipRect.w = 0x80;
@@ -491,12 +490,12 @@ void func_us_801D9264(Entity* self) {
             drawEnv.ofs[0] = 0;
             drawEnv.ofs[1] = 0x100;
             SetDrawEnv(dr_env, &drawEnv);
-            
+
             prim->priority = 0xF;
             if (self->params) {
                 prim->priority += 4;
             }
-            
+
             prim->drawMode = DRAW_DEFAULT;
             self->ext.et_801D9264.y = 0x28;
             self->ext.et_801D9264.timer = 0x10;
@@ -510,7 +509,7 @@ void func_us_801D9264(Entity* self) {
             posX = Random() & 0x3F;
             posY = self->ext.et_801D9264.y;
             if (!(g_Timer & 0xF)) {
-                newEntity = AllocEntity(&D_800762D8, (Entity*) &g_EvHwCardEnd);
+                newEntity = AllocEntity(&D_800762D8, (Entity*)&g_EvHwCardEnd);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(2, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
@@ -518,7 +517,7 @@ void func_us_801D9264(Entity* self) {
                     newEntity->params = 3;
                 }
             }
-            newEntity = AllocEntity(&D_800762D8, (Entity*) &g_EvHwCardEnd);
+            newEntity = AllocEntity(&D_800762D8, (Entity*)&g_EvHwCardEnd);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x46, newEntity);
                 newEntity->posX.i.hi = (self->posX.i.hi - 0x20) + posX;
@@ -554,7 +553,7 @@ void func_us_801D9264(Entity* self) {
                 self->params |= 1;
             } else {
                 break;
-            } 
+            }
 
         } else {
             self->params = 0;
@@ -574,7 +573,6 @@ void func_us_801D9264(Entity* self) {
         LOH(self->hitboxOffY) = 0x11;
         self->hitboxWidth = 0x16;
         self->hitboxHeight = 0x16;
-        
     } else {
         LOH(self->hitboxOffX) = -1;
         LOH(self->hitboxOffY) = 1;
