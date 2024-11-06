@@ -281,7 +281,7 @@ void func_us_801D9264(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x44, self, newEntity);
+                    CreateEntityFromEntity(E_ID_44, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -305,7 +305,7 @@ void func_us_801D9264(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x44, self, newEntity);
+                    CreateEntityFromEntity(E_ID_44, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -328,7 +328,7 @@ void func_us_801D9264(Entity* self) {
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x45, self, newEntity);
+                CreateEntityFromEntity(E_ID_45, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->zPriority = self->zPriority + 1;
                 if (self->facingLeft) {
@@ -514,7 +514,7 @@ void func_us_801D9264(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 newEntity = AllocEntity(&D_800762D8, (Entity*)&g_EvHwCardEnd);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(2, newEntity);
+                    CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
                     newEntity->posY.i.hi = prim->y2 + posY - 0x30;
                     newEntity->params = 3;
@@ -522,7 +522,7 @@ void func_us_801D9264(Entity* self) {
             }
             newEntity = AllocEntity(&D_800762D8, (Entity*)&g_EvHwCardEnd);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x46, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_46, newEntity);
                 newEntity->posX.i.hi = (self->posX.i.hi - 0x20) + posX;
                 newEntity->posY.i.hi = (self->posY.i.hi + posY) + 4;
                 newEntity->params = 1;
