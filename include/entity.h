@@ -2013,6 +2013,24 @@ typedef struct {
     /* 0x7C */ s16 unk7C;
 } ET_FleaMan;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 pad6;
+    /* 0x84 */ u8 pad8;
+    /* 0x85 */ u8 pad9;
+    /* 0x86 */ u8 padA;
+    /* 0x87 */ u8 padB;
+    /* 0x88 */ u32 padC;
+    /* 0x8C */ u32 pad10;
+    /* 0x90 */ u32 pad14;
+    /* 0x94 */ u32 pad18;
+    /* 0x98 */ u32 pad1C;
+    /* 0x9C */ s32 y;
+    /* 0xA0 */ s32 pad24;
+    /* 0xA4 */ struct Primitive* pad28;
+} ET_801D9264;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2024,7 +2042,7 @@ typedef struct {
     /* 0x84 */ s16 offsets[26];
 } ET_MedusaUnk1A;
 
-typedef union { // offset=0x7C
+typedef union {
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
     ET_TimerOnly timer;
@@ -2196,6 +2214,7 @@ typedef union { // offset=0x7C
     ET_OuijaTable ouijaTable;
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
+    ET_801D9264 et_801D9264;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
