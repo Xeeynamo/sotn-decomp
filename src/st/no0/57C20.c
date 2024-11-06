@@ -366,7 +366,7 @@ void func_us_801D9264(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-            if (self->animCurFrame > 10 && self->animCurFrame < 15) {
+            if (self->animCurFrame > 8 && self->animCurFrame < 19) {
                 self->animCurFrame = 0x14;
             }
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
