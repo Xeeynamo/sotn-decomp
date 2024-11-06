@@ -196,6 +196,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 
 void InitStageDummy(Overlay* o);
 void InitStageCEN(Overlay* o);
+void InitStageNZ0(Overlay* o);
 void InitStageWRP(Overlay* o);
 void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
@@ -415,6 +416,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case STAGE_CEN:
             InitStageCEN(&g_api.o);
+            break;
+        case STAGE_NZ0:
+            InitStageNZ0(&g_api.o);
             break;
         case STAGE_WRP:
             InitStageWRP(&g_api.o);

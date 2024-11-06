@@ -44,6 +44,10 @@ extern s32 D_us_80172C04[];
 extern u16 D_us_80172D28;
 extern u16 D_us_80172D2A;
 extern u32 D_us_801792D0;
+extern s32 D_us_801792EC;
+
+extern s32 D_us_80172C3C[];
+extern s32 D_us_80172C64[];
 
 // this may actually be a multi dimensional array instead of a struct
 typedef struct {
@@ -123,7 +127,7 @@ void func_us_801739D0(Entity* arg0) {
     } else {
         switch (arg0->entityId) {
         case ENTITY_ID_SERVANT:
-            arg0->ext.faerie.unk96 = 0x78;
+            arg0->ext.faerie.timer = 120;
             // fallthrough
         case 0xD2:
         case 0xD3:
@@ -1025,7 +1029,146 @@ void func_us_80176178(Entity* self) {
     ServantUpdateAnim(self, NULL, D_us_80172B14);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176504);
+void func_us_80176504(Entity* arg0) {
+    s16 rnd;
+    s32 i;
+
+    g_api.GetServantStats(arg0, 0, 0, &s_FaerieStats);
+    if (D_us_80179320) {
+        arg0->zPriority = PLAYER.zPriority - 2;
+        s_zPriority = arg0->zPriority;
+    }
+    s_TargetLocOffset_calc = -0x18;
+    if (!PLAYER.facingLeft) {
+        s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+    }
+    s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+    s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x20;
+    s_AngleToTarget = arg0->ext.faerie.randomMovementAngle;
+    arg0->ext.faerie.randomMovementAngle += 0x10;
+    arg0->ext.faerie.randomMovementAngle &= 0xfff;
+    s_DistToTargetLocation = arg0->ext.faerie.unk88;
+
+    s_TargetLocationX =
+        s_TargetLocationX_calc +
+        ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 0xC);
+    s_TargetLocationY =
+        s_TargetLocationY_calc -
+        ((rsin(s_AngleToTarget) * (s_DistToTargetLocation / 2)) >> 0xC);
+
+    s_AngleToTarget =
+        CalculateAngleToEntity(arg0, s_TargetLocationX, s_TargetLocationY);
+    s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+        s_AngleToTarget, arg0->ext.faerie.targetAngle,
+        arg0->ext.faerie.maxAngle);
+    arg0->ext.faerie.targetAngle = s_AllowedAngle;
+
+    s_DistToTargetLocation =
+        CalculateDistance(arg0, s_TargetLocationX, s_TargetLocationY);
+
+    if (s_DistToTargetLocation < 0x3C) {
+        arg0->velocityY = -(rsin(s_AllowedAngle) << 3);
+        arg0->velocityX = rcos(s_AllowedAngle) << 3;
+        arg0->ext.faerie.maxAngle = 0x40;
+    } else if (s_DistToTargetLocation < 0x64) {
+        arg0->velocityY = -(rsin(s_AllowedAngle) << 4);
+        arg0->velocityX = rcos(s_AllowedAngle) << 4;
+        arg0->ext.faerie.maxAngle = 0x60;
+    } else {
+        arg0->velocityY = -(rsin(s_AllowedAngle) << 5);
+        arg0->velocityX = rcos(s_AllowedAngle) << 5;
+        arg0->ext.faerie.maxAngle = 0x80;
+    }
+    arg0->posX.val += arg0->velocityX;
+    arg0->posY.val += arg0->velocityY;
+    switch (arg0->step) {
+    case 0:
+        func_us_801739D0(arg0);
+        arg0->ext.faerie.timer = -1;
+        break;
+    case 1:
+        func_us_80173BD0(arg0);
+        if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
+            D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
+            SetAnimationFrame(arg0, 0xE);
+            arg0->entityId = ENTITY_ID_SERVANT;
+            arg0->step = 0;
+            return;
+        }
+        s_DistToTargetLocation =
+            CalculateDistance(arg0, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 0x20) {
+            arg0->facingLeft = PLAYER.facingLeft;
+            arg0->step++;
+        }
+        break;
+    case 2:
+        rnd = rand() % 0x100;
+        if (D_us_801792EC == 1) {
+            for (i = 0; true; i++) {
+                if (rnd <= D_us_80172C3C[i * 2]) {
+                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C3C[i * 2 + 1];
+                    break;
+                }
+            }
+        } else {
+            for (i = 0; true; i++) {
+                if (rnd <= D_us_80172C64[i * 2]) {
+                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C64[i * 2 + 1];
+                    break;
+                }
+            }
+        }
+        arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4[0];
+        g_PauseAllowed = false;
+        arg0->step++;
+
+        break;
+    case 3:
+        if (PLAYER.posX.i.hi >= arg0->posX.i.hi) {
+            arg0->facingLeft = 1;
+        } else {
+            arg0->facingLeft = 0;
+        }
+        if (arg0->ext.faerie.unkA8 < 0) {
+            if (g_PlaySfxStep > 4) {
+                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4[1]);
+                arg0->step++;
+            }
+        } else {
+            if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
+                arg0->ext.faerie.unkA8--;
+            }
+            if (arg0->ext.faerie.unkA8 < 0) {
+                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4[1]);
+                if ((s32*)arg0->ext.faerie.unkA4[2] &&
+                    (SearchForEntityInRange(0, 0xDE) == NULL)) {
+                    CreateEventEntity_Dupe(
+                        arg0, 0xDE, (s32)arg0->ext.faerie.unkA4[2]);
+                }
+                arg0->ext.faerie.unkA4 += 3;
+                arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4[0];
+            }
+        }
+        break;
+    case 4:
+        if (g_PlaySfxStep == 0x63) {
+            arg0->step++;
+        }
+        break;
+    case 5:
+        SetAnimationFrame(arg0, 0xE);
+        g_PauseAllowed = true;
+        arg0->entityId = ENTITY_ID_SERVANT;
+        arg0->step = 0;
+        break;
+    }
+
+    ProcessEvent(arg0, false);
+    func_us_80173D60(arg0);
+    ServantUpdateAnim(arg0, NULL, D_us_80172B14);
+    FntPrint("sts = %d\n", g_PlaySfxStep);
+}
 
 void func_us_80176B6C(Entity* self) {
     s32 temp_unk0;
@@ -1078,7 +1221,7 @@ void func_us_80176C98(Entity* self) {
     }
     if (IsMovementAllowed(1)) {
         if (self->step < 2) {
-            self->entityId = 0xD1;
+            self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
         }
@@ -1254,7 +1397,7 @@ void func_us_80176C98(Entity* self) {
         self->velocityY -= FIX(0.03125);
 
         if (D_us_801792D0 == -1) {
-            self->entityId = 0xD1;
+            self->entityId = ENTITY_ID_SERVANT;
             self->step = 0;
             return;
         }
@@ -1273,7 +1416,53 @@ void func_us_80176C98(Entity* self) {
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177958);
+void func_us_80177958(Entity* self) {
+    Entity* entity;
+
+    switch (self->params) {
+    case 0:
+        D_us_8017931C = 1;
+        entity = SearchForEntityInRange(0, 222);
+        if (entity && entity->step < 5) {
+            entity->step = 8;
+        }
+        break;
+    case 1:
+        D_us_8017931C = 2;
+        break;
+    case 2:
+        D_us_8017931C = 3;
+        break;
+    case 3:
+        D_us_8017931C = 4;
+        break;
+    case 4:
+        D_us_8017931C = 5;
+        break;
+    case 5:
+        D_us_8017931C = 6;
+        break;
+    case 6:
+        D_us_8017931C = 7;
+        break;
+    case 7:
+        D_us_8017931C = 8;
+        break;
+    case 8:
+        D_us_8017931C = 9;
+        break;
+    case 9:
+        D_us_8017931C = 10;
+        break;
+    case 10:
+        D_us_8017931C = 11;
+        break;
+    case 15:
+        D_us_80179320 = 1;
+        break;
+    }
+    DestroyEntity(self);
+}
 
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
@@ -1420,7 +1609,7 @@ void func_us_80177AC4(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
+void func_us_80177F64(Entity* self) { ProcessSfxState(); }
 
 void func_us_80177F84(Entity* self) {
     FakePrim* fakePrim;
@@ -1616,10 +1805,7 @@ void func_us_80177F84(Entity* self) {
 #ifndef VERSION_PSP
 #include "../calculate_distance.h"
 
-// There is some .rodata jumptable stuff going on with ProcessSfxState
-// where the table is in the middle of the .rodata function
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
-// #include "../play_sfx.h"
+#include "../play_sfx.h"
 #endif
 
 #include "../process_event.h"

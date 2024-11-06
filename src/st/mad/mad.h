@@ -85,7 +85,7 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollRandTable;
 extern RoomHeader g_rooms[];
 
-extern u16 g_EInitBreakable[];
+extern EInit OVL_EXPORT(EInitBreakable);
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];

@@ -620,11 +620,17 @@ typedef struct {
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 maxAngle;
     /* 0x8C */ s16 frameCounter;
-    /* 0x8E */ s16 pad8E[4];
-    /* 0x96 */ s16 unk96;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 timer;
     /* 0x98 */ s16 pad98[4];
     /* 0xA0 */ s16 unkCounterA0;
-    /* 0xA2 */ s16 padA2[9];
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s16* unkA4;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 padAA[5];
     /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
 

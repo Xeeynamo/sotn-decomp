@@ -1,7 +1,7 @@
 NO0_pStObjLayoutHorizontal = 0x80180778;
 NO0_pStObjLayoutVertical = 0x8018084C;
 NO0_EntityUpdates = 0x80180920;
-g_EInitBreakable = 0x80180A64;
+NO0_EInitBreakable = 0x80180A64;
 g_EInitObtainable = 0x80180A70;
 g_EInitParticle = 0x80180A7C;
 g_EInitInteractable = 0x80180A94;
@@ -102,7 +102,7 @@ UpdateRoomPosition = 0x801C5D4C;
 CreateEntityFromCurrentEntity = 0x801C5E00;
 CreateEntityFromEntity = 0x801C5E74;
 EntityIsNearPlayer = 0x801C5EF0;
-EntityRedDoor = 0x801C5F68;
+NO0_EntityRedDoor = 0x801C5F68;
 EntityRoomForeground = 0x801C6BA0;
 BottomCornerText = 0x801C6C8C;
 EntitySoulStealOrb = 0x801C6FBC;

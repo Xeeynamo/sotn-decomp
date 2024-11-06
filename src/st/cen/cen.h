@@ -49,7 +49,7 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 /*** Initializers ***/
-extern u16 g_EInitBreakable[];
+extern EInit OVL_EXPORT(EInitBreakable);
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitMaria[];
 extern u16 g_EInitInteractable[];
