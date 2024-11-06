@@ -53,7 +53,7 @@ void func_us_801D91C4(Entity* self) {
 
 extern u16 D_us_80180BD8[];
 extern u16 D_us_80180BDE[];
-extern s32 D_us_8018234C;
+extern u16 D_us_8018234C[];
 extern u16 D_us_80182354[];
 extern u8 D_us_80182364[];
 extern u8 D_us_80182390[];
@@ -163,7 +163,7 @@ void func_us_801D9264(Entity* self) {
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
-            colRet = UnkCollisionFunc2(&D_us_8018234C);
+            colRet = UnkCollisionFunc2(D_us_8018234C);
             if (colRet & 0x80) {
                 self->facingLeft ^= 1;
             }
