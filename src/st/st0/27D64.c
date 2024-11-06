@@ -149,7 +149,7 @@ void func_801A805C(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(g_EInitBreakable);
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = D_8018074C[params];
         self->hitboxHeight = D_801806F8[params];

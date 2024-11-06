@@ -5,7 +5,7 @@ void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void EntityRedDoor(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -35,25 +35,41 @@ void func_us_8018C90C(Entity* self);
 void func_us_8018CA94(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,      EntityExplosion,
-    EntityPrizeDrop,      EntityDamageDisplay,
-    EntityRedDoor,        EntityIntenseExplosion,
-    EntitySoulStealOrb,   EntityRoomForeground,
-    EntityStageNamePopup, EntityEquipItemDrop,
-    EntityRelicOrb,       EntityHeartDrop,
-    EntityEnemyBlood,     EntityMessageBox,
-    EntityDummy,          EntityDummy,
-    func_us_8018AC0C,     EntityUnkId12,
-    EntityUnkId13,        EntityExplosionVariants,
-    EntityGreyPuff,       EntityClockRoomController,
-    EntityClockHands,     EntityBirdcageDoor,
-    EntityStatue,         EntityStatueGear,
-    EntityStoneDoor,      EntityClockRoomUnused,
-    EntityDummy,          OVL_EXPORT(EntityCutscene),
-    func_us_8018C90C,     func_us_8018CA94,
+    EntityBreakable,
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
+    OVL_EXPORT(EntityRedDoor),
+    EntityIntenseExplosion,
+    EntitySoulStealOrb,
+    EntityRoomForeground,
+    EntityStageNamePopup,
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
+    EntityEnemyBlood,
+    EntityMessageBox,
+    EntityDummy,
+    EntityDummy,
+    func_us_8018AC0C,
+    EntityUnkId12,
+    EntityUnkId13,
+    EntityExplosionVariants,
+    EntityGreyPuff,
+    EntityClockRoomController,
+    EntityClockHands,
+    EntityBirdcageDoor,
+    EntityStatue,
+    EntityStatueGear,
+    EntityStoneDoor,
+    EntityClockRoomUnused,
+    EntityDummy,
+    OVL_EXPORT(EntityCutscene),
+    func_us_8018C90C,
+    func_us_8018CA94,
 };
 
-u16 g_EInitBreakable[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
+EInit OVL_EXPORT(EInitBreakable) = {0x0003, 0x0000, 0x0000, 0x0000, 0x0000};
 u16 g_EInitObtainable[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0001};
 u16 g_EInitParticle[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
 u16 g_EInitMaria[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};

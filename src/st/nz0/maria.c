@@ -81,7 +81,7 @@ void func_801B8E0C(Entity* self) {
 
 // Maria appearing in the cutscene. Walks in from the door on the left, talks
 // to Alucard, and departs to the right.
-void EntityMaria(Entity* self) {
+void EntityMariaNZ0(Entity* self) {
     Entity* redDoor;
     Primitive* prim;
     s32 i;

@@ -42,7 +42,7 @@ segments:
       - [0x23C, .data, rwrp/e_laydef] # layout entries header
       - [0x3E4, .data, rwrp/e_init]
       - [0x528, .data, rwrp/st_debug]
-      - [0x5A8, .data, wrp/e_breakable]
+      - [0x5A8, .data, rwrp/e_breakable]
       - [0x608, .data, rwrp/d_prize_drops]
       - [0x648, .data, rwrp/warp]
       - [0x690, .data, wrp/st_update]
@@ -74,7 +74,7 @@ segments:
       - [0x8DB4, .rodata, wrp/e_stage_name] # EntityStageNamePopup
       - [0x8DE8, .rodata, wrp/prim_helpers]
       - [0x8DF0, c, rwrp/st_debug]
-      - [0x908C, c, wrp/e_breakable]
+      - [0x908C, c, rwrp/e_breakable]
       - [0x91C0, c, rwrp/warp]
       - [0xA168, c, wrp/st_update]
       - [0xA59C, c, wrp/collision]

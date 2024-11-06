@@ -37,13 +37,22 @@ extern s32 D_us_80172BD0;
 extern s32 D_800973FC;
 // this is likely incorrect typing
 extern s32 D_80097420[];
+extern Unkstruct_801724CC D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
+extern s32 D_us_80172C04[];
+extern u16 D_us_80172D28;
+extern u16 D_us_80172D2A;
+extern u32 D_us_801792D0;
+extern s32 D_us_801792EC;
+
+extern s32 D_us_80172C3C[];
+extern s32 D_us_80172C64[];
 
 extern FaerieAnimIndex D_us_80172368[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
 
-void func_us_80173994(Entity*, s32);
+void SetAnimationFrame(Entity*, s32);
 void unused_39C8(Entity*);
 void func_us_80173D60(Entity*);
 
@@ -112,7 +121,7 @@ void func_us_801739D0(Entity* arg0) {
     } else {
         switch (arg0->entityId) {
         case ENTITY_ID_SERVANT:
-            arg0->ext.faerie.unk96 = 0x78;
+            arg0->ext.faerie.timer = 120;
             // fallthrough
         case 0xD2:
         case 0xD3:
@@ -1014,7 +1023,146 @@ void func_us_80176178(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176504);
+void func_us_80176504(Entity* arg0) {
+    s16 rnd;
+    s32 i;
+
+    g_api.GetServantStats(arg0, 0, 0, &s_FaerieStats);
+    if (D_us_80179320) {
+        arg0->zPriority = PLAYER.zPriority - 2;
+        s_zPriority = arg0->zPriority;
+    }
+    s_TargetLocOffset_calc = -0x18;
+    if (!PLAYER.facingLeft) {
+        s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+    }
+    s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+    s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x20;
+    s_AngleToTarget = arg0->ext.faerie.randomMovementAngle;
+    arg0->ext.faerie.randomMovementAngle += 0x10;
+    arg0->ext.faerie.randomMovementAngle &= 0xfff;
+    s_DistToTargetLocation = arg0->ext.faerie.unk88;
+
+    s_TargetLocationX =
+        s_TargetLocationX_calc +
+        ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 0xC);
+    s_TargetLocationY =
+        s_TargetLocationY_calc -
+        ((rsin(s_AngleToTarget) * (s_DistToTargetLocation / 2)) >> 0xC);
+
+    s_AngleToTarget =
+        CalculateAngleToEntity(arg0, s_TargetLocationX, s_TargetLocationY);
+    s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+        s_AngleToTarget, arg0->ext.faerie.targetAngle,
+        arg0->ext.faerie.maxAngle);
+    arg0->ext.faerie.targetAngle = s_AllowedAngle;
+
+    s_DistToTargetLocation =
+        CalculateDistance(arg0, s_TargetLocationX, s_TargetLocationY);
+
+    if (s_DistToTargetLocation < 0x3C) {
+        arg0->velocityY = -(rsin(s_AllowedAngle) << 3);
+        arg0->velocityX = rcos(s_AllowedAngle) << 3;
+        arg0->ext.faerie.maxAngle = 0x40;
+    } else if (s_DistToTargetLocation < 0x64) {
+        arg0->velocityY = -(rsin(s_AllowedAngle) << 4);
+        arg0->velocityX = rcos(s_AllowedAngle) << 4;
+        arg0->ext.faerie.maxAngle = 0x60;
+    } else {
+        arg0->velocityY = -(rsin(s_AllowedAngle) << 5);
+        arg0->velocityX = rcos(s_AllowedAngle) << 5;
+        arg0->ext.faerie.maxAngle = 0x80;
+    }
+    arg0->posX.val += arg0->velocityX;
+    arg0->posY.val += arg0->velocityY;
+    switch (arg0->step) {
+    case 0:
+        func_us_801739D0(arg0);
+        arg0->ext.faerie.timer = -1;
+        break;
+    case 1:
+        func_us_80173BD0(arg0);
+        if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
+            D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
+            SetAnimationFrame(arg0, 0xE);
+            arg0->entityId = ENTITY_ID_SERVANT;
+            arg0->step = 0;
+            return;
+        }
+        s_DistToTargetLocation =
+            CalculateDistance(arg0, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 0x20) {
+            arg0->facingLeft = PLAYER.facingLeft;
+            arg0->step++;
+        }
+        break;
+    case 2:
+        rnd = rand() % 0x100;
+        if (D_us_801792EC == 1) {
+            for (i = 0; true; i++) {
+                if (rnd <= D_us_80172C3C[i * 2]) {
+                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C3C[i * 2 + 1];
+                    break;
+                }
+            }
+        } else {
+            for (i = 0; true; i++) {
+                if (rnd <= D_us_80172C64[i * 2]) {
+                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C64[i * 2 + 1];
+                    break;
+                }
+            }
+        }
+        arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4[0];
+        g_PauseAllowed = false;
+        arg0->step++;
+
+        break;
+    case 3:
+        if (PLAYER.posX.i.hi >= arg0->posX.i.hi) {
+            arg0->facingLeft = 1;
+        } else {
+            arg0->facingLeft = 0;
+        }
+        if (arg0->ext.faerie.unkA8 < 0) {
+            if (g_PlaySfxStep > 4) {
+                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4[1]);
+                arg0->step++;
+            }
+        } else {
+            if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
+                arg0->ext.faerie.unkA8--;
+            }
+            if (arg0->ext.faerie.unkA8 < 0) {
+                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4[1]);
+                if ((s32*)arg0->ext.faerie.unkA4[2] &&
+                    (SearchForEntityInRange(0, 0xDE) == NULL)) {
+                    CreateEventEntity_Dupe(
+                        arg0, 0xDE, (s32)arg0->ext.faerie.unkA4[2]);
+                }
+                arg0->ext.faerie.unkA4 += 3;
+                arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4[0];
+            }
+        }
+        break;
+    case 4:
+        if (g_PlaySfxStep == 0x63) {
+            arg0->step++;
+        }
+        break;
+    case 5:
+        SetAnimationFrame(arg0, 0xE);
+        g_PauseAllowed = true;
+        arg0->entityId = ENTITY_ID_SERVANT;
+        arg0->step = 0;
+        break;
+    }
+
+    ProcessEvent(arg0, false);
+    func_us_80173D60(arg0);
+    ServantUpdateAnim(arg0, NULL, D_us_80172B14);
+    FntPrint("sts = %d\n", g_PlaySfxStep);
+}
 
 void func_us_80176B6C(Entity* self) {
     s32 animIndex;
@@ -1056,11 +1204,259 @@ void func_us_80176B6C(Entity* self) {
     ServantUpdateAnim(self, 0, g_FaerieAnimationFrames);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80176C98);
+void func_us_80176C98(Entity* self) {
+    s32 rnd;
+    s32 i;
+
+    g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
+    if (D_us_80179320 != 0) {
+        self->zPriority = PLAYER.zPriority - 2;
+        s_zPriority = self->zPriority;
+    }
+    if (IsMovementAllowed(1)) {
+        if (self->step < 2) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+
+        if (self->step < 9) {
+            self->step = 9;
+        }
+    }
+    if (PLAYER.step_s == 0) {
+        s_TargetLocOffset_calc = -6;
+        if (PLAYER.facingLeft) {
+            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+        }
+        s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationY = PLAYER.posY.i.hi - 12;
+    } else {
+        s_TargetLocOffset_calc = 16;
+        if (PLAYER.facingLeft) {
+            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+        }
+        s_TargetLocationX = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationY = PLAYER.posY.i.hi - 8;
+    }
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        SetAnimationFrame(self, 0xE);
+        break;
+    case 1:
+        s_AngleToTarget =
+            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+            s_AngleToTarget, self->ext.faerie.targetAngle, 0x180);
+        self->ext.faerie.targetAngle = s_AllowedAngle;
+        self->velocityY = -(rsin(s_AllowedAngle) << 3);
+        self->velocityX = (rcos(s_AllowedAngle) << 3);
+        func_us_80173BD0(self);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 2) {
+            if (PLAYER.step_s == 0) {
+                self->facingLeft = PLAYER.facingLeft;
+            } else {
+                self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+            }
+            SetAnimationFrame(self, 0x18);
+            self->ext.faerie.frameCounter = 0;
+
+            self->flags |= FLAG_POS_PLAYER_LOCKED;
+            self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+
+#ifdef VERSION_PSP
+            if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
+                D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
+                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                self->step = 5;
+            } else if (s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
+                self->step = 5;
+            } else if (s_FaerieStats.level > 9 || g_Timer & 1 ||
+                       s_FaerieStats.level > 4 || (g_Timer & 7)) {
+                self->step = 5;
+            } else {
+                self->ext.faerie.unkB4 = 0;
+                if (s_FaerieStats.level < 16) {
+                    self->ext.faerie.frameCounter = 0x708;
+                } else {
+                    self->ext.faerie.frameCounter =
+                        0x7a8 - (s_FaerieStats.level << 0x4);
+                }
+                self->step++;
+            }
+#else
+            if ((*((FgLayer32*)&D_8003C708)).flags &
+                    (LAYOUT_RECT_PARAMS_UNKNOWN_20 |
+                     LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
+                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                self->step = 5;
+            } else if (s_ServantId != FAM_ACTIVE_YOUSEI ||
+                       s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
+                self->step = 5;
+            } else if (s_FaerieStats.level < 0x5A && rand() % 8) {
+                self->step = 5;
+            } else {
+                self->ext.faerie.unkB4 = 0;
+                if (PLAYER.step_s == 4) {
+                    self->ext.faerie.frameCounter = D_us_80172D2A;
+                } else {
+                    self->ext.faerie.frameCounter = D_us_80172D28;
+                }
+                self->step++;
+            }
+#endif
+        }
+        break;
+    case 2:
+        --self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter < 0) {
+            self->ext.faerie.frameCounter = 0;
+            if (g_api.func_800F27F4(0)) {
+                SetAnimationFrame(self, 0x19);
+                self->ext.faerie.unkB4 = 1;
+                self->step++;
+            }
+        }
+        break;
+    case 3:
+        ++self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter > 0x420) {
+            SetAnimationFrame(self, 0x1A);
+            self->ext.faerie.frameCounter = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        ++self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter > 0x15E0) {
+            SetAnimationFrame(self, 0x19);
+            self->ext.faerie.frameCounter = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        ++self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter > 0x500) {
+            SetAnimationFrame(self, 0x18);
+            self->ext.faerie.frameCounter = 0;
+            self->ext.faerie.unkB4 = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        self->ext.faerie.frameCounter = (rand() % 0x800) + 0x400;
+        self->step++;
+        /* fallthrough */
+    case 7:
+        --self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter < 0) {
+            self->ext.faerie.frameCounter = (rand() % 0x80) + 0x80;
+            SetAnimationFrame(self, 0x19);
+            self->step++;
+        }
+        break;
+    case 8:
+        --self->ext.faerie.frameCounter;
+        if (self->ext.faerie.frameCounter < 0) {
+            SetAnimationFrame(self, 0x18);
+            self->step = 6;
+        }
+        break;
+    case 9:
+        if (self->ext.faerie.unkB4) {
+            g_api.func_800F27F4(1);
+        }
+        self->flags &= ~FLAG_POS_PLAYER_LOCKED;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        SetAnimationFrame(self, 0x1B);
+        self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
+        self->velocityY = FIX(1);
+        for (rnd = rand() % 0x100, i = 0; true; i++) {
+            if (rnd <= D_us_80172C04[i * 2]) {
+                g_api.PlaySfx(D_us_80172C04[i * 2 + 1]);
+                break;
+            }
+        }
+
+        self->step++;
+        break;
+    case 10:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY -= FIX(0.03125);
+
+        if (D_us_801792D0 == -1) {
+            self->entityId = ENTITY_ID_SERVANT;
+            self->step = 0;
+            return;
+        }
+        break;
+    }
+    ProcessEvent(self, false);
+    func_us_80173D60(self);
+#ifdef VERSION_PSP
+    if ((self->step == 3 || self->step == 4) && *((s32*)0x9234CB8) < 0x200) {
+        *((s32*)0x9234CB8) = 0x200;
+    }
+#endif
+    func_us_801739C8(self);
+    D_us_801792D0 = ServantUpdateAnim(self, NULL, D_us_80172B14);
+}
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177958);
+void func_us_80177958(Entity* self) {
+    Entity* entity;
+
+    switch (self->params) {
+    case 0:
+        D_us_8017931C = 1;
+        entity = SearchForEntityInRange(0, 222);
+        if (entity && entity->step < 5) {
+            entity->step = 8;
+        }
+        break;
+    case 1:
+        D_us_8017931C = 2;
+        break;
+    case 2:
+        D_us_8017931C = 3;
+        break;
+    case 3:
+        D_us_8017931C = 4;
+        break;
+    case 4:
+        D_us_8017931C = 5;
+        break;
+    case 5:
+        D_us_8017931C = 6;
+        break;
+    case 6:
+        D_us_8017931C = 7;
+        break;
+    case 7:
+        D_us_8017931C = 8;
+        break;
+    case 8:
+        D_us_8017931C = 9;
+        break;
+    case 9:
+        D_us_8017931C = 10;
+        break;
+    case 10:
+        D_us_8017931C = 11;
+        break;
+    case 15:
+        D_us_80179320 = 1;
+        break;
+    }
+    DestroyEntity(self);
+}
 
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
@@ -1207,9 +1603,183 @@ void func_us_80177AC4(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
+void func_us_80177F64(Entity* self) { ProcessSfxState(); }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
+void func_us_80177F84(Entity* self) {
+    FakePrim* fakePrim;
+    s32 i;
+    u16 posY2;
+    s16 posX3;
+    s32 posX;
+    s16 posY;
+    s16 posX2;
+    u16 posX4;
+    Unkstruct_801724CC* unkStruct;
+
+    posX2 = self->posX.i.hi;
+    posY = self->posY.i.hi;
+    unkStruct = &D_us_801724CC[LOH(self->params)];
+    switch (self->step) {
+    case 0:
+        self->primIndex =
+            g_api.func_800EDB58(PRIM_TILE_ALT, unkStruct->count + 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        posX = posX2;
+        self->flags = unkStruct->flags;
+        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+
+        while (true) {
+            fakePrim->drawMode = unkStruct->drawMode + DRAW_HIDE;
+            fakePrim->priority = unkStruct->priority + PLAYER.zPriority;
+            if (fakePrim->next == NULL) {
+                fakePrim->w = 0;
+                fakePrim->y0 = fakePrim->x0 = 0;
+                fakePrim->drawMode &= ~DRAW_HIDE;
+                break;
+            }
+
+            fakePrim->posX.i.hi = posX2;
+            fakePrim->posY.i.hi = posY;
+            fakePrim->posY.i.lo = 0;
+            fakePrim->posX.i.lo = 0;
+            switch (unkStruct->unk6) {
+            case 0:
+                if (!self->facingLeft) {
+                    fakePrim->posX.i.hi = posX + 4;
+                } else {
+                    fakePrim->posX.i.hi = posX - 4;
+                }
+                fakePrim->posY.i.hi = posY - 0x1A;
+                fakePrim->velocityX.val = ((rand() % 0x2000) - 0x1000) << 4;
+                fakePrim->velocityY.val = 0;
+                break;
+            case 1:
+                if (!self->facingLeft) {
+                    posX3 = posX - 0x18;
+                } else {
+                    posX3 = posX + 0x18;
+                }
+                posY2 = posY + 0x10;
+                fakePrim->posX.i.hi = (u16)(posX3 - 8 + (rand() % 16));
+                fakePrim->posY.i.hi = posY2;
+                fakePrim->velocityX.val = ((rand() % 0x2000) - 0x1000) << 4;
+                fakePrim->velocityY.val = -((rand() % 0x1000) + 0x1800) << 4;
+                fakePrim->delay = 0x2D;
+                break;
+            case 2:
+                if (!self->facingLeft) {
+                    posX4 = posX + 0xE;
+                } else {
+                    posX4 = posX - 0xE;
+                }
+                posY2 = posY - 8;
+                fakePrim->posX.i.hi = posX4;
+                fakePrim->posY.i.hi = posY2;
+                fakePrim->velocityX.val = (rand() % 0x800) << 4;
+                if (self->facingLeft) {
+                    fakePrim->velocityX.val = -fakePrim->velocityX.val;
+                }
+                fakePrim->velocityY.val = -((rand() % 0x1000) + 0x800) << 4;
+                fakePrim->delay = 0x28;
+                break;
+            }
+            fakePrim->x0 = fakePrim->posX.i.hi;
+            fakePrim->y0 = fakePrim->posY.i.hi;
+            fakePrim->r0 = unkStruct->r;
+            fakePrim->g0 = unkStruct->g;
+            fakePrim->b0 = unkStruct->b;
+            fakePrim->w = unkStruct->w;
+            fakePrim->h = unkStruct->h;
+            fakePrim = fakePrim->next;
+        }
+        self->step++;
+    case 1:
+        if (--self->ext.faerie.unk82 <= 0) {
+            fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+            for (i = 0; i < self->ext.faerie.unk80; i++) {
+                fakePrim = fakePrim->next;
+            }
+            for (i = 0; i < unkStruct->unk2; i++) {
+                fakePrim->drawMode &= ~DRAW_HIDE;
+                fakePrim = fakePrim->next;
+            }
+            self->ext.faerie.unk80 += unkStruct->unk2;
+            if (self->ext.faerie.unk80 >= unkStruct->count) {
+                self->step++;
+            }
+            self->ext.faerie.unk82 = unkStruct->unk4;
+        }
+    case 2:
+        self->ext.faerie.unk7E = 0;
+        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+
+        while (true) {
+            if (fakePrim->next == NULL) {
+                fakePrim->w = 0;
+                fakePrim->y0 = fakePrim->x0 = 0;
+                fakePrim->drawMode &= ~DRAW_HIDE;
+                break;
+            }
+
+            fakePrim->posX.i.hi = fakePrim->x0;
+            fakePrim->posY.i.hi = fakePrim->y0;
+            switch (unkStruct->unk6) {
+            case 0:
+                if (!(fakePrim->drawMode & DRAW_HIDE)) {
+                    fakePrim->posX.val += fakePrim->velocityX.val;
+                    fakePrim->posY.val += fakePrim->velocityY.val;
+                    fakePrim->velocityX.val =
+                        AccumulateTowardZero(fakePrim->velocityX.val, 0x1000);
+                    fakePrim->velocityY.val -= FIX(2.0 / 16);
+                    if (fakePrim->posY.i.hi < 0) {
+                        fakePrim->drawMode |= DRAW_HIDE;
+                    }
+                }
+                break;
+            case 1:
+                if (!(fakePrim->drawMode & DRAW_HIDE)) {
+                    fakePrim->posX.val += fakePrim->velocityX.val;
+                    fakePrim->posY.val += fakePrim->velocityY.val;
+                    fakePrim->velocityY.val += FIX(2.0 / 16);
+                    if (--fakePrim->delay < 0) {
+                        fakePrim->drawMode |= DRAW_HIDE;
+                    }
+                }
+                break;
+            case 2:
+                if (!(fakePrim->drawMode & DRAW_HIDE)) {
+                    fakePrim->posX.val += fakePrim->velocityX.val;
+                    fakePrim->posY.val += fakePrim->velocityY.val;
+                    if (fakePrim->r0 != 0) {
+                        fakePrim->r0--;
+                    }
+                    if (fakePrim->g0 != 0) {
+                        fakePrim->g0--;
+                    }
+                    if (fakePrim->b0 != 0) {
+                        fakePrim->b0--;
+                    }
+                    fakePrim->velocityY.val += FIX(1.5 / 16);
+                    if (--fakePrim->delay < 0) {
+                        fakePrim->drawMode |= DRAW_HIDE;
+                    }
+                }
+                break;
+            }
+            fakePrim->x0 = fakePrim->posX.i.hi;
+            fakePrim->y0 = fakePrim->posY.i.hi;
+            self->ext.faerie.unk7E |= !(fakePrim->drawMode & DRAW_HIDE);
+            fakePrim = fakePrim->next;
+        }
+        if (self->ext.faerie.unk7E == 0) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 #ifndef VERSION_PSP
 #include "../servant_update_anim.h"
@@ -1229,10 +1799,7 @@ INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F84);
 #ifndef VERSION_PSP
 #include "../calculate_distance.h"
 
-// There is some .rodata jumptable stuff going on with ProcessSfxState
-// where the table is in the middle of the .rodata function
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
-// #include "../play_sfx.h"
+#include "../play_sfx.h"
 #endif
 
 #include "../process_event.h"

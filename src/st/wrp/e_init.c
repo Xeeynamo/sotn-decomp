@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
-#include "../st_private.h"
 
+void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
@@ -11,18 +11,32 @@ void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,       EntityExplosion,         EntityPrizeDrop,
-    EntityDamageDisplay,   EntityRedDoor,           EntityIntenseExplosion,
-    EntitySoulStealOrb,    EntityRoomForeground,    EntityStageNamePopup,
-    EntityEquipItemDrop,   EntityRelicOrb,          EntityHeartDrop,
-    EntityEnemyBlood,      EntityMessageBox,        EntityDummy,
+    EntityBreakable,
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
+    OVL_EXPORT(EntityRedDoor),
+    EntityIntenseExplosion,
+    EntitySoulStealOrb,
+    EntityRoomForeground,
+    EntityStageNamePopup,
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
+    EntityEnemyBlood,
+    EntityMessageBox,
+    EntityDummy,
     EntityDummy,
     EntityBackgroundBlock, // unused
     EntityUnkId12,         // unused? looks debugging stuff
-    EntityUnkId13,         EntityExplosionVariants, EntityGreyPuff,
-    EntityWarpRoom,        EntityWarpSmallRocks,
+    EntityUnkId13,
+    EntityExplosionVariants,
+    EntityGreyPuff,
+    EntityWarpRoom,
+    EntityWarpSmallRocks,
 };
 
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitReverseSmallRocks = {ANIMSET_OVL(11), 1, 0x48, 0x21A, 97};
 EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0, 0x00, 0x000, 5};

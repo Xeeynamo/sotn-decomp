@@ -620,10 +620,18 @@ typedef struct {
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 maxAngle;
     /* 0x8C */ s16 frameCounter;
-    /* 0x8E */ s16 pad8E[4];
-    /* 0x96 */ s16 unk96;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 timer;
     /* 0x98 */ s16 pad98[4];
     /* 0xA0 */ s16 unkCounterA0;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s16* unkA4;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 padAA[5];
+    /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
 
 struct draculaPrimitive;
@@ -2011,6 +2019,23 @@ typedef struct {
     /* 0x7C */ s16 unk7C;
 } ET_FleaMan;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 y;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ struct Primitive* unkA4;
+} ET_801D9264;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2194,6 +2219,7 @@ typedef union { // offset=0x7C
     ET_OuijaTable ouijaTable;
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
+    ET_801D9264 et_801D9264;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
