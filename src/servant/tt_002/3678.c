@@ -1084,7 +1084,7 @@ void func_us_80176504(Entity* arg0) {
     switch (arg0->step) {
     case 0:
         func_us_801739D0(arg0);
-        arg0->ext.faerie.unk96 = -1;
+        arg0->ext.faerie.timer = -1;
         break;
     case 1:
         func_us_80173BD0(arg0);
