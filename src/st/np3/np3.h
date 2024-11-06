@@ -94,7 +94,7 @@ extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
 extern Primitive* func_801D2470(Primitive* poly);
 void EntityGreyPuff(Entity* entity);
-extern u16 g_EInitBreakable[];
+extern EInit OVL_EXPORT(EInitBreakable);
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];

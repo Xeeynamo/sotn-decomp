@@ -62,7 +62,7 @@ static void MyInitRoomEntities(s32 objLayoutId) {
     case STAGE_ST0: // hack to force NG to jump straight to a valid map
         SetGameState(Game_NowLoading);
         g_GameStep = NowLoading_2;
-        g_StageId = STAGE_WRP;
+        g_StageId = STAGE_NZ0;
         break;
     }
 

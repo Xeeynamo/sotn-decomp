@@ -2,6 +2,7 @@
 #include "rwrp.h"
 #include "../st_private.h"
 
+void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
@@ -11,22 +12,33 @@ void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,       EntityExplosion,         EntityPrizeDrop,
-    EntityDamageDisplay,   EntityRedDoor,           EntityIntenseExplosion,
-    EntitySoulStealOrb,    EntityRoomForeground,    EntityStageNamePopup,
-    EntityEquipItemDrop,   EntityRelicOrb,          EntityHeartDrop,
-    EntityEnemyBlood,      EntityMessageBox,        EntityDummy,
+    EntityBreakable,
+    EntityExplosion,
+    EntityPrizeDrop,
+    EntityDamageDisplay,
+    OVL_EXPORT(EntityRedDoor),
+    EntityIntenseExplosion,
+    EntitySoulStealOrb,
+    EntityRoomForeground,
+    EntityStageNamePopup,
+    EntityEquipItemDrop,
+    EntityRelicOrb,
+    EntityHeartDrop,
+    EntityEnemyBlood,
+    EntityMessageBox,
+    EntityDummy,
     EntityDummy,
     EntityBackgroundBlock, // unused
     EntityUnkId12,         // unused? looks debugging stuff
-    EntityUnkId13,         EntityExplosionVariants, EntityGreyPuff,
-    EntityRWarpRoom,       EntityWarpSmallRocks,
+    EntityUnkId13,
+    EntityExplosionVariants,
+    EntityGreyPuff,
+    EntityRWarpRoom,
+    EntityWarpSmallRocks,
 };
 
 // *** Group here all the Entity Init ***
-u16 g_EInitBreakable[] = {
-    0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 u16 g_EInitObtainable[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };

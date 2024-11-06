@@ -102,7 +102,7 @@ void func_801C4CC0(void);
 extern u16 g_EInitParticle[];
 extern u16 g_EInitInteractable[]; // Init Elevator2
 extern u16 g_EInitCommon[];
-extern u16 D_80180C34[];
+extern u16 g_EInitSecret[];
 
 // *** EntityBloodSkeleton properties START ***
 
