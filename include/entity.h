@@ -2014,21 +2014,20 @@ typedef struct {
 } ET_FleaMan;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
+    /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
-    /* 0x82 */ s16 pad6;
-    /* 0x84 */ u8 pad8;
-    /* 0x85 */ u8 pad9;
-    /* 0x86 */ u8 padA;
-    /* 0x87 */ u8 padB;
-    /* 0x88 */ u32 padC;
-    /* 0x8C */ u32 pad10;
-    /* 0x90 */ u32 pad14;
-    /* 0x94 */ u32 pad18;
-    /* 0x98 */ u32 pad1C;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 y;
-    /* 0xA0 */ s32 pad24;
-    /* 0xA4 */ struct Primitive* pad28;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ struct Primitive* unkA4;
 } ET_801D9264;
 
 // ====== RIC ENTITIES ======

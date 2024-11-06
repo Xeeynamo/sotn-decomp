@@ -214,11 +214,11 @@ void func_us_801D9264(Entity* self) {
             self->velocityY += FIX(3.0 / 16);
             if (self->velocityY > 0) {
                 self->step_s++;
-                if (self->ext.et_801D9264.pad8 == 0) {
-                    self->ext.et_801D9264.pad8 = 2;
+                if (self->ext.et_801D9264.unk84 == 0) {
+                    self->ext.et_801D9264.unk84 = 2;
                     SetStep(7);
                 } else {
-                    self->ext.et_801D9264.pad8--;
+                    self->ext.et_801D9264.unk84--;
                 }
             }
             break;
@@ -236,15 +236,15 @@ void func_us_801D9264(Entity* self) {
                 }
                 SetSubStep(0);
 
-                if (self->ext.et_801D9264.pad8 == 1) {
+                if (self->ext.et_801D9264.unk84 == 1) {
                     SetStep(6);
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                     if (posX > 0x400) {
                         self->facingLeft = 1;
-                        self->ext.et_801D9264.pad9 = 3;
+                        self->ext.et_801D9264.unk85 = 3;
                     }
-                    if (++self->ext.et_801D9264.pad9 > 2) {
-                        self->ext.et_801D9264.pad9 = 0;
+                    if (++self->ext.et_801D9264.unk85 > 2) {
+                        self->ext.et_801D9264.unk85 = 0;
                         SetStep(8);
                     }
                 } else {
@@ -420,7 +420,7 @@ void func_us_801D9264(Entity* self) {
 
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
-            self->ext.et_801D9264.pad28 = prim;
+            self->ext.et_801D9264.unkA4 = prim;
             posY = self->params ? 0xFF : 0x7F;
             prim->type = PRIM_GT4;
             prim->tpage = 0x110;
@@ -508,7 +508,7 @@ void func_us_801D9264(Entity* self) {
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(0x65B);
             }
-            prim = self->ext.et_801D9264.pad28;
+            prim = self->ext.et_801D9264.unkA4;
             posX = Random() & 0x3F;
             posY = self->ext.et_801D9264.y;
             if (!(g_Timer & 0xF)) {
