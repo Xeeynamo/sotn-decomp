@@ -322,8 +322,8 @@ void func_us_801D9264(Entity* self) {
         if (AnimateEntity(&D_us_80182364, self) == 0) {
             SetStep(2);
         }
-        if ((GetDistanceToPlayerY() < 0x60) && (self->animFrameIdx == 0x9 &&
-            self->animFrameDuration == 0)) {
+        if ((GetDistanceToPlayerY() < 0x60) &&
+            (self->animFrameIdx == 0x9 && self->animFrameDuration == 0)) {
             PlaySfxPositional(0x758);
             PlaySfxPositional(0x684);
             newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
