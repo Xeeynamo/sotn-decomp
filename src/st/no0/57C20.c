@@ -123,7 +123,8 @@ void func_us_801D9264(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(&D_us_801823E4, self)) {
-                self->ext.et_801D9264.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x20;
+                self->ext.et_801D9264.y =
+                    self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x20;
                 SetSubStep(1);
             }
             break;
@@ -298,7 +299,8 @@ void func_us_801D9264(Entity* self) {
         if (!AnimateEntity(&D_us_801823F4, self)) {
             SetStep(5);
         }
-        if ((GetDistanceToPlayerY() < 0x60) && (self->animCurFrame == 0x24) && (self->animFrameDuration == 0)) {
+        if ((GetDistanceToPlayerY() < 0x60) && (self->animCurFrame == 0x24) &&
+            (self->animFrameDuration == 0)) {
             PlaySfxPositional(0x690);
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
@@ -320,7 +322,8 @@ void func_us_801D9264(Entity* self) {
         if (AnimateEntity(&D_us_80182364, self) == 0) {
             SetStep(2);
         }
-        if ((GetDistanceToPlayerY() < 0x60) && (self->animFrameIdx == 9 && self->animFrameDuration == 0)) {
+        if ((GetDistanceToPlayerY() < 0x60) && (self->animFrameIdx == 0x9 &&
+            self->animFrameDuration == 0)) {
             PlaySfxPositional(0x758);
             PlaySfxPositional(0x684);
             newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
@@ -363,7 +366,7 @@ void func_us_801D9264(Entity* self) {
     case 10:
         switch (self->step_s) {
         case 0:
-            if ((u16) self->animCurFrame - 9 < 0xAU) {
+            if ((u16)self->animCurFrame - 9 < 0xAU) {
                 self->animCurFrame = 0x14;
             }
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
@@ -375,7 +378,7 @@ void func_us_801D9264(Entity* self) {
             self->primIndex = primIndex;
             self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
-            dr_env = g_api.func_800EDB08((POLY_GT4*) prim);
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;
@@ -404,7 +407,7 @@ void func_us_801D9264(Entity* self) {
             SetDrawEnv(dr_env, &drawEnv);
 
             prim = prim->next;
-            if (g_api.func_800EDB08((POLY_GT4*) prim) == NULL) {
+            if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
                 DestroyEntity(self);
                 return;
             }
@@ -425,10 +428,10 @@ void func_us_801D9264(Entity* self) {
             prim->u0 = prim->u2 = 0;
             prim->v0 = prim->v1 = posY - 0x70;
             prim->v2 = prim->v3 = posY;
-            temp_v0_13 = (u16) self->posX.i.hi;
+            temp_v0_13 = (u16)self->posX.i.hi;
             prim->x0 = prim->x2 = temp_v0_13 - 0x20;
-            prim->x1 = prim->x3 = temp_v0_13 + 0x20;;
-            temp_v0_15 = (u16) self->posY.i.hi;
+            prim->x1 = prim->x3 = temp_v0_13 + 0x20;
+            temp_v0_15 = (u16)self->posY.i.hi;
             prim->y2 = prim->y3 = temp_v0_15 + 0x28;
             prim->y0 = prim->y1 = temp_v0_15 - 0x48;
             prim->priority = self->zPriority;
