@@ -123,7 +123,7 @@ void func_us_801739D0(Entity* arg0) {
     } else {
         switch (arg0->entityId) {
         case ENTITY_ID_SERVANT:
-            arg0->ext.faerie.unk96 = 0x78;
+            arg0->ext.faerie.timer = 120;
             // fallthrough
         case 0xD2:
         case 0xD3:
@@ -1273,7 +1273,53 @@ void func_us_80176C98(Entity* self) {
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177958);
+void func_us_80177958(Entity* self) {
+    Entity* entity;
+
+    switch (self->params) {
+    case 0:
+        D_us_8017931C = 1;
+        entity = SearchForEntityInRange(0, 222);
+        if (entity && entity->step < 5) {
+            entity->step = 8;
+        }
+        break;
+    case 1:
+        D_us_8017931C = 2;
+        break;
+    case 2:
+        D_us_8017931C = 3;
+        break;
+    case 3:
+        D_us_8017931C = 4;
+        break;
+    case 4:
+        D_us_8017931C = 5;
+        break;
+    case 5:
+        D_us_8017931C = 6;
+        break;
+    case 6:
+        D_us_8017931C = 7;
+        break;
+    case 7:
+        D_us_8017931C = 8;
+        break;
+    case 8:
+        D_us_8017931C = 9;
+        break;
+    case 9:
+        D_us_8017931C = 10;
+        break;
+    case 10:
+        D_us_8017931C = 11;
+        break;
+    case 15:
+        D_us_80179320 = 1;
+        break;
+    }
+    DestroyEntity(self);
+}
 
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
@@ -1420,7 +1466,7 @@ void func_us_80177AC4(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177F64);
+void func_us_80177F64(Entity* self) { ProcessSfxState(); }
 
 void func_us_80177F84(Entity* self) {
     FakePrim* fakePrim;
@@ -1616,10 +1662,7 @@ void func_us_80177F84(Entity* self) {
 #ifndef VERSION_PSP
 #include "../calculate_distance.h"
 
-// There is some .rodata jumptable stuff going on with ProcessSfxState
-// where the table is in the middle of the .rodata function
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80178A30);
-// #include "../play_sfx.h"
+#include "../play_sfx.h"
 #endif
 
 #include "../process_event.h"

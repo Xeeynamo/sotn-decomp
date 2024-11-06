@@ -18,6 +18,7 @@ SearchForEntityInRange = 0x801788A8;
 CalculateAngleToEntity = 0x80178928;
 GetTargetPositionWithDistanceBuffer = 0x8017896C;
 CalculateDistance = 0x801789E0;
+ProcessSfxState = 0x80178A30;
 ProcessEvent = 0x80178C08;
 CreateEventEntity = 0x80178FDC;
 IsMovementAllowed = 0x80179098;
