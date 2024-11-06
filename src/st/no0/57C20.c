@@ -95,7 +95,7 @@ void func_us_801D9264(Entity* self) {
         self->animCurFrame = 1;
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(&D_us_80182354) & 1) {
+        if (UnkCollisionFunc3(D_us_80182354) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(2);
         }
@@ -163,7 +163,7 @@ void func_us_801D9264(Entity* self) {
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
-            colRet = UnkCollisionFunc2(&D_us_8018234C);
+            colRet = UnkCollisionFunc2(D_us_8018234C);
             if (colRet & 0x80) {
                 self->facingLeft ^= 1;
             }
@@ -183,7 +183,7 @@ void func_us_801D9264(Entity* self) {
             break;
         case 5:
             self->animCurFrame = 6;
-            if (UnkCollisionFunc3(&D_us_80182354) & 1) {
+            if (UnkCollisionFunc3(D_us_80182354) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 SetSubStep(6);
             }
@@ -222,7 +222,7 @@ void func_us_801D9264(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 6;
-            if (UnkCollisionFunc3(&D_us_80182354) & 1) {
+            if (UnkCollisionFunc3(D_us_80182354) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 SetSubStep(3);
             }
@@ -341,7 +341,7 @@ void func_us_801D9264(Entity* self) {
     case 9:
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(&D_us_80182354) & 1) {
+            if (UnkCollisionFunc3(D_us_80182354) & 1) {
                 PlaySfxPositional(0x758);
                 self->step_s++;
             }
