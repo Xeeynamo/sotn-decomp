@@ -51,8 +51,6 @@ void func_us_801D91C4(Entity* self) {
     }
 }
 
-extern Entity* D_800762D8;
-extern Entity* D_8007A958;
 extern u16 D_us_80180BD8[];
 extern u16 D_us_80180BDE[];
 extern s32 D_us_8018234C;
@@ -107,7 +105,7 @@ void func_us_801D9264(Entity* self) {
             self->ext.et_801D9264.timer = 0x40;
             self->step_s++;
         }
-        AnimateEntity(&D_us_80182390, self);
+        AnimateEntity(D_us_80182390, self);
         if (self->ext.et_801D9264.timer == 0x20) {
             self->facingLeft ^= 1;
         }
@@ -122,7 +120,7 @@ void func_us_801D9264(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(&D_us_801823E4, self)) {
+            if (!AnimateEntity(D_us_801823E4, self)) {
                 self->ext.et_801D9264.y =
                     self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x20;
                 SetSubStep(1);
@@ -144,7 +142,7 @@ void func_us_801D9264(Entity* self) {
             }
             break;
         case 3:
-            AnimateEntity(&D_us_801823B8, self);
+            AnimateEntity(D_us_801823B8, self);
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
@@ -161,7 +159,7 @@ void func_us_801D9264(Entity* self) {
             }
             break;
         case 4:
-            AnimateEntity(&D_us_801823B8, self);
+            AnimateEntity(D_us_801823B8, self);
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
@@ -191,7 +189,7 @@ void func_us_801D9264(Entity* self) {
             }
             break;
         case 6:
-            if (!AnimateEntity(&D_us_8018243C, self)) {
+            if (!AnimateEntity(D_us_8018243C, self)) {
                 SetStep(2);
             }
             break;
@@ -230,7 +228,7 @@ void func_us_801D9264(Entity* self) {
             }
             break;
         case 3:
-            if (!AnimateEntity(&D_us_8018243C, self)) {
+            if (!AnimateEntity(D_us_8018243C, self)) {
                 if (GetDistanceToPlayerX() > 0x40) {
                     self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 }
@@ -259,7 +257,7 @@ void func_us_801D9264(Entity* self) {
         }
         break;
     case 7:
-        if (!AnimateEntity(&D_us_801823C4, self)) {
+        if (!AnimateEntity(D_us_801823C4, self)) {
             SetStep(5);
             self->step_s = 2;
         }
@@ -296,14 +294,14 @@ void func_us_801D9264(Entity* self) {
         }
         break;
     case 6:
-        if (!AnimateEntity(&D_us_801823F4, self)) {
+        if (!AnimateEntity(D_us_801823F4, self)) {
             SetStep(5);
         }
         if ((GetDistanceToPlayerY() < 0x60) && (self->animCurFrame == 0x24) &&
             (self->animFrameDuration == 0)) {
             PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_ID_44, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
@@ -319,14 +317,14 @@ void func_us_801D9264(Entity* self) {
         }
         break;
     case 8:
-        if (AnimateEntity(&D_us_80182364, self) == 0) {
+        if (AnimateEntity(D_us_80182364, self) == 0) {
             SetStep(2);
         }
         if ((GetDistanceToPlayerY() < 0x60) &&
             (self->animFrameIdx == 0x9 && self->animFrameDuration == 0)) {
             PlaySfxPositional(0x758);
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
-            newEntity = AllocEntity(&D_8007A958, &D_8007A958 + 0x5E0);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ID_45, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
@@ -349,7 +347,7 @@ void func_us_801D9264(Entity* self) {
             }
             break;
         case 1:
-            if (!AnimateEntity(&D_us_801823A0, self)) {
+            if (!AnimateEntity(D_us_801823A0, self)) {
                 SetSubStep(2);
             }
             break;
@@ -357,7 +355,7 @@ void func_us_801D9264(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(0x759);
             }
-            AnimateEntity(&D_us_801823B0, self);
+            AnimateEntity(D_us_801823B0, self);
             if ((g_Player.status & PLAYER_STATUS_UNK40000) == 0) {
                 SetStep(2);
             }
@@ -512,7 +510,7 @@ void func_us_801D9264(Entity* self) {
             posX = Random() & 0x3F;
             posY = self->ext.et_801D9264.y;
             if (!(g_Timer & 0xF)) {
-                newEntity = AllocEntity(&D_800762D8, (Entity*)&g_EvHwCardEnd);
+                newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
@@ -520,7 +518,7 @@ void func_us_801D9264(Entity* self) {
                     newEntity->params = 3;
                 }
             }
-            newEntity = AllocEntity(&D_800762D8, (Entity*)&g_EvHwCardEnd);
+            newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_ID_46, newEntity);
                 newEntity->posX.i.hi = (self->posX.i.hi - 0x20) + posX;
