@@ -46,6 +46,7 @@ extern u16 D_us_80172D2A;
 extern u32 D_us_801792D0;
 extern s32 D_us_801792EC;
 
+// Ranked lookup tables
 extern s32 D_us_80172C3C[];
 extern s32 D_us_80172C64[];
 
@@ -1160,7 +1161,7 @@ void func_us_80176504(Entity* arg0) {
 
     ProcessEvent(arg0, false);
     func_us_80173D60(arg0);
-    ServantUpdateAnim(arg0, NULL, D_us_80172B14);
+    ServantUpdateAnim(arg0, NULL, g_FaerieAnimationFrames);
     FntPrint("sts = %d\n", g_PlaySfxStep);
 }
 
@@ -1404,8 +1405,8 @@ void func_us_80176C98(Entity* self) {
         *((s32*)0x9234CB8) = 0x200;
     }
 #endif
-    func_us_801739C8(self);
-    D_us_801792D0 = ServantUpdateAnim(self, NULL, D_us_80172B14);
+    unused_39C8(self);
+    D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
