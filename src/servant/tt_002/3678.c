@@ -29,7 +29,6 @@ extern u8 D_80097A1A[];
 extern s32 D_us_80172BCC;
 extern s32 D_us_80172BD8;
 
-extern s32 D_us_80172BE4[];
 extern s16 D_us_80172494[];
 extern s16 D_us_801724C4[];
 extern s32 D_us_80172BD0;
@@ -40,15 +39,17 @@ extern s32 D_80097420[];
 extern Unkstruct_801724CC D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
-extern s32 D_us_80172C04[];
+
 extern u16 D_us_80172D28;
 extern u16 D_us_80172D2A;
 extern u32 D_us_801792D0;
 extern s32 D_us_801792EC;
 
 // Ranked lookup tables
-extern s32 D_us_80172C3C[];
-extern s32 D_us_80172C64[];
+extern RANKED_LOOKUP_TABLE(D_us_80172C04);
+extern RANKED_LOOKUP_TABLE(D_us_80172BE4);
+extern RANKED_LOOKUP_TABLE(D_us_80172C3C);
+extern RANKED_LOOKUP_TABLE(D_us_80172C64);
 
 extern FaerieAnimIndex D_us_80172368[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
@@ -613,8 +614,8 @@ void func_us_801753E4(Entity* self) {
             SetAnimationFrame(self, 0x17);
 
             for (rnd = rand() % 0x100, i = 0; true; i++) {
-                if (rnd <= D_us_80172BE4[i * 2]) {
-                    g_api.PlaySfx(D_us_80172BE4[(i * 2) + 1]);
+                if (rnd <= RANKED_LOOKUP_COMPARATOR(D_us_80172BE4, i)) {
+                    g_api.PlaySfx(RANKED_LOOKUP_VALUE(D_us_80172BE4, i));
                     break;
                 }
             }
@@ -895,8 +896,8 @@ void func_us_80175DBC(Entity* self) {
 
         if (self->animFrameIdx == 0xB) {
             for (rnd = rand() % 0x100, i = 0; true; i++) {
-                if (rnd <= D_us_80172BE4[i * 2]) {
-                    g_api.PlaySfx(D_us_80172BE4[(i * 2) + 1]);
+                if (rnd <= RANKED_LOOKUP_COMPARATOR(D_us_80172BE4, i)) {
+                    g_api.PlaySfx(RANKED_LOOKUP_VALUE(D_us_80172BE4, i));
                     break;
                 }
             }
@@ -1101,15 +1102,17 @@ void func_us_80176504(Entity* arg0) {
         rnd = rand() % 0x100;
         if (D_us_801792EC == 1) {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_80172C3C[i * 2]) {
-                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C3C[i * 2 + 1];
+                if (rnd <= RANKED_LOOKUP_COMPARATOR(D_us_80172C3C, i)) {
+                    arg0->ext.faerie.unkA4 =
+                        RANKED_LOOKUP_S16_DATA(D_us_80172C3C, i);
                     break;
                 }
             }
         } else {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_80172C64[i * 2]) {
-                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C64[i * 2 + 1];
+                if (rnd <= RANKED_LOOKUP_COMPARATOR(D_us_80172C64, i)) {
+                    arg0->ext.faerie.unkA4 =
+                        RANKED_LOOKUP_S16_DATA(D_us_80172C64, i);
                     break;
                 }
             }
@@ -1378,8 +1381,8 @@ void func_us_80176C98(Entity* self) {
         self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
         self->velocityY = FIX(1);
         for (rnd = rand() % 0x100, i = 0; true; i++) {
-            if (rnd <= D_us_80172C04[i * 2]) {
-                g_api.PlaySfx(D_us_80172C04[i * 2 + 1]);
+            if (rnd <= RANKED_LOOKUP_COMPARATOR(D_us_80172C04, i)) {
+                g_api.PlaySfx(RANKED_LOOKUP_VALUE(D_us_80172C04, i));
                 break;
             }
         }
