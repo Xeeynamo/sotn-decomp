@@ -238,11 +238,11 @@ void func_us_80173BD0(Entity* arg0) {
 }
 
 void func_us_80173D60(Entity* self) {
-    s32 i; 
-    s32 params; 
-    s32 rnd;  
-    s32 unkHpSum; 
-    s32 playerUnk18Flag; 
+    s32 i;
+    s32 params;
+    s32 rnd;
+    s32 unkHpSum;
+    s32 playerUnk18Flag;
 
     g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
     playerUnk18Flag = g_Player.unk18 & 0xFA00;
@@ -276,13 +276,13 @@ void func_us_80173D60(Entity* self) {
             D_us_80179318 = 0;
             D_us_80179310 = g_Status.hp;
             for (i = 0; i < 5; i++) {
-                D_us_8017930C[i] = 0;
+                D_us_801792FC[i] = 0;
             }
         }
     }
     if (g_Player.status & PLAYER_STATUS_UNK40000) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk0) {
+        if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk1) {
             self->entityId = 0xD2;
             self->step = 0;
             return;
@@ -304,11 +304,9 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    if (PLAYER.step == 0xB &&
-        (!IsMovementAllowed(0)) &&
-        D_80097A1D){
+    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) && D_80097A1D) {
         rnd = rand() % 100;
-        if(rnd <= D_us_80172408[(s_FaerieStats.level / 10)].unk2) {
+        if (rnd <= D_us_80172408[(s_FaerieStats.level / 10)].unk2) {
             self->ext.faerie.unk8E = 0;
             self->entityId = 0xD3;
             self->step = 0;
@@ -319,7 +317,7 @@ void func_us_80173D60(Entity* self) {
     if (self->entityId == 0xD4) {
         return;
     }
- 
+
     if (g_Player.status & PLAYER_STATUS_CURSE) {
         if (D_80097A1B) {
             rnd = rand() % 100;
@@ -343,7 +341,7 @@ void func_us_80173D60(Entity* self) {
     }
 
     if (g_Player.status & PLAYER_STATUS_POISON) {
-        if (D_80097A1A) {
+        if (D_80097A1A[0]) {
             rnd = rand() % 100;
             if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk4) {
                 self->ext.faerie.unk92 = false;
@@ -393,30 +391,22 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    
-
     for (unkHpSum = 0, params = 0, i = 0; i < 5; i++) {
         unkHpSum += D_us_801792FC[i];
     }
 
     if (unkHpSum >= (g_Status.hpMax / 2)) {
-        if(g_Status.hpMax < 100)
-        {
+        if (g_Status.hpMax < 100) {
             params = 1;
-        }
-        else
-        {
+        } else {
             params = 2;
         }
     }
 
     if (g_Status.hp <= (g_Status.hpMax / 10)) {
-        if(g_Status.hpMax < 100)
-        {
+        if (g_Status.hpMax < 100) {
             params = 1;
-        }
-        else
-        {
+        } else {
             params = 2;
         }
     }
@@ -434,7 +424,7 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    if ((D_80097A29 | D_80097A2A)) {
+    if (D_80097A29 | D_80097A2A) {
         rnd = rand() % 100;
         if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk6) {
             self->ext.faerie.unk94 = true;
@@ -460,7 +450,7 @@ void func_us_80173D60(Entity* self) {
             D_us_80179310 = g_Status.hp;
 
             for (i = 0; i < 5; i++) {
-                D_us_8017930C[i] = 0;
+                D_us_801792FC[i] = 0;
             }
         }
     }
