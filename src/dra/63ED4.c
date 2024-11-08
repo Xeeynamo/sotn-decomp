@@ -1606,11 +1606,11 @@ void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(POLY_GT4* poly, s32 colorIntensity) {
-    func_801071CC(poly, (u8)colorIntensity, 0);
-    func_801071CC(poly, (u8)colorIntensity, 1);
-    func_801071CC(poly, (u8)colorIntensity, 2);
-    func_801071CC(poly, (u8)colorIntensity, 3);
+void func_80107250(Primitive* prim, s32 colorIntensity) {
+    func_801071CC(prim, (u8)colorIntensity, 0);
+    func_801071CC(prim, (u8)colorIntensity, 1);
+    func_801071CC(prim, (u8)colorIntensity, 2);
+    func_801071CC(prim, (u8)colorIntensity, 3);
 }
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }

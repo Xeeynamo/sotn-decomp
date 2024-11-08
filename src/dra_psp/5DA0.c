@@ -65,7 +65,29 @@ void func_80102628(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E28D0);
+void func_801026BC(s32 arg0) {
+    Primitive* prim = &g_PrimBuf[D_801379A0];
+
+    if (arg0 == 0) {
+        prim->drawMode = DRAW_HIDE;
+        return;
+    } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
+        SetPrimRect(prim, 0, 1, 255, 255);
+    } else {
+        prim->x0 = prim->x2 = 255;
+        prim->x1 = prim->x3 = 0;
+        prim->y0 = prim->y1 = 240;
+        prim->y2 = prim->y3 = -15;
+    }
+
+    func_80107250(prim, arg0 * 2);
+
+    if (arg0 == 0x40) {
+        prim->drawMode = DRAW_DEFAULT;
+    } else {
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E29A8);
 

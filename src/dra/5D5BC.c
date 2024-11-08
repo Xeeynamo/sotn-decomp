@@ -2297,14 +2297,10 @@ void func_801026BC(s32 arg0) {
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
         SetPrimRect(prim, 0, 1, 255, 255);
     } else {
-        prim->x2 = 255;
-        prim->x0 = 255;
-        prim->y1 = 240;
-        prim->y0 = 240;
-        prim->x3 = 0;
-        prim->x1 = 0;
-        prim->y3 = -15;
-        prim->y2 = -15;
+        prim->x0 = prim->x2 = 255;
+        prim->x1 = prim->x3 = 0;
+        prim->y0 = prim->y1 = 240;
+        prim->y2 = prim->y3 = -15;
     }
 
     func_80107250(prim, arg0 * 2);
