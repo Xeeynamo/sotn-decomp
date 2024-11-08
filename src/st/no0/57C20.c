@@ -28,7 +28,355 @@ INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7D00);
 
 INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7DAC);
 
-INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D8150);
+extern u16 D_us_80180AF4;
+extern AnimationFrame D_us_80182280;
+extern AnimationFrame D_us_8018228C;
+extern AnimationFrame D_us_801822B4;
+extern AnimationFrame D_us_80182300;
+extern u16 D_us_80182324[];
+
+void func_us_801D8150(Entity* self) { //s2
+    Primitive* prim;
+    s32 primIndex;
+    s32 i; //s0
+    s32 posX; //s1
+    s32 posY; //s3
+    s16 temp_s0;
+    u32 params;
+    u8 intensity;
+    Entity* entity; //s3
+
+    params = self->params;
+    if(self->step < 7) {
+        entity = self - params;
+        if ((u16)(entity->posX.i.hi + 0x80) > 0x200 || ((u16)entity->posY.i.hi > 0x180)) {
+            return;
+        }
+    }
+
+    entity = self - params + 0xB;
+    if (self->step == 1) {
+        if (params == 0) {
+            self->unk60 = entity;
+        } else {
+            self->unk60 = self - 1;
+        }
+    }
+    if ((entity->hitFlags & 0xF) && (self->step < 7U)) {
+        if (entity->flags & FLAG_DEAD) {
+            PlaySfxPositional(0x731);
+            entity -= 0xB;
+            for (i = 0; i < 0xC; i++) {
+                entity->hitboxState = 0;
+                entity->step = 7;
+                entity->ext.et_801D8150.unk86 = 0xC0;
+                entity->flags |= FLAG_DEAD;
+                entity++;
+            }
+        } else if ((entity->step != 3) && ((entity->step - 5) > 1U)) {
+            if ((entity->hitPoints >= 0x1F) || (params != 0xB) || (self->ext.et_801D8150.unk8A != 0)) {
+                PlaySfxPositional(0x730);
+                if ((self->step - 5) > 1U) {
+                    self->step_s = self->step;
+                }
+                self->step = 5;
+                self->ext.et_801D8150.unk86 = 0x28;
+                if ((entity->hitPoints >= 0x1F) && (params == 0xB)) {
+                    self->animFrameIdx = 0;
+                    self->animFrameDuration = 0;
+                    self->anim = &D_us_80182280;
+                }
+            } else {
+                self->ext.et_801D8150.unk8A = 1;
+                self->anim = &D_us_801822B4;
+                self->animFrameIdx = 0;
+                self->animFrameDuration = 0;
+                self->step = 3;
+                self->drawFlags |= FLAG_DRAW_ROTZ;
+            }
+        }
+    }
+    switch (self->step) {
+    case 0:
+        if (params == 0) {
+            entity = self + 1;
+            for (i = 1; i < 0xC; ) {
+                CreateEntityFromCurrentEntity(E_ID_3D, entity);
+                entity->params = i++;
+                entity->facingLeft = self->facingLeft;
+                entity++;
+            }
+        }
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        InitializeEntity(&D_us_80180AF4);
+        if (params == 0xB) {
+            self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
+        }
+        
+        if (params == 0) {
+            self->animCurFrame = 1;
+        } else if (params == 0xB) {
+            self->animCurFrame = 2;
+        } else {
+            self->animCurFrame = 9;
+        }
+        self->zPriority = 0xFFE0 + (params * 2) + PLAYER.zPriority;
+        self->facingLeft = GetSideToPlayer() & 1;
+        if (params == 0) {
+            self->hitboxWidth = 0xC;
+            self->hitboxHeight = 0xC;
+            self->hitboxOffX = -8;
+            self->hitboxOffY = 8;
+        }
+        if (params == 0xB) {
+            self->hitboxWidth = 0x10;
+            self->hitboxHeight = 8;
+            self->hitboxOffX = 0x10;
+            self->hitboxOffY = 0;
+        } else {
+            self->hitPoints = 0x7FFF;
+        }
+        self->ext.et_801D8150.unk7E = params * 0x180;
+        self->ext.et_801D8150.unk88 = 0x480;
+        self->ext.et_801D8150.unk82 = params * 0x40 + 0x100;
+        if (params == 0) {
+            self->ext.et_801D8150.unk82 =  self->ext.et_801D8150.unk82 / 4;
+        }
+        if (params == 1) {
+            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 / 2;
+        }
+        if (params == 2) {
+            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 3 / 4;
+        }
+        break;
+
+    case 1:
+        if ((self->posX.i.hi < 0x120) || (self->posX.i.hi >= -0x1F) || (self->posY.i.hi < 0xE8)) {
+            self->ext.et_801D8150.unk84++;
+        }
+        self->ext.et_801D8150.unk7E += 0x30;
+        if (((self->ext.et_801D8150.unk84 & 0x1F) == 0x1F) && (params == 0xB)) {
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->anim = &D_us_8018228C;
+            PlaySfxPositional(SFX_SEED_SPIT);
+            self->step = 2;
+        }
+        break;
+    case 2:
+        self->ext.et_801D8150.unk7E += 0x30;
+        g_api.UpdateAnim(NULL, NULL);
+        if (self->animFrameIdx == 0x8 && self->animFrameDuration == 0x2F) {
+            PlaySfxPositional(SFX_SEED_BLIP);
+            func_us_801D7D00(0U);
+        }
+        if (self->animFrameDuration < 0) {
+            self->step = 1;
+            self->animCurFrame = 2;
+        }
+        break;
+    case 3:
+        self->ext.et_801D8150.unk7E += 0x100;
+        self->ext.et_801D8150.unk90 += 0x180;
+        self->rotZ = rsin(self->ext.et_801D8150.unk90) >> 3;
+        if (self->ext.et_801D8150.unk90 >= 0x6000) {
+            self->drawFlags &= ~FLAG_DRAW_ROTZ;
+        }
+        g_api.UpdateAnim(NULL, NULL);
+        if (self->animFrameDuration < 0) {
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->anim = &D_us_80182300;
+            PlaySfxPositional(SFX_SEED_SPIT);
+            self->step++;
+        }
+        break;
+    case 4:
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 0x1C;
+        self->hitboxOffX = 8;
+        self->hitboxOffY = 0;
+        self->ext.et_801D8150.unk7E += 0x30;
+        g_api.UpdateAnim(NULL, NULL);
+        if ((--self->ext.et_801D8150.unk84 & 0x3F) == 0x1F) {
+            PlaySfxPositional(SFX_SEED_BLIP);
+            func_us_801D7D00(1U);
+        }
+        break;
+    case 5:
+        if (params == 0xB) {
+            g_api.UpdateAnim(NULL, NULL);
+        }
+        self->ext.et_801D8150.unk88 -= 8;
+        self->ext.et_801D8150.unk7E += 0xC0;
+        if (!--self->ext.et_801D8150.unk86) {
+            self->ext.et_801D8150.unk86 = 0xC;
+            self->step++;
+        }
+        break;
+    case 6:
+        if (params == 0xB) {
+            g_api.UpdateAnim(NULL, NULL);
+        }
+        if (!self->ext.et_801D8150.unk86) {
+            self->ext.et_801D8150.unk7E += 0x30;
+            self->ext.et_801D8150.unk88 += 0x10;
+            
+            if (self->ext.et_801D8150.unk88 >= 0x480) {
+                self->ext.et_801D8150.unk88 = 0x480;
+                self->step = self->step_s;
+                if ((params == 0xB) && (self->step - 1) < 2U) {
+                    self->animFrameIdx = 7;
+                    self->animFrameDuration = 1;
+                    self->anim = &D_us_8018228C;
+                    self->step = 2;
+                }
+            }
+        } else {
+            self->ext.et_801D8150.unk86--;
+        }
+        break;
+    case 7:
+        if (!(g_Timer & 7)) {
+            PlaySfxPositional(SFX_EXPLODE_B);
+        }
+        self->ext.et_801D8150.unk7E += 0x180;
+        if ((params == 0xB) && !(self->ext.et_801D8150.unk86 & 1)) {
+            entity = g_api.GetFreeEntity(0xE0, 0x100);
+            if (entity != NULL) {
+                DestroyEntity(entity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+                entity->params = 1;
+                entity->zPriority = self->zPriority + 2;
+                if (self->facingLeft != 0) {
+                    entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0x1F;
+                } else {
+                    entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0xF;
+                }
+                entity->posY.i.hi = self->posY.i.hi + (rand() & 0x1F) - 0x10;
+            }
+        }
+        if (!--self->ext.et_801D8150.unk86) {
+            self->ext.et_801D8150.unk86 = (0xC - params) * 2;
+            self->step++;
+        }
+        break;
+    case 8:
+        if (!--self->ext.et_801D8150.unk86) {
+            if (params == 0xB) {
+                PlaySfxPositional(SFX_STUTTER_EXPLODE_B);
+            }
+            self->step++;
+            if (params != 0) {
+                self->posY.i.hi += 8;
+                EntityExplosionSpawn(1, 0);
+                return;
+            }
+            func_us_801D7D00(2U);
+            posX = self->posX.i.hi;
+            self->animSet = 0;
+            posY = self->posY.i.hi;
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex != -1) {
+                self->flags |= FLAG_HAS_PRIMS;
+                prim = &g_PrimBuf[self->primIndex];
+                prim->tpage = 0x1A;
+                prim->clut = 0x15F;
+                prim->u1 = prim->u3 = 0x3F;
+                prim->v0 = prim->v1 = 0xC0;
+                prim->v2 = prim->v3 = 0xFF;
+                prim->u0 = prim->u2 = 0;
+                prim->drawMode = 0x37;
+                prim->priority = self->zPriority - 2;
+
+                prim->r3 = prim->g3 = prim->b3 = 0x80;
+                prim->r2 = prim->g2 = prim->b2 = 0x80;
+                prim->r1 = prim->g1 = prim->b1 = 0x80;
+                prim->r0 = prim->g0 = prim->b0 = 0x80;
+
+                prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
+                prim->x1 = prim->x3 = self->ext.et_801D8150.unk94 + posX;
+                prim->y0 = prim->y1 = posY - self->ext.et_801D8150.unk94;
+                prim->y2 = prim->y3 = self->ext.et_801D8150.unk94 + posY;
+            }
+            self->ext.et_801D8150.unk86 = 0x18;
+            return;
+        }
+        break;
+    case 9:
+        if (--self->ext.et_801D8150.unk86) {
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi;
+            if (self->primIndex != -1) {
+                prim = &g_PrimBuf[self->primIndex];
+                if (prim->b3 > 8) {
+                    prim->b3 += 0xFA;
+                }
+                intensity = prim->b3;
+                
+                prim->r3 = prim->g3 = intensity;
+                prim->r2 = prim->g2 = prim->b2 = intensity;
+                prim->r1 = prim->g1 = prim->b1 = intensity;
+                prim->r0 = prim->g0 = prim->b0 = intensity;
+                self->ext.et_801D8150.unk94 += 4;
+                prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
+                prim->x1 = prim->x3 = self->ext.et_801D8150.unk94 + posX;
+                prim->y0 = prim->y1 = posY - self->ext.et_801D8150.unk94;
+                prim->y2 = prim->y3 = self->ext.et_801D8150.unk94 + posY;
+                return;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    if ((self->step < 7) && (params != 0) && (params != 0xB)) {
+        if ((params ^ g_GameTimer) & 1) {
+            self->hitboxState = 0;
+        } else {
+            self->hitboxState = 3;
+        }
+    }
+    self->ext.et_801D8150.unk7C = self->ext.et_801D8150.unk88 + ((rsin(self->ext.et_801D8150.unk7E) * self->ext.et_801D8150.unk82) >> 0xC);
+    if (!(g_GameTimer & 7) || (self->step > 6)) {
+        self->ext.et_801D8150.unk80 = (self->ext.et_801D8150.unk80 + 1) & 0xF;
+    }
+    i = 0;
+    if (params == 0) {
+        i = D_us_80182324[self->ext.et_801D8150.unk80];
+    }
+    if (params == 1) {
+        i = 0x30;
+    }
+    if (params == 2) {
+        i = 0x20;
+    }
+    if (params == 3) {
+        i = 0x10;
+    }
+    if (params == 4) {
+        i = 0x8;
+    }
+    i += 0x100;
+    
+    self->rotY = self->rotX = i;
+    if ((params != 0) && (self->step < 8)) {
+        self--;
+        posX = self->posX.val;
+        posY = self->posY.val;
+        temp_s0 = self->ext.et_801D8150.unk7C;
+        self++;
+        if (params == 0xB) {
+            self->posX.val = posX;
+            self->posY.val = posY;
+        } else {
+            self->posX.val = posX + 0x70 * rcos(temp_s0);
+            self->posY.val = posY - 0x70 * rsin(temp_s0);
+        }
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D8DF0);
 

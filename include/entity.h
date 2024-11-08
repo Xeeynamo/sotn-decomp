@@ -2047,6 +2047,27 @@ typedef struct {
     /* 0x84 */ s16 offsets[26];
 } ET_MedusaUnk1A;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 : 16;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+} ET_801D8150;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2220,6 +2241,7 @@ typedef union { // offset=0x7C
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
     ET_801D9264 et_801D9264;
+    ET_801D8150 et_801D8150;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
