@@ -602,7 +602,7 @@
 | dra    | func_psp_09126E60                   |      256 |         29 |        |                                 |       |
 | dra    | func_psp_090F1078                   |      256 |         39 | Yes    |                                 |       |
 | dra    | func_psp_09119D00                   |      257 |         34 |        | https://decomp.me/scratch/QRVI1 | 0.995 |
-|        | FindValidTarget                     |      258 |         36 |        |                                 |       |
+|        | FindValidTarget                     |      258 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
 | dra    | func_psp_090F6430                   |      259 |         36 |        |                                 |       |
 | dra    | func_psp_091123D8                   |      259 |         37 | Yes    |                                 |       |
 | dra    | func_psp_09130730                   |      260 |         37 | Yes    | https://decomp.me/scratch/yJ6yP | 1.0   |
