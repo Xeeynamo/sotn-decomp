@@ -726,7 +726,7 @@
 | dra    | func_psp_090DEAC8                   |     1175 |        181 |        |                                 |       |
 | wrp    | EntityRelicOrb                      |     1186 |         87 | Yes    | https://decomp.me/scratch/V04Wm | 0.998 |
 | dra    | func_psp_09130B00                   |     1189 |         81 |        | https://decomp.me/scratch/70r4s | 0.999 |
-| tt_000 | UpdateServantDefault                |     1199 |        126 | Yes    |                                 |       |
+| tt_000 | UpdateServantDefault                |     1199 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
 | dra    | func_psp_090E31F8                   |     1204 |        134 |        |                                 |       |
 | dra    | HandleNowLoading                    |     1204 |        196 |        |                                 |       |
 | wrp    | WRP_EntityRedDoor                   |     1248 |        112 | Yes    |                                 |       |
