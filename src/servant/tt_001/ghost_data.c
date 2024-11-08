@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "servant.h"
+#include "ghost.h"
 
-// ability stats for level / 10
-// 0 - delay counter
-// 1 - spell Id
-// 2 - make bad attacks (skips enemy hitbox & 8)
-s32 g_GhostAbilityStats[][3] = {
+GhostAbilityValues g_GhostAbilityStats[] = {
     {120, FAM_ABILITY_GHOST_ATTACK, 1},
     {120, FAM_ABILITY_GHOST_ATTACK, 1},
     {100, FAM_ABILITY_GHOST_ATTACK, 1},
