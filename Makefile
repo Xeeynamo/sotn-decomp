@@ -491,7 +491,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
-	$(M2CTX) $(SOURCE)
+	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
 extract_disk: ##@ Extract game files from a disc image.
