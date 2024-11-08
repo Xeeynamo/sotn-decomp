@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
-#include <servant.h>
+#include "faerie.h"
 #include "sfx.h"
 #include "items.h"
 
@@ -29,7 +29,6 @@ extern u8 D_80097A1A[];
 extern s32 D_us_80172BCC;
 extern s32 D_us_80172BD8;
 
-extern s32 D_us_80172BE4[];
 extern s16 D_us_80172494[];
 extern s16 D_us_801724C4[];
 extern s32 D_us_80172BD0;
@@ -40,26 +39,23 @@ extern s32 D_80097420[];
 extern Unkstruct_801724CC D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
-extern s32 D_us_80172C04[];
+
 extern u16 D_us_80172D28;
 extern u16 D_us_80172D2A;
 extern u32 D_us_801792D0;
 extern s32 D_us_801792EC;
 
+// Ranked lookup tables
+extern s32 D_us_80172C04[];
+extern s32 D_us_80172BE4[];
 extern s32 D_us_80172C3C[];
 extern s32 D_us_80172C64[];
 
-// this may actually be a multi dimensional array instead of a struct
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-} UnkFaerieStruct;
-
-extern UnkFaerieStruct D_us_80172368[];
-extern AnimationFrame* D_us_80172B14[];
+extern FaerieAnimIndex D_us_80172368[];
+extern AnimationFrame* g_FaerieAnimationFrames[];
 
 void SetAnimationFrame(Entity*, s32);
-void func_us_801739C8(Entity*);
+void unused_39C8(Entity*);
 void func_us_80173D60(Entity*);
 
 static void ServantInit(InitializeMode mode);
@@ -91,14 +87,14 @@ static s16 GetTargetPositionWithDistanceBuffer(
     s16 currentX, s16 targetX, s16 distanceBuffer);
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
-    if (self->anim != D_us_80172B14[animationIndex]) {
-        self->anim = D_us_80172B14[animationIndex];
+    if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
+        self->anim = g_FaerieAnimationFrames[animationIndex];
         self->animFrameIdx = 0;
         self->animFrameDuration = 0;
     }
 }
 
-void func_us_801739C8(Entity* arg0) {}
+void unused_39C8(Entity* arg0) {}
 
 void func_us_801739D0(Entity* arg0) {
     if (!arg0->ext.faerie.unk7E) {
@@ -439,8 +435,8 @@ void func_us_80174998(Entity* self) {
     if (!g_CutsceneHasControl) {
         func_us_80173D60(self);
     }
-    func_us_801739C8(self);
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    unused_39C8(self);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 void func_us_80174F0C(Entity* self) {
@@ -575,7 +571,7 @@ void func_us_80174F0C(Entity* self) {
         break;
     }
 
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 void func_us_801753E4(Entity* self) {
@@ -619,7 +615,7 @@ void func_us_801753E4(Entity* self) {
 
             for (rnd = rand() % 0x100, i = 0; true; i++) {
                 if (rnd <= D_us_80172BE4[i * 2]) {
-                    g_api.PlaySfx(D_us_80172BE4[(i * 2) + 1]);
+                    g_api.PlaySfx(D_us_80172BE4[i * 2 + 1]);
                     break;
                 }
             }
@@ -655,7 +651,7 @@ void func_us_801753E4(Entity* self) {
     }
 
     func_us_80173D60(self);
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 // This is a dupe of func_us_80175A78 with a slightly different offset
@@ -747,7 +743,7 @@ void func_us_80175730(Entity* self) {
     }
 
     func_us_80173D60(self);
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 // This is a dupe of func_us_80175730 with a slightly different offset
@@ -839,7 +835,7 @@ void func_us_80175A78(Entity* self) {
     }
 
     func_us_80173D60(self);
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 void func_us_80175DBC(Entity* self) {
@@ -901,7 +897,7 @@ void func_us_80175DBC(Entity* self) {
         if (self->animFrameIdx == 0xB) {
             for (rnd = rand() % 0x100, i = 0; true; i++) {
                 if (rnd <= D_us_80172BE4[i * 2]) {
-                    g_api.PlaySfx(D_us_80172BE4[(i * 2) + 1]);
+                    g_api.PlaySfx(D_us_80172BE4[i * 2 + 1]);
                     break;
                 }
             }
@@ -936,7 +932,7 @@ void func_us_80175DBC(Entity* self) {
     }
 
     func_us_80173D60(self);
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 void func_us_80176178(Entity* self) {
@@ -1026,7 +1022,7 @@ void func_us_80176178(Entity* self) {
     }
 
     func_us_80173D60(self);
-    ServantUpdateAnim(self, NULL, D_us_80172B14);
+    ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 void func_us_80176504(Entity* arg0) {
@@ -1107,14 +1103,14 @@ void func_us_80176504(Entity* arg0) {
         if (D_us_801792EC == 1) {
             for (i = 0; true; i++) {
                 if (rnd <= D_us_80172C3C[i * 2]) {
-                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C3C[i * 2 + 1];
+                    arg0->ext.faerie.unkA4 = D_us_80172C3C[i * 2 + 1];
                     break;
                 }
             }
         } else {
             for (i = 0; true; i++) {
                 if (rnd <= D_us_80172C64[i * 2]) {
-                    arg0->ext.faerie.unkA4 = (s16*)D_us_80172C64[i * 2 + 1];
+                    arg0->ext.faerie.unkA4 = D_us_80172C64[i * 2 + 1];
                     break;
                 }
             }
@@ -1166,13 +1162,13 @@ void func_us_80176504(Entity* arg0) {
 
     ProcessEvent(arg0, false);
     func_us_80173D60(arg0);
-    ServantUpdateAnim(arg0, NULL, D_us_80172B14);
+    ServantUpdateAnim(arg0, NULL, g_FaerieAnimationFrames);
     FntPrint("sts = %d\n", g_PlaySfxStep);
 }
 
 void func_us_80176B6C(Entity* self) {
-    s32 temp_unk0;
-    s32 temp_unk2;
+    s32 animIndex;
+    s32 zPriorityFlag;
     s32 i;
 #ifdef VERSION_PSP
     s32 temp_zPriority;
@@ -1190,16 +1186,16 @@ void func_us_80176B6C(Entity* self) {
     self->facingLeft = self->ext.faerieUnk0.unk7C->facingLeft;
 
     for (i = 6; i <= 0x2D; i++) {
-        if (self->ext.faerieUnk0.unk7C->anim == D_us_80172B14[i])
+        if (self->ext.faerieUnk0.unk7C->anim == g_FaerieAnimationFrames[i])
             break;
     }
 
-    temp_unk0 = abs(D_us_80172368[i - 6].unk0);
-    temp_unk2 = D_us_80172368[i - 6].unk2;
+    animIndex = abs(D_us_80172368[i - 6].animIndex);
+    zPriorityFlag = D_us_80172368[i - 6].zPriorityFlag;
 
-    SetAnimationFrame(self, temp_unk0);
+    SetAnimationFrame(self, animIndex);
 
-    if (temp_unk2) {
+    if (zPriorityFlag) {
         temp_zPriority = s_zPriority - 1;
     } else {
         temp_zPriority = s_zPriority + 1;
@@ -1207,7 +1203,7 @@ void func_us_80176B6C(Entity* self) {
 
     self->zPriority = temp_zPriority;
 
-    ServantUpdateAnim(self, 0, D_us_80172B14);
+    ServantUpdateAnim(self, 0, g_FaerieAnimationFrames);
 }
 
 void func_us_80176C98(Entity* self) {
@@ -1410,8 +1406,8 @@ void func_us_80176C98(Entity* self) {
         *((s32*)0x9234CB8) = 0x200;
     }
 #endif
-    func_us_801739C8(self);
-    D_us_801792D0 = ServantUpdateAnim(self, NULL, D_us_80172B14);
+    unused_39C8(self);
+    D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
