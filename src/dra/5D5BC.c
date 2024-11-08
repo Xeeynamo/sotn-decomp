@@ -2264,7 +2264,10 @@ void func_801024DC(void) {
     prim->drawMode = DRAW_HIDE;
 }
 
-s32 func_801025F4(void) { return g_PrimBuf[D_8013799C].clut; }
+s32 func_801025F4(void) {
+    Primitive* prim = &g_PrimBuf[D_8013799C];
+    return prim->clut;
+}
 
 void func_80102628(s32 arg0) {
     Primitive* prim;

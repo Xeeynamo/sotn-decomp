@@ -40,7 +40,11 @@ void func_801024DC(void) {
 
     prim->drawMode = DRAW_HIDE;
 }
-INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E2820);
+
+s32 func_801025F4(void) {
+    Primitive* prim = &g_PrimBuf[D_8013799C];
+    return prim->clut;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E2848);
 
