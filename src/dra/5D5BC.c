@@ -2275,6 +2275,7 @@ void func_80102628(s32 arg0) {
 
     prim = &g_PrimBuf[D_8013799C];
     for (i = 0; prim != NULL; i++) {
+        prim->x0 = arg0 / 2 * (i & 1);
         prim->y0 = 0;
         prim->u0 = arg0 / 2;
         prim->v0 = 0xF0;
@@ -2283,7 +2284,6 @@ void func_80102628(s32 arg0) {
         prim->r0 = 0;
         prim->priority = 0x1FD;
         prim->drawMode = DRAW_HIDE;
-        prim->x0 = arg0 / 2 * (i & 1);
         prim = prim->next;
     }
 }

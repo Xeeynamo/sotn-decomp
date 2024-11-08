@@ -46,7 +46,24 @@ s32 func_801025F4(void) {
     return prim->clut;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E2848);
+void func_80102628(s32 arg0) {
+    Primitive* prim;
+    s32 i;
+
+    prim = &g_PrimBuf[D_8013799C];
+    for (i = 0; prim != NULL; i++) {
+        prim->x0 = arg0 / 2 * (i & 1);
+        prim->y0 = 0;
+        prim->u0 = arg0 / 2;
+        prim->v0 = 0xF0;
+        prim->b0 = 0;
+        prim->g0 = 0;
+        prim->r0 = 0;
+        prim->priority = 0x1FD;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E28D0);
 
