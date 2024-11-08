@@ -43,7 +43,6 @@ void func_us_801D8150(Entity* self) { //s2
     s32 posY; //s3
     s16 temp_s0;
     u32 params;
-    u8 intensity;
     Entity* entity; //s3
 
     params = self->params;
@@ -62,7 +61,7 @@ void func_us_801D8150(Entity* self) { //s2
             self->unk60 = self - 1;
         }
     }
-    if ((entity->hitFlags & 0xF) && (self->step < 7U)) {
+    if ((entity->hitFlags & 0xF) && (self->step < 7)) {
         if (entity->flags & FLAG_DEAD) {
             PlaySfxPositional(0x731);
             entity -= 0xB;
@@ -73,10 +72,10 @@ void func_us_801D8150(Entity* self) { //s2
                 entity->flags |= FLAG_DEAD;
                 entity++;
             }
-        } else if ((entity->step != 3) && ((entity->step - 5) > 1U)) {
+        } else if ((entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
             if ((entity->hitPoints >= 0x1F) || (params != 0xB) || (self->ext.et_801D8150.unk8A != 0)) {
                 PlaySfxPositional(0x730);
-                if ((self->step - 5) > 1U) {
+                if ((entity->step != 6) && (entity->step != 5)) {
                     self->step_s = self->step;
                 }
                 self->step = 5;
@@ -312,12 +311,7 @@ void func_us_801D8150(Entity* self) { //s2
                 if (prim->b3 > 8) {
                     prim->b3 += 0xFA;
                 }
-                intensity = prim->b3;
-                
-                prim->r3 = prim->g3 = intensity;
-                prim->r2 = prim->g2 = prim->b2 = intensity;
-                prim->r1 = prim->g1 = prim->b1 = intensity;
-                prim->r0 = prim->g0 = prim->b0 = intensity;
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
                 self->ext.et_801D8150.unk94 += 4;
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
                 prim->x1 = prim->x3 = self->ext.et_801D8150.unk94 + posX;
@@ -372,8 +366,8 @@ void func_us_801D8150(Entity* self) { //s2
             self->posX.val = posX;
             self->posY.val = posY;
         } else {
-            self->posX.val = posX + 0x70 * rcos(temp_s0);
-            self->posY.val = posY - 0x70 * rsin(temp_s0);
+            self->posX.val = posX + rcos(temp_s0) * 0x70;
+            self->posY.val = posY - rsin(temp_s0) * 0x70;
         }
     }
 }
