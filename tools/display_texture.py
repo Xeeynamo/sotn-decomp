@@ -85,7 +85,7 @@ def color_tpage(tpage, clut):
 # Experimentally determined. For a tpage from 0x00 to 0x1F, get that tpage
 # out of VRAM.
 def get_tpage_by_number(raw_dump, tpage_num):
-    assert 0 < tpage_num < 0x20
+    assert 0 <= tpage_num < 0x20
     tpage_row = tpage_num >= 0x10  # Row 0 or 1. First 16 are row 0, then row 1
     tpage_top = tpage_row * 256  # rows are 256 pixels tall so this is where it starts
     tpage_bottom = tpage_top + 256

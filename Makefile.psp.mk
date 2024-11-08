@@ -80,12 +80,13 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-FILES_WITH_O4 = 61F30.c.o 63C90.c.o
-OPTIMIZATION = $(if $(filter $(notdir $@),$(FILES_WITH_O4)), -O4, -Op)
+FILES_WITH_O4 = 5DA0.c.o 61F30.c.o 63C90.c.o
+OPT_HIGH = -O4,p #need this because otherwise the comma breaks the filter statement
+OPTIMIZATION = $(if $(filter $(notdir $@),$(FILES_WITH_O4)), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu $(OPTIMIZATION) $(MWCCPSP_FLAGS)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS) $(OPTIMIZATION)
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)
