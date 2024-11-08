@@ -1,19 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 #include <sfx.h>
-#include <servant.h>
+#include "ghost.h"
 #include "../servant_private.h"
-
-#define DELAY_FRAMES_INDEX 0
-#define SPELL_ID_INDEX 1
-#define BAD_ATTACKS_INDEX 2
 
 #define ENTITY_ID_ATTACK_CLOUD 0xDA
 #define ENTITY_ID_CONFUSION 0xDB
 
 typedef enum { ATTACK_CLOUD, CONFUSION } ChildEntityType;
 
-// These variables are only used in UpdateEntityVelocityTowardsTarget
 static s16 s_DeltaX;
 STATIC_PAD_BSS(2);
 static s16 s_DeltaY;
@@ -38,8 +33,8 @@ static s32 s_TargetLocationX_calc;
 static s32 s_TargetLocationY_calc;
 static s32 s_AttackPrimIndex;
 static s32 s_AttackPosOscillator;
-static s32 D_us_801737E8;
-static s32 D_us_801737EC;
+static s32 s_AttackPrimX_calc;
+static s32 s_AttackPrimY_calc;
 static Primitive* s_CurrentAttackPrim;
 static s32 s_AttackCloudTimer;
 static s32 s_AttackPosOscillator_calc;
@@ -59,9 +54,9 @@ static FamiliarStats s_GhostStats;
 static s32 s_IsServantDestroyed;
 static s32 s_LastTargetedEntityIndex;
 
-extern s32 g_DefaultGhostAnimationFrame[];
+extern AnimationFrame g_DefaultGhostAnimationFrame[];
 extern AnimationFrame* g_GhostAnimationFrames[];
-extern s32 g_GhostAbilityStats[][3];
+extern GhostAbilityValues g_GhostAbilityStats[];
 extern u16 g_GhostClut[];
 
 extern s16
@@ -190,8 +185,7 @@ static Entity* FindValidTarget(
             continue;
         // Differs from here
         if (entity->hitboxState & 8 &&
-            g_GhostAbilityStats[s_GhostStats.level / 10][BAD_ATTACKS_INDEX] ==
-                0)
+            g_GhostAbilityStats[s_GhostStats.level / 10].makeBadAttacks == 0)
             continue;
         if (abs(self->posX.i.hi - entity->posX.i.hi) >= 49)
             continue;
@@ -528,18 +522,15 @@ void UpdateServantDefault(Entity* self) {
         } else if (s_DistanceToTarget2 < 8) {
             self->ext.ghost.frameCounter++;
             if (self->ext.ghost.frameCounter ==
-                (g_GhostAbilityStats[s_GhostStats.level / 10]
-                                    [DELAY_FRAMES_INDEX] -
+                (g_GhostAbilityStats[s_GhostStats.level / 10].delayFrames -
                  30)) {
                 self->ext.ghost.attackEntity = CreateChildEntity(self, 0);
-            } else if (self->ext.ghost.frameCounter >
-                       g_GhostAbilityStats[s_GhostStats.level / 10]
-                                          [DELAY_FRAMES_INDEX]) {
+            } else if (
+                self->ext.ghost.frameCounter >
+                g_GhostAbilityStats[s_GhostStats.level / 10].delayFrames) {
                 self->ext.ghost.frameCounter = 0;
                 g_api.GetServantStats(
-                    self,
-                    g_GhostAbilityStats[s_GhostStats.level / 10]
-                                       [SPELL_ID_INDEX],
+                    self, g_GhostAbilityStats[s_GhostStats.level / 10].spellId,
                     1, &s_GhostStats);
                 self->hitboxWidth = 8;
                 self->hitboxHeight = 8;
@@ -742,20 +733,24 @@ void UpdateAttackEntites(Entity* self) {
     s_CurrentAttackPrim = &g_PrimBuf[self->primIndex];
 
     for (s_AttackPrimIndex = 0; s_AttackPrimIndex < 8; s_AttackPrimIndex++) {
-        D_us_801737E8 =
+        s_AttackPrimX_calc =
             self->posX.i.hi +
             ((rcos(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) *
               s_AttackCloudTimer) >>
              12);
-        D_us_801737EC =
+        s_AttackPrimY_calc =
             self->posY.i.hi -
             ((rsin(s_AttackPosOscillator + (s_AttackPrimIndex << 9)) *
               s_AttackCloudTimer) >>
              12);
-        s_CurrentAttackPrim->x0 = s_CurrentAttackPrim->x2 = D_us_801737E8 - 4;
-        s_CurrentAttackPrim->x1 = s_CurrentAttackPrim->x3 = D_us_801737E8 + 4;
-        s_CurrentAttackPrim->y0 = s_CurrentAttackPrim->y1 = D_us_801737EC - 4;
-        s_CurrentAttackPrim->y2 = s_CurrentAttackPrim->y3 = D_us_801737EC + 4;
+        s_CurrentAttackPrim->x0 = s_CurrentAttackPrim->x2 =
+            s_AttackPrimX_calc - 4;
+        s_CurrentAttackPrim->x1 = s_CurrentAttackPrim->x3 =
+            s_AttackPrimX_calc + 4;
+        s_CurrentAttackPrim->y0 = s_CurrentAttackPrim->y1 =
+            s_AttackPrimY_calc - 4;
+        s_CurrentAttackPrim->y2 = s_CurrentAttackPrim->y3 =
+            s_AttackPrimY_calc + 4;
         s_CurrentAttackPrim = s_CurrentAttackPrim->next;
     }
 }
