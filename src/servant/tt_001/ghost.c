@@ -7,6 +7,12 @@
 #define ENTITY_ID_ATTACK_CLOUD 0xDA
 #define ENTITY_ID_CONFUSION 0xDB
 
+#ifdef VERSION_PSP
+#define PSP_INLINE(code) code
+#else
+#define PSP_INLINE(code)
+#endif
+
 typedef enum { ATTACK_CLOUD, CONFUSION } ChildEntityType;
 
 static s16 s_DeltaX;
@@ -512,6 +518,7 @@ void UpdateServantDefault(Entity* self) {
         if (self->velocityX < 0) {
             self->facingLeft = 0;
         }
+
         s_DistanceToTarget2 = UpdateEntityVelocityTowardsTarget(
             self, s_TargetLocationX, s_TargetLocationY);
         if (self->step == 2) {
@@ -537,7 +544,8 @@ void UpdateServantDefault(Entity* self) {
             }
         } else {
             self->ext.ghost.frameCounter = 0;
-            if (self->ext.ghost.attackEntity->entityId ==
+            if (PSP_INLINE(self->ext.ghost.attackEntity&&)
+                    self->ext.ghost.attackEntity->entityId ==
                 ENTITY_ID_ATTACK_CLOUD) {
                 self->ext.ghost.attackEntity->params = 1;
                 // this is calling UpdateAttackEntites
@@ -550,7 +558,8 @@ void UpdateServantDefault(Entity* self) {
     case 4:
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_AXEARMOR))) {
-            if (self->ext.ghost.confusedEntity->entityId ==
+            if (PSP_INLINE(self->ext.ghost.confusedEntity&&)
+                    self->ext.ghost.confusedEntity->entityId ==
                 ENTITY_ID_CONFUSION) {
                 self->ext.ghost.confusedEntity->params = 1;
                 // this is calling UpdateConfusedEntites
