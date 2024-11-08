@@ -371,7 +371,6 @@
 | dra    | func_psp_0910EFE0                   |       71 |         11 |        |                                 |       |
 | dra    | InitSoundVars3                      |       72 |          1 |        | https://decomp.me/scratch/wDtJk | 0.951 |
 | wrp    | PrimResetNext                       |       72 |          1 |        |                                 |       |
-| dra    | func_psp_090E2720                   |       72 |          5 |        |                                 |       |
 | dra    | func_psp_090E8A30                   |       72 |          5 |        |                                 |       |
 | dra    | func_psp_090F0220                   |       72 |          7 |        |                                 |       |
 | dra    | func_psp_09142ED8                   |       72 |          7 |        |                                 |       |
