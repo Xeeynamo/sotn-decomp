@@ -69,26 +69,26 @@ void func_us_801D8150(Entity* self) {
             for (i = 0; i < 0xC; i++, entity++) {
                 entity->hitboxState = 0;
                 entity->step = 7;
-                entity->ext.et_801D8150.unk86 = 0xC0;
+                entity->ext.stoneRose.unk86 = 0xC0;
                 entity->flags |= FLAG_DEAD;
             }
         } else if (
             (entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
             if ((entity->hitPoints >= 0x1F) || (params != 0xB) ||
-                self->ext.et_801D8150.unk8A) {
+                self->ext.stoneRose.unk8A) {
                 PlaySfxPositional(0x730);
                 if ((self->step != 6) && (self->step != 5)) {
                     self->step_s = self->step;
                 }
                 self->step = 5;
-                self->ext.et_801D8150.unk86 = 0x28;
+                self->ext.stoneRose.unk86 = 0x28;
                 if ((entity->hitPoints >= 0x1F) && (params == 0xB)) {
                     self->animFrameIdx = 0;
                     self->animFrameDuration = 0;
                     self->anim = &D_us_80182280;
                 }
             } else {
-                self->ext.et_801D8150.unk8A = true;
+                self->ext.stoneRose.unk8A = true;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->anim = &D_us_801822B4;
@@ -136,26 +136,26 @@ void func_us_801D8150(Entity* self) {
         } else {
             self->hitPoints = 0x7FFF;
         }
-        self->ext.et_801D8150.unk7E = params * 0x180;
-        self->ext.et_801D8150.unk88 = 0x480;
-        self->ext.et_801D8150.unk82 = params * 0x40 + 0x100;
+        self->ext.stoneRose.unk7E = params * 0x180;
+        self->ext.stoneRose.unk88 = 0x480;
+        self->ext.stoneRose.unk82 = params * 0x40 + 0x100;
         if (params == 0) {
-            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 1 / 4;
+            self->ext.stoneRose.unk82 = self->ext.stoneRose.unk82 * 1 / 4;
         }
         if (params == 1) {
-            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 2 / 4;
+            self->ext.stoneRose.unk82 = self->ext.stoneRose.unk82 * 2 / 4;
         }
         if (params == 2) {
-            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 3 / 4;
+            self->ext.stoneRose.unk82 = self->ext.stoneRose.unk82 * 3 / 4;
         }
         break;
     case 1:
         if ((self->posX.i.hi < 0x120) || (self->posX.i.hi >= -0x1F) ||
             (self->posY.i.hi < 0xE8)) {
-            self->ext.et_801D8150.unk84++;
+            self->ext.stoneRose.unk84++;
         }
-        self->ext.et_801D8150.unk7E += 0x30;
-        if (((self->ext.et_801D8150.unk84 & 0x1F) == 0x1F) && (params == 0xB)) {
+        self->ext.stoneRose.unk7E += 0x30;
+        if (((self->ext.stoneRose.unk84 & 0x1F) == 0x1F) && (params == 0xB)) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->anim = &D_us_8018228C;
@@ -164,7 +164,7 @@ void func_us_801D8150(Entity* self) {
         }
         break;
     case 2:
-        self->ext.et_801D8150.unk7E += 0x30;
+        self->ext.stoneRose.unk7E += 0x30;
         g_api.UpdateAnim(NULL, NULL);
         if (self->animFrameIdx == 0x8 && self->animFrameDuration == 0x2F) {
             PlaySfxPositional(SFX_SEED_BLIP);
@@ -176,10 +176,10 @@ void func_us_801D8150(Entity* self) {
         }
         break;
     case 3:
-        self->ext.et_801D8150.unk7E += 0x100;
-        self->ext.et_801D8150.unk90 += 0x180;
-        self->rotZ = rsin(self->ext.et_801D8150.unk90) >> 3;
-        if (self->ext.et_801D8150.unk90 >= 0x6000) {
+        self->ext.stoneRose.unk7E += 0x100;
+        self->ext.stoneRose.unk90 += 0x180;
+        self->rotZ = rsin(self->ext.stoneRose.unk90) >> 3;
+        if (self->ext.stoneRose.unk90 >= 0x6000) {
             self->drawFlags &= ~FLAG_DRAW_ROTZ;
         }
         g_api.UpdateAnim(NULL, NULL);
@@ -196,10 +196,10 @@ void func_us_801D8150(Entity* self) {
         self->hitboxHeight = 0x1C;
         self->hitboxOffX = 8;
         self->hitboxOffY = 0;
-        self->ext.et_801D8150.unk7E += 0x30;
+        self->ext.stoneRose.unk7E += 0x30;
         g_api.UpdateAnim(NULL, NULL);
-        --self->ext.et_801D8150.unk84;
-        if ((self->ext.et_801D8150.unk84 & 0x3F) == 0x1F) {
+        --self->ext.stoneRose.unk84;
+        if ((self->ext.stoneRose.unk84 & 0x3F) == 0x1F) {
             PlaySfxPositional(SFX_SEED_BLIP);
             func_us_801D7D00(1U);
         }
@@ -208,10 +208,10 @@ void func_us_801D8150(Entity* self) {
         if (params == 0xB) {
             g_api.UpdateAnim(NULL, NULL);
         }
-        self->ext.et_801D8150.unk88 -= 8;
-        self->ext.et_801D8150.unk7E += 0xC0;
-        if (--self->ext.et_801D8150.unk86 == 0) {
-            self->ext.et_801D8150.unk86 = 0xC;
+        self->ext.stoneRose.unk88 -= 8;
+        self->ext.stoneRose.unk7E += 0xC0;
+        if (--self->ext.stoneRose.unk86 == 0) {
+            self->ext.stoneRose.unk86 = 0xC;
             self->step++;
         }
         break;
@@ -219,12 +219,12 @@ void func_us_801D8150(Entity* self) {
         if (params == 0xB) {
             g_api.UpdateAnim(NULL, NULL);
         }
-        if (!self->ext.et_801D8150.unk86) {
-            self->ext.et_801D8150.unk7E += 0x30;
-            self->ext.et_801D8150.unk88 += 0x10;
+        if (!self->ext.stoneRose.unk86) {
+            self->ext.stoneRose.unk7E += 0x30;
+            self->ext.stoneRose.unk88 += 0x10;
 
-            if (self->ext.et_801D8150.unk88 >= 0x480) {
-                self->ext.et_801D8150.unk88 = 0x480;
+            if (self->ext.stoneRose.unk88 >= 0x480) {
+                self->ext.stoneRose.unk88 = 0x480;
                 self->step = self->step_s;
                 if (params == 0xB && (self->step == 2 || self->step == 1)) {
                     self->animFrameIdx = 7;
@@ -234,15 +234,15 @@ void func_us_801D8150(Entity* self) {
                 }
             }
         } else {
-            self->ext.et_801D8150.unk86--;
+            self->ext.stoneRose.unk86--;
         }
         break;
     case 7:
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_EXPLODE_B);
         }
-        self->ext.et_801D8150.unk7E += 0x180;
-        if ((params == 0xB) && !(self->ext.et_801D8150.unk86 & 1)) {
+        self->ext.stoneRose.unk7E += 0x180;
+        if ((params == 0xB) && !(self->ext.stoneRose.unk86 & 1)) {
             entity = g_api.GetFreeEntity(0xE0, 0x100);
             if (entity != NULL) {
                 DestroyEntity(entity);
@@ -258,13 +258,13 @@ void func_us_801D8150(Entity* self) {
                 entity->posY.i.hi = self->posY.i.hi + (rand() & 0x1F) - 0x10;
             }
         }
-        if (--self->ext.et_801D8150.unk86 == 0) {
+        if (--self->ext.stoneRose.unk86 == 0) {
             self->step++;
-            self->ext.et_801D8150.unk86 = (0xC - params) * 2;
+            self->ext.stoneRose.unk86 = (0xC - params) * 2;
         }
         break;
     case 8:
-        if (--self->ext.et_801D8150.unk86 == 0) {
+        if (--self->ext.stoneRose.unk86 == 0) {
             if (params == 0xB) {
                 PlaySfxPositional(SFX_STUTTER_EXPLODE_B);
             }
@@ -295,17 +295,17 @@ void func_us_801D8150(Entity* self) {
                 PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) =
                     PGREY(prim, 3) = 0x80;
 
-                prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
-                prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
-                prim->y0 = prim->y1 = posY - self->ext.et_801D8150.unk94;
-                prim->y2 = prim->y3 = posY + self->ext.et_801D8150.unk94;
+                prim->x0 = prim->x2 = posX - self->ext.stoneRose.unk94;
+                prim->x1 = prim->x3 = posX + self->ext.stoneRose.unk94;
+                prim->y0 = prim->y1 = posY - self->ext.stoneRose.unk94;
+                prim->y2 = prim->y3 = posY + self->ext.stoneRose.unk94;
             }
-            self->ext.et_801D8150.unk86 = 0x18;
+            self->ext.stoneRose.unk86 = 0x18;
             return;
         }
         break;
     case 9:
-        if (--self->ext.et_801D8150.unk86) {
+        if (--self->ext.stoneRose.unk86) {
             posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             if (self->primIndex != -1) {
@@ -315,11 +315,11 @@ void func_us_801D8150(Entity* self) {
                 }
                 PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = prim->r3 =
                     prim->g3 = prim->b3;
-                self->ext.et_801D8150.unk94 += 4;
-                prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
-                prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
-                prim->y0 = prim->y1 = posY - self->ext.et_801D8150.unk94;
-                prim->y2 = prim->y3 = posY + self->ext.et_801D8150.unk94;
+                self->ext.stoneRose.unk94 += 4;
+                prim->x0 = prim->x2 = posX - self->ext.stoneRose.unk94;
+                prim->x1 = prim->x3 = posX + self->ext.stoneRose.unk94;
+                prim->y0 = prim->y1 = posY - self->ext.stoneRose.unk94;
+                prim->y2 = prim->y3 = posY + self->ext.stoneRose.unk94;
             }
         } else {
             DestroyEntity(self);
@@ -334,17 +334,16 @@ void func_us_801D8150(Entity* self) {
             self->hitboxState = 3;
         }
     }
-    self->ext.et_801D8150.unk7C =
-        self->ext.et_801D8150.unk88 +
-        ((rsin(self->ext.et_801D8150.unk7E) * self->ext.et_801D8150.unk82) >>
-         0xC);
+    self->ext.stoneRose.unk7C =
+        self->ext.stoneRose.unk88 +
+        ((rsin(self->ext.stoneRose.unk7E) * self->ext.stoneRose.unk82) >> 0xC);
     if (!(g_GameTimer & 7) || (self->step > 6)) {
-        self->ext.et_801D8150.unk80++;
-        self->ext.et_801D8150.unk80 &= 0xF;
+        self->ext.stoneRose.unk80++;
+        self->ext.stoneRose.unk80 &= 0xF;
     }
     i = 0;
     if (params == 0) {
-        i = D_us_80182324[self->ext.et_801D8150.unk80];
+        i = D_us_80182324[self->ext.stoneRose.unk80];
     }
     if (params == 1) {
         i = 0x30;
@@ -365,7 +364,7 @@ void func_us_801D8150(Entity* self) {
         self--;
         posX = self->posX.val;
         posY = self->posY.val;
-        temp_s0 = self->ext.et_801D8150.unk7C;
+        temp_s0 = self->ext.stoneRose.unk7C;
         self++;
         if (params == 0xB) {
             self->posX.val = posX;

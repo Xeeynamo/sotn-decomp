@@ -2061,7 +2061,7 @@ typedef struct {
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ s16 unk94;
-} ET_801D8150;
+} ET_StoneRose;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -2236,7 +2236,7 @@ typedef union { // offset=0x7C
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
     ET_801D9264 et_801D9264;
-    ET_801D8150 et_801D8150;
+    ET_StoneRose stoneRose;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
