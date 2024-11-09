@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - '*.md'
       - '**/*.md'
-  pull_request_target:
+  pull_request:
     paths-ignore:
       - '*.md'
       - '**/*.md'
@@ -35,18 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ matrix.version }}
-      FROGRESS_API_BASE_URL: "https://progress.deco.mp"
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
-      - name: Clone main repo (PR)
-        if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          submodules: false
       - name: Clone main repo
-        if: github.event_name != 'pull_request_target'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
@@ -92,23 +84,6 @@ jobs:
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
-      - name: Post the progress update as a comment to the pull request
-        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { execSync } = require('child_process');
-            const output = execSync('.venv/bin/python3 tools/progress.py --markdown').toString().trim();
-            if (output) {
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: output
-              });
-            }
-
 
   generate-progress-report:
     strategy:
