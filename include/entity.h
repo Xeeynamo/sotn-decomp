@@ -2061,11 +2061,6 @@ typedef struct {
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ s16 unk94;
-    /* 0x96 */ s16 : 16;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
 } ET_801D8150;
 
 typedef union { // offset=0x7C
