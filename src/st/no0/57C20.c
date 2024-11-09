@@ -292,9 +292,7 @@ void func_us_801D8150(Entity* self) {
                                  DRAW_UNK02 | DRAW_TRANSP;
                 prim->priority = self->zPriority - 2;
 
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
-                        prim->g3 = prim->b3 = 0x80;
+                PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) = 0x80;
 
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
                 prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
@@ -314,9 +312,7 @@ void func_us_801D8150(Entity* self) {
                 if (prim->b3 > 8) {
                     prim->b3 -= 6;
                 }
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
-                        prim->g3 = prim->b3;
+                PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = prim->r3 = prim->g3 = prim->b3;
                 self->ext.et_801D8150.unk94 += 4;
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
                 prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
