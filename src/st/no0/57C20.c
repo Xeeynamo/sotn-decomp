@@ -28,7 +28,7 @@ INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7D00);
 
 INCLUDE_ASM("st/no0/nonmatchings/57C20", func_us_801D7DAC);
 
-extern u16 D_us_80180AF4;
+extern u16 D_us_80180AF4[];
 extern AnimationFrame D_us_80182280;
 extern AnimationFrame D_us_8018228C;
 extern AnimationFrame D_us_801822B4;
@@ -108,7 +108,7 @@ void func_us_801D8150(Entity* self) {
             }
         }
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        InitializeEntity(&D_us_80180AF4);
+        InitializeEntity(D_us_80180AF4);
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
         }
