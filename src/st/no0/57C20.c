@@ -35,20 +35,21 @@ extern AnimationFrame D_us_801822B4;
 extern AnimationFrame D_us_80182300;
 extern u16 D_us_80182324[];
 
-void func_us_801D8150(Entity* self) { //s2
+void func_us_801D8150(Entity* self) {
     Primitive* prim;
     s32 primIndex;
-    s32 i; //s0
-    s32 posX; //s1
-    s32 posY; //s3
+    s32 i;
+    s32 posX;
+    s32 posY;
     s16 temp_s0;
     u32 params;
-    Entity* entity; //s3
+    Entity* entity;
 
     params = self->params;
-    if(self->step < 7) {
+    if (self->step < 7) {
         entity = self - params;
-        if ((entity->posX.i.hi > 0x180) || (entity->posX.i.hi < -0x80) || (entity->posY.i.hi > 0x180) || (entity->posY.i.hi < 0)) {
+        if ((entity->posX.i.hi > 0x180) || (entity->posX.i.hi < -0x80) ||
+            (entity->posY.i.hi > 0x180) || (entity->posY.i.hi < 0)) {
             return;
         }
     }
@@ -71,8 +72,10 @@ void func_us_801D8150(Entity* self) { //s2
                 entity->ext.et_801D8150.unk86 = 0xC0;
                 entity->flags |= FLAG_DEAD;
             }
-        } else if ((entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
-            if ((entity->hitPoints >= 0x1F) || (params != 0xB) || self->ext.et_801D8150.unk8A) {
+        } else if (
+            (entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
+            if ((entity->hitPoints >= 0x1F) || (params != 0xB) ||
+                self->ext.et_801D8150.unk8A) {
                 PlaySfxPositional(0x730);
                 if ((self->step != 6) && (self->step != 5)) {
                     self->step_s = self->step;
@@ -109,7 +112,7 @@ void func_us_801D8150(Entity* self) { //s2
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
         }
-        
+
         if (params == 0) {
             self->animCurFrame = 1;
         } else if (params == 0xB) {
@@ -146,9 +149,9 @@ void func_us_801D8150(Entity* self) { //s2
             self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 3 / 4;
         }
         break;
-
     case 1:
-        if ((self->posX.i.hi < 0x120) || (self->posX.i.hi >= -0x1F) || (self->posY.i.hi < 0xE8)) {
+        if ((self->posX.i.hi < 0x120) || (self->posX.i.hi >= -0x1F) ||
+            (self->posY.i.hi < 0xE8)) {
             self->ext.et_801D8150.unk84++;
         }
         self->ext.et_801D8150.unk7E += 0x30;
@@ -219,7 +222,7 @@ void func_us_801D8150(Entity* self) { //s2
         if (!self->ext.et_801D8150.unk86) {
             self->ext.et_801D8150.unk7E += 0x30;
             self->ext.et_801D8150.unk88 += 0x10;
-            
+
             if (self->ext.et_801D8150.unk88 >= 0x480) {
                 self->ext.et_801D8150.unk88 = 0x480;
                 self->step = self->step_s;
@@ -247,7 +250,8 @@ void func_us_801D8150(Entity* self) { //s2
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 2;
                 if (self->facingLeft) {
-                    entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0x1F;
+                    entity->posX.i.hi =
+                        self->posX.i.hi + (rand() & 0x1F) - 0x1F;
                 } else {
                     entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0xF;
                 }
@@ -284,10 +288,13 @@ void func_us_801D8150(Entity* self) { //s2
                 prim->u1 = prim->u3 = 0x3F;
                 prim->v0 = prim->v1 = 0xC0;
                 prim->v2 = prim->v3 = 0xFF;
-                prim->drawMode = 0x37;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
                 prim->priority = self->zPriority - 2;
 
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0x80;
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
+                        prim->g3 = prim->b3 = 0x80;
 
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
                 prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
@@ -307,7 +314,9 @@ void func_us_801D8150(Entity* self) { //s2
                 if (prim->b3 > 8) {
                     prim->b3 -= 6;
                 }
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
+                        prim->g3 = prim->b3;
                 self->ext.et_801D8150.unk94 += 4;
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
                 prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
@@ -327,7 +336,10 @@ void func_us_801D8150(Entity* self) { //s2
             self->hitboxState = 3;
         }
     }
-    self->ext.et_801D8150.unk7C = self->ext.et_801D8150.unk88 + ((rsin(self->ext.et_801D8150.unk7E) * self->ext.et_801D8150.unk82) >> 0xC);
+    self->ext.et_801D8150.unk7C =
+        self->ext.et_801D8150.unk88 +
+        ((rsin(self->ext.et_801D8150.unk7E) * self->ext.et_801D8150.unk82) >>
+        0xC);
     if (!(g_GameTimer & 7) || (self->step > 6)) {
         self->ext.et_801D8150.unk80++;
         self->ext.et_801D8150.unk80 &= 0xF;
@@ -349,7 +361,7 @@ void func_us_801D8150(Entity* self) { //s2
         i = 0x8;
     }
     i += 0x100;
-    
+
     self->rotY = self->rotX = i;
     if ((params != 0) && (self->step < 8)) {
         self--;
