@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "servant.h"
+#include "bat.h"
 
 // sprite data
 Sprite g_BatSpriteData[] = {
@@ -9,13 +9,7 @@ Sprite g_BatSpriteData[] = {
     {-4, -4, 8, 8, 0x144, 0x78, 80, 0, 88, 8},
 };
 
-// ability by level table
-// 0 - attack delay (frames?)
-// 1 - max angle of attack
-// 2 - additional bat count
-// 3 - min enemy HP
-// 4 - make bad attacks (attack invincible?)
-s32 g_BatAbilityStats[][5] = {
+BatAbilityValues g_BatAbilityStats[] = {
     {90, 64, 0, 128, 1}, //
     {90, 96, 0, 128, 1}, //
     {60, 128, 1, 96, 1}, //

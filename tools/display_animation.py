@@ -84,7 +84,7 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                 animdata = f.read().splitlines()
                 animarray = load_array_from_file(animdata, main_array)
                 anim_set_name = animarray[spritebank]
-            print(f"Animation set {anim_num} is {anim_set_name}. Loading.")
+            print(f"Animation set {spritebank} is {anim_set_name}. Loading.")
             with open(animset_file) as f:
                 self.framesdata = f.read().splitlines()
                 print("Loading framearray")

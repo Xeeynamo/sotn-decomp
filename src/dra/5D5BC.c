@@ -2231,36 +2231,36 @@ extern s32 D_801379A8;
 
 void func_801024DC(void) {
     Primitive* prim;
-    Primitive* prim2;
     s32 x;
 
     D_8013799C = AllocPrimitives(PRIM_TILE, 4);
     prim = &g_PrimBuf[D_8013799C];
-    for (x = 0; prim != 0; x++) {
-        prim->x0 = (x & 1) << 7;
+    for (x = 0; prim != NULL; x++) {
+        prim->x0 = (x & 1) * 128;
         prim->u0 = 0x80;
         prim->v0 = 0xF0;
         prim->priority = 0x1FD;
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
+
     D_801379A8 = 0;
     D_801379A4 = 0;
 
     D_801379A0 = AllocPrimitives(PRIM_GT4, 1);
-    prim2 = &g_PrimBuf[D_801379A0];
-    prim2->u1 = 0xFF;
-    prim2->v2 = 0xFF;
-    prim2->u3 = 0xFF;
-    prim2->v3 = 0xFF;
-    prim2->tpage = 0x1D;
-    prim2->clut = 0x1C0;
-    prim2->priority = 0x1FE;
-    prim2->u0 = 0;
-    prim2->v0 = 0;
-    prim = prim2;
+    prim = &g_PrimBuf[D_801379A0];
+    prim->u0 = 0;
+    prim->v0 = 0;
+    prim->u1 = 0xFF;
     prim->v1 = 0;
     prim->u2 = 0;
+    prim->v2 = 0xFF;
+    prim->u3 = 0xFF;
+    prim->v3 = 0xFF;
+    prim->tpage = 0x1D;
+    prim->clut = 0x1C0;
+    prim->priority = 0x1FE;
+
     prim->drawMode = DRAW_HIDE;
 }
 

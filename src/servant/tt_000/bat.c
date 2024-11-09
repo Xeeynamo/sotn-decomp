@@ -1,14 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <servant.h>
+#include "bat.h"
 #include <sfx.h>
 #include <psxsdk/libc.h>
 #include "../servant_private.h"
-
-#define DELAY_FRAMES_INDEX 0
-#define MAX_ATTACK_ANGLE_INDEX 1
-#define ADD_BAT_COUNT_INDEX 2
-#define MIN_ENEMY_HP_INDEX 3
-#define BAD_ATTACKS_INDEX 4
 
 #define ENTITY_ID_SEEK_MODE ENTITY_ID_SERVANT
 #define ENTITY_ID_ATTACK_MODE 0xD2
@@ -139,7 +133,7 @@ extern AnimationFrame g_BatHighVelocityAnimationFrame[];
 extern AnimationFrame g_BatFarFromTargetAnimationFrame[];
 extern AnimationFrame g_BatCloseToTargetAnimationFrame[];
 extern AnimationFrame* g_BatAnimationFrames[];
-extern s32 g_BatAbilityStats[][5];
+extern BatAbilityValues g_BatAbilityStats[];
 extern u16 g_BatClut[];
 extern Sprite g_BatSpriteData[];
 
@@ -179,7 +173,7 @@ static Entity* FindValidTarget(Entity* self) {
             continue;
         }
         if (entity->hitboxState & 8 &&
-            !g_BatAbilityStats[s_BatStats.level / 10][BAD_ATTACKS_INDEX]) {
+            !g_BatAbilityStats[s_BatStats.level / 10].makeBadAttacks) {
             continue;
         }
         if (abs(self->posX.i.hi - entity->posX.i.hi) < 64 &&
@@ -198,7 +192,7 @@ static Entity* FindValidTarget(Entity* self) {
 
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
-                g_BatAbilityStats[s_BatStats.level / 10][MIN_ENEMY_HP_INDEX]) {
+                g_BatAbilityStats[s_BatStats.level / 10].minimumEnemyHp) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
@@ -675,7 +669,7 @@ void UpdateServantDefault(Entity* self) {
             self->velocityY = -(rsin(s_AllowedAngle) << 5);
             self->velocityX = rcos(s_AllowedAngle) << 5;
             self->ext.bat.maxAngle = 0x60;
-        } else if (s_DistanceToAttackTarget_0 < 0x100) {
+        } else if (s_DistanceToAttackTarget_0 < 256) {
             self->velocityY = -(rsin(s_AllowedAngle) << 6);
             self->velocityX = rcos(s_AllowedAngle) << 6;
             self->ext.bat.maxAngle = 0x80;
@@ -710,7 +704,7 @@ void UpdateServantDefault(Entity* self) {
             }
             self->ext.bat.frameCounter++;
             if (self->ext.bat.frameCounter >
-                g_BatAbilityStats[s_BatStats.level / 10][DELAY_FRAMES_INDEX]) {
+                g_BatAbilityStats[s_BatStats.level / 10].delayFrames) {
                 self->ext.bat.frameCounter = 0;
                 // Pay attention - this is not a ==
                 if (self->ext.bat.attackTarget = FindValidTarget(self)) {
@@ -747,7 +741,7 @@ void UpdateServantDefault(Entity* self) {
             CalculateAngleToEntity(self, s_TargetPositionX, s_TargetPositionY);
         s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
             s_AngleToTarget, self->ext.bat.targetAngle,
-            g_BatAbilityStats[s_BatStats.level / 10][MAX_ATTACK_ANGLE_INDEX]);
+            g_BatAbilityStats[s_BatStats.level / 10].maxAngle);
         self->ext.bat.targetAngle = s_AllowedAngle;
         self->velocityX = rcos(s_AllowedAngle) << 2 << 4;
         self->velocityY = -(rsin(s_AllowedAngle) << 2 << 4);
@@ -838,7 +832,7 @@ void UpdateBatAttackMode(Entity* self) {
         SwitchModeInitialize(self);
         if (!self->ext.bat.batIndex) {
             CreateAdditionalBats(
-                g_BatAbilityStats[s_BatStats.level / 10][ADD_BAT_COUNT_INDEX],
+                g_BatAbilityStats[s_BatStats.level / 10].additionalBatCount,
                 ENTITY_ID_ATTACK_MODE);
         }
         break;
