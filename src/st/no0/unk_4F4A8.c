@@ -132,7 +132,3 @@ INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D52E0);
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5384);
 
 INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D542C);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5E4C);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D606C);

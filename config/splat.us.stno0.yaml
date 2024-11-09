@@ -102,6 +102,7 @@ segments:
       - [0x4E2E0, c]
       - [0x4E654, c, e_stage_name]
       - [0x4F4A8, c, unk_4F4A8]
+      - [0x55E4C, c, e_ghost]
       - [0x56254, c, e_marionette]
       - [0x575E4, c, e_slinger]
       - [0x57C20, c, 57C20]
