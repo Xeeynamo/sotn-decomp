@@ -2040,6 +2040,7 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
 } ET_GhostEnemySpawner;
+
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 angle;
