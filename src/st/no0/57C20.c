@@ -48,14 +48,14 @@ void func_us_801D8150(Entity* self) { //s2
     params = self->params;
     if(self->step < 7) {
         entity = self - params;
-        if ((u16)(entity->posX.i.hi + 0x80) > 0x200 || ((u16)entity->posY.i.hi > 0x180)) {
+        if ((entity->posX.i.hi > 0x180) || (entity->posX.i.hi < -0x80) || (entity->posY.i.hi > 0x180) || (entity->posY.i.hi < 0)) {
             return;
         }
     }
 
-    entity = self - params + 0xB;
+    entity = self - self->params + 0xB;
     if (self->step == 1) {
-        if (params == 0) {
+        if (self->params == 0) {
             self->unk60 = entity;
         } else {
             self->unk60 = self - 1;
@@ -65,17 +65,16 @@ void func_us_801D8150(Entity* self) { //s2
         if (entity->flags & FLAG_DEAD) {
             PlaySfxPositional(0x731);
             entity -= 0xB;
-            for (i = 0; i < 0xC; i++) {
+            for (i = 0; i < 0xC; i++, entity++) {
                 entity->hitboxState = 0;
                 entity->step = 7;
                 entity->ext.et_801D8150.unk86 = 0xC0;
                 entity->flags |= FLAG_DEAD;
-                entity++;
             }
         } else if ((entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
-            if ((entity->hitPoints >= 0x1F) || (params != 0xB) || (self->ext.et_801D8150.unk8A != 0)) {
+            if ((entity->hitPoints >= 0x1F) || (params != 0xB) || self->ext.et_801D8150.unk8A) {
                 PlaySfxPositional(0x730);
-                if ((entity->step != 6) && (entity->step != 5)) {
+                if ((self->step != 6) && (self->step != 5)) {
                     self->step_s = self->step;
                 }
                 self->step = 5;
@@ -86,10 +85,10 @@ void func_us_801D8150(Entity* self) { //s2
                     self->anim = &D_us_80182280;
                 }
             } else {
-                self->ext.et_801D8150.unk8A = 1;
-                self->anim = &D_us_801822B4;
+                self->ext.et_801D8150.unk8A = true;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
+                self->anim = &D_us_801822B4;
                 self->step = 3;
                 self->drawFlags |= FLAG_DRAW_ROTZ;
             }
@@ -99,11 +98,10 @@ void func_us_801D8150(Entity* self) { //s2
     case 0:
         if (params == 0) {
             entity = self + 1;
-            for (i = 1; i < 0xC; ) {
+            for (i = 1; i < 0xC; i++, entity++) {
                 CreateEntityFromCurrentEntity(E_ID_3D, entity);
-                entity->params = i++;
+                entity->params = i;
                 entity->facingLeft = self->facingLeft;
-                entity++;
             }
         }
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
@@ -119,7 +117,7 @@ void func_us_801D8150(Entity* self) { //s2
         } else {
             self->animCurFrame = 9;
         }
-        self->zPriority = 0xFFE0 + (params * 2) + PLAYER.zPriority;
+        self->zPriority = PLAYER.zPriority - 0x20 + (params * 2);
         self->facingLeft = GetSideToPlayer() & 1;
         if (params == 0) {
             self->hitboxWidth = 0xC;
@@ -139,10 +137,10 @@ void func_us_801D8150(Entity* self) { //s2
         self->ext.et_801D8150.unk88 = 0x480;
         self->ext.et_801D8150.unk82 = params * 0x40 + 0x100;
         if (params == 0) {
-            self->ext.et_801D8150.unk82 =  self->ext.et_801D8150.unk82 / 4;
+            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 1 / 4;
         }
         if (params == 1) {
-            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 / 2;
+            self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 2 / 4;
         }
         if (params == 2) {
             self->ext.et_801D8150.unk82 = self->ext.et_801D8150.unk82 * 3 / 4;
@@ -197,7 +195,8 @@ void func_us_801D8150(Entity* self) { //s2
         self->hitboxOffY = 0;
         self->ext.et_801D8150.unk7E += 0x30;
         g_api.UpdateAnim(NULL, NULL);
-        if ((--self->ext.et_801D8150.unk84 & 0x3F) == 0x1F) {
+        --self->ext.et_801D8150.unk84;
+        if ((self->ext.et_801D8150.unk84 & 0x3F) == 0x1F) {
             PlaySfxPositional(SFX_SEED_BLIP);
             func_us_801D7D00(1U);
         }
@@ -208,7 +207,7 @@ void func_us_801D8150(Entity* self) { //s2
         }
         self->ext.et_801D8150.unk88 -= 8;
         self->ext.et_801D8150.unk7E += 0xC0;
-        if (!--self->ext.et_801D8150.unk86) {
+        if (--self->ext.et_801D8150.unk86 == 0) {
             self->ext.et_801D8150.unk86 = 0xC;
             self->step++;
         }
@@ -224,7 +223,7 @@ void func_us_801D8150(Entity* self) { //s2
             if (self->ext.et_801D8150.unk88 >= 0x480) {
                 self->ext.et_801D8150.unk88 = 0x480;
                 self->step = self->step_s;
-                if ((params == 0xB) && (self->step - 1) < 2U) {
+                if (params == 0xB && (self->step == 2 || self->step == 1)) {
                     self->animFrameIdx = 7;
                     self->animFrameDuration = 1;
                     self->anim = &D_us_8018228C;
@@ -247,7 +246,7 @@ void func_us_801D8150(Entity* self) { //s2
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 2;
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0x1F;
                 } else {
                     entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0xF;
@@ -255,13 +254,13 @@ void func_us_801D8150(Entity* self) { //s2
                 entity->posY.i.hi = self->posY.i.hi + (rand() & 0x1F) - 0x10;
             }
         }
-        if (!--self->ext.et_801D8150.unk86) {
-            self->ext.et_801D8150.unk86 = (0xC - params) * 2;
+        if (--self->ext.et_801D8150.unk86 == 0) {
             self->step++;
+            self->ext.et_801D8150.unk86 = (0xC - params) * 2;
         }
         break;
     case 8:
-        if (!--self->ext.et_801D8150.unk86) {
+        if (--self->ext.et_801D8150.unk86 == 0) {
             if (params == 0xB) {
                 PlaySfxPositional(SFX_STUTTER_EXPLODE_B);
             }
@@ -272,8 +271,8 @@ void func_us_801D8150(Entity* self) { //s2
                 return;
             }
             func_us_801D7D00(2U);
-            posX = self->posX.i.hi;
             self->animSet = 0;
+            posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex != -1) {
@@ -281,22 +280,19 @@ void func_us_801D8150(Entity* self) { //s2
                 prim = &g_PrimBuf[self->primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x15F;
+                prim->u0 = prim->u2 = 0;
                 prim->u1 = prim->u3 = 0x3F;
                 prim->v0 = prim->v1 = 0xC0;
                 prim->v2 = prim->v3 = 0xFF;
-                prim->u0 = prim->u2 = 0;
                 prim->drawMode = 0x37;
                 prim->priority = self->zPriority - 2;
 
-                prim->r3 = prim->g3 = prim->b3 = 0x80;
-                prim->r2 = prim->g2 = prim->b2 = 0x80;
-                prim->r1 = prim->g1 = prim->b1 = 0x80;
-                prim->r0 = prim->g0 = prim->b0 = 0x80;
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0x80;
 
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
-                prim->x1 = prim->x3 = self->ext.et_801D8150.unk94 + posX;
+                prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
                 prim->y0 = prim->y1 = posY - self->ext.et_801D8150.unk94;
-                prim->y2 = prim->y3 = self->ext.et_801D8150.unk94 + posY;
+                prim->y2 = prim->y3 = posY + self->ext.et_801D8150.unk94;
             }
             self->ext.et_801D8150.unk86 = 0x18;
             return;
@@ -309,21 +305,19 @@ void func_us_801D8150(Entity* self) { //s2
             if (self->primIndex != -1) {
                 prim = &g_PrimBuf[self->primIndex];
                 if (prim->b3 > 8) {
-                    prim->b3 += 0xFA;
+                    prim->b3 -= 6;
                 }
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
                 self->ext.et_801D8150.unk94 += 4;
                 prim->x0 = prim->x2 = posX - self->ext.et_801D8150.unk94;
-                prim->x1 = prim->x3 = self->ext.et_801D8150.unk94 + posX;
+                prim->x1 = prim->x3 = posX + self->ext.et_801D8150.unk94;
                 prim->y0 = prim->y1 = posY - self->ext.et_801D8150.unk94;
-                prim->y2 = prim->y3 = self->ext.et_801D8150.unk94 + posY;
-                return;
+                prim->y2 = prim->y3 = posY + self->ext.et_801D8150.unk94;
             }
         } else {
             DestroyEntity(self);
-            return;
         }
-        break;
+        return;
     }
 
     if ((self->step < 7) && (params != 0) && (params != 0xB)) {
@@ -335,7 +329,8 @@ void func_us_801D8150(Entity* self) { //s2
     }
     self->ext.et_801D8150.unk7C = self->ext.et_801D8150.unk88 + ((rsin(self->ext.et_801D8150.unk7E) * self->ext.et_801D8150.unk82) >> 0xC);
     if (!(g_GameTimer & 7) || (self->step > 6)) {
-        self->ext.et_801D8150.unk80 = (self->ext.et_801D8150.unk80 + 1) & 0xF;
+        self->ext.et_801D8150.unk80++;
+        self->ext.et_801D8150.unk80 &= 0xF;
     }
     i = 0;
     if (params == 0) {
@@ -366,8 +361,8 @@ void func_us_801D8150(Entity* self) { //s2
             self->posX.val = posX;
             self->posY.val = posY;
         } else {
-            self->posX.val = posX + rcos(temp_s0) * 0x70;
-            self->posY.val = posY - rsin(temp_s0) * 0x70;
+            self->posX.val = posX + (rcos(temp_s0) << 4) * 7;
+            self->posY.val = posY - (rsin(temp_s0) << 4) * 7;
         }
     }
 }
