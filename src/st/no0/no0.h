@@ -66,6 +66,9 @@ extern EInit g_EInitOuijaTableComponent;
 // Flea Man
 extern EInit g_EInitFleaMan;
 
+// Ghost (enemy)
+extern EInit g_EInitGhostEnemy;
+
 // Clock room
 extern EInit g_Statues;
 
