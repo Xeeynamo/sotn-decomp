@@ -339,7 +339,7 @@ void func_us_801D8150(Entity* self) {
     self->ext.et_801D8150.unk7C =
         self->ext.et_801D8150.unk88 +
         ((rsin(self->ext.et_801D8150.unk7E) * self->ext.et_801D8150.unk82) >>
-        0xC);
+         0xC);
     if (!(g_GameTimer & 7) || (self->step > 6)) {
         self->ext.et_801D8150.unk80++;
         self->ext.et_801D8150.unk80 &= 0xF;
