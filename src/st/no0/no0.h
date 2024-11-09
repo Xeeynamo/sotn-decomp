@@ -30,6 +30,7 @@ typedef enum EntityIDs {
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x1D */ E_CLOCK_ROOM_SHADOW = 0x20,
+    /* 0x37 */ E_GHOST_ENEMY = 0x37,
     /* 0x3B */ E_SLINGER_THROWN_BONE = 0x3B,
     /* 0x3C */ E_SLINGER_PIECES,
     /* 0x44 */ E_ID_44 = 0x44,
@@ -51,22 +52,23 @@ extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];
 
 // Axe knight
-extern u16 g_EInitAxeKnightAxe[];
+extern EInit g_EInitAxeKnightAxe;
 
 // Skeleton
-extern u16 g_EInitSkeleton[];
-extern u16 g_EInitSkeletonPieces[];
-extern u16 g_EInitSkeletonBone[];
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
 
 // Ouija Table
-extern u16 g_EInitOuijaTable[];
-extern u16 g_EInitOuijaTableComponent[];
+extern EInit g_EInitOuijaTable;
+extern EInit g_EInitOuijaTableComponent;
 
 // Flea Man
-extern u16 g_EInitFleaMan[];
+extern EInit g_EInitFleaMan;
 
 // Clock room
-extern u16 g_Statues[];
+extern EInit g_Statues;
 
-// Clocks?
-extern u16 D_us_80180A88[];
+// Seems shared between a number of entities - ghost spawner,
+// func_us_801C2B24 (clocks?), func_us_801CC750
+extern EInit D_us_80180A88;

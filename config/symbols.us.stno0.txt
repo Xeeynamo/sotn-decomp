@@ -184,6 +184,7 @@ EntityClockRoomUnused = 0x801CE2D8;
 StageNamePopupHelper = 0x801CE654;
 EntityStageNamePopup = 0x801CE824;
 func_801CD78C = 0x801D2374;
+EntityGhostEnemySpawner = 0x801D606C;
 EntitySlinger = 0x801D7670;
 EntitySlingerPieces = 0x801D7B40;
 func_801C3F9C = 0x801DAEBC;
