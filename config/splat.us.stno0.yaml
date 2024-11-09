@@ -56,6 +56,8 @@ segments:
       - [0x1C14, data]
       - [0x1C34, data, clock_room]
       - [0x1CA0, data]
+      - [0x1FC8, .data, e_ghost]
+      - [0x1FE8, data]
       - [0x2194, .data, e_slinger]
       - [0x2268, data]
       - [0x2478, .data, e_axe_knight]

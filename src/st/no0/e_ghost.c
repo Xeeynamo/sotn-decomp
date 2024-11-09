@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
-#include "common.h"
 
-extern u8 D_us_80181FC8[];
-extern u8 D_us_80181FD8[];
-extern s16 D_us_80181FE0[];
+static u8 anim_phase_in[] = {0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03,
+                             0x04, 0x03, 0x05, 0x03, 0x06, 0xFF, 0x00};
+static u8 anim_burning[] = {0x03, 0x07, 0x03, 0x08, 0x00};
+static s16 min_max_positions[] = {
+    416, 1152, 288, 480}; // xMin, xMax, yMin, yMax
 
 void EntityGhostEnemy(Entity* self) {
     Entity* newEntity;
@@ -34,13 +35,13 @@ void EntityGhostEnemy(Entity* self) {
         self->step++;
         break;
     case 2:
-        if (!AnimateEntity(D_us_80181FC8, self)) {
+        if (!AnimateEntity(anim_phase_in, self)) {
             self->hitboxState = 7;
             SetStep(3);
         }
         break;
     case 3:
-        if (!AnimateEntity(D_us_80181FD8, self)) {
+        if (!AnimateEntity(anim_burning, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
@@ -84,7 +85,7 @@ void EntityGhostEnemySpawner(Entity* self) {
         xPos = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         yPos = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
         if (self->params) {
-            minMaxPositions = &D_us_80181FE0[(self->params - 1) * 4];
+            minMaxPositions = &min_max_positions[(self->params - 1) * 4];
             if (xPos < minMaxPositions[0] || xPos > minMaxPositions[1] ||
                 yPos < minMaxPositions[2] || yPos > minMaxPositions[3]) {
                 return;
