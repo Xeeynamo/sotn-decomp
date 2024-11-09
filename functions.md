@@ -319,7 +319,7 @@
 | dra    | func_psp_091295F0                   |       56 |          7 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       56 |          8 |        |                                 |       |
 | dra    | func_psp_09141488                   |       57 |          2 |        |                                 |       |
-| dra    | func_801027C4                       |       57 |          5 | Yes    |                                 |       |
+| dra    | func_801027C4                       |       57 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.938 |
 | dra    | func_psp_09109140                   |       58 |          9 |        |                                 |       |
 | dra    | func_psp_0913D7D8                   |       58 |          9 |        |                                 |       |
 | dra    | func_psp_090E80E0                   |       58 |         15 |        |                                 |       |
