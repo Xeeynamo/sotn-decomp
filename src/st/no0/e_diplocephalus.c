@@ -11,11 +11,11 @@ INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801CFBE8);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0718);
 
-INCLUDE_ASM(
-    "st/no0/nonmatchings/e_diplocephalus", func_us_801D0898); // Death explosion
+// Death explosion
+INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0898);
 
-INCLUDE_ASM(
-    "st/no0/nonmatchings/e_diplocephalus", func_us_801D0990); // Fireball
+// Fireball
+INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0990);
 
-INCLUDE_ASM(
-    "st/no0/nonmatchings/e_diplocephalus", func_us_801D0E7C); // Main entity?
+// Main entity?
+INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0E7C);
