@@ -12,7 +12,8 @@ void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     dst->y += speed * rcos(angle) * 16;
 }
 
-void func_us_801D2424(Entity* arg0, s16 arg1, s16 arg2, Entity* arg3, s32 arg4, s32 arg5, Primitive* prim) {
+void func_us_801D2424(Entity* arg0, s16 arg1, s16 arg2, Entity* arg3, s32 arg4,
+                      s32 arg5, Primitive* prim) {
     s16 a = arg1;
     s16 b = arg2;
     s16 c = arg4;
