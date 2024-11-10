@@ -48,8 +48,8 @@ extern Unkstruct_801724CC D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
 
-extern u16 D_us_80172D28;
-extern u16 D_us_80172D2A;
+extern u16 g_FaerieFrameCount1;
+extern u16 g_FaerieFrameCount2;
 extern u32 D_us_801792D0;
 extern s32 D_us_801792EC;
 
@@ -1346,7 +1346,7 @@ void func_us_80176504(Entity* arg0) {
                 }
             }
         }
-        arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4[0];
+        arg0->ext.faerie.unkA8 = ((s16*)arg0->ext.faerie.unkA4)[0];
         g_PauseAllowed = false;
         arg0->step++;
 
@@ -1359,7 +1359,7 @@ void func_us_80176504(Entity* arg0) {
         }
         if (arg0->ext.faerie.unkA8 < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4[1]);
+                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4->animIndex);
                 arg0->step++;
             }
         } else {
@@ -1367,14 +1367,14 @@ void func_us_80176504(Entity* arg0) {
                 arg0->ext.faerie.unkA8--;
             }
             if (arg0->ext.faerie.unkA8 < 0) {
-                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4[1]);
-                if ((s32*)arg0->ext.faerie.unkA4[2] &&
+                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4->animIndex);
+                if (arg0->ext.faerie.unkA4->params &&
                     (SearchForEntityInRange(0, 0xDE) == NULL)) {
                     CreateEventEntity_Dupe(
-                        arg0, 0xDE, (s32)arg0->ext.faerie.unkA4[2]);
+                        arg0, 0xDE, arg0->ext.faerie.unkA4->params);
                 }
-                arg0->ext.faerie.unkA4 += 3;
-                arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4[0];
+                arg0->ext.faerie.unkA4++;
+                arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4->unk0;
             }
         }
         break;
@@ -1536,9 +1536,9 @@ void func_us_80176C98(Entity* self) {
             } else {
                 self->ext.faerie.unkB4 = 0;
                 if (PLAYER.step_s == 4) {
-                    self->ext.faerie.frameCounter = D_us_80172D2A;
+                    self->ext.faerie.frameCounter = g_FaerieFrameCount2;
                 } else {
-                    self->ext.faerie.frameCounter = D_us_80172D28;
+                    self->ext.faerie.frameCounter = g_FaerieFrameCount1;
                 }
                 self->step++;
             }
@@ -1641,7 +1641,139 @@ void func_us_80176C98(Entity* self) {
     D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-INCLUDE_ASM("servant/tt_002/nonmatchings/3678", func_us_80177380);
+extern s32 D_us_801792D4;
+extern s32 D_us_801792D8;
+extern Unk2CB0 D_us_80172CB0[];
+
+void func_us_80177380(Entity* self) {
+    char pad[2];
+
+    self->ext.faerie.left = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
+    self->ext.faerie.top = (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
+
+    if (D_us_80179320) {
+        self->zPriority = PLAYER.zPriority - 2;
+        s_zPriority = self->zPriority;
+    }
+
+    if ((D_us_80172CB0[self->params].left == -1) || (self->step == 0)) {
+        s_TargetLocOffset_calc = -24;
+        if (!PLAYER.facingLeft) {
+            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+        }
+        s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationY_calc = PLAYER.posY.i.hi - 32;
+    } else {
+        s_TargetLocationX_calc = D_us_801792D4 - self->ext.faerie.left;
+        s_TargetLocationY_calc = D_us_801792D8 - self->ext.faerie.top;
+    }
+
+    s_AngleToTarget = self->ext.faerie.randomMovementAngle;
+    self->ext.faerie.randomMovementAngle =
+        (self->ext.faerie.randomMovementAngle + 0x10) & 0xFFF;
+    s_DistToTargetLocation = self->ext.faerie.unk88;
+
+    s_TargetLocationX =
+        ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 12) +
+        s_TargetLocationX_calc;
+
+    s_TargetLocationY =
+        s_TargetLocationY_calc -
+        ((rsin(s_AngleToTarget) * (s_DistToTargetLocation / 2)) >> 12);
+    s_AngleToTarget =
+        CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
+    s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
+        s_AngleToTarget, self->ext.faerie.targetAngle,
+        self->ext.faerie.maxAngle);
+    self->ext.faerie.targetAngle = s_AllowedAngle;
+    s_DistToTargetLocation =
+        CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+
+    if (s_DistToTargetLocation < 60) {
+        self->velocityY = -(rsin(s_AllowedAngle) * 8);
+        self->velocityX = rcos(s_AllowedAngle) * 8;
+        self->ext.faerie.maxAngle = 64;
+    } else if (s_DistToTargetLocation < 100) {
+        self->velocityY = -(rsin(s_AllowedAngle) * 16);
+        self->velocityX = rcos(s_AllowedAngle) * 16;
+        self->ext.faerie.maxAngle = 96;
+    } else {
+        self->velocityY = -(rsin(s_AllowedAngle) * 32);
+        self->velocityX = rcos(s_AllowedAngle) * 32;
+        self->ext.faerie.maxAngle = 128;
+    }
+
+    self->posX.val += self->velocityX;
+    self->posY.val += self->velocityY;
+
+    switch (self->step) {
+    case 0:
+        func_us_801739D0(self);
+        D_us_801792D4 =
+            D_us_80172CB0[self->params].left + self->ext.faerie.left;
+        D_us_801792D8 = D_us_80172CB0[self->params].top + self->ext.faerie.top;
+        self->ext.faerie.timer = -1;
+        break;
+
+    case 1:
+        func_us_80173BD0(self);
+        s_DistToTargetLocation =
+            CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
+        if (s_DistToTargetLocation < 32) {
+            self->facingLeft = PLAYER.facingLeft;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->ext.faerie.unkA4 = D_us_80172CB0[self->params].unk8;
+        self->ext.faerie.unkA8 = *((s16*)self->ext.faerie.unkA4);
+        g_PauseAllowed = 0;
+        self->step++;
+        break;
+
+    case 3:
+        if (PLAYER.posX.i.hi >= self->posX.i.hi) {
+            self->facingLeft = true;
+        } else {
+            self->facingLeft = false;
+        }
+
+        if (self->ext.faerie.unkA8 < 0) {
+            if (g_PlaySfxStep > 4) {
+                SetAnimationFrame(self, self->ext.faerie.unkA4->animIndex);
+                self->step++;
+            }
+        } else {
+            if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 99)) {
+                self->ext.faerie.unkA8--;
+            }
+
+            if (self->ext.faerie.unkA8 < 0) {
+                SetAnimationFrame(self, self->ext.faerie.unkA4->animIndex);
+                if ((self->ext.faerie.unkA4->params != 0) &&
+                    (SearchForEntityInRange(0, 0xDE) == NULL)) {
+                    CreateEventEntity_Dupe(
+                        self, 0xDE, self->ext.faerie.unkA4->params);
+                }
+
+                self->ext.faerie.unkA4++;
+                self->ext.faerie.unkA8 = self->ext.faerie.unkA4->unk0;
+            }
+        }
+        break;
+
+    case 4:
+        SetAnimationFrame(self, 14);
+        g_PauseAllowed = 1;
+        self->entityId = 0xD1;
+        self->step = 0;
+        break;
+    }
+
+    unused_39C8(self);
+    ServantUpdateAnim(self, NULL, &g_FaerieAnimationFrames);
+}
 
 void func_us_80177958(Entity* self) {
     Entity* entity;

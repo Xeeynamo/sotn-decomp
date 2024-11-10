@@ -18,3 +18,9 @@ typedef struct {
     s16 unk5;
     s16 unk6;
 } FaerieAbilityStats;
+
+typedef struct {
+    s32 left;
+    s32 top;
+    FaerieUnkA4* unk8;
+} Unk2CB0;
