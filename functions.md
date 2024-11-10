@@ -385,7 +385,7 @@
 | dra    | func_psp_090DFED8                   |       74 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD78                   |       74 |          7 |        |                                 |       |
 | dra    | func_psp_0913E558                   |       74 |          7 |        |                                 |       |
-| wrp    | GetNormalizedAngle                  |       74 |          7 |        | https://decomp.me/scratch/nIT0f | 0.954 |
+| wrp    | GetNormalizedAngle                  |       74 |          7 |        |                                 |       |
 | dra    | func_psp_09117998                   |       74 |         12 |        |                                 |       |
 | dra    | func_psp_090E8658                   |       75 |          6 |        |                                 |       |
 | dra    | func_psp_0910B660                   |       75 |          7 |        |                                 |       |
