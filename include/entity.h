@@ -2066,6 +2066,22 @@ typedef struct {
     /* 0x84 */ s16 offsets[26];
 } ET_MedusaUnk1A;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+} ET_StoneRose;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2239,6 +2255,7 @@ typedef union { // offset=0x7C
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
     ET_801D9264 et_801D9264;
+    ET_StoneRose stoneRose;
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
 } Ext;

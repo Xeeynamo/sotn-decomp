@@ -33,6 +33,7 @@ typedef enum EntityIDs {
     /* 0x37 */ E_GHOST_ENEMY = 0x37,
     /* 0x3B */ E_SLINGER_THROWN_BONE = 0x3B,
     /* 0x3C */ E_SLINGER_PIECES,
+    /* 0x3D */ E_ID_3D,
     /* 0x44 */ E_ID_44 = 0x44,
     /* 0x45 */ E_ID_45,
     /* 0x46 */ E_ID_46,
