@@ -1518,8 +1518,8 @@
 | 1.00 | false    | D_us_80190F9C                       | asm/us/boss/rbo3/nonmatchings/e_collect/D_us_80190F9C.s 
 | 1.00 | false    | g_UnkPrimHelperRot                  | asm/us/boss/rbo3/nonmatchings/prim_helpers/g_UnkPrimHelperRot.s 
 | 1.00 | false    | D_us_801C13DC                       | asm/us/st/no0/nonmatchings/e_collect/D_us_801C13DC.s 
+| 1.00 | false    | D_us_801C1684                       | asm/us/st/no0/nonmatchings/e_plate_lord/D_us_801C1684.s 
 | 1.00 | false    | g_UnkPrimHelperRot                  | asm/us/st/no0/nonmatchings/prim_helpers/g_UnkPrimHelperRot.s 
-| 1.00 | false    | D_us_801C1684                       | asm/us/st/no0/nonmatchings/unk_4F4A8/D_us_801C1684.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/mar/matchings/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/rbo3/matchings/e_breakable/EntityBreakable.s 
@@ -2315,6 +2315,9 @@
 | 1.00 | true     | EntityMagicallySealedDoor           | asm/us/st/no0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
 | 0.99 | true     | EntityMagicallySealedDoor           | asm/us/st/nz0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_801CD78C                       | asm/us/st/no0/matchings/e_plate_lord/func_801CD78C.s 
+| 1.00 | true     | func_801CD78C                       | asm/us/st/np3/matchings/4D540/func_801CD78C.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/no0/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/nz0/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 -------------------------------------------------------------------------------
@@ -2326,9 +2329,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801B0AA4                       | asm/us/st/no0/matchings/first_c_file/func_801B0AA4.s 
 | 0.98 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/30958/func_801B0AA4.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801CD78C                       | asm/us/st/no0/matchings/unk_4F4A8/func_801CD78C.s 
-| 1.00 | true     | func_801CD78C                       | asm/us/st/np3/matchings/4D540/func_801CD78C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityDeadMerman                    | asm/us/st/no3/matchings/53F38/EntityDeadMerman.s 
 | 1.00 | true     | EntityDeadMerman                    | asm/us/st/np3/matchings/e_merman2/EntityDeadMerman.s 
