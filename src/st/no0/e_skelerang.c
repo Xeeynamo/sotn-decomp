@@ -6,13 +6,13 @@ INCLUDE_ASM("st/no0/nonmatchings/e_skelerang", func_us_801D191C);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_skelerang", func_us_801D20A4);
 
-extern u16 g_EInitInteractable[];
-
 void func_us_801D2318(Entity* entity) {
-    if (entity->step == 0) {
+    Entity* parent;
+    if (!entity->step) {
         InitializeEntity(g_EInitInteractable);
     }
-    if ((entity - 1)->entityId != 0x2E) {
+    parent = entity - 1;
+    if (parent->entityId != 0x2E) {
         DestroyEntity(entity);
     }
 }

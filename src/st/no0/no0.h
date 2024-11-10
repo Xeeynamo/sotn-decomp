@@ -52,6 +52,7 @@ typedef enum EntityIDs {
 extern s16 g_SineTable[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];
+extern u16 g_EInitInteractable[];
 
 // Axe knight
 extern EInit g_EInitAxeKnightAxe;
