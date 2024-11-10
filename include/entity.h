@@ -2043,6 +2043,18 @@ typedef struct {
     /* 0xA4 */ struct Primitive* unkA4;
 } ET_801D9264;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_GhostEnemySpawner;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u32 speed;
+} ET_GhostEnemy;
+
 // ====== RIC ENTITIES ======
 
 // ==========================
@@ -2227,6 +2239,8 @@ typedef union { // offset=0x7C
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
     ET_801D9264 et_801D9264;
+    ET_GhostEnemy ghostEnemy;
+    ET_GhostEnemySpawner ghostEnemySpawner;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

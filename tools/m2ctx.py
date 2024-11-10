@@ -25,16 +25,21 @@ CPP_FLAGS = [
     "-DM2CTX",
 ]
 
+VERSION_DEF = []
+
 
 def import_c_file(in_file) -> str:
     in_file = os.path.relpath(in_file, root_dir)
     cpp_command = ["gcc", "-E", "-P", "-dM", *CPP_FLAGS, in_file]
-    cpp_command2 = ["gcc", "-E", "-P", *CPP_FLAGS, in_file]
+    cpp_command2 = ["gcc", "-E", "-P", *CPP_FLAGS, *VERSION_DEF, in_file]
 
     with tempfile.NamedTemporaryFile(suffix=".c") as tmp:
         stock_macros = subprocess.check_output(
-            ["gcc", "-E", "-P", "-dM", tmp.name], cwd=root_dir, encoding="utf-8"
+            ["gcc", "-E", "-P", "-dM", *VERSION_DEF, tmp.name],
+            cwd=root_dir,
+            encoding="utf-8",
         )
+    stock_macros += "#define __STDC_HOSTED__ 0\n"
 
     out_text = ""
     try:
@@ -68,6 +73,9 @@ def main():
         help="""File from which to create context""",
     )
     args = parser.parse_args()
+
+    if "VERSION" in os.environ:
+        VERSION_DEF.append("-D_internal_version_" + os.environ["VERSION"])
 
     output = import_c_file(args.c_file)
 
