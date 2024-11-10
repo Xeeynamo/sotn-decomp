@@ -611,6 +611,12 @@ typedef struct {
 } ET_FaerieUnk0;
 
 typedef struct {
+    /* 0x0 */ s16 unk0; // a toggle that is either 0 or -1
+    /* 0x2 */ s16 animIndex;
+    /* 0x4 */ s16 params;
+} FaerieUnkA4;
+
+typedef struct {
     /* 0x7C */ s16 unk7c;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
@@ -625,10 +631,11 @@ typedef struct {
     /* 0x92 */ s16 unk92;
     /* 0x94 */ s16 unk94;
     /* 0x96 */ s16 timer;
-    /* 0x98 */ s16 pad98[4];
+    /* 0x98 */ s32 left;
+    /* 0x9C */ s32 top;
     /* 0xA0 */ s16 unkCounterA0;
     /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s16* unkA4;
+    /* 0xA4 */ FaerieUnkA4* unkA4;
     /* 0xA8 */ s16 unkA8;
     /* 0xAA */ s16 padAA[5];
     /* 0xB4 */ s16 unkB4;
