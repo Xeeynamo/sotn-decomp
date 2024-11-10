@@ -1,37 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
-#include "game.h"
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801CF4A8);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801CF670);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801CF910);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801CFBE8);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D0718);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D0898);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D0990);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D0E7C);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D191C);
-
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D20A4);
-
-extern u16 g_EInitInteractable[];
-
-void func_us_801D2318(Entity* entity) {
-    if (entity->step == 0) {
-        InitializeEntity(g_EInitInteractable);
-    }
-    if ((entity - 1)->entityId != 0x2E) {
-        DestroyEntity(entity);
-    }
-}
+#include "no0.h"
 
 void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     if (g_CurrentEntity->facingLeft) {
@@ -43,8 +12,7 @@ void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     dst->y += speed * rcos(angle) * 16;
 }
 
-void func_us_801D2424(Entity* arg0, s16 arg1, s16 arg2, Entity* arg3, s32 arg4,
-                      s32 arg5, Primitive* prim) {
+void func_us_801D2424(Entity* arg0, s16 arg1, s16 arg2, Entity* arg3, s32 arg4, s32 arg5, Primitive* prim) {
     s16 a = arg1;
     s16 b = arg2;
     s16 c = arg4;
@@ -70,11 +38,11 @@ void func_us_801D2424(Entity* arg0, s16 arg1, s16 arg2, Entity* arg3, s32 arg4,
     prim->y3 += (d * rsin(c)) >> 0xC;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D26CC);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D26CC);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D274C);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D274C);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D27C4);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D27C4);
 
 bool func_us_801D29F8(s16* arg0, s32 arg1, s32 arg2) {
     if (abs(*arg0 - arg1) < arg2) {
@@ -93,17 +61,17 @@ bool func_us_801D29F8(s16* arg0, s32 arg1, s32 arg2) {
     return false;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D2A64);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D2A64);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4324);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4324);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D44A0);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D44A0);
 
-INCLUDE_RODATA("st/no0/nonmatchings/unk_4F4A8", D_us_801C1684);
+INCLUDE_RODATA("st/no0/nonmatchings/e_plate_lord", D_us_801C1684);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4AA4);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4AA4);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4CAC);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4CAC);
 
 void func_us_801D4E30(void) {
     Primitive* prim;
@@ -117,11 +85,11 @@ void func_us_801D4E30(void) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4E94);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4E94);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D4FCC);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4FCC);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5074);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D5074);
 
 void func_us_801D51EC(void) {
     Primitive* prim;
@@ -152,8 +120,8 @@ void func_us_801D5250(void) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D52E0);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D52E0);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D5384);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D5384);
 
-INCLUDE_ASM("st/no0/nonmatchings/unk_4F4A8", func_us_801D542C);
+INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D542C);
