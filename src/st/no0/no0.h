@@ -67,6 +67,11 @@ extern EInit g_EInitOuijaTableComponent;
 // Flea Man
 extern EInit g_EInitFleaMan;
 
+// Slinger
+extern EInit g_EInitSlinger;
+extern EInit g_EInitSlingerPieces;
+extern EInit g_EInitSlingerRib;
+
 // Ghost (enemy)
 extern EInit g_EInitGhostEnemy;
 
