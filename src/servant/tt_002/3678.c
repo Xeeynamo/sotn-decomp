@@ -11,7 +11,7 @@ extern u16 g_FaerieClut[];
 extern Entity thisFamiliar;
 extern s32 s_zPriority;
 extern FamiliarStats s_FaerieStats;
-extern FaerieAbilityStats D_us_80172408[];
+extern FaerieAbilityStats g_FaerieAbilityStats[];
 extern s32 D_us_8017931C;
 extern s32 D_us_80179320;
 extern s32 D_us_80179310;
@@ -26,14 +26,6 @@ extern s32 s_TargetLocationX_calc;
 extern s32 s_TargetLocationY;
 extern s32 s_TargetLocationY_calc;
 
-// These are likely able to be consolidated during data cleanup
-extern u8 D_80097A1A[];
-extern u8 D_80097A1B;
-extern u8 D_80097A1D;
-
-extern u8 D_80097A29;
-extern u8 D_80097A2A;
-
 extern s32 D_us_80172BCC;
 extern s32 D_us_80172BD8;
 
@@ -41,9 +33,8 @@ extern s16 D_us_80172494[];
 extern s16 D_us_801724C4[];
 extern s32 D_us_80172BD0;
 
-extern s32 D_800973FC;
-// this is likely incorrect typing
-extern s32 D_80097420[];
+extern s32 D_800973FC; // this is in unkGraphicsStruct
+extern s32 D_80097420[]; // this is in unkGraphicsStruct
 extern Unkstruct_801724CC D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
@@ -282,7 +273,8 @@ void func_us_80173D60(Entity* self) {
     }
     if (g_Player.status & PLAYER_STATUS_UNK40000) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk1) {
+        // for faerie, this is always true. stats table.unk1 is 0x00FF
+        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].unk1) {
             self->entityId = 0xD2;
             self->step = 0;
             return;
@@ -298,15 +290,15 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    self->ext.faerie.timer = D_us_80172408[s_FaerieStats.level / 10].unk0;
+    self->ext.faerie.timer = g_FaerieAbilityStats[s_FaerieStats.level / 10].timer;
 
     if (self->entityId == 0xD3) {
         return;
     }
 
-    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) && D_80097A1D) {
+    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) && g_Status.equipHandCount[ITEM_HAMMER]) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[(s_FaerieStats.level / 10)].unk2) {
+        if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)].hammerChance) {
             self->ext.faerie.unk8E = 0;
             self->entityId = 0xD3;
             self->step = 0;
@@ -319,9 +311,9 @@ void func_us_80173D60(Entity* self) {
     }
 
     if (g_Player.status & PLAYER_STATUS_CURSE) {
-        if (D_80097A1B) {
+        if (g_Status.equipHandCount[ITEM_UNCURSE]) {
             rnd = rand() % 100;
-            if (rnd <= D_us_80172408[(s_FaerieStats.level / 10)].unk3) {
+            if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)].uncurseChance) {
                 self->ext.faerie.unk90 = false;
                 self->entityId = 0xD4;
                 self->step = 0;
@@ -341,9 +333,9 @@ void func_us_80173D60(Entity* self) {
     }
 
     if (g_Player.status & PLAYER_STATUS_POISON) {
-        if (D_80097A1A[0]) {
+        if (g_Status.equipHandCount[ITEM_ANTIVENOM]) {
             rnd = rand() % 100;
-            if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk4) {
+            if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].antivenomChance) {
                 self->ext.faerie.unk92 = false;
                 self->entityId = 0xD5;
                 self->step = 0;
@@ -376,7 +368,7 @@ void func_us_80173D60(Entity* self) {
         if (!g_api.func_800FF110(D_us_80172494[params * 4]) &&
             g_Status.equipHandCount[D_us_80172494[(params * 4) + 1]]) {
             rnd = rand() % 100;
-            if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk5) {
+            if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].unkChance5) {
                 self->entityId = 0xD6;
                 self->step = 0;
                 self->params = params;
@@ -424,9 +416,9 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    if (D_80097A29 | D_80097A2A) {
+    if (g_Status.equipHandCount[ITEM_POTION] | g_Status.equipHandCount[ITEM_HIGH_POTION]) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk6) {
+        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].healChance) {
             self->ext.faerie.unk94 = true;
             self->entityId = 0xD7;
             self->step = 0;
@@ -841,7 +833,7 @@ void func_us_801753E4(Entity* self) {
         break;
     case 2:
         self->facingLeft = PLAYER.facingLeft;
-        if (D_80097A1A[paramOffset]) {
+        if (g_Status.equipHandCount[ITEM_HAMMER]) {
             SetAnimationFrame(self, 0x17);
 
             for (rnd = rand() % 0x100, i = 0; true; i++) {
@@ -861,7 +853,7 @@ void func_us_801753E4(Entity* self) {
         break;
     case 3:
         if (self->animFrameIdx == 5) {
-            D_80097A1A[paramOffset]--;
+            g_Status.equipHandCount[ITEM_HAMMER]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
             CreateEventEntity_Dupe(self, 0xDF, 1);
@@ -920,7 +912,7 @@ void func_us_80175730(Entity* self) {
         }
         break;
     case 2:
-        if (!D_80097A1A[paramOffset]) {
+        if (!g_Status.equipHandCount[ITEM_UNCURSE]) {
             SetAnimationFrame(self, 0x14);
             self->step = 5;
             break;
@@ -944,7 +936,7 @@ void func_us_80175730(Entity* self) {
                 g_api.PlaySfx(D_us_80172BCC);
             }
 
-            D_80097A1A[paramOffset]--;
+            g_Status.equipHandCount[ITEM_UNCURSE]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
@@ -1012,7 +1004,7 @@ void func_us_80175A78(Entity* self) {
         }
         break;
     case 2:
-        if (!D_80097A1A[paramOffset]) {
+        if (!g_Status.equipHandCount[ITEM_ANTIVENOM]) {
             SetAnimationFrame(self, 0x14);
             self->step = 5;
             break;
@@ -1036,7 +1028,7 @@ void func_us_80175A78(Entity* self) {
                 g_api.PlaySfx(D_us_80172BCC);
             }
 
-            D_80097A1A[paramOffset]--;
+            g_Status.equipHandCount[ITEM_ANTIVENOM]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
