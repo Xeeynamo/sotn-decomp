@@ -545,7 +545,7 @@ Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
-void func_80107250(POLY_GT4* poly, s32 colorIntensity);
+void func_80107250(Primitive* prim, s32 colorIntensity);
 void SetTexturedPrimRect(
     Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
