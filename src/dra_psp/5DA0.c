@@ -89,6 +89,6 @@ void func_801026BC(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_psp_090E29A8);
+void func_801027A4(void) { func_801026BC(0); }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5DA0", func_801027C4);
