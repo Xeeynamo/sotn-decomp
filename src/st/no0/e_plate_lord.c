@@ -12,7 +12,28 @@ void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     dst->y += speed * rcos(angle) * 16;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D2424);
+void func_us_801D2424(Entity* arg0, s16 arg1, s16 arg2, Entity* arg3, s16 arg4,
+                      s16 arg5, Primitive* prim) {
+    prim->x0 = prim->x1 = arg0->posX.i.hi;
+    prim->y0 = prim->y1 = arg0->posY.i.hi;
+    prim->x2 = prim->x3 = arg3->posX.i.hi;
+    prim->y2 = prim->y3 = arg3->posY.i.hi;
+    if (g_CurrentEntity->facingLeft) {
+        prim->x0 += (arg2 * rcos(arg1)) >> 0xC;
+        prim->x1 -= (arg2 * rcos(arg1)) >> 0xC;
+        prim->x2 += (arg5 * rcos(arg4)) >> 0xC;
+        prim->x3 -= (arg5 * rcos(arg4)) >> 0xC;
+    } else {
+        prim->x0 -= (arg2 * rcos(arg1)) >> 0xC;
+        prim->x1 += (arg2 * rcos(arg1)) >> 0xC;
+        prim->x2 -= (arg5 * rcos(arg4)) >> 0xC;
+        prim->x3 += (arg5 * rcos(arg4)) >> 0xC;
+    }
+    prim->y0 -= (arg2 * rsin(arg1)) >> 0xC;
+    prim->y1 += (arg2 * rsin(arg1)) >> 0xC;
+    prim->y2 -= (arg5 * rsin(arg4)) >> 0xC;
+    prim->y3 += (arg5 * rsin(arg4)) >> 0xC;
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D26CC);
 
