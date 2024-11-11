@@ -247,6 +247,7 @@ segments:
       - [0x5087C, c, 5087C]
       - [0x5483C, c, menu]
       - [0x5D5BC, c, 5D5BC]
+      - [0x624DC, c, 624DC]
       - [0x627C4, c, 627C4]
       - [0x63ED4, c, 63ED4]
       - [0x673C0, c, cd]
