@@ -92,3 +92,45 @@ void func_801026BC(s32 arg0) {
 }
 
 void func_801027A4(void) { func_801026BC(0); }
+
+void func_801027C4(u32 arg0) {
+    Primitive* prim1;
+    Primitive* prim2;
+
+    prim1 = &g_PrimBuf[D_8013799C];
+    prim2 = prim1->next;
+    switch (arg0) {
+    case 0:
+    case 3:
+        prim1 = prim1->next;
+        do {
+            prim1 = prim1->next;
+            prim1->x1 = 0;
+            prim1->clut = 0;
+            D_801379A8 = arg0 + 1;
+            return;
+        } while (0);
+    case 1:
+    case 2:
+    case 5:
+    case 6:
+    case 7:
+        prim1->x1 = 0;
+        prim1->clut = 0;
+        D_801379A4 = 1;
+        D_801379A4 = arg0 + D_801379A4;
+        break;
+    case 4:
+        prim1->x1 = 0xFF;
+        prim1->clut = 1;
+        D_801379A4 = 2;
+        do {
+            prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
+                prim2->b0 = prim1->x1;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
+        } while (0);
+    default:
+        break;
+    }
+}
