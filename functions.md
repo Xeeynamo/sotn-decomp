@@ -628,7 +628,7 @@
 | dra    | func_psp_09122008                   |      313 |         24 |        |                                 |       |
 | dra    | func_psp_09142408                   |      313 |         36 | Yes    |                                 |       |
 | dra    | func_psp_090EE5D0                   |      324 |         37 |        |                                 |       |
-| dra    | func_psp_090E2A78                   |      330 |         32 | Yes    |                                 |       |
+| dra    | func_psp_090E2A78                   |      330 |         32 | Yes    | https://decomp.me/scratch/NaHl4 | 0.999 |
 | dra    | DealDamage                          |      332 |         39 |        |                                 |       |
 | dra    | func_psp_09113268                   |      336 |         45 | Yes    |                                 |       |
 | wrp    | func_psp_09244020                   |      339 |         36 |        | https://decomp.me/scratch/LSXAc | 1.0   |
