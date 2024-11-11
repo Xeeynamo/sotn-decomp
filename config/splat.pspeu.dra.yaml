@@ -186,6 +186,7 @@ segments:
       - [0x68D80, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra_psp/5DA0]
+      - [0xEE3C0, .rodata, dra_psp/60F8]
       - [0xEE3E8, .rodata, dra_psp/65E0]
       - [0xEE408, .rodata, dra_psp/86A0]
       - [0xEE428, .rodata, dra_psp/C0B0]
