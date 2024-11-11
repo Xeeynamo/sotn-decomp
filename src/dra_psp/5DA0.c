@@ -101,12 +101,12 @@ void func_801027C4(u32 arg0) {
     case 0:
     case 3:
         prim1 = prim1->next;
-         do{
+        do {
             prim1 = prim1->next;
             prim1->x1 = 0;
             prim1->clut = 0;
             D_801379A8 = arg0 + 1;
-        }while(0);
+        } while (0);
         break;
     case 1:
     case 2:
@@ -121,12 +121,12 @@ void func_801027C4(u32 arg0) {
         prim1->x1 = 0xFF;
         prim1->clut = 1;
         D_801379A4 = 2;
-        do{
-        prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
-            prim2->b0 = prim1->x1;
-        prim1->drawMode = prim2->drawMode =
-            DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-        } while(0);
+        do {
+            prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
+                prim2->b0 = prim1->x1;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
+        } while (0);
         break;
     }
 }

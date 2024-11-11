@@ -108,8 +108,8 @@ void func_801027C4(u32 arg0) {
             prim1->x1 = 0;
             prim1->clut = 0;
             D_801379A8 = arg0 + 1;
-            return;
         } while (0);
+        break;
     case 1:
     case 2:
     case 5:
@@ -117,8 +117,7 @@ void func_801027C4(u32 arg0) {
     case 7:
         prim1->x1 = 0;
         prim1->clut = 0;
-        D_801379A4 = 1;
-        D_801379A4 = arg0 + D_801379A4;
+        D_801379A4 = arg0 + 1;
         break;
     case 4:
         prim1->x1 = 0xFF;
@@ -130,7 +129,6 @@ void func_801027C4(u32 arg0) {
             prim1->drawMode = prim2->drawMode =
                 DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         } while (0);
-    default:
         break;
     }
 }
