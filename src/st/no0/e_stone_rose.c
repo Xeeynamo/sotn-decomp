@@ -3,7 +3,7 @@
 
 extern PfnEntityUpdate D_us_80180A20[];
 
-//spawn seed
+// spawn seed
 Entity* func_us_801D7D00(u16 arg0) {
     Entity* newEntity;
 
