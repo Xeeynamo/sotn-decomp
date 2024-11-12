@@ -2092,9 +2092,6 @@ typedef struct {
     /* 0x88 */ s16 : 16;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ struct Entity* unk8C;
-    /* 0x90 */ s16 : 16;
-    /* 0x92 */ s16 : 16;
-    /* 0x94 */ s16 : 16;
 } ET_StoneRoseSeed;
 
 typedef union { // offset=0x7C
