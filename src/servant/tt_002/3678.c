@@ -26,18 +26,14 @@ extern s32 s_TargetLocationX_calc;
 extern s32 s_TargetLocationY;
 extern s32 s_TargetLocationY_calc;
 
-extern s32 D_us_80172BCC;
-extern s32 D_us_80172BD8;
+extern s32 D_us_80172BCC[];
 
 extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
-extern s32 D_us_80172BD0;
 
 extern s32 D_800973FC;   // this is in unkGraphicsStruct
 extern s32 D_80097420[]; // this is in unkGraphicsStruct
 extern s16 D_us_801724CC[];
-extern s32 D_us_80172BD4;
-extern s32 D_us_80172BDC;
 
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
@@ -731,14 +727,14 @@ void func_us_80174F0C(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         SetAnimationFrame(self, 0x13);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BD4);
+            g_api.PlaySfx(D_us_80172BCC[2]);
         }
         self->step++;
         break;
     case 0x6:
         if (self->animFrameIdx == 0xA) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BD4);
+                g_api.PlaySfx(D_us_80172BCC[2]);
             }
             self->step++;
         }
@@ -794,7 +790,7 @@ void func_us_80174F0C(Entity* self) {
 
     case 0x5A:
         SetAnimationFrame(self, 0x20);
-        g_api.PlaySfx(D_us_80172BDC);
+        g_api.PlaySfx(D_us_80172BCC[4]);
         self->step++;
         break;
     case 0x5B:
@@ -853,7 +849,7 @@ void func_us_801753E4(Entity* self) {
             self->step++;
         } else {
             SetAnimationFrame(self, 0x10);
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step += 2;
         }
@@ -931,7 +927,7 @@ void func_us_80175730(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC);
+            g_api.PlaySfx(D_us_80172BCC[0]);
         }
         self->step++;
         break;
@@ -940,7 +936,7 @@ void func_us_80175730(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC);
+                g_api.PlaySfx(D_us_80172BCC[0]);
             }
 
             g_Status.equipHandCount[ITEM_UNCURSE]--;
@@ -965,7 +961,7 @@ void func_us_80175730(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1023,7 +1019,7 @@ void func_us_80175A78(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC);
+            g_api.PlaySfx(D_us_80172BCC[0]);
         }
         self->step++;
         break;
@@ -1032,7 +1028,7 @@ void func_us_80175A78(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC);
+                g_api.PlaySfx(D_us_80172BCC[0]);
             }
 
             g_Status.equipHandCount[ITEM_ANTIVENOM]--;
@@ -1057,7 +1053,7 @@ void func_us_80175A78(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1157,7 +1153,7 @@ void func_us_80175DBC(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1227,7 +1223,7 @@ void func_us_80176178(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
-            g_api.PlaySfx(D_us_80172BD0);
+            g_api.PlaySfx(D_us_80172BCC[1]);
             g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
                 self,
@@ -1249,7 +1245,7 @@ void func_us_80176178(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
