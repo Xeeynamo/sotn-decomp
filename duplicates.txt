@@ -302,7 +302,7 @@
 | 1.00 | true     | DestroyEntity                       | asm/us/st/st0/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/wrp/matchings/st_common/DestroyEntity.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801027A4                       | asm/us/dra/matchings/5D5BC/func_801027A4.s 
+| 1.00 | true     | func_801027A4                       | asm/us/dra/matchings/624DC/func_801027A4.s 
 | 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/63ED4/func_801072BC.s 
 | 1.00 | true     | StCdInterrupt2                      | asm/us/main/matchings/psxsdk/libcd/cdread2/StCdInterrupt2.s 
 | 1.00 | true     | CdDataSync                          | asm/us/main/matchings/psxsdk/libcd/sys/CdDataSync.s 
@@ -1622,7 +1622,7 @@
 | 1.00 | true     | RicSetDeadPrologue                  | asm/us/ric/matchings/211D0/RicSetDeadPrologue.s 
 | 1.00 | true     | func_801B1D88                       | asm/us/st/sel/matchings/2C048/func_801B1D88.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | MemCardSetPort                      | asm/us/dra/matchings/627C4/MemCardSetPort.s 
+| 1.00 | true     | MemCardSetPort                      | asm/us/dra/matchings/628AC/MemCardSetPort.s 
 | 1.00 | true     | func_800FAC30                       | asm/us/dra/matchings/menu/func_800FAC30.s 
 | 1.00 | true     | MemcardInfoInit                     | asm/us/dra/matchings/save_mgr/MemcardInfoInit.s 
 | 1.00 | true     | MemCardSetPort                      | asm/us/st/sel/matchings/33164/MemCardSetPort.s 
@@ -1930,7 +1930,7 @@
 | 1.00 | true     | func_800FDE00                       | asm/us/dra/matchings/5D5BC/func_800FDE00.s 
 | 1.00 | true     | StSetMask                           | asm/us/main/matchings/psxsdk/libcd/c_010/StSetMask.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | MemCardInitAndFormat                | asm/us/dra/matchings/627C4/MemCardInitAndFormat.s 
+| 1.00 | true     | MemCardInitAndFormat                | asm/us/dra/matchings/628AC/MemCardInitAndFormat.s 
 | 1.00 | true     | MemCardInitAndFormat                | asm/us/st/sel/matchings/33164/MemCardInitAndFormat.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetPrimRect                         | asm/us/dra/matchings/63ED4/SetPrimRect.s 
@@ -2146,11 +2146,11 @@
 | 1.00 | false    | D_800DB3DC                          | asm/us/dra/nonmatchings/42398/D_800DB3DC.s 
 | 1.00 | false    | aNone                               | asm/us/main/nonmatchings/psxsdk/libcd/sys/aNone.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | D_800DCC70                          | asm/us/dra/nonmatchings/627C4/D_800DCC70.s 
-| 1.00 | false    | D_800DCCF0                          | asm/us/dra/nonmatchings/627C4/D_800DCCF0.s 
+| 1.00 | false    | D_800DCC70                          | asm/us/dra/nonmatchings/628AC/D_800DCC70.s 
+| 1.00 | false    | D_800DCCF0                          | asm/us/dra/nonmatchings/628AC/D_800DCCF0.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | D_800DCD5C                          | asm/us/dra/nonmatchings/627C4/D_800DCD5C.s 
-| 1.00 | false    | D_800DCD68                          | asm/us/dra/nonmatchings/627C4/D_800DCD68.s 
+| 1.00 | false    | D_800DCD5C                          | asm/us/dra/nonmatchings/628AC/D_800DCD5C.s 
+| 1.00 | false    | D_800DCD68                          | asm/us/dra/nonmatchings/628AC/D_800DCD68.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | D_800DBEE0                          | asm/us/dra/nonmatchings/save_mgr/D_800DBEE0.s 
 | 1.00 | false    | D_800DBEEC                          | asm/us/dra/nonmatchings/save_mgr/D_800DBEEC.s 
