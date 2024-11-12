@@ -406,7 +406,7 @@ void func_us_801D8DF0(Entity* self) {
             spawnXOffset = -0x28;
         }
         self->ext.stoneRoseSeed.unk86 = 2;
-        self->posX.i.hi += spawnXOffset;
+        self->posX.i.hi = spawnXOffset + self->posX.i.hi;
         break;
     case 1:
         self->posX.val += self->velocityX;
