@@ -42,7 +42,6 @@ segments:
       - [0x40, .data, faerie_spriteparts]
       - [0x22E8, .data, faerie_clutdata]
       - [0x2368, .data, faerie_data_2368]
-      - [0x2494, data]
       - [0x2600, .data, faerie_animation_data]
       - [0x2B2C, data]
       - [0x2C24, .data, faerie_data_2C24]

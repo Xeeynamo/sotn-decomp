@@ -29,13 +29,13 @@ extern s32 s_TargetLocationY_calc;
 extern s32 D_us_80172BCC;
 extern s32 D_us_80172BD8;
 
-extern s16 D_us_80172494[];
-extern s16 D_us_801724C4[];
+extern s16 g_ResistItemsParamMap[];
+extern s16 g_PotionItemsParamMap[];
 extern s32 D_us_80172BD0;
 
-extern s32 D_800973FC; // this is in unkGraphicsStruct
+extern s32 D_800973FC;   // this is in unkGraphicsStruct
 extern s32 D_80097420[]; // this is in unkGraphicsStruct
-extern Unkstruct_801724CC D_us_801724CC[];
+extern s16 D_us_801724CC[];
 extern s32 D_us_80172BD4;
 extern s32 D_us_80172BDC;
 
@@ -290,15 +290,18 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    self->ext.faerie.timer = g_FaerieAbilityStats[s_FaerieStats.level / 10].timer;
+    self->ext.faerie.timer =
+        g_FaerieAbilityStats[s_FaerieStats.level / 10].timer;
 
     if (self->entityId == 0xD3) {
         return;
     }
 
-    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) && g_Status.equipHandCount[ITEM_HAMMER]) {
+    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) &&
+        g_Status.equipHandCount[ITEM_HAMMER]) {
         rnd = rand() % 100;
-        if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)].hammerChance) {
+        if (rnd <=
+            g_FaerieAbilityStats[(s_FaerieStats.level / 10)].hammerChance) {
             self->ext.faerie.unk8E = 0;
             self->entityId = 0xD3;
             self->step = 0;
@@ -313,7 +316,8 @@ void func_us_80173D60(Entity* self) {
     if (g_Player.status & PLAYER_STATUS_CURSE) {
         if (g_Status.equipHandCount[ITEM_UNCURSE]) {
             rnd = rand() % 100;
-            if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)].uncurseChance) {
+            if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)]
+                           .uncurseChance) {
                 self->ext.faerie.unk90 = false;
                 self->entityId = 0xD4;
                 self->step = 0;
@@ -335,7 +339,8 @@ void func_us_80173D60(Entity* self) {
     if (g_Player.status & PLAYER_STATUS_POISON) {
         if (g_Status.equipHandCount[ITEM_ANTIVENOM]) {
             rnd = rand() % 100;
-            if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].antivenomChance) {
+            if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10]
+                           .antivenomChance) {
                 self->ext.faerie.unk92 = false;
                 self->entityId = 0xD5;
                 self->step = 0;
@@ -365,10 +370,11 @@ void func_us_80173D60(Entity* self) {
             params = 5;
         }
 
-        if (!g_api.func_800FF110(D_us_80172494[params * 4]) &&
-            g_Status.equipHandCount[D_us_80172494[(params * 4) + 1]]) {
+        if (!g_api.func_800FF110(g_ResistItemsParamMap[params * 4]) &&
+            g_Status.equipHandCount[g_ResistItemsParamMap[(params * 4) + 1]]) {
             rnd = rand() % 100;
-            if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].unkChance5) {
+            if (rnd <=
+                g_FaerieAbilityStats[s_FaerieStats.level / 10].resistChance) {
                 self->entityId = 0xD6;
                 self->step = 0;
                 self->params = params;
@@ -416,7 +422,8 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    if (g_Status.equipHandCount[ITEM_POTION] | g_Status.equipHandCount[ITEM_HIGH_POTION]) {
+    if (g_Status.equipHandCount[ITEM_POTION] |
+        g_Status.equipHandCount[ITEM_HIGH_POTION]) {
         rnd = rand() % 100;
         if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].healChance) {
             self->ext.faerie.unk94 = true;
@@ -1096,7 +1103,8 @@ void func_us_80175DBC(Entity* self) {
         break;
     case 2:
         self->facingLeft = PLAYER.facingLeft;
-        if (!g_Status.equipHandCount[D_us_80172494[self->params * 4 + 1]]) {
+        if (!g_Status
+                 .equipHandCount[g_ResistItemsParamMap[self->params * 4 + 1]]) {
             SetAnimationFrame(self, 0x10);
             self->step = 5;
             break;
@@ -1125,12 +1133,14 @@ void func_us_80175DBC(Entity* self) {
                 }
             }
 
-            g_Status.equipHandCount[D_us_80172494[self->params * 4 + 1]]--;
+            g_Status
+                .equipHandCount[g_ResistItemsParamMap[self->params * 4 + 1]]--;
 
             g_api.CreateEntFactoryFromEntity(
-                self, FACTORY(0x37, D_us_80172494[self->params * 4 + 2]), 0);
+                self,
+                FACTORY(0x37, g_ResistItemsParamMap[self->params * 4 + 2]), 0);
             CreateEventEntity_Dupe(
-                self, 0xDF, D_us_80172494[self->params * 4 + 3]);
+                self, 0xDF, g_ResistItemsParamMap[self->params * 4 + 3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1190,14 +1200,15 @@ void func_us_80176178(Entity* self) {
         }
         break;
     case 2:
-        if (!g_Status.equipHandCount[D_us_801724C4[self->params * 2]]) {
+        if (!g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]) {
             if (self->params) {
                 temp = 0;
             } else {
                 temp = 1;
             }
             self->params = temp;
-            if (!g_Status.equipHandCount[D_us_801724C4[self->params * 2]]) {
+            if (!g_Status
+                     .equipHandCount[g_PotionItemsParamMap[self->params * 2]]) {
                 SetAnimationFrame(self, 0x14);
                 self->step = 5;
                 break;
@@ -1217,9 +1228,10 @@ void func_us_80176178(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             g_api.PlaySfx(D_us_80172BD0);
-            g_Status.equipHandCount[D_us_801724C4[self->params * 2]]--;
+            g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
-                self, FACTORY(0x37, D_us_801724C4[self->params * 2 + 1]), 0);
+                self,
+                FACTORY(0x37, g_PotionItemsParamMap[self->params * 2 + 1]), 0);
             CreateEventEntity_Dupe(self, 0xDF, 2);
             self->ext.faerie.frameCounter = 0;
             self->step++;
@@ -1975,7 +1987,11 @@ void func_us_80177F84(Entity* self) {
 
     posX2 = self->posX.i.hi;
     posY = self->posY.i.hi;
-    unkStruct = &D_us_801724CC[LOH(self->params)];
+    // The data in D_us_801724CC is aligned in a way that it needs to be a u16
+    // array So this is a bit ugly to cast it into the struct pointer
+    unkStruct =
+        (Unkstruct_801724CC*)&D_us_801724CC[(s16)self->params *
+                                            sizeof(Unkstruct_801724CC) / 2];
     switch (self->step) {
     case 0:
         self->primIndex =

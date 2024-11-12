@@ -15,7 +15,7 @@ typedef struct {
     s16 hammerChance;
     s16 uncurseChance;
     s16 antivenomChance;
-    s16 unkChance5;
+    s16 resistChance;
     s16 healChance;
 } FaerieAbilityStats;
 
