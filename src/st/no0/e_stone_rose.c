@@ -478,7 +478,7 @@ void func_us_801D8FFC(Entity* self) {
         } else {
             xOffset = -0xC;
         }
-        self->posX.i.hi += xOffset;
+        self->posX.i.hi = xOffset + self->posX.i.hi;
         self->posX.i.hi += (rand() & 7) - 4;
         self->posY.i.hi += (rand() & 7) - 4;
         return;
