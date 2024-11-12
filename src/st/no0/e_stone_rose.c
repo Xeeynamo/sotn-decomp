@@ -3,6 +3,7 @@
 
 extern PfnEntityUpdate D_us_80180A20[];
 
+//spawn seed
 Entity* func_us_801D7D00(u16 arg0) {
     Entity* newEntity;
 
@@ -23,7 +24,7 @@ Entity* func_us_801D7D00(u16 arg0) {
     return NULL;
 }
 
-// Destroyed when seed fired
+// seed update function
 INCLUDE_ASM("st/no0/nonmatchings/e_stone_rose", func_us_801D7DAC);
 
 extern u16 D_us_80180AF4[];
@@ -455,7 +456,7 @@ void func_us_801D8FFC(Entity* self) {
     s32 yOffset;
 
     if (self->flags & FLAG_DEAD) {
-        PlaySfxPositional(0x691);
+        PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
         EntityExplosionSpawn(0, 0);
         return;
     }
