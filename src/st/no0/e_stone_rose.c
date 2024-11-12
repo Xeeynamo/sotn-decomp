@@ -404,7 +404,7 @@ void func_us_801D8DF0(Entity* self) {
         } else {
             spawnXOffset = -0x28;
         }
-        self->ext.ILLEGAL.u16[5] = 2;
+        self->ext.stoneRoseSeed.unk86 = 2;
         self->posX.i.hi += spawnXOffset;
         break;
     case 1:
@@ -447,6 +447,7 @@ void func_us_801D8DF0(Entity* self) {
 extern u16 D_us_80180B0C[];
 extern AnimationFrame D_us_80182318;
 
+// Seed entity
 void func_us_801D8FFC(Entity* self) {
     Collider collider;
     s32 angle;
@@ -458,7 +459,7 @@ void func_us_801D8FFC(Entity* self) {
         EntityExplosionSpawn(0, 0);
         return;
     }
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180B0C);
         self->zPriority = PLAYER.zPriority + 0x10;
