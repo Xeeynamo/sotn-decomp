@@ -59,6 +59,11 @@ void SetAnimationFrame(Entity*, s32);
 void unused_39C8(Entity*);
 void func_us_80173D60(Entity*);
 
+static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
+static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
+static s16 GetTargetPositionWithDistanceBuffer(
+    s16 currentX, s16 targetX, s16 distanceBuffer);
+
 static void ServantInit(InitializeMode mode);
 static void func_us_80174998(Entity* self);
 static void func_us_80174F0C(Entity* self);
@@ -81,11 +86,6 @@ ServantDesc faerie_ServantDesc = {
     func_us_80175730, func_us_80175A78, func_us_80175DBC, func_us_80176178,
     func_us_80176504, func_us_80176B6C, func_us_80176C98, func_us_80177380,
     func_us_80177958, func_us_80177AC4, func_us_80177F64, func_us_80177F84};
-
-static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
-static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
-static s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -1766,7 +1766,7 @@ void func_us_80177380(Entity* self) {
     case 4:
         SetAnimationFrame(self, 14);
         g_PauseAllowed = 1;
-        self->entityId = 0xD1;
+        self->entityId = ENTITY_ID_SERVANT;
         self->step = 0;
         break;
     }
