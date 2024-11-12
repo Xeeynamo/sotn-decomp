@@ -1,8 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-// Destroyed when seed fired
-INCLUDE_ASM("st/no0/nonmatchings/e_stone_rose", func_us_801D7D00);
+extern PfnEntityUpdate D_us_80180A20[];
+
+Entity* func_us_801D7D00(u16 arg0) {
+    Entity* newEntity;
+
+    newEntity = g_api.GetFreeEntity(0xA0, 0xC0);
+    if (newEntity != NULL) {
+        DestroyEntity(newEntity);
+        
+        newEntity->entityId = E_STONEROSE_SEED;
+        newEntity->pfnUpdate = D_us_80180A20[0];
+        newEntity->ext.stoneRoseSeed.unk8C = g_CurrentEntity;
+        newEntity->params = arg0;
+        newEntity->posX.val = g_CurrentEntity->posX.val;
+        newEntity->posY.val = g_CurrentEntity->posY.val;
+        newEntity->facingLeft = g_CurrentEntity->facingLeft;
+        newEntity->flags = g_CurrentEntity->flags & 0x2100;
+        return newEntity;
+    }
+    return NULL;
+}
 
 // Destroyed when seed fired
 INCLUDE_ASM("st/no0/nonmatchings/e_stone_rose", func_us_801D7DAC);
