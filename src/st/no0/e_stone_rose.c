@@ -384,7 +384,7 @@ void func_us_801D8DF0(Entity* self) {
     s32 spawnXOffset;
     s32 zRotation;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
         EntityExplosionSpawn(0, 0);
         return;
@@ -398,7 +398,7 @@ void func_us_801D8DF0(Entity* self) {
         } else {
             self->velocityX = FIX(1.75);
         }
-        
+
         if (!self->facingLeft) {
             spawnXOffset = 0x28;
         } else {
@@ -410,7 +410,8 @@ void func_us_801D8DF0(Entity* self) {
     case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             if (self->ext.stoneRoseSeed.unk86 == 0) {
                 EntityExplosionSpawn(0, 0);
@@ -420,16 +421,17 @@ void func_us_801D8DF0(Entity* self) {
             self->velocityX = self->velocityX >> 1;
             self->velocityY = FIX(-2.0);
             self->ext.stoneRoseSeed.unk86--;
-            
+
             self->drawFlags |= FLAG_BLINK;
         }
-        
+
         if (self->velocityX < 0) {
             xOffset = -6;
         } else {
             xOffset = 8;
         }
-        g_api.CheckCollision(self->posX.i.hi + xOffset, self->posY.i.hi, &collider, 0);
+        g_api.CheckCollision(
+            self->posX.i.hi + xOffset, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->velocityY = 0;
             self->velocityX = -self->velocityX;
@@ -442,7 +444,57 @@ void func_us_801D8DF0(Entity* self) {
     self->rotZ = zRotation;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_stone_rose", func_us_801D8FFC);
+extern u16 D_us_80180B0C[];
+extern AnimationFrame D_us_80182318;
+
+void func_us_801D8FFC(Entity* self) {
+    Collider collider;
+    s32 angle;
+    s32 xOffset;
+    s32 yOffset;
+
+    if (self->flags & FLAG_DEAD) {
+        PlaySfxPositional(0x691);
+        EntityExplosionSpawn(0, 0);
+        return;
+    }
+    switch (self->step) { /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180B0C);
+        self->zPriority = PLAYER.zPriority + 0x10;
+        self->anim = &D_us_80182318;
+        self->ext.stoneRoseSeed.unk86 = rand();
+        angle = (rand() & 0x1FF) + 0x700;
+        self->velocityX = rcos(angle) * 0x10;
+        if (!self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+
+        self->velocityY = rsin(angle) * 0x10;
+        if (!self->facingLeft) {
+            xOffset = 0xC;
+        } else {
+            xOffset = -0xC;
+        }
+        self->posX.i.hi += xOffset;
+        self->posX.i.hi += (rand() & 7) - 4;
+        self->posY.i.hi += (rand() & 7) - 4;
+        return;
+    case 1:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            EntityExplosionSpawn(0, 0);
+            return;
+        }
+        g_api.UpdateAnim(NULL, NULL);
+        yOffset = rsin(self->ext.stoneRoseSeed.unk86) * 4;
+        self->ext.stoneRoseSeed.unk86 += 0x60;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->posY.val += yOffset;
+        return;
+    }
+}
 
 // Death explosion
 void func_us_801D91C4(Entity* self) {
