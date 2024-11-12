@@ -4,53 +4,54 @@
 #include "sfx.h"
 #include "items.h"
 
-extern s32 s_ServantId;
+static u32 D_us_801792D0;
+static s32 D_us_801792D4;
+static s32 D_us_801792D8;
+static s32 s_ServantId;
+static s32 s_zPriority;
+static FamiliarStats s_FaerieStats;
+
+static s32 D_us_801792F0;
+static s32 D_us_801792F4;
+static s32 D_us_801792F8;
+static s32 D_us_801792FC[5];
+static s32 D_us_80179310;
+static s16 D_us_80179314;
+STATIC_PAD_BSS(2);
+static s16 D_us_80179318;
+STATIC_PAD_BSS(2);
+static s32 D_us_8017931C;
+static s32 D_us_80179320;
+static s32 s_TargetLocationX;
+static s32 s_TargetLocationY;
+static s32 s_TargetLocationX_calc;
+static s32 s_TargetLocationY_calc;
+static s32 s_AngleToTarget;
+static s32 s_AllowedAngle;
+static s32 s_DistToTargetLocation;
+static s16 s_TargetLocOffset_calc;
+
 extern u16 g_FaerieClut[];
 // During cleanup, rename this.  May not actually be this familiar, unknown
 // where it's set
 extern Entity thisFamiliar;
-extern s32 s_zPriority;
-extern FamiliarStats s_FaerieStats;
 extern FaerieAbilityStats g_FaerieAbilityStats[];
-extern s32 D_us_8017931C;
-extern s32 D_us_80179320;
-extern s32 D_us_80179310;
-extern s16 D_us_80179314;
-extern s16 D_us_80179318;
-extern s32 s_AllowedAngle;
-extern s32 s_AngleToTarget;
-extern s32 s_DistToTargetLocation;
-extern s16 s_TargetLocOffset_calc;
-extern s32 s_TargetLocationX;
-extern s32 s_TargetLocationX_calc;
-extern s32 s_TargetLocationY;
-extern s32 s_TargetLocationY_calc;
-
 extern s32 D_us_80172BCC[];
-
 extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
-
 extern s32 D_800973FC;   // this is in unkGraphicsStruct
 extern s32 D_80097420[]; // this is in unkGraphicsStruct
 extern s16 D_us_801724CC[];
-
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
-extern u32 D_us_801792D0;
-extern s32 D_us_801792EC;
-
-extern s32 D_us_801792F0;
-extern s32 D_us_801792F4;
-extern s32 D_us_801792F8;
-extern s32 D_us_801792FC[];
-extern s32 D_us_8017930C[];
 
 // Ranked lookup tables
 extern s32 D_us_80172C04[];
 extern s32 D_us_80172BE4[];
 extern s32 D_us_80172C3C[];
 extern s32 D_us_80172C64[];
+
+extern Unk2CB0 D_us_80172CB0[];
 
 extern FaerieAnimIndex D_us_80172368[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
@@ -1331,7 +1332,7 @@ void func_us_80176504(Entity* arg0) {
         break;
     case 2:
         rnd = rand() % 0x100;
-        if (D_us_801792EC == 1) {
+        if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
                 if (rnd <= D_us_80172C3C[i * 2]) {
                     arg0->ext.faerie.unkA4 = D_us_80172C3C[i * 2 + 1];
@@ -1640,10 +1641,6 @@ void func_us_80176C98(Entity* self) {
     unused_39C8(self);
     D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
-
-extern s32 D_us_801792D4;
-extern s32 D_us_801792D8;
-extern Unk2CB0 D_us_80172CB0[];
 
 void func_us_80177380(Entity* self) {
     char pad[2];

@@ -46,5 +46,5 @@ segments:
       - [0x2D2C, .data, servant_events]
       - [0x3678, .rodata, faerie]
       - [0x3994, c, faerie]
-      - [0x92D0, sbss]
+      - [0x92D0, .bss, faerie]
   - [0xA000]
