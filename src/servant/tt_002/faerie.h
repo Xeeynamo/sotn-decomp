@@ -10,13 +10,13 @@ typedef struct {
 // It looks like most if not all of the ability stats for faerie are
 // essentially % chance for abilities to trigger.
 typedef struct {
-    s16 unk0;
+    s16 timer;
     s16 unk1;
-    s16 unk2;
-    s16 unk3;
-    s16 unk4;
-    s16 unk5;
-    s16 unk6;
+    s16 hammerChance;
+    s16 uncurseChance;
+    s16 antivenomChance;
+    s16 resistChance;
+    s16 healChance;
 } FaerieAbilityStats;
 
 typedef struct {

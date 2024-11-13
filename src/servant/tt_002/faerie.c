@@ -4,60 +4,46 @@
 #include "sfx.h"
 #include "items.h"
 
-extern s32 s_ServantId;
+static u32 D_us_801792D0;
+static s32 D_us_801792D4;
+static s32 D_us_801792D8;
+static s32 s_ServantId;
+static s32 s_zPriority;
+static FamiliarStats s_FaerieStats;
+
+static s32 D_us_801792F0;
+static s32 D_us_801792F4;
+static s32 D_us_801792F8;
+static s32 D_us_801792FC[5];
+static s32 D_us_80179310;
+static s16 D_us_80179314;
+STATIC_PAD_BSS(2);
+static s16 D_us_80179318;
+STATIC_PAD_BSS(2);
+static s32 D_us_8017931C;
+static s32 D_us_80179320;
+static s32 s_TargetLocationX;
+static s32 s_TargetLocationY;
+static s32 s_TargetLocationX_calc;
+static s32 s_TargetLocationY_calc;
+static s32 s_AngleToTarget;
+static s32 s_AllowedAngle;
+static s32 s_DistToTargetLocation;
+static s16 s_TargetLocOffset_calc;
+
 extern u16 g_FaerieClut[];
 // During cleanup, rename this.  May not actually be this familiar, unknown
 // where it's set
 extern Entity thisFamiliar;
-extern s32 s_zPriority;
-extern FamiliarStats s_FaerieStats;
-extern FaerieAbilityStats D_us_80172408[];
-extern s32 D_us_8017931C;
-extern s32 D_us_80179320;
-extern s32 D_us_80179310;
-extern s16 D_us_80179314;
-extern s16 D_us_80179318;
-extern s32 s_AllowedAngle;
-extern s32 s_AngleToTarget;
-extern s32 s_DistToTargetLocation;
-extern s16 s_TargetLocOffset_calc;
-extern s32 s_TargetLocationX;
-extern s32 s_TargetLocationX_calc;
-extern s32 s_TargetLocationY;
-extern s32 s_TargetLocationY_calc;
-
-// These are likely able to be consolidated during data cleanup
-extern u8 D_80097A1A[];
-extern u8 D_80097A1B;
-extern u8 D_80097A1D;
-
-extern u8 D_80097A29;
-extern u8 D_80097A2A;
-
-extern s32 D_us_80172BCC;
-extern s32 D_us_80172BD8;
-
-extern s16 D_us_80172494[];
-extern s16 D_us_801724C4[];
-extern s32 D_us_80172BD0;
-
-extern s32 D_800973FC;
-// this is likely incorrect typing
-extern s32 D_80097420[];
+extern FaerieAbilityStats g_FaerieAbilityStats[];
+extern s32 D_us_80172BCC[];
+extern s16 g_ResistItemsParamMap[];
+extern s16 g_PotionItemsParamMap[];
+extern s32 D_800973FC;   // this is in unkGraphicsStruct
+extern s32 D_80097420[]; // this is in unkGraphicsStruct
 extern Unkstruct_801724CC D_us_801724CC[];
-extern s32 D_us_80172BD4;
-extern s32 D_us_80172BDC;
-
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
-extern u32 D_us_801792D0;
-extern s32 D_us_801792EC;
-
-extern s32 D_us_801792F0;
-extern s32 D_us_801792F4;
-extern s32 D_us_801792F8;
-extern s32 D_us_801792FC[];
-extern s32 D_us_8017930C[];
 
 // Ranked lookup tables
 extern s32 D_us_80172C04[];
@@ -65,12 +51,19 @@ extern s32 D_us_80172BE4[];
 extern s32 D_us_80172C3C[];
 extern s32 D_us_80172C64[];
 
+extern Unk2CB0 D_us_80172CB0[];
+
 extern FaerieAnimIndex D_us_80172368[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
 
 void SetAnimationFrame(Entity*, s32);
 void unused_39C8(Entity*);
 void func_us_80173D60(Entity*);
+
+static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
+static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
+static s16 GetTargetPositionWithDistanceBuffer(
+    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 static void ServantInit(InitializeMode mode);
 static void func_us_80174998(Entity* self);
@@ -94,11 +87,6 @@ ServantDesc faerie_ServantDesc = {
     func_us_80175730, func_us_80175A78, func_us_80175DBC, func_us_80176178,
     func_us_80176504, func_us_80176B6C, func_us_80176C98, func_us_80177380,
     func_us_80177958, func_us_80177AC4, func_us_80177F64, func_us_80177F84};
-
-static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
-static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
-static s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -282,7 +270,8 @@ void func_us_80173D60(Entity* self) {
     }
     if (g_Player.status & PLAYER_STATUS_UNK40000) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk1) {
+        // for faerie, this is always true. stats table.unk1 is 0x00FF
+        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].unk1) {
             self->entityId = 0xD2;
             self->step = 0;
             return;
@@ -298,15 +287,18 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    self->ext.faerie.timer = D_us_80172408[s_FaerieStats.level / 10].unk0;
+    self->ext.faerie.timer =
+        g_FaerieAbilityStats[s_FaerieStats.level / 10].timer;
 
     if (self->entityId == 0xD3) {
         return;
     }
 
-    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) && D_80097A1D) {
+    if (PLAYER.step == 0xB && (!IsMovementAllowed(0)) &&
+        g_Status.equipHandCount[ITEM_HAMMER]) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[(s_FaerieStats.level / 10)].unk2) {
+        if (rnd <=
+            g_FaerieAbilityStats[(s_FaerieStats.level / 10)].hammerChance) {
             self->ext.faerie.unk8E = 0;
             self->entityId = 0xD3;
             self->step = 0;
@@ -319,9 +311,10 @@ void func_us_80173D60(Entity* self) {
     }
 
     if (g_Player.status & PLAYER_STATUS_CURSE) {
-        if (D_80097A1B) {
+        if (g_Status.equipHandCount[ITEM_UNCURSE]) {
             rnd = rand() % 100;
-            if (rnd <= D_us_80172408[(s_FaerieStats.level / 10)].unk3) {
+            if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)]
+                           .uncurseChance) {
                 self->ext.faerie.unk90 = false;
                 self->entityId = 0xD4;
                 self->step = 0;
@@ -341,9 +334,10 @@ void func_us_80173D60(Entity* self) {
     }
 
     if (g_Player.status & PLAYER_STATUS_POISON) {
-        if (D_80097A1A[0]) {
+        if (g_Status.equipHandCount[ITEM_ANTIVENOM]) {
             rnd = rand() % 100;
-            if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk4) {
+            if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10]
+                           .antivenomChance) {
                 self->ext.faerie.unk92 = false;
                 self->entityId = 0xD5;
                 self->step = 0;
@@ -373,10 +367,11 @@ void func_us_80173D60(Entity* self) {
             params = 5;
         }
 
-        if (!g_api.func_800FF110(D_us_80172494[params * 4]) &&
-            g_Status.equipHandCount[D_us_80172494[(params * 4) + 1]]) {
+        if (!g_api.func_800FF110(g_ResistItemsParamMap[params * 4]) &&
+            g_Status.equipHandCount[g_ResistItemsParamMap[(params * 4) + 1]]) {
             rnd = rand() % 100;
-            if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk5) {
+            if (rnd <=
+                g_FaerieAbilityStats[s_FaerieStats.level / 10].resistChance) {
                 self->entityId = 0xD6;
                 self->step = 0;
                 self->params = params;
@@ -424,9 +419,10 @@ void func_us_80173D60(Entity* self) {
         return;
     }
 
-    if (D_80097A29 | D_80097A2A) {
+    if (g_Status.equipHandCount[ITEM_POTION] |
+        g_Status.equipHandCount[ITEM_HIGH_POTION]) {
         rnd = rand() % 100;
-        if (rnd <= D_us_80172408[s_FaerieStats.level / 10].unk6) {
+        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].healChance) {
             self->ext.faerie.unk94 = true;
             self->entityId = 0xD7;
             self->step = 0;
@@ -732,14 +728,14 @@ void func_us_80174F0C(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         SetAnimationFrame(self, 0x13);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BD4);
+            g_api.PlaySfx(D_us_80172BCC[2]);
         }
         self->step++;
         break;
     case 0x6:
         if (self->animFrameIdx == 0xA) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BD4);
+                g_api.PlaySfx(D_us_80172BCC[2]);
             }
             self->step++;
         }
@@ -795,7 +791,7 @@ void func_us_80174F0C(Entity* self) {
 
     case 0x5A:
         SetAnimationFrame(self, 0x20);
-        g_api.PlaySfx(D_us_80172BDC);
+        g_api.PlaySfx(D_us_80172BCC[4]);
         self->step++;
         break;
     case 0x5B:
@@ -841,7 +837,7 @@ void func_us_801753E4(Entity* self) {
         break;
     case 2:
         self->facingLeft = PLAYER.facingLeft;
-        if (D_80097A1A[paramOffset]) {
+        if (g_Status.equipHandCount[ITEM_HAMMER]) {
             SetAnimationFrame(self, 0x17);
 
             for (rnd = rand() % 0x100, i = 0; true; i++) {
@@ -854,14 +850,14 @@ void func_us_801753E4(Entity* self) {
             self->step++;
         } else {
             SetAnimationFrame(self, 0x10);
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step += 2;
         }
         break;
     case 3:
         if (self->animFrameIdx == 5) {
-            D_80097A1A[paramOffset]--;
+            g_Status.equipHandCount[ITEM_HAMMER]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
             CreateEventEntity_Dupe(self, 0xDF, 1);
@@ -920,7 +916,7 @@ void func_us_80175730(Entity* self) {
         }
         break;
     case 2:
-        if (!D_80097A1A[paramOffset]) {
+        if (!g_Status.equipHandCount[ITEM_UNCURSE]) {
             SetAnimationFrame(self, 0x14);
             self->step = 5;
             break;
@@ -932,7 +928,7 @@ void func_us_80175730(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC);
+            g_api.PlaySfx(D_us_80172BCC[0]);
         }
         self->step++;
         break;
@@ -941,10 +937,10 @@ void func_us_80175730(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC);
+                g_api.PlaySfx(D_us_80172BCC[0]);
             }
 
-            D_80097A1A[paramOffset]--;
+            g_Status.equipHandCount[ITEM_UNCURSE]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
@@ -966,7 +962,7 @@ void func_us_80175730(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1012,7 +1008,7 @@ void func_us_80175A78(Entity* self) {
         }
         break;
     case 2:
-        if (!D_80097A1A[paramOffset]) {
+        if (!g_Status.equipHandCount[ITEM_ANTIVENOM]) {
             SetAnimationFrame(self, 0x14);
             self->step = 5;
             break;
@@ -1024,7 +1020,7 @@ void func_us_80175A78(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC);
+            g_api.PlaySfx(D_us_80172BCC[0]);
         }
         self->step++;
         break;
@@ -1033,10 +1029,10 @@ void func_us_80175A78(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC);
+                g_api.PlaySfx(D_us_80172BCC[0]);
             }
 
-            D_80097A1A[paramOffset]--;
+            g_Status.equipHandCount[ITEM_ANTIVENOM]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
@@ -1058,7 +1054,7 @@ void func_us_80175A78(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1104,7 +1100,8 @@ void func_us_80175DBC(Entity* self) {
         break;
     case 2:
         self->facingLeft = PLAYER.facingLeft;
-        if (!g_Status.equipHandCount[D_us_80172494[self->params * 4 + 1]]) {
+        if (!g_Status
+                 .equipHandCount[g_ResistItemsParamMap[self->params * 4 + 1]]) {
             SetAnimationFrame(self, 0x10);
             self->step = 5;
             break;
@@ -1133,12 +1130,14 @@ void func_us_80175DBC(Entity* self) {
                 }
             }
 
-            g_Status.equipHandCount[D_us_80172494[self->params * 4 + 1]]--;
+            g_Status
+                .equipHandCount[g_ResistItemsParamMap[self->params * 4 + 1]]--;
 
             g_api.CreateEntFactoryFromEntity(
-                self, FACTORY(0x37, D_us_80172494[self->params * 4 + 2]), 0);
+                self,
+                FACTORY(0x37, g_ResistItemsParamMap[self->params * 4 + 2]), 0);
             CreateEventEntity_Dupe(
-                self, 0xDF, D_us_80172494[self->params * 4 + 3]);
+                self, 0xDF, g_ResistItemsParamMap[self->params * 4 + 3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1155,7 +1154,7 @@ void func_us_80175DBC(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1198,14 +1197,15 @@ void func_us_80176178(Entity* self) {
         }
         break;
     case 2:
-        if (!g_Status.equipHandCount[D_us_801724C4[self->params * 2]]) {
+        if (!g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]) {
             if (self->params) {
                 temp = 0;
             } else {
                 temp = 1;
             }
             self->params = temp;
-            if (!g_Status.equipHandCount[D_us_801724C4[self->params * 2]]) {
+            if (!g_Status
+                     .equipHandCount[g_PotionItemsParamMap[self->params * 2]]) {
                 SetAnimationFrame(self, 0x14);
                 self->step = 5;
                 break;
@@ -1224,10 +1224,11 @@ void func_us_80176178(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
-            g_api.PlaySfx(D_us_80172BD0);
-            g_Status.equipHandCount[D_us_801724C4[self->params * 2]]--;
+            g_api.PlaySfx(D_us_80172BCC[1]);
+            g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
-                self, FACTORY(0x37, D_us_801724C4[self->params * 2 + 1]), 0);
+                self,
+                FACTORY(0x37, g_PotionItemsParamMap[self->params * 2 + 1]), 0);
             CreateEventEntity_Dupe(self, 0xDF, 2);
             self->ext.faerie.frameCounter = 0;
             self->step++;
@@ -1245,7 +1246,7 @@ void func_us_80176178(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BD8);
+            g_api.PlaySfx(D_us_80172BCC[3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1331,7 +1332,7 @@ void func_us_80176504(Entity* arg0) {
         break;
     case 2:
         rnd = rand() % 0x100;
-        if (D_us_801792EC == 1) {
+        if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
                 if (rnd <= D_us_80172C3C[i * 2]) {
                     arg0->ext.faerie.unkA4 = D_us_80172C3C[i * 2 + 1];
@@ -1641,10 +1642,6 @@ void func_us_80176C98(Entity* self) {
     D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-extern s32 D_us_801792D4;
-extern s32 D_us_801792D8;
-extern Unk2CB0 D_us_80172CB0[];
-
 void func_us_80177380(Entity* self) {
     char pad[2];
 
@@ -1766,7 +1763,7 @@ void func_us_80177380(Entity* self) {
     case 4:
         SetAnimationFrame(self, 14);
         g_PauseAllowed = 1;
-        self->entityId = 0xD1;
+        self->entityId = ENTITY_ID_SERVANT;
         self->step = 0;
         break;
     }
@@ -1983,7 +1980,8 @@ void func_us_80177F84(Entity* self) {
 
     posX2 = self->posX.i.hi;
     posY = self->posY.i.hi;
-    unkStruct = &D_us_801724CC[LOH(self->params)];
+
+    unkStruct = &D_us_801724CC[(s16)self->params];
     switch (self->step) {
     case 0:
         self->primIndex =
