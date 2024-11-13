@@ -58,7 +58,9 @@ void DebugShowWaitInfo(const char* msg) {
     VSync(0);
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
+#if !defined(VERSION_PSP)
     FntFlush(-1);
+#endif
 }
 
 void DebugInputWait(const char* msg) {

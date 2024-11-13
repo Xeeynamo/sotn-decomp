@@ -81,9 +81,11 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-FILES_WITH_O4 = 624DC.c.o 61F30.c.o 63C90.c.o
-OPT_HIGH = -O4,p #need this because otherwise the comma breaks the filter statement
-OPTIMIZATION = $(if $(filter $(notdir $@),$(FILES_WITH_O4)), $(OPT_HIGH), -Op)
+# DRA appears to be compiled with -O4,p. This will control that flag.
+# May need to modify if other -O4,p functions are found in other overlays.
+# Works for now. Look in git history for a different approach which filters by individual .o file.
+OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
+OPTIMIZATION = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
