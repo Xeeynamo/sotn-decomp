@@ -289,7 +289,7 @@
 | 1.00 | true     | DestroyEntity                       | asm/us/ric/matchings/1AC60/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_000/matchings/bat/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_001/matchings/ghost/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_002/matchings/3678/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_002/matchings/faerie/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/cen/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/dre/matchings/st_common/DestroyEntity.s 
 | 1.00 | true     | DestroyEntity                       | asm/us/st/mad/matchings/st_common/DestroyEntity.s 
@@ -314,7 +314,7 @@
 | 1.00 | true     | SsStart2                            | asm/us/main/matchings/psxsdk/libsnd/ssstart/SsStart2.s 
 | 1.00 | true     | SsUtReverbOff                       | asm/us/main/matchings/psxsdk/libsnd/ut_roff/SsUtReverbOff.s 
 | 1.00 | true     | SpuInit                             | asm/us/main/matchings/psxsdk/libspu/s_i/SpuInit.s 
-| 1.00 | true     | func_us_80177F64                    | asm/us/servant/tt_002/matchings/3678/func_us_80177F64.s 
+| 1.00 | true     | func_us_80177F64                    | asm/us/servant/tt_002/matchings/faerie/func_us_80177F64.s 
 | 1.00 | true     | func_801B1D68                       | asm/us/st/sel/matchings/2C048/func_801B1D68.s 
 | 1.00 | true     | func_801BA648                       | asm/us/st/sel/matchings/stream/func_801BA648.s 
 | 1.00 | true     | func_801BA668                       | asm/us/st/sel/matchings/stream/func_801BA668.s 
@@ -1755,8 +1755,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_000/matchings/bat/CreateEventEntity.s 
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_001/matchings/ghost/CreateEventEntity.s 
-| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_002/matchings/3678/CreateEventEntity.s 
-| 1.00 | true     | CreateEventEntity_Dupe              | asm/us/servant/tt_002/matchings/3678/CreateEventEntity_Dupe.s 
+| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_002/matchings/faerie/CreateEventEntity.s 
+| 1.00 | true     | CreateEventEntity_Dupe              | asm/us/servant/tt_002/matchings/faerie/CreateEventEntity_Dupe.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/no0/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
 | 0.98 | true     | EntityExplosionPuffOpaque           | asm/us/st/no3/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
@@ -1819,47 +1819,47 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/matchings/bat/AccumulateTowardZero.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_001/matchings/ghost/AccumulateTowardZero.s 
-| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_002/matchings/3678/AccumulateTowardZero.s 
+| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_002/matchings/faerie/AccumulateTowardZero.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_000/matchings/bat/CalculateAngleToEntity.s 
 | 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_001/matchings/ghost/CalculateAngleToEntity.s 
-| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_002/matchings/3678/CalculateAngleToEntity.s 
+| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_002/matchings/faerie/CalculateAngleToEntity.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_000/matchings/bat/CalculateDistance.s 
 | 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_001/matchings/ghost/CalculateDistance.s 
-| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_002/matchings/3678/CalculateDistance.s 
+| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_002/matchings/faerie/CalculateDistance.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_000/matchings/bat/CheckAllEntitiesValid.s 
 | 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_001/matchings/ghost/CheckAllEntitiesValid.s 
-| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_002/matchings/3678/CheckAllEntitiesValid.s 
+| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_002/matchings/faerie/CheckAllEntitiesValid.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_000/matchings/bat/GetTargetPositionWithDistanceBuffer.s 
 | 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_001/matchings/ghost/GetTargetPositionWithDistanceBuffer.s 
-| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_002/matchings/3678/GetTargetPositionWithDistanceBuffer.s 
+| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_002/matchings/faerie/GetTargetPositionWithDistanceBuffer.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_000/matchings/bat/IsMovementAllowed.s 
 | 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_001/matchings/ghost/IsMovementAllowed.s 
-| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_002/matchings/3678/IsMovementAllowed.s 
+| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_002/matchings/faerie/IsMovementAllowed.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_000/matchings/bat/ProcessEvent.s 
 | 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_001/matchings/ghost/ProcessEvent.s 
-| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_002/matchings/3678/ProcessEvent.s 
+| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_002/matchings/faerie/ProcessEvent.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ProcessSfxState                     | asm/us/servant/tt_000/matchings/bat/ProcessSfxState.s 
 | 1.00 | true     | ProcessSfxState                     | asm/us/servant/tt_001/matchings/ghost/ProcessSfxState.s 
-| 0.93 | true     | ProcessSfxState                     | asm/us/servant/tt_002/matchings/3678/ProcessSfxState.s 
+| 0.93 | true     | ProcessSfxState                     | asm/us/servant/tt_002/matchings/faerie/ProcessSfxState.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_000/matchings/bat/SearchForEntityInRange.s 
 | 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_001/matchings/ghost/SearchForEntityInRange.s 
-| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_002/matchings/3678/SearchForEntityInRange.s 
+| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_002/matchings/faerie/SearchForEntityInRange.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_000/matchings/bat/ServantUnk0.s 
 | 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_001/matchings/ghost/ServantUnk0.s 
-| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_002/matchings/3678/ServantUnk0.s 
+| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_002/matchings/faerie/ServantUnk0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_000/matchings/bat/ServantUpdateAnim.s 
 | 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_001/matchings/ghost/ServantUpdateAnim.s 
-| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_002/matchings/3678/ServantUpdateAnim.s 
+| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_002/matchings/faerie/ServantUpdateAnim.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeleton                      | asm/us/st/no0/matchings/e_skeleton/EntitySkeleton.s 
 | 1.00 | true     | EntitySlinger                       | asm/us/st/no0/matchings/e_slinger/EntitySlinger.s 
@@ -2260,8 +2260,8 @@
 | 1.00 | true     | SetEntityAnimation                  | asm/us/servant/tt_000/matchings/bat/SetEntityAnimation.s 
 | 1.00 | true     | SetEntityAnimation                  | asm/us/servant/tt_001/matchings/ghost/SetEntityAnimation.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_80175730                    | asm/us/servant/tt_002/matchings/3678/func_us_80175730.s 
-| 1.00 | true     | func_us_80175A78                    | asm/us/servant/tt_002/matchings/3678/func_us_80175A78.s 
+| 1.00 | true     | func_us_80175730                    | asm/us/servant/tt_002/matchings/faerie/func_us_80175730.s 
+| 1.00 | true     | func_us_80175A78                    | asm/us/servant/tt_002/matchings/faerie/func_us_80175A78.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityUnkId1B                       | asm/us/st/cen/matchings/F890/EntityUnkId1B.s 
 | 1.00 | true     | func_us_801C26B8                    | asm/us/st/no0/matchings/e_elevator/func_us_801C26B8.s 
