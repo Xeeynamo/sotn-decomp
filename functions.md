@@ -244,7 +244,6 @@
 | dra    | func_psp_0913D640                   |       43 |          3 |        |                                 |       |
 | wrp    | FindFirstEntityBelow                |       43 |          5 |        |                                 |       |
 | wrp    | FindFirstEntityToTheLeft            |       43 |          5 |        |                                 |       |
-| dra    | func_psp_090F5068                   |       43 |          7 |        | https://decomp.me/scratch/Ax3UX | 0.974 |
 | dra    | func_80118C28                       |       44 |          1 |        | https://decomp.me/scratch/7JQww | 0.978 |
 | dra    | func_psp_090ECCC0                   |       44 |          3 |        |                                 |       |
 | dra    | func_psp_090ECE88                   |       44 |          3 |        |                                 |       |
