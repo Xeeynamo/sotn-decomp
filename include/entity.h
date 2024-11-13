@@ -2075,24 +2075,11 @@ typedef struct {
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 : 16;
-    /* 0x8E */ s16 : 16;
+    /* 0x8C */ struct Entity* unk8C;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ s16 unk94;
 } ET_StoneRose;
-
-typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
-    /* 0x80 */ s16 : 16;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s16 : 16;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 : 16;
-    /* 0x8A */ s16 : 16;
-    /* 0x8C */ struct Entity* unk8C;
-} ET_StoneRoseSeed;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -2268,7 +2255,6 @@ typedef union { // offset=0x7C
     ET_FleaMan fleaMan;
     ET_801D9264 et_801D9264;
     ET_StoneRose stoneRose;
-    ET_StoneRoseSeed stoneRoseSeed;
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
 } Ext;

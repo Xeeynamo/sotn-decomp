@@ -13,7 +13,7 @@ Entity* func_us_801D7D00(u16 arg0) {
 
         newEntity->entityId = E_STONEROSE_SEED;
         newEntity->pfnUpdate = D_us_80180A20[0];
-        newEntity->ext.stoneRoseSeed.unk8C = g_CurrentEntity;
+        newEntity->ext.stoneRose.unk8C = g_CurrentEntity;
         newEntity->params = arg0;
         newEntity->posX.val = g_CurrentEntity->posX.val;
         newEntity->posY.val = g_CurrentEntity->posY.val;
@@ -405,7 +405,7 @@ void func_us_801D8DF0(Entity* self) {
         } else {
             spawnXOffset = -0x28;
         }
-        self->ext.stoneRoseSeed.unk86 = 2;
+        self->ext.stoneRose.unk86 = 2;
         self->posX.i.hi = spawnXOffset + self->posX.i.hi;
         break;
     case 1:
@@ -414,14 +414,14 @@ void func_us_801D8DF0(Entity* self) {
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            if (self->ext.stoneRoseSeed.unk86 == 0) {
+            if (self->ext.stoneRose.unk86 == 0) {
                 EntityExplosionSpawn(0, 0);
                 return;
             }
             self->posY.i.hi += collider.unk18;
             self->velocityX = self->velocityX >> 1;
             self->velocityY = FIX(-2.0);
-            self->ext.stoneRoseSeed.unk86--;
+            self->ext.stoneRose.unk86--;
 
             self->drawFlags |= FLAG_BLINK;
         }
@@ -465,7 +465,7 @@ void func_us_801D8FFC(Entity* self) {
         InitializeEntity(D_us_80180B0C);
         self->zPriority = PLAYER.zPriority + 0x10;
         self->anim = &D_us_80182318;
-        self->ext.stoneRoseSeed.unk86 = rand();
+        self->ext.stoneRose.unk86 = rand();
         angle = (rand() & 0x1FF) + 0x700;
         self->velocityX = rcos(angle) * 0x10;
         if (!self->facingLeft) {
@@ -489,8 +489,8 @@ void func_us_801D8FFC(Entity* self) {
             return;
         }
         g_api.UpdateAnim(NULL, NULL);
-        yOffset = rsin(self->ext.stoneRoseSeed.unk86) * 4;
-        self->ext.stoneRoseSeed.unk86 += 0x60;
+        yOffset = rsin(self->ext.stoneRose.unk86) * 4;
+        self->ext.stoneRose.unk86 += 0x60;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->posY.val += yOffset;
