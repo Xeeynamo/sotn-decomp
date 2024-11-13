@@ -219,26 +219,7 @@ void EntitySkelerang(Entity* self) {
         }
         break;
     case 16:
-        // TODO: include
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 
     if (self->animCurFrame > 39) {
