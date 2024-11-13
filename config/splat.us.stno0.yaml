@@ -40,7 +40,7 @@ segments:
     subsegments:
       - [0x0, data]
       - [0x778, data, e_laydef]
-      - [0x91C, data, e_init]
+      - [0x920, .data, e_init]
       - [0xC8C, data]
       - [0xF04, .data, e_breakable]
       - [0xFC0, data]
