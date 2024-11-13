@@ -244,7 +244,7 @@
 | dra    | func_psp_0913D640                   |       43 |          3 |        |                                 |       |
 | wrp    | FindFirstEntityBelow                |       43 |          5 |        |                                 |       |
 | wrp    | FindFirstEntityToTheLeft            |       43 |          5 |        |                                 |       |
-| dra    | func_psp_090F5068                   |       43 |          7 |        |                                 |       |
+| dra    | func_psp_090F5068                   |       43 |          7 |        | https://decomp.me/scratch/Ax3UX | 0.974 |
 | dra    | func_80118C28                       |       44 |          1 |        | https://decomp.me/scratch/7JQww | 0.978 |
 | dra    | func_psp_090ECCC0                   |       44 |          3 |        |                                 |       |
 | dra    | func_psp_090ECE88                   |       44 |          3 |        |                                 |       |
@@ -502,7 +502,7 @@
 | dra    | func_psp_09142980                   |      128 |         18 |        |                                 |       |
 | dra    | func_psp_090F1618                   |      129 |         16 |        |                                 |       |
 | dra    | func_psp_090EDC48                   |      129 |         17 |        |                                 |       |
-| dra    | func_psp_090EC608                   |      130 |         11 |        |                                 |       |
+| dra    | func_psp_090EC608                   |      130 |         11 |        | https://decomp.me/scratch/Tr9tx | 0.514 |
 | dra    | func_psp_09104AA0                   |      133 |         15 |        |                                 |       |
 | dra    | func_psp_091418D0                   |      133 |         16 |        |                                 |       |
 | dra    | func_psp_0911B630                   |      136 |         12 |        |                                 |       |
