@@ -125,7 +125,7 @@ typedef struct {
     /* 0x12 */ u16 priority;
     /* 0x14 */ s16 drawMode;
     /* 0x16 */ s16 : 16;
-    /* 0x16 */ u32 flags;
+    /* 0x18 */ u32 flags;
 } Unkstruct_801724CC; // size = 0x1C
 
 typedef struct {
