@@ -41,7 +41,7 @@ extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
 extern s32 D_800973FC;   // this is in unkGraphicsStruct
 extern s32 D_80097420[]; // this is in unkGraphicsStruct
-extern s16 D_us_801724CC[];
+extern Unkstruct_801724CC D_us_801724CC[];
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
 
@@ -1980,11 +1980,8 @@ void func_us_80177F84(Entity* self) {
 
     posX2 = self->posX.i.hi;
     posY = self->posY.i.hi;
-    // The data in D_us_801724CC is aligned in a way that it needs to be a u16
-    // array So this is a bit ugly to cast it into the struct pointer
-    unkStruct =
-        (Unkstruct_801724CC*)&D_us_801724CC[(s16)self->params *
-                                            sizeof(Unkstruct_801724CC) / 2];
+
+    unkStruct = &D_us_801724CC[(s16)self->params];
     switch (self->step) {
     case 0:
         self->primIndex =
