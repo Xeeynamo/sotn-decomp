@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
-
-extern PfnEntityUpdate D_us_80180A20[];
+#include "../pfn_entity_update.h"
 
 // spawn seed
 Entity* func_us_801D7D00(u16 arg0) {
@@ -12,7 +11,7 @@ Entity* func_us_801D7D00(u16 arg0) {
         DestroyEntity(newEntity);
 
         newEntity->entityId = E_STONEROSE_SEED;
-        newEntity->pfnUpdate = D_us_80180A20[0];
+        newEntity->pfnUpdate = PfnEntityUpdates[E_STONEROSE_SEED - 1];
         newEntity->ext.stoneRose.unk8C = g_CurrentEntity;
         newEntity->params = arg0;
         newEntity->posX.val = g_CurrentEntity->posX.val;
