@@ -77,6 +77,9 @@ extern EInit g_EInitSlingerRib;
 // Ghost (enemy)
 extern EInit g_EInitGhostEnemy;
 
+// Skelerang
+extern EInit g_EInitSkelerangBoomerang;
+
 // Clock room
 extern EInit g_Statues;
 

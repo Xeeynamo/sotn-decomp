@@ -2055,10 +2055,6 @@ typedef struct {
     /* 0x84 */ u32 speed;
 } ET_GhostEnemy;
 
-// ====== RIC ENTITIES ======
-
-// ==========================
-
 typedef struct {
     /* 0x7C */ struct Entity* next;
     /* 0x80 */ s16 timer;
@@ -2080,6 +2076,14 @@ typedef struct {
     /* 0x92 */ s16 : 16;
     /* 0x94 */ s16 unk94;
 } ET_StoneRose;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ s16 unk84;
+} ET_Skelerang;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -2257,6 +2261,7 @@ typedef union { // offset=0x7C
     ET_StoneRose stoneRose;
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
+    ET_Skelerang skelerang;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
