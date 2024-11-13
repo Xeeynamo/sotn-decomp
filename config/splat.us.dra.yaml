@@ -86,7 +86,7 @@ segments:
       - [0x2FBC, .data, 5D5BC] # g_CapePaletteDefs
       - [0x300C, .data, 5D5BC] # g_CheatCodes
       - [0x3014, .data, 5D5BC] # D_800A3014
-      - [0x3134, .data, 627C4] # D_800A3194
+      - [0x3134, .data, 628AC] # D_800A3194
       - [0x31B0, .data, 63ED4] # D_800A3210
       - [0x3330, .data, 63ED4] # D_800A33A0-D_800A35D0
       - [0x37D8, .data, 63ED4] # Palette, GFX desc until D_800A3BB8
@@ -176,10 +176,10 @@ segments:
       - [0x3CBAC, .rodata, 5D5BC] # func_800FD6C4
       # - [0x3CBC4, .rodata, 5D5BC] # func_800FD7C0
       # - [0x3CBDC, .rodata, 5D5BC] # GetStatusAilmentTimer
-      - [0x3CC0C, .rodata, 627C4] # func_801027C4
-      # - [0x3CC2C, .rodata, 627C4] # func_801028AC
-      # - [0x3CC54, .rodata, 627C4] # func_80102D70
-      # - [0x3CC70, .rodata, 627C4] # HandleSaveMenu
+      - [0x3CC0C, .rodata, 624DC] # func_801027C4
+      - [0x3CC2C, .rodata, 628AC] # func_801028AC
+      # - [0x3CC54, .rodata, 628AC] # func_80102D70
+      # - [0x3CC70, .rodata, 628AC] # HandleSaveMenu
       - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
@@ -247,7 +247,8 @@ segments:
       - [0x5087C, c, 5087C]
       - [0x5483C, c, menu]
       - [0x5D5BC, c, 5D5BC]
-      - [0x627C4, c, 627C4]
+      - [0x624DC, c, 624DC]
+      - [0x628AC, c, 628AC]
       - [0x63ED4, c, 63ED4]
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]

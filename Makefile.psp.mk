@@ -66,7 +66,8 @@ $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(PSX_BASE_SYMS) $(CONFI
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT_PIP) $<
 
-$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $$(call list_o_files_psp,dra_psp)
+ST_DRA_MERGE = 624DC
+$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
 	$(call link,dra,$@)
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
@@ -80,7 +81,7 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-FILES_WITH_O4 = 5DA0.c.o 61F30.c.o 63C90.c.o
+FILES_WITH_O4 = 624DC.c.o 61F30.c.o 63C90.c.o
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the filter statement
 OPTIMIZATION = $(if $(filter $(notdir $@),$(FILES_WITH_O4)), $(OPT_HIGH), -Op)
 

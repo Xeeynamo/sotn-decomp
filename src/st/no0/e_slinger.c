@@ -52,7 +52,6 @@ void SlingerAttackCheck(Entity* self) {
     }
 }
 
-extern u16 g_EInitSlinger[];
 void EntitySlinger(Entity* self) {
     Entity* newEntity;
     u8 animStatus;
@@ -203,7 +202,6 @@ void EntitySlinger(Entity* self) {
 
 // Bone parts that rotate and fall down when killed
 // This is a duplicate of EntitySkeletonPieces and EntityBoneScimitarParts
-extern u16 g_EInitSlingerPieces[];
 void EntitySlingerPieces(Entity* self) {
     if (self->step) {
         self->ext.skeleton.explosionTimer--;
@@ -227,5 +225,26 @@ void EntitySlingerPieces(Entity* self) {
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;
+    }
+}
+
+void EntitySlingerRib(Entity* self) {
+    if (self->step != 0) {
+        if (self->flags & FLAG_DEAD) {
+            EntityExplosionSpawn(0, 0);
+            return;
+        }
+        self->rotZ += 0x80;
+        MoveEntity(0);
+        if (self->posY.i.hi > 0xF0) {
+            DestroyEntity(self);
+        }
+    } else {
+        InitializeEntity(g_EInitSlingerRib);
+        self->posY.val -= FIX(1.0 / 16);
+        GetDistanceToPlayerX();
+        self->velocityX = self->facingLeft ? FIX(1.75) : FIX(-1.75);
+        self->velocityY = 0;
+        self->drawFlags = FLAG_DRAW_ROTZ;
     }
 }
