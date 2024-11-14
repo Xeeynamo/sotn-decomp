@@ -99,7 +99,11 @@ void func_us_801D7DAC(Entity* self) {
                 i++;
             }
         }
+#ifdef VERSION_PSP
+        newEntity->pfnUpdate = D_us_8018091C[newEntity->entityId - 1];
+#else
         newEntity->pfnUpdate = D_us_8018091C[newEntity->entityId];
+#endif
         newEntity->params = self->hitEffect;
         newEntity->ext.stoneRose.unk8C = self->ext.stoneRose.unk8C;
         newEntity->posX.val = self->posX.val;
