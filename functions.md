@@ -294,7 +294,7 @@
 | dra    | func_psp_090F1DF0                   |       52 |          4 |        |                                 |       |
 | dra    | AddHearts                           |       52 |          5 |        |                                 |       |
 | dra    | GetFreeEntity                       |       52 |          5 |        |                                 |       |
-| dra    | func_psp_090F4FC8                   |       52 |         10 |        |                                 |       |
+| dra    | func_psp_090F4FC8                   |       52 |         10 |        | https://decomp.me/scratch/Bs12o | 0.997 |
 | dra    | func_psp_090F6368                   |       52 |         10 |        |                                 |       |
 | dra    | func_psp_09103E68                   |       52 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra    | func_psp_091048B8                   |       52 |         10 |        |                                 |       |
@@ -610,7 +610,7 @@
 | dra    | HandleVideoPlayback                 |      286 |         37 | Yes    |                                 |       |
 | dra    | UpdateAnim                          |      289 |         15 |        |                                 |       |
 | dra    | func_psp_09116720                   |      289 |         19 |        |                                 |       |
-| dra    | func_psp_090F4B90                   |      293 |         59 |        |                                 |       |
+| dra    | func_psp_090F4B90                   |      293 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
 |        | ProcessEvent                        |      294 |         42 |        |                                 |       |
 | dra    | HandleEnding                        |      299 |         60 |        |                                 |       |
 | dra    | func_psp_09144280                   |      304 |         47 |        |                                 |       |
