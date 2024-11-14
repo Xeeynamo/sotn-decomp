@@ -5,6 +5,7 @@
 #include "items.h"
 #include "../servant_private.h"
 
+#define FAERIE_MODE_USE_LIFE_APPLE 0xD2
 #define FAERIE_MODE_USE_HAMMER 0xD3
 
 static u32 D_us_801792D0;
@@ -134,7 +135,7 @@ void ExecuteAbilityInitialize(Entity* self) {
         case ENTITY_ID_SERVANT:
             self->ext.faerie.timer = 120;
             // fallthrough
-        case 0xD2:
+        case FAERIE_MODE_USE_LIFE_APPLE:
         case FAERIE_MODE_USE_HAMMER:
         case 0xD4:
         case 0xD5:
@@ -278,9 +279,9 @@ void CheckForValidAbility(Entity* self) {
     }
     if (g_Player.status & PLAYER_STATUS_UNK40000) {
         rnd = rand() % 100;
-        // for faerie, this is always true. stats table.unk1 is 0x00FF
-        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].unk1) {
-            self->entityId = 0xD2;
+        // for faerie, this is always true. stats table.lifeAppleChance is 0x00FF
+        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].lifeAppleChance) {
+            self->entityId = FAERIE_MODE_USE_LIFE_APPLE;
             self->step = 0;
             return;
         }
