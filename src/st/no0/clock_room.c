@@ -2,12 +2,34 @@
 #include "common.h"
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/clock_room", func_us_801CCAAC);
+void func_us_801CCAAC(Entity* self) {
+    s32 minute;
+    s32 hour;
+
+    if (!(self->ext.clockRoom.unk88 & 0x1F)) {
+        g_api.PlaySfxVolPan(SFX_STONE_MOVE_A, 0x40, 0);
+    }
+    self->ext.clockRoom.unk88++;
+
+    // Minute hand
+    minute =
+        (self->ext.clockRoom.unk88 * LOW((self + 5)->ext.clockRoom.bellTimer)) /
+        512;
+    (self + 5)->ext.clockRoom.hand =
+        (s16)((self + 5)->ext.clockRoom.unk80 + minute) % 3600;
+
+    // Hour hand
+    hour =
+        (self->ext.clockRoom.unk88 * LOW((self + 6)->ext.clockRoom.bellTimer)) /
+        512;
+    (self + 6)->ext.clockRoom.hand =
+        (s16)((self + 6)->ext.clockRoom.unk80 - hour) % 3600;
+}
 
 void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     // self + 7 is birdcage door 1
     self += 7;
-    if (timerMinutes - 10 < 20) {
+    if (timerMinutes >= 10 && timerMinutes < 30) {
         self->ext.birdcage.state = true;
     } else {
         self->ext.birdcage.state = false;
@@ -15,7 +37,7 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
 
     // self + 8 is birdcage door 2
     self += 1;
-    if (timerMinutes - 30 < 20) {
+    if (timerMinutes >= 30 && timerMinutes < 50) {
         self->ext.birdcage.state = true;
     } else {
         self->ext.birdcage.state = false;
