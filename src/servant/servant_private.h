@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef SERVANT_PRIVATE_H
+#define SERVANT_PRIVATE_H
 #include <servant.h>
 
 #ifndef VERSION_PSP
@@ -28,3 +30,5 @@ STATIC u32 ServantUpdateAnim(
     Entity* self, s8* frameProps, AnimationFrame** frames);
 STATIC void SetEntityAnimation(Entity* entity, AnimationFrame* anim);
 STATIC void UpdateServantDefault(Entity* self);
+
+#endif

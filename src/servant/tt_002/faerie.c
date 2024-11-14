@@ -3,6 +3,9 @@
 #include "faerie.h"
 #include "sfx.h"
 #include "items.h"
+#include "../servant_private.h"
+
+#define FAERIE_MODE_USE_HAMMER 0xD3
 
 static u32 D_us_801792D0;
 static s32 D_us_801792D4;
@@ -32,9 +35,7 @@ static s32 s_DistToTargetLocation;
 static s16 s_TargetLocOffset_calc;
 
 extern u16 g_FaerieClut[];
-// During cleanup, rename this.  May not actually be this familiar, unknown
-// where it's set
-extern Entity thisFamiliar;
+
 extern FaerieAbilityStats g_FaerieAbilityStats[];
 extern s32 D_us_80172BCC[];
 extern s16 g_ResistItemsParamMap[];
@@ -58,35 +59,41 @@ extern AnimationFrame* g_FaerieAnimationFrames[];
 
 void SetAnimationFrame(Entity*, s32);
 void unused_39C8(Entity*);
-void func_us_80173D60(Entity*);
+void CheckForValidAbility(Entity*);
 
-static s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
-static s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
-static s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
-
-static void ServantInit(InitializeMode mode);
-static void func_us_80174998(Entity* self);
-static void func_us_80174F0C(Entity* self);
-static void func_us_801753E4(Entity* self);
-static void func_us_80175730(Entity* self);
-static void func_us_80175A78(Entity* self);
-static void func_us_80175DBC(Entity* self);
-static void func_us_80176178(Entity* self);
-static void func_us_80176504(Entity* self);
-static void func_us_80176B6C(Entity* self);
-static void func_us_80176C98(Entity* self);
-static void func_us_80177380(Entity* self);
+static void UpdateServantDefault(Entity* self);
+static void UpdateEntityIdD2(Entity* self);
+static void UpdateServantUseHammer(Entity* self);
+static void UpdateEntityIdD4(Entity* self);
+static void UpdateEntityIdD5(Entity* self);
+static void UpdateEntityIdD6(Entity* self);
+static void UpdateEntityIdD7(Entity* self);
+static void UpdateEntityIdD8(Entity* self);
+static void UpdateEntityIdD9(Entity* self);
+static void UpdateEntityIdDA(Entity* self);
+static void UpdateEntityIdDB(Entity* self);
 static void func_us_80177958(Entity* self);
 static void func_us_80177AC4(Entity* self);
-static void func_us_80177F64(Entity* self);
+static void ProcessSfxState_Passthrough(Entity* self);
 static void func_us_80177F84(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
-    ServantInit,      func_us_80174998, func_us_80174F0C, func_us_801753E4,
-    func_us_80175730, func_us_80175A78, func_us_80175DBC, func_us_80176178,
-    func_us_80176504, func_us_80176B6C, func_us_80176C98, func_us_80177380,
-    func_us_80177958, func_us_80177AC4, func_us_80177F64, func_us_80177F84};
+    ServantInit,
+    UpdateServantDefault,
+    UpdateEntityIdD2,
+    UpdateServantUseHammer,
+    UpdateEntityIdD4,
+    UpdateEntityIdD5,
+    UpdateEntityIdD6,
+    UpdateEntityIdD7,
+    UpdateEntityIdD8,
+    UpdateEntityIdD9,
+    UpdateEntityIdDA,
+    UpdateEntityIdDB,
+    func_us_80177958,
+    func_us_80177AC4,
+    ProcessSfxState_Passthrough,
+    func_us_80177F84};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -98,61 +105,62 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
 
 void unused_39C8(Entity* arg0) {}
 
-void func_us_801739D0(Entity* arg0) {
-    if (!arg0->ext.faerie.unk7E) {
+void ExecuteAbilityInitialize(Entity* self) {
+    if (!self->ext.faerie.unk7E) {
 
-        switch (arg0->entityId) {
+        switch (self->entityId) {
         case ENTITY_ID_SERVANT:
         case 0xD8:
-            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
 
-            SetAnimationFrame(arg0, 0xE);
+            SetAnimationFrame(self, 0xE);
 
-            arg0->ext.faerie.randomMovementAngle = rand() % 4096;
-            arg0->ext.faerie.targetAngle = 0;
-            arg0->ext.faerie.unk88 = 8;
-            arg0->ext.faerie.maxAngle = 0x20;
-            arg0->step++;
+            self->ext.faerie.randomMovementAngle = rand() % 4096;
+            self->ext.faerie.targetAngle = 0;
+            self->ext.faerie.unk88 = 8;
+            self->ext.faerie.maxAngle = 0x20;
+            self->step++;
             break;
         case 0xD9:
             // loc 0xD8
-            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
-            arg0->step++;
+            self->step++;
             break;
         }
     } else {
-        switch (arg0->entityId) {
+        switch (self->entityId) {
         case ENTITY_ID_SERVANT:
-            arg0->ext.faerie.timer = 120;
+            self->ext.faerie.timer = 120;
             // fallthrough
         case 0xD2:
-        case 0xD3:
+        case FAERIE_MODE_USE_HAMMER:
         case 0xD4:
         case 0xD5:
         case 0xD6:
         case 0xD7:
         case 0xDA:
         case 0xDB:
-            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
-            SetAnimationFrame(arg0, 0xE);
-            arg0->step++;
+            SetAnimationFrame(self, 0xE);
+            self->step++;
             break;
         case 0xD9:
-            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
-            arg0->step++;
+            self->step++;
         }
     }
-    arg0->ext.faerie.unk7E = arg0->entityId;
+    self->ext.faerie.unk7E = self->entityId;
     D_us_8017931C = 0;
 }
 
 // This is a duplicate CreateEventEntity which is lower in the file, but we need
-// both to match the binary for PSX.
-void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
+// both to match the binary for PSX.  They are identical, but faerie uses this
+// one.
+void CreateEventEntity_Local(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
 
@@ -178,54 +186,54 @@ void CreateEventEntity_Dupe(Entity* entityParent, s32 entityId, s32 params) {
     }
 }
 
-void func_us_80173BD0(Entity* arg0) {
-    if (abs(arg0->velocityY) > abs(arg0->velocityX)) {
-        if (abs(arg0->velocityY) < FIX(0.5)) {
-            if (arg0->ext.faerie.unk80 == 1) {
-                arg0->ext.faerie.unk80 = 0;
-                SetAnimationFrame(arg0, 0x29);
-            } else if (arg0->ext.faerie.unk80 == 2) {
-                arg0->ext.faerie.unk80 = 0;
-                SetAnimationFrame(arg0, 0xE);
+void SelectAnimationFrame(Entity* self) {
+    if (abs(self->velocityY) > abs(self->velocityX)) {
+        if (abs(self->velocityY) < FIX(0.5)) {
+            if (self->ext.faerie.unk80 == 1) {
+                self->ext.faerie.unk80 = 0;
+                SetAnimationFrame(self, 0x29);
+            } else if (self->ext.faerie.unk80 == 2) {
+                self->ext.faerie.unk80 = 0;
+                SetAnimationFrame(self, 0xE);
             }
-        } else if (abs(arg0->velocityY) > FIX(1)) {
-            if (arg0->velocityY >= 0) {
-                arg0->ext.faerie.unk80 = 2;
-                SetAnimationFrame(arg0, 0xB);
+        } else if (abs(self->velocityY) > FIX(1)) {
+            if (self->velocityY >= 0) {
+                self->ext.faerie.unk80 = 2;
+                SetAnimationFrame(self, 0xB);
             } else {
-                arg0->ext.faerie.unk80 = 2;
-                SetAnimationFrame(arg0, 0xC);
+                self->ext.faerie.unk80 = 2;
+                SetAnimationFrame(self, 0xC);
             }
         }
     } else {
-        if (abs(arg0->velocityX) > FIX(0.5625)) {
-            if (arg0->ext.faerie.unk80 == 0) {
-                arg0->ext.faerie.unk80 = 1;
-                SetAnimationFrame(arg0, 0xF);
-            } else if (arg0->ext.faerie.unk80 == 2) {
-                arg0->ext.faerie.unk80 = 0;
-                SetAnimationFrame(arg0, 0xE);
+        if (abs(self->velocityX) > FIX(0.5625)) {
+            if (self->ext.faerie.unk80 == 0) {
+                self->ext.faerie.unk80 = 1;
+                SetAnimationFrame(self, 0xF);
+            } else if (self->ext.faerie.unk80 == 2) {
+                self->ext.faerie.unk80 = 0;
+                SetAnimationFrame(self, 0xE);
             }
-        } else if (abs(arg0->velocityX) < FIX(0.375)) {
-            if (arg0->ext.faerie.unk80 == 1) {
-                arg0->ext.faerie.unk80 = 0;
-                SetAnimationFrame(arg0, 0x29);
-            } else if (arg0->ext.faerie.unk80 == 2) {
-                arg0->ext.faerie.unk80 = 0;
-                SetAnimationFrame(arg0, 0xE);
+        } else if (abs(self->velocityX) < FIX(0.375)) {
+            if (self->ext.faerie.unk80 == 1) {
+                self->ext.faerie.unk80 = 0;
+                SetAnimationFrame(self, 0x29);
+            } else if (self->ext.faerie.unk80 == 2) {
+                self->ext.faerie.unk80 = 0;
+                SetAnimationFrame(self, 0xE);
             }
         }
-        if (abs(arg0->velocityX) > FIX(0.5)) {
-            if (arg0->velocityX >= 0) {
-                arg0->facingLeft = 1;
+        if (abs(self->velocityX) > FIX(0.5)) {
+            if (self->velocityX >= 0) {
+                self->facingLeft = 1;
             } else {
-                arg0->facingLeft = 0;
+                self->facingLeft = 0;
             }
         }
     }
 }
 
-void func_us_80173D60(Entity* self) {
+void CheckForValidAbility(Entity* self) {
     s32 i;
     s32 params;
     s32 rnd;
@@ -290,7 +298,7 @@ void func_us_80173D60(Entity* self) {
     self->ext.faerie.timer =
         g_FaerieAbilityStats[s_FaerieStats.level / 10].timer;
 
-    if (self->entityId == 0xD3) {
+    if (self->entityId == FAERIE_MODE_USE_HAMMER) {
         return;
     }
 
@@ -300,7 +308,7 @@ void func_us_80173D60(Entity* self) {
         if (rnd <=
             g_FaerieAbilityStats[(s_FaerieStats.level / 10)].hammerChance) {
             self->ext.faerie.unk8E = 0;
-            self->entityId = 0xD3;
+            self->entityId = FAERIE_MODE_USE_HAMMER;
             self->step = 0;
             return;
         }
@@ -487,7 +495,7 @@ void ServantInit(InitializeMode mode) {
     spriteBanks += 20;
     *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
 
-    entity = &thisFamiliar;
+    entity = &g_Entities[SERVANT_ENTITY_INDEX];
 
     DestroyEntity(entity);
     entity->unk5A = 0x6C;
@@ -548,7 +556,7 @@ void ServantInit(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
 
-void func_us_80174998(Entity* self) {
+void UpdateServantDefault(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
 
     if (D_us_80179320) {
@@ -591,7 +599,7 @@ void func_us_80174998(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         self->ext.faerie.unk80 = 0;
         SetAnimationFrame(self, 0xE);
 
@@ -633,7 +641,7 @@ void func_us_80174998(Entity* self) {
             self->ext.faerie.maxAngle = 0x80;
         }
 
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
 
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -660,18 +668,18 @@ void func_us_80174998(Entity* self) {
     ProcessEvent(self, false);
 
     if (!g_CutsceneHasControl) {
-        func_us_80173D60(self);
+        CheckForValidAbility(self);
     }
     unused_39C8(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void func_us_80174F0C(Entity* self) {
+void UpdateEntityIdD2(Entity* self) {
     s32 i;
 
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         self->ext.faerie.frameCounter = 0;
         break;
     case 1:
@@ -715,7 +723,7 @@ void func_us_80174F0C(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 5);
         self->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -743,7 +751,7 @@ void func_us_80174F0C(Entity* self) {
     case 0x7:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            CreateEventEntity_Dupe(self, 0xDF, 0);
+            CreateEventEntity_Local(self, 0xDF, 0);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -751,7 +759,7 @@ void func_us_80174F0C(Entity* self) {
     case 0x8:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            CreateEventEntity_Dupe(self, 0xDD, 0);
+            CreateEventEntity_Local(self, 0xDD, 0);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -801,7 +809,7 @@ void func_us_80174F0C(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void func_us_801753E4(Entity* self) {
+void UpdateServantUseHammer(Entity* self) {
     const int paramOffset = 3;
 
     s32 rnd;
@@ -815,7 +823,7 @@ void func_us_801753E4(Entity* self) {
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         SetAnimationFrame(self, 0xE);
         break;
     case 1:
@@ -826,7 +834,7 @@ void func_us_801753E4(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 5);
         self->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -860,7 +868,7 @@ void func_us_801753E4(Entity* self) {
             g_Status.equipHandCount[ITEM_HAMMER]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
-            CreateEventEntity_Dupe(self, 0xDF, 1);
+            CreateEventEntity_Local(self, 0xDF, 1);
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             g_api.func_80102CD8(4);
             self->ext.faerie.frameCounter = 0;
@@ -877,13 +885,13 @@ void func_us_801753E4(Entity* self) {
         break;
     }
 
-    func_us_80173D60(self);
+    CheckForValidAbility(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-// This is a dupe of func_us_80175A78 with a slightly different offset
+// This is a dupe of UpdateEntityIdD5 with a slightly different offset
 // for the create entity params
-void func_us_80175730(Entity* self) {
+void UpdateEntityIdD4(Entity* self) {
     const int paramOffset = 1;
 
     s_TargetLocOffset_calc = -0x18;
@@ -894,7 +902,7 @@ void func_us_80175730(Entity* self) {
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         SetAnimationFrame(self, 0xE);
         break;
 
@@ -906,7 +914,7 @@ void func_us_80175730(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 5);
         self->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -944,7 +952,7 @@ void func_us_80175730(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
+            CreateEventEntity_Local(self, 0xDF, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -969,13 +977,13 @@ void func_us_80175730(Entity* self) {
         break;
     }
 
-    func_us_80173D60(self);
+    CheckForValidAbility(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-// This is a dupe of func_us_80175730 with a slightly different offset
+// This is a dupe of UpdateEntityIdD4 with a slightly different offset
 // for the create entity params
-void func_us_80175A78(Entity* self) {
+void UpdateEntityIdD5(Entity* self) {
     const int paramOffset = 0;
 
     s_TargetLocOffset_calc = -0x18;
@@ -986,7 +994,7 @@ void func_us_80175A78(Entity* self) {
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         SetAnimationFrame(self, 0xE);
         break;
 
@@ -998,7 +1006,7 @@ void func_us_80175A78(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 5);
         self->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -1036,7 +1044,7 @@ void func_us_80175A78(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Dupe(self, 0xDF, paramOffset + 3);
+            CreateEventEntity_Local(self, 0xDF, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -1061,11 +1069,11 @@ void func_us_80175A78(Entity* self) {
         break;
     }
 
-    func_us_80173D60(self);
+    CheckForValidAbility(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void func_us_80175DBC(Entity* self) {
+void UpdateEntityIdD6(Entity* self) {
     s32 i;
     s32 rnd;
     s32 temp;
@@ -1078,7 +1086,7 @@ void func_us_80175DBC(Entity* self) {
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         SetAnimationFrame(self, 0xE);
         break;
     case 1:
@@ -1089,7 +1097,7 @@ void func_us_80175DBC(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 5);
         self->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -1136,7 +1144,7 @@ void func_us_80175DBC(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self,
                 FACTORY(0x37, g_ResistItemsParamMap[self->params * 4 + 2]), 0);
-            CreateEventEntity_Dupe(
+            CreateEventEntity_Local(
                 self, 0xDF, g_ResistItemsParamMap[self->params * 4 + 3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
@@ -1161,11 +1169,11 @@ void func_us_80175DBC(Entity* self) {
         break;
     }
 
-    func_us_80173D60(self);
+    CheckForValidAbility(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void func_us_80176178(Entity* self) {
+void UpdateEntityIdD7(Entity* self) {
     s32 temp;
 
     s_TargetLocOffset_calc = -0x18;
@@ -1176,7 +1184,7 @@ void func_us_80176178(Entity* self) {
     s_TargetLocationY = PLAYER.posY.i.hi - 0x18;
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         SetAnimationFrame(self, 0xE);
         break;
     case 1:
@@ -1187,7 +1195,7 @@ void func_us_80176178(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 5);
         self->velocityX = rcos(s_AllowedAngle) << 5;
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -1229,7 +1237,7 @@ void func_us_80176178(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self,
                 FACTORY(0x37, g_PotionItemsParamMap[self->params * 2 + 1]), 0);
-            CreateEventEntity_Dupe(self, 0xDF, 2);
+            CreateEventEntity_Local(self, 0xDF, 2);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1253,11 +1261,11 @@ void func_us_80176178(Entity* self) {
         break;
     }
 
-    func_us_80173D60(self);
+    CheckForValidAbility(self);
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void func_us_80176504(Entity* arg0) {
+void UpdateEntityIdD8(Entity* arg0) {
     s16 rnd;
     s32 i;
 
@@ -1311,11 +1319,11 @@ void func_us_80176504(Entity* arg0) {
     arg0->posY.val += arg0->velocityY;
     switch (arg0->step) {
     case 0:
-        func_us_801739D0(arg0);
+        ExecuteAbilityInitialize(arg0);
         arg0->ext.faerie.timer = -1;
         break;
     case 1:
-        func_us_80173BD0(arg0);
+        SelectAnimationFrame(arg0);
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
             SetAnimationFrame(arg0, 0xE);
@@ -1371,7 +1379,7 @@ void func_us_80176504(Entity* arg0) {
                 SetAnimationFrame(arg0, arg0->ext.faerie.unkA4->animIndex);
                 if (arg0->ext.faerie.unkA4->params &&
                     (SearchForEntityInRange(0, 0xDE) == NULL)) {
-                    CreateEventEntity_Dupe(
+                    CreateEventEntity_Local(
                         arg0, 0xDE, arg0->ext.faerie.unkA4->params);
                 }
                 arg0->ext.faerie.unkA4++;
@@ -1393,12 +1401,12 @@ void func_us_80176504(Entity* arg0) {
     }
 
     ProcessEvent(arg0, false);
-    func_us_80173D60(arg0);
+    CheckForValidAbility(arg0);
     ServantUpdateAnim(arg0, NULL, g_FaerieAnimationFrames);
     FntPrint("sts = %d\n", g_PlaySfxStep);
 }
 
-void func_us_80176B6C(Entity* self) {
+void UpdateEntityIdD9(Entity* self) {
     s32 animIndex;
     s32 zPriorityFlag;
     s32 i;
@@ -1409,8 +1417,8 @@ void func_us_80176B6C(Entity* self) {
 #endif
 
     if (!self->step) {
-        func_us_801739D0(self);
-        self->ext.faerieUnk0.unk7C = &thisFamiliar;
+        ExecuteAbilityInitialize(self);
+        self->ext.faerieUnk0.unk7C = &g_Entities[SERVANT_ENTITY_INDEX];
         self->step += 1;
     }
     self->posX.val = self->ext.faerieUnk0.unk7C->posX.val;
@@ -1438,7 +1446,7 @@ void func_us_80176B6C(Entity* self) {
     ServantUpdateAnim(self, 0, g_FaerieAnimationFrames);
 }
 
-void func_us_80176C98(Entity* self) {
+void UpdateEntityIdDA(Entity* self) {
     s32 rnd;
     s32 i;
 
@@ -1475,7 +1483,7 @@ void func_us_80176C98(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         SetAnimationFrame(self, 0xE);
         break;
     case 1:
@@ -1486,7 +1494,7 @@ void func_us_80176C98(Entity* self) {
         self->ext.faerie.targetAngle = s_AllowedAngle;
         self->velocityY = -(rsin(s_AllowedAngle) << 3);
         self->velocityX = (rcos(s_AllowedAngle) << 3);
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         s_DistToTargetLocation =
@@ -1632,7 +1640,7 @@ void func_us_80176C98(Entity* self) {
         break;
     }
     ProcessEvent(self, false);
-    func_us_80173D60(self);
+    CheckForValidAbility(self);
 #ifdef VERSION_PSP
     if ((self->step == 3 || self->step == 4) && *((s32*)0x9234CB8) < 0x200) {
         *((s32*)0x9234CB8) = 0x200;
@@ -1642,7 +1650,7 @@ void func_us_80176C98(Entity* self) {
     D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void func_us_80177380(Entity* self) {
+void UpdateEntityIdDB(Entity* self) {
     char pad[2];
 
     self->ext.faerie.left = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
@@ -1705,7 +1713,7 @@ void func_us_80177380(Entity* self) {
 
     switch (self->step) {
     case 0:
-        func_us_801739D0(self);
+        ExecuteAbilityInitialize(self);
         D_us_801792D4 =
             D_us_80172CB0[self->params].left + self->ext.faerie.left;
         D_us_801792D8 = D_us_80172CB0[self->params].top + self->ext.faerie.top;
@@ -1713,7 +1721,7 @@ void func_us_80177380(Entity* self) {
         break;
 
     case 1:
-        func_us_80173BD0(self);
+        SelectAnimationFrame(self);
         s_DistToTargetLocation =
             CalculateDistance(self, s_TargetLocationX, s_TargetLocationY);
         if (s_DistToTargetLocation < 32) {
@@ -1750,7 +1758,7 @@ void func_us_80177380(Entity* self) {
                 SetAnimationFrame(self, self->ext.faerie.unkA4->animIndex);
                 if ((self->ext.faerie.unkA4->params != 0) &&
                     (SearchForEntityInRange(0, 0xDE) == NULL)) {
-                    CreateEventEntity_Dupe(
+                    CreateEventEntity_Local(
                         self, 0xDE, self->ext.faerie.unkA4->params);
                 }
 
@@ -1965,7 +1973,7 @@ void func_us_80177AC4(Entity* arg0) {
     }
 }
 
-void func_us_80177F64(Entity* self) { ProcessSfxState(); }
+void ProcessSfxState_Passthrough(Entity* self) { ProcessSfxState(self); }
 
 void func_us_80177F84(Entity* self) {
     FakePrim* fakePrim;
