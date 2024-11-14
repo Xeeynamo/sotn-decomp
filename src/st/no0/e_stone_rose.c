@@ -375,6 +375,7 @@ void func_us_801D8150(Entity* self) {
     }
 }
 
+// Seed entity
 extern u16 D_us_80180B00[];
 
 void func_us_801D8DF0(Entity* self) {
