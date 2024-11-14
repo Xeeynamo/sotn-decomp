@@ -25,7 +25,15 @@ Entity* func_us_801D7D00(u16 arg0) {
 }
 
 extern PfnEntityUpdate D_us_8018091C[];
-extern s16 D_us_80182268[][4];
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+} Unk_D_us_80182268;
+
+extern Unk_D_us_80182268 D_us_80182268[];
 
 // seed update function
 void func_us_801D7DAC(Entity* self) {
@@ -36,18 +44,18 @@ void func_us_801D7DAC(Entity* self) {
 
     params = self->params;
     if (self->step == 0) {
-        self->rotX = D_us_80182268[params][0] & 0xFF;
-        self->rotY = D_us_80182268[params][1] & 0xFF;
-        self->rotZ = D_us_80182268[params][2] & 0x7F;
-        self->rotPivotX = D_us_80182268[params][3] & 0x7F;
-        if (D_us_80182268[params][3] & 0x80) {
+        self->rotX = D_us_80182268[params].unk0 & 0xFF;
+        self->rotY = D_us_80182268[params].unk2 & 0xFF;
+        self->rotZ = D_us_80182268[params].unk4 & 0x7F;
+        self->rotPivotX = D_us_80182268[params].unk6 & 0x7F;
+        if (D_us_80182268[params].unk6 & 0x80) {
             self->attackElement = self->rotPivotX;
         }
-        self->hitPoints = D_us_80182268[params][3] >> 0x8;
-        self->hitParams = D_us_80182268[params][2] >> 0x8;
-        self->entityRoomIndex = (D_us_80182268[params][2] >> 7) & 1;
-        self->hitEffect = D_us_80182268[params][0] & 0xFF00;
-        self->hitboxOffX = D_us_80182268[params][1] >> 0x8;
+        self->hitPoints = D_us_80182268[params].unk6 >> 0x8;
+        self->hitParams = D_us_80182268[params].unk4 >> 0x8;
+        self->entityRoomIndex = (D_us_80182268[params].unk4 >> 7) & 1;
+        self->hitEffect = D_us_80182268[params].unk0 & 0xFF00;
+        self->hitboxOffX = D_us_80182268[params].unk2 >> 0x8;
         self->rotPivotY = 0;
         self->step++;
         switch (self->hitParams) {
