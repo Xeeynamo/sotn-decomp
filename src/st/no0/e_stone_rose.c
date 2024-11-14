@@ -23,8 +23,112 @@ Entity* func_us_801D7D00(u16 arg0) {
     return NULL;
 }
 
+extern PfnEntityUpdate D_us_8018091C[];
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+} Unk_D_us_80182268;
+
+extern Unk_D_us_80182268 D_us_80182268[];
+
 // seed update function
-INCLUDE_ASM("st/no0/nonmatchings/e_stone_rose", func_us_801D7DAC);
+void func_us_801D7DAC(Entity* self) {
+    Entity* newEntity;
+    s32 params;
+    s32 i;
+    s32 rotZ;
+
+    params = self->params;
+    if (self->step == 0) {
+        self->rotX = D_us_80182268[params].unk0 & 0xFF;
+        self->rotY = D_us_80182268[params].unk2 & 0xFF;
+        self->rotZ = D_us_80182268[params].unk4 & 0x7F;
+        self->rotPivotX = D_us_80182268[params].unk6 & 0x7F;
+        if (D_us_80182268[params].unk6 & 0x80) {
+            self->attackElement = self->rotPivotX;
+        }
+        self->hitPoints = D_us_80182268[params].unk6 >> 0x8;
+        self->hitParams = D_us_80182268[params].unk4 >> 0x8;
+        self->entityRoomIndex = (D_us_80182268[params].unk4 >> 7) & 1;
+        self->hitEffect = D_us_80182268[params].unk0 & 0xFF00;
+        self->hitboxOffX = D_us_80182268[params].unk2 >> 0x8;
+        self->rotPivotY = 0;
+        self->step++;
+        switch (self->hitParams) {
+        case 0:
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            break;
+        case 1:
+            break;
+        case 2:
+            newEntity = self->ext.stoneRose.unk8C;
+            self->posX.val = newEntity->posX.val;
+            self->posY.val = newEntity->posY.val;
+        }
+    } else {
+        switch (self->hitParams) {
+        case 0:
+        case 1:
+            break;
+        case 2:
+            newEntity = self->ext.stoneRose.unk8C;
+            self->posX.val = newEntity->posX.val;
+            self->posY.val = newEntity->posY.val;
+        }
+    }
+    if (self->attackElement) {
+        if (--self->attackElement) {
+            return;
+        }
+        self->attackElement = self->rotPivotX;
+    }
+    rotZ = self->rotZ;
+    for (i = 0; i < rotZ; i++) {
+        if (self->hitPoints == 0) {
+            newEntity = g_api.GetFreeEntity(0xA0, 0xC0);
+        }
+        if (self->hitPoints == 1) {
+            newEntity = g_api.GetFreeEntity(0xE0, 0x100);
+        }
+        if (newEntity == NULL) {
+            if (self->hitboxOffX == 1) {
+                DestroyEntity(self);
+            }
+            return;
+        }
+        DestroyEntity(newEntity);
+        newEntity->entityId = self->rotX;
+        if (self->rotX == 0) {
+            while (true) {
+                i++;
+            }
+        }
+#ifdef VERSION_PSP
+        newEntity->pfnUpdate = D_us_8018091C[newEntity->entityId - 1];
+#else
+        newEntity->pfnUpdate = D_us_8018091C[newEntity->entityId];
+#endif
+        newEntity->params = self->hitEffect;
+        newEntity->ext.stoneRose.unk8C = self->ext.stoneRose.unk8C;
+        newEntity->posX.val = self->posX.val;
+        newEntity->posY.val = self->posY.val;
+        newEntity->facingLeft = self->facingLeft;
+        if (self->entityRoomIndex) {
+            newEntity->params += self->rotPivotY;
+        } else {
+            newEntity->params += i;
+        }
+        self->rotPivotY++;
+        if (self->rotPivotY == self->rotY) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+    self->attackElement = self->rotPivotX;
+}
 
 extern u16 D_us_80180AF4[];
 extern AnimationFrame D_us_80182280;
