@@ -82,7 +82,6 @@ segments:
       - [0x18210, c, dra_psp/18210]
       # Start of shared C. All prior C is PSP-exclusive.
       - [0x186E8, c, dra_psp/186E8]
-      - [0x18800, c, dra_psp/18800]
       - [0x18920, c, dra_psp/18920]
       - [0x18BA0, c, dra_psp/18BA0]
       - [0x18BE0, c, dra_psp/18BE0]
