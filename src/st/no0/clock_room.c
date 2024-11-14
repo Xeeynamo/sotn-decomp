@@ -29,7 +29,7 @@ void func_us_801CCAAC(Entity* self) {
 void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     // self + 7 is birdcage door 1
     self += 7;
-    if (timerMinutes - 10 < 20) {
+    if (timerMinutes >= 10 && timerMinutes < 30) {
         self->ext.birdcage.state = true;
     } else {
         self->ext.birdcage.state = false;
@@ -37,7 +37,7 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
 
     // self + 8 is birdcage door 2
     self += 1;
-    if (timerMinutes - 30 < 20) {
+    if (timerMinutes >= 30 && timerMinutes < 50) {
         self->ext.birdcage.state = true;
     } else {
         self->ext.birdcage.state = false;
