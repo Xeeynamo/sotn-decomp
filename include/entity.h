@@ -1757,10 +1757,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 hand;
-    /* 0x80 */ char pad_80[0x4];
+    /* 0x80 */ s32 unk80;
     /* 0x84 */ u16 bellTimer;
     /* 0x86 */ u16 bellDuration;
-    /* 0x88 */ char pad_88[0x2];
+    /* 0x88 */ u16 unk88;
     /* 0x8A */ u16 unk8A; // might belong to another struct
 } ET_ClockRoom;
 

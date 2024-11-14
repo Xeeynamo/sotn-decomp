@@ -2,7 +2,29 @@
 #include "common.h"
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/clock_room", func_us_801CCAAC);
+void func_us_801CCAAC(Entity* self) {
+    s32 minute;
+    s32 hour;
+
+    if (!(self->ext.clockRoom.unk88 & 0x1F)) {
+        g_api.PlaySfxVolPan(SFX_STONE_MOVE_A, 0x40, 0);
+    }
+    self->ext.clockRoom.unk88++;
+
+    // Minute hand
+    minute =
+        (self->ext.clockRoom.unk88 * LOW((self + 5)->ext.clockRoom.bellTimer)) /
+        512;
+    (self + 5)->ext.clockRoom.hand =
+        (s16)((self + 5)->ext.clockRoom.unk80 + minute) % 3600;
+
+    // Hour hand
+    hour =
+        (self->ext.clockRoom.unk88 * LOW((self + 6)->ext.clockRoom.bellTimer)) /
+        512;
+    (self + 6)->ext.clockRoom.hand =
+        (s16)((self + 6)->ext.clockRoom.unk80 - hour) % 3600;
+}
 
 void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     // self + 7 is birdcage door 1
