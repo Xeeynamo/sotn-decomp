@@ -9,6 +9,10 @@
 #define VERSION "hd"
 #elif defined(_internal_version_pspeu)
 #define VERSION_PSP
+// use this to flag code as only non-psp due to deadstripping.
+// will make it easier to restore stripped code if we ever work out a
+// solution for doing proper deadstripping like the original.
+#define PSP_DEADSTRIP
 #define VERSION "psp"
 #elif defined(_internal_version_beta)
 #define VERSION_BETA
