@@ -5,6 +5,7 @@
 #include "items.h"
 #include "../servant_private.h"
 
+#define FAERIE_MODE_DEFAULT_UPDATE ENTITY_ID_SERVANT
 #define FAERIE_MODE_USE_LIFE_APPLE 0xD2
 #define FAERIE_MODE_USE_HAMMER 0xD3
 #define FAERIE_MODE_USE_UNCURSE 0xD4
@@ -114,7 +115,7 @@ void ExecuteAbilityInitialize(Entity* self) {
     if (!self->ext.faerie.isAbilityInitialized) {
 
         switch (self->entityId) {
-        case ENTITY_ID_SERVANT:
+        case FAERIE_MODE_DEFAULT_UPDATE:
         case 0xD8:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
@@ -136,7 +137,7 @@ void ExecuteAbilityInitialize(Entity* self) {
         }
     } else {
         switch (self->entityId) {
-        case ENTITY_ID_SERVANT:
+        case FAERIE_MODE_DEFAULT_UPDATE:
             self->ext.faerie.timer = 120;
             // fallthrough
         case FAERIE_MODE_USE_LIFE_APPLE:
@@ -441,7 +442,7 @@ void CheckForValidAbility(Entity* self) {
         if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].healChance) {
             // This is likely a bug as it breaks the pattern.
             // variable also only ever gets set and never cleared
-            self->ext.faerie.unk94 = true;
+            self->ext.faerie.requirePotionLuckCheck = true;
             self->entityId = FAERIE_MODE_USE_POTION;
             self->step = 0;
             self->params = params - 1;
@@ -454,8 +455,8 @@ void CheckForValidAbility(Entity* self) {
             }
         }
     } else {
-        if (!self->ext.faerie.unk94) {
-            self->ext.faerie.unk94 = true;
+        if (!self->ext.faerie.requirePotionLuckCheck) {
+            self->ext.faerie.requirePotionLuckCheck = true;
             self->entityId = FAERIE_MODE_USE_POTION;
             self->step = 0;
             self->params = params - 1;
@@ -526,14 +527,14 @@ void ServantInit(InitializeMode mode) {
             (LAYOUT_RECT_PARAMS_UNKNOWN_20 | LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
 #endif
 
-            entity->entityId = ENTITY_ID_SERVANT;
+            entity->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         } else {
             entity->entityId = 0xD8;
         }
         entity->posX.val = FIX(128);
         entity->posY.val = FIX(-32);
     } else {
-        entity->entityId = ENTITY_ID_SERVANT;
+        entity->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
             if (ServantUnk0()) {
                 entity->posX.val = FIX(192);
@@ -801,7 +802,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 0xB:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -888,7 +889,7 @@ void UpdateServantUseHammer(Entity* self) {
     case 4:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -938,7 +939,7 @@ void UpdateServantUseUncurse(Entity* self) {
             break;
         }
         if (SearchForEntityInRange(1, 0x27)) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -970,7 +971,7 @@ void UpdateServantUseUncurse(Entity* self) {
     case 6:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1028,7 +1029,7 @@ void UpdateServantUseAntivenom(Entity* self) {
             break;
         }
         if (SearchForEntityInRange(1, 0x27)) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1060,7 +1061,7 @@ void UpdateServantUseAntivenom(Entity* self) {
     case 6:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1121,7 +1122,7 @@ void UpdateServantUseElementalResist(Entity* self) {
             break;
         }
         if (SearchForEntityInRange(1, 0x27)) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1160,7 +1161,7 @@ void UpdateServantUseElementalResist(Entity* self) {
     case 6:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1227,7 +1228,7 @@ void UpdateServantUsePotion(Entity* self) {
         }
 
         if (SearchForEntityInRange(1, 0x27)) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1252,7 +1253,7 @@ void UpdateServantUsePotion(Entity* self) {
     case 6:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1333,7 +1334,7 @@ void UpdateEntityIdD8(Entity* arg0) {
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
             D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
             SetAnimationFrame(arg0, 0xE);
-            arg0->entityId = ENTITY_ID_SERVANT;
+            arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             arg0->step = 0;
             return;
         }
@@ -1401,7 +1402,7 @@ void UpdateEntityIdD8(Entity* arg0) {
     case 5:
         SetAnimationFrame(arg0, 0xE);
         g_PauseAllowed = true;
-        arg0->entityId = ENTITY_ID_SERVANT;
+        arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         arg0->step = 0;
         break;
     }
@@ -1463,7 +1464,7 @@ void UpdateEntityIdDA(Entity* self) {
     }
     if (IsMovementAllowed(1)) {
         if (self->step < 2) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1639,7 +1640,7 @@ void UpdateEntityIdDA(Entity* self) {
         self->velocityY -= FIX(0.03125);
 
         if (D_us_801792D0 == -1) {
-            self->entityId = ENTITY_ID_SERVANT;
+            self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1777,7 +1778,7 @@ void UpdateEntityIdDB(Entity* self) {
     case 4:
         SetAnimationFrame(self, 14);
         g_PauseAllowed = 1;
-        self->entityId = ENTITY_ID_SERVANT;
+        self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         self->step = 0;
         break;
     }

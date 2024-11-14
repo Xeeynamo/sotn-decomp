@@ -629,7 +629,7 @@ typedef struct {
     /* 0x8E */ s16 unk8E;
     /* 0x90 */ s16 requireUncurseLuckCheck;
     /* 0x92 */ s16 requireAntivenomLuckCheck;
-    /* 0x94 */ s16 unk94;
+    /* 0x94 */ s16 requirePotionLuckCheck;
     /* 0x96 */ s16 timer;
     /* 0x98 */ s32 left;
     /* 0x9C */ s32 top;
