@@ -7,6 +7,10 @@
 
 #define FAERIE_MODE_USE_LIFE_APPLE 0xD2
 #define FAERIE_MODE_USE_HAMMER 0xD3
+#define FAERIE_MODE_USE_UNCURSE 0xD4
+#define FAERIE_MODE_USE_ANTIVENOM 0xD5
+#define FAERIE_MODE_USE_ELEMENTAL_RESIST 0xD6
+#define FAERIE_MODE_USE_POTION 0xD7
 
 static u32 D_us_801792D0;
 static s32 D_us_801792D4;
@@ -15,14 +19,14 @@ static s32 s_ServantId;
 static s32 s_zPriority;
 static FamiliarStats s_FaerieStats;
 
-static s32 D_us_801792F0;
-static s32 D_us_801792F4;
-static s32 D_us_801792F8;
-static s32 D_us_801792FC[5];
-static s32 D_us_80179310;
-static s16 D_us_80179314;
+static s32 s_ElementalDamageStatus;
+static s32 s_UseResistDelayTimer;
+static s32 s_UseResistClearTimer;
+static s32 s_HpDifferenceHistory[5];
+static s32 s_CachedHp;
+static s16 s_HpDifferenceIndex;
 STATIC_PAD_BSS(2);
-static s16 D_us_80179318;
+static s16 s_HpCacheResetTimer;
 STATIC_PAD_BSS(2);
 static s32 D_us_8017931C;
 static s32 D_us_80179320;
@@ -55,7 +59,7 @@ extern s32 D_us_80172C64[];
 
 extern Unk2CB0 D_us_80172CB0[];
 
-extern FaerieAnimIndex D_us_80172368[];
+extern FaerieAnimIndex g_AnimIndexParams[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
 
 void SetAnimationFrame(Entity*, s32);
@@ -65,15 +69,15 @@ void CheckForValidAbility(Entity*);
 static void UpdateServantDefault(Entity* self);
 static void UpdateServantUseLifeApple(Entity* self);
 static void UpdateServantUseHammer(Entity* self);
-static void UpdateEntityIdD4(Entity* self);
-static void UpdateEntityIdD5(Entity* self);
-static void UpdateEntityIdD6(Entity* self);
-static void UpdateEntityIdD7(Entity* self);
+static void UpdateServantUseUncurse(Entity* self);
+static void UpdateServantUseAntivenom(Entity* self);
+static void UpdateServantUseElementalResist(Entity* self);
+static void UpdateServantUsePotion(Entity* self);
 static void UpdateEntityIdD8(Entity* self);
 static void UpdateEntityIdD9(Entity* self);
 static void UpdateEntityIdDA(Entity* self);
 static void UpdateEntityIdDB(Entity* self);
-static void func_us_80177958(Entity* self);
+static void UpdateEntityIdDC(Entity* self);
 static void UpdateSubEntityIdDD(Entity* self);
 static void ProcessSfxState_Passthrough(Entity* self);
 static void UpdateSubEntityIdDF(Entity* self);
@@ -83,15 +87,15 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantDefault,
     UpdateServantUseLifeApple,
     UpdateServantUseHammer,
-    UpdateEntityIdD4,
-    UpdateEntityIdD5,
-    UpdateEntityIdD6,
-    UpdateEntityIdD7,
+    UpdateServantUseUncurse,
+    UpdateServantUseAntivenom,
+    UpdateServantUseElementalResist,
+    UpdateServantUsePotion,
     UpdateEntityIdD8,
     UpdateEntityIdD9,
     UpdateEntityIdDA,
     UpdateEntityIdDB,
-    func_us_80177958,
+    UpdateEntityIdDC,
     UpdateSubEntityIdDD,
     ProcessSfxState_Passthrough,
     UpdateSubEntityIdDF};
@@ -107,7 +111,7 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
 void unused_39C8(Entity* arg0) {}
 
 void ExecuteAbilityInitialize(Entity* self) {
-    if (!self->ext.faerie.unk7E) {
+    if (!self->ext.faerie.isAbilityInitialized) {
 
         switch (self->entityId) {
         case ENTITY_ID_SERVANT:
@@ -137,10 +141,10 @@ void ExecuteAbilityInitialize(Entity* self) {
             // fallthrough
         case FAERIE_MODE_USE_LIFE_APPLE:
         case FAERIE_MODE_USE_HAMMER:
-        case 0xD4:
-        case 0xD5:
-        case 0xD6:
-        case 0xD7:
+        case FAERIE_MODE_USE_UNCURSE:
+        case FAERIE_MODE_USE_ANTIVENOM:
+        case FAERIE_MODE_USE_ELEMENTAL_RESIST:
+        case FAERIE_MODE_USE_POTION:
         case 0xDA:
         case 0xDB:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
@@ -154,7 +158,7 @@ void ExecuteAbilityInitialize(Entity* self) {
             self->step++;
         }
     }
-    self->ext.faerie.unk7E = self->entityId;
+    self->ext.faerie.isAbilityInitialized = self->entityId;
     D_us_8017931C = 0;
 }
 
@@ -244,43 +248,46 @@ void CheckForValidAbility(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
     playerUnk18Flag = g_Player.unk18 & 0xFA00;
     if (playerUnk18Flag) {
-        if ((D_us_801792F0 & playerUnk18Flag) == playerUnk18Flag) {
-            D_us_801792F8 = 0;
-            D_us_801792F4++;
-            D_us_801792F0 = playerUnk18Flag & D_us_801792F0;
+        if ((s_ElementalDamageStatus & playerUnk18Flag) == playerUnk18Flag) {
+            s_UseResistClearTimer = 0;
+            s_UseResistDelayTimer++;
+            s_ElementalDamageStatus = playerUnk18Flag & s_ElementalDamageStatus;
         } else {
-            D_us_801792F4 = 0;
-            D_us_801792F0 |= playerUnk18Flag;
+            s_UseResistDelayTimer = 0;
+            s_ElementalDamageStatus |= playerUnk18Flag;
         }
     } else {
-        D_us_801792F8++;
-        if (D_us_801792F8 > 3600) {
-            D_us_801792F0 = D_us_801792F4 = D_us_801792F8 = 0;
+        s_UseResistClearTimer++;
+        if (s_UseResistClearTimer > 3600) {
+            s_ElementalDamageStatus = s_UseResistDelayTimer =
+                s_UseResistClearTimer = 0;
         }
     }
 
-    if (D_us_80179310 > g_Status.hp) {
-        D_us_801792FC[D_us_80179314++] = D_us_80179310 - g_Status.hp;
-        if (D_us_80179314 > 4) {
-            D_us_80179314 = 0;
+    if (s_CachedHp > g_Status.hp) {
+        s_HpDifferenceHistory[s_HpDifferenceIndex++] = s_CachedHp - g_Status.hp;
+        if (s_HpDifferenceIndex > 4) {
+            s_HpDifferenceIndex = 0;
         }
-        D_us_80179310 = g_Status.hp;
-        D_us_80179318 = 0;
+        s_CachedHp = g_Status.hp;
+        s_HpCacheResetTimer = 0;
     } else {
-        D_us_80179318++;
-        if (D_us_80179318 > 120) {
-            D_us_80179314 = 0;
-            D_us_80179318 = 0;
-            D_us_80179310 = g_Status.hp;
+        s_HpCacheResetTimer++;
+        if (s_HpCacheResetTimer > 120) {
+            s_HpDifferenceIndex = 0;
+            s_HpCacheResetTimer = 0;
+            s_CachedHp = g_Status.hp;
             for (i = 0; i < 5; i++) {
-                D_us_801792FC[i] = 0;
+                s_HpDifferenceHistory[i] = 0;
             }
         }
     }
     if (g_Player.status & PLAYER_STATUS_UNK40000) {
         rnd = rand() % 100;
-        // for faerie, this is always true. stats table.lifeAppleChance is 0x00FF
-        if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].lifeAppleChance) {
+        // for faerie, this is always true. stats table.lifeAppleChance is
+        // 0x00FF
+        if (rnd <=
+            g_FaerieAbilityStats[s_FaerieStats.level / 10].lifeAppleChance) {
             self->entityId = FAERIE_MODE_USE_LIFE_APPLE;
             self->step = 0;
             return;
@@ -315,7 +322,7 @@ void CheckForValidAbility(Entity* self) {
         }
     }
 
-    if (self->entityId == 0xD4) {
+    if (self->entityId == FAERIE_MODE_USE_UNCURSE) {
         return;
     }
 
@@ -324,21 +331,21 @@ void CheckForValidAbility(Entity* self) {
             rnd = rand() % 100;
             if (rnd <= g_FaerieAbilityStats[(s_FaerieStats.level / 10)]
                            .uncurseChance) {
-                self->ext.faerie.unk90 = false;
-                self->entityId = 0xD4;
+                self->ext.faerie.requireUncurseLuckCheck = false;
+                self->entityId = FAERIE_MODE_USE_UNCURSE;
                 self->step = 0;
                 return;
             }
         }
-        if (!self->ext.faerie.unk90) {
-            self->ext.faerie.unk90 = true;
-            self->entityId = 0xD4;
+        if (!self->ext.faerie.requireUncurseLuckCheck) {
+            self->ext.faerie.requireUncurseLuckCheck = true;
+            self->entityId = FAERIE_MODE_USE_UNCURSE;
             self->step = 0;
             return;
         }
     }
 
-    if (self->entityId == 0xD5) {
+    if (self->entityId == FAERIE_MODE_USE_ANTIVENOM) {
         return;
     }
 
@@ -347,32 +354,32 @@ void CheckForValidAbility(Entity* self) {
             rnd = rand() % 100;
             if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10]
                            .antivenomChance) {
-                self->ext.faerie.unk92 = false;
-                self->entityId = 0xD5;
+                self->ext.faerie.requireAntivenomLuckCheck = false;
+                self->entityId = FAERIE_MODE_USE_ANTIVENOM;
                 self->step = 0;
                 return;
             }
         }
-        if (!self->ext.faerie.unk92) {
-            self->ext.faerie.unk92 = true;
-            self->entityId = 0xD5;
+        if (!self->ext.faerie.requireAntivenomLuckCheck) {
+            self->ext.faerie.requireAntivenomLuckCheck = true;
+            self->entityId = FAERIE_MODE_USE_ANTIVENOM;
             self->step = 0;
             return;
         }
     }
 
-    if (D_us_801792F4 >= 10) {
-        if (D_us_801792F0 & 0x8000) {
+    if (s_UseResistDelayTimer >= 10) {
+        if (s_ElementalDamageStatus & ELEMENT_FIRE) {
             params = 0;
-        } else if (D_us_801792F0 & 0x4000) {
+        } else if (s_ElementalDamageStatus & ELEMENT_THUNDER) {
             params = 1;
-        } else if (D_us_801792F0 & 0x2000) {
+        } else if (s_ElementalDamageStatus & ELEMENT_ICE) {
             params = 2;
-        } else if (D_us_801792F0 & 0x1000) {
+        } else if (s_ElementalDamageStatus & ELEMENT_HOLY) {
             params = 3;
-        } else if (D_us_801792F0 & 0x800) {
+        } else if (s_ElementalDamageStatus & ELEMENT_DARK) {
             params = 4;
-        } else if (D_us_801792F0 & 0x200) {
+        } else if (s_ElementalDamageStatus & ELEMENT_STONE) {
             params = 5;
         }
 
@@ -381,22 +388,22 @@ void CheckForValidAbility(Entity* self) {
             rnd = rand() % 100;
             if (rnd <=
                 g_FaerieAbilityStats[s_FaerieStats.level / 10].resistChance) {
-                self->entityId = 0xD6;
+                self->entityId = FAERIE_MODE_USE_ELEMENTAL_RESIST;
                 self->step = 0;
                 self->params = params;
-                D_us_801792F8 = 0;
-                D_us_801792F4 = 0;
+                s_UseResistClearTimer = 0;
+                s_UseResistDelayTimer = 0;
                 return;
             }
         }
     }
 
-    if (self->entityId == 0xD7) {
+    if (self->entityId == FAERIE_MODE_USE_POTION) {
         return;
     }
 
     for (unkHpSum = 0, params = 0, i = 0; i < 5; i++) {
-        unkHpSum += D_us_801792FC[i];
+        unkHpSum += s_HpDifferenceHistory[i];
     }
 
     if (unkHpSum >= (g_Status.hpMax / 2)) {
@@ -432,30 +439,32 @@ void CheckForValidAbility(Entity* self) {
         g_Status.equipHandCount[ITEM_HIGH_POTION]) {
         rnd = rand() % 100;
         if (rnd <= g_FaerieAbilityStats[s_FaerieStats.level / 10].healChance) {
+            // This is likely a bug as it breaks the pattern.
+            // variable also only ever gets set and never cleared
             self->ext.faerie.unk94 = true;
-            self->entityId = 0xD7;
+            self->entityId = FAERIE_MODE_USE_POTION;
             self->step = 0;
             self->params = params - 1;
-            D_us_80179314 = 0;
-            D_us_80179318 = 0;
-            D_us_80179310 = g_Status.hp;
+            s_HpDifferenceIndex = 0;
+            s_HpCacheResetTimer = 0;
+            s_CachedHp = g_Status.hp;
 
             for (i = 0; i < 5; i++) {
-                D_us_801792FC[i] = 0;
+                s_HpDifferenceHistory[i] = 0;
             }
         }
     } else {
         if (!self->ext.faerie.unk94) {
             self->ext.faerie.unk94 = true;
-            self->entityId = 0xD7;
+            self->entityId = FAERIE_MODE_USE_POTION;
             self->step = 0;
             self->params = params - 1;
-            D_us_80179314 = 0;
-            D_us_80179318 = 0;
-            D_us_80179310 = g_Status.hp;
+            s_HpDifferenceIndex = 0;
+            s_HpCacheResetTimer = 0;
+            s_CachedHp = g_Status.hp;
 
             for (i = 0; i < 5; i++) {
-                D_us_801792FC[i] = 0;
+                s_HpDifferenceHistory[i] = 0;
             }
         }
     }
@@ -604,9 +613,9 @@ void UpdateServantDefault(Entity* self) {
         self->ext.faerie.unk80 = 0;
         SetAnimationFrame(self, 0xE);
 
-        D_us_80179310 = g_Status.hp;
-        D_us_80179314 = 0;
-        D_us_80179318 = 0;
+        s_CachedHp = g_Status.hp;
+        s_HpDifferenceIndex = 0;
+        s_HpCacheResetTimer = 0;
         self->ext.faerie.unkCounterA0 = 0;
         break;
     case 1:
@@ -890,9 +899,7 @@ void UpdateServantUseHammer(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-// This is a dupe of UpdateEntityIdD5 with a slightly different offset
-// for the create entity params
-void UpdateEntityIdD4(Entity* self) {
+void UpdateServantUseUncurse(Entity* self) {
     const int paramOffset = 1;
 
     s_TargetLocOffset_calc = -0x18;
@@ -982,9 +989,7 @@ void UpdateEntityIdD4(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-// This is a dupe of UpdateEntityIdD4 with a slightly different offset
-// for the create entity params
-void UpdateEntityIdD5(Entity* self) {
+void UpdateServantUseAntivenom(Entity* self) {
     const int paramOffset = 0;
 
     s_TargetLocOffset_calc = -0x18;
@@ -1074,7 +1079,7 @@ void UpdateEntityIdD5(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdD6(Entity* self) {
+void UpdateServantUseElementalResist(Entity* self) {
     s32 i;
     s32 rnd;
     s32 temp;
@@ -1174,7 +1179,7 @@ void UpdateEntityIdD6(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdD7(Entity* self) {
+void UpdateServantUsePotion(Entity* self) {
     s32 temp;
 
     s_TargetLocOffset_calc = -0x18;
@@ -1419,20 +1424,20 @@ void UpdateEntityIdD9(Entity* self) {
 
     if (!self->step) {
         ExecuteAbilityInitialize(self);
-        self->ext.faerieUnk0.unk7C = &g_Entities[SERVANT_ENTITY_INDEX];
+        self->ext.faerieUnk0.parent = &g_Entities[SERVANT_ENTITY_INDEX];
         self->step += 1;
     }
-    self->posX.val = self->ext.faerieUnk0.unk7C->posX.val;
-    self->posY.val = self->ext.faerieUnk0.unk7C->posY.val;
-    self->facingLeft = self->ext.faerieUnk0.unk7C->facingLeft;
+    self->posX.val = self->ext.faerieUnk0.parent->posX.val;
+    self->posY.val = self->ext.faerieUnk0.parent->posY.val;
+    self->facingLeft = self->ext.faerieUnk0.parent->facingLeft;
 
     for (i = 6; i <= 0x2D; i++) {
-        if (self->ext.faerieUnk0.unk7C->anim == g_FaerieAnimationFrames[i])
+        if (self->ext.faerieUnk0.parent->anim == g_FaerieAnimationFrames[i])
             break;
     }
 
-    animIndex = abs(D_us_80172368[i - 6].animIndex);
-    zPriorityFlag = D_us_80172368[i - 6].zPriorityFlag;
+    animIndex = abs(g_AnimIndexParams[i - 6].animIndex);
+    zPriorityFlag = g_AnimIndexParams[i - 6].zPriorityFlag;
 
     SetAnimationFrame(self, animIndex);
 
@@ -1781,7 +1786,9 @@ void UpdateEntityIdDB(Entity* self) {
     ServantUpdateAnim(self, NULL, &g_FaerieAnimationFrames);
 }
 
-void func_us_80177958(Entity* self) {
+// I don't think this code can be reached in Faerie
+// This may be the code that is Yousie specific and was just copied
+void UpdateEntityIdDC(Entity* self) {
     Entity* entity;
 
     switch (self->params) {
@@ -1895,8 +1902,8 @@ void UpdateSubEntityIdDD(Entity* arg0) {
         }
         break;
     case 2:
-        arg0->ext.faerie.unk7c++;
-        if (arg0->ext.faerie.unk7c > 0xF) {
+        arg0->ext.faerie.subEntityDdTimer++;
+        if (arg0->ext.faerie.subEntityDdTimer > 0xF) {
             arg0->step++;
         }
         break;
@@ -1908,13 +1915,13 @@ void UpdateSubEntityIdDD(Entity* arg0) {
 
         arg0->ext.faerie.unk80 += 4;
         if (arg0->ext.faerie.unk80 >= 0x100) {
-            arg0->ext.faerie.unk7c = 0;
+            arg0->ext.faerie.subEntityDdTimer = 0;
             arg0->step++;
         }
         break;
     case 4:
-        arg0->ext.faerie.unk7c++;
-        if (arg0->ext.faerie.unk7c > 60) {
+        arg0->ext.faerie.subEntityDdTimer++;
+        if (arg0->ext.faerie.subEntityDdTimer > 60) {
             arg0->step++;
         }
         break;
@@ -1976,6 +1983,7 @@ void UpdateSubEntityIdDD(Entity* arg0) {
 
 void ProcessSfxState_Passthrough(Entity* self) { ProcessSfxState(self); }
 
+// This subentity likely uses a different Ext, but more research is needed
 void UpdateSubEntityIdDF(Entity* self) {
     FakePrim* fakePrim;
     s32 i;
@@ -2086,7 +2094,7 @@ void UpdateSubEntityIdDF(Entity* self) {
             self->ext.faerie.unk82 = unkStruct->unk4;
         }
     case 2:
-        self->ext.faerie.unk7E = 0;
+        self->ext.faerie.isAbilityInitialized = 0;
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
 
         while (true) {
@@ -2144,10 +2152,11 @@ void UpdateSubEntityIdDF(Entity* self) {
             }
             fakePrim->x0 = fakePrim->posX.i.hi;
             fakePrim->y0 = fakePrim->posY.i.hi;
-            self->ext.faerie.unk7E |= !(fakePrim->drawMode & DRAW_HIDE);
+            self->ext.faerie.isAbilityInitialized |=
+                !(fakePrim->drawMode & DRAW_HIDE);
             fakePrim = fakePrim->next;
         }
-        if (self->ext.faerie.unk7E == 0) {
+        if (self->ext.faerie.isAbilityInitialized == 0) {
             DestroyEntity(self);
         }
     }
