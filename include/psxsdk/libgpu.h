@@ -1,6 +1,11 @@
 #ifndef LIBGPU_H
 #define LIBGPU_H
 
+#ifndef VERSION_PSP
+#define DR_ENV_CODE_SIZE 15
+#else
+#define DR_ENV_CODE_SIZE 8
+#endif
 /*
  *	Set Primitive Attributes
  */
@@ -171,7 +176,7 @@ typedef struct {
 
 typedef struct {
     O_TAG;
-    /* 0x4 */ u_long code[15];
+    /* 0x4 */ u_long code[DR_ENV_CODE_SIZE];
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
 
 typedef struct {
