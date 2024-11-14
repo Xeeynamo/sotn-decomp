@@ -623,7 +623,7 @@ typedef struct {
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x86 */ s16 targetAngle;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ s16 defaultDistToTargetLoc;
     /* 0x8A */ s16 maxAngle;
     /* 0x8C */ s16 frameCounter;
     /* 0x8E */ s16 unk8E;

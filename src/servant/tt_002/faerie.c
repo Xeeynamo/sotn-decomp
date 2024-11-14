@@ -62,7 +62,7 @@ void unused_39C8(Entity*);
 void CheckForValidAbility(Entity*);
 
 static void UpdateServantDefault(Entity* self);
-static void UpdateEntityIdD2(Entity* self);
+static void UpdateServantUseLifeApple(Entity* self);
 static void UpdateServantUseHammer(Entity* self);
 static void UpdateEntityIdD4(Entity* self);
 static void UpdateEntityIdD5(Entity* self);
@@ -73,14 +73,14 @@ static void UpdateEntityIdD9(Entity* self);
 static void UpdateEntityIdDA(Entity* self);
 static void UpdateEntityIdDB(Entity* self);
 static void func_us_80177958(Entity* self);
-static void func_us_80177AC4(Entity* self);
+static void UpdateSubEntityIdDD(Entity* self);
 static void ProcessSfxState_Passthrough(Entity* self);
-static void func_us_80177F84(Entity* self);
+static void UpdateSubEntityIdDF(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
     ServantInit,
     UpdateServantDefault,
-    UpdateEntityIdD2,
+    UpdateServantUseLifeApple,
     UpdateServantUseHammer,
     UpdateEntityIdD4,
     UpdateEntityIdD5,
@@ -91,9 +91,9 @@ ServantDesc faerie_ServantDesc = {
     UpdateEntityIdDA,
     UpdateEntityIdDB,
     func_us_80177958,
-    func_us_80177AC4,
+    UpdateSubEntityIdDD,
     ProcessSfxState_Passthrough,
-    func_us_80177F84};
+    UpdateSubEntityIdDF};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -118,7 +118,7 @@ void ExecuteAbilityInitialize(Entity* self) {
 
             self->ext.faerie.randomMovementAngle = rand() % 4096;
             self->ext.faerie.targetAngle = 0;
-            self->ext.faerie.unk88 = 8;
+            self->ext.faerie.defaultDistToTargetLoc = 8;
             self->ext.faerie.maxAngle = 0x20;
             self->step++;
             break;
@@ -588,7 +588,7 @@ void UpdateServantDefault(Entity* self) {
 
         self->ext.faerie.randomMovementAngle += 0x10;
         self->ext.faerie.randomMovementAngle &= 0xfff;
-        s_DistToTargetLocation = self->ext.faerie.unk88;
+        s_DistToTargetLocation = self->ext.faerie.defaultDistToTargetLoc;
 
         s_TargetLocationX =
             s_TargetLocationX_calc +
@@ -674,7 +674,7 @@ void UpdateServantDefault(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdD2(Entity* self) {
+void UpdateServantUseLifeApple(Entity* self) {
     s32 i;
 
     switch (self->step) {
@@ -709,7 +709,7 @@ void UpdateEntityIdD2(Entity* self) {
         s_AngleToTarget = self->ext.faerie.randomMovementAngle;
         self->ext.faerie.randomMovementAngle += 0x10;
         self->ext.faerie.randomMovementAngle &= 0xFFF;
-        s_DistToTargetLocation = self->ext.faerie.unk88;
+        s_DistToTargetLocation = self->ext.faerie.defaultDistToTargetLoc;
         s_TargetLocationX =
             s_TargetLocationX_calc +
             ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 0xC);
@@ -797,7 +797,7 @@ void UpdateEntityIdD2(Entity* self) {
         }
         break;
 
-    case 0x5A:
+    case 0x5A: // Only get here when you are dead and have no life apple
         SetAnimationFrame(self, 0x20);
         g_api.PlaySfx(D_us_80172BCC[4]);
         self->step++;
@@ -1283,7 +1283,7 @@ void UpdateEntityIdD8(Entity* arg0) {
     s_AngleToTarget = arg0->ext.faerie.randomMovementAngle;
     arg0->ext.faerie.randomMovementAngle += 0x10;
     arg0->ext.faerie.randomMovementAngle &= 0xfff;
-    s_DistToTargetLocation = arg0->ext.faerie.unk88;
+    s_DistToTargetLocation = arg0->ext.faerie.defaultDistToTargetLoc;
 
     s_TargetLocationX =
         s_TargetLocationX_calc +
@@ -1676,7 +1676,7 @@ void UpdateEntityIdDB(Entity* self) {
     s_AngleToTarget = self->ext.faerie.randomMovementAngle;
     self->ext.faerie.randomMovementAngle =
         (self->ext.faerie.randomMovementAngle + 0x10) & 0xFFF;
-    s_DistToTargetLocation = self->ext.faerie.unk88;
+    s_DistToTargetLocation = self->ext.faerie.defaultDistToTargetLoc;
 
     s_TargetLocationX =
         ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 12) +
@@ -1831,7 +1831,7 @@ void func_us_80177958(Entity* self) {
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
 // but I need more context to get it right.
-void func_us_80177AC4(Entity* arg0) {
+void UpdateSubEntityIdDD(Entity* arg0) {
     Primitive* currentPrim;
     s32 i;
     s32 var_v1;
@@ -1975,7 +1975,7 @@ void func_us_80177AC4(Entity* arg0) {
 
 void ProcessSfxState_Passthrough(Entity* self) { ProcessSfxState(self); }
 
-void func_us_80177F84(Entity* self) {
+void UpdateSubEntityIdDF(Entity* self) {
     FakePrim* fakePrim;
     s32 i;
     u16 posY2;
