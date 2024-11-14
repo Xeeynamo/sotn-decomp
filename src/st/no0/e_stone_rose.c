@@ -95,7 +95,7 @@ void func_us_801D7DAC(Entity* self) {
         DestroyEntity(newEntity);
         newEntity->entityId = self->rotX;
         if (self->rotX == 0) {
-            while(true) {
+            while (true) {
                 i++;
             }
         }
