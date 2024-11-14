@@ -189,6 +189,7 @@ StageNamePopupHelper = 0x801CE654;
 EntityStageNamePopup = 0x801CE824;
 EntitySkelerang = 0x801D191C;
 EntitySkelerangBoomerang = 0x801D20A4;
+EntitySkelerangUnknown = 0x801D2318;
 func_801CD78C = 0x801D2374;
 EntityGhostEnemy = 0x801D5E4C;
 EntityGhostEnemySpawner = 0x801D606C;

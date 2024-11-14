@@ -2079,7 +2079,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ u8 unk80;
+    /* 0x80 */ u8 angle;
     /* 0x81 */ u8 : 8;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ s16 unk84;
