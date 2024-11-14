@@ -253,7 +253,6 @@
 | dra    | func_psp_090F53A8                   |       44 |          6 |        |                                 |       |
 | dra    | func_psp_09114500                   |       44 |          6 |        |                                 |       |
 | dra    | func_psp_09117538                   |       44 |          8 |        |                                 |       |
-| dra    | func_psp_090F50F8                   |       44 |          9 |        |                                 |       |
 | dra    | func_psp_0910A9D0                   |       44 |         11 |        |                                 |       |
 | dra    | func_psp_09142E48                   |       45 |          3 |        |                                 |       |
 | dra    | func_80134C60                       |       46 |          1 |        |                                 |       |
