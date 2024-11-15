@@ -108,7 +108,6 @@ extern s16 D_us_80180FF0[];
 extern s16 D_us_80180FF8[];
 extern u8 D_us_80181028[];
 extern s16 D_us_80181034[];
-extern u16 g_EInitCommon;
 
 void func_us_801C2E7C(Entity* self) {
     Primitive* prim;
@@ -126,7 +125,7 @@ void func_us_801C2E7C(Entity* self) {
     castleFlag1 = g_CastleFlags[CASTLE_FLAG_1];
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitCommon);
+        InitializeEntity(g_EInitCommon);
         self->animCurFrame = 0;
         self->zPriority = 0x9E;
 
