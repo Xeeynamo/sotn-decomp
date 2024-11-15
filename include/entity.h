@@ -607,7 +607,7 @@ typedef struct {
 
 // There appears to be a 2nd Ext used in the Faerie code
 typedef struct {
-    /* 0x7C */ struct Entity* unk7C;
+    /* 0x7C */ struct Entity* parent;
 } ET_FaerieUnk0;
 
 typedef struct {
@@ -617,19 +617,19 @@ typedef struct {
 } FaerieUnkA4;
 
 typedef struct {
-    /* 0x7C */ s16 unk7c;
-    /* 0x7E */ s16 unk7E;
+    /* 0x7C */ s16 subEntityDdTimer;
+    /* 0x7E */ s16 isAbilityInitialized;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x86 */ s16 targetAngle;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ s16 defaultDistToTargetLoc;
     /* 0x8A */ s16 maxAngle;
     /* 0x8C */ s16 frameCounter;
     /* 0x8E */ s16 unk8E;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
-    /* 0x94 */ s16 unk94;
+    /* 0x90 */ s16 requireUncurseLuckCheck;
+    /* 0x92 */ s16 requireAntivenomLuckCheck;
+    /* 0x94 */ s16 requirePotionLuckCheck;
     /* 0x96 */ s16 timer;
     /* 0x98 */ s32 left;
     /* 0x9C */ s32 top;
