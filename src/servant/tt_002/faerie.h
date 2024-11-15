@@ -2,13 +2,40 @@
 #include "common.h"
 #include <servant.h>
 
+#define FAERIE_MODE_DEFAULT_UPDATE ENTITY_ID_SERVANT
+#define FAERIE_MODE_USE_LIFE_APPLE 0xD2
+#define FAERIE_MODE_USE_HAMMER 0xD3
+#define FAERIE_MODE_USE_UNCURSE 0xD4
+#define FAERIE_MODE_USE_ANTIVENOM 0xD5
+#define FAERIE_MODE_USE_ELEMENTAL_RESIST 0xD6
+#define FAERIE_MODE_USE_POTION 0xD7
+#define FAERIE_MODE_ADDITIONAL_INIT 0xD8
+#define FAERIE_MODE_SIT_ON_SHOULDER 0xDA
+#define FAERIE_MODE_OFFER_HINT 0xDB
+
+#define FAERIE_EVENT_SFX_PASSTHROUGH 0xDE
+#define FAERIE_SUBENTITY_WINGS 0xD9
+#define FAERIE_SUBENTITY_LIFE_APPLE 0xDD
+#define FAERIE_SUBENTITY_ITEM 0xDF
+
+#define ROOM_STATE_TO_HINT_OFFSET 2
+#define ROOM_SPECIAL_STATE_UNK1 1
+#define ROOM_SPECIAL_STATE_DARKNESS 2
+#define ROOM_SPECIAL_STATE_MIST 3
+#define ROOM_SPECIAL_STATE_WALL_HINT1 4
+#define ROOM_SPECIAL_STATE_WALL_HINT2 6
+#define ROOM_SPECIAL_STATE_WALL_HINT3 7
+#define ROOM_SPECIAL_STATE_WALL_HINT4 8
+#define ROOM_SPECIAL_STATE_WALL_HINT5 10
+#define ROOM_SPECIAL_STATE_SUS_HINT1 5
+#define ROOM_SPECIAL_STATE_SUS_HINT2 9
+#define ROOM_SPECIAL_STATE_SUS_HINT3 11
+
 typedef struct {
     s16 animIndex;
     s16 zPriorityFlag;
 } FaerieAnimIndex;
 
-// It looks like most if not all of the ability stats for faerie are
-// essentially % chance for abilities to trigger.
 typedef struct {
     s16 timer;
     s16 lifeAppleChance;
