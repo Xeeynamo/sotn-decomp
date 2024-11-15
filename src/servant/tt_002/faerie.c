@@ -130,6 +130,8 @@ void unused_39C8(Entity* arg0) {}
 
 void ExecuteAbilityInitialize(Entity* self) {
     if (!self->ext.faerie.isAbilityInitialized) {
+void ExecuteAbilityInitialize(Entity* self) {
+    if (!self->ext.faerie.isAbilityInitialized) {
 
         switch (self->entityId) {
         case FAERIE_MODE_DEFAULT_UPDATE:

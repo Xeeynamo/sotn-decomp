@@ -11,6 +11,7 @@ PutDispEnv = 0x0891D68C;
 FntPrint = 0x08925e98;
 SsSetMVol = 0x89261B4;
 SsUtSetReverbDepth = 0x89261D4;
+PadRead = 0x8926290;
 CdControl = 0x8926320;
 CdSync = 0x8926334;
 main_ = 0x08926994;
