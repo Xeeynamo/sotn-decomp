@@ -11,7 +11,7 @@ typedef struct {
 // essentially % chance for abilities to trigger.
 typedef struct {
     s16 timer;
-    s16 unk1;
+    s16 lifeAppleChance;
     s16 hammerChance;
     s16 uncurseChance;
     s16 antivenomChance;
