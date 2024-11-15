@@ -1751,7 +1751,8 @@ void UpdateServantOfferHint(Entity* self) {
         ExecuteAbilityInitialize(self);
         s_HintTargetX =
             g_FaerieHints[self->params].left + self->ext.faerie.tileMapX;
-        s_HintTargetY = g_FaerieHints[self->params].top + self->ext.faerie.tileMapY;
+        s_HintTargetY =
+            g_FaerieHints[self->params].top + self->ext.faerie.tileMapY;
         self->ext.faerie.timer = -1;
         break;
 
