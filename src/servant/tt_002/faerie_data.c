@@ -20,13 +20,11 @@ static FaerieSfxEventDesc s_IntroEventCommandVO[] = {{0, 34, NA_VO_FAERIE_INTRO_
 
 s32 g_FaerieIntroRandomizer[] = {0x0000007F, s_IntroEventLifeVO, 0x000000FF, s_IntroEventCommandVO};
 
-static FaerieSfxEventDesc D_us_80172C4C[] = {{0, 38, NA_VO_FAERIE_LETS_GO,},{ -1, 14, 0}};
+static FaerieSfxEventDesc s_SfxEventLetsGo[] = {{0, 38, NA_VO_FAERIE_LETS_GO,},{ -1, 14, 0}};
 
-static FaerieSfxEventDesc D_us_80172C58[] = {{0, 38, NA_VO_FAERIE_FOLLOW,},{-1, 14, 0}};
+static FaerieSfxEventDesc s_SfxEventFollow[] = {{0, 38, NA_VO_FAERIE_FOLLOW,},{-1, 14, 0}};
 
-// This is a ranked lookup table.  First column is selected from a rand() %
-// 0x100 to select the data at the pointer in column 2
-s32 D_us_80172C64[] = {0x0000007F, D_us_80172C4C, 0x000000FF, D_us_80172C58};
+s32 g_SfxEventRandomizer[] = {0x0000007F, s_SfxEventLetsGo, 0x000000FF, s_SfxEventFollow};
 
 // position data with a flag field
 // clang-format off

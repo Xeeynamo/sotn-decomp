@@ -58,7 +58,7 @@ extern u16 g_FaerieFrameCount2;
 extern s32 g_SfxRandomizerGrunt[];
 extern s32 g_SfxRandomizerHammerResist[];
 extern s32 g_FaerieIntroRandomizer[];
-extern s32 D_us_80172C64[];
+extern s32 g_SfxEventRandomizer[];
 
 extern HintTriggerMap g_FaerieHints[];
 
@@ -1358,13 +1358,13 @@ void UpdateEntityIdD8(Entity* arg0) {
             }
         } else {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_80172C64[i * 2]) {
-                    arg0->ext.faerie.currentSfxEvent = D_us_80172C64[i * 2 + 1];
+                if (rnd <= g_SfxEventRandomizer[i * 2]) {
+                    arg0->ext.faerie.currentSfxEvent = g_SfxEventRandomizer[i * 2 + 1];
                     break;
                 }
             }
         }
-        arg0->ext.faerie.unkA8 = ((s16*)arg0->ext.faerie.currentSfxEvent)[0];
+        arg0->ext.faerie.sfxEventFlag = ((s16*)arg0->ext.faerie.currentSfxEvent)[0];
         g_PauseAllowed = false;
         arg0->step++;
 
@@ -1375,16 +1375,16 @@ void UpdateEntityIdD8(Entity* arg0) {
         } else {
             arg0->facingLeft = 0;
         }
-        if (arg0->ext.faerie.unkA8 < 0) {
+        if (arg0->ext.faerie.sfxEventFlag < 0) {
             if (g_PlaySfxStep > 4) {
                 SetAnimationFrame(arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
                 arg0->step++;
             }
         } else {
             if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
-                arg0->ext.faerie.unkA8--;
+                arg0->ext.faerie.sfxEventFlag--;
             }
-            if (arg0->ext.faerie.unkA8 < 0) {
+            if (arg0->ext.faerie.sfxEventFlag < 0) {
                 SetAnimationFrame(arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
                 if (arg0->ext.faerie.currentSfxEvent->sfxId &&
                     (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) == NULL)) {
@@ -1392,7 +1392,7 @@ void UpdateEntityIdD8(Entity* arg0) {
                         arg0, FAERIE_EVENT_SFX_PASSTHROUGH, arg0->ext.faerie.currentSfxEvent->sfxId);
                 }
                 arg0->ext.faerie.currentSfxEvent++;
-                arg0->ext.faerie.unkA8 = arg0->ext.faerie.currentSfxEvent->unk0;
+                arg0->ext.faerie.sfxEventFlag = arg0->ext.faerie.currentSfxEvent->unk0;
             }
         }
         break;
@@ -1741,7 +1741,7 @@ void UpdateEntityIdDB(Entity* self) {
 
     case 2:
         self->ext.faerie.currentSfxEvent = g_FaerieHints[self->params].hint;
-        self->ext.faerie.unkA8 = *((s16*)self->ext.faerie.currentSfxEvent);
+        self->ext.faerie.sfxEventFlag = *((s16*)self->ext.faerie.currentSfxEvent);
         g_PauseAllowed = 0;
         self->step++;
         break;
@@ -1753,17 +1753,17 @@ void UpdateEntityIdDB(Entity* self) {
             self->facingLeft = false;
         }
 
-        if (self->ext.faerie.unkA8 < 0) {
+        if (self->ext.faerie.sfxEventFlag < 0) {
             if (g_PlaySfxStep > 4) {
                 SetAnimationFrame(self, self->ext.faerie.currentSfxEvent->animIndex);
                 self->step++;
             }
         } else {
             if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 99)) {
-                self->ext.faerie.unkA8--;
+                self->ext.faerie.sfxEventFlag--;
             }
 
-            if (self->ext.faerie.unkA8 < 0) {
+            if (self->ext.faerie.sfxEventFlag < 0) {
                 SetAnimationFrame(self, self->ext.faerie.currentSfxEvent->animIndex);
                 if ((self->ext.faerie.currentSfxEvent->sfxId != 0) &&
                     (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) == NULL)) {
@@ -1772,7 +1772,7 @@ void UpdateEntityIdDB(Entity* self) {
                 }
 
                 self->ext.faerie.currentSfxEvent++;
-                self->ext.faerie.unkA8 = self->ext.faerie.currentSfxEvent->unk0;
+                self->ext.faerie.sfxEventFlag = self->ext.faerie.currentSfxEvent->unk0;
             }
         }
         break;

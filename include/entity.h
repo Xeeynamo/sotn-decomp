@@ -636,7 +636,7 @@ typedef struct {
     /* 0xA0 */ s16 unkCounterA0;
     /* 0xA2 */ s16 : 16;
     /* 0xA4 */ FaerieSfxEventDesc* currentSfxEvent;
-    /* 0xA8 */ s16 unkA8;
+    /* 0xA8 */ s16 sfxEventFlag;
     /* 0xAA */ s16 padAA[5];
     /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
