@@ -611,7 +611,7 @@ typedef struct {
 } ET_FaerieUnk0;
 
 typedef struct {
-    /* 0x0 */ s16 unk0; // a toggle that is either 0 or -1
+    /* 0x0 */ s16 flag;
     /* 0x2 */ s16 animIndex;
     /* 0x4 */ s16 sfxId;
 } FaerieSfxEventDesc;

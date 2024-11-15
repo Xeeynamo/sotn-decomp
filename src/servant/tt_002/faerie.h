@@ -24,3 +24,12 @@ typedef struct {
     s32 top;
     FaerieSfxEventDesc* hint;
 } HintTriggerMap;
+
+typedef struct {
+    s32 healing;
+    s32 potion;
+    s32 regeneration;
+    s32 noMedicine;
+    s32 ohNo;
+    s32 areYouOk;
+} FaerieSfx;

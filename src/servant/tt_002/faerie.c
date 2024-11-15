@@ -12,6 +12,7 @@
 #define FAERIE_MODE_USE_ANTIVENOM 0xD5
 #define FAERIE_MODE_USE_ELEMENTAL_RESIST 0xD6
 #define FAERIE_MODE_USE_POTION 0xD7
+#define FAERIE_MODE_ADDITIONAL_INIT 0xD8
 
 #define FAERIE_EVENT_SFX_PASSTHROUGH 0xDE
 
@@ -45,7 +46,7 @@ static s16 s_TargetLocOffset_calc;
 extern u16 g_FaerieClut[];
 
 extern FaerieAbilityStats g_FaerieAbilityStats[];
-extern s32 D_us_80172BCC[];
+extern FaerieSfx g_FaerieSfx;
 extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
 extern s32 D_800973FC;   // this is in unkGraphicsStruct
@@ -76,7 +77,7 @@ static void UpdateServantUseUncurse(Entity* self);
 static void UpdateServantUseAntivenom(Entity* self);
 static void UpdateServantUseElementalResist(Entity* self);
 static void UpdateServantUsePotion(Entity* self);
-static void UpdateEntityIdD8(Entity* self);
+static void UpdateServantAdditionalInit(Entity* self);
 static void UpdateEntityIdD9(Entity* self);
 static void UpdateEntityIdDA(Entity* self);
 static void UpdateEntityIdDB(Entity* self);
@@ -94,7 +95,7 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantUseAntivenom,
     UpdateServantUseElementalResist,
     UpdateServantUsePotion,
-    UpdateEntityIdD8,
+    UpdateServantAdditionalInit,
     UpdateEntityIdD9,
     UpdateEntityIdDA,
     UpdateEntityIdDB,
@@ -118,7 +119,7 @@ void ExecuteAbilityInitialize(Entity* self) {
 
         switch (self->entityId) {
         case FAERIE_MODE_DEFAULT_UPDATE:
-        case 0xD8:
+        case FAERIE_MODE_ADDITIONAL_INIT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
 
@@ -131,7 +132,6 @@ void ExecuteAbilityInitialize(Entity* self) {
             self->step++;
             break;
         case 0xD9:
-            // loc 0xD8
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             self->step++;
@@ -531,7 +531,7 @@ void ServantInit(InitializeMode mode) {
 
             entity->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         } else {
-            entity->entityId = 0xD8;
+            entity->entityId = FAERIE_MODE_ADDITIONAL_INIT;
         }
         entity->posX.val = FIX(128);
         entity->posY.val = FIX(-32);
@@ -749,14 +749,14 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         SetAnimationFrame(self, 0x13);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC[2]);
+            g_api.PlaySfx(g_FaerieSfx.regeneration);
         }
         self->step++;
         break;
     case 0x6:
         if (self->animFrameIdx == 0xA) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC[2]);
+                g_api.PlaySfx(g_FaerieSfx.regeneration);
             }
             self->step++;
         }
@@ -812,7 +812,7 @@ void UpdateServantUseLifeApple(Entity* self) {
 
     case 0x5A: // Only get here when you are dead and have no life apple
         SetAnimationFrame(self, 0x20);
-        g_api.PlaySfx(D_us_80172BCC[4]);
+        g_api.PlaySfx(g_FaerieSfx.ohNo);
         self->step++;
         break;
     case 0x5B:
@@ -871,7 +871,7 @@ void UpdateServantUseHammer(Entity* self) {
             self->step++;
         } else {
             SetAnimationFrame(self, 0x10);
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step += 2;
         }
@@ -947,7 +947,7 @@ void UpdateServantUseUncurse(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC[0]);
+            g_api.PlaySfx(g_FaerieSfx.healing);
         }
         self->step++;
         break;
@@ -956,7 +956,7 @@ void UpdateServantUseUncurse(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC[0]);
+                g_api.PlaySfx(g_FaerieSfx.healing);
             }
 
             g_Status.equipHandCount[ITEM_UNCURSE]--;
@@ -981,7 +981,7 @@ void UpdateServantUseUncurse(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1037,7 +1037,7 @@ void UpdateServantUseAntivenom(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC[0]);
+            g_api.PlaySfx(g_FaerieSfx.healing);
         }
         self->step++;
         break;
@@ -1046,7 +1046,7 @@ void UpdateServantUseAntivenom(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC[0]);
+                g_api.PlaySfx(g_FaerieSfx.healing);
             }
 
             g_Status.equipHandCount[ITEM_ANTIVENOM]--;
@@ -1071,7 +1071,7 @@ void UpdateServantUseAntivenom(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1171,7 +1171,7 @@ void UpdateServantUseElementalResist(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1241,7 +1241,7 @@ void UpdateServantUsePotion(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
-            g_api.PlaySfx(D_us_80172BCC[1]);
+            g_api.PlaySfx(g_FaerieSfx.potion);
             g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
                 self,
@@ -1263,7 +1263,7 @@ void UpdateServantUsePotion(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1274,7 +1274,7 @@ void UpdateServantUsePotion(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdD8(Entity* arg0) {
+void UpdateServantAdditionalInit(Entity* arg0) {
     s16 rnd;
     s32 i;
 
@@ -1392,7 +1392,7 @@ void UpdateEntityIdD8(Entity* arg0) {
                         arg0, FAERIE_EVENT_SFX_PASSTHROUGH, arg0->ext.faerie.currentSfxEvent->sfxId);
                 }
                 arg0->ext.faerie.currentSfxEvent++;
-                arg0->ext.faerie.sfxEventFlag = arg0->ext.faerie.currentSfxEvent->unk0;
+                arg0->ext.faerie.sfxEventFlag = arg0->ext.faerie.currentSfxEvent->flag;
             }
         }
         break;
@@ -1741,6 +1741,7 @@ void UpdateEntityIdDB(Entity* self) {
 
     case 2:
         self->ext.faerie.currentSfxEvent = g_FaerieHints[self->params].hint;
+        // This is self->ext.faerie.currentSfxEvent->flag, but the weird cas is needed for match
         self->ext.faerie.sfxEventFlag = *((s16*)self->ext.faerie.currentSfxEvent);
         g_PauseAllowed = 0;
         self->step++;
@@ -1772,7 +1773,7 @@ void UpdateEntityIdDB(Entity* self) {
                 }
 
                 self->ext.faerie.currentSfxEvent++;
-                self->ext.faerie.sfxEventFlag = self->ext.faerie.currentSfxEvent->unk0;
+                self->ext.faerie.sfxEventFlag = self->ext.faerie.currentSfxEvent->flag;
             }
         }
         break;
