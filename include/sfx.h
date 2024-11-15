@@ -255,20 +255,28 @@ enum SfxModes {
 #define SFX_RBO3_UNK_804 0x804
 
 // TT_002 - Faerie
-#define SFX_TT002_UNK_885 0x885
-#define SFX_TT002_UNK_886 0x886
-#define SFX_TT002_UNK_887 0x887
-#define SFX_TT002_UNK_888 0x888
-#define SFX_TT002_UNK_889 0x889
-#define SFX_TT002_UNK_88A 0x88A
-#define SFX_TT002_UNK_88B 0x88B
-#define SFX_TT002_UNK_88C 0x88C
-#define SFX_TT002_UNK_88D 0x88D
-#define SFX_TT002_UNK_88E 0x88E
-#define SFX_TT002_UNK_88F 0x88F
-#define SFX_TT002_UNK_890 0x890
-#define SFX_TT002_UNK_891 0x891
-#define SFX_TT002_UNK_892 0x892
+#define NA_VO_FAERIE_INTRO_LIFE 0x472 // "Thank you for giving me life"
+#define NA_VO_FAERIE_INTRO_COMMAND 0x473 // "Your word is my command"
+#define NA_VO_FAERIE_LETS_GO 0x476 // "Let's go!"
+#define NA_VO_FAERIE_FOLLOW 0x479 // "I'll follow you anywhere"
+#define NA_VO_FAERIE_WALL_HINT 0x47A // "There is something funny about this wall"
+#define NA_VO_FAERIE_SUSPICIOUS_HINT 0x48A // "This is really suspicious looking"
+#define NA_VO_FAERIE_MIST_HINT 0x48E // "If only you could transform into mist" 
+#define NA_VO_FAERIE_DARKNESS_HINT 0x492 // "Some animals can live in complete darkness" 
+#define NA_VO_FAERIE_HEALING 0x885  // "Healing!"
+#define NA_VO_FAERIE_POTION 0x886   // "Potion"
+#define NA_VO_FAERIE_REGENERATION 0x887 // "Regeneration"
+#define NA_VO_FAERIE_NO_MEDICINE 0x888 // "No medicine left"
+#define NA_SE_FAERIE_HAI 0x889
+#define NA_SE_FAERIE_YEAH 0x88A
+#define NA_SE_FAERIE_HA1 0x88B
+#define NA_SE_FAERIE_HA2 0x88C
+#define NA_SE_FAERIE_AH 0x88D
+#define NA_SE_FAERIE_UHH 0x88E
+#define NA_SE_FAERIE_UHH2 0x88F
+#define NA_SE_FAERIE_OHH 0x890
+#define NA_VO_FAERIE_OH_NO 0x891 // "OH NOOO!"
+#define NA_VO_FAERIE_ARE_YOU_OK 0x892  // "Are you ok?" after life apple
 
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files

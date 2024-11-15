@@ -4,28 +4,25 @@
 
 // SFX map
 s32 D_us_80172BCC[] = {
-    SFX_TT002_UNK_885, SFX_TT002_UNK_886, SFX_TT002_UNK_887,
-    SFX_TT002_UNK_888, SFX_TT002_UNK_891, SFX_TT002_UNK_892,
+    NA_VO_FAERIE_HEALING, NA_VO_FAERIE_POTION, NA_VO_FAERIE_REGENERATION,
+    NA_VO_FAERIE_NO_MEDICINE, NA_VO_FAERIE_OH_NO, NA_VO_FAERIE_ARE_YOU_OK,
 };
 
-// ranked lookup tables for sfx
-s32 D_us_80172BE4[] = {0x3F, SFX_TT002_UNK_889, 0x7F, SFX_TT002_UNK_88A,
-                       0xBF, SFX_TT002_UNK_88B, 0xFF, SFX_TT002_UNK_88C};
+s32 g_SfxRandomizerHammerResist[] = {0x3F, NA_SE_FAERIE_HAI, 0x7F, NA_SE_FAERIE_YEAH,
+                       0xBF, NA_SE_FAERIE_HA1, 0xFF, NA_SE_FAERIE_HA2};
 
-s32 D_us_80172C04[] = {0x3F, SFX_TT002_UNK_88D, 0x7F, SFX_TT002_UNK_88E,
-                       0xBF, SFX_TT002_UNK_88F, 0xFF, SFX_TT002_UNK_890};
+s32 g_SfxRandomizerGrunt[] = {0x3F, NA_SE_FAERIE_AH, 0x7F, NA_SE_FAERIE_UHH,
+                       0xBF, NA_SE_FAERIE_UHH2, 0xFF, NA_SE_FAERIE_OHH};
 
-s16 D_us_80172C24[] = {0x0000, 0x0022, 0x0472, 0xFFFF, 0x000E, 0x0000};
+static FaerieSfxEventDesc s_IntroEventLifeVO[2] = { { 0, 34, NA_VO_FAERIE_INTRO_LIFE, },{-1, 14, 0}};
 
-s16 D_us_80172C30[] = {0x0000, 0x0022, 0x0473, 0xFFFF, 0x000E, 0x0000};
+static FaerieSfxEventDesc s_IntroEventCommandVO[] = {{0, 34, NA_VO_FAERIE_INTRO_COMMAND,},{-1, 14, 0}};
 
-// This is a ranked lookup table.  First column is selected from a rand() %
-// 0x100 to select the data at the pointer in column 2
-s32 D_us_80172C3C[] = {0x0000007F, D_us_80172C24, 0x000000FF, D_us_80172C30};
+s32 g_FaerieIntroRandomizer[] = {0x0000007F, s_IntroEventLifeVO, 0x000000FF, s_IntroEventCommandVO};
 
-s16 D_us_80172C4C[] = {0x0000, 0x0026, 0x0476, 0xFFFF, 0x000E, 0x0000};
+static FaerieSfxEventDesc D_us_80172C4C[] = {{0, 38, NA_VO_FAERIE_LETS_GO,},{ -1, 14, 0}};
 
-s16 D_us_80172C58[] = {0x0000, 0x0026, 0x0479, 0xFFFF, 0x000E, 0x0000};
+static FaerieSfxEventDesc D_us_80172C58[] = {{0, 38, NA_VO_FAERIE_FOLLOW,},{-1, 14, 0}};
 
 // This is a ranked lookup table.  First column is selected from a rand() %
 // 0x100 to select the data at the pointer in column 2
@@ -33,23 +30,23 @@ s32 D_us_80172C64[] = {0x0000007F, D_us_80172C4C, 0x000000FF, D_us_80172C58};
 
 // position data with a flag field
 // clang-format off
-FaerieUnkA4 D_us_80172C74[2] = { { 0, 14, 0x0492,} , { -1, 14, 0 } };
-FaerieUnkA4 D_us_80172C80[2] = { { 0, 14, 0x048E,} , { -1, 14, 0 } };
-FaerieUnkA4 D_us_80172C8C[2] = { { 0, 37, 0x047A,} , { -1, 14, 0 } };
-FaerieUnkA4 D_us_80172C98[2] = { { 0, 36, 0x048A,} , { -1, 14, 0 } };
-FaerieUnkA4 D_us_80172CA4[2] = { { 0, 36, 0x047A,} , { -1, 14, 0 } };
+static FaerieSfxEventDesc s_DarknessHint[2] = { { 0, 14, NA_VO_FAERIE_DARKNESS_HINT,} , { -1, 14, 0 } };
+static FaerieSfxEventDesc s_MistHint[2] = { { 0, 14, NA_VO_FAERIE_MIST_HINT,} , { -1, 14, 0 } };
+static FaerieSfxEventDesc s_WallHint1[2] = { { 0, 37, NA_VO_FAERIE_WALL_HINT,} , { -1, 14, 0 } };
+static FaerieSfxEventDesc s_SuspiciousHint[2] = { { 0, 36, NA_VO_FAERIE_SUSPICIOUS_HINT,} , { -1, 14, 0 } };
+static FaerieSfxEventDesc s_WallHint2[2] = { { 0, 36, NA_VO_FAERIE_WALL_HINT,} , { -1, 14, 0 } };
 
-Unk2CB0 D_us_80172CB0[] = {
-    { .left = -1,  .top = -1,  .unk8 = D_us_80172C74 },
-    { .left = -1,  .top = -1,  .unk8 = D_us_80172C80 },
-    { .left = 88,  .top = 184, .unk8 = D_us_80172C8C },
-    { .left = 32,  .top = 128, .unk8 = D_us_80172C98 },
-    { .left = 56,  .top = 128, .unk8 = D_us_80172CA4 },
-    { .left = 128, .top = 208, .unk8 = D_us_80172C8C },
-    { .left = 208, .top = 112, .unk8 = D_us_80172CA4 },
-    { .left = 160, .top = 128, .unk8 = D_us_80172C98 },
-    { .left = 208, .top = 120, .unk8 = D_us_80172CA4 },
-    { .left = 48,  .top = 128, .unk8 = D_us_80172C98 },
+HintTriggerMap g_FaerieHints[] = {
+    { .left = -1,  .top = -1,  .hint = s_DarknessHint },
+    { .left = -1,  .top = -1,  .hint = s_MistHint },
+    { .left = 88,  .top = 184, .hint = s_WallHint1 },
+    { .left = 32,  .top = 128, .hint = s_SuspiciousHint },
+    { .left = 56,  .top = 128, .hint = s_WallHint2 },
+    { .left = 128, .top = 208, .hint = s_WallHint1 },
+    { .left = 208, .top = 112, .hint = s_WallHint2 },
+    { .left = 160, .top = 128, .hint = s_SuspiciousHint },
+    { .left = 208, .top = 120, .hint = s_WallHint2 },
+    { .left = 48,  .top = 128, .hint = s_SuspiciousHint },
 };
 // clang-format on
 

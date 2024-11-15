@@ -22,5 +22,5 @@ typedef struct {
 typedef struct {
     s32 left;
     s32 top;
-    FaerieUnkA4* unk8;
-} Unk2CB0;
+    FaerieSfxEventDesc* hint;
+} HintTriggerMap;
