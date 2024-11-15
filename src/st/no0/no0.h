@@ -30,6 +30,9 @@ typedef enum EntityIDs {
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x1D */ E_CLOCK_ROOM_SHADOW = 0x20,
+    /* 0x2E */ E_SKELERANG = 0x2E,
+    /* 0x2F */ E_SKELERANG_BOOMERANG,
+    /* 0x30 */ E_SKELERANG_UNK,
     /* 0x37 */ E_GHOST_ENEMY = 0x37,
     /* 0x3B */ E_SLINGER_THROWN_BONE = 0x3B,
     /* 0x3C */ E_SLINGER_PIECES,
@@ -52,6 +55,7 @@ typedef enum EntityIDs {
 extern s16 g_SineTable[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];
+extern u16 g_EInitInteractable[];
 
 // Axe knight
 extern EInit g_EInitAxeKnightAxe;
@@ -75,6 +79,10 @@ extern EInit g_EInitSlingerRib;
 
 // Ghost (enemy)
 extern EInit g_EInitGhostEnemy;
+
+// Skelerang
+extern EInit g_EInitSkelerang;
+extern EInit g_EInitSkelerangBoomerang;
 
 // Clock room
 extern EInit g_Statues;
