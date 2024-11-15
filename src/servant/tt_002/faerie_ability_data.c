@@ -103,7 +103,7 @@ s16 g_PotionItemsParamMap[] = {
     0x0011,
 };
 
-Unkstruct_801724CC D_us_801724CC[] = {
+ItemPrimitiveParams g_ItemPrimitiveParams[] = {
     {.count = 0x80,
      .unk2 = 1,
      .unk4 = 1,

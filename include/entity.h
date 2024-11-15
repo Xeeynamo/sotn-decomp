@@ -611,16 +611,32 @@ typedef struct {
 } ET_FaerieWings;
 
 typedef struct {
+    /* 0x7C */ s16 lifeAppleTimer;
+    /* 0x7E */ s16 drawMode;
+    /* 0x80 */ s16 primX;
+    /* 0x82 */ s16 primY;
+    /* 0x84 */ s16 opacity;
+    /* 0x86 */ s16 effectOpacity;
+} ET_FaerieLifeApple;
+
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 drawMode;
+    /* 0x80 */ s16 unkAccumulator;
+    /* 0x82 */ s16 unkFlag;
+} ET_FaerieItem;
+
+typedef struct {
     /* 0x0 */ s16 flag;
     /* 0x2 */ s16 animIndex;
     /* 0x4 */ s16 sfxId;
 } FaerieSfxEventDesc;
 
 typedef struct {
-    /* 0x7C */ s16 subEntityDdTimer;
+    /* 0x7C */ s16 : 16;
     /* 0x7E */ s16 isAbilityInitialized;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
+    /* 0x80 */ s16 animationFlag;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 defaultDistToTargetLoc;
@@ -2151,6 +2167,8 @@ typedef union { // offset=0x7C
     ET_Ghost ghost;
     ET_Faerie faerie;
     ET_FaerieWings faerieWings;
+    ET_FaerieItem faerieItem;
+    ET_FaerieLifeApple faerieLifeApple;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
