@@ -59,7 +59,7 @@ jobs:
         compiler: ["clang", "gcc"]
         build_type: ["Debug", "RelWithDebInfo"]
         sound_engine: ["lle", "custom"]
-        arch: ["x86_64", "i686"]
+        arch: ["x86_64"]
     runs-on: ubuntu-24.04
     needs: extract-assets
     steps:
