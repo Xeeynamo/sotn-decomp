@@ -14,7 +14,21 @@
 #define FAERIE_MODE_USE_POTION 0xD7
 #define FAERIE_MODE_ADDITIONAL_INIT 0xD8
 
+#define FAERIE_MODE_OFFER_HINT 0xDB
 #define FAERIE_EVENT_SFX_PASSTHROUGH 0xDE
+
+#define ROOM_STATE_TO_HINT_OFFSET 2
+#define ROOM_SPECIAL_STATE_UNK1 1
+#define ROOM_SPECIAL_STATE_DARKNESS 2
+#define ROOM_SPECIAL_STATE_MIST 3 
+#define ROOM_SPECIAL_STATE_WALL_HINT1 4
+#define ROOM_SPECIAL_STATE_WALL_HINT2 6
+#define ROOM_SPECIAL_STATE_WALL_HINT3 7
+#define ROOM_SPECIAL_STATE_WALL_HINT4 8
+#define ROOM_SPECIAL_STATE_WALL_HINT5 10
+#define ROOM_SPECIAL_STATE_SUS_HINT1 5
+#define ROOM_SPECIAL_STATE_SUS_HINT2 9
+#define ROOM_SPECIAL_STATE_SUS_HINT3 11
 
 static u32 D_us_801792D0;
 static s32 D_us_801792D4;
@@ -32,7 +46,7 @@ static s16 s_HpDifferenceIndex;
 STATIC_PAD_BSS(2);
 static s16 s_HpCacheResetTimer;
 STATIC_PAD_BSS(2);
-static s32 D_us_8017931C;
+static s32 s_RoomSpecialState;
 static s32 D_us_80179320;
 static s32 s_TargetLocationX;
 static s32 s_TargetLocationY;
@@ -80,8 +94,8 @@ static void UpdateServantUsePotion(Entity* self);
 static void UpdateServantAdditionalInit(Entity* self);
 static void UpdateEntityIdD9(Entity* self);
 static void UpdateEntityIdDA(Entity* self);
-static void UpdateEntityIdDB(Entity* self);
-static void UpdateEntityIdDC(Entity* self);
+static void UpdateServantOfferHint(Entity* self);
+static void UpdateEntitySetRoomSpecialState(Entity* self);
 static void UpdateSubEntityIdDD(Entity* self);
 static void UpdateServantSfxPassthrough(Entity* self);
 static void UpdateSubEntityIdDF(Entity* self);
@@ -98,8 +112,8 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantAdditionalInit,
     UpdateEntityIdD9,
     UpdateEntityIdDA,
-    UpdateEntityIdDB,
-    UpdateEntityIdDC,
+    UpdateServantOfferHint,
+    UpdateEntitySetRoomSpecialState,
     UpdateSubEntityIdDD,
     UpdateServantSfxPassthrough, // DE
     UpdateSubEntityIdDF};
@@ -149,7 +163,7 @@ void ExecuteAbilityInitialize(Entity* self) {
         case FAERIE_MODE_USE_ELEMENTAL_RESIST:
         case FAERIE_MODE_USE_POTION:
         case 0xDA:
-        case 0xDB:
+        case FAERIE_MODE_OFFER_HINT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             SetAnimationFrame(self, 0xE);
@@ -162,7 +176,7 @@ void ExecuteAbilityInitialize(Entity* self) {
         }
     }
     self->ext.faerie.isAbilityInitialized = self->entityId;
-    D_us_8017931C = 0;
+    s_RoomSpecialState = 0;
 }
 
 // This is a duplicate CreateEventEntity which is lower in the file, but we need
@@ -564,7 +578,7 @@ void ServantInit(InitializeMode mode) {
     entity->facingLeft = PLAYER.facingLeft;
     entity->params = 0;
 
-    D_us_8017931C = 0;
+    s_RoomSpecialState = 0;
     D_us_80179320 = 0;
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
@@ -670,10 +684,10 @@ void UpdateServantDefault(Entity* self) {
             self->step = 0;
             return;
         }
-        if (D_us_8017931C >= 2) {
-            self->entityId = 0xDB;
+        if (s_RoomSpecialState >= 2) {
+            self->entityId = FAERIE_MODE_OFFER_HINT;
             self->step = 0;
-            self->params = D_us_8017931C - 2;
+            self->params = s_RoomSpecialState - ROOM_STATE_TO_HINT_OFFSET;
         }
         break;
     }
@@ -1334,7 +1348,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
     case 1:
         SelectAnimationFrame(arg0);
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
-            D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
+            s_RoomSpecialState == 1 || g_CutsceneHasControl || D_800973FC) {
             SetAnimationFrame(arg0, 0xE);
             arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             arg0->step = 0;
@@ -1531,7 +1545,7 @@ void UpdateEntityIdDA(Entity* self) {
 #ifdef VERSION_PSP
             if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
                 D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
-                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                (s_RoomSpecialState == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
             } else if (s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
                 self->step = 5;
@@ -1552,7 +1566,7 @@ void UpdateEntityIdDA(Entity* self) {
             if ((*((FgLayer32*)&D_8003C708)).flags &
                     (LAYOUT_RECT_PARAMS_UNKNOWN_20 |
                      LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
-                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                (s_RoomSpecialState == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
             } else if (s_ServantId != FAM_ACTIVE_YOUSEI ||
                        s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
@@ -1667,7 +1681,9 @@ void UpdateEntityIdDA(Entity* self) {
     D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdDB(Entity* self) {
+// Update code for Faerie offering hint.
+// self->param is index for g_FaerieHints for the type of hint
+void UpdateServantOfferHint(Entity* self) {
     char pad[2];
 
     self->ext.faerie.left = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
@@ -1805,48 +1821,50 @@ void UpdateEntityIdDB(Entity* self) {
     ServantUpdateAnim(self, NULL, &g_FaerieAnimationFrames);
 }
 
-// I don't think this code can be reached in Faerie
-// This may be the code that is Yousie specific and was just copied
-void UpdateEntityIdDC(Entity* self) {
+// Unsure where this code is exectued from, but it would be where 
+// an entity is created with Entity ID DC
+// It has to be from the engine somewhere as they are triggered
+// from room states (for the most part)
+void UpdateEntitySetRoomSpecialState(Entity* self) {
     Entity* entity;
 
     switch (self->params) {
     case 0:
-        D_us_8017931C = 1;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_UNK1;
         entity = SearchForEntityInRange(0, 222);
         if (entity && entity->step < 5) {
             entity->step = 8;
         }
         break;
     case 1:
-        D_us_8017931C = 2;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_DARKNESS;
         break;
     case 2:
-        D_us_8017931C = 3;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_MIST;
         break;
     case 3:
-        D_us_8017931C = 4;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT1;
         break;
     case 4:
-        D_us_8017931C = 5;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_SUS_HINT1;
         break;
     case 5:
-        D_us_8017931C = 6;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT2;
         break;
     case 6:
-        D_us_8017931C = 7;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT3;
         break;
     case 7:
-        D_us_8017931C = 8;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT4;
         break;
     case 8:
-        D_us_8017931C = 9;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_SUS_HINT2;
         break;
     case 9:
-        D_us_8017931C = 10;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT5;
         break;
     case 10:
-        D_us_8017931C = 11;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_SUS_HINT3;
         break;
     case 15:
         D_us_80179320 = 1;
@@ -1854,6 +1872,8 @@ void UpdateEntityIdDC(Entity* self) {
     }
     DestroyEntity(self);
 }
+
+
 
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
