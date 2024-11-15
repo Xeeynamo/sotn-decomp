@@ -9,7 +9,7 @@ typedef enum {
     SKELERANG_ATTACK_INIT,
     SKELERANG_WAKE_ANIM,
     SKELERANG_BOOMERANG_CHECK,
-    SKELERANG_ATTACK_PREAMBLE,
+    SKELERANG_CATCH,
     SKELERANG_COWER,
     SKELERANG_POST_ATTACK,
     SKELERANG_DEATH_COWER,
@@ -26,15 +26,35 @@ typedef enum {
     BOOMERANG_DESTROY
 } SkelerangBoomerangSteps;
 
-extern u16 D_us_80181E94[];     // sensors_ground
-extern Point16 D_us_80181EA4[]; // positions
-extern u8 D_us_80181EC8[];      // anim
-extern u8 D_us_80181EDC[];      // anim
-extern u8 D_us_80181F00[];      // anim
-extern u8 D_us_80181F34[];      // anim
-extern u8 D_us_80181F38[];      // anim
-extern u8 D_us_80181F4C[];      // anim
-extern u8 D_us_80181F60[];      // anim
+static s16 sensors_ground[][2] = {{0, 24}, {0, 4}, {8, -4}, {-16, 0}};
+static Point16 positions[] = {
+    {.x = 8, .y = -10}, {.x = -4, .y = -10}, {.x = 0, .y = -30},
+    {.x = 0, .y = -30}, {.x = 3, .y = -8},   {.x = 4, .y = 6},
+    {.x = -2, .y = 6},  {.x = 12, .y = 16},  {.x = -8, .y = 16}};
+static u8 anim_wake[] = {
+    0x20, 0x01, 0x31, 0x02, 0x02, 0x03, 0x03, 0x04, 0x03, 0x05,
+    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x21, 0x09, 0xFF, 0x00};
+static u8 anim_bounce[] = {
+    0x04, 0x09, 0x04, 0x0A, 0x04, 0x0B, 0x04, 0x0C, 0x0A, 0x0D, 0x06, 0x0C,
+    0x06, 0x0B, 0x06, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x06, 0x0A, 0x06, 0x0B,
+    0x05, 0x0C, 0x05, 0x0D, 0x05, 0x0C, 0x06, 0x0B, 0x0A, 0x0A, 0xFF, 0x00};
+static u8 anim_spin_boomerang[] = {
+    0x01, 0x13, 0x01, 0x18, 0x01, 0x12, 0x01, 0x11, 0x01, 0x10, 0x01,
+    0x0F, 0x01, 0x0E, 0x01, 0x14, 0x01, 0x15, 0x01, 0x16, 0x01, 0x17,
+    0x01, 0x18, 0x18, 0x19, 0x03, 0x1A, 0x04, 0x1B, 0x06, 0x1C, 0x02,
+    0x1D, 0x01, 0x1E, 0x04, 0x1F, 0x02, 0x21, 0x30, 0x20, 0x04, 0x21,
+    0x03, 0x22, 0x03, 0x23, 0x04, 0x24, 0xFF, 0x00};
+static u8 anim_catch[] = {0x18, 0x0D, 0xFF, 0x00};
+static u8 anim_cower_crouch[] = {
+    0x10, 0x0A, 0x06, 0x09, 0x20, 0x08, 0x06, 0x25, 0x04, 0x26,
+    0x06, 0x27, 0x03, 0x28, 0x08, 0x29, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_cower_stand[] = {
+    0x08, 0x29, 0x03, 0x28, 0x06, 0x27, 0x04, 0x26, 0x06, 0x25,
+    0x20, 0x08, 0x06, 0x09, 0x10, 0x0A, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_cower[] = {
+    0x01, 0x29, 0x01, 0x2A, 0x00, 0x00, 0x00, 0x00, 0x02, 0x29, 0x02,
+    0x28, 0x02, 0x27, 0x02, 0x26, 0x02, 0x25, 0xFF, 0x00, 0x02, 0x24,
+    0x02, 0x23, 0x02, 0x22, 0x02, 0x20, 0xFF, 0x00, 0x00, 0x00};
 
 void EntitySkelerang(Entity* self) {
     Entity* entity;
@@ -78,7 +98,7 @@ void EntitySkelerang(Entity* self) {
         self->facingLeft = self->params;
         break;
     case SKELERANG_GROUND_INIT:
-        if (UnkCollisionFunc3(D_us_80181E94) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             SetStep(SKELERANG_IDLE);
         }
         break;
@@ -92,7 +112,7 @@ void EntitySkelerang(Entity* self) {
         }
         break;
     case SKELERANG_WAKE_ANIM:
-        if (!AnimateEntity(D_us_80181EC8, self)) {
+        if (!AnimateEntity(anim_wake, self)) {
             SetStep(SKELERANG_ATTACK_INIT);
         }
         break;
@@ -101,7 +121,7 @@ void EntitySkelerang(Entity* self) {
             self->ext.skelerang.unk84 = 0;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80181EDC, self)) {
+        if (!AnimateEntity(anim_bounce, self)) {
             self->ext.skelerang.unk84++;
         }
         if (self->ext.skelerang.unk84 == 3) {
@@ -117,8 +137,7 @@ void EntitySkelerang(Entity* self) {
         }
         break;
     case SKELERANG_ATTACK_INIT:
-        // Play catch animation
-        if (!AnimateEntity(D_us_80181F00, self)) {
+        if (!AnimateEntity(anim_spin_boomerang, self)) {
             SetStep(SKELERANG_BOOMERANG_CHECK);
         }
         if (self->animCurFrame == 30) {
@@ -150,11 +169,11 @@ void EntitySkelerang(Entity* self) {
             entityTwo->step == BOOMERANG_IN_HAND) {
             entity->step = BOOMERANG_PRETHROW;
             entityTwo->step = BOOMERANG_PRETHROW;
-            SetStep(SKELERANG_ATTACK_PREAMBLE);
+            SetStep(SKELERANG_CATCH);
         }
         break;
-    case SKELERANG_ATTACK_PREAMBLE:
-        if (!AnimateEntity(D_us_80181F34, self)) {
+    case SKELERANG_CATCH:
+        if (!AnimateEntity(anim_catch, self)) {
             self->ext.skelerang.unk84++;
             // Throw boomerangs 3 times, then return to attack init
             if (self->ext.skelerang.unk84 > 2) {
@@ -167,7 +186,7 @@ void EntitySkelerang(Entity* self) {
     case SKELERANG_COWER:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80181F38, self)) {
+            if (!AnimateEntity(anim_cower_crouch, self)) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -175,9 +194,8 @@ void EntitySkelerang(Entity* self) {
             break;
         case 1:
             // Play cower animation until player gets far enough away
-            AnimateEntity(D_us_80181F60, self);
-            if ((GetDistanceToPlayerX() > 80) ||
-                (GetDistanceToPlayerY() > 48)) {
+            AnimateEntity(anim_cower, self);
+            if (GetDistanceToPlayerX() > 80 || GetDistanceToPlayerY() > 48) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -186,7 +204,7 @@ void EntitySkelerang(Entity* self) {
         case 2:
             // Once player is far enough away move out of cower and back into
             // potential attack state
-            if (!AnimateEntity(D_us_80181F4C, self)) {
+            if (!AnimateEntity(anim_cower_stand, self)) {
                 SetStep(SKELERANG_POST_ATTACK);
             }
             break;
@@ -244,11 +262,11 @@ void EntitySkelerang(Entity* self) {
                 CreateEntityFromEntity(2, self, entity);
                 index = self->params;
                 if (self->facingLeft) {
-                    entity->posX.i.hi -= D_us_80181EA4[index].x;
+                    entity->posX.i.hi -= positions[index].x;
                 } else {
-                    entity->posX.i.hi += D_us_80181EA4[index].x;
+                    entity->posX.i.hi += positions[index].x;
                 }
-                entity->posY.i.hi += D_us_80181EA4[index].y;
+                entity->posY.i.hi += positions[index].y;
             }
             DestroyEntity(self);
         }
