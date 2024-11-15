@@ -20,7 +20,7 @@
 #define ROOM_STATE_TO_HINT_OFFSET 2
 #define ROOM_SPECIAL_STATE_UNK1 1
 #define ROOM_SPECIAL_STATE_DARKNESS 2
-#define ROOM_SPECIAL_STATE_MIST 3 
+#define ROOM_SPECIAL_STATE_MIST 3
 #define ROOM_SPECIAL_STATE_WALL_HINT1 4
 #define ROOM_SPECIAL_STATE_WALL_HINT2 6
 #define ROOM_SPECIAL_STATE_WALL_HINT3 7
@@ -128,8 +128,6 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
 
 void unused_39C8(Entity* arg0) {}
 
-void ExecuteAbilityInitialize(Entity* self) {
-    if (!self->ext.faerie.isAbilityInitialized) {
 void ExecuteAbilityInitialize(Entity* self) {
     if (!self->ext.faerie.isAbilityInitialized) {
 
@@ -1823,7 +1821,7 @@ void UpdateServantOfferHint(Entity* self) {
     ServantUpdateAnim(self, NULL, &g_FaerieAnimationFrames);
 }
 
-// Unsure where this code is exectued from, but it would be where 
+// Unsure where this code is exectued from, but it would be where
 // an entity is created with Entity ID DC
 // It has to be from the engine somewhere as they are triggered
 // from room states (for the most part)
@@ -1874,8 +1872,6 @@ void UpdateEntitySetRoomSpecialState(Entity* self) {
     }
     DestroyEntity(self);
 }
-
-
 
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
