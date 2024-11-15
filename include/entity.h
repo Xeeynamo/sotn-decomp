@@ -631,9 +631,9 @@ typedef struct {
     /* 0x92 */ s16 requireAntivenomLuckCheck;
     /* 0x94 */ s16 requirePotionLuckCheck;
     /* 0x96 */ s16 timer;
-    /* 0x98 */ s32 left;
-    /* 0x9C */ s32 top;
-    /* 0xA0 */ s16 unkCounterA0;
+    /* 0x98 */ s32 tileMapX;
+    /* 0x9C */ s32 tileMapY;
+    /* 0xA0 */ s16 idleFrameCounter;
     /* 0xA2 */ s16 : 16;
     /* 0xA4 */ FaerieSfxEventDesc* currentSfxEvent;
     /* 0xA8 */ s16 sfxEventFlag;

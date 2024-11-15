@@ -14,6 +14,7 @@
 #define FAERIE_MODE_USE_POTION 0xD7
 #define FAERIE_MODE_ADDITIONAL_INIT 0xD8
 
+#define FAERIE_MODE_SIT_ON_SHOULDER 0xDA
 #define FAERIE_MODE_OFFER_HINT 0xDB
 #define FAERIE_EVENT_SFX_PASSTHROUGH 0xDE
 
@@ -30,9 +31,9 @@
 #define ROOM_SPECIAL_STATE_SUS_HINT2 9
 #define ROOM_SPECIAL_STATE_SUS_HINT3 11
 
-static u32 D_us_801792D0;
-static s32 D_us_801792D4;
-static s32 D_us_801792D8;
+static u32 s_AnimationStatus;
+static s32 s_HintTargetX;
+static s32 s_HintTargetY;
 static s32 s_ServantId;
 static s32 s_zPriority;
 static FamiliarStats s_FaerieStats;
@@ -69,7 +70,6 @@ extern Unkstruct_801724CC D_us_801724CC[];
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
 
-// Ranked lookup tables
 extern s32 g_SfxRandomizerGrunt[];
 extern s32 g_SfxRandomizerHammerResist[];
 extern s32 g_FaerieIntroRandomizer[];
@@ -93,7 +93,7 @@ static void UpdateServantUseElementalResist(Entity* self);
 static void UpdateServantUsePotion(Entity* self);
 static void UpdateServantAdditionalInit(Entity* self);
 static void UpdateEntityIdD9(Entity* self);
-static void UpdateEntityIdDA(Entity* self);
+static void UpdateServantSitOnShoulder(Entity* self);
 static void UpdateServantOfferHint(Entity* self);
 static void UpdateEntitySetRoomSpecialState(Entity* self);
 static void UpdateSubEntityIdDD(Entity* self);
@@ -111,7 +111,7 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantUsePotion,
     UpdateServantAdditionalInit,
     UpdateEntityIdD9,
-    UpdateEntityIdDA,
+    UpdateServantSitOnShoulder,
     UpdateServantOfferHint,
     UpdateEntitySetRoomSpecialState,
     UpdateSubEntityIdDD,
@@ -162,7 +162,7 @@ void ExecuteAbilityInitialize(Entity* self) {
         case FAERIE_MODE_USE_ANTIVENOM:
         case FAERIE_MODE_USE_ELEMENTAL_RESIST:
         case FAERIE_MODE_USE_POTION:
-        case 0xDA:
+        case FAERIE_MODE_SIT_ON_SHOULDER:
         case FAERIE_MODE_OFFER_HINT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
@@ -505,7 +505,7 @@ void ServantInit(InitializeMode mode) {
     }
 
     dst = &g_Clut[CLUT_INDEX_SERVANT];
-    src = g_FaerieClut; // clut data for faerie, will rename at data import
+    src = g_FaerieClut;
     for (i = 0; i < 0x100; i++) {
         *dst++ = *src++;
     }
@@ -633,7 +633,7 @@ void UpdateServantDefault(Entity* self) {
         s_CachedHp = g_Status.hp;
         s_HpDifferenceIndex = 0;
         s_HpCacheResetTimer = 0;
-        self->ext.faerie.unkCounterA0 = 0;
+        self->ext.faerie.idleFrameCounter = 0;
         break;
     case 1:
         s_AngleToTarget =
@@ -675,12 +675,12 @@ void UpdateServantDefault(Entity* self) {
 
         if (!g_CutsceneHasControl && !IsMovementAllowed(1) &&
             !CheckAllEntitiesValid() && !(D_8003C708.flags & FLAG_UNK_20)) {
-            self->ext.faerie.unkCounterA0 += 1;
+            self->ext.faerie.idleFrameCounter += 1;
         } else {
-            self->ext.faerie.unkCounterA0 = 0;
+            self->ext.faerie.idleFrameCounter = 0;
         }
-        if (self->ext.faerie.unkCounterA0 > 0x708) {
-            self->entityId = 0xDA;
+        if (self->ext.faerie.idleFrameCounter > 0x708) {
+            self->entityId = FAERIE_MODE_SIT_ON_SHOULDER;
             self->step = 0;
             return;
         }
@@ -1437,6 +1437,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
     FntPrint("sts = %d\n", g_PlaySfxStep);
 }
 
+// I'm pretty sure this is for the wings
 void UpdateEntityIdD9(Entity* self) {
     s32 animIndex;
     s32 zPriorityFlag;
@@ -1477,7 +1478,7 @@ void UpdateEntityIdD9(Entity* self) {
     ServantUpdateAnim(self, 0, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdDA(Entity* self) {
+void UpdateServantSitOnShoulder(Entity* self) {
     s32 rnd;
     s32 i;
 
@@ -1586,7 +1587,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 2:
-        --self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter--;
         if (self->ext.faerie.frameCounter < 0) {
             self->ext.faerie.frameCounter = 0;
             if (g_api.func_800F27F4(0)) {
@@ -1597,7 +1598,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 3:
-        ++self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 0x420) {
             SetAnimationFrame(self, 0x1A);
             self->ext.faerie.frameCounter = 0;
@@ -1605,7 +1606,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 4:
-        ++self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 0x15E0) {
             SetAnimationFrame(self, 0x19);
             self->ext.faerie.frameCounter = 0;
@@ -1613,7 +1614,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 5:
-        ++self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 0x500) {
             SetAnimationFrame(self, 0x18);
             self->ext.faerie.frameCounter = 0;
@@ -1626,7 +1627,7 @@ void UpdateEntityIdDA(Entity* self) {
         self->step++;
         /* fallthrough */
     case 7:
-        --self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter--;
         if (self->ext.faerie.frameCounter < 0) {
             self->ext.faerie.frameCounter = (rand() % 0x80) + 0x80;
             SetAnimationFrame(self, 0x19);
@@ -1634,13 +1635,13 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 8:
-        --self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter--;
         if (self->ext.faerie.frameCounter < 0) {
             SetAnimationFrame(self, 0x18);
             self->step = 6;
         }
         break;
-    case 9:
+    case 9: // Happens when the faerie falls off your shoulder
         if (self->ext.faerie.unkB4) {
             g_api.func_800F27F4(1);
         }
@@ -1658,12 +1659,13 @@ void UpdateEntityIdDA(Entity* self) {
 
         self->step++;
         break;
-    case 10:
+    case 10: // performs the fall animation
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY -= FIX(0.03125);
 
-        if (D_us_801792D0 == -1) {
+        // fall animation is finished
+        if (s_AnimationStatus == -1) {
             self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
@@ -1678,7 +1680,7 @@ void UpdateEntityIdDA(Entity* self) {
     }
 #endif
     unused_39C8(self);
-    D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
+    s_AnimationStatus = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
 // Update code for Faerie offering hint.
@@ -1686,8 +1688,8 @@ void UpdateEntityIdDA(Entity* self) {
 void UpdateServantOfferHint(Entity* self) {
     char pad[2];
 
-    self->ext.faerie.left = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
-    self->ext.faerie.top = (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
+    self->ext.faerie.tileMapX = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
+    self->ext.faerie.tileMapY = (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
 
     if (D_us_80179320) {
         self->zPriority = PLAYER.zPriority - 2;
@@ -1702,8 +1704,8 @@ void UpdateServantOfferHint(Entity* self) {
         s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
         s_TargetLocationY_calc = PLAYER.posY.i.hi - 32;
     } else {
-        s_TargetLocationX_calc = D_us_801792D4 - self->ext.faerie.left;
-        s_TargetLocationY_calc = D_us_801792D8 - self->ext.faerie.top;
+        s_TargetLocationX_calc = s_HintTargetX - self->ext.faerie.tileMapX;
+        s_TargetLocationY_calc = s_HintTargetY - self->ext.faerie.tileMapY;
     }
 
     s_AngleToTarget = self->ext.faerie.randomMovementAngle;
@@ -1747,9 +1749,9 @@ void UpdateServantOfferHint(Entity* self) {
     switch (self->step) {
     case 0:
         ExecuteAbilityInitialize(self);
-        D_us_801792D4 =
-            g_FaerieHints[self->params].left + self->ext.faerie.left;
-        D_us_801792D8 = g_FaerieHints[self->params].top + self->ext.faerie.top;
+        s_HintTargetX =
+            g_FaerieHints[self->params].left + self->ext.faerie.tileMapX;
+        s_HintTargetY = g_FaerieHints[self->params].top + self->ext.faerie.tileMapY;
         self->ext.faerie.timer = -1;
         break;
 
@@ -1765,7 +1767,7 @@ void UpdateServantOfferHint(Entity* self) {
 
     case 2:
         self->ext.faerie.currentSfxEvent = g_FaerieHints[self->params].hint;
-        // This is self->ext.faerie.currentSfxEvent->flag, but the weird cas is
+        // This is self->ext.faerie.currentSfxEvent->flag, but the weird cast is
         // needed for match
         self->ext.faerie.sfxEventFlag =
             *((s16*)self->ext.faerie.currentSfxEvent);
