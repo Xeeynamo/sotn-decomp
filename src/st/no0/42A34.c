@@ -103,7 +103,6 @@ void func_us_801C2CD8(Entity* self) {
     }
 }
 
-extern u8 D_8003BDED;
 extern s16 D_us_80180FF0[];
 extern s16 D_us_80180FF8[];
 extern u8 D_us_80181028[];
