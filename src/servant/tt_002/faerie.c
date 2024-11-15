@@ -13,10 +13,11 @@
 #define FAERIE_MODE_USE_ELEMENTAL_RESIST 0xD6
 #define FAERIE_MODE_USE_POTION 0xD7
 #define FAERIE_MODE_ADDITIONAL_INIT 0xD8
-
 #define FAERIE_MODE_SIT_ON_SHOULDER 0xDA
 #define FAERIE_MODE_OFFER_HINT 0xDB
+
 #define FAERIE_EVENT_SFX_PASSTHROUGH 0xDE
+#define FAERIE_SUBENTITY_WINGS 0xD9
 
 #define ROOM_STATE_TO_HINT_OFFSET 2
 #define ROOM_SPECIAL_STATE_UNK1 1
@@ -92,7 +93,7 @@ static void UpdateServantUseAntivenom(Entity* self);
 static void UpdateServantUseElementalResist(Entity* self);
 static void UpdateServantUsePotion(Entity* self);
 static void UpdateServantAdditionalInit(Entity* self);
-static void UpdateEntityIdD9(Entity* self);
+static void UpdateSubEntityWings(Entity* self);
 static void UpdateServantSitOnShoulder(Entity* self);
 static void UpdateServantOfferHint(Entity* self);
 static void UpdateEntitySetRoomSpecialState(Entity* self);
@@ -110,7 +111,7 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantUseElementalResist,
     UpdateServantUsePotion,
     UpdateServantAdditionalInit,
-    UpdateEntityIdD9,
+    UpdateSubEntityWings,
     UpdateServantSitOnShoulder,
     UpdateServantOfferHint,
     UpdateEntitySetRoomSpecialState,
@@ -145,7 +146,7 @@ void ExecuteAbilityInitialize(Entity* self) {
             self->ext.faerie.maxAngle = 0x20;
             self->step++;
             break;
-        case 0xD9:
+        case FAERIE_SUBENTITY_WINGS:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             self->step++;
@@ -169,7 +170,7 @@ void ExecuteAbilityInitialize(Entity* self) {
             SetAnimationFrame(self, 0xE);
             self->step++;
             break;
-        case 0xD9:
+        case FAERIE_SUBENTITY_WINGS:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             self->step++;
@@ -570,7 +571,7 @@ void ServantInit(InitializeMode mode) {
 
     entity++;
     DestroyEntity(entity);
-    entity->entityId = 0xD9;
+    entity->entityId = FAERIE_SUBENTITY_WINGS;
     entity->unk5A = 0x6C;
     entity->palette = 0x140;
     entity->animSet = ANIMSET_OVL(20);
@@ -1437,8 +1438,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
     FntPrint("sts = %d\n", g_PlaySfxStep);
 }
 
-// I'm pretty sure this is for the wings
-void UpdateEntityIdD9(Entity* self) {
+void UpdateSubEntityWings(Entity* self) {
     s32 animIndex;
     s32 zPriorityFlag;
     s32 i;
@@ -1450,15 +1450,15 @@ void UpdateEntityIdD9(Entity* self) {
 
     if (!self->step) {
         ExecuteAbilityInitialize(self);
-        self->ext.faerieUnk0.parent = &g_Entities[SERVANT_ENTITY_INDEX];
+        self->ext.faerieWings.parent = &g_Entities[SERVANT_ENTITY_INDEX];
         self->step += 1;
     }
-    self->posX.val = self->ext.faerieUnk0.parent->posX.val;
-    self->posY.val = self->ext.faerieUnk0.parent->posY.val;
-    self->facingLeft = self->ext.faerieUnk0.parent->facingLeft;
+    self->posX.val = self->ext.faerieWings.parent->posX.val;
+    self->posY.val = self->ext.faerieWings.parent->posY.val;
+    self->facingLeft = self->ext.faerieWings.parent->facingLeft;
 
     for (i = 6; i <= 0x2D; i++) {
-        if (self->ext.faerieUnk0.parent->anim == g_FaerieAnimationFrames[i])
+        if (self->ext.faerieWings.parent->anim == g_FaerieAnimationFrames[i])
             break;
     }
 

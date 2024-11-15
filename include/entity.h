@@ -608,7 +608,7 @@ typedef struct {
 // There appears to be a 2nd Ext used in the Faerie code
 typedef struct {
     /* 0x7C */ struct Entity* parent;
-} ET_FaerieUnk0;
+} ET_FaerieWings;
 
 typedef struct {
     /* 0x0 */ s16 flag;
@@ -2150,7 +2150,7 @@ typedef union { // offset=0x7C
     ET_BatEcho batEcho;
     ET_Ghost ghost;
     ET_Faerie faerie;
-    ET_FaerieUnk0 faerieUnk0;
+    ET_FaerieWings faerieWings;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
