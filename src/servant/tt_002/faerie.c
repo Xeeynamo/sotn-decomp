@@ -1352,19 +1352,22 @@ void UpdateServantAdditionalInit(Entity* arg0) {
         if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
                 if (rnd <= g_FaerieIntroRandomizer[i * 2]) {
-                    arg0->ext.faerie.currentSfxEvent = g_FaerieIntroRandomizer[i * 2 + 1];
+                    arg0->ext.faerie.currentSfxEvent =
+                        g_FaerieIntroRandomizer[i * 2 + 1];
                     break;
                 }
             }
         } else {
             for (i = 0; true; i++) {
                 if (rnd <= g_SfxEventRandomizer[i * 2]) {
-                    arg0->ext.faerie.currentSfxEvent = g_SfxEventRandomizer[i * 2 + 1];
+                    arg0->ext.faerie.currentSfxEvent =
+                        g_SfxEventRandomizer[i * 2 + 1];
                     break;
                 }
             }
         }
-        arg0->ext.faerie.sfxEventFlag = ((s16*)arg0->ext.faerie.currentSfxEvent)[0];
+        arg0->ext.faerie.sfxEventFlag =
+            ((s16*)arg0->ext.faerie.currentSfxEvent)[0];
         g_PauseAllowed = false;
         arg0->step++;
 
@@ -1377,7 +1380,8 @@ void UpdateServantAdditionalInit(Entity* arg0) {
         }
         if (arg0->ext.faerie.sfxEventFlag < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
+                SetAnimationFrame(
+                    arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
                 arg0->step++;
             }
         } else {
@@ -1385,14 +1389,18 @@ void UpdateServantAdditionalInit(Entity* arg0) {
                 arg0->ext.faerie.sfxEventFlag--;
             }
             if (arg0->ext.faerie.sfxEventFlag < 0) {
-                SetAnimationFrame(arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
+                SetAnimationFrame(
+                    arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
                 if (arg0->ext.faerie.currentSfxEvent->sfxId &&
-                    (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) == NULL)) {
+                    (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) ==
+                     NULL)) {
                     CreateEventEntity_Local(
-                        arg0, FAERIE_EVENT_SFX_PASSTHROUGH, arg0->ext.faerie.currentSfxEvent->sfxId);
+                        arg0, FAERIE_EVENT_SFX_PASSTHROUGH,
+                        arg0->ext.faerie.currentSfxEvent->sfxId);
                 }
                 arg0->ext.faerie.currentSfxEvent++;
-                arg0->ext.faerie.sfxEventFlag = arg0->ext.faerie.currentSfxEvent->flag;
+                arg0->ext.faerie.sfxEventFlag =
+                    arg0->ext.faerie.currentSfxEvent->flag;
             }
         }
         break;
@@ -1741,8 +1749,10 @@ void UpdateEntityIdDB(Entity* self) {
 
     case 2:
         self->ext.faerie.currentSfxEvent = g_FaerieHints[self->params].hint;
-        // This is self->ext.faerie.currentSfxEvent->flag, but the weird cas is needed for match
-        self->ext.faerie.sfxEventFlag = *((s16*)self->ext.faerie.currentSfxEvent);
+        // This is self->ext.faerie.currentSfxEvent->flag, but the weird cas is
+        // needed for match
+        self->ext.faerie.sfxEventFlag =
+            *((s16*)self->ext.faerie.currentSfxEvent);
         g_PauseAllowed = 0;
         self->step++;
         break;
@@ -1756,7 +1766,8 @@ void UpdateEntityIdDB(Entity* self) {
 
         if (self->ext.faerie.sfxEventFlag < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(self, self->ext.faerie.currentSfxEvent->animIndex);
+                SetAnimationFrame(
+                    self, self->ext.faerie.currentSfxEvent->animIndex);
                 self->step++;
             }
         } else {
@@ -1765,15 +1776,19 @@ void UpdateEntityIdDB(Entity* self) {
             }
 
             if (self->ext.faerie.sfxEventFlag < 0) {
-                SetAnimationFrame(self, self->ext.faerie.currentSfxEvent->animIndex);
+                SetAnimationFrame(
+                    self, self->ext.faerie.currentSfxEvent->animIndex);
                 if ((self->ext.faerie.currentSfxEvent->sfxId != 0) &&
-                    (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) == NULL)) {
+                    (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) ==
+                     NULL)) {
                     CreateEventEntity_Local(
-                        self, FAERIE_EVENT_SFX_PASSTHROUGH, self->ext.faerie.currentSfxEvent->sfxId);
+                        self, FAERIE_EVENT_SFX_PASSTHROUGH,
+                        self->ext.faerie.currentSfxEvent->sfxId);
                 }
 
                 self->ext.faerie.currentSfxEvent++;
-                self->ext.faerie.sfxEventFlag = self->ext.faerie.currentSfxEvent->flag;
+                self->ext.faerie.sfxEventFlag =
+                    self->ext.faerie.currentSfxEvent->flag;
             }
         }
         break;

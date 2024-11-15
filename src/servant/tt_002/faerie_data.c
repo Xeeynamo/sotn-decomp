@@ -4,35 +4,43 @@
 
 // SFX map
 FaerieSfx g_FaerieSfx = {
-    NA_VO_FAERIE_HEALING, NA_VO_FAERIE_POTION, NA_VO_FAERIE_REGENERATION,
-    NA_VO_FAERIE_NO_MEDICINE, NA_VO_FAERIE_OH_NO, NA_VO_FAERIE_ARE_YOU_OK
-};
+    NA_VO_FAERIE_HEALING,     NA_VO_FAERIE_POTION, NA_VO_FAERIE_REGENERATION,
+    NA_VO_FAERIE_NO_MEDICINE, NA_VO_FAERIE_OH_NO,  NA_VO_FAERIE_ARE_YOU_OK};
 
-s32 g_SfxRandomizerHammerResist[] = {0x3F, NA_SE_FAERIE_HAI, 0x7F, NA_SE_FAERIE_YEAH,
-                       0xBF, NA_SE_FAERIE_HA1, 0xFF, NA_SE_FAERIE_HA2};
+s32 g_SfxRandomizerHammerResist[] = {
+    0x3F, NA_SE_FAERIE_HAI, 0x7F, NA_SE_FAERIE_YEAH,
+    0xBF, NA_SE_FAERIE_HA1, 0xFF, NA_SE_FAERIE_HA2};
 
-s32 g_SfxRandomizerGrunt[] = {0x3F, NA_SE_FAERIE_AH, 0x7F, NA_SE_FAERIE_UHH,
-                       0xBF, NA_SE_FAERIE_UHH2, 0xFF, NA_SE_FAERIE_OHH};
+s32 g_SfxRandomizerGrunt[] = {0x3F, NA_SE_FAERIE_AH,   0x7F, NA_SE_FAERIE_UHH,
+                              0xBF, NA_SE_FAERIE_UHH2, 0xFF, NA_SE_FAERIE_OHH};
 
-static FaerieSfxEventDesc s_IntroEventLifeVO[2] = { { 0, 34, NA_VO_FAERIE_INTRO_LIFE, },{-1, 14, 0}};
+// clang-format off
+static FaerieSfxEventDesc s_IntroEventLifeVO[] = {
+    { 0, 34, NA_VO_FAERIE_INTRO_LIFE },
+    {-1, 14, 0}};
+static FaerieSfxEventDesc s_IntroEventCommandVO[] = {
+    { 0, 34, NA_VO_FAERIE_INTRO_COMMAND },
+    {-1, 14, 0}};
 
-static FaerieSfxEventDesc s_IntroEventCommandVO[] = {{0, 34, NA_VO_FAERIE_INTRO_COMMAND,},{-1, 14, 0}};
+s32 g_FaerieIntroRandomizer[] = {
+    0x0000007F, s_IntroEventLifeVO, 0x000000FF, s_IntroEventCommandVO};
 
-s32 g_FaerieIntroRandomizer[] = {0x0000007F, s_IntroEventLifeVO, 0x000000FF, s_IntroEventCommandVO};
+static FaerieSfxEventDesc s_SfxEventLetsGo[] = {
+    { 0, 38, NA_VO_FAERIE_LETS_GO },
+    {-1, 14, 0}};
+static FaerieSfxEventDesc s_SfxEventFollow[] = {
+    { 0, 38, NA_VO_FAERIE_FOLLOW },
+    {-1, 14, 0}};
 
-static FaerieSfxEventDesc s_SfxEventLetsGo[] = {{0, 38, NA_VO_FAERIE_LETS_GO,},{ -1, 14, 0}};
-
-static FaerieSfxEventDesc s_SfxEventFollow[] = {{0, 38, NA_VO_FAERIE_FOLLOW,},{-1, 14, 0}};
-
-s32 g_SfxEventRandomizer[] = {0x0000007F, s_SfxEventLetsGo, 0x000000FF, s_SfxEventFollow};
+s32 g_SfxEventRandomizer[] = {
+    0x0000007F, s_SfxEventLetsGo, 0x000000FF, s_SfxEventFollow};
 
 // position data with a flag field
-// clang-format off
-static FaerieSfxEventDesc s_DarknessHint[2] = { { 0, 14, NA_VO_FAERIE_DARKNESS_HINT,} , { -1, 14, 0 } };
-static FaerieSfxEventDesc s_MistHint[2] = { { 0, 14, NA_VO_FAERIE_MIST_HINT,} , { -1, 14, 0 } };
-static FaerieSfxEventDesc s_WallHint1[2] = { { 0, 37, NA_VO_FAERIE_WALL_HINT,} , { -1, 14, 0 } };
-static FaerieSfxEventDesc s_SuspiciousHint[2] = { { 0, 36, NA_VO_FAERIE_SUSPICIOUS_HINT,} , { -1, 14, 0 } };
-static FaerieSfxEventDesc s_WallHint2[2] = { { 0, 36, NA_VO_FAERIE_WALL_HINT,} , { -1, 14, 0 } };
+static FaerieSfxEventDesc s_DarknessHint[] =   { { 0, 14, NA_VO_FAERIE_DARKNESS_HINT  ,}, { -1, 14, 0 } };
+static FaerieSfxEventDesc s_MistHint[] =       { { 0, 14, NA_VO_FAERIE_MIST_HINT      ,}, { -1, 14, 0 } };
+static FaerieSfxEventDesc s_WallHint1[] =      { { 0, 37, NA_VO_FAERIE_WALL_HINT      ,}, { -1, 14, 0 } };
+static FaerieSfxEventDesc s_SuspiciousHint[] = { { 0, 36, NA_VO_FAERIE_SUSPICIOUS_HINT,}, { -1, 14, 0 } };
+static FaerieSfxEventDesc s_WallHint2[] =      { { 0, 36, NA_VO_FAERIE_WALL_HINT      ,}, { -1, 14, 0 } };
 
 HintTriggerMap g_FaerieHints[] = {
     { .left = -1,  .top = -1,  .hint = s_DarknessHint },
