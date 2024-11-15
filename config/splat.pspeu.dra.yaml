@@ -80,7 +80,8 @@ segments:
       - [0x15520, c, dra_psp/15520]
       - [0x160C0, c, dra_psp/160C0]
       - [0x18210, c, dra_psp/18210]
-      - [0x18800, c, dra_psp/18800]
+      # Start of shared C. All prior C is PSP-exclusive.
+      - [0x186E8, c, dra_psp/186E8]
       - [0x18920, c, dra_psp/18920]
       - [0x18BA0, c, dra_psp/18BA0]
       - [0x18BE0, c, dra_psp/18BE0]
@@ -184,7 +185,7 @@ segments:
       - [0x67E90, c, dra_psp/67E90]
       - [0x680C0, c, dra_psp/680C0]
       - [0x68D80, data]
-      - [0x6DDE8, .data, dra_psp/18210] # "\no\n"
+      - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]

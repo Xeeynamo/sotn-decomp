@@ -822,7 +822,7 @@ typedef struct Entity {
     /* 0x3C */ u16 hitboxState; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
-    /* 0x42 */ s16 attackElement;
+    /* 0x42 */ u16 attackElement;
     /* 0x44 */ u16 hitParams;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
