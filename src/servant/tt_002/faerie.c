@@ -18,6 +18,8 @@
 
 #define FAERIE_EVENT_SFX_PASSTHROUGH 0xDE
 #define FAERIE_SUBENTITY_WINGS 0xD9
+#define FAERIE_SUBENTITY_LIFE_APPLE 0xDD
+#define FAERIE_SUBENTITY_ITEM 0xDF
 
 #define ROOM_STATE_TO_HINT_OFFSET 2
 #define ROOM_SPECIAL_STATE_UNK1 1
@@ -97,9 +99,9 @@ static void UpdateSubEntityWings(Entity* self);
 static void UpdateServantSitOnShoulder(Entity* self);
 static void UpdateServantOfferHint(Entity* self);
 static void UpdateEntitySetRoomSpecialState(Entity* self);
-static void UpdateSubEntityIdDD(Entity* self);
+static void UpdateSubEntityUseLifeApple(Entity* self);
 static void UpdateServantSfxPassthrough(Entity* self);
-static void UpdateSubEntityIdDF(Entity* self);
+static void UpdateSubEntityUseItem(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
     ServantInit,
@@ -115,9 +117,9 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantSitOnShoulder,
     UpdateServantOfferHint,
     UpdateEntitySetRoomSpecialState,
-    UpdateSubEntityIdDD,
-    UpdateServantSfxPassthrough, // DE
-    UpdateSubEntityIdDF};
+    UpdateSubEntityUseLifeApple,
+    UpdateServantSfxPassthrough,
+    UpdateSubEntityUseItem};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -779,7 +781,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 0x7:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            CreateEventEntity_Local(self, 0xDF, 0);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 0);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -787,7 +789,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 0x8:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            CreateEventEntity_Local(self, 0xDD, 0);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_LIFE_APPLE, 0);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -896,7 +898,7 @@ void UpdateServantUseHammer(Entity* self) {
             g_Status.equipHandCount[ITEM_HAMMER]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
-            CreateEventEntity_Local(self, 0xDF, 1);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 1);
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             g_api.func_80102CD8(4);
             self->ext.faerie.frameCounter = 0;
@@ -978,7 +980,7 @@ void UpdateServantUseUncurse(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Local(self, 0xDF, paramOffset + 3);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -1068,7 +1070,7 @@ void UpdateServantUseAntivenom(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Local(self, 0xDF, paramOffset + 3);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -1169,7 +1171,7 @@ void UpdateServantUseElementalResist(Entity* self) {
                 self,
                 FACTORY(0x37, g_ResistItemsParamMap[self->params * 4 + 2]), 0);
             CreateEventEntity_Local(
-                self, 0xDF, g_ResistItemsParamMap[self->params * 4 + 3]);
+                self, FAERIE_SUBENTITY_ITEM, g_ResistItemsParamMap[self->params * 4 + 3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1261,7 +1263,7 @@ void UpdateServantUsePotion(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self,
                 FACTORY(0x37, g_PotionItemsParamMap[self->params * 2 + 1]), 0);
-            CreateEventEntity_Local(self, 0xDF, 2);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 2);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1879,7 +1881,7 @@ void UpdateEntitySetRoomSpecialState(Entity* self) {
 // It's likely that this Entity uses a different extension as
 // randomMovementAngle and targetAngle don't make sense
 // but I need more context to get it right.
-void UpdateSubEntityIdDD(Entity* arg0) {
+void UpdateSubEntityUseLifeApple(Entity* arg0) {
     Primitive* currentPrim;
     s32 i;
     s32 var_v1;
@@ -2024,7 +2026,7 @@ void UpdateSubEntityIdDD(Entity* arg0) {
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
 // This subentity likely uses a different Ext, but more research is needed
-void UpdateSubEntityIdDF(Entity* self) {
+void UpdateSubEntityUseItem(Entity* self) {
     FakePrim* fakePrim;
     s32 i;
     u16 posY2;
