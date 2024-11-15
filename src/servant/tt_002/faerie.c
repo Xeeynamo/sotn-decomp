@@ -980,7 +980,8 @@ void UpdateServantUseUncurse(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
+            CreateEventEntity_Local(
+                self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -1070,7 +1071,8 @@ void UpdateServantUseAntivenom(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
+            CreateEventEntity_Local(
+                self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -1171,7 +1173,8 @@ void UpdateServantUseElementalResist(Entity* self) {
                 self,
                 FACTORY(0x37, g_ResistItemsParamMap[self->params * 4 + 2]), 0);
             CreateEventEntity_Local(
-                self, FAERIE_SUBENTITY_ITEM, g_ResistItemsParamMap[self->params * 4 + 3]);
+                self, FAERIE_SUBENTITY_ITEM,
+                g_ResistItemsParamMap[self->params * 4 + 3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
