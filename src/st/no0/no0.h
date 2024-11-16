@@ -84,6 +84,10 @@ extern EInit g_EInitGhostEnemy;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 
+// Ctulhu
+extern EInit g_EInitCtulhu;
+extern EInit g_EInitCtulhuFireball;
+
 // Clock room
 extern EInit g_Statues;
 

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-extern u16 D_us_80180BD8[];
 extern u16 D_us_80180BDE[];
 extern u16 D_us_8018234C[];
 extern u16 D_us_80182354[];
@@ -15,9 +14,12 @@ extern u8 D_us_801823E4[];
 extern u8 D_us_801823F4[];
 extern u8 D_us_8018243C[];
 extern u16 D_us_80182454[];
+extern u8 D_us_8018245C[]; // anim_death
 
-// Main Cthulu entity
-void func_us_801D9264(Entity* self) {
+extern u16 D_us_80180BEA[]; // clut
+extern u8 D_us_80182430[];  // anim fireball
+
+void EntityCtulhu(Entity* self) {
     RECT clipRect;
     DRAWENV drawEnv;
     DR_ENV* dr_env;
@@ -42,7 +44,7 @@ void func_us_801D9264(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180BD8);
+        InitializeEntity(g_EInitCtulhu);
         self->animCurFrame = 1;
         /* fallthrough */
     case 1:
@@ -53,18 +55,18 @@ void func_us_801D9264(Entity* self) {
         break;
     case 2:
         if (self->step_s == 0) {
-            self->ext.et_801D9264.timer = 0x40;
+            self->ext.ctulhu.timer = 0x40;
             self->step_s++;
         }
         AnimateEntity(D_us_80182390, self);
-        if (self->ext.et_801D9264.timer == 0x20) {
+        if (self->ext.ctulhu.timer == 0x20) {
             self->facingLeft ^= 1;
         }
         if ((self->facingLeft == ((GetSideToPlayer() & 1) ^ 1)) &&
             (GetDistanceToPlayerX() < 0x48)) {
             SetStep(5);
         }
-        if (!--self->ext.et_801D9264.timer) {
+        if (!--self->ext.ctulhu.timer) {
             SetStep(3);
         }
         break;
@@ -72,7 +74,7 @@ void func_us_801D9264(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_801823E4, self)) {
-                self->ext.et_801D9264.y =
+                self->ext.ctulhu.y =
                     self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x20;
                 SetSubStep(1);
             }
@@ -87,7 +89,7 @@ void func_us_801D9264(Entity* self) {
             MoveEntity();
             self->velocityY += FIX(3.0 / 16);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            posY -= self->ext.et_801D9264.y;
+            posY -= self->ext.ctulhu.y;
             if ((posY <= 0) || (self->velocityY > 0)) {
                 self->step_s++;
             }
@@ -98,9 +100,9 @@ void func_us_801D9264(Entity* self) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            posY -= self->ext.et_801D9264.y;
+            posY -= self->ext.ctulhu.y;
             if (posY == 0) {
-                self->ext.et_801D9264.timer = 0x80;
+                self->ext.ctulhu.timer = 0x80;
                 self->velocityY = 0;
                 self->step_s++;
             } else if (posY < 0) {
@@ -124,12 +126,12 @@ void func_us_801D9264(Entity* self) {
                 self->velocityX = FIX(-0.75);
             }
 
-            if (self->ext.et_801D9264.timer == 0) {
+            if (self->ext.ctulhu.timer == 0) {
                 if (colRet == 1) {
                     SetSubStep(5);
                 }
             } else {
-                self->ext.et_801D9264.timer--;
+                self->ext.ctulhu.timer--;
             }
             break;
         case 5:
@@ -163,11 +165,11 @@ void func_us_801D9264(Entity* self) {
             self->velocityY += FIX(3.0 / 16);
             if (self->velocityY > 0) {
                 self->step_s++;
-                if (self->ext.et_801D9264.unk84 == 0) {
-                    self->ext.et_801D9264.unk84 = 2;
+                if (self->ext.ctulhu.unk84 == 0) {
+                    self->ext.ctulhu.unk84 = 2;
                     SetStep(7);
                 } else {
-                    self->ext.et_801D9264.unk84--;
+                    self->ext.ctulhu.unk84--;
                 }
             }
             break;
@@ -185,15 +187,15 @@ void func_us_801D9264(Entity* self) {
                 }
                 SetSubStep(0);
 
-                if (self->ext.et_801D9264.unk84 == 1) {
+                if (self->ext.ctulhu.unk84 == 1) {
                     SetStep(6);
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                     if (posX > 0x400) {
                         self->facingLeft = 1;
-                        self->ext.et_801D9264.unk85 = 3;
+                        self->ext.ctulhu.unk85 = 3;
                     }
-                    if (++self->ext.et_801D9264.unk85 > 2) {
-                        self->ext.et_801D9264.unk85 = 0;
+                    if (++self->ext.ctulhu.unk85 > 2) {
+                        self->ext.ctulhu.unk85 = 0;
                         SetStep(8);
                     }
                 } else {
@@ -369,7 +371,7 @@ void func_us_801D9264(Entity* self) {
 
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
-            self->ext.et_801D9264.unkA4 = prim;
+            self->ext.ctulhu.unkA4 = prim;
             posY = self->params ? 0xFF : 0x7F;
             prim->type = PRIM_GT4;
             prim->tpage = 0x110;
@@ -449,17 +451,17 @@ void func_us_801D9264(Entity* self) {
             }
 
             prim->drawMode = DRAW_DEFAULT;
-            self->ext.et_801D9264.y = 0x28;
-            self->ext.et_801D9264.timer = 0x10;
+            self->ext.ctulhu.y = 0x28;
+            self->ext.ctulhu.timer = 0x10;
             self->step_s++;
             /* fallthrough */
         case 2:
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_FM_EXPLODE_B);
             }
-            prim = self->ext.et_801D9264.unkA4;
+            prim = self->ext.ctulhu.unkA4;
             posX = Random() & 0x3F;
-            posY = self->ext.et_801D9264.y;
+            posY = self->ext.ctulhu.y;
             if (!(g_Timer & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                         &g_Entities[TOTAL_ENTITY_COUNT]);
@@ -483,17 +485,17 @@ void func_us_801D9264(Entity* self) {
                     newEntity->zPriority += 4;
                 }
             }
-            if (!--self->ext.et_801D9264.timer) {
-                self->ext.et_801D9264.timer = 2;
-                self->ext.et_801D9264.y -= 2;
-                if (self->ext.et_801D9264.y < -0x28) {
-                    self->ext.et_801D9264.timer = 0x40;
+            if (!--self->ext.ctulhu.timer) {
+                self->ext.ctulhu.timer = 2;
+                self->ext.ctulhu.y -= 2;
+                if (self->ext.ctulhu.y < -0x28) {
+                    self->ext.ctulhu.timer = 0x40;
                     self->step_s++;
                 }
             }
             break;
         case 3:
-            if (!--self->ext.et_801D9264.timer) {
+            if (!--self->ext.ctulhu.timer) {
                 DestroyEntity(self);
                 return;
             }
@@ -515,11 +517,96 @@ void func_us_801D9264(Entity* self) {
     }
 }
 
-// Shot fireball
-INCLUDE_ASM("st/no0/nonmatchings/e_ctulhu", func_us_801DA488);
+void EntityCtulhuFireball(Entity* self) {
+    Entity* newEntity;
+    Primitive* prim;
+    s32 primIndex;
+    s16 rotZ;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitCtulhuFireball);
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        rotZ = self->rotZ;
+        if (self->facingLeft) {
+            rotZ = -rotZ;
+        } else {
+            rotZ = rotZ + 0x800;
+        }
+        self->velocityX = rcos(rotZ) * 48;
+        self->velocityY = rsin(rotZ) * 48;
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        prim->tpage = 20;
+        prim->clut = D_us_80180BEA[0] + 1;
+        prim->u0 = prim->u2 = 224;
+        prim->u1 = prim->u3 = 255;
+        prim->v0 = prim->v1 = 48;
+        prim->v2 = prim->v3 = 79;
+        prim->priority = self->zPriority - 1;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+    }
+
+    AnimateEntity(D_us_80182430, self);
+    MoveEntity();
+    prim = self->ext.prim;
+    prim->x0 = prim->x2 = self->posX.i.hi - 24;
+    prim->x1 = prim->x3 = self->posX.i.hi + 24;
+    prim->y0 = prim->y1 = self->posY.i.hi - 24;
+    prim->y2 = prim->y3 = self->posY.i.hi + 24;
+
+    if (g_Timer & 1) {
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+
+    if (self->flags & FLAG_DEAD) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, self, newEntity);
+            newEntity->params = 2;
+        }
+        DestroyEntity(self);
+    }
+}
 
 // Ice shockwave attack
 INCLUDE_ASM("st/no0/nonmatchings/e_ctulhu", func_us_801DA6B4);
 
-// Death
-INCLUDE_ASM("st/no0/nonmatchings/e_ctulhu", func_us_801DADD0);
+void EntityCtulhuDeath(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 14;
+        self->unk5A = 121;
+        self->palette = PAL_OVL(0x2CE);
+        self->drawFlags = FLAG_DRAW_UNK8;
+        self->unk6C = 16;
+        if (self->params) {
+            self->unk6C = 16;
+            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+            self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        } else {
+            self->zPriority += 2;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        }
+        // fallthrough
+    case 1:
+        self->posY.val += 0xFFFF0000;
+        if (!AnimateEntity(D_us_8018245C, self)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}

@@ -67,10 +67,10 @@ void func_us_801D8FFC(Entity*);
 void func_us_801D91C4(Entity*);
 void func_us_801D7DAC(Entity*);
 void func_us_801C2B24(Entity*);
-void func_us_801D9264(Entity*);
-void func_us_801DA488(Entity*);
+void EntityCtulhu(Entity*);
+void EntityCtulhuFireball(Entity*);
 void func_us_801DA6B4(Entity*);
-void func_us_801DADD0(Entity*);
+void EntityCtulhuDeath(Entity*);
 void EntityAxeKnight(Entity*);
 void EntityAxeKnightThrowingAxe(Entity*);
 void EntityExplosionPuffOpaque(Entity*);
@@ -150,10 +150,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D91C4,
     func_us_801D7DAC,
     func_us_801C2B24,
-    func_us_801D9264,
-    func_us_801DA488,
+    EntityCtulhu,
+    EntityCtulhuFireball,
     func_us_801DA6B4,
-    func_us_801DADD0,
+    EntityCtulhuDeath,
     EntityAxeKnight,
     EntityAxeKnightThrowingAxe,
     EntityExplosionPuffOpaque,
@@ -198,8 +198,8 @@ EInit D_us_80180BA8 = {ANIMSET_OVL(0x08), 0x00, 0x48, 0x201, 0x031};
 EInit g_EInitSlinger = {ANIMSET_OVL(0x0A), 0x01, 0x49, 0x203, 0x0B2};
 EInit g_EInitSlingerPieces = {ANIMSET_OVL(0x0A), 0x00, 0x49, 0x203, 0x002};
 EInit g_EInitSlingerRib = {ANIMSET_OVL(0x0A), 0x16, 0x49, 0x203, 0x0B3};
-EInit D_us_80180BD8 = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0E9};
-EInit D_us_80180BE4 = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0EA};
+EInit g_EInitCtulhu = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0E9};
+EInit g_EInitCtulhuFireball = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0EA};
 EInit D_us_80180BF0 = {ANIMSET_OVL(0x0E), 0x2C, 0x50, 0x238, 0x0EB};
 EInit g_EInitAxeKnight = {ANIMSET_OVL(0x07), 0x01, 0x48, 0x23F, 0x0F6};
 EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x07), 0x2F, 0x48, 0x23D, 0x18F};
