@@ -50,6 +50,8 @@ typedef enum EntityIDs {
     /* 0x4F */ E_SKELETON_PIECES,
 } EntityIDs;
 
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
+
 #define E_PUFF_OPAQUE_PALETTE_OFFSET 0x2C0
 
 extern s16 g_SineTable[];
@@ -87,6 +89,7 @@ extern EInit g_EInitSkelerangBoomerang;
 // Ctulhu
 extern EInit g_EInitCtulhu;
 extern EInit g_EInitCtulhuFireball;
+extern EInit g_EInitCtulhuIceShockwave;
 
 // Clock room
 extern EInit g_Statues;
