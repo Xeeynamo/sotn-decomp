@@ -317,7 +317,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     RoomHeader* room;
     u32 stack[4];
 
-    if (g_Player.status & PLAYER_STATUS_UNK40000) {
+    if (g_Player.status & PLAYER_STATUS_ZERO_HP) {
         return 0;
     }
     res = func_800F087C(x, y);
@@ -1513,7 +1513,7 @@ void RunMainEngine(void) {
                     D_8006BB00 = 0;
                 }
             }
-            if (!(g_Player.status & PLAYER_STATUS_UNK40000)) {
+            if (!(g_Player.status & PLAYER_STATUS_ZERO_HP)) {
                 if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed) {
                     func_801027A4();
                     if ((g_StageId == STAGE_ST0) ||

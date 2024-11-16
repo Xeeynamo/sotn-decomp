@@ -633,11 +633,10 @@ void RicMain(void) {
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_DEAD:
-        var_s4 =
-            NO_AFTERIMAGE | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
+        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_ZERO_HP | PLAYER_STATUS_UNK10000;
         if (PLAYER.step_s == 0x80) {
             var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
-                     PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
+                     PLAYER_STATUS_ZERO_HP | PLAYER_STATUS_UNK10000;
         }
         RicSetInvincibilityFrames(1, 16);
         break;

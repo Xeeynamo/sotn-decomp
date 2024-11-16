@@ -566,7 +566,7 @@ void EntityAlucard(void) {
     D_80137FB8 = g_unkGraphicsStruct.D_800973FC;
     var_s7 = 0;
     g_Player.unk72 = func_80110394();
-    if (!(g_Player.status & PLAYER_STATUS_UNK40000)) {
+    if (!(g_Player.status & PLAYER_STATUS_ZERO_HP)) {
         var_s0 = GetTeleportToOtherCastle();
         if (var_s0 != 0) {
             func_8010E42C(var_s0);
@@ -1202,8 +1202,7 @@ block_160:
         g_Player.status |= PLAYER_STATUS_UNK100;
     }
     if ((g_Player.unk08 & 0x10000) &&
-        !(g_Player.status &
-          (PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40000))) {
+        !(g_Player.status & (PLAYER_STATUS_UNK10000 | PLAYER_STATUS_ZERO_HP))) {
         func_8010E168(1, 0xC);
         if (!(g_Player.status & (PLAYER_STATUS_POISON | PLAYER_STATUS_CURSE))) {
             g_Player.timers[4] = 0xC;
@@ -1212,7 +1211,7 @@ block_160:
         }
     }
     PlayAnimation(D_800B0130, D_800B01B8);
-    if (g_Player.status & PLAYER_STATUS_UNK40000) {
+    if (g_Player.status & PLAYER_STATUS_ZERO_HP) {
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
@@ -1230,7 +1229,7 @@ block_160:
         if ((CheckEquipmentItemCount(0x58U, 4U) != 0) &&
             !(g_Player.status &
               (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10 |
-               PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40000 |
+               PLAYER_STATUS_UNK10000 | PLAYER_STATUS_ZERO_HP |
                PLAYER_STATUS_AXEARMOR)) &&
             !(PLAYER.drawFlags & (FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ))) {
             PLAYER.drawFlags |= FLAG_DRAW_ROTY;

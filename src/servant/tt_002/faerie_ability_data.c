@@ -2,7 +2,10 @@
 #include "faerie.h"
 #include "items.h"
 
-FaerieAnimIndex g_AnimIndexParams[] = {
+// Map is used in the wing animation selector. The Z index param is used
+// because sometimes the wings are in front of the faerie like when
+// her back it toward the player.
+FaerieWingAnimationParams g_WingAnimationParams[] = {
     {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {4, 1}, {4, 1}, {0, 0},
     {4, 1}, {4, 1}, {3, 0}, {5, 0}, {0, 0}, {0, 0}, {0, 0}, {4, 1},
     {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {4, 1}, {0, 0},
