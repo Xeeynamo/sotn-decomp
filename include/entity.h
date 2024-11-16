@@ -2041,7 +2041,7 @@ typedef struct {
     /* 0x9C */ s32 y;
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ struct Primitive* unkA4;
-} ET_801D9264;
+} ET_Ctulhu;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -2257,7 +2257,7 @@ typedef union { // offset=0x7C
     ET_OuijaTable ouijaTable;
     ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
-    ET_801D9264 et_801D9264;
+    ET_Ctulhu ctulhu;
     ET_StoneRose stoneRose;
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
