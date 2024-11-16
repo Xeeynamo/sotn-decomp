@@ -16,6 +16,9 @@ extern u8 D_us_8018243C[];
 extern u16 D_us_80182454[];
 extern u8 D_us_8018245C[]; // anim_death
 
+extern u16 D_us_80180BEA[]; // clut
+extern u8 D_us_80182430[];  // anim fireball
+
 void EntityCtulhu(Entity* self) {
     RECT clipRect;
     DRAWENV drawEnv;
@@ -514,8 +517,69 @@ void EntityCtulhu(Entity* self) {
     }
 }
 
-// Shot fireball
-INCLUDE_ASM("st/no0/nonmatchings/e_ctulhu", func_us_801DA488);
+void EntityCtulhuFireball(Entity* self) {
+    Entity* newEntity;
+    Primitive* prim;
+    s32 primIndex;
+    s16 rotZ;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitCtulhuFireball);
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        rotZ = self->rotZ;
+        if (self->facingLeft) {
+            rotZ = -rotZ;
+        } else {
+            rotZ = rotZ + 0x800;
+        }
+        self->velocityX = rcos(rotZ) * 48;
+        self->velocityY = rsin(rotZ) * 48;
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        prim->tpage = 20;
+        prim->clut = D_us_80180BEA[0] + 1;
+        prim->u0 = prim->u2 = 224;
+        prim->u1 = prim->u3 = 255;
+        prim->v0 = prim->v1 = 48;
+        prim->v2 = prim->v3 = 79;
+        prim->priority = self->zPriority - 1;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+    }
+
+    AnimateEntity(D_us_80182430, self);
+    MoveEntity();
+    prim = self->ext.prim;
+    prim->x0 = prim->x2 = self->posX.i.hi - 24;
+    prim->x1 = prim->x3 = self->posX.i.hi + 24;
+    prim->y0 = prim->y1 = self->posY.i.hi - 24;
+    prim->y2 = prim->y3 = self->posY.i.hi + 24;
+
+    if (g_Timer & 1) {
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+
+    if (self->flags & FLAG_DEAD) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, self, newEntity);
+            newEntity->params = 2;
+        }
+        DestroyEntity(self);
+    }
+}
 
 // Ice shockwave attack
 INCLUDE_ASM("st/no0/nonmatchings/e_ctulhu", func_us_801DA6B4);

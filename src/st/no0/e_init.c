@@ -68,7 +68,7 @@ void func_us_801D91C4(Entity*);
 void func_us_801D7DAC(Entity*);
 void func_us_801C2B24(Entity*);
 void EntityCtulhu(Entity*);
-void func_us_801DA488(Entity*);
+void EntityCtulhuFireball(Entity*);
 void func_us_801DA6B4(Entity*);
 void EntityCtulhuDeath(Entity*);
 void EntityAxeKnight(Entity*);
@@ -151,7 +151,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D7DAC,
     func_us_801C2B24,
     EntityCtulhu,
-    func_us_801DA488,
+    EntityCtulhuFireball,
     func_us_801DA6B4,
     EntityCtulhuDeath,
     EntityAxeKnight,
@@ -199,7 +199,7 @@ EInit g_EInitSlinger = {ANIMSET_OVL(0x0A), 0x01, 0x49, 0x203, 0x0B2};
 EInit g_EInitSlingerPieces = {ANIMSET_OVL(0x0A), 0x00, 0x49, 0x203, 0x002};
 EInit g_EInitSlingerRib = {ANIMSET_OVL(0x0A), 0x16, 0x49, 0x203, 0x0B3};
 EInit g_EInitCtulhu = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0E9};
-EInit D_us_80180BE4 = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0EA};
+EInit g_EInitCtulhuFireball = {ANIMSET_OVL(0x0E), 0x00, 0x50, 0x238, 0x0EA};
 EInit D_us_80180BF0 = {ANIMSET_OVL(0x0E), 0x2C, 0x50, 0x238, 0x0EB};
 EInit g_EInitAxeKnight = {ANIMSET_OVL(0x07), 0x01, 0x48, 0x23F, 0x0F6};
 EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x07), 0x2F, 0x48, 0x23D, 0x18F};
