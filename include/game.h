@@ -969,7 +969,7 @@ typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 typedef struct {
     s32 level;
     s32 exp;
-    s32 unk8;
+    s32 unk8; // Possibly the number of times loaded
 } FamiliarStats;
 
 #define RELIC_FLAG_DISABLE 0
@@ -1738,6 +1738,7 @@ typedef struct {
     /* 80072F2C */ PlayerStateStatus status;
     /* 80072F30 */ s32 unk10;
     /* 80072F34 */ u32 unk14;
+    // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 unk1C;
     /* 80072F40 */ s32 unk20;

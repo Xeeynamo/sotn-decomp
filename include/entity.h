@@ -608,19 +608,35 @@ typedef struct {
 // There appears to be a 2nd Ext used in the Faerie code
 typedef struct {
     /* 0x7C */ struct Entity* parent;
-} ET_FaerieUnk0;
+} ET_FaerieWings;
 
 typedef struct {
-    /* 0x0 */ s16 unk0; // a toggle that is either 0 or -1
+    /* 0x7C */ s16 lifeAppleTimer;
+    /* 0x7E */ s16 drawMode;
+    /* 0x80 */ s16 primX;
+    /* 0x82 */ s16 primY;
+    /* 0x84 */ s16 opacity;
+    /* 0x86 */ s16 effectOpacity;
+} ET_FaerieLifeApple;
+
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 drawMode;
+    /* 0x80 */ s16 unkAccumulator;
+    /* 0x82 */ s16 unkFlag;
+} ET_FaerieItem;
+
+typedef struct {
+    /* 0x0 */ s16 flag;
     /* 0x2 */ s16 animIndex;
-    /* 0x4 */ s16 params;
-} FaerieUnkA4;
+    /* 0x4 */ s16 sfxId;
+} FaerieSfxEventDesc;
 
 typedef struct {
-    /* 0x7C */ s16 subEntityDdTimer;
+    /* 0x7C */ s16 : 16;
     /* 0x7E */ s16 isAbilityInitialized;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
+    /* 0x80 */ s16 animationFlag;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 defaultDistToTargetLoc;
@@ -631,12 +647,12 @@ typedef struct {
     /* 0x92 */ s16 requireAntivenomLuckCheck;
     /* 0x94 */ s16 requirePotionLuckCheck;
     /* 0x96 */ s16 timer;
-    /* 0x98 */ s32 left;
-    /* 0x9C */ s32 top;
-    /* 0xA0 */ s16 unkCounterA0;
+    /* 0x98 */ s32 tileMapX;
+    /* 0x9C */ s32 tileMapY;
+    /* 0xA0 */ s16 idleFrameCounter;
     /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ FaerieUnkA4* unkA4;
-    /* 0xA8 */ s16 unkA8;
+    /* 0xA4 */ FaerieSfxEventDesc* currentSfxEvent;
+    /* 0xA8 */ s16 sfxEventFlag;
     /* 0xAA */ s16 padAA[5];
     /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
@@ -2150,7 +2166,9 @@ typedef union { // offset=0x7C
     ET_BatEcho batEcho;
     ET_Ghost ghost;
     ET_Faerie faerie;
-    ET_FaerieUnk0 faerieUnk0;
+    ET_FaerieWings faerieWings;
+    ET_FaerieItem faerieItem;
+    ET_FaerieLifeApple faerieLifeApple;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;

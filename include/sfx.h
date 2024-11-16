@@ -254,22 +254,6 @@ enum SfxModes {
 #define SFX_RBO3_UNK_802 0x802
 #define SFX_RBO3_UNK_804 0x804
 
-// TT_002 - Faerie
-#define SFX_TT002_UNK_885 0x885
-#define SFX_TT002_UNK_886 0x886
-#define SFX_TT002_UNK_887 0x887
-#define SFX_TT002_UNK_888 0x888
-#define SFX_TT002_UNK_889 0x889
-#define SFX_TT002_UNK_88A 0x88A
-#define SFX_TT002_UNK_88B 0x88B
-#define SFX_TT002_UNK_88C 0x88C
-#define SFX_TT002_UNK_88D 0x88D
-#define SFX_TT002_UNK_88E 0x88E
-#define SFX_TT002_UNK_88F 0x88F
-#define SFX_TT002_UNK_890 0x890
-#define SFX_TT002_UNK_891 0x891
-#define SFX_TT002_UNK_892 0x892
-
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2

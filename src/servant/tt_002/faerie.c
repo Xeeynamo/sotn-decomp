@@ -5,17 +5,9 @@
 #include "items.h"
 #include "../servant_private.h"
 
-#define FAERIE_MODE_DEFAULT_UPDATE ENTITY_ID_SERVANT
-#define FAERIE_MODE_USE_LIFE_APPLE 0xD2
-#define FAERIE_MODE_USE_HAMMER 0xD3
-#define FAERIE_MODE_USE_UNCURSE 0xD4
-#define FAERIE_MODE_USE_ANTIVENOM 0xD5
-#define FAERIE_MODE_USE_ELEMENTAL_RESIST 0xD6
-#define FAERIE_MODE_USE_POTION 0xD7
-
-static u32 D_us_801792D0;
-static s32 D_us_801792D4;
-static s32 D_us_801792D8;
+static u32 s_AnimationStatus;
+static s32 s_HintTargetX;
+static s32 s_HintTargetY;
 static s32 s_ServantId;
 static s32 s_zPriority;
 static FamiliarStats s_FaerieStats;
@@ -29,7 +21,7 @@ static s16 s_HpDifferenceIndex;
 STATIC_PAD_BSS(2);
 static s16 s_HpCacheResetTimer;
 STATIC_PAD_BSS(2);
-static s32 D_us_8017931C;
+static s32 s_RoomSpecialState;
 static s32 D_us_80179320;
 static s32 s_TargetLocationX;
 static s32 s_TargetLocationY;
@@ -43,22 +35,21 @@ static s16 s_TargetLocOffset_calc;
 extern u16 g_FaerieClut[];
 
 extern FaerieAbilityStats g_FaerieAbilityStats[];
-extern s32 D_us_80172BCC[];
+extern FaerieSfx g_FaerieSfx;
 extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
 extern s32 D_800973FC;   // this is in unkGraphicsStruct
 extern s32 D_80097420[]; // this is in unkGraphicsStruct
-extern Unkstruct_801724CC D_us_801724CC[];
+extern ItemPrimitiveParams g_ItemPrimitiveParams[];
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
 
-// Ranked lookup tables
-extern s32 D_us_80172C04[];
-extern s32 D_us_80172BE4[];
-extern s32 D_us_80172C3C[];
-extern s32 D_us_80172C64[];
+extern s32 g_SfxRandomizerGrunt[];
+extern s32 g_SfxRandomizerHammerResist[];
+extern s32 g_FaerieIntroRandomizer[];
+extern s32 g_SfxEventRandomizer[];
 
-extern Unk2CB0 D_us_80172CB0[];
+extern HintTriggerMap g_FaerieHints[];
 
 extern FaerieAnimIndex g_AnimIndexParams[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
@@ -74,14 +65,14 @@ static void UpdateServantUseUncurse(Entity* self);
 static void UpdateServantUseAntivenom(Entity* self);
 static void UpdateServantUseElementalResist(Entity* self);
 static void UpdateServantUsePotion(Entity* self);
-static void UpdateEntityIdD8(Entity* self);
-static void UpdateEntityIdD9(Entity* self);
-static void UpdateEntityIdDA(Entity* self);
-static void UpdateEntityIdDB(Entity* self);
-static void UpdateEntityIdDC(Entity* self);
-static void UpdateSubEntityIdDD(Entity* self);
-static void ProcessSfxState_Passthrough(Entity* self);
-static void UpdateSubEntityIdDF(Entity* self);
+static void UpdateServantAdditionalInit(Entity* self);
+static void UpdateSubEntityWings(Entity* self);
+static void UpdateServantSitOnShoulder(Entity* self);
+static void UpdateServantOfferHint(Entity* self);
+static void UpdateEntitySetRoomSpecialState(Entity* self);
+static void UpdateSubEntityUseLifeApple(Entity* self);
+static void UpdateServantSfxPassthrough(Entity* self);
+static void UpdateSubEntityUseItem(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
     ServantInit,
@@ -92,14 +83,14 @@ ServantDesc faerie_ServantDesc = {
     UpdateServantUseAntivenom,
     UpdateServantUseElementalResist,
     UpdateServantUsePotion,
-    UpdateEntityIdD8,
-    UpdateEntityIdD9,
-    UpdateEntityIdDA,
-    UpdateEntityIdDB,
-    UpdateEntityIdDC,
-    UpdateSubEntityIdDD,
-    ProcessSfxState_Passthrough,
-    UpdateSubEntityIdDF};
+    UpdateServantAdditionalInit,
+    UpdateSubEntityWings,
+    UpdateServantSitOnShoulder,
+    UpdateServantOfferHint,
+    UpdateEntitySetRoomSpecialState,
+    UpdateSubEntityUseLifeApple,
+    UpdateServantSfxPassthrough,
+    UpdateSubEntityUseItem};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -116,7 +107,7 @@ void ExecuteAbilityInitialize(Entity* self) {
 
         switch (self->entityId) {
         case FAERIE_MODE_DEFAULT_UPDATE:
-        case 0xD8:
+        case FAERIE_MODE_ADDITIONAL_INIT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
 
@@ -128,8 +119,7 @@ void ExecuteAbilityInitialize(Entity* self) {
             self->ext.faerie.maxAngle = 0x20;
             self->step++;
             break;
-        case 0xD9:
-            // loc 0xD8
+        case FAERIE_SUBENTITY_WINGS:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             self->step++;
@@ -146,21 +136,21 @@ void ExecuteAbilityInitialize(Entity* self) {
         case FAERIE_MODE_USE_ANTIVENOM:
         case FAERIE_MODE_USE_ELEMENTAL_RESIST:
         case FAERIE_MODE_USE_POTION:
-        case 0xDA:
-        case 0xDB:
+        case FAERIE_MODE_SIT_ON_SHOULDER:
+        case FAERIE_MODE_OFFER_HINT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             SetAnimationFrame(self, 0xE);
             self->step++;
             break;
-        case 0xD9:
+        case FAERIE_SUBENTITY_WINGS:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             self->step++;
         }
     }
     self->ext.faerie.isAbilityInitialized = self->entityId;
-    D_us_8017931C = 0;
+    s_RoomSpecialState = 0;
 }
 
 // This is a duplicate CreateEventEntity which is lower in the file, but we need
@@ -195,37 +185,37 @@ void CreateEventEntity_Local(Entity* entityParent, s32 entityId, s32 params) {
 void SelectAnimationFrame(Entity* self) {
     if (abs(self->velocityY) > abs(self->velocityX)) {
         if (abs(self->velocityY) < FIX(0.5)) {
-            if (self->ext.faerie.unk80 == 1) {
-                self->ext.faerie.unk80 = 0;
+            if (self->ext.faerie.animationFlag == 1) {
+                self->ext.faerie.animationFlag = 0;
                 SetAnimationFrame(self, 0x29);
-            } else if (self->ext.faerie.unk80 == 2) {
-                self->ext.faerie.unk80 = 0;
+            } else if (self->ext.faerie.animationFlag == 2) {
+                self->ext.faerie.animationFlag = 0;
                 SetAnimationFrame(self, 0xE);
             }
         } else if (abs(self->velocityY) > FIX(1)) {
             if (self->velocityY >= 0) {
-                self->ext.faerie.unk80 = 2;
+                self->ext.faerie.animationFlag = 2;
                 SetAnimationFrame(self, 0xB);
             } else {
-                self->ext.faerie.unk80 = 2;
+                self->ext.faerie.animationFlag = 2;
                 SetAnimationFrame(self, 0xC);
             }
         }
     } else {
         if (abs(self->velocityX) > FIX(0.5625)) {
-            if (self->ext.faerie.unk80 == 0) {
-                self->ext.faerie.unk80 = 1;
+            if (self->ext.faerie.animationFlag == 0) {
+                self->ext.faerie.animationFlag = 1;
                 SetAnimationFrame(self, 0xF);
-            } else if (self->ext.faerie.unk80 == 2) {
-                self->ext.faerie.unk80 = 0;
+            } else if (self->ext.faerie.animationFlag == 2) {
+                self->ext.faerie.animationFlag = 0;
                 SetAnimationFrame(self, 0xE);
             }
         } else if (abs(self->velocityX) < FIX(0.375)) {
-            if (self->ext.faerie.unk80 == 1) {
-                self->ext.faerie.unk80 = 0;
+            if (self->ext.faerie.animationFlag == 1) {
+                self->ext.faerie.animationFlag = 0;
                 SetAnimationFrame(self, 0x29);
-            } else if (self->ext.faerie.unk80 == 2) {
-                self->ext.faerie.unk80 = 0;
+            } else if (self->ext.faerie.animationFlag == 2) {
+                self->ext.faerie.animationFlag = 0;
                 SetAnimationFrame(self, 0xE);
             }
         }
@@ -489,7 +479,7 @@ void ServantInit(InitializeMode mode) {
     }
 
     dst = &g_Clut[CLUT_INDEX_SERVANT];
-    src = g_FaerieClut; // clut data for faerie, will rename at data import
+    src = g_FaerieClut;
     for (i = 0; i < 0x100; i++) {
         *dst++ = *src++;
     }
@@ -529,7 +519,7 @@ void ServantInit(InitializeMode mode) {
 
             entity->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         } else {
-            entity->entityId = 0xD8;
+            entity->entityId = FAERIE_MODE_ADDITIONAL_INIT;
         }
         entity->posX.val = FIX(128);
         entity->posY.val = FIX(-32);
@@ -554,7 +544,7 @@ void ServantInit(InitializeMode mode) {
 
     entity++;
     DestroyEntity(entity);
-    entity->entityId = 0xD9;
+    entity->entityId = FAERIE_SUBENTITY_WINGS;
     entity->unk5A = 0x6C;
     entity->palette = 0x140;
     entity->animSet = ANIMSET_OVL(20);
@@ -562,7 +552,7 @@ void ServantInit(InitializeMode mode) {
     entity->facingLeft = PLAYER.facingLeft;
     entity->params = 0;
 
-    D_us_8017931C = 0;
+    s_RoomSpecialState = 0;
     D_us_80179320 = 0;
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
@@ -611,13 +601,13 @@ void UpdateServantDefault(Entity* self) {
     switch (self->step) {
     case 0:
         ExecuteAbilityInitialize(self);
-        self->ext.faerie.unk80 = 0;
+        self->ext.faerie.animationFlag = 0;
         SetAnimationFrame(self, 0xE);
 
         s_CachedHp = g_Status.hp;
         s_HpDifferenceIndex = 0;
         s_HpCacheResetTimer = 0;
-        self->ext.faerie.unkCounterA0 = 0;
+        self->ext.faerie.idleFrameCounter = 0;
         break;
     case 1:
         s_AngleToTarget =
@@ -659,19 +649,19 @@ void UpdateServantDefault(Entity* self) {
 
         if (!g_CutsceneHasControl && !IsMovementAllowed(1) &&
             !CheckAllEntitiesValid() && !(D_8003C708.flags & FLAG_UNK_20)) {
-            self->ext.faerie.unkCounterA0 += 1;
+            self->ext.faerie.idleFrameCounter += 1;
         } else {
-            self->ext.faerie.unkCounterA0 = 0;
+            self->ext.faerie.idleFrameCounter = 0;
         }
-        if (self->ext.faerie.unkCounterA0 > 0x708) {
-            self->entityId = 0xDA;
+        if (self->ext.faerie.idleFrameCounter > 0x708) {
+            self->entityId = FAERIE_MODE_SIT_ON_SHOULDER;
             self->step = 0;
             return;
         }
-        if (D_us_8017931C >= 2) {
-            self->entityId = 0xDB;
+        if (s_RoomSpecialState >= 2) {
+            self->entityId = FAERIE_MODE_OFFER_HINT;
             self->step = 0;
-            self->params = D_us_8017931C - 2;
+            self->params = s_RoomSpecialState - ROOM_STATE_TO_HINT_OFFSET;
         }
         break;
     }
@@ -747,14 +737,14 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         SetAnimationFrame(self, 0x13);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC[2]);
+            g_api.PlaySfx(g_FaerieSfx.regeneration);
         }
         self->step++;
         break;
     case 0x6:
         if (self->animFrameIdx == 0xA) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC[2]);
+                g_api.PlaySfx(g_FaerieSfx.regeneration);
             }
             self->step++;
         }
@@ -762,7 +752,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 0x7:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            CreateEventEntity_Local(self, 0xDF, 0);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 0);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -770,7 +760,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 0x8:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 60) {
-            CreateEventEntity_Local(self, 0xDD, 0);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_LIFE_APPLE, 0);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -810,7 +800,7 @@ void UpdateServantUseLifeApple(Entity* self) {
 
     case 0x5A: // Only get here when you are dead and have no life apple
         SetAnimationFrame(self, 0x20);
-        g_api.PlaySfx(D_us_80172BCC[4]);
+        g_api.PlaySfx(g_FaerieSfx.ohNo);
         self->step++;
         break;
     case 0x5B:
@@ -860,8 +850,8 @@ void UpdateServantUseHammer(Entity* self) {
             SetAnimationFrame(self, 0x17);
 
             for (rnd = rand() % 0x100, i = 0; true; i++) {
-                if (rnd <= D_us_80172BE4[i * 2]) {
-                    g_api.PlaySfx(D_us_80172BE4[i * 2 + 1]);
+                if (rnd <= g_SfxRandomizerHammerResist[i * 2]) {
+                    g_api.PlaySfx(g_SfxRandomizerHammerResist[i * 2 + 1]);
                     break;
                 }
             }
@@ -869,7 +859,7 @@ void UpdateServantUseHammer(Entity* self) {
             self->step++;
         } else {
             SetAnimationFrame(self, 0x10);
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step += 2;
         }
@@ -879,7 +869,7 @@ void UpdateServantUseHammer(Entity* self) {
             g_Status.equipHandCount[ITEM_HAMMER]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
-            CreateEventEntity_Local(self, 0xDF, 1);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 1);
             g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             g_api.func_80102CD8(4);
             self->ext.faerie.frameCounter = 0;
@@ -945,7 +935,7 @@ void UpdateServantUseUncurse(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC[0]);
+            g_api.PlaySfx(g_FaerieSfx.healing);
         }
         self->step++;
         break;
@@ -954,14 +944,15 @@ void UpdateServantUseUncurse(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC[0]);
+                g_api.PlaySfx(g_FaerieSfx.healing);
             }
 
             g_Status.equipHandCount[ITEM_UNCURSE]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Local(self, 0xDF, paramOffset + 3);
+            CreateEventEntity_Local(
+                self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -979,7 +970,7 @@ void UpdateServantUseUncurse(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1035,7 +1026,7 @@ void UpdateServantUseAntivenom(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(D_us_80172BCC[0]);
+            g_api.PlaySfx(g_FaerieSfx.healing);
         }
         self->step++;
         break;
@@ -1044,14 +1035,15 @@ void UpdateServantUseAntivenom(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(D_us_80172BCC[0]);
+                g_api.PlaySfx(g_FaerieSfx.healing);
             }
 
             g_Status.equipHandCount[ITEM_ANTIVENOM]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
 
-            CreateEventEntity_Local(self, 0xDF, paramOffset + 3);
+            CreateEventEntity_Local(
+                self, FAERIE_SUBENTITY_ITEM, paramOffset + 3);
             self->ext.faerie.frameCounter = 0;
             self->step++;
             break;
@@ -1069,7 +1061,7 @@ void UpdateServantUseAntivenom(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1139,8 +1131,8 @@ void UpdateServantUseElementalResist(Entity* self) {
 
         if (self->animFrameIdx == 0xB) {
             for (rnd = rand() % 0x100, i = 0; true; i++) {
-                if (rnd <= D_us_80172BE4[i * 2]) {
-                    g_api.PlaySfx(D_us_80172BE4[i * 2 + 1]);
+                if (rnd <= g_SfxRandomizerHammerResist[i * 2]) {
+                    g_api.PlaySfx(g_SfxRandomizerHammerResist[i * 2 + 1]);
                     break;
                 }
             }
@@ -1152,7 +1144,8 @@ void UpdateServantUseElementalResist(Entity* self) {
                 self,
                 FACTORY(0x37, g_ResistItemsParamMap[self->params * 4 + 2]), 0);
             CreateEventEntity_Local(
-                self, 0xDF, g_ResistItemsParamMap[self->params * 4 + 3]);
+                self, FAERIE_SUBENTITY_ITEM,
+                g_ResistItemsParamMap[self->params * 4 + 3]);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1169,7 +1162,7 @@ void UpdateServantUseElementalResist(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1239,12 +1232,12 @@ void UpdateServantUsePotion(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->animFrameIdx == 0xB) {
-            g_api.PlaySfx(D_us_80172BCC[1]);
+            g_api.PlaySfx(g_FaerieSfx.potion);
             g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
                 self,
                 FACTORY(0x37, g_PotionItemsParamMap[self->params * 2 + 1]), 0);
-            CreateEventEntity_Local(self, 0xDF, 2);
+            CreateEventEntity_Local(self, FAERIE_SUBENTITY_ITEM, 2);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1261,7 +1254,7 @@ void UpdateServantUsePotion(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->animFrameIdx == 0x20) {
-            g_api.PlaySfx(D_us_80172BCC[3]);
+            g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1272,7 +1265,7 @@ void UpdateServantUsePotion(Entity* self) {
     ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdD8(Entity* arg0) {
+void UpdateServantAdditionalInit(Entity* arg0) {
     s16 rnd;
     s32 i;
 
@@ -1332,7 +1325,7 @@ void UpdateEntityIdD8(Entity* arg0) {
     case 1:
         SelectAnimationFrame(arg0);
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
-            D_us_8017931C == 1 || g_CutsceneHasControl || D_800973FC) {
+            s_RoomSpecialState == 1 || g_CutsceneHasControl || D_800973FC) {
             SetAnimationFrame(arg0, 0xE);
             arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             arg0->step = 0;
@@ -1349,20 +1342,23 @@ void UpdateEntityIdD8(Entity* arg0) {
         rnd = rand() % 0x100;
         if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_80172C3C[i * 2]) {
-                    arg0->ext.faerie.unkA4 = D_us_80172C3C[i * 2 + 1];
+                if (rnd <= g_FaerieIntroRandomizer[i * 2]) {
+                    arg0->ext.faerie.currentSfxEvent =
+                        g_FaerieIntroRandomizer[i * 2 + 1];
                     break;
                 }
             }
         } else {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_80172C64[i * 2]) {
-                    arg0->ext.faerie.unkA4 = D_us_80172C64[i * 2 + 1];
+                if (rnd <= g_SfxEventRandomizer[i * 2]) {
+                    arg0->ext.faerie.currentSfxEvent =
+                        g_SfxEventRandomizer[i * 2 + 1];
                     break;
                 }
             }
         }
-        arg0->ext.faerie.unkA8 = ((s16*)arg0->ext.faerie.unkA4)[0];
+        arg0->ext.faerie.sfxEventFlag =
+            ((s16*)arg0->ext.faerie.currentSfxEvent)[0];
         g_PauseAllowed = false;
         arg0->step++;
 
@@ -1373,24 +1369,29 @@ void UpdateEntityIdD8(Entity* arg0) {
         } else {
             arg0->facingLeft = 0;
         }
-        if (arg0->ext.faerie.unkA8 < 0) {
+        if (arg0->ext.faerie.sfxEventFlag < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4->animIndex);
+                SetAnimationFrame(
+                    arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
                 arg0->step++;
             }
         } else {
             if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
-                arg0->ext.faerie.unkA8--;
+                arg0->ext.faerie.sfxEventFlag--;
             }
-            if (arg0->ext.faerie.unkA8 < 0) {
-                SetAnimationFrame(arg0, arg0->ext.faerie.unkA4->animIndex);
-                if (arg0->ext.faerie.unkA4->params &&
-                    (SearchForEntityInRange(0, 0xDE) == NULL)) {
+            if (arg0->ext.faerie.sfxEventFlag < 0) {
+                SetAnimationFrame(
+                    arg0, arg0->ext.faerie.currentSfxEvent->animIndex);
+                if (arg0->ext.faerie.currentSfxEvent->sfxId &&
+                    (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) ==
+                     NULL)) {
                     CreateEventEntity_Local(
-                        arg0, 0xDE, arg0->ext.faerie.unkA4->params);
+                        arg0, FAERIE_EVENT_SFX_PASSTHROUGH,
+                        arg0->ext.faerie.currentSfxEvent->sfxId);
                 }
-                arg0->ext.faerie.unkA4++;
-                arg0->ext.faerie.unkA8 = arg0->ext.faerie.unkA4->unk0;
+                arg0->ext.faerie.currentSfxEvent++;
+                arg0->ext.faerie.sfxEventFlag =
+                    arg0->ext.faerie.currentSfxEvent->flag;
             }
         }
         break;
@@ -1413,7 +1414,7 @@ void UpdateEntityIdD8(Entity* arg0) {
     FntPrint("sts = %d\n", g_PlaySfxStep);
 }
 
-void UpdateEntityIdD9(Entity* self) {
+void UpdateSubEntityWings(Entity* self) {
     s32 animIndex;
     s32 zPriorityFlag;
     s32 i;
@@ -1425,15 +1426,15 @@ void UpdateEntityIdD9(Entity* self) {
 
     if (!self->step) {
         ExecuteAbilityInitialize(self);
-        self->ext.faerieUnk0.parent = &g_Entities[SERVANT_ENTITY_INDEX];
+        self->ext.faerieWings.parent = &g_Entities[SERVANT_ENTITY_INDEX];
         self->step += 1;
     }
-    self->posX.val = self->ext.faerieUnk0.parent->posX.val;
-    self->posY.val = self->ext.faerieUnk0.parent->posY.val;
-    self->facingLeft = self->ext.faerieUnk0.parent->facingLeft;
+    self->posX.val = self->ext.faerieWings.parent->posX.val;
+    self->posY.val = self->ext.faerieWings.parent->posY.val;
+    self->facingLeft = self->ext.faerieWings.parent->facingLeft;
 
     for (i = 6; i <= 0x2D; i++) {
-        if (self->ext.faerieUnk0.parent->anim == g_FaerieAnimationFrames[i])
+        if (self->ext.faerieWings.parent->anim == g_FaerieAnimationFrames[i])
             break;
     }
 
@@ -1453,7 +1454,7 @@ void UpdateEntityIdD9(Entity* self) {
     ServantUpdateAnim(self, 0, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdDA(Entity* self) {
+void UpdateServantSitOnShoulder(Entity* self) {
     s32 rnd;
     s32 i;
 
@@ -1521,7 +1522,7 @@ void UpdateEntityIdDA(Entity* self) {
 #ifdef VERSION_PSP
             if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20 ||
                 D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40 ||
-                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                (s_RoomSpecialState == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
             } else if (s_ServantId != FAM_ACTIVE_YOUSEI || PLAYER.step_s != 4) {
                 self->step = 5;
@@ -1542,7 +1543,7 @@ void UpdateEntityIdDA(Entity* self) {
             if ((*((FgLayer32*)&D_8003C708)).flags &
                     (LAYOUT_RECT_PARAMS_UNKNOWN_20 |
                      LAYOUT_RECT_PARAMS_UNKNOWN_40) ||
-                (D_us_8017931C == 1) || s_FaerieStats.level < 5) {
+                (s_RoomSpecialState == 1) || s_FaerieStats.level < 5) {
                 self->step = 5;
             } else if (s_ServantId != FAM_ACTIVE_YOUSEI ||
                        s_FaerieStats.level < 0x32 || PLAYER.step_s != 4) {
@@ -1562,7 +1563,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 2:
-        --self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter--;
         if (self->ext.faerie.frameCounter < 0) {
             self->ext.faerie.frameCounter = 0;
             if (g_api.func_800F27F4(0)) {
@@ -1573,7 +1574,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 3:
-        ++self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 0x420) {
             SetAnimationFrame(self, 0x1A);
             self->ext.faerie.frameCounter = 0;
@@ -1581,7 +1582,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 4:
-        ++self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 0x15E0) {
             SetAnimationFrame(self, 0x19);
             self->ext.faerie.frameCounter = 0;
@@ -1589,7 +1590,7 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 5:
-        ++self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 0x500) {
             SetAnimationFrame(self, 0x18);
             self->ext.faerie.frameCounter = 0;
@@ -1602,7 +1603,7 @@ void UpdateEntityIdDA(Entity* self) {
         self->step++;
         /* fallthrough */
     case 7:
-        --self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter--;
         if (self->ext.faerie.frameCounter < 0) {
             self->ext.faerie.frameCounter = (rand() % 0x80) + 0x80;
             SetAnimationFrame(self, 0x19);
@@ -1610,13 +1611,13 @@ void UpdateEntityIdDA(Entity* self) {
         }
         break;
     case 8:
-        --self->ext.faerie.frameCounter;
+        self->ext.faerie.frameCounter--;
         if (self->ext.faerie.frameCounter < 0) {
             SetAnimationFrame(self, 0x18);
             self->step = 6;
         }
         break;
-    case 9:
+    case 9: // Happens when the faerie falls off your shoulder
         if (self->ext.faerie.unkB4) {
             g_api.func_800F27F4(1);
         }
@@ -1626,20 +1627,21 @@ void UpdateEntityIdDA(Entity* self) {
         self->velocityX = self->facingLeft ? FIX(-0.25) : FIX(0.25);
         self->velocityY = FIX(1);
         for (rnd = rand() % 0x100, i = 0; true; i++) {
-            if (rnd <= D_us_80172C04[i * 2]) {
-                g_api.PlaySfx(D_us_80172C04[i * 2 + 1]);
+            if (rnd <= g_SfxRandomizerGrunt[i * 2]) {
+                g_api.PlaySfx(g_SfxRandomizerGrunt[i * 2 + 1]);
                 break;
             }
         }
 
         self->step++;
         break;
-    case 10:
+    case 10: // performs the fall animation
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY -= FIX(0.03125);
 
-        if (D_us_801792D0 == -1) {
+        // fall animation is finished
+        if (s_AnimationStatus == -1) {
             self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
@@ -1654,21 +1656,23 @@ void UpdateEntityIdDA(Entity* self) {
     }
 #endif
     unused_39C8(self);
-    D_us_801792D0 = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
+    s_AnimationStatus = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-void UpdateEntityIdDB(Entity* self) {
+// Update code for Faerie offering hint.
+// self->param is index for g_FaerieHints for the type of hint
+void UpdateServantOfferHint(Entity* self) {
     char pad[2];
 
-    self->ext.faerie.left = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
-    self->ext.faerie.top = (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
+    self->ext.faerie.tileMapX = (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
+    self->ext.faerie.tileMapY = (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
 
     if (D_us_80179320) {
         self->zPriority = PLAYER.zPriority - 2;
         s_zPriority = self->zPriority;
     }
 
-    if ((D_us_80172CB0[self->params].left == -1) || (self->step == 0)) {
+    if ((g_FaerieHints[self->params].left == -1) || (self->step == 0)) {
         s_TargetLocOffset_calc = -24;
         if (!PLAYER.facingLeft) {
             s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
@@ -1676,8 +1680,8 @@ void UpdateEntityIdDB(Entity* self) {
         s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
         s_TargetLocationY_calc = PLAYER.posY.i.hi - 32;
     } else {
-        s_TargetLocationX_calc = D_us_801792D4 - self->ext.faerie.left;
-        s_TargetLocationY_calc = D_us_801792D8 - self->ext.faerie.top;
+        s_TargetLocationX_calc = s_HintTargetX - self->ext.faerie.tileMapX;
+        s_TargetLocationY_calc = s_HintTargetY - self->ext.faerie.tileMapY;
     }
 
     s_AngleToTarget = self->ext.faerie.randomMovementAngle;
@@ -1721,9 +1725,10 @@ void UpdateEntityIdDB(Entity* self) {
     switch (self->step) {
     case 0:
         ExecuteAbilityInitialize(self);
-        D_us_801792D4 =
-            D_us_80172CB0[self->params].left + self->ext.faerie.left;
-        D_us_801792D8 = D_us_80172CB0[self->params].top + self->ext.faerie.top;
+        s_HintTargetX =
+            g_FaerieHints[self->params].left + self->ext.faerie.tileMapX;
+        s_HintTargetY =
+            g_FaerieHints[self->params].top + self->ext.faerie.tileMapY;
         self->ext.faerie.timer = -1;
         break;
 
@@ -1738,8 +1743,11 @@ void UpdateEntityIdDB(Entity* self) {
         break;
 
     case 2:
-        self->ext.faerie.unkA4 = D_us_80172CB0[self->params].unk8;
-        self->ext.faerie.unkA8 = *((s16*)self->ext.faerie.unkA4);
+        self->ext.faerie.currentSfxEvent = g_FaerieHints[self->params].hint;
+        // This is self->ext.faerie.currentSfxEvent->flag, but the weird cast is
+        // needed for match
+        self->ext.faerie.sfxEventFlag =
+            *((s16*)self->ext.faerie.currentSfxEvent);
         g_PauseAllowed = 0;
         self->step++;
         break;
@@ -1751,26 +1759,31 @@ void UpdateEntityIdDB(Entity* self) {
             self->facingLeft = false;
         }
 
-        if (self->ext.faerie.unkA8 < 0) {
+        if (self->ext.faerie.sfxEventFlag < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(self, self->ext.faerie.unkA4->animIndex);
+                SetAnimationFrame(
+                    self, self->ext.faerie.currentSfxEvent->animIndex);
                 self->step++;
             }
         } else {
             if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 99)) {
-                self->ext.faerie.unkA8--;
+                self->ext.faerie.sfxEventFlag--;
             }
 
-            if (self->ext.faerie.unkA8 < 0) {
-                SetAnimationFrame(self, self->ext.faerie.unkA4->animIndex);
-                if ((self->ext.faerie.unkA4->params != 0) &&
-                    (SearchForEntityInRange(0, 0xDE) == NULL)) {
+            if (self->ext.faerie.sfxEventFlag < 0) {
+                SetAnimationFrame(
+                    self, self->ext.faerie.currentSfxEvent->animIndex);
+                if ((self->ext.faerie.currentSfxEvent->sfxId != 0) &&
+                    (SearchForEntityInRange(0, FAERIE_EVENT_SFX_PASSTHROUGH) ==
+                     NULL)) {
                     CreateEventEntity_Local(
-                        self, 0xDE, self->ext.faerie.unkA4->params);
+                        self, FAERIE_EVENT_SFX_PASSTHROUGH,
+                        self->ext.faerie.currentSfxEvent->sfxId);
                 }
 
-                self->ext.faerie.unkA4++;
-                self->ext.faerie.unkA8 = self->ext.faerie.unkA4->unk0;
+                self->ext.faerie.currentSfxEvent++;
+                self->ext.faerie.sfxEventFlag =
+                    self->ext.faerie.currentSfxEvent->flag;
             }
         }
         break;
@@ -1787,48 +1800,50 @@ void UpdateEntityIdDB(Entity* self) {
     ServantUpdateAnim(self, NULL, &g_FaerieAnimationFrames);
 }
 
-// I don't think this code can be reached in Faerie
-// This may be the code that is Yousie specific and was just copied
-void UpdateEntityIdDC(Entity* self) {
+// Unsure where this code is exectued from, but it would be where
+// an entity is created with Entity ID DC
+// It has to be from the engine somewhere as they are triggered
+// from room states (for the most part)
+void UpdateEntitySetRoomSpecialState(Entity* self) {
     Entity* entity;
 
     switch (self->params) {
     case 0:
-        D_us_8017931C = 1;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_UNK1;
         entity = SearchForEntityInRange(0, 222);
         if (entity && entity->step < 5) {
             entity->step = 8;
         }
         break;
     case 1:
-        D_us_8017931C = 2;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_DARKNESS;
         break;
     case 2:
-        D_us_8017931C = 3;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_MIST;
         break;
     case 3:
-        D_us_8017931C = 4;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT1;
         break;
     case 4:
-        D_us_8017931C = 5;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_SUS_HINT1;
         break;
     case 5:
-        D_us_8017931C = 6;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT2;
         break;
     case 6:
-        D_us_8017931C = 7;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT3;
         break;
     case 7:
-        D_us_8017931C = 8;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT4;
         break;
     case 8:
-        D_us_8017931C = 9;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_SUS_HINT2;
         break;
     case 9:
-        D_us_8017931C = 10;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_WALL_HINT5;
         break;
     case 10:
-        D_us_8017931C = 11;
+        s_RoomSpecialState = ROOM_SPECIAL_STATE_SUS_HINT3;
         break;
     case 15:
         D_us_80179320 = 1;
@@ -1837,13 +1852,10 @@ void UpdateEntityIdDC(Entity* self) {
     DestroyEntity(self);
 }
 
-// It's likely that this Entity uses a different extension as
-// randomMovementAngle and targetAngle don't make sense
-// but I need more context to get it right.
-void UpdateSubEntityIdDD(Entity* arg0) {
+void UpdateSubEntityUseLifeApple(Entity* arg0) {
     Primitive* currentPrim;
     s32 i;
-    s32 var_v1;
+    s32 temp_x;
 
     switch (arg0->step) {
     case 0:
@@ -1888,57 +1900,57 @@ void UpdateSubEntityIdDD(Entity* arg0) {
                 FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
                 FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
         }
-        arg0->ext.faerie.unk80 = 0x10;
-        arg0->ext.faerie.unk82 = 0;
-        arg0->ext.faerie.randomMovementAngle = 0x40;
-        arg0->ext.faerie.targetAngle = 0;
+        arg0->ext.faerieLifeApple.primX = 0x10;
+        arg0->ext.faerieLifeApple.primY = 0;
+        arg0->ext.faerieLifeApple.opacity = 0x40;
+        arg0->ext.faerieLifeApple.effectOpacity = 0;
         arg0->step++;
         break;
     case 1:
-        arg0->ext.faerie.targetAngle += 4;
-        arg0->ext.faerie.unk82 += 0x10;
+        arg0->ext.faerieLifeApple.effectOpacity += 4;
+        arg0->ext.faerieLifeApple.primY += 0x10;
 
-        if (arg0->ext.faerie.unk82 >= 0x100) {
+        if (arg0->ext.faerieLifeApple.primY >= 0x100) {
             arg0->step++;
         }
         break;
     case 2:
-        arg0->ext.faerie.subEntityDdTimer++;
-        if (arg0->ext.faerie.subEntityDdTimer > 0xF) {
+        arg0->ext.faerieLifeApple.lifeAppleTimer++;
+        if (arg0->ext.faerieLifeApple.lifeAppleTimer > 0xF) {
             arg0->step++;
         }
         break;
     case 3:
-        arg0->ext.faerie.randomMovementAngle += 4;
-        if (arg0->ext.faerie.randomMovementAngle >= 0x100) {
-            arg0->ext.faerie.randomMovementAngle = 0xFF;
+        arg0->ext.faerieLifeApple.opacity += 4;
+        if (arg0->ext.faerieLifeApple.opacity >= 0x100) {
+            arg0->ext.faerieLifeApple.opacity = 0xFF;
         }
 
-        arg0->ext.faerie.unk80 += 4;
-        if (arg0->ext.faerie.unk80 >= 0x100) {
-            arg0->ext.faerie.subEntityDdTimer = 0;
+        arg0->ext.faerieLifeApple.primX += 4;
+        if (arg0->ext.faerieLifeApple.primX >= 0x100) {
+            arg0->ext.faerieLifeApple.lifeAppleTimer = 0;
             arg0->step++;
         }
         break;
     case 4:
-        arg0->ext.faerie.subEntityDdTimer++;
-        if (arg0->ext.faerie.subEntityDdTimer > 60) {
+        arg0->ext.faerieLifeApple.lifeAppleTimer++;
+        if (arg0->ext.faerieLifeApple.lifeAppleTimer > 60) {
             arg0->step++;
         }
         break;
     case 5:
-        arg0->ext.faerie.targetAngle--;
-        if (arg0->ext.faerie.targetAngle < 0) {
-            arg0->ext.faerie.targetAngle = 0;
+        arg0->ext.faerieLifeApple.effectOpacity--;
+        if (arg0->ext.faerieLifeApple.effectOpacity < 0) {
+            arg0->ext.faerieLifeApple.effectOpacity = 0;
         }
 
-        arg0->ext.faerie.randomMovementAngle -= 4;
-        if (arg0->ext.faerie.randomMovementAngle <= 0x40) {
-            arg0->ext.faerie.randomMovementAngle = 0x40;
+        arg0->ext.faerieLifeApple.opacity -= 4;
+        if (arg0->ext.faerieLifeApple.opacity <= 0x40) {
+            arg0->ext.faerieLifeApple.opacity = 0x40;
         }
 
-        arg0->ext.faerie.unk80 -= 8;
-        if (arg0->ext.faerie.unk80 <= 0) {
+        arg0->ext.faerieLifeApple.primX -= 8;
+        if (arg0->ext.faerieLifeApple.primX <= 0) {
             DestroyEntity(arg0);
             return;
         }
@@ -1946,46 +1958,45 @@ void UpdateSubEntityIdDD(Entity* arg0) {
     }
     currentPrim = &g_PrimBuf[arg0->primIndex];
 
-    var_v1 = arg0->posX.i.hi - arg0->ext.faerie.unk80;
-    if (var_v1 < 0) {
-        var_v1 = 0;
+    temp_x = arg0->posX.i.hi - arg0->ext.faerieLifeApple.primX;
+    if (temp_x < 0) {
+        temp_x = 0;
     }
-    currentPrim->x0 = currentPrim->x2 = var_v1;
+    currentPrim->x0 = currentPrim->x2 = temp_x;
     currentPrim->x1 = currentPrim->x3 = arg0->posX.i.hi;
     currentPrim->y0 = currentPrim->y1 = 0;
-    currentPrim->y2 = currentPrim->y3 = arg0->ext.faerie.unk82;
+    currentPrim->y2 = currentPrim->y3 = arg0->ext.faerieLifeApple.primY;
     currentPrim->r0 = currentPrim->r2 = currentPrim->g0 = currentPrim->g2 =
-        currentPrim->b0 = currentPrim->b2 =
-            arg0->ext.faerie.randomMovementAngle;
+        currentPrim->b0 = currentPrim->b2 = arg0->ext.faerieLifeApple.opacity;
 
     currentPrim = currentPrim->next;
 
-    var_v1 = arg0->posX.i.hi + arg0->ext.faerie.unk80;
-    if (var_v1 > 0x100) {
-        var_v1 = 0x100;
+    temp_x = arg0->posX.i.hi + arg0->ext.faerieLifeApple.primX;
+    if (temp_x > 0x100) {
+        temp_x = 0x100;
     }
-    currentPrim->x0 = currentPrim->x2 = var_v1;
+    currentPrim->x0 = currentPrim->x2 = temp_x;
     currentPrim->x1 = currentPrim->x3 = arg0->posX.i.hi;
     currentPrim->y0 = currentPrim->y1 = 0;
-    currentPrim->y2 = currentPrim->y3 = arg0->ext.faerie.unk82;
+    currentPrim->y2 = currentPrim->y3 = arg0->ext.faerieLifeApple.primY;
     currentPrim->r0 = currentPrim->r2 = currentPrim->g0 = currentPrim->g2 =
-        currentPrim->b0 = currentPrim->b2 =
-            arg0->ext.faerie.randomMovementAngle;
+        currentPrim->b0 = currentPrim->b2 = arg0->ext.faerieLifeApple.opacity;
 
     for (i = 0; i < 8; i++) {
         currentPrim = currentPrim->next;
 
         currentPrim->r0 = currentPrim->r1 = currentPrim->g0 = currentPrim->g1 =
-            currentPrim->b0 = currentPrim->b1 = arg0->ext.faerie.targetAngle;
+            currentPrim->b0 = currentPrim->b1 =
+                arg0->ext.faerieLifeApple.effectOpacity;
         currentPrim->r2 = currentPrim->r3 = currentPrim->g2 = currentPrim->g3 =
             currentPrim->b2 = currentPrim->b3 = 0;
     }
 }
 
-void ProcessSfxState_Passthrough(Entity* self) { ProcessSfxState(self); }
+void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-// This subentity likely uses a different Ext, but more research is needed
-void UpdateSubEntityIdDF(Entity* self) {
+// self->params is the item being used
+void UpdateSubEntityUseItem(Entity* self) {
     FakePrim* fakePrim;
     s32 i;
     u16 posY2;
@@ -1994,28 +2005,28 @@ void UpdateSubEntityIdDF(Entity* self) {
     s16 posY;
     s16 posX2;
     u16 posX4;
-    Unkstruct_801724CC* unkStruct;
+    ItemPrimitiveParams* primitiveParams;
 
     posX2 = self->posX.i.hi;
     posY = self->posY.i.hi;
 
-    unkStruct = &D_us_801724CC[(s16)self->params];
+    primitiveParams = &g_ItemPrimitiveParams[(s16)self->params];
     switch (self->step) {
     case 0:
         self->primIndex =
-            g_api.func_800EDB58(PRIM_TILE_ALT, unkStruct->count + 1);
+            g_api.func_800EDB58(PRIM_TILE_ALT, primitiveParams->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
         posX = posX2;
-        self->flags = unkStruct->flags;
+        self->flags = primitiveParams->flags;
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
 
         while (true) {
-            fakePrim->drawMode = unkStruct->drawMode + DRAW_HIDE;
-            fakePrim->priority = unkStruct->priority + PLAYER.zPriority;
+            fakePrim->drawMode = primitiveParams->drawMode + DRAW_HIDE;
+            fakePrim->priority = primitiveParams->priority + PLAYER.zPriority;
             if (fakePrim->next == NULL) {
                 fakePrim->w = 0;
                 fakePrim->y0 = fakePrim->x0 = 0;
@@ -2027,7 +2038,7 @@ void UpdateSubEntityIdDF(Entity* self) {
             fakePrim->posY.i.hi = posY;
             fakePrim->posY.i.lo = 0;
             fakePrim->posX.i.lo = 0;
-            switch (unkStruct->unk6) {
+            switch (primitiveParams->unk6) {
             case 0:
                 if (!self->facingLeft) {
                     fakePrim->posX.i.hi = posX + 4;
@@ -2070,32 +2081,35 @@ void UpdateSubEntityIdDF(Entity* self) {
             }
             fakePrim->x0 = fakePrim->posX.i.hi;
             fakePrim->y0 = fakePrim->posY.i.hi;
-            fakePrim->r0 = unkStruct->r;
-            fakePrim->g0 = unkStruct->g;
-            fakePrim->b0 = unkStruct->b;
-            fakePrim->w = unkStruct->w;
-            fakePrim->h = unkStruct->h;
+            fakePrim->r0 = primitiveParams->r;
+            fakePrim->g0 = primitiveParams->g;
+            fakePrim->b0 = primitiveParams->b;
+            fakePrim->w = primitiveParams->w;
+            fakePrim->h = primitiveParams->h;
             fakePrim = fakePrim->next;
         }
         self->step++;
-    case 1:
-        if (--self->ext.faerie.unk82 <= 0) {
+        // fallthrough
+    case 1: // The hammer runs this code more than once, the other items only
+            // once
+        if (--self->ext.faerieItem.unkFlag <= 0) {
             fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-            for (i = 0; i < self->ext.faerie.unk80; i++) {
+            for (i = 0; i < self->ext.faerieItem.unkAccumulator; i++) {
                 fakePrim = fakePrim->next;
             }
-            for (i = 0; i < unkStruct->unk2; i++) {
+            for (i = 0; i < primitiveParams->unk2; i++) {
                 fakePrim->drawMode &= ~DRAW_HIDE;
                 fakePrim = fakePrim->next;
             }
-            self->ext.faerie.unk80 += unkStruct->unk2;
-            if (self->ext.faerie.unk80 >= unkStruct->count) {
+            self->ext.faerieItem.unkAccumulator += primitiveParams->unk2;
+            if (self->ext.faerieItem.unkAccumulator >= primitiveParams->count) {
                 self->step++;
             }
-            self->ext.faerie.unk82 = unkStruct->unk4;
+            self->ext.faerieItem.unkFlag = primitiveParams->unk4;
         }
+        // fallthrough
     case 2:
-        self->ext.faerie.isAbilityInitialized = 0;
+        self->ext.faerieItem.drawMode = DRAW_DEFAULT;
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
 
         while (true) {
@@ -2108,7 +2122,7 @@ void UpdateSubEntityIdDF(Entity* self) {
 
             fakePrim->posX.i.hi = fakePrim->x0;
             fakePrim->posY.i.hi = fakePrim->y0;
-            switch (unkStruct->unk6) {
+            switch (primitiveParams->unk6) {
             case 0:
                 if (!(fakePrim->drawMode & DRAW_HIDE)) {
                     fakePrim->posX.val += fakePrim->velocityX.val;
@@ -2153,11 +2167,10 @@ void UpdateSubEntityIdDF(Entity* self) {
             }
             fakePrim->x0 = fakePrim->posX.i.hi;
             fakePrim->y0 = fakePrim->posY.i.hi;
-            self->ext.faerie.isAbilityInitialized |=
-                !(fakePrim->drawMode & DRAW_HIDE);
+            self->ext.faerieItem.drawMode |= !(fakePrim->drawMode & DRAW_HIDE);
             fakePrim = fakePrim->next;
         }
-        if (self->ext.faerie.isAbilityInitialized == 0) {
+        if (self->ext.faerieItem.drawMode == DRAW_DEFAULT) {
             DestroyEntity(self);
         }
     }
