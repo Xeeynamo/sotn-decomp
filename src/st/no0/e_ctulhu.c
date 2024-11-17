@@ -764,25 +764,27 @@ void EntityCtulhuIceShockwave(Entity* self) {
                     if (prim->p1 > 13) {
                         prim->p3 = 0;
                         prim->drawMode = DRAW_HIDE;
-#ifdef VERSION_PSP
-                        // Looks to be a bug fix on PSP
-                        // PSX can index outside size of D_us_801C11B0
-                        goto primNext;
-#endif
                     }
-                    ptr = D_us_801C11B0[prim->p1];
-                    ptr += 8;
-                    prim->u0 = prim->u2 = *ptr++;
-                    prim->v0 = prim->v1 = *ptr++;
-                    prim->u1 = prim->u3 = *ptr++;
-                    prim->v2 = prim->v3 = *ptr++;
-                    prim->p2 = 3;
+#ifdef VERSION_PSP
+                    // Looks to be a bug fix on PSP
+                    // PSX can index outside size of D_us_801C11B0
+                    else {
+#endif
+                        ptr = D_us_801C11B0[prim->p1];
+                        ptr += 8;
+                        prim->u0 = prim->u2 = *ptr++;
+                        prim->v0 = prim->v1 = *ptr++;
+                        prim->u1 = prim->u3 = *ptr++;
+                        prim->v2 = prim->v3 = *ptr++;
+                        prim->p2 = 3;
+#ifdef VERSION_PSP
+                    }
+#endif
                 } else {
                     prim->p2 -= 1;
                 }
             }
         }
-    primNext:
         prim = prim->next;
     }
 
