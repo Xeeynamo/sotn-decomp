@@ -23,6 +23,7 @@ DebugUpdate = 0x090f5180;
 SetGPUBuffRGBZero = 0x090F5230;
 SetGPUBuffRGB = 0x090F5268;
 func_800E34DC = 0x090F52A0;
+SetStageDisplayBuffer = 0x090F5318;
 MainGame = 0x090f5b58;
 HandleTitle = 0x090f6800;
 HandlePlay = 0x090f6b28;

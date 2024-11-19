@@ -379,7 +379,13 @@ void func_800E34DC(s32 arg0) {
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5318);
+void SetStageDisplayBuffer(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    func_800E34DC(0);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F53A8);
 
