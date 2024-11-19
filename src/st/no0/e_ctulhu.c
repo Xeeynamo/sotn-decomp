@@ -19,6 +19,8 @@ extern u8 D_us_8018245C[]; // anim_death
 extern u16 D_us_80180BEA[]; // clut
 extern u8 D_us_80182430[];  // anim fireball
 
+extern s16* D_us_801C11B0[]; // uvs for shockwave
+
 void EntityCtulhu(Entity* self) {
     RECT clipRect;
     DRAWENV drawEnv;
@@ -581,8 +583,219 @@ void EntityCtulhuFireball(Entity* self) {
     }
 }
 
-// Ice shockwave attack
-INCLUDE_ASM("st/no0/nonmatchings/e_ctulhu", func_us_801DA6B4);
+void EntityCtulhuIceShockwave(Entity* self) {
+    Primitive* prim;
+    s16* ptr;
+    s32 primIndex;
+    s32 v2;
+
+    if (g_Timer & 1) {
+        self->palette = g_EInitCtulhuIceShockwave[3];
+    } else {
+        self->palette = g_EInitCtulhuIceShockwave[3] + 1;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCtulhuIceShockwave);
+        self->animCurFrame = 44;
+        self->hitboxOffX = 7;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_ROTY;
+        self->rotY = 256;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 128);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        while (prim != NULL) {
+            prim->p3 = 0;
+            prim->priority = self->zPriority - 1;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        // Fallthrough
+    case 1:
+        if (self->facingLeft) {
+            self->velocityX = FIX(4.0);
+        } else {
+            self->velocityX = FIX(-4.0);
+        }
+        MoveEntity();
+
+        if (g_Timer & 1) {
+            self->rotY = 264;
+        } else {
+            self->rotY = 248;
+        }
+
+        if (self->ext.ctulhu.shockwavePrim == NULL) {
+            prim = self->ext.prim;
+            prim = FindFirstUnkPrim(prim);
+            self->ext.ctulhu.shockwavePrim = prim;
+
+            if (prim != NULL) {
+                prim->p3 = 8;
+                prim->tpage = 26;
+                prim->clut = 0x1F5;
+                prim->u0 = prim->u2 = 4;
+                prim->u1 = prim->u3 = 28;
+                prim->v0 = prim->v1 = prim->v2 = prim->v3 = 96;
+                PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) =
+                    PGREY(prim, 3) = 128;
+                prim->x0 = prim->x2 = prim->x1 = prim->x3 = self->posX.i.hi;
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                    self->posY.i.hi + 40;
+                prim->priority = self->zPriority - 1;
+                prim->drawMode =
+                    DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            }
+        }
+
+        if (self->ext.ctulhu.shockwavePrim != NULL) {
+            prim = self->ext.ctulhu.shockwavePrim;
+            prim->x1 = prim->x3 = self->posX.i.hi;
+            prim->y0 = (prim->y1 -= 12);
+            v2 = prim->v2;
+            v2 += 4;
+            if (v2 > 120) {
+                v2 = 120;
+                prim->p3 = 2;
+                self->ext.ctulhu.shockwavePrim = NULL;
+            }
+            prim->v2 = prim->v3 = v2;
+        }
+
+        if (!self->ext.ctulhu.timer) {
+            self->ext.ctulhu.timer = 2;
+            prim = self->ext.prim;
+            prim = FindFirstUnkPrim(prim);
+            if (prim != NULL) {
+                prim->p3 = 4;
+                prim->p1 = 0;
+                prim->p2 = 0;
+                prim->tpage = 23;
+                prim->clut = 0x234;
+                PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) =
+                    PGREY(prim, 3) = 96;
+                prim->x0 = prim->x2 = self->posX.i.hi + 16;
+                prim->x1 = prim->x3 = self->posX.i.hi - 16;
+                prim->y0 = prim->y1 = self->posY.i.hi - 24;
+                prim->y2 = prim->y3 = self->posY.i.hi + 48;
+                prim->priority = self->zPriority;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
+            }
+        } else {
+            self->ext.ctulhu.timer -= 1;
+        }
+
+        if (self->flags & FLAG_DEAD) {
+            self->drawFlags |= FLAG_DRAW_UNK8;
+            self->unk6C = 128;
+            self->hitboxState = 0;
+            self->step++;
+        }
+        break;
+    case 2:
+        MoveEntity();
+        self->unk6C -= 8;
+        self->rotY += 24;
+        self->velocityX -= self->velocityX / 8;
+
+        if (g_Timer & 1) {
+            self->animCurFrame = 0;
+        } else {
+            self->animCurFrame = 44;
+        }
+
+        if (!self->unk6C) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    prim = self->ext.prim;
+    while (prim != NULL) {
+        if (!(prim->drawMode & DRAW_HIDE)) {
+            if (prim->p3 == 2) {
+                PrimDecreaseBrightness(prim, 5);
+
+                if (g_Timer & 1) {
+                    prim->u0 = prim->u2 = 4;
+                    prim->u1 = prim->u3 = 28;
+                } else {
+                    prim->u0 = prim->u2 = 28;
+                    prim->u1 = prim->u3 = 4;
+                }
+
+                prim->y0 = (prim->y1 += 3);
+                prim->v2 = (prim->v3 -= 1);
+
+                prim->x2 -= (F(self->velocityX).i.hi) >> 1;
+                prim->x3 += (F(self->velocityX).i.hi) >> 1;
+                if (prim->x0 != prim->x2) {
+                    prim->x0 = prim->x2;
+                    prim->x1 = prim->x3;
+                } else {
+                    prim->x0 = prim->x2 + 4;
+                    prim->x1 = prim->x3 + 4;
+                }
+
+                if (prim->y0 > prim->y2 || prim->v2 < prim->v0) {
+                    prim->p3 = 0;
+                    prim->drawMode = DRAW_HIDE;
+                }
+            }
+
+            if (prim->p3 == 4) {
+                PrimDecreaseBrightness(prim, 4);
+                if (prim->y2 - prim->y0 > 32) {
+                    prim->y0 = (prim->y1 += 2);
+                }
+                if (!prim->p2) {
+                    prim->p1++;
+                    if (prim->p1 > 13) {
+                        prim->p3 = 0;
+                        prim->drawMode = DRAW_HIDE;
+                    }
+#ifdef VERSION_PSP
+                    // Looks to be a bug fix on PSP
+                    // PSX can index outside size of D_us_801C11B0
+                    else {
+#endif
+                        ptr = D_us_801C11B0[prim->p1];
+                        ptr += 8;
+                        prim->u0 = prim->u2 = *ptr++;
+                        prim->v0 = prim->v1 = *ptr++;
+                        prim->u1 = prim->u3 = *ptr++;
+                        prim->v2 = prim->v3 = *ptr++;
+                        prim->p2 = 3;
+#ifdef VERSION_PSP
+                    }
+#endif
+                } else {
+                    prim->p2 -= 1;
+                }
+            }
+        }
+        prim = prim->next;
+    }
+
+    if (self->velocityX > 0) {
+        if (self->posX.i.hi > 384) {
+            DestroyEntity(self);
+        }
+    } else if (self->posX.i.hi < -128) {
+        DestroyEntity(self);
+    }
+}
 
 void EntityCtulhuDeath(Entity* self) {
     switch (self->step) {

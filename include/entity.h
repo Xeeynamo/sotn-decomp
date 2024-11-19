@@ -2055,7 +2055,7 @@ typedef struct {
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 y;
-    /* 0xA0 */ s32 : 32;
+    /* 0xA0 */ struct Primitive* shockwavePrim;
     /* 0xA4 */ struct Primitive* unkA4;
 } ET_Ctulhu;
 
