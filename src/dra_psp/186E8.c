@@ -333,7 +333,9 @@ void DebugEditColorChannel(s32 colorAdd) {
 
 #endif
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", DebugUpdate);
+s32 DebugUpdate(){
+    return 1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5188);
 
