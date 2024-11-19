@@ -103,3 +103,13 @@ typedef struct {
     /* 0x16 */ s16 : 16;
     /* 0x18 */ u32 flags;
 } ItemPrimitiveParams; // size = 0x1C
+
+extern SpriteParts* g_FaerieSpriteParts[];
+
+#ifdef VERSION_PC
+extern s64 g_FaerieIntroRandomizer[];
+extern s64 g_SfxEventRandomizer[];
+#else
+extern s32 g_FaerieIntroRandomizer[];
+extern s32 g_SfxEventRandomizer[];
+#endif

@@ -38,27 +38,22 @@ extern FaerieAbilityStats g_FaerieAbilityStats[];
 extern FaerieSfx g_FaerieSfx;
 extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
-extern s32 D_800973FC;   // this is in unkGraphicsStruct
-extern s32 D_80097420[]; // this is in unkGraphicsStruct
+extern unkGraphicsStruct g_unkGraphicsStruct;
 extern ItemPrimitiveParams g_ItemPrimitiveParams[];
 extern u16 g_FaerieFrameCount1;
 extern u16 g_FaerieFrameCount2;
 
 extern s32 g_SfxRandomizerGrunt[];
 extern s32 g_SfxRandomizerHammerResist[];
-extern s32 g_FaerieIntroRandomizer[];
-extern s32 g_SfxEventRandomizer[];
 
 extern HintTriggerMap g_FaerieHints[];
 
 extern FaerieAnimIndex g_AnimIndexParams[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
 
-void SetAnimationFrame(Entity*, s32);
 void unused_39C8(Entity*);
 void CheckForValidAbility(Entity*);
 
-static void UpdateServantDefault(Entity* self);
 static void UpdateServantUseLifeApple(Entity* self);
 static void UpdateServantUseHammer(Entity* self);
 static void UpdateServantUseUncurse(Entity* self);
@@ -461,6 +456,10 @@ void CheckForValidAbility(Entity* self) {
     }
 }
 
+#ifdef VERSION_PC
+extern u16 g_FaerieClut[64];
+#endif
+
 void ServantInit(InitializeMode mode) {
     u16* src;
     u16* dst;
@@ -468,6 +467,12 @@ void ServantInit(InitializeMode mode) {
     s32 i;
     SpriteParts** spriteBanks;
     Entity* entity;
+
+#ifdef VERSION_PC
+    const int len = LEN(g_FaerieClut);
+#else
+    const int len = 256;
+#endif
 
     s_ServantId = g_Servant;
 
@@ -480,7 +485,7 @@ void ServantInit(InitializeMode mode) {
 
     dst = &g_Clut[CLUT_INDEX_SERVANT];
     src = g_FaerieClut;
-    for (i = 0; i < 0x100; i++) {
+    for (i = 0; i < len; i++) {
         *dst++ = *src++;
     }
 
@@ -494,7 +499,7 @@ void ServantInit(InitializeMode mode) {
 
     spriteBanks = g_api.o.spriteBanks;
     spriteBanks += 20;
-    *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
+    *spriteBanks = (SpriteParts*)g_FaerieSpriteParts;
 
     entity = &g_Entities[SERVANT_ENTITY_INDEX];
 
@@ -769,7 +774,7 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 90) {
             if (SearchForEntityInRange(1, 0x29)) {
-                D_800973FC = 0;
+                g_unkGraphicsStruct.D_800973FC = 0;
             }
 
             for (i = 8; i < 0x40; i++) {
@@ -785,7 +790,7 @@ void UpdateServantUseLifeApple(Entity* self) {
     case 0xA:
         self->ext.faerie.frameCounter++;
         if (self->ext.faerie.frameCounter > 90) {
-            D_80097420[0] = 0;
+            g_unkGraphicsStruct.unk20 = 0;
             self->step++;
         }
         break;
@@ -1325,7 +1330,8 @@ void UpdateServantAdditionalInit(Entity* arg0) {
     case 1:
         SelectAnimationFrame(arg0);
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
-            s_RoomSpecialState == 1 || g_CutsceneHasControl || D_800973FC) {
+            s_RoomSpecialState == 1 || g_CutsceneHasControl ||
+            g_unkGraphicsStruct.D_800973FC) {
             SetAnimationFrame(arg0, 0xE);
             arg0->entityId = FAERIE_MODE_DEFAULT_UPDATE;
             arg0->step = 0;
@@ -1344,7 +1350,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
             for (i = 0; true; i++) {
                 if (rnd <= g_FaerieIntroRandomizer[i * 2]) {
                     arg0->ext.faerie.currentSfxEvent =
-                        g_FaerieIntroRandomizer[i * 2 + 1];
+                        (FaerieSfxEventDesc*)g_FaerieIntroRandomizer[i * 2 + 1];
                     break;
                 }
             }
@@ -1352,7 +1358,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
             for (i = 0; true; i++) {
                 if (rnd <= g_SfxEventRandomizer[i * 2]) {
                     arg0->ext.faerie.currentSfxEvent =
-                        g_SfxEventRandomizer[i * 2 + 1];
+                        (FaerieSfxEventDesc*)g_SfxEventRandomizer[i * 2 + 1];
                     break;
                 }
             }

@@ -256,6 +256,15 @@ set(SOURCE_FILES_TT_001
     src/servant/tt_001/servant_events.c
 )
 
+set(SOURCE_FILES_TT_002
+    src/servant/tt_002/faerie.c
+    src/servant/tt_002/faerie_ability_data.c
+    src/servant/tt_002/faerie_animation_data.c
+    src/servant/tt_002/faerie_data.c
+    src/servant/tt_002/faerie_spriteparts.c
+    src/servant/tt_002/servant_events.c
+)
+
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/banks.c
@@ -422,6 +431,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
     ${SOURCE_FILES_TT_001}
+    ${SOURCE_FILES_TT_002}
 )
 
 add_library(core ${SOURCE_FILES_CORE})

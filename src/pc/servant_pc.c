@@ -5,11 +5,13 @@
 
 extern ServantDesc bat_ServantDesc;
 extern ServantDesc ghost_ServantDesc;
+extern ServantDesc faerie_ServantDesc;
 extern ServantDesc D_80170000;
 
 // To add a new servant, replace proper null with it's servant desc
 ServantDesc* servantDescs[] = {
-    NULL, &bat_ServantDesc, &ghost_ServantDesc, NULL, NULL, NULL, NULL};
+    NULL, &bat_ServantDesc, &ghost_ServantDesc, &faerie_ServantDesc, NULL, NULL,
+    NULL};
 
 void HandleServantPrg() { D_80170000 = *servantDescs[g_Servant]; }
 
