@@ -118,8 +118,8 @@ const gameMetadata = {
             "name": "SERVANT/TT_002.BIN",
             "desc": "Familiar Faerie"
         },
-        "tt_002": {
-            "name": "SERVANT/TT_002.BIN",
+        "tt_003": {
+            "name": "SERVANT/TT_003.BIN",
             "desc": "Familiar Demon"
         },
     }
