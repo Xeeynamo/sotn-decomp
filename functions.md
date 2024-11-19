@@ -71,7 +71,7 @@
 | wrp    | e_misc.rodata                       |       20 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090F1BC8                   |       20 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C00                   |       20 |          1 |        |                                 |       |
-| dra    | func_psp_090F5230                   |       20 |          1 |        |                                 |       |
+| dra    | func_psp_090F5230                   |       20 |          1 |        | https://decomp.me/scratch/Rzcw0 | 0.877 |
 | dra    | func_psp_090F5268                   |       20 |          1 |        |                                 |       |
 | dra    | func_800EA5AC                       |       20 |          1 |        |                                 |       |
 | dra    | func_psp_0913D5D8                   |       20 |          1 |        |                                 |       |
@@ -274,7 +274,7 @@
 | dra    | func_psp_09117858                   |       48 |          5 |        |                                 |       |
 | dra    | func_psp_091178F8                   |       48 |          5 |        |                                 |       |
 | dra    | func_psp_090EC568                   |       48 |          5 |        |                                 |       |
-| dra    | func_psp_090F5188                   |       48 |          9 |        |                                 |       |
+| dra    | func_psp_090F5188                   |       48 |          9 |        | https://decomp.me/scratch/n80wF | 0.976 |
 | dra    | func_psp_090EBE50                   |       49 |          4 |        |                                 |       |
 | dra    | func_psp_0913A3A0                   |       50 |          4 |        |                                 |       |
 | dra    | func_psp_090F0FD0                   |       50 |          5 |        |                                 |       |
@@ -634,7 +634,7 @@
 | dra    | func_psp_090EB8B8                   |      369 |         17 |        |                                 |       |
 | dra    | func_psp_0913B5D0                   |      370 |         35 | Yes    |                                 |       |
 | dra    | func_psp_090F8348                   |      374 |         35 |        |                                 |       |
-| dra    | func_psp_090F5560                   |      375 |         13 |        |                                 |       |
+| dra    | func_psp_090F5560                   |      375 |         13 |        | https://decomp.me/scratch/UVi7b | 1.0   |
 | wrp    | func_psp_0923AD68                   |      375 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | dra    | func_psp_09104C80                   |      375 |         48 |        |                                 |       |
 | dra    | func_psp_09132550                   |      382 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
