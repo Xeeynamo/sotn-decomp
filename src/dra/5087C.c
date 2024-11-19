@@ -984,7 +984,7 @@ void func_800F2404(s32 arg0) {
     D_80097448[0] = 0;
     D_80097448[1] = 0;
     D_80097450 = 0;
-    func_800E346C();
+    SetGPUBuffRGBZero();
 }
 
 void func_800F24F4(void) {
@@ -1849,7 +1849,7 @@ void RunMainEngine(void) {
                 if (g_StageId == STAGE_ST0) {
                     SetGameState(Game_GameOver);
                     ClearImage(&g_Vram.D_800ACDA0, 0xFF, 0xFF, 0xFF);
-                    func_800E34A4(-1);
+                    SetGPUBuffRGB(-1);
                     DestroyEntitiesFromIndex(0);
                     DestroyAllPrimitives();
                     func_800EDAE4();
@@ -1865,7 +1865,7 @@ void RunMainEngine(void) {
                 break;
             case 2:
                 SetGameState(Game_GameOver);
-                func_800E346C();
+                SetGPUBuffRGBZero();
                 break;
             }
             func_801028AC(0);

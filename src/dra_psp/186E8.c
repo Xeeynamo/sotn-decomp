@@ -333,9 +333,7 @@ void DebugEditColorChannel(s32 colorAdd) {
 
 #endif
 
-s32 DebugUpdate(){
-    return 1;
-}
+s32 DebugUpdate() { return 1; }
 
 extern s32 D_psp_08B42060;
 
@@ -353,7 +351,7 @@ s32 func_psp_090F5188(void) {
     return 0;
 }
 
-void func_psp_090F5230(void) {
+void SetGPUBuffRGBZero(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -361,4 +359,11 @@ void func_psp_090F5230(void) {
     g_GpuBuffers[1].draw.g0 = 0;
     g_GpuBuffers[1].draw.b0 = 0;
 }
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5268);
+void SetGPUBuffRGB(u8 arg0) {
+    g_GpuBuffers[0].draw.r0 = arg0;
+    g_GpuBuffers[0].draw.g0 = arg0;
+    g_GpuBuffers[0].draw.b0 = arg0;
+    g_GpuBuffers[1].draw.r0 = arg0;
+    g_GpuBuffers[1].draw.g0 = arg0;
+    g_GpuBuffers[1].draw.b0 = arg0;
+}

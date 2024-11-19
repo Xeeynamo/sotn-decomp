@@ -275,7 +275,7 @@ void HandlePlay(void) {
             prim->tpage = 0x110;
             prim = prim->next;
         }
-        func_800E346C();
+        SetGPUBuffRGBZero();
         g_GameStep++;
         break;
     case Play_WaitStageChr:
@@ -425,7 +425,7 @@ void HandleGameOver(void) {
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
             MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
-            func_800E346C();
+            SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
             D_8013640C = AllocPrimitives(PRIM_GT4, 259);
