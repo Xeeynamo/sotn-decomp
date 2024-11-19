@@ -412,3 +412,5 @@ void func_psp_090F54E0(void) {
     }
     func_psp_090FA740();
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5520);
