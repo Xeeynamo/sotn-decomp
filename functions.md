@@ -2,7 +2,6 @@
 |--------|-------------------------------------|----------|------------|--------|---------------------------------|-------|
 | dra    | func_psp_090ED058                   |        8 |          1 |        |                                 |       |
 | dra    | func_psp_090F1CE0                   |        8 |          1 |        |                                 |       |
-| dra    | DebugUpdate                         |        8 |          1 |        |                                 |       |
 | dra    | func_psp_090FC4D8                   |        8 |          1 |        |                                 |       |
 | dra    | func_psp_0913F8C8                   |        8 |          1 |        |                                 |       |
 | dra    | func_psp_0913F8D0                   |        8 |          1 |        |                                 |       |
@@ -71,8 +70,6 @@
 | wrp    | e_misc.rodata                       |       20 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090F1BC8                   |       20 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C00                   |       20 |          1 |        |                                 |       |
-| dra    | func_psp_090F5230                   |       20 |          1 |        | https://decomp.me/scratch/Rzcw0 | 0.877 |
-| dra    | func_psp_090F5268                   |       20 |          1 |        |                                 |       |
 | dra    | func_800EA5AC                       |       20 |          1 |        |                                 |       |
 | dra    | func_psp_0913D5D8                   |       20 |          1 |        |                                 |       |
 | dra    | func_psp_090E8620                   |       20 |          1 |        |                                 |       |
@@ -99,12 +96,10 @@
 | dra    | func_psp_090E0C68                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_09117BC0                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_09140588                   |       23 |          3 |        |                                 |       |
-| dra    | func_psp_090F54E0                   |       23 |          4 |        |                                 |       |
 | dra    | func_psp_090F5B10                   |       24 |          1 |        |                                 |       |
 | dra    | func_psp_091088F0                   |       24 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                   |       24 |          2 |        |                                 |       |
 | dra    | func_psp_090F1C98                   |       24 |          3 |        |                                 |       |
-| dra    | func_psp_090F5520                   |       24 |          3 |        |                                 |       |
 | dra    | func_psp_090E4C90                   |       24 |          3 |        |                                 |       |
 | dra    | func_psp_090F6A50                   |       24 |          4 |        |                                 |       |
 | dra    | ResetPendingGfxLoad                 |       25 |          2 |        |                                 |       |
@@ -182,7 +177,6 @@
 | dra    | func_psp_090F1B60                   |       35 |          4 |        |                                 |       |
 | dra    | HasEnoughMp                         |       35 |          4 |        |                                 |       |
 | dra    | func_psp_0913D930                   |       35 |          6 |        |                                 |       |
-| dra    | func_psp_090F52A0                   |       36 |          2 |        |                                 |       |
 | dra    | DecompressWriteNibble               |       36 |          2 |        |                                 |       |
 | dra    | InitSoundVars2                      |       36 |          2 |        |                                 |       |
 | dra    | func_psp_090F1EC8                   |       36 |          3 |        |                                 |       |
@@ -237,7 +231,6 @@
 | dra    | func_psp_091272B8                   |       42 |          3 |        |                                 |       |
 | wrp    | GetSideToPlayer                     |       42 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | dra    | func_psp_090F1CE8                   |       42 |          4 |        |                                 |       |
-| dra    | func_psp_090F5318                   |       42 |          6 |        |                                 |       |
 | dra    | func_psp_09128A78                   |       42 |          6 |        |                                 |       |
 | dra    | func_psp_090F6A90                   |       42 |         15 |        |                                 |       |
 | dra    | func_psp_090ED1B8                   |       43 |          3 |        |                                 |       |
@@ -250,14 +243,12 @@
 | dra    | func_psp_090ED9E0                   |       44 |          4 |        |                                 |       |
 | dra    | func_psp_090FCE58                   |       44 |          5 |        |                                 |       |
 | dra    | func_psp_09124FB8                   |       44 |          5 |        |                                 |       |
-| dra    | func_psp_090F53A8                   |       44 |          6 |        |                                 |       |
 | dra    | func_psp_09114500                   |       44 |          6 |        |                                 |       |
 | dra    | func_psp_09117538                   |       44 |          8 |        |                                 |       |
 | dra    | func_psp_0910A9D0                   |       44 |         11 |        |                                 |       |
 | dra    | func_psp_09142E48                   |       45 |          3 |        |                                 |       |
 | dra    | func_80134C60                       |       46 |          1 |        |                                 |       |
 |        | CalculateAngleToEntity              |       46 |          2 |        |                                 |       |
-| dra    | func_psp_090F5440                   |       46 |          6 |        |                                 |       |
 | dra    | func_psp_09117A90                   |       46 |          6 |        |                                 |       |
 | dra    | func_psp_090ED248                   |       47 |          3 |        |                                 |       |
 | dra    | func_psp_090DFBD0                   |       47 |          4 |        |                                 |       |
@@ -274,7 +265,6 @@
 | dra    | func_psp_09117858                   |       48 |          5 |        |                                 |       |
 | dra    | func_psp_091178F8                   |       48 |          5 |        |                                 |       |
 | dra    | func_psp_090EC568                   |       48 |          5 |        |                                 |       |
-| dra    | func_psp_090F5188                   |       48 |          9 |        | https://decomp.me/scratch/n80wF | 0.976 |
 | dra    | func_psp_090EBE50                   |       49 |          4 |        |                                 |       |
 | dra    | func_psp_0913A3A0                   |       50 |          4 |        |                                 |       |
 | dra    | func_psp_090F0FD0                   |       50 |          5 |        |                                 |       |
