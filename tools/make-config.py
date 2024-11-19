@@ -964,8 +964,8 @@ def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
         samples = ["stsel"]
         dup_paths = ["st/sel"]
     elif is_servant(ovl_name):
-        samples = [ovl_name]
-        dup_paths = [f"servant/{ovl_name}"]
+        samples = ["tt_000", "tt_001", "tt_002"]
+        dup_paths = ["servant/tt_000", "servant/tt_001", "servant/tt_002"]
     else:
         samples = ["stdre", "stnp3", "stnz0", "stst0", "stwrp"]
         dup_paths = ["st/dre", "st/np3", "st/nz0", "st/st0", "st/wrp"]
@@ -1032,6 +1032,9 @@ def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
     elif is_stage(ovl_name) or is_boss(ovl_name):
         # pick NZ0 as the most complete overlay to cross-reference symbols
         right_matchings_path = f"asm/us/{make_dst_path('nz0')}/matchings"
+    elif is_servant(ovl_name):
+        # pick TT_002 as the most complete overlay to cross-reference symbols
+        right_matchings_path = f"asm/us/{make_dst_path('tt_002')}/matchings"
     else:
         yowarning(
             f"cannot find a similar overlay to {version}/{ovl_name} to cross-reference"
