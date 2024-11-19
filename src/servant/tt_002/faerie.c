@@ -32,7 +32,7 @@ static s32 s_AllowedAngle;
 static s32 s_DistToTargetLocation;
 static s16 s_TargetLocOffset_calc;
 
-extern u16 g_FaerieClut[];
+extern u16 g_FaerieClut[64];
 
 extern FaerieAbilityStats g_FaerieAbilityStats[];
 extern FaerieSfx g_FaerieSfx;
@@ -455,10 +455,6 @@ void CheckForValidAbility(Entity* self) {
         }
     }
 }
-
-#ifdef VERSION_PC
-extern u16 g_FaerieClut[64];
-#endif
 
 void ServantInit(InitializeMode mode) {
     u16* src;

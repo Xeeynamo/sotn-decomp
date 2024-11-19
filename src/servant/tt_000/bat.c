@@ -482,10 +482,6 @@ void SwitchModeInitialize(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_BatStats);
 }
 
-#ifdef VERSION_PC
-extern u16 g_ServantClut[48];
-#endif
-
 void ServantInit(InitializeMode mode) {
     u16* dst;
     u16* src;
