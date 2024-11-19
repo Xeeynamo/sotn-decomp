@@ -22,7 +22,7 @@ STATIC_PAD_BSS(2);
 static s16 s_HpCacheResetTimer;
 STATIC_PAD_BSS(2);
 static s32 s_RoomSpecialState;
-static s32 D_us_80179320;
+static s32 D_us_80179320; // Possibly when player is sitting
 static s32 s_TargetLocationX;
 static s32 s_TargetLocationY;
 static s32 s_TargetLocationX_calc;
@@ -51,7 +51,7 @@ extern s32 g_SfxEventRandomizer[];
 
 extern HintTriggerMap g_FaerieHints[];
 
-extern FaerieAnimIndex g_AnimIndexParams[];
+extern FaerieWingAnimationParams g_WingAnimationParams[];
 extern AnimationFrame* g_FaerieAnimationFrames[];
 
 void SetAnimationFrame(Entity*, s32);
@@ -273,10 +273,9 @@ void CheckForValidAbility(Entity* self) {
             }
         }
     }
-    if (g_Player.status & PLAYER_STATUS_UNK40000) {
+    if (g_Player.status & PLAYER_STATUS_DEAD) {
         rnd = rand() % 100;
-        // for faerie, this is always true. stats table.lifeAppleChance is
-        // 0x00FF
+        // for faerie, always true. stats table.lifeAppleChance is 0x00FF
         if (rnd <=
             g_FaerieAbilityStats[s_FaerieStats.level / 10].lifeAppleChance) {
             self->entityId = FAERIE_MODE_USE_LIFE_APPLE;
@@ -1416,7 +1415,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
 
 void UpdateSubEntityWings(Entity* self) {
     s32 animIndex;
-    s32 zPriorityFlag;
+    s32 wingsInBackZ;
     s32 i;
 #ifdef VERSION_PSP
     s32 temp_zPriority;
@@ -1438,12 +1437,12 @@ void UpdateSubEntityWings(Entity* self) {
             break;
     }
 
-    animIndex = abs(g_AnimIndexParams[i - 6].animIndex);
-    zPriorityFlag = g_AnimIndexParams[i - 6].zPriorityFlag;
+    animIndex = abs(g_WingAnimationParams[i - 6].animIndex);
+    wingsInBackZ = g_WingAnimationParams[i - 6].wingsInBackZ;
 
     SetAnimationFrame(self, animIndex);
 
-    if (zPriorityFlag) {
+    if (wingsInBackZ) {
         temp_zPriority = s_zPriority - 1;
     } else {
         temp_zPriority = s_zPriority + 1;
@@ -1659,7 +1658,6 @@ void UpdateServantSitOnShoulder(Entity* self) {
     s_AnimationStatus = ServantUpdateAnim(self, NULL, g_FaerieAnimationFrames);
 }
 
-// Update code for Faerie offering hint.
 // self->param is index for g_FaerieHints for the type of hint
 void UpdateServantOfferHint(Entity* self) {
     char pad[2];

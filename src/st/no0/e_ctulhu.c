@@ -36,7 +36,7 @@ void EntityCtulhu(Entity* self) {
     u16 temp_v0_13;
     u16 temp_v0_15;
 
-    if ((g_Player.status & PLAYER_STATUS_UNK40000) && (self->step < 9)) {
+    if ((g_Player.status & PLAYER_STATUS_DEAD) && (self->step < 9)) {
         SetStep(9);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 10)) {
@@ -311,7 +311,7 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(0x759);
             }
             AnimateEntity(D_us_801823B0, self);
-            if ((g_Player.status & PLAYER_STATUS_UNK40000) == 0) {
+            if ((g_Player.status & PLAYER_STATUS_DEAD) == 0) {
                 SetStep(2);
             }
         }
