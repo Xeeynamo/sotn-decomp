@@ -106,7 +106,7 @@ typedef struct {
 
 extern SpriteParts* g_FaerieSpriteParts[];
 
-#ifdef VERSION_PC
+#ifdef PLATFORM_64BIT
 extern s64 g_FaerieIntroRandomizer[];
 extern s64 g_SfxEventRandomizer[];
 #else
