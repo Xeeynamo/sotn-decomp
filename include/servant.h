@@ -70,7 +70,7 @@ typedef struct ServantEvent {
 #define FOR_CASTLE_FLAG(x) CHECK_CASTLE_FLAG | x
 
 extern SpriteParts* g_ServantSpriteParts[];
-extern u16 g_ServantClut[];
+extern u16 g_ServantClut[48];
 
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];

@@ -63,7 +63,7 @@ static s32 s_LastTargetedEntityIndex;
 extern AnimationFrame g_DefaultGhostAnimationFrame[];
 extern AnimationFrame* g_GhostAnimationFrames[];
 extern GhostAbilityValues g_GhostAbilityStats[];
-extern u16 g_GhostClut[];
+extern u16 g_GhostClut[16];
 
 extern s16
     g_ConfusedOffsetsX[]; // Array of X-axis offsets for positioning primitives
@@ -280,11 +280,6 @@ Entity* CreateChildEntity(Entity* parent, ChildEntityType entityType) {
     }
     // BUG? There is a fall-through case here with no return value on PSX
 }
-
-#ifdef VERSION_PC
-extern u16 g_ServantClut[48];
-extern u16 g_GhostClut[16];
-#endif
 
 void ServantInit(InitializeMode mode) {
     RECT rect;

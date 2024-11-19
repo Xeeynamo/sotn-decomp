@@ -1,5 +1,5 @@
 thisFamiliar = 0x800736C8;
-g_ServantSpriteParts = 0x80170040;
+g_FaerieSpriteParts = 0x80170040;
 g_FaerieClut = 0x801722E8;
 g_FaerieAnimationFrames = 0x80172B14;
 g_Events = 0x80172D2C;
