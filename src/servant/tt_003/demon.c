@@ -5,7 +5,10 @@
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172ED8);
+void DestroyEntityPassthrough(Entity* self)
+{
+    DestroyEntity(self);
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172EF8);
 
@@ -33,7 +36,7 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175C08);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176544);
+void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176564);
 
@@ -79,10 +82,11 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80177690);
 
 #include "../servant_unk0.h"
 
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172A68);
+INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", SetAnimationFrame);
 
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172A9C);
+// maybe a match for FindValidTarget, but only 90%.  It looks to be significantly simpler
+INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", FindValidTarget);
 
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172D50);
+INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", CheckEntityValid);
 
 INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172DBC);
