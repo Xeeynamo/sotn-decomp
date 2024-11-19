@@ -404,4 +404,11 @@ void SetMenuDisplayBuffer(void) {
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F54E0);
+extern s32 D_psp_091CE1E8;
+void func_psp_090F54E0(void) {
+    if (D_psp_091CE1E8 != 0) {
+        func_891AEC8();
+        D_psp_091CE1E8 = 0;
+    }
+    func_psp_090FA740();
+}
