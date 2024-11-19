@@ -273,7 +273,7 @@ void CheckForValidAbility(Entity* self) {
             }
         }
     }
-    if (g_Player.status & PLAYER_STATUS_ZERO_HP) {
+    if (g_Player.status & PLAYER_STATUS_DEAD) {
         rnd = rand() % 100;
         // for faerie, always true. stats table.lifeAppleChance is 0x00FF
         if (rnd <=

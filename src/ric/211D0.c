@@ -1597,7 +1597,7 @@ void RicUpdatePlayerEntities(void) {
     if (func_8015FB84(&subwpn, true, false) >= 0) {
         g_Player.status |= PLAYER_STATUS_UNK200000;
     }
-    if (g_Player.status & (PLAYER_STATUS_ZERO_HP | PLAYER_STATUS_UNK80000)) {
+    if (g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
         FntPrint("dead player\n");
         entity = &g_Entities[17]; // Weird code here. Set entity to #17 but...
         entity -= 13; // then change to #4 before the for-loop starting with 4?

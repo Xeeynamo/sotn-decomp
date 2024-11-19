@@ -27,7 +27,7 @@ lazy_static! {
         (1 << 15, "PLAYER_STATUS_CURSE"),
         (1 << 16, "PLAYER_STATUS_UNK10000"),
         (1 << 17, "PLAYER_STATUS_UNK20000"),
-        (1 << 18, "PLAYER_STATUS_ZERO_HP"),
+        (1 << 18, "PLAYER_STATUS_DEAD"),
         (1 << 19, "PLAYER_STATUS_UNK80000"),
         (1 << 20, "PLAYER_STATUS_UNK100000"),
         (1 << 21, "PLAYER_STATUS_UNK200000"),

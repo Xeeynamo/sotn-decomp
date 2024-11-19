@@ -159,7 +159,7 @@ void UpdatePlayerEntities(void) {
         }
     }
     // Appears to be a temporary debugging block that was left in.
-    if ((g_Player.status & (PLAYER_STATUS_ZERO_HP | PLAYER_STATUS_UNK80000)) ||
+    if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
 #if defined(VERSION_US)
         // Japanese for "without hit".
@@ -1399,7 +1399,7 @@ void EntityPlayerOutline(Entity* self) {
     s16 selfX;
     s16 selfY;
 
-    if ((g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_ZERO_HP |
+    if ((g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
                             PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
         !(PLAYER.animCurFrame & 0x7FFF) || (!PLAYER.animSet) ||
         ((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D))) {
