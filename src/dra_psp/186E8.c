@@ -333,10 +333,88 @@ void DebugEditColorChannel(s32 colorAdd) {
 
 #endif
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", DebugUpdate);
+s32 DebugUpdate() { return 1; }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5188);
+extern s32 D_psp_08B42060;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5230);
+s32 func_psp_090F5188(void) {
+    char sp10[0x100];
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5268);
+    psp_sprintf(&sp10, "%sSE/sd_j010.spk;1", D_psp_08B42060);
+    func_892EAFC(&sp10, 0);
+    psp_sprintf(&sp10, "%sSE/sd_alk.spk;1", D_psp_08B42060);
+    func_892EAFC(&sp10, 1);
+    psp_sprintf(&sp10, "%sSE/sd_mak.spk;1", D_psp_08B42060);
+    func_892EAFC(&sp10, 2);
+    psp_sprintf(&sp10, "%sSE/sd_rou.spk;1", D_psp_08B42060);
+    func_892EAFC(&sp10, 3);
+    return 0;
+}
+
+void SetGPUBuffRGBZero(void) {
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
+}
+void SetGPUBuffRGB(u8 arg0) {
+    g_GpuBuffers[0].draw.r0 = arg0;
+    g_GpuBuffers[0].draw.g0 = arg0;
+    g_GpuBuffers[0].draw.b0 = arg0;
+    g_GpuBuffers[1].draw.r0 = arg0;
+    g_GpuBuffers[1].draw.g0 = arg0;
+    g_GpuBuffers[1].draw.b0 = arg0;
+}
+
+void func_800E34DC(s32 arg0) {
+    g_GpuBuffers[0].draw.clip.y = 0x0014;
+    g_GpuBuffers[0].draw.clip.h = 0x00CF;
+    g_GpuBuffers[1].draw.clip.y = 0x0014;
+    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+    g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
+    SetGPUBuffRGBZero();
+    g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 0;
+    g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
+}
+
+void SetStageDisplayBuffer(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    func_800E34DC(0);
+}
+
+void SetCgiDisplayBuffer(s32 width) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0, width, DISP_ALL_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0, width, DISP_ALL_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, width, DISP_ALL_H);
+    func_800E34DC(1);
+}
+
+void SetMenuDisplayBuffer(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    func_800E34DC(1);
+    g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 1;
+}
+
+extern s32 D_psp_091CE1E8;
+void func_psp_090F54E0(void) {
+    if (D_psp_091CE1E8 != 0) {
+        func_891AEC8();
+        D_psp_091CE1E8 = 0;
+    }
+    func_psp_090FA740();
+}
+
+void func_psp_090F5520(void) {
+    while (D_psp_091CE1E8 != 0) {
+        func_8939EB8(1);
+    }
+}

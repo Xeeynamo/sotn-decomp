@@ -611,7 +611,7 @@ void HandlePrologueEnd(void) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
-            func_800E346C();
+            SetGPUBuffRGBZero();
             g_GameStep++;
             return;
         }

@@ -3412,7 +3412,7 @@ block_4:
         if (func_801025F4() == 0) {
             break;
         }
-        func_800E346C();
+        SetGPUBuffRGBZero();
         func_80102628(0x180);
         SetMenuDisplayBuffer();
         func_800FAC48();
@@ -3930,7 +3930,7 @@ block_4:
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             func_801073C0();
             g_CdStep = CdStep_None;
-            func_800E346C();
+            SetGPUBuffRGBZero();
             func_80102628(0x180);
             SetMenuDisplayBuffer();
             func_800FAC48();

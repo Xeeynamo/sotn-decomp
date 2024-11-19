@@ -652,7 +652,7 @@ s32 LoadVabData(void) {
     return 0;
 }
 
-void func_800E346C(void) {
+void SetGPUBuffRGBZero(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -661,7 +661,7 @@ void func_800E346C(void) {
     g_GpuBuffers[1].draw.b0 = 0;
 }
 
-void func_800E34A4(u8 arg0) {
+void SetGPUBuffRGB(u8 arg0) {
     g_GpuBuffers[0].draw.r0 = arg0;
     g_GpuBuffers[0].draw.g0 = arg0;
     g_GpuBuffers[0].draw.b0 = arg0;
@@ -681,7 +681,7 @@ void func_800E34DC(s32 arg0) {
     }
     g_GpuBuffers[1].draw.clip.h = 0x00CF;
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
-    func_800E346C();
+    SetGPUBuffRGBZero();
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 0;
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
@@ -723,7 +723,7 @@ static void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_800E346C();
+    SetGPUBuffRGBZero();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
