@@ -368,7 +368,16 @@ void SetGPUBuffRGB(u8 arg0) {
     g_GpuBuffers[1].draw.b0 = arg0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F52A0);
+void func_800E34DC(s32 arg0) {
+    g_GpuBuffers[0].draw.clip.y = 0x0014;
+    g_GpuBuffers[0].draw.clip.h = 0x00CF;
+    g_GpuBuffers[1].draw.clip.y = 0x0014;
+    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+    g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
+    SetGPUBuffRGBZero();
+    g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 0;
+    g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5318);
 
