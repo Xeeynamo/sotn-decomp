@@ -4,6 +4,7 @@ binutils-sh-elf
 bsdmainutils
 cargo
 clang-format
+coreutils
 curl
 gcc-mipsel-linux-gnu
 git

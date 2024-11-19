@@ -144,7 +144,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen dre mad no0 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003
+build_us: main dra weapon ric cen dre mad no0 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
 build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -228,6 +228,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
+	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
@@ -358,33 +359,20 @@ $(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
 $(BUILD_DIR)/F_RBO3.BIN:
 	$(GFXSTAGE) e assets/boss/rbo3 $@
 
+# servant (familiar) targets
+
 tt_000: $(BUILD_DIR)/TT_000.BIN
-$(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000_raw.bin
-	cp $< $@
-	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
-
 tt_001: $(BUILD_DIR)/TT_001.BIN
-$(BUILD_DIR)/tt_001_raw.bin: $(BUILD_DIR)/tt_001.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/TT_001.BIN: $(BUILD_DIR)/tt_001_raw.bin
-	cp $< $@
-	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
-
 tt_002: $(BUILD_DIR)/TT_002.BIN
-$(BUILD_DIR)/tt_002_raw.bin: $(BUILD_DIR)/tt_002.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/TT_002.BIN: $(BUILD_DIR)/tt_002_raw.bin
-	cp $< $@
-	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
-
 tt_003: $(BUILD_DIR)/TT_003.BIN
-$(BUILD_DIR)/tt_003_raw.bin: $(BUILD_DIR)/tt_003.elf
+tt_004: $(BUILD_DIR)/TT_004.BIN
+
+$(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/TT_003.BIN: $(BUILD_DIR)/tt_003_raw.bin
-	cp $< $@
-	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
+$(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
+	cp $< $@.tmp
+	truncate -c -s 40960 $@.tmp
+	mv $@.tmp $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
@@ -498,6 +486,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_003.elf > config/symbols.us.tt_003.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_004.elf > config/symbols.us.tt_004.txt
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
@@ -540,6 +529,7 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/TT_001.BIN $(DISK_DIR)/SERVANT/TT_001.BIN
 	cp $(BUILD_DIR)/TT_002.BIN $(DISK_DIR)/SERVANT/TT_002.BIN
 	cp $(BUILD_DIR)/TT_003.BIN $(DISK_DIR)/SERVANT/TT_003.BIN
+	cp $(BUILD_DIR)/TT_004.BIN $(DISK_DIR)/SERVANT/TT_004.BIN
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare
@@ -657,7 +647,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003
+.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies
