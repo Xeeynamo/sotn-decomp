@@ -353,6 +353,12 @@ s32 func_psp_090F5188(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5230);
-
+void func_psp_090F5230(void) {
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
+}
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5268);

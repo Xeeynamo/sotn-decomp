@@ -116,6 +116,7 @@ g_DemoMode = 0x091fc420;
 D_800973EC = 0x091fc428;
 g_GameStep = 0x091fc448;
 g_GameState = 0x091fc450;
+g_GpuBuffers = 0x091FC4E8;
 g_sfxRingBufferWritePos = 0x09236b80;
 g_SfxRingBuffer = 0x09236b90;
 g_SoundCommandRingBufferWritePos = 0x09237190;
