@@ -60,8 +60,8 @@
 
 typedef struct {
     s16 animIndex;
-    s16 zPriorityFlag;
-} FaerieAnimIndex;
+    s16 wingsInBackZ;
+} FaerieWingAnimationParams;
 
 typedef struct {
     s16 timer;
