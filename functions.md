@@ -634,7 +634,7 @@
 | dra    | func_psp_090EB8B8                   |      369 |         17 |        |                                 |       |
 | dra    | func_psp_0913B5D0                   |      370 |         35 | Yes    |                                 |       |
 | dra    | func_psp_090F8348                   |      374 |         35 |        |                                 |       |
-| dra    | func_psp_090F5560                   |      375 |         13 |        | https://decomp.me/scratch/UVi7b | 1.0   |
+| dra    | func_psp_090F5560                   |      375 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
 | wrp    | func_psp_0923AD68                   |      375 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | dra    | func_psp_09104C80                   |      375 |         48 |        |                                 |       |
 | dra    | func_psp_09132550                   |      382 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
