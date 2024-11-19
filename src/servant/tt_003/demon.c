@@ -3,12 +3,13 @@
 #include "servant.h"
 #include "sfx.h"
 
+#include "../check_entity_valid.h"
+
+void func_us_80172DBC(void) {}
+
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
 
-void DestroyEntityPassthrough(Entity* self)
-{
-    DestroyEntity(self);
-}
+void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172EF8);
 
@@ -82,11 +83,10 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80177690);
 
 #include "../servant_unk0.h"
 
+// This is a dupe for a function with the same name in Faerie.
+// Need to have the DemonFindValidTarget function first to move this though
 INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", SetAnimationFrame);
 
-// maybe a match for FindValidTarget, but only 90%.  It looks to be significantly simpler
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", FindValidTarget);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", CheckEntityValid);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172DBC);
+// maybe a match for FindValidTarget, but only 90%.  It looks to be
+// significantly simpler
+INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", DemonFindValidTarget);
