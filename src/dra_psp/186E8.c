@@ -395,6 +395,13 @@ void SetCgiDisplayBuffer(s32 width) {
     func_800E34DC(1);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5440);
+void SetMenuDisplayBuffer(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    func_800E34DC(1);
+    g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F54E0);
