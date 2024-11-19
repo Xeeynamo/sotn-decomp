@@ -30,7 +30,7 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno0", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002"
+                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno0", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002", "tt_003"
             ]
         },
         {
@@ -117,6 +117,10 @@ const gameMetadata = {
         "tt_002": {
             "name": "SERVANT/TT_002.BIN",
             "desc": "Familiar Faerie"
+        },
+        "tt_002": {
+            "name": "SERVANT/TT_002.BIN",
+            "desc": "Familiar Demon"
         },
     }
 };
