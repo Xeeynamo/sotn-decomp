@@ -367,3 +367,13 @@ void SetGPUBuffRGB(u8 arg0) {
     g_GpuBuffers[1].draw.g0 = arg0;
     g_GpuBuffers[1].draw.b0 = arg0;
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F52A0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5318);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F53A8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5440);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F54E0);
