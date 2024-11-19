@@ -252,13 +252,13 @@ void EntityBloodyZombie(Entity* self) {
     s32 animStatus;
 
     if (self->hitParams && self->step & 1) {
-        PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM);
-        PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
+        PlaySfxPositional(SFX_BLOODY_ZOMBIE_HIT_GRUNT);
+        PlaySfxPositional(SFX_BLOODY_ZOMBIE_HIT);
         SetStep(BLOODY_ZOMBIE_TAKE_HIT);
     }
 
     if (self->flags & FLAG_DEAD && self->step < 8) {
-        PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
+        PlaySfxPositional(SFX_BLOODY_ZOMBIE_DEATH);
         self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
         SetStep(BLOODY_ZOMBIE_DYING);
@@ -390,7 +390,7 @@ void EntityBloodyZombie(Entity* self) {
 
         if (self->animFrameIdx < 13) {
             if (!(g_Timer % 8)) {
-                PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
+                PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
@@ -407,7 +407,7 @@ void EntityBloodyZombie(Entity* self) {
             self->ext.bloodyZombie.unk80 = 0;
         } else {
             if (self->ext.bloodyZombie.unk80 == 0) {
-                PlaySfxPositional(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
+                PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
             }
 
             self->ext.bloodyZombie.unk80++;
