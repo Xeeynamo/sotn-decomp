@@ -5,11 +5,6 @@
 #define UNKSTRUCT_H
 
 typedef struct {
-    /* 0x0 */ s32 x;
-    /* 0x4 */ s32 y;
-} Point32; // size = 0x8
-
-typedef struct {
     /* 0x00 */ u8 vabid;
     /* 0x01 */ u8 prog;
     /* 0x02 */ u8 note;
