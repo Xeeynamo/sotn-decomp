@@ -1343,7 +1343,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
         rnd = rand() % 0x100;
         if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
-                if (rnd <= g_FaerieIntroRandomizer[i * 2]) {
+                if (rnd <= (s32)g_FaerieIntroRandomizer[i * 2]) {
                     arg0->ext.faerie.currentSfxEvent =
                         (FaerieSfxEventDesc*)g_FaerieIntroRandomizer[i * 2 + 1];
                     break;
@@ -1351,7 +1351,7 @@ void UpdateServantAdditionalInit(Entity* arg0) {
             }
         } else {
             for (i = 0; true; i++) {
-                if (rnd <= g_SfxEventRandomizer[i * 2]) {
+                if (rnd <= (s32)g_SfxEventRandomizer[i * 2]) {
                     arg0->ext.faerie.currentSfxEvent =
                         (FaerieSfxEventDesc*)g_SfxEventRandomizer[i * 2 + 1];
                     break;
