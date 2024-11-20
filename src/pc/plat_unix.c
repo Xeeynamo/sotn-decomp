@@ -5,7 +5,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <psxsdk/kernel.h>
+#include <kernel.h>
 
 void _adjust_path(char* dst, const char* src, int maxlen) {
     INFOF("TODO: adjust path '%s'", src);
@@ -27,7 +27,6 @@ void _populate_entry(struct DIRENTRY* dst, struct dirent* src) {
     dst->name[sizeof(dst->name) - 1] = '\0';
     dst->attr = 0; // not sure what this is
     dst->size = fileStat.st_size;
-    dst->head = 0; // not sure what this is
     dst->system[0] = 'O';
     dst->system[1] = 'S';
     dst->system[2] = '\0';

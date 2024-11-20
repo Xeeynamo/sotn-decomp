@@ -1,5 +1,5 @@
 #include <common.h>
-#include <psxsdk/libetc.h>
+#include <libetc.h>
 #include <log.h>
 
 void MyPadInit(int mode);

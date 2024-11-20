@@ -2,7 +2,7 @@
 #include <common.h>
 #include <log.h>
 #include <string.h>
-#include <psxsdk/kernel.h>
+#include <kernel.h>
 
 void _adjust_path(char* dst, const char* src, int maxlen) {
     INFOF("TODO: adjust path '%s'", src);

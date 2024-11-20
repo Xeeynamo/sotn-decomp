@@ -1,5 +1,5 @@
 #include <common.h>
-#include <psxsdk/libgpu.h>
+#include <libgpu.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <log.h>
