@@ -1,7 +1,7 @@
 #ifndef WANT_LIBSND_LLE
 #include <common.h>
-#include <psxsdk/libspu.h>
-#include <psxsdk/libsnd.h>
+#include <libspu.h>
+#include <libsnd.h>
 #include <log.h>
 
 short SsUtSetVVol(short vc, short voll, short volr) {
@@ -83,7 +83,7 @@ void SsVabClose(short vab_id) { NOT_IMPLEMENTED; }
 
 #else
 #include <common.h>
-#include <psxsdk/libspu.h>
+#include <libspu.h>
 #include <log.h>
 #include <assert.h>
 #include "../../main/psxsdk/libsnd/libsnd_i.h"

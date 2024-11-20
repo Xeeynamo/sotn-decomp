@@ -104,18 +104,6 @@ bool CalcPlayerDamage(DamageParam* damage);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
 
-int g_Frame = 0;
-void MyDrawSyncCallback(int mode) {
-    DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
-
-    // force loaded map to always be visible
-    if (g_Tilemap.tileDef) {
-        g_Tilemap.flags |= LAYER_SHOW;
-    }
-
-    g_Frame++;
-}
-
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);

@@ -9,18 +9,18 @@
 
 // lseek etc. conflicts
 #ifndef VERSION_PC
-#include <psxsdk/libapi.h>
-#include <psxsdk/libc.h>
+#include <libapi.h>
+#include <libc.h>
 #endif
 
-#include <psxsdk/libcd.h>
-#include <psxsdk/libetc.h>
-#include <psxsdk/libgpu.h>
-#include <psxsdk/libgs.h>
-#include <psxsdk/libgte.h>
-#include <psxsdk/libspu.h>
-#include <psxsdk/libsnd.h>
-#include <psxsdk/romio.h>
+#include <libcd.h>
+#include <libetc.h>
+#include <libgpu.h>
+#include <libgs.h>
+#include <libgte.h>
+#include <libspu.h>
+#include <libsnd.h>
+#include <romio.h>
 
 // PSP does & 7FFF for many calls to rand(), PS1 does not.
 // This works around that.
