@@ -1,6 +1,8 @@
-g_DemonSpriteParts = 0x80170040;g_ServantClut = 0x80171990;
+g_DemonSpriteParts = 0x80170040;
+g_ServantClut = 0x80171990;
 g_DemonAbilityStats = 0x80171A68;
 g_DemonClut = 0x80171C24;
+s_PassthroughFunctions = 0x80171CC4;
 g_DemonAnimationFrames = 0x80172010;
 g_Events = 0x80172090;
 g_PlaySfxStep = 0x801729C0;
@@ -17,6 +19,7 @@ DestroyEntityPassthrough = 0x80172ED8;
 ServantInit = 0x801744CC;
 UpdateServantDefault = 0x8017472C;
 UpdateServantSfxPassthrough = 0x80176544;
+FunctionPointerPassthrough = 0x80176564;
 ServantUpdateAnim = 0x80177750;
 DestroyEntity = 0x801778F8;
 AccumulateTowardZero = 0x80177964;

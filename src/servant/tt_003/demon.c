@@ -14,6 +14,8 @@ extern SpriteParts* g_DemonSpriteParts[];
 extern s32 D_us_801786D0;
 extern s32 D_us_801786D4;
 
+extern void (*s_PassthroughFunctions[])(Entity*);
+
 void ServantInit(InitializeMode);
 void UpdateServantDefault(Entity*);
 void func_us_80174FD0(Entity*);
@@ -24,7 +26,7 @@ void func_us_80175810(Entity*);
 void func_us_80175C08(Entity*);
 void func_us_80175D20(Entity*);
 void UpdateServantSfxPassthrough(Entity*);
-void func_us_80176564(Entity*);
+void FunctionPointerPassthrough(Entity*);
 void func_us_801765A0(Entity*);
 void func_us_80176814(Entity*);
 void func_us_80176C1C(Entity*);
@@ -32,14 +34,22 @@ void func_us_801771B0(Entity*);
 void func_us_80177690(Entity*);
 
 ServantDesc demon_ServantDesc = {
-    ServantInit,      UpdateServantDefault,
-    func_us_80174FD0, func_us_8017540C,
-    unused_5800,      unused_5808,
-    func_us_80175810, func_us_80175C08,
-    func_us_80175D20, UpdateServantSfxPassthrough,
-    func_us_80176564, func_us_801765A0,
-    func_us_80176814, func_us_80176C1C,
-    func_us_801771B0, func_us_80177690,
+    ServantInit,
+    UpdateServantDefault,
+    func_us_80174FD0,
+    func_us_8017540C,
+    unused_5800,
+    unused_5808,
+    func_us_80175810,
+    func_us_80175C08,
+    func_us_80175D20,
+    UpdateServantSfxPassthrough,
+    FunctionPointerPassthrough,
+    func_us_801765A0,
+    func_us_80176814,
+    func_us_80176C1C,
+    func_us_801771B0,
+    func_us_80177690,
 };
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
@@ -256,7 +266,9 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176564);
+void FunctionPointerPassthrough(Entity* arg0) {
+    s_PassthroughFunctions[arg0->params](arg0);
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801765A0);
 
