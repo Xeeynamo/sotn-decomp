@@ -5,7 +5,7 @@
 #include <string.h>
 
 // uncomment to disable the logs grouping feature
-// #define FORCE_LINEAR_LOGS
+#define FORCE_LINEAR_LOGS
 
 #ifdef NDEBUG
 LOG_LEVEL g_MinLogLevel = LOG_LEVEL_I;

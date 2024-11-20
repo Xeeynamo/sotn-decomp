@@ -1,5 +1,5 @@
 #include <common.h>
-#include <psxsdk/libgs.h>
+#include <libgs.h>
 #include <log.h>
 
 void GsClearVcount(void) { NOT_IMPLEMENTED; }

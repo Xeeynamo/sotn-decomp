@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
-#include <psxsdk/romio.h>
+#include <romio.h>
 #include "memcard.h"
 
 #define OVL_EXPORT(x) SEL_##x
