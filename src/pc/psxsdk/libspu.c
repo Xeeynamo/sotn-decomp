@@ -1,5 +1,5 @@
 #include <common.h>
-#include <psxsdk/libspu.h>
+#include <libspu.h>
 #include <log.h>
 
 #ifndef WANT_LIBSND_LLE

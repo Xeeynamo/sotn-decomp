@@ -144,7 +144,7 @@ u8** g_PlOvlAluBatSpritesheet[1] = {0};
 
 // sound stubs
 
-void SpuGetAllKeysStatus(s8* status) { NOT_IMPLEMENTED; }
+void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 

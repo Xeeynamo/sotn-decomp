@@ -1,6 +1,6 @@
 #include <common.h>
 #include <log.h>
-#include <psxsdk/kernel.h>
+#include <kernel.h>
 
 int MyVSync(int mode);
 int VSync(int mode) { return MyVSync(mode); }

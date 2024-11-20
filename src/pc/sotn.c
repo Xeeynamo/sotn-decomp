@@ -104,18 +104,6 @@ bool CalcPlayerDamage(DamageParam* damage);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
 
-int g_Frame = 0;
-void MyDrawSyncCallback(int mode) {
-    DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
-
-    // force loaded map to always be visible
-    if (g_Tilemap.tileDef) {
-        g_Tilemap.flags |= LAYER_SHOW;
-    }
-
-    g_Frame++;
-}
-
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);
@@ -260,16 +248,6 @@ void InitStrings(void) {
     for (int i = 0; i < LEN(g_goldCollectTexts); i++) {
         g_goldCollectTexts[i] = AnsiToSotnMenuString(g_goldCollectTexts[i]);
     }
-}
-
-void (*g_VsyncCallback)() = NULL;
-int MyVSyncCallback(void (*f)()) { g_VsyncCallback = f; }
-
-int MyVSync(int mode) {
-    if (g_VsyncCallback) {
-        g_VsyncCallback();
-    }
-    return 0;
 }
 
 int MyClearImage(RECT* rect, u_char r, u_char g, u_char b) {

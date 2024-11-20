@@ -1,5 +1,5 @@
 #include <common.h>
-#include <psxsdk/libcard.h>
+#include <libcard.h>
 #include <log.h>
 
 long _card_info(long chan) {

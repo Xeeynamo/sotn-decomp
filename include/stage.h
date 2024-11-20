@@ -1,6 +1,9 @@
 #ifndef STAGE_H
 #define STAGE_H
 #define STAGE 0xCC
+#ifdef __psyz
+#include <psyz.h>
+#endif
 
 #include "common.h"
 #include "game.h"

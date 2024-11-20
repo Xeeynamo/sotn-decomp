@@ -11,9 +11,6 @@ endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(CMAKE_BUILD_TYPE Debug)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
@@ -60,11 +57,6 @@ if(WIN32)
 else()
     list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
 endif()
-
-set(SOURCE_FILES_PSX_SDK
-    src/main/psxsdk/libgpu/ext.c
-    src/main/psxsdk/libgpu/prim.c
-)
 
 set(WANT_LIBSND_LLE FALSE CACHE BOOL "Whether to append use LLE for libsnd")
 set(SOURCE_FILES_LIBSND_LLE
@@ -156,17 +148,13 @@ set(SOURCE_FILES_LIBSND_LLE
     src/pc/psxsdk/mednafen/spu.cpp
 )
 if(WANT_LIBSND_LLE)
-    list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
+    list(APPEND ${SOURCE_FILES_LIBSND_LLE})
 endif()
 
 set(SOURCE_FILES_MOCK_SDK
-    src/pc/psxsdk/libapi.c
-    src/pc/psxsdk/libetc.c
-    src/pc/psxsdk/libgpu.c
     src/pc/psxsdk/libgte.c
     src/pc/psxsdk/libgs.c
     src/pc/psxsdk/libcd.c
-    src/pc/psxsdk/libcard.c
     src/pc/psxsdk/libspu.c
     src/pc/psxsdk/libsnd.c
     src/pc/psxsdk/cdc.c
@@ -534,7 +522,6 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
     ${SOURCE_FILES_PC}
-    ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_STAGE_SEL}
@@ -572,18 +559,11 @@ target_compile_definitions(core PUBLIC
     _internal_version_us
 )
 
-# sdl2 target
-add_executable(${PROJECT_NAME}
-    src/pc/sdl2.c
-    src/pc/render_soft.c
-    src/pc/render_shared.c
-    src/pc/render_gl.c
-    src/pc/psxsdk/mednafen/gpu.cpp
-    src/pc/psxsdk/mednafen/gpu_line.cpp
-    src/pc/psxsdk/mednafen/gpu_polygon.cpp
-    src/pc/psxsdk/mednafen/gpu_sprite.cpp
-    src/pc/sdl2_macros.c
-)
+add_executable(${PROJECT_NAME} src/pc/psyz.c)
+add_subdirectory(psyz/psyz)
+target_link_libraries(core PRIVATE psyz)
+target_include_directories(psyz PRIVATE psyz/psyz/include)
+target_compile_definitions(psyz PRIVATE __psyz)
 target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core)
@@ -596,12 +576,12 @@ if(WANT_LIBSND_LLE)
 endif()
 
 # null target
-add_executable(${PROJECT_NAME}_null
-    src/pc/null.c
-)
+#add_executable(${PROJECT_NAME}_null
+#    src/pc/null.c
+#)
 
-if (WIN32)
-    target_link_libraries(${PROJECT_NAME}_null PRIVATE core)
-else()
-    target_link_libraries(${PROJECT_NAME}_null PRIVATE core m)
-endif()
+#if (WIN32)
+#    target_link_libraries(${PROJECT_NAME}_null PRIVATE core)
+#else()
+#    target_link_libraries(${PROJECT_NAME}_null PRIVATE core m)
+#endif()
