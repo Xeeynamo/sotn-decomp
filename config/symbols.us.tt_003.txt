@@ -28,3 +28,7 @@ ServantUnk0 = 0x80178350;
 s_TargetMatch = 0x801783C4;
 s_DemonStats = 0x80178694;
 s_LastTargetedEntityIndex = 0x801786E0;
+
+ServantInit = 0x801744CC;
+UpdateServantDefault = 0x8017472C;
+unused_2DBC = 0x80172DBC;

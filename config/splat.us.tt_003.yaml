@@ -38,7 +38,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, demon]
+      - [0x40, data]
       - [0x29DC, .rodata, demon]
       - [0x2A68, c, demon]
       - [0x83C4, sbss]

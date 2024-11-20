@@ -9,6 +9,32 @@ extern FamiliarStats s_DemonStats;
 extern s32 s_LastTargetedEntityIndex;
 extern AnimationFrame* g_DemonAnimationFrames[];
 
+void ServantInit(Entity*);
+void UpdateServantDefault(Entity*);
+void func_us_80174FD0(Entity*);
+void func_us_8017540C(Entity*);
+void unused_5800(Entity*);
+void unused_5808(Entity*);
+void func_us_80175810(Entity*);
+void func_us_80175C08(Entity*);
+void func_us_80175D20(Entity*);
+void UpdateServantSfxPassthrough(Entity*);
+void func_us_80176564(Entity*);
+void func_us_801765A0(Entity*);
+void func_us_80176814(Entity*);
+void func_us_80176C1C(Entity*);
+void func_us_801771B0(Entity*);
+void func_us_80177690(Entity*);
+
+ServantDesc demon_ServantDesc = {
+    ServantInit, UpdateServantDefault, func_us_80174FD0,
+    func_us_8017540C, unused_5800, unused_5808,
+    func_us_80175810, func_us_80175C08, func_us_80175D20,
+    UpdateServantSfxPassthrough, func_us_80176564,
+    func_us_801765A0, func_us_80176814, func_us_80176C1C,
+    func_us_801771B0, func_us_80177690,
+};
+
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_DemonAnimationFrames[animationIndex]) {
         self->anim = g_DemonAnimationFrames[animationIndex];
@@ -101,7 +127,7 @@ static Entity* FindValidTarget(Entity* self) {
 
 #include "../check_entity_valid.h"
 
-void func_us_80172DBC(void) {}
+void unused_2DBC(void) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
 
@@ -115,17 +141,17 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801737F0);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80173D14);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801744CC);
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", ServantInit);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017472C);
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", UpdateServantDefault);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80174FD0);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017540C);
 
-void func_us_80175800(void) {}
+void unused_5800(Entity* self) {}
 
-void func_us_80175808(void) {}
+void unused_5808(Entity* self) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175810);
 
