@@ -146,7 +146,37 @@ static Entity* FindValidTarget(Entity* self) {
 
 void unused_2DBC(void) {}
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
+// This is likey the analog to Faerie.ExecuteAbilityInitialize
+void func_us_80172DC4(Entity* arg0) {
+    if (!arg0->ext.demon.isAbilityInitialized) {
+        if ((arg0->entityId == 0xD1) || (arg0->entityId == 0xD8)) {
+            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            SetAnimationFrame(arg0, 0);
+
+            arg0->ext.demon.randomMovementAngle = rand() % 4096;
+            arg0->ext.demon.defaultDistToTargetLoc = 8;
+            arg0->ext.demon.targetAngle = 0;
+            arg0->ext.demon.maxAngle = 0x20;
+            arg0->step++;
+        }
+    } else {
+        switch (arg0->entityId) {
+        case 0xD1:
+        case 0xD2:
+        case 0xD3:
+        case 0xD6:
+        case 0xD8:
+            arg0->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            SetAnimationFrame(arg0, 0);
+            arg0->step++;
+            break;
+        }
+    }
+    D_us_801786D0 = 0;
+    arg0->ext.demon.isAbilityInitialized = arg0->entityId;
+}
 
 void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
