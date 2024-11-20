@@ -8,6 +8,7 @@
 // channel: the numerical combination of port and port_s
 // block: 0-14, a memory card can store up to 15 blocks
 
+#include <psyz.h>
 #include <game.h>
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>

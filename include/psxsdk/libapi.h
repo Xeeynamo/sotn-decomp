@@ -25,7 +25,7 @@ extern void _bu_init(void);
  * Opens a device for low-level input/output and returns
  * the descriptor. Returns -1 on failure.
  */
-extern long open(char* devname, // Pointer to a filename
+extern int open(const char* devname, // Pointer to a filename
                  int flag       // Open mode
 );
 
