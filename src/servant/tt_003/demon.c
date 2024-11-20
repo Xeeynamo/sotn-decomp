@@ -8,6 +8,49 @@ extern s32 g_DemonAbilityStats[10][4];
 extern FamiliarStats s_DemonStats;
 extern s32 s_LastTargetedEntityIndex;
 extern AnimationFrame* g_DemonAnimationFrames[];
+extern s32 s_ServantId;
+extern u16 g_DemonClut[64];
+extern SpriteParts* g_DemonSpriteParts[];
+extern s32 D_us_801786D0;
+extern s32 D_us_801786D4;
+
+extern void (*s_PassthroughFunctions[])(Entity*);
+
+void ServantInit(InitializeMode);
+void UpdateServantDefault(Entity*);
+void func_us_80174FD0(Entity*);
+void func_us_8017540C(Entity*);
+void unused_5800(Entity*);
+void unused_5808(Entity*);
+void func_us_80175810(Entity*);
+void func_us_80175C08(Entity*);
+void func_us_80175D20(Entity*);
+void UpdateServantSfxPassthrough(Entity*);
+void FunctionPointerPassthrough(Entity*);
+void func_us_801765A0(Entity*);
+void func_us_80176814(Entity*);
+void func_us_80176C1C(Entity*);
+void func_us_801771B0(Entity*);
+void func_us_80177690(Entity*);
+
+ServantDesc demon_ServantDesc = {
+    ServantInit,
+    UpdateServantDefault,
+    func_us_80174FD0,
+    func_us_8017540C,
+    unused_5800,
+    unused_5808,
+    func_us_80175810,
+    func_us_80175C08,
+    func_us_80175D20,
+    UpdateServantSfxPassthrough,
+    FunctionPointerPassthrough,
+    func_us_801765A0,
+    func_us_80176814,
+    func_us_80176C1C,
+    func_us_801771B0,
+    func_us_80177690,
+};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_DemonAnimationFrames[animationIndex]) {
@@ -101,7 +144,7 @@ static Entity* FindValidTarget(Entity* self) {
 
 #include "../check_entity_valid.h"
 
-void func_us_80172DBC(void) {}
+void unused_2DBC(void) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
 
@@ -115,17 +158,105 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801737F0);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80173D14);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801744CC);
+void ServantInit(InitializeMode mode) {
+    u16* src;
+    u16* dst;
+    RECT rect;
+    s32 i;
+    SpriteParts** spriteBanks;
+    Entity* entity;
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017472C);
+#ifdef VERSION_PC
+    const int lenServant = LEN(g_ServantClut);
+    const int lenDemon = LEN(g_DemonClut);
+#else
+    const int lenServant = 256;
+    const int lenDemon = 80;
+#endif
+
+    s_ServantId = g_Servant;
+
+    if ((mode == MENU_SWITCH_SERVANT) || (mode == MENU_SAME_SERVANT)) {
+        ProcessEvent(NULL, true);
+        if (mode == MENU_SAME_SERVANT) {
+            return;
+        }
+    }
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    src = g_ServantClut;
+    for (i = 0; i < lenServant; i++) {
+        *dst++ = *src++;
+    }
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
+    src = g_DemonClut;
+
+    for (i = 0; i < lenDemon; i++) {
+        *dst++ = *src++;
+    }
+
+    rect.x = 0;
+    rect.w = 0x100;
+    rect.h = 1;
+    rect.y = 0xF4;
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    LoadImage(&rect, (u_long*)dst);
+
+    spriteBanks = g_api.o.spriteBanks;
+    spriteBanks += 20;
+    *spriteBanks = (SpriteParts*)g_DemonSpriteParts;
+
+    entity = &g_Entities[SERVANT_ENTITY_INDEX];
+
+    DestroyEntity(entity);
+    entity->unk5A = 0x6C;
+    entity->palette = 0x140;
+    entity->animSet = ANIMSET_OVL(20);
+    entity->zPriority = PLAYER.zPriority - 2;
+    entity->facingLeft = PLAYER.facingLeft;
+    entity->params = 0;
+
+    if (mode == MENU_SWITCH_SERVANT) {
+        if (LOW(D_8003C708.flags) &
+            (LAYOUT_RECT_PARAMS_UNKNOWN_20 | LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
+            entity->entityId = 0xD1;
+        } else {
+            entity->entityId = 0xD8;
+        }
+        entity->posX.val = FIX(128);
+        entity->posY.val = FIX(-32);
+    } else {
+        entity->entityId = 0xD1;
+        if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
+            if (ServantUnk0()) {
+                entity->posX.val = FIX(192);
+            } else {
+                entity->posX.val = FIX(64);
+            }
+            entity->posY.val = FIX(160);
+        } else {
+            entity->posX.val =
+                PLAYER.posX.val + (PLAYER.facingLeft ? FIX(24) : FIX(-24));
+            entity->posY.val = PLAYER.posY.val + FIX(-32);
+        }
+    }
+
+    D_us_801786D0 = 0;
+    D_us_801786D4 = 0;
+    g_api.GetServantStats(entity, 0, 0, &s_DemonStats);
+}
+
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", UpdateServantDefault);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80174FD0);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017540C);
 
-void func_us_80175800(void) {}
+void unused_5800(Entity* self) {}
 
-void func_us_80175808(void) {}
+void unused_5808(Entity* self) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175810);
 
@@ -135,7 +266,9 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176564);
+void FunctionPointerPassthrough(Entity* arg0) {
+    s_PassthroughFunctions[arg0->params](arg0);
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801765A0);
 
