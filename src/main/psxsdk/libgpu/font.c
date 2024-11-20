@@ -34,7 +34,7 @@ extern u16 clut;
 extern u16 tpage;
 
 void FntLoad(s32 tx, s32 ty) {
-    clut = LoadClut2(D_8002B818, tx, ty + 0x80);
+    clut = LoadClut(D_8002B818, tx, ty + 0x80);
     tpage = LoadTPage(D_8002B818 + 0x80, 0, 0, tx, ty, 0x80, 0x20);
     D_8002B810 = 0;
     memset(Font, 0, sizeof(Font));
