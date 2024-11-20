@@ -3,9 +3,109 @@
 #include "servant.h"
 #include "sfx.h"
 
+extern s32 s_TargetMatch[0x80];
+extern s32 g_DemonAbilityStats[10][4];
+extern FamiliarStats s_DemonStats;
+extern s32 s_LastTargetedEntityIndex;
+extern AnimationFrame* g_DemonAnimationFrames[];
+
+static void SetAnimationFrame(Entity* self, s32 animationIndex) {
+    if (self->anim != g_DemonAnimationFrames[animationIndex]) {
+        self->anim = g_DemonAnimationFrames[animationIndex];
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+    }
+}
+
+static Entity* FindValidTarget(Entity* self) {
+    const int EntitySearchCount = 128;
+    s32 foundIndex;
+    s32 i;
+    u32 found;
+    Entity* entity;
+    s32 distance;
+
+    found = 0;
+    entity = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < EntitySearchCount; i++, entity++) {
+        s_TargetMatch[i] = 0;
+        if (!entity->entityId) {
+            continue;
+        }
+        if (entity->hitboxState == 0) {
+            continue;
+        }
+        if (entity->flags & FLAG_UNK_00200000) {
+            continue;
+        }
+        if (entity->posX.i.hi < -16) {
+            continue;
+        }
+        if (entity->posX.i.hi > 272) {
+            continue;
+        }
+        if (entity->posY.i.hi > 240) {
+            continue;
+        }
+        if (entity->posY.i.hi < 0) {
+            continue;
+        }
+        if (!g_DemonAbilityStats[s_DemonStats.level / 10][2] &&
+            entity->hitboxState & 8) {
+            continue;
+        }
+
+        if (abs(self->posX.i.hi - entity->posX.i.hi) >
+                g_DemonAbilityStats[s_DemonStats.level / 10][3] ||
+            abs(self->posY.i.hi - entity->posY.i.hi) >
+                g_DemonAbilityStats[s_DemonStats.level / 10][3]) {
+            continue;
+        }
+        if (self->facingLeft && self->posX.i.hi < entity->posX.i.hi) {
+            continue;
+        }
+        if (!self->facingLeft && self->posX.i.hi > entity->posX.i.hi) {
+            continue;
+        }
+        if (entity->hitPoints >= 0x7000) {
+            continue;
+        }
+
+        if (entity->flags & FLAG_UNK_80000) {
+            if (entity->hitPoints >=
+                g_DemonAbilityStats[s_DemonStats.level / 10][1]) {
+                found++;
+                s_TargetMatch[i] = 1;
+            }
+        } else {
+            entity->flags |= FLAG_UNK_80000;
+            return entity;
+        }
+    }
+
+    if (found > 0) {
+        foundIndex = s_LastTargetedEntityIndex % EntitySearchCount;
+        for (i = 0; i < EntitySearchCount; i++) {
+            if (s_TargetMatch[foundIndex]) {
+                entity = &g_Entities[STAGE_ENTITY_START + foundIndex];
+                s_LastTargetedEntityIndex =
+                    (foundIndex + 1) % EntitySearchCount;
+                return entity;
+            }
+            foundIndex = (foundIndex + 1) % EntitySearchCount;
+        }
+    }
+
+    return NULL;
+}
+
+#include "../check_entity_valid.h"
+
+void func_us_80172DBC(void) {}
+
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172ED8);
+void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172EF8);
 
@@ -33,7 +133,7 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175C08);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176544);
+void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176564);
 
@@ -78,11 +178,3 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80177690);
 #endif
 
 #include "../servant_unk0.h"
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172A68);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172A9C);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172D50);
-
-INCLUDE_RODATA("servant/tt_003/nonmatchings/demon", func_us_80172DBC);
