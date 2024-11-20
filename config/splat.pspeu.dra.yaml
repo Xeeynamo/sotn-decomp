@@ -30,7 +30,8 @@ options:
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
-    .include "macro.inc"
+sha1: 2ba697c152e240ee0d69619f4a460d145fae04c0
+
 segments:
   - [0x0, bin, mwo_header]
   - name: dra
