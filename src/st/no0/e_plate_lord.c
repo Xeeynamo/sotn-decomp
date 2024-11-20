@@ -350,16 +350,16 @@ void func_us_801D2A64(Entity* self) {
             }
             if (posX > 6) {
                 if (self->facingLeft) {
-                    tempEntity->posX.val += 0x20000;
+                    tempEntity->posX.val += FIX(2);
                 } else {
-                    tempEntity->posX.val += 0xFFFE0000;
+                    tempEntity->posX.val += FIX(-2);
                 }
             } else {
                 counter++;
             }
             func_us_801D27C4(unkStructB, true);
             if (counter == 3) {
-                PlaySfxPositional(0x647);
+                PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->ext.plateLord.unk84 ^= 1;
                 self->step_s++;
             }
@@ -872,7 +872,7 @@ void func_us_801D2A64(Entity* self) {
             tempEntity = self + 1;
             tempEntity->step = 0x10;
             self->ext.plateLord.unk80 = 0x30;
-            PlaySfxPositional(0x694);
+            PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
             self->step_s++;
             break;
         case 5:
