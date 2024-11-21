@@ -278,7 +278,255 @@ void ServantInit(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_DemonStats);
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", UpdateServantDefault);
+//#ifndef NON_MATCHING
+//INCLUDE_ASM("servant/tt_003/nonmatchings/demon", UpdateServantDefault);
+//#else
+extern /*?*/s32 D_us_801719F0;
+extern s8 D_us_80171FE8;
+extern /*?*/s32 D_us_80172092;
+extern s32 D_us_801785C4;
+extern s32 D_us_801785C8;
+extern s16 D_us_801785CC;
+extern s16 D_us_801785D0;
+extern u16 D_us_801785D4;
+extern s16 D_us_801785D8;
+extern u16 D_us_801785DC;
+extern u16 D_us_801785E0;
+extern s32 D_us_801785E4;
+extern s32 D_us_801785E8;
+extern s32 D_us_801785EC;
+extern s32 D_us_801786D8;
+extern u16 PLAYER.facingLeft;
+extern u16 PLAYER.posY.i.hi;
+extern u16 PLAYER_zPriority;
+
+void UpdateServantDefault(Entity* arg0)
+{
+    ServantEvent* var_v1_2;
+    s16 temp_a0;
+    s16 temp_a1_3;
+    s16 temp_a2;
+    s16 temp_v0_3;
+    s16 temp_v0_9;
+    s32 temp_v0;
+    s32 temp_v0_4;
+    s32 temp_v0_5;
+    s32 temp_v0_6;
+    s32 temp_v0_8;
+    s32 temp_v1_2;
+    s32 temp_v1_4;
+    s32 var_a0;
+    s32 var_a0_2;
+    s32 var_a1;
+    s32 var_v0_2;
+    s32 var_v0_4;
+    s32 var_v1;
+    u16 temp_a1;
+    u16 temp_a1_2;
+    u16 temp_v0_2;
+    u16 temp_v1;
+    u16 temp_v1_3;
+    u16 var_v0;
+    u16 var_v0_3;
+    u32 temp_v0_7;
+
+    g_api.GetServantStats(arg0, 0, 0, &s_DemonStats);
+    if (D_us_801786D4 != 0) {
+        arg0->zPriority = PLAYER_zPriority - 2;
+    }
+    if (D_8003C708.flags & 0x20) {
+        temp_v0 = ServantUnk0();
+        switch (temp_v0) {                          // irregular
+            case 0:
+                D_us_801785C4 = 0x40;
+                break;
+            case 1:
+                D_us_801785C4 = 0xC0;
+                break;
+            case 2:
+                var_v1 = 0x40;
+                if (arg0->posX.i.hi >= 0x81) {
+                    var_v1 = 0xC0;
+                }
+                D_us_801785C4 = var_v1;
+                break;
+        }
+        D_us_801785C8 = 0xA0;
+    } else {
+        D_us_801785E0 = -0x18U;
+        if (PLAYER.facingLeft != 0) {
+            D_us_801785E0 = 0x18;
+        }
+        temp_a1 = (u16) arg0->ext.demon.randomMovementAngle;
+        D_us_801785D4 = temp_a1;
+        D_us_801785CC = (u16) g_Entities->posX.i.hi + D_us_801785E0;
+        D_us_801785D0 = PLAYER.posY.i.hi - 0x20;
+        arg0->ext.demon.randomMovementAngle = ((u16) arg0->ext.demon.randomMovementAngle + 0x10) & 0xFFF;
+        D_us_801785DC = (u16) arg0->ext.demon.defaultDistToTargetLoc;
+        D_us_801785C4 = D_us_801785CC + ((s32) (rcos((s32) ((s16) temp_a1 + ((u32) (temp_a1 << 0x10) >> 0x1F)) >> 1) * (s16) D_us_801785DC) >> 0xC);
+        D_us_801785C8 = D_us_801785D0 - ((s32) (rsin((s32) (s16) D_us_801785D4) * ((s16) D_us_801785DC / 2)) >> 0xC);
+    }
+    temp_v1 = arg0->step;
+    switch (temp_v1) {                              // switch 1; irregular
+        case 0:                                     // switch 1
+            func_us_80172DC4(arg0);
+            break;
+        case 1:                                     // switch 1
+            if (D_8003C708.flags & 0x20) {
+                var_v0 = 1;
+                if (g_Entities->posX.i.hi >= arg0->posX.i.hi) {
+                    arg0->facingLeft = 0;
+                } else {
+                    goto block_39;
+                }
+            } else {
+                temp_a1_2 = arg0->facingLeft;
+                if (PLAYER.facingLeft != temp_a1_2) {
+                    temp_a0 = arg0->posX.i.hi;
+                    var_v0_2 = D_us_801785C4 - temp_a0;
+                    if (var_v0_2 < 0) {
+                        var_v0_2 = -var_v0_2;
+                    }
+                    if (var_v0_2 <= 0) {
+                        arg0->facingLeft = PLAYER.facingLeft;
+                    } else if (temp_a1_2 == 0) {
+                        if (D_us_801785C4 < temp_a0) {
+                            arg0->facingLeft = PLAYER.facingLeft;
+                        }
+                    } else if (temp_a0 < D_us_801785C4) {
+                        arg0->facingLeft = PLAYER.facingLeft;
+                    }
+                } else if (PLAYER.facingLeft == 0) {
+                    if ((arg0->posX.i.hi - D_us_801785C4) >= 0x29) {
+                        arg0->facingLeft = 1;
+                    }
+                } else {
+                    var_v0 = PLAYER.facingLeft == 0;
+                    if ((D_us_801785C4 - arg0->posX.i.hi) >= 0x29) {
+block_39:
+                        arg0->facingLeft = var_v0;
+                    }
+                }
+            }
+            temp_v0_2 = CalculateAngleToEntity(arg0, (s16) D_us_801785C4, (s16) D_us_801785C8);
+            D_us_801785D4 = temp_v0_2;
+            temp_v0_3 = GetTargetPositionWithDistanceBuffer((s16) temp_v0_2, arg0->ext.demon.targetAngle, arg0->ext.demon.maxAngle);
+            arg0->ext.demon.targetAngle = temp_v0_3;
+            temp_a2 = (u16) D_us_801785C4 - (u16) arg0->posX.i.hi;
+            temp_a1_3 = (u16) D_us_801785C8 - (u16) arg0->posY.i.hi;
+            D_us_801785D8 = temp_v0_3;
+            D_us_801785CC = temp_a2;
+            D_us_801785D0 = temp_a1_3;
+            temp_v0_4 = SquareRoot12(((temp_a2 * temp_a2) + (temp_a1_3 * temp_a1_3)) << 0xC) >> 0xC;
+            D_us_801785DC = (u16) temp_v0_4;
+            if ((s16) temp_v0_4 < 0x28) {
+                arg0->velocityY = -(rsin((s32) D_us_801785D8) * 8);
+                arg0->velocityX = rcos((s32) D_us_801785D8) * 8;
+                arg0->ext.demon.maxAngle = 0x20;
+            } else if ((s16) temp_v0_4 < 0x3C) {
+                arg0->velocityY = -(rsin((s32) D_us_801785D8) * 0x10);
+                arg0->velocityX = rcos((s32) D_us_801785D8) * 0x10;
+                arg0->ext.demon.maxAngle = 0x40;
+            } else if ((s16) temp_v0_4 < 0x64) {
+                arg0->velocityY = -(rsin((s32) D_us_801785D8) << 5);
+                arg0->velocityX = rcos((s32) D_us_801785D8) << 5;
+                arg0->ext.demon.maxAngle = 0x60;
+            } else if ((s16) temp_v0_4 < 0x100) {
+                arg0->velocityY = -(rsin((s32) D_us_801785D8) << 6);
+                arg0->velocityX = rcos((s32) D_us_801785D8) << 6;
+                arg0->ext.demon.maxAngle = 0x80;
+            } else {
+                arg0->ext.demon.maxAngle = 0x80;
+                arg0->velocityX = (D_us_801785C4 - arg0->posX.i.hi) << 0xE;
+                arg0->velocityY = (D_us_801785C8 - arg0->posY.i.hi) << 0xE;
+            }
+            if (arg0->velocityY > 0x10000) {
+                var_a1 = 0xA;
+                goto block_54;
+            }
+            var_a1 = 0;
+            if ((s16) D_us_801785DC >= 0x3C) {
+                if ((s16) D_us_801785DC >= 0x65) {
+                    var_a1 = 0xB;
+                    goto block_54;
+                }
+            } else {
+block_54:
+                SetAnimationFrame(arg0, var_a1);
+            }
+            arg0->posX.val += arg0->velocityX;
+            arg0->posY.val += arg0->velocityY;
+            if (g_CutsceneHasControl == 0) {
+                temp_v1_2 = D_us_801785C4 - arg0->posX.i.hi;
+                temp_v0_5 = D_us_801785C8 - arg0->posY.i.hi;
+                D_us_801785E4 = temp_v1_2;
+                D_us_801785E8 = temp_v0_5;
+                temp_v0_6 = SquareRoot12(((temp_v1_2 * temp_v1_2) + (temp_v0_5 * temp_v0_5)) << 0xC) >> 0xC;
+                D_us_801785EC = temp_v0_6;
+                if (temp_v0_6 < 0x20) {
+                    temp_v1_3 = arg0->ext.ILLEGAL.u16[8] + 1;
+                    arg0->ext.ILLEGAL.u16[8] = temp_v1_3;
+                    if (*g_DemonAbilityStats[s_DemonStats.level / 10] < (s16) temp_v1_3) {
+                        arg0->ext.ILLEGAL.u16[8] = 0;
+                        temp_v0_7 = FindValidTarget(arg0);
+                        arg0->ext.ILLEGAL.u32[0xA] = temp_v0_7;
+                        if (temp_v0_7 != 0) {
+                            temp_v0_8 = rand();
+                            var_a0 = temp_v0_8;
+                            if (temp_v0_8 < 0) {
+                                var_a0 = temp_v0_8 + 0xFF;
+                            }
+                            var_v0_3 = 0xD3;
+                            if (*(&D_us_801719F0 + ((s_DemonStats.level / 10) * 0xC)) >= (temp_v0_8 - ((var_a0 >> 8) << 8))) {
+                                var_v0_3 = 0xD2;
+                            }
+                            arg0->entityId = var_v0_3;
+                            arg0->step = 0;
+                        }
+                    }
+                }
+                if (s_ServantId == 7) {
+                    if ((g_CutsceneHasControl == 0) && (IsMovementAllowed(1) == 0) && (CheckAllEntitiesValid() == 0) && !(D_8003C708.flags & 0x20) && (D_us_801786D0 == 0)) {
+                        temp_v0_9 = (s16) arg0->ext.ILLEGAL.u16[0x12];
+                        if (temp_v0_9 < 0x4651) {
+                            arg0->ext.ILLEGAL.u16[0x12] = temp_v0_9 + 1;
+                        }
+                    } else {
+                        arg0->ext.ILLEGAL.u16[0x12] = 0;
+                    }
+                    if ((s16) arg0->ext.ILLEGAL.u16[0x12] == 0x4650) {
+                        var_v0_4 = rand();
+                        temp_v1_4 = var_v0_4;
+                        var_a0_2 = 0;
+                        if (temp_v1_4 < 0) {
+                            var_v0_4 = temp_v1_4 + 0xFF;
+                        }
+                        var_v1_2 = g_Events;
+loop_77:
+                        if (*var_v1_2 < (temp_v1_4 - ((var_v0_4 >> 8) << 8))) {
+                            var_v1_2 += 4;
+                            var_a0_2 += 1;
+                            goto loop_77;
+                        }
+                        CreateEventEntity(arg0, 0xD9, (s32) *(&D_us_80172092 + (var_a0_2 * 4)));
+                    }
+                }
+                if (D_us_801786D0 == 2) {
+                    D_us_801786D8 = 0;
+                    CreateEventEntity(arg0, 0xD7, 0);
+                    arg0->entityId = 0xD6;
+                    arg0->step = 0;
+                }
+            }
+            break;
+    }
+    ProcessEvent(arg0, false);
+    unused_2DBC();
+    ServantUpdateAnim(arg0, &D_us_80171FE8, g_DemonAnimationFrames);
+}
+// Warning: struct draculaPrimitive is not defined (only forward-declared)
+// Warning: struct Primitve is not defined (only forward-declared)
+//#endif
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80174FD0);
 
