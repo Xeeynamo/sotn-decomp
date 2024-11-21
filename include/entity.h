@@ -657,6 +657,17 @@ typedef struct {
     /* 0xB4 */ s16 unkB4;
 } ET_Faerie;
 
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 isAbilityInitialized;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 randomMovementAngle;
+    /* 0x86 */ s16 targetAngle;
+    /* 0x88 */ s16 defaultDistToTargetLoc;
+    /* 0x8A */ s16 maxAngle;
+} ET_Demon;
+
 struct draculaPrimitive;
 typedef struct ET_Dracula {
     /* 0x7C */ char pad_7C[4];
@@ -2169,6 +2180,7 @@ typedef union { // offset=0x7C
     ET_FaerieWings faerieWings;
     ET_FaerieItem faerieItem;
     ET_FaerieLifeApple faerieLifeApple;
+    ET_Demon demon;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
