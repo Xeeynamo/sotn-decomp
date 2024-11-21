@@ -37,7 +37,39 @@ static s32 D_us_801782BC;
 static s32 D_us_801782C0;
 static s32 D_us_801782C4;
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80172420);
+extern Entity D_800736C8;
+extern Entity D_80073784[];
+
+void func_us_80172420(Entity* self, s32 entityId) {
+    Entity* entity;
+    s32 i;
+
+    if (self == NULL) {
+        self = &D_800736C8;
+    }
+
+    for (i = 0; i < 3; i++) {
+        entity = D_80073784 + i;
+        if (entity->entityId == entityId + 0xDA) {
+            return;
+        }
+
+        if (!entity->entityId) {
+            break;
+        }
+    }
+
+    if (!entity->entityId) {
+        DestroyEntity(entity);
+        entity->entityId = entityId + 0xDA;
+        entity->zPriority = self->zPriority;
+        entity->facingLeft = self->facingLeft;
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->posX.val = self->posX.val;
+        entity->posY.val = self->posY.val;
+        entity->ext.factory.parent = self;
+    }
+}
 
 void func_us_801724E8(Entity* self, s32 arg1, u32 params) {
     Entity* entity;
