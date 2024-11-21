@@ -1037,6 +1037,8 @@ typedef enum {
     FAM_ABILITY_BAT_ATTACK = 15,
     FAM_ABILITY_GHOST_ATTACK = 17,
     FAM_ABILITY_GHOST_ATTACK_SOULSTEAL = 18,
+    FAM_ABILITY_SWORD_UNK19 = 19,
+    FAM_ABILITY_SWORD_UNK20 = 20,
 } FamiliarAbilityIds;
 
 // Need two familiar enums. One has a zero entry, one does not.

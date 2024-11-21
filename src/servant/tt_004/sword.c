@@ -380,8 +380,8 @@ Entity* func_us_80173AA0(Entity* self) {
         D_us_80178344[i] = 0;
         if (entity->entityId && entity->hitboxState != 0 &&
             !(entity->flags & FLAG_UNK_00200000) &&
-            *((s16*)&entity->posX.i.hi) >= -16 && entity->posX.i.hi <= 272 &&
-            *((s16*)&entity->posY.i.hi) <= 240 && entity->posY.i.hi >= 0 &&
+            LOH(entity->posX.i.hi) >= -16 && entity->posX.i.hi <= 272 &&
+            LOH(entity->posY.i.hi) <= 240 && entity->posY.i.hi >= 0 &&
             entity->hitPoints < 0x7000) {
             if (entity->flags & FLAG_UNK_80000) {
                 hitFlag++;
@@ -501,9 +501,9 @@ void func_us_80177480(Entity* self) {
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         flag = D_us_801700A0[(s_SwordStats.level / 10) * 3];
         if (flag) {
-            spellId = 20;
+            spellId = FAM_ABILITY_SWORD_UNK20;
         } else {
-            spellId = 19;
+            spellId = FAM_ABILITY_SWORD_UNK19;
         }
 
         g_api.GetServantStats(self, spellId, 1, &s_SwordStats);
