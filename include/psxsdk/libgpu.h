@@ -535,7 +535,7 @@ extern u_short LoadTPage(
     int w, int h  // Texture pattern size
 );
 
-extern u_short LoadClut2(u_long* clut, int x, int y);
+extern u_short LoadClut(u_long* clut, int x, int y);
 
 /**
  * Calculates and returns the texture CLUT ID.

@@ -19,8 +19,8 @@ void EntityBreakable(Entity* entity) {
         if (entity->hitParams) { // If the candle is destroyed
             Entity* entityDropItem;
 #if defined(STAGE_IS_NO0)
-            breakableType == 1 ? g_api_PlaySfx(SFX_GLASS_BREAK_C)
-                               : g_api_PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
+            breakableType == 1 ? g_api.PlaySfx(SFX_GLASS_BREAK_C)
+                               : g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_A);
 #else
             g_api.PlaySfx(SFX_BREAKABLE_HIT);
 #endif
