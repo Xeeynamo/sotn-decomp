@@ -717,7 +717,7 @@ void HandleEnding(void) {
             StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
             LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x80194000);
             StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
-            LoadClut2(g_Clut, 0x200, 0xF0);
+            LoadClut(g_Clut, 0x200, 0xF0);
         } else {
             if (LoadFileSim(14, SimFileType_System) < 0) {
                 break;
@@ -734,7 +734,7 @@ void HandleEnding(void) {
             if (LoadFileSim(4, SimFileType_System) < 0) {
                 break;
             }
-            LoadClut2(g_Clut, 0x200, 0xF0);
+            LoadClut(g_Clut, 0x200, 0xF0);
         }
         g_GameStep++;
         break;

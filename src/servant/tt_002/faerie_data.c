@@ -21,11 +21,7 @@ static FaerieSfxEventDesc s_IntroEventCommandVO[] = {
     { 0, 34, NA_VO_FAERIE_INTRO_COMMAND },
     {-1, 14, 0}};
 
-#ifdef VERSION_PC
-s64 g_FaerieIntroRandomizer[] = {
-#else
-s32 g_FaerieIntroRandomizer[] = {
-#endif
+s32* g_FaerieIntroRandomizer[] = {
     0x0000007F, s_IntroEventLifeVO, 0x000000FF, s_IntroEventCommandVO};
 
 static FaerieSfxEventDesc s_SfxEventLetsGo[] = {
@@ -35,11 +31,7 @@ static FaerieSfxEventDesc s_SfxEventFollow[] = {
     { 0, 38, NA_VO_FAERIE_FOLLOW },
     {-1, 14, 0}};
 
-#ifdef VERSION_PC
-s64 g_SfxEventRandomizer[] = {
-#else
-s32 g_SfxEventRandomizer[] = {
-#endif
+s32* g_SfxEventRandomizer[] = {
     0x0000007F, s_SfxEventLetsGo, 0x000000FF, s_SfxEventFollow};
 
 // position data with a flag field

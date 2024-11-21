@@ -146,7 +146,37 @@ static Entity* FindValidTarget(Entity* self) {
 
 void unused_2DBC(void) {}
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80172DC4);
+// This is likey the analog to Faerie.ExecuteAbilityInitialize
+void func_us_80172DC4(Entity* self) {
+    if (!self->ext.demon.isAbilityInitialized) {
+        if ((self->entityId == 0xD1) || (self->entityId == 0xD8)) {
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            SetAnimationFrame(self, 0);
+
+            self->ext.demon.randomMovementAngle = rand() % 4096;
+            self->ext.demon.defaultDistToTargetLoc = 8;
+            self->ext.demon.targetAngle = 0;
+            self->ext.demon.maxAngle = 0x20;
+            self->step++;
+        }
+    } else {
+        switch (self->entityId) {
+        case 0xD1:
+        case 0xD2:
+        case 0xD3:
+        case 0xD6:
+        case 0xD8:
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_UNK_20000;
+            SetAnimationFrame(self, 0);
+            self->step++;
+            break;
+        }
+    }
+    D_us_801786D0 = 0;
+    self->ext.demon.isAbilityInitialized = self->entityId;
+}
 
 void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
@@ -266,8 +296,8 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-void FunctionPointerPassthrough(Entity* arg0) {
-    s_PassthroughFunctions[arg0->params](arg0);
+void FunctionPointerPassthrough(Entity* self) {
+    s_PassthroughFunctions[self->params](self);
 }
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801765A0);
