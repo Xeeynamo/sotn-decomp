@@ -58,7 +58,6 @@ bool func_us_801D29F8(s16* arg0, s32 arg1, s32 arg2) {
     return false;
 }
 
-extern Entity D_8007D858[];
 extern u16 D_us_80180B84[];
 extern Point32 D_us_80181F80[];
 extern Point16 D_us_80181F90[];
@@ -569,7 +568,7 @@ void func_us_801D2A64(Entity* self) {
                 self->velocityX -= FIX(0.125);
             }
 
-            if (abs(self->velocityX) == 0xC000) {
+            if (abs(self->velocityX) == FIX(0.75)) {
                 self->step_s = 0;
                 self->step = 6;
             }
@@ -888,7 +887,7 @@ void func_us_801D2A64(Entity* self) {
                 posY = self->posY.i.hi;
                 posX += (Random() & 0x1F) - 0x10;
                 posY += (Random() & 0x1F) - 0x10;
-                tempEntity = AllocEntity(D_8007D858, D_8007D858 + 32);
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     CreateEntityFromCurrentEntity(2, tempEntity);
                     tempEntity->params = 1;
