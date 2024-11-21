@@ -2113,6 +2113,20 @@ typedef struct {
 } ET_Skelerang;
 
 typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ u32 velocityY;
+    /* 0x9C */ s16 : 16;
+    /* 0x9E */ u8 unk9E;
+    /* 0x9F */ u8 unk9F;
+} ET_Diplocephalus;
+
+typedef struct {
     /* 0x00 */ struct Entity* unk0;
     /* 0x04 */ s16 unk4;
     /* 0x06 */ s16 unk6;
@@ -2335,6 +2349,7 @@ typedef union { // offset=0x7C
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
     ET_Skelerang skelerang;
+    ET_Diplocephalus diplocephalus;
     ET_PlateLord plateLord;
     ET_UnkPlatelordPlus3 unkPlatelordPlus3;
 } Ext;
