@@ -174,7 +174,8 @@ void EntityUnkId23(Entity* self) {
                     g_Player.padSim = PAD_R2;
                 }
             }
-        } else if ((g_Player.pl_vram_flag & 1) && (g_CutsceneFlags & 2)) {
+        } else if ((g_Player.pl_vram_flag & TOUCHING_GROUND) &&
+                   (g_CutsceneFlags & 2)) {
             diff = player->posX.i.hi - ent->posX.i.hi;
             if (diff < -0x50) {
                 g_Player.padSim = PAD_RIGHT;

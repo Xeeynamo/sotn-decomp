@@ -690,7 +690,8 @@ void EntityHitByLightning(Entity* self) {
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
         if ((self->ext.hitbylightning.unk92 != 0) &&
-            (g_Player.pl_vram_flag & 0xE)) {
+            (g_Player.pl_vram_flag &
+             (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING))) {
             var_s0 = true;
         }
         if (var_s0) {
@@ -839,7 +840,7 @@ void EntityHitByIce(Entity* self) {
         // Could rewrite as a series of && and || but that would probably reduce
         // readability
         if (self->ext.hitbyice.unk7E != 0) {
-            if (g_Player.pl_vram_flag & 0xC) {
+            if (g_Player.pl_vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
                 sp18 = true;
             }
             if (PLAYER.step == Player_Hit && PLAYER.step_s == 5) {

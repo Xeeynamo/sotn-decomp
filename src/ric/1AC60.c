@@ -120,7 +120,7 @@ void RicInit(s16 initParam) {
         *memset_ptr++ = 0;
     }
     g_Player.unk04 = 1;
-    g_Player.pl_vram_flag = 1;
+    g_Player.pl_vram_flag = TOUCHING_GROUND;
     RicSetStand(0);
     PLAYER.anim = ric_anim_stand_relax;
     g_Player.unk5C = initParam;

@@ -227,7 +227,7 @@ void func_801120B4(void) {
     s32 atLedge;
 
     atLedge = 0;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.pl_vram_flag & IN_AIR_OR_EDGE) {
         atLedge = 1;
     }
 
@@ -420,7 +420,7 @@ void func_801120B4(void) {
         func_8010DFF0(1, 1);
         local_flags = 0;
         if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
-            (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
+            (g_Player.pl_vram_flag & TOUCHING_GROUND) && (g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
         if ((u16)PLAYER.animFrameIdx >= (u16)g_Player.unk54) {
@@ -431,7 +431,7 @@ void func_801120B4(void) {
             local_flags = 0xF;
         }
         if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
-            !(g_Player.pl_vram_flag & 1)) {
+            !(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             PLAYER.animFrameIdx = 5;
             PLAYER.ext.player.anim = 0x6C;
             PLAYER.step = 4;

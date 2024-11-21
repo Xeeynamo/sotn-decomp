@@ -637,7 +637,7 @@ void func_8011B5A4(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Player.pl_vram_flag & 0x8000) {
+            if (g_Player.pl_vram_flag & STANDING_ANY_SLOPE) {
                 posX /= 2;
             }
         }

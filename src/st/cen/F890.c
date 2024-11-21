@@ -146,7 +146,7 @@ void EntityPlatform(Entity* self) {
                 }
             }
         } else {
-            if ((temp_a1 != 0) || (g_Player.pl_vram_flag & 1)) {
+            if ((temp_a1 != 0) || (g_Player.pl_vram_flag & TOUCHING_GROUND)) {
                 if (temp_s1 > 384) {
                     g_Player.padSim = PAD_LEFT;
                 } else if (temp_s1 < 384) {
@@ -655,7 +655,7 @@ void EntityMovingElevator(Entity* self) {
         g_Player.padSim = 0;
         self->posY.val += FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
-        g_Player.pl_vram_flag = 0x41;
+        g_Player.pl_vram_flag = VRAM_UNK40 | TOUCHING_GROUND;
         break;
 
     case 2:
@@ -663,7 +663,7 @@ void EntityMovingElevator(Entity* self) {
         g_Player.padSim = 0;
         self->posY.val -= FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
-        g_Player.pl_vram_flag = 0x41;
+        g_Player.pl_vram_flag = VRAM_UNK40 | TOUCHING_GROUND;
         break;
     }
     prim = self->ext.cenElevator.prim;

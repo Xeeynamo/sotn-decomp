@@ -14,7 +14,7 @@ void PlayerStepJump(void) {
                 !(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = FIX(-1);
             }
-            if (g_Player.pl_vram_flag & 2) {
+            if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
                 PLAYER.velocityY = FIX(-0.25);
                 g_Player.unk44 |= 0x20;
             }
@@ -199,7 +199,7 @@ void func_801131C4(void) {
     local_flags = 0;
 
     atLedge = 0;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.pl_vram_flag & IN_AIR_OR_EDGE) {
         atLedge = 1;
     }
 
@@ -481,7 +481,7 @@ void func_80113AAC(void) {
 
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
             func_801139CC(3);
             if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
@@ -502,7 +502,7 @@ void func_80113AAC(void) {
         break;
 
     case 1:
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
             PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
@@ -875,16 +875,19 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         break;
     case 2:
     case 15:
-        if ((g_Player.unk04 & 0x8000) && !(g_Player.pl_vram_flag & 0x8000)) {
+        if ((g_Player.unk04 & 0x8000) &&
+            !(g_Player.pl_vram_flag & STANDING_ANY_SLOPE)) {
             goto deepcond;
         }
-        if ((g_Player.pl_vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+        if ((g_Player.pl_vram_flag & STANDING_ANY_SLOPE) &&
+            !(g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 10), 0);
         }
-        if (!(g_Player.pl_vram_flag & 0xE)) {
+        if (!(g_Player.pl_vram_flag &
+              (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING))) {
             break;
         }
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & TOUCHING_CEILING) {
             func_801139CC(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
@@ -973,12 +976,18 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 5:
         DecelerateX(FIX(1.0 / 8));
         if (g_Player.timers[8]) {
-            if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
+            if ((g_Player.pl_vram_flag & TOUCHING_CEILING) &&
+                !(g_GameTimer & 3)) {
                 func_801139CC(0);
             }
             break;
-        } else if (g_Player.pl_vram_flag & 0xC) {
-            if (!(g_Player.pl_vram_flag & 0xFF03)) {
+        } else if (
+            g_Player.pl_vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
+            if (!(g_Player.pl_vram_flag &
+                  (STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE | VRAM_UNK2000 |
+                   STANDING_SLIGHT_SLOPE | TOUCHING_CEILING_SLOPE |
+                   VRAM_UNK400 | VRAM_UNK200 | VRAM_UNK100 | TOUCHING_CEILING |
+                   TOUCHING_GROUND))) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
                     PLAYER.velocityY = FIX(7);
@@ -1011,7 +1020,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 6:
     case 7:
         DecelerateX(FIX(1.0 / 8));
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             func_8010E7AC();
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -1040,7 +1049,7 @@ void func_80114DF4(s32 arg0) {
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-4);
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             PLAYER.velocityY = FIX(-2);
         }
         func_8010E3B8(FIX(-1.25));
@@ -1095,7 +1104,7 @@ void func_80114DF4(s32 arg0) {
         do {
         } while (0);
 
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.pl_vram_flag & TOUCHING_GROUND)) {
             PLAYER.velocityY += yShift;
             if (PLAYER.velocityY > FIX(7)) {
                 PLAYER.velocityY = FIX(7);
@@ -1376,7 +1385,7 @@ void func_80115BB0(void) {
     PLAYER.animFrameDuration = 4;
 
     if (g_unkGraphicsStruct.unk20 == 0) {
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
             func_8010E7AC();

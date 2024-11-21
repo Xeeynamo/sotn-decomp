@@ -41,7 +41,7 @@ static void EntityWeaponAttack(Entity* self) {
     if ((g_Player.status & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
         self->zPriority = PLAYER.zPriority + 2;
         self->step = 4;
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.pl_vram_flag & TOUCHING_GROUND) {
             self->velocityX = PLAYER.velocityX;
         } else {
             self->velocityX = PLAYER.velocityX * 2;
