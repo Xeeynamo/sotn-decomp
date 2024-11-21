@@ -2112,6 +2112,49 @@ typedef struct {
     /* 0x84 */ s16 unk84;
 } ET_Skelerang;
 
+typedef struct {
+    /* 0x00 */ struct Entity* unk0;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ Point32 unk8;
+    /* 0x10 */ Point32* unk10;
+} unk_PlatelordStruct; /* size = 0x14 */
+
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ unk_PlatelordStruct unk88;
+    /* 0x9C */ unk_PlatelordStruct unk9C;
+    /* 0xB0 */ s16 unkB0;
+} ET_PlateLord;
+
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 : 16;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ s16 unk9C[10];
+    /* 0xB0 */ s16 unkB0;
+} ET_UnkPlatelordPlus3;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2292,6 +2335,8 @@ typedef union { // offset=0x7C
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
     ET_Skelerang skelerang;
+    ET_PlateLord plateLord;
+    ET_UnkPlatelordPlus3 unkPlatelordPlus3;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
