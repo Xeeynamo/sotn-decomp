@@ -932,7 +932,193 @@ void func_us_801D2A64(Entity* self) {
 
 INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4324);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D44A0);
+extern SVECTOR D_us_80181F98;
+extern SVECTOR D_us_801C1684[];
+
+void func_us_801D44A0(Entity* self) {
+    long sp70;
+    long unusedA;
+    long unusedB;
+    Point32 sp20;
+    Point32 sp28;
+    SVECTOR rot;
+    VECTOR trans;
+    MATRIX m;
+    SVECTOR sp6B;
+    Entity* tempEntity;
+    Primitive* prim;
+    s32 posX;
+    s32 posY;
+    s32 primIndex;
+    s32 var_s3;
+
+    sp6B = D_us_801C1684[0];
+    tempEntity = self - 3;
+    self->facingLeft = tempEntity->facingLeft;
+    self->rotZ = (self->ext.unkPlatelordPlus3.unkB0 - 0x800) / 2;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180B84);
+        self->hitPoints = 0x7FFE;
+        self->animCurFrame = 2;
+        self->ext.unkPlatelordPlus3.unkB0 = 0x780;
+        self->zPriority = 0xB1;
+        self->hitboxWidth = 0xC;
+        self->hitboxHeight = 0xC;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
+
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        prim->type = PRIM_GT4;
+        prim->tpage = 0x13;
+        prim->clut = 0x22C;
+        setUV4(prim, 0x37, 0x0, 0x3F, 0x5, 0x30, 0xC, 0x38, 0x10);
+        setRGB0(prim, 0x40, 0xC0, 0x80);
+        setRGB1(prim, 0x80, 0x0, 0xC0);
+        prim->priority = 0xB4;
+        prim->drawMode = DRAW_UNK02;
+
+        prim = prim->next;
+        prim->type = PRIM_GT4;
+        prim->tpage = 0x13;
+        prim->clut = 0x22B;
+        setUV4(prim, 0x50, 0x10, 0x50, 0x20, 0x38, 0x10, 0x38, 0x20);
+        prim->priority = 0xB5;
+        prim->drawMode = DRAW_UNK02;
+        prim->r0 = 0x80;
+        prim->g1 = 0x80;
+        prim->b2 = 0x80;
+        prim->r3 = prim->g3 = 0xC0;
+
+        self->ext.unkPlatelordPlus3.unk80 = 0x180;
+        self->ext.unkPlatelordPlus3.unk94 = 0x100;
+        self->ext.unkPlatelordPlus3.unk96 = -0x1C0;
+        self->ext.unkPlatelordPlus3.unk98 = 0x200;
+
+        return;
+    case 9:
+        break;
+    }
+    tempEntity = self - 3;
+    func_801CD78C((Point32*)&tempEntity->posX, 0x10,
+                  self->ext.unkPlatelordPlus3.unkB0, (Point32*)&self->posX);
+    if (self->step == 9) {
+        posX = rcos(self->ext.unkPlatelordPlus3.unk82) * 0x10;
+        if (self->facingLeft) {
+            self->posX.val -= posX;
+        } else {
+            self->posX.val += posX;
+        }
+    }
+    tempEntity = self + 4;
+    func_801CD78C((Point32*)&self->posX, 8, self->ext.unkPlatelordPlus3.unk98,
+                  (Point32*)&tempEntity->posX);
+    tempEntity->rotZ = self->ext.unkPlatelordPlus3.unk98 - 0x200;
+    tempEntity = self + 5;
+    func_801CD78C(
+        (Point32*)&self->posX, 0x12, self->ext.unkPlatelordPlus3.unk98,
+        (Point32*)&tempEntity->posX);
+    tempEntity->rotZ = self->ext.unkPlatelordPlus3.unk98 - 0x200;
+    posX = self->posX.i.hi;
+    posY = self->posY.i.hi;
+
+    if (self->animCurFrame == 2) {
+        posY -= 6;
+        if (self->facingLeft) {
+            posX -= 0xC;
+        } else {
+            posX += 0xC;
+        }
+    } else {
+        posY += 6;
+        if (self->facingLeft) {
+            posX += 0xA;
+        } else {
+            posX -= 0xA;
+        }
+    }
+    F(sp20.x).i.hi = posX;
+    F(sp20.y).i.hi = posY;
+    if (self->step == 9) {
+        posX = (rcos(self->ext.unkPlatelordPlus3.unk82) << 1) << 4;
+        if (self->facingLeft) {
+            sp20.x -= posX;
+        } else {
+            sp20.x += posX;
+        }
+    }
+    tempEntity = self + 3;
+    tempEntity->posX.val = sp20.x;
+    tempEntity->posY.val = sp20.y;
+    func_801CD78C(&sp20, -3, self->ext.unkPlatelordPlus3.unk96, &sp20);
+    rot.vx = self->ext.unkPlatelordPlus3.unk94;
+    rot.vy = 0;
+    rot.vz = self->ext.unkPlatelordPlus3.unk96;
+    if (self->step == 9) {
+        rot.vz += rcos(self->ext.unkPlatelordPlus3.unk82) >> 5;
+    }
+    RotMatrix(&D_us_80181F98, &m);
+    RotMatrixX(rot.vx, &m);
+    RotMatrixZ(rot.vz, &m);
+    if (self->facingLeft) {
+        RotMatrixY(0x800, &m);
+    }
+    trans.vx = 0;
+    trans.vy = 0;
+    trans.vz = 0x400;
+    TransMatrix(&m, &trans);
+    SetRotMatrix(&m);
+    SetTransMatrix(&m);
+    SetGeomScreen(0x400);
+    SetGeomOffset(F(sp20.x).i.hi, F(sp20.y).i.hi);
+    RotTransPers(&sp6B, &sp70, &unusedA, &unusedB);
+    F(sp28.x).i.hi = sp70 & 0xFFFF;
+    F(sp28.y).i.hi = sp70 >> 0x10;
+    prim = self->ext.prim;
+    func_us_801D2424(&sp20, rot.vz, 4, &sp28, rot.vz, 4, prim);
+    if (self->palette & 0x8000) {
+        prim->clut = self->palette & 0xFFF;
+    } else {
+        prim->clut = 0x22C;
+    }
+    prim = prim->next;
+    F(sp20.x).i.hi = sp70 & 0xFFFF;
+    F(sp20.y).i.hi = sp70 >> 0x10;
+    func_801CD78C(&sp20, -5, self->ext.unkPlatelordPlus3.unk80, &sp20);
+    tempEntity = self + 2;
+    func_801CD78C(&sp20, 0x1A, self->ext.unkPlatelordPlus3.unk80,
+                  (Point32*)&tempEntity->posX);
+    tempEntity->rotZ = self->ext.unkPlatelordPlus3.unk80 - 0x600;
+    var_s3 = self->ext.unkPlatelordPlus3.unk80;
+    if (self->step == 9) {
+        posX = rcos(self->ext.unkPlatelordPlus3.unk82) * 0xD0;
+        if (self->facingLeft) {
+            tempEntity->posX.val -= posX;
+        } else {
+            tempEntity->posX.val += posX;
+        }
+        self->ext.unkPlatelordPlus3.unk82 += self->ext.unkPlatelordPlus3.unk84;
+        self->ext.unkPlatelordPlus3.unk86 += 2;
+        self->ext.unkPlatelordPlus3.unk84 =
+            (self->ext.unkPlatelordPlus3.unk86 << 7) >> 8;
+        var_s3 += ratan2(posX >> 0x10, 0x1A);
+    }
+    func_us_801D2424(
+        &sp20, var_s3, 8, (Point32*)&tempEntity->posX, var_s3, 8, prim);
+
+    if (self->palette & 0x8000) {
+        prim->clut = self->palette & 0xFFF;
+    } else {
+        prim->clut = 0x22B;
+    }
+}
 
 INCLUDE_RODATA("st/no0/nonmatchings/e_plate_lord", D_us_801C1684);
 
