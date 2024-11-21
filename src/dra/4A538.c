@@ -283,7 +283,7 @@ void func_800EA7CC(void) {
     clutX = 0x200;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
-            LoadClut2(temp_s0, clutX, i);
+            LoadClut(temp_s0, clutX, i);
         }
     }
 
@@ -291,7 +291,7 @@ void func_800EA7CC(void) {
     clutX = 0;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
-            LoadClut2(temp_s0, clutX, i);
+            LoadClut(temp_s0, clutX, i);
         }
     }
 
@@ -299,7 +299,7 @@ void func_800EA7CC(void) {
     clutX = 0x100;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset]) {
-            LoadClut2(temp_s0, clutX, i);
+            LoadClut(temp_s0, clutX, i);
         }
     }
 }
@@ -607,8 +607,8 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
             D_800705CC[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
         }
 
-        LoadClut2(D_800705CC, 0, 0xFD);
-        LoadClut2(D_800705CC + 0x100, 0, 0xFE);
+        LoadClut(D_800705CC, 0, 0xFD);
+        LoadClut(D_800705CC + 0x100, 0, 0xFE);
     }
     if (D_800973EC == 0) {
         D_80137478[index] = equipIcon;
