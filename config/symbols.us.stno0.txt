@@ -185,6 +185,7 @@ EntityStoneDoor = 0x801CE0F8;
 EntityClockRoomUnused = 0x801CE2D8;
 StageNamePopupHelper = 0x801CE654;
 EntityStageNamePopup = 0x801CE824;
+EntityDiplocephalusFoot = 0x801CF670;
 EntitySkelerang = 0x801D191C;
 EntitySkelerangBoomerang = 0x801D20A4;
 EntitySkelerangUnknown = 0x801D2318;

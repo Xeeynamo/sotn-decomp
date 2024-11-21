@@ -91,6 +91,9 @@ extern EInit g_EInitCtulhu;
 extern EInit g_EInitCtulhuFireball;
 extern EInit g_EInitCtulhuIceShockwave;
 
+// Diplocephalus
+extern EInit g_EInitDiplocephalusFoot;
+
 // Clock room
 extern EInit g_Statues;
 
