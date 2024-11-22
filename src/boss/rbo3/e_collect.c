@@ -8,14 +8,11 @@
 
 #include "../../st/prize_drop_fall2.h"
 
-// // INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", CollectHeart);
 #include "../../st/collect_heart.h"
 
-// // INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", CollectGold);
 #include "../../st/collect_gold.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", CollectSubweapon);
-// #include "../../st/collect_subweapon.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", CollectHeartVessel);
 
@@ -50,4 +47,3 @@ INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", EntityPrizeDrop);
 #include "../../st/blink_item.h"
 
 INCLUDE_ASM("boss/rbo3/nonmatchings/e_collect", EntityEquipItemDrop);
-// #include "../../st/entity_equip_item_drop.h"
