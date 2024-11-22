@@ -2113,17 +2113,21 @@ typedef struct {
 } ET_Skelerang;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s32 : 32;
+    /* 0x7C */ struct Entity* parent;
+    /* 0x80 */ struct Entity* entity;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
+    /* 0x90 */ Point32* unk90;
     /* 0x94 */ s32 : 32;
-    /* 0x98 */ u32 velocityY;
+    /* 0x98 */ s32 velocityY;
     /* 0x9C */ s16 : 16;
     /* 0x9E */ u8 unk9E;
     /* 0x9F */ u8 unk9F;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ s32 posX;
+    /* 0xA8 */ s32 posY;
+    /* 0xAC */ s32 unkAC;
 } ET_Diplocephalus;
 
 typedef struct {
