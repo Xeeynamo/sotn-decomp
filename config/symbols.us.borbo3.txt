@@ -54,8 +54,9 @@ CreateEntitiesToTheRight = 0x80195120;
 CreateEntitiesToTheLeft = 0x8019521C;
 FindFirstEntityAbove = 0x80195330; 
 FindFirstEntityBelow = 0x8019537C;
-CreateEntitiesAbove = 0x801953D4; // above
-CreateEntitiesBelow = 0x801954D0; // belowInitRoomEntities = 0x801955E4;
+CreateEntitiesAbove = 0x801953D4; 
+CreateEntitiesBelow = 0x801954D0; 
+InitRoomEntities = 0x801955E4;
 UpdateRoomPosition = 0x8019575C;
 CreateEntityFromCurrentEntity = 0x80195810;
 CreateEntityFromEntity = 0x80195884;
