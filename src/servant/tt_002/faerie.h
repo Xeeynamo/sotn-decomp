@@ -105,11 +105,5 @@ typedef struct {
 } ItemPrimitiveParams; // size = 0x1C
 
 extern SpriteParts* g_FaerieSpriteParts[];
-
-#ifdef PLATFORM_64BIT
-extern s64 g_FaerieIntroRandomizer[];
-extern s64 g_SfxEventRandomizer[];
-#else
-extern s32 g_FaerieIntroRandomizer[];
-extern s32 g_SfxEventRandomizer[];
-#endif
+extern s32* g_FaerieIntroRandomizer[];
+extern s32* g_SfxEventRandomizer[];

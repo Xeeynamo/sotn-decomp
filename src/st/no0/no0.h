@@ -33,7 +33,12 @@ typedef enum EntityIDs {
     /* 0x2E */ E_SKELERANG = 0x2E,
     /* 0x2F */ E_SKELERANG_BOOMERANG,
     /* 0x30 */ E_SKELERANG_UNK,
-    /* 0x37 */ E_GHOST_ENEMY = 0x37,
+    /* 0x32 */ E_ID_32 = 0x32,
+    /* 0x33 */ E_ID_33,
+    /* 0x34 */ E_ID_34,
+    /* 0x35 */ E_ID_35,
+    /* 0x36 */ E_ID_36,
+    /* 0x37 */ E_GHOST_ENEMY,
     /* 0x3B */ E_SLINGER_THROWN_BONE = 0x3B,
     /* 0x3C */ E_SLINGER_PIECES,
     /* 0x3D */ E_ID_3D,
@@ -90,6 +95,9 @@ extern EInit g_EInitSkelerangBoomerang;
 extern EInit g_EInitCtulhu;
 extern EInit g_EInitCtulhuFireball;
 extern EInit g_EInitCtulhuIceShockwave;
+
+// Diplocephalus
+extern EInit g_EInitDiplocephalusFoot;
 
 // Clock room
 extern EInit g_Statues;

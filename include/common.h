@@ -126,6 +126,7 @@ int sprintf(char* dst, const char* fmt, ...);
 #define SP(x) (0x1F800000 + (x))
 #endif
 
+#define CLAMP(x, min, max) x < min ? min : (x > max ? max : x)
 #define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
 #define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
 
