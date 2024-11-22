@@ -49,7 +49,7 @@ void func_us_801C2E7C(Entity*);
 void EntitySkelerang(Entity*);
 void EntitySkelerangBoomerang(Entity*);
 void EntitySkelerangUnknown(Entity*);
-void func_us_801D2A64(Entity*);
+void EntityPlateLord(Entity*);
 void func_us_801D4324(Entity*);
 void func_us_801D44A0(Entity*);
 void func_us_801D4AA4(Entity*);
@@ -132,7 +132,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerang,
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
-    func_us_801D2A64,
+    EntityPlateLord,
     func_us_801D4324,
     func_us_801D44A0,
     func_us_801D4AA4,
@@ -191,7 +191,7 @@ EInit D_us_80180B54 = {ANIMSET_OVL(0x0D), 0x00, 0x4E, 0x2C0, 0x013};
 EInit g_EInitElevator = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x223, 0x005};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x04), 0x01, 0x48, 0x228, 0x00B};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(0x04), 0x2B, 0x48, 0x228, 0x00C};
-EInit D_us_80180B84 = {ANIMSET_OVL(0x05), 0x01, 0x4C, 0x22B, 0x061};
+EInit g_EInitPlateLord = {ANIMSET_OVL(0x05), 0x01, 0x4C, 0x22B, 0x061};
 EInit D_us_80180B90 = {ANIMSET_OVL(0x05), 0x16, 0x4C, 0x22B, 0x062};
 EInit g_EInitGhostEnemy = {ANIMSET_OVL(0x06), 0x01, 0x4A, 0x200, 0x09C};
 EInit D_us_80180BA8 = {ANIMSET_OVL(0x08), 0x00, 0x48, 0x201, 0x031};
