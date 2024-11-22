@@ -115,7 +115,7 @@ void func_us_801D0718(Entity* self) {
     collision = 0;
     step = parent->step;
     if (step < 13) {
-        collision = GetPlayerCollisionWith(self, 8, 0x12, 4) & 0xFF;
+        collision = GetPlayerCollisionWith(self, 8, 18, 4) & 0xFF;
         if (collision) {
             player->posX.i.hi += posX;
             player->posY.i.hi += 2;
@@ -144,7 +144,7 @@ void func_us_801D0898(Entity* self, s32 count) {
         randomY = (Random() & 0x1F) - 0xF;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
             newEntity->posX.i.hi += randomX;
             newEntity->posY.i.hi += randomY;
