@@ -84,5 +84,5 @@ segments:
       - [0x1E214, c, prim_helpers]
       - [0x1EA44, c, e_life_up]
       - [0x1F978, .sbss, create_entity]
-      - [0x1F978, sbss]
+      - [0x1F988, sbss]
   - [0x20630]
