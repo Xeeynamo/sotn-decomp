@@ -86,8 +86,10 @@ void EntityDiplocephalusFoot(Entity* self) {
 
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801CF910);
 
+// Main entity?
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801CFBE8);
 
+// Likely the torso entity that player can stand on top of
 void func_us_801D0718(Entity* self) {
     Entity* parent;
     Entity* player;
@@ -131,10 +133,28 @@ void func_us_801D0718(Entity* self) {
 }
 
 // Death explosion
-INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0898);
+void func_us_801D0898(Entity* self, s32 count) {
+    Entity* newEntity;
+    s32 i;
+    s8 randomX;
+    s8 randomY;
+
+    for (i = 0; i < count; i++) {
+        randomX = (Random() & 0x3F) - 0x20;
+        randomY = (Random() & 0x1F) - 0xF;
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, self, newEntity);
+            newEntity->params = 1;
+            newEntity->posX.i.hi += randomX;
+            newEntity->posY.i.hi += randomY;
+            newEntity->zPriority = self->zPriority + 2;
+        }
+    }
+}
 
 // Fireball
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0990);
 
-// Main entity?
+// Tail entity
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0E7C);
