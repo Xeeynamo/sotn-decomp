@@ -39,7 +39,63 @@ INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D26CC);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D274C);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D27C4);
+bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
+    bool ret;
+    s32 dx;
+    s32 dy;
+    s32 x;
+    s32 w;
+    s32 distance;
+
+    Entity* tempEntity;
+    Point32* posA;
+    Point32* posB;
+    Point32* posC;
+    RECT* rect;
+
+    posA = (Point32*)&g_CurrentEntity->posX;
+    tempEntity = arg0->unk0;
+    posB = (Point32*)&tempEntity->posX;
+    rect = arg0->unk10;
+    posC = &arg0->unk8;
+
+    dx = posB->x - posA->x;
+    if (g_CurrentEntity->facingLeft) {
+        dx = -dx;
+    }
+    dy = posB->y - posA->y;
+    arg0->unk4 = ratan2(-dx, dy);
+
+    x = rect->x * 256;
+    w = (rect->w - 4) * 256;
+    dx /= 256;
+    dy /= 256;
+    distance = SquareRoot0((dx * dx) + (dy * dy));
+    if (((rect->x + rect->w - 4) * 256) < distance) {
+        ret = true;
+        distance = (rect->x + rect->w - 4) * 256;
+    } else {
+        ret = false;
+    }
+    distance = (distance * x) / (x + w);
+    w = (x * x) - (distance * distance);
+    w = SquareRoot0(w);
+    if (isNegative) {
+        arg0->unk4 -= ratan2(w, distance);
+    } else {
+        arg0->unk4 += ratan2(w, distance);
+    }
+    func_801CD78C(posA, rect->x, arg0->unk4, posC);
+
+    dx = posB->x - posC->x;
+    if (g_CurrentEntity->facingLeft) {
+        dx = -dx;
+    }
+    dy = posB->y - posC->y;
+    arg0->unk6 = ratan2(-dx, dy);
+
+    return ret;
+}
 
 bool StepTowards(s16* val, s32 target, s32 step) {
     if (abs(*val - target) < step) {
@@ -59,7 +115,8 @@ bool StepTowards(s16* val, s32 target, s32 step) {
 }
 
 extern EInit g_EInitPlateLord;
-static Point32 D_us_80181F80[] = {{.x = 0x00080016, .y = 0x0007001F}, {.x = 0x00090014, .y = 0x0008001C}};
+static RECT D_us_80181F80[] = {
+    {.x = 22, .y = 8, .w = 31, .h = 7}, {.x = 20, .y = 9, .w = 28, .h = 8}};
 extern Point16 D_us_80181F90[];
 
 void EntityPlateLord(Entity* self) {
@@ -77,8 +134,8 @@ void EntityPlateLord(Entity* self) {
     unk_PlatelordStruct* unkStructC;
     Point16* tempPoint16A;
     Point16* tempPoint16B;
-    Point32* tempPoint32A;
-    Point32* tempPoint32B;
+    Point32* tempPoint32;
+    RECT* tempRect;
     Entity* tempEntity;
     s16 tempS16;
 
@@ -893,12 +950,11 @@ void EntityPlateLord(Entity* self) {
     unkStructC = &self->ext.plateLord.unk88;
     for (i = 0; i < 2; i++, unkStructC++) {
         tempEntity = unkStructC->unk0;
-        tempPoint32A = &unkStructC->unk8;
+        tempPoint32 = &unkStructC->unk8;
         tempS16 = unkStructC->unk4;
-        tempPoint32B = unkStructC->unk10;
-        func_us_801D2424(
-            (Point32*)&self->posX, tempS16, F(tempPoint32B->x).i.hi,
-            tempPoint32A, tempS16, F(tempPoint32B->x).i.hi, prim);
+        tempRect = unkStructC->unk10;
+        func_us_801D2424((Point32*)&self->posX, tempS16, tempRect->y,
+                         tempPoint32, tempS16, tempRect->y, prim);
         if (self->palette & 0x8000) {
             prim->clut = self->palette & 0xFFF;
         } else {
@@ -906,10 +962,10 @@ void EntityPlateLord(Entity* self) {
         }
         prim = prim->next;
         tempS16 = unkStructC->unk6;
-        func_801CD78C(tempPoint32A, -4, tempS16, &point32);
-        func_us_801D2424(&point32, tempS16, F(tempPoint32B->y).i.hi,
-                         (Point32*)&tempEntity->posX, tempS16,
-                         F(tempPoint32B->y).i.hi, prim);
+        func_801CD78C(tempPoint32, -4, tempS16, &point32);
+        func_us_801D2424(
+            &point32, tempS16, tempRect->h, (Point32*)&tempEntity->posX,
+            tempS16, tempRect->h, prim);
         if (self->palette & 0x8000) {
             prim->clut = self->palette & 0xFFF;
         } else {
