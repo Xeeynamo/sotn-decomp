@@ -96,6 +96,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntitiesAbove                 | asm/us/boss/mar/matchings/create_entity/CreateEntitiesAbove.s 
 | 1.00 | true     | CreateEntitiesToTheRight            | asm/us/boss/mar/matchings/create_entity/CreateEntitiesToTheRight.s 
+| 1.00 | true     | CreateEntitiesAbove                 | asm/us/boss/rbo3/matchings/create_entity/CreateEntitiesAbove.s 
+| 1.00 | true     | CreateEntitiesToTheRight            | asm/us/boss/rbo3/matchings/create_entity/CreateEntitiesToTheRight.s 
 | 1.00 | true     | CreateEntitiesAbove                 | asm/us/st/cen/matchings/create_entity/CreateEntitiesAbove.s 
 | 1.00 | true     | CreateEntitiesToTheRight            | asm/us/st/cen/matchings/create_entity/CreateEntitiesToTheRight.s 
 | 1.00 | true     | CreateEntitiesAbove                 | asm/us/st/dre/matchings/create_entity/CreateEntitiesAbove.s 
@@ -116,11 +118,11 @@
 | 1.00 | true     | CreateEntitiesToTheRight            | asm/us/st/st0/matchings/create_entity/CreateEntitiesToTheRight.s 
 | 1.00 | true     | CreateEntitiesAbove                 | asm/us/st/wrp/matchings/create_entity/CreateEntitiesAbove.s 
 | 1.00 | true     | CreateEntitiesToTheRight            | asm/us/st/wrp/matchings/create_entity/CreateEntitiesToTheRight.s 
-| 1.00 | false    | CreateEntitiesAbove                 | asm/us/boss/rbo3/nonmatchings/create_entity/CreateEntitiesAbove.s 
-| 1.00 | false    | func_us_801953D4                    | asm/us/boss/rbo3/nonmatchings/create_entity/func_us_801953D4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityWhenInHorizontalRange   | asm/us/boss/mar/matchings/create_entity/CreateEntityWhenInHorizontalRange.s 
 | 1.00 | true     | CreateEntityWhenInVerticalRange     | asm/us/boss/mar/matchings/create_entity/CreateEntityWhenInVerticalRange.s 
+| 1.00 | true     | CreateEntityWhenInHorizontalRange   | asm/us/boss/rbo3/matchings/create_entity/CreateEntityWhenInHorizontalRange.s 
+| 1.00 | true     | CreateEntityWhenInVerticalRange     | asm/us/boss/rbo3/matchings/create_entity/CreateEntityWhenInVerticalRange.s 
 | 1.00 | true     | CreateEntityWhenInHorizontalRange   | asm/us/st/cen/matchings/create_entity/CreateEntityWhenInHorizontalRange.s 
 | 1.00 | true     | CreateEntityWhenInVerticalRange     | asm/us/st/cen/matchings/create_entity/CreateEntityWhenInVerticalRange.s 
 | 1.00 | true     | CreateEntityWhenInHorizontalRange   | asm/us/st/dre/matchings/create_entity/CreateEntityWhenInHorizontalRange.s 
@@ -141,11 +143,11 @@
 | 1.00 | true     | CreateEntityWhenInVerticalRange     | asm/us/st/st0/matchings/create_entity/CreateEntityWhenInVerticalRange.s 
 | 1.00 | true     | CreateEntityWhenInHorizontalRange   | asm/us/st/wrp/matchings/create_entity/CreateEntityWhenInHorizontalRange.s 
 | 1.00 | true     | CreateEntityWhenInVerticalRange     | asm/us/st/wrp/matchings/create_entity/CreateEntityWhenInVerticalRange.s 
-| 1.00 | false    | CreateEntityWhenInHorizontalRange   | asm/us/boss/rbo3/nonmatchings/create_entity/CreateEntityWhenInHorizontalRange.s 
-| 1.00 | false    | func_us_80194F64                    | asm/us/boss/rbo3/nonmatchings/create_entity/func_us_80194F64.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | FindFirstEntityBelow                | asm/us/boss/mar/matchings/create_entity/FindFirstEntityBelow.s 
 | 1.00 | true     | FindFirstEntityToTheLeft            | asm/us/boss/mar/matchings/create_entity/FindFirstEntityToTheLeft.s 
+| 1.00 | true     | FindFirstEntityBelow                | asm/us/boss/rbo3/matchings/create_entity/FindFirstEntityBelow.s 
+| 1.00 | true     | FindFirstEntityToTheLeft            | asm/us/boss/rbo3/matchings/create_entity/FindFirstEntityToTheLeft.s 
 | 1.00 | true     | FindFirstEntityBelow                | asm/us/st/cen/matchings/create_entity/FindFirstEntityBelow.s 
 | 1.00 | true     | FindFirstEntityToTheLeft            | asm/us/st/cen/matchings/create_entity/FindFirstEntityToTheLeft.s 
 | 1.00 | true     | FindFirstEntityBelow                | asm/us/st/dre/matchings/create_entity/FindFirstEntityBelow.s 
@@ -166,11 +168,11 @@
 | 1.00 | true     | FindFirstEntityToTheLeft            | asm/us/st/st0/matchings/create_entity/FindFirstEntityToTheLeft.s 
 | 1.00 | true     | FindFirstEntityBelow                | asm/us/st/wrp/matchings/create_entity/FindFirstEntityBelow.s 
 | 1.00 | true     | FindFirstEntityToTheLeft            | asm/us/st/wrp/matchings/create_entity/FindFirstEntityToTheLeft.s 
-| 1.00 | false    | FindFirstEntityBelow                | asm/us/boss/rbo3/nonmatchings/create_entity/FindFirstEntityBelow.s 
-| 1.00 | false    | func_us_8019537C                    | asm/us/boss/rbo3/nonmatchings/create_entity/func_us_8019537C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | FindFirstEntityAbove                | asm/us/boss/mar/matchings/create_entity/FindFirstEntityAbove.s 
 | 1.00 | true     | FindFirstEntityToTheRight           | asm/us/boss/mar/matchings/create_entity/FindFirstEntityToTheRight.s 
+| 1.00 | true     | FindFirstEntityAbove                | asm/us/boss/rbo3/matchings/create_entity/FindFirstEntityAbove.s 
+| 1.00 | true     | FindFirstEntityToTheRight           | asm/us/boss/rbo3/matchings/create_entity/FindFirstEntityToTheRight.s 
 | 1.00 | true     | FindFirstEntityAbove                | asm/us/st/cen/matchings/create_entity/FindFirstEntityAbove.s 
 | 1.00 | true     | FindFirstEntityToTheRight           | asm/us/st/cen/matchings/create_entity/FindFirstEntityToTheRight.s 
 | 1.00 | true     | FindFirstEntityAbove                | asm/us/st/dre/matchings/create_entity/FindFirstEntityAbove.s 
@@ -191,8 +193,6 @@
 | 1.00 | true     | FindFirstEntityToTheRight           | asm/us/st/st0/matchings/create_entity/FindFirstEntityToTheRight.s 
 | 1.00 | true     | FindFirstEntityAbove                | asm/us/st/wrp/matchings/create_entity/FindFirstEntityAbove.s 
 | 1.00 | true     | FindFirstEntityToTheRight           | asm/us/st/wrp/matchings/create_entity/FindFirstEntityToTheRight.s 
-| 1.00 | false    | FindFirstEntityAbove                | asm/us/boss/rbo3/nonmatchings/create_entity/FindFirstEntityAbove.s 
-| 1.00 | false    | func_us_80195330                    | asm/us/boss/rbo3/nonmatchings/create_entity/func_us_80195330.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | GetAnglePointToEntity               | asm/us/boss/mar/matchings/st_common/GetAnglePointToEntity.s 
 | 1.00 | true     | GetAnglePointToEntityShifted        | asm/us/boss/mar/matchings/st_common/GetAnglePointToEntityShifted.s 
@@ -221,6 +221,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntitiesBelow                 | asm/us/boss/mar/matchings/create_entity/CreateEntitiesBelow.s 
 | 1.00 | true     | CreateEntitiesToTheLeft             | asm/us/boss/mar/matchings/create_entity/CreateEntitiesToTheLeft.s 
+| 1.00 | true     | CreateEntitiesBelow                 | asm/us/boss/rbo3/matchings/create_entity/CreateEntitiesBelow.s 
+| 1.00 | true     | CreateEntitiesToTheLeft             | asm/us/boss/rbo3/matchings/create_entity/CreateEntitiesToTheLeft.s 
 | 1.00 | true     | CreateEntitiesBelow                 | asm/us/st/cen/matchings/create_entity/CreateEntitiesBelow.s 
 | 1.00 | true     | CreateEntitiesToTheLeft             | asm/us/st/cen/matchings/create_entity/CreateEntitiesToTheLeft.s 
 | 1.00 | true     | CreateEntitiesBelow                 | asm/us/st/dre/matchings/create_entity/CreateEntitiesBelow.s 
@@ -240,8 +242,6 @@
 | 1.00 | true     | CreateEntitiesToTheLeft             | asm/us/st/st0/matchings/create_entity/CreateEntitiesToTheLeft.s 
 | 1.00 | true     | CreateEntitiesBelow                 | asm/us/st/wrp/matchings/create_entity/CreateEntitiesBelow.s 
 | 1.00 | true     | CreateEntitiesToTheLeft             | asm/us/st/wrp/matchings/create_entity/CreateEntitiesToTheLeft.s 
-| 1.00 | false    | CreateEntitiesBelow                 | asm/us/boss/rbo3/nonmatchings/create_entity/CreateEntitiesBelow.s 
-| 1.00 | false    | func_us_801954D0                    | asm/us/boss/rbo3/nonmatchings/create_entity/func_us_801954D0.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | D_us_8018AAC8                       | asm/us/boss/mar/nonmatchings/e_collect/D_us_8018AAC8.s 
 | 1.00 | false    | D_us_8018AAD0                       | asm/us/boss/mar/nonmatchings/e_collect/D_us_8018AAD0.s 
@@ -458,6 +458,7 @@
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/wrp/matchings/collision/EntityDamageDisplay.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/boss/mar/matchings/create_entity/CreateEntityFromCurrentEntity.s 
+| 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/boss/rbo3/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/cen/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/dre/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | func_80190FB8                       | asm/us/st/mad/matchings/create_entity/func_80190FB8.s 
@@ -468,9 +469,9 @@
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/rwrp/matchings/rwrp/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/st0/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/st/wrp/matchings/create_entity/CreateEntityFromCurrentEntity.s 
-| 1.00 | false    | CreateEntityFromCurrentEntity       | asm/us/boss/rbo3/nonmatchings/create_entity/CreateEntityFromCurrentEntity.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/boss/mar/matchings/create_entity/CreateEntityFromEntity.s 
+| 1.00 | true     | CreateEntityFromEntity              | asm/us/boss/rbo3/matchings/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/cen/matchings/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/dre/matchings/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | func_8019102C                       | asm/us/st/mad/matchings/create_entity/func_8019102C.s 
@@ -481,9 +482,9 @@
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/rwrp/matchings/rwrp/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/st0/matchings/create_entity/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | asm/us/st/wrp/matchings/create_entity/CreateEntityFromEntity.s 
-| 1.00 | false    | CreateEntityFromEntity              | asm/us/boss/rbo3/nonmatchings/create_entity/CreateEntityFromEntity.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityFromLayout              | asm/us/boss/mar/matchings/create_entity/CreateEntityFromLayout.s 
+| 1.00 | true     | CreateEntityFromLayout              | asm/us/boss/rbo3/matchings/create_entity/CreateEntityFromLayout.s 
 | 1.00 | true     | CreateEntityFromLayout              | asm/us/st/cen/matchings/create_entity/CreateEntityFromLayout.s 
 | 1.00 | true     | CreateEntityFromLayout              | asm/us/st/dre/matchings/create_entity/CreateEntityFromLayout.s 
 | 1.00 | true     | func_80190544                       | asm/us/st/mad/matchings/create_entity/func_80190544.s 
@@ -494,9 +495,9 @@
 | 1.00 | true     | CreateEntityFromLayout              | asm/us/st/rwrp/matchings/rwrp/create_entity/CreateEntityFromLayout.s 
 | 1.00 | true     | CreateEntityFromLayout              | asm/us/st/st0/matchings/create_entity/CreateEntityFromLayout.s 
 | 1.00 | true     | CreateEntityFromLayout              | asm/us/st/wrp/matchings/create_entity/CreateEntityFromLayout.s 
-| 1.00 | false    | CreateEntityFromLayout              | asm/us/boss/rbo3/nonmatchings/create_entity/CreateEntityFromLayout.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | InitRoomEntities                    | asm/us/boss/mar/matchings/create_entity/InitRoomEntities.s 
+| 1.00 | true     | InitRoomEntities                    | asm/us/boss/rbo3/matchings/create_entity/InitRoomEntities.s 
 | 1.00 | true     | InitRoomEntities                    | asm/us/st/cen/matchings/create_entity/InitRoomEntities.s 
 | 1.00 | true     | InitRoomEntities                    | asm/us/st/dre/matchings/create_entity/InitRoomEntities.s 
 | 1.00 | true     | func_80190D8C                       | asm/us/st/mad/matchings/create_entity/func_80190D8C.s 
@@ -507,9 +508,9 @@
 | 1.00 | true     | InitRoomEntities                    | asm/us/st/rwrp/matchings/rwrp/create_entity/InitRoomEntities.s 
 | 1.00 | true     | InitRoomEntities                    | asm/us/st/st0/matchings/create_entity/InitRoomEntities.s 
 | 1.00 | true     | InitRoomEntities                    | asm/us/st/wrp/matchings/create_entity/InitRoomEntities.s 
-| 1.00 | false    | InitRoomEntities                    | asm/us/boss/rbo3/nonmatchings/create_entity/InitRoomEntities.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/boss/mar/matchings/create_entity/UpdateRoomPosition.s 
+| 1.00 | true     | UpdateRoomPosition                  | asm/us/boss/rbo3/matchings/create_entity/UpdateRoomPosition.s 
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/st/cen/matchings/create_entity/UpdateRoomPosition.s 
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/st/dre/matchings/create_entity/UpdateRoomPosition.s 
 | 1.00 | true     | func_80190F04                       | asm/us/st/mad/matchings/create_entity/func_80190F04.s 
@@ -520,7 +521,6 @@
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/st/rwrp/matchings/rwrp/create_entity/UpdateRoomPosition.s 
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/st/st0/matchings/create_entity/UpdateRoomPosition.s 
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/st/wrp/matchings/create_entity/UpdateRoomPosition.s 
-| 1.00 | false    | UpdateRoomPosition                  | asm/us/boss/rbo3/nonmatchings/create_entity/UpdateRoomPosition.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectLifeVessel                   | asm/us/boss/mar/matchings/e_collect/CollectLifeVessel.s 
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/cen/matchings/e_collect/CollectLifeVessel.s 
@@ -1762,6 +1762,11 @@
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/matchings/bat/AccumulateTowardZero.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_001/matchings/ghost/AccumulateTowardZero.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_002/matchings/faerie/AccumulateTowardZero.s 
@@ -1863,10 +1868,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2200,9 +2201,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
