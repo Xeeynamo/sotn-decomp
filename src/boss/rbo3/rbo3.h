@@ -28,4 +28,6 @@ typedef enum {
 
 extern u16 g_EInitCommon[];
 
+extern s8 c_HeartPrizes[];
+
 #endif // RBO3_H

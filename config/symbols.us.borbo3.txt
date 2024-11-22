@@ -150,3 +150,5 @@ g_LayoutObjVertical = 0x8019F97C;
 g_LayoutObjPosHorizontal = 0x8019F980;
 g_LayoutObjPosVertical = 0x8019F984;
 g_ItemIconSlots = 0x801A05F0;
+eRoomForegroundInit = 0x801811F4;
+g_goldCollectTexts = 0x80180EC8;
