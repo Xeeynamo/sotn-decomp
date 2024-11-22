@@ -68,7 +68,7 @@ void EntityDiplocephalusFoot(Entity* self) {
             self->animCurFrame++;
             if (self->ext.diplocephalus.unk9E < 3) {
                 if (g_CurrentEntity->facingLeft ^
-                    (LOHU(self->ext.prim->x3) % 2)) {
+                    (self->ext.diplocephalus.parent->step % 2)) {
                     EntityGreyPuffSpawner(self, 6, 3, 6, 16, 0, -4);
                 } else {
                     EntityGreyPuffSpawner(self, 6, 3, -6, 16, 0, 4);
@@ -88,7 +88,47 @@ INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801CF910);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801CFBE8);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0718);
+void func_us_801D0718(Entity* self) {
+    Entity* parent;
+    Entity* player;
+    s32 step;
+    s32 collision;
+    s32 posX;
+    s32 posY;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->ext.diplocephalus.posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        self->ext.diplocephalus.posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    }
+
+    player = &PLAYER;
+    parent = self->ext.diplocephalus.parent;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+    posX =
+        self->posX.i.hi + g_Tilemap.scrollX.i.hi - self->ext.diplocephalus.posX;
+    posY =
+        self->posY.i.hi + g_Tilemap.scrollY.i.hi - self->ext.diplocephalus.posY;
+    collision = 0;
+    step = parent->step;
+    if (step < 13) {
+        collision = GetPlayerCollisionWith(self, 8, 0x12, 4) & 0xFF;
+        if (collision) {
+            player->posX.i.hi += posX;
+            player->posY.i.hi += 2;
+            D_80097488.x.i.hi += posX;
+            D_80097488.y.i.hi += 2;
+        }
+    }
+    self->ext.diplocephalus.posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    self->ext.diplocephalus.posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+
+    // Parent is func_us_801CFBE8 (self - 1)
+    if (parent->entityId != 0x21) {
+        DestroyEntity(self);
+    }
+}
 
 // Death explosion
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0898);
