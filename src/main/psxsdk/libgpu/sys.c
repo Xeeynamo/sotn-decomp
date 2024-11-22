@@ -23,12 +23,6 @@ typedef struct {
 const char aIdSysCV1831995[] =
     "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $";
 
-extern const char D_800101FC[]; // "ResetGraph(%d)...\n"
-extern const char D_80010360[]; // "PutDispEnv(%08x)...\n"
-extern const char D_80010378[]; // "GPU_exeque: null func.\n"
-extern const char
-    D_80010390[]; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n"
-
 s32 VSync(s32);
 
 extern gpu* D_8002C260;
@@ -376,11 +370,33 @@ int get_mode(int dfe, int dtd, int tpage) {
     }
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_cs);
+u_long get_cs(short x, short y) {
+    x = CLAMP(x, 0, 0x400 - 1);
+    y = CLAMP(y, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
+    if (D_8002C26C) {
+        return 0xE3000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE3000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
+    }
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ce);
+u_long get_ce(short x, short y) {
+    x = CLAMP(x, 0, 0x400 - 1);
+    y = CLAMP(y, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
+    if (D_8002C26C) {
+        return 0xE4000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE4000000 | ((y & 0x1FF) << 10) | (x & 0x3FF);
+    }
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ofs);
+u_long get_ofs(short x, short y) {
+    if (D_8002C26C) {
+        return 0xE5000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE5000000 | ((y & 0x7FF) << 11) | (x & 0x7FF);
+    }
+}
 
 u_long get_tw(RECT* arg0) {
     u32 pad[4];
