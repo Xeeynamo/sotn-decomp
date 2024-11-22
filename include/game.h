@@ -1867,6 +1867,8 @@ typedef enum {
     MAD_RAREDROP_FLAGS_START = 320,
     COLLISION_FLAGS_START = 400,
     COLLECT_FLAGS_START = 432,
+    // TT_004
+    CASTLE_FLAG_464 = 464,
 } CastleFlagOffsets;
 
 extern s32 D_8003C0EC[4];

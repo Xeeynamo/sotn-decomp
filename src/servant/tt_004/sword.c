@@ -50,7 +50,7 @@ void func_us_80172420(Entity* self, s32 entityId) {
 
     for (i = 0; i < 3; i++) {
         entity = D_80073784 + i;
-        if (entity->entityId == entityId + 0xDA) {
+        if (entity->entityId == entityId + SWORD_UNK_DA) {
             return;
         }
 
@@ -61,7 +61,7 @@ void func_us_80172420(Entity* self, s32 entityId) {
 
     if (!entity->entityId) {
         DestroyEntity(entity);
-        entity->entityId = entityId + 0xDA;
+        entity->entityId = entityId + SWORD_UNK_DA;
         entity->zPriority = self->zPriority;
         entity->facingLeft = self->facingLeft;
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -74,7 +74,7 @@ void func_us_80172420(Entity* self, s32 entityId) {
 void func_us_801724E8(Entity* self, s32 arg1, u32 params) {
     Entity* entity;
 
-    if (entity = g_api.GetFreeEntity(0x11, 0x2F)) {
+    if (entity = g_api.GetFreeEntity(UNK_ENTITY_11, 0x2F)) {
 
         DestroyEntity(entity);
 
@@ -94,13 +94,15 @@ void func_us_801724E8(Entity* self, s32 arg1, u32 params) {
     }
 }
 
-extern s16 D_us_80170594[];
-extern s16 D_us_801708F4[];
-extern s16 D_us_801710E4[];
-extern s16 D_us_80171564[];
-extern s32 D_us_801786D4[384];
-extern s32 D_us_80178854[384];
-extern s32 D_us_801789D4[384];
+#define UNK_SWORD_PRIM_COUNT 96
+
+extern s16 D_us_80170594[72];
+extern s16 D_us_801708F4[72];
+extern s16 D_us_801710E4[UNK_SWORD_PRIM_COUNT];
+extern s16 D_us_80171564[UNK_SWORD_PRIM_COUNT];
+extern s32 D_us_801786D4[UNK_SWORD_PRIM_COUNT * 4];
+extern s32 D_us_80178854[UNK_SWORD_PRIM_COUNT * 4];
+extern s32 D_us_801789D4[UNK_SWORD_PRIM_COUNT * 4];
 
 typedef struct {
     s16 a, b, c, d;
@@ -123,7 +125,7 @@ void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
             uvCoords = D_us_80170594;
         }
 
-        for (i = 0; i < 72; i++) {
+        for (i = 0; i < LEN(D_us_80170594); i++) {
             prim->u0 = *uvCoords++;
             prim->v0 = *uvCoords++;
 
@@ -142,7 +144,7 @@ void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
             D_us_801789D4[i] = SP(0x20 + D_us_80170354[i].c * 8);
         }
 
-        for (; i < 96; i++) {
+        for (; i < UNK_SWORD_PRIM_COUNT; i++) {
             prim->drawMode |= DRAW_HIDE;
             prim = prim->next;
         }
@@ -153,7 +155,7 @@ void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
             uvCoords = D_us_801710E4;
         }
 
-        for (i = 0; i < 96; i++) {
+        for (i = 0; i < LEN(D_us_801710E4); i++) {
             prim->u0 = *uvCoords++;
             prim->v0 = *uvCoords++;
 
@@ -202,7 +204,7 @@ void func_us_8017280C(Entity* self, s32 arg1, s32 arg2) {
             prim = prim->next;
         }
     }
-    for (; i < 96; i++) {
+    for (; i < UNK_SWORD_PRIM_COUNT; i++) {
         prim->drawMode |= DRAW_HIDE;
         prim = prim->next;
     }
@@ -221,7 +223,8 @@ void func_us_80172940(Entity* self) {
     if (self->ext.swordFamiliar.unk7c == 0) {
         if ((self->entityId == SWORD_UNK_D1) ||
             (self->entityId == SWORD_UNK_D8)) {
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 96);
+            self->primIndex =
+                g_api.AllocPrimitives(PRIM_GT4, UNK_SWORD_PRIM_COUNT);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -229,7 +232,7 @@ void func_us_80172940(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             prim = &g_PrimBuf[self->primIndex];
-            for (i = 0; i < 96; i++) {
+            for (i = 0; i < UNK_SWORD_PRIM_COUNT; i++) {
                 prim->tpage = 0x1B;
                 prim->clut = 0x140;
                 prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
@@ -364,7 +367,7 @@ void func_us_80172C8C(UnkC8C* arg0, UnkC8C* arg1) {
 
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80172E84);
 
-extern s32 D_us_80178344[];
+extern s32 D_us_80178344[128];
 extern s32 D_us_80178B88;
 
 Entity* func_us_80173AA0(Entity* self) {
@@ -374,9 +377,9 @@ Entity* func_us_80173AA0(Entity* self) {
     s32 hitFlag;
 
     hitFlag = 0;
-    entity = &g_Entities[0x40];
+    entity = &g_Entities[STAGE_ENTITY_START];
 
-    for (i = 0; i < 128; i++, entity++) {
+    for (i = 0; i < LEN(D_us_80178344); i++, entity++) {
         D_us_80178344[i] = 0;
         if (entity->entityId && entity->hitboxState != 0 &&
             !(entity->flags & FLAG_UNK_00200000) &&
@@ -396,9 +399,9 @@ Entity* func_us_80173AA0(Entity* self) {
     if (hitFlag != 0) {
         entityIndex = D_us_80178B88 % 128;
 
-        for (i = 0; i < 128; i++) {
+        for (i = 0; i < LEN(D_us_80178344); i++) {
             if (D_us_80178344[entityIndex] != 0) {
-                entity = &g_Entities[0x40 + entityIndex];
+                entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
                 D_us_80178B88 = (entityIndex + 1) % 128;
                 return entity;
             }
@@ -412,7 +415,6 @@ Entity* func_us_80173AA0(Entity* self) {
 
 #include "../check_entity_valid.h"
 
-extern u8 D_8003BFBC[];
 extern s32 D_us_801700A8[];
 
 void func_us_80173CB8(Entity* self) {
@@ -421,18 +423,18 @@ void func_us_80173CB8(Entity* self) {
         if (s_SwordCurrentLevel != s_SwordStats.level) {
             s_SwordCurrentLevel = s_SwordStats.level;
             if (D_us_801700A8[(s_SwordStats.level / 10) * 3] & 1) {
-                if (SearchForEntityInRange(0, 0xDA) == NULL) {
+                if (SearchForEntityInRange(0, SWORD_UNK_DA) == NULL) {
                     func_us_80172420(self, 0);
                 }
             }
             if ((D_us_801700A8[(s_SwordStats.level / 10) * 3] & 2) &&
-                SearchForEntityInRange(0, 0xDB) == NULL) {
+                SearchForEntityInRange(0, SWORD_UNK_DB) == NULL) {
                 func_us_80172420(self, 1);
             }
 
-            if (s_SwordStats.level == 50 && !D_8003BFBC[0]) {
+            if (s_SwordStats.level == 50 && !g_CastleFlags[CASTLE_FLAG_464]) {
                 g_api.AddToInventory(ITEM_SWORD_FAMILIAR, EQUIP_HAND);
-                D_8003BFBC[0] = true;
+                g_CastleFlags[CASTLE_FLAG_464] = true;
             }
         }
     }
@@ -471,8 +473,8 @@ void func_us_801773CC(Entity* self) {
     switch (self->params) {
     case 0:
         D_us_80178B80 = 1;
-        entity = SearchForEntityInRange(0, 0xDD);
-        if (entity && entity->step < 5) {
+        entity = SearchForEntityInRange(0, SWORD_UNK_DD);
+        if (entity > 0 && entity->step < 5) {
             entity->step = 8;
         }
         break;

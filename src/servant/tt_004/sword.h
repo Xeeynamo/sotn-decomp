@@ -2,12 +2,21 @@
 #include <servant.h>
 
 typedef enum {
-    SWORD_UNK_D1 = 0xD1,
-    SWORD_UNK_D2 = 0xD2,
-    SWORD_UNK_D3 = 0xD3,
-    SWORD_UNK_D4 = 0xD4,
-    SWORD_UNK_D5 = 0xD5,
-    SWORD_UNK_D8 = 0xD8,
-    SWORD_UNK_DE = 0xDE,
-    SWORD_UNK_DF = 0xDF,
+    SWORD_UNK_D1 = ENTITY_ID_SERVANT,
+    SWORD_UNK_D2,
+    SWORD_UNK_D3,
+    SWORD_UNK_D4,
+    SWORD_UNK_D5,
+    SWORD_UNK_D6,
+    SWORD_UNK_D7,
+    SWORD_UNK_D8,
+    SWORD_UNK_D9,
+    SWORD_UNK_DA,
+    SWORD_UNK_DB,
+    SWORD_UNK_DC,
+    SWORD_UNK_DD,
+    SWORD_UNK_DE,
+    SWORD_UNK_DF,
 } SwordEntity;
+
+extern ServantDesc sword_ServantDesc;
