@@ -29,7 +29,7 @@ Point16 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS] = {
     {4, 24},
     {-4, 24},
 };
-Point16 g_RicSensorsWall[NUM_VERTICAL_SENSORS] = {
+Point16 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2] = {
     {7, 23},  {7, 16},  {7, 8},  {7, 0},  {7, -8},  {7, -8},  {7, -15},
     {-7, 23}, {-7, 16}, {-7, 8}, {-7, 0}, {-7, -8}, {-7, -8}, {-7, -15},
 };
