@@ -309,14 +309,14 @@ extern u8 D_801545B0[];
 extern u8 D_801545C4[16];
 extern u8 D_801545D4[16];
 // These appear to be a set of collision boxes
-extern Point16 D_801545E4[4];
-extern Point16 D_801545F4[4];
-extern Point16 D_80154604[14];
-extern u16 D_8015463C[4];
-extern u16 D_80154644[4];
-extern u16 D_8015464C[8];
-extern u16 D_8015465C[4];
-extern u16 D_80154664[8];
+extern Point16 g_RicSensorsCeiling[];
+extern Point16 g_RicSensorsFloor[];
+extern Point16 g_RicSensorsWall[];
+extern u16 g_RicSensorsCeilingDefault[];
+extern u16 g_RicSensorsFloorDefault[];
+extern u16 g_RicSensorsWallDefault[];
+extern u16 g_RicSensorsCeilingCrouch[];
+extern u16 g_RicSensorsWallCrouch[];
 
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];

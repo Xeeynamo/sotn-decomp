@@ -540,9 +540,10 @@ void func_8015E484(void) {
         PLAYER.posY.i.hi -= 0x10;
         while (true) {
             for (i = 0; i < NUM_HORIZONTAL_SENSORS; ++i) {
-                g_api.CheckCollision((s16)(PLAYER.posX.i.hi + D_801545F4[i].x),
-                                     (s16)(PLAYER.posY.i.hi + D_801545F4[i].y),
-                                     &g_Player.colFloor[i], 0);
+                g_api.CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + g_RicSensorsFloor[i].x),
+                    (s16)(PLAYER.posY.i.hi + g_RicSensorsFloor[i].y),
+                    &g_Player.colFloor[i], 0);
             }
 
             if ((g_Player.colFloor[1].effects & 0x81) == 1 ||
@@ -566,9 +567,10 @@ void func_8015E484(void) {
         PLAYER.posY.i.hi += 0x20;
         while (true) {
             for (i = 0; i < NUM_HORIZONTAL_SENSORS; ++i) {
-                g_api.CheckCollision((s16)(PLAYER.posX.i.hi + D_801545E4[i].x),
-                                     (s16)(PLAYER.posY.i.hi + D_801545E4[i].y),
-                                     &g_Player.colCeiling[i], 0);
+                g_api.CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + g_RicSensorsCeiling[i].x),
+                    (s16)(PLAYER.posY.i.hi + g_RicSensorsCeiling[i].y),
+                    &g_Player.colCeiling[i], 0);
             }
 
             if ((g_Player.colCeiling[1].effects & 0x41) == 1 ||
@@ -592,13 +594,13 @@ void func_8015E484(void) {
 }
 
 void func_8015E7B4(Collider* col) {
-    col->unk14 = D_80154604[0].x;
-    col->unk1C = D_80154604[0].y;
-    col->unk18 = D_801545F4[1].y - 1;
-    col->unk20 = D_801545E4[1].y + 1;
+    col->unk14 = g_RicSensorsWall[0].x;
+    col->unk1C = g_RicSensorsWall[0].y;
+    col->unk18 = g_RicSensorsFloor[1].y - 1;
+    col->unk20 = g_RicSensorsCeiling[1].y + 1;
 }
 
-void func_8015E800(void) {
+void RicCheckFloor(void) {
     Collider sp10;
     s32 temp_a0;
     s32 temp_a1;
@@ -639,8 +641,8 @@ void func_8015E800(void) {
                       (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
             if ((temp_s0 == EFFECT_SOLID) ||
                 (g_Player.colFloor[i].effects & EFFECT_UNK_0800)) {
-                argX = *xPosPtr + D_801545F4[i].x;
-                argY = *yPosPtr + D_801545F4[i].y +
+                argX = *xPosPtr + g_RicSensorsFloor[i].x;
+                argY = *yPosPtr + g_RicSensorsFloor[i].y +
                        (g_Player.colFloor[i].unk18 - 1);
                 g_api.CheckCollision(argX, argY, &sp10, 0);
                 sp10effects = sp10.effects;
@@ -713,8 +715,8 @@ void func_8015E800(void) {
     if (PLAYER.velocityY < 0) {
         return;
     }
-    argX = *xPosPtr + D_801545F4[0].x;
-    argY = *yPosPtr + D_801545F4[0].y + 10;
+    argX = *xPosPtr + g_RicSensorsFloor[0].x;
+    argY = *yPosPtr + g_RicSensorsFloor[0].y + 10;
     g_api.CheckCollision(argX, argY, &sp10, 0);
     if ((sp10.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != 0) {
         return;
@@ -744,8 +746,8 @@ void func_8015E800(void) {
             var_v1 = 8 - temp_s16;
         }
         if ((temp_s0 & EFFECT_UNK_4000) == temp_a0) {
-            argX = var_a1 + (*xPosPtr + D_801545F4[i].x);
-            argY = *yPosPtr + D_801545F4[i].y;
+            argX = var_a1 + (*xPosPtr + g_RicSensorsFloor[i].x);
+            argY = *yPosPtr + g_RicSensorsFloor[i].y;
             g_api.CheckCollision(argX, argY, &sp10, 0);
             if (sp10.effects & 1) {
                 *yPosPtr += sp10.unk18;
@@ -760,8 +762,8 @@ void func_8015E800(void) {
         if (!(temp_s0 & 1)) {
             continue;
         }
-        argX = var_a1 + (*xPosPtr + D_801545F4[i].x);
-        argY = *yPosPtr + D_801545F4[i].y + g_Player.colFloor[i].unk10;
+        argX = var_a1 + (*xPosPtr + g_RicSensorsFloor[i].x);
+        argY = *yPosPtr + g_RicSensorsFloor[i].y + g_Player.colFloor[i].unk10;
         g_api.CheckCollision(argX, argY, &sp10, 0);
         if (sp10.effects & 1) {
             *yPosPtr += (sp10.unk18 + g_Player.colFloor[i].unk10);
@@ -771,7 +773,7 @@ void func_8015E800(void) {
     }
 }
 
-void func_8015EE28(void) {
+void RicCheckCeiling(void) {
     Collider collider;
     s32 temp_fp;
     u32 temp_s0;
@@ -808,9 +810,9 @@ void func_8015EE28(void) {
                 !(var_a0 & EFFECT_SOLID)) {
                 continue;
             }
-            argX = *xPosPtr + D_801545E4[i].x;
-            argY =
-                *yPosPtr + D_801545E4[i].y + g_Player.colCeiling[i].unk10 + 1;
+            argX = *xPosPtr + g_RicSensorsCeiling[i].x;
+            argY = *yPosPtr + g_RicSensorsCeiling[i].y +
+                   g_Player.colCeiling[i].unk10 + 1;
             g_api.CheckCollision(argX, argY, &collider, 0);
             collidereffects = collider.effects;
             if (!(collidereffects & 1)) {
@@ -889,8 +891,8 @@ void func_8015EE28(void) {
     if (PLAYER.velocityY > 0) {
         return;
     }
-    argX = *xPosPtr + D_801545E4[0].x;
-    argY = (*yPosPtr + D_801545E4[0].y) - 10;
+    argX = *xPosPtr + g_RicSensorsCeiling[0].x;
+    argY = (*yPosPtr + g_RicSensorsCeiling[0].y) - 10;
     g_api.CheckCollision(argX, argY, &collider, 0);
     if ((collider.effects & EFFECT_SOLID) != 0) {
         return;
@@ -917,8 +919,8 @@ void func_8015EE28(void) {
                 temp_v1 = 8 - temp_s16;
             }
             if ((temp_s0 & EFFECT_UNK_4000) == var_a0) {
-                argX = var_a1 + (*xPosPtr + D_801545E4[i].x);
-                argY = *yPosPtr + D_801545E4[i].y;
+                argX = var_a1 + (*xPosPtr + g_RicSensorsCeiling[i].x);
+                argY = *yPosPtr + g_RicSensorsCeiling[i].y;
                 g_api.CheckCollision(argX, argY, &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     *vram_ptr |= temp_fp;
@@ -928,8 +930,9 @@ void func_8015EE28(void) {
                     return;
                 }
             } else if ((temp_v1 > 0) && (temp_s0 & 1)) {
-                argX = var_a1 + (*xPosPtr + D_801545E4[i].x);
-                argY = *yPosPtr + D_801545E4[i].y + g_Player.colCeiling[i].unk8;
+                argX = var_a1 + (*xPosPtr + g_RicSensorsCeiling[i].x);
+                argY = *yPosPtr + g_RicSensorsCeiling[i].y +
+                       g_Player.colCeiling[i].unk8;
                 g_api.CheckCollision(argX, argY, &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     if (!(*vram_ptr & 1)) {
@@ -944,7 +947,7 @@ void func_8015EE28(void) {
     }
 }
 
-void func_8015F414(void) {
+void RicCheckWallRight(void) {
     Collider collider;
     s32 temp_s0;
     s32 i;
@@ -982,8 +985,9 @@ void func_8015F414(void) {
                          EFFECT_SOLID)) ||
             (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
             (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
-            argX = *xPosPtr + D_80154604[i].x + g_Player.colWall[i].unk4 - 1;
-            argY = *yPosPtr + D_80154604[i].y;
+            argX =
+                *xPosPtr + g_RicSensorsWall[i].x + g_Player.colWall[i].unk4 - 1;
+            argY = *yPosPtr + g_RicSensorsWall[i].y;
             g_api.CheckCollision(argX, argY, &collider, 0);
             if ((collider.effects & EFFECT_SOLID) == 0) {
                 *vram_ptr |= 4;
@@ -1017,7 +1021,7 @@ void func_8015F414(void) {
     }
 }
 
-void func_8015F680(void) {
+void RicCheckWallLeft(void) {
     Collider collider;
     s32 temp_s0;
     s32 i;
@@ -1056,8 +1060,9 @@ void func_8015F680(void) {
             (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
                          EFFECT_SOLID)) ||
             (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
-            argX = *xPosPtr + D_80154604[i].x + g_Player.colWall[i].unkC + 1;
-            argY = *yPosPtr + D_80154604[i].y;
+            argX =
+                *xPosPtr + g_RicSensorsWall[i].x + g_Player.colWall[i].unkC + 1;
+            argY = *yPosPtr + g_RicSensorsWall[i].y;
             g_api.CheckCollision(argX, argY, &collider, 0);
             if ((collider.effects & EFFECT_SOLID) == 0) {
                 *vram_ptr |= 8;

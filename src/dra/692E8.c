@@ -55,28 +55,31 @@ s32 D_800ACE00[] = {
 
 #endif
 
-s16 D_800ACE68[] = {-8, -8, -8, -8};
-s16 D_800ACE70[] = {8, 8, 8, 8};
-s16 D_800ACE78[] = {7, 0, 0, 0, 0, 0, -7};
-s16 D_800ACE88[] = {-22, -22, -22, -22};
-s16 D_800ACE90[] = {29, 25, 25, 25};
-s16 D_800ACE98[] = {24, 17, 9, 1, -7, -14, -21};
-s16 D_800ACEA8[] = {0, 0, 0, 0};
-s16 D_800ACEB0[] = {24, 17, 9, 5, 5, 1, 1};
+// Bat sensors are also use by the Mist form
+// Crouch sensors are also used by the Wolf form
+// Default sensors are a copy of Alucard sensors to reset modified sensors
+s16 g_SensorsCeilingBat[NUM_HORIZONTAL_SENSORS] = {-8, -8, -8, -8};
+s16 g_SensorsFloorBat[NUM_HORIZONTAL_SENSORS] = {8, 8, 8, 8};
+s16 g_SensorsWallBat[NUM_VERTICAL_SENSORS] = {7, 0, 0, 0, 0, 0, -7};
+s16 g_SensorsCeilingDefault[NUM_HORIZONTAL_SENSORS] = {-22, -22, -22, -22};
+s16 g_SensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {29, 25, 25, 25};
+s16 g_SensorsWallDefault[NUM_VERTICAL_SENSORS] = {24, 17, 9, 1, -7, -14, -21};
+s16 g_SensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
+s16 g_SensorsWallCrouch[NUM_VERTICAL_SENSORS] = {24, 17, 9, 5, 5, 1, 1};
 
-Point16 D_800ACEC0[] = {
+Point16 g_SensorsCeiling[] = {
     {0, -22},
     {0, -22},
     {4, -22},
     {-4, -22},
 };
-Point16 D_800ACED0[] = {
+Point16 g_SensorsFloor[] = {
     {0, 29},
     {0, 25},
     {4, 25},
     {-4, 25},
 };
-Point16 D_800ACEE0[NUM_VERTICAL_SENSORS * 2] = {
+Point16 g_SensorsWall[NUM_VERTICAL_SENSORS * 2] = {
     // sensors from bottom-right to top-right
     {7, 24},
     {7, 17},
@@ -326,30 +329,32 @@ static void CheckStageCollision(s32 isTransformed) {
     *pl_vram = 0;
     status = g_Player.status;
     if (isTransformed) {
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
             if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
-                D_800ACED0[i].y = D_800ACE70[i];
-                D_800ACEC0[i].y = D_800ACE68[i];
+                g_SensorsFloor[i].y = g_SensorsFloorBat[i];
+                g_SensorsCeiling[i].y = g_SensorsCeilingBat[i];
             } else if (
                 status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_CROUCH)) {
-                D_800ACED0[i].y = D_800ACE90[i];
-                D_800ACEC0[i].y = D_800ACEA8[i];
+                g_SensorsFloor[i].y = g_SensorsFloorDefault[i];
+                g_SensorsCeiling[i].y = g_SensorsCeilingCrouch[i];
             } else {
-                D_800ACED0[i].y = D_800ACE90[i];
-                D_800ACEC0[i].y = D_800ACE88[i];
+                g_SensorsFloor[i].y = g_SensorsFloorDefault[i];
+                g_SensorsCeiling[i].y = g_SensorsCeilingDefault[i];
             }
         }
         for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
             if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
-                D_800ACEE0[i].y = D_800ACE78[i];
-                D_800ACEE0[i + NUM_VERTICAL_SENSORS].y = D_800ACE78[i];
+                g_SensorsWall[i].y = g_SensorsWallBat[i];
+                g_SensorsWall[i + NUM_VERTICAL_SENSORS].y = g_SensorsWallBat[i];
             } else if (
                 status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_CROUCH)) {
-                D_800ACEE0[i].y = D_800ACEB0[i];
-                D_800ACEE0[i + NUM_VERTICAL_SENSORS].y = D_800ACEB0[i];
+                g_SensorsWall[i].y = g_SensorsWallCrouch[i];
+                g_SensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_SensorsWallCrouch[i];
             } else {
-                D_800ACEE0[i].y = D_800ACE98[i];
-                D_800ACEE0[i + NUM_VERTICAL_SENSORS].y = D_800ACE98[i];
+                g_SensorsWall[i].y = g_SensorsWallDefault[i];
+                g_SensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_SensorsWallDefault[i];
             }
         }
     }
@@ -376,8 +381,8 @@ static void CheckStageCollision(s32 isTransformed) {
 
     PLAYER.posY.val += PLAYER.velocityY;
     for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
-        x = PLAYER.posX.i.hi + D_800ACED0[i].x;
-        y = PLAYER.posY.i.hi + D_800ACED0[i].y;
+        x = PLAYER.posX.i.hi + g_SensorsFloor[i].x;
+        y = PLAYER.posY.i.hi + g_SensorsFloor[i].y;
         CheckCollision(x, y, &g_Player.colFloor[i], 0);
         if (g_Player.timers[7] &&
             g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
@@ -410,8 +415,8 @@ static void CheckStageCollision(s32 isTransformed) {
     }
 
     for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
-        x = PLAYER.posX.i.hi + D_800ACEC0[i].x;
-        y = PLAYER.posY.i.hi + D_800ACEC0[i].y;
+        x = PLAYER.posX.i.hi + g_SensorsCeiling[i].x;
+        y = PLAYER.posY.i.hi + g_SensorsCeiling[i].y;
         CheckCollision(x, y, &g_Player.colCeiling[i], 0);
         if (mist && g_Player.colCeiling[i].effects & EFFECT_MIST_ONLY) {
             g_Player.colCeiling[i].effects = 0;
@@ -432,8 +437,8 @@ static void CheckStageCollision(s32 isTransformed) {
     }
 
     for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
-        x = PLAYER.posX.i.hi + D_800ACEE0[i].x;
-        y = PLAYER.posY.i.hi + D_800ACEE0[i].y;
+        x = PLAYER.posX.i.hi + g_SensorsWall[i].x;
+        y = PLAYER.posY.i.hi + g_SensorsWall[i].y;
         CheckCollision(x, y, &g_Player.colWall[i], 0);
         if (mist && g_Player.colWall[i].effects & EFFECT_MIST_ONLY) {
             g_Player.colWall[i].effects = 0;
@@ -1320,10 +1325,10 @@ block_160:
 void func_8010BF64(Collider* col) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
         u32 mod = (g_Player.status >> 1) & 2;
-        col->unk14 = D_800ACEE0[0].x - mod;
-        col->unk1C = D_800ACEE0[0].y + mod;
-        col->unk18 = D_800ACED0[1].y - 1;
-        col->unk20 = D_800ACEC0[1].y + 1;
+        col->unk14 = g_SensorsWall[0].x - mod;
+        col->unk1C = g_SensorsWall[0].y + mod;
+        col->unk18 = g_SensorsFloor[1].y - 1;
+        col->unk20 = g_SensorsCeiling[1].y + 1;
     } else {
         g_PlOvl.D_8013C00C();
     }
@@ -1351,8 +1356,8 @@ void func_8010BFFC(void) {
         PLAYER.posY.i.hi -= 16;
         while (true) {
             for (i = 0; i < 4; i++) {
-                x = PLAYER.posX.i.hi + D_800ACED0[i].x;
-                y = PLAYER.posY.i.hi + D_800ACED0[i].y;
+                x = PLAYER.posX.i.hi + g_SensorsFloor[i].x;
+                y = PLAYER.posY.i.hi + g_SensorsFloor[i].y;
                 CheckCollision(x, y, &g_Player.colFloor[i], 0);
             }
             if ((g_Player.colFloor[1].effects &
@@ -1380,8 +1385,8 @@ void func_8010BFFC(void) {
         PLAYER.posY.i.hi += 32;
         while (true) {
             for (i = 0; i < 4; i++) {
-                x = PLAYER.posX.i.hi + D_800ACEC0[i].x;
-                y = PLAYER.posY.i.hi + D_800ACEC0[i].y;
+                x = PLAYER.posX.i.hi + g_SensorsCeiling[i].x;
+                y = PLAYER.posY.i.hi + g_SensorsCeiling[i].y;
 #if defined(VERSION_US)
                 if (g_PlayableCharacter != PLAYER_ALUCARD) {
                     y += 6;
@@ -1461,8 +1466,8 @@ static void CheckFloor(void) {
                 !(var_s2 & 1)) {
                 continue;
             }
-            argX = *xPosPtr + D_800ACED0[i].x;
-            argY = *yPosPtr + D_800ACED0[i].y;
+            argX = *xPosPtr + g_SensorsFloor[i].x;
+            argY = *yPosPtr + g_SensorsFloor[i].y;
             argY += (g_Player.colFloor[i].unk18 - 1);
             CheckCollision(argX, argY, &sp10, 0);
             if ((g_Player.status & PLAYER_STATUS_MIST_FORM) &&
@@ -1535,8 +1540,8 @@ static void CheckFloor(void) {
     if (PLAYER.velocityY < 0) {
         return;
     }
-    argX = *xPosPtr + D_800ACED0[0].x;
-    argY = *yPosPtr + D_800ACED0[0].y + 10;
+    argX = *xPosPtr + g_SensorsFloor[0].x;
+    argY = *yPosPtr + g_SensorsFloor[0].y + 10;
     CheckCollision(argX, argY, &sp10, 0);
     if ((sp10.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != 0) {
         return;
@@ -1564,8 +1569,8 @@ static void CheckFloor(void) {
             var_s8 = 8 - var_s6;
         }
         if ((var_s2 & EFFECT_UNK_4000) == var_s1) {
-            argX = var_s6 + (*xPosPtr + D_800ACED0[i].x);
-            argY = *yPosPtr + D_800ACED0[i].y;
+            argX = var_s6 + (*xPosPtr + g_SensorsFloor[i].x);
+            argY = *yPosPtr + g_SensorsFloor[i].y;
             CheckCollision(argX, argY, &sp10, 0);
             if (sp10.effects & 1) {
                 *yPosPtr += sp10.unk18;
@@ -1580,8 +1585,8 @@ static void CheckFloor(void) {
         if (!(var_s2 & 1)) {
             continue;
         }
-        argX = var_s6 + (*xPosPtr + D_800ACED0[i].x);
-        argY = *yPosPtr + D_800ACED0[i].y + g_Player.colFloor[i].unk10;
+        argX = var_s6 + (*xPosPtr + g_SensorsFloor[i].x);
+        argY = *yPosPtr + g_SensorsFloor[i].y + g_Player.colFloor[i].unk10;
         CheckCollision(argX, argY, &sp10, 0);
         if (sp10.effects & 1) {
             *yPosPtr += (sp10.unk18 + g_Player.colFloor[i].unk10);
@@ -1630,9 +1635,9 @@ static void CheckCeiling(void) {
                 continue;
             }
 
-            argX = *xPosPtr + D_800ACEC0[i].x;
-            argY =
-                *yPosPtr + D_800ACEC0[i].y + g_Player.colCeiling[i].unk10 + 1;
+            argX = *xPosPtr + g_SensorsCeiling[i].x;
+            argY = *yPosPtr + g_SensorsCeiling[i].y +
+                   g_Player.colCeiling[i].unk10 + 1;
             CheckCollision(argX, argY, &collider, 0);
             // If in mist form, and collider is mist, then disable collision on
             // that collider!
@@ -1714,8 +1719,8 @@ static void CheckCeiling(void) {
     if (PLAYER.velocityY > 0) {
         return;
     }
-    argX = *xPosPtr + D_800ACEC0[0].x;
-    argY = (*yPosPtr + D_800ACEC0[0].y) - 10;
+    argX = *xPosPtr + g_SensorsCeiling[0].x;
+    argY = (*yPosPtr + g_SensorsCeiling[0].y) - 10;
     CheckCollision(argX, argY, &collider, 0);
     if ((collider.effects & EFFECT_SOLID) != 0) {
         return;
@@ -1740,8 +1745,8 @@ static void CheckCeiling(void) {
                 temp_v1 = 8 - var_a1;
             }
             if ((temp_s0 & EFFECT_UNK_4000) == var_a0) {
-                argX = var_a1 + (*xPosPtr + D_800ACEC0[i].x);
-                argY = *yPosPtr + D_800ACEC0[i].y;
+                argX = var_a1 + (*xPosPtr + g_SensorsCeiling[i].x);
+                argY = *yPosPtr + g_SensorsCeiling[i].y;
                 CheckCollision(argX, argY, &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     *vram_ptr |= temp_fp;
@@ -1751,8 +1756,9 @@ static void CheckCeiling(void) {
                     return;
                 }
             } else if ((temp_v1 > 0) && (temp_s0 & 1)) {
-                argX = var_a1 + (*xPosPtr + D_800ACEC0[i].x);
-                argY = *yPosPtr + D_800ACEC0[i].y + g_Player.colCeiling[i].unk8;
+                argX = var_a1 + (*xPosPtr + g_SensorsCeiling[i].x);
+                argY = *yPosPtr + g_SensorsCeiling[i].y +
+                       g_Player.colCeiling[i].unk8;
                 CheckCollision(argX, argY, &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     if (!(*vram_ptr & 1)) {
@@ -1814,8 +1820,8 @@ static void CheckWallRight(void) {
             (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
             (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
             (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
-            argX = *xPosPtr + D_800ACEE0[i].x + g_Player.colWall[i].unk4 - 1;
-            argY = *yPosPtr + D_800ACEE0[i].y;
+            argX = *xPosPtr + g_SensorsWall[i].x + g_Player.colWall[i].unk4 - 1;
+            argY = *yPosPtr + g_SensorsWall[i].y;
             CheckCollision(argX, argY, &collider, 0);
             if ((collider.effects & EFFECT_SOLID) == 0) {
                 *vram_ptr |= 4;
@@ -1896,8 +1902,8 @@ static void CheckWallLeft(void) {
             (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
                          EFFECT_SOLID)) ||
             (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
-            argX = *xPosPtr + D_800ACEE0[i].x + g_Player.colWall[i].unkC + 1;
-            argY = *yPosPtr + D_800ACEE0[i].y;
+            argX = *xPosPtr + g_SensorsWall[i].x + g_Player.colWall[i].unkC + 1;
+            argY = *yPosPtr + g_SensorsWall[i].y;
             CheckCollision(argX, argY, &collider, 0);
             if ((collider.effects & EFFECT_SOLID) == 0) {
                 *vram_ptr |= 8;

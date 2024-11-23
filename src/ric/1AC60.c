@@ -173,7 +173,7 @@ void RicInit(s16 initParam) {
     }
 }
 
-static void func_801572A8(bool arg0) {
+static void CheckStageCollision(bool arg0) {
     Collider collider;
     s16 argX;
     s16 argY;
@@ -190,22 +190,24 @@ static void func_801572A8(bool arg0) {
     status = g_Player.status;
 
     if (arg0) {
-        for (i = 0; i < LEN(D_801545E4); i++) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
             if (status & PLAYER_STATUS_CROUCH) {
-                D_801545F4[i].y = D_80154644[i];
-                D_801545E4[i].y = D_8015465C[i];
+                g_RicSensorsFloor[i].y = g_RicSensorsFloorDefault[i];
+                g_RicSensorsCeiling[i].y = g_RicSensorsCeilingCrouch[i];
             } else {
-                D_801545F4[i].y = D_80154644[i];
-                D_801545E4[i].y = D_8015463C[i];
+                g_RicSensorsFloor[i].y = g_RicSensorsFloorDefault[i];
+                g_RicSensorsCeiling[i].y = g_RicSensorsCeilingDefault[i];
             }
         }
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
             if (status & PLAYER_STATUS_CROUCH) {
-                D_80154604[i].y = D_80154664[i];
-                D_80154604[i + 7].y = D_80154664[i];
+                g_RicSensorsWall[i].y = g_RicSensorsWallCrouch[i];
+                g_RicSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_RicSensorsWallCrouch[i];
             } else {
-                D_80154604[i].y = D_8015464C[i];
-                D_80154604[i + 7].y = D_8015464C[i];
+                g_RicSensorsWall[i].y = g_RicSensorsWallDefault[i];
+                g_RicSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_RicSensorsWallDefault[i];
             }
         }
     }
@@ -239,8 +241,8 @@ static void func_801572A8(bool arg0) {
         PLAYER.posY.val += PLAYER.velocityY;
     }
     for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
-        argX = PLAYER.posX.i.hi + D_801545F4[i].x;
-        argY = PLAYER.posY.i.hi + D_801545F4[i].y;
+        argX = PLAYER.posX.i.hi + g_RicSensorsFloor[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsFloor[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colFloor[i], 0);
         if (g_Player.timers[PL_T_7] && (g_Player.colFloor[i].effects & 0x40)) {
             g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
@@ -249,13 +251,13 @@ static void func_801572A8(bool arg0) {
             }
         }
     }
-    func_8015E800();
+    RicCheckFloor();
     for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
-        argX = PLAYER.posX.i.hi + D_801545E4[i].x;
-        argY = PLAYER.posY.i.hi + D_801545E4[i].y;
+        argX = PLAYER.posX.i.hi + g_RicSensorsCeiling[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsCeiling[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colCeiling[i], 0);
     }
-    func_8015EE28();
+    RicCheckCeiling();
     if ((*vram_ptr & 1) && (PLAYER.velocityY >= 0)) {
         PLAYER.posY.i.lo = 0;
     }
@@ -263,12 +265,12 @@ static void func_801572A8(bool arg0) {
         PLAYER.posY.i.lo = 0;
     }
     for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
-        argX = PLAYER.posX.i.hi + D_80154604[i].x;
-        argY = PLAYER.posY.i.hi + D_80154604[i].y;
+        argX = PLAYER.posX.i.hi + g_RicSensorsWall[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsWall[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colWall[i], 0);
     }
-    func_8015F414();
-    func_8015F680();
+    RicCheckWallRight();
+    RicCheckWallLeft();
     if ((*vram_ptr & 4) && (PLAYER.velocityX > 0)) {
         PLAYER.posX.i.lo = 0;
     }
@@ -726,16 +728,17 @@ void RicMain(void) {
     if ((abs(PLAYER.velocityY) > FIX(2)) || (abs(PLAYER.velocityX) > FIX(2))) {
         PLAYER.velocityY = PLAYER.velocityY >> 2;
         PLAYER.velocityX = PLAYER.velocityX >> 2;
-        if ((playerY->i.hi < 0) || (func_801572A8(1), (playerY->i.hi < 0)) ||
-            (func_801572A8(0), (playerY->i.hi < 0)) ||
-            (func_801572A8(0), (playerY->i.hi < 0)) ||
-            (func_801572A8(0), (playerY->i.hi < 0))) {
+        if ((playerY->i.hi < 0) ||
+            (CheckStageCollision(1), (playerY->i.hi < 0)) ||
+            (CheckStageCollision(0), (playerY->i.hi < 0)) ||
+            (CheckStageCollision(0), (playerY->i.hi < 0)) ||
+            (CheckStageCollision(0), (playerY->i.hi < 0))) {
             PLAYER.posY.val = FIX(-1);
         }
         PLAYER.velocityX *= 4;
         PLAYER.velocityY *= 4;
     } else {
-        func_801572A8(1);
+        CheckStageCollision(1);
     }
     g_Player.unk04 = temp_s0;
     if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {

@@ -352,9 +352,9 @@ void RicEntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                PLAYER.posX.i.hi + D_80154604[sensors1_80154CE4[i]].x;
+                PLAYER.posX.i.hi + g_RicSensorsWall[sensors1_80154CE4[i]].x;
             self->posY.i.hi =
-                PLAYER.posY.i.hi + D_80154604[sensors1_80154CE4[i]].y;
+                PLAYER.posY.i.hi + g_RicSensorsWall[sensors1_80154CE4[i]].y;
             self->velocityY = FIX(-0.25);
             self->rotY = self->rotX = rot_x_80154C74[1] + 0x40;
             self->step++;
@@ -371,9 +371,9 @@ void RicEntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                PLAYER.posX.i.hi + D_80154604[sensors2_80154CF4[i]].x;
+                PLAYER.posX.i.hi + g_RicSensorsWall[sensors2_80154CF4[i]].x;
             self->posY.i.hi =
-                PLAYER.posY.i.hi + D_80154604[sensors2_80154CF4[i]].y;
+                PLAYER.posY.i.hi + g_RicSensorsWall[sensors2_80154CF4[i]].y;
             self->velocityY = velocity_x_80154C5C[paramsLo];
             self->rotY = self->rotX = rot_x_80154C74[paramsLo] + 0x20;
             self->step++;

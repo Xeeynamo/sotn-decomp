@@ -334,12 +334,12 @@ extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
 extern Vram g_Vram;
 extern s32 D_800ACE44;
-extern s16 D_800ACE88[];
-extern s16 D_800ACE90[];
-extern s16 D_800ACE98[];
-extern Point16 D_800ACEC0[];
-extern Point16 D_800ACED0[];
-extern Point16 D_800ACEE0[];
+extern s16 g_SensorsCeilingDefault[];
+extern s16 g_SensorsFloorDefault[];
+extern s16 g_SensorsWallDefault[];
+extern Point16 g_SensorsCeiling[];
+extern Point16 g_SensorsFloor[];
+extern Point16 g_SensorsWall[];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
