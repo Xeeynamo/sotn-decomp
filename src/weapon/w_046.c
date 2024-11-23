@@ -248,7 +248,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk82 = -20;
         }
         self->ext.weapon.unk80 = -5;
-        if (g_Player.status & PLAYER_STATUS_UNK_20) {
+        if (g_Player.status & PLAYER_STATUS_CROUCH) {
             self->ext.weapon.unk80 = 11;
         }
         self->posX.i.hi = self->posX.i.hi + self->ext.weapon.unk82;
@@ -371,7 +371,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
-        if (g_Player.status & PLAYER_STATUS_UNK_20) {
+        if (g_Player.status & PLAYER_STATUS_CROUCH) {
             self->ext.weapon_046.unk7C = -0x200;
             self->ext.weapon_046.unk94 = -0x200;
             self->ext.weapon_046.unk90 = 0x280;

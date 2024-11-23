@@ -191,7 +191,7 @@ static void func_801572A8(bool arg0) {
 
     if (arg0) {
         for (i = 0; i < LEN(D_801545E4); i++) {
-            if (status & PLAYER_STATUS_UNK_20) {
+            if (status & PLAYER_STATUS_CROUCH) {
                 D_801545F4[i].y = D_80154644[i];
                 D_801545E4[i].y = D_8015465C[i];
             } else {
@@ -200,7 +200,7 @@ static void func_801572A8(bool arg0) {
             }
         }
         for (i = 0; i < 7; i++) {
-            if (status & PLAYER_STATUS_UNK_20) {
+            if (status & PLAYER_STATUS_CROUCH) {
                 D_80154604[i].y = D_80154664[i];
                 D_80154604[i + 7].y = D_80154664[i];
             } else {
@@ -378,7 +378,7 @@ void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
 void RicMain(void) {
     DamageParam damage;
     s32 temp_s0;
-    s32 var_s4;
+    s32 newStatus;
     s32 damageKind;
     s32 damageEffects;
     s16 playerStep;
@@ -603,28 +603,28 @@ void RicMain(void) {
     switch (PLAYER.step) {
     case PL_S_STAND:
     case PL_S_WALK:
-        var_s4 = NO_AFTERIMAGE;
+        newStatus = NO_AFTERIMAGE;
         break;
     case PL_S_CROUCH:
-        var_s4 = NO_AFTERIMAGE;
+        newStatus = NO_AFTERIMAGE;
         if (PLAYER.step_s != 2) {
-            var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK_20;
+            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_CROUCH;
         }
         break;
     case PL_S_FALL:
     case PL_S_JUMP:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
         break;
     case PL_S_HIGHJUMP:
         RicSetInvincibilityFrames(1, 4);
         break;
     case PL_S_HIT:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
     case PL_S_STAND_IN_AIR:
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_BOSS_GRAB:
-        var_s4 =
+        newStatus =
 #if defined(VERSION_US)
             NO_AFTERIMAGE |
 #endif
@@ -633,16 +633,16 @@ void RicMain(void) {
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_DEAD:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
         if (PLAYER.step_s == 0x80) {
-            var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
-                     PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
+            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
+                        PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
         }
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_SLIDE:
     case PL_S_SLIDE_KICK:
-        var_s4 = 0x20;
+        newStatus = PLAYER_STATUS_CROUCH;
         break;
     case PL_S_RUN:
     case PL_S_BLADEDASH:
@@ -653,26 +653,26 @@ void RicMain(void) {
     case PL_S_DEAD_PROLOGUE:
     case PL_S_SUBWPN_CRASH:
     case PL_S_INIT:
-        var_s4 = NO_AFTERIMAGE;
+        newStatus = NO_AFTERIMAGE;
         RicSetInvincibilityFrames(1, 16);
         break;
     }
     if (g_Player.timers[PL_T_ATTACK]) {
-        var_s4 |= PLAYER_STATUS_UNK400;
+        newStatus |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[PL_T_10]) {
-        var_s4 |= PLAYER_STATUS_UNK800;
+        newStatus |= PLAYER_STATUS_UNK800;
     }
     if (g_Player.timers[PL_T_12]) {
-        var_s4 |= PLAYER_STATUS_UNK1000;
+        newStatus |= PLAYER_STATUS_UNK1000;
     }
     if (*D_80097448 != 0) {
-        var_s4 |= PLAYER_STATUS_UNK20000;
+        newStatus |= PLAYER_STATUS_UNK20000;
     }
-    var_s4 |= PLAYER_STATUS_UNK10000000;
-    g_Player.status = var_s4;
+    newStatus |= PLAYER_STATUS_UNK10000000;
+    g_Player.status = newStatus;
     if (g_Player.unk08 & PLAYER_STATUS_UNK10000) {
-        if (!(var_s4 & PLAYER_STATUS_UNK10000)) {
+        if (!(newStatus & PLAYER_STATUS_UNK10000)) {
             if (g_Player.unk5C != 0) {
                 if (g_Status.hp < 2) {
                     RicSetDeadPrologue();
@@ -685,7 +685,7 @@ void RicMain(void) {
             }
         }
     }
-    if (var_s4 & NO_AFTERIMAGE) {
+    if (newStatus & NO_AFTERIMAGE) {
         DisableAfterImage(1, 4);
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |

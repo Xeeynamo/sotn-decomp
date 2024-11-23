@@ -298,7 +298,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         self->hitboxHeight = 2;
         self->hitboxOffX = 4;
         self->hitboxOffY = 0;
-        if (!(g_Player.status & PLAYER_STATUS_UNK_20)) {
+        if (!(g_Player.status & PLAYER_STATUS_CROUCH)) {
             self->posY.i.hi -= 9;
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -512,7 +512,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->velocityY = FIX(-6);
         tempLeft = self->facingLeft;
         self->ext.axeCrash.unk7C = tempLeft ? 0x400 : 0xC00;
-        if (!(g_Player.status & PLAYER_STATUS_UNK_20)) {
+        if (!(g_Player.status & PLAYER_STATUS_CROUCH)) {
             self->posY.i.hi = (u16)self->posY.i.hi - 0xC;
         }
         sp10 = 0;

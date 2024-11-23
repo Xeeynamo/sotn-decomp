@@ -318,7 +318,7 @@ void func_80109A44(s32 isTransformed) {
                 D_800ACED0[i].y = D_800ACE70[i];
                 D_800ACEC0[i].y = D_800ACE68[i];
             } else if (
-                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_UNK_20)) {
+                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_CROUCH)) {
                 D_800ACED0[i].y = D_800ACE90[i];
                 D_800ACEC0[i].y = D_800ACEA8[i];
             } else {
@@ -331,7 +331,7 @@ void func_80109A44(s32 isTransformed) {
                 D_800ACEE0[i].y = D_800ACE78[i];
                 D_800ACEE0[i + 7].y = D_800ACE78[i];
             } else if (
-                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_UNK_20)) {
+                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_CROUCH)) {
                 D_800ACEE0[i].y = D_800ACEB0[i];
                 D_800ACEE0[i + 7].y = D_800ACEB0[i];
             } else {
@@ -548,7 +548,7 @@ void EntityAlucard(void) {
     s32 temp_s1;
     s32 temp_a0;
     s32 temp_v1;
-    s32 var_s0;
+    s32 newStatus;
     s16 var_s6;
     s16 var_s7;
 
@@ -567,9 +567,9 @@ void EntityAlucard(void) {
     var_s7 = 0;
     g_Player.unk72 = func_80110394();
     if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-        var_s0 = GetTeleportToOtherCastle();
-        if (var_s0 != 0) {
-            func_8010E42C(var_s0);
+        newStatus = GetTeleportToOtherCastle();
+        if (newStatus != 0) {
+            func_8010E42C(newStatus);
         }
         if (PLAYER.step != 0x12) {
             func_8010A234(0);
@@ -598,14 +598,14 @@ void EntityAlucard(void) {
                 }
                 g_Player.unk56 = 0;
             }
-            var_s0 = CheckAndDoLevelUp();
-            if (var_s0 != 0) {
+            newStatus = CheckAndDoLevelUp();
+            if (newStatus != 0) {
                 CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0x19, var_s0 - 1), 0);
+                    g_CurrentEntity, FACTORY(0x19, newStatus - 1), 0);
             }
-            for (var_s0 = 0; var_s0 < 16; var_s0++) {
-                if (g_Player.timers[var_s0]) {
-                    switch (var_s0) {
+            for (newStatus = 0; newStatus < 16; newStatus++) {
+                if (g_Player.timers[newStatus]) {
+                    switch (newStatus) {
                     case 2:
                         PLAYER.palette = g_Player.unk40;
                         break;
@@ -638,8 +638,8 @@ void EntityAlucard(void) {
                     case 0:
                         break;
                     }
-                    if (!--g_Player.timers[var_s0]) {
-                        switch (var_s0) {
+                    if (!--g_Player.timers[newStatus]) {
+                        switch (newStatus) {
                         case 0:
                             if (!(g_Player.status & (PLAYER_STATUS_STONE |
                                                      PLAYER_STATUS_CURSE))) {
@@ -725,9 +725,9 @@ void EntityAlucard(void) {
             } else {
                 g_Player.padPressed = g_pads[0].pressed;
                 g_Player.padPressed = g_Player.padPressed & 0xFF00;
-                for (var_s0 = 0; var_s0 < 8; var_s0++) {
-                    if (g_pads[0].pressed & g_Settings.buttonMask[var_s0]) {
-                        g_Player.padPressed |= D_800ACE00[var_s0];
+                for (newStatus = 0; newStatus < 8; newStatus++) {
+                    if (g_pads[0].pressed & g_Settings.buttonMask[newStatus]) {
+                        g_Player.padPressed |= D_800ACE00[newStatus];
                     }
                 }
 #ifdef VERSION_US
@@ -777,15 +777,15 @@ void EntityAlucard(void) {
                         if (PLAYER.hitParams) {
                             var_s6 = PLAYER.step;
                             var_s7 = PLAYER.step_s;
-                            var_s0 = HandleDamage(
+                            newStatus = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
                             if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
-                                ((var_s0 == 1) || (var_s0 == 7) ||
-                                 (var_s0 == 8))) {
-                                var_s0 = 3;
+                                ((newStatus == 1) || (newStatus == 7) ||
+                                 (newStatus == 8))) {
+                                newStatus = 3;
                                 damage.damageKind = 1;
                             }
-                            switch (var_s0) {
+                            switch (newStatus) {
                             case 0:
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2F, 0), 0);
@@ -1034,7 +1034,7 @@ block_160:
     runweapon:
         weapon_func();
     }
-    var_s0 = 0;
+    newStatus = 0;
     g_unkGraphicsStruct.unk1C &= ~2;
     g_Player.status &= ~PLAYER_STATUS_UNK8;
     g_Player.unk08 = g_Player.status;
@@ -1042,46 +1042,46 @@ block_160:
     switch (PLAYER.step) { /* switch 5 */
     case 2:                /* switch 5 */
         if (PLAYER.step_s != 2) {
-            var_s0 = 0x20;
+            newStatus = PLAYER_STATUS_CROUCH;
         }
-        var_s0 |= 0x10000000;
+        newStatus |= 0x10000000;
         break;
     case 1: /* switch 5 */
-        var_s0 = 0x04000000;
+        newStatus = 0x04000000;
         /* fallthrough */
     case 0: /* switch 5 */
-        var_s0 |= 0x10000000;
+        newStatus |= 0x10000000;
         if (PLAYER.step_s == 4) {
-            var_s0 |= 0x08100000;
+            newStatus |= 0x08100000;
         }
         break;
     case 3: /* switch 5 */
     case 4: /* switch 5 */
-        var_s0 = 0x10002000;
+        newStatus = 0x10002000;
         break;
     case 5: /* switch 5 */
         if (PLAYER.step_s == 3) {
             func_8010E168(1, 4);
             g_unkGraphicsStruct.unk1C |= 2;
         }
-        var_s0 = 0x28100001;
+        newStatus = 0x28100001;
         break;
     case 7: /* switch 5 */
         func_8010E168(1, 4);
-        var_s0 = 0x28100002;
+        newStatus = 0x28100002;
         PLAYER.palette = 0x810D;
         break;
     case 14:
-        var_s0 = 0x28900002;
+        newStatus = 0x28900002;
         PLAYER.palette = 0x810D;
         func_8010E168(1, 4);
         break;
     case 6: /* switch 5 */
         func_8010E168(1, 4);
-        var_s0 = 0x18100030;
+        newStatus = 0x18100010 | PLAYER_STATUS_CROUCH;
         break;
     case 9: /* switch 5 */
-        var_s0 = 0x28500001;
+        newStatus = 0x28500001;
         if (PLAYER.step_s == 0) {
             PLAYER.animSet = 0xD;
             PLAYER.unk5A = 0;
@@ -1090,48 +1090,48 @@ block_160:
         break;
     case 8: /* switch 5 */
         func_8010E168(1, 4);
-        var_s0 = 0x38000000;
+        newStatus = 0x38000000;
         break;
     case 10: /* switch 5 */
     case 48: /* switch 5 */
     case 49: /* switch 5 */
-        var_s0 = 0x38110000;
+        newStatus = 0x38110000;
         func_8010E168(1, 12);
         break;
     case 11: /* switch 5 */
-        var_s0 = 0x38110080;
+        newStatus = 0x38110080;
         break;
     case 12: /* switch 5 */
-        var_s0 = 0x38110040;
+        newStatus = 0x38110040;
         func_8010E168(1, 12);
         break;
     case 13: /* switch 5 */
     case 16: /* switch 5 */
-        var_s0 = 0x18150000;
+        newStatus = 0x18150000;
         if (PLAYER.step_s == 0x80) {
-            var_s0 = 0x181D0000;
+            newStatus = 0x181D0000;
         }
         func_8010E168(1, 12);
         break;
     case 17: /* switch 5 */
-        var_s0 = 0x18150000;
+        newStatus = 0x18150000;
         func_8010E168(1, 12);
         break;
     case 18: /* switch 5 */
-        var_s0 = 0x18100000;
+        newStatus = 0x18100000;
         func_8010E168(1, 12);
         break;
     case 33: /* switch 5 */
     case 35: /* switch 5 */
     case 39: /* switch 5 */
         func_8010E168(1, 0x10);
-        var_s0 = 0x38000220;
+        newStatus = 0x38000200 | PLAYER_STATUS_CROUCH;
         break;
     case 32: /* switch 5 */
     case 34: /* switch 5 */
     case 37: /* switch 5 */
         func_8010E168(1, 0x10);
-        var_s0 = 0x38000200;
+        newStatus = 0x38000200;
         break;
     case 43: /* switch 5 */
         func_8010E168(1, 0x14);
@@ -1141,10 +1141,10 @@ block_160:
     case 42: /* switch 5 */
     case 50: /* switch 5 */
         PLAYER.unk5A = 0x64;
-        var_s0 = 0x29100000;
+        newStatus = 0x29100000;
         break;
     case 15: /* switch 5 */
-        var_s0 = 0x18100000;
+        newStatus = 0x18100000;
         func_8010E168(4, 0xC);
         PLAYER.palette = 0x810D;
         break;
@@ -1153,49 +1153,49 @@ block_160:
         if (abs(PLAYER.velocityX) > FIX(3)) {
             func_8010E168(1, 4);
         }
-        var_s0 = 0x2C100204;
+        newStatus = 0x2C100204;
         if ((PLAYER.step_s == 0) || (PLAYER.step_s == 8)) {
-            var_s0 = 0x6C100204;
+            newStatus = 0x6C100204;
         }
         if (PLAYER.step_s == 3) {
-            var_s0 |= 0x20;
+            newStatus |= PLAYER_STATUS_CROUCH;
         }
         break;
     case 25: /* switch 5 */
-        var_s0 = 0x68100000;
+        newStatus = 0x68100000;
         func_8010E168(1, 4);
         break;
     }
     if (g_Player.timers[9]) {
-        var_s0 |= 0x400;
+        newStatus |= 0x400;
     }
     if (g_Player.timers[10]) {
-        var_s0 |= 0x800;
+        newStatus |= 0x800;
     }
     if (g_Player.timers[12]) {
-        var_s0 |= 0x1000;
+        newStatus |= 0x1000;
     }
     if (g_Player.timers[0]) {
-        var_s0 |= 0x28104000;
+        newStatus |= 0x28104000;
     }
     if (g_Player.timers[1]) {
-        var_s0 |= 0x28108000;
+        newStatus |= 0x28108000;
     }
     if (*D_80097448 != 0) {
-        var_s0 |= 0x08020000;
+        newStatus |= 0x08020000;
     }
     if (g_Player.timers[11]) {
-        var_s0 |= 0x02000000;
+        newStatus |= 0x02000000;
     }
-    g_Player.status = var_s0;
-    if ((var_s0 & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
+    g_Player.status = newStatus;
+    if ((newStatus & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
         func_8010DFF0(1, 1);
     }
-    if (var_s0 & 0x10000000) {
+    if (newStatus & 0x10000000) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
     }
-    if (var_s0 & 0x20000000) {
+    if (newStatus & 0x20000000) {
         g_Status.D_80097BF8 |= 1;
     }
     if (g_Player.timers[13] | g_Player.timers[14]) {
@@ -1264,7 +1264,7 @@ block_160:
                     func_80109A44(1);
                 }
             }
-            for (var_s0 = 0; var_s0 < 7; var_s0++) {
+            for (newStatus = 0; newStatus < 7; newStatus++) {
                 if (PLAYER.posY.i.hi >= 0) {
                     func_80109A44(0);
                 }

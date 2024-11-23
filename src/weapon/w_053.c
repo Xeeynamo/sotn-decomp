@@ -119,7 +119,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->ext.weapon.unk82 = -20;
         }
         self->ext.weapon.unk80 = -5;
-        if (g_Player.status & PLAYER_STATUS_UNK_20) {
+        if (g_Player.status & PLAYER_STATUS_CROUCH) {
             self->ext.weapon.unk80 = 11;
         }
         self->posX.i.hi += self->ext.weapon.unk82;
@@ -212,7 +212,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->ext.weapon.unk82 = -0x26;
         }
         self->ext.weapon.unk80 = -5;
-        if (g_Player.status & PLAYER_STATUS_UNK_20) {
+        if (g_Player.status & PLAYER_STATUS_CROUCH) {
             self->ext.weapon.unk80 = 0xB;
         }
         self->posX.i.hi = self->ext.weapon.unk82 + PLAYER.posX.i.hi;
@@ -350,7 +350,7 @@ void func_ptr_8017000C(Entity* self) {
     if (self->step == 0) {
         self->facingLeft = PLAYER.facingLeft;
         self->ext.weapon.unk80 = -5;
-        if (g_Player.status & PLAYER_STATUS_UNK_20) {
+        if (g_Player.status & PLAYER_STATUS_CROUCH) {
             self->ext.weapon.unk80 = 0xB;
         }
         self->posY.i.hi = self->posY.i.hi + self->ext.weapon.unk80;
