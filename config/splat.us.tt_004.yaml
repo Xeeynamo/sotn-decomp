@@ -1,0 +1,50 @@
+options:
+  platform: psx
+  basename: tt_004
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/SERVANT/TT_004.BIN
+  asm_path: asm/us/servant/tt_004
+  asset_path: assets/servant/tt_004
+  src_path: src/servant/tt_004
+  ld_script_path: build/us/tt_004.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.tt_004.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.tt_004.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.tt_004.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+  disassemble_all: true
+sha1: 0f2ff898829ead77bb15545324c7b8958f9fb4e1
+segments:
+  - name: tt_004
+    type: code
+    start: 0
+    vram:  0x80170000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, sword]
+      - [0x40, data, sword_misc_data]
+      - [0x19E4, .data, servant_events]
+      - [0x2330, .rodata, sword]
+      - [0x23FC, .rodata, servant_common]
+      - [0x2420, c, sword]
+      - [0x763C, c, servant_common]
+      - [0x82B0, .bss, sword]
+      - [0x82C8, sbss]
+  - [0xA000]

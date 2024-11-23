@@ -12,7 +12,9 @@ typedef enum {
     MENU_SAME_SERVANT
 } InitializeMode;
 
-#define ENTITY_ID_SERVANT 0xD1
+#define SERVANT_ENTITY_START 0xD0
+#define SERVANT_ID(id) (SERVANT_ENTITY_START + (id))
+#define ENTITY_ID_SERVANT SERVANT_ID(1)
 
 /* These are mostly update functions.
  * Update function is called in the engine and is

@@ -6,7 +6,7 @@ static void func_801CF58C(Entity* self) {
     self->velocityX = 0;
     self->ext.warg.unk86 = 0x100;
     SetStep(6);
-    g_api.PlaySfx(SE_WARG_GROWL);
+    g_api.PlaySfx(SFX_WARG_GROWL);
     self->ext.warg.unk80 = 0x20;
 }
 
@@ -254,7 +254,7 @@ void EntityWarg(Entity* self) {
                 } else {
                     self->velocityX = FIX(-6.0);
                 }
-                g_api.PlaySfx(SFX_UNK_782);
+                g_api.PlaySfx(SFX_WARG_ATTACK);
                 enemy = &g_api.enemyDefs[176];
                 otherEnt->attackElement = enemy->attackElement;
                 otherEnt->attack = enemy->attack;
@@ -291,7 +291,7 @@ void EntityWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             SetSubStep(1);
-            g_api.PlaySfx(SFX_UNK_781);
+            g_api.PlaySfx(SFX_WARG_PAIN);
             if (self->facingLeft) {
                 self->velocityX = FIX(-2.0);
             } else {
@@ -359,7 +359,7 @@ void EntityWarg(Entity* self) {
             AnimateEntity(D_801831A0, self);
             self->unk6C -= 2;
             if (self->unk6C == 0x40) {
-                g_api.PlaySfx(SFX_UNK_780);
+                g_api.PlaySfx(SFX_WARG_DEATH_HOWL);
             }
             if (self->unk6C) {
                 break;

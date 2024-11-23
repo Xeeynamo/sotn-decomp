@@ -11,7 +11,7 @@ PSX_RSTAGES		:= rwrp
 PSX_BOSTAGES    := mar
 PSX_RBOSTAGES	:= rbo3
 PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES)) $(addprefix bo,$(PSX_RBOSTAGES))
-PSX_SERVANTS	:= tt_000 tt_001 tt_002 tt_003
+PSX_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 PSX_US_TARGETS	:= main $(PSX_OVLS) $(PSX_ALLSTAGES) $(PSX_SERVANTS)
 PSX_HD_TARGETS	:= dra ric tt_000 stcen stwrp
 

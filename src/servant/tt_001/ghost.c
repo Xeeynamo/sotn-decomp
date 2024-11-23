@@ -4,8 +4,8 @@
 #include "ghost.h"
 #include "../servant_private.h"
 
-#define ENTITY_ID_ATTACK_CLOUD 0xDA
-#define ENTITY_ID_CONFUSION 0xDB
+#define ENTITY_ID_ATTACK_CLOUD SERVANT_ID(10)
+#define ENTITY_ID_CONFUSION SERVANT_ID(11)
 
 #ifdef VERSION_PSP
 #define PSP_INLINE(code) code
