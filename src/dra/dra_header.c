@@ -51,7 +51,7 @@ u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 s32 SetVolumeCommand22_23(s16 vol, u16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_8010BF64(Unkstruct_8010BF64* arg0);
+void func_8010BF64(Collider* col);
 void func_800F1FC4(s32 arg0);
 void func_800F2288(void); // unknown signature
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);

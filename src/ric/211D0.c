@@ -591,13 +591,11 @@ void func_8015E484(void) {
     }
 }
 
-void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
-    s32 temp = D_80154604[0].x;
-
-    arg0->unk14 = temp;
-    arg0->unk1C = temp = D_80154604[0].y;
-    arg0->unk18 = D_801545F4[1].y - 1;
-    arg0->unk20 = D_801545E4[1].y + 1;
+void func_8015E7B4(Collider* col) {
+    col->unk14 = D_80154604[0].x;
+    col->unk1C = D_80154604[0].y;
+    col->unk18 = D_801545F4[1].y - 1;
+    col->unk20 = D_801545E4[1].y + 1;
 }
 
 void func_8015E800(void) {

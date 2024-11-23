@@ -1304,13 +1304,13 @@ block_160:
     }
 }
 
-void func_8010BF64(Unkstruct_8010BF64* arg0) {
+void func_8010BF64(Collider* col) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        u32 status = (g_Player.status / 2) & 2;
-        arg0->unk14 = D_800ACEE0[0].x - status;
-        arg0->unk1C = D_800ACEE0[0].y + status;
-        arg0->unk18 = D_800ACED0[1].y - 1;
-        arg0->unk20 = D_800ACEC0[1].y + 1;
+        u32 mod = (g_Player.status >> 1) & 2;
+        col->unk14 = D_800ACEE0[0].x - mod;
+        col->unk1C = D_800ACEE0[0].y + mod;
+        col->unk18 = D_800ACED0[1].y - 1;
+        col->unk20 = D_800ACEC0[1].y + 1;
     } else {
         g_PlOvl.D_8013C00C();
     }
