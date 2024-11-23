@@ -29,7 +29,6 @@ options:
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
-    .include "macro.inc"
 sha1: c8c34ac1d46b31e2e5336df271aa2409f44c9d01
 
 segments:
