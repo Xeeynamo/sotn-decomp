@@ -440,8 +440,8 @@ void func_8012E550(void) {
     DecelerateX(FIX(0.125));
     if (g_Player.padTapped & PAD_CROSS) {
         if (g_Player.padPressed & PAD_DOWN) {
-            for (i = 0; i < 4; i++) {
-                if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+                if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.timers[7] = 8;
                     func_8012CED4();
                     PLAYER.animFrameIdx = 4;

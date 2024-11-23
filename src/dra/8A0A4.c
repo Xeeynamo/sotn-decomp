@@ -1140,16 +1140,16 @@ void func_8012D28C(bool exitEarly) {
     }
     // Start a routine where we look through this array for a value.
     bitNotFound = 0;
-    for (i = 3; i < 7; i++) {
-        if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
+    for (i = 3; i < NUM_VERTICAL_SENSORS; i++) {
+        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
             break;
         }
     }
     // If we made it through that loop without finding one, skip i=7,8,9
     // and keep searching.
     if (i == 7) {
-        for (i = 10; i < 14; i++) {
-            if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
+        for (i = NUM_VERTICAL_SENSORS + 3; i < NUM_VERTICAL_SENSORS * 2; i++) {
+            if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
                 break;
             }
         }

@@ -343,7 +343,7 @@ void RicEntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 4) {
             for (i = paramsLo * 2; i < LEN(sensors1_80154CE4); i++) {
-                if (g_Player.colliders3[sensors1_80154CE4[i]].effects & 3) {
+                if (g_Player.colWall[sensors1_80154CE4[i]].effects & 3) {
                     break;
                 }
             }
@@ -362,7 +362,7 @@ void RicEntitySmokePuff(Entity* self) {
         }
         if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(sensors2_80154CF4); i++) {
-                if (g_Player.colliders3[sensors2_80154CF4[i]].effects & 3) {
+                if (g_Player.colWall[sensors2_80154CF4[i]].effects & 3) {
                     break;
                 }
             }

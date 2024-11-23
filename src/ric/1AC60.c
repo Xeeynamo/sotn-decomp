@@ -238,22 +238,22 @@ static void func_801572A8(bool arg0) {
     if ((PLAYER.velocityY > 0) && !(*unk04_ptr & 1)) {
         PLAYER.posY.val += PLAYER.velocityY;
     }
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
         argX = PLAYER.posX.i.hi + D_801545F4[i].x;
         argY = PLAYER.posY.i.hi + D_801545F4[i].y;
-        g_api.CheckCollision(argX, argY, &g_Player.colliders[i], 0);
-        if (g_Player.timers[PL_T_7] && (g_Player.colliders[i].effects & 0x40)) {
+        g_api.CheckCollision(argX, argY, &g_Player.colFloor[i], 0);
+        if (g_Player.timers[PL_T_7] && (g_Player.colFloor[i].effects & 0x40)) {
             g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
             if (!(collider.effects & EFFECT_SOLID)) {
-                g_Player.colliders[i].effects = 0;
+                g_Player.colFloor[i].effects = 0;
             }
         }
     }
     func_8015E800();
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
         argX = PLAYER.posX.i.hi + D_801545E4[i].x;
         argY = PLAYER.posY.i.hi + D_801545E4[i].y;
-        g_api.CheckCollision(argX, argY, &g_Player.colliders2[i], 0);
+        g_api.CheckCollision(argX, argY, &g_Player.colCeiling[i], 0);
     }
     func_8015EE28();
     if ((*vram_ptr & 1) && (PLAYER.velocityY >= 0)) {
@@ -262,10 +262,10 @@ static void func_801572A8(bool arg0) {
     if ((*vram_ptr & 2) && (PLAYER.velocityY <= 0)) {
         PLAYER.posY.i.lo = 0;
     }
-    for (i = 0; i < 14; i++) {
+    for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
         argX = PLAYER.posX.i.hi + D_80154604[i].x;
         argY = PLAYER.posY.i.hi + D_80154604[i].y;
-        g_api.CheckCollision(argX, argY, &g_Player.colliders3[i], 0);
+        g_api.CheckCollision(argX, argY, &g_Player.colWall[i], 0);
     }
     func_8015F414();
     func_8015F680();

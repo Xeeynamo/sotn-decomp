@@ -1714,10 +1714,15 @@ typedef struct {
     /* D_8003C70C */ u32 zPriority;
 } FgLayer32;
 
+// A tall player needs to have multiple sensors to detect collision at the
+// center of the body.
+#define NUM_HORIZONTAL_SENSORS 4
+#define NUM_VERTICAL_SENSORS 7
+
 typedef struct {
-    /* 80072BD0 */ Collider colliders[4];
-    /* 80072C60 */ Collider colliders2[4];
-    /* 80072CF0 */ Collider colliders3[14];
+    /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
+    /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
+    /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;

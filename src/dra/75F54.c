@@ -154,15 +154,15 @@ void PlayerStepHellfire(void) {
         PLAYER.velocityX = 0;
         if (CheckMoveDirection() != 0) {
             if (g_Player.padPressed & PAD_RIGHT) {
-                if ((g_Player.colliders[2].effects &
+                if ((g_Player.colFloor[2].effects &
                      (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
-                    (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
+                    (g_Player.colFloor[1].effects & EFFECT_UNK_8000) ||
                     (PLAYER.posX.i.hi > 248)) {
                     SetSpeedX(FIX(3));
                 }
-            } else if ((g_Player.colliders[3].effects &
+            } else if ((g_Player.colFloor[3].effects &
                         (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
-                       (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
+                       (g_Player.colFloor[1].effects & EFFECT_UNK_8000) ||
                        (PLAYER.posX.i.hi < 8)) {
                 SetSpeedX(FIX(3));
             }
