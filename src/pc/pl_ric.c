@@ -15,7 +15,7 @@ void InitPlayerRic(void) {
     g_PlOvl.D_8013C000 = RIC_player.D_8013C000;
     g_PlOvl.D_8013C004 = InjectPlayerInit;
     g_PlOvl.D_8013C008 = RIC_player.D_8013C008;
-    g_PlOvl.D_8013C00C = RIC_player.D_8013C00C;
+    g_PlOvl.GetPlayerSensor = RIC_player.GetPlayerSensor;
     real_player_init = RIC_player.D_8013C004;
 }
 

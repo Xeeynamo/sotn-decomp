@@ -1544,7 +1544,7 @@ typedef struct {
     /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, u16 distance);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
-    /* 8003C868 */ void (*func_8010BF64)(Collider* col);
+    /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*GetServantStats)(
@@ -1576,7 +1576,7 @@ typedef struct {
     void (*D_8013C000)(void);
     void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
-    void (*D_8013C00C)(void);
+    void (*GetPlayerSensor)(void);
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
@@ -1624,7 +1624,7 @@ extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, u16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
-extern void (*g_api_func_8010BF64)(Collider* col);
+extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_GetServantStats)(

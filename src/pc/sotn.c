@@ -94,7 +94,7 @@ void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_8010BF64(Collider* col);
+void GetPlayerSensor(Collider* col);
 void func_800F1FC4(s32 arg0);
 void func_800F2288(s32 arg0);
 s32 func_800FF460(s32 arg0);
@@ -198,7 +198,7 @@ bool InitGame(struct InitGameParams* params) {
     api.SetVolumeCommand22_23 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
-    api.func_8010BF64 = func_8010BF64;
+    api.GetPlayerSensor = GetPlayerSensor;
     api.func_800F1FC4 = func_800F1FC4;
     api.func_800F2288 = func_800F2288;
     api.GetServantStats = GetServantStats;

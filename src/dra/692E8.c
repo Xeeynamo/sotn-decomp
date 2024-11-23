@@ -1322,7 +1322,7 @@ block_160:
     }
 }
 
-void func_8010BF64(Collider* col) {
+void GetPlayerSensor(Collider* col) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
         u32 mod = (g_Player.status >> 1) & 2;
         col->unk14 = g_SensorsWall[0].x - mod;
@@ -1330,7 +1330,7 @@ void func_8010BF64(Collider* col) {
         col->unk18 = g_SensorsFloor[1].y - 1;
         col->unk20 = g_SensorsCeiling[1].y + 1;
     } else {
-        g_PlOvl.D_8013C00C();
+        g_PlOvl.GetPlayerSensor();
     }
 }
 

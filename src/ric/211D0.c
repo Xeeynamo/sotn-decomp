@@ -593,7 +593,7 @@ void func_8015E484(void) {
     }
 }
 
-void func_8015E7B4(Collider* col) {
+void RicGetPlayerSensor(Collider* col) {
     col->unk14 = g_RicSensorsWall[0].x;
     col->unk1C = g_RicSensorsWall[0].y;
     col->unk18 = g_RicSensorsFloor[1].y - 1;
