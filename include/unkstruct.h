@@ -51,17 +51,6 @@ typedef struct {
     /* 0x10 */ u8 unkArray[0x30]; // color buffer
 } Unkstruct_8006C3C4;             // size = 0x40
 
-// Used in:
-// func_8015E7B4
-// func_8010BF64
-typedef struct {
-    /* 0x00 */ char pad0[0x14];
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-} Unkstruct_8010BF64;
-
 // related to SFX
 typedef struct {
     /* 0x00 */ s16 sndId;

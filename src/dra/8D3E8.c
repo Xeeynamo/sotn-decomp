@@ -440,8 +440,8 @@ void func_8012E550(void) {
     DecelerateX(FIX(0.125));
     if (g_Player.padTapped & PAD_CROSS) {
         if (g_Player.padPressed & PAD_DOWN) {
-            for (i = 0; i < 4; i++) {
-                if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+                if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.timers[7] = 8;
                     func_8012CED4();
                     PLAYER.animFrameIdx = 4;
@@ -568,8 +568,8 @@ void func_8012E9C0(void) {
 
     PLAYER.palette = 0x810D;
     for (i = 0; i < 4; i++) {
-        if (D_800ACED0[i].y < D_800ACE90[i]) {
-            D_800ACED0[i].y++;
+        if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+            g_SensorsFloor[i].y++;
         }
     }
     func_8010E168(1, 4);
@@ -602,8 +602,8 @@ void func_8012EAD0(void) {
     case 0:
         i = 0;
         for (i = 0; i < 4; i++) {
-            if (D_800ACE88[i] < D_800ACEC0[i].y) {
-                D_800ACEC0[i].y--;
+            if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+                g_SensorsCeiling[i].y--;
             } else {
                 else_cycles++;
             }

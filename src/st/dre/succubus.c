@@ -576,7 +576,7 @@ void EntitySuccubus(Entity* self) {
             if (!(g_Player.status &
                   (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
                    PLAYER_STATUS_UNK100 | PLAYER_STATUS_STONE |
-                   PLAYER_STATUS_UNK_20 | PLAYER_STATUS_MIST_FORM))) {
+                   PLAYER_STATUS_CROUCH | PLAYER_STATUS_MIST_FORM))) {
                 if ((posY < 12) && (posX < 24)) {
                     g_Player.unk60 = 1;
                     g_Player.unk64 = 0;

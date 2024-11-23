@@ -603,34 +603,34 @@ void func_8011B5A4(Entity* self) {
             self->posY.i.hi -= (20 + (rand() % 4));
         }
         if (paramsHi == 4) {
-            for (i = paramsLo * 2; i < 14; i++) {
-                if (g_Player.colliders3[D_800AD5E0[i]].effects & 3) {
+            for (i = paramsLo * 2; i < LEN(D_800AD5E0); i++) {
+                if (g_Player.colWall[D_800AD5E0[i]].effects & 3) {
                     break;
                 }
             }
-            if (i == 14) {
+            if (i == LEN(D_800AD5E0)) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5E0[i]].x;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5E0[i]].y;
+            self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5E0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5E0[i]].y;
             self->velocityY = FIX(-0.25);
             self->rotY = self->rotX = D_800AD570[1] + 0x40;
             self->step++;
             return;
         }
         if (paramsHi == 8) { /* switch 1 */
-            for (i = paramsLo * 2; i < 10; i++) {
-                if (g_Player.colliders3[D_800AD5F0[i]].effects & 3) {
+            for (i = paramsLo * 2; i < LEN(D_800AD5F0); i++) {
+                if (g_Player.colWall[D_800AD5F0[i]].effects & 3) {
                     break;
                 }
             }
-            if (i == 10) {
+            if (i == LEN(D_800AD5F0)) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5F0[i]].x;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5F0[i]].y;
+            self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5F0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5F0[i]].y;
             self->velocityY = D_800AD558[paramsLo];
             self->rotY = self->rotX = D_800AD570[paramsLo] + 0x20;
             self->step++;

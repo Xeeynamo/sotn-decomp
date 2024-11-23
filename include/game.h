@@ -290,7 +290,7 @@ typedef enum {
          PLAYER_STATUS_WOLF_FORM),
     PLAYER_STATUS_UNK8 = 0x8,
     PLAYER_STATUS_UNK10 = 0x10,
-    PLAYER_STATUS_UNK_20 = 0x20,
+    PLAYER_STATUS_CROUCH = 0x20,
     PLAYER_STATUS_UNK40 = 0x40,
     PLAYER_STATUS_STONE = 0x80,
     PLAYER_STATUS_UNK100 = 0x100,
@@ -1544,7 +1544,7 @@ typedef struct {
     /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, u16 distance);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
-    /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
+    /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*GetServantStats)(
@@ -1576,7 +1576,7 @@ typedef struct {
     void (*D_8013C000)(void);
     void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
-    void (*D_8013C00C)(void);
+    void (*GetPlayerSensor)(Collider* col);
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
@@ -1624,7 +1624,7 @@ extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, u16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
-extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
+extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_GetServantStats)(
@@ -1714,10 +1714,15 @@ typedef struct {
     /* D_8003C70C */ u32 zPriority;
 } FgLayer32;
 
+// A tall player needs to have multiple sensors to detect collision at the
+// center of the body.
+#define NUM_HORIZONTAL_SENSORS 4
+#define NUM_VERTICAL_SENSORS 7
+
 typedef struct {
-    /* 80072BD0 */ Collider colliders[4];
-    /* 80072C60 */ Collider colliders2[4];
-    /* 80072CF0 */ Collider colliders3[14];
+    /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
+    /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
+    /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;

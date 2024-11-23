@@ -1,3 +1,4 @@
+D_800ACE88 = 0x800ACE88; // ignore:true
 aPbav = 0x800B107C;
 aPbav_0 = 0x800B407C;
 aPbav_2 = 0x800B607C;

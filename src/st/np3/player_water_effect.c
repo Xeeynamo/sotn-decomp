@@ -52,8 +52,8 @@ void EntityAlucardWaterEffect(Entity* arg0) {
 
     sp18 = player->posX.i.hi + tilemap->scrollX.i.hi;
     status = g_Player.status;
-    if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
-        if (status & PLAYER_STATUS_UNK_20) {
+    if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
+        if (status & PLAYER_STATUS_CROUCH) {
             sp4A = 0x14;
             var_s6 = 0x19;
             if (status & PLAYER_STATUS_WOLF_FORM) {
@@ -274,8 +274,8 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             arg0->ext.aluwater.unk7E--;
         }
         *D_80097448 = var_s3;
-        if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
-            if (status & PLAYER_STATUS_UNK_20) {
+        if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
+            if (status & PLAYER_STATUS_CROUCH) {
                 if (status & PLAYER_STATUS_WOLF_FORM) {
                     if (var_s3 > 4) {
                         D_80097448[1] = var_s3 - 4;

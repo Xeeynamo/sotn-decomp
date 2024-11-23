@@ -205,8 +205,8 @@ void func_801131C4(void) {
 
     if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & PAD_LEFT)) {
         if (g_Player.padPressed & PAD_DOWN) {
-            for (i = 0; i < 4; i++) {
-                if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+                if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.timers[7] = 8;
                     return;
                 }
@@ -648,7 +648,7 @@ block_13:
 void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     s32 randbit;
     u8 unkAC_offset;
-    s32 var_s0;
+    s32 i;
     s32 sfxIndex;
     bool step_sIsZero = false;
 
@@ -685,18 +685,18 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
         // Unfortunate reuse of var_s0 here. case 4 and 5 treat it as a step_s
         // offset, while others treat it as a velocity.
-        var_s0 = 0;
+        i = 0;
         func_80111CC0();
         sfxIndex = 0;
         switch (damage->damageKind) {
         case 5:
-            var_s0 = 13;
+            i = 13;
             g_Player.damageTaken = damage->damageTaken;
         case 4:
             PLAYER.posY.val -= 1;
             PLAYER.velocityY = FIX(-0.5);
             func_8010E3B8(FIX(-8));
-            PLAYER.step_s = var_s0 + 2;
+            PLAYER.step_s = i + 2;
             PLAYER.ext.player.anim = 0x2E;
             g_Player.timers[2] = 0x200;
             PLAYER.facingLeft = PLAYER.entityRoomIndex;
@@ -714,10 +714,10 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 break;
             case 3:
             case 4:
-                var_s0 = FIX(1);
+                i = FIX(1);
                 break;
             }
-            PLAYER.velocityY = var_s0 + FIX(-4);
+            PLAYER.velocityY = i + FIX(-4);
             func_8010E3B8(FIX(-1.66666));
             PLAYER.step_s = 1;
             if (func_80113E68() == 0) {
@@ -730,10 +730,10 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             switch (arg1) {
             case 3:
             case 4:
-                var_s0 = FIX(1);
+                i = FIX(1);
             case 0:
             default:
-                PLAYER.velocityY = var_s0 + FIX(-4);
+                PLAYER.velocityY = i + FIX(-4);
                 func_8010E3B8(FIX(-1.66666));
                 PLAYER.step_s = 1;
                 if (func_80113E68() == 0) {
@@ -898,34 +898,35 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
         if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
             (g_StageId != STAGE_DRE)) {
-            for (var_s0 = 2; var_s0 < 7; var_s0++) {
-                if (g_Player.colliders3[var_s0].effects & 2) {
+            for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
+                if (g_Player.colWall[i].effects & 2) {
                     break;
                 }
             }
-            if (var_s0 == 7) {
-                for (var_s0 = 9; var_s0 < 14; var_s0++) {
-                    if (g_Player.colliders3[var_s0].effects & 2) {
+            if (i == NUM_VERTICAL_SENSORS) {
+                for (i = NUM_VERTICAL_SENSORS + 2; i < NUM_VERTICAL_SENSORS * 2;
+                     i++) {
+                    if (g_Player.colWall[i].effects & 2) {
                         break;
                     }
                 }
             }
-            if (var_s0 == 14) {
+            if (i == 14) {
             // Not a very good label name, but it's deep in a bunch of
             // conditionals.
             deepcond:
                 PLAYER.velocityY = FIX(-4);
                 func_8010E3B8(FIX(-1.25));
                 PLAYER.ext.player.anim = 0x2F;
-                var_s0 = -3;
+                i = -3;
                 if (PLAYER.velocityX != 0) {
-                    var_s0 = 3;
+                    i = 3;
                 }
                 PLAYER.posY.i.hi += 0x15;
-                PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+                PLAYER.posX.i.hi = i + PLAYER.posX.i.hi;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 9), 0);
                 PLAYER.posY.i.hi -= 0x15;
-                PLAYER.posX.i.hi -= var_s0;
+                PLAYER.posX.i.hi -= i;
                 PlaySfx(SFX_WALL_DEBRIS_B);
                 func_80102CD8(2);
                 PLAYER.step_s = 1;

@@ -318,8 +318,8 @@ void RicHandleCrouch(void) {
 
     if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
         (g_Player.padPressed & PAD_DOWN)) {
-        for (i = 0; i < 4; i++) {
-            if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                 g_Player.timers[PL_T_7] = 8;
                 return;
             }
@@ -698,19 +698,20 @@ void RicHandleHit(
         } else {
             if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
                 (g_StageId != STAGE_DRE)) {
-                for (i = 2; i < 7; i++) {
-                    if (g_Player.colliders3[i].effects & 2) {
+                for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
+                    if (g_Player.colWall[i].effects & 2) {
                         break;
                     }
                 }
-                if (i == 7) {
-                    for (i = 9; i < 0xE; i++) {
-                        if (g_Player.colliders3[i].effects & 2) {
+                if (i == NUM_VERTICAL_SENSORS) {
+                    for (i = NUM_VERTICAL_SENSORS + 2;
+                         i < NUM_VERTICAL_SENSORS * 2; i++) {
+                        if (g_Player.colWall[i].effects & 2) {
                             break;
                         }
                     }
                 }
-                if (i == 14) {
+                if (i == NUM_VERTICAL_SENSORS * 2) {
                 block_6dc:
                     PLAYER.velocityY = FIX(-4);
                     func_8015CAAC(FIX(-1.25));
@@ -1262,9 +1263,9 @@ void RicHandleSlide(void) {
         isTouchingGround = 1;
     }
     if ((!PLAYER.facingLeft &&
-         (g_Player.colliders[2].effects & EFFECT_UNK_8000)) ||
+         (g_Player.colFloor[2].effects & EFFECT_UNK_8000)) ||
         (PLAYER.facingLeft &&
-         (g_Player.colliders[3].effects & EFFECT_UNK_8000))) {
+         (g_Player.colFloor[3].effects & EFFECT_UNK_8000))) {
         isTouchingGround = 1;
     }
     if (isTouchingGround && (PLAYER.animFrameIdx < 6)) {
