@@ -5,8 +5,8 @@
 #include "../servant_private.h"
 
 #define ENTITY_ID_SEEK_MODE ENTITY_ID_SERVANT
-#define ENTITY_ID_ATTACK_MODE 0xD2
-#define ENTITY_ID_BLUE_TRAIL 0xDA
+#define ENTITY_ID_ATTACK_MODE SERVANT_ID(2)
+#define ENTITY_ID_BLUE_TRAIL SERVANT_ID(10)
 
 #ifndef VERSION_PSP
 static s32 s_TargetMatch[0x80];

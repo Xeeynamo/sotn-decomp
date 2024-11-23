@@ -668,6 +668,21 @@ typedef struct {
     /* 0x8A */ s16 maxAngle;
 } ET_Demon;
 
+typedef struct {
+    /* 0x7C */ s16 unk7c;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8a;
+    /* 0x8c */ s16 unk8c;
+    /* 0x8e */ s16 unk8e;
+    /* 0x90 */ s32 posX;
+    /* 0x94 */ s32 posY;
+} ET_SwordFamiliar;
+
 struct draculaPrimitive;
 typedef struct ET_Dracula {
     /* 0x7C */ char pad_7C[4];
@@ -2135,7 +2150,7 @@ typedef struct {
     /* 0x04 */ s16 unk4;
     /* 0x06 */ s16 unk6;
     /* 0x08 */ Point32 unk8;
-    /* 0x10 */ Point32* unk10;
+    /* 0x10 */ RECT* unk10;
 } unk_PlatelordStruct; /* size = 0x14 */
 
 typedef struct {
@@ -2242,6 +2257,7 @@ typedef union { // offset=0x7C
     ET_FaerieItem faerieItem;
     ET_FaerieLifeApple faerieLifeApple;
     ET_Demon demon;
+    ET_SwordFamiliar swordFamiliar;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;

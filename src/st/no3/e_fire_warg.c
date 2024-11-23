@@ -54,7 +54,7 @@ static void func_801CC6F8(Entity* self) {
             SetStep(9);
         } else {
             SetStep(6);
-            PlaySfxPositional(0x783);
+            PlaySfxPositional(SFX_WARG_GROWL);
             self->ext.fireWarg.unk80 = 0x20;
         }
     } else {
@@ -65,7 +65,7 @@ static void func_801CC6F8(Entity* self) {
             }
         } else {
             SetStep(6);
-            PlaySfxPositional(0x783);
+            PlaySfxPositional(SFX_WARG_GROWL);
             self->ext.fireWarg.unk80 = 0x20;
         }
     }
@@ -442,7 +442,7 @@ void EntityFireWarg(Entity* self) {
                 } else {
                     self->velocityX = FIX(-8.0);
                 }
-                PlaySfxPositional(0x783);
+                PlaySfxPositional(SFX_WARG_GROWL);
                 enemyDefPtr = &g_api.enemyDefs[149];
                 ent_s0->attackElement = enemyDefPtr->attackElement;
                 ent_s0->attack = enemyDefPtr->attack;
@@ -503,7 +503,7 @@ void EntityFireWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             SetSubStep(1);
-            PlaySfxPositional(0x781);
+            PlaySfxPositional(SFX_WARG_PAIN);
             if (self->facingLeft) {
                 self->velocityX = FIX(-2.0);
             } else {
@@ -565,7 +565,7 @@ void EntityFireWarg(Entity* self) {
             self->ext.fireWarg.unk80 += 1;
             self->unk6C -= 2;
             if (self->unk6C == 0x40) {
-                PlaySfxPositional(0x780);
+                PlaySfxPositional(SFX_WARG_DEATH_HOWL);
             }
             if (!self->unk6C) {
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
