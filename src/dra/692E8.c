@@ -1330,7 +1330,7 @@ void GetPlayerSensor(Collider* col) {
         col->unk18 = g_SensorsFloor[1].y - 1;
         col->unk20 = g_SensorsCeiling[1].y + 1;
     } else {
-        g_PlOvl.GetPlayerSensor();
+        g_PlOvl.GetPlayerSensor(col);
     }
 }
 
