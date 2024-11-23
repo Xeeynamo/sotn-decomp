@@ -67,13 +67,13 @@ s16 g_SensorsWallDefault[NUM_VERTICAL_SENSORS] = {24, 17, 9, 1, -7, -14, -21};
 s16 g_SensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
 s16 g_SensorsWallCrouch[NUM_VERTICAL_SENSORS] = {24, 17, 9, 5, 5, 1, 1};
 
-Point16 g_SensorsCeiling[] = {
+Point16 g_SensorsCeiling[NUM_HORIZONTAL_SENSORS] = {
     {0, -22},
     {0, -22},
     {4, -22},
     {-4, -22},
 };
-Point16 g_SensorsFloor[] = {
+Point16 g_SensorsFloor[NUM_HORIZONTAL_SENSORS] = {
     {0, 29},
     {0, 25},
     {4, 25},

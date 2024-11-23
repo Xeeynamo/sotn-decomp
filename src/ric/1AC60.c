@@ -600,7 +600,7 @@ void RicMain(void) {
     }
     g_Player.unk08 = g_Player.status;
 #ifdef VERSION_PC
-    var_s4 = 0;
+    newStatus = 0;
 #endif
     switch (PLAYER.step) {
     case PL_S_STAND:
