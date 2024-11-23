@@ -2150,7 +2150,7 @@ typedef struct {
     /* 0x04 */ s16 unk4;
     /* 0x06 */ s16 unk6;
     /* 0x08 */ Point32 unk8;
-    /* 0x10 */ Point32* unk10;
+    /* 0x10 */ RECT* unk10;
 } unk_PlatelordStruct; /* size = 0x14 */
 
 typedef struct {
