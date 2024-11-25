@@ -2188,9 +2188,7 @@ typedef struct {
     /* 0x9D */ u8 unk9D;
     /* 0x9E */ s16 : 16;
     /* 0xA0 */ struct Primitive* unkA0;
-    /* 0xA4 */ Point32 unkA4;
-    /* 0xAC */ s16 : 16;
-    /* 0xAE */ s16 : 16;
+    /* 0xA4 */ s16 unkA4[6];
     /* 0xB0 */ s16 unkB0;
 } ET_PlatelordUnknown;
 

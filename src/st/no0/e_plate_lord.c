@@ -1254,12 +1254,12 @@ void func_us_801D5384(void) {
     prim = g_CurrentEntity->ext.plateLordUnkown.unkA0;
     posX = (prim->x0 + prim->x1) / 2;
     posY = (prim->y0 + prim->y2) / 2;
-    tempPoint32 = &(g_CurrentEntity + 3)->ext.plateLordUnkown.unkA4;
+    tempPoint32 = (Point32*)&(g_CurrentEntity + 4)->posX;
     F(tempPoint32->x).i.hi = posX;
     F(tempPoint32->y).i.hi = posY;
     posY += 0xA;
     g_api.CheckCollision(posX, posY, &collider, 0);
-    if (collider.effects & 1) {
+    if (collider.effects & EFFECT_SOLID) {
         F(tempPoint32->y).i.hi += collider.unk18;
     }
 }
@@ -1361,13 +1361,13 @@ void func_us_801D542C(Entity* self) {
         posY = prim->y0;
         tempEntity = self + 4;
         g_api.CheckCollision(posX, posY + 0xA, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             posY += collider.unk18;
-            tempEntity->velocityY = -0x40000;
+            tempEntity->velocityY = FIX(-4);
             if (self->facingLeft) {
-                tempEntity->velocityX = -0x6000;
+                tempEntity->velocityX = FIX(-0.375);
             } else {
-                tempEntity->velocityX = 0x6000;
+                tempEntity->velocityX = FIX(0.375);
             }
             self->ext.ILLEGAL.u8[0x20] = 0;
             PlaySfxPositional(0x761);
@@ -1389,11 +1389,11 @@ void func_us_801D542C(Entity* self) {
         tempEntity = self + 4;
         tempEntity->posX.val += tempEntity->velocityX;
         tempEntity->posY.val += tempEntity->velocityY;
-        tempEntity->velocityY += 0x4000;
+        tempEntity->velocityY += FIX(0.25);
         tempPosX = tempEntity->posX.i.hi;
         tempPosY = tempEntity->posY.i.hi + 0xA;
         g_api.CheckCollision(tempPosX, tempPosY, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             PlaySfxPositional(0x761);
             tempEntity->posY.i.hi += collider.unk18;
             if (!self->ext.plateLordUnkown.unk9C) {
@@ -1444,13 +1444,13 @@ void func_us_801D542C(Entity* self) {
     case 16:
         tempEntity = self + 4;
         tempPosY = self->posY.i.hi - tempEntity->posY.i.hi;
-        tempEntity->velocityY = -0xC0000;
+        tempEntity->velocityY = FIX(-12);
         self->step = 0x11;
         /* fallthrough */
     case 17:
         tempEntity = self + 4;
         tempEntity->posY.val += tempEntity->velocityY;
-        tempEntity->velocityY += 0x2000;
+        tempEntity->velocityY += FIX(0.125);
         tempPosY = self->posY.i.hi - tempEntity->posY.i.hi;
         if (tempPosY >= 0x39) {
             tempEntity = self - 5;
