@@ -108,7 +108,7 @@ void func_us_801D542C(Entity* self) {
             } else {
                 tempEntity->velocityX = FIX(0.375);
             }
-            self->ext.ILLEGAL.u8[0x20] = 0;
+            self->ext.plateLordUnknown.unk9C = 0;
             PlaySfxPositional(0x761);
             g_api.func_80102CD8(1);
             self->step = 0xD;
