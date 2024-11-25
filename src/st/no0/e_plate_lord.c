@@ -1244,7 +1244,25 @@ s32 func_us_801D52E0(void) {
     return angle;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D5384);
+void func_us_801D5384(void) {
+    Collider collider;
+    s32 posY;
+    s32 posX;
+    Primitive* prim;
+    Point32* tempPoint32;
+
+    prim = g_CurrentEntity->ext.plateLordUnkown.unkA0;
+    posX = (prim->x0 + prim->x1) / 2;
+    posY = (prim->y0 + prim->y2) / 2;
+    tempPoint32 = &(g_CurrentEntity + 3)->ext.plateLordUnkown.unkA4;
+    F(tempPoint32->x).i.hi = posX;
+    F(tempPoint32->y).i.hi = posY;
+    posY += 0xA;
+    g_api.CheckCollision(posX, posY, &collider, 0);
+    if (collider.effects & 1) {
+        F(tempPoint32->y).i.hi += collider.unk18;
+    }
+}
 
 extern SVECTOR D_us_80181FC0;
 
