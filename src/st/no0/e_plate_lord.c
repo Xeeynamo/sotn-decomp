@@ -323,15 +323,15 @@ void EntityPlateLord(Entity* self) {
         break;
     case 5:
         tempEntity = self + 3;
-        StepTowards(&tempEntity->ext.plateLordUnkown.unkB0, 0x7C0, 0x20);
+        StepTowards(&tempEntity->ext.plateLordUnknown.unkB0, 0x7C0, 0x20);
         if (self->ext.plateLord.unk86) {
-            tempEntity->ext.plateLordUnkown.unk98 -= 4;
-            if (tempEntity->ext.plateLordUnkown.unk98 < 0x200) {
+            tempEntity->ext.plateLordUnknown.unk98 -= 4;
+            if (tempEntity->ext.plateLordUnknown.unk98 < 0x200) {
                 self->ext.plateLord.unk86 = 0;
             }
         } else {
-            tempEntity->ext.plateLordUnkown.unk98 += 4;
-            if (tempEntity->ext.plateLordUnkown.unk98 > 0x240) {
+            tempEntity->ext.plateLordUnknown.unk98 += 4;
+            if (tempEntity->ext.plateLordUnknown.unk98 > 0x240) {
                 self->ext.plateLord.unk86 = 1;
             }
         }
@@ -458,15 +458,15 @@ void EntityPlateLord(Entity* self) {
         break;
     case 6:
         tempEntity = self + 3;
-        StepTowards(&tempEntity->ext.plateLordUnkown.unkB0, 0x800, 0x20);
+        StepTowards(&tempEntity->ext.plateLordUnknown.unkB0, 0x800, 0x20);
         if (self->ext.plateLord.unk86) {
-            tempEntity->ext.plateLordUnkown.unk98 -= 8;
-            if (tempEntity->ext.plateLordUnkown.unk98 < 0x180) {
+            tempEntity->ext.plateLordUnknown.unk98 -= 8;
+            if (tempEntity->ext.plateLordUnknown.unk98 < 0x180) {
                 self->ext.plateLord.unk86 = 0;
             }
         } else {
-            tempEntity->ext.plateLordUnkown.unk98 += 8;
-            if (tempEntity->ext.plateLordUnkown.unk98 > 0x200) {
+            tempEntity->ext.plateLordUnknown.unk98 += 8;
+            if (tempEntity->ext.plateLordUnknown.unk98 > 0x200) {
                 self->ext.plateLord.unk86 = 1;
             }
         }
@@ -626,7 +626,7 @@ void EntityPlateLord(Entity* self) {
             func_us_801D27C4(unkStructB, false);
         }
         tempEntity = self + 3;
-        StepTowards(&tempEntity->ext.plateLordUnkown.unkB0, 0x8C0, 0x30);
+        StepTowards(&tempEntity->ext.plateLordUnknown.unkB0, 0x8C0, 0x30);
         break;
     case 9:
         if (self->ext.plateLord.unk84 == 0) {
@@ -663,19 +663,19 @@ void EntityPlateLord(Entity* self) {
         case 1:
             counter = 0;
             counter += StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk80, 0x880, 0x3C);
+                &tempEntity->ext.plateLordUnknown.unk80, 0x880, 0x3C);
             counter += StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk96, 0x900, 0x48);
+                &tempEntity->ext.plateLordUnknown.unk96, 0x900, 0x48);
             counter += StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk94, 0x280, 0x20);
-            StepTowards(&tempEntity->ext.plateLordUnkown.unk98, 0x300, 0x20);
+                &tempEntity->ext.plateLordUnknown.unk94, 0x280, 0x20);
+            StepTowards(&tempEntity->ext.plateLordUnknown.unk98, 0x300, 0x20);
             if (counter == 3) {
                 self->step_s++;
             }
             break;
         case 2:
-            tempEntity->ext.plateLordUnkown.unk82 = 0xC00;
-            tempEntity->ext.plateLordUnkown.unk86 = 0xC0;
+            tempEntity->ext.plateLordUnknown.unk82 = 0xC00;
+            tempEntity->ext.plateLordUnknown.unk86 = 0xC0;
             tempEntity->step = 9;
             tempEntity = self + 5;
             tempEntity->step = 9;
@@ -683,18 +683,18 @@ void EntityPlateLord(Entity* self) {
             break;
         case 3:
             if (self->ext.plateLord.unk86) {
-                tempEntity->ext.plateLordUnkown.unk98 -= 2;
-                if (tempEntity->ext.plateLordUnkown.unk98 < 0x2F0) {
+                tempEntity->ext.plateLordUnknown.unk98 -= 2;
+                if (tempEntity->ext.plateLordUnknown.unk98 < 0x2F0) {
                     self->ext.plateLord.unk86 = 0;
                 }
             } else {
-                tempEntity->ext.plateLordUnkown.unk98 += 2;
-                if (tempEntity->ext.plateLordUnkown.unk98 > 0x310) {
+                tempEntity->ext.plateLordUnknown.unk98 += 2;
+                if (tempEntity->ext.plateLordUnknown.unk98 > 0x310) {
                     self->ext.plateLord.unk86 = 1;
                 }
             }
             tempEntity = self + 3;
-            if (tempEntity->ext.plateLordUnkown.unk84 > 0xE8) {
+            if (tempEntity->ext.plateLordUnknown.unk84 > 0xE8) {
                 StepTowards(&unkStructA->unk4, 0x80, 0x18);
                 StepTowards(&unkStructA->unk6, 0, 0x18);
                 func_us_801D26CC(unkStructA);
@@ -720,18 +720,18 @@ void EntityPlateLord(Entity* self) {
         tempEntity = self + 3;
         switch (self->step_s) {
         case 0:
-            if (tempEntity->ext.plateLordUnkown.unk96 < 0x500) {
-                tempEntity->ext.plateLordUnkown.unk94 -= 0x40;
-                if (tempEntity->ext.plateLordUnkown.unk94 <= 0) {
-                    tempEntity->ext.plateLordUnkown.unk94 = 0;
+            if (tempEntity->ext.plateLordUnknown.unk96 < 0x500) {
+                tempEntity->ext.plateLordUnknown.unk94 -= 0x40;
+                if (tempEntity->ext.plateLordUnknown.unk94 <= 0) {
+                    tempEntity->ext.plateLordUnknown.unk94 = 0;
                 }
             }
-            tempEntity->ext.plateLordUnkown.unk96 -= 0xA0;
-            if (tempEntity->ext.plateLordUnkown.unk96 < 0x580) {
+            tempEntity->ext.plateLordUnknown.unk96 -= 0xA0;
+            if (tempEntity->ext.plateLordUnknown.unk96 < 0x580) {
                 tempEntity->animCurFrame = 0x12;
-                tempEntity->ext.plateLordUnkown.unk80 -= 0xE8;
+                tempEntity->ext.plateLordUnknown.unk80 -= 0xE8;
             }
-            if (tempEntity->ext.plateLordUnkown.unk80 < 0x380) {
+            if (tempEntity->ext.plateLordUnknown.unk80 < 0x380) {
                 self->step_s++;
             }
             StepTowards(&unkStructA->unk4, -0x280, 0x40);
@@ -756,7 +756,7 @@ void EntityPlateLord(Entity* self) {
                 self->ext.plateLord.unk80 = 0;
             }
             tempEntity = self + 3;
-            StepTowards(&tempEntity->ext.plateLordUnkown.unkB0, 0x600, 0x30);
+            StepTowards(&tempEntity->ext.plateLordUnknown.unkB0, 0x600, 0x30);
             break;
         case 1:
             func_us_801D26CC(unkStructA);
@@ -772,36 +772,36 @@ void EntityPlateLord(Entity* self) {
         StepTowards(&unkStructB->unk4, 0x100, 0x10);
         StepTowards(&unkStructB->unk6, 0, 0x10);
         tempEntity = self + 3;
-        StepTowards(&tempEntity->ext.plateLordUnkown.unkB0, 0x7C0, 0x20);
+        StepTowards(&tempEntity->ext.plateLordUnknown.unkB0, 0x7C0, 0x20);
         func_us_801D26CC(unkStructA);
         func_us_801D274C(unkStructB);
         tempEntity = self + 3;
         switch (self->step_s) {
         case 0:
             counter = StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk94, 0x600, 0x40);
+                &tempEntity->ext.plateLordUnknown.unk94, 0x600, 0x40);
             if ((counter != 0) && (tempEntity->animCurFrame != 2)) {
                 tempEntity->animCurFrame = 2;
-                tempEntity->ext.plateLordUnkown.unk94 = 0x400U;
+                tempEntity->ext.plateLordUnknown.unk94 = 0x400U;
                 counter = 0;
             }
             counter += StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk96, 0x600, 0x20);
+                &tempEntity->ext.plateLordUnknown.unk96, 0x600, 0x20);
             if (counter == 2) {
-                tempEntity->ext.plateLordUnkown.unk94 = 0x200;
-                tempEntity->ext.plateLordUnkown.unk96 = -0x200U;
+                tempEntity->ext.plateLordUnknown.unk94 = 0x200;
+                tempEntity->ext.plateLordUnknown.unk96 = -0x200U;
                 self->step_s++;
             }
             break;
         case 1:
             counter = 0;
             counter = StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk80, 0x180, 0x20);
+                &tempEntity->ext.plateLordUnknown.unk80, 0x180, 0x20);
             counter +=
-                StepTowards(&tempEntity->ext.plateLordUnkown.unk94, 0x100, 8);
+                StepTowards(&tempEntity->ext.plateLordUnknown.unk94, 0x100, 8);
             counter += StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk96, -0x1C0, 0x10);
-            StepTowards(&tempEntity->ext.plateLordUnkown.unk98, 0x180, 0x10);
+                &tempEntity->ext.plateLordUnknown.unk96, -0x1C0, 0x10);
+            StepTowards(&tempEntity->ext.plateLordUnknown.unk98, 0x180, 0x10);
             if (counter == 3) {
                 self->step = 3;
                 self->step_s = 0;
@@ -875,11 +875,11 @@ void EntityPlateLord(Entity* self) {
         case 1:
             tempEntity = self + 3;
             counter = StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk80, 0x800, 0xA0);
+                &tempEntity->ext.plateLordUnknown.unk80, 0x800, 0xA0);
             counter += StepTowards(
-                &tempEntity->ext.plateLordUnkown.unk96, 0x800, 0xA0);
+                &tempEntity->ext.plateLordUnknown.unk96, 0x800, 0xA0);
             counter +=
-                StepTowards(&tempEntity->ext.plateLordUnkown.unk94, 0, 0x80);
+                StepTowards(&tempEntity->ext.plateLordUnknown.unk94, 0, 0x80);
             func_us_801D26CC(unkStructA);
             func_us_801D274C(unkStructB);
             if (counter == 3) {
@@ -1000,13 +1000,13 @@ void func_us_801D44A0(Entity* self) {
     sp6B = D_us_801C1684[0];
     tempEntity = self - 3;
     self->facingLeft = tempEntity->facingLeft;
-    self->rotZ = (self->ext.plateLordUnkown.unkB0 - 0x800) / 2;
+    self->rotZ = (self->ext.plateLordUnknown.unkB0 - 0x800) / 2;
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitPlateLord);
         self->hitPoints = 0x7FFE;
         self->animCurFrame = 2;
-        self->ext.plateLordUnkown.unkB0 = 0x780;
+        self->ext.plateLordUnknown.unkB0 = 0x780;
         self->zPriority = 0xB1;
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 0xC;
@@ -1042,10 +1042,10 @@ void func_us_801D44A0(Entity* self) {
         prim->b2 = 0x80;
         prim->r3 = prim->g3 = 0xC0;
 
-        self->ext.plateLordUnkown.unk80 = 0x180;
-        self->ext.plateLordUnkown.unk94 = 0x100;
-        self->ext.plateLordUnkown.unk96 = -0x1C0;
-        self->ext.plateLordUnkown.unk98 = 0x200;
+        self->ext.plateLordUnknown.unk80 = 0x180;
+        self->ext.plateLordUnknown.unk94 = 0x100;
+        self->ext.plateLordUnknown.unk96 = -0x1C0;
+        self->ext.plateLordUnknown.unk98 = 0x200;
 
         return;
     case 9:
@@ -1053,9 +1053,9 @@ void func_us_801D44A0(Entity* self) {
     }
     tempEntity = self - 3;
     func_801CD78C((Point32*)&tempEntity->posX, 0x10,
-                  self->ext.plateLordUnkown.unkB0, (Point32*)&self->posX);
+                  self->ext.plateLordUnknown.unkB0, (Point32*)&self->posX);
     if (self->step == 9) {
-        posX = rcos(self->ext.plateLordUnkown.unk82) * 0x10;
+        posX = rcos(self->ext.plateLordUnknown.unk82) * 0x10;
         if (self->facingLeft) {
             self->posX.val -= posX;
         } else {
@@ -1063,13 +1063,13 @@ void func_us_801D44A0(Entity* self) {
         }
     }
     tempEntity = self + 4;
-    func_801CD78C((Point32*)&self->posX, 8, self->ext.plateLordUnkown.unk98,
+    func_801CD78C((Point32*)&self->posX, 8, self->ext.plateLordUnknown.unk98,
                   (Point32*)&tempEntity->posX);
-    tempEntity->rotZ = self->ext.plateLordUnkown.unk98 - 0x200;
+    tempEntity->rotZ = self->ext.plateLordUnknown.unk98 - 0x200;
     tempEntity = self + 5;
-    func_801CD78C((Point32*)&self->posX, 0x12, self->ext.plateLordUnkown.unk98,
+    func_801CD78C((Point32*)&self->posX, 0x12, self->ext.plateLordUnknown.unk98,
                   (Point32*)&tempEntity->posX);
-    tempEntity->rotZ = self->ext.plateLordUnkown.unk98 - 0x200;
+    tempEntity->rotZ = self->ext.plateLordUnknown.unk98 - 0x200;
     posX = self->posX.i.hi;
     posY = self->posY.i.hi;
 
@@ -1091,7 +1091,7 @@ void func_us_801D44A0(Entity* self) {
     F(sp20.x).i.hi = posX;
     F(sp20.y).i.hi = posY;
     if (self->step == 9) {
-        posX = (rcos(self->ext.plateLordUnkown.unk82) << 1) << 4;
+        posX = (rcos(self->ext.plateLordUnknown.unk82) << 1) << 4;
         if (self->facingLeft) {
             sp20.x -= posX;
         } else {
@@ -1101,12 +1101,12 @@ void func_us_801D44A0(Entity* self) {
     tempEntity = self + 3;
     tempEntity->posX.val = sp20.x;
     tempEntity->posY.val = sp20.y;
-    func_801CD78C(&sp20, -3, self->ext.plateLordUnkown.unk96, &sp20);
-    rot.vx = self->ext.plateLordUnkown.unk94;
+    func_801CD78C(&sp20, -3, self->ext.plateLordUnknown.unk96, &sp20);
+    rot.vx = self->ext.plateLordUnknown.unk94;
     rot.vy = 0;
-    rot.vz = self->ext.plateLordUnkown.unk96;
+    rot.vz = self->ext.plateLordUnknown.unk96;
     if (self->step == 9) {
-        rot.vz += rcos(self->ext.plateLordUnkown.unk82) >> 5;
+        rot.vz += rcos(self->ext.plateLordUnknown.unk82) >> 5;
     }
     RotMatrix(&D_us_80181F98, &m);
     RotMatrixX(rot.vx, &m);
@@ -1135,23 +1135,23 @@ void func_us_801D44A0(Entity* self) {
     prim = prim->next;
     F(sp20.x).i.hi = sp70 & 0xFFFF;
     F(sp20.y).i.hi = sp70 >> 0x10;
-    func_801CD78C(&sp20, -5, self->ext.plateLordUnkown.unk80, &sp20);
+    func_801CD78C(&sp20, -5, self->ext.plateLordUnknown.unk80, &sp20);
     tempEntity = self + 2;
-    func_801CD78C(&sp20, 0x1A, self->ext.plateLordUnkown.unk80,
+    func_801CD78C(&sp20, 0x1A, self->ext.plateLordUnknown.unk80,
                   (Point32*)&tempEntity->posX);
-    tempEntity->rotZ = self->ext.plateLordUnkown.unk80 - 0x600;
-    var_s3 = self->ext.plateLordUnkown.unk80;
+    tempEntity->rotZ = self->ext.plateLordUnknown.unk80 - 0x600;
+    var_s3 = self->ext.plateLordUnknown.unk80;
     if (self->step == 9) {
-        posX = rcos(self->ext.plateLordUnkown.unk82) * 0xD0;
+        posX = rcos(self->ext.plateLordUnknown.unk82) * 0xD0;
         if (self->facingLeft) {
             tempEntity->posX.val -= posX;
         } else {
             tempEntity->posX.val += posX;
         }
-        self->ext.plateLordUnkown.unk82 += self->ext.plateLordUnkown.unk84;
-        self->ext.plateLordUnkown.unk86 += 2;
-        self->ext.plateLordUnkown.unk84 =
-            (self->ext.plateLordUnkown.unk86 << 7) >> 8;
+        self->ext.plateLordUnknown.unk82 += self->ext.plateLordUnknown.unk84;
+        self->ext.plateLordUnknown.unk86 += 2;
+        self->ext.plateLordUnknown.unk84 =
+            (self->ext.plateLordUnknown.unk86 << 7) >> 8;
         var_s3 += ratan2(posX >> 0x10, 0x1A);
     }
     func_us_801D2424(
@@ -1251,7 +1251,7 @@ void func_us_801D5384(void) {
     Primitive* prim;
     Point32* tempPoint32;
 
-    prim = g_CurrentEntity->ext.plateLordUnkown.unkA0;
+    prim = g_CurrentEntity->ext.plateLordUnknown.unkA0;
     posX = (prim->x0 + prim->x1) / 2;
     posY = (prim->y0 + prim->y2) / 2;
     tempPoint32 = (Point32*)&(g_CurrentEntity + 4)->posX;

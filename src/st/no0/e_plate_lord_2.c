@@ -69,7 +69,7 @@ void func_us_801D542C(Entity* self) {
             LOW(prim->x3) = LOW(prim->x0);
             prim->priority = 0xB6;
             prim->drawMode = DRAW_UNK02;
-            self->ext.plateLordUnkown.unkA0 = prim;
+            self->ext.plateLordUnknown.unkA0 = prim;
             prim = prim->next;
         }
         break;
@@ -95,7 +95,7 @@ void func_us_801D542C(Entity* self) {
         func_us_801D4E30();
         func_us_801D4FCC();
         func_us_801D5250();
-        prim = self->ext.plateLordUnkown.unkA0;
+        prim = self->ext.plateLordUnknown.unkA0;
         posX = prim->x0;
         posY = prim->y0;
         tempEntity = self + 4;
@@ -114,9 +114,9 @@ void func_us_801D542C(Entity* self) {
             self->step = 0xD;
         } else {
             if (self->facingLeft) {
-                self->ext.plateLordUnkown.unk84 += 0x80;
+                self->ext.plateLordUnknown.unk84 += 0x80;
             } else {
-                self->ext.plateLordUnkown.unk84 -= 0x80;
+                self->ext.plateLordUnknown.unk84 -= 0x80;
             }
         }
         tempEntity->posX.i.hi = posX;
@@ -135,20 +135,20 @@ void func_us_801D542C(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             PlaySfxPositional(0x761);
             tempEntity->posY.i.hi += collider.unk18;
-            if (!self->ext.plateLordUnkown.unk9C) {
+            if (!self->ext.plateLordUnknown.unk9C) {
                 tempEntity->velocityY = -(tempEntity->velocityY) / 2;
-                self->ext.plateLordUnkown.unk9C++;
+                self->ext.plateLordUnknown.unk9C++;
             } else {
                 tempEntity = self - 5;
                 tempEntity->step_s = 0;
                 tempEntity->step = 0xE;
                 self->step = 0xE;
-                self->ext.plateLordUnkown.unk9C = 0;
+                self->ext.plateLordUnknown.unk9C = 0;
             }
         }
         func_us_801D4E30();
 
-        if (self->ext.plateLordUnkown.unk9C) {
+        if (self->ext.plateLordUnknown.unk9C) {
             func_us_801D5074(0x180);
         } else {
             func_us_801D5074(0);
@@ -160,7 +160,7 @@ void func_us_801D542C(Entity* self) {
         func_us_801D4E30();
         unks32A = func_us_801D52E0();
         if (unks32A != 0) {
-            self->ext.plateLordUnkown.unk84 = unks32A;
+            self->ext.plateLordUnknown.unk84 = unks32A;
             func_us_801D4FCC();
         }
         func_us_801D4E94(0x180);
@@ -168,8 +168,8 @@ void func_us_801D542C(Entity* self) {
         func_us_801D5250();
         func_us_801D51EC();
         func_us_801D5384();
-        if (!(self->ext.plateLordUnkown.unk9C & g_Timer)) {
-            self->ext.plateLordUnkown.unk9C++;
+        if (!(self->ext.plateLordUnknown.unk9C & g_Timer)) {
+            self->ext.plateLordUnknown.unk9C++;
             tempEntity = self + 4;
             tempEntity2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity2 != NULL) {
@@ -218,25 +218,25 @@ void func_us_801D542C(Entity* self) {
         break;
     case 9:
         if (!self->step_s) {
-            self->ext.plateLordUnkown.unk88 = -0x100;
-            self->ext.plateLordUnkown.unk8A = 0;
-            self->ext.plateLordUnkown.unk8C = 0;
-            self->ext.plateLordUnkown.unk80 = 0;
-            self->ext.plateLordUnkown.unk82 = 0xC00;
-            self->ext.plateLordUnkown.unk90 = 0x10;
+            self->ext.plateLordUnknown.unk88 = -0x100;
+            self->ext.plateLordUnknown.unk8A = 0;
+            self->ext.plateLordUnknown.unk8C = 0;
+            self->ext.plateLordUnknown.unk80 = 0;
+            self->ext.plateLordUnknown.unk82 = 0xC00;
+            self->ext.plateLordUnknown.unk90 = 0x10;
             self->step_s++;
         }
         tempEntity = self - 2;
-        if (self->ext.plateLordUnkown.unk9D == 0) {
-            if (tempEntity->ext.plateLordUnkown.unk82 & 0xF000) {
+        if (self->ext.plateLordUnknown.unk9D == 0) {
+            if (tempEntity->ext.plateLordUnknown.unk82 & 0xF000) {
                 PlaySfxPositional(0x6C7);
-                self->ext.plateLordUnkown.unk9D = 1;
-                tempEntity->ext.plateLordUnkown.unk82 &= 0xFFF;
+                self->ext.plateLordUnknown.unk9D = 1;
+                tempEntity->ext.plateLordUnknown.unk82 &= 0xFFF;
             }
         } else {
-            self->ext.plateLordUnkown.unk9D = 0;
+            self->ext.plateLordUnknown.unk9D = 0;
         }
-        attack = (tempEntity->ext.plateLordUnkown.unk84 *
+        attack = (tempEntity->ext.plateLordUnknown.unk84 *
                   g_api.enemyDefs[98].attack) >>
                  8;
         if (g_api.enemyDefs[98].attack < attack) {
@@ -245,37 +245,39 @@ void func_us_801D542C(Entity* self) {
         tempEntity = self + 4;
         tempEntity->attack = attack;
         tempEntity = self - 2;
-        unks32B = (tempEntity->ext.plateLordUnkown.unk84 << 0xF) >> 0xC;
-        self->ext.plateLordUnkown.unk80 = unks32B + 0x100;
-        if (self->ext.plateLordUnkown.unk80 > 0x400) {
-            self->ext.plateLordUnkown.unk80 = 0x400;
+        unks32B = (tempEntity->ext.plateLordUnknown.unk84 << 0xF) >> 0xC;
+        self->ext.plateLordUnknown.unk80 = unks32B + 0x100;
+        if (self->ext.plateLordUnknown.unk80 > 0x400) {
+            self->ext.plateLordUnknown.unk80 = 0x400;
         }
-        unks32C = tempEntity->ext.plateLordUnkown.unk84 << 5;
+        unks32C = tempEntity->ext.plateLordUnknown.unk84 << 5;
         if (unks32C > 0x1000) {
             unks32C = 0x1000;
         }
-        self->ext.plateLordUnkown.unk82 = tempEntity->ext.plateLordUnkown.unk82;
-        sp90 = (0x1000 - (tempEntity->ext.plateLordUnkown.unk84 * 0xD)) >> 4;
+        self->ext.plateLordUnknown.unk82 =
+            tempEntity->ext.plateLordUnknown.unk82;
+        sp90 = (0x1000 - (tempEntity->ext.plateLordUnknown.unk84 * 0xD)) >> 4;
         if (sp90 < 0) {
             sp90 = 0;
         }
-        if (tempEntity->ext.plateLordUnkown.unk84 > 0xA0) {
-            self->ext.plateLordUnkown.unk8C += self->ext.plateLordUnkown.unk90;
-            if ((self->ext.plateLordUnkown.unk8C > 0x100) ||
-                (self->ext.plateLordUnkown.unk8C < -0x100)) {
-                self->ext.plateLordUnkown.unk90 =
-                    -self->ext.plateLordUnkown.unk90;
+        if (tempEntity->ext.plateLordUnknown.unk84 > 0xA0) {
+            self->ext.plateLordUnknown.unk8C +=
+                self->ext.plateLordUnknown.unk90;
+            if ((self->ext.plateLordUnknown.unk8C > 0x100) ||
+                (self->ext.plateLordUnknown.unk8C < -0x100)) {
+                self->ext.plateLordUnknown.unk90 =
+                    -self->ext.plateLordUnknown.unk90;
             }
         }
-        if (((self->ext.plateLordUnkown.unk82 & 0xFFF) > 0xD00) &&
-            ((self->ext.plateLordUnkown.unk82 & 0xFFF) < 0xF00) &&
-            (tempEntity->ext.plateLordUnkown.unk84 > 0x100)) {
-            tempEntity->ext.plateLordUnkown.unk82 =
-                tempEntity->ext.plateLordUnkown.unk82 & 0xFFF;
-            tempEntity->ext.plateLordUnkown.unk82 =
-                -(0x1000 - tempEntity->ext.plateLordUnkown.unk82);
-            self->ext.plateLordUnkown.unk8E =
-                tempEntity->ext.plateLordUnkown.unk82;
+        if (((self->ext.plateLordUnknown.unk82 & 0xFFF) > 0xD00) &&
+            ((self->ext.plateLordUnknown.unk82 & 0xFFF) < 0xF00) &&
+            (tempEntity->ext.plateLordUnknown.unk84 > 0x100)) {
+            tempEntity->ext.plateLordUnknown.unk82 =
+                tempEntity->ext.plateLordUnknown.unk82 & 0xFFF;
+            tempEntity->ext.plateLordUnknown.unk82 =
+                -(0x1000 - tempEntity->ext.plateLordUnknown.unk82);
+            self->ext.plateLordUnknown.unk8E =
+                tempEntity->ext.plateLordUnknown.unk82;
             tempEntity = self - 5;
             PlaySfxPositional(0x60C);
             PlaySfxPositional(0x75E);
@@ -287,18 +289,19 @@ void func_us_801D542C(Entity* self) {
         break;
     case 11:
         tempEntity = self - 2;
-        self->ext.plateLordUnkown.unk8C = 0;
-        tempEntity->ext.plateLordUnkown.unk86 = 0;
-        tempEntity->ext.plateLordUnkown.unk84 = 0xF0;
-        if (tempEntity->ext.plateLordUnkown.unk82 > 0xE00) {
-            tempEntity->ext.plateLordUnkown.unk82 = 0xE00;
+        self->ext.plateLordUnknown.unk8C = 0;
+        tempEntity->ext.plateLordUnknown.unk86 = 0;
+        tempEntity->ext.plateLordUnknown.unk84 = 0xF0;
+        if (tempEntity->ext.plateLordUnknown.unk82 > 0xE00) {
+            tempEntity->ext.plateLordUnknown.unk82 = 0xE00;
         }
 
-        self->ext.plateLordUnkown.unk8E = tempEntity->ext.plateLordUnkown.unk82;
+        self->ext.plateLordUnknown.unk8E =
+            tempEntity->ext.plateLordUnknown.unk82;
         sp90 = 0x60;
-        self->ext.plateLordUnkown.unk82 = self->ext.plateLordUnkown.unk8E;
-        if (self->ext.plateLordUnkown.unk82 > 0x800) {
-            self->ext.plateLordUnkown.unk82 = 0x800;
+        self->ext.plateLordUnknown.unk82 = self->ext.plateLordUnknown.unk8E;
+        if (self->ext.plateLordUnknown.unk82 > 0x800) {
+            self->ext.plateLordUnknown.unk82 = 0x800;
         }
         tempEntity = self + 4;
         tempEntity->attack = g_api.enemyDefs[98].attack;
@@ -307,9 +310,9 @@ void func_us_801D542C(Entity* self) {
     if ((self->step == 9) || (self->step == 0xB)) {
         SetGeomScreen(0x400);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
-        var_s6 = self->ext.plateLordUnkown.unk80;
-        var_s3 = self->ext.plateLordUnkown.unk82;
-        var_fp = self->ext.plateLordUnkown.unk8E;
+        var_s6 = self->ext.plateLordUnknown.unk80;
+        var_s3 = self->ext.plateLordUnknown.unk82;
+        var_fp = self->ext.plateLordUnknown.unk8E;
         prim = self->ext.prim;
         for (i = 0; i < 0xA; i++) {
             switch (self->step) {
@@ -326,14 +329,14 @@ void func_us_801D542C(Entity* self) {
                 }
                 break;
             }
-            rotB.vx = self->ext.plateLordUnkown.unk88;
-            rotB.vy = -var_s3 + self->ext.plateLordUnkown.unk8A;
+            rotB.vx = self->ext.plateLordUnknown.unk88;
+            rotB.vy = -var_s3 + self->ext.plateLordUnknown.unk8A;
             rotB.vz = var_s6;
             RotMatrix(&D_us_80181FC0, &m);
             RotMatrixZ(rotB.vz, &m);
             RotMatrixY(rotB.vy, &m);
             RotMatrixX(rotB.vx, &m);
-            RotMatrixZ(self->ext.plateLordUnkown.unk8C, &m);
+            RotMatrixZ(self->ext.plateLordUnknown.unk8C, &m);
             if (!self->facingLeft) {
                 RotMatrixY(0x800, &m);
             }
@@ -364,9 +367,9 @@ void func_us_801D542C(Entity* self) {
             tempEntity = self - 2;
             tempEntity->step = 3;
             if (self->facingLeft) {
-                self->ext.plateLordUnkown.unk84 = -0x400;
+                self->ext.plateLordUnknown.unk84 = -0x400;
             } else {
-                self->ext.plateLordUnkown.unk84 = 0x400;
+                self->ext.plateLordUnknown.unk84 = 0x400;
             }
             self->step = 0xC;
         }

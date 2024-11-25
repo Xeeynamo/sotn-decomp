@@ -2375,7 +2375,7 @@ typedef union { // offset=0x7C
     ET_Skelerang skelerang;
     ET_Diplocephalus diplocephalus;
     ET_PlateLord plateLord;
-    ET_PlatelordUnknown plateLordUnkown;
+    ET_PlatelordUnknown plateLordUnknown;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
