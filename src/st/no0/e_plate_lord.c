@@ -1067,9 +1067,8 @@ void func_us_801D44A0(Entity* self) {
                   (Point32*)&tempEntity->posX);
     tempEntity->rotZ = self->ext.plateLordUnkown.unk98 - 0x200;
     tempEntity = self + 5;
-    func_801CD78C(
-        (Point32*)&self->posX, 0x12, self->ext.plateLordUnkown.unk98,
-        (Point32*)&tempEntity->posX);
+    func_801CD78C((Point32*)&self->posX, 0x12, self->ext.plateLordUnkown.unk98,
+                  (Point32*)&tempEntity->posX);
     tempEntity->rotZ = self->ext.plateLordUnkown.unk98 - 0x200;
     posX = self->posX.i.hi;
     posY = self->posY.i.hi;
@@ -1234,7 +1233,7 @@ void func_us_801D542C(Entity* self) {
     s32 tempPosY;
     s32 unks32A;
     s32 unks32B;
-    s32 unkS32C;
+    s32 unks32C;
     s32 attack;
     Collider collider;
     Entity* tempEntity2;
@@ -1242,7 +1241,7 @@ void func_us_801D542C(Entity* self) {
     SVECTOR rotB;
     VECTOR trans;
     MATRIX m;
-    
+
     s32 sp90;
     Primitive* prim;
     s32 posX;
@@ -1262,13 +1261,13 @@ void func_us_801D542C(Entity* self) {
         InitializeEntity(&g_EInitPlateLord);
         self->animCurFrame = 7;
         self->zPriority = 0xB4;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xA);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
@@ -1287,7 +1286,7 @@ void func_us_801D542C(Entity* self) {
             LOW(prim->x2) = LOW(prim->x0);
             LOW(prim->x3) = LOW(prim->x0);
             prim->priority = 0xB6;
-            prim->drawMode = 2;
+            prim->drawMode = DRAW_UNK02;
             self->ext.plateLordUnkown.unkA0 = prim;
             prim = prim->next;
         }
@@ -1366,7 +1365,7 @@ void func_us_801D542C(Entity* self) {
             }
         }
         func_us_801D4E30();
-        
+
         if (self->ext.plateLordUnkown.unk9C) {
             func_us_801D5074(0x180);
         } else {
@@ -1455,7 +1454,9 @@ void func_us_801D542C(Entity* self) {
         } else {
             self->ext.plateLordUnkown.unk9D = 0;
         }
-        attack = (tempEntity->ext.plateLordUnkown.unk84 * g_api.enemyDefs[98].attack) >> 8;
+        attack = (tempEntity->ext.plateLordUnkown.unk84 *
+                  g_api.enemyDefs[98].attack) >>
+                 8;
         if (g_api.enemyDefs[98].attack < attack) {
             attack = g_api.enemyDefs[98].attack;
         }
@@ -1467,9 +1468,9 @@ void func_us_801D542C(Entity* self) {
         if (self->ext.plateLordUnkown.unk80 > 0x400) {
             self->ext.plateLordUnkown.unk80 = 0x400;
         }
-        unkS32C = tempEntity->ext.plateLordUnkown.unk84 << 5;
-        if (unkS32C > 0x1000) {
-            unkS32C = 0x1000;
+        unks32C = tempEntity->ext.plateLordUnkown.unk84 << 5;
+        if (unks32C > 0x1000) {
+            unks32C = 0x1000;
         }
         self->ext.plateLordUnkown.unk82 = tempEntity->ext.plateLordUnkown.unk82;
         sp90 = (0x1000 - (tempEntity->ext.plateLordUnkown.unk84 * 0xD)) >> 4;
@@ -1478,14 +1479,21 @@ void func_us_801D542C(Entity* self) {
         }
         if (tempEntity->ext.plateLordUnkown.unk84 > 0xA0) {
             self->ext.plateLordUnkown.unk8C += self->ext.plateLordUnkown.unk90;
-            if ((self->ext.plateLordUnkown.unk8C > 0x100) || (self->ext.plateLordUnkown.unk8C < -0x100)) {
-                self->ext.plateLordUnkown.unk90 = -self->ext.plateLordUnkown.unk90;
+            if ((self->ext.plateLordUnkown.unk8C > 0x100) ||
+                (self->ext.plateLordUnkown.unk8C < -0x100)) {
+                self->ext.plateLordUnkown.unk90 =
+                    -self->ext.plateLordUnkown.unk90;
             }
         }
-        if (((self->ext.plateLordUnkown.unk82 & 0xFFF) > 0xD00) && ((self->ext.plateLordUnkown.unk82 & 0xFFF) < 0xF00) && (tempEntity->ext.plateLordUnkown.unk84 > 0x100)) {
-            tempEntity->ext.plateLordUnkown.unk82 = tempEntity->ext.plateLordUnkown.unk82 & 0xFFF;
-            tempEntity->ext.plateLordUnkown.unk82 = -(0x1000 - tempEntity->ext.plateLordUnkown.unk82);
-            self->ext.plateLordUnkown.unk8E = tempEntity->ext.plateLordUnkown.unk82;
+        if (((self->ext.plateLordUnkown.unk82 & 0xFFF) > 0xD00) &&
+            ((self->ext.plateLordUnkown.unk82 & 0xFFF) < 0xF00) &&
+            (tempEntity->ext.plateLordUnkown.unk84 > 0x100)) {
+            tempEntity->ext.plateLordUnkown.unk82 =
+                tempEntity->ext.plateLordUnkown.unk82 & 0xFFF;
+            tempEntity->ext.plateLordUnkown.unk82 =
+                -(0x1000 - tempEntity->ext.plateLordUnkown.unk82);
+            self->ext.plateLordUnkown.unk8E =
+                tempEntity->ext.plateLordUnkown.unk82;
             tempEntity = self - 5;
             PlaySfxPositional(0x60C);
             PlaySfxPositional(0x75E);
@@ -1503,7 +1511,7 @@ void func_us_801D542C(Entity* self) {
         if (tempEntity->ext.plateLordUnkown.unk82 > 0xE00) {
             tempEntity->ext.plateLordUnkown.unk82 = 0xE00;
         }
-        
+
         self->ext.plateLordUnkown.unk8E = tempEntity->ext.plateLordUnkown.unk82;
         sp90 = 0x60;
         self->ext.plateLordUnkown.unk82 = self->ext.plateLordUnkown.unk8E;
@@ -1524,7 +1532,7 @@ void func_us_801D542C(Entity* self) {
         for (i = 0; i < 0xA; i++) {
             switch (self->step) {
             case 9:
-                var_s6 = (var_s6 * unkS32C) >> 0xC;
+                var_s6 = (var_s6 * unks32C) >> 0xC;
                 var_s3 -= sp90;
                 break;
             case 11:
