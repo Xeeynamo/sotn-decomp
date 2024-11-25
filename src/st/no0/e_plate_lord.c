@@ -1217,7 +1217,32 @@ void func_us_801D5250(void) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D52E0);
+s32 func_us_801D52E0(void) {
+    Entity* tempEntity;
+    s32 angle;
+    s32 dx;
+    s32 dy;
+    s32 tempVal;
+
+    tempEntity = (g_CurrentEntity - 3);
+    dy = tempEntity->posY.i.hi - 6 - g_CurrentEntity->posY.i.hi;
+    tempEntity = (g_CurrentEntity + 4);
+    dx = tempEntity->posX.i.hi - g_CurrentEntity->posX.i.hi;
+    tempVal = 0x50;
+    tempVal = (tempVal * tempVal) - (dy * dy);
+    tempVal = SquareRoot0(tempVal);
+    if (tempVal < abs(dx)) {
+        if (dx > 0) {
+            dx = tempVal;
+        } else {
+            dx = -tempVal;
+        }
+    } else {
+        return 0;
+    }
+    angle = ratan2(-dx, dy);
+    return angle;
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D5384);
 
