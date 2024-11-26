@@ -975,7 +975,52 @@ void EntityPlateLord(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4324);
+void func_us_801D4324(Entity* self) {
+    Collider collider;
+    Entity* tempEntity;
+
+    if (self->params == 0) {
+        tempEntity = self - 1;
+    } else {
+        tempEntity = self - 2;
+    }
+    self->facingLeft = tempEntity->facingLeft;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitPlateLord);
+        self->hitPoints = 0x7FFE;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 8;
+        if (self->params != 0) {
+            self->animCurFrame = 0xD;
+            self->zPriority = 0xB1;
+        } else {
+            self->animCurFrame = 0x10;
+            self->zPriority = 0xAE;
+        }
+
+        return;
+    case 1:
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
+        if (collider.effects & 1) {
+            self->posY.i.hi += collider.unk18;
+            self->ext.plateLord.unk85 = 1;
+            return;
+        }
+        self->ext.plateLord.unk85 = 0;
+        return;
+    case 16:
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (tempEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            tempEntity->params = 1;
+            tempEntity->zPriority = self->zPriority + 4;
+        }
+        DestroyEntity(self);
+        return;
+    }
+}
 
 extern SVECTOR D_us_80181F98;
 extern SVECTOR D_us_801C1684[];
