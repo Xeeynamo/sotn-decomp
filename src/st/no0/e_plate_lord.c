@@ -2,14 +2,14 @@
 #include "common.h"
 #include "no0.h"
 
-void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
+void func_801CD78C(Point32* src, s32 offset, s16 angle, Point32* dst) {
     if (g_CurrentEntity->facingLeft) {
         angle = -angle;
     }
     *dst = *src;
 
-    dst->x -= speed * rsin(angle) * 16;
-    dst->y += speed * rcos(angle) * 16;
+    dst->x -= offset * rsin(angle) * 16;
+    dst->y += offset * rcos(angle) * 16;
 }
 
 void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
@@ -35,9 +35,49 @@ void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
     prim->y3 += (arg5 * rsin(arg4)) >> 0xC;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D26CC);
+void func_us_801D26CC(unk_PlatelordStruct* arg0) {
+    Entity* entity;
+    Point32* position;
+    Entity* currentEntity;
+    Point32* tempPos;
+    RECT* tempRect;
+    s32 angle;
+    s32 offset;
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D274C);
+    tempRect = arg0->unk10;
+    entity = arg0->unk0;
+    position = (Point32*)&entity->posX;
+    tempPos = &arg0->unk8;
+    currentEntity = g_CurrentEntity;
+    angle = arg0->unk6;
+    offset = -tempRect->w + 4;
+    func_801CD78C(position, offset, angle, tempPos);
+    angle = arg0->unk4;
+    offset = -tempRect->x;
+    func_801CD78C(tempPos, offset, angle, (Point32*)&currentEntity->posX);
+}
+
+void func_us_801D274C(unk_PlatelordStruct* arg0) {
+    Entity* entity;
+    Entity* currentEntity;
+    Point32* position;
+    Point32* tempPos;
+    RECT* tempRect;
+    s32 angle;
+    s32 offset;
+
+    tempRect = arg0->unk10;
+    currentEntity = g_CurrentEntity;
+    tempPos = &arg0->unk8;
+    entity = arg0->unk0;
+    position = (Point32*)&entity->posX;
+    angle = arg0->unk4;
+    offset = tempRect->x;
+    func_801CD78C((Point32*)&currentEntity->posX, offset, angle, tempPos);
+    angle = arg0->unk6;
+    offset = tempRect->w - 4;
+    func_801CD78C(tempPos, offset, angle, position);
+}
 
 bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
     bool ret;
@@ -975,7 +1015,52 @@ void EntityPlateLord(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4324);
+void func_us_801D4324(Entity* self) {
+    Collider collider;
+    Entity* tempEntity;
+
+    if (self->params == 0) {
+        tempEntity = self - 1;
+    } else {
+        tempEntity = self - 2;
+    }
+    self->facingLeft = tempEntity->facingLeft;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitPlateLord);
+        self->hitPoints = 0x7FFE;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 8;
+        if (self->params != 0) {
+            self->animCurFrame = 0xD;
+            self->zPriority = 0xB1;
+        } else {
+            self->animCurFrame = 0x10;
+            self->zPriority = 0xAE;
+        }
+
+        return;
+    case 1:
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posY.i.hi += collider.unk18;
+            self->ext.plateLord.unk85 = 1;
+            return;
+        }
+        self->ext.plateLord.unk85 = 0;
+        return;
+    case 16:
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (tempEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            tempEntity->params = 1;
+            tempEntity->zPriority = self->zPriority + 4;
+        }
+        DestroyEntity(self);
+        return;
+    }
+}
 
 extern SVECTOR D_us_80181F98;
 extern SVECTOR D_us_801C1684[];
