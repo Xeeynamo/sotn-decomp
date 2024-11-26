@@ -359,6 +359,7 @@
 | 0.92 | true     | EntityBackgroundBlock               | asm/us/st/wrp/matchings/st_debug/EntityBackgroundBlock.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/boss/mar/matchings/e_collect/DestroyCurrentEntity.s 
+| 1.00 | true     | DestroyCurrentEntity                | asm/us/boss/rbo3/matchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/cen/matchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/dre/matchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | func_801937C4                       | asm/us/st/mad/matchings/e_collect/func_801937C4.s 
@@ -371,7 +372,6 @@
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/st0/matchings/e_collect/DestroyCurrentEntity.s 
 | 1.00 | true     | UnusedDestroyCurrentEntity          | asm/us/st/st0/matchings/e_collect/UnusedDestroyCurrentEntity.s 
 | 1.00 | true     | DestroyCurrentEntity                | asm/us/st/wrp/matchings/e_collect/DestroyCurrentEntity.s 
-| 1.00 | false    | DestroyCurrentEntity                | asm/us/boss/rbo3/nonmatchings/e_collect/DestroyCurrentEntity.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/boss/mar/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/boss/rbo3/matchings/e_misc/EntityOlroxDrool.s 
@@ -525,6 +525,7 @@
 | 1.00 | true     | UpdateRoomPosition                  | asm/us/st/wrp/matchings/create_entity/UpdateRoomPosition.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectLifeVessel                   | asm/us/boss/mar/matchings/e_collect/CollectLifeVessel.s 
+| 1.00 | true     | CollectLifeVessel                   | asm/us/boss/rbo3/matchings/e_collect/CollectLifeVessel.s 
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/cen/matchings/e_collect/CollectLifeVessel.s 
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/dre/matchings/e_collect/CollectLifeVessel.s 
 | 1.00 | true     | func_801938FC                       | asm/us/st/mad/matchings/e_collect/func_801938FC.s 
@@ -535,7 +536,6 @@
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/nz0/matchings/e_collect/CollectLifeVessel.s 
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/rwrp/matchings/wrp/e_collect/CollectLifeVessel.s 
 | 1.00 | true     | CollectLifeVessel                   | asm/us/st/wrp/matchings/e_collect/CollectLifeVessel.s 
-| 1.00 | false    | CollectLifeVessel                   | asm/us/boss/rbo3/nonmatchings/e_collect/CollectLifeVessel.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityExplosion                     | asm/us/boss/mar/matchings/e_collect/EntityExplosion.s 
 | 1.00 | true     | EntityExplosion                     | asm/us/boss/rbo3/matchings/e_collect/EntityExplosion.s 
@@ -551,6 +551,7 @@
 | 1.00 | true     | EntityExplosion                     | asm/us/st/wrp/matchings/e_collect/EntityExplosion.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityPrizeDrop                     | asm/us/boss/mar/matchings/e_collect/EntityPrizeDrop.s 
+| 1.00 | true     | EntityPrizeDrop                     | asm/us/boss/rbo3/matchings/e_collect/EntityPrizeDrop.s 
 | 0.99 | true     | EntityPrizeDrop                     | asm/us/st/cen/matchings/e_collect/EntityPrizeDrop.s 
 | 0.99 | true     | EntityPrizeDrop                     | asm/us/st/dre/matchings/e_collect/EntityPrizeDrop.s 
 | 0.95 | true     | EntityPrizeDrop                     | asm/us/st/mad/matchings/e_collect/EntityPrizeDrop.s 
@@ -561,7 +562,6 @@
 | 0.99 | true     | EntityPrizeDrop                     | asm/us/st/rwrp/matchings/wrp/e_collect/EntityPrizeDrop.s 
 | 0.93 | true     | EntityPrizeDrop                     | asm/us/st/st0/matchings/e_collect/EntityPrizeDrop.s 
 | 0.99 | true     | EntityPrizeDrop                     | asm/us/st/wrp/matchings/e_collect/EntityPrizeDrop.s 
-| 1.00 | false    | EntityPrizeDrop                     | asm/us/boss/rbo3/nonmatchings/e_collect/EntityPrizeDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | PrizeDropFall                       | asm/us/boss/mar/matchings/e_collect/PrizeDropFall.s 
 | 1.00 | true     | PrizeDropFall                       | asm/us/boss/rbo3/matchings/e_collect/PrizeDropFall.s 
@@ -1430,6 +1430,7 @@
 | 1.00 | true     | CollectHeart                        | asm/us/st/wrp/matchings/e_collect/CollectHeart.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectHeartVessel                  | asm/us/boss/mar/matchings/e_collect/CollectHeartVessel.s 
+| 1.00 | true     | CollectHeartVessel                  | asm/us/boss/rbo3/matchings/e_collect/CollectHeartVessel.s 
 | 1.00 | true     | CollectHeartVessel                  | asm/us/st/cen/matchings/e_collect/CollectHeartVessel.s 
 | 1.00 | true     | CollectHeartVessel                  | asm/us/st/dre/matchings/e_collect/CollectHeartVessel.s 
 | 1.00 | true     | CollectHeartVessel                  | asm/us/st/no0/matchings/e_collect/CollectHeartVessel.s 
@@ -1438,9 +1439,9 @@
 | 1.00 | true     | CollectHeartVessel                  | asm/us/st/nz0/matchings/e_collect/CollectHeartVessel.s 
 | 1.00 | true     | CollectHeartVessel                  | asm/us/st/rwrp/matchings/wrp/e_collect/CollectHeartVessel.s 
 | 1.00 | true     | CollectHeartVessel                  | asm/us/st/wrp/matchings/e_collect/CollectHeartVessel.s 
-| 1.00 | false    | CollectHeartVessel                  | asm/us/boss/rbo3/nonmatchings/e_collect/CollectHeartVessel.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectSubweapon                    | asm/us/boss/mar/matchings/e_collect/CollectSubweapon.s 
+| 1.00 | true     | CollectSubweapon                    | asm/us/boss/rbo3/matchings/e_collect/CollectSubweapon.s 
 | 1.00 | true     | CollectSubweapon                    | asm/us/st/cen/matchings/e_collect/CollectSubweapon.s 
 | 1.00 | true     | CollectSubweapon                    | asm/us/st/dre/matchings/e_collect/CollectSubweapon.s 
 | 1.00 | true     | CollectSubweapon                    | asm/us/st/no0/matchings/e_collect/CollectSubweapon.s 
@@ -1449,9 +1450,9 @@
 | 1.00 | true     | CollectSubweapon                    | asm/us/st/nz0/matchings/e_collect/CollectSubweapon.s 
 | 1.00 | true     | CollectSubweapon                    | asm/us/st/rwrp/matchings/wrp/e_collect/CollectSubweapon.s 
 | 1.00 | true     | CollectSubweapon                    | asm/us/st/wrp/matchings/e_collect/CollectSubweapon.s 
-| 1.00 | false    | CollectSubweapon                    | asm/us/boss/rbo3/nonmatchings/e_collect/CollectSubweapon.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityEquipItemDrop                 | asm/us/boss/mar/matchings/e_collect/EntityEquipItemDrop.s 
+| 1.00 | true     | EntityEquipItemDrop                 | asm/us/boss/rbo3/matchings/e_collect/EntityEquipItemDrop.s 
 | 0.98 | true     | EntityEquipItemDrop                 | asm/us/st/cen/matchings/e_collect/EntityEquipItemDrop.s 
 | 0.98 | true     | EntityEquipItemDrop                 | asm/us/st/dre/matchings/e_collect/EntityEquipItemDrop.s 
 | 1.00 | true     | EntityEquipItemDrop                 | asm/us/st/no0/matchings/e_collect/EntityEquipItemDrop.s 
@@ -1460,7 +1461,6 @@
 | 0.98 | true     | EntityEquipItemDrop                 | asm/us/st/nz0/matchings/e_collect/EntityEquipItemDrop.s 
 | 0.98 | true     | EntityEquipItemDrop                 | asm/us/st/rwrp/matchings/wrp/e_collect/EntityEquipItemDrop.s 
 | 0.98 | true     | EntityEquipItemDrop                 | asm/us/st/wrp/matchings/e_collect/EntityEquipItemDrop.s 
-| 1.00 | false    | EntityEquipItemDrop                 | asm/us/boss/rbo3/nonmatchings/e_collect/EntityEquipItemDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityMessageBox                    | asm/us/boss/mar/matchings/e_misc/EntityMessageBox.s 
 | 1.00 | true     | EntityMessageBox                    | asm/us/boss/rbo3/matchings/e_misc/EntityMessageBox.s 
@@ -1553,15 +1553,6 @@
 | 1.00 | false    | D_us_801C13CC                       | asm/us/st/no0/nonmatchings/e_collect/D_us_801C13CC.s 
 | 1.00 | false    | D_us_801C13D4                       | asm/us/st/no0/nonmatchings/e_collect/D_us_801C13D4.s 
 -------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | D_800DBF44                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF44.s 
 | 1.00 | false    | D_800DBF4C                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF4C.s 
 | 1.00 | false    | D_800DBF54                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF54.s 
@@ -1618,6 +1609,14 @@
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | false    | SetCutsceneScript                   | asm/us/st/cen/nonmatchings/cutscene/SetCutsceneScript.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -1831,6 +1830,11 @@
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -1882,10 +1886,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2222,9 +2222,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2251,6 +2248,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
