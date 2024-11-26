@@ -1003,7 +1003,7 @@ void func_us_801D4324(Entity* self) {
     case 1:
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             self->ext.plateLord.unk85 = 1;
             return;
