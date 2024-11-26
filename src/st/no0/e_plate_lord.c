@@ -2,14 +2,14 @@
 #include "common.h"
 #include "no0.h"
 
-void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
+void func_801CD78C(Point32* src, s32 offset, s16 angle, Point32* dst) {
     if (g_CurrentEntity->facingLeft) {
         angle = -angle;
     }
     *dst = *src;
 
-    dst->x -= speed * rsin(angle) * 16;
-    dst->y += speed * rcos(angle) * 16;
+    dst->x -= offset * rsin(angle) * 16;
+    dst->y += offset * rcos(angle) * 16;
 }
 
 void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
@@ -35,9 +35,49 @@ void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
     prim->y3 += (arg5 * rsin(arg4)) >> 0xC;
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D26CC);
+void func_us_801D26CC(unk_PlatelordStruct* arg0) {
+    Entity* entity;
+    Point32* position;
+    Entity* currentEntity;
+    Point32* tempPos;
+    RECT* tempRect;
+    s32 angle;
+    s32 offset;
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D274C);
+    tempRect = arg0->unk10;
+    entity = arg0->unk0;
+    position = (Point32*)&entity->posX;
+    tempPos = &arg0->unk8;
+    currentEntity = g_CurrentEntity;
+    angle = arg0->unk6;
+    offset = -tempRect->w + 4;
+    func_801CD78C(position, offset, angle, tempPos);
+    angle = arg0->unk4;
+    offset = -tempRect->x;
+    func_801CD78C(tempPos, offset, angle, (Point32*)&currentEntity->posX);
+}
+
+void func_us_801D274C(unk_PlatelordStruct* arg0) {
+    Entity* entity;
+    Entity* currentEntity;
+    Point32* position;
+    Point32* tempPos;
+    RECT* tempRect;
+    s32 angle;
+    s32 offset;
+
+    tempRect = arg0->unk10;
+    currentEntity = g_CurrentEntity;
+    tempPos = &arg0->unk8;
+    entity = arg0->unk0;
+    position = (Point32*)&entity->posX;
+    angle = arg0->unk4;
+    offset = tempRect->x;
+    func_801CD78C((Point32*)&currentEntity->posX, offset, angle, tempPos);
+    angle = arg0->unk6;
+    offset = tempRect->w - 4;
+    func_801CD78C(tempPos, offset, angle, position);
+}
 
 bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
     bool ret;
