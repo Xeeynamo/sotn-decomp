@@ -535,7 +535,6 @@ def make_config_psp(ovl_path: str, version: str):
                 f"  asm_inc_header: |\n",
                 f"    .set noat      /* allow manual use of $at */\n",
                 f"    .set noreorder /* don't insert nops after branches */\n",
-                f'    .include "macro.inc"\n',
                 f"sha1: {get_sha1(ovl_path)}\n",
                 f"segments:\n",
                 f"  - [0x0, bin, mwo_header]\n",

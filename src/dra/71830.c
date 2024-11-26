@@ -137,7 +137,7 @@ bool func_80111DE8(bool mistReset) {
     s32 colliderXOffset;
     s32 playerX;
 
-    yOffset = D_800ACED0[1].y - 1;
+    yOffset = g_SensorsFloor[1].y - 1;
 
     CheckCollision(
         PLAYER.posX.i.hi + 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);

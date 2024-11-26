@@ -14,7 +14,7 @@ lazy_static! {
         (1 << 2, "PLAYER_STATUS_WOLF_FORM"),
         (1 << 3, "PLAYER_STATUS_UNK8"),
         (1 << 4, "PLAYER_STATUS_UNK10"),
-        (1 << 5, "PLAYER_STATUS_UNK_20"),
+        (1 << 5, "PLAYER_STATUS_CROUCH"),
         (1 << 6, "PLAYER_STATUS_UNK40"),
         (1 << 7, "PLAYER_STATUS_STONE"),
         (1 << 8, "PLAYER_STATUS_UNK100"),
@@ -79,7 +79,7 @@ mod tests {
     #[test]
     fn test_player_status_decimal() {
         let input_line = "g_Player.status = 32;";
-        let expected_line = "g_Player.status = PLAYER_STATUS_UNK_20;";
+        let expected_line = "g_Player.status = PLAYER_STATUS_CROUCH;";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

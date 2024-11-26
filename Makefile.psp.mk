@@ -89,7 +89,7 @@ OPTIMIZATION = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS) $(OPTIMIZATION)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION)
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)

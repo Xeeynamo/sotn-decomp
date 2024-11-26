@@ -154,15 +154,15 @@ void PlayerStepHellfire(void) {
         PLAYER.velocityX = 0;
         if (CheckMoveDirection() != 0) {
             if (g_Player.padPressed & PAD_RIGHT) {
-                if ((g_Player.colliders[2].effects &
+                if ((g_Player.colFloor[2].effects &
                      (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
-                    (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
+                    (g_Player.colFloor[1].effects & EFFECT_UNK_8000) ||
                     (PLAYER.posX.i.hi > 248)) {
                     SetSpeedX(FIX(3));
                 }
-            } else if ((g_Player.colliders[3].effects &
+            } else if ((g_Player.colFloor[3].effects &
                         (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
-                       (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
+                       (g_Player.colFloor[1].effects & EFFECT_UNK_8000) ||
                        (PLAYER.posX.i.hi < 8)) {
                 SetSpeedX(FIX(3));
             }
@@ -779,13 +779,13 @@ void func_801177A0(void) {
     switch (PLAYER.step_s) {
     case 0:
         for (i = 0; i < 4; i++) {
-            if (D_800ACED0[i].y < D_800ACE90[i]) {
-                D_800ACED0[i].y++;
+            if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+                g_SensorsFloor[i].y++;
             } else {
                 else_cycles++;
             }
-            if (D_800ACE88[i] < D_800ACEC0[i].y) {
-                D_800ACEC0[i].y--;
+            if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+                g_SensorsCeiling[i].y--;
             } else {
                 else_cycles++;
             }
@@ -1123,13 +1123,13 @@ void func_801182F8(void) {
     DecelerateY(0x200);
     else_cycles = 0;
     for (i = 0; i < 4; i++) {
-        if (D_800ACED0[i].y < D_800ACE90[i]) {
-            D_800ACED0[i].y++;
+        if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+            g_SensorsFloor[i].y++;
         } else {
             else_cycles++;
         }
-        if (D_800ACE88[i] < D_800ACEC0[i].y) {
-            D_800ACEC0[i].y--;
+        if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+            g_SensorsCeiling[i].y--;
         } else {
             else_cycles++;
         }
