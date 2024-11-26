@@ -5,11 +5,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
 
     g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
-#if defined STAGE_IS_RBO3
-    g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx];
-#else
     g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx - 14];
-#endif
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
