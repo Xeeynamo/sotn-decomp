@@ -229,7 +229,7 @@ void func_us_801D542C(Entity* self) {
         tempEntity = self - 2;
         if (self->ext.plateLordUnknown.unk9D == 0) {
             if (tempEntity->ext.plateLordUnknown.unk82 & 0xF000) {
-                PlaySfxPositional(0x6C7);
+                PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
                 self->ext.plateLordUnknown.unk9D = 1;
                 tempEntity->ext.plateLordUnknown.unk82 &= 0xFFF;
             }
@@ -279,7 +279,7 @@ void func_us_801D542C(Entity* self) {
             self->ext.plateLordUnknown.unk8E =
                 tempEntity->ext.plateLordUnknown.unk82;
             tempEntity = self - 5;
-            PlaySfxPositional(0x60C);
+            PlaySfxPositional(SFX_WEAPON_SWISH_C);
             PlaySfxPositional(0x75E);
             tempEntity->step = 0xB;
             tempEntity->step_s = 0;
