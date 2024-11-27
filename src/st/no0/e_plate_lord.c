@@ -1063,7 +1063,7 @@ void func_us_801D4324(Entity* self) {
 }
 
 extern SVECTOR D_us_80181F98;
-extern SVECTOR D_us_801C1684[];
+static const SVECTOR D_us_801C1684 = {.vx = 0, .vy = 20, .vz = 0};
 
 void func_us_801D44A0(Entity* self) {
     long sp70;
@@ -1082,7 +1082,7 @@ void func_us_801D44A0(Entity* self) {
     s32 primIndex;
     s32 var_s3;
 
-    sp6B = D_us_801C1684[0];
+    sp6B = D_us_801C1684;
     tempEntity = self - 3;
     self->facingLeft = tempEntity->facingLeft;
     self->rotZ = (self->ext.plateLordUnknown.unkB0 - 0x800) / 2;
@@ -1249,9 +1249,89 @@ void func_us_801D44A0(Entity* self) {
     }
 }
 
-INCLUDE_RODATA("st/no0/nonmatchings/e_plate_lord", D_us_801C1684);
+void func_us_801D4AA4(Entity* self) {
+    Entity* tempEntity;
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4AA4);
+    tempEntity = self - 4;
+    self->facingLeft = tempEntity->facingLeft;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitPlateLord);
+        self->hitPoints = 0x7FFE;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 0;
+        switch (self->params) {
+        case 0:
+            self->zPriority = 0xB2;
+            self->animCurFrame = 1;
+            self->ext.plateLordUnknown.unkB0 = 0x800;
+            self->step = 1;
+            self->hitboxWidth = 4;
+            self->hitboxHeight = 4;
+            break;
+        case 1:
+            self->zPriority = 0xB5;
+            self->animCurFrame = 4;
+            self->step = 2;
+            break;
+        case 2:
+            self->animCurFrame = 9;
+            self->zPriority = 0xAD;
+            self->step = 3;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
+            break;
+        case 3:
+            self->animCurFrame = 0xA;
+            self->zPriority = 0xAE;
+            self->step = 4;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
+            break;
+        }
+        break;
+    case 1:
+        tempEntity = self - 1;
+        if (tempEntity->animCurFrame == 0x12) {
+            self->animCurFrame = 0x11;
+            self->ext.plateLordUnknown.unkB0 = 0x600;
+        } else {
+            self->animCurFrame = 1;
+            self->ext.plateLordUnknown.unkB0 = 0x800;
+        }
+        func_801CD78C((Point32*)&tempEntity->posX, 0xE,
+                      self->ext.plateLordUnknown.unkB0, (Point32*)&self->posX);
+        break;
+    case 2:
+        tempEntity = self - 6;
+        if (tempEntity->step != 9 && tempEntity->step == 0xB) {
+            self->animCurFrame = 0x13;
+            self->zPriority = 0xB5;
+        } else {
+            self->animCurFrame = 4;
+            self->zPriority = 0xB3;
+        }
+        break;
+    case 3:
+        tempEntity = self - 1;
+        if (tempEntity->animCurFrame != 0x12) {
+            self->animCurFrame = 9;
+        } else {
+            self->animCurFrame = 0;
+        }
+        break;
+    case 4:
+        tempEntity = self - 8;
+        if (tempEntity->step == 9) {
+            self->animCurFrame = 0x18;
+        } else {
+            self->animCurFrame = 0xA;
+        }
+        tempEntity = self - 1;
+        if (tempEntity->animCurFrame == 0x12) {
+            self->animCurFrame = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4CAC);
 
