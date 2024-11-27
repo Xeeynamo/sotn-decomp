@@ -666,7 +666,11 @@ typedef struct {
     /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 defaultDistToTargetLoc;
     /* 0x8A */ s16 maxAngle;
-} ET_Demon;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 : 16;   
+    /* 0x90 */ s16 pad_90[0x9]; // This will get broken out as we find more fields
+    /* 0xA4 */ struct Entity* target;
+} ET_Demon; 
 
 typedef struct {
     /* 0x7C */ s16 unk7c;
