@@ -1351,7 +1351,62 @@ INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4E94);
 
 INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4FCC);
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D5074);
+void func_us_801D5074(s32 arg0) {
+    Primitive* nextPrim;
+    Primitive* prim;
+    Point32* pos;
+    s32 posX;
+    s32 posY;
+    s32 i;
+    s32 s2;
+    s32 s1;
+    s32 s4;
+    s32 s5;
+
+    posX = g_CurrentEntity->posX.val >> 8;
+    posY = g_CurrentEntity->posY.val >> 8;
+    prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 9; i++) {
+        nextPrim = prim->next;
+        s2 = nextPrim->x0 << 8;
+        s1 = nextPrim->y0 << 8;
+        s2 += nextPrim->p2;
+        s1 += nextPrim->p3;
+        s2 = (s2 + posX) / 2;
+        s1 = (s1 + posY) / 2;
+        s5 = prim->x0 << 8;
+        s4 = prim->y0 << 8;
+        s5 += prim->p2;
+        s4 += prim->p3;
+        s5 -= s2;
+        s4 -= s1;
+        posX = (s5 / 2) + s2;
+        posY = (s4 / 2) + s1;
+        posY += arg0;
+        prim->x0 = posX >> 8;
+        prim->y0 = posY >> 8;
+        prim->p2 = posX & 0xFF;
+        prim->p3 = posY & 0xFF;
+        prim = nextPrim;
+    }
+    pos = (Point32*)&(g_CurrentEntity + 4)->posX.val;
+    s2 = pos->x >> 8;
+    s1 = pos->y >> 8;
+    s2 = (s2 + posX) / 2;
+    s1 = (s1 + posY) / 2;
+    s5 = prim->x0 << 8;
+    s4 = prim->y0 << 8;
+    s5 += prim->p2;
+    s4 += prim->p3;
+    s5 -= s2;
+    s4 -= s1;
+    posX = (s5 / 2) + s2;
+    posY = (s4 / 2) + s1;
+    prim->x0 = posX >> 8;
+    prim->y0 = posY >> 8;
+    prim->p2 = posX & 0xFF;
+    prim->p3 = posY & 0xFF;
+}
 
 void func_us_801D51EC(void) {
     Primitive* prim;
