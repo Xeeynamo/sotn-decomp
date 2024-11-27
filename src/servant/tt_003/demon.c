@@ -290,7 +290,52 @@ void unused_5808(Entity* self) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175810);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175C08);
+extern Entity* D_us_801786D8;
+extern s32 D_us_801786DC;
+
+void func_us_80175C08(Entity* self) {
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        D_us_801786D8 = self;
+        D_us_801786DC = 0;
+
+        if (g_StageId < 0x20 || g_StageId >= 0x35) {
+            self->posX.i.hi = 200;
+            self->posY.i.hi = 36;
+            self->facingLeft = 0;
+        } else {
+            self->posX.i.hi = 56;
+            self->posY.i.hi = 196;
+            self->facingLeft = 1;
+        }
+
+        self->step++;
+        break;
+
+    case 1:
+        if (D_us_801786DC != 0) {
+            self->hitboxOffX = 0x18;
+            self->hitboxOffY = 4;
+            self->hitboxWidth = 2;
+            self->hitboxHeight = 2;
+            self->attackElement = 0x20;
+            self->hitboxState = 2;
+            self->attack = 0;
+            self->nFramesInvincibility = 0;
+            self->stunFrames = 0;
+            self->hitEffect = 7;
+            self->entityRoomIndex = 0;
+
+            g_api.func_80118894(self);
+
+            self->step++;
+        }
+    case 2:
+        return;
+    }
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
@@ -308,7 +353,29 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176C1C);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801771B0);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80177690);
+extern s32 D_us_801786D0;
+extern s32 D_us_801786D4;
+
+void func_us_80177690(Entity* self) {
+    Entity* entity;
+
+    switch (self->params) {
+    case 0:
+        D_us_801786D0 = 1;
+        entity = SearchForEntityInRange(0, 217);
+        if ((entity != NULL) && (entity->step < 5)) {
+            entity->step = 8;
+        }
+        break;
+    case 1:
+        D_us_801786D0 = 2;
+        break;
+    case 15:
+        D_us_801786D4 = 1;
+        break;
+    }
+    DestroyEntity(self);
+}
 
 #ifndef VERSION_PSP
 #include "../servant_update_anim.h"
