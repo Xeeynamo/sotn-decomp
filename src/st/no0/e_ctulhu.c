@@ -35,7 +35,7 @@ static u8 anim_fireball[] = {
 static u8 anim_land[] = {
     0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x1E, 0x01, 0x1F,
     0x05, 0x1E, 0x04, 0x04, 0x03, 0x03, 0x02, 0x02, 0x02, 0x01, 0x00, 0x00};
-static u16 rotZ[] = {0x0180, 0x0000, 0xFE80, 0x0000};
+static s16 rotZ[] = {0x0180, 0x0000, 0xFE80, 0x0000};
 extern u8 anim_death[] = {
     0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
     0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
@@ -43,33 +43,33 @@ extern u8 anim_death[] = {
 extern s16* D_us_801C11B0[]; // uvs for shockwave
 
 void EntityCtulhu(Entity* self) {
+    Primitive* prim;
+    Entity* newEntity;
+    DR_ENV* dr_env;
     RECT clipRect;
     DRAWENV drawEnv;
-    DR_ENV* dr_env;
-    Entity* newEntity;
-    Primitive* prim;
-    s16 angle;
-    s32 i;
+    s32 primIndex;
+    s32 colRet;
     s32 posX;
     s32 posY;
-    s32 colRet;
-    s32 primIndex;
-    u16 temp_v0_13;
-    u16 temp_v0_15;
+    s32 i;
+    s16 angle;
 
-    if ((g_Player.status & PLAYER_STATUS_DEAD) && (self->step < 9)) {
+    if ((g_Player.status & PLAYER_STATUS_DEAD) && self->step < 9) {
         SetStep(9);
     }
-    if ((self->flags & FLAG_DEAD) && (self->step < 10)) {
+
+    if ((self->flags & FLAG_DEAD) && self->step < 10) {
         self->hitboxState = 0;
         PlaySfxPositional(0x757);
         SetStep(10);
     }
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCtulhu);
         self->animCurFrame = 1;
-        /* fallthrough */
+        // fallthrough
     case 1:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -77,7 +77,7 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case 2:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->ext.ctulhu.timer = 0x40;
             self->step_s++;
         }
@@ -85,10 +85,12 @@ void EntityCtulhu(Entity* self) {
         if (self->ext.ctulhu.timer == 0x20) {
             self->facingLeft ^= 1;
         }
-        if ((self->facingLeft == ((GetSideToPlayer() & 1) ^ 1)) &&
-            (GetDistanceToPlayerX() < 0x48)) {
+
+        if (self->facingLeft == ((GetSideToPlayer() & 1) ^ 1) &&
+            GetDistanceToPlayerX() < 0x48) {
             SetStep(5);
         }
+
         if (!--self->ext.ctulhu.timer) {
             SetStep(3);
         }
@@ -103,23 +105,23 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 1:
-            self->velocityY = FIX(-4);
             self->velocityX = 0;
+            self->velocityY = FIX(-4);
             self->animCurFrame = 0x15;
             self->step_s++;
-            /* fallthrough */
+            // fallthrough
         case 2:
             MoveEntity();
             self->velocityY += FIX(3.0 / 16);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             posY -= self->ext.ctulhu.y;
-            if ((posY <= 0) || (self->velocityY > 0)) {
+            if (posY <= 0 || self->velocityY > 0) {
                 self->step_s++;
             }
             break;
         case 3:
             AnimateEntity(anim_wing_flap, self);
-            if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
+            if (!self->animFrameDuration && self->animFrameIdx == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -136,7 +138,7 @@ void EntityCtulhu(Entity* self) {
             break;
         case 4:
             AnimateEntity(anim_wing_flap, self);
-            if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
+            if (!self->animFrameDuration && self->animFrameIdx == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
             colRet = UnkCollisionFunc2(D_us_8018234C);
@@ -149,7 +151,7 @@ void EntityCtulhu(Entity* self) {
                 self->velocityX = FIX(-0.75);
             }
 
-            if (self->ext.ctulhu.timer == 0) {
+            if (!self->ext.ctulhu.timer) {
                 if (colRet == 1) {
                     SetSubStep(5);
                 }
@@ -182,13 +184,13 @@ void EntityCtulhu(Entity* self) {
             self->velocityY = FIX(-4);
             self->animCurFrame = 0x15;
             self->step_s++;
-            /* fallthrough */
+            // fallthrough
         case 1:
             MoveEntity();
             self->velocityY += FIX(3.0 / 16);
             if (self->velocityY > 0) {
                 self->step_s++;
-                if (self->ext.ctulhu.unk84 == 0) {
+                if (!self->ext.ctulhu.unk84) {
                     self->ext.ctulhu.unk84 = 2;
                     SetStep(7);
                 } else {
@@ -223,9 +225,11 @@ void EntityCtulhu(Entity* self) {
                     }
                 } else {
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-                    if (self->facingLeft && posX > g_Tilemap.width - 0x80) {
-                        self->facingLeft = 0;
-                    } else if (!self->facingLeft && posX < g_Tilemap.x + 0x80) {
+                    if (self->facingLeft) {
+                        if (posX > g_Tilemap.width - 0x80) {
+                            self->facingLeft = 0;
+                        }
+                    } else if (posX < g_Tilemap.x + 0x80) {
                         self->facingLeft = 1;
                     }
                 }
@@ -237,7 +241,8 @@ void EntityCtulhu(Entity* self) {
             SetStep(5);
             self->step_s = 2;
         }
-        if (self->animFrameIdx == 8 && self->animFrameDuration == 0) {
+
+        if (self->animFrameIdx == 8 && !self->animFrameDuration) {
             newEntity = &PLAYER;
             posX = newEntity->posX.i.hi - self->posX.i.hi;
             posY = newEntity->posY.i.hi - self->posY.i.hi;
@@ -262,8 +267,8 @@ void EntityCtulhu(Entity* self) {
                     } else {
                         newEntity->posX.i.hi -= 0x10;
                     }
-                    newEntity->rotZ = angle;
                     newEntity->posY.i.hi -= 0x16;
+                    newEntity->rotZ = angle;
                     newEntity->zPriority = self->zPriority + 1;
                 }
             }
@@ -273,8 +278,8 @@ void EntityCtulhu(Entity* self) {
         if (!AnimateEntity(anim_shoot_triple_fireball, self)) {
             SetStep(5);
         }
-        if ((GetDistanceToPlayerY() < 0x60) && (self->animCurFrame == 0x24) &&
-            (self->animFrameDuration == 0)) {
+        if (GetDistanceToPlayerY() < 0x60 && self->animCurFrame == 0x24 &&
+            !self->animFrameDuration) {
             PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -293,11 +298,12 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case 8:
-        if (AnimateEntity(anim_shockwave_throw, self) == 0) {
+        if (!AnimateEntity(anim_shockwave_throw, self)) {
             SetStep(2);
         }
-        if ((GetDistanceToPlayerY() < 0x60) &&
-            (self->animFrameIdx == 0x9 && self->animFrameDuration == 0)) {
+
+        if (GetDistanceToPlayerY() < 0x60 && self->animFrameIdx == 0x9 &&
+            !self->animFrameDuration) {
             PlaySfxPositional(0x758);
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -305,12 +311,19 @@ void EntityCtulhu(Entity* self) {
                 CreateEntityFromEntity(E_ID_45, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->zPriority = self->zPriority + 1;
+
                 if (self->facingLeft) {
                     newEntity->posX.i.hi += 0x20;
                 } else {
                     newEntity->posX.i.hi -= 0x20;
                 }
+
+                // Possible bug?
+#ifdef VERSION_PSP
+                1;
+#else
                 newEntity->posY.i.hi = newEntity->posY.i.hi;
+#endif
             }
         }
         break;
@@ -332,7 +345,7 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(0x759);
             }
             AnimateEntity(anim_laugh_static, self);
-            if ((g_Player.status & PLAYER_STATUS_DEAD) == 0) {
+            if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
                 SetStep(2);
             }
         }
@@ -348,10 +361,10 @@ void EntityCtulhu(Entity* self) {
                 self->step_s = 0;
                 return;
             }
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
             dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
@@ -369,7 +382,11 @@ void EntityCtulhu(Entity* self) {
             drawEnv.isbg = 1;
             drawEnv.r0 = drawEnv.g0 = drawEnv.b0 = 0;
 
-            posY = self->params ? 0x180 : 0x100;
+            if (self->params) {
+                posY = 0x180;
+            } else {
+                posY = 0x100;
+            }
 
             clipRect.x = 0;
             clipRect.y = posY;
@@ -379,54 +396,61 @@ void EntityCtulhu(Entity* self) {
             drawEnv.ofs[0] = 0;
             drawEnv.ofs[1] = 0x100;
             SetDrawEnv(dr_env, &drawEnv);
-
             prim = prim->next;
+
             if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
                 DestroyEntity(self);
                 return;
             }
-            prim->type = PRIM_ENV;
 
+            prim->type = PRIM_ENV;
             prim->priority = 0x12;
             if (self->params) {
                 prim->priority += 4;
             }
-
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
+
             self->ext.ctulhu.unkA4 = prim;
-            posY = self->params ? 0xFF : 0x7F;
+            if (self->params) {
+                posY = 0xFF;
+            } else {
+                posY = 0x7F;
+            }
+
             prim->type = PRIM_GT4;
             prim->tpage = 0x110;
-            prim->u1 = prim->u3 = 0x3F;
             prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x3F;
             prim->v0 = prim->v1 = posY - 0x70;
             prim->v2 = prim->v3 = posY;
-            temp_v0_13 = (u16)self->posX.i.hi;
-            prim->x0 = prim->x2 = temp_v0_13 - 0x20;
-            prim->x1 = prim->x3 = temp_v0_13 + 0x20;
-            temp_v0_15 = (u16)self->posY.i.hi;
-            prim->y2 = prim->y3 = temp_v0_15 + 0x28;
-            prim->y0 = prim->y1 = temp_v0_15 - 0x48;
+            prim->x0 = prim->x2 = self->posX.i.hi - 0x20;
+            prim->x1 = prim->x3 = prim->x0 + 0x40;
+            prim->y2 = prim->y3 = self->posY.i.hi + 0x28;
+            prim->y0 = prim->y1 = prim->y2 - 0x70;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK02;
-
             prim = prim->next;
             prim->type = PRIM_TILE;
-            posY = (self->params != 0) << 7;
+            if (self->params) {
+                posY = 0x80;
+            } else {
+                posY = 0;
+            }
             prim->x0 = 0;
             prim->y0 = posY;
-            prim->v0 = prim->u0 = 0x80;
+            prim->u0 = 0x80;
+            prim->v0 = 0x80;
             prim->r0 = prim->g0 = prim->b0 = 0;
-
             prim->priority = 0x11;
+
             if (self->params) {
                 prim->priority += 4;
             }
 
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-
             prim = prim->next;
+
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
@@ -438,7 +462,11 @@ void EntityCtulhu(Entity* self) {
                 self->zPriority += 4;
             }
 
-            posY = self->params ? 0x100 : 0x80;
+            if (self->params) {
+                posY = 0x100;
+            } else {
+                posY = 0x80;
+            }
 
             self->posX.i.hi = 0x20;
             self->posY.i.hi = posY - 0x28;
@@ -448,16 +476,20 @@ void EntityCtulhu(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            prim = self->ext.prim;
             self->animCurFrame = 0;
+            prim = self->ext.prim;
             prim->type = PRIM_ENV;
 
-            dr_env = LOW(prim->r1);
+            dr_env = (DR_ENV*)LOW(prim->r1);
             drawEnv = g_CurrentBuffer->draw;
             drawEnv.isbg = 0;
             drawEnv.dtd = 0;
 
-            posY = self->params ? 0x180 : 0x100;
+            if (self->params) {
+                posY = 0x180;
+            } else {
+                posY = 0x100;
+            }
 
             clipRect.x = 0;
             clipRect.y = posY;
@@ -474,10 +506,12 @@ void EntityCtulhu(Entity* self) {
             }
 
             prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+
             self->ext.ctulhu.y = 0x28;
             self->ext.ctulhu.timer = 0x10;
             self->step_s++;
-            /* fallthrough */
+            // fallthrough
         case 2:
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_FM_EXPLODE_B);
@@ -491,7 +525,11 @@ void EntityCtulhu(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                     newEntity->posX.i.hi = prim->x0 + posX;
+#ifdef VERSION_PSP
+                    newEntity->posY.i.hi = prim->y2 - 0x30 + posY;
+#else
                     newEntity->posY.i.hi = prim->y2 + posY - 0x30;
+#endif
                     newEntity->params = 3;
                 }
             }
@@ -499,10 +537,10 @@ void EntityCtulhu(Entity* self) {
                                     &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_ID_46, newEntity);
-                newEntity->posX.i.hi = (self->posX.i.hi - 0x20) + posX;
-                newEntity->posY.i.hi = (self->posY.i.hi + posY) + 4;
-                newEntity->params = 1;
+                newEntity->posX.i.hi = self->posX.i.hi - 0x20 + posX;
+                newEntity->posY.i.hi = self->posY.i.hi + posY + 4;
                 newEntity->facingLeft = colRet;
+                newEntity->params = 1;
                 newEntity->zPriority = 0x10;
                 if (self->params) {
                     newEntity->zPriority += 4;
@@ -527,7 +565,7 @@ void EntityCtulhu(Entity* self) {
     case 255:
 #include "../pad2_anim_debug.h"
     }
-    if (self->animCurFrame > 10 && self->animCurFrame < 15) {
+    if (self->animCurFrame >= 11 && self->animCurFrame < 15) {
         LOH(self->hitboxOffX) = -0x12;
         LOH(self->hitboxOffY) = 0x11;
         self->hitboxWidth = 0x16;
