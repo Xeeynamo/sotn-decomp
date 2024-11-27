@@ -1,24 +1,45 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-extern u16 D_us_80180BDE[];
-extern u16 D_us_8018234C[];
-extern u16 D_us_80182354[];
-extern u8 D_us_80182364[];
-extern u8 D_us_80182390[];
-extern u8 D_us_801823A0[];
-extern u8 D_us_801823B0[];
-extern u8 D_us_801823B8[];
-extern u8 D_us_801823C4[];
-extern u8 D_us_801823E4[];
-extern u8 D_us_801823F4[];
-extern u8 D_us_8018243C[];
-extern u16 D_us_80182454[];
-extern u8 D_us_8018245C[]; // anim_death
-
-extern u16 D_us_80180BEA[]; // clut
-extern u8 D_us_80182430[];  // anim fireball
-
+static u16 D_us_8018234C[] = {0, 72, 8, 0}; // sensors
+static u16 sensors_ground[][2] = {{0, 40}, {0, 4}, {8, -4}, {-16, 0}};
+static u8 anim_shockwave_throw[] = {
+    0x31, 0x05, 0x03, 0x06, 0x03, 0x05, 0x06, 0x07, 0x06, 0x08, 0x05,
+    0x09, 0x05, 0x0A, 0x14, 0x09, 0x02, 0x0B, 0x02, 0x0D, 0x21, 0x0C,
+    0x03, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02,
+    0x12, 0x06, 0x05, 0x03, 0x13, 0x04, 0x14, 0x03, 0x13, 0xFF, 0x00};
+static u8 anim_idle_breath[] = {0x05, 0x01, 0x05, 0x02, 0x05, 0x03, 0x05, 0x04,
+                                0x05, 0x03, 0x05, 0x02, 0x00, 0x00, 0x00, 0x00};
+static u8 anim_player_death_laugh[] = {
+    0x02, 0x05, 0x03, 0x06, 0x03, 0x05, 0x03, 0x07,
+    0x03, 0x08, 0x04, 0x09, 0x03, 0x0A, 0xFF, 0x00};
+static u8 anim_laugh_static[] = {
+    0x02, 0x09, 0x02, 0x0A, 0x00, 0x00, 0x00, 0x00};
+static u8 anim_wing_flap[] = {
+    0x06, 0x15, 0x06, 0x16, 0x06, 0x17, 0x06, 0x16, 0x00, 0x00, 0x00, 0x00};
+static u8 anim_shoot_single_fireball[] = {
+    0x04, 0x15, 0x03, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02,
+    0x1A, 0x04, 0x1B, 0x04, 0x1C, 0x04, 0x1D, 0x02, 0x18, 0x02, 0x19,
+    0x03, 0x1A, 0x03, 0x15, 0x04, 0x16, 0x05, 0x17, 0x00, 0x00};
+static u8 anim_fly_from_ground[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04,
+    0x02, 0x1E, 0x02, 0x1F, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_shoot_triple_fireball[] = {
+    0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x01, 0x02,
+    0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x01, 0x02,
+    0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x01, 0x02,
+    0x01, 0x20, 0x01, 0x02, 0x01, 0x20, 0x06, 0x21, 0x03, 0x22, 0x02, 0x23,
+    0x02, 0x24, 0x08, 0x23, 0x04, 0x25, 0x04, 0x22, 0x10, 0x02, 0x00, 0x00};
+static u8 anim_fireball[] = {
+    0x02, 0x26, 0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00};
+static u8 anim_land[] = {
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x1E, 0x01, 0x1F,
+    0x05, 0x1E, 0x04, 0x04, 0x03, 0x03, 0x02, 0x02, 0x02, 0x01, 0x00, 0x00};
+static u16 rotZ[] = {0x0180, 0x0000, 0xFE80, 0x0000};
+extern u8 anim_death[] = {
+    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
+    0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
+    0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0xFF, 0x00};
 extern s16* D_us_801C11B0[]; // uvs for shockwave
 
 void EntityCtulhu(Entity* self) {
@@ -50,7 +71,7 @@ void EntityCtulhu(Entity* self) {
         self->animCurFrame = 1;
         /* fallthrough */
     case 1:
-        if (UnkCollisionFunc3(D_us_80182354) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(2);
         }
@@ -60,7 +81,7 @@ void EntityCtulhu(Entity* self) {
             self->ext.ctulhu.timer = 0x40;
             self->step_s++;
         }
-        AnimateEntity(D_us_80182390, self);
+        AnimateEntity(anim_idle_breath, self);
         if (self->ext.ctulhu.timer == 0x20) {
             self->facingLeft ^= 1;
         }
@@ -75,7 +96,7 @@ void EntityCtulhu(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_801823E4, self)) {
+            if (!AnimateEntity(anim_fly_from_ground, self)) {
                 self->ext.ctulhu.y =
                     self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x20;
                 SetSubStep(1);
@@ -97,7 +118,7 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 3:
-            AnimateEntity(D_us_801823B8, self);
+            AnimateEntity(anim_wing_flap, self);
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
@@ -114,7 +135,7 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 4:
-            AnimateEntity(D_us_801823B8, self);
+            AnimateEntity(anim_wing_flap, self);
             if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
@@ -138,13 +159,13 @@ void EntityCtulhu(Entity* self) {
             break;
         case 5:
             self->animCurFrame = 6;
-            if (UnkCollisionFunc3(D_us_80182354) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 SetSubStep(6);
             }
             break;
         case 6:
-            if (!AnimateEntity(D_us_8018243C, self)) {
+            if (!AnimateEntity(anim_land, self)) {
                 SetStep(2);
             }
             break;
@@ -177,13 +198,13 @@ void EntityCtulhu(Entity* self) {
             break;
         case 2:
             self->animCurFrame = 6;
-            if (UnkCollisionFunc3(D_us_80182354) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 SetSubStep(3);
             }
             break;
         case 3:
-            if (!AnimateEntity(D_us_8018243C, self)) {
+            if (!AnimateEntity(anim_land, self)) {
                 if (GetDistanceToPlayerX() > 0x40) {
                     self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 }
@@ -212,7 +233,7 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case 7:
-        if (!AnimateEntity(D_us_801823C4, self)) {
+        if (!AnimateEntity(anim_shoot_single_fireball, self)) {
             SetStep(5);
             self->step_s = 2;
         }
@@ -249,7 +270,7 @@ void EntityCtulhu(Entity* self) {
         }
         break;
     case 6:
-        if (!AnimateEntity(D_us_801823F4, self)) {
+        if (!AnimateEntity(anim_shoot_triple_fireball, self)) {
             SetStep(5);
         }
         if ((GetDistanceToPlayerY() < 0x60) && (self->animCurFrame == 0x24) &&
@@ -266,13 +287,13 @@ void EntityCtulhu(Entity* self) {
                         newEntity->posX.i.hi -= 0x10;
                     }
                     newEntity->posY.i.hi -= 0x14;
-                    newEntity->rotZ = D_us_80182454[i];
+                    newEntity->rotZ = rotZ[i];
                 }
             }
         }
         break;
     case 8:
-        if (AnimateEntity(D_us_80182364, self) == 0) {
+        if (AnimateEntity(anim_shockwave_throw, self) == 0) {
             SetStep(2);
         }
         if ((GetDistanceToPlayerY() < 0x60) &&
@@ -296,13 +317,13 @@ void EntityCtulhu(Entity* self) {
     case 9:
         switch (self->step_s) {
         case 0:
-            if (UnkCollisionFunc3(D_us_80182354) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(0x758);
                 self->step_s++;
             }
             break;
         case 1:
-            if (!AnimateEntity(D_us_801823A0, self)) {
+            if (!AnimateEntity(anim_player_death_laugh, self)) {
                 SetSubStep(2);
             }
             break;
@@ -310,7 +331,7 @@ void EntityCtulhu(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 PlaySfxPositional(0x759);
             }
-            AnimateEntity(D_us_801823B0, self);
+            AnimateEntity(anim_laugh_static, self);
             if ((g_Player.status & PLAYER_STATUS_DEAD) == 0) {
                 SetStep(2);
             }
@@ -422,7 +443,7 @@ void EntityCtulhu(Entity* self) {
             self->posX.i.hi = 0x20;
             self->posY.i.hi = posY - 0x28;
 
-            self->palette = *D_us_80180BDE;
+            self->palette = g_EInitCtulhu[3];
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
             self->step_s++;
             break;
@@ -548,7 +569,7 @@ void EntityCtulhuFireball(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
         prim->tpage = 20;
-        prim->clut = D_us_80180BEA[0] + 1;
+        prim->clut = g_EInitCtulhuFireball[3] + 1;
         prim->u0 = prim->u2 = 224;
         prim->u1 = prim->u3 = 255;
         prim->v0 = prim->v1 = 48;
@@ -558,7 +579,7 @@ void EntityCtulhuFireball(Entity* self) {
             DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
     }
 
-    AnimateEntity(D_us_80182430, self);
+    AnimateEntity(anim_fireball, self);
     MoveEntity();
     prim = self->ext.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 24;
@@ -817,7 +838,7 @@ void EntityCtulhuDeath(Entity* self) {
         // fallthrough
     case 1:
         self->posY.val += 0xFFFF0000;
-        if (!AnimateEntity(D_us_8018245C, self)) {
+        if (!AnimateEntity(anim_death, self)) {
             DestroyEntity(self);
         }
         break;
