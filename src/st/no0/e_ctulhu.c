@@ -1,7 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-static u16 D_us_8018234C[] = {0, 72, 8, 0}; // sensors
+typedef enum {
+    CTULHU_INIT,
+    CTULHU_GROUND_INIT,
+    CTULHU_IDLE,
+    CTULHU_FLY,
+    CTULHU_UNUSED_4,
+    CTULHU_HOP,
+    CTULHU_TRIPLE_FIREBALL,
+    CTULHU_SINGLE_FIREBALL,
+    CTULHU_ICE_SHOCKWAVE,
+    CTULHU_PLAYER_DEAD,
+    CTULHU_DEATH,
+    CTULHU_DEBUG = 255
+} CtulhuSteps;
+
+static u16 sensors_unk[] = {0, 72, 8, 0};
 static u16 sensors_ground[][2] = {{0, 40}, {0, 4}, {8, -4}, {-16, 0}};
 static u8 anim_shockwave_throw[] = {
     0x31, 0x05, 0x03, 0x06, 0x03, 0x05, 0x06, 0x07, 0x06, 0x08, 0x05,
@@ -35,12 +50,12 @@ static u8 anim_fireball[] = {
 static u8 anim_land[] = {
     0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x1E, 0x01, 0x1F,
     0x05, 0x1E, 0x04, 0x04, 0x03, 0x03, 0x02, 0x02, 0x02, 0x01, 0x00, 0x00};
-static s16 rotZ[] = {0x0180, 0x0000, 0xFE80, 0x0000};
+static s16 triple_fireball_rot_z[] = {0x0180, 0x0000, 0xFE80, 0x0000};
 extern u8 anim_death[] = {
     0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
     0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
     0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0xFF, 0x00};
-extern s16* D_us_801C11B0[]; // uvs for shockwave
+extern s16* ctulhu_shockwave_uvs[]; // uvs for shockwave
 
 void EntityCtulhu(Entity* self) {
     Primitive* prim;
@@ -55,28 +70,29 @@ void EntityCtulhu(Entity* self) {
     s32 i;
     s16 angle;
 
-    if ((g_Player.status & PLAYER_STATUS_DEAD) && self->step < 9) {
-        SetStep(9);
+    if ((g_Player.status & PLAYER_STATUS_DEAD) &&
+        self->step < CTULHU_PLAYER_DEAD) {
+        SetStep(CTULHU_PLAYER_DEAD);
     }
 
-    if ((self->flags & FLAG_DEAD) && self->step < 10) {
+    if ((self->flags & FLAG_DEAD) && self->step < CTULHU_DEATH) {
         self->hitboxState = 0;
         PlaySfxPositional(0x757);
-        SetStep(10);
+        SetStep(CTULHU_DEATH);
     }
 
     switch (self->step) {
-    case 0:
+    case CTULHU_INIT:
         InitializeEntity(g_EInitCtulhu);
         self->animCurFrame = 1;
         // fallthrough
-    case 1:
+    case CTULHU_GROUND_INIT:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            SetStep(2);
+            SetStep(CTULHU_IDLE);
         }
         break;
-    case 2:
+    case CTULHU_IDLE:
         if (!self->step_s) {
             self->ext.ctulhu.timer = 0x40;
             self->step_s++;
@@ -86,16 +102,18 @@ void EntityCtulhu(Entity* self) {
             self->facingLeft ^= 1;
         }
 
+        // When player is close enough to the direction Ctulhu is looking,
+        // switch to attack routine
         if (self->facingLeft == ((GetSideToPlayer() & 1) ^ 1) &&
             GetDistanceToPlayerX() < 0x48) {
-            SetStep(5);
+            SetStep(CTULHU_HOP);
         }
 
         if (!--self->ext.ctulhu.timer) {
-            SetStep(3);
+            SetStep(CTULHU_FLY);
         }
         break;
-    case 3:
+    case CTULHU_FLY:
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(anim_fly_from_ground, self)) {
@@ -137,11 +155,12 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 4:
+            // Fly horizontally for a period
             AnimateEntity(anim_wing_flap, self);
             if (!self->animFrameDuration && self->animFrameIdx == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
-            colRet = UnkCollisionFunc2(D_us_8018234C);
+            colRet = UnkCollisionFunc2(sensors_unk);
             if (colRet & 0x80) {
                 self->facingLeft ^= 1;
             }
@@ -160,6 +179,7 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 5:
+            // Land again
             self->animCurFrame = 6;
             if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_EXPLODE_B);
@@ -168,12 +188,12 @@ void EntityCtulhu(Entity* self) {
             break;
         case 6:
             if (!AnimateEntity(anim_land, self)) {
-                SetStep(2);
+                SetStep(CTULHU_IDLE);
             }
             break;
         }
         break;
-    case 5:
+    case CTULHU_HOP:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -190,11 +210,11 @@ void EntityCtulhu(Entity* self) {
             self->velocityY += FIX(3.0 / 16);
             if (self->velocityY > 0) {
                 self->step_s++;
-                if (!self->ext.ctulhu.unk84) {
-                    self->ext.ctulhu.unk84 = 2;
-                    SetStep(7);
+                if (!self->ext.ctulhu.hopCount) {
+                    self->ext.ctulhu.hopCount = 2;
+                    SetStep(CTULHU_SINGLE_FIREBALL);
                 } else {
-                    self->ext.ctulhu.unk84--;
+                    self->ext.ctulhu.hopCount--;
                 }
             }
             break;
@@ -212,16 +232,21 @@ void EntityCtulhu(Entity* self) {
                 }
                 SetSubStep(0);
 
-                if (self->ext.ctulhu.unk84 == 1) {
-                    SetStep(6);
+                // When Ctulhu has done a hop after shooting a single fireball,
+                // shoot a triple
+                if (self->ext.ctulhu.hopCount == 1) {
+                    SetStep(CTULHU_TRIPLE_FIREBALL);
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+
+                    // If Ctulhu has chased the player far enough, or fired
+                    // enough triple fireballs, it can fire an ice shockwave
                     if (posX > 0x400) {
                         self->facingLeft = 1;
-                        self->ext.ctulhu.unk85 = 3;
+                        self->ext.ctulhu.tripleFireballCount = 3;
                     }
-                    if (++self->ext.ctulhu.unk85 > 2) {
-                        self->ext.ctulhu.unk85 = 0;
-                        SetStep(8);
+                    if (++self->ext.ctulhu.tripleFireballCount > 2) {
+                        self->ext.ctulhu.tripleFireballCount = 0;
+                        SetStep(CTULHU_ICE_SHOCKWAVE);
                     }
                 } else {
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -236,9 +261,9 @@ void EntityCtulhu(Entity* self) {
             }
         }
         break;
-    case 7:
+    case CTULHU_SINGLE_FIREBALL:
         if (!AnimateEntity(anim_shoot_single_fireball, self)) {
-            SetStep(5);
+            SetStep(CTULHU_HOP);
             self->step_s = 2;
         }
 
@@ -260,7 +285,7 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_44, self, newEntity);
+                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -274,9 +299,9 @@ void EntityCtulhu(Entity* self) {
             }
         }
         break;
-    case 6:
+    case CTULHU_TRIPLE_FIREBALL:
         if (!AnimateEntity(anim_shoot_triple_fireball, self)) {
-            SetStep(5);
+            SetStep(CTULHU_HOP);
         }
         if (GetDistanceToPlayerY() < 0x60 && self->animCurFrame == 0x24 &&
             !self->animFrameDuration) {
@@ -284,7 +309,7 @@ void EntityCtulhu(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_44, self, newEntity);
+                    CreateEntityFromEntity(E_CTULHU_FIREBALL, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         newEntity->posX.i.hi += 0x10;
@@ -292,23 +317,24 @@ void EntityCtulhu(Entity* self) {
                         newEntity->posX.i.hi -= 0x10;
                     }
                     newEntity->posY.i.hi -= 0x14;
-                    newEntity->rotZ = rotZ[i];
+                    newEntity->rotZ = triple_fireball_rot_z[i];
                 }
             }
         }
         break;
-    case 8:
+    case CTULHU_ICE_SHOCKWAVE:
         if (!AnimateEntity(anim_shockwave_throw, self)) {
-            SetStep(2);
+            SetStep(CTULHU_IDLE);
         }
 
         if (GetDistanceToPlayerY() < 0x60 && self->animFrameIdx == 0x9 &&
             !self->animFrameDuration) {
-            PlaySfxPositional(0x758);
+            // Don't think SFX can overlap so this laugh never plays?
+            PlaySfxPositional(SFX_CTULHU_LAUGH);
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_ID_45, self, newEntity);
+                CreateEntityFromEntity(E_CTULHU_ICE_SHOCKWAVE, self, newEntity);
                 newEntity->facingLeft = self->facingLeft;
                 newEntity->zPriority = self->zPriority + 1;
 
@@ -327,11 +353,12 @@ void EntityCtulhu(Entity* self) {
             }
         }
         break;
-    case 9:
+    case CTULHU_PLAYER_DEAD:
         switch (self->step_s) {
         case 0:
+            // Once Ctulhu is on the group begin laughing SFX
             if (UnkCollisionFunc3(sensors_ground) & 1) {
-                PlaySfxPositional(0x758);
+                PlaySfxPositional(SFX_CTULHU_LAUGH);
                 self->step_s++;
             }
             break;
@@ -345,12 +372,13 @@ void EntityCtulhu(Entity* self) {
                 PlaySfxPositional(0x759);
             }
             AnimateEntity(anim_laugh_static, self);
+            // If player is revived, return back to standard action
             if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-                SetStep(2);
+                SetStep(CTULHU_IDLE);
             }
         }
         break;
-    case 10:
+    case CTULHU_DEATH:
         switch (self->step_s) {
         case 0:
             if (self->animCurFrame > 8 && self->animCurFrame < 19) {
@@ -411,7 +439,7 @@ void EntityCtulhu(Entity* self) {
             prim->drawMode = DRAW_UNK_800;
             prim = prim->next;
 
-            self->ext.ctulhu.unkA4 = prim;
+            self->ext.ctulhu.deathExplosionPrim = prim;
             if (self->params) {
                 posY = 0xFF;
             } else {
@@ -516,7 +544,7 @@ void EntityCtulhu(Entity* self) {
             if (!(g_Timer & 7)) {
                 PlaySfxPositional(SFX_FM_EXPLODE_B);
             }
-            prim = self->ext.ctulhu.unkA4;
+            prim = self->ext.ctulhu.deathExplosionPrim;
             posX = Random() & 0x3F;
             posY = self->ext.ctulhu.y;
             if (!(g_Timer & 0xF)) {
@@ -536,7 +564,7 @@ void EntityCtulhu(Entity* self) {
             newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                     &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_46, newEntity);
+                CreateEntityFromCurrentEntity(E_CTULHU_DEATH, newEntity);
                 newEntity->posX.i.hi = self->posX.i.hi - 0x20 + posX;
                 newEntity->posY.i.hi = self->posY.i.hi + posY + 4;
                 newEntity->facingLeft = colRet;
@@ -562,7 +590,7 @@ void EntityCtulhu(Entity* self) {
             }
         }
         break;
-    case 255:
+    case CTULHU_DEBUG:
 #include "../pad2_anim_debug.h"
     }
     if (self->animCurFrame >= 11 && self->animCurFrame < 15) {
@@ -826,10 +854,10 @@ void EntityCtulhuIceShockwave(Entity* self) {
                     }
 #ifdef VERSION_PSP
                     // Looks to be a bug fix on PSP
-                    // PSX can index outside size of D_us_801C11B0
+                    // PSX can index outside size of ctulhu_shockwave_uvs
                     else {
 #endif
-                        ptr = D_us_801C11B0[prim->p1];
+                        ptr = ctulhu_shockwave_uvs[prim->p1];
                         ptr += 8;
                         prim->u0 = prim->u2 = *ptr++;
                         prim->v0 = prim->v1 = *ptr++;
