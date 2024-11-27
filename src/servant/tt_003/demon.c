@@ -345,7 +345,99 @@ void FunctionPointerPassthrough(Entity* self) {
     s_PassthroughFunctions[self->params](self);
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801765A0);
+extern AnimationFrame D_us_80171CD8;
+extern s32 D_us_80178670;
+extern s32 D_us_80178674;
+extern FamiliarStats s_DemonStats;
+
+
+void func_us_801765A0(Entity* self) {
+    s32 velocityX;
+    s32 posX_hi;
+    s16 step;
+    switch (self->step) {
+        case 0: {
+            if (self->params == 0) {
+                D_us_80178670 = self->posX.val;
+                D_us_80178674 = self->posY.val;
+            } else {
+                self->posX.val = D_us_80178670;
+                self->posY.val = D_us_80178674;
+            }
+
+            self->flags = 0x0C000000;
+            self->palette = 0x8143;
+            self->drawMode = 0x30;
+            self->animSet = 0xE;
+            self->unk5A = 0x79;
+            self->anim = &D_us_80171CD8;            
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->drawFlags |= 2;
+            self->rotY = 0xC0;
+            
+            // velocityX = 0xC0;
+            if (self->facingLeft != 0) {
+                velocityX = -0xC000;
+                
+            } else {
+                velocityX = 0xC000;
+            }
+            self->velocityX = velocityX;
+        
+
+            switch (self->params) {
+                            case 2:              
+                            self->posY.i.hi += 8;
+                            case 1:
+                            self->posY.i.hi += 8;
+                            case 0: 
+                            self->posX.i.hi += (self->facingLeft ? -0x20 : 0x20);
+                        }
+
+            g_api.GetServantStats(self, 0x18, 1, &s_DemonStats);
+
+            self->hitboxOffX = 0;
+            self->hitboxOffY = 0;
+            self->hitboxWidth = 0xC;
+            self->hitboxHeight = 0xA;
+
+            self->step++;
+            if (self->params >= 2) {
+                self->step += 1;
+            } 
+            break;
+        }
+
+        case 1: {
+
+            self->posX.val += self->velocityX;
+            
+            self->ext.ILLEGAL.u16[1] += 1;
+
+            if ((s16)self->ext.ILLEGAL.u16[1] >= 7) {
+                CreateEventEntity(self, 0xDB, self->params + 1);
+                self->step += 1;    
+            }
+            
+            break;
+        }
+
+        case 2: {
+            self->posX.val += self->velocityX;
+
+            if ((s16)self->ext.ILLEGAL.u16[0] == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            
+        }
+        default:
+            break;
+    }
+    
+    self->ext.ILLEGAL.u16[0] = ServantUpdateAnim(self, NULL, NULL);
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176814);
 
