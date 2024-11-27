@@ -15,8 +15,10 @@ typedef enum {
     DEMON_EVENT_SFX_PASSTHROUGH,
 } EntityIds;
 
+extern ServantEvent g_Events[];
+
 extern s32 s_TargetMatch[0x80];
-extern s32 g_DemonAbilityStats[10][6];
+extern s32 g_DemonAbilityStats[10][4];
 extern FamiliarStats s_DemonStats;
 extern s32 s_LastTargetedEntityIndex;
 extern AnimationFrame* g_DemonAnimationFrames[];
@@ -25,7 +27,9 @@ extern u16 g_DemonClut[64];
 extern SpriteParts* g_DemonSpriteParts[];
 extern s32 D_us_801786D0;
 extern s32 D_us_801786D4;
+
 extern s8 D_us_80171FE8;
+extern s16 g_DemonAttackStats[10][6];
 extern s32 s_TargetLocationX;
 extern s32 s_TargetLocationY;
 extern s16 s_TargetLocationX_calc;
@@ -429,12 +433,12 @@ void UpdateServantDefault(Entity* self)
                 s_DistToTargetLocation2 = SquareRoot12(((s_DeltaX * s_DeltaX) + (s_DeltaY * s_DeltaY)) << 0xC) >> 0xC;
                 
                 if (s_DistToTargetLocation2 < 0x20) {
-                    self->ext.ILLEGAL.s16[8]++;
-                    if (self->ext.ILLEGAL.s16[8] > g_DemonAbilityStats[s_DemonStats.level / 10][0]) {
-                        self->ext.ILLEGAL.s16[8] = 0;
+                    self->ext.demon.abilityTimer++;
+                    if (self->ext.demon.abilityTimer > g_DemonAttackStats[s_DemonStats.level / 10][0]) {
+                        self->ext.demon.abilityTimer = 0;
                         
                         if (self->ext.demon.target = FindValidTarget(self)) {
-                            if (rand() % 0x100 <= g_DemonAbilityStats[s_DemonStats.level / 10][0]) {
+                            if (rand() % 0x100 <= g_DemonAttackStats[s_DemonStats.level / 10][0]) {
                                 self->entityId = DEMON_MODE_UNK_D2;
                             }
                             else
@@ -448,16 +452,16 @@ void UpdateServantDefault(Entity* self)
                 // This is likely dead code and not actually valid as it's doing some weird stuff with
                 // g_Events that doesn't make any sense.  And it only does it with the N Demon, which
                 // was stripped out anyway
-                if (s_ServantId == 7) {
+                if (s_ServantId == FAM_ACTIVE_NOSE_DEMON) {
                     if (!g_CutsceneHasControl && !IsMovementAllowed(1) && !CheckAllEntitiesValid() && 
                             !(D_8003C708.flags & 0x20) && !D_us_801786D0) {
-                        if (self->ext.ILLEGAL.s16[0x12] < 0x4651) {
-                            self->ext.ILLEGAL.s16[0x12]++;
+                        if (self->ext.demon.unkCounter < 0x4651) {
+                            self->ext.demon.unkCounter++;
                         }
                     } else {
-                        self->ext.ILLEGAL.s16[0x12] = 0;
+                        self->ext.demon.unkCounter = 0;
                     }
-                    if (self->ext.ILLEGAL.s16[0x12] == 0x4650) {
+                    if (self->ext.demon.unkCounter == 0x4650) {
 
                         for(rnd = rand() % 0x100, i = 0; true; i++ )
                         { 
