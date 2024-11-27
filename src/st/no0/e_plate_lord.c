@@ -1309,7 +1309,7 @@ void func_us_801D5074(s32 arg0) {
         prim->p3 = posY & 0xFF;
         prim = nextPrim;
     }
-    pos = &(g_CurrentEntity + 4)->posX.val;
+    pos = (Point32*)&(g_CurrentEntity + 4)->posX.val;
     s2 = pos->x >> 8;
     s1 = pos->y >> 8;
     s2 = (s2 + posX) / 2;
