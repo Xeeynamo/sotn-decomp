@@ -667,13 +667,10 @@ typedef struct {
     /* 0x88 */ s16 defaultDistToTargetLoc;
     /* 0x8A */ s16 maxAngle;
     /* 0x8C */ s16 abilityTimer;
-    /* 0x8E */ s16 : 16;   
-    /* 0x90 */ s16 :16;
-    /*0x92*/ s16:16;
-    /*0x94*/ s16 unkCounter;
-    /* 0x90 */ s16 pad_90[0x6]; // This will get broken out as we find more fields
+    /* 0x8E */ s16 pad_8E[0x9]; // this will possbily get broken out more
+    /*0xA0*/ s16 unkCounter;
     /* 0xA4 */ struct Entity* target;
-} ET_Demon; 
+} ET_Demon;
 
 typedef struct {
     /* 0x7C */ s16 unk7c;

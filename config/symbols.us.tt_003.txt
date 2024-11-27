@@ -1,5 +1,6 @@
 g_DemonSpriteParts = 0x80170040;
 g_ServantClut = 0x80171990;
+g_DemonAttackStats = 0x801719F0;
 g_DemonAbilityStats = 0x80171A68;
 g_DemonClut = 0x80171C24;
 s_PassthroughFunctions = 0x80171CC4;
@@ -34,11 +35,6 @@ IsMovementAllowed = 0x8017818C;
 CheckAllEntitiesValid = 0x801782A4;
 ServantUnk0 = 0x80178350;
 s_TargetMatch = 0x801783C4;
-s_ServantId = 0x80178690;
-s_DemonStats = 0x80178694;
-s_LastTargetedEntityIndex = 0x801786E0;
-
-g_DemonAttackStats = 0x801719F0;
 s_TargetLocationX = 0x801785C4;
 s_TargetLocationY = 0x801785C8;
 s_TargetLocationX_calc = 0x801785CC;
@@ -50,3 +46,6 @@ s_TargetLocOffset_calc = 0x801785E0;
 s_DeltaX = 0x801785E4;
 s_DeltaY = 0x801785E8;
 s_DistToTargetLocation2 = 0x801785EC;
+s_ServantId = 0x80178690;
+s_DemonStats = 0x80178694;
+s_LastTargetedEntityIndex = 0x801786E0;
