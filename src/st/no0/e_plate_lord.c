@@ -1352,7 +1352,7 @@ void func_us_801D4E94(s32 arg0) {
     s32 i;
     s32 xOffset;
     s32 yOffset;
-    s32 length;
+    s32 magnitudeSqr;
 
     s32 posX = g_CurrentEntity->posX.val >> 8;
     s32 posY = g_CurrentEntity->posY.val >> 8;
@@ -1366,8 +1366,8 @@ void func_us_801D4E94(s32 arg0) {
         yOffset -= posY;
         yOffset += arg0;
         angle = ratan2(-xOffset, yOffset);
-        length = (xOffset * xOffset) + (yOffset * yOffset);
-        if (length > FIX(64)) {
+        magnitudeSqr = (xOffset * xOffset) + (yOffset * yOffset);
+        if (magnitudeSqr > FIX(64)) {
             xOffset = -((rsin(angle) * 8) >> 4);
             yOffset = (rcos(angle) * 8) >> 4;
         }
