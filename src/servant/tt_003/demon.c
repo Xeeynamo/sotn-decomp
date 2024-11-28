@@ -41,7 +41,9 @@ extern s16 s_TargetLocOffset_calc;
 extern s32 s_DeltaX;
 extern s32 s_DeltaY;
 extern s32 s_DistToTargetLocation2;
-extern s32 D_us_801786D8;
+
+extern Entity* D_us_801786D8;
+extern s32 D_us_801786DC;
 
 extern void (*s_PassthroughFunctions[])(Entity*);
 
@@ -518,9 +520,6 @@ void unused_5800(Entity* self) {}
 void unused_5808(Entity* self) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175810);
-
-extern Entity* D_us_801786D8;
-extern s32 D_us_801786DC;
 
 void func_us_80175C08(Entity* self) {
 
