@@ -301,7 +301,7 @@ void func_us_80175C08(Entity* self) {
         D_us_801786D8 = self;
         D_us_801786DC = 0;
 
-        if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RWRP) {
+        if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
             self->posX.i.hi = 200;
             self->posY.i.hi = 36;
             self->facingLeft = 0;
