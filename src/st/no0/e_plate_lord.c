@@ -1391,7 +1391,7 @@ void func_us_801D4FCC(void) {
     Primitive* prim = g_CurrentEntity->ext.prim;
     s32 angle = g_CurrentEntity->ext.plateLordUnknown.unk84;
     s8 pad[40];
-    
+
     for (i = 0; i < 0xA; i++) {
         xOffset = (rsin(angle) * 8) >> 0xC;
         yOffset = (rcos(angle) * 8) >> 0xC;
