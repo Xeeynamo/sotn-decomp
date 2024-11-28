@@ -1362,13 +1362,13 @@ void func_us_801D4CAC(Entity* self) {
             x = self->posX.i.hi;
             y = self->posY.i.hi + 0xA;
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 self->velocityY = -self->velocityY / 2;
                 self->posY.i.hi += collider.unk18;
                 self->ext.plateLordUnknown.unk80++;
             }
             if (self->ext.plateLordUnknown.unk80 > 3) {
-                self->step = 0x11;
+                self->step = 17;
             }
         }
         break;
