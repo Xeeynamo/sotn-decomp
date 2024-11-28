@@ -486,7 +486,7 @@ void UpdateServantDefault(Entity* self) {
                 } else {
                     self->ext.demon.unkCounter = 0;
                 }
-                if (self->ext.demon.unkCounter == 0x4650) {
+                if (self->ext.demon.unkCounter == 18000) {
 
                     for (rnd = rand() % 0x100, i = 0; true; i++) {
                         if (rnd <= ((s16*)g_Events)[i * 2]) {
