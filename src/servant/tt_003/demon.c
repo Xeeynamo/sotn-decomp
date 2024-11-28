@@ -478,7 +478,7 @@ void UpdateServantDefault(Entity* self) {
                 if (!g_CutsceneHasControl && !IsMovementAllowed(1) &&
                     !CheckAllEntitiesValid() &&
                     !(D_8003C708.flags & FLAG_UNK_20) && !D_us_801786D0) {
-                    if (self->ext.demon.unkCounter < 0x4651) {
+                    if (self->ext.demon.unkCounter <= 18000) {
                         self->ext.demon.unkCounter++;
                     }
                 } else {
