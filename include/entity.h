@@ -2076,8 +2076,8 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
+    /* 0x84 */ u8 hopCount;
+    /* 0x85 */ u8 tripleFireballCount;
     /* 0x86 */ s16 : 16;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
@@ -2086,7 +2086,7 @@ typedef struct {
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s32 y;
     /* 0xA0 */ struct Primitive* shockwavePrim;
-    /* 0xA4 */ struct Primitive* unkA4;
+    /* 0xA4 */ struct Primitive* deathExplosionPrim;
 } ET_Ctulhu;
 
 typedef struct {

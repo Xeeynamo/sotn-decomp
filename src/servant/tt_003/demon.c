@@ -519,7 +519,52 @@ void unused_5808(Entity* self) {}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175810);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175C08);
+extern Entity* D_us_801786D8;
+extern s32 D_us_801786DC;
+
+void func_us_80175C08(Entity* self) {
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        D_us_801786D8 = self;
+        D_us_801786DC = 0;
+
+        if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
+            self->posX.i.hi = 200;
+            self->posY.i.hi = 36;
+            self->facingLeft = 0;
+        } else {
+            self->posX.i.hi = 56;
+            self->posY.i.hi = 196;
+            self->facingLeft = 1;
+        }
+
+        self->step++;
+        break;
+
+    case 1:
+        if (D_us_801786DC != 0) {
+            self->hitboxOffX = 0x18;
+            self->hitboxOffY = 4;
+            self->hitboxWidth = 2;
+            self->hitboxHeight = 2;
+            self->attackElement = 0x20;
+            self->hitboxState = 2;
+            self->attack = 0;
+            self->nFramesInvincibility = 0;
+            self->stunFrames = 0;
+            self->hitEffect = 7;
+            self->entityRoomIndex = 0;
+
+            g_api.func_80118894(self);
+
+            self->step++;
+        }
+    case 2:
+        return;
+    }
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
 
@@ -529,7 +574,96 @@ void FunctionPointerPassthrough(Entity* self) {
     s_PassthroughFunctions[self->params](self);
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801765A0);
+extern AnimationFrame D_us_80171CD8;
+extern s32 D_us_80178670;
+extern s32 D_us_80178674;
+extern FamiliarStats s_DemonStats;
+
+void func_us_801765A0(Entity* self) {
+    s32 velocityX;
+    s32 posX_hi;
+    s16 step;
+    switch (self->step) {
+    case 0: {
+        if (self->params == 0) {
+            D_us_80178670 = self->posX.val;
+            D_us_80178674 = self->posY.val;
+        } else {
+            self->posX.val = D_us_80178670;
+            self->posY.val = D_us_80178674;
+        }
+
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->palette = 0x8143;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->animSet = 0xE;
+        self->unk5A = 0x79;
+        self->anim = &D_us_80171CD8;
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+        self->drawFlags |= FLAG_DRAW_ROTY;
+        self->rotY = 0xC0;
+
+        // velocityX = 0xC0;
+        if (self->facingLeft != 0) {
+            velocityX = -0xC000;
+
+        } else {
+            velocityX = 0xC000;
+        }
+        self->velocityX = velocityX;
+
+        switch (self->params) {
+        case 2:
+            self->posY.i.hi += 8;
+        case 1:
+            self->posY.i.hi += 8;
+        case 0:
+            self->posX.i.hi += (self->facingLeft ? -0x20 : 0x20);
+        }
+
+        g_api.GetServantStats(self, 0x18, 1, &s_DemonStats);
+
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 0xC;
+        self->hitboxHeight = 0xA;
+
+        self->step++;
+        if (self->params >= 2) {
+            self->step += 1;
+        }
+        break;
+    }
+
+    case 1: {
+
+        self->posX.val += self->velocityX;
+
+        self->ext.ILLEGAL.u16[1] += 1;
+
+        if ((s16)self->ext.ILLEGAL.u16[1] >= 7) {
+            CreateEventEntity(self, 0xDB, self->params + 1);
+            self->step += 1;
+        }
+
+        break;
+    }
+
+    case 2: {
+        self->posX.val += self->velocityX;
+
+        if ((s16)self->ext.ILLEGAL.u16[0] == -1) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+    default:
+        break;
+    }
+
+    self->ext.ILLEGAL.u16[0] = ServantUpdateAnim(self, NULL, NULL);
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176814);
 
@@ -537,7 +671,29 @@ INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176C1C);
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801771B0);
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80177690);
+extern s32 D_us_801786D0;
+extern s32 D_us_801786D4;
+
+void func_us_80177690(Entity* self) {
+    Entity* entity;
+
+    switch (self->params) {
+    case 0:
+        D_us_801786D0 = 1;
+        entity = SearchForEntityInRange(0, 217);
+        if ((entity != NULL) && (entity->step < 5)) {
+            entity->step = 8;
+        }
+        break;
+    case 1:
+        D_us_801786D0 = 2;
+        break;
+    case 15:
+        D_us_801786D4 = 1;
+        break;
+    }
+    DestroyEntity(self);
+}
 
 #ifndef VERSION_PSP
 #include "../servant_update_anim.h"
