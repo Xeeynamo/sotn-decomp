@@ -45,6 +45,18 @@ extern s32 s_DistToTargetLocation2;
 extern Entity* D_us_801786D8;
 extern s32 D_us_801786DC;
 
+extern s32 s_DemonSfxMap[];
+extern s32 D_us_80171D30;
+extern s32 D_us_80171D34;
+// These are all in sbss
+extern s32 D_us_801785F0;
+extern s32 D_us_801785F4;
+extern s32 D_us_801785F8;
+extern s32 D_us_801785FC;
+extern u32 D_us_80178600;
+extern s32 D_us_80178604;
+extern s32 D_us_80178608;
+
 extern void (*s_PassthroughFunctions[])(Entity*);
 
 // These are all in servant_private, but we need to have more decomped before we
@@ -511,7 +523,102 @@ void UpdateServantDefault(Entity* self) {
     ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80174FD0);
+void func_us_80174FD0(Entity* self) {
+    if (D_us_801786D4) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    switch (self->step) {
+    case 0:
+        func_us_80172DC4(self);
+        break;
+    case 1:
+        D_us_80178604 = self->ext.demon.target->facingLeft;
+        self->step++;
+        // fallthrough
+    case 2:
+        if (!CheckEntityValid(self->ext.demon.target) &&
+            !(self->ext.demon.target = FindValidTarget(self))) {
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+            self->step = 0;
+        } else {
+            D_us_801785F0 = self->ext.demon.target->posX.val;
+            D_us_801785F0 += D_us_80178604 ? 0x200000 : -0x200000;
+
+            D_us_801785F4 = self->ext.demon.target->posY.val;
+            self->velocityX = (D_us_801785F0 - self->posX.val) >> 3;
+            self->velocityY = (D_us_801785F4 - self->posY.val) >> 3;
+
+            self->facingLeft = self->velocityX > 0 ? 0 : 1;
+            self->posX.val += self->velocityX;
+
+            self->posY.val += self->velocityY;
+            D_us_801785F8 = abs(D_us_801785F0 - self->posX.val);
+            D_us_801785FC = abs(D_us_801785F4 - self->posY.val);
+            if ((D_us_801785F8 <= 0x7FFFF) && (D_us_801785FC <= 0xFFFF)) {
+                self->facingLeft = D_us_80178604;
+                self->step++;
+            }
+        }
+        break;
+    case 3:
+        D_us_80178608 = rand() % 2;
+        SetAnimationFrame(self, D_us_80178608 ? 1 : 3);
+
+        g_api.GetServantStats(
+            self,
+            D_us_80178608 ? FAM_ABILITY_DEMON_UNK21 : FAM_ABILITY_DEMON_UNK22,
+            1, &s_DemonStats);
+
+        D_us_80178608 = rand() % 8;
+        switch (D_us_80178608) {
+        case 0:
+            g_api.PlaySfx(s_DemonSfxMap[0]);
+            break;
+        case 1:
+            g_api.PlaySfx(s_DemonSfxMap[1]);
+            break;
+        case 2:
+            g_api.PlaySfx(s_DemonSfxMap[2]);
+            break;
+        }
+        self->step++;
+        break;
+    case 4:
+        if (D_us_80178600 == -2) {
+            self->ext.demon.abilityTimer = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        self->velocityX = self->facingLeft ? 0x2000 : -0x2000;
+        self->velocityY = FIX(-0.25);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->ext.demon.abilityTimer++;
+        if (self->ext.demon.abilityTimer > 30) {
+            self->step++;
+        }
+        break;
+    case 6:
+        if (g_CutsceneHasControl ||
+            !(self->ext.demon.target = FindValidTarget(self))) {
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+            self->step = 0;
+            break;
+        }
+        if ((rand() % 0x100) <=
+            g_DemonAttackStats[s_DemonStats.level / 10][0]) {
+            self->step = 1;
+        } else {
+            self->entityId = DEMON_MODE_UNK_D3;
+            self->step = 0;
+        }
+
+        break;
+    }
+    D_us_80178600 =
+        ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017540C);
 
