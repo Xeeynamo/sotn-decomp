@@ -46,8 +46,7 @@ extern Entity* D_us_801786D8;
 extern s32 D_us_801786DC;
 
 extern s32 s_DemonSfxMap[];
-extern s32 D_us_80171D30;
-extern s32 D_us_80171D34;
+
 // These are all in sbss
 extern s32 D_us_801785F0;
 extern s32 D_us_801785F4;
