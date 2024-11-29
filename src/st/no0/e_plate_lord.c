@@ -1392,9 +1392,61 @@ void func_us_801D4E30(void) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4E94);
+void func_us_801D4E94(s32 arg0) {
+    s32 angle;
+    s32 i;
+    s32 xOffset;
+    s32 yOffset;
+    s32 magnitudeSqr;
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4FCC);
+    s32 posX = g_CurrentEntity->posX.val >> 8;
+    s32 posY = g_CurrentEntity->posY.val >> 8;
+    Primitive* prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 0xA; i++) {
+        xOffset = prim->x0 << 8;
+        yOffset = prim->y0 << 8;
+        xOffset += prim->p2;
+        yOffset += prim->p3;
+        xOffset -= posX;
+        yOffset -= posY;
+        yOffset += arg0;
+        angle = ratan2(-xOffset, yOffset);
+        magnitudeSqr = (xOffset * xOffset) + (yOffset * yOffset);
+        if (magnitudeSqr > FIX(64)) {
+            xOffset = -((rsin(angle) * 8) >> 4);
+            yOffset = (rcos(angle) * 8) >> 4;
+        }
+        posX += xOffset;
+        posY += yOffset;
+        prim->x0 = posX >> 8;
+        prim->y0 = posY >> 8;
+        prim->p2 = posX & 0xFF;
+        prim->p3 = posY & 0xFF;
+        prim = prim->next;
+    }
+}
+
+void func_us_801D4FCC(void) {
+    s32 i;
+    s32 xOffset;
+    s32 yOffset;
+
+    s32 posX = g_CurrentEntity->posX.i.hi;
+    s32 posY = g_CurrentEntity->posY.i.hi;
+    Primitive* prim = g_CurrentEntity->ext.prim;
+    s32 angle = g_CurrentEntity->ext.plateLordUnknown.unk84;
+    s8 pad[40];
+
+    for (i = 0; i < 0xA; i++) {
+        xOffset = (rsin(angle) * 8) >> 0xC;
+        yOffset = (rcos(angle) * 8) >> 0xC;
+        posX -= xOffset;
+        posY += yOffset;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+    }
+}
 
 void func_us_801D5074(s32 arg0) {
     Primitive* nextPrim;
