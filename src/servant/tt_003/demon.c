@@ -641,7 +641,7 @@ void func_us_801765A0(Entity* self) {
 
         self->ext.et_80176814.frameCounter[1] += 1;
 
-        if ((s16)self->ext.et_80176814.frameCounter[1] >= 7) {
+        if (self->ext.et_80176814.frameCounter[1] >= 7) {
             CreateEventEntity(self, 0xDB, self->params + 1);
             self->step += 1;
         }
@@ -652,7 +652,7 @@ void func_us_801765A0(Entity* self) {
     case 2: {
         self->posX.val += self->velocityX;
 
-        if ((s16)self->ext.et_80176814.frameCounter[0] == -1) {
+        if (self->ext.et_80176814.frameCounter[0] == -1) {
             DestroyEntity(self);
             return;
         }
@@ -739,7 +739,7 @@ void func_us_80176814(Entity* self) {
         self->posX.val += self->velocityX;
         self->ext.et_80176814.frameCounter[0]++;
 
-        if ((s16)self->ext.et_80176814.frameCounter[0] >= 3) {
+        if (self->ext.et_80176814.frameCounter[0] >= 3) {
             CreateEventEntity(self, 220, self->params + 1);
             self->step++;
         }
@@ -748,7 +748,7 @@ void func_us_80176814(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         self->ext.et_80176814.frameCounter[0]++;
-        if ((s16)self->ext.et_80176814.frameCounter[0] >= 9) {
+        if (self->ext.et_80176814.frameCounter[0] >= 9) {
             DestroyEntity(self);
             return;
         }
