@@ -4,16 +4,14 @@
 // Fireball
 INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus_2", func_us_801D0990);
 
-extern Entity D_8007A958;
-extern u16 D_us_80180B48[];
+extern EInit g_EInitDiplocephalusTail;
 extern u8 D_us_80181DBC[];
 extern u8 D_us_80181DDC[];
 extern u8 D_us_80181DEC[];
 extern u8 D_us_80181E0C[];
 extern u8 D_us_80181E30[];
 
-// Tail entity
-void func_us_801D0E7C(Entity* self) {
+void EntityDiplocephalusTail(Entity* self) {
     s16 unused;
     s16 temp_s5;
     u8 three;
@@ -49,7 +47,7 @@ void func_us_801D0E7C(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B48);
+        InitializeEntity(g_EInitDiplocephalusTail);
         self->hitboxState = 1;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->ext.diplocephalus.unk84 = 0;
@@ -255,9 +253,9 @@ void func_us_801D0E7C(Entity* self) {
         break;
     case 7:
         if (AnimateEntity(D_us_80181DEC, self) == 0) {
-            tempEntity = AllocEntity(&D_8007A958, &D_8007A958 + 32);
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(2, self, tempEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                 tempEntity->params = 3;
                 tempEntity->zPriority = self->zPriority + 9;
             }
@@ -307,7 +305,7 @@ void func_us_801D0E7C(Entity* self) {
         }
         if (self->animFrameIdx == 8 && self->params) {
             PlaySfxPositional(0x776);
-            tempEntity = AllocEntity(&D_8007A958, &D_8007A958 + 32);
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 CreateEntityFromCurrentEntity(E_ID_25, tempEntity);
