@@ -1,7 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C1854);
+extern u16 D_us_80180C8C[];
+extern u16 D_us_80180CE8[];
+extern u16 D_us_80180D10[];
+extern u16 D_us_80180D38[];
+extern u8 D_us_80180D60[];
+extern u8 D_us_80180D88[];
+extern s32 D_us_80180DB0[];
+extern u16 D_us_80180DFC[];
+extern u8* D_us_80180E48[];
+
+void func_us_801C1854(Entity* self) {
+    u16 params = self->params;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+
+        self->animSet = D_us_80180C8C[params];
+        self->zPriority = D_us_80180CE8[params];
+        self->unk5A = D_us_80180D10[params];
+        self->palette = D_us_80180D38[params];
+        self->drawFlags = D_us_80180D60[params * 2];
+        self->drawMode = D_us_80180D88[params * 2];
+
+        if (D_us_80180DB0[params] != 0) {
+            self->flags = D_us_80180DB0[params];
+        }
+
+        self->facingLeft = D_us_80180DFC[params * 2];
+    }
+
+    AnimateEntity(D_us_80180E48[params], self);
+}
 
 #include "../player_is_within_hitbox.h"
 
