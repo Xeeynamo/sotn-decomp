@@ -2201,6 +2201,10 @@ typedef struct {
     /* 0xB0 */ s16 unkB0;
 } ET_PlatelordUnknown;
 
+typedef struct {
+    s16 frameCounter[0x1E];
+} ET_80176814;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2214,6 +2218,7 @@ typedef union { // offset=0x7C
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
     ET_HellfireHandler hellfireHandler;
+    ET_80176814 et_80176814;
     ET_8016D9C4 et_8016D9C4;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
     ET_CrossBoomerang crossBoomerang;
