@@ -1333,7 +1333,52 @@ void func_us_801D4AA4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no0/nonmatchings/e_plate_lord", func_us_801D4CAC);
+extern u16 D_us_80180B90;
+
+void func_us_801D4CAC(Entity* self) {
+    Collider collider;
+    Entity* tempEntity;
+    s32 x;
+    s32 y;
+
+    tempEntity = self - 9;
+    self->facingLeft = tempEntity->facingLeft;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_us_80180B90);
+        self->animCurFrame = 0x16;
+        self->zPriority = 0xB7;
+        self->hitPoints = 0x7FFF;
+        self->ext.plateLordUnknown.unkAC =
+            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        break;
+    case 1:
+        break;
+    case 16:
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(0.375);
+        y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (y >= self->ext.plateLordUnknown.unkAC) {
+            x = self->posX.i.hi;
+            y = self->posY.i.hi + 0xA;
+            g_api.CheckCollision(x, y, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                self->velocityY = -self->velocityY / 2;
+                self->posY.i.hi += collider.unk18;
+                self->ext.plateLordUnknown.unk80++;
+            }
+            if (self->ext.plateLordUnknown.unk80 > 3) {
+                self->step = 17;
+            }
+        }
+        break;
+    case 17:
+        self->hitboxState = 0;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
+        break;
+    }
+}
 
 void func_us_801D4E30(void) {
     Primitive* prim;
