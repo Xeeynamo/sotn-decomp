@@ -639,9 +639,9 @@ void func_us_801765A0(Entity* self) {
 
         self->posX.val += self->velocityX;
 
-        self->ext.ILLEGAL.u16[1] += 1;
+        self->ext.et_80176814.frameCounter[1] += 1;
 
-        if ((s16)self->ext.ILLEGAL.u16[1] >= 7) {
+        if (self->ext.et_80176814.frameCounter[1] >= 7) {
             CreateEventEntity(self, 0xDB, self->params + 1);
             self->step += 1;
         }
@@ -652,7 +652,7 @@ void func_us_801765A0(Entity* self) {
     case 2: {
         self->posX.val += self->velocityX;
 
-        if ((s16)self->ext.ILLEGAL.u16[0] == -1) {
+        if (self->ext.et_80176814.frameCounter[0] == -1) {
             DestroyEntity(self);
             return;
         }
@@ -661,10 +661,139 @@ void func_us_801765A0(Entity* self) {
         break;
     }
 
-    self->ext.ILLEGAL.u16[0] = ServantUpdateAnim(self, NULL, NULL);
+    self->ext.et_80176814.frameCounter[0] = ServantUpdateAnim(self, NULL, NULL);
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176814);
+// PSX: https://decomp.me/scratch/NMQwa
+// PSP: https://decomp.me/scratch/6hM5K
+
+// Horizontal offsets for positioning primitives
+typedef struct {
+    u16 xOffsets[14];
+} D_us_80171D10_t;
+
+extern D_us_80171D10_t D_us_80171D10;
+extern s32 D_us_80178678;
+extern s32 D_us_8017867C;
+
+void func_us_80176814(Entity* self) {
+    Primitive* prim;
+    s32 i;
+    s32 newX;
+    s32 newY;
+    s32 offset;
+
+    switch (self->step) {
+    case 0:
+        if (self->params == 0) {
+            D_us_80178678 = self->posX.val;
+            D_us_8017867C = self->posY.val;
+        } else {
+            self->posX.val = D_us_80178678;
+            self->posY.val = D_us_8017867C;
+        }
+
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
+
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 12; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x146;
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+
+            offset = (i % 4) * 4;
+            prim->u0 = prim->u2 = offset + 8;
+            prim->u1 = prim->u3 = (offset) + 0xC;
+            prim->v0 = prim->v1 = 0x60;
+            prim->v2 = prim->v3 = 0x80;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0x80;
+            prim = prim->next;
+        }
+        self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
+
+        g_api.GetServantStats(self, 25, 1, &s_DemonStats);
+
+        self->hitboxOffX = 28;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 10;
+
+        self->step++;
+
+        if (self->params >= 2) {
+            self->step++;
+        }
+        break;
+
+    case 1:
+        self->posX.val += self->velocityX;
+        self->ext.et_80176814.frameCounter[0]++;
+
+        if (self->ext.et_80176814.frameCounter[0] >= 3) {
+            CreateEventEntity(self, 220, self->params + 1);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posX.val += self->velocityX;
+        self->ext.et_80176814.frameCounter[0]++;
+        if (self->ext.et_80176814.frameCounter[0] >= 9) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+    newX = self->posX.i.hi;
+    newY = self->posY.i.hi - 12;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < 12; i++) {
+        if (self->facingLeft) {
+            prim->x2 = newX - D_us_80171D10.xOffsets[i];
+            prim->x3 = newX - D_us_80171D10.xOffsets[i + 1];
+            if (i == 0) {
+                prim->x0 = prim->x2 - 0x10;
+            } else {
+                prim->x0 = prim->x2 - 0x20;
+            }
+            if (i == 11) {
+                prim->x1 = prim->x3 - 0x10;
+            } else {
+                prim->x1 = prim->x3 - 0x20;
+            }
+
+        } else {
+            prim->x2 = newX + D_us_80171D10.xOffsets[i];
+            prim->x3 = newX + D_us_80171D10.xOffsets[i + 1];
+
+            if (i == 0) {
+                prim->x0 = prim->x2 + 0x10;
+            } else {
+                prim->x0 = prim->x2 + 0x20;
+            }
+            if (i == 11) {
+                prim->x1 = prim->x3 + 0x10;
+            } else {
+                prim->x1 = prim->x3 + 0x20;
+            }
+        }
+
+        prim->y0 = prim->y2 = newY + (i * 2);
+        prim->y1 = prim->y3 = newY + ((i + 1) * 2);
+
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176C1C);
 
