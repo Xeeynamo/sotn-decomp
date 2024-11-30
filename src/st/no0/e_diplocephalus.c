@@ -152,9 +152,3 @@ void func_us_801D0898(Entity* self, s32 count) {
         }
     }
 }
-
-// Fireball
-INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0990);
-
-// Tail entity
-INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801D0E7C);
