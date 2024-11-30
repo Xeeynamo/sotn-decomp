@@ -2208,6 +2208,15 @@ typedef struct {
     s16 frameCounter[0x1E];
 } ET_80176814;
 
+typedef struct {
+    s16 animationTriggerCount; // Auxiliary counter, previously ILLEGAL.u16[0]
+    s16 animationTimer;        // Another counter, previously ILLEGAL.u16[1]
+    s16 stepCounter;           // Counter for steps, previously ILLEGAL.u16[2]
+    s16 angle;                 // Rotation angle, previously ILLEGAL.u16[3]
+    s32 _align_parent[2];
+    struct Entity* parent;
+} ET_801737F0;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2220,6 +2229,7 @@ typedef union { // offset=0x7C
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
+    ET_801737F0 et_801737F0;
     ET_HellfireHandler hellfireHandler;
     ET_80176814 et_80176814;
     ET_8016D9C4 et_8016D9C4;
