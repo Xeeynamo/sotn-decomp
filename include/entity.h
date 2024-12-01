@@ -2134,20 +2134,36 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Entity* parent;
     /* 0x80 */ struct Entity* entity;
-    /* 0x84 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ Point32* unk90;
-    /* 0x94 */ s32 : 32;
+    /* 0x8C */ struct Entity* unk8C;
+    /* 0x90 */ struct Entity* unk90;
+    /* 0x94 */ s32 velocityX;
     /* 0x98 */ s32 velocityY;
-    /* 0x9C */ s16 : 16;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 unk9D;
     /* 0x9E */ u8 unk9E;
     /* 0x9F */ u8 unk9F;
     /* 0xA0 */ u32 : 32;
     /* 0xA4 */ s32 posX;
     /* 0xA8 */ s32 posY;
-    /* 0xAC */ s32 unkAC;
+    /* 0xAC */ u8 unkAC;
+    /* 0xAD */ u8 unkAD;
 } ET_Diplocephalus;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ struct Primitive* unk90;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ u8 unk9C;
+} ET_DiplocephalusFireball;
 
 typedef struct {
     /* 0x00 */ struct Entity* unk0;
@@ -2201,6 +2217,10 @@ typedef struct {
     /* 0xB0 */ s16 unkB0;
 } ET_PlatelordUnknown;
 
+typedef struct {
+    s16 frameCounter[0x1E];
+} ET_80176814;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2214,6 +2234,7 @@ typedef union { // offset=0x7C
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
     ET_HellfireHandler hellfireHandler;
+    ET_80176814 et_80176814;
     ET_8016D9C4 et_8016D9C4;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
     ET_CrossBoomerang crossBoomerang;
@@ -2383,6 +2404,7 @@ typedef union { // offset=0x7C
     ET_GhostEnemySpawner ghostEnemySpawner;
     ET_Skelerang skelerang;
     ET_Diplocephalus diplocephalus;
+    ET_DiplocephalusFireball diplocephalusFireball;
     ET_PlateLord plateLord;
     ET_PlatelordUnknown plateLordUnknown;
 } Ext;

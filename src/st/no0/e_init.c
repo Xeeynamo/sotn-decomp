@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void func_us_801C1854(Entity*);
+void EntityStageDecoration(Entity*);
 void func_801B0AA4(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
@@ -36,8 +36,8 @@ void EntityDummy(Entity*);
 void func_us_801CFBE8(Entity*);
 void func_us_801CF4A8(Entity*);
 void func_us_801CF910(Entity*);
-void func_us_801D0E7C(Entity*);
-void func_us_801D0990(Entity*);
+void EntityDiplocephalusTail(Entity*);
+void EntityDiplocephalusFireball(Entity*);
 void func_us_801D0718(Entity*);
 void EntityOlroxDrool(Entity*);
 void func_us_801C2184(Entity*);
@@ -100,7 +100,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    func_us_801C1854,
+    EntityStageDecoration,
     func_801B0AA4,
     EntityUnkId13,
     EntityExplosionVariants,
@@ -119,8 +119,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801CFBE8,
     func_us_801CF4A8,
     func_us_801CF910,
-    func_us_801D0E7C,
-    func_us_801D0990,
+    EntityDiplocephalusTail,
+    EntityDiplocephalusFireball,
     func_us_801D0718,
     EntityOlroxDrool,
     func_us_801C2184,
@@ -186,8 +186,9 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit D_us_80180B24 = {ANIMSET_OVL(0x09), 0x01, 0x4B, 0x20E, 0x010};
 EInit g_EInitDiplocephalusFoot = {ANIMSET_OVL(0x09), 0x0C, 0x4B, 0x20E, 0x011};
 EInit D_us_80180B3C = {ANIMSET_OVL(0x09), 0x08, 0x4B, 0x20E, 0x005};
-EInit D_us_80180B48 = {ANIMSET_OVL(0x09), 0x16, 0x4B, 0x20E, 0x012};
-EInit D_us_80180B54 = {ANIMSET_OVL(0x0D), 0x00, 0x4E, 0x2C0, 0x013};
+EInit g_EInitDiplocephalusTail = {ANIMSET_OVL(0x09), 0x16, 0x4B, 0x20E, 0x012};
+EInit g_EInitDiplocephalusFireball = {
+    ANIMSET_OVL(0x0D), 0x00, 0x4E, 0x2C0, 0x013};
 EInit g_EInitElevator = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x223, 0x005};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x04), 0x01, 0x48, 0x228, 0x00B};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(0x04), 0x2B, 0x48, 0x228, 0x00C};

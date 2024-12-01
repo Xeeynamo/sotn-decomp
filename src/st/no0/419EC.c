@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/first_c_file", func_us_801C1854);
-
 #include "../player_is_within_hitbox.h"
 
 extern u16 D_us_80180ADC[];
