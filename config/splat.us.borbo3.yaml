@@ -35,7 +35,7 @@ segments:
   - name: borbo3
     type: code
     start: 0
-    vram:  0x80180000
+    vram: 0x80180000
     align: 4
     subalign: 4
     subsegments:
@@ -50,7 +50,7 @@ segments:
       - [0x77C, .data, collision]
       - [0xB3C, .data, e_red_door] # e_red_door
       - [0xB54, .data, st_common] # st_common
-      - [0xD54, data, e_collect] # e_collect
+      - [0xD54, .data, e_collect] # e_collect
       - [0x1044, .data, e_misc]
       - [0x1160, .data, e_particles]
       - [0x11E0, .data, e_room_fg]
@@ -86,7 +86,7 @@ segments:
       - [0x1DEE4, c, popup]
       - [0x1E214, c, prim_helpers]
       - [0x1EA44, c, e_life_up]
-      - [0x1F978, .sbss, create_entity]
-      - [0x1F988, sbss]
-      - [0x205F0, sbss, e_collect]
+      - [0x1F978, .bss, create_entity]
+      - [0x1F988, bss]
+      - [0x205F0, .bss, e_collect]
   - [0x20630]
