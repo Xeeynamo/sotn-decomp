@@ -428,12 +428,12 @@ void UpdateServantDefault(Entity* self) {
                          << 0xC) >>
             0xC;
         if (s_DistToTargetLocation < 0x28) {
-            self->velocityY = -(rsin((s32)s_AllowedAngle) * 8);
-            self->velocityX = rcos((s32)s_AllowedAngle) * 8;
+            self->velocityY = -(rsin((s32)s_AllowedAngle) << 3);
+            self->velocityX = rcos((s32)s_AllowedAngle) << 3;
             self->ext.demon.maxAngle = 0x20;
         } else if (s_DistToTargetLocation < 0x3C) {
-            self->velocityY = -(rsin((s32)s_AllowedAngle) * 0x10);
-            self->velocityX = rcos((s32)s_AllowedAngle) * 0x10;
+            self->velocityY = -(rsin((s32)s_AllowedAngle) << 4);
+            self->velocityX = rcos((s32)s_AllowedAngle) << 4;
             self->ext.demon.maxAngle = 0x40;
         } else if (s_DistToTargetLocation < 0x64) {
             self->velocityY = -(rsin((s32)s_AllowedAngle) << 5);
@@ -541,7 +541,7 @@ void func_us_80174FD0(Entity* self) {
             self->step = 0;
         } else {
             D_us_801785F0 = self->ext.demon.target->posX.val;
-            D_us_801785F0 += D_us_80178604 ? 0x200000 : -0x200000;
+            D_us_801785F0 += D_us_80178604 ? FIX(32) : FIX(-32);
 
             D_us_801785F4 = self->ext.demon.target->posY.val;
             self->velocityX = (D_us_801785F0 - self->posX.val) >> 3;
@@ -553,7 +553,7 @@ void func_us_80174FD0(Entity* self) {
             self->posY.val += self->velocityY;
             D_us_801785F8 = abs(D_us_801785F0 - self->posX.val);
             D_us_801785FC = abs(D_us_801785F4 - self->posY.val);
-            if ((D_us_801785F8 <= 0x7FFFF) && (D_us_801785FC <= 0xFFFF)) {
+            if ((D_us_801785F8 < FIX(8)) && (D_us_801785FC < FIX(1))) {
                 self->facingLeft = D_us_80178604;
                 self->step++;
             }
@@ -589,7 +589,7 @@ void func_us_80174FD0(Entity* self) {
         }
         break;
     case 5:
-        self->velocityX = self->facingLeft ? 0x2000 : -0x2000;
+        self->velocityX = self->facingLeft ? FIX(0.125) : FIX(-0.125);
         self->velocityY = FIX(-0.25);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
