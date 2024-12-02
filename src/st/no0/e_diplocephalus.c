@@ -132,7 +132,7 @@ void func_us_801D0718(Entity* self) {
     }
 }
 
-// Death explosion
+// Death explosion...
 void func_us_801D0898(Entity* self, s32 count) {
     Entity* newEntity;
     s32 i;
