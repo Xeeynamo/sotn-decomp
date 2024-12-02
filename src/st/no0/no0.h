@@ -105,6 +105,7 @@ extern EInit g_EInitCtulhuIceShockwave;
 extern EInit g_EInitDiplocephalusFoot;
 extern EInit g_EInitDiplocephalusFireball;
 extern EInit g_EInitDiplocephalusTail;
+extern EInit D_us_80180B3C;
 
 // Clock room
 extern EInit g_Statues;
