@@ -349,7 +349,7 @@ void func_us_80173D14(Entity* self) {
         prim->y3 = posY + D_us_801786A0[i][7] *
                               self->ext.et_801737F0.animationTimer / 256;
         PCOL(prim) =
-            ((self->ext.et_801737F0.animationTriggerCount & 1) << 6) + 0x40;
+            ((self->ext.et_801737F0.animationTriggerCount & 1) * 64) + 0x40;
         prim = prim->next;
     }
 
