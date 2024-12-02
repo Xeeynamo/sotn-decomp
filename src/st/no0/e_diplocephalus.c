@@ -1,10 +1,64 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus", func_us_801CF4A8);
+extern s32 D_us_80181CC4[];    // velocityX
+extern s32 D_us_80181CE8[][8]; // velocityY
+extern s16 D_us_80181D54[];    // sensors_ground
 
-extern s16 D_us_80181D54[]; // sensors_ground
-extern u8 D_us_80181D83[];  // anim frames
+// Foot
+extern u8 D_us_80181D83[]; // anim frames
+
+// Some sort of death entity
+// Perhaps the parts that go flying on death
+void func_us_801CF4A8(Entity* self) {
+    Entity* newEntity;
+
+    if (self->ext.diplocephalus.parent->entityId != 0x21) {
+        EntityExplosionSpawn(0, 0);
+        return;
+    }
+
+    switch (self->step) {
+    case 6:
+        self->drawFlags = DRAW_COLORS;
+        self->hitboxState = 0;
+        self->velocityY =
+            D_us_80181CE8[self->params][self->ext.diplocephalus.unk9E - 1] -
+            FIX(8);
+        self->ext.diplocephalus.velocityY = self->velocityY;
+        self->step++;
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_UNK_ID_13, self, newEntity);
+            newEntity->params = 2;
+            newEntity->ext.diplocephalus.entity = self;
+        }
+        break;
+    case 7:
+        self->velocityX = D_us_80181CC4[self->ext.diplocephalus.unk9E];
+        if (self->facingLeft ^ 1) {
+            self->velocityX = -self->velocityX;
+        }
+
+        if (self->ext.diplocephalus.unk9E % 2) {
+            self->rotZ += 0x100;
+        } else {
+            self->rotZ -= 0x100;
+        }
+
+        if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                newEntity->params = 3;
+                newEntity->zPriority = self->zPriority + 9;
+            }
+            g_api.func_80102CD8(1);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 void EntityDiplocephalusFoot(Entity* self) {
     Entity* currentEntity;
