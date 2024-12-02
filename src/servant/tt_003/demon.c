@@ -320,7 +320,7 @@ void func_us_80173D14(Entity* self) {
         break;
     case 2:
         self->ext.et_801737F0.animationTriggerCount++;
-        if (self->ext.et_801737F0.animationTriggerCount >= 0x33) {
+        if (self->ext.et_801737F0.animationTriggerCount > 50) {
             CreateEventEntity(self, 0xDE, 0);
             DestroyEntity(self);
             return;
