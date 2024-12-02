@@ -367,7 +367,128 @@ void func_us_801737F0(Entity* self) {
         posYOffset + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80173D14);
+extern s16 D_us_80171B44[3][8];
+extern s16 D_us_801786A0[3][8];
+
+void func_us_80173D14(Entity* self) {
+    Primitive* prim;
+    s32 x0, x1, x2, x3;
+    s32 y0, y1, y2, y3;
+    s32 posX, posY;
+    s32 s, c;
+    s32 i;
+
+    self->posX.val = self->ext.et_801737F0.parent->posX.val;
+    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        if (self->facingLeft) {
+            s = rsin(0xE00);
+            c = rcos(0xE00);
+        } else {
+            s = rsin(0xA00);
+            c = rcos(0xA00);
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 3; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x147;
+            prim->priority = self->zPriority + 1;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->u0 = prim->u2 = 0xB;
+            prim->u1 = prim->u3 = 0x35;
+            prim->v0 = prim->v1 = 0xCB;
+            prim->v2 = prim->v3 = 0xF5;
+            PCOL(prim) = 0x80;
+            x0 = D_us_80171B44[i][0];
+            y0 = D_us_80171B44[i][1];
+            x1 = D_us_80171B44[i][2];
+            y1 = D_us_80171B44[i][3];
+            x2 = D_us_80171B44[i][4];
+            y2 = D_us_80171B44[i][5];
+            x3 = D_us_80171B44[i][6];
+            y3 = D_us_80171B44[i][7];
+            D_us_801786A0[i][0] = ((c * x0) - (s * y0)) >> 0xC;
+            D_us_801786A0[i][1] = ((s * x0) + (c * y0)) >> 0xC;
+            D_us_801786A0[i][2] = ((c * x1) - (s * y1)) >> 0xC;
+            D_us_801786A0[i][3] = ((s * x1) + (c * y1)) >> 0xC;
+            D_us_801786A0[i][4] = ((c * x2) - (s * y2)) >> 0xC;
+            D_us_801786A0[i][5] = ((s * x2) + (c * y2)) >> 0xC;
+            D_us_801786A0[i][6] = ((c * x3) - (s * y3)) >> 0xC;
+            D_us_801786A0[i][7] = ((s * x3) + (c * y3)) >> 0xC;
+            prim = prim->next;
+        }
+        prim->tpage = 0x1A;
+        prim->clut = 0x147;
+        prim->priority = self->zPriority + 1;
+        prim->drawMode =
+            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_801737F0.animationTriggerCount++;
+        self->ext.et_801737F0.animationTimer += 8;
+        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.et_801737F0.animationTriggerCount++;
+        if (self->ext.et_801737F0.animationTriggerCount > 50) {
+            CreateEventEntity(self, 0xDE, 0);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    posX = self->posX.i.hi + (self->facingLeft ? 2 : -2);
+    posY = self->posY.i.hi - 0xC;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 3; i++) {
+        prim->x0 = posX + D_us_801786A0[i][0] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->y0 = posY + D_us_801786A0[i][1] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->x1 = posX + D_us_801786A0[i][2] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->y1 = posY + D_us_801786A0[i][3] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->x2 = posX + D_us_801786A0[i][4] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->y2 = posY + D_us_801786A0[i][5] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->x3 = posX + D_us_801786A0[i][6] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        prim->y3 = posY + D_us_801786A0[i][7] *
+                              self->ext.et_801737F0.animationTimer / 256;
+        PCOL(prim) =
+            ((self->ext.et_801737F0.animationTriggerCount & 1) * 64) + 0x40;
+        prim = prim->next;
+    }
+
+    posX = self->posX.i.hi + (self->facingLeft ? 4 : -4);
+    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
+    prim->x0 = prim->x2 =
+        posX - (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->x1 = prim->x3 =
+        posX + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->y0 = prim->y1 =
+        posY - (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->y2 = prim->y3 =
+        posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+}
 
 void ServantInit(InitializeMode mode) {
     u16* src;
