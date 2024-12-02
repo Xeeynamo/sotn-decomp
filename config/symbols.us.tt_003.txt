@@ -4,6 +4,7 @@ g_DemonAttackStats = 0x801719F0;
 g_DemonAbilityStats = 0x80171A68;
 g_DemonClut = 0x80171C24;
 s_PassthroughFunctions = 0x80171CC4;
+s_DemonSfxMap = 0x80171D2C;
 g_DemonAnimationFrames = 0x80172010;
 g_Events = 0x80172090;
 g_PlaySfxStep = 0x801729C0;
