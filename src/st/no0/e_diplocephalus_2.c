@@ -2,14 +2,166 @@
 #include "no0.h"
 
 // Fireball
-INCLUDE_ASM("st/no0/nonmatchings/e_diplocephalus_2", func_us_801D0990);
+extern u8 D_us_80181E3C[]; // anim
+extern u8 D_us_80181E54[]; // anim
+extern u8 D_us_80181E70[]; // anim
 
-extern EInit g_EInitDiplocephalusTail;
-extern u8 D_us_80181DBC[];
-extern u8 D_us_80181DDC[];
-extern u8 D_us_80181DEC[];
-extern u8 D_us_80181E0C[];
-extern u8 D_us_80181E30[];
+// Tail
+extern u8 D_us_80181DBC[]; // anim
+extern u8 D_us_80181DDC[]; // anim
+extern u8 D_us_80181DEC[]; // anim
+extern u8 D_us_80181E0C[]; // anim
+extern u8 D_us_80181E30[]; // anim
+
+void EntityDiplocephalusFireball(Entity* self) {
+    Entity* player;
+    Primitive* prim;
+    s16 angle;
+    s32 primIndex;
+    s32 magnitude;
+
+    FntPrint("tama_step %x\n", self->step);
+    if ((self->flags & FLAG_DEAD) && self->step < 4) {
+        PlaySfxPositional(SFX_EXPLODE_FAST_A);
+        self->hitboxState = 0;
+        SetStep(4);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitDiplocephalusFireball);
+        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->rotX = self->rotY = 0x60;
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 20);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.diplocephalusFireball.unk90 = prim;
+
+        while (prim != NULL) {
+            prim->tpage = 26;
+            prim->clut = 368;
+            PGREY(prim, 0) = 64;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->p3 = 0;
+            prim->priority = self->zPriority + 2;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+
+        if (self->facingLeft) {
+            self->velocityX = FIX(6);
+        } else {
+            self->velocityX = FIX(-6);
+        }
+        self->velocityY = 0;
+        self->ext.diplocephalusFireball.unk9C = 2;
+        // Fallthrough
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_us_80181E3C, self);
+        self->rotZ += 64;
+        self->rotX += 16;
+        if (self->rotX > 256) {
+            self->rotX = 256;
+        }
+        self->rotY = self->rotX;
+        MoveEntity();
+        self->velocityX -= self->velocityX / 8;
+        if (abs(self->velocityX) < FIX(0.25)) {
+            if (self->facingLeft) {
+                self->ext.diplocephalusFireball.unk8C = 0;
+            } else {
+                self->ext.diplocephalusFireball.unk8C = 2048;
+            }
+            self->ext.diplocephalusFireball.unk88 = 0;
+            self->step++;
+        }
+        break;
+    case 2:
+        player = &PLAYER;
+        angle = GetAngleBetweenEntities(self, player);
+        angle = GetNormalizedAngle(
+            16, self->ext.diplocephalusFireball.unk8C, angle);
+        magnitude = self->ext.diplocephalusFireball.unk88;
+        magnitude += 3072;
+        if (magnitude > 0x30000) {
+            magnitude = 0x30000;
+            self->step++;
+        }
+        self->velocityX = (magnitude * rcos(angle)) >> 12;
+        self->velocityY = (magnitude * rsin(angle)) >> 12;
+        self->ext.diplocephalusFireball.unk88 = magnitude;
+        self->ext.diplocephalusFireball.unk8C = angle;
+        AnimateEntity(D_us_80181E3C, self);
+        MoveEntity();
+        break;
+    case 3:
+        AnimateEntity(D_us_80181E3C, self);
+        MoveEntity();
+        break;
+    case 4:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.diplocephalusFireball.unk90;
+            while (prim != NULL) {
+                prim->p3 = 0;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+
+            self->velocityX >>= 1;
+            self->velocityY >>= 1;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->step_s++;
+            self->flags = 0xFFFFFFF0;
+            self->palette = PAL_DRA(0x2C0);
+            // fallthrough
+        case 1:
+            MoveEntity();
+            self->posY.val -= FIX(1.0);
+            if (!AnimateEntity(D_us_80181E54, self)) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        break;
+    }
+
+    if ((g_Timer & 1) && !(self->flags & FLAG_DEAD)) {
+        prim = self->ext.diplocephalusFireball.unk90;
+        prim = FindFirstUnkPrim(prim);
+        if (prim != NULL) {
+            prim->p3 = 3;
+            prim->x0 = prim->x2 = self->posX.i.hi - 12;
+            prim->x1 = prim->x3 = prim->x0 + 28;
+            prim->y0 = prim->y1 = self->posY.i.hi - 12;
+            prim->y2 = prim->y3 = prim->y0 + 28;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+            prim->p1 = 0;
+            prim->p2 = 0;
+        }
+    }
+
+    prim = self->ext.diplocephalusFireball.unk90;
+    while (prim != NULL) {
+        if (prim->p3 && !UpdateAnimation(D_us_80181E70, prim)) {
+            prim->p3 = 0;
+            prim->drawMode = DRAW_HIDE;
+        }
+        prim = prim->next;
+    }
+}
 
 void EntityDiplocephalusTail(Entity* self) {
     s16 unused;
@@ -58,7 +210,7 @@ void EntityDiplocephalusTail(Entity* self) {
         tempEntity = self;
         for (i = 0; i < 6; i++) {
             tempEntity++;
-            CreateEntityFromCurrentEntity(E_ID_24, tempEntity);
+            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, tempEntity);
             tempEntity->ext.diplocephalus.unk8C = tempEntity - 1;
             (tempEntity - 1)->ext.diplocephalus.unk90 = tempEntity;
             tempEntity->step = 3;
@@ -281,7 +433,8 @@ void EntityDiplocephalusTail(Entity* self) {
         return;
     case 9:
         if ((self->ext.diplocephalus.entity->ext.diplocephalus.unk90 != 0) ||
-            (self->ext.diplocephalus.entity->entityId != E_ID_24)) {
+            (self->ext.diplocephalus.entity->entityId !=
+             E_DIPLOCEPHALUS_TAIL)) {
             if (self->ext.diplocephalus.unk9C++ > 6) {
                 self->ext.diplocephalus.unk9D++;
                 self->ext.diplocephalus.unk9C = 0;
@@ -308,7 +461,8 @@ void EntityDiplocephalusTail(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
-                CreateEntityFromCurrentEntity(E_ID_25, tempEntity);
+                CreateEntityFromCurrentEntity(
+                    E_DIPLOCEPHALUS_FIREBALL, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
                     tempEntity->posX.i.hi += 0xC;
