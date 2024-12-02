@@ -27,7 +27,8 @@ typedef enum EntityIDs {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x11 */ E_ID_11 = 0x11,
-    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x13 */ E_UNK_ID_13 = 0x13,
+    /* 0x14 */ E_ID_14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x20 */ E_CLOCK_ROOM_SHADOW = 0x20,
     /* 0x21 */ E_ID_21,
@@ -104,6 +105,7 @@ extern EInit g_EInitCtulhuIceShockwave;
 extern EInit g_EInitDiplocephalusFoot;
 extern EInit g_EInitDiplocephalusFireball;
 extern EInit g_EInitDiplocephalusTail;
+extern EInit D_us_80180B3C;
 
 // Clock room
 extern EInit g_Statues;
