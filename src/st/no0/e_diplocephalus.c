@@ -20,7 +20,7 @@ extern u8 D_us_80181D83[]; // anim frames
 void func_us_801CF4A8(Entity* self) {
     Entity* newEntity;
 
-    if (self->ext.diplocephalus.parent->entityId != 0x21) {
+    if (self->ext.diplocephalus.parent->entityId != E_ID_21) {
         EntityExplosionSpawn(0, 0);
         return;
     }
@@ -122,7 +122,7 @@ void EntityDiplocephalusFoot(Entity* self) {
         g_CurrentEntity = self;
 
         // Walk forward, spawning dust cloud when stepping
-        if (UnkCollisionFunc3(&D_us_80181D54) & 1) {
+        if (UnkCollisionFunc3(D_us_80181D54) & 1) {
             PlaySfxPositional(0x779);
             self->velocityX = 0;
             self->velocityY = 0;
@@ -150,7 +150,7 @@ void func_us_801CF910(Entity* self) {
     Entity* entityTwo;
 
     // func_us_801CFBE8 (self + 1)
-    if (self->ext.diplocephalusUnk.parent->entityId != 0x21) {
+    if (self->ext.diplocephalusUnk.parent->entityId != E_ID_21) {
         EntityExplosionSpawn(0, 0);
         return;
     }
@@ -159,11 +159,11 @@ void func_us_801CF910(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180B3C);
         if (self->facingLeft) {
-            self->ext.diplocephalusUnk.posY = 0x60000;
-            self->ext.diplocephalusUnk.unkAC = 0x120000;
+            self->ext.diplocephalusUnk.posY = FIX(6);
+            self->ext.diplocephalusUnk.unkAC = FIX(18);
         } else {
-            self->ext.diplocephalusUnk.posY = -0x60000;
-            self->ext.diplocephalusUnk.unkAC = -0x120000;
+            self->ext.diplocephalusUnk.posY = FIX(-6);
+            self->ext.diplocephalusUnk.unkAC = FIX(-18);
         }
         // fallthrough
     case 1:
@@ -180,8 +180,8 @@ void func_us_801CF910(Entity* self) {
         }
 
         self->posY.val =
-            ((entityTwo->posY.val + 0xC0000 + entityOne->posY.val) / 2) -
-            0x80000;
+            ((entityTwo->posY.val + FIX(12) + entityOne->posY.val) / 2) -
+            FIX(8);
         if (self->ext.diplocephalusUnk.unk9E % 2) {
             self->posY.val -= FIX(4.0);
         }
@@ -222,7 +222,7 @@ void func_us_801CF910(Entity* self) {
             self->rotZ -= 0x100;
         }
 
-        if (UnkCollisionFunc3(&D_us_80181D64) & 1) {
+        if (UnkCollisionFunc3(D_us_80181D64) & 1) {
             self->ext.diplocephalusUnk.velocityY /= 2;
             if (self->ext.diplocephalusUnk.velocityY == 0) {
                 PlaySfxPositional(SFX_EXPLODE_B);
@@ -276,7 +276,7 @@ void func_us_801D0718(Entity* self) {
     self->ext.diplocephalus.posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
     // Parent is func_us_801CFBE8 (self - 1)
-    if (parent->entityId != 0x21) {
+    if (parent->entityId != E_ID_21) {
         DestroyEntity(self);
     }
 }
