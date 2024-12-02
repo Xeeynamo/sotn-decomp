@@ -780,7 +780,119 @@ void func_us_80174FD0(Entity* self) {
         ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017540C);
+// INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_8017540C);
+
+extern s16 D_us_801719F2[][6];
+extern s32 D_us_80171B08[];
+extern s32 D_us_80171B0C[];
+extern s32 D_us_80171B10[];
+// extern u32 D_us_80171D2C[];
+extern s32 D_us_8017860C;
+extern s32 D_us_80178610;
+extern s32 D_us_80178614;
+extern s32 D_us_80178618;
+extern s32 D_us_8017861C;
+extern s32 D_us_80178620;
+extern s32 D_us_80178624;
+extern s32 D_us_801786D4;
+extern s32 s_DemonSfxMap[];
+
+// PSX: https://decomp.me/scratch/vbedA
+// PSP: https://decomp.me/scratch/mRGqb
+
+extern s16 g_DemonAttackStats[][6];
+extern s32 g_DemonAttackIdSfxLookup[][3];
+extern s32 D_us_8017860C;
+extern s32 D_us_80178610;
+extern s32 D_us_80178614;
+extern s32 D_us_80178618;
+extern s32 D_us_8017861C;
+extern s32 D_us_80178620;
+extern s32 D_us_80178624;
+
+void func_us_8017540C(Entity* self) {
+    s32 i;
+
+    if (D_us_801786D4) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    switch (self->step) {
+    case 0:
+        func_us_80172DC4(self);
+        break;
+    case 1:
+        D_us_80178620 = self->ext.demon.target->facingLeft;
+        self->step++;
+
+    case 2:
+        if (!CheckEntityValid(self->ext.demon.target) &&
+            !(self->ext.demon.target = FindValidTarget(self))) {
+            self->entityId = 0xD1;
+            self->step = 0;
+        } else {
+            D_us_8017860C = self->ext.demon.target->posX.val;
+            D_us_8017860C += D_us_80178620 ? FIX(32) : FIX(-32);
+
+            D_us_80178610 = self->ext.demon.target->posY.val;
+            self->velocityX = (D_us_8017860C - self->posX.val) >> 3;
+            self->velocityY = (D_us_80178610 - self->posY.val) >> 3;
+            self->facingLeft = self->velocityX > 0 ? 0 : 1;
+
+            self->posX.val += self->velocityX;
+            self->posY.val += self->velocityY;
+
+            D_us_80178614 = abs(D_us_8017860C - self->posX.val);
+            D_us_80178618 = abs(D_us_80178610 - self->posY.val);
+            if ((D_us_80178614 < FIX(8)) && (D_us_80178618 < FIX(1))) {
+                self->facingLeft = D_us_80178620;
+                self->step++;
+            }
+        }
+        break;
+    case 3:
+        D_us_80178624 = rand() % 256;
+
+        for (i = 1; i < 6; i++) {
+            if (D_us_80178624 <=
+                g_DemonAttackStats[s_DemonStats.level / 10][i]) {
+                D_us_80178624 = i - 1;
+                break;
+            }
+        }
+
+        SetAnimationFrame(self, g_DemonAttackIdSfxLookup[D_us_80178624][0]);
+        g_api.PlaySfx(
+            s_DemonSfxMap[g_DemonAttackIdSfxLookup[D_us_80178624][1]]);
+
+        g_api.GetServantStats(
+            self, g_DemonAttackIdSfxLookup[D_us_80178624][2], 1, &s_DemonStats);
+        CreateEventEntity(self, 0xDA, D_us_80178624);
+
+        self->step++;
+        break;
+    case 4:
+        if (D_us_8017861C == -2) {
+            self->ext.demon.abilityTimer = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        self->velocityX = self->facingLeft ? FIX(0.125) : FIX(-0.125);
+        self->velocityY = FIX(-0.25);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+
+        self->ext.demon.abilityTimer++;
+
+        if (self->ext.demon.abilityTimer > 30) {
+            self->entityId = 0xD1;
+            self->step = 0;
+        }
+        break;
+    }
+    D_us_8017861C =
+        ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+}
 
 void unused_5800(Entity* self) {}
 
@@ -931,136 +1043,138 @@ void func_us_801765A0(Entity* self) {
     self->ext.et_80176814.frameCounter[0] = ServantUpdateAnim(self, NULL, NULL);
 }
 
+INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176814);
+
 // PSX: https://decomp.me/scratch/NMQwa
 // PSP: https://decomp.me/scratch/6hM5K
 
 // Horizontal offsets for positioning primitives
-typedef struct {
-    u16 xOffsets[14];
-} D_us_80171D10_t;
+// typedef struct {
+//     u16 xOffsets[14];
+// } D_us_80171D10_t;
 
-extern D_us_80171D10_t D_us_80171D10;
-extern s32 D_us_80178678;
-extern s32 D_us_8017867C;
+// extern D_us_80171D10_t D_us_80171D10;
+// extern s32 D_us_80178678;
+// extern s32 D_us_8017867C;
 
-void func_us_80176814(Entity* self) {
-    Primitive* prim;
-    s32 i;
-    s32 newX;
-    s32 newY;
-    s32 offset;
+// void func_us_80176814(Entity* self) {
+//     Primitive* prim;
+//     s32 i;
+//     s32 newX;
+//     s32 newY;
+//     s32 offset;
 
-    switch (self->step) {
-    case 0:
-        if (self->params == 0) {
-            D_us_80178678 = self->posX.val;
-            D_us_8017867C = self->posY.val;
-        } else {
-            self->posX.val = D_us_80178678;
-            self->posY.val = D_us_8017867C;
-        }
+// switch (self->step) {
+// case 0:
+//     if (self->params == 0) {
+//         D_us_80178678 = self->posX.val;
+//         D_us_8017867C = self->posY.val;
+//     } else {
+//         self->posX.val = D_us_80178678;
+//         self->posY.val = D_us_8017867C;
+//     }
 
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
+// self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
 
-        if (self->primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        self->flags =
-            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 12; i++) {
-            prim->tpage = 0x1A;
-            prim->clut = 0x146;
-            prim->priority = self->zPriority + 1;
-            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
-                             DRAW_UNK02 | DRAW_TRANSP;
+// if (self->primIndex == -1) {
+//     DestroyEntity(self);
+//     return;
+// }
+// self->flags =
+//     FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+// prim = &g_PrimBuf[self->primIndex];
+// for (i = 0; i < 12; i++) {
+//     prim->tpage = 0x1A;
+//     prim->clut = 0x146;
+//     prim->priority = self->zPriority + 1;
+//     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+//                      DRAW_UNK02 | DRAW_TRANSP;
 
-            offset = (i % 4) * 4;
-            prim->u0 = prim->u2 = offset + 8;
-            prim->u1 = prim->u3 = (offset) + 0xC;
-            prim->v0 = prim->v1 = 0x60;
-            prim->v2 = prim->v3 = 0x80;
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = 0x80;
-            prim = prim->next;
-        }
-        self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
+// offset = (i % 4) * 4;
+// prim->u0 = prim->u2 = offset + 8;
+// prim->u1 = prim->u3 = (offset) + 0xC;
+// prim->v0 = prim->v1 = 0x60;
+// prim->v2 = prim->v3 = 0x80;
+// prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+//     prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+//         prim->b3 = 0x80;
+// prim = prim->next;
+// }
+// self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
 
-        g_api.GetServantStats(self, 25, 1, &s_DemonStats);
+// g_api.GetServantStats(self, 25, 1, &s_DemonStats);
 
-        self->hitboxOffX = 28;
-        self->hitboxOffY = 0;
-        self->hitboxWidth = 12;
-        self->hitboxHeight = 10;
+// self->hitboxOffX = 28;
+// self->hitboxOffY = 0;
+// self->hitboxWidth = 12;
+// self->hitboxHeight = 10;
 
-        self->step++;
+// self->step++;
 
-        if (self->params >= 2) {
-            self->step++;
-        }
-        break;
+// if (self->params >= 2) {
+//     self->step++;
+// }
+// break;
 
-    case 1:
-        self->posX.val += self->velocityX;
-        self->ext.et_80176814.frameCounter[0]++;
+// case 1:
+//     self->posX.val += self->velocityX;
+//     self->ext.et_80176814.frameCounter[0]++;
 
-        if (self->ext.et_80176814.frameCounter[0] >= 3) {
-            CreateEventEntity(self, 220, self->params + 1);
-            self->step++;
-        }
-        break;
+// if (self->ext.et_80176814.frameCounter[0] >= 3) {
+//     CreateEventEntity(self, 220, self->params + 1);
+//     self->step++;
+// }
+// break;
 
-    case 2:
-        self->posX.val += self->velocityX;
-        self->ext.et_80176814.frameCounter[0]++;
-        if (self->ext.et_80176814.frameCounter[0] >= 9) {
-            DestroyEntity(self);
-            return;
-        }
-    }
-    newX = self->posX.i.hi;
-    newY = self->posY.i.hi - 12;
-    prim = &g_PrimBuf[self->primIndex];
+// case 2:
+//     self->posX.val += self->velocityX;
+//     self->ext.et_80176814.frameCounter[0]++;
+//     if (self->ext.et_80176814.frameCounter[0] >= 9) {
+//         DestroyEntity(self);
+//         return;
+//     }
+// }
+// newX = self->posX.i.hi;
+// newY = self->posY.i.hi - 12;
+// prim = &g_PrimBuf[self->primIndex];
 
-    for (i = 0; i < 12; i++) {
-        if (self->facingLeft) {
-            prim->x2 = newX - D_us_80171D10.xOffsets[i];
-            prim->x3 = newX - D_us_80171D10.xOffsets[i + 1];
-            if (i == 0) {
-                prim->x0 = prim->x2 - 0x10;
-            } else {
-                prim->x0 = prim->x2 - 0x20;
-            }
-            if (i == 11) {
-                prim->x1 = prim->x3 - 0x10;
-            } else {
-                prim->x1 = prim->x3 - 0x20;
-            }
+// for (i = 0; i < 12; i++) {
+//     if (self->facingLeft) {
+//         prim->x2 = newX - D_us_80171D10.xOffsets[i];
+//         prim->x3 = newX - D_us_80171D10.xOffsets[i + 1];
+//         if (i == 0) {
+//             prim->x0 = prim->x2 - 0x10;
+//         } else {
+//             prim->x0 = prim->x2 - 0x20;
+//         }
+//         if (i == 11) {
+//             prim->x1 = prim->x3 - 0x10;
+//         } else {
+//             prim->x1 = prim->x3 - 0x20;
+//         }
 
-        } else {
-            prim->x2 = newX + D_us_80171D10.xOffsets[i];
-            prim->x3 = newX + D_us_80171D10.xOffsets[i + 1];
+// } else {
+//     prim->x2 = newX + D_us_80171D10.xOffsets[i];
+//     prim->x3 = newX + D_us_80171D10.xOffsets[i + 1];
 
-            if (i == 0) {
-                prim->x0 = prim->x2 + 0x10;
-            } else {
-                prim->x0 = prim->x2 + 0x20;
-            }
-            if (i == 11) {
-                prim->x1 = prim->x3 + 0x10;
-            } else {
-                prim->x1 = prim->x3 + 0x20;
-            }
-        }
+// if (i == 0) {
+//     prim->x0 = prim->x2 + 0x10;
+// } else {
+//     prim->x0 = prim->x2 + 0x20;
+// }
+// if (i == 11) {
+//     prim->x1 = prim->x3 + 0x10;
+// } else {
+//     prim->x1 = prim->x3 + 0x20;
+// }
+// }
 
-        prim->y0 = prim->y2 = newY + (i * 2);
-        prim->y1 = prim->y3 = newY + ((i + 1) * 2);
+// prim->y0 = prim->y2 = newY + (i * 2);
+// prim->y1 = prim->y3 = newY + ((i + 1) * 2);
 
-        prim = prim->next;
-    }
-}
+// prim = prim->next;
+// }
+// }
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176C1C);
 

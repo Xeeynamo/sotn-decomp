@@ -50,3 +50,4 @@ s_DistToTargetLocation2 = 0x801785EC;
 s_ServantId = 0x80178690;
 s_DemonStats = 0x80178694;
 s_LastTargetedEntityIndex = 0x801786E0;
+g_DemonAttackIdSfxLookup = 0x80171B08;
