@@ -312,7 +312,7 @@ INCLUDE_ASM("st/no1/nonmatchings/us", ClutLerp);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", PlaySfxPositional);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_801C3F9C);
+INCLUDE_ASM("st/no1/nonmatchings/us", AxeKnightUnkFunc1);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801CA51C);
 
@@ -328,7 +328,7 @@ INCLUDE_ASM("st/no1/nonmatchings/us", EntityAxeKnightThrowingAxe);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801CBA30);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_801917BC);
+INCLUDE_ASM("st/no1/nonmatchings/us", StageNamePopupHelper);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", EntityStageNamePopup);
 
@@ -340,7 +340,7 @@ INCLUDE_ASM("st/no1/nonmatchings/us", EntityRoomForeground);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", BottomCornerText);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_801C5F2C);
+INCLUDE_ASM("st/no1/nonmatchings/us", SkeletonAttackCheck);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", EntitySkeleton);
 
