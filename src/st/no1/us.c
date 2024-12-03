@@ -5,7 +5,7 @@ INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B4CC4);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", EntityIsNearPlayer);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B4EE4);
+INCLUDE_ASM("st/no1/nonmatchings/us", NO1_EntityRedDoor);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", EntityUnkId12);
 

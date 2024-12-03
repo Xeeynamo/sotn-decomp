@@ -20,7 +20,7 @@ file_start_funcs = {
     "DestroyEntity": ["st_common"],
     "func_8018CAB0": ["e_collect"],
     "BlitChar": ["blit_char"],
-    "EntityRelicOrb": ["e_misc"],
+    "EntityRelicOrb": ["e_misc", "PlaySfxPositional"],
     "StageNamePopupHelper": ["e_stage_name", "EntityStageNamePopup"],
     "EntitySoulStealOrb": ["e_particles"],
     "EntityRoomForeground": ["e_room_fg"],
