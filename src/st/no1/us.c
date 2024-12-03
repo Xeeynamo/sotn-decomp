@@ -2,7 +2,7 @@
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B4CC4);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_8018A950);
+INCLUDE_ASM("st/no1/nonmatchings/us", EntityIsNearPlayer);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B4EE4);
 
@@ -222,21 +222,21 @@ INCLUDE_ASM("st/no1/nonmatchings/us", GetPlayerCollisionWith);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", ReplaceBreakableWithItemDrop);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_8018CAB0);
+INCLUDE_ASM("st/no1/nonmatchings/us", PrizeDropFall);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_8018CB34);
+INCLUDE_ASM("st/no1/nonmatchings/us", PrizeDropFall2);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", CollectHeart);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", CollectGold);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_8018CDEC);
+INCLUDE_ASM("st/no1/nonmatchings/us", CollectSubweapon);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", CollectHeartVessel);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_8018CFA8);
+INCLUDE_ASM("st/no1/nonmatchings/us", CollectLifeVessel);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_8018CFF8);
+INCLUDE_ASM("st/no1/nonmatchings/us", DestroyCurrentEntity);
 
 INCLUDE_RODATA("st/no1/nonmatchings/us", D_us_801B48A8);
 
