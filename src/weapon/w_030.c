@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Weapon ID #30. Used by weapons:
 // Sword of Dawn, Unknown#177
+#define FUNC_04_VOID
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
@@ -75,7 +76,352 @@ static void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_030", func_ptr_80170004);
+extern s16 D_D6000_8017A5F4[10];
+
+#ifdef VERSION_PSP
+extern s8 D_D6000_8017A608[15];
+extern s8 D_D6000_8017A618[16];
+#else
+extern u8 D_D6000_8017A608[15];
+extern u8 D_D6000_8017A618[16];
+#endif
+
+void func_ptr_80170004(Entity* self) {
+    Primitive* prim;
+    Collider collider;
+    s16 x, y;
+    s16 t;
+    u16 clut;
+    u8 v;
+    bool flag;
+    s32 i, j, k;
+
+    s32 buffer[16];
+    s16 xValues[16];
+    s16 yValues[16];
+    Entity* entity;
+    s32 entityID;
+
+    v = 0;
+    clut = 0x110;
+    if (g_HandId != 0) {
+        v += 0x80;
+        clut += 0x18;
+    }
+    flag = false;
+
+    for (i = 0; i < LEN(buffer); i++) {
+        buffer[i] = 0;
+    }
+
+    switch (self->step) {
+    case 0:
+        if (rand() & 7) {
+            self->ext.weapon.unk90 = 1;
+        } else {
+            self->ext.weapon.unk90 = 6;
+        }
+
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 11);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+
+        prim->u0 = prim->u2 = 0x70;
+        prim->u1 = prim->u3 = 0x7F;
+        prim->v0 = prim->v1 = v + 0x38;
+        prim->v2 = prim->v3 = v + 0x7F;
+
+        prim->g0 = prim->b0 = prim->r0 = prim->g1 = prim->b1 = prim->r1 =
+            prim->g2 = prim->b2 = prim->r2 = prim->g3 = prim->b3 = prim->r3 =
+                0x80;
+
+        prim->clut = clut;
+        prim->tpage = 0x19;
+        prim->priority = PLAYER.zPriority + 2;
+
+#ifdef VERSION_PSP
+        prim->drawMode = DRAW_COLORS | DRAW_UNK02;
+#else
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                         DRAW_UNK02 | DRAW_TRANSP;
+#endif
+
+        for (i = 0; i < 10; i++) {
+            prim = prim->next;
+            prim->u0 = prim->u2 = 0x70;
+            prim->u1 = prim->u3 = 0x7F;
+
+            prim->v0 = prim->v1 = 0x38 + v + (i * 8);
+            prim->v2 = prim->v3 = 0x38 + v + ((i + 1) * 8) - 1;
+
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+            prim->tpage = 0x19;
+            prim->priority = PLAYER.zPriority + 4;
+            prim->clut = 0x15F;
+        }
+
+        self->facingLeft = PLAYER.facingLeft;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        SetSpeedX(FIX(1.5));
+        self->velocityY = FIX(-5.125);
+        self->ext.weapon.lifetime = 8;
+        self->ext.weapon.unk80 = self->ext.weapon.unk82 = 0;
+        self->ext.weapon.unk92 = D_D6000_8017A618[rand() & 0xF];
+        self->ext.weapon.unk94 = PLAYER.posY.i.hi;
+        self->ext.weapon.unk96 = PLAYER.posX.i.hi;
+        g_Player.timers[10] = 4;
+
+        self->step++;
+        break;
+
+    case 1:
+
+        self->ext.weapon.unk80++;
+        if (self->ext.weapon.unk80 > 8) {
+            self->ext.weapon.unk80 = 8;
+        }
+
+        // n.b.! BUG: unk82 is incremented but unk80 is clamped
+        self->ext.weapon.unk82 += 4;
+        if (self->ext.weapon.unk80 > 0x18) {
+            self->ext.weapon.unk80 = 0x18;
+        }
+
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+
+        if (--self->ext.weapon.lifetime == 0) {
+            x = self->ext.weapon.unk96;
+            y = self->ext.weapon.unk94 + 0x19;
+
+            for (i = 0; i < 8; i++) {
+                g_api.CheckCollision(x, y + 7, &collider, 0);
+                if (collider.effects & 1) {
+                    y += 7 + collider.unk18;
+                    g_api.CheckCollision(x, y - 1, &collider, 0);
+
+                    if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) ==
+                        EFFECT_SOLID) {
+                        buffer[i] = 2;
+                    } else if (collider.effects & 1) {
+                        y += collider.unk18 - 1;
+                    }
+                    xValues[i] = x;
+                    yValues[i] = y;
+                } else {
+                    buffer[i] = 1;
+                }
+                if (self->facingLeft == 0) {
+                    x += 7;
+                } else {
+                    x -= 7;
+                }
+            }
+
+            x = self->ext.weapon.unk96;
+            y = self->ext.weapon.unk94 + 0x19;
+            for (i = 8; i < 15; i++) {
+                if (self->facingLeft == 0) {
+                    x -= 7;
+                } else {
+                    x += 7;
+                }
+                g_api.CheckCollision(x, y + 7, &collider, 0);
+                if (collider.effects & 1) {
+                    y += 7 + collider.unk18;
+                    g_api.CheckCollision(x, y - 1, &collider, 0);
+
+                    if ((collider.effects & 0x8001) == 1) {
+                        buffer[i] = 2;
+                    } else if (collider.effects & 1) {
+                        y += collider.unk18 - 1;
+                    }
+                    xValues[i] = x;
+                    yValues[i] = y;
+                } else {
+                    buffer[i] = 1;
+                }
+            }
+
+            for (j = 0; j < self->ext.weapon.unk90; j++) {
+                for (i = 0; i < LEN(D_D6000_8017A608); i++) {
+                    if (buffer[D_D6000_8017A608[i]] == 0) {
+                        entity = &g_Entities[UNK_ENTITY_11];
+
+                        if (g_HandId) {
+                            entityID = 0xF2;
+                        } else {
+                            entityID = 0xE2;
+                        }
+
+                        for (k = 0; k < LEN(D_D6000_8017A608); k++, entity++) {
+                            if (entity->entityId == entityID &&
+                                abs(entity->posX.i.hi -
+                                    xValues[D_D6000_8017A608[i]]) < 3) {
+                                break;
+                            }
+                        }
+
+                        if (k == LEN(D_D6000_8017A608)) {
+                            break;
+                        }
+                    }
+                }
+
+// This is the same as `WFACTORY`, except the order of operations
+// is changed to add `id` to the `g_HandId` bits and then add then
+// the shifted params. `WFACTORY` groups the `id` and `param`
+// addition operation and is required for all other instances.
+#define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
+
+                if (self->ext.weapon.unk90 == 6) {
+                    k = 0x10;
+                } else {
+                    k = 0;
+                }
+                // same weapon factory ID as w_051
+                entity = g_api.CreateEntFactoryFromEntity(
+                    self, WFACTORY2(0x3E, self->ext.weapon.unk92 + k), 0);
+
+                if (entity) {
+                    self->ext.weapon.accelerationX = 1;
+                    self->ext.weapon.unk98 = entity->posX.i.hi =
+                        xValues[D_D6000_8017A608[i]];
+                    self->ext.weapon.unk9A = entity->posY.i.hi =
+                        yValues[D_D6000_8017A608[i]] - 0x19;
+
+                    buffer[D_D6000_8017A608[i]] = 1;
+                    self->ext.weapon.unk92++;
+                    self->ext.weapon.unk92 = self->ext.weapon.unk92 % 6;
+                }
+            }
+
+            self->ext.weapon.lifetime = 8;
+            g_api.PlaySfxVolPan(SFX_TELEPORT_BANG_A, 0x58, 0);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (--self->ext.weapon.lifetime == 0) {
+            for (i = 0; i < 10; i++) {
+                D_D6000_8017A5F4[i] = 0x199 * i;
+            }
+            self->ext.weapon.childPalette = 0xFF;
+            self->ext.weapon.unk8A = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        self->ext.weapon.unk7E += 4;
+        if (self->ext.weapon.unk7E > 0x120) {
+            self->ext.weapon.unk7E = 0x120;
+        }
+        flag = true;
+
+        self->ext.weapon.unk8A++;
+
+        self->ext.weapon.childPalette -= 8;
+        if (self->ext.weapon.childPalette < 0) {
+            self->ext.weapon.childPalette = 0;
+        }
+
+        if (self->ext.weapon.unk8A >= 10) {
+            self->ext.weapon_030.unk84 = 1 + (self->ext.weapon.unk8A - 10) / 4;
+        }
+
+        if (self->ext.weapon_030.unk84 >= 7 &&
+            self->ext.weapon.unk7E == 0x120) {
+            self->step++;
+        }
+        break;
+
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->g3 -= 6;
+        if (prim->g3 < 10) {
+            prim->g3 = 10;
+        }
+
+        prim->r3 += 6;
+        if (prim->r3 > 240) {
+            prim->r3 = 240;
+        }
+        prim->r0 = prim->r1 = prim->r2 = prim->r3;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 =
+            prim->g2 = prim->g3;
+
+        // Flashing effect
+        if (g_GameTimer & 1) {
+            prim->drawMode |= DRAW_HIDE;
+        } else {
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+
+        self->ext.weapon.unk7E -= 8;
+        if (self->ext.weapon.unk7E < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+
+    prim->x0 = prim->x2 = x - self->ext.weapon.unk80;
+    prim->x1 = prim->x3 = x + self->ext.weapon.unk80;
+
+    prim->y0 = prim->y1 = y - 4 - self->ext.weapon.unk82;
+    prim->y2 = prim->y3 = y + 4 + self->ext.weapon.unk82;
+    prim = prim->next;
+
+    for (i = 0; i < LEN(D_D6000_8017A5F4) - 1; i++) {
+        prim->x0 = prim->x2 = x - 8;
+        prim->x1 = prim->x3 = x + 8;
+
+        prim->y0 = prim->y1 = y + ((i + 0) * 8) - 0x24;
+        prim->y2 = prim->y3 = y + ((i + 1) * 8) - 0x24;
+
+        t = D_D6000_8017A5F4[i];
+        prim->r0 = prim->r1 =
+            (((rcos(t) + 0x1000) >> 6) * self->ext.weapon.unk7E) / 0x100;
+
+        t = D_D6000_8017A5F4[i + 1];
+        prim->r2 = prim->r3 =
+            (((rcos(t) + 0x1000) >> 6) * self->ext.weapon.unk7E) / 0x100;
+
+        D_D6000_8017A5F4[i] += 0x80;
+
+        prim = prim->next;
+    }
+
+    t = self->ext.weapon.unk8A;
+    if (t > 10) {
+        t = 10;
+    }
+
+    // weapon_030.unk9C is possibly weapon.accelerationX
+    if (flag && self->ext.weapon_030.unk9C) {
+        prim->x0 = x;
+        prim->y0 = y;
+        prim->x1 = x + ((0 + self->ext.weapon.unk98 - x) * t / 10);
+        prim->y1 = y + ((25 + self->ext.weapon.unk9A - y) * t / 10);
+        prim->r0 = self->ext.weapon.childPalette / 2;
+        prim->r1 = self->ext.weapon.childPalette;
+        prim->priority = PLAYER.zPriority + 6;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        prim->type = PRIM_LINE_G2;
+    }
+}
 
 void func_ptr_80170008(Entity* self) {
     s32 smallOffset;
