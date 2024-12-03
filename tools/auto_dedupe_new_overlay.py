@@ -13,18 +13,18 @@ import os
 # "StageNamePopupHelper"   : ["e_stage_name", "EntityStageNamePopup"],
 # Maybe the dictionary should be changed so the file name is the key, but eh.
 file_start_funcs = {
+    "EntityIsNearPlayer": ["e_red_door"],
     "Random": ["st_update"],
     "HitDetection": ["collision"],
     "CreateEntityFromLayout": ["create_entity"],
-    "EntityIsNearPlayer": ["e_red_door"],
     "DestroyEntity": ["st_common"],
-    "func_8018CAB0": ["e_collect"],
     "BlitChar": ["blit_char"],
     "EntityRelicOrb": ["e_misc", "PlaySfxPositional"],
     "StageNamePopupHelper": ["e_stage_name", "EntityStageNamePopup"],
     "EntitySoulStealOrb": ["e_particles"],
+    "func_8018CAB0": ["e_collect"],
     "EntityRoomForeground": ["e_room_fg"],
-    "BottomCornerText": ["popup"],
+    "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
 }
 
@@ -46,14 +46,17 @@ def get_file_splits(overlay_name):
             if function_name in file_start_funcs:
                 filename = file_start_funcs[function_name][0]
                 if len(file_start_funcs[function_name]) == 2:
+                    # detect single-function files
+                    if file_start_funcs[function_name][1] == function_name:
+                        force_next_func_split = True
                     file_last_func = file_start_funcs[function_name][1]
                 else:
                     file_last_func = ""
                 split_location = get_symbol_addr(function_name, overlay_name)
                 file_splits.append([f"0x{split_location}", filename, function_name])
-            if function_name == file_last_func:
+            elif function_name == file_last_func:
                 force_next_func_split = True
-            if force_next_func_split:
+            elif force_next_func_split:
                 split_location = get_symbol_addr(function_name, overlay_name)
                 file_splits.append(
                     [f"0x{split_location}", f"unk_{split_location}", function_name]
