@@ -144,7 +144,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen dre mad no0 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
+build_us: main dra weapon ric cen dre mad no0 no1 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
 build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -213,6 +213,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
@@ -306,6 +307,12 @@ $(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NO0.BIN:
 	$(GFXSTAGE) e assets/st/no0 $@
+
+no1: $(BUILD_DIR)/NO1.BIN $(BUILD_DIR)/F_NO1.BIN
+$(BUILD_DIR)/NO1.BIN: $(BUILD_DIR)/stno1.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO1.BIN:
+	$(GFXSTAGE) e assets/st/no1 $@
 
 no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
@@ -506,8 +513,10 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
 	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
 	cp $(BUILD_DIR)/F_MAD.BIN $(DISK_DIR)/ST/MAD/F_MAD.BIN
-	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO0.BIN
-	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO0.BIN
+	cp $(BUILD_DIR)/NO0.BIN $(DISK_DIR)/ST/NO3/NO0.BIN
+	cp $(BUILD_DIR)/F_NO0.BIN $(DISK_DIR)/ST/NO3/F_NO0.BIN
+	cp $(BUILD_DIR)/NO1.BIN $(DISK_DIR)/ST/NO3/NO1.BIN
+	cp $(BUILD_DIR)/F_NO1.BIN $(DISK_DIR)/ST/NO3/F_NO1.BIN
 	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
 	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO3.BIN
 	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
@@ -647,7 +656,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
+.PHONY: main, dra, ric, cen, dre, mad, no0, no1, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies
