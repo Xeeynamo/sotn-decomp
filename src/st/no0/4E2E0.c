@@ -18,7 +18,7 @@ void func_us_801CE2E0(Entity* self) {
         UnkAnimFunc(anim_unk, self, 5);
         self->rotZ += 0x80;
         player = &PLAYER;
-        if (self->ext.et_801CE2E0.unk88 & 64) {
+        if (self->ext.et_801CE2E0.unk88 & 0x40) {
             self->velocityY = FIX(-0.5);
         } else {
             self->velocityY = FIX(0.5);
@@ -27,7 +27,7 @@ void func_us_801CE2E0(Entity* self) {
         self->velocityX = 0;
         self->ext.et_801CE2E0.unk88++;
         MoveEntity();
-        if (self->ext.et_801CE2E0.unk7C & 4) {
+        if (self->ext.et_801CE2E0.unk7C & 0x4) {
             offset = (self->posY.i.hi + g_Tilemap.scrollY.i.hi) -
                      self->ext.et_801CE2E0.posY;
             if (offset > 0 || (offset < 0 && (g_Player.pl_vram_flag ^ 2) & 2)) {
@@ -40,14 +40,14 @@ void func_us_801CE2E0(Entity* self) {
             flags = 11;
         }
 
-        if (self->ext.et_801CE2E0.unk80 & 15 &&
-            (self->ext.et_801CE2E0.unk80 & 240)) {
-            flags |= 16;
+        if (self->ext.et_801CE2E0.unk80 & 0xF &&
+            (self->ext.et_801CE2E0.unk80 & 0xF0)) {
+            flags |= 0x10;
         }
 
         collision = GetPlayerCollisionWith(self, 24, 8, flags);
-        if (self->ext.et_801CE2E0.unk80 & 15) {
-            if (self->ext.et_801CE2E0.unk80 & 240) {
+        if (self->ext.et_801CE2E0.unk80 & 0xF) {
+            if (self->ext.et_801CE2E0.unk80 & 0xF0) {
                 offset = -yOffsets[(self->ext.et_801CE2E0.unk80 & 0xF) - 1];
             } else {
                 offset = yOffsets[self->ext.et_801CE2E0.unk80 - 1];
@@ -61,7 +61,7 @@ void func_us_801CE2E0(Entity* self) {
 
         if (collision & 4) {
             if (self->ext.et_801CE2E0.unk7C != 4 &&
-                !(self->ext.et_801CE2E0.unk80 & 15) &&
+                !(self->ext.et_801CE2E0.unk80 & 0xF) &&
                 F(player->velocityY).i.hi > 0) {
                 self->ext.et_801CE2E0.unk80 = 8;
             }
@@ -75,7 +75,7 @@ void func_us_801CE2E0(Entity* self) {
             self->ext.et_801CE2E0.unk8A = 8;
         }
 
-        if (collision & 2 && !(self->ext.et_801CE2E0.unk80 & 15)) {
+        if ((collision & 0x2) && !(self->ext.et_801CE2E0.unk80 & 0xF)) {
             self->ext.et_801CE2E0.unk80 = 24;
         }
         self->ext.et_801CE2E0.unk7C = collision;
