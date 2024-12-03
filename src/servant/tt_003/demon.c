@@ -968,9 +968,6 @@ void unused_5800(Entity* self) {}
 
 void unused_5808(Entity* self) {}
 
-// PSX: https://decomp.me/scratch/TLUnC
-// PSP: https://decomp.me/scratch/GQL4q
-
 extern AnimationFrame* D_us_8017202C;
 extern s32* D_us_80172080[];
 extern s32 D_us_80178628;
@@ -978,12 +975,11 @@ extern s32 D_us_8017862C;
 extern ServantSfxEventDesc* D_us_80178634;
 extern s16 D_us_80178638;
 
-void func_us_80175810(Entity* self)
-{
+void func_us_80175810(Entity* self) {
     Entity* sfxEntity;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
-    s32 temp_again;
+    s32 xCalc;
+    s32 yCalc;
+    s32 facingLeft;
 
     if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
@@ -993,90 +989,91 @@ void func_us_80175810(Entity* self)
         D_us_8017862C = D_us_801786D8->posY.val;
         self->ext.demon.pad_8E[3] += 0x40;
         self->ext.demon.pad_8E[3] &= 0xFFF;
-        D_us_8017862C = (rsin((s32) self->ext.demon.pad_8E[3]) << 3 << 4) + D_us_8017862C;
-        
-        self->velocityX =  (D_us_80178628 - self->posX.val) >> 5;
+        D_us_8017862C =
+            (rsin((s32)self->ext.demon.pad_8E[3]) << 3 << 4) + D_us_8017862C;
+
+        self->velocityX = (D_us_80178628 - self->posX.val) >> 5;
         self->velocityY = (D_us_8017862C - self->posY.val) >> 5;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
     }
     switch (self->step) {
-        case 0:
-            func_us_80172DC4(self);
-            break;
-        case 1:
-            if(self->velocityX > 0)
-            {
-                temp_again = 0;
+    case 0:
+        func_us_80172DC4(self);
+        break;
+    case 1:
+        if (self->velocityX > 0) {
+            facingLeft = false;
+        } else {
+            facingLeft = true;
+        }
+        self->facingLeft = facingLeft;
+
+        xCalc = (D_us_80178628 - self->posX.val) >> 0x10;
+        yCalc = (D_us_8017862C - self->posY.val) >> 0x10;
+        if ((SquareRoot12((SQ(xCalc) + SQ(yCalc)) << 0xC) >> 0xC) < 0x10) {
+            if (g_StageId < 0x20 || g_StageId > 0x34) {
+                self->facingLeft = 0;
+                D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[1];
+            } else {
+                self->facingLeft = 1;
+                D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[3];
             }
-            else
-            {
-                temp_again = 1;
-            }
-            self->facingLeft = temp_again;
-            
-            temp_v0_2 = (D_us_80178628 - self->posX.val) >> 0x10;
-            temp_v0_3 = (D_us_8017862C - self->posY.val) >> 0x10;
-            if ((SquareRoot12(((temp_v0_2 * temp_v0_2) + (temp_v0_3 * temp_v0_3)) << 0xC) >> 0xC) < 0x10) {
-                if (g_StageId < 0x20 || g_StageId > 0x34) {
-                    self->facingLeft = 0;
-                    D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[1];
-                } else {
-                    self->facingLeft = 1;
-                    D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[3];
-                }
+            self->step++;
+        }
+        break;
+    case 2:
+        D_us_80178638 = ((s16*)D_us_80178634)[0];
+#ifndef VERSION_PSP
+        g_PauseAllowed = false;
+#endif
+        self->step++;
+        // fallthrough
+    case 3:
+
+        if (D_us_80178638 < 0) {
+            if (g_PlaySfxStep > 4) {
+
+                SetAnimationFrame(self, D_us_80178634->animIndex);
+#ifndef VERSION_PSP
+                g_PauseAllowed = true;
+#endif
                 self->step++;
             }
-            break;
-        case 2:
-            D_us_80178638 = ((s16*)D_us_80178634)[0];
-#ifndef VERSION_PSP
-            g_PauseAllowed = false;
-#endif
-            self->step++;
-        
-            // fallthrough
-        case 3:
-            
-            if (D_us_80178638 < 0) { 
-                if (g_PlaySfxStep > 4) {
-                    
-                    SetAnimationFrame(self, D_us_80178634->animIndex);
-#ifndef VERSION_PSP
-                    g_PauseAllowed = true;
-#endif
-                    self->step++;
-                }
-            } else {
-                if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
-                    D_us_80178638--;
-                }
-                if (D_us_80178638 < 0) {
-                    SetAnimationFrame(self, D_us_80178634->animIndex);
-                    if (D_us_80178634->sfxId != 0 && !SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) {
-                        CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH, D_us_80178634->sfxId);
-                    }
-                    D_us_80178634++;
-                    D_us_80178638 = ((s16*)D_us_80178634)[0]; 
-                }
+        } else {
+            if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
+                D_us_80178638--;
             }
-            break;
-        case 4:
-            self->ext.demon.pad_8E[2]++;
-            if (self->ext.demon.pad_8E[2] > 0x78) {
-                self->entityId = DEMON_MODE_DEFAULT_UPDATE;
-                self->step = 0;
+            if (D_us_80178638 < 0) {
+                SetAnimationFrame(self, D_us_80178634->animIndex);
+                if (D_us_80178634->sfxId != 0 &&
+                    !SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) {
+                    CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
+                                      D_us_80178634->sfxId);
+                }
+                D_us_80178634++;
+                D_us_80178638 = ((s16*)D_us_80178634)[0];
             }
-            break;
+        }
+        break;
+    case 4:
+        self->ext.demon.pad_8E[2]++;
+        if (self->ext.demon.pad_8E[2] > 0x78) {
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+            self->step = 0;
+        }
+        break;
     }
-    if (D_us_801786D8 && !D_us_801786D8->entityId ) {
+    if (D_us_801786D8 && !D_us_801786D8->entityId) {
 #ifndef VERSION_PSP
         g_PauseAllowed = true;
 #endif
         self->entityId = DEMON_MODE_DEFAULT_UPDATE;
         self->step = 0;
-         
-        if ((sfxEntity = SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) && sfxEntity->step < 5) {
+
+        if ((sfxEntity =
+                 SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) &&
+            sfxEntity->step < 5) {
             sfxEntity->step = 7;
         }
     }
