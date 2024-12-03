@@ -51,7 +51,7 @@ def get_file_splits(overlay_name):
                     file_last_func = ""
                 split_location = get_symbol_addr(function_name, overlay_name)
                 file_splits.append([f"0x{split_location}", filename, function_name])
-            elif function_name == file_last_func:
+            if function_name == file_last_func:
                 force_next_func_split = True
             elif force_next_func_split:
                 split_location = get_symbol_addr(function_name, overlay_name)
