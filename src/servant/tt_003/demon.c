@@ -897,7 +897,7 @@ void func_us_8017540C(Entity* self) {
     case 2:
         if (!CheckEntityValid(self->ext.demon.target) &&
             !(self->ext.demon.target = FindValidTarget(self))) {
-            self->entityId = 0xD1;
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         } else {
             D_us_8017860C = self->ext.demon.target->posX.val;
@@ -955,7 +955,7 @@ void func_us_8017540C(Entity* self) {
         self->ext.demon.abilityTimer++;
 
         if (self->ext.demon.abilityTimer > 30) {
-            self->entityId = 0xD1;
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         }
         break;
@@ -1112,7 +1112,7 @@ void func_us_80175D20(Entity* self) {
             D_us_801786D0 == true || g_CutsceneHasControl ||
             g_unkGraphicsStruct.D_800973FC) {
             SetAnimationFrame(self, 0);
-            self->entityId = 0xD1;
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
             return;
         }
@@ -1169,8 +1169,10 @@ void func_us_80175D20(Entity* self) {
         if (D_us_8017866C < 0) {
             SetAnimationFrame(self, D_us_80178668->animIndex);
             if ((D_us_80178668->sfxId != 0) &&
-                (SearchForEntityInRange(0, 0xD9) == NULL)) {
-                CreateEventEntity(self, 0xD9, D_us_80178668->sfxId);
+                (SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH) ==
+                 NULL)) {
+                CreateEventEntity(
+                    self, DEMON_EVENT_SFX_PASSTHROUGH, D_us_80178668->sfxId);
             }
             D_us_80178668++;
             D_us_8017866C = ((s16*)D_us_80178668)[0];
@@ -1184,7 +1186,7 @@ void func_us_80175D20(Entity* self) {
     case 5:
         SetAnimationFrame(self, 0);
         g_PauseAllowed = true;
-        self->entityId = 0xD1;
+        self->entityId = DEMON_MODE_DEFAULT_UPDATE;
         self->step = 0;
         break;
     }
