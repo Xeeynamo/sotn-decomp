@@ -1344,8 +1344,8 @@ void UpdateServantAdditionalInit(Entity* arg0) {
         if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
                 if (rnd <= (s32)g_FaerieIntroRandomizer[i * 2]) {
-                    arg0->ext.faerie.currentSfxEvent = (ServantSfxEventDesc*)
-                        g_FaerieIntroRandomizer[i * 2 + 1];
+                    arg0->ext.faerie.currentSfxEvent =
+                        (ServantSfxEventDesc*)g_FaerieIntroRandomizer[i * 2 + 1];
                     break;
                 }
             }
