@@ -348,7 +348,7 @@ INCLUDE_ASM("st/no1/nonmatchings/us", func_801C6494);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_801C6574);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_801C6678);
+INCLUDE_ASM("st/no1/nonmatchings/us", UnusedSkeletonEntity);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801CDDD8);
 

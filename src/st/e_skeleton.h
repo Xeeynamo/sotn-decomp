@@ -269,7 +269,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 
 // Unclear if this has a way to run. Not called, and not in
 // the main entity list.
-void func_801C6678(Entity* self) {
+void UnusedSkeletonEntity(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitSkeleton);
         self->rotX = 0x120;
