@@ -27,7 +27,8 @@ file_start_funcs = {
     "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
 
-    "AxeKnightUnkFunc1":["e_axe_knight", "EntityAxeKnightThrowingAxe"]
+    "AxeKnightUnkFunc1":["e_axe_knight", "EntityAxeKnightThrowingAxe"],
+    "SkeletonAttackCheck":["e_skeleton", "UnusedSkeletonEntity"]
 }
 
 
