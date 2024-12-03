@@ -69,6 +69,8 @@ extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];
 extern u16 g_EInitInteractable[];
 
+extern EInit D_us_80180AAC;
+
 // Axe knight
 extern EInit g_EInitAxeKnightAxe;
 
