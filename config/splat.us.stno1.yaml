@@ -46,7 +46,7 @@ segments:
       - [0x34930, .rodata, blit_char]
       - [0x34940, .rodata, e_misc]
       - [0x3497C, .rodata, e_axe_knight]
-      - [0x34A20, .rodata, e_stage_name]
+      - [0x34A00, .rodata, e_stage_name]
       - [0x34A34, .rodata, e_skeleton]
       - [0x34A50, .rodata, unk_4DDD8]
       - [0x34CBC, .rodata, prim_helpers]
