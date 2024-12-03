@@ -26,9 +26,8 @@ file_start_funcs = {
     "EntityRoomForeground": ["e_room_fg"],
     "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
-
-    "AxeKnightUnkFunc1":["e_axe_knight", "EntityAxeKnightThrowingAxe"],
-    "SkeletonAttackCheck":["e_skeleton", "UnusedSkeletonEntity"]
+    "AxeKnightUnkFunc1": ["e_axe_knight", "EntityAxeKnightThrowingAxe"],
+    "SkeletonAttackCheck": ["e_skeleton", "UnusedSkeletonEntity"],
 }
 
 
@@ -47,7 +46,9 @@ def get_file_splits(overlay_name):
         if match:
             function_name = match.group(1)
             if function_name in file_start_funcs:
-                force_next_func_split = False # disable force-split, we're doing our own
+                force_next_func_split = (
+                    False  # disable force-split, we're doing our own
+                )
                 filename = file_start_funcs[function_name][0]
                 if len(file_start_funcs[function_name]) == 2:
                     # detect single-function files
