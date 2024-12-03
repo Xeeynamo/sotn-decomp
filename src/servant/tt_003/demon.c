@@ -1173,9 +1173,7 @@ void func_us_80175D20(Entity* self) {
                 CreateEventEntity(self, 0xD9, D_us_80178668->sfxId);
             }
             D_us_80178668++;
-            do {
-                D_us_8017866C = D_us_80178668->flag;
-            } while (0);
+            D_us_8017866C = ((s16*)D_us_80178668)[0];
         }
         break;
     case 4:
