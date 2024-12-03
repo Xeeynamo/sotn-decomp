@@ -5,7 +5,7 @@ void func_801A805C(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
-void ST0_EntityRedDoor(Entity*);
+void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityIntenseExplosion(Entity*);
 void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -22,7 +22,7 @@ void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
-void ST0_EntityCutscene(Entity*);
+void OVL_EXPORT(EntityCutscene)(Entity*);
 void EntityCutscene(Entity*);
 void EntityStageTitleCard(Entity*);
 void EntityStageTitleFadeout(Entity*);
@@ -53,7 +53,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
-    ST0_EntityRedDoor,
+    OVL_EXPORT(EntityRedDoor),
     EntityIntenseExplosion,
     EntitySoulStealOrb,
     EntityRoomForeground,
@@ -70,7 +70,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    ST0_EntityCutscene,
+    OVL_EXPORT(EntityCutscene),
     EntityCutscene,
     EntityStageTitleCard,
     EntityStageTitleFadeout,
@@ -94,9 +94,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_801AF774,
     EntityCutscenePhotograph,
     EntityCutscenePhotographFire,
-    func_801BC5C0
+    func_801BC5C0,
 };
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x7C, 0x0100, 0};
-
-
