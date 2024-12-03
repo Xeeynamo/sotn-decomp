@@ -11,7 +11,7 @@ INCLUDE_ASM("st/no1/nonmatchings/us", EntityUnkId12);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B5E20);
 
-INCLUDE_ASM("st/no1/nonmatchings/us", func_801A8328);
+INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B6198);
 
 INCLUDE_ASM("st/no1/nonmatchings/us", func_us_801B6490);
 

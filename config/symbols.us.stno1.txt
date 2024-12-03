@@ -7,7 +7,6 @@ D_801824B8 = 0x80182808;
 D_801824C0 = 0x80182810;
 EntityIsNearPlayer = 0x801B4E6C;
 EntityUnkId12 = 0x801B5C64;
-func_801A8328 = 0x801B6198;
 Random = 0x801C19F0;
 Update = 0x801C1A20;
 UpdateStageEntities = 0x801C1D1C;
