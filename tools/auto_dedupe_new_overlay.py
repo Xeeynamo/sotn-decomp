@@ -26,6 +26,8 @@ file_start_funcs = {
     "EntityRoomForeground": ["e_room_fg"],
     "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
+
+    "AxeKnightUnkFunc1":["e_axe_knight", "EntityAxeKnightThrowingAxe"]
 }
 
 
