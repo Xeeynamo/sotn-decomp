@@ -52,10 +52,18 @@ extern void func_us_80173348(Entity* self);
 extern void func_us_801737F0(Entity* self);
 extern void func_us_80173D14(Entity* self);
 
+// clang-format off
 void (*s_PassthroughFunctions[])(Entity*) = {
     DestroyEntityPassthrough,
     func_us_80172EF8,
     func_us_80173348,
     func_us_801737F0,
     func_us_80173D14
+};
+
+// clang-format on
+AnimationFrame D_us_80171CD8[] = {
+    {3, 0x0001}, {3, 0x0002}, {3, 0x0003}, {3, 0x0004},  {3, 0x0005},
+    {3, 0x0006}, {3, 0x0007}, {3, 0x0008}, {3, 0x0009},  {3, 0x000A},
+    {3, 0x000B}, {3, 0x000C}, {3, 0x000D}, {-1, 0x0000},
 };
