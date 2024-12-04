@@ -1040,7 +1040,6 @@ void unused_5800(Entity* self) {}
 
 void unused_5808(Entity* self) {}
 
-extern AnimationFrame* D_us_8017202C;
 extern s32* D_us_80172080[];
 extern s32 D_us_80178628;
 extern s32 D_us_8017862C;
@@ -1151,7 +1150,8 @@ void func_us_80175810(Entity* self) {
             sfxEntity->step = 7;
         }
     }
-    if ((self->anim == D_us_8017202C) && (self->animFrameIdx == 8)) {
+    if ((self->anim == g_DemonAnimationFrames[7]) &&
+        (self->animFrameIdx == 8)) {
         D_us_801786DC = 1;
     }
     ServantUpdateAnim(self, NULL, g_DemonAnimationFrames);
