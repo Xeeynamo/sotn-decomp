@@ -201,14 +201,14 @@ void func_ptr_80170004(Entity* self) {
 
             for (i = 0; i < 8; i++) {
                 g_api.CheckCollision(x, y + 7, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     y += 7 + collider.unk18;
                     g_api.CheckCollision(x, y - 1, &collider, 0);
 
                     if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) ==
                         EFFECT_SOLID) {
                         buffer[i] = 2;
-                    } else if (collider.effects & 1) {
+                    } else if (collider.effects & EFFECT_SOLID) {
                         y += collider.unk18 - 1;
                     }
                     xValues[i] = x;
@@ -232,13 +232,13 @@ void func_ptr_80170004(Entity* self) {
                     x += 7;
                 }
                 g_api.CheckCollision(x, y + 7, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     y += 7 + collider.unk18;
                     g_api.CheckCollision(x, y - 1, &collider, 0);
 
-                    if ((collider.effects & 0x8001) == 1) {
+                    if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) == EFFECT_SOLID) {
                         buffer[i] = 2;
-                    } else if (collider.effects & 1) {
+                    } else if (collider.effects & EFFECT_SOLID) {
                         y += collider.unk18 - 1;
                     }
                     xValues[i] = x;
