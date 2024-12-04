@@ -897,7 +897,7 @@ void func_us_8017540C(Entity* self) {
     case 2:
         if (!CheckEntityValid(self->ext.demon.target) &&
             !(self->ext.demon.target = FindValidTarget(self))) {
-            self->entityId = 0xD1;
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         } else {
             D_us_8017860C = self->ext.demon.target->posX.val;
@@ -955,7 +955,7 @@ void func_us_8017540C(Entity* self) {
         self->ext.demon.abilityTimer++;
 
         if (self->ext.demon.abilityTimer > 30) {
-            self->entityId = 0xD1;
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         }
         break;
@@ -1014,7 +1014,185 @@ void func_us_80175C08(Entity* self) {
     }
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175D20);
+extern s32 D_us_8017204C[];
+extern s32 D_us_80172060[];
+extern s32 D_us_8017863C;
+extern s32 D_us_80178640;
+extern s16 D_us_80178644;
+extern s16 D_us_80178648;
+extern s16 D_us_8017864C;
+extern s16 D_us_80178650;
+extern s16 D_us_80178654;
+extern s16 D_us_80178658;
+extern s32 D_us_8017865C;
+extern s32 D_us_80178660;
+extern s32 D_us_80178664;
+extern ServantSfxEventDesc* D_us_80178668;
+extern s16 D_us_8017866C;
+extern bool D_us_8017869C;
+
+void func_us_80175D20(Entity* self) {
+    s16 rnd;
+    s32 i;
+
+    g_api.GetServantStats(self, 0, 0, &s_DemonStats);
+    if (D_us_801786D4 != 0) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    D_us_80178658 = -0x18;
+    if (!PLAYER.facingLeft) {
+        D_us_80178658 = -D_us_80178658;
+    }
+
+    D_us_80178644 = PLAYER.posX.i.hi + D_us_80178658;
+    D_us_80178648 = PLAYER.posY.i.hi - 0x20;
+    D_us_8017864C = self->ext.demon.randomMovementAngle;
+    self->ext.demon.randomMovementAngle += 0x10;
+    self->ext.demon.randomMovementAngle &= 0xFFF;
+    D_us_80178654 = self->ext.demon.defaultDistToTargetLoc;
+
+    D_us_8017863C =
+        D_us_80178644 + (rcos(D_us_8017864C / 2) * (D_us_80178654) >> 0xC);
+    D_us_80178640 =
+        D_us_80178648 - (rsin(D_us_8017864C) * (D_us_80178654 / 2) >> 0xC);
+
+    D_us_8017864C = CalculateAngleToEntity(self, D_us_8017863C, D_us_80178640);
+    D_us_80178650 = GetTargetPositionWithDistanceBuffer(
+        D_us_8017864C, self->ext.demon.targetAngle, self->ext.demon.maxAngle);
+    self->ext.demon.targetAngle = D_us_80178650;
+    D_us_80178644 = D_us_8017863C - self->posX.i.hi;
+    D_us_80178648 = D_us_80178640 - self->posY.i.hi;
+    D_us_80178654 =
+        SquareRoot12(
+            ((D_us_80178644 * D_us_80178644) + (D_us_80178648 * D_us_80178648))
+            << 0xC) >>
+        0xC;
+    if (D_us_80178654 < 0x3C) {
+        self->velocityY = -(rsin(D_us_80178650) << 3);
+        self->velocityX = (rcos(D_us_80178650) << 3);
+        self->ext.demon.maxAngle = 0x40;
+    } else if (D_us_80178654 < 0x64) {
+        self->velocityY = -(rsin(D_us_80178650) << 4);
+        self->velocityX = (rcos(D_us_80178650) << 4);
+        self->ext.demon.maxAngle = 0x60;
+    } else {
+        self->velocityY = -(rsin(D_us_80178650) << 5);
+        self->velocityX = (rcos(D_us_80178650) << 5);
+        self->ext.demon.maxAngle = 0x80;
+    }
+    self->posX.val += self->velocityX;
+    self->posY.val += self->velocityY;
+    switch (self->step) {
+    case 0:
+        func_us_80172DC4(self);
+        break;
+    case 1:
+        if (PLAYER.facingLeft != self->facingLeft) {
+            if (abs(D_us_8017863C - self->posX.i.hi) <= 0) {
+                self->facingLeft = PLAYER.facingLeft;
+            } else if (!self->facingLeft && D_us_8017863C < self->posX.i.hi) {
+                self->facingLeft = PLAYER.facingLeft;
+            } else if (self->facingLeft && D_us_8017863C > self->posX.i.hi) {
+                self->facingLeft = PLAYER.facingLeft;
+            }
+        } else if (
+            !self->facingLeft && (self->posX.i.hi - D_us_8017863C) > 40) {
+            self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        } else if (self->facingLeft && (D_us_8017863C - self->posX.i.hi) > 40) {
+            self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        }
+        if (self->velocityY > FIX(1.0)) {
+            SetAnimationFrame(self, 10);
+        } else if (D_us_80178654 < 60) {
+            SetAnimationFrame(self, 0);
+        } else if (D_us_80178654 > 100) {
+            SetAnimationFrame(self, 11);
+        }
+        if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
+            D_us_801786D0 == true || g_CutsceneHasControl ||
+            g_unkGraphicsStruct.D_800973FC) {
+            SetAnimationFrame(self, 0);
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+            self->step = 0;
+            return;
+        }
+        D_us_8017865C = D_us_8017863C - self->posX.i.hi;
+        D_us_80178660 = D_us_80178640 - self->posY.i.hi;
+        D_us_80178664 = SquareRoot12(((D_us_8017865C * D_us_8017865C) +
+                                      (D_us_80178660 * D_us_80178660))
+                                     << 0xC) >>
+                        0xC;
+        if (D_us_80178664 < 0x20) {
+            self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+            self->step++;
+        }
+        break;
+    case 2:
+        rnd = rand() % 0x100;
+        if (D_us_8017869C == true) {
+            for (i = 0; true; i++) {
+                if (rnd <= D_us_8017204C[i * 2]) {
+                    D_us_80178668 =
+                        (ServantSfxEventDesc*)D_us_8017204C[i * 2 + 1];
+                    break;
+                }
+            }
+        } else {
+            for (i = 0; true; i++) {
+                if (rnd <= D_us_80172060[i * 2]) {
+                    D_us_80178668 =
+                        (ServantSfxEventDesc*)D_us_80172060[i * 2 + 1];
+                    break;
+                }
+            }
+        }
+        D_us_8017866C = ((s16*)D_us_80178668)[0];
+        g_PauseAllowed = false;
+        self->step++;
+        break;
+    case 3:
+        if (PLAYER.posX.i.hi >= self->posX.i.hi) {
+            self->facingLeft = false;
+        } else {
+            self->facingLeft = true;
+        }
+        if (D_us_8017866C < 0) {
+            if (g_PlaySfxStep > 4) {
+                SetAnimationFrame(self, D_us_80178668->animIndex);
+                self->step++;
+            }
+            break;
+        }
+        if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 99)) {
+            D_us_8017866C--;
+        }
+        if (D_us_8017866C < 0) {
+            SetAnimationFrame(self, D_us_80178668->animIndex);
+            if ((D_us_80178668->sfxId != 0) &&
+                (SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH) ==
+                 NULL)) {
+                CreateEventEntity(
+                    self, DEMON_EVENT_SFX_PASSTHROUGH, D_us_80178668->sfxId);
+            }
+            D_us_80178668++;
+            D_us_8017866C = ((s16*)D_us_80178668)[0];
+        }
+        break;
+    case 4:
+        if (g_PlaySfxStep == 99) {
+            self->step++;
+        }
+        break;
+    case 5:
+        SetAnimationFrame(self, 0);
+        g_PauseAllowed = true;
+        self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+        self->step = 0;
+        break;
+    }
+    ProcessEvent(self, false);
+    ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+}
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 

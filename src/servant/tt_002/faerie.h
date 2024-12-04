@@ -78,7 +78,7 @@ typedef struct {
 typedef struct {
     s32 left;
     s32 top;
-    FaerieSfxEventDesc* hint;
+    ServantSfxEventDesc* hint;
 } HintTriggerMap;
 
 typedef struct {
