@@ -1,0 +1,70 @@
+options:
+  platform: psx
+  basename: stno1
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NO1/NO1.BIN
+  asm_path: asm/us/st/no1
+  asset_path: assets/st/no1
+  src_path: src/st/no1
+  ld_script_path: build/us/stno1.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stno1.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno1.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stno1.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+  disassemble_all: true
+sha1: 41ccd886308d5527684ae2c41164ecf6c554721f
+segments:
+  - name: stno1
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x34670, .rodata, first_c_file]
+      - [0x34670, .rodata, e_red_door]
+      - [0x348A8, .rodata, st_common]
+      - [0x34930, .rodata, blit_char]
+      - [0x34940, .rodata, e_misc]
+      - [0x3497C, .rodata, e_axe_knight]
+      - [0x34A00, .rodata, e_stage_name]
+      - [0x34A34, .rodata, e_skeleton]
+      - [0x34A50, .rodata, unk_4DDD8]
+      - [0x34CBC, .rodata, prim_helpers]
+      - [0x34CC4, c, first_c_file]
+      - [0x34E6C, c, e_red_door]
+      - [0x419F0, c, st_update]
+      - [0x41E24, c, collision]
+      - [0x435E0, c, create_entity]
+      - [0x44158, c, st_common]
+      - [0x46B74, c, blit_char]
+      - [0x46E24, c, e_misc]
+      - [0x4A314, c, e_axe_knight]
+      - [0x4BA30, c, unk_4BA30]
+      - [0x4BB24, c, e_stage_name]
+      - [0x4C978, c, e_particles]
+      - [0x4D1BC, c, e_room_fg]
+      - [0x4D2A8, c, popup]
+      - [0x4D5D8, c, e_skeleton]
+      - [0x4DDD8, c, unk_4DDD8]
+      - [0x55AF8, c, prim_helpers]
+      - [0x56328, sbss]
+  - [0x57064]

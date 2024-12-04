@@ -54,7 +54,7 @@ extern u16 g_EInitAxeKnight[];
 
 // Weirdly, this function ONLY acts on prim->next, it does not act on prim.
 // However, it does call functions on prim.
-void func_801C3F9C(AxePrim* prim) {
+static void AxeKnightUnkFunc1(AxePrim* prim) {
     Collider collider;
     Entity* newEnt;
     s16 yVar;
@@ -178,7 +178,7 @@ s32 func_801C4198(Entity* axeKnight) {
         flag = 0;
         for (prim = axeKnight->ext.axeknight.prim; prim != NULL;) {
             if (prim->p3 & 8) {
-                func_801C3F9C(prim);
+                AxeKnightUnkFunc1(prim);
                 flag = 1;
             }
             prim = prim->next;

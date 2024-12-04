@@ -197,6 +197,7 @@ void func_801A8328(Entity* self) {
             temp2 = (self->params * 16) - 124;
             prim->v2 = prim->v3 = temp2 + 15;
             prim->v0 = prim->v1 = temp2;
+
             prim->next->x1 = self->posX.i.hi;
             prim->next->y0 = self->posY.i.hi;
             LOH(prim->next->r2) = 0x10;
