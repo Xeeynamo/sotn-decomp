@@ -249,7 +249,7 @@
 | dra    | func_psp_09142E48                   |       44 |          3 |        |                                 |       |
 | dra    | func_80134C60                       |       45 |          1 |        |                                 |       |
 |        | CalculateAngleToEntity              |       45 |          2 |        |                                 |       |
-| dra    | func_psp_09117A90                   |       45 |          6 |        |                                 |       |
+| dra    | func_psp_09117A90                   |       45 |          6 |        | https://decomp.me/scratch/nRChY | 0.713 |
 | dra    | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
 | dra    | func_psp_090DFBD0                   |       46 |          4 |        |                                 |       |
 | wrp    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
@@ -367,7 +367,7 @@
 | dra    | func_psp_090ECD78                   |       73 |          7 |        |                                 |       |
 | dra    | func_psp_0913E558                   |       73 |          7 |        |                                 |       |
 | wrp    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
-| dra    | func_psp_09117998                   |       73 |         12 |        |                                 |       |
+| dra    | func_psp_09117998                   |       73 |         12 |        | https://decomp.me/scratch/MkcQs | 0.966 |
 | dra    | func_psp_090E8658                   |       74 |          6 |        |                                 |       |
 | dra    | func_psp_0910B660                   |       74 |          7 |        |                                 |       |
 | dra    | func_8010DFF0                       |       74 |          7 |        |                                 |       |
