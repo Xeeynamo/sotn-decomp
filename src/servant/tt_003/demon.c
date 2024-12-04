@@ -224,7 +224,7 @@ void func_us_80172DC4(Entity* self) {
 
 void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
-extern u32 D_us_80171B74[][4];
+extern u32 D_us_80171B74[8][4];
 
 void func_us_80172EF8(Entity* self) {
     Primitive* prim;
