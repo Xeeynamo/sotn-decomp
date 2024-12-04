@@ -529,8 +529,6 @@ void ControlBatForm(void) {
                 DecelerateY(0x1200);
             } else {
                 PLAYER.velocityY = FIX(-1.25);
-                // Putting a 'break;' right here helps the match, but it's
-                // nonsense
             }
             func_8011690C(-0x80);
             DecelerateX(0x1200);
