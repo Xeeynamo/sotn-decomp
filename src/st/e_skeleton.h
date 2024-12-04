@@ -253,7 +253,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
         self->posY.val -= FIX(0.0625);
         xDistanceToPlayer = GetDistanceToPlayerX();
         xDistanceToPlayer /= 32;
-        xDistanceToPlayer = MAX(xDistanceToPlayer, 7);
+        xDistanceToPlayer = MIN(xDistanceToPlayer, 7);
         velocityX = bone_projectile_velocity_x[xDistanceToPlayer];
         xDistanceToPlayer = self->facingLeft;
 
