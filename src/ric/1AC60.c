@@ -244,10 +244,11 @@ static void CheckStageCollision(bool arg0) {
         argX = PLAYER.posX.i.hi + g_RicSensorsFloor[i].x;
         argY = PLAYER.posY.i.hi + g_RicSensorsFloor[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colFloor[i], 0);
-        if (g_Player.timers[PL_T_7] && (g_Player.colFloor[i].effects & 0x40)) {
+        if (g_Player.timers[PL_T_7] &&
+            (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
             g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
             if (!(collider.effects & EFFECT_SOLID)) {
-                g_Player.colFloor[i].effects = 0;
+                g_Player.colFloor[i].effects = EFFECT_NONE;
             }
         }
     }

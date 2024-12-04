@@ -1,19 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
-#include "servant.h"
+#include "demon.h"
 #include "sfx.h"
-
-typedef enum {
-    DEMON_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
-    DEMON_MODE_UNK_D2,
-    DEMON_MODE_UNK_D3,
-    DEMON_MODE_UNK_D4,
-    DEMON_MODE_UNK_D5,
-    DEMON_MODE_UNK_D6,
-    DEMON_SUBENTITY_UNK_D7,
-    DEMON_MODE_UNK_D8,
-    DEMON_EVENT_SFX_PASSTHROUGH,
-} EntityIds;
 
 extern ServantEvent g_Events[];
 
@@ -955,8 +943,7 @@ extern s32 s_DemonSfxMap[];
 // PSX: https://decomp.me/scratch/vbedA
 // PSP: https://decomp.me/scratch/mRGqb
 
-extern s16 g_DemonAttackStats[][6];
-extern s32 g_DemonAttackIdSfxLookup[][3];
+extern s32 g_DemonAttackIdSfxLookup[5][3];
 extern s32 D_us_8017860C;
 extern s32 D_us_80178610;
 extern s32 D_us_80178614;
@@ -1053,7 +1040,122 @@ void unused_5800(Entity* self) {}
 
 void unused_5808(Entity* self) {}
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80175810);
+extern AnimationFrame* D_us_8017202C;
+extern s32* D_us_80172080[];
+extern s32 D_us_80178628;
+extern s32 D_us_8017862C;
+extern ServantSfxEventDesc* D_us_80178634;
+extern s16 D_us_80178638;
+
+void func_us_80175810(Entity* self) {
+    Entity* sfxEntity;
+    s32 xCalc;
+    s32 yCalc;
+    s32 facingLeft;
+
+    if (D_us_801786D4) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    if (D_us_801786D8) {
+        D_us_80178628 = D_us_801786D8->posX.val;
+        D_us_8017862C = D_us_801786D8->posY.val;
+        self->ext.demon.attackVelocityOffset += 0x40;
+        self->ext.demon.attackVelocityOffset &= 0xFFF;
+        D_us_8017862C =
+            (rsin((s32)self->ext.demon.attackVelocityOffset) << 3 << 4) +
+            D_us_8017862C;
+
+        self->velocityX = (D_us_80178628 - self->posX.val) >> 5;
+        self->velocityY = (D_us_8017862C - self->posY.val) >> 5;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+    }
+    switch (self->step) {
+    case 0:
+        func_us_80172DC4(self);
+        break;
+    case 1:
+        if (self->velocityX > 0) {
+            facingLeft = false;
+        } else {
+            facingLeft = true;
+        }
+        self->facingLeft = facingLeft;
+
+        xCalc = (D_us_80178628 - self->posX.val) >> 0x10;
+        yCalc = (D_us_8017862C - self->posY.val) >> 0x10;
+        if ((SquareRoot12((SQ(xCalc) + SQ(yCalc)) << 0xC) >> 0xC) < 0x10) {
+            if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
+                self->facingLeft = 0;
+                D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[1];
+            } else {
+                self->facingLeft = 1;
+                D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[3];
+            }
+            self->step++;
+        }
+        break;
+    case 2:
+        D_us_80178638 = ((s16*)D_us_80178634)[0];
+#ifndef VERSION_PSP
+        g_PauseAllowed = false;
+#endif
+        self->step++;
+        // fallthrough
+    case 3:
+
+        if (D_us_80178638 < 0) {
+            if (g_PlaySfxStep > 4) {
+
+                SetAnimationFrame(self, D_us_80178634->animIndex);
+#ifndef VERSION_PSP
+                g_PauseAllowed = true;
+#endif
+                self->step++;
+            }
+        } else {
+            if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
+                D_us_80178638--;
+            }
+            if (D_us_80178638 < 0) {
+                SetAnimationFrame(self, D_us_80178634->animIndex);
+                if (D_us_80178634->sfxId != 0 &&
+                    !SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) {
+                    CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
+                                      D_us_80178634->sfxId);
+                }
+                D_us_80178634++;
+                D_us_80178638 = ((s16*)D_us_80178634)[0];
+            }
+        }
+        break;
+    case 4:
+        self->ext.demon.attackEndCounter++;
+        if (self->ext.demon.attackEndCounter > 120) {
+            self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+            self->step = 0;
+        }
+        break;
+    }
+
+    if (D_us_801786D8 && !D_us_801786D8->entityId) {
+#ifndef VERSION_PSP
+        g_PauseAllowed = true;
+#endif
+        self->entityId = DEMON_MODE_DEFAULT_UPDATE;
+        self->step = 0;
+
+        if ((sfxEntity =
+                 SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) &&
+            sfxEntity->step < 5) {
+            sfxEntity->step = 7;
+        }
+    }
+    if ((self->anim == D_us_8017202C) && (self->animFrameIdx == 8)) {
+        D_us_801786DC = 1;
+    }
+    ServantUpdateAnim(self, NULL, g_DemonAnimationFrames);
+}
 
 void func_us_80175C08(Entity* self) {
 

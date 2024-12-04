@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
 
 mod bit_flag_line_transformer;
+mod collider_effects;
 mod drawflags;
 mod drawmodes;
 mod enum_line_transformer;
@@ -13,6 +14,7 @@ mod player_status;
 mod primitive_type;
 mod relics;
 
+use collider_effects::ColliderEffectsTransformer;
 use drawflags::DrawFlagsTransformer;
 use drawmodes::DrawModeTransformer;
 use fixed::FixedTransformer;
@@ -68,6 +70,7 @@ fn process_directory(dir_path: &str) {
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
         Box::new(relics_transformer),
+        Box::new(ColliderEffectsTransformer::new()),
         Box::new(draw_mode_transformer),
         Box::new(flags_transformer),
         Box::new(draw_flags_transformer),

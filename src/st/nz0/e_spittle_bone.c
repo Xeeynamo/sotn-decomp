@@ -229,7 +229,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.0625);
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-        if (collider.effects != 0) {
+        if (collider.effects != EFFECT_NONE) {
             PlaySfxPositional(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
             EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
@@ -291,7 +291,7 @@ void EntitySpittleBoneSpit(Entity* self) {
             if (LOW(prim->x3) > 0) {
                 g_api.CheckCollision(
                     prim->x0, (s16)(prim->y0 + 16), &collider, 0);
-                if (collider.effects != 0) {
+                if (collider.effects != EFFECT_NONE) {
                     prim->drawMode = DRAW_HIDE;
                 }
             }

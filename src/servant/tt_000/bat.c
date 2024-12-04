@@ -226,13 +226,13 @@ bool Unused_CheckCollision(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
     g_api.CheckCollision(x, y, &s_UnusedCollider, 0);
-    if (s_UnusedCollider.effects & 1) {
+    if (s_UnusedCollider.effects & EFFECT_SOLID) {
         return 0;
     }
 
     for (curY = y - 16; curY > 0; curY -= 16) {
         g_api.CheckCollision(x, curY, &s_UnusedCollider, 0);
-        switch (s_UnusedCollider.effects & 0x801) {
+        switch (s_UnusedCollider.effects & (EFFECT_UNK_0800 | EFFECT_SOLID)) {
         case 0:
             break;
         case 1:
