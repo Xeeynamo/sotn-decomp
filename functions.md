@@ -704,7 +704,7 @@
 | dra    | func_psp_0912F7F8                   |     1022 |         72 |        |                                 |       |
 | dra    | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | dra    | func_psp_090E5020                   |     1102 |        110 |        |                                 |       |
-| dra    | func_psp_0910F720                   |     1173 |        197 | Yes    |                                 |       |
+| dra    | func_psp_0910F720                   |     1173 |        197 | Yes    | https://decomp.me/scratch/MBJNm | 0.971 |
 | dra    | func_psp_090DEAC8                   |     1174 |        181 |        |                                 |       |
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/V04Wm | 0.998 |
 | dra    | func_psp_09130B00                   |     1188 |         81 |        | https://decomp.me/scratch/70r4s | 0.999 |
