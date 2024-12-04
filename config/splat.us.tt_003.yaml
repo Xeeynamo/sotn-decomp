@@ -41,7 +41,7 @@ segments:
       - [0x0, .data, demon]
       - [0x40, data, demon_spriteparts]
       - [0x19F0, .data, demon_data]
-      - [0x1BF4, data]
+      - [0x1C24, data]
       - [0x2090, .data, servant_events]
       - [0x29DC, .rodata, demon]
       - [0x2A68, c, demon]
