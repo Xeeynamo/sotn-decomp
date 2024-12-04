@@ -14,8 +14,32 @@ void func_8010E168(s32 arg0, s16 arg1) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3AE30", func_psp_09117858);
+void DecelerateX(s32 amount) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += amount;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= amount;
+        if (g_CurrentEntity->velocityX < 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    }
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3AE30", func_psp_091178F8);
+void DecelerateY(s32 amount) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += amount;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= amount;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3AE30", func_psp_09117998);
