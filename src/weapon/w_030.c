@@ -236,7 +236,8 @@ void func_ptr_80170004(Entity* self) {
                     y += 7 + collider.unk18;
                     g_api.CheckCollision(x, y - 1, &collider, 0);
 
-                    if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) == EFFECT_SOLID) {
+                    if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) ==
+                        EFFECT_SOLID) {
                         buffer[i] = 2;
                     } else if (collider.effects & EFFECT_SOLID) {
                         y += collider.unk18 - 1;
@@ -272,12 +273,6 @@ void func_ptr_80170004(Entity* self) {
                         }
                     }
                 }
-
-// This is the same as `WFACTORY`, except the order of operations
-// is changed to add `id` to the `g_HandId` bits and then add then
-// the shifted params. `WFACTORY` groups the `id` and `param`
-// addition operation and is required for all other instances.
-#define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
 
                 if (self->ext.weapon.unk90 == 6) {
                     k = 0x10;
