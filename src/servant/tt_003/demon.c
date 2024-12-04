@@ -1792,7 +1792,7 @@ void func_us_801771B0(Entity* self) {
         self->posX.val += self->velocityX;
         self->ext.et_801737F0.animationTriggerCount += 1;
 
-        if ((u16)(self->posX.i.hi + 0x20 & 0xFFFF) >= 0x141U) {
+        if ((u16)(self->posX.i.hi + 0x20) > 0x140) {
             DestroyEntity(self);
             return;
         }
@@ -1825,9 +1825,8 @@ void func_us_801771B0(Entity* self) {
             prim->y3 = posY_hi + D_us_80171B44[i][7];
         }
 
-        colorValue =
-            ((self->ext.et_801737F0.animationTriggerCount & 1) << 6) + 0x40;
-        PCOL(prim) = colorValue;
+        PCOL(prim) =
+            ((self->ext.et_801737F0.animationTriggerCount & 1) * 64) + 0x40;
         prim = prim->next;
     }
 }
