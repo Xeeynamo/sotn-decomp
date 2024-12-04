@@ -81,11 +81,12 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-# DRA appears to be compiled with -O4,p. This will control that flag.
-# May need to modify if other -O4,p functions are found in other overlays.
-# Works for now. Look in git history for a different approach which filters by individual .o file.
+# Much of DRA has O4. Here we set optimization of the overlay - DRA gets O4, otherwise Op.
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
-OPTIMIZATION = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
+OPT_OVL = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
+# Allow override. Any file in this list will get Op.
+OPT_LO_OVERRIDES = 3AE30.c.o
+OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_LO_OVERRIDES)), -Op, $(OPT_OVL))
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
