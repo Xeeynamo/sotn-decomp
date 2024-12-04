@@ -11,7 +11,7 @@ extern FamiliarStats s_DemonStats;
 extern s32 s_LastTargetedEntityIndex;
 extern AnimationFrame* g_DemonAnimationFrames[];
 extern s32 s_ServantId;
-extern u16 g_DemonClut[64];
+extern u16 g_DemonClut[80];
 extern SpriteParts* g_DemonSpriteParts[];
 extern s32 D_us_801786D0;
 extern s32 D_us_801786D4;
