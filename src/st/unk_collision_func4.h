@@ -18,7 +18,7 @@ u8 UnkCollisionFunc4(s32 arg0) {
         g_CurrentEntity->posY.i.hi += 3;
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi, &collider, 0);
-        if (collider.effects != 0) {
+        if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk18;
             g_api.CheckCollision(
@@ -53,7 +53,7 @@ u8 UnkCollisionFunc4(s32 arg0) {
         g_CurrentEntity->posY.i.hi -= 3;
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi, &collider, 0);
-        if (collider.effects != 0) {
+        if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk20;
             g_api.CheckCollision(
@@ -88,7 +88,7 @@ u8 UnkCollisionFunc4(s32 arg0) {
         g_CurrentEntity->posX.i.hi += 3;
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi, &collider, 0);
-        if (collider.effects != 0) {
+        if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posX.i.hi += collider.unk14;
             g_api.CheckCollision((s16)(g_CurrentEntity->posX.i.hi - 4),
@@ -122,7 +122,7 @@ u8 UnkCollisionFunc4(s32 arg0) {
         g_CurrentEntity->posX.i.hi -= 3;
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi, &collider, 0);
-        if (collider.effects != 0) {
+        if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posX.i.hi += collider.unk1C;
             g_api.CheckCollision((s16)(g_CurrentEntity->posX.i.hi + 4),

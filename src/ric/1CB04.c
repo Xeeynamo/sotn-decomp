@@ -686,7 +686,7 @@ void RicHandleHit(
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
             PLAYER.step_s = 5;
-            damage.effects = 0;
+            damage.effects = EFFECT_NONE;
             damage.damageKind = 1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.CalcPlayerDamage(&damage)) {
@@ -699,14 +699,14 @@ void RicHandleHit(
             if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
                 (g_StageId != STAGE_DRE)) {
                 for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
-                    if (g_Player.colWall[i].effects & 2) {
+                    if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
                         break;
                     }
                 }
                 if (i == NUM_VERTICAL_SENSORS) {
                     for (i = NUM_VERTICAL_SENSORS + 2;
                          i < NUM_VERTICAL_SENSORS * 2; i++) {
-                        if (g_Player.colWall[i].effects & 2) {
+                        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
                             break;
                         }
                     }
@@ -728,7 +728,7 @@ void RicHandleHit(
                     g_api.PlaySfx(SFX_WALL_DEBRIS_B);
                     g_api.func_80102CD8(2);
                     PLAYER.step_s = 1;
-                    damage.effects = 0;
+                    damage.effects = EFFECT_NONE;
                     damage.damageKind = 1;
                     damage.damageTaken = g_Player.damageTaken;
                     if (g_api.CalcPlayerDamage(&damage)) {
@@ -747,7 +747,7 @@ void RicHandleHit(
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SKID_SMOKE_2, 8), 0);
         }
-        damage.effects = 0;
+        damage.effects = EFFECT_NONE;
         damage.damageKind = 1;
         damage.damageTaken = g_Player.damageTaken;
         if (g_api.CalcPlayerDamage(&damage)) {
@@ -840,7 +840,7 @@ void RicHandleBossGrab(void) {
     case 1:
         // Effectively a switch on g_Player.unk60
         if (g_Player.unk60 == 3) {
-            damage.effects = 0;
+            damage.effects = EFFECT_NONE;
             damage.damageKind = 1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.CalcPlayerDamage(&damage)) {

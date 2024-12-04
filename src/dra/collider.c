@@ -68,7 +68,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
             g_Tilemap.fg[(absX >> 4) + (absY >> 4) * g_Tilemap.hSize * new_var];
         colType = g_Tilemap.tileDef->collision[colTile];
     }
-    res->effects = 0;
+    res->effects = EFFECT_NONE;
     res->unk4 = res->unk14 = -(absX & 0xF);
     res->unk8 = res->unk18 = -(absY & 0xF);
     res->unkC = res->unk1C = res->unk14 + 0xF;
@@ -98,7 +98,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
                 res->effects = EFFECT_UNK_8000 | EFFECT_SOLID | EFFECT_UNK_0002;
             }
         } else {
-            res->effects = 1;
+            res->effects = EFFECT_SOLID;
         }
         break;
     case COLLISION_TYPE_RIGHT_45_ANGLE:
@@ -145,9 +145,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
             temp_v0_6 = res->unk20 - res->unk1C;
             res->unk18 = temp_v0_6;
             res->unk1C = (-temp_v0_6);
-            res->effects = 0xC001;
+            res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID;
         } else {
-            res->effects = 0xC000;
+            res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000;
         }
         break;
     case 0x8C:
@@ -155,9 +155,10 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     case 0x8D:
         if (var_a1 + res->unk1C >= res->unk20 * 2) {
             res->unk18 = res->unk20 - (var_a1 + res->unk1C >> 1);
-            res->effects = 0xD001;
+            res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_1000 |
+                           EFFECT_SOLID;
         } else {
-            res->effects = 0xD000;
+            res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_1000;
         }
         break;
     case 0x9A:
@@ -171,9 +172,10 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
         temp_v1_7 = var_a1 + res->unk1C;
         if (temp_v1_7 >= temp_a0_3 * 4) {
             res->unk18 = temp_a0_3 - (temp_v1_7 >> 2);
-            res->effects = 0xE001;
+            res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                           EFFECT_SOLID;
         } else {
-            res->effects = 0xE000;
+            res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000;
         }
         break;
     case 0x85:
@@ -189,12 +191,12 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
                     temp_a0_2 = 1;
                     res->unk20 = res->unk20 + temp_a0_2 + sp38.unk20;
                 }
-                res->effects = sp38.effects |= 3;
+                res->effects = sp38.effects |= EFFECT_UNK_0002 | EFFECT_SOLID;
             } else {
-                res->effects = 0x803;
+                res->effects = EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID;
             }
         } else {
-            res->effects = 1;
+            res->effects = EFFECT_SOLID;
         }
         break;
     case COLLISION_TYPE_RIGHT_CEILING_45_ANGLE:
@@ -203,9 +205,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
             temp_v0_8 = temp_a0_4 - res->unk20;
             res->unk14 = temp_v0_8;
             res->unk20 = -temp_v0_8;
-            res->effects = 0x801;
+            res->effects = EFFECT_UNK_0800 | EFFECT_SOLID;
         } else {
-            res->effects = 0x800;
+            res->effects = EFFECT_UNK_0800;
         }
         break;
     case 0x8E:
@@ -216,9 +218,9 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
             temp_v0_9 = temp_a0_5 - res->unk20 * 2;
             res->unk14 = temp_v0_9;
             res->unk20 = -temp_v0_9 / 2;
-            res->effects = 0x1801;
+            res->effects = EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_SOLID;
         } else {
-            res->effects = 0x1800;
+            res->effects = EFFECT_UNK_1000 | EFFECT_UNK_0800;
         }
         break;
     case 0x9E:
@@ -237,20 +239,20 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
                 var_v0_2 += 3;
             }
             res->unk20 = (s32)(var_v0_2 >> 2);
-            res->effects = 0x2801;
+            res->effects = EFFECT_UNK_2000 | EFFECT_UNK_0800 | EFFECT_SOLID;
         } else {
-            res->effects = 0x2800;
+            res->effects = EFFECT_UNK_2000 | EFFECT_UNK_0800;
         }
         break;
     case COLLISION_TYPE_LEFT_CEILING_45_ANGLE:
         if (res->unk1C + res->unk20 >= 0xF) {
-            res->effects = 0x4801;
+            res->effects = EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID;
             temp_v0_11 = res->unk18 + 0xF;
             temp_v0_11 = temp_v0_11 + res->unk14;
             res->unk20 = temp_v0_11;
             res->unk1C = (u32)temp_v0_11;
         } else {
-            res->effects = 0x4800;
+            res->effects = EFFECT_UNK_4000 | EFFECT_UNK_0800;
         }
         break;
     case 0x92:
@@ -258,12 +260,13 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     case 0x93:
         if (var_a1 + res->unk1C + res->unk20 * 2 >= 0x1E) {
             temp_a0_5 = 0xF;
-            res->effects = 0x5801;
+            res->effects = EFFECT_UNK_4000 | EFFECT_UNK_1000 | EFFECT_UNK_0800 |
+                           EFFECT_SOLID;
             res->unk20 = ((var_a1 + res->unk14 - temp_a0_5) >> 1) +
                          (res->unk18 + temp_a0_5);
             ;
         } else {
-            res->effects = 0x5800;
+            res->effects = EFFECT_UNK_4000 | EFFECT_UNK_1000 | EFFECT_UNK_0800;
         }
         break;
     case 0xA4:
@@ -275,62 +278,63 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     case 0xA7:
         new_var2 = 0xF;
         if (var_a1 + res->unk1C + res->unk20 * 4 >= 0x3C) {
-            res->effects = 0x6801;
+            res->effects = EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_0800 |
+                           EFFECT_SOLID;
             res->unk20 =
                 (((var_a1 + res->unk14) - 0x2D) >> 2) + (res->unk18 + new_var2);
         } else {
-            res->effects = 0x6800;
+            res->effects = EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_0800;
         }
         break;
     case 0xFF:
         if (res->unk20 < 8) {
-            res->effects = 3;
+            res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
             res->unk18 = res->unk18 + 8;
         }
         break;
     case 0xFE:
         if (res->unk20 >= 8) {
-            res->effects = 3;
+            res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
     case 0xFD:
         if (res->unk20 < 8) {
-            res->effects = 1;
+            res->effects = EFFECT_SOLID;
             res->unk18 += 8;
         }
         break;
     case 0xFC:
         if (res->unk20 >= 8) {
-            res->effects = 1;
+            res->effects = EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
     case 0xFB:
-        res->effects = 4;
+        res->effects = EFFECT_QUICKSAND;
         break;
     case 0xFA:
         if (res->unk20 < 8) {
             if (1) {
-                res->effects = 4;
+                res->effects = EFFECT_QUICKSAND;
             }
             res->unk18 += 8;
         }
         break;
     case 0xF9:
         if (res->unk20 < 8) {
-            res->effects = 8;
+            res->effects = EFFECT_WATER;
             res->unk18 += 8;
         }
         break;
     case 0xF8:
-        res->effects = 0x13;
+        res->effects = EFFECT_MIST_ONLY | EFFECT_UNK_0002 | EFFECT_SOLID;
         break;
     case 0xF4:
     case 0xF5:
     case 0xF6:
     case 0xF7:
-        res->effects = 0x20;
+        res->effects = EFFECT_UNK_0020;
         break;
     case 0xEE:
     case 0xEF:
@@ -338,44 +342,44 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     case 0xF1:
     case 0xF2:
     case 0xF3:
-        res->effects = 3;
+        res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
         break;
     case COLLISION_TYPE_WATER:
-        res->effects = 8;
+        res->effects = EFFECT_WATER;
         break;
     case 0xEA:
         if (res->unk20 >= 8) {
-            res->effects = 8;
+            res->effects = EFFECT_WATER;
             res->unk20 -= 8;
         }
         break;
     case 0xE9:
         if (res->unk20 >= 8) {
-            res->effects = 4;
+            res->effects = EFFECT_QUICKSAND;
             res->unk20 -= 8;
         }
         break;
     case 0xE8:
         if (res->unk20 < 8) {
-            res->effects = 0x41;
+            res->effects = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
             res->unk18 += 8;
         }
         break;
     case COLLISION_TYPE_FLAT_DROP_THROUGH:
         if (res->unk20 >= 8) {
-            res->effects = 0x41;
+            res->effects = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
     case 0xE6:
         if (res->unk20 < 8) {
-            res->effects = 0x81;
+            res->effects = EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID;
             res->unk18 += 8;
         }
         break;
     case 0xE5:
         if (res->unk20 >= 8) {
-            res->effects = 0x81;
+            res->effects = EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
