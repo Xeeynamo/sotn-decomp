@@ -1671,7 +1671,8 @@ void func_us_80176C1C(Entity* self) {
                 prim->y0 = prim->y1 = self->posY.i.hi - 4;
                 prim->y2 = prim->y3 = self->posY.i.hi + 4;
             }
-
+            // this looks like a mistake but it is needed to get a match on PSP:
+            // https://decomp.me/scratch/28GaG
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 0;
@@ -1721,6 +1722,8 @@ void func_us_80176C1C(Entity* self) {
         if (prim->r0 < 0x20) {
             prim->drawMode |= DRAW_HIDE;
         } else {
+            // this looks like a mistake but it is needed to get a match on PSP:
+            // https://decomp.me/scratch/28GaG
             prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 = prim->g2 =
                 prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0;
             prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
