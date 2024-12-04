@@ -42,4 +42,27 @@ void DecelerateY(s32 amount) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3AE30", func_psp_09117998);
+s32 CheckMoveDirection(void) {
+    if (g_Player.unk44 & 2) {
+        return 0;
+    }
+    if (PLAYER.facingLeft == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
+            g_Player.unk4C = 1;
+            return -1;
+        } else if (g_Player.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
