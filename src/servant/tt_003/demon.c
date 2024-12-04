@@ -1573,8 +1573,8 @@ void func_us_80176814(Entity* self) {
 
     for (i = 0; i < 12; i++) {
         if (self->facingLeft) {
-            prim->x2 = newX - D_us_80171D10.xOffsets[i];
-            prim->x3 = newX - D_us_80171D10.xOffsets[i + 1];
+            prim->x2 = newX - D_us_80171D10[i];
+            prim->x3 = newX - D_us_80171D10[i + 1];
             if (i == 0) {
                 prim->x0 = prim->x2 - 0x10;
             } else {
@@ -1587,8 +1587,8 @@ void func_us_80176814(Entity* self) {
             }
 
         } else {
-            prim->x2 = newX + D_us_80171D10.xOffsets[i];
-            prim->x3 = newX + D_us_80171D10.xOffsets[i + 1];
+            prim->x2 = newX + D_us_80171D10[i];
+            prim->x3 = newX + D_us_80171D10[i + 1];
 
             if (i == 0) {
                 prim->x0 = prim->x2 + 0x10;
