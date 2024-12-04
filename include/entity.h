@@ -630,7 +630,7 @@ typedef struct {
     /* 0x0 */ s16 flag;
     /* 0x2 */ s16 animIndex;
     /* 0x4 */ s16 sfxId;
-} FaerieSfxEventDesc;
+} ServantSfxEventDesc;
 
 typedef struct {
     /* 0x7C */ s16 : 16;
@@ -651,7 +651,7 @@ typedef struct {
     /* 0x9C */ s32 tileMapY;
     /* 0xA0 */ s16 idleFrameCounter;
     /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ FaerieSfxEventDesc* currentSfxEvent;
+    /* 0xA4 */ ServantSfxEventDesc* currentSfxEvent;
     /* 0xA8 */ s16 sfxEventFlag;
     /* 0xAA */ s16 padAA[5];
     /* 0xB4 */ s16 unkB4;
@@ -667,8 +667,11 @@ typedef struct {
     /* 0x88 */ s16 defaultDistToTargetLoc;
     /* 0x8A */ s16 maxAngle;
     /* 0x8C */ s16 abilityTimer;
-    /* 0x8E */ s16 pad_8E[0x9]; // this will possbily get broken out more
-    /*0xA0*/ s16 unkCounter;
+    /* 0x8E */ s16 pad_8E[2];
+    /* 0x92 */ s16 attackEndCounter;
+    /* 0x94 */ s16 attackVelocityOffset;
+    /* 0x96 */ s16 pad_96[5];
+    /* 0xA0 */ s16 unkCounter;
     /* 0xA4 */ struct Entity* target;
 } ET_Demon;
 

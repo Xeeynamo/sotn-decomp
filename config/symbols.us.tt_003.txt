@@ -7,6 +7,7 @@ g_DemonClut = 0x80171C24;
 s_PassthroughFunctions = 0x80171CC4;
 s_DemonSfxMap = 0x80171D2C;
 g_DemonAnimationFrames = 0x80172010;
+D_us_80172080 = 0x80172080;
 g_Events = 0x80172090;
 g_PlaySfxStep = 0x801729C0;
 g_EntityRanges = 0x801729C4;
