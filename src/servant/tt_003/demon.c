@@ -1435,7 +1435,7 @@ void func_us_801765A0(Entity* self) {
             self->posX.i.hi += (self->facingLeft ? -0x20 : 0x20);
         }
 
-        g_api.GetServantStats(self, 0x18, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK24, 1, &s_DemonStats);
 
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
@@ -1535,7 +1535,7 @@ void func_us_80176814(Entity* self) {
         }
         self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
 
-        g_api.GetServantStats(self, 25, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK25, 1, &s_DemonStats);
 
         self->hitboxOffX = 28;
         self->hitboxOffY = 0;
@@ -1677,7 +1677,7 @@ void func_us_80176C1C(Entity* self) {
                     prim->b3 = 0;
             prim = prim->next;
         }
-        g_api.GetServantStats(self, 0x1A, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK26, 1, &s_DemonStats);
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
         self->hitboxWidth = 0;
