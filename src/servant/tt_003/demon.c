@@ -1,19 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
-#include "servant.h"
+#include "demon.h"
 #include "sfx.h"
-
-typedef enum {
-    DEMON_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
-    DEMON_MODE_UNK_D2,
-    DEMON_MODE_UNK_D3,
-    DEMON_MODE_UNK_D4,
-    DEMON_MODE_UNK_D5,
-    DEMON_MODE_UNK_D6,
-    DEMON_SUBENTITY_UNK_D7,
-    DEMON_MODE_UNK_D8,
-    DEMON_EVENT_SFX_PASSTHROUGH,
-} EntityIds;
 
 extern ServantEvent g_Events[];
 
@@ -870,8 +858,7 @@ extern s32 s_DemonSfxMap[];
 // PSX: https://decomp.me/scratch/vbedA
 // PSP: https://decomp.me/scratch/mRGqb
 
-extern s16 g_DemonAttackStats[][6];
-extern s32 g_DemonAttackIdSfxLookup[][3];
+extern s32 g_DemonAttackIdSfxLookup[5][3];
 extern s32 D_us_8017860C;
 extern s32 D_us_80178610;
 extern s32 D_us_80178614;
