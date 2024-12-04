@@ -987,10 +987,11 @@ void func_us_80175810(Entity* self) {
     if (D_us_801786D8) {
         D_us_80178628 = D_us_801786D8->posX.val;
         D_us_8017862C = D_us_801786D8->posY.val;
-        self->ext.demon.pad_8E[3] += 0x40;
-        self->ext.demon.pad_8E[3] &= 0xFFF;
+        self->ext.demon.attackVelocityOffset += 0x40;
+        self->ext.demon.attackVelocityOffset &= 0xFFF;
         D_us_8017862C =
-            (rsin((s32)self->ext.demon.pad_8E[3]) << 3 << 4) + D_us_8017862C;
+            (rsin((s32)self->ext.demon.attackVelocityOffset) << 3 << 4) +
+            D_us_8017862C;
 
         self->velocityX = (D_us_80178628 - self->posX.val) >> 5;
         self->velocityY = (D_us_8017862C - self->posY.val) >> 5;
@@ -1012,7 +1013,7 @@ void func_us_80175810(Entity* self) {
         xCalc = (D_us_80178628 - self->posX.val) >> 0x10;
         yCalc = (D_us_8017862C - self->posY.val) >> 0x10;
         if ((SquareRoot12((SQ(xCalc) + SQ(yCalc)) << 0xC) >> 0xC) < 0x10) {
-            if (g_StageId < 0x20 || g_StageId > 0x34) {
+            if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
                 self->facingLeft = 0;
                 D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[1];
             } else {
@@ -1057,13 +1058,14 @@ void func_us_80175810(Entity* self) {
         }
         break;
     case 4:
-        self->ext.demon.pad_8E[2]++;
-        if (self->ext.demon.pad_8E[2] > 0x78) {
+        self->ext.demon.attackEndCounter++;
+        if (self->ext.demon.attackEndCounter > 120) {
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         }
         break;
     }
+
     if (D_us_801786D8 && !D_us_801786D8->entityId) {
 #ifndef VERSION_PSP
         g_PauseAllowed = true;
