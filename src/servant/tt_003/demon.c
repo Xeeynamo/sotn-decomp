@@ -33,7 +33,7 @@ extern s32 s_DistToTargetLocation2;
 extern Entity* D_us_801786D8;
 extern s32 D_us_801786DC;
 
-extern s32 s_DemonSfxMap[];
+extern s32 s_DemonSfxMap[8];
 
 // These are all in sbss
 extern s32 D_us_801785F0;
