@@ -20,6 +20,7 @@ options:
   asm_jtbl_label_macro: jlabel
   symbol_name_format: psp_$VRAM
   nonmatchings_path: psp
+  disassemble_all: True
   section_order:
     - .text
     - .data

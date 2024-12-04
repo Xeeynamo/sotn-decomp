@@ -417,12 +417,12 @@ void ControlBatForm(void) {
 
 #if defined(VERSION_HD)
     if (PLAYER.step_s != 3) {
-#elif defined(VERSION_US)
+#else
     // Just to make the curly brackets match at the end of this block
     if (1) {
 #endif
         if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s) &&
-            (CastSpell(SPELL_WING_SMASH) != 0)) {
+            CastSpell(SPELL_WING_SMASH)) {
             LearnSpell(SPELL_WING_SMASH);
             SetPlayerAnim(0xC6);
             SetSpeedX(FIX(6));
@@ -430,7 +430,7 @@ void ControlBatForm(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5c), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, 67, 0);
             g_WingSmashTimer = 0x40;
-#if defined(VERSION_US)
+#if !defined(VERSION_HD)
             g_WingSmashButtonCounter = 0;
 #endif
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
@@ -439,7 +439,7 @@ void ControlBatForm(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 103, 0);
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
                    (PLAYER.step_s == 1 || PLAYER.step_s == 2) &&
-                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
+                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9))) {
             SetPlayerAnim(0xC9);
             PLAYER.step_s = 4;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 5), 0);
@@ -456,20 +456,17 @@ void ControlBatForm(void) {
             PLAYER.animSet = 13;
             D_800AFDA4[1] = 6;
             PLAYER.ext.player.anim = 0xCA;
-            if (func_8011203C() == 0) {
+            if (!func_8011203C()) {
                 return;
             }
         } else {
             if (g_Player.unk66 == 0) {
-#if defined(VERSION_US)
                 newEntity = CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x20), 0);
+#if !defined(VERSION_HD)
                 if (newEntity == NULL) {
                     return;
                 }
-#elif defined(VERSION_HD)
-                CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(44, 0x20), 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;
@@ -504,11 +501,11 @@ void ControlBatForm(void) {
         PLAYER.step_s++;
         break;
     case 1:
-        if ((directionsPressed != 0) && (pressingCross == 0)) {
+        if (directionsPressed && !pressingCross) {
             if (PLAYER.ext.player.anim == 0xC3) {
                 PLAYER.animFrameIdx /= 3;
             }
-            PLAYER.step_s += 1;
+            PLAYER.step_s++;
         } else {
             func_8011690C(0);
             DecelerateX(0x1200);
@@ -532,6 +529,8 @@ void ControlBatForm(void) {
                 DecelerateY(0x1200);
             } else {
                 PLAYER.velocityY = FIX(-1.25);
+                // Putting a 'break;' right here helps the match, but it's
+                // nonsense
             }
             func_8011690C(-0x80);
             DecelerateX(0x1200);
@@ -688,7 +687,7 @@ void ControlBatForm(void) {
                     PLAYER.velocityY = FIX(6);
                 }
             }
-            if ((g_Player.pl_vram_flag & 0x8000) != 0) {
+            if (g_Player.pl_vram_flag & 0x8000) {
                 if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x4000) ||
                     !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x4000)) {
                     PLAYER.velocityY = FIX(-6);
