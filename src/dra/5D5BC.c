@@ -620,10 +620,10 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         amount /= 2;
     }
     if (g_Status.D_80097C2C & damage->effects) {
-        if (!(g_Status.D_80097C2C & damage->effects & 0x200)) {
+        if (!(g_Status.D_80097C2C & damage->effects & EFFECT_UNK_0200)) {
             return 0;
         }
-        damage->effects &= ~0x200;
+        damage->effects &= ~EFFECT_UNK_0200;
     }
 
     if (g_Status.D_80097C2E & damage->effects) {
@@ -664,7 +664,11 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
     itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD);
-    if (itemCount != 0 && (damage->effects & 0xF980)) {
+    if (itemCount != 0 &&
+        (damage->effects &
+         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+          EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
+          EFFECT_SOLID_FROM_BELOW))) {
         if (itemCount == 1) {
             amount -= amount / 5;
         }
@@ -675,7 +679,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     if (g_Player.status & PLAYER_STATUS_STONE) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (damage->effects & 0x200) {
+    } else if (damage->effects & EFFECT_UNK_0200) {
         damage->damageTaken = amount - (g_Status.defenseEquip * 2);
         if (damage->damageTaken <= 0) {
             damage->damageTaken = 0;
@@ -716,7 +720,9 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             }
             ret = 3;
         } else {
-            if (g_Status.defenseEquip > 99 && !(damage->effects & 0x180) &&
+            if (g_Status.defenseEquip > 99 &&
+                !(damage->effects &
+                  (EFFECT_UNK_0100 | EFFECT_SOLID_FROM_BELOW)) &&
                 !(g_Player.status & PLAYER_STATUS_STONE)) {
                 damage->damageKind = 0;
                 ret = 1;

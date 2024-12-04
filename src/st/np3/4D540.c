@@ -277,10 +277,10 @@ void func_801CE04C(Entity* entity, Collider* collider) {
     g_api.CheckCollision(
         entity->posX.i.hi, (s16)(entity->posY.i.hi + collider->unk18), collider,
         0);
-    if (collider->effects & 1) {
+    if (collider->effects & EFFECT_SOLID) {
         var_s0 = 1;
-        if (collider->effects & 0x8000) {
-            if (collider->effects & 0x4000) {
+        if (collider->effects & EFFECT_UNK_8000) {
+            if (collider->effects & EFFECT_UNK_4000) {
                 if (g_CurrentEntity->facingLeft != 0) {
                     var_s0 = 4;
                 } else {

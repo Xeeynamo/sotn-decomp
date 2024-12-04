@@ -95,7 +95,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_90000_8017A864;
@@ -111,7 +111,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 2) {
+        if (sp10.effects & EFFECT_UNK_0002) {
             if (xOffset < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {
@@ -124,7 +124,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk20 + 1;
             self->velocityY = FIX(1.0);
             self->velocityX = self->velocityX / 2;

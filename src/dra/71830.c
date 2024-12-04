@@ -142,7 +142,7 @@ bool func_80111DE8(bool mistReset) {
     CheckCollision(
         PLAYER.posX.i.hi + 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);
     if (mistReset && (collider1.effects & EFFECT_MIST_ONLY)) {
-        collider1.effects = 0;
+        collider1.effects = EFFECT_NONE;
     }
     filtered_effects =
         collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
@@ -162,7 +162,7 @@ bool func_80111DE8(bool mistReset) {
         CheckCollision(colliderXOffset + playerX + 8,
                        PLAYER.posY.i.hi + yOffset - 1, &collider2, 0);
         if (mistReset && (collider2.effects & EFFECT_MIST_ONLY)) {
-            collider1.effects = 0;
+            collider1.effects = EFFECT_NONE;
         }
         if (!(collider2.effects & EFFECT_SOLID)) {
             PLAYER.posX.i.hi += collider1.unk4;
@@ -173,7 +173,7 @@ bool func_80111DE8(bool mistReset) {
     CheckCollision(
         PLAYER.posX.i.hi - 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);
     if (mistReset && (collider1.effects & EFFECT_MIST_ONLY)) {
-        collider1.effects = 0;
+        collider1.effects = EFFECT_NONE;
     }
     filtered_effects =
         collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
@@ -193,7 +193,7 @@ bool func_80111DE8(bool mistReset) {
         CheckCollision(colliderXOffset + playerX - 8,
                        PLAYER.posY.i.hi + yOffset - 1, &collider2, 0);
         if (mistReset && (collider2.effects & EFFECT_MIST_ONLY)) {
-            collider1.effects = 0;
+            collider1.effects = EFFECT_NONE;
         }
         if (!(collider2.effects & EFFECT_SOLID)) {
             PLAYER.posX.i.hi += collider1.unkC;

@@ -1288,6 +1288,7 @@ typedef struct {
 } AbbreviatedOverlay;
 
 typedef enum {
+    EFFECT_NONE = 0,
     EFFECT_SOLID = 1 << 0,
     EFFECT_UNK_0002 = 1 << 1,
     EFFECT_QUICKSAND = 1 << 2,

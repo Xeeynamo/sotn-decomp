@@ -546,9 +546,12 @@ void func_8015E484(void) {
                     &g_Player.colFloor[i], 0);
             }
 
-            if ((g_Player.colFloor[1].effects & 0x81) == 1 ||
-                (g_Player.colFloor[2].effects & 0x81) == 1 ||
-                (g_Player.colFloor[3].effects & 0x81) == 1) {
+            if ((g_Player.colFloor[1].effects &
+                 (EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID)) == 1 ||
+                (g_Player.colFloor[2].effects &
+                 (EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID)) == 1 ||
+                (g_Player.colFloor[3].effects &
+                 (EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID)) == 1) {
                 PLAYER.velocityY = 0;
                 PLAYER.posY.i.hi -= 1;
                 collision = 1;
@@ -573,9 +576,12 @@ void func_8015E484(void) {
                     &g_Player.colCeiling[i], 0);
             }
 
-            if ((g_Player.colCeiling[1].effects & 0x41) == 1 ||
-                (g_Player.colCeiling[2].effects & 0x41) == 1 ||
-                (g_Player.colCeiling[3].effects & 0x41) == 1) {
+            if ((g_Player.colCeiling[1].effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) == 1 ||
+                (g_Player.colCeiling[2].effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) == 1 ||
+                (g_Player.colCeiling[3].effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) == 1) {
                 PLAYER.velocityY = 0;
                 PLAYER.posY.i.hi += 1;
                 collision = 1;
@@ -702,14 +708,14 @@ void RicCheckFloor(void) {
             return;
         }
     }
-    if (g_Player.colFloor[1].effects & 4) {
+    if (g_Player.colFloor[1].effects & EFFECT_QUICKSAND) {
         *vram_ptr |= 0x11;
         if ((g_Timer & 3) == 0) {
             (*yPosPtr)++;
         }
         return;
     }
-    if (g_Player.colFloor[1].effects & 8) {
+    if (g_Player.colFloor[1].effects & EFFECT_WATER) {
         *vram_ptr |= 0x80;
     }
     if (PLAYER.velocityY < 0) {
@@ -718,7 +724,7 @@ void RicCheckFloor(void) {
     argX = *xPosPtr + g_RicSensorsFloor[0].x;
     argY = *yPosPtr + g_RicSensorsFloor[0].y + 10;
     g_api.CheckCollision(argX, argY, &sp10, 0);
-    if ((sp10.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != 0) {
+    if ((sp10.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != EFFECT_NONE) {
         return;
     }
 
@@ -749,7 +755,7 @@ void RicCheckFloor(void) {
             argX = var_a1 + (*xPosPtr + g_RicSensorsFloor[i].x);
             argY = *yPosPtr + g_RicSensorsFloor[i].y;
             g_api.CheckCollision(argX, argY, &sp10, 0);
-            if (sp10.effects & 1) {
+            if (sp10.effects & EFFECT_SOLID) {
                 *yPosPtr += sp10.unk18;
                 *vram_ptr |= temp_s7;
                 return;
@@ -765,7 +771,7 @@ void RicCheckFloor(void) {
         argX = var_a1 + (*xPosPtr + g_RicSensorsFloor[i].x);
         argY = *yPosPtr + g_RicSensorsFloor[i].y + g_Player.colFloor[i].unk10;
         g_api.CheckCollision(argX, argY, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             *yPosPtr += (sp10.unk18 + g_Player.colFloor[i].unk10);
             *vram_ptr |= temp_s7;
             return;
@@ -863,7 +869,7 @@ void RicCheckCeiling(void) {
                     g_Player.colFloor[3].unk8 = g_Player.colFloor[3].unk10;
                 }
             }
-            if ((collidereffects & EFFECT_UNK_0800) == 0) {
+            if ((collidereffects & EFFECT_UNK_0800) == EFFECT_NONE) {
                 *vram_ptr |=
                     (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
                      ((collidereffects >> 4) &
@@ -894,7 +900,7 @@ void RicCheckCeiling(void) {
     argX = *xPosPtr + g_RicSensorsCeiling[0].x;
     argY = (*yPosPtr + g_RicSensorsCeiling[0].y) - 10;
     g_api.CheckCollision(argX, argY, &collider, 0);
-    if ((collider.effects & EFFECT_SOLID) != 0) {
+    if ((collider.effects & EFFECT_SOLID) != EFFECT_NONE) {
         return;
     }
     for (i = 2; i < NUM_HORIZONTAL_SENSORS; i++) {
@@ -989,7 +995,7 @@ void RicCheckWallRight(void) {
                 *xPosPtr + g_RicSensorsWall[i].x + g_Player.colWall[i].unk4 - 1;
             argY = *yPosPtr + g_RicSensorsWall[i].y;
             g_api.CheckCollision(argX, argY, &collider, 0);
-            if ((collider.effects & EFFECT_SOLID) == 0) {
+            if ((collider.effects & EFFECT_SOLID) == EFFECT_NONE) {
                 *vram_ptr |= 4;
                 *xPosPtr += g_Player.colWall[i].unk4;
                 return;
@@ -1064,7 +1070,7 @@ void RicCheckWallLeft(void) {
                 *xPosPtr + g_RicSensorsWall[i].x + g_Player.colWall[i].unkC + 1;
             argY = *yPosPtr + g_RicSensorsWall[i].y;
             g_api.CheckCollision(argX, argY, &collider, 0);
-            if ((collider.effects & EFFECT_SOLID) == 0) {
+            if ((collider.effects & EFFECT_SOLID) == EFFECT_NONE) {
                 *vram_ptr |= 8;
                 *xPosPtr += g_Player.colWall[i].unkC;
                 return;
