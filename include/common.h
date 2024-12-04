@@ -23,6 +23,7 @@
 #define VERSION "us"
 #endif
 
+#ifndef M2CTX
 #if defined(_MSC_VER)
 #if defined(_WIN64) || defined(_M_X64) || defined(_M_ARM64)
 #define PLATFORM_64BIT
@@ -35,6 +36,7 @@
 #else
 #if (defined(__LP64__) || defined(_LP64))
 #define PLATFORM_64BIT
+#endif
 #endif
 #endif
 
