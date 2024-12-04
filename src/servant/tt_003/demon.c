@@ -311,8 +311,6 @@ void func_us_80172EF8(Entity* self) {
         posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
 
-
-
 extern u32 D_us_80171BF4[][4];
 
 void func_us_80173348(Entity* self) {
