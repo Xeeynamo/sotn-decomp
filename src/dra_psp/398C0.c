@@ -15,7 +15,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/398C0", func_psp_09116450);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/398C0", func_psp_09116720);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/398C0", func_psp_09116B48);
+INCLUDE_ASM("dra_psp/psp/dra_psp/398C0", SetPlayerAnim);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/398C0", func_psp_09116B88);
 

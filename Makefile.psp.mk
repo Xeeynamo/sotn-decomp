@@ -85,7 +85,7 @@ $(BUILD_DIR)/%.s.o: %.s
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
 OPT_OVL = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
 # Allow override. Any file in this list will get Op.
-OPT_LO_OVERRIDES = 3AE30.c.o
+OPT_LO_OVERRIDES = 32DA0.c.o 3AE30.c.o
 OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_LO_OVERRIDES)), -Op, $(OPT_OVL))
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
