@@ -45,3 +45,17 @@ u16 g_DemonClut[80] = {
     0xFE48, 0xF6D1, 0xC021, 0xC021, 0xD421, 0xFC21, 0xFD42, 0xFE48, 0xF6D1,
     0xFFBD, 0x0000, 0xFFFF, 0xFFD5, 0xFF4B, 0xFA85, 0xF604, 0xF180, 0xED40,
     0xE900, 0xED40, 0xF180, 0xF604, 0xFA85, 0xFF4B, 0xFFD5, 0xFFFF};
+
+extern void DestroyEntityPassthrough(Entity* self);
+extern void func_us_80172EF8(Entity* self);
+extern void func_us_80173348(Entity* self);
+extern void func_us_801737F0(Entity* self);
+extern void func_us_80173D14(Entity* self);
+
+void (*s_PassthroughFunctions[])(Entity*) = {
+    DestroyEntityPassthrough,
+    func_us_80172EF8,
+    func_us_80173348,
+    func_us_801737F0,
+    func_us_80173D14
+};
