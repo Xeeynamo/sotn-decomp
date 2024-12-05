@@ -1435,7 +1435,7 @@ void func_us_801765A0(Entity* self) {
             self->posX.i.hi += (self->facingLeft ? -0x20 : 0x20);
         }
 
-        g_api.GetServantStats(self, 0x18, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK24, 1, &s_DemonStats);
 
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
@@ -1535,7 +1535,7 @@ void func_us_80176814(Entity* self) {
         }
         self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
 
-        g_api.GetServantStats(self, 25, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK25, 1, &s_DemonStats);
 
         self->hitboxOffX = 28;
         self->hitboxOffY = 0;
@@ -1609,7 +1609,129 @@ void func_us_80176814(Entity* self) {
     }
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176C1C);
+extern s32 D_us_80178680;
+extern s32 D_us_80178684;
+
+void func_us_80176C1C(Entity* self) {
+    Primitive* prim;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        if (!self->params) {
+            D_us_80178680 = self->posX.val;
+            D_us_80178684 = self->posY.val;
+        } else {
+            self->posX.val = D_us_80178680;
+            self->posY.val = D_us_80178684;
+        }
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        switch (self->params) {
+        case 0:
+            self->posX.i.hi += self->facingLeft ? -0x20 : 0x20;
+            break;
+        case 1:
+            self->posX.i.hi += self->facingLeft ? -0x18 : 0x18;
+            self->posY.i.hi += 8;
+            break;
+        case 2:
+            self->posX.i.hi += self->facingLeft ? -0x10 : 0x10;
+            self->posY.i.hi += 0x10;
+            break;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 8; i++) {
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+
+            prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
+            prim->v0 = prim->v1 = 0xC0;
+            prim->v2 = prim->v3 = 0xD0;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = self->posX.i.hi - i * 8;
+                prim->x1 = prim->x3 = self->posX.i.hi - (i + 1) * 8;
+            } else {
+                prim->x0 = prim->x2 = self->posX.i.hi + i * 8;
+                prim->x1 = prim->x3 = self->posX.i.hi + (i + 1) * 8;
+            }
+            if (i < 7) {
+                prim->y0 = prim->y1 = self->posY.i.hi - 6;
+                prim->y2 = prim->y3 = self->posY.i.hi + 6;
+            } else {
+                prim->y0 = prim->y1 = self->posY.i.hi - 4;
+                prim->y2 = prim->y3 = self->posY.i.hi + 4;
+            }
+            // this looks like a mistake but it is needed to get a match on PSP:
+            // https://decomp.me/scratch/28GaG
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0;
+            prim = prim->next;
+        }
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK26, 1, &s_DemonStats);
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 4;
+
+        self->step++;
+        if (self->params >= 2) {
+            self->step++;
+        }
+        break;
+    case 1:
+        self->ext.et_801737F0.animationTriggerCount++;
+        if (self->ext.et_801737F0.animationTriggerCount > 2) {
+            CreateEventEntity(self, 0xDD, self->params + 1);
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.et_801737F0.animationTriggerCount++;
+        if (self->ext.et_801737F0.animationTriggerCount > 16) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (self->ext.et_801737F0.animationTimer < 8) {
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < self->ext.et_801737F0.animationTimer; i++) {
+            prim = prim->next;
+        }
+
+        prim->drawMode &= ~DRAW_HIDE;
+        prim->r0 = 0x80;
+        self->hitboxOffX += 4;
+        self->hitboxWidth += 4;
+        self->ext.et_801737F0.animationTimer++;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        prim->r0 -= 8;
+        if (prim->r0 < 0x20) {
+            prim->drawMode |= DRAW_HIDE;
+        } else {
+            // this looks like a mistake but it is needed to get a match on PSP:
+            // https://decomp.me/scratch/28GaG
+            prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 = prim->g2 =
+                prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0;
+            prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801771B0);
 
