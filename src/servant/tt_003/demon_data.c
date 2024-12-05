@@ -172,3 +172,29 @@ AnimationFrame* g_DemonAnimationFrames[] = {
     D_us_80171E34, D_us_80171E60, D_us_80171E8C, D_us_80171EB8,
     D_us_80171EF8, D_us_80171F34, D_us_80171FA4, D_us_80171FAC,
 };
+
+ServantSfxEventDesc D_us_80172040[] = {
+    {.flag = 0, .animIndex = 9, .sfxId = 0x4E8},
+    {.flag = -1, .animIndex = 0, .sfxId = 0x000},
+};
+
+s32 D_us_8017204C[] = {0xFF, D_us_80172040};
+
+ServantSfxEventDesc D_us_80172054[] = {
+    {.flag = 0, .animIndex = 9, .sfxId = 0x4ED},
+    {.flag = -1, .animIndex = 0, .sfxId = 0x000},
+};
+
+s32 D_us_80172060[] = {0xFF, D_us_80172054};
+
+ServantSfxEventDesc D_us_80172068[] = {
+    {.flag = 0, .animIndex = 0, .sfxId = 0x4EE},
+    {.flag = -1, .animIndex = 7, .sfxId = 0x000},
+};
+
+ServantSfxEventDesc D_us_80172074[] = {
+    {.flag = 0, .animIndex = 0, .sfxId = 0x4EF},
+    {.flag = -1, .animIndex = 7, .sfxId = 0x000},
+};
+
+s32 D_us_80172080[] = {0x7F, D_us_80172068, 0xFF, D_us_80172074};
