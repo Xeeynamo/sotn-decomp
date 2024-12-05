@@ -39,6 +39,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/2E0E0", func_psp_0910F0D8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/2E0E0", func_psp_0910F128);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/2E0E0", func_psp_0910F1A0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/2E0E0", BatFormFinished);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/2E0E0", func_psp_0910F298);
+INCLUDE_ASM("dra_psp/psp/dra_psp/2E0E0", func_8011690C);

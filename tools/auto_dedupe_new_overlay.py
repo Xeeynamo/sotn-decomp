@@ -22,7 +22,7 @@ file_start_funcs = {
     "EntityRelicOrb": ["e_misc", "PlaySfxPositional"],
     "StageNamePopupHelper": ["e_stage_name", "EntityStageNamePopup"],
     "EntitySoulStealOrb": ["e_particles"],
-    "func_8018CAB0": ["e_collect"],
+    "PrizeDropFall": ["e_collect"],
     "EntityRoomForeground": ["e_room_fg"],
     "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
