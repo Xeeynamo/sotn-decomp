@@ -311,7 +311,102 @@ void func_us_80172EF8(Entity* self) {
         posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80173348);
+extern u32 D_us_80171BF4[][4];
+
+void func_us_80173348(Entity* self) {
+    Primitive* prim;
+    s32 posX, posY;
+
+    self->posX.val = self->ext.et_801737F0.parent->posX.val;
+    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = 0x146;
+        prim->priority = self->zPriority + 1;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        PCOL(prim) = 0x80;
+
+        prim = prim->next;
+        prim->tpage = 0x1A;
+        prim->clut = 0x145;
+        prim->priority = self->zPriority + 1;
+        prim->drawMode =
+            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+
+        self->ext.et_801737F0.animationTriggerCount = 0;
+        self->ext.et_801737F0.animationTimer = 0;
+        self->step++;
+        break;
+
+    case 1:
+        self->ext.et_801737F0.stepCounter++;
+        if ((self->ext.et_801737F0.stepCounter % 10) == 0 &&
+            self->ext.et_801737F0.animationTriggerCount < 2) {
+            self->ext.et_801737F0.animationTriggerCount++;
+        }
+
+        self->ext.et_801737F0.animationTimer += 8;
+        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->ext.et_801737F0.stepCounter++;
+        if (self->ext.et_801737F0.stepCounter > 0x32) {
+            CreateEventEntity(self, 0xDC, 0);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    posX = self->posX.i.hi + (self->facingLeft ? 6 : -6);
+    posY = self->posY.i.hi - 0xC;
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->u0 = prim->u2 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][0];
+    prim->u1 = prim->u3 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][1];
+    prim->v0 = prim->v1 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][2];
+    prim->v2 = prim->v3 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][3];
+    prim->x0 = prim->x2 =
+        posX - self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->x1 = prim->x3 =
+        posX + self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->y0 = prim->y1 =
+        posY - self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->y2 = prim->y3 =
+        posY + self->ext.et_801737F0.animationTimer * 16 / 256;
+
+    prim = prim->next;
+    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
+    prim->x0 = prim->x2 =
+        posX - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->x1 = prim->x3 =
+        posX + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->y0 = prim->y1 =
+        posY - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->y2 = prim->y3 =
+        posY + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+}
 
 // PSX: https://decomp.me/scratch/QGDMn
 // PSP: https://decomp.me/scratch/TKY2r
@@ -323,7 +418,6 @@ void func_us_801737F0(Entity* self) {
     s32 posXOffset;
     s32 posYOffset;
     s32 scaledCounter;
-    u16 newColor;
 
     self->posX.val = self->ext.et_801737F0.parent->posX.val;
     self->posY.val = self->ext.et_801737F0.parent->posY.val;
@@ -423,8 +517,7 @@ void func_us_801737F0(Entity* self) {
         posXOffset + ((cosine * (scaledCounter)-sine * (scaledCounter)) >> 12);
     prim->y3 = posYOffset +
                ((sine * (scaledCounter) + cosine * (scaledCounter)) >> 12);
-    newColor = ((self->ext.et_801737F0.stepCounter & 1) << 7);
-    PCOL(prim) = newColor;
+    PCOL(prim) = (self->ext.et_801737F0.stepCounter & 1) * 128;
 
     prim = prim->next;
 
@@ -1435,7 +1528,7 @@ void func_us_801765A0(Entity* self) {
             self->posX.i.hi += (self->facingLeft ? -0x20 : 0x20);
         }
 
-        g_api.GetServantStats(self, 0x18, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK24, 1, &s_DemonStats);
 
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
@@ -1531,7 +1624,7 @@ void func_us_80176814(Entity* self) {
         }
         self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
 
-        g_api.GetServantStats(self, 25, 1, &s_DemonStats);
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK25, 1, &s_DemonStats);
 
         self->hitboxOffX = 28;
         self->hitboxOffY = 0;
@@ -1605,9 +1698,256 @@ void func_us_80176814(Entity* self) {
     }
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80176C1C);
+extern s32 D_us_80178680;
+extern s32 D_us_80178684;
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_801771B0);
+void func_us_80176C1C(Entity* self) {
+    Primitive* prim;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        if (!self->params) {
+            D_us_80178680 = self->posX.val;
+            D_us_80178684 = self->posY.val;
+        } else {
+            self->posX.val = D_us_80178680;
+            self->posY.val = D_us_80178684;
+        }
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        switch (self->params) {
+        case 0:
+            self->posX.i.hi += self->facingLeft ? -0x20 : 0x20;
+            break;
+        case 1:
+            self->posX.i.hi += self->facingLeft ? -0x18 : 0x18;
+            self->posY.i.hi += 8;
+            break;
+        case 2:
+            self->posX.i.hi += self->facingLeft ? -0x10 : 0x10;
+            self->posY.i.hi += 0x10;
+            break;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 8; i++) {
+            prim->priority = self->zPriority + 1;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+
+            prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
+            prim->v0 = prim->v1 = 0xC0;
+            prim->v2 = prim->v3 = 0xD0;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = self->posX.i.hi - i * 8;
+                prim->x1 = prim->x3 = self->posX.i.hi - (i + 1) * 8;
+            } else {
+                prim->x0 = prim->x2 = self->posX.i.hi + i * 8;
+                prim->x1 = prim->x3 = self->posX.i.hi + (i + 1) * 8;
+            }
+            if (i < 7) {
+                prim->y0 = prim->y1 = self->posY.i.hi - 6;
+                prim->y2 = prim->y3 = self->posY.i.hi + 6;
+            } else {
+                prim->y0 = prim->y1 = self->posY.i.hi - 4;
+                prim->y2 = prim->y3 = self->posY.i.hi + 4;
+            }
+            // this looks like a mistake but it is needed to get a match on PSP:
+            // https://decomp.me/scratch/28GaG
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0;
+            prim = prim->next;
+        }
+        g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK26, 1, &s_DemonStats);
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 4;
+
+        self->step++;
+        if (self->params >= 2) {
+            self->step++;
+        }
+        break;
+    case 1:
+        self->ext.et_801737F0.animationTriggerCount++;
+        if (self->ext.et_801737F0.animationTriggerCount > 2) {
+            CreateEventEntity(self, 0xDD, self->params + 1);
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.et_801737F0.animationTriggerCount++;
+        if (self->ext.et_801737F0.animationTriggerCount > 16) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (self->ext.et_801737F0.animationTimer < 8) {
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < self->ext.et_801737F0.animationTimer; i++) {
+            prim = prim->next;
+        }
+
+        prim->drawMode &= ~DRAW_HIDE;
+        prim->r0 = 0x80;
+        self->hitboxOffX += 4;
+        self->hitboxWidth += 4;
+        self->ext.et_801737F0.animationTimer++;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        prim->r0 -= 8;
+        if (prim->r0 < 0x20) {
+            prim->drawMode |= DRAW_HIDE;
+        } else {
+            // this looks like a mistake but it is needed to get a match on PSP:
+            // https://decomp.me/scratch/28GaG
+            prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 = prim->g2 =
+                prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0;
+            prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
+        }
+        prim = prim->next;
+    }
+}
+
+// PSX: https://decomp.me/scratch/qDGTj
+// PSP: https://decomp.me/scratch/D67x7
+
+extern s32 D_us_80178688;
+extern s32 D_us_8017868C;
+extern s16 D_us_80171B44[3][8];
+
+void func_us_801771B0(Entity* self) {
+    Primitive* prim;
+    s16 colorValue;
+    s32 i;
+    // s32 i;
+    s32 posX_hi;
+    s32 posY_hi;
+    s16* uvCoords;
+
+    switch (self->step) {
+    case 0:
+        if (self->params == 0) {
+            D_us_80178688 = self->posX.val;
+            D_us_8017868C = self->posY.val;
+        } else {
+            self->posX.val = D_us_80178688;
+            self->posY.val = D_us_8017868C;
+        }
+
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        HIH(self->velocityX) = (self->facingLeft != 0) ? -0x10 : 0x10;
+
+        switch (self->params) {
+        case 2:
+            self->posY.i.hi += 8;
+        case 1:
+            self->posY.i.hi += 8;
+        case 0:
+            self->posX.i.hi += (self->facingLeft != 0) ? -0x20 : 0x20;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 3; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x147;
+            prim->priority = self->zPriority + 1;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->u0 = prim->u2 = 0xB;
+            prim->u1 = prim->u3 = 0x35;
+            prim->v0 = prim->v1 = 0xCB;
+            prim->v2 = prim->v3 = 0xF5;
+            PCOL(prim) = 0x80;
+
+            prim = prim->next;
+        }
+
+        g_api.GetServantStats(self, 0x1B, 1, &s_DemonStats);
+
+        self->hitboxOffX = -4;
+        self->hitboxOffY = 0;
+        self->hitboxWidth = 0x1C;
+        self->hitboxHeight = 4;
+
+        self->step++;
+        if (self->params >= 2) {
+            self->step++;
+        }
+        break;
+
+    case 1:
+        self->ext.et_801737F0.animationTriggerCount += 1;
+        self->posX.val += self->velocityX;
+
+        if (self->ext.et_801737F0.animationTriggerCount >= 3) {
+            CreateEventEntity(self, 0xDE, self->params + 1);
+            self->step += 1;
+        }
+        break;
+
+    case 2:
+        self->posX.val += self->velocityX;
+        self->ext.et_801737F0.animationTriggerCount += 1;
+
+        if ((u16)(self->posX.i.hi + 0x20) > 0x140) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    posX_hi = self->posX.i.hi;
+    posY_hi = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 3; i++) {
+
+        if (self->facingLeft) {
+            prim->x0 = posX_hi - D_us_80171B44[i][0];
+            prim->y0 = posY_hi - D_us_80171B44[i][1];
+            prim->x1 = posX_hi - D_us_80171B44[i][2];
+            prim->y1 = posY_hi - D_us_80171B44[i][3];
+            prim->x2 = posX_hi - D_us_80171B44[i][4];
+            prim->y2 = posY_hi - D_us_80171B44[i][5];
+            prim->x3 = posX_hi - D_us_80171B44[i][6];
+            prim->y3 = posY_hi - D_us_80171B44[i][7];
+        } else {
+            prim->x0 = posX_hi + D_us_80171B44[i][0];
+            prim->y0 = posY_hi + D_us_80171B44[i][1];
+            prim->x1 = posX_hi + D_us_80171B44[i][2];
+            prim->y1 = posY_hi + D_us_80171B44[i][3];
+            prim->x2 = posX_hi + D_us_80171B44[i][4];
+            prim->y2 = posY_hi + D_us_80171B44[i][5];
+            prim->x3 = posX_hi + D_us_80171B44[i][6];
+            prim->y3 = posY_hi + D_us_80171B44[i][7];
+        }
+
+        PCOL(prim) =
+            ((self->ext.et_801737F0.animationTriggerCount & 1) * 64) + 0x40;
+        prim = prim->next;
+    }
+}
 
 extern s32 D_us_801786D0;
 extern s32 D_us_801786D4;
