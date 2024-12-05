@@ -311,7 +311,102 @@ void func_us_80172EF8(Entity* self) {
         posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
 
-INCLUDE_ASM("servant/tt_003/nonmatchings/demon", func_us_80173348);
+extern u32 D_us_80171BF4[][4];
+
+void func_us_80173348(Entity* self) {
+    Primitive* prim;
+    s32 posX, posY;
+
+    self->posX.val = self->ext.et_801737F0.parent->posX.val;
+    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = 0x146;
+        prim->priority = self->zPriority + 1;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        PCOL(prim) = 0x80;
+
+        prim = prim->next;
+        prim->tpage = 0x1A;
+        prim->clut = 0x145;
+        prim->priority = self->zPriority + 1;
+        prim->drawMode =
+            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+
+        self->ext.et_801737F0.animationTriggerCount = 0;
+        self->ext.et_801737F0.animationTimer = 0;
+        self->step++;
+        break;
+
+    case 1:
+        self->ext.et_801737F0.stepCounter++;
+        if ((self->ext.et_801737F0.stepCounter % 10) == 0 &&
+            self->ext.et_801737F0.animationTriggerCount < 2) {
+            self->ext.et_801737F0.animationTriggerCount++;
+        }
+
+        self->ext.et_801737F0.animationTimer += 8;
+        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->ext.et_801737F0.stepCounter++;
+        if (self->ext.et_801737F0.stepCounter > 0x32) {
+            CreateEventEntity(self, 0xDC, 0);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    posX = self->posX.i.hi + (self->facingLeft ? 6 : -6);
+    posY = self->posY.i.hi - 0xC;
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->u0 = prim->u2 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][0];
+    prim->u1 = prim->u3 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][1];
+    prim->v0 = prim->v1 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][2];
+    prim->v2 = prim->v3 =
+        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][3];
+    prim->x0 = prim->x2 =
+        posX - self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->x1 = prim->x3 =
+        posX + self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->y0 = prim->y1 =
+        posY - self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->y2 = prim->y3 =
+        posY + self->ext.et_801737F0.animationTimer * 16 / 256;
+
+    prim = prim->next;
+    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
+    prim->x0 = prim->x2 =
+        posX - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->x1 = prim->x3 =
+        posX + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->y0 = prim->y1 =
+        posY - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->y2 = prim->y3 =
+        posY + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+}
 
 // PSX: https://decomp.me/scratch/QGDMn
 // PSP: https://decomp.me/scratch/TKY2r
@@ -323,7 +418,6 @@ void func_us_801737F0(Entity* self) {
     s32 posXOffset;
     s32 posYOffset;
     s32 scaledCounter;
-    u16 newColor;
 
     self->posX.val = self->ext.et_801737F0.parent->posX.val;
     self->posY.val = self->ext.et_801737F0.parent->posY.val;
@@ -423,8 +517,7 @@ void func_us_801737F0(Entity* self) {
         posXOffset + ((cosine * (scaledCounter)-sine * (scaledCounter)) >> 12);
     prim->y3 = posYOffset +
                ((sine * (scaledCounter) + cosine * (scaledCounter)) >> 12);
-    newColor = ((self->ext.et_801737F0.stepCounter & 1) << 7);
-    PCOL(prim) = newColor;
+    PCOL(prim) = (self->ext.et_801737F0.stepCounter & 1) * 128;
 
     prim = prim->next;
 
