@@ -480,13 +480,13 @@
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/dre/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/mad/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/no0/matchings/collision/EntityDamageDisplay.s 
+| 1.00 | true     | EntityDamageDisplay                 | asm/us/st/no1/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/no3/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/np3/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/nz0/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/rwrp/matchings/wrp/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/st0/matchings/collision/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | asm/us/st/wrp/matchings/collision/EntityDamageDisplay.s 
-| 1.00 | false    | EntityDamageDisplay                 | asm/us/st/no1/nonmatchings/collision/EntityDamageDisplay.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/boss/mar/matchings/create_entity/CreateEntityFromCurrentEntity.s 
 | 1.00 | true     | CreateEntityFromCurrentEntity       | asm/us/boss/rbo3/matchings/create_entity/CreateEntityFromCurrentEntity.s 
@@ -1306,13 +1306,13 @@
 | 1.00 | true     | Random                              | asm/us/st/dre/matchings/st_update/Random.s 
 | 1.00 | true     | func_8018E964                       | asm/us/st/mad/matchings/st_update/func_8018E964.s 
 | 1.00 | true     | Random                              | asm/us/st/no0/matchings/st_update/Random.s 
+| 1.00 | true     | Random                              | asm/us/st/no1/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/no3/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/np3/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/nz0/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/rwrp/matchings/wrp/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/st0/matchings/st_update/Random.s 
 | 1.00 | true     | Random                              | asm/us/st/wrp/matchings/st_update/Random.s 
-| 1.00 | false    | Random                              | asm/us/st/no1/nonmatchings/st_update/Random.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Update                              | asm/us/boss/mar/matchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/boss/rbo3/matchings/st_update/Update.s 
@@ -1320,13 +1320,13 @@
 | 1.00 | true     | Update                              | asm/us/st/dre/matchings/st_update/Update.s 
 | 1.00 | true     | func_8018E994                       | asm/us/st/mad/matchings/st_update/func_8018E994.s 
 | 1.00 | true     | Update                              | asm/us/st/no0/matchings/st_update/Update.s 
+| 1.00 | true     | Update                              | asm/us/st/no1/matchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/no3/matchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/np3/matchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/nz0/matchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/rwrp/matchings/wrp/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/st0/matchings/st_update/Update.s 
 | 1.00 | true     | Update                              | asm/us/st/wrp/matchings/st_update/Update.s 
-| 1.00 | false    | Update                              | asm/us/st/no1/nonmatchings/st_update/Update.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | HitDetection                        | asm/us/boss/mar/matchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/boss/rbo3/matchings/collision/HitDetection.s 
@@ -1334,12 +1334,12 @@
 | 1.00 | true     | HitDetection                        | asm/us/st/dre/matchings/collision/HitDetection.s 
 | 0.95 | true     | func_8018EDB8                       | asm/us/st/mad/matchings/collision/func_8018EDB8.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/no0/matchings/collision/HitDetection.s 
+| 1.00 | true     | HitDetection                        | asm/us/st/no1/matchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/no3/matchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/np3/matchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/nz0/matchings/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/rwrp/matchings/wrp/collision/HitDetection.s 
 | 1.00 | true     | HitDetection                        | asm/us/st/wrp/matchings/collision/HitDetection.s 
-| 1.00 | false    | HitDetection                        | asm/us/st/no1/nonmatchings/collision/HitDetection.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectGold                         | asm/us/boss/mar/matchings/e_collect/CollectGold.s 
 | 1.00 | true     | CollectGold                         | asm/us/boss/rbo3/matchings/e_collect/CollectGold.s 
@@ -1489,13 +1489,13 @@
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/cen/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/dre/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/no0/matchings/st_update/UpdateStageEntities.s 
+| 1.00 | true     | UpdateStageEntities                 | asm/us/st/no1/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/no3/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/np3/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/nz0/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/rwrp/matchings/wrp/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/st0/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/wrp/matchings/st_update/UpdateStageEntities.s 
-| 1.00 | false    | UpdateStageEntities                 | asm/us/st/no1/nonmatchings/st_update/UpdateStageEntities.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | WarpBackgroundAmplitiude            | asm/us/st/wrp/matchings/prim_helpers/DestinationWarpRoom.s 
 | 1.00 | true     | WarpBackgroundBrightness            | asm/us/st/wrp/matchings/prim_helpers/WarpBackgroundPhase.s 
@@ -1670,6 +1670,15 @@
 | 1.00 | true     | func_801B0958                       | asm/us/st/nz0/matchings/30958/func_801B0958.s 
 | 1.00 | true     | func_801A7D64                       | asm/us/st/st0/matchings/27D64/func_801A7D64.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
+-------------------------------------------------------------------------------
 | 1.00 | false    | D_800DBF44                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF44.s 
 | 1.00 | false    | D_800DBF4C                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF4C.s 
 | 1.00 | false    | D_800DBF54                          | asm/us/dra/nonmatchings/save_mgr/D_800DBF54.s 
@@ -1726,14 +1735,6 @@
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | false    | SetCutsceneScript                   | asm/us/st/cen/nonmatchings/cutscene/SetCutsceneScript.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2395,9 +2396,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/stream/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
