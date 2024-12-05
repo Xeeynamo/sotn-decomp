@@ -1,5 +1,6 @@
 #ifndef SERVANT_H
 #define SERVANT_H
+#define SERVANT
 #include <common.h>
 #include <game.h>
 

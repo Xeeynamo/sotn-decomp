@@ -798,7 +798,7 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 velocityX;
     /* 0x0C */ s32 velocityY;
-#if defined(STAGE) || defined(WEAPON)
+#if defined(STAGE) || defined(WEAPON) || defined(SERVANT)
     /* 0x10 */ s16 hitboxOffX;
 #else // hack to match in DRA and RIC
     /* 0x10 */ u16 hitboxOffX;
