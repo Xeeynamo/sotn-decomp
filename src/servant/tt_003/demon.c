@@ -11,12 +11,12 @@ extern FamiliarStats s_DemonStats;
 extern s32 s_LastTargetedEntityIndex;
 extern AnimationFrame* g_DemonAnimationFrames[];
 extern s32 s_ServantId;
-extern u16 g_DemonClut[64];
+extern u16 g_DemonClut[80];
 extern SpriteParts* g_DemonSpriteParts[];
 extern s32 D_us_801786D0;
 extern s32 D_us_801786D4;
 
-extern s8 D_us_80171FE8;
+extern s8 D_us_80171FE8[40];
 extern s16 g_DemonAttackStats[10][6];
 extern s32 s_TargetLocationX;
 extern s32 s_TargetLocationY;
@@ -33,7 +33,7 @@ extern s32 s_DistToTargetLocation2;
 extern Entity* D_us_801786D8;
 extern s32 D_us_801786DC;
 
-extern s32 s_DemonSfxMap[];
+extern s32 s_DemonSfxMap[8];
 
 // These are all in sbss
 extern s32 D_us_801785F0;
@@ -224,7 +224,7 @@ void func_us_80172DC4(Entity* self) {
 
 void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
-extern u32 D_us_80171B74[][4];
+extern u32 D_us_80171B74[8][4];
 
 void func_us_80172EF8(Entity* self) {
     Primitive* prim;
@@ -931,7 +931,7 @@ void UpdateServantDefault(Entity* self) {
     }
     ProcessEvent(self, false);
     unused_2DBC(self);
-    ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+    ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
 }
 
 void func_us_80174FD0(Entity* self) {
@@ -1028,7 +1028,7 @@ void func_us_80174FD0(Entity* self) {
         break;
     }
     D_us_80178600 =
-        ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+        ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
 }
 
 extern s32 s_DemonSfxMap[];
@@ -1126,14 +1126,13 @@ void func_us_8017540C(Entity* self) {
         break;
     }
     D_us_8017861C =
-        ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+        ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
 }
 
 void unused_5800(Entity* self) {}
 
 void unused_5808(Entity* self) {}
 
-extern AnimationFrame* D_us_8017202C;
 extern s32* D_us_80172080[];
 extern s32 D_us_80178628;
 extern s32 D_us_8017862C;
@@ -1244,7 +1243,8 @@ void func_us_80175810(Entity* self) {
             sfxEntity->step = 7;
         }
     }
-    if ((self->anim == D_us_8017202C) && (self->animFrameIdx == 8)) {
+    if ((self->anim == g_DemonAnimationFrames[7]) &&
+        (self->animFrameIdx == 8)) {
         D_us_801786DC = 1;
     }
     ServantUpdateAnim(self, NULL, g_DemonAnimationFrames);
@@ -1471,7 +1471,7 @@ void func_us_80175D20(Entity* self) {
         break;
     }
     ProcessEvent(self, false);
-    ServantUpdateAnim(self, &D_us_80171FE8, g_DemonAnimationFrames);
+    ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
 }
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
@@ -1575,11 +1575,7 @@ void func_us_801765A0(Entity* self) {
 // PSP: https://decomp.me/scratch/6hM5K
 
 // Horizontal offsets for positioning primitives
-typedef struct {
-    u16 xOffsets[14];
-} D_us_80171D10_t;
-
-extern D_us_80171D10_t D_us_80171D10;
+extern u16 D_us_80171D10[];
 extern s32 D_us_80178678;
 extern s32 D_us_8017867C;
 
@@ -1666,8 +1662,8 @@ void func_us_80176814(Entity* self) {
 
     for (i = 0; i < 12; i++) {
         if (self->facingLeft) {
-            prim->x2 = newX - D_us_80171D10.xOffsets[i];
-            prim->x3 = newX - D_us_80171D10.xOffsets[i + 1];
+            prim->x2 = newX - D_us_80171D10[i];
+            prim->x3 = newX - D_us_80171D10[i + 1];
             if (i == 0) {
                 prim->x0 = prim->x2 - 0x10;
             } else {
@@ -1680,8 +1676,8 @@ void func_us_80176814(Entity* self) {
             }
 
         } else {
-            prim->x2 = newX + D_us_80171D10.xOffsets[i];
-            prim->x3 = newX + D_us_80171D10.xOffsets[i + 1];
+            prim->x2 = newX + D_us_80171D10[i];
+            prim->x3 = newX + D_us_80171D10[i + 1];
 
             if (i == 0) {
                 prim->x0 = prim->x2 + 0x10;
