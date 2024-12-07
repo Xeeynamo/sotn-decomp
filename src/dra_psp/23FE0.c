@@ -387,7 +387,53 @@ bool IsRelicActive(RelicIds relicId) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_800FE3C4);
+s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+    u32 accessoryCount;
+
+    if (subweaponId == 0) {
+        *subwpn = g_SubwpnDefs[g_Status.subWeapon];
+        accessoryCount =
+            CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
+        if (accessoryCount == 1) {
+            subwpn->heartCost /= 2;
+        }
+        if (accessoryCount == 2) {
+            subwpn->heartCost /= 3;
+        }
+        if (subwpn->heartCost <= 0) {
+            subwpn->heartCost = 1;
+        }
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        } else {
+            return 0;
+        }
+    } else {
+        *subwpn = g_SubwpnDefs[subweaponId];
+        if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, EQUIP_ARMOR) != 0) {
+            subwpn->attack += 10;
+        }
+#if defined(VERSION_US)
+        if (subweaponId == 4 || subweaponId == 12) {
+#elif defined(VERSION_HD) || defined(VERSION_PSP)
+        if (subweaponId == 4) {
+#endif
+            accessoryCount =
+                CheckEquipmentItemCount(ITEM_STAUROLITE, EQUIP_ACCESSORY);
+            if (accessoryCount == 1) {
+                subwpn->attack *= 2;
+            }
+            if (accessoryCount == 2) {
+                subwpn->attack *= 3;
+            }
+        }
+        subwpn->attack += ((g_Status.statsTotal[2] * 2) + (rand() % 12)) / 10;
+        return subweaponId;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipProperties);
 
