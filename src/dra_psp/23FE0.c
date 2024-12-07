@@ -2,6 +2,8 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
+// Appears to be start of a file, there is zero padding before this function.
+
 u8* GetEquipOrder(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
@@ -481,3 +483,5 @@ void func_800FE8F0(void) {
         D_8013B5E8 = 0x40;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", AddHearts);
