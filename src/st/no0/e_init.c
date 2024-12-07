@@ -33,12 +33,12 @@ void EntityStatueGear(Entity*);
 void EntityStoneDoor(Entity*);
 void EntityClockRoomUnused(Entity*);
 void EntityDummy(Entity*);
-void func_us_801CFBE8(Entity*);
+void EntityDiplocephalus(Entity*);
 void func_us_801CF4A8(Entity*);
 void func_us_801CF910(Entity*);
 void EntityDiplocephalusTail(Entity*);
 void EntityDiplocephalusFireball(Entity*);
-void func_us_801D0718(Entity*);
+void EntityDiplocephalusTorso(Entity*);
 void EntityOlroxDrool(Entity*);
 void func_us_801C2184(Entity*);
 void func_us_801C26B8(Entity*);
@@ -116,12 +116,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityStoneDoor,
     EntityClockRoomUnused,
     EntityDummy,
-    func_us_801CFBE8,
+    EntityDiplocephalus,
     func_us_801CF4A8,
     func_us_801CF910,
     EntityDiplocephalusTail,
     EntityDiplocephalusFireball,
-    func_us_801D0718,
+    EntityDiplocephalusTorso,
     EntityOlroxDrool,
     func_us_801C2184,
     func_us_801C26B8,
@@ -183,7 +183,7 @@ EInit D_us_80180AF4 = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x055};
 EInit D_us_80180B00 = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x056};
 EInit D_us_80180B0C = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x057};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
-EInit D_us_80180B24 = {ANIMSET_OVL(0x09), 0x01, 0x4B, 0x20E, 0x010};
+EInit g_EInitDiplocephalus = {ANIMSET_OVL(0x09), 0x01, 0x4B, 0x20E, 0x010};
 EInit g_EInitDiplocephalusFoot = {ANIMSET_OVL(0x09), 0x0C, 0x4B, 0x20E, 0x011};
 EInit D_us_80180B3C = {ANIMSET_OVL(0x09), 0x08, 0x4B, 0x20E, 0x005};
 EInit g_EInitDiplocephalusTail = {ANIMSET_OVL(0x09), 0x16, 0x4B, 0x20E, 0x012};
