@@ -247,31 +247,30 @@ void EntityClockRoomController(Entity* self) {
             primIndex = g_Player.status; // FAKE
             if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
                 if (g_Timer & 1) {
-#endif
                     if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                         g_Player.padSim = PAD_R1;
                     } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-#ifdef VERSION_PSP
-                        g_Player.padSim = 0;
-#else
-                g_Player.padSim = PAD_L1;
-#endif
-                    } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
-#ifdef VERSION_PSP
                         g_Player.padSim = PAD_L1;
-#else
-                g_Player.padSim = PAD_R2;
-#endif
+                    } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+                        g_Player.padSim = PAD_R2;
                     }
-#ifndef VERSION_PSP
                 }
             } else {
-#else
-            {
-#endif
                 self->ext.clockRoom.unk88 = 0;
                 self->step_s++;
             }
+#else
+            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+                g_Player.padSim = PAD_R1;
+            } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+                g_Player.padSim = 0;
+            } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+                g_Player.padSim = PAD_L1;
+            }
+
+            self->ext.clockRoom.unk88 = 0;
+            self->step_s++;
+#endif
 
             break;
         case 1:
