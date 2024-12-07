@@ -47,6 +47,7 @@ DemoUpdate = 0x090ff738;
 TimeAttackController = 0x09100458;
 CheckEquipmentItemCount = 0x09100A58;
 AddToInventory = 0x09100B68;
+GetSpellDef = 0x09100D70;
 GetStatusAilmentTimer = 0x09100E90;
 CastSpell = 0x09101060;
 LearnSpell = 0x091010D8;

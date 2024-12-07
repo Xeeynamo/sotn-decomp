@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/243F0", func_psp_09100D70);
+void GetSpellDef(SpellDef* spell, s32 id) {
+    *spell = g_SpellDefs[id];
+    spell->attack += (g_Status.statsTotal[STAT_INT] * 2 + (rand() % 12)) / 10;
+    if (CheckEquipmentItemCount(ITEM_MOJO_MAIL, EQUIP_ARMOR) != 0) {
+        spell->attack += spell->attack / 2;
+    }
+}
 
 s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     s16 ret;
