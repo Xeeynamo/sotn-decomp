@@ -123,7 +123,6 @@ typedef struct ProloguePrimitive {
     u16 tpage;
 } ProloguePrimitive;
 
-extern s32 D_8003CB04[];
 static ProloguePrimitive D_80181568[] = {
     {0x01, 0x80, 0xFF, 0x80, 1, 112, 0x9C},
     {0x00, 0x80, 0xFF, 0x80, 256, 112, 0x9E},
@@ -461,7 +460,7 @@ void PrologueScroll(void) {
         break;
 
     case 18:
-        D_8003CB04[0] |= 2;
+        g_Settings.D_8003CB04 |= 2;
         func_801B0058();
         g_api.FreePrimitives(D_801BEE08);
         DestroyEntitiesFromIndex(0);
