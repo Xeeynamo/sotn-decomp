@@ -106,3 +106,5 @@ void InitStageST0(Overlay* o) {
     g_pStObjLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal);
     g_pStObjLayoutVertical = OVL_EXPORT(pStObjLayoutVertical);
 }
+
+void EntityClouds(Entity* self) { NOT_IMPLEMENTED; }

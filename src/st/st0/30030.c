@@ -3,7 +3,7 @@
 #include "dialogue2.h"
 #include "disk.h"
 
-void SetGameState(GameState gameState) {
+static void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
     g_backbufferX = 0;
@@ -44,7 +44,7 @@ void func_801B0180(void) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void SetDisplayBufferColorsToBlack(void) {
+static void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -78,7 +78,7 @@ void func_801B0280(void) {
     func_801B01F8(0);
 }
 
-void SetTitleDisplayBuffer(void) {
+static void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);

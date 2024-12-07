@@ -364,6 +364,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/sprites.c
     src/st/st0/27D64.c
     src/st/st0/cutscene.c
+    src/st/st0/cutscene_data.c
     src/st/st0/2A218.c
     src/st/st0/2A8DC.c
     src/st/st0/2B0C8.c
@@ -377,7 +378,10 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/st_common.c
     src/st/st0/e_collect.c
     src/st/st0/e_misc.c
-    src/st/st0/39EA8.c
+    src/st/st0/e_particles.c
+    src/st/st0/e_room_fg.c
+    src/st/st0/popup.c
+    src/st/st0/3AB08.c
     src/st/st0/3C5C0.c
     src/st/st0/prim_helpers.c
     src/st/st0/3D8F0.c

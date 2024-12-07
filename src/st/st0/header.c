@@ -11,7 +11,7 @@ void OVL_EXPORT(HitDetection)();
 void UpdateStageEntities();
 void PrologueScroll();
 
-static Overlay OVL_EXPORT(Overlay) = {
+Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = OVL_EXPORT(HitDetection),
     .UpdateRoomPosition = UpdateRoomPosition,
