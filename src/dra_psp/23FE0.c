@@ -497,3 +497,9 @@ void AddHearts(s32 value) {
         PlaySfx(SFX_HEART_PICKUP);
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091020A0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102800);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102898);
