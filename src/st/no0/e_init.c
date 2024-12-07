@@ -25,7 +25,7 @@ void EntityGreyPuff(Entity*);
 void func_us_801CC8F8(Entity*);
 void func_us_801CC750(Entity*);
 void func_us_801CC9B4(Entity*);
-void func_us_801CCC74(Entity*);
+void EntityClockRoomController(Entity*);
 void EntityClockHands(Entity*);
 void EntityBirdcageDoor(Entity*);
 void EntityStatue(Entity*);
@@ -108,7 +108,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801CC8F8,
     func_us_801CC750,
     func_us_801CC9B4,
-    func_us_801CCC74,
+    EntityClockRoomController,
     EntityClockHands,
     EntityBirdcageDoor,
     EntityStatue,
