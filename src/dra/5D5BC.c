@@ -593,13 +593,15 @@ void func_800FE8F0(void) {
 }
 
 void AddHearts(s32 value) {
+    Entity* player;
     if (g_Status.hearts < g_Status.heartsMax) {
         g_Status.hearts += value;
-        if (g_Status.heartsMax < g_Status.hearts) {
+        if (g_Status.hearts > g_Status.heartsMax) {
             g_Status.hearts = g_Status.heartsMax;
         }
         // Creates a heart rising from the player, which flickers away
-        CreateEntFactoryFromEntity(&PLAYER, FACTORY(99, 0), 0);
+        player = &PLAYER;
+        CreateEntFactoryFromEntity(player, FACTORY(99, 0), 0);
         PlaySfx(SFX_HEART_PICKUP);
     }
 }

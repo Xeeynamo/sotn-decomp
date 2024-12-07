@@ -484,4 +484,16 @@ void func_800FE8F0(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", AddHearts);
+void AddHearts(s32 value) {
+    Entity* player;
+    if (g_Status.hearts < g_Status.heartsMax) {
+        g_Status.hearts += value;
+        if (g_Status.hearts > g_Status.heartsMax) {
+            g_Status.hearts = g_Status.heartsMax;
+        }
+        // Creates a heart rising from the player, which flickers away
+        player = &PLAYER;
+        CreateEntFactoryFromEntity(player, FACTORY(99, 0), 0);
+        PlaySfx(SFX_HEART_PICKUP);
+    }
+}
