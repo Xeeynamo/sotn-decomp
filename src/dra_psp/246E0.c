@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/246E0", CastSpell);
+bool CastSpell(SpellIds spellId) {
+    s32 mpUsage = g_SpellDefs[spellId].mpUsage;
+
+    if (g_Status.mp < mpUsage) {
+        return false;
+    } else {
+        g_Status.mp -= mpUsage;
+        return true;
+    }
+}
 
 void LearnSpell(s32 spellId) {
     s32 i;

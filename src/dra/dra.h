@@ -323,13 +323,14 @@ extern u_long* D_800A3BB8[];
 extern Lba g_StagesLba[80];
 extern SubweaponDef g_SubwpnDefs[13];
 #if defined(VERSION_PSP)
+extern SpellDef* g_SpellDefs;
 extern Equipment* g_EquipDefs;
 #else
+extern SpellDef g_SpellDefs[28];
 extern Equipment g_EquipDefs[217];
 #endif
 extern Accessory g_AccessoryDefs[90];
 extern const char* g_MenuStr[110];
-extern SpellDef g_SpellDefs[28];
 extern RelicDesc g_RelicDefs[30];
 extern EnemyDef g_EnemyDefs[400];
 extern s32 g_ExpNext[];

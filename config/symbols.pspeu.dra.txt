@@ -183,5 +183,6 @@ g_CdCommandResult = 0x09237608;
 g_CdCommandStatus = 0x09237610;
 D_8013B61C = 0x09237620;
 g_RelicDefs = 0x09237628;
+g_SpellDefs = 0x09237630;
 g_AccessoryDefs = 0x09237648;
 g_EquipDefs = 0x09237650;

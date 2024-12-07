@@ -265,7 +265,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
 }
 
 bool CastSpell(SpellIds spellId) {
-    u8 mpUsage = g_SpellDefs[spellId].mpUsage;
+    s32 mpUsage = g_SpellDefs[spellId].mpUsage;
 
     if (g_Status.mp < mpUsage) {
         return false;
