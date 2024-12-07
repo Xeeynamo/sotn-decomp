@@ -163,7 +163,6 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
 void AddToInventory(u16 id, EquipKind kind) {
     s32 i;
     EquipKind found;
-    u8 prevAmount;
     u8* order;
     u8* count;
     u8* pOrder;
@@ -175,21 +174,24 @@ void AddToInventory(u16 id, EquipKind kind) {
     if (count[id] >= 99) {
         return;
     }
-
-    prevAmount = count[id];
-    count[id] = prevAmount + 1;
+    // Increment the count of the item.
+    count[id]++;
+    // If the amount we now have is not 1, then we already had one (or more).
+    // Done.
     if (count[id] != 1) {
         return;
     }
-    count[id] = prevAmount;
-
+    // If the amount we now have IS 1, then change it back to 0 and do more
+    // processing.
+    count[id]--;
+    // If it's not a hand item, then figure out what equipType it is.
     if (kind != EQUIP_HAND) {
         found = g_AccessoryDefs[id].equipType;
     }
 
     pOrder = order;
-    for (i = 0; true; i++) {
-        if (*pOrder++ == id) {
+    for (i = 0; true; i++, pOrder++) {
+        if (*pOrder == id) {
             existingItemSlot = i;
             break;
         }
@@ -197,7 +199,7 @@ void AddToInventory(u16 id, EquipKind kind) {
 
     pOrder = order;
     for (i = 0; true; i++, pOrder++) {
-        if (count[*pOrder] > 0) {
+        if (count[*pOrder]) {
             continue;
         }
         if (kind == EQUIP_HAND || found == g_AccessoryDefs[*pOrder].equipType) {
@@ -242,7 +244,8 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
         break;
     case STATUS_AILMENT_PETRIFIED:
         ret = timer;
-        petrify_adjustment = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
+        petrify_adjustment =
+            (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
         if (petrify_adjustment < 0) {
             petrify_adjustment = 0;
         }
@@ -266,7 +269,6 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
 
     return ret;
 }
-
 
 bool CastSpell(SpellIds spellId) {
     s32 mpUsage = g_SpellDefs[spellId].mpUsage;

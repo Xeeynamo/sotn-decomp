@@ -1,15 +1,68 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09100960);
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipOrder);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091009A0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipCount);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091009E0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", CheckEquipmentItemCount);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", AddToInventory);
+void AddToInventory(u16 id, EquipKind kind) {
+    s32 i;
+    EquipKind found;
+    u8* order;
+    u8* count;
+    u8* pOrder;
+    s32 existingItemSlot;
+    s32 emptySlot;
+
+    order = GetEquipOrder(kind);
+    count = GetEquipCount(kind);
+    if (count[id] >= 99) {
+        return;
+    }
+    // Increment the count of the item.
+    count[id]++;
+    // If the amount we now have is not 1, then we already had one (or more).
+    // Done.
+    if (count[id] != 1) {
+        return;
+    }
+    // If the amount we now have IS 1, then change it back to 0 and do more
+    // processing.
+    count[id]--;
+    // If it's not a hand item, then figure out what equipType it is.
+    if (kind != EQUIP_HAND) {
+        found = g_AccessoryDefs[id].equipType;
+    }
+
+    pOrder = order;
+    for (i = 0; true; i++, pOrder++) {
+        if (*pOrder == id) {
+            existingItemSlot = i;
+            break;
+        }
+    }
+
+    pOrder = order;
+    for (i = 0; true; i++, pOrder++) {
+        if (count[*pOrder]) {
+            continue;
+        }
+        if (kind == EQUIP_HAND || found == g_AccessoryDefs[*pOrder].equipType) {
+            emptySlot = i;
+            break;
+        }
+    }
+
+    count[id]++;
+    if (emptySlot < existingItemSlot) {
+        order[existingItemSlot] = order[emptySlot];
+        order[emptySlot] = id;
+    }
+}
 
 void GetSpellDef(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
@@ -40,7 +93,8 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
         break;
     case STATUS_AILMENT_PETRIFIED:
         ret = timer;
-        petrify_adjustment = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
+        petrify_adjustment =
+            (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
         if (petrify_adjustment < 0) {
             petrify_adjustment = 0;
         }
