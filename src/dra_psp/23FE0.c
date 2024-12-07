@@ -1,9 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipOrder);
+u8* GetEquipOrder(EquipKind kind) {
+    switch (kind){
+        case EQUIP_HAND:
+            return g_Status.equipHandOrder;
+    }
+    return g_Status.equipBodyOrder;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipCount);
+u8* GetEquipCount(EquipKind kind) {
+    switch (kind){
+        case EQUIP_HAND:
+            return g_Status.equipHandCount;
+    }
+    return g_Status.equipBodyCount;
+}
 
 const char* GetEquipmentName(EquipKind kind, s32 equipId) {
     switch (kind){

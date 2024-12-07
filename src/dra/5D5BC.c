@@ -119,15 +119,17 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 }
 
 u8* GetEquipOrder(EquipKind kind) {
-    if (kind == EQUIP_HAND) {
-        return g_Status.equipHandOrder;
+    switch (kind){
+        case EQUIP_HAND:
+            return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
 
 u8* GetEquipCount(EquipKind kind) {
-    if (kind == EQUIP_HAND) {
-        return g_Status.equipHandCount;
+    switch (kind){
+        case EQUIP_HAND:
+            return g_Status.equipHandCount;
     }
     return g_Status.equipBodyCount;
 }
