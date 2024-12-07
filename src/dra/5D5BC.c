@@ -293,15 +293,16 @@ bool func_800FDD44(s32 itemType) {
     s32 equippedItem = g_Status.equipment[itemType];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
-    if (CheckEquipmentItemCount(ITEM_DUPLICATOR, EQUIP_ACCESSORY) == 0) {
-        if (isConsumable) {
-            if (g_Status.equipHandCount[equippedItem] == 0) {
-                g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
-                func_800F53A4();
-                return true;
-            }
-            g_Status.equipHandCount[equippedItem]--;
+    if (CheckEquipmentItemCount(ITEM_DUPLICATOR, EQUIP_ACCESSORY)) {
+        return false;
+    }
+    if (isConsumable) {
+        if (!g_Status.equipHandCount[equippedItem]) {
+            g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
+            func_800F53A4();
+            return true;
         }
+        g_Status.equipHandCount[equippedItem]--;
     }
     return false;
 }

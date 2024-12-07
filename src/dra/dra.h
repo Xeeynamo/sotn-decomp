@@ -322,7 +322,11 @@ extern s16** D_800A3B70[18];
 extern u_long* D_800A3BB8[];
 extern Lba g_StagesLba[80];
 extern SubweaponDef g_SubwpnDefs[13];
+#if defined(VERSION_PSP)
+extern Equipment* g_EquipDefs;
+#else
 extern Equipment g_EquipDefs[217];
+#endif
 extern Accessory g_AccessoryDefs[90];
 extern const char* g_MenuStr[110];
 extern SpellDef g_SpellDefs[28];
