@@ -435,7 +435,35 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipProperties);
+void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
+    s32 criticalRate;
+    u8 itemCategory;
+
+    *res = g_EquipDefs[equipId];
+    criticalRate = res->criticalRate;
+    criticalRate +=
+        SquareRoot0((g_Status.statsTotal[STAT_LCK] * 2) + (rand() & 0xF)) - 5;
+    if (criticalRate > 255) {
+        criticalRate = 255;
+    }
+    if (criticalRate < 0) {
+        criticalRate = 0;
+    }
+    if (g_StageId == STAGE_ST0) {
+        criticalRate = 0;
+    }
+
+    res->criticalRate = criticalRate;
+    func_800F4994();
+    itemCategory = g_EquipDefs[equipId].itemCategory;
+    if (itemCategory == ITEM_FOOD || itemCategory == ITEM_MEDICINE) {
+        return;
+    }
+    res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
+    if (g_Player.status & PLAYER_STATUS_POISON) {
+        res->attack >>= 1;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", HasEnoughMp);
 

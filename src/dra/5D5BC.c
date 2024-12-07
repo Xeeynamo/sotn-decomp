@@ -547,18 +547,13 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 }
 
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
-    s32 criticalModRate;
-    Equipment* var_a2;
     s32 criticalRate;
     u8 itemCategory;
 
-    var_a2 = &g_EquipDefs[(s16)equipId]; // FAKE
-    criticalModRate = 5;
-
-    __builtin_memcpy(res, &g_EquipDefs[equipId], sizeof(Equipment));
+    *res = g_EquipDefs[equipId];
     criticalRate = res->criticalRate;
-    criticalRate = criticalRate - criticalModRate +
-                   SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
+    criticalRate +=
+        SquareRoot0((g_Status.statsTotal[STAT_LCK] * 2) + (rand() & 0xF)) - 5;
     if (criticalRate > 255) {
         criticalRate = 255;
     }
@@ -572,11 +567,12 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     res->criticalRate = criticalRate;
     func_800F4994();
     itemCategory = g_EquipDefs[equipId].itemCategory;
-    if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
-        res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
-        if (g_Player.status & PLAYER_STATUS_POISON) {
-            res->attack >>= 1;
-        }
+    if (itemCategory == ITEM_FOOD || itemCategory == ITEM_MEDICINE) {
+        return;
+    }
+    res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
+    if (g_Player.status & PLAYER_STATUS_POISON) {
+        res->attack >>= 1;
     }
 }
 

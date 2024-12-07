@@ -513,7 +513,7 @@ void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
-s32 CalcAttack(s32, s32);
+s32 CalcAttack(s32, u32);
 void func_800F4F48(void);
 void CalcDefense(void);
 bool IsAlucart(void);
