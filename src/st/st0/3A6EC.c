@@ -3,10 +3,6 @@
 #include "st0.h"
 #include "sfx.h"
 
-#include "../entity_soul_steal_orb.h"
-
-#include "../entity_enemy_blood.h"
-
 extern ObjInit D_80181FE8[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &D_80181FE8[entity->params];
@@ -32,7 +28,7 @@ void EntityRoomForeground(Entity* entity) {
 
 #include "../popup.h"
 
-INCLUDE_ASM("st/st0/nonmatchings/39EA8", EntityClouds);
+INCLUDE_ASM("st/st0/nonmatchings/3A6EC", EntityClouds);
 
 typedef struct {
     u8 u0, v0, u1, v1, u2, v2;
