@@ -46,7 +46,7 @@ segments:
       - [0x9D4, .data, e_red_door]
       - [0x9EC, .data, st_common]
       - [0xBEC, .data, e_collect]
-      - [0xED8, data]
+      - [0xED8, .data, e_collect] # g_collectVelocity
       - [0xEF8, .data, e_misc]
       - [0x1068, data]
       - [0x1130, data, g_Rooms]

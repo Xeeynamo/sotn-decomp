@@ -81,8 +81,6 @@ extern s32 D_801C2578;
 extern s16 D_80181990[];
 extern u16 g_EInitObtainable[];
 extern u16 D_80181D74[];
-extern s16 g_collectXVelTable[];
-extern s16 g_collectYVelTable[];
 extern s16 D_80181EB0[];
 extern u32 D_80181EC0[];
 extern u16 D_80181F04[];

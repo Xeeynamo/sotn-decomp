@@ -196,6 +196,10 @@ extern u16 g_EInitParticle[];
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
 #include "blink_item.h"
 #else
+static Point16 g_collectVelocity[] = {
+    {0x0160, 0xFD20}, {0xFE80, 0xFC90}, {0x00E0, 0xFC20}, {0xFF40, 0xFD30},
+    {0x0020, 0xFB60}, {0xFFC0, 0xFCC0}, {0x0090, 0xFC40}, {0xFFA0, 0xFC30},
+};
 // Also, this function is never called.
 void Unreferenced_MAD_ST0_func(Entity* self) {
     if (self->step != 0) {
@@ -210,8 +214,8 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 
     InitializeEntity(OVL_EXPORT(EInitBreakable));
     self->animCurFrame = self->ext.unusedMadST0.animframe;
-    self->velocityX = g_collectXVelTable[self->ext.unusedMadST0.velIndex * 2];
-    self->velocityY = g_collectYVelTable[self->ext.unusedMadST0.velIndex * 2];
+    self->velocityX = g_collectVelocity[self->ext.unusedMadST0.velIndex].x;
+    self->velocityY = g_collectVelocity[self->ext.unusedMadST0.velIndex].y;
 
     if (self->params != 0) {
         self->zPriority -= 1;

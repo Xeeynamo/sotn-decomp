@@ -65,5 +65,4 @@ g_ESoulStealOrbAngles = 0x80181068;
 g_ESoulStealOrbAnim = 0x801810D8;
 g_ESoulStealOrbSprt = 0x80181078;
 MAD_rooms_layers = 0x801801F8;
-g_collectXVelTable = 0x80180ED8;
-g_collectYVelTable = 0x80180EDA;
+g_collectVelocity = 0x80180ED8;
