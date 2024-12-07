@@ -26,6 +26,18 @@ func readSector(r io.ReaderAt, loc location, mode TrackMode, useMode2 bool) (sec
 	if mode == TrackMode1_2048 {
 		offset = int64(loc) * sectorSize
 		secLength = sectorSize
+	} else if mode == TrackMode1_2352 {
+		// Sync Header (12 bytes)
+		// Header (4 bytes)
+		// User Data (2048 bytes)
+		// Error Correction Code (ECC) (280 bytes)
+		// Sub-channel Data (96 bytes)
+
+		// skip the sync header and header
+		offset = 16 + int64(loc) * sectorMode2Size
+
+		// read the user data but not ecc or sub
+		secLength = sectorSize
 	} else if mode == TrackMode2_2352 {
 		if useMode2 {
 			offset = int64(loc) * sectorMode2Size
