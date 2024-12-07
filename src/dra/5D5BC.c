@@ -334,13 +334,13 @@ u32 CheckAndDoLevelUp(void) {
     }
     if (g_ExpNext[g_Status.level + 1] <= g_Status.exp) {
         g_Status.level++;
-        statsGained = 0;
         g_Status.mpMax += 4 + (rand() & 1);
         g_Status.hp += g_LevelHPIncrease[(s32)g_Status.level / 10];
         g_Status.hpMax += g_LevelHPIncrease[(s32)g_Status.level / 10];
         g_Status.heartsMax += 2;
         // Run again, in case we have enough EXP to level up twice
         CheckAndDoLevelUp();
+        statsGained = 0;
         for (i = 0; i < LEN(g_Status.statsBase); i++) {
             // Flip a coin to decide if you will gain a stat here
             statgain = rand() & 1;
