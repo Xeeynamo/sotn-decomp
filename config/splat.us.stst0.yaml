@@ -47,7 +47,8 @@ segments:
       - [0x830, .data, 2A218]
       - [0x89C, .data, 2A8DC]
       - [0x908, .data, 2B0C8]
-      - [0x90C, data]
+      - [0x90C, data] # 2C564
+      - [0xAA4, .data, 2DAC8] # 2DAC8
       - [0x1568, .data, 30030]
       - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]

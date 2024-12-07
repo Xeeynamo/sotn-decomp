@@ -86,34 +86,10 @@ extern u8 D_801809A4[]; // Animation
 extern u8 D_80180A0C[]; // Animation
 extern u8 D_80180A20[]; // Animation
 extern u8 D_80180A2C[]; // Animation
-// Animations for EntityDraculaFinalForm
-extern u8 D_80180AA4[];
-extern u8 D_80180AB0[];
-extern u8 D_80180AC8[];
-extern u8 D_80180AD4[];
-extern u8 D_80180AEC[];
-extern u8 D_80180AFC[];
-extern u8 D_80180B20[];
-extern u8 D_80180B48[];
-extern u8 D_80180B58[];
-extern u8 D_80180B60[];
-extern u8 D_80180B80[];
-extern u8 D_80180BA0[]; // Animation
-extern u8 D_80180BB8[]; // Animation
-extern u8 D_80180BCC[]; // Animation
-extern u8 D_80180BDC[]; // Animation
 
 extern u16 D_80180A48[];
 extern Point16 D_80180A58[];
-extern u16 D_80180BE4[];
-extern s16 D_801810F4[];
-extern Point16 D_80181108[];
-extern s32 D_80181148;
-extern u32 D_8018114C;
-extern s16 D_80181150[];
-extern s16 D_8018129C[];
-extern u8 D_801813E8;
-extern u8 D_801814A8;
+
 extern u16 D_80181CAC[];
 extern u16 D_80181CDC[];
 extern u32 D_80181CF0[];
