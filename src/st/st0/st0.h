@@ -56,8 +56,6 @@ extern const char* D_801A7984;
 extern const char* D_801A7990;
 extern const char* D_801A799C;
 
-extern bool g_isDraculaFirstFormDefeated;
-
 // *** Initializers ***
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitParticle;
@@ -71,25 +69,6 @@ extern EInit g_EInitDraculaMegaFireball; // Init EntityDraculaMegaFireball
 extern EInit g_EInitSecretStairs;
 
 extern ObjInit D_80180638[];
-
-extern s32 D_80180910;
-
-// *** EntityDracula properties START ***
-extern u8 D_80180914[]; // Animation
-extern u8 D_80180924[]; // Animation
-extern u8 D_80180934[]; // Animation
-extern u8 D_80180944[]; // Animation
-extern u8 D_80180954[]; // Animation
-extern u8 D_80180964[]; // Animation
-extern u8 D_8018097C[]; // Animation
-extern u8 D_801809A4[]; // Animation
-extern u8 D_80180A0C[]; // Animation
-extern u8 D_80180A20[]; // Animation
-extern u8 D_80180A2C[]; // Animation
-
-extern u16 D_80180A48[];
-extern Point16 D_80180A58[];
-
 extern u16 D_80181CAC[];
 extern u16 D_80181CDC[];
 extern u32 D_80181CF0[];

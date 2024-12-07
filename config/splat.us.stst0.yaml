@@ -47,8 +47,8 @@ segments:
       - [0x830, .data, 2A218]
       - [0x89C, .data, 2A8DC]
       - [0x908, .data, 2B0C8]
-      - [0x90C, data] # 2C564
-      - [0xAA4, .data, 2DAC8] # 2DAC8
+      - [0x90C, .data, 2C564]
+      - [0xAA4, .data, 2DAC8]
       - [0x1568, .data, 30030]
       - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
@@ -114,7 +114,7 @@ segments:
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
       - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
       - [0x27B00, .rodata, 2B0C8] # EntityStageTitleCard
-      - [0x27B18, .rodata, 2B0C8] # func_801ABBBC
+      - [0x27B18, .rodata, 2C564] # func_801ABBBC
       - [0x27B40, .rodata, 2C564] # EntityDracula
       - [0x27B7C, .rodata, 2DAC8] # "charal %x\n"
       - [0x27B8C, .rodata, 2DAC8] # EntityDraculaFinalForm
@@ -135,7 +135,7 @@ segments:
       - [0x2A218, c]
       - [0x2A8DC, c]
       - [0x2B0C8, c]
-      - [0x2C564, c] # EntityDracula
+      - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
       - [0x3186C, c, st_update]

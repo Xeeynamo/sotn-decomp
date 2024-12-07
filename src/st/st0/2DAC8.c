@@ -256,6 +256,7 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
     }
 }
 
+extern s32 D_80180910;
 void EntityDraculaFinalForm(Entity* self) {
     byte stackpad[56];
     Entity* temp_s2;
