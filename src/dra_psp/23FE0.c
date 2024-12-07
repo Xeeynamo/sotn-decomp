@@ -5,7 +5,14 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipOrder);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", GetEquipCount);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091009E0);
+const char* GetEquipmentName(EquipKind kind, s32 equipId) {
+    switch (kind){
+        case EQUIP_HAND:
+            return g_EquipDefs[equipId].name;
+    }
+    // This can alternatively be made a Default case.
+    return g_AccessoryDefs[equipId].name;
+}
 
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     switch (equipType) {

@@ -133,11 +133,12 @@ u8* GetEquipCount(EquipKind kind) {
 }
 
 const char* GetEquipmentName(EquipKind kind, s32 equipId) {
-    if (kind == EQUIP_HAND) {
-        return g_EquipDefs[equipId].name;
-    } else {
-        return g_AccessoryDefs[equipId].name;
+    switch (kind){
+        case EQUIP_HAND:
+            return g_EquipDefs[equipId].name;
     }
+    // This can alternatively be made a Default case.
+    return g_AccessoryDefs[equipId].name;
 }
 
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
