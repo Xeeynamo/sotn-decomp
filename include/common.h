@@ -49,7 +49,7 @@
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 #define SQ(x) ((x) * (x))
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
-#define MAX(a, b) ((a) > (b) ? (b) : (a))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 #ifdef _MSC_VER
 #define __builtin_memcpy memcpy

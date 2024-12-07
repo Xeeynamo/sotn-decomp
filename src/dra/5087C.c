@@ -227,7 +227,7 @@ u8 D_800A2C0C[] = {
 u8* D_800A2D44[] = {D_800A2C0C};
 
 // BSS
-extern s32 D_80137598;
+extern bool D_80137598;
 extern s32 D_8013759C;
 extern s32 D_801375A0;
 extern s32 D_801375A4;
@@ -1005,7 +1005,7 @@ void func_800F24F4(void) {
 
         var_a0 = 0;
         if (g_StageId == STAGE_RNO4 && x == 18 && y == 30) {
-            D_80137598 = 0;
+            D_80137598 = false;
             return;
         }
         if (g_StageId == STAGE_NO4 && x == 45 && y == 33) {
@@ -1014,17 +1014,17 @@ void func_800F24F4(void) {
             } else {
                 if (TimeAttackController(TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
                                          TIMEATTACK_GET_RECORD)) {
-                    D_80137598 = 0;
+                    D_80137598 = false;
                     return;
                 }
             }
             var_a0 = 1;
         }
         func_801042C4(var_a0);
-        D_80137598 = 1;
+        D_80137598 = true;
         func_80105428();
     } else {
-        D_80137598 = 0;
+        D_80137598 = false;
     }
 }
 
@@ -1482,7 +1482,7 @@ void RunMainEngine(void) {
             func_801028AC(0);
             DrawHudSubweapon();
             func_800E414C();
-            if (D_80137598 != 0) {
+            if (D_80137598) {
                 func_80105428();
             }
             if (g_Player.status & PLAYER_STATUS_UNK80000) {
@@ -1618,9 +1618,9 @@ void RunMainEngine(void) {
                         }
                     }
                 }
-                if (D_80137598 != 0) {
+                if (D_80137598) {
                     func_8010427C();
-                    D_80137598 = 0;
+                    D_80137598 = false;
                 }
                 layer = g_api.o.tileLayers[D_801375BC.def->tileLayoutId].fg;
                 if (layer->rect.params & 0x80) {

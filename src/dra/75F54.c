@@ -397,30 +397,32 @@ s32 CheckWingSmashInput(void) {
 }
 
 void ControlBatForm(void) {
+    Entity* newEntity;
     s32 pressingCross;
-    s32 x_offset;
     // When we initially move left/right, bat makes a screech sound.
     s32 screechDone;
+    s16 x_offset;
     u32 directionsPressed;
 
     screechDone = 0;
     if (BatFormFinished()) {
         return;
     }
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
-    PLAYER.rotPivotY = 0;
+
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Player.padPressed & PAD_CROSS;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.rotPivotY = 0;
 
 #if defined(VERSION_HD)
     if (PLAYER.step_s != 3) {
-#elif defined(VERSION_US)
+#else
     // Just to make the curly brackets match at the end of this block
     if (1) {
 #endif
-        if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s != 0) &&
-            (CastSpell(SPELL_WING_SMASH) != 0)) {
+        if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s) &&
+            CastSpell(SPELL_WING_SMASH)) {
             LearnSpell(SPELL_WING_SMASH);
             SetPlayerAnim(0xC6);
             SetSpeedX(FIX(6));
@@ -428,16 +430,16 @@ void ControlBatForm(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5c), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, 67, 0);
             g_WingSmashTimer = 0x40;
-#if defined(VERSION_US)
+#if !defined(VERSION_HD)
             g_WingSmashButtonCounter = 0;
 #endif
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
-                   ((u32)(PLAYER.step_s - 1) < 2U) &&
+                   (PLAYER.step_s == 1 || PLAYER.step_s == 2) &&
                    (IsRelicActive(RELIC_ECHO_OF_BAT))) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 103, 0);
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-                   ((u32)(PLAYER.step_s - 1) < 2U) &&
-                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
+                   (PLAYER.step_s == 1 || PLAYER.step_s == 2) &&
+                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9))) {
             SetPlayerAnim(0xC9);
             PLAYER.step_s = 4;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 5), 0);
@@ -448,27 +450,23 @@ void ControlBatForm(void) {
     case 0:
         g_WingSmashButtonCounter = 0;
         PLAYER.rotZ = 0;
-        g_Player.unk48 = 0;
-        g_Player.unk46 = 0;
-        g_Player.unk44 = 0;
+        g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
         if (g_Entities[16].entityId == 0x22) {
-            PLAYER.animSet = 0xD;
-            D_800AFDA4[1] = 6;
             PLAYER.unk5A = 0;
+            PLAYER.animSet = 13;
+            D_800AFDA4[1] = 6;
             PLAYER.ext.player.anim = 0xCA;
-            if (func_8011203C() == 0) {
+            if (!func_8011203C()) {
                 return;
             }
         } else {
             if (g_Player.unk66 == 0) {
-#if defined(VERSION_US)
-                if (CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(44, 0x20), 0) == NULL) {
+                newEntity = CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(44, 0x20), 0);
+#if !defined(VERSION_HD)
+                if (newEntity == NULL) {
                     return;
                 }
-#elif defined(VERSION_HD)
-                CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(44, 0x20), 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;
@@ -483,14 +481,14 @@ void ControlBatForm(void) {
                 }
             }
             SetPlayerAnim(0xCA);
+            D_800AFDA4[1] = PLAYER.animCurFrame;
             PLAYER.palette = 0x810D;
-            D_800AFDA4[1] = (s16)PLAYER.animCurFrame;
             if (g_Player.unk66 == 1) {
                 return;
             }
             if (g_Player.unk66 == 2) {
-                PLAYER.animSet = 0xD;
                 PLAYER.unk5A = 0;
+                PLAYER.animSet = 0xD;
                 D_800AFDA4[1] = 6;
                 return;
             }
@@ -503,11 +501,11 @@ void ControlBatForm(void) {
         PLAYER.step_s++;
         break;
     case 1:
-        if ((directionsPressed != 0) && (pressingCross == 0)) {
+        if (directionsPressed && !pressingCross) {
             if (PLAYER.ext.player.anim == 0xC3) {
                 PLAYER.animFrameIdx /= 3;
             }
-            PLAYER.step_s += 1;
+            PLAYER.step_s++;
         } else {
             func_8011690C(0);
             DecelerateX(0x1200);
@@ -536,10 +534,10 @@ void ControlBatForm(void) {
             DecelerateX(0x1200);
             break;
         case PAD_DOWN:
-            if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.anim = 0xC5;
-            } else {
+            if (g_Player.pl_vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
+            } else {
+                PLAYER.ext.player.anim = 0xC5;
             }
             if (PLAYER.velocityY > FIX(1.25)) {
                 DecelerateY(0x1200);
@@ -559,10 +557,10 @@ void ControlBatForm(void) {
                 PLAYER.velocityX = FIX(1.25);
             }
             DecelerateY(0x1200);
-            screechDone = 1;
             if (!g_BatScreechDone) {
                 PlaySfx(SFX_BAT_SCREECH);
             }
+            screechDone = 1;
             break;
         case PAD_LEFT:
             PLAYER.ext.player.anim = 0xC2;
@@ -574,10 +572,10 @@ void ControlBatForm(void) {
                 PLAYER.velocityX = FIX(-1.25);
             }
             DecelerateY(0x1200);
-            screechDone = 1;
             if (!g_BatScreechDone) {
                 PlaySfx(SFX_BAT_SCREECH);
             }
+            screechDone = 1;
             break;
         case PAD_RIGHT | PAD_UP:
             PLAYER.ext.player.anim = 0xC2;
@@ -610,10 +608,10 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_RIGHT | PAD_DOWN:
-            if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.anim = 0xC5;
-            } else {
+            if (g_Player.pl_vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
+            } else {
+                PLAYER.ext.player.anim = 0xC5;
             }
             PLAYER.facingLeft = 0;
             func_8011690C(0);
@@ -629,10 +627,10 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT | PAD_DOWN:
-            if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.anim = 0xC5;
-            } else {
+            if (g_Player.pl_vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
+            } else {
+                PLAYER.ext.player.anim = 0xC5;
             }
             PLAYER.facingLeft = 1;
             func_8011690C(0);
@@ -650,8 +648,8 @@ void ControlBatForm(void) {
         }
         break;
     case 3:
-        if (PLAYER.facingLeft == 0 && (g_Player.pl_vram_flag & 4) ||
-            PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 8)) {
+        if (!PLAYER.facingLeft && (g_Player.pl_vram_flag & 4) ||
+            PLAYER.facingLeft && (g_Player.pl_vram_flag & 8)) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
@@ -682,17 +680,14 @@ void ControlBatForm(void) {
                 DecelerateY(0x2000);
             }
             if (g_Player.pl_vram_flag & 0x800) {
-                if (PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 0x400) ||
-                    PLAYER.facingLeft == 0 &&
-                        !(g_Player.pl_vram_flag & 0x400)) {
+                if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x400) ||
+                    !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x400)) {
                     PLAYER.velocityY = FIX(6);
                 }
             }
-            if ((g_Player.pl_vram_flag & 0x8000) != 0) {
-                if (PLAYER.facingLeft != 0 &&
-                        (g_Player.pl_vram_flag & 0x4000) ||
-                    PLAYER.facingLeft == 0 &&
-                        !(g_Player.pl_vram_flag & 0x4000)) {
+            if (g_Player.pl_vram_flag & 0x8000) {
+                if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x4000) ||
+                    !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x4000)) {
                     PLAYER.velocityY = FIX(-6);
                 }
             }
@@ -710,11 +705,11 @@ void ControlBatForm(void) {
                 }
                 if (g_Player.pl_vram_flag & 2) {
                     x_offset = 3;
-                    if (PLAYER.facingLeft != 0) {
-                        x_offset = -3;
+                    if (PLAYER.facingLeft) {
+                        x_offset = -x_offset;
                     }
                     PLAYER.posY.i.hi -= 8;
-                    PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
+                    PLAYER.posX.i.hi += x_offset;
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(4, 1), 0);
                     PLAYER.posY.i.hi += 8;
@@ -752,6 +747,8 @@ void ControlBatForm(void) {
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = 0;
         }
+    }
+    if (D_8013AECC != 0) {
         if (D_8013AECC > 0) {
             D_8013AECC--;
             g_CurrentEntity->posY.i.hi++;

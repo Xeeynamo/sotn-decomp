@@ -64,7 +64,7 @@ u8* g_DemoPtr;
 s32 g_DemoKeyIdx;
 
 // 5087C.c
-s32 D_80137598;
+bool D_80137598;
 s32 D_8013759C;
 s32 D_801375A0;
 s32 D_801375A4;
