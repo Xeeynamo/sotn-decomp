@@ -9,7 +9,11 @@ extern s32 g_LevelHPIncrease[];
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/24810", func_psp_09101190);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/24810", func_psp_09101288);
+void func_800FDE00(void) {
+    D_80137960 = 0;
+    D_80137964 = 0;
+    D_80137968 = 0;
+}
 
 u32 CheckAndDoLevelUp(void) {
     s32 i;

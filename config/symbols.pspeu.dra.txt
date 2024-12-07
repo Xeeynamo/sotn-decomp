@@ -48,6 +48,7 @@ CheckEquipmentItemCount = 0x09100A58;
 AddToInventory = 0x09100B68;
 CastSpell = 0x09101060;
 LearnSpell = 0x091010D8;
+func_800FDE00 = 0x09101288;
 CheckAndDoLevelUp = 0x091012A8;
 func_800FE044 = 0x091015B8;
 IsRelicActive = 0x09101AA8;
