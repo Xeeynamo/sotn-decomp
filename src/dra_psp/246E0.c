@@ -3,7 +3,19 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/246E0", CastSpell);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/246E0", LearnSpell);
+void LearnSpell(s32 spellId) {
+    s32 i;
+
+    if ((g_Status.spellsLearnt & (1 << spellId)) == 0) {
+        g_Status.spellsLearnt |= 1 << spellId;
+        for (i = 0; i < LEN(g_Status.spells); i++) {
+            if (!g_Status.spells[i]) {
+                g_Status.spells[i] = spellId | 0x80;
+                return;
+            }
+        }
+    }
+}
 
 // BSS
 extern s32 D_80137960;

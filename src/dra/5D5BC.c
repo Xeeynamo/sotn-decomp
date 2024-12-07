@@ -281,8 +281,8 @@ void LearnSpell(s32 spellId) {
     if ((g_Status.spellsLearnt & (1 << spellId)) == 0) {
         g_Status.spellsLearnt |= 1 << spellId;
         for (i = 0; i < LEN(g_Status.spells); i++) {
-            if (g_Status.spells[i] == 0) {
-                g_Status.spells[i] = spellId | (~0x7F);
+            if (!g_Status.spells[i]) {
+                g_Status.spells[i] = spellId | 0x80;
                 return;
             }
         }
