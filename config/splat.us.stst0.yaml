@@ -63,7 +63,8 @@ segments:
       - [0x2084, data] # 3AB08 EntityClouds
       - [0x2184, .data, 3AB08] # EntityClockTower3D
       - [0x2438, .data, 3AB08] # EntityCutscenePhotograph
-      - [0x24E8, data] # 3C5C0
+      - [0x24E8, .data, 3C5C0]
+      - [0x2690, .data, 3D8F0]
       - [0x26B8, .data, e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
       - [0x2C4C, data] # prologue end text?

@@ -13,10 +13,11 @@ typedef struct {
     s16 unk14;
 } unkstr_801C06B0;
 
-extern SVECTOR D_80182690;
-extern SVECTOR D_80182698;
-extern SVECTOR D_801826A0;
-extern SVECTOR D_801826A8;
+static SVECTOR D_80182690 = {-8, -8, 0};
+static SVECTOR D_80182698 = {8, -8, 0};
+static SVECTOR D_801826A0 = {-8, 8, 0};
+static SVECTOR D_801826A8 = {8, 8, 0};
+static SVECTOR unused = {0, 0, 0};
 extern unkstr_801C06B0 D_801C06B0;
 
 void func_801BD8F0(Entity* self) {
