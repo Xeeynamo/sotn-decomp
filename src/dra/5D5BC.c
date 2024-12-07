@@ -141,21 +141,19 @@ const char* GetEquipmentName(EquipKind kind, s32 equipId) {
 }
 
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
-    if (equipType < 5) {
-        switch (equipType) {
-        case 0:
-            return (g_Status.equipment[LEFT_HAND_SLOT] == itemId) +
-                   (g_Status.equipment[RIGHT_HAND_SLOT] == itemId);
-        case 1:
-            return g_Status.equipment[HEAD_SLOT] == itemId;
-        case 2:
-            return g_Status.equipment[ARMOR_SLOT] == itemId;
-        case 3:
-            return g_Status.equipment[CAPE_SLOT] == itemId;
-        case 4:
-            return (g_Status.equipment[ACCESSORY_1_SLOT] == itemId) +
-                   (g_Status.equipment[ACCESSORY_2_SLOT] == itemId);
-        }
+    switch (equipType) {
+    case 0:
+        return (g_Status.equipment[LEFT_HAND_SLOT] == itemId) +
+               (g_Status.equipment[RIGHT_HAND_SLOT] == itemId);
+    case 1:
+        return g_Status.equipment[HEAD_SLOT] == itemId;
+    case 2:
+        return g_Status.equipment[ARMOR_SLOT] == itemId;
+    case 3:
+        return g_Status.equipment[CAPE_SLOT] == itemId;
+    case 4:
+        return (g_Status.equipment[ACCESSORY_1_SLOT] == itemId) +
+               (g_Status.equipment[ACCESSORY_2_SLOT] == itemId);
     }
     // seems to require missing return
 }
@@ -190,11 +188,15 @@ void AddToInventory(u16 id, EquipKind kind) {
     }
 
     pOrder = order;
-    for (i = 0; true; i++, pOrder++) {
+    // Odd way to write this loop, this is the only way that works on all
+    // systems.
+    for (i = 0; true;) {
         if (*pOrder == id) {
             existingItemSlot = i;
             break;
         }
+        i++;
+        pOrder++;
     }
 
     pOrder = order;
