@@ -433,9 +433,6 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         case STAGE_NZ0:
             InitStageNZ0(&g_api.o);
             break;
-        case STAGE_ST0:
-            InitStageST0(&g_api.o);
-            break;
         case STAGE_WRP:
             InitStageWRP(&g_api.o);
             break;
