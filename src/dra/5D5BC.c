@@ -223,34 +223,37 @@ void GetSpellDef(SpellDef* spell, s32 id) {
 
 s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     s16 ret;
-    s32 var_v1;
+    s32 petrify_adjustment;
 
     switch (statusAilment) {
     case STATUS_AILMENT_POISON:
-        ret = timer - (g_Status.statsTotal[STAT_CON] * 16);
+        ret = timer;
+        ret -= (g_Status.statsTotal[STAT_CON] * 16);
         if (ret < 256) {
             ret = 256;
         }
         break;
     case STATUS_AILMENT_CURSE:
-        ret = timer - (g_Status.statsTotal[STAT_CON] * 4);
+        ret = timer;
+        ret -= (g_Status.statsTotal[STAT_CON] * 4);
         if (ret < 64) {
             ret = 64;
         }
         break;
     case STATUS_AILMENT_PETRIFIED:
         ret = timer;
-        var_v1 = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
-        if (var_v1 < 0) {
-            var_v1 = 0;
+        petrify_adjustment = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
+        if (petrify_adjustment < 0) {
+            petrify_adjustment = 0;
         }
-        if (var_v1 > 4) {
-            var_v1 = 4;
+        if (petrify_adjustment > 4) {
+            petrify_adjustment = 4;
         }
-        ret -= var_v1;
+        ret -= petrify_adjustment;
         break;
     case STATUS_AILMENT_DARK_METAMORPHOSIS:
-        ret = timer + (g_Status.statsTotal[STAT_INT] * 4);
+        ret = timer;
+        ret += (g_Status.statsTotal[STAT_INT] * 4);
         break;
     case STATUS_AILMENT_UNK04:
     case STATUS_AILMENT_UNK05:
@@ -263,6 +266,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
 
     return ret;
 }
+
 
 bool CastSpell(SpellIds spellId) {
     s32 mpUsage = g_SpellDefs[spellId].mpUsage;

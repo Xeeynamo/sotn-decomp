@@ -3,7 +3,51 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/243F0", func_psp_09100D70);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/243F0", func_psp_09100E90);
+s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
+    s16 ret;
+    s32 petrify_adjustment;
+
+    switch (statusAilment) {
+    case STATUS_AILMENT_POISON:
+        ret = timer;
+        ret -= (g_Status.statsTotal[STAT_CON] * 16);
+        if (ret < 256) {
+            ret = 256;
+        }
+        break;
+    case STATUS_AILMENT_CURSE:
+        ret = timer;
+        ret -= (g_Status.statsTotal[STAT_CON] * 4);
+        if (ret < 64) {
+            ret = 64;
+        }
+        break;
+    case STATUS_AILMENT_PETRIFIED:
+        ret = timer;
+        petrify_adjustment = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
+        if (petrify_adjustment < 0) {
+            petrify_adjustment = 0;
+        }
+        if (petrify_adjustment > 4) {
+            petrify_adjustment = 4;
+        }
+        ret -= petrify_adjustment;
+        break;
+    case STATUS_AILMENT_DARK_METAMORPHOSIS:
+        ret = timer;
+        ret += (g_Status.statsTotal[STAT_INT] * 4);
+        break;
+    case STATUS_AILMENT_UNK04:
+    case STATUS_AILMENT_UNK05:
+        ret = timer;
+        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, EQUIP_ACCESSORY) != 0) {
+            ret += ret / 2;
+        }
+        break;
+    }
+
+    return ret;
+}
 
 bool CastSpell(SpellIds spellId) {
     s32 mpUsage = g_SpellDefs[spellId].mpUsage;
