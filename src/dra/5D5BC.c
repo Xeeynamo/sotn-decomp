@@ -119,25 +119,25 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 }
 
 u8* GetEquipOrder(EquipKind kind) {
-    switch (kind){
-        case EQUIP_HAND:
-            return g_Status.equipHandOrder;
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
 
 u8* GetEquipCount(EquipKind kind) {
-    switch (kind){
-        case EQUIP_HAND:
-            return g_Status.equipHandCount;
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_Status.equipHandCount;
     }
     return g_Status.equipBodyCount;
 }
 
 const char* GetEquipmentName(EquipKind kind, s32 equipId) {
-    switch (kind){
-        case EQUIP_HAND:
-            return g_EquipDefs[equipId].name;
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_EquipDefs[equipId].name;
     }
     // This can alternatively be made a Default case.
     return g_AccessoryDefs[equipId].name;
@@ -381,11 +381,11 @@ u32 CheckAndDoLevelUp(void) {
 }
 
 s32 func_800FE044(s32 amount, s32 type) {
+    s32 oldHPMax; // unused
     s32 oldHeartMax;
     s32 activeFamiliar;
     s32 levelDiff;
     s32 i;
-    s32 familiarXPBoost;
     u32 playerXPBoost;
 
     // Life Max Up
@@ -393,6 +393,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         if (g_Status.hpMax == 9999) {
             return 1;
         }
+        oldHPMax = g_Status.hpMax;
         g_Status.hpMax += amount;
         if (g_Status.hpMax > 9999) {
             g_Status.hpMax = 9999;
@@ -414,7 +415,7 @@ s32 func_800FE044(s32 amount, s32 type) {
             return 1;
         }
         oldHeartMax = g_Status.heartsMax;
-        if (oldHeartMax == 9999) {
+        if (g_Status.heartsMax == 9999) {
             return 1;
         }
         g_Status.heartsMax += amount;
@@ -429,11 +430,6 @@ s32 func_800FE044(s32 amount, s32 type) {
     // Collect a relic. "amount" here isn't an amount, it's the relic ID.
     if (type == 0x2000) {
         g_Status.relics[amount] = 3;
-        // Fake! This is needed to avoid having the compiler swap
-        // the previous and following line. There may be other methods to
-        // achieve the same goal, but this one at least works.
-        amount++;
-        amount--;
         if (g_RelicDefs[amount].unk0C) {
             g_Status.relics[amount] = 1;
         }
@@ -443,11 +439,10 @@ s32 func_800FE044(s32 amount, s32 type) {
 
     // Gain XP from defeating enemy
     if (amount != 0 && g_Status.level != 99) {
-        // Done checking types, rename variable for clarity.
-        s32 enemyLevel = type;
         playerXPBoost = amount;
-        if (enemyLevel < (s32)g_Status.level) {
-            levelDiff = g_Status.level - enemyLevel;
+        // from here on, "type" is really the enemy's level
+        if ((s32)g_Status.level > type) {
+            levelDiff = g_Status.level - type;
             for (i = 0; i < levelDiff; i++) {
                 playerXPBoost = playerXPBoost * 2 / 3;
             }
@@ -455,8 +450,8 @@ s32 func_800FE044(s32 amount, s32 type) {
                 playerXPBoost = 1;
             }
         }
-        if ((s32)g_Status.level < enemyLevel) {
-            levelDiff = enemyLevel - g_Status.level;
+        if ((s32)g_Status.level < type) {
+            levelDiff = type - g_Status.level;
             if (levelDiff > 5) {
                 levelDiff = 5;
             }
@@ -465,34 +460,30 @@ s32 func_800FE044(s32 amount, s32 type) {
             }
         }
         g_Status.exp += playerXPBoost;
-        if (g_Status.exp >= g_ExpNext[99]) {
+        if (g_ExpNext[99] <= g_Status.exp) {
             g_Status.exp = g_ExpNext[99];
         }
 
-        activeFamiliar = g_Servant - 1;
         if (g_Servant == 0) {
             return;
         }
-
-        // Note: playerXPBoost is meaningless as a name here. But register a2 is
-        // playerXPBoost, and is used as the loop variable for this loop, so I
-        // reuse it here. Strange logic, the familiarXPBoost seems to be log
-        // base 2 of arg0/familiar.exp.
-
+        activeFamiliar = g_Servant - 1;
         playerXPBoost =
             (amount / g_Status.statsFamiliars[activeFamiliar].level);
-
-        for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
+        // Here we reuse i to keep track of how much xp the familiar gains.
+        i = 0;
+        while (playerXPBoost != 0) {
+            i++;
             playerXPBoost >>= 1;
         }
 #if defined(VERSION_HD)
-        familiarXPBoost -= 2;
+        i -= 2;
 #endif
-        if (familiarXPBoost <= 0) {
-            familiarXPBoost = 1;
+        if (i <= 0) {
+            i = 1;
         }
-        g_Status.statsFamiliars[activeFamiliar].exp += familiarXPBoost;
-        if (g_Status.statsFamiliars[activeFamiliar].exp >= 9900) {
+        g_Status.statsFamiliars[activeFamiliar].exp += i;
+        if (g_Status.statsFamiliars[activeFamiliar].exp > 9899) {
             g_Status.statsFamiliars[activeFamiliar].exp = 9899;
         }
         g_Status.statsFamiliars[activeFamiliar].level =

@@ -2,25 +2,25 @@
 #include "../dra/dra.h"
 
 u8* GetEquipOrder(EquipKind kind) {
-    switch (kind){
-        case EQUIP_HAND:
-            return g_Status.equipHandOrder;
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
 
 u8* GetEquipCount(EquipKind kind) {
-    switch (kind){
-        case EQUIP_HAND:
-            return g_Status.equipHandCount;
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_Status.equipHandCount;
     }
     return g_Status.equipBodyCount;
 }
 
 const char* GetEquipmentName(EquipKind kind, s32 equipId) {
-    switch (kind){
-        case EQUIP_HAND:
-            return g_EquipDefs[equipId].name;
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_EquipDefs[equipId].name;
     }
     // This can alternatively be made a Default case.
     return g_AccessoryDefs[equipId].name;
@@ -269,7 +269,116 @@ u32 CheckAndDoLevelUp(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_800FE044);
+s32 func_800FE044(s32 amount, s32 type) {
+    s32 oldHPMax; // unused
+    s32 oldHeartMax;
+    s32 activeFamiliar;
+    s32 levelDiff;
+    s32 i;
+    u32 playerXPBoost;
+
+    // Life Max Up
+    if (type == 0x8000) {
+        if (g_Status.hpMax == 9999) {
+            return 1;
+        }
+        oldHPMax = g_Status.hpMax;
+        g_Status.hpMax += amount;
+        if (g_Status.hpMax > 9999) {
+            g_Status.hpMax = 9999;
+        }
+        if (g_PlayableCharacter != 0) {
+            g_Status.hpMax += amount;
+            if (g_Status.hpMax > 9999) {
+                g_Status.hpMax = 9999;
+            }
+        }
+        g_Status.hp = g_Status.hpMax;
+        D_80137960++;
+        return 0;
+    }
+
+    // Heart Max Up
+    if (type == 0x4000) {
+        if (g_PlayableCharacter != 0) {
+            return 1;
+        }
+        oldHeartMax = g_Status.heartsMax;
+        if (g_Status.heartsMax == 9999) {
+            return 1;
+        }
+        g_Status.heartsMax += amount;
+        if (g_Status.heartsMax > 9999) {
+            g_Status.heartsMax = 9999;
+        }
+        g_Status.hearts += (g_Status.heartsMax - oldHeartMax);
+        D_80137964++;
+        return 0;
+    }
+
+    // Collect a relic. "amount" here isn't an amount, it's the relic ID.
+    if (type == 0x2000) {
+        g_Status.relics[amount] = 3;
+        if (g_RelicDefs[amount].unk0C) {
+            g_Status.relics[amount] = 1;
+        }
+        D_80137968++;
+        return 0;
+    }
+
+    // Gain XP from defeating enemy
+    if (amount != 0 && g_Status.level != 99) {
+        playerXPBoost = amount;
+        // from here on, "type" is really the enemy's level
+        if ((s32)g_Status.level > type) {
+            levelDiff = g_Status.level - type;
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost = playerXPBoost * 2 / 3;
+            }
+            if (playerXPBoost == 0) {
+                playerXPBoost = 1;
+            }
+        }
+        if ((s32)g_Status.level < type) {
+            levelDiff = type - g_Status.level;
+            if (levelDiff > 5) {
+                levelDiff = 5;
+            }
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost += playerXPBoost / 4;
+            }
+        }
+        g_Status.exp += playerXPBoost;
+        if (g_ExpNext[99] <= g_Status.exp) {
+            g_Status.exp = g_ExpNext[99];
+        }
+
+        if (g_Servant == 0) {
+            return;
+        }
+        activeFamiliar = g_Servant - 1;
+        playerXPBoost =
+            (amount / g_Status.statsFamiliars[activeFamiliar].level);
+        // Here we reuse i to keep track of how much xp the familiar gains.
+        i = 0;
+        while (playerXPBoost != 0) {
+            i++;
+            playerXPBoost >>= 1;
+        }
+#if defined(VERSION_HD)
+        i -= 2;
+#endif
+        if (i <= 0) {
+            i = 1;
+        }
+        g_Status.statsFamiliars[activeFamiliar].exp += i;
+        if (g_Status.statsFamiliars[activeFamiliar].exp > 9899) {
+            g_Status.statsFamiliars[activeFamiliar].exp = 9899;
+        }
+        g_Status.statsFamiliars[activeFamiliar].level =
+            (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", IsRelicActive);
 
