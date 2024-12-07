@@ -3,32 +3,7 @@
 #include "st0.h"
 #include "sfx.h"
 
-extern ObjInit D_80181FE8[];
-void EntityRoomForeground(Entity* entity) {
-    ObjInit* objInit = &D_80181FE8[entity->params];
-
-    if (entity->step == 0) {
-        InitializeEntity(g_EInitCommon);
-        entity->animSet = objInit->animSet;
-        entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk5A;
-        entity->palette = objInit->palette;
-        entity->drawFlags = objInit->drawFlags;
-        entity->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
-            entity->flags = objInit->unkC;
-        }
-        if (entity->params >= 5) {
-            entity->rotZ = 0x800;
-            entity->drawFlags |= FLAG_DRAW_ROTZ;
-        }
-    }
-    AnimateEntity(objInit->animFrames, entity);
-}
-
-#include "../popup.h"
-
-INCLUDE_ASM("st/st0/nonmatchings/3A6EC", EntityClouds);
+INCLUDE_ASM("st/st0/nonmatchings/3AB08", EntityClouds);
 
 typedef struct {
     u8 u0, v0, u1, v1, u2, v2;

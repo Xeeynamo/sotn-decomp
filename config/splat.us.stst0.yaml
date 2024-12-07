@@ -58,7 +58,7 @@ segments:
       - [0x1E3C, .data, e_collect] # g_collectVelocity
       - [0x1E5C, .data, e_misc]
       - [0x1F54, .data, e_particles]
-      - [0x1FD4, data]
+      - [0x1FD4, .data, e_room_fg]
       - [0x2060, .data, rooms]
       - [0x2084, data]
       - [0x26B8, .data, e_layout] # layout entries data
@@ -127,7 +127,7 @@ segments:
       - [0x27C8C, .rodata, e_collect]
       - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, .rodata, e_misc]
-      - [0x27CFC, .rodata, 3A6EC] # EntityCutscenePhotograph
+      - [0x27CFC, .rodata, 3AB08] # EntityCutscenePhotograph
       - [0x27D30, .rodata, 3C5C0] # "d_step" string
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
@@ -147,7 +147,9 @@ segments:
       - [0x35EC8, c, e_collect]
       - [0x37308, c, e_misc]
       - [0x39EA8, c, e_particles]
-      - [0x3A6EC, c]
+      - [0x3A6EC, c, e_room_fg]
+      - [0x3A7D8, c, popup]
+      - [0x3AB08, c]
       - [0x3C5C0, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
