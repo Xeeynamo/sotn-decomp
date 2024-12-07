@@ -465,6 +465,14 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", HasEnoughMp);
+bool HasEnoughMp(s32 mpCount, bool subtractMp) {
+    if (mpCount <= g_Status.mp) {
+        if (subtractMp) {
+            g_Status.mp -= mpCount;
+        }
+        return false;
+    }
+    return true;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_800FE8F0);

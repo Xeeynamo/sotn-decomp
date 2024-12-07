@@ -577,8 +577,8 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 }
 
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
-    if (g_Status.mp >= mpCount) {
-        if (subtractMp != 0) {
+    if (mpCount <= g_Status.mp) {
+        if (subtractMp) {
             g_Status.mp -= mpCount;
         }
         return false;
