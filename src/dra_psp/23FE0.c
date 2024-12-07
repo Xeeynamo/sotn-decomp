@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
+#include "../dra/dra_bss.h"
 
 u8* GetEquipOrder(EquipKind kind) {
     switch (kind) {
@@ -475,4 +476,8 @@ bool HasEnoughMp(s32 mpCount, bool subtractMp) {
     return true;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_800FE8F0);
+void func_800FE8F0(void) {
+    if (D_8013B5E8 == 0) {
+        D_8013B5E8 = 0x40;
+    }
+}
