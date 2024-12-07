@@ -380,7 +380,12 @@ s32 func_800FE044(s32 amount, s32 type) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", IsRelicActive);
+bool IsRelicActive(RelicIds relicId) {
+    if (g_Status.relics[relicId] & RELIC_FLAG_ACTIVE) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_800FE3C4);
 
