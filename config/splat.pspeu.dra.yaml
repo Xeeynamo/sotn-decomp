@@ -103,7 +103,6 @@ segments:
       - [0x23FE0, c, dra_psp/23FE0]
       - [0x243F0, c, dra_psp/243F0]
       - [0x246E0, c, dra_psp/246E0]
-      - [0x24810, c, dra_psp/24810]
       - [0x25670, c, dra_psp/25670]
       - [0x25720, c, dra_psp/25720]
       - [0x26170, c, dra_psp/26170]
