@@ -238,32 +238,6 @@ def get_gnu_c_first_jtbl_addr(data: bytearray):
     return (mips_lui["immu"] << 16) + mips_lw["imm"]
 
 
-def estimate_c_file_split(input: str, text_len: int):
-    """
-    tries to detect a file split by looking for gaps on 0x10 aligned functions
-    PSP ONLY
-    """
-    with open(input, "rb") as f:
-        f.seek(0x80)
-        data = struct.unpack(f"{text_len>>2}i", f.read(text_len))
-    splits = [0x80]
-    for i in range(len(data)):
-        n = data[i]
-        if n != JR_RA:
-            continue
-        # check for a gap of at least two nops
-        if (i & 3) > 1:
-            continue
-        if data[i + 1] != NOP:
-            continue
-        if data[i + 2] != NOP:
-            continue
-        offset = align(0x80 + i * 4, 0x10)
-        if offset < text_len:
-            splits += [offset]
-    return splits
-
-
 ##### NAMES AND PATH UTILITIES
 
 
@@ -339,6 +313,32 @@ def make_ovl_fullname(ovl_name: str) -> str:
     elif is_stage(ovl_name):
         return f"st{ovl_name}"
     return ovl_name
+
+
+def make_ovl_name_from_fullname(ovl_fullname: str):
+    # account the fact the ovl name can look like 'stst0'
+    if ovl_fullname == "stst0":
+        return "st0"
+    # account the fact the ovl name can look like 'stnz0'
+    if ovl_fullname != "st0" and ovl_fullname.startswith("st"):
+        return ovl_fullname[2:]
+    return ovl_fullname
+
+
+def make_entity_init_c_path(ovl_name: str) -> str:
+    return f"src/st/{make_ovl_name_from_fullname(ovl_name)}/e_init.c"
+
+
+# do a OVL_EXPORT(EntityRedDoor) -> NZ0EntityRedDoor
+def resolve_ovl_export(name: str, ovl_name: str):
+    idx = name.find("OVL_EXPORT(")
+    if idx < 0:  # not a OVL_EXPORT
+        return name
+    idx_close = name.find(")", idx + 1)
+    if idx_close < 0:  # invalid OVL_EXPORT? just ignore it
+        return name
+    ovl_prefix = make_ovl_name_from_fullname(ovl_name).upper()
+    return name.replace("OVL_EXPORT(", f"{ovl_prefix}_").rstrip(")")
 
 
 ##### SPLAT CONFIG UTILITIES
@@ -425,7 +425,6 @@ def get_splat_config(
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
             "include_macro_inc": False,
-            "disassemble_all": True,
         }
     }
 
@@ -515,45 +514,59 @@ def make_config_psp(ovl_path: str, version: str):
     text_len = ovl_header["text_len"]
     data_len = ovl_header["data_len"]
     bss_len = ovl_header["bss_len"]
-    data_start = align(text_len, 0x80) + 0x80
+    data_start = align(text_len, 0x80)
     bss_start = align(vram + data_start + data_len - 0x80, 0x80)
     file_size = os.stat(ovl_path).st_size
-    splits = estimate_c_file_split(ovl_path, text_len)
     config = get_splat_config(
         ovl_path,
         version,
         str(ovl_header["name"]).split(".")[0],
     )
 
+    # estimate the rodata table by checking if the data is an offset within the C subsegment
+    vram_c_start = vram + 0x80
+    vram_c_end = vram_c_start + text_len
+    rodata_start = -1
+    with open(ovl_path, "rb") as f:
+        byte_data = f.read()[data_start:bss_start]
+        start = align(data_len // 2, 4)  # very cheap way to skip the entity table
+        for i in range(start, len(byte_data), 4):
+            word = int.from_bytes(byte_data[i : i + 4], "little", signed=False)
+            # from now on, all words must be either in the C segment or be NULL
+            if vram_c_start <= word < vram_c_end:
+                if rodata_start == -1:
+                    rodata_start = data_start + i
+            elif word != 0:
+                rodata_start = -1
+    if rodata_start == -1:
+        rodata_start = data_start + data_len
+
     ovl_name = config["options"]["basename"]
     splat_config_path = f"config/splat.{version}.{ovl_name}.yaml"
     with open(splat_config_path, "w") as f:
         f.write(yaml.dump(config, Dumper=IndentDumper, sort_keys=False))
         # now writes the rest manually because the default yaml formatting is horrifying
-        text = (
-            [
-                f"  asm_inc_header: |\n",
-                f"    .set noat      /* allow manual use of $at */\n",
-                f"    .set noreorder /* don't insert nops after branches */\n",
-                f"sha1: {get_sha1(ovl_path)}\n",
-                f"segments:\n",
-                f"  - [0x0, bin, mwo_header]\n",
-                f'  - name: {config["options"]["basename"]}\n',
-                f"    type: code\n",
-                f"    start: 0x80\n",
-                f"    vram:  0x{vram+0x80:08X}\n",
-                f"    bss_size: 0x{bss_len:X}\n",
-                f"    align: 128\n",
-                f"    subalign: 8\n",
-                f"    subsegments:\n",
-            ]
-            + [f"      - [0x{offset:X}, c]\n" for offset in splits]
-            + [
-                f"      - [0x{data_start:X}, data]\n",
-                f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
-                f"  - [0x{file_size:X}]\n",
-            ]
-        )
+        text = [
+            f"  asm_inc_header: |\n",
+            f"    .set noat      /* allow manual use of $at */\n",
+            f"    .set noreorder /* don't insert nops after branches */\n",
+            f"sha1: {get_sha1(ovl_path)}\n",
+            f"segments:\n",
+            f"  - [0x0, bin, mwo_header]\n",
+            f'  - name: {config["options"]["basename"]}\n',
+            f"    type: code\n",
+            f"    start: 0x80\n",
+            f"    vram:  0x{vram_c_start:08X}\n",
+            f"    bss_size: 0x{bss_len:X}\n",
+            f"    align: 128\n",
+            f"    subalign: 8\n",
+            f"    subsegments:\n",
+            f"      - [0x80, c, 80]\n",
+            f"      - [0x{data_start:X}, data]\n",
+            f"      - [0x{rodata_start:X}, .rodata, 80]\n",
+            f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
+            f"  - [0x{file_size:X}]\n",
+        ]
         f.writelines(text)
     return splat_config_path
 
@@ -764,6 +777,27 @@ def get_symbol_table(splat_config, table):
     return [int(line, 16) for line in table]
 
 
+def get_symbol_table_from_entity_init_c(file_name: str, ovl_name: str) -> list[str]:
+    with open(file_name) as f:
+        while True:  # loop until the EntityUpdates array is found
+            line = f.readline()
+            if not line:  # unexpected end of file
+                return []
+            if "PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {" in line:
+                break
+        entities = []
+        while True:  # loop until the end of the array
+            line = f.readline()
+            if not line:  # unexpected end of file
+                return entities
+            line = line.strip().rstrip(",")
+            if line == "};":
+                break
+            symbol = resolve_ovl_export(line, ovl_name)
+            entities.append(symbol)
+    return entities
+
+
 def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
     with open(symbol_file_name, "r") as f:
         lines = f.readlines()
@@ -792,13 +826,18 @@ def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
 def add_symbol(splat_config, version: str, name: str, offset: int):
     if offset == 0:
         return
+    if is_psp(version):
+        # segment 0 is always the mw header, we need to skip it
+        segment = splat_config["segments"][1]
+    else:
+        segment = splat_config["segments"][0]
     # do not add symbols that belongs to the shared area
-    base_addr = splat_config["segments"][0]["vram"]
+    base_addr = segment["vram"]
     if offset < base_addr:
         return
 
     # do not add symbols that belongs to the shared area
-    base_addr = splat_config["segments"][0]["vram"]
+    base_addr = segment["vram"]
     if offset < base_addr:
         return
 
@@ -914,7 +953,7 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
     ovl_name = splat_config["options"]["basename"]
     table = get_symbol_table(splat_config, get_symbol_of_export_table(splat_config))
     spinner_stop(True)
-    if table != None:
+    if table is not None:
         if is_stage(ovl_name):
             spinner_start("adding stage symbols")
             hydrate_stage_export_table_symbols(splat_config, version, table)
@@ -929,12 +968,31 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
     if is_stage(ovl_name):
         spinner_start("getting the entity stage table")
         entity_table_symbol = get_symbol_of_entity_table(splat_config)
-        if entity_table_symbol != None:
+        if (
+            # entity symbol table found, we can start adding symbols
+            entity_table_symbol
+            is not None
+        ):
             entity_table = get_symbol_table(splat_config, entity_table_symbol)
-            hydrate_stage_entity_table_symbols(splat_config, entity_table)
+            if version != "us" and os.path.exists(
+                # if the US counterpart exists
+                make_entity_init_c_path(ovl_name)
+            ):
+                entities = get_symbol_table_from_entity_init_c(
+                    make_entity_init_c_path(ovl_name), ovl_name
+                )
+                if len(entities) != len(entity_table):
+                    yowarning(
+                        "number of entities is different than the US counterpart:"
+                        f"'{version}' has {len(entity_table)}, 'us' has {len(entities)}"
+                    )
+                for i in range(min(len(entities), len(entity_table))):
+                    add_symbol(splat_config, version, entities[i], entity_table[i])
+            else:  # default cheap way of adding symbols
+                hydrate_stage_entity_table_symbols(splat_config, version, entity_table)
             need_to_update_symbols = True
 
-    if need_to_update_symbols == True:
+    if need_to_update_symbols:
         # disassemble once more to update the symbols
         need_to_update_symbols = False
         spinner_start("updating all symbols")
