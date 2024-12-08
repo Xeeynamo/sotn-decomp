@@ -185,6 +185,7 @@ set(SOURCE_FILES_DRA
     src/dra/config_us.c
     src/dra/menu.c
     src/dra/5D5BC.c
+    src/dra/5F60C.c
     src/dra/d_C910.c
     src/dra/624DC.c
     src/dra/628AC.c
