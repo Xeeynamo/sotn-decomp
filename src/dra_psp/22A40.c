@@ -60,7 +60,16 @@ bool CalcPlayerDamageAgain(DamageParam* damage) {
     g_Status.hp -= damage->damageTaken;
     return false;
 }
+// What the heck? Repeating again? Never referenced but not dead-stripped?
+s32 func_psp_091007E0(s32 arg0) {
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG){
+        arg0 *= 2;
+    }
+    return arg0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_091007E0);
+ItemCategory GetEquipItemCategory(s32 equipId) {
+    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_09100818);
+INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_09100870);
