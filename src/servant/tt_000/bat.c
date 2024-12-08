@@ -220,7 +220,6 @@ static Entity* FindValidTarget(Entity* self) {
 
 #include "../check_entity_valid.h"
 
-#ifndef VERSION_PSP
 // This may be dead code.  Doesn't look like it is called anywhere.
 bool Unused_CheckCollision(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
@@ -245,7 +244,6 @@ bool Unused_CheckCollision(s16 x, s16 y, s16* outX, s16* outY) {
     }
     return 0;
 }
-#endif
 
 static void unused_1560(Entity* self) {}
 
@@ -1123,25 +1121,19 @@ void unused_3C24(void) {}
 
 #include "../destroy_servant_entity.h"
 
-#ifndef VERSION_PSP
 #include "../servant_update_anim.h"
-#endif
 
 #include "../../destroy_entity.h"
 
-#ifndef VERSION_PSP
 #include "../accumulate_toward_zero.h"
 #include "../search_for_entity_in_range.h"
-#endif
 
 #include "../calculate_angle_to_entity.h"
 
 #include "../get_target_position_with_distance_buffer.h"
 
-#ifndef VERSION_PSP
 #include "../calculate_distance.h"
 #include "../play_sfx.h"
-#endif
 
 #include "../process_event.h"
 
@@ -1149,9 +1141,7 @@ void unused_3C24(void) {}
 
 #include "../is_movement_allowed.h"
 
-#ifndef VERSION_PSP
 #include "../check_all_entities_valid.h"
-#endif
 
 #include "../servant_unk0.h"
 
