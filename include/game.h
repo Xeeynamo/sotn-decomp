@@ -1109,10 +1109,7 @@ typedef struct {
     /* 80097C34 */ s32 timerMinutes;
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
-#if defined(VERSION_PSP)
-    s32 mariaSubWeapon;
-#endif
-    /* 80097C40 */ u32 D_80097C40;
+    /* 80097C40 */ u32 D_80097C40; // reused for Maria subweapon
     /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
@@ -1491,7 +1488,7 @@ typedef struct {
     u32 effects; // Curse, poison, etc; needs an enum.
     u32 damageKind;
     s32 damageTaken;
-    s32 unkC;
+    u32 unkC;
 } DamageParam;
 
 typedef struct {
@@ -1566,12 +1563,13 @@ typedef struct {
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
-    /* 8003C8A4 */ void* unused130;
     // this matches on both versions but doing this to show the difference
 #if defined(VERSION_PSP)
+    /* 8003C8A4 */ s32 (*CalcPlayerDamageAgain)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
     /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
 #else
+    /* 8003C8A4 */ void* unused130;
     /* 8003C8A8 */ void* unused134;
     /* 8003C8AC */ void* unused138;
 #endif

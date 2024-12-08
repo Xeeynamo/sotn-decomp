@@ -346,16 +346,18 @@ void func_800F4994(void) {
     }
 }
 
-s32 CalcAttack(s32 equipId, s32 otherEquipId) {
+s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     s32 i;
-    u16 equipmentAttackBonus;
+    s16 equipmentAttackBonus;
     s16 totalAttack;
     s16 strengthStat;
 
     if (g_EquipDefs[equipId].itemCategory == ITEM_FOOD ||
-        g_EquipDefs[equipId].itemCategory == ITEM_MEDICINE ||
-        (g_EquipDefs[equipId].itemCategory == ITEM_SHIELD &&
-         g_EquipDefs[equipId].attack == 1)) {
+        g_EquipDefs[equipId].itemCategory == ITEM_MEDICINE) {
+        return 0;
+    }
+    if (g_EquipDefs[equipId].itemCategory == ITEM_SHIELD &&
+        g_EquipDefs[equipId].attack == 1) {
         return 0;
     }
 
@@ -367,13 +369,13 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
 
     for (i = 0; i < 5; i++) {
         equipmentAttackBonus +=
-            (u16)g_AccessoryDefs[g_Status.equipment[2 + i]].attBonus;
+            g_AccessoryDefs[g_Status.equipment[2 + i]].attBonus;
     }
 
     totalAttack = g_EquipDefs[equipId].attack;
     strengthStat = g_Status.statsTotal[0];
 
-    if (strengthStat >= totalAttack) {
+    if (totalAttack <= strengthStat) {
         totalAttack += strengthStat;
     } else {
         totalAttack += strengthStat / 2;

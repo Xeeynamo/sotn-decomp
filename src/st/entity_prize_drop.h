@@ -203,7 +203,7 @@ void EntityPrizeDrop(Entity* self) {
             if (itemId >= 14 && itemId < 23) {
 #if defined(VERSION_PSP)
                 if (g_PlayableCharacter == PLAYER_MARIA) {
-                    subWeaponId = maria_subweapons_id[g_Status.mariaSubWeapon];
+                    subWeaponId = maria_subweapons_id[g_Status.D_80097C40];
                     if (itemId == subWeaponId) {
                         itemId = 1;
                         self->params = 1;

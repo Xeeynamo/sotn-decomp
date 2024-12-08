@@ -60,6 +60,93 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", func_psp_090EAFA8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", func_psp_090EB028);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", func_psp_090EB238);
+INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", IsAlucart);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", func_psp_090EB298);
+extern s32 D_80139828[16];
+
+void func_800F4994(void) {
+    s32* statsPtr = &g_Status.statsEquip[0];
+    s32 correctStonesEquipped;
+    s32 hourOfDay;
+    s32 i, j;
+    s32 statBonus;
+
+    for (i = 0; i < 4; i++, statsPtr++) {
+        *statsPtr = 0;
+    }
+
+    // Iterate through each Item Slot
+    for (i = 0; i < 5; i++) {
+        // Iterate through the 4 stats (STR, CON, INT, LCK)
+        for (j = 0; j < 4; j++) {
+            statBonus = g_AccessoryDefs[g_Status.equipment[HEAD_SLOT + i]]
+                            .statsBonus[j];
+            if (statBonus > 128) {
+                statBonus -= 256;
+            }
+            g_Status.statsEquip[j] += statBonus;
+        }
+    }
+    hourOfDay = g_Status.timerHours % 24;
+
+    // Hours of sunstone effectiveness
+    if (6 <= hourOfDay && hourOfDay < 18) {
+        // Sunstone check
+        correctStonesEquipped =
+            CheckEquipmentItemCount(ITEM_SUNSTONE, EQUIP_ACCESSORY);
+        statsPtr = &g_Status.statsEquip[0];
+        for (i = 0; i < 4; i++, statsPtr++) {
+            *statsPtr += correctStonesEquipped * 5;
+        }
+    } else {
+        // Moonstone check
+        correctStonesEquipped =
+            CheckEquipmentItemCount(ITEM_MOONSTONE, EQUIP_ACCESSORY);
+        statsPtr = &g_Status.statsEquip[0];
+        for (i = 0; i < 4; i++, statsPtr++) {
+            *statsPtr += correctStonesEquipped * 5;
+        }
+    }
+
+    if (D_80139828[4]) {
+        g_Status.statsEquip[STAT_STR] += 20;
+    }
+    if (D_80139828[3]) {
+        g_Status.statsEquip[STAT_INT] += 20;
+    }
+    if (D_80139828[2]) {
+        g_Status.statsEquip[STAT_LCK] += 20;
+    }
+    if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
+        g_Status.statsEquip[STAT_CON] += 10;
+    }
+    if (g_Status.relics[RELIC_EYE_OF_VLAD] & 2) {
+        g_Status.statsEquip[STAT_LCK] += 10;
+    }
+    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & 2) {
+        g_Status.statsEquip[STAT_STR] += 10;
+    }
+    if (g_Status.relics[RELIC_RING_OF_VLAD] & 2) {
+        g_Status.statsEquip[STAT_INT] += 10;
+    }
+    if (IsAlucart() != false) {
+        g_Status.statsEquip[STAT_LCK] += 30;
+    }
+
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsEquip[i] > 99) {
+            g_Status.statsEquip[i] = 99;
+        }
+        g_Status.statsTotal[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
+    }
+
+    g_Status.statsTotal[1] =
+        (g_Status.statsEquip[1] * 8) + g_Status.statsBase[1];
+    g_Status.statsTotal[2] =
+        (g_Status.statsEquip[2] * 4) + g_Status.statsBase[2];
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsTotal[i] < 0) {
+            g_Status.statsTotal[i] = 0;
+        }
+    }
+}

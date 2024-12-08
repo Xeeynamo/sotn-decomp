@@ -4,7 +4,7 @@ PSP_EU_TARGETS  := dra stst0 stwrp tt_000
 
 # Flags
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
 
 # Tools
@@ -91,7 +91,7 @@ $(BUILD_DIR)/%.s.o: %.s
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
 OPT_OVL = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
 # Allow override. Any file in this list will get Op.
-OPT_LO_OVERRIDES = 32DA0.c.o 3AE30.c.o
+OPT_LO_OVERRIDES = 22A40.c.o 23FE0.c.o 32DA0.c.o 3AE30.c.o
 OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_LO_OVERRIDES)), -Op, $(OPT_OVL))
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
