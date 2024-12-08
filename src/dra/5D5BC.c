@@ -973,7 +973,7 @@ exit:
     return result;
 }
 
-s32 func_800FF460(u32 arg0){
+s32 func_800FF460(u32 arg0) {
     s32 res;
     if (arg0 == 0) {
         return 0;
@@ -999,27 +999,27 @@ s32 func_800FF494(EnemyDef* arg0) {
 
     if (rnd < arg0->rareItemDropRate) {
         return 0x40; // drop the enemy's rare item
-    } else {
-        // drop a common item, typically hearts or money
-        rnd -= arg0->rareItemDropRate;
-        if (ringOfArcanaCount != 0) {
-            rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
-        }
-        rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
-
-        if (rnd >= arg0->uncommonItemDropRate) {
-            rnd = rand() % 28;
-            if (arg0->rareItemDropRate == 0) {
-                rnd++;
-            }
-            if (arg0->uncommonItemDropRate == 0) {
-                rnd++;
-            }
-            return rnd + ringOfArcanaCount;
-        } else {
-            return 0x20; // drop the enemy's uncommon item
-        }
     }
+
+    // drop a common item, typically hearts or money
+    rnd -= arg0->rareItemDropRate;
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
+    }
+    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+
+    if (rnd < arg0->uncommonItemDropRate) {
+        return 0x20;
+    }
+    rnd = rand() % 28;
+    if (!arg0->rareItemDropRate) {
+        rnd++;
+    }
+    if (!arg0->uncommonItemDropRate) {
+        rnd++;
+    }
+    rnd += ringOfArcanaCount;
+    return rnd;
 }
 
 void UpdateCapePalette(void) {

@@ -877,7 +877,7 @@ exit:
     return result;
 }
 
-s32 func_800FF460(u32 arg0){
+s32 func_800FF460(u32 arg0) {
     s32 res;
     if (arg0 == 0) {
         return 0;
@@ -886,7 +886,45 @@ s32 func_800FF460(u32 arg0){
     return res;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09103128);
+// Determine what type of item to drop
+s32 func_800FF494(EnemyDef* arg0) {
+    /* Ring of Arcana is an item that increases
+     * enemy item drop rates when equipped
+     */
+    s32 ringOfArcanaCount =
+        CheckEquipmentItemCount(ITEM_RING_OF_ARCANA, EQUIP_ACCESSORY);
+    s32 rnd = rand() & 0xFF;
+
+    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
+    }
+
+    if (rnd < arg0->rareItemDropRate) {
+        return 0x40; // drop the enemy's rare item
+    }
+
+    // drop a common item, typically hearts or money
+    rnd -= arg0->rareItemDropRate;
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
+    }
+    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+
+    if (rnd < arg0->uncommonItemDropRate) {
+        return 0x20;
+    }
+    rnd = rand() % 28;
+    if (!arg0->rareItemDropRate) {
+        rnd++;
+    }
+    if (!arg0->uncommonItemDropRate) {
+        rnd++;
+    }
+    rnd += ringOfArcanaCount;
+    return rnd;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091032C8);
 
