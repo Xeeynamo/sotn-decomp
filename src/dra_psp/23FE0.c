@@ -744,3 +744,13 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
         return -1;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102AF0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102B48);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102B78);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102BC0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102BF0);
