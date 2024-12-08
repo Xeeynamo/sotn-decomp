@@ -73,6 +73,7 @@ HandleTransformationMP = 0x09102898;
 HandleGravityBootsMP = 0x09102AF0;
 func_800FF0A0 = 0x09102B48;
 func_800FF0B8 = 0x09102B78;
+func_800FF0F4 = 0x09102BC0;
 DealDamage = 0x09102C20;
 RenderTilemap = 0x09103318;
 SetRoomForegroundLayer = 0x09103B78;
