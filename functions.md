@@ -405,7 +405,7 @@
 | dra    | func_psp_090E8008                   |       67 |         10 |        |                                 |       |
 | dra    | SetRoomBackgroundLayer              |       68 |          2 |        |                                 |       |
 | dra    | func_psp_090ED570                   |       68 |          5 |        |                                 |       |
-| dra    | func_psp_09102800                   |       68 |          6 | Yes    |                                 |       |
+| dra    | func_psp_09102800                   |       68 |          6 | Yes    | https://decomp.me/scratch/3qtAE | 1.0   |
 | dra    | func_psp_090EDA78                   |       69 |          6 |        |                                 |       |
 |        | CreateEventEntity                   |       69 |          6 |        |                                 |       |
 | dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
@@ -713,7 +713,7 @@
 | dra    | func_psp_09117C00                   |      499 |        105 |        |                                 |       |
 | wrp    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | dra    | func_psp_090EDE28                   |      517 |         73 |        |                                 |       |
-| dra    | func_psp_091020A0                   |      517 |         74 |        | https://decomp.me/scratch/t87MI | 0.988 |
+| dra    | func_psp_091020A0                   |      517 |         74 |        | https://decomp.me/scratch/t87MI | 0.984 |
 | dra    | func_psp_0911C2F8                   |      519 |         37 |        |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        |                                 |       |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
