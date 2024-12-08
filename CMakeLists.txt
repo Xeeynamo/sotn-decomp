@@ -362,7 +362,8 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/e_layout.c
     src/st/st0/tile_data.c
     src/st/st0/sprites.c
-    src/st/st0/27D64.c
+    src/st/st0/e_lock_camera.c
+    src/st/st0/2805C.c
     src/st/st0/cutscene.c
     src/st/st0/cutscene_data.c
     src/st/st0/2A218.c
@@ -371,6 +372,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/2C564.c
     src/st/st0/2DAC8.c
     src/st/st0/30030.c
+    src/st/st0/3101C.c
     src/st/st0/st_update.c
     src/st/st0/collision.c
     src/st/st0/create_entity.c
@@ -385,6 +387,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/3C5C0.c
     src/st/st0/prim_helpers.c
     src/st/st0/3D8F0.c
+    src/st/st0/e_bg_vortex.c
 )
 
 set(SOURCE_FILES_STAGE_WRP

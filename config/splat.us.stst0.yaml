@@ -40,8 +40,8 @@ segments:
       - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
-      - [0x65C, .data, 27D64] # EntityLockCamera
-      - [0x674, .data, 27D64] # func_801A805C
+      - [0x65C, .data, e_lock_camera]
+      - [0x674, .data, 2805C] # func_801A805C
       - [0x784, .data, cutscene]
       - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, .data, 2A218]
@@ -112,7 +112,7 @@ segments:
       - [0x1B2D0, .data, tile_data] # tile data
       - [0x1E6D0, .data, tile_data] # tile definitions
       - [0x226E0, .data, sprites]
-      - [0x27984, .rodata, 27D64]
+      - [0x27984, .rodata, 2805C]
       - [0x279E8, .rodata, cutscene] # ST0_EntityCutscene
       - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
@@ -135,7 +135,9 @@ segments:
       - [0x27D30, .rodata, 3C5C0] # "d_step" string
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
-      - [0x27D64, c]
+      - [0x27D64, c, st_debug]
+      - [0x27E2C, c, e_lock_camera]
+      - [0x2805C, c]
       - [0x28984, c, cutscene]
       - [0x2A218, c]
       - [0x2A8DC, c]
@@ -143,6 +145,7 @@ segments:
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
+      - [0x3101C, c]
       - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]
       - [0x330E0, c, create_entity]
@@ -157,6 +160,7 @@ segments:
       - [0x3C5C0, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
+      - [0x3E1B4, c, e_bg_vortex]
       - [0x3EB04, .bss, create_entity]
       - [0x400B6, .bss, bss]
       - [0x42584, .bss, e_collect]
