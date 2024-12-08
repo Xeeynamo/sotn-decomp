@@ -767,4 +767,4 @@ void func_800FF0B8(void) {
 
 void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102BF0);
+s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
