@@ -523,6 +523,24 @@ def make_config_psp(ovl_path: str, version: str):
         str(ovl_header["name"]).split(".")[0],
     )
 
+    # estimate the rodata table by checking if the data is an offset within the C subsegment
+    vram_c_start = vram+0x80
+    vram_c_end = vram_c_start + text_len
+    rodata_start = -1
+    with open(ovl_path, "rb") as f:
+        byte_data = f.read()[data_start:bss_start]
+        start = align(data_len // 2, 4) # very cheap way to skip the entity table
+        for i in range(start, len(byte_data), 4):
+            word = int.from_bytes(byte_data[i:i+4], 'little', signed=False)
+            # from now on, all words must be either in the C segment or be NULL
+            if vram_c_start <= word < vram_c_end:
+                if rodata_start == -1:
+                    rodata_start = data_start + i
+            elif word != 0:
+                rodata_start = -1
+    if rodata_start == -1:
+        rodata_start = data_start + data_len
+
     ovl_name = config["options"]["basename"]
     splat_config_path = f"config/splat.{version}.{ovl_name}.yaml"
     with open(splat_config_path, "w") as f:
@@ -539,13 +557,14 @@ def make_config_psp(ovl_path: str, version: str):
                 f'  - name: {config["options"]["basename"]}\n',
                 f"    type: code\n",
                 f"    start: 0x80\n",
-                f"    vram:  0x{vram+0x80:08X}\n",
+                f"    vram:  0x{vram_c_start:08X}\n",
                 f"    bss_size: 0x{bss_len:X}\n",
                 f"    align: 128\n",
                 f"    subalign: 8\n",
                 f"    subsegments:\n",
-                f"      - [0x80, c]\n",
+                f"      - [0x80, c, 80]\n",
                 f"      - [0x{data_start:X}, data]\n",
+                f"      - [0x{rodata_start:X}, .rodata, 80]\n",
                 f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
                 f"  - [0x{file_size:X}]\n",
             ]
