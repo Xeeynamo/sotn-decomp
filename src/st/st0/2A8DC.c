@@ -2,12 +2,22 @@
 #include "st0.h"
 #include "sfx.h"
 
+static bool g_isSecretStairsButtonPressed = 0;
+static Point16 D_801808A0[] = {
+    {0x280, 0x030}, {0x298, 0x048}, {0x2B0, 0x060}, {0x2C0, 0x070}};
+static u16 D_801808B0[] = {
+    0x00C6, 0x002E, 0x00C7, 0x002D, 0x0116, 0x0036, 0x0117, 0x0035, 0x0118,
+    0x002D, 0x0167, 0x0036, 0x0168, 0x0035, 0x0169, 0x002D, 0x01B8, 0x0036,
+    0x01B9, 0x0035, 0x01BA, 0x002D, 0x0209, 0x0036, 0x020A, 0x0035, 0x020B,
+    0x002D, 0x025A, 0x0036, 0x025B, 0x0035, 0x025C, 0x0330, 0xFFFF, 0xFFFF};
+static s16 D_801808F8[] = {0, 8, 0, 4, 4, -4, -8, 0};
+
 void EntitySecretButton(Entity* self) {
     Entity* newEntity;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180628);
+        InitializeEntity(g_EInitSecretStairs);
         self->animCurFrame = 5;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -92,7 +102,7 @@ void EntitySecretButton(Entity* self) {
 void EntitySecretStairsCeiling(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180628);
+        InitializeEntity(g_EInitSecretStairs);
         entity->animCurFrame = 3;
         entity->zPriority += 2;
         if (g_isSecretStairsButtonPressed) {
@@ -133,7 +143,7 @@ void EntitySecretStairs(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180628);
+        InitializeEntity(g_EInitSecretStairs);
         self->animCurFrame = 1;
         if (self->params == 0) {
             self->ext.secretStairs.unk84 = true;

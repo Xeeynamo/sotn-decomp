@@ -103,7 +103,7 @@ static s16 D_80180EB8[] = {-6, 4, 0, -8};
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 // This is weird, the values have to go in later.
 // Note that this array is in rodata. Other overlays have it in data.
-static const s8 c_HeartPrizes[2][2];
+static const s8 c_HeartPrizes[4][2];
 #else
 s8 c_HeartPrizes[] = {1, 5};
 #endif
@@ -150,7 +150,7 @@ extern u16 g_EInitObtainable[];
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 // For some reason need to declare the values AFTER the function.
-static const s8 c_HeartPrizes[2][2] = {{1, 5}, {0, 0}, {1, 2}, {0, 0}};
+static const s8 c_HeartPrizes[][2] = {{1, 5}, {0, 0}, {1, 2}, {0, 0}};
 #endif
 
 #include "collect_gold.h"
@@ -196,6 +196,10 @@ extern u16 g_EInitParticle[];
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
 #include "blink_item.h"
 #else
+static Point16 g_collectVelocity[] = {
+    {0x0160, 0xFD20}, {0xFE80, 0xFC90}, {0x00E0, 0xFC20}, {0xFF40, 0xFD30},
+    {0x0020, 0xFB60}, {0xFFC0, 0xFCC0}, {0x0090, 0xFC40}, {0xFFA0, 0xFC30},
+};
 // Also, this function is never called.
 void Unreferenced_MAD_ST0_func(Entity* self) {
     if (self->step != 0) {
@@ -210,8 +214,8 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 
     InitializeEntity(OVL_EXPORT(EInitBreakable));
     self->animCurFrame = self->ext.unusedMadST0.animframe;
-    self->velocityX = g_collectXVelTable[self->ext.unusedMadST0.velIndex * 2];
-    self->velocityY = g_collectYVelTable[self->ext.unusedMadST0.velIndex * 2];
+    self->velocityX = g_collectVelocity[self->ext.unusedMadST0.velIndex].x;
+    self->velocityY = g_collectVelocity[self->ext.unusedMadST0.velIndex].y;
 
     if (self->params != 0) {
         self->zPriority -= 1;

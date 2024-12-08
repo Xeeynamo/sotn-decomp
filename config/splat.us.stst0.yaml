@@ -40,22 +40,31 @@ segments:
       - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
-      - [0x580, data]
-      - [0x770, data]
+      - [0x65C, .data, 27D64] # EntityLockCamera
+      - [0x674, .data, 27D64] # func_801A805C
+      - [0x784, .data, cutscene]
       - [0x828, .data, cutscene] # "Richter, Dracula"
-      - [0x830, data]
-      - [0x990, data]
-      - [0xAB0, data]
+      - [0x830, .data, 2A218]
+      - [0x89C, .data, 2A8DC]
+      - [0x908, .data, 2B0C8]
+      - [0x90C, .data, 2C564]
+      - [0xAA4, .data, 2DAC8]
+      - [0x1568, .data, 30030]
       - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
       - [0x1990, .data, st_common]
       - [0x1B90, .data, e_collect]
-      - [0x1E3C, data]
+      - [0x1E3C, .data, e_collect] # g_collectVelocity
       - [0x1E5C, .data, e_misc]
-      - [0x1F54, data]
+      - [0x1F54, .data, e_particles]
+      - [0x1FD4, .data, e_room_fg]
       - [0x2060, .data, rooms]
-      - [0x2084, data]
+      - [0x2084, data] # 3AB08 EntityClouds
+      - [0x2184, .data, 3AB08] # EntityClockTower3D
+      - [0x2438, .data, 3AB08] # EntityCutscenePhotograph
+      - [0x24E8, .data, 3C5C0]
+      - [0x2690, .data, 3D8F0]
       - [0x26B8, .data, e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
       - [0x2C4C, data] # prologue end text?
@@ -75,7 +84,7 @@ segments:
       - [0xE3D0, cmpgfx, e_dracula2_g9, 128, 128, 4, 0x1A7D0]
       - [0xF130, raw, cutscene_richter]
       - [0xFEB0, raw, cutscene_dracula]
-      - [0x10C30, cmpgfx, stage_title_jp, 128, 128, 4, 0x1AD30] # unused
+      - [0x10C30, cmpgfx, stage_title_st0_jp, 128, 128, 4, 0x1AD30] # unused
       - [0x111D8, cmpgfx, e_breakables_g, 128, 128, 4, 0x1AC30]
       - [0x11B8C, cmpgfx, D_80191B8C, 128, 128, 4, 0x1AD70] # unseen?
       - [0x13DB0, cmpgfx, bg_moon, 128, 128, 4, 0x1B010] # unseen?
@@ -86,7 +95,7 @@ segments:
       - [0x17F80, cmpgfx, richter_cutscene, 128, 128, 4]
       - [0x187BC, cmpgfx, e_secret_stairs_g, 128, 128, 4, 0x1AF50]
       - [0x19628, cmpgfx, e_smoke_g, 128, 128, 4, 0x1ADD0]
-      - [0x1A40C, cmpgfx, stage_title_us, 128, 128, 4, 0x1AD50]
+      - [0x1A40C, cmpgfx, stage_title_st0_us, 128, 128, 4, 0x1AD50]
       - [0x1A750, pal, e_dracula_p]
       - [0x1A830, pal, D_8019A830]
       - [0x1A930, pal, D_8019A930] # unused
@@ -110,7 +119,7 @@ segments:
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
       - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
       - [0x27B00, .rodata, 2B0C8] # EntityStageTitleCard
-      - [0x27B18, .rodata, 2B0C8] # func_801ABBBC
+      - [0x27B18, .rodata, 2C564] # func_801ABBBC
       - [0x27B40, .rodata, 2C564] # EntityDracula
       - [0x27B7C, .rodata, 2DAC8] # "charal %x\n"
       - [0x27B8C, .rodata, 2DAC8] # EntityDraculaFinalForm
@@ -122,7 +131,7 @@ segments:
       - [0x27C8C, .rodata, e_collect]
       - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, .rodata, e_misc]
-      - [0x27CFC, .rodata, 39EA8] # EntityCutscenePhotograph
+      - [0x27CFC, .rodata, 3AB08] # EntityCutscenePhotograph
       - [0x27D30, .rodata, 3C5C0] # "d_step" string
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
@@ -131,7 +140,7 @@ segments:
       - [0x2A218, c]
       - [0x2A8DC, c]
       - [0x2B0C8, c]
-      - [0x2C564, c] # EntityDracula
+      - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
       - [0x3186C, c, st_update]
@@ -141,7 +150,10 @@ segments:
       - [0x34908, c, st_common]
       - [0x35EC8, c, e_collect]
       - [0x37308, c, e_misc]
-      - [0x39EA8, c]
+      - [0x39EA8, c, e_particles]
+      - [0x3A6EC, c, e_room_fg]
+      - [0x3A7D8, c, popup]
+      - [0x3AB08, c]
       - [0x3C5C0, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]

@@ -13,10 +13,11 @@ typedef struct {
     s16 unk14;
 } unkstr_801C06B0;
 
-extern SVECTOR D_80182690;
-extern SVECTOR D_80182698;
-extern SVECTOR D_801826A0;
-extern SVECTOR D_801826A8;
+static SVECTOR D_80182690 = {-8, -8, 0};
+static SVECTOR D_80182698 = {8, -8, 0};
+static SVECTOR D_801826A0 = {-8, 8, 0};
+static SVECTOR D_801826A8 = {8, 8, 0};
+static SVECTOR unused = {0, 0, 0};
 extern unkstr_801C06B0 D_801C06B0;
 
 void func_801BD8F0(Entity* self) {
@@ -43,7 +44,7 @@ void func_801BD8F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         g_GpuBuffers[0].draw.r0 = 0;
         g_GpuBuffers[0].draw.g0 = 0;
         g_GpuBuffers[0].draw.b0 = 0;
@@ -279,6 +280,9 @@ extern SVECTOR D_801C1BC8[];
 extern u8 D_801C23C8[16];
 
 void EntityBackgroundVortex(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
     u8 brightness; // writes into an array, later that array is used for colors
     u8 leftV;
     u8 rightV;
@@ -307,7 +311,7 @@ void EntityBackgroundVortex(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         self->posX.i.hi = 0x80;
         self->posY.i.hi = 0x1A0;
         primIndex = g_api.func_800EDB58(PRIM_GT4, 0x110);

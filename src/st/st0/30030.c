@@ -3,7 +3,7 @@
 #include "dialogue2.h"
 #include "disk.h"
 
-void SetGameState(GameState gameState) {
+static void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
     g_backbufferX = 0;
@@ -44,7 +44,7 @@ void func_801B0180(void) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void SetDisplayBufferColorsToBlack(void) {
+static void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -78,7 +78,7 @@ void func_801B0280(void) {
     func_801B01F8(0);
 }
 
-void SetTitleDisplayBuffer(void) {
+static void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
@@ -123,8 +123,22 @@ typedef struct ProloguePrimitive {
     u16 tpage;
 } ProloguePrimitive;
 
-extern s32 D_8003CB04[];
-extern ProloguePrimitive D_80181568[];
+static ProloguePrimitive D_80181568[] = {
+    {0x01, 0x80, 0xFF, 0x80, 1, 112, 0x9C},
+    {0x00, 0x80, 0xFF, 0x80, 256, 112, 0x9E},
+    {0x01, 0x00, 0xFF, 0x80, 1, -16, 0x9C},
+    {0x00, 0x00, 0xFF, 0x80, 256, -16, 0x9E},
+    {0x01, 0x80, 0xFF, 0x80, 1, -144, 0x98},
+    {0x00, 0x80, 0xFF, 0x80, 256, -144, 0x9A},
+    {0x01, 0x00, 0xFF, 0x80, 1, -272, 0x98},
+    {0x00, 0x00, 0xFF, 0x80, 256, -272, 0x9A},
+    {0x00, 0x00, 0x88, 0x70, 112, -384, 0x8C},
+    {0x00, 0x70, 0xA0, 0x90, 248, -416, 0x8C},
+};
+static u8 D_801815CC_unused[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00,
+    0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
+    0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x01};
 extern u16 D_801BEDFC;
 extern u16 D_801BEE00;
 extern u16 D_801BEE04;
@@ -171,7 +185,7 @@ void PrologueScroll(void) {
             prim = prim->next;
         }
 
-        textPrim = D_80181568;
+        textPrim = (ProloguePrimitive*)D_80181568;
         for (i = 0; i < 10; i++) {
             prim->u0 = textPrim->u0;
             prim->v0 = textPrim->v0;
@@ -446,7 +460,7 @@ void PrologueScroll(void) {
         break;
 
     case 18:
-        D_8003CB04[0] |= 2;
+        g_Settings.D_8003CB04 |= 2;
         func_801B0058();
         g_api.FreePrimitives(D_801BEE08);
         DestroyEntitiesFromIndex(0);

@@ -353,6 +353,40 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_life_up.c
 )
 
+set (SOURCE_FILES_STAGE_ST0
+    src/pc/stages/stage_st0.c
+    src/st/st0/header.c
+    src/st/st0/e_laydef.c
+    src/st/st0/e_init.c
+    src/st/st0/rooms.c
+    src/st/st0/e_layout.c
+    src/st/st0/tile_data.c
+    src/st/st0/sprites.c
+    src/st/st0/27D64.c
+    src/st/st0/cutscene.c
+    src/st/st0/cutscene_data.c
+    src/st/st0/2A218.c
+    src/st/st0/2A8DC.c
+    src/st/st0/2B0C8.c
+    src/st/st0/2C564.c
+    src/st/st0/2DAC8.c
+    src/st/st0/30030.c
+    src/st/st0/st_update.c
+    src/st/st0/collision.c
+    src/st/st0/create_entity.c
+    src/st/st0/e_red_door.c
+    src/st/st0/st_common.c
+    src/st/st0/e_collect.c
+    src/st/st0/e_misc.c
+    src/st/st0/e_particles.c
+    src/st/st0/e_room_fg.c
+    src/st/st0/popup.c
+    src/st/st0/3AB08.c
+    src/st/st0/3C5C0.c
+    src/st/st0/prim_helpers.c
+    src/st/st0/3D8F0.c
+)
+
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/header.c
@@ -427,6 +461,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_CEN}
     ${SOURCE_FILES_STAGE_NZ0}
+    ${SOURCE_FILES_STAGE_ST0}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}

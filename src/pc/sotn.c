@@ -24,6 +24,7 @@ LayoutEntity** g_pStObjLayoutHorizontal;
 LayoutEntity** g_pStObjLayoutVertical;
 u32 g_CutsceneFlags;
 s32 g_IsCutsceneDone;
+s32 g_SkipCutscene;
 
 ServantDesc D_80170000;
 

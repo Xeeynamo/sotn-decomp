@@ -64,17 +64,16 @@ EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
 EInit g_EInitElevator = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
 
-static u32 JUNK_80180488 = 0x00FF0140;
-static u32 D_8018048C = 0x00FF0740;
-
-ObjInit OVL_EXPORT(BackgroundBlockInit) = {
-    .animSet = ANIMSET_OVL(2),
-    .zPriority = 129,
-    .unk5A = 0,
-    .palette = PAL_DRA(0),
-    .drawFlags = DRAW_DEFAULT,
-    .unkC = NULL,
-    .animFrames = &D_8018048C,
+static u8 D_80180488[] = {0x40, 0x01, 0xFF, 0x00};
+static u8 D_8018048C[] = {0x40, 0x07, 0xFF, 0x00};
+ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
+    {.animSet = ANIMSET_OVL(2),
+     .zPriority = 129,
+     .unk5A = 0,
+     .palette = PAL_DRA(0),
+     .drawFlags = DRAW_DEFAULT,
+     .unkC = NULL,
+     .animFrames = D_8018048C},
 };
 
 u16 OVL_EXPORT(RedDoorTiles)[][8] = {

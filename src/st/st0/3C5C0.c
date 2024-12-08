@@ -1,11 +1,43 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 
-extern SVECTOR D_801824E8[];
-extern SVECTOR* D_80182568[];
+static SVECTOR D_801824E8[] = {
+    {0x0100, 0x0200, 0x0300, 0xFFC0},
+    {0x0000, 0x0000, 0x0000, 0xFD00},
+    {0x0000, 0x0000, 0x0400, 0xFA00},
+    {0x0200, 0x0100, 0xFE00, 0xF700}};
+static SVECTOR D_80182508 = {0x0022, 0xFFEE, 0xFFF5};
+static SVECTOR D_80182510 = {0x0015, 0x0012, 0xFFE3};
+static SVECTOR D_80182518 = {0x0000, 0xFFEE, 0xFFDC};
+static SVECTOR D_80182520 = {0x0000, 0xFFD8, 0x0000};
+static SVECTOR D_80182528 = {0x0015, 0xFFEE, 0x001D};
+static SVECTOR D_80182530 = {0x0022, 0x0012, 0x000B};
+static SVECTOR D_80182538 = {0x0000, 0x0028, 0x0000};
+static SVECTOR D_80182540 = {0x0000, 0x0012, 0x0024};
+static SVECTOR D_80182548 = {0xFFDE, 0xFFEE, 0xFFF5};
+static SVECTOR D_80182550 = {0xFFEB, 0x0012, 0xFFE3};
+static SVECTOR D_80182558 = {0xFFEB, 0xFFEE, 0x001D};
+static SVECTOR D_80182560 = {0xFFDE, 0x0012, 0x000B};
+static SVECTOR* D_80182568[] = {
+    &D_80182508, &D_80182518, &D_80182520, &D_80182548, &D_80182520,
+    &D_80182518, &D_80182548, &D_80182518, &D_80182550, &D_80182548,
+    &D_80182558, &D_80182520, &D_80182508, &D_80182520, &D_80182528,
+    &D_80182508, &D_80182510, &D_80182518, &D_80182528, &D_80182530,
+    &D_80182508, &D_80182558, &D_80182548, &D_80182560, &D_80182510,
+    &D_80182508, &D_80182530, &D_80182520, &D_80182558, &D_80182528,
+    &D_80182518, &D_80182510, &D_80182550, &D_80182550, &D_80182560,
+    &D_80182548, &D_80182560, &D_80182550, &D_80182538, &D_80182530,
+    &D_80182528, &D_80182540, &D_80182560, &D_80182540, &D_80182558,
+    &D_80182530, &D_80182538, &D_80182510, &D_80182540, &D_80182528,
+    &D_80182558, &D_80182538, &D_80182550, &D_80182510, &D_80182530,
+    &D_80182540, &D_80182538, &D_80182560, &D_80182538, &D_80182540,
+    &D_80182558, &D_80182540, &D_80182540, &D_80182510, &D_80182538,
+    &D_80182538, &D_80182538, &D_80182540, &D_80182540, &D_80182540,
+    &D_80182538, &D_80182538, NULL,        NULL,
+};
 
 // Defines for the locations of scratchpad values
-#define offsetof(st, m) (void*)((size_t) & (((st*)0)->m)) // __builtin_offsetof
+#define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
 typedef struct {
     MATRIX m[2];
     SVECTOR vec[1];
@@ -17,6 +49,9 @@ typedef struct {
 } ST0_SCRATCHPAD;
 
 void func_801BC5C0(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[sizeof(ST0_SCRATCHPAD)];
+#endif
     s16 var_s7;
     s16 var_s6;
     u8* var_s5;
@@ -43,7 +78,7 @@ void func_801BC5C0(Entity* self) {
     FntPrint("d_step %x\n", self->step);
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         self->zPriority = 0xC0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x34);
         if (primIndex == -1) {
