@@ -976,6 +976,7 @@ void func_801AF6D0(void) {
     }
 }
 
+static inline s32 add(s32 a, s32 b) { return a + b; }
 void func_801AF774(Entity* self) {
     RECT sp10;
     DRAWENV sp18;
@@ -990,7 +991,6 @@ void func_801AF774(Entity* self) {
     s16* temp_a3;
     s32 xBase;
     s32 yBase;
-    inline s32 add(s32 a, s32 b) { return a + b; }
 
     switch (self->step) {
     case 0:
