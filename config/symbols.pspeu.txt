@@ -72,4 +72,3 @@ g_Clut_2860 = 0x091F8658;
 g_GameTimer = 0x091FC460;
 g_CurrentBuffer = 0x091FC4E0;
 g_CastleFlags = 0x09234730;
-g_ItemIconSlots = 0x0924BC20;

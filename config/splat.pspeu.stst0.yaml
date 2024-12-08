@@ -1,0 +1,49 @@
+options:
+  platform: psp
+  basename: stst0
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
+  asm_path: asm/pspeu/st/st0_psp
+  asset_path: assets/st/st0
+  src_path: src/st
+  ld_script_path: build/pspeu/stst0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stst0.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stst0.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stst0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  nonmatchings_path: psp
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  include_macro_inc: false
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: f40689641eda2ab9de69b6aed15a200717827628
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stst0
+    type: code
+    start: 0x80
+    vram:  0x09237700
+    bss_size: 0x3C00
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, st0_psp/80]
+      - [0x1B200, data]
+      - [0x42400, .rodata, st0_psp/80]
+      - {type: bss, vram: 0x9279D80}
+  - [0x42700]

@@ -126,6 +126,7 @@ g_LayoutObjPosVertical = 0x0924BC00;
 g_LayoutObjPosHorizontal = 0x0924BC08;
 g_LayoutObjVertical = 0x0924BC10;
 g_LayoutObjHorizontal = 0x0924BC18;
+g_ItemIconSlots = 0x0924BC20;
 g_eBreakableExplosionTypes = 0x0924BCC8;
 WRP_PrizeDrops = 0x0924CCD0;
 g_EntityUnkId12Data = 0x0924CCD8;
