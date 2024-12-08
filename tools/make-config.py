@@ -524,14 +524,14 @@ def make_config_psp(ovl_path: str, version: str):
     )
 
     # estimate the rodata table by checking if the data is an offset within the C subsegment
-    vram_c_start = vram+0x80
+    vram_c_start = vram + 0x80
     vram_c_end = vram_c_start + text_len
     rodata_start = -1
     with open(ovl_path, "rb") as f:
         byte_data = f.read()[data_start:bss_start]
-        start = align(data_len // 2, 4) # very cheap way to skip the entity table
+        start = align(data_len // 2, 4)  # very cheap way to skip the entity table
         for i in range(start, len(byte_data), 4):
-            word = int.from_bytes(byte_data[i:i+4], 'little', signed=False)
+            word = int.from_bytes(byte_data[i : i + 4], "little", signed=False)
             # from now on, all words must be either in the C segment or be NULL
             if vram_c_start <= word < vram_c_end:
                 if rodata_start == -1:
@@ -546,29 +546,27 @@ def make_config_psp(ovl_path: str, version: str):
     with open(splat_config_path, "w") as f:
         f.write(yaml.dump(config, Dumper=IndentDumper, sort_keys=False))
         # now writes the rest manually because the default yaml formatting is horrifying
-        text = (
-            [
-                f"  asm_inc_header: |\n",
-                f"    .set noat      /* allow manual use of $at */\n",
-                f"    .set noreorder /* don't insert nops after branches */\n",
-                f"sha1: {get_sha1(ovl_path)}\n",
-                f"segments:\n",
-                f"  - [0x0, bin, mwo_header]\n",
-                f'  - name: {config["options"]["basename"]}\n',
-                f"    type: code\n",
-                f"    start: 0x80\n",
-                f"    vram:  0x{vram_c_start:08X}\n",
-                f"    bss_size: 0x{bss_len:X}\n",
-                f"    align: 128\n",
-                f"    subalign: 8\n",
-                f"    subsegments:\n",
-                f"      - [0x80, c, 80]\n",
-                f"      - [0x{data_start:X}, data]\n",
-                f"      - [0x{rodata_start:X}, .rodata, 80]\n",
-                f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
-                f"  - [0x{file_size:X}]\n",
-            ]
-        )
+        text = [
+            f"  asm_inc_header: |\n",
+            f"    .set noat      /* allow manual use of $at */\n",
+            f"    .set noreorder /* don't insert nops after branches */\n",
+            f"sha1: {get_sha1(ovl_path)}\n",
+            f"segments:\n",
+            f"  - [0x0, bin, mwo_header]\n",
+            f'  - name: {config["options"]["basename"]}\n',
+            f"    type: code\n",
+            f"    start: 0x80\n",
+            f"    vram:  0x{vram_c_start:08X}\n",
+            f"    bss_size: 0x{bss_len:X}\n",
+            f"    align: 128\n",
+            f"    subalign: 8\n",
+            f"    subsegments:\n",
+            f"      - [0x80, c, 80]\n",
+            f"      - [0x{data_start:X}, data]\n",
+            f"      - [0x{rodata_start:X}, .rodata, 80]\n",
+            f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
+            f"  - [0x{file_size:X}]\n",
+        ]
         f.writelines(text)
     return splat_config_path
 
@@ -970,9 +968,16 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
     if is_stage(ovl_name):
         spinner_start("getting the entity stage table")
         entity_table_symbol = get_symbol_of_entity_table(splat_config)
-        if entity_table_symbol is not None: # entity symbol table found, we can start adding symbols
+        if (
+            # entity symbol table found, we can start adding symbols
+            entity_table_symbol
+            is not None
+        ):
             entity_table = get_symbol_table(splat_config, entity_table_symbol)
-            if version != "us" and os.path.exists(make_entity_init_c_path(ovl_name)): # if the US counterpart exists
+            if version != "us" and os.path.exists(
+                # if the US counterpart exists
+                make_entity_init_c_path(ovl_name)
+            ):
                 entities = get_symbol_table_from_entity_init_c(
                     make_entity_init_c_path(ovl_name), ovl_name
                 )
@@ -983,7 +988,7 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
                     )
                 for i in range(min(len(entities), len(entity_table))):
                     add_symbol(splat_config, version, entities[i], entity_table[i])
-            else: # default cheap way of adding symbols
+            else:  # default cheap way of adding symbols
                 hydrate_stage_entity_table_symbols(splat_config, version, entity_table)
             need_to_update_symbols = True
 
