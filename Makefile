@@ -399,8 +399,6 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
-	$(call link,tt_$*,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
