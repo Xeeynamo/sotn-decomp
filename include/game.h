@@ -1563,12 +1563,13 @@ typedef struct {
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
-    /* 8003C8A4 */ void* unused130;
     // this matches on both versions but doing this to show the difference
 #if defined(VERSION_PSP)
+    /* 8003C8A4 */ s32 (*CalcPlayerDamageAgain)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
     /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
 #else
+    /* 8003C8A4 */ void* unused130;
     /* 8003C8A8 */ void* unused134;
     /* 8003C8AC */ void* unused138;
 #endif
