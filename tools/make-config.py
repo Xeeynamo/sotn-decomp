@@ -341,6 +341,32 @@ def make_ovl_fullname(ovl_name: str) -> str:
     return ovl_name
 
 
+def make_ovl_name_from_fullname(ovl_fullname: str):
+    # account the fact the ovl name can look like 'stst0'
+    if ovl_fullname == "stst0":
+        return "st0"
+    # account the fact the ovl name can look like 'stnz0'
+    if ovl_fullname != "st0" and ovl_fullname.startswith("st"):
+        return ovl_fullname[2:]
+    return ovl_fullname
+
+
+def make_entity_init_c_path(ovl_name: str) -> str:
+    return f"src/st/{make_ovl_name_from_fullname(ovl_name)}/e_init.c"
+
+
+# do a OVL_EXPORT(EntityRedDoor) -> NZ0EntityRedDoor
+def resolve_ovl_export(name: str, ovl_name: str):
+    idx = name.find("OVL_EXPORT(")
+    if idx < 0:  # not a OVL_EXPORT
+        return name
+    idx_close = name.find(")", idx + 1)
+    if idx_close < 0:  # invalid OVL_EXPORT? just ignore it
+        return name
+    ovl_prefix = make_ovl_name_from_fullname(ovl_name).upper()
+    return name.replace("OVL_EXPORT(", f"{ovl_prefix}_").rstrip(")")
+
+
 ##### SPLAT CONFIG UTILITIES
 
 
@@ -763,6 +789,27 @@ def get_symbol_table(splat_config, table):
     return [int(line, 16) for line in table]
 
 
+def get_symbol_table_from_entity_init_c(file_name: str, ovl_name: str) -> list[str]:
+    with open(file_name) as f:
+        while True:  # loop until the EntityUpdates array is found
+            line = f.readline()
+            if not line:  # unexpected end of file
+                return []
+            if "PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {" in line:
+                break
+        entities = []
+        while True:  # loop until the end of the array
+            line = f.readline()
+            if not line:  # unexpected end of file
+                return entities
+            line = line.strip().rstrip(",")
+            if line == "};":
+                break
+            symbol = resolve_ovl_export(line, ovl_name)
+            entities.append(symbol)
+    return entities
+
+
 def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
     with open(symbol_file_name, "r") as f:
         lines = f.readlines()
@@ -918,7 +965,7 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
     ovl_name = splat_config["options"]["basename"]
     table = get_symbol_table(splat_config, get_symbol_of_export_table(splat_config))
     spinner_stop(True)
-    if table != None:
+    if table is not None:
         if is_stage(ovl_name):
             spinner_start("adding stage symbols")
             hydrate_stage_export_table_symbols(splat_config, version, table)
@@ -933,12 +980,24 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
     if is_stage(ovl_name):
         spinner_start("getting the entity stage table")
         entity_table_symbol = get_symbol_of_entity_table(splat_config)
-        if entity_table_symbol != None:
+        if entity_table_symbol is not None: # entity symbol table found, we can start adding symbols
             entity_table = get_symbol_table(splat_config, entity_table_symbol)
-            hydrate_stage_entity_table_symbols(splat_config, version, entity_table)
+            if version != "us" and os.path.exists(make_entity_init_c_path(ovl_name)): # if the US counterpart exists
+                entities = get_symbol_table_from_entity_init_c(
+                    make_entity_init_c_path(ovl_name), ovl_name
+                )
+                if len(entities) != len(entity_table):
+                    yowarning(
+                        "number of entities is different than the US counterpart:"
+                        f"'{version}' has {len(entity_table)}, 'us' has {len(entities)}"
+                    )
+                for i in range(min(len(entities), len(entity_table))):
+                    add_symbol(splat_config, version, entities[i], entity_table[i])
+            else: # default cheap way of adding symbols
+                hydrate_stage_entity_table_symbols(splat_config, version, entity_table)
             need_to_update_symbols = True
 
-    if need_to_update_symbols == True:
+    if need_to_update_symbols:
         # disassemble once more to update the symbols
         need_to_update_symbols = False
         spinner_start("updating all symbols")
