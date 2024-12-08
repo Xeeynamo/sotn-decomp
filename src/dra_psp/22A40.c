@@ -36,7 +36,7 @@ bool CalcPlayerDamage(DamageParam* damage) {
 }
 
 s32 func_800FD664(s32 arg0) {
-    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG){
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
     return arg0;
@@ -62,7 +62,7 @@ bool CalcPlayerDamageAgain(DamageParam* damage) {
 }
 // What the heck? Repeating again? Never referenced but not dead-stripped?
 s32 func_psp_091007E0(s32 arg0) {
-    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG){
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
     return arg0;

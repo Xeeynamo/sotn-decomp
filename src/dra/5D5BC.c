@@ -30,7 +30,7 @@ bool CalcPlayerDamage(DamageParam* damage) {
 }
 
 s32 func_800FD664(s32 arg0) {
-    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG){
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
     return arg0;
