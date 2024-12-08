@@ -76,6 +76,7 @@ func_800FF0B8 = 0x09102B78;
 func_800FF0F4 = 0x09102BC0;
 func_800FF110 = 0x09102BF0;
 DealDamage = 0x09102C20;
+func_800FF460 = 0x091030C8;
 RenderTilemap = 0x09103318;
 SetRoomForegroundLayer = 0x09103B78;
 SetRoomBackgroundLayer = 0x09103CF8;

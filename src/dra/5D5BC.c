@@ -973,11 +973,13 @@ exit:
     return result;
 }
 
-s32 func_800FF460(s32 arg0) {
+s32 func_800FF460(u32 arg0){
+    s32 res;
     if (arg0 == 0) {
         return 0;
     }
-    return arg0 + ((u32)(arg0 * g_Status.statsTotal[STAT_LCK]) >> 7);
+    res = arg0 + (arg0 * g_Status.statsTotal[STAT_LCK]) / 0x80;
+    return res;
 }
 
 // Determine what type of item to drop

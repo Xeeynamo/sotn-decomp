@@ -877,7 +877,14 @@ exit:
     return result;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091030C8);
+s32 func_800FF460(u32 arg0){
+    s32 res;
+    if (arg0 == 0) {
+        return 0;
+    }
+    res = arg0 + (arg0 * g_Status.statsTotal[STAT_LCK]) / 0x80;
+    return res;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09103128);
 
