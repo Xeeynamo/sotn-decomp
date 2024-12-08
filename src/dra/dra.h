@@ -327,16 +327,17 @@ extern SubweaponDef g_SubwpnDefs[13];
 #if defined(VERSION_PSP)
 extern RelicDesc* g_RelicDefs;
 extern SpellDef* g_SpellDefs;
+extern EnemyDef* g_EnemyDefs;
 extern Accessory* g_AccessoryDefs;
 extern Equipment* g_EquipDefs;
 #else
 extern RelicDesc g_RelicDefs[30];
 extern SpellDef g_SpellDefs[28];
+extern EnemyDef g_EnemyDefs[400];
 extern Accessory g_AccessoryDefs[90];
 extern Equipment g_EquipDefs[217];
 #endif
 extern const char* g_MenuStr[110];
-extern EnemyDef g_EnemyDefs[400];
 extern s32 g_ExpNext[];
 extern u16 D_800AC958[];
 extern CdFile* D_800ACC74[];

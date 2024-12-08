@@ -869,24 +869,24 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     s32 stats[4];
     EnemyDef sp20;
     EnemyDef* enemy;
-    u16 temp_v1;
+    u16 element;
+    u16 enemyElements;
     u16 elementMask;
+    u16 maskedElement;
     s32 highestStatIdx;
     s32 i;
-    u16 element;
     u16 damage;
     u16 result;
-    u16 stuff;
 
     enemy = &sp20;
-    sp20 = g_EnemyDefs[enemyEntity->enemyId];
+    *enemy = g_EnemyDefs[enemyEntity->enemyId];
     if (CheckEquipmentItemCount(ITEM_DRAGON_HELM, EQUIP_HEAD) != 0) {
         enemy->defense /= 2;
     }
 
     element = attackerEntity->attackElement;
     damage = attackerEntity->attack;
-    if (element == 0) {
+    if (!element) {
         element = 0x20;
     }
     if (element & 0xFF80) {
@@ -896,70 +896,80 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     }
 
     result = 0;
-    temp_v1 = element & elementMask;
-    if (temp_v1 == (temp_v1 & (elementMask & enemy->immunes))) {
+    maskedElement = element & elementMask;
+
+    // These could be written as nested if-else, but more readable with goto.
+    enemyElements = enemy->immunes & elementMask;
+    if (maskedElement == (maskedElement & enemyElements)) {
         result = DAMAGE_FLAG_IMMUNE;
-    } else if (temp_v1 == (temp_v1 & (elementMask & enemy->absorbs))) {
+        goto exit;
+    }
+    enemyElements = enemy->absorbs & elementMask;
+    if (maskedElement == (maskedElement & enemyElements)) {
         result = damage + DAMAGE_FLAG_ABSORB;
-    } else {
-        if (temp_v1 == (temp_v1 & (elementMask & enemy->strengths))) {
-            damage /= 2;
-        }
-        if (element & enemy->weaknesses) {
-            damage *= 2;
-        }
-        if (attackerEntity->entityRoomIndex > (rand() & 0xFF)) {
-            for (i = 0; i < 4; i++) {
-                stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
-            }
-
-            highestStatIdx = 0;
-            for (i = 1; i < 4; i++) {
-                if (stats[i] > stats[highestStatIdx]) {
-                    highestStatIdx = i;
-                }
-            }
-
-            switch (highestStatIdx) {
-            case STAT_STR:
-                damage *= 2;
-                break;
-            case STAT_CON:
-                if (enemy->defense > damage) {
-                    damage += enemy->defense / 2;
-                } else {
-                    damage += damage / 2;
-                }
-                break;
-            case STAT_INT:
-                damage += SquareRoot0(g_RoomCount);
-                break;
-            case STAT_LCK:
-#if defined(VERSION_US)
-                damage += (rand() % g_Status.statsTotal[STAT_LCK]) + 1;
-#elif defined(VERSION_HD)
-                damage += (rand() % g_Status.statsTotal[STAT_LCK]);
-#endif
-                break;
-            }
-            result = DAMAGE_FLAG_CRITICAL;
-        } else {
-            result = DAMAGE_FLAG_NORMAL;
-        }
-
-        if (damage > enemy->defense) {
-            damage = damage - enemy->defense;
-        } else {
-            damage = 1;
-        }
-
-        if (damage < 0 || damage >= 10000) {
-            damage = 9999;
-        }
-
-        result += damage;
+        goto exit;
     }
 
+    enemyElements = enemy->strengths & elementMask;
+    if (maskedElement == (maskedElement & enemyElements)) {
+        damage /= 2;
+    }
+    maskedElement = element & enemy->weaknesses;
+    if (maskedElement) {
+        damage *= 2;
+    }
+    // Looks like this block triggers for a critical hit.
+    // Implies that attackerEntity->entityRoomIndex is a crit rate?
+    if (attackerEntity->entityRoomIndex > (rand() & 0xFF)) {
+        for (i = 0; i < 4; i++) {
+            stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
+        }
+
+        highestStatIdx = 0;
+        for (i = 1; i < 4; i++) {
+            if (stats[i] > stats[highestStatIdx]) {
+                highestStatIdx = i;
+            }
+        }
+
+        switch (highestStatIdx) {
+        case STAT_STR:
+            damage *= 2;
+            break;
+        case STAT_CON:
+            if (enemy->defense > damage) {
+                damage += enemy->defense / 2;
+            } else {
+                damage += damage / 2;
+            }
+            break;
+        case STAT_INT:
+            damage += SquareRoot0(g_RoomCount);
+            break;
+        case STAT_LCK:
+#if defined(VERSION_US)
+            damage += (rand() % g_Status.statsTotal[STAT_LCK]) + 1;
+#else
+            damage += (rand() % g_Status.statsTotal[STAT_LCK]);
+#endif
+            break;
+        }
+        result = DAMAGE_FLAG_CRITICAL;
+    }
+
+    if (damage > enemy->defense) {
+        damage -= enemy->defense;
+    } else {
+        damage = 1;
+    }
+
+    if (damage > 9999) {
+        damage = 9999;
+    }
+
+    result += damage;
+
+exit:
     return result;
 }
 

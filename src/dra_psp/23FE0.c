@@ -769,7 +769,113 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", DealDamage);
+u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
+    s32 stats[4];
+    EnemyDef sp20;
+    EnemyDef* enemy;
+    u16 element;
+    u16 enemyElements;
+    u16 elementMask;
+    u16 maskedElement;
+    s32 highestStatIdx;
+    s32 i;
+    u16 damage;
+    u16 result;
+
+    enemy = &sp20;
+    *enemy = g_EnemyDefs[enemyEntity->enemyId];
+    if (CheckEquipmentItemCount(ITEM_DRAGON_HELM, EQUIP_HEAD) != 0) {
+        enemy->defense /= 2;
+    }
+
+    element = attackerEntity->attackElement;
+    damage = attackerEntity->attack;
+    if (!element) {
+        element = 0x20;
+    }
+    if (element & 0xFF80) {
+        elementMask = 0xFF80;
+    } else {
+        elementMask = 0x7F;
+    }
+
+    result = 0;
+    maskedElement = element & elementMask;
+
+    // These could be written as nested if-else, but more readable with goto.
+    enemyElements = enemy->immunes & elementMask;
+    if (maskedElement == (maskedElement & enemyElements)) {
+        result = DAMAGE_FLAG_IMMUNE;
+        goto exit;
+    }
+    enemyElements = enemy->absorbs & elementMask;
+    if (maskedElement == (maskedElement & enemyElements)) {
+        result = damage + DAMAGE_FLAG_ABSORB;
+        goto exit;
+    }
+
+    enemyElements = enemy->strengths & elementMask;
+    if (maskedElement == (maskedElement & enemyElements)) {
+        damage /= 2;
+    }
+    maskedElement = element & enemy->weaknesses;
+    if (maskedElement) {
+        damage *= 2;
+    }
+    // Looks like this block triggers for a critical hit.
+    // Implies that attackerEntity->entityRoomIndex is a crit rate?
+    if (attackerEntity->entityRoomIndex > (rand() & 0xFF)) {
+        for (i = 0; i < 4; i++) {
+            stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
+        }
+
+        highestStatIdx = 0;
+        for (i = 1; i < 4; i++) {
+            if (stats[i] > stats[highestStatIdx]) {
+                highestStatIdx = i;
+            }
+        }
+
+        switch (highestStatIdx) {
+        case STAT_STR:
+            damage *= 2;
+            break;
+        case STAT_CON:
+            if (enemy->defense > damage) {
+                damage += enemy->defense / 2;
+            } else {
+                damage += damage / 2;
+            }
+            break;
+        case STAT_INT:
+            damage += SquareRoot0(g_RoomCount);
+            break;
+        case STAT_LCK:
+#if defined(VERSION_US)
+            damage += (rand() % g_Status.statsTotal[STAT_LCK]) + 1;
+#else
+            damage += (rand() % g_Status.statsTotal[STAT_LCK]);
+#endif
+            break;
+        }
+        result = DAMAGE_FLAG_CRITICAL;
+    }
+
+    if (damage > enemy->defense) {
+        damage -= enemy->defense;
+    } else {
+        damage = 1;
+    }
+
+    if (damage > 9999) {
+        damage = 9999;
+    }
+
+    result += damage;
+
+exit:
+    return result;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091030C8);
 
