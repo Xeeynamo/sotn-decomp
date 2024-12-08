@@ -35,6 +35,17 @@ define list_o_files_psp
 	$(foreach file,$(call list_src_files_psp,$(1)),$(BUILD_DIR)/$(file).o)
 endef
 
+define link_psp
+	$(LD) $(LD_FLAGS) -o $(2) \
+		--gc-sections --print-gc-sections \
+		-Map $(BUILD_DIR)/$(1).map \
+		-T $(BUILD_DIR)/$(1).ld \
+		-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
+endef
+
 # Targets
 build_pspeu: $(addsuffix _psp,$(PSP_EU_TARGETS))
 
@@ -73,14 +84,14 @@ ST_DRA_MERGE = 624DC
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
 	$(call link,dra,$@)
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
-	$(call link,tt_$*,$@)
+	$(call link_psp,tt_$*,$@)
 
 ST_ST0_MERGE = 
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
 	$(call link,stst0,$@)
 ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door
 $(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/stwrp.ld $(addprefix $(BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
-	$(call link,stwrp,$@)
+	$(call link_psp,stwrp,$@)
 
 # Recipes
 $(BUILD_DIR)/%.s.o: %.s
