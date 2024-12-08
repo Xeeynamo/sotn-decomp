@@ -103,7 +103,7 @@ static s16 D_80180EB8[] = {-6, 4, 0, -8};
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 // This is weird, the values have to go in later.
 // Note that this array is in rodata. Other overlays have it in data.
-static const s8 c_HeartPrizes[2][2];
+static const s8 c_HeartPrizes[4][2];
 #else
 s8 c_HeartPrizes[] = {1, 5};
 #endif
@@ -150,7 +150,7 @@ extern u16 g_EInitObtainable[];
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 // For some reason need to declare the values AFTER the function.
-static const s8 c_HeartPrizes[2][2] = {{1, 5}, {0, 0}, {1, 2}, {0, 0}};
+static const s8 c_HeartPrizes[][2] = {{1, 5}, {0, 0}, {1, 2}, {0, 0}};
 #endif
 
 #include "collect_gold.h"
