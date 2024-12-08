@@ -238,32 +238,6 @@ def get_gnu_c_first_jtbl_addr(data: bytearray):
     return (mips_lui["immu"] << 16) + mips_lw["imm"]
 
 
-def estimate_c_file_split(input: str, text_len: int):
-    """
-    tries to detect a file split by looking for gaps on 0x10 aligned functions
-    PSP ONLY
-    """
-    with open(input, "rb") as f:
-        f.seek(0x80)
-        data = struct.unpack(f"{text_len>>2}i", f.read(text_len))
-    splits = [0x80]
-    for i in range(len(data)):
-        n = data[i]
-        if n != JR_RA:
-            continue
-        # check for a gap of at least two nops
-        if (i & 3) > 1:
-            continue
-        if data[i + 1] != NOP:
-            continue
-        if data[i + 2] != NOP:
-            continue
-        offset = align(0x80 + i * 4, 0x10)
-        if offset < text_len:
-            splits += [offset]
-    return splits
-
-
 ##### NAMES AND PATH UTILITIES
 
 
@@ -543,7 +517,6 @@ def make_config_psp(ovl_path: str, version: str):
     data_start = align(text_len, 0x80) + 0x80
     bss_start = align(vram + data_start + data_len - 0x80, 0x80)
     file_size = os.stat(ovl_path).st_size
-    splits = estimate_c_file_split(ovl_path, text_len)
     config = get_splat_config(
         ovl_path,
         version,
@@ -571,9 +544,7 @@ def make_config_psp(ovl_path: str, version: str):
                 f"    align: 128\n",
                 f"    subalign: 8\n",
                 f"    subsegments:\n",
-            ]
-            + [f"      - [0x{offset:X}, c]\n" for offset in splits]
-            + [
+                f"      - [0x80, c]\n",
                 f"      - [0x{data_start:X}, data]\n",
                 f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
                 f"  - [0x{file_size:X}]\n",
