@@ -755,7 +755,7 @@ bool HandleGravityBootsMP(CallMode mode) {
     return -1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102B48);
+void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102B78);
 
