@@ -745,7 +745,15 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102AF0);
+bool HandleGravityBootsMP(CallMode mode) {
+    if ((g_Status.mp - 4) > 0) {
+        if (mode != CHECK_ONLY) {
+            g_Status.mp -= 4;
+        }
+        return 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102B48);
 

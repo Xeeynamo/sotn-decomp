@@ -70,6 +70,7 @@ AddHearts = 0x09101FF0;
 HandleDamage = 0x091020A0;
 func_800FEE6C = 0x09102800;
 HandleTransformationMP = 0x09102898;
+HandleGravityBootsMP = 0x09102AF0;
 DealDamage = 0x09102C20;
 RenderTilemap = 0x09103318;
 SetRoomForegroundLayer = 0x09103B78;
