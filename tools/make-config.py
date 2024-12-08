@@ -514,7 +514,7 @@ def make_config_psp(ovl_path: str, version: str):
     text_len = ovl_header["text_len"]
     data_len = ovl_header["data_len"]
     bss_len = ovl_header["bss_len"]
-    data_start = align(text_len, 0x80) + 0x80
+    data_start = align(text_len, 0x80)
     bss_start = align(vram + data_start + data_len - 0x80, 0x80)
     file_size = os.stat(ovl_path).st_size
     config = get_splat_config(
