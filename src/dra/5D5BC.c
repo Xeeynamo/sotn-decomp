@@ -15,10 +15,10 @@ bool CalcPlayerDamage(DamageParam* damage) {
     if (damage->damageKind != 5) {
         if (damage->damageKind >= 16) {
             damage->damageTaken = g_Status.hpMax / 8;
-        } else if (g_Status.hpMax >= (damage->damageTaken * 20)) {
-            damage->damageKind = 3;
-        } else {
+        } else if ((damage->damageTaken * 20) > g_Status.hpMax) {
             damage->damageKind = 2;
+        } else {
+            damage->damageKind = 3;
         }
     }
     if (g_Status.hp <= damage->damageTaken) {

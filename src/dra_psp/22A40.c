@@ -17,4 +17,20 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_090FFB28);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", TimeAttackController);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_09100598);
+bool CalcPlayerDamage(DamageParam* damage) {
+    if (damage->damageKind != 5) {
+        if (damage->damageKind >= 16) {
+            damage->damageTaken = g_Status.hpMax / 8;
+        } else if ((damage->damageTaken * 20) > g_Status.hpMax) {
+            damage->damageKind = 2;
+        } else {
+            damage->damageKind = 3;
+        }
+    }
+    if (g_Status.hp <= damage->damageTaken) {
+        g_Status.hp = 0;
+        return true;
+    }
+    g_Status.hp -= damage->damageTaken;
+    return false;
+}
