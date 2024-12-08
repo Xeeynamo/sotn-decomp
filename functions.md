@@ -102,10 +102,10 @@
 | dra    | func_800EA5AC                       |       19 |          1 |        |                                 |       |
 | dra    | func_psp_0913D5D8                   |       19 |          1 |        |                                 |       |
 | dra    | func_psp_090E8620                   |       19 |          1 |        |                                 |       |
-| st0    | func_pspeu_09237868                 |       19 |          1 |        |                                 |       |
-| st0    | func_pspeu_09237A40                 |       19 |          1 |        |                                 |       |
-| st0    | func_pspeu_092392D0                 |       19 |          1 |        |                                 |       |
+| st0    | SetDisplayBufferColorsToBlack       |       19 |          1 |        |                                 |       |
+| st0    | SetGameState                        |       19 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A20                 |       19 |          1 |        |                                 |       |
+| st0    | func_pspeu_092392D0                 |       19 |          1 |        |                                 |       |
 | dra    | func_psp_09137498                   |       19 |          2 |        |                                 |       |
 | dra    | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
@@ -126,8 +126,8 @@
 | dra    | SetPlayerAnim                       |       21 |          1 |        |                                 |       |
 | dra    | func_psp_0913D798                   |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A58                 |       21 |          1 |        |                                 |       |
-| st0    | func_pspeu_0924A330                 |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_092506C0                 |       21 |          1 |        |                                 |       |
+| st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | wrp    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | wrp    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | dra    | func_8010FAF4                       |       21 |          2 |        |                                 |       |
@@ -144,7 +144,7 @@
 | dra    | func_psp_090F5B10                   |       23 |          1 |        |                                 |       |
 | dra    | func_psp_091088F0                   |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                   |       23 |          2 |        |                                 |       |
-| st0    | func_pspeu_092379F8                 |       23 |          2 |        |                                 |       |
+| st0    | func_801B0180                       |       23 |          2 |        |                                 |       |
 | dra    | func_psp_090F5520                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090F1C98                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090E4C90                   |       23 |          3 |        |                                 |       |
@@ -194,7 +194,7 @@
 | wrp    | func_psp_09244760                   |       29 |          1 |        |                                 |       |
 | dra    | DecompressReadNibble                |       29 |          2 |        |                                 |       |
 |        | func_092EC220                       |       29 |          2 |        |                                 |       |
-| st0    | func_pspeu_09242EA0                 |       29 |          2 |        |                                 |       |
+| st0    | func_801B1198                       |       29 |          2 |        |                                 |       |
 | dra    | func_psp_090F2118                   |       29 |          3 |        |                                 |       |
 |        | DestroyServantEntity                |       29 |          4 |        |                                 |       |
 | dra    | func_psp_09141878                   |       29 |          5 |        |                                 |       |
@@ -207,18 +207,18 @@
 | dra    | func_psp_09102AF0                   |       30 |          4 |        |                                 |       |
 | dra    | func_80131FCC                       |       30 |          5 |        |                                 |       |
 | dra    | func_psp_090EF1A0                   |       30 |          5 |        |                                 |       |
-| st0    | func_pspeu_09237CB8                 |       30 |          5 |        |                                 |       |
+| st0    | func_801B0414                       |       30 |          5 |        |                                 |       |
 | dra    | func_psp_0910A138                   |       30 |          7 |        |                                 |       |
 | dra    | func_psp_09142CA8                   |       31 |          2 |        |                                 |       |
 | dra    | func_psp_09142D10                   |       31 |          2 |        |                                 |       |
 | dra    | func_psp_09142D78                   |       31 |          2 |        |                                 |       |
 | dra    | func_psp_09142DE0                   |       31 |          2 |        |                                 |       |
 | dra    | func_psp_090EC968                   |       31 |          2 |        |                                 |       |
-| st0    | func_pspeu_09251A18                 |       31 |          2 |        |                                 |       |
+| st0    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/HhGja | 1.0   |
 | wrp    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/HhGja | 1.0   |
 | dra    | func_psp_091030C8                   |       31 |          3 |        |                                 |       |
 | dra    | func_psp_0913E4F8                   |       31 |          3 |        |                                 |       |
-| st0    | func_pspeu_09242F00                 |       31 |          3 |        |                                 |       |
+| st0    | func_801B11E8                       |       31 |          3 |        |                                 |       |
 | dra    | func_psp_090F89B0                   |       31 |          4 |        |                                 |       |
 | dra    | func_psp_090EBF50                   |       31 |          4 |        |                                 |       |
 | dra    | func_80107250                       |       31 |          5 |        |                                 |       |
@@ -305,7 +305,7 @@
 | dra    | func_psp_0913E468                   |       41 |          2 |        |                                 |       |
 | dra    | func_800EAEA4                       |       41 |          3 |        |                                 |       |
 | dra    | func_psp_091272B8                   |       41 |          3 |        |                                 |       |
-| st0    | func_pspeu_0923F8B0                 |       41 |          3 |        |                                 |       |
+| st0    | func_801ADAC8                       |       41 |          3 |        |                                 |       |
 | st0    | func_pspeu_09250020                 |       41 |          3 |        |                                 |       |
 | wrp    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | dra    | func_psp_090F1CE8                   |       41 |          4 |        |                                 |       |
@@ -352,11 +352,11 @@
 | dra    | func_psp_090EDBA0                   |       47 |          1 |        |                                 |       |
 | dra    | func_psp_09127210                   |       47 |          3 |        |                                 |       |
 | dra    | func_psp_090DCBC8                   |       47 |          3 |        |                                 |       |
-| st0    | func_pspeu_09237A78                 |       47 |          4 |        |                                 |       |
+| st0    | func_801B01F8                       |       47 |          4 |        |                                 |       |
 | dra    | DecelerateX                         |       47 |          5 |        |                                 |       |
 | dra    | DecelerateY                         |       47 |          5 |        |                                 |       |
 | dra    | func_psp_090EC568                   |       47 |          5 |        |                                 |       |
-| st0    | func_pspeu_09237B18                 |       47 |          6 |        |                                 |       |
+| st0    | func_801B0280                       |       47 |          6 |        |                                 |       |
 | dra    | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.976 |
 | dra    | func_psp_090EBE50                   |       48 |          4 |        |                                 |       |
 | dra    | func_psp_0913A3A0                   |       49 |          4 |        |                                 |       |
@@ -409,7 +409,7 @@
 | dra    | func_psp_090F88F0                   |       58 |          9 |        |                                 |       |
 | dra    | func_psp_090E7090                   |       58 |         10 |        |                                 |       |
 | dra    | func_80134E64                       |       59 |          3 |        |                                 |       |
-| st0    | func_pspeu_09250A70                 |       59 |          4 |        |                                 |       |
+| st0    | ReplaceBreakableWithItemDrop        |       59 |          4 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | dra    | func_psp_090FF480                   |       59 |         10 |        |                                 |       |
 | dra    | func_psp_09114438                   |       59 |         10 |        |                                 |       |
 | dra    | func_psp_09140C28                   |       59 |         10 |        |                                 |       |
@@ -426,14 +426,14 @@
 | dra    | func_psp_09137038                   |       61 |         12 |        |                                 |       |
 | dra    | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09118330                   |       62 |          5 |        |                                 |       |
-| st0    | ST0_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | st0    | func_pspeu_0924B7E0                 |       62 |          5 |        |                                 |       |
+| st0    | ST0_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | wrp    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | dra    | func_psp_090F2A40                   |       63 |          3 |        |                                 |       |
 |        | CreateBlueTrailEntity               |       63 |          6 |        |                                 |       |
-| st0    | func_pspeu_09247478                 |       63 |          6 |        |                                 |       |
+| st0    | func_801AA218                       |       63 |          6 |        |                                 |       |
 | dra    | func_psp_0911FBD0                   |       63 |          7 |        |                                 |       |
-| st0    | func_pspeu_09251A80                 |       63 |          7 |        |                                 |       |
+| st0    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
 | wrp    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
 | dra    | AllocPrimitives                     |       63 |          8 |        |                                 |       |
 | dra    | func_800EDB58                       |       63 |          8 |        |                                 |       |
@@ -445,12 +445,12 @@
 | wrp    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra    | C0B0.rodata                         |       66 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED480                   |       66 |          6 |        |                                 |       |
-| st0    | func_pspeu_09249028                 |       66 |          7 |        |                                 |       |
+| st0    | EntityIsNearPlayer                  |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
 | wrp    | EntityIsNearPlayer                  |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
 | dra    | func_psp_09114590                   |       66 |         10 |        |                                 |       |
 | dra    | func_psp_09137668                   |       66 |         15 |        |                                 |       |
 | dra    | func_psp_090F2038                   |       67 |          6 |        |                                 |       |
-| st0    | func_pspeu_09237BC0                 |       67 |          6 |        |                                 |       |
+| st0    | SetTitleDisplayBuffer               |       67 |          6 |        |                                 |       |
 | dra    | func_psp_09137358                   |       67 |          8 |        |                                 |       |
 | dra    | func_80134B48                       |       67 |          8 |        |                                 |       |
 | dra    | func_psp_090E8008                   |       67 |         10 |        |                                 |       |
@@ -462,7 +462,7 @@
 | dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
 | dra    | func_psp_0910EFE0                   |       70 |         11 |        |                                 |       |
 | dra    | InitSoundVars3                      |       71 |          1 |        | https://decomp.me/scratch/wDtJk | 0.951 |
-| st0    | func_pspeu_09251910                 |       71 |          1 |        |                                 |       |
+| st0    | PrimResetNext                       |       71 |          1 |        |                                 |       |
 | wrp    | PrimResetNext                       |       71 |          1 |        |                                 |       |
 | dra    | func_801024DC                       |       71 |          5 |        |                                 |       |
 | dra    | func_psp_090E8A30                   |       71 |          5 |        |                                 |       |
@@ -476,7 +476,7 @@
 | dra    | BatFormFinished                     |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40                   |       72 |          5 |        |                                 |       |
 | dra    | func_psp_09128978                   |       72 |          7 |        |                                 |       |
-| st0    | func_pspeu_09247CF8                 |       72 |          7 |        |                                 |       |
+| st0    | PlayerIsWithinHitbox                |       72 |          7 |        |                                 |       |
 | dra    | func_psp_09136D18                   |       72 |         14 |        |                                 |       |
 | dra    | func_psp_090DFED8                   |       73 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD78                   |       73 |          7 |        |                                 |       |
@@ -561,7 +561,7 @@
 | st0    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
 | wrp    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
 | dra    | func_psp_090ED310                   |       99 |         12 |        |                                 |       |
-| st0    | func_pspeu_09241BF0                 |      101 |          5 |        |                                 |       |
+| st0    | func_801AF6D0                       |      101 |          5 |        |                                 |       |
 | st0    | func_pspeu_0924FEB0                 |      101 |          7 |        |                                 |       |
 | wrp    | AnimateEntity                       |      101 |          7 |        |                                 |       |
 | dra    | func_psp_0910BD28                   |      101 |         14 |        |                                 |       |
@@ -574,7 +574,7 @@
 | wrp    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
 | st0    | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | wrp    | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
-| st0    | func_pspeu_092378A0                 |      103 |         13 |        |                                 |       |
+| st0    | func_801B0058                       |      103 |         13 |        |                                 |       |
 | dra    | func_801349F4                       |      104 |          3 |        |                                 |       |
 | dra    | func_psp_090EF200                   |      104 |         10 |        |                                 |       |
 | wrp    | EntityBreakable                     |      104 |         11 |        |                                 |       |
@@ -602,7 +602,7 @@
 | dra    | func_psp_090EC380                   |      112 |          9 |        |                                 |       |
 | st0    | func_pspeu_092481A0                 |      113 |         13 |        |                                 |       |
 | st0    | func_pspeu_09248338                 |      113 |         13 |        |                                 |       |
-| st0    | func_pspeu_092508E0                 |      113 |         13 |        |                                 |       |
+| st0    | CheckFieldCollision                 |      113 |         13 |        |                                 |       |
 | wrp    | CheckFieldCollision                 |      113 |         13 |        |                                 |       |
 | wrp    | CreateEntityWhenInHorizontalRange   |      113 |         13 |        |                                 |       |
 | wrp    | CreateEntityWhenInVerticalRange     |      113 |         13 |        |                                 |       |
@@ -692,7 +692,7 @@
 | wrp    | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/8xUEZ | 0.987 |
 | dra    | func_psp_09139428                   |      185 |         25 |        |                                 |       |
 | dra    | func_psp_09123E50                   |      186 |         14 |        |                                 |       |
-| st0    | func_pspeu_09250130                 |      186 |         20 |        |                                 |       |
+| st0    | UnkCollisionFunc3                   |      186 |         20 |        |                                 |       |
 | dra    | HandleTitle                         |      186 |         35 | Yes    |                                 |       |
 | dra    | MainMenuHandler                     |      187 |         28 | Yes    |                                 |       |
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
@@ -747,7 +747,7 @@
 | wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | func_psp_09138240                   |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8                   |      270 |         27 |        |                                 |       |
-| st0    | func_pspeu_09242A98                 |      275 |         24 |        |                                 |       |
+| st0    | func_801B101C                       |      275 |         24 |        |                                 |       |
 | dra    | func_psp_090F1078                   |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                       |      277 |         20 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
@@ -772,7 +772,7 @@
 | dra    | func_psp_09122008                   |      312 |         24 |        |                                 |       |
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
 | dra    | func_psp_090EE5D0                   |      323 |         37 |        |                                 |       |
-| st0    | func_pspeu_09241708                 |      325 |          7 |        |                                 |       |
+| st0    | func_801AF380                       |      325 |          7 |        |                                 |       |
 | dra    | func_psp_090E2A78                   |      329 |         32 | Yes    | https://decomp.me/scratch/NaHl4 | 0.999 |
 | dra    | DealDamage                          |      331 |         39 |        |                                 |       |
 | dra    | func_psp_09113268                   |      335 |         45 | Yes    |                                 |       |
@@ -794,7 +794,7 @@
 | dra    | func_psp_09104C80                   |      374 |         48 |        |                                 |       |
 | dra    | func_psp_09132550                   |      381 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
 | st0    | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
-| st0    | func_pspeu_0924F680                 |      406 |         25 |        |                                 |       |
+| st0    | BottomCornerText                    |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | wrp    | BottomCornerText                    |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | dra    | func_psp_0911F5D8                   |      409 |         42 |        |                                 |       |
 | wrp    | BlitChar                            |      409 |         53 |        | https://decomp.me/scratch/tsOag | 0.999 |
@@ -854,7 +854,7 @@
 | st0    | EntityClouds                        |      692 |         55 |        |                                 |       |
 | dra    | func_psp_09135BE8                   |      694 |         76 |        |                                 |       |
 | dra    | func_psp_0912ED98                   |      700 |         67 |        |                                 |       |
-| st0    | func_pspeu_09242FF8                 |      705 |         69 |        |                                 |       |
+| st0    | func_801B1298                       |      705 |         69 |        |                                 |       |
 | dra    | HandleGameOver                      |      723 |        139 |        |                                 |       |
 | dra    | func_psp_0911EB88                   |      728 |        126 |        |                                 |       |
 | dra    | func_psp_0913CAC0                   |      729 |         63 |        | https://decomp.me/scratch/e5ksX | 0.998 |
@@ -875,7 +875,7 @@
 | st0    | EntityBackgroundVortex              |      890 |        109 |        |                                 |       |
 | dra    | func_psp_0913A448                   |      893 |        109 | Yes    | https://decomp.me/scratch/XL89s | 0.958 |
 | dra    | func_psp_0912D170                   |      904 |         88 | Yes    |                                 |       |
-| st0    | func_pspeu_0923CF38                 |      927 |        100 | Yes    |                                 |       |
+| st0    | func_801ABBBC                       |      927 |        100 | Yes    |                                 |       |
 | dra    | func_psp_09125048                   |      930 |         70 | Yes    | https://decomp.me/scratch/7GIvu | 0.901 |
 | dra    | func_psp_090E62B8                   |      934 |         73 |        |                                 |       |
 |        | UpdateBatBlueTrailEntities          |      963 |         44 |        |                                 |       |
@@ -884,7 +884,7 @@
 | wrp    | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | dra    | func_psp_0912F7F8                   |     1022 |         72 |        |                                 |       |
 | dra    | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
-| st0    | func_pspeu_09237D10                 |     1058 |        112 | Yes    |                                 |       |
+| st0    | PrologueScroll                      |     1058 |        112 | Yes    |                                 |       |
 | dra    | func_psp_090E5020                   |     1102 |        110 |        |                                 |       |
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    |                                 |       |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/PhWZ0 | 0.974 |
