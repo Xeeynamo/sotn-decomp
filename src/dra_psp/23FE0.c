@@ -661,6 +661,29 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     return ret;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102800);
+void func_800FEE6C(void) {
+    s32 i;
+    for (i = 0; i < 16; i++) {
+        if (!D_80139828[i]) {
+            continue;
+        }
+        switch (i) {
+        default:
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            D_80139828[i]--;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102898);
