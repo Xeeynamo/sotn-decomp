@@ -686,4 +686,61 @@ void func_800FEE6C(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102898);
+s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
+    if (form == FORM_BAT) {
+        if (!IsRelicActive(RELIC_SOUL_OF_BAT)) {
+            return -1;
+        }
+        if (g_Status.mp - 1 > 0) {
+            if (mode != CHECK_ONLY) {
+                if (g_GameTimer % 60 == 0) {
+                    g_Status.mp -= 1;
+                }
+            }
+            return 0;
+        } else {
+            return -1;
+        }
+    } else if (form == FORM_MIST) {
+        if (!IsRelicActive(RELIC_FORM_OF_MIST)) {
+            return -1;
+        }
+        if (IsRelicActive(RELIC_POWER_OF_MIST)) {
+            if (g_Status.mp - 2 > 0) {
+                if (mode != CHECK_ONLY) {
+                    if (g_GameTimer % 30 == 0) {
+                        g_Status.mp -= 2;
+                    }
+                }
+                return 0;
+            } else {
+                return -1;
+            }
+        } else {
+            if (g_Status.mp - 10 > 0) {
+                if (mode != CHECK_ONLY) {
+                    if ((g_GameTimer % 8) == 0) {
+                        g_Status.mp -= 10;
+                    }
+                }
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+        return 0;
+    } else if (form == FORM_WOLF) {
+        if (IsRelicActive(RELIC_SOUL_OF_WOLF) == false) {
+            return -1;
+        }
+        if (g_Status.mp - 1 > 0) {
+            if (mode != CHECK_ONLY) {
+                if (g_GameTimer % 120 == 0) {
+                    g_Status.mp -= 1;
+                }
+            }
+            return 0;
+        }
+        return -1;
+    }
+}
