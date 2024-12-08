@@ -1488,7 +1488,7 @@ typedef struct {
     u32 effects; // Curse, poison, etc; needs an enum.
     u32 damageKind;
     s32 damageTaken;
-    s32 unkC;
+    u32 unkC;
 } DamageParam;
 
 typedef struct {

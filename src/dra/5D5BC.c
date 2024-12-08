@@ -608,7 +608,7 @@ void AddHearts(s32 value) {
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
 s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
-    s32 ret;
+    s32 ret = 0;
     s32 itemCount;
 
     func_800F53A4();
@@ -621,10 +621,11 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         amount /= 2;
     }
     if (g_Status.D_80097C2C & damage->effects) {
-        if (!(g_Status.D_80097C2C & damage->effects & EFFECT_UNK_0200)) {
+        if (g_Status.D_80097C2C & damage->effects & EFFECT_UNK_0200) {
+            damage->effects &= ~EFFECT_UNK_0200;
+        } else {
             return 0;
         }
-        damage->effects &= ~EFFECT_UNK_0200;
     }
 
     if (g_Status.D_80097C2E & damage->effects) {
@@ -635,7 +636,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
             g_Status.hp += damage->unkC;
-            if (g_Status.hpMax < g_Status.hp) {
+            if (g_Status.hp > g_Status.hpMax) {
                 g_Status.hp = g_Status.hpMax;
             }
         }
@@ -654,7 +655,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
             g_Status.hp += damage->unkC;
-            if (g_Status.hpMax < g_Status.hp) {
+            if (g_Status.hp > g_Status.hpMax) {
                 g_Status.hp = g_Status.hpMax;
             }
         }
@@ -664,24 +665,25 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // Very strange to have ballroom mask check. This item is not known to
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
-    itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD);
-    if (itemCount != 0 &&
-        (damage->effects &
-         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-          EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
-          EFFECT_SOLID_FROM_BELOW))) {
-        if (itemCount == 1) {
-            amount -= amount / 5;
-        }
-        if (itemCount == 2) {
-            amount -= amount / 3;
+    ;
+    if (itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD)) {
+        if (damage->effects &
+            (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+             EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
+             EFFECT_SOLID_FROM_BELOW)) {
+            if (itemCount == 1) {
+                amount -= amount / 5;
+            }
+            if (itemCount == 2) {
+                amount -= amount / 3;
+            }
         }
     }
     if (g_Player.status & PLAYER_STATUS_STONE) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
     } else if (damage->effects & EFFECT_UNK_0200) {
-        damage->damageTaken = amount - (g_Status.defenseEquip * 2);
+        damage->damageTaken = amount - ((s32)g_Status.defenseEquip * 2);
         if (damage->damageTaken <= 0) {
             damage->damageTaken = 0;
         }
@@ -703,14 +705,14 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
-        itemCount = CheckEquipmentItemCount(ITEM_TALISMAN, EQUIP_ACCESSORY);
-        if (itemCount != 0) {
-            if (itemCount * g_Status.statsTotal[STAT_LCK] >= (rand() & 511)) {
+        if (itemCount =
+                CheckEquipmentItemCount(ITEM_TALISMAN, EQUIP_ACCESSORY)) {
+            if (g_Status.statsTotal[STAT_LCK] * itemCount >= (rand() & 511)) {
                 return 2;
             }
         }
         if (damage->damageTaken > 0) {
-            if (damage->damageKind < 2) {
+            if (damage->damageKind == 1 || damage->damageKind == 0) {
                 if ((damage->damageTaken * 2) >= g_Status.hpMax) {
                     damage->damageKind = 4;
                 } else if (amount * 50 >= g_Status.hpMax) {
@@ -721,7 +723,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             }
             ret = 3;
         } else {
-            if (g_Status.defenseEquip > 99 &&
+            if (g_Status.defenseEquip >= 100 &&
                 !(damage->effects &
                   (EFFECT_UNK_0100 | EFFECT_SOLID_FROM_BELOW)) &&
                 !(g_Player.status & PLAYER_STATUS_STONE)) {
@@ -739,7 +741,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         if (ret == 7) {
-            return 7;
+            return ret;
         }
         if (ret == 9) {
             ret = 6;

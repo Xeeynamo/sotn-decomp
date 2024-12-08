@@ -67,6 +67,7 @@ GetEquipProperties = 0x09101DB0;
 HasEnoughMp = 0x09101F60;
 func_800FE8F0 = 0x09101FC8;
 AddHearts = 0x09101FF0;
+HandleDamage = 0x091020A0;
 DealDamage = 0x09102C20;
 RenderTilemap = 0x09103318;
 SetRoomForegroundLayer = 0x09103B78;

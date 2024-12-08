@@ -498,7 +498,168 @@ void AddHearts(s32 value) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_091020A0);
+s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
+    s32 ret = 0;
+    s32 itemCount;
+
+    func_800F53A4();
+    damage->effects = arg1 & ~0x1F;
+    damage->damageKind = arg1 & 0x1F;
+    if (g_Status.defenseElement & damage->effects) {
+        amount *= 2;
+    }
+    if (g_Status.D_80097C2A & damage->effects) {
+        amount /= 2;
+    }
+    if (g_Status.D_80097C2C & damage->effects) {
+        if (g_Status.D_80097C2C & damage->effects & EFFECT_UNK_0200) {
+            damage->effects &= ~EFFECT_UNK_0200;
+        } else {
+            return 0;
+        }
+    }
+
+    if (g_Status.D_80097C2E & damage->effects) {
+        if (amount < 1) {
+            amount = 1;
+        }
+        damage->unkC = amount;
+        if (g_Status.hp != g_Status.hpMax) {
+            func_800FE8F0();
+            g_Status.hp += damage->unkC;
+            if (g_Status.hp > g_Status.hpMax) {
+                g_Status.hp = g_Status.hpMax;
+            }
+        }
+        return 5;
+    }
+    // Player wearing cat-eye circlet. Same as above if-statement but
+    //  with arg2 doubled. Item description says "Big HP restore" so makes
+    //  sense
+    if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, EQUIP_HEAD) != 0 &&
+        damage->damageKind == 7) {
+        amount *= 2;
+        if (amount < 1) {
+            amount = 1;
+        }
+        damage->unkC = amount;
+        if (g_Status.hp != g_Status.hpMax) {
+            func_800FE8F0();
+            g_Status.hp += damage->unkC;
+            if (g_Status.hp > g_Status.hpMax) {
+                g_Status.hp = g_Status.hpMax;
+            }
+        }
+        return 5;
+    }
+
+    // Very strange to have ballroom mask check. This item is not known to
+    // have special behavior. Also, not possible to equip two. This may be
+    // a new discovery of a property of the item. Worth further analysis.
+    ;
+    if (itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD)) {
+        if (damage->effects &
+            (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+             EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
+             EFFECT_SOLID_FROM_BELOW)) {
+            if (itemCount == 1) {
+                amount -= amount / 5;
+            }
+            if (itemCount == 2) {
+                amount -= amount / 3;
+            }
+        }
+    }
+    if (g_Player.status & PLAYER_STATUS_STONE) {
+        damage->damageTaken = g_Status.hpMax / 8;
+        ret = 8;
+    } else if (damage->effects & EFFECT_UNK_0200) {
+        damage->damageTaken = amount - ((s32)g_Status.defenseEquip * 2);
+        if (damage->damageTaken <= 0) {
+            damage->damageTaken = 0;
+        }
+        ret = 7;
+    } else if (damage->damageKind == 6) {
+        if (g_GameTimer % 10 == 0) {
+            damage->damageTaken = 1;
+        } else {
+            damage->damageTaken = 0;
+        }
+        ret = 9;
+    } else {
+        if (damage->damageKind < 16) {
+            damage->damageTaken = amount - g_Status.defenseEquip;
+        } else {
+            damage->damageTaken = g_Status.hpMax / 8;
+        }
+        if (g_Player.status & PLAYER_STATUS_POISON) {
+            damage->damageTaken *= 2;
+        }
+        // Check for player wearing a Talisman (chance to dodge attack)
+        if (itemCount =
+                CheckEquipmentItemCount(ITEM_TALISMAN, EQUIP_ACCESSORY)) {
+            if (g_Status.statsTotal[STAT_LCK] * itemCount >= (rand() & 511)) {
+                return 2;
+            }
+        }
+        if (damage->damageTaken > 0) {
+            if (damage->damageKind == 1 || damage->damageKind == 0) {
+                if ((damage->damageTaken * 2) >= g_Status.hpMax) {
+                    damage->damageKind = 4;
+                } else if (amount * 50 >= g_Status.hpMax) {
+                    damage->damageKind = 3;
+                } else {
+                    damage->damageKind = 2;
+                }
+            }
+            ret = 3;
+        } else {
+            if (g_Status.defenseEquip >= 100 &&
+                !(damage->effects &
+                  (EFFECT_UNK_0100 | EFFECT_SOLID_FROM_BELOW)) &&
+                !(g_Player.status & PLAYER_STATUS_STONE)) {
+                damage->damageKind = 0;
+                ret = 1;
+            } else {
+                damage->damageKind = 2;
+                ret = 3;
+            }
+            damage->damageTaken = 1;
+        }
+    }
+
+    // If our HP is less than the damage, we die.
+    if (g_Status.hp <= damage->damageTaken) {
+        g_Status.hp = 0;
+        if (ret == 7) {
+            return ret;
+        }
+        if (ret == 9) {
+            ret = 6;
+        } else {
+            ret = 4;
+        }
+    } else {
+        if (ret != 9) {
+            func_800FE8F0();
+        }
+        // Here is where we actually take the damage away.
+        g_Status.hp -= damage->damageTaken;
+        // Blood cloak gives hearts when damage is taken
+        if ((CheckEquipmentItemCount(ITEM_BLOOD_CLOAK, EQUIP_CAPE) != 0) &&
+            (ret != 9)) {
+            AddHearts(damage->damageTaken);
+        }
+        // Fury Plate "DEF goes up when damage taken", that logic is not here
+        // though.
+        if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
+            if (D_80139828[0] < 0x200) {
+                D_80139828[0] = 0x200;
+            }
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/23FE0", func_psp_09102800);
 
