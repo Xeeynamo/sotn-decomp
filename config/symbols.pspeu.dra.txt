@@ -52,6 +52,7 @@ CalcPlayerDamage = 0x09100598;
 func_800FD664 = 0x091006A0;
 CalcPlayerDamageAgain = 0x091006D8;
 GetEquipItemCategory = 0x09100818;
+func_800FD6C4 = 0x09100870;
 GetEquipOrder = 0x09100960;
 GetEquipCount = 0x091009A0;
 GetEquipmentName = 0x091009E0;

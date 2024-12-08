@@ -72,4 +72,32 @@ ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_09100870);
+s32 func_800FD6C4(s32 equipTypeFilter) {
+    s32 itemCount;
+    s32 equipType;
+    s32 i;
+
+    switch (equipTypeFilter) {
+    case EQUIP_HAND:
+        return NUM_HAND_ITEMS;
+    case EQUIP_HEAD:
+        equipType = EQUIP_HEAD - 1;
+        break;
+    case EQUIP_ARMOR:
+        equipType = EQUIP_ARMOR - 1;
+        break;
+    case EQUIP_CAPE:
+        equipType = EQUIP_CAPE - 1;
+        break;
+    case EQUIP_ACCESSORY:
+        equipType = EQUIP_ACCESSORY - 1;
+        break;
+    }
+
+    for (itemCount = 0, i = 0; i < NUM_BODY_ITEMS; i++) {
+        if (g_AccessoryDefs[i].equipType == equipType) {
+            itemCount++;
+        }
+    }
+    return itemCount;
+}
