@@ -34,3 +34,12 @@ bool CalcPlayerDamage(DamageParam* damage) {
     g_Status.hp -= damage->damageTaken;
     return false;
 }
+
+s32 func_800FD664(s32 arg0) {
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG){
+        arg0 *= 2;
+    }
+    return arg0;
+}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_091006D8);

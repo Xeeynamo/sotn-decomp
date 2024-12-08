@@ -49,6 +49,7 @@ RenderEntities = 0x090fd268;
 DemoUpdate = 0x090ff738;
 TimeAttackController = 0x09100458;
 CalcPlayerDamage = 0x09100598;
+func_800FD664 = 0x091006A0;
 GetEquipOrder = 0x09100960;
 GetEquipCount = 0x091009A0;
 GetEquipmentName = 0x091009E0;
