@@ -425,7 +425,6 @@ def get_splat_config(
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
             "include_macro_inc": False,
-            "disassemble_all": True,
         }
     }
 
@@ -792,13 +791,18 @@ def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
 def add_symbol(splat_config, version: str, name: str, offset: int):
     if offset == 0:
         return
+    if is_psp(version):
+        # segment 0 is always the mw header, we need to skip it
+        segment = splat_config["segments"][1]
+    else:
+        segment = splat_config["segments"][0]
     # do not add symbols that belongs to the shared area
-    base_addr = splat_config["segments"][0]["vram"]
+    base_addr = segment["vram"]
     if offset < base_addr:
         return
 
     # do not add symbols that belongs to the shared area
-    base_addr = splat_config["segments"][0]["vram"]
+    base_addr = segment["vram"]
     if offset < base_addr:
         return
 
@@ -931,7 +935,7 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
         entity_table_symbol = get_symbol_of_entity_table(splat_config)
         if entity_table_symbol != None:
             entity_table = get_symbol_table(splat_config, entity_table_symbol)
-            hydrate_stage_entity_table_symbols(splat_config, entity_table)
+            hydrate_stage_entity_table_symbols(splat_config, version, entity_table)
             need_to_update_symbols = True
 
     if need_to_update_symbols == True:
