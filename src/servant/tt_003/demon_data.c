@@ -81,7 +81,10 @@ u16 D_us_80171D10[] = {
 };
 
 s32 g_DemonSfxMap[8] = {
-    0x89E, 0x89F, 0x8A0, 0x8A2, 0x8A3, 0x8A4, 0x8A5, 0x8A6,
+    NA_SE_DEMON_GRUNT_1,       NA_SE_DEMON_GRUNT_2,
+    NA_SE_DEMON_GRUNT_3,       NA_VO_DEMON_DIE,
+    NA_VO_DEMON_FIRE_SPEAR,    NA_VO_DEMON_ICE_SPEAR,
+    NA_VO_DEMON_THUNDER_SPEAR, NA_VO_DEMON_LIGHTNING_SPEAR,
 };
 
 AnimationFrame D_us_80171D4C[] = {
@@ -173,28 +176,29 @@ AnimationFrame* g_DemonAnimationFrames[] = {
     D_us_80171EF8, D_us_80171F34, D_us_80171FA4, D_us_80171FAC,
 };
 
-ServantSfxEventDesc D_us_80172040[] = {
-    {.flag = 0, .animIndex = 9, .sfxId = 0x4E8},
+static ServantSfxEventDesc s_SfxIntroCommand[] = {
+    {.flag = 0, .animIndex = 9, .sfxId = NA_VO_DEMON_INTRO_COMMAND},
     {.flag = -1, .animIndex = 0, .sfxId = 0x000},
 };
 
-s32 D_us_8017204C[] = {0xFF, D_us_80172040};
+s32 g_SfxDemonIntroPrevSummoned[] = {0xFF, s_SfxIntroCommand};
 
-ServantSfxEventDesc D_us_80172054[] = {
-    {.flag = 0, .animIndex = 9, .sfxId = 0x4ED},
+static ServantSfxEventDesc s_SfxIntroIntroReady[] = {
+    {.flag = 0, .animIndex = 9, .sfxId = NA_VO_DEMON_INTRO_READY},
     {.flag = -1, .animIndex = 0, .sfxId = 0x000},
 };
 
-s32 D_us_80172060[] = {0xFF, D_us_80172054};
+s32 g_SfxDemonIntroNewSummoned[] = {0xFF, s_SfxIntroIntroReady};
 
-ServantSfxEventDesc D_us_80172068[] = {
-    {.flag = 0, .animIndex = 0, .sfxId = 0x4EE},
+static ServantSfxEventDesc s_SfxEventSwitch1[] = {
+    {.flag = 0, .animIndex = 0, .sfxId = NA_VO_DEMON_SWITCH_1},
     {.flag = -1, .animIndex = 7, .sfxId = 0x000},
 };
 
-ServantSfxEventDesc D_us_80172074[] = {
-    {.flag = 0, .animIndex = 0, .sfxId = 0x4EF},
+static ServantSfxEventDesc s_SfxEventSwitch2[] = {
+    {.flag = 0, .animIndex = 0, .sfxId = NA_VO_DEMON_SWITCH_2},
     {.flag = -1, .animIndex = 7, .sfxId = 0x000},
 };
 
-s32 D_us_80172080[] = {0x7F, D_us_80172068, 0xFF, D_us_80172074};
+s32 g_SfxDemonSwitchRandomizer[] = {
+    0x7F, s_SfxEventSwitch1, 0xFF, s_SfxEventSwitch2};
