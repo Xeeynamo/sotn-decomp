@@ -61,7 +61,7 @@ s32 func_us_801D1DAC(void) {
         g_CurrentEntity->ext.et_801D1DAC.unk8D = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
         if (primIndex != -1) {
-            g_CurrentEntity->flags |= 0x800000;
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             g_CurrentEntity->ext.prim = prim;
@@ -80,8 +80,9 @@ s32 func_us_801D1DAC(void) {
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
-            prim->drawMode = 0x37;
-    
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+
             prim2 = prim;
             prim = prim->next;
             prim->u0 = prim2->u0;
@@ -92,8 +93,9 @@ s32 func_us_801D1DAC(void) {
             LOW(prim->r2) = LOW(prim->r0);
             prim->r1 = prim->g1 = prim->b1 = 0x80;
             LOW(prim->r3) = LOW(prim->r1);
-            prim->drawMode = 0x37;
-            
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+
             prim = prim->next;
             prim->u0 = prim2->u1;
             prim->u1 = prim->u0;
@@ -103,7 +105,8 @@ s32 func_us_801D1DAC(void) {
             LOW(prim->r2) = LOW(prim->r0);
             prim->r1 = prim->g1 = prim->b1 = 0x20;
             LOW(prim->r3) = LOW(prim->r1);
-            prim->drawMode = 0x37;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim = g_CurrentEntity->ext.prim;
             for (i = 0; i < 3; i++) {
                 prim->tpage = 0x15;
@@ -140,10 +143,10 @@ s32 func_us_801D1DAC(void) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->priority = g_CurrentEntity->zPriority + 2;
-                prim->drawMode = 0x37;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
                 prim = prim->next;
             }
-                
         } else {
             return 1;
         }
@@ -152,10 +155,11 @@ s32 func_us_801D1DAC(void) {
         g_CurrentEntity->ext.et_801D1DAC.unk8A = 0;
         g_CurrentEntity->ext.et_801D1DAC.unk88 = 0;
         g_CurrentEntity->ext.et_801D1DAC.unk8C = 0;
-        g_CurrentEntity->drawFlags |= 8;
+        g_CurrentEntity->drawFlags |= FLAG_DRAW_UNK8;
         g_CurrentEntity->unk6C = 0x80;
         g_CurrentEntity->step_s++;
         break;
+
     case 1:
         prim = g_CurrentEntity->ext.prim;
         prim->r0 += 2;
@@ -166,15 +170,17 @@ s32 func_us_801D1DAC(void) {
         g_CurrentEntity->unk6C += 0xFE;
         if (!g_CurrentEntity->unk6C) {
             g_CurrentEntity->animCurFrame = 0;
-            prim->drawMode = 6;
+            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             g_CurrentEntity->ext.et_801D1DAC.unk8D += 1;
             PlaySfxPositional(0x660);
             g_CurrentEntity->step_s++;
         }
         break;
+
     case 2:
         g_CurrentEntity->step_s++;
         break;
+
     case 3:
         if (g_Timer % 8 == 0) {
             prim = g_CurrentEntity->ext.prim;
@@ -191,7 +197,7 @@ s32 func_us_801D1DAC(void) {
             prim->x2 = prim->x0;
             prim->x1--;
             prim->x3 = prim->x1;
-            
+
             prim = prim->next;
             if (g_CurrentEntity->facingLeft) {
                 prim->u1--;
@@ -203,7 +209,7 @@ s32 func_us_801D1DAC(void) {
             prim->x3 = prim->x1;
             prim->y0 -= 3;
             prim->y2 -= 1;
-            
+
             prim = prim->next;
             if (g_CurrentEntity->facingLeft) {
                 prim->u0++;
@@ -221,6 +227,7 @@ s32 func_us_801D1DAC(void) {
             }
         }
         break;
+
     case 5:
         if (g_Timer % 4 == 0) {
             prim = g_CurrentEntity->ext.prim;
@@ -237,7 +244,7 @@ s32 func_us_801D1DAC(void) {
             prim->x2 = prim->x0;
             prim->x1--;
             prim->x3 = prim->x1;
-            
+
             prim = prim->next;
             if (g_CurrentEntity->facingLeft) {
                 prim->u0--;
@@ -252,7 +259,7 @@ s32 func_us_801D1DAC(void) {
             prim->x2 = prim->x0;
             prim->x1++;
             prim->x3 = prim->x1;
-            
+
             prim = prim->next;
             if (g_CurrentEntity->facingLeft) {
                 prim->u1++;
@@ -274,6 +281,7 @@ s32 func_us_801D1DAC(void) {
             }
         }
         break;
+
     case 6:
         if (g_Timer % 2 == 0) {
             prim = g_CurrentEntity->ext.prim;
@@ -286,7 +294,7 @@ s32 func_us_801D1DAC(void) {
             prim->u2 = prim->u0;
             prim->x0++;
             prim->x2 = prim->x0;
-            
+
             prim = prim->next;
             if (g_CurrentEntity->facingLeft) {
                 prim->u1++;
@@ -302,6 +310,7 @@ s32 func_us_801D1DAC(void) {
             }
         }
         break;
+
     case 8:
         prim = g_CurrentEntity->ext.prim;
         while (prim != NULL) {
@@ -318,6 +327,7 @@ s32 func_us_801D1DAC(void) {
         }
         break;
     }
+
     if (g_CurrentEntity->ext.et_801D1DAC.unk8D) {
         prim = g_CurrentEntity->ext.et_801D1DAC.unk90;
         prim2 = prim;
@@ -327,7 +337,6 @@ s32 func_us_801D1DAC(void) {
                 prim->v2++;
                 prim->v3 = prim->v2;
             }
-            
             if (g_Timer % 3 == 0) {
                 temp = prim->u0;
                 prim->u0 = prim->u1;
@@ -428,7 +437,8 @@ s32 func_us_801D1DAC(void) {
                     prim->g0 = 0xA0;
                     prim->p2 = (Random() & 7) + 1;
                     prim->priority = g_CurrentEntity->zPriority + 1;
-                    prim->drawMode = 0x33;
+                    prim->drawMode =
+                        DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
                     prim = prim->next;
                 }
             }
@@ -439,7 +449,6 @@ s32 func_us_801D1DAC(void) {
     }
     return 0;
 }
-
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801D2D00);
 
