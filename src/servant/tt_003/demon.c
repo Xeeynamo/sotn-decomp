@@ -2,6 +2,7 @@
 #include "common.h"
 #include "demon.h"
 #include "sfx.h"
+#include "../servant_private.h"
 
 extern ServantEvent g_Events[];
 
@@ -45,19 +46,6 @@ extern s32 D_us_80178604;
 extern s32 D_us_80178608;
 
 extern void (*s_PassthroughFunctions[])(Entity*);
-
-// These are all in servant_private, but we need to have more decomped before we
-// can include that
-s16 CalculateAngleToEntity(Entity* entity, s16 targetX, s16 targetY);
-s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
-void SetAnimationFrame(Entity* self, s32 animationIndex);
-Entity* FindValidTarget(Entity* self);
-s32 IsMovementAllowed(s32 arg0);
-s32 CheckAllEntitiesValid(void);
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
-void ProcessEvent(Entity* self, bool resetEvent);
-u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames);
 
 void ServantInit(InitializeMode);
 void UpdateServantDefault(Entity*);
@@ -1483,7 +1471,6 @@ void FunctionPointerPassthrough(Entity* self) {
 extern AnimationFrame D_us_80171CD8;
 extern s32 D_us_80178670;
 extern s32 D_us_80178674;
-extern FamiliarStats s_DemonStats;
 
 void func_us_801765A0(Entity* self) {
     s32 velocityX;
@@ -1537,7 +1524,7 @@ void func_us_801765A0(Entity* self) {
 
         self->step++;
         if (self->params >= 2) {
-            self->step += 1;
+            self->step++;
         }
         break;
     }
@@ -1546,11 +1533,11 @@ void func_us_801765A0(Entity* self) {
 
         self->posX.val += self->velocityX;
 
-        self->ext.et_80176814.frameCounter[1] += 1;
+        self->ext.et_80176814.frameCounter[1]++;
 
         if (self->ext.et_80176814.frameCounter[1] >= 7) {
             CreateEventEntity(self, 0xDB, self->params + 1);
-            self->step += 1;
+            self->step++;
         }
 
         break;
@@ -1897,18 +1884,18 @@ void func_us_801771B0(Entity* self) {
         break;
 
     case 1:
-        self->ext.et_801737F0.animationTriggerCount += 1;
+        self->ext.et_801737F0.animationTriggerCount++;
         self->posX.val += self->velocityX;
 
         if (self->ext.et_801737F0.animationTriggerCount >= 3) {
             CreateEventEntity(self, 0xDE, self->params + 1);
-            self->step += 1;
+            self->step++;
         }
         break;
 
     case 2:
         self->posX.val += self->velocityX;
-        self->ext.et_801737F0.animationTriggerCount += 1;
+        self->ext.et_801737F0.animationTriggerCount++;
 
         if ((u16)(self->posX.i.hi + 0x20) > 0x140) {
             DestroyEntity(self);
