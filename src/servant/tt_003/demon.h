@@ -21,22 +21,21 @@ typedef enum {
     DEMON_MODE_UNK_DE
 } EntityIds;
 
-// SFX Ids
-#define NA_VO_DEMON_INTRO_COMMAND 0x4E8 // Command me, my lord and master
-#define NA_VO_DEMON_INTRO_READY 0x4ED   // I'm ready to serve, master
-#define NA_VO_DEMON_SWITCH_1                                                   \
-    0x4EE // Hmm, a switch.  Why don't I press it and see?
-#define NA_VO_DEMON_SWITCH_2 0x4EF // Hmm, this switch hasn't been pressed yet
-
-#define NA_SE_DEMON_GRUNT_1 0x89E         // he-ya
-#define NA_SE_DEMON_GRUNT_2 0x89F         // huh
-#define NA_SE_DEMON_GRUNT_3 0x8A0         // hrr
-#define NA_VO_DEMON_TAKE_THAT 0x8A1       // "Take that" - possibly unused
-#define NA_VO_DEMON_DIE 0x8A2             // "DIE!" - Used for cleave attack
-#define NA_VO_DEMON_FIRE_SPEAR 0x8A3      // "Fire Spear"
-#define NA_VO_DEMON_ICE_SPEAR 0x8A4       // "Ice Spear"
-#define NA_VO_DEMON_THUNDER_SPEAR 0x8A5   // "Thunder Spear"
-#define NA_VO_DEMON_LIGHTNING_SPEAR 0x8A6 // "Lightning spear"
+typedef enum {
+    DEMON_INTRO_COMMAND = 0x4E8, // Command me, my lord and master
+    DEMON_INTRO_READY = 0x4ED,   // I'm ready to serve, master
+    DEMON_SWITCH_1,        // Hmm, a switch.  Why don't I press it and see?
+    DEMON_SWITCH_2,        // Hmm, this switch hasn't been pressed yet
+    DEMON_GRUNT_1 = 0x89E, // he-ya
+    DEMON_GRUNT_2,         // huh
+    DEMON_GRUNT_3,         // hrr
+    DEMON_TAKE_THAT,       // "Take that" - possibly unused
+    DEMON_DIE,             // "DIE!" - Used for cleave attack
+    DEMON_FIRE_SPEAR,      // "Fire Spear"
+    DEMON_ICE_SPEAR,       // "Ice Spear"
+    DEMON_THUNDER_SPEAR,   // "Thunder Spear"
+    DEMON_LIGHTNING_SPEAR  // "Lightning spear"
+} DemonSfxId;
 
 typedef struct {
     s32 timer;
