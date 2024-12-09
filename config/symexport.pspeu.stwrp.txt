@@ -1,0 +1,4 @@
+EXTERN(_binary_assets_st_wrp_mwo_header_bin_start);
+EXTERN(func_psp_092447C0);
+EXTERN(g_ItemIconSlots);
+EXTERN(pad);

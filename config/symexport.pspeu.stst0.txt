@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_st_st0_mwo_header_bin_start);
+EXTERN(func_pspeu_09246B10);
