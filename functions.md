@@ -25,17 +25,18 @@
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
 | wrp    | jtbl_psp_0924BB78                   |        9 |          0 | Yes    |                                 |       |
+| dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_091088E0                   |        9 |          1 |        |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09127480                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_0912CC10                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_0913D618                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
-| dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_090DD678                   |        9 |          1 |        |                                 |       |
 |        | unused_1560                         |        9 |          1 |        |                                 |       |
 | wrp    | warp.rodata                         |       11 |          0 | Yes    |                                 |       |
+| dra    | func_psp_09141860                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C80                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090F67E8                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
@@ -44,7 +45,6 @@
 | dra    | func_psp_0913D628                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_0913D998                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_091405C8                   |       11 |          1 |        |                                 |       |
-| dra    | func_psp_09141860                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_09141F38                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_091420E0                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_091420F8                   |       11 |          1 |        |                                 |       |
@@ -56,11 +56,11 @@
 | dra    | func_psp_091405E0                   |       13 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD58                   |       14 |          2 |        |                                 |       |
 | dra    | func_801025F4                       |       15 |          1 |        |                                 |       |
+| dra    | func_psp_090E4C68                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F0308                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C58                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F6408                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_09116428                   |       15 |          1 |        |                                 |       |
-| dra    | func_psp_090E4C68                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1EA0                   |       15 |          2 |        |                                 |       |
 | dra    | func_psp_09141550                   |       15 |          2 |        |                                 |       |
 | dra    | func_psp_091415E0                   |       15 |          2 |        |                                 |       |
@@ -122,8 +122,8 @@
 | wrp    | EntityDummy                         |       20 |          2 |        | https://decomp.me/scratch/unNIE | 1.0   |
 | wrp    | FallEntity                          |       20 |          2 |        | https://decomp.me/scratch/ZIw3V | 0.986 |
 | dra    | func_psp_091119E0                   |       20 |          3 |        |                                 |       |
-| dra    | SetPlayerAnim                       |       21 |          1 |        |                                 |       |
 | dra    | func_psp_0913D798                   |       21 |          1 |        |                                 |       |
+| dra    | SetPlayerAnim                       |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A58                 |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_092506C0                 |       21 |          1 |        |                                 |       |
 | st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -144,8 +144,8 @@
 | dra    | func_psp_090ECF20                   |       23 |          2 |        |                                 |       |
 | st0    | func_801B0180                       |       23 |          2 |        |                                 |       |
 | dra    | func_psp_090F5520                   |       23 |          3 |        |                                 |       |
-| dra    | func_psp_090F1C98                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090E4C90                   |       23 |          3 |        |                                 |       |
+| dra    | func_psp_090F1C98                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090F6A50                   |       23 |          4 |        |                                 |       |
 | dra    | 65790.rodata                        |       24 |          0 | Yes    |                                 |       |
 | dra    | ResetPendingGfxLoad                 |       24 |          2 |        |                                 |       |
