@@ -4,65 +4,118 @@
 #include "sfx.h"
 #include "../servant_private.h"
 
-extern ServantEvent g_Events[];
+static s32 s_TargetMatch[0x80];
+static s32 s_TargetLocationX;
+static s32 s_TargetLocationY;
+static s16 s_TargetLocationX_calc;
+STATIC_PAD_BSS(2);
+static s16 s_TargetLocationY_calc;
+STATIC_PAD_BSS(2);
+static s16 s_AngleToTarget;
+STATIC_PAD_BSS(2);
+static s16 s_AllowedAngle;
+STATIC_PAD_BSS(2);
+static s16 s_DistToTargetLocation;
+STATIC_PAD_BSS(2);
+static s16 s_TargetLocOffset_calc;
+STATIC_PAD_BSS(2);
+static s32 s_DeltaX;
+static s32 s_DeltaY;
+static s32 s_DistToTargetLocation2;
+static s32 D_us_801785F0;
+static s32 D_us_801785F4;
+static s32 D_us_801785F8;
+static s32 D_us_801785FC;
+static u32 D_us_80178600;
+static s32 D_us_80178604;
+static s32 D_us_80178608;
+static s32 D_us_8017860C;
+static s32 D_us_80178610;
+static s32 D_us_80178614;
+static s32 D_us_80178618;
+static s32 D_us_8017861C;
+static s32 D_us_80178620;
+static s32 D_us_80178624;
+static s32 D_us_80178628;
+static s32 D_us_8017862C;
+STATIC_PAD_BSS(4);
+static ServantSfxEventDesc* D_us_80178634;
+static s16 D_us_80178638;
+STATIC_PAD_BSS(2);
+static s32 D_us_8017863C;
+static s32 D_us_80178640;
+static s16 D_us_80178644;
+STATIC_PAD_BSS(2);
+static s16 D_us_80178648;
+STATIC_PAD_BSS(2);
+static s16 D_us_8017864C;
+STATIC_PAD_BSS(2);
+static s16 D_us_80178650;
+STATIC_PAD_BSS(2);
+static s16 D_us_80178654;
+STATIC_PAD_BSS(2);
+static s16 D_us_80178658;
+STATIC_PAD_BSS(2);
+static s32 D_us_8017865C;
+static s32 D_us_80178660;
+static s32 D_us_80178664;
+static ServantSfxEventDesc* D_us_80178668;
+static s16 D_us_8017866C;
+STATIC_PAD_BSS(2);
+static s32 D_us_80178670;
+static s32 D_us_80178674;
+static s32 D_us_80178678;
+static s32 D_us_8017867C;
+static s32 D_us_80178680;
+static s32 D_us_80178684;
+static s32 D_us_80178688;
+static s32 D_us_8017868C;
+static s32 s_ServantId;
+static FamiliarStats s_DemonStats;
+static s16 D_us_801786A0[3][8];
+static s32 D_us_801786D0;
+static s32 D_us_801786D4;
+static Entity* D_us_801786D8;
+static s32 D_us_801786DC;
+static s32 s_LastTargetedEntityIndex;
 
-extern s32 s_TargetMatch[0x80];
 extern s32 g_DemonAbilityStats[10][4];
-extern FamiliarStats s_DemonStats;
-extern s32 s_LastTargetedEntityIndex;
 extern AnimationFrame* g_DemonAnimationFrames[];
-extern s32 s_ServantId;
 extern u16 g_DemonClut[80];
 extern SpriteParts* g_DemonSpriteParts[];
-extern s32 D_us_801786D0;
-extern s32 D_us_801786D4;
-
+extern ServantEvent g_Events[];
 extern s8 D_us_80171FE8[40];
 extern s16 g_DemonAttackStats[10][6];
-extern s32 s_TargetLocationX;
-extern s32 s_TargetLocationY;
-extern s16 s_TargetLocationX_calc;
-extern s16 s_TargetLocationY_calc;
-extern s16 s_AngleToTarget;
-extern s16 s_AllowedAngle;
-extern s16 s_DistToTargetLocation;
-extern s16 s_TargetLocOffset_calc;
-extern s32 s_DeltaX;
-extern s32 s_DeltaY;
-extern s32 s_DistToTargetLocation2;
-
-extern Entity* D_us_801786D8;
-extern s32 D_us_801786DC;
-
 extern s32 s_DemonSfxMap[8];
-
-// These are all in sbss
-extern s32 D_us_801785F0;
-extern s32 D_us_801785F4;
-extern s32 D_us_801785F8;
-extern s32 D_us_801785FC;
-extern u32 D_us_80178600;
-extern s32 D_us_80178604;
-extern s32 D_us_80178608;
+extern u32 D_us_80171B74[8][4];
+extern u32 D_us_80171BF4[][4];
+extern s16 D_us_80171B44[3][8];
+extern s32 g_DemonAttackIdSfxLookup[5][3];
+extern s32* D_us_80172080[];
+extern s32 D_us_8017204C[];
+extern s32 D_us_80172060[];
+extern AnimationFrame D_us_80171CD8;
+// Horizontal offsets for positioning primitives
+extern u16 D_us_80171D10[];
 
 extern void (*s_PassthroughFunctions[])(Entity*);
 
-void ServantInit(InitializeMode);
-void UpdateServantDefault(Entity*);
-void func_us_80174FD0(Entity*);
-void func_us_8017540C(Entity*);
-void unused_5800(Entity*);
-void unused_5808(Entity*);
-void func_us_80175810(Entity*);
-void func_us_80175C08(Entity*);
-void func_us_80175D20(Entity*);
-void UpdateServantSfxPassthrough(Entity*);
-void FunctionPointerPassthrough(Entity*);
-void func_us_801765A0(Entity*);
-void func_us_80176814(Entity*);
-void func_us_80176C1C(Entity*);
-void func_us_801771B0(Entity*);
-void func_us_80177690(Entity*);
+static void ServantInit(InitializeMode);
+static void UpdateServantDefault(Entity*);
+static void func_us_80174FD0(Entity*);
+static void func_us_8017540C(Entity*);
+static void unused_5800(Entity*);
+static void unused_5808(Entity*);
+static void func_us_80175810(Entity*);
+static void func_us_80175C08(Entity*);
+static void func_us_80175D20(Entity*);
+static void UpdateServantSfxPassthrough(Entity*);
+static void FunctionPointerPassthrough(Entity*);
+static void func_us_801765A0(Entity*);
+static void func_us_80176814(Entity*);
+static void func_us_80176C1C(Entity*);
+static void func_us_801771B0(Entity*);
+static void func_us_80177690(Entity*);
 
 ServantDesc demon_ServantDesc = {
     ServantInit,
@@ -212,8 +265,6 @@ void func_us_80172DC4(Entity* self) {
 
 void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
 
-extern u32 D_us_80171B74[8][4];
-
 void func_us_80172EF8(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
@@ -298,8 +349,6 @@ void func_us_80172EF8(Entity* self) {
     prim->y2 = prim->y3 =
         posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
-
-extern u32 D_us_80171BF4[][4];
 
 void func_us_80173348(Entity* self) {
     Primitive* prim;
@@ -398,7 +447,6 @@ void func_us_80173348(Entity* self) {
 
 // PSX: https://decomp.me/scratch/QGDMn
 // PSP: https://decomp.me/scratch/TKY2r
-
 void func_us_801737F0(Entity* self) {
     Primitive* prim;
     s32 sine;
@@ -520,9 +568,6 @@ void func_us_801737F0(Entity* self) {
     prim->y2 = prim->y3 =
         posYOffset + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
-
-extern s16 D_us_80171B44[3][8];
-extern s16 D_us_801786A0[3][8];
 
 void func_us_80173D14(Entity* self) {
     Primitive* prim;
@@ -1023,16 +1068,6 @@ extern s32 s_DemonSfxMap[];
 
 // PSX: https://decomp.me/scratch/vbedA
 // PSP: https://decomp.me/scratch/mRGqb
-
-extern s32 g_DemonAttackIdSfxLookup[5][3];
-extern s32 D_us_8017860C;
-extern s32 D_us_80178610;
-extern s32 D_us_80178614;
-extern s32 D_us_80178618;
-extern s32 D_us_8017861C;
-extern s32 D_us_80178620;
-extern s32 D_us_80178624;
-
 void func_us_8017540C(Entity* self) {
     s32 i;
 
@@ -1118,14 +1153,7 @@ void func_us_8017540C(Entity* self) {
 }
 
 void unused_5800(Entity* self) {}
-
 void unused_5808(Entity* self) {}
-
-extern s32* D_us_80172080[];
-extern s32 D_us_80178628;
-extern s32 D_us_8017862C;
-extern ServantSfxEventDesc* D_us_80178634;
-extern s16 D_us_80178638;
 
 void func_us_80175810(Entity* self) {
     Entity* sfxEntity;
@@ -1282,23 +1310,6 @@ void func_us_80175C08(Entity* self) {
     }
 }
 
-extern s32 D_us_8017204C[];
-extern s32 D_us_80172060[];
-extern s32 D_us_8017863C;
-extern s32 D_us_80178640;
-extern s16 D_us_80178644;
-extern s16 D_us_80178648;
-extern s16 D_us_8017864C;
-extern s16 D_us_80178650;
-extern s16 D_us_80178654;
-extern s16 D_us_80178658;
-extern s32 D_us_8017865C;
-extern s32 D_us_80178660;
-extern s32 D_us_80178664;
-extern ServantSfxEventDesc* D_us_80178668;
-extern s16 D_us_8017866C;
-extern bool D_us_8017869C;
-
 void func_us_80175D20(Entity* self) {
     s16 rnd;
     s32 i;
@@ -1397,7 +1408,7 @@ void func_us_80175D20(Entity* self) {
         break;
     case 2:
         rnd = rand() % 0x100;
-        if (D_us_8017869C == true) {
+        if (s_DemonStats.unk8 == true) {
             for (i = 0; true; i++) {
                 if (rnd <= D_us_8017204C[i * 2]) {
                     D_us_80178668 =
@@ -1467,10 +1478,6 @@ void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 void FunctionPointerPassthrough(Entity* self) {
     s_PassthroughFunctions[self->params](self);
 }
-
-extern AnimationFrame D_us_80171CD8;
-extern s32 D_us_80178670;
-extern s32 D_us_80178674;
 
 void func_us_801765A0(Entity* self) {
     s32 velocityX;
@@ -1560,12 +1567,6 @@ void func_us_801765A0(Entity* self) {
 
 // PSX: https://decomp.me/scratch/NMQwa
 // PSP: https://decomp.me/scratch/6hM5K
-
-// Horizontal offsets for positioning primitives
-extern u16 D_us_80171D10[];
-extern s32 D_us_80178678;
-extern s32 D_us_8017867C;
-
 void func_us_80176814(Entity* self) {
     Primitive* prim;
     s32 i;
@@ -1684,9 +1685,6 @@ void func_us_80176814(Entity* self) {
         prim = prim->next;
     }
 }
-
-extern s32 D_us_80178680;
-extern s32 D_us_80178684;
 
 void func_us_80176C1C(Entity* self) {
     Primitive* prim;
@@ -1811,11 +1809,6 @@ void func_us_80176C1C(Entity* self) {
 
 // PSX: https://decomp.me/scratch/qDGTj
 // PSP: https://decomp.me/scratch/D67x7
-
-extern s32 D_us_80178688;
-extern s32 D_us_8017868C;
-extern s16 D_us_80171B44[3][8];
-
 void func_us_801771B0(Entity* self) {
     Primitive* prim;
     s16 colorValue;
@@ -1935,9 +1928,6 @@ void func_us_801771B0(Entity* self) {
         prim = prim->next;
     }
 }
-
-extern s32 D_us_801786D0;
-extern s32 D_us_801786D4;
 
 void func_us_80177690(Entity* self) {
     Entity* entity;
