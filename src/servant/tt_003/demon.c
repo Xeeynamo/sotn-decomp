@@ -86,7 +86,7 @@ extern SpriteParts* g_DemonSpriteParts[];
 extern ServantEvent g_Events[];
 extern s8 D_us_80171FE8[40];
 extern s16 g_DemonAttackStats[10][6];
-extern s32 s_DemonSfxMap[8];
+extern s32 g_DemonSfxMap[8];
 extern u32 D_us_80171B74[8][4];
 extern u32 D_us_80171BF4[][4];
 extern s16 D_us_80171B44[3][8];
@@ -110,7 +110,7 @@ static void func_us_80175810(Entity*);
 static void func_us_80175C08(Entity*);
 static void func_us_80175D20(Entity*);
 static void UpdateServantSfxPassthrough(Entity*);
-static void FunctionPointerPassthrough(Entity*);
+static void UpdateEventAttack(Entity*);
 static void func_us_801765A0(Entity*);
 static void func_us_80176814(Entity*);
 static void func_us_80176C1C(Entity*);
@@ -118,22 +118,14 @@ static void func_us_801771B0(Entity*);
 static void func_us_80177690(Entity*);
 
 ServantDesc demon_ServantDesc = {
-    ServantInit,
-    UpdateServantDefault,
-    func_us_80174FD0,
-    func_us_8017540C,
-    unused_5800,
-    unused_5808,
-    func_us_80175810,
-    func_us_80175C08,
-    func_us_80175D20,
-    UpdateServantSfxPassthrough,
-    FunctionPointerPassthrough,
-    func_us_801765A0,
-    func_us_80176814,
-    func_us_80176C1C,
-    func_us_801771B0,
-    func_us_80177690,
+    ServantInit,       UpdateServantDefault,
+    func_us_80174FD0,  func_us_8017540C,
+    unused_5800,       unused_5808,
+    func_us_80175810,  func_us_80175C08,
+    func_us_80175D20,  UpdateServantSfxPassthrough,
+    UpdateEventAttack, func_us_801765A0,
+    func_us_80176814,  func_us_80176C1C,
+    func_us_801771B0,  func_us_80177690,
 };
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
@@ -230,8 +222,7 @@ static Entity* FindValidTarget(Entity* self) {
 
 void unused_2DBC(Entity* self) {}
 
-// This is likey the analog to Faerie.ExecuteAbilityInitialize
-void func_us_80172DC4(Entity* self) {
+void ExecuteAbilityInitialize(Entity* self) {
     if (!self->ext.demon.isAbilityInitialized) {
         if ((self->entityId == DEMON_MODE_DEFAULT_UPDATE) ||
             (self->entityId == DEMON_MODE_UNK_D8)) {
@@ -315,7 +306,7 @@ void func_us_80172EF8(Entity* self) {
         self->ext.et_801737F0.animationTriggerCount &= 7;
         self->ext.et_801737F0.stepCounter++;
         if (self->ext.et_801737F0.stepCounter > 50) {
-            CreateEventEntity(self, 0xDB, 0);
+            CreateEventEntity(self, DEMON_MODE_UNK_DB, 0);
             DestroyEntity(self);
             return;
         }
@@ -405,7 +396,7 @@ void func_us_80173348(Entity* self) {
     case 2:
         self->ext.et_801737F0.stepCounter++;
         if (self->ext.et_801737F0.stepCounter > 0x32) {
-            CreateEventEntity(self, 0xDC, 0);
+            CreateEventEntity(self, DEMON_MODE_UNK_DC, 0);
             DestroyEntity(self);
             return;
         }
@@ -515,7 +506,7 @@ void func_us_801737F0(Entity* self) {
         self->ext.et_801737F0.stepCounter++;
 
         if (self->ext.et_801737F0.stepCounter > 50) {
-            CreateEventEntity(self, 0xDD, 0);
+            CreateEventEntity(self, DEMON_MODE_UNK_DD, 0);
             DestroyEntity(self);
             return;
         }
@@ -645,7 +636,7 @@ void func_us_80173D14(Entity* self) {
     case 2:
         self->ext.et_801737F0.animationTriggerCount++;
         if (self->ext.et_801737F0.animationTriggerCount > 50) {
-            CreateEventEntity(self, 0xDE, 0);
+            CreateEventEntity(self, DEMON_MODE_UNK_DE, 0);
             DestroyEntity(self);
             return;
         }
@@ -830,7 +821,7 @@ void UpdateServantDefault(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_us_80172DC4(self);
+        ExecuteAbilityInitialize(self);
         break;
     case 1:
         if (D_8003C708.flags & FLAG_UNK_20) {
@@ -973,7 +964,7 @@ void func_us_80174FD0(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_us_80172DC4(self);
+        ExecuteAbilityInitialize(self);
         break;
     case 1:
         D_us_80178604 = self->ext.demon.target->facingLeft;
@@ -1016,13 +1007,13 @@ void func_us_80174FD0(Entity* self) {
         D_us_80178608 = rand() % 8;
         switch (D_us_80178608) {
         case 0:
-            g_api.PlaySfx(s_DemonSfxMap[0]);
+            g_api.PlaySfx(g_DemonSfxMap[0]);
             break;
         case 1:
-            g_api.PlaySfx(s_DemonSfxMap[1]);
+            g_api.PlaySfx(g_DemonSfxMap[1]);
             break;
         case 2:
-            g_api.PlaySfx(s_DemonSfxMap[2]);
+            g_api.PlaySfx(g_DemonSfxMap[2]);
             break;
         }
         self->step++;
@@ -1064,7 +1055,7 @@ void func_us_80174FD0(Entity* self) {
         ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
 }
 
-extern s32 s_DemonSfxMap[];
+extern s32 g_DemonSfxMap[];
 
 // PSX: https://decomp.me/scratch/vbedA
 // PSP: https://decomp.me/scratch/mRGqb
@@ -1076,7 +1067,7 @@ void func_us_8017540C(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_us_80172DC4(self);
+        ExecuteAbilityInitialize(self);
         break;
     case 1:
         D_us_80178620 = self->ext.demon.target->facingLeft;
@@ -1120,11 +1111,13 @@ void func_us_8017540C(Entity* self) {
 
         SetAnimationFrame(self, g_DemonAttackIdSfxLookup[D_us_80178624][0]);
         g_api.PlaySfx(
-            s_DemonSfxMap[g_DemonAttackIdSfxLookup[D_us_80178624][1]]);
+            g_DemonSfxMap[g_DemonAttackIdSfxLookup[D_us_80178624][1]]);
 
         g_api.GetServantStats(
             self, g_DemonAttackIdSfxLookup[D_us_80178624][2], 1, &s_DemonStats);
-        CreateEventEntity(self, 0xDA, D_us_80178624);
+        // This is for the different Attack types.  Param selects update
+        // function from passthrough array
+        CreateEventEntity(self, DEMON_EVENT_ATTACK_UPDATE, D_us_80178624);
 
         self->step++;
         break;
@@ -1180,7 +1173,7 @@ void func_us_80175810(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        func_us_80172DC4(self);
+        ExecuteAbilityInitialize(self);
         break;
     case 1:
         if (self->velocityX > 0) {
@@ -1363,7 +1356,7 @@ void func_us_80175D20(Entity* self) {
     self->posY.val += self->velocityY;
     switch (self->step) {
     case 0:
-        func_us_80172DC4(self);
+        ExecuteAbilityInitialize(self);
         break;
     case 1:
         if (PLAYER.facingLeft != self->facingLeft) {
@@ -1475,7 +1468,7 @@ void func_us_80175D20(Entity* self) {
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-void FunctionPointerPassthrough(Entity* self) {
+void UpdateEventAttack(Entity* self) {
     s_PassthroughFunctions[self->params](self);
 }
 
@@ -1543,7 +1536,7 @@ void func_us_801765A0(Entity* self) {
         self->ext.et_80176814.frameCounter[1]++;
 
         if (self->ext.et_80176814.frameCounter[1] >= 7) {
-            CreateEventEntity(self, 0xDB, self->params + 1);
+            CreateEventEntity(self, DEMON_MODE_UNK_DB, self->params + 1);
             self->step++;
         }
 
@@ -1766,7 +1759,7 @@ void func_us_80176C1C(Entity* self) {
     case 1:
         self->ext.et_801737F0.animationTriggerCount++;
         if (self->ext.et_801737F0.animationTriggerCount > 2) {
-            CreateEventEntity(self, 0xDD, self->params + 1);
+            CreateEventEntity(self, DEMON_MODE_UNK_DD, self->params + 1);
             self->step++;
         }
         break;
@@ -1881,7 +1874,7 @@ void func_us_801771B0(Entity* self) {
         self->posX.val += self->velocityX;
 
         if (self->ext.et_801737F0.animationTriggerCount >= 3) {
-            CreateEventEntity(self, 0xDE, self->params + 1);
+            CreateEventEntity(self, DEMON_MODE_UNK_DE, self->params + 1);
             self->step++;
         }
         break;
