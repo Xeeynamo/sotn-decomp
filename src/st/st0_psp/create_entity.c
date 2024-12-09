@@ -29,4 +29,4 @@ INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", UpdateTilemap);
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248F18);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248FA0);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", CreateEntityFromEntity);
