@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
-#include "game.h"
+#include "no1.h"
 
 extern MATRIX D_us_80182DF4;
 extern SVECTOR D_us_80182E14;
@@ -140,7 +139,7 @@ s32 func_us_801D1DAC(void) {
             g_CurrentEntity->animCurFrame = 0;
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             g_CurrentEntity->ext.et_801D1DAC.unk8D += 1;
-            PlaySfxPositional(0x660);
+            PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             g_CurrentEntity->step_s++;
         }
         break;
