@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "demon.h"
 
-s16 g_DemonAttackStats[10][6] = {
+s16 g_DemonAttackSelector[10][6] = {
     {0xFF, 0x00, 0x00, 0x00, 0x00, 0x00}, {0xD0, 0xFF, 0x00, 0x00, 0x00, 0x00},
     {0xD0, 0xE0, 0xFF, 0x00, 0x00, 0x00}, {0xC0, 0xD0, 0xFF, 0x00, 0x00, 0x00},
     {0xC0, 0xD0, 0xE0, 0xFF, 0x00, 0x00}, {0xB0, 0xC0, 0xD0, 0xFF, 0x00, 0x00},
@@ -9,7 +9,7 @@ s16 g_DemonAttackStats[10][6] = {
     {0xA0, 0xB0, 0xC0, 0xD0, 0xE0, 0xFF}, {0x90, 0xA0, 0xB0, 0xC0, 0xD0, 0xFF},
 };
 
-s32 g_DemonAbilityStats[10][4] = {
+DemonAbilityStats g_DemonAbilityStats[10] = {
     {0x3C, 0x80, 0x01, 0x40}, {0x3C, 0x80, 0x01, 0x40},
     {0x3C, 0x60, 0x01, 0x40}, {0x2D, 0x60, 0x00, 0x40},
     {0x2D, 0x40, 0x00, 0x60}, {0x2D, 0x40, 0x00, 0x60},
@@ -17,7 +17,7 @@ s32 g_DemonAbilityStats[10][4] = {
     {0x0F, 0x10, 0x00, 0x80}, {0x0F, 0x10, 0x00, 0x80},
 };
 
-s32 g_DemonAttackIdSfxLookup[5][3] = {
+DemonAttackInfo g_DemonAttackIdSfxLookup[5] = {
     {0x02, 0x03, 0x17}, {0x04, 0x04, 0x18}, {0x05, 0x05, 0x19},
     {0x06, 0x06, 0x1A}, {0x06, 0x07, 0x1B},
 };
@@ -60,7 +60,7 @@ extern void func_us_801737F0(Entity* self);
 extern void func_us_80173D14(Entity* self);
 
 // clang-format off
-void (*s_PassthroughFunctions[])(Entity*) = {
+void (*g_AttackFunctions[])(Entity*) = {
     DestroyEntityPassthrough,
     func_us_80172EF8,
     func_us_80173348,
@@ -81,7 +81,9 @@ u16 D_us_80171D10[] = {
 };
 
 s32 g_DemonSfxMap[8] = {
-    0x89E, 0x89F, 0x8A0, 0x8A2, 0x8A3, 0x8A4, 0x8A5, 0x8A6,
+    DEMON_GRUNT_1,       DEMON_GRUNT_2,         DEMON_GRUNT_3,
+    DEMON_DIE,           DEMON_FIRE_SPEAR,      DEMON_ICE_SPEAR,
+    DEMON_THUNDER_SPEAR, DEMON_LIGHTNING_SPEAR,
 };
 
 AnimationFrame D_us_80171D4C[] = {
@@ -160,7 +162,7 @@ AnimationFrame D_us_80171FAC[] = {
     {1, 0x0205}, {1, 0x0204}, {1, 0x0203}, {1, 0x0202}, {0, 0x0000},
 };
 
-s8 D_us_80171FE8[40] = {
+s8 g_DemonFrameProps[40] = {
     0x00, 0x00, 0x00, 0x00, 0xF0, 0xF0, 0x00, 0x00, 0x08, 0x09,
     0x08, 0x04, 0x0E, 0x09, 0x08, 0x06, 0x15, 0x0A, 0x0C, 0x07,
     0x15, 0x09, 0x0D, 0x07, 0x0A, 0xF8, 0x0D, 0x08, 0x14, 0xFD,
@@ -173,28 +175,29 @@ AnimationFrame* g_DemonAnimationFrames[] = {
     D_us_80171EF8, D_us_80171F34, D_us_80171FA4, D_us_80171FAC,
 };
 
-ServantSfxEventDesc D_us_80172040[] = {
-    {.flag = 0, .animIndex = 9, .sfxId = 0x4E8},
+static ServantSfxEventDesc s_SfxIntroCommand[] = {
+    {.flag = 0, .animIndex = 9, .sfxId = DEMON_INTRO_COMMAND},
     {.flag = -1, .animIndex = 0, .sfxId = 0x000},
 };
 
-s32 D_us_8017204C[] = {0xFF, D_us_80172040};
+s32 g_SfxDemonIntroPrevSummoned[] = {0xFF, s_SfxIntroCommand};
 
-ServantSfxEventDesc D_us_80172054[] = {
-    {.flag = 0, .animIndex = 9, .sfxId = 0x4ED},
+static ServantSfxEventDesc s_SfxIntroIntroReady[] = {
+    {.flag = 0, .animIndex = 9, .sfxId = DEMON_INTRO_READY},
     {.flag = -1, .animIndex = 0, .sfxId = 0x000},
 };
 
-s32 D_us_80172060[] = {0xFF, D_us_80172054};
+s32 g_SfxDemonIntroNewSummoned[] = {0xFF, s_SfxIntroIntroReady};
 
-ServantSfxEventDesc D_us_80172068[] = {
-    {.flag = 0, .animIndex = 0, .sfxId = 0x4EE},
+static ServantSfxEventDesc s_SfxEventSwitch1[] = {
+    {.flag = 0, .animIndex = 0, .sfxId = DEMON_SWITCH_1},
     {.flag = -1, .animIndex = 7, .sfxId = 0x000},
 };
 
-ServantSfxEventDesc D_us_80172074[] = {
-    {.flag = 0, .animIndex = 0, .sfxId = 0x4EF},
+static ServantSfxEventDesc s_SfxEventSwitch2[] = {
+    {.flag = 0, .animIndex = 0, .sfxId = DEMON_SWITCH_2},
     {.flag = -1, .animIndex = 7, .sfxId = 0x000},
 };
 
-s32 D_us_80172080[] = {0x7F, D_us_80172068, 0xFF, D_us_80172074};
+s32 g_SfxDemonSwitchRandomizer[] = {
+    0x7F, s_SfxEventSwitch1, 0xFF, s_SfxEventSwitch2};

@@ -1,13 +1,13 @@
 g_DemonSpriteParts = 0x80170040;
 g_ServantClut = 0x80171990;
-g_DemonAttackStats = 0x801719F0;
+g_DemonAttackSelector = 0x801719F0;
 g_DemonAbilityStats = 0x80171A68;
 g_DemonAttackIdSfxLookup = 0x80171B08;
 g_DemonClut = 0x80171C24;
-s_PassthroughFunctions = 0x80171CC4;
+g_AttackFunctions = 0x80171CC4;
 g_DemonSfxMap = 0x80171D2C;
 g_DemonAnimationFrames = 0x80172010;
-D_us_80172080 = 0x80172080;
+g_SfxDemonSwitchRandomizer = 0x80172080;
 g_Events = 0x80172090;
 g_PlaySfxStep = 0x801729C0;
 g_EntityRanges = 0x801729C4;

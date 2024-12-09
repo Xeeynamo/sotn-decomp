@@ -669,7 +669,7 @@ typedef struct {
     /* 0x8C */ s16 abilityTimer;
     /* 0x8E */ s16 pad_8E[2];
     /* 0x92 */ s16 attackEndCounter;
-    /* 0x94 */ s16 attackVelocityOffset;
+    /* 0x94 */ s16 switchPressVelocityOffset;
     /* 0x96 */ s16 pad_96[5];
     /* 0xA0 */ s16 unkCounter;
     /* 0xA4 */ struct Entity* target;
