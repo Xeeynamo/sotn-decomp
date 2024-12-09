@@ -28,7 +28,6 @@ g_CurrentEntity     = 0x091E1678;
 PfnEntityUpdates    = 0x08C6BC30;
 g_PlayableCharacter = 0x091CF020;
 D_8018047C          = 0x09246ED0;
-g_ItemIconSlots     = 0x0924BC20;
 g_PlayableCharacter = 0x091CF020;
 D_091CF6DC          = 0x091CF6DC;
 D_091CF698          = 0x091CF698;

@@ -441,6 +441,6 @@ void EntityPrizeDrop(Entity* self) {
 
 #include "../blink_item.h"
 
-u16 _g_ItemIconSlots[ICON_SLOT_NUM];
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", EntityEquipItemDrop);
