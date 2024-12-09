@@ -321,13 +321,23 @@ extern GfxBank** g_GfxSharedBank[];
 extern s16** D_800A3B70[18];
 extern u_long* D_800A3BB8[];
 extern Lba g_StagesLba[80];
+
 extern SubweaponDef g_SubwpnDefs[13];
-extern Equipment g_EquipDefs[217];
-extern Accessory g_AccessoryDefs[90];
-extern const char* g_MenuStr[110];
-extern SpellDef g_SpellDefs[28];
+// These are different on PSP since they have text that needs translating.
+#if defined(VERSION_PSP)
+extern RelicDesc* g_RelicDefs;
+extern SpellDef* g_SpellDefs;
+extern EnemyDef* g_EnemyDefs;
+extern Accessory* g_AccessoryDefs;
+extern Equipment* g_EquipDefs;
+#else
 extern RelicDesc g_RelicDefs[30];
+extern SpellDef g_SpellDefs[28];
 extern EnemyDef g_EnemyDefs[400];
+extern Accessory g_AccessoryDefs[90];
+extern Equipment g_EquipDefs[217];
+#endif
+extern const char* g_MenuStr[110];
 extern s32 g_ExpNext[];
 extern u16 D_800AC958[];
 extern CdFile* D_800ACC74[];
@@ -504,7 +514,7 @@ void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
-s32 CalcAttack(s32, s32);
+s32 CalcAttack(s32, u32);
 void func_800F4F48(void);
 void CalcDefense(void);
 bool IsAlucart(void);
