@@ -1,0 +1,12 @@
+EXTERN(_binary_assets_dra_psp_mwo_header_bin_start);
+EXTERN(MainGame);
+EXTERN(func_psp_090E4C18);
+EXTERN(func_psp_090E4C58);
+EXTERN(func_psp_090E4C68);
+EXTERN(func_psp_090E4C90);
+EXTERN(func_psp_090FFAB8);
+EXTERN(func_psp_0913D798);
+EXTERN(func_psp_0913D7D8);
+EXTERN(func_psp_0913D930);
+EXTERN(func_psp_09141860);
+EXTERN(func_psp_09141878);
