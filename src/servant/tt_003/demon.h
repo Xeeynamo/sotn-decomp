@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef DEMON_H
+#define DEMON_H
 #include "common.h"
 #include <servant.h>
 
@@ -18,3 +20,18 @@ typedef enum {
     DEMON_MODE_UNK_DD,
     DEMON_MODE_UNK_DE
 } EntityIds;
+
+typedef struct {
+    s32 timer;
+    s32 minimumEnemyHp;
+    s32 makeBadAttacks;
+    s32 maxEnemyAxisDelta;
+} DemonAbilityStats;
+
+typedef struct {
+    s32 animationIndex;
+    s32 sfxIndex;
+    s32 abilityId;
+} DemonAttackInfo;
+
+#endif

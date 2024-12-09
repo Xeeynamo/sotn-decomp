@@ -79,18 +79,18 @@ static Entity* D_us_801786D8;
 static s32 D_us_801786DC;
 static s32 s_LastTargetedEntityIndex;
 
-extern s32 g_DemonAbilityStats[10][4];
+extern DemonAbilityStats g_DemonAbilityStats[10];
 extern AnimationFrame* g_DemonAnimationFrames[];
 extern u16 g_DemonClut[80];
 extern SpriteParts* g_DemonSpriteParts[];
 extern ServantEvent g_Events[];
-extern s8 D_us_80171FE8[40];
-extern s16 g_DemonAttackStats[10][6];
+extern s8 g_DemonFrameProps[40];
+extern s16 g_DemonAttackSelector[10][6];
 extern s32 g_DemonSfxMap[8];
 extern u32 D_us_80171B74[8][4];
 extern u32 D_us_80171BF4[][4];
 extern s16 D_us_80171B44[3][8];
-extern s32 g_DemonAttackIdSfxLookup[5][3];
+extern DemonAttackInfo g_DemonAttackIdSfxLookup[5];
 extern s32* D_us_80172080[];
 extern s32 D_us_8017204C[];
 extern s32 D_us_80172060[];
@@ -98,7 +98,7 @@ extern AnimationFrame D_us_80171CD8;
 // Horizontal offsets for positioning primitives
 extern u16 D_us_80171D10[];
 
-extern void (*s_PassthroughFunctions[])(Entity*);
+extern void (*g_AttackFunctions[])(Entity*);
 
 static void ServantInit(InitializeMode);
 static void UpdateServantDefault(Entity*);
@@ -169,15 +169,17 @@ static Entity* FindValidTarget(Entity* self) {
         if (entity->posY.i.hi < 0) {
             continue;
         }
-        if (!g_DemonAbilityStats[s_DemonStats.level / 10][2] &&
+        if (!g_DemonAbilityStats[s_DemonStats.level / 10].makeBadAttacks &&
             entity->hitboxState & 8) {
             continue;
         }
 
         if (abs(self->posX.i.hi - entity->posX.i.hi) >
-                g_DemonAbilityStats[s_DemonStats.level / 10][3] ||
+                g_DemonAbilityStats[s_DemonStats.level / 10]
+                    .maxEnemyAxisDelta ||
             abs(self->posY.i.hi - entity->posY.i.hi) >
-                g_DemonAbilityStats[s_DemonStats.level / 10][3]) {
+                g_DemonAbilityStats[s_DemonStats.level / 10]
+                    .maxEnemyAxisDelta) {
             continue;
         }
         if (self->facingLeft && self->posX.i.hi < entity->posX.i.hi) {
@@ -192,7 +194,7 @@ static Entity* FindValidTarget(Entity* self) {
 
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
-                g_DemonAbilityStats[s_DemonStats.level / 10][1]) {
+                g_DemonAbilityStats[s_DemonStats.level / 10].minimumEnemyHp) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
@@ -906,12 +908,12 @@ void UpdateServantDefault(Entity* self) {
             if (s_DistToTargetLocation2 < 0x20) {
                 self->ext.demon.abilityTimer++;
                 if (self->ext.demon.abilityTimer >
-                    g_DemonAbilityStats[s_DemonStats.level / 10][0]) {
+                    g_DemonAbilityStats[s_DemonStats.level / 10].timer) {
                     self->ext.demon.abilityTimer = 0;
 
                     if (self->ext.demon.target = FindValidTarget(self)) {
                         if (rand() % 0x100 <=
-                            g_DemonAttackStats[s_DemonStats.level / 10][0]) {
+                            g_DemonAttackSelector[s_DemonStats.level / 10][0]) {
                             self->entityId = DEMON_MODE_UNK_D2;
                         } else {
                             self->entityId = DEMON_MODE_UNK_D3;
@@ -955,7 +957,7 @@ void UpdateServantDefault(Entity* self) {
     }
     ProcessEvent(self, false);
     unused_2DBC(self);
-    ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+    ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
 void func_us_80174FD0(Entity* self) {
@@ -1042,7 +1044,7 @@ void func_us_80174FD0(Entity* self) {
             break;
         }
         if ((rand() % 0x100) <=
-            g_DemonAttackStats[s_DemonStats.level / 10][0]) {
+            g_DemonAttackSelector[s_DemonStats.level / 10][0]) {
             self->step = 1;
         } else {
             self->entityId = DEMON_MODE_UNK_D3;
@@ -1052,7 +1054,7 @@ void func_us_80174FD0(Entity* self) {
         break;
     }
     D_us_80178600 =
-        ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+        ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
 extern s32 g_DemonSfxMap[];
@@ -1103,18 +1105,20 @@ void func_us_8017540C(Entity* self) {
 
         for (i = 1; i < 6; i++) {
             if (D_us_80178624 <=
-                g_DemonAttackStats[s_DemonStats.level / 10][i]) {
+                g_DemonAttackSelector[s_DemonStats.level / 10][i]) {
                 D_us_80178624 = i - 1;
                 break;
             }
         }
 
-        SetAnimationFrame(self, g_DemonAttackIdSfxLookup[D_us_80178624][0]);
+        SetAnimationFrame(
+            self, g_DemonAttackIdSfxLookup[D_us_80178624].animationIndex);
         g_api.PlaySfx(
-            g_DemonSfxMap[g_DemonAttackIdSfxLookup[D_us_80178624][1]]);
+            g_DemonSfxMap[g_DemonAttackIdSfxLookup[D_us_80178624].sfxIndex]);
 
         g_api.GetServantStats(
-            self, g_DemonAttackIdSfxLookup[D_us_80178624][2], 1, &s_DemonStats);
+            self, g_DemonAttackIdSfxLookup[D_us_80178624].abilityId, 1,
+            &s_DemonStats);
         // This is for the different Attack types.  Param selects update
         // function from passthrough array
         CreateEventEntity(self, DEMON_EVENT_ATTACK_UPDATE, D_us_80178624);
@@ -1142,7 +1146,7 @@ void func_us_8017540C(Entity* self) {
         break;
     }
     D_us_8017861C =
-        ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+        ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
 void unused_5800(Entity* self) {}
@@ -1463,14 +1467,12 @@ void func_us_80175D20(Entity* self) {
         break;
     }
     ProcessEvent(self, false);
-    ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+    ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-void UpdateEventAttack(Entity* self) {
-    s_PassthroughFunctions[self->params](self);
-}
+void UpdateEventAttack(Entity* self) { g_AttackFunctions[self->params](self); }
 
 void func_us_801765A0(Entity* self) {
     s32 velocityX;
