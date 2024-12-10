@@ -124,7 +124,7 @@ void func_us_801BCB34(Entity* self) {
             } else {
                 self->step = 5;
                 if (!self->ext.et_801BCB34.unk94) {
-                    g_api.PlaySfx(0x6ED);
+                    g_api.PlaySfx(SFX_VO_ALU_YELL);
                 }
             }
         }
@@ -186,7 +186,7 @@ void func_us_801BCB34(Entity* self) {
                         }
                     }
                 } else {
-                    g_api.PlaySfx(0x675);
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                     self->ext.et_801BCB34.unk87 = 1;
                     self->velocityY /= 2;
                     self->step_s++;
@@ -284,7 +284,7 @@ void func_us_801BCB34(Entity* self) {
                         }
                     }
                 } else {
-                    g_api.PlaySfx(0x675);
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                     self->velocityY /= 2;
                     self->step_s = 1;
                 }
