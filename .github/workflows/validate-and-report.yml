@@ -186,6 +186,7 @@ jobs:
         run: |
           make force_symbols
           make -j extract
+          .venv/bin/python3 tools/function_finder/fix_matchings.py
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Generate function report
