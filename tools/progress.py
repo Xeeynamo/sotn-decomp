@@ -74,29 +74,6 @@ class DecompProgressStats:
             return Path(asm_path_psp)
         exiterr(f"path '{asm_path}' or '{asm_path_psp}' not found")
 
-    def get_nonmatchings_path(self, asm_path: Path) -> Path:
-        """
-        Returns one of the following valid paths:
-        `asm/us/main/nonmatchings`
-        `asm/us/st/wrp/nonmatchings`
-        `asm/pspeu/dra_psp/psp/dra_psp`
-        `asm/pspeu/st/wrp_psp/psp/wrp_psp`
-        """
-        nonmatchings = f"{asm_path}/nonmatchings"
-        if not os.path.exists(nonmatchings):
-            nonmatchings_psp = f"{asm_path}/psp/{os.path.basename(asm_path)}"
-            if os.path.exists(nonmatchings_psp) and os.path.exists(
-                f"{asm_path}/matchings"
-            ):
-                nonmatchings = nonmatchings_psp
-            else:
-                print("unable to determine nonmatchings path")
-                exit(1)
-        # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
-        if nonmatchings.endswith("/main"):
-            nonmatchings = nonmatchings[:-5]
-        return Path(nonmatchings)
-
     def __init__(self, module_name: str, path: str):
         self.name = module_name
         self.data_imported = 0
@@ -117,11 +94,8 @@ class DecompProgressStats:
         map_file.readMapFile(map_path)
 
         asm_path = self.get_asm_path(path)
-        nonmatchings = self.get_nonmatchings_path(asm_path)
         depth = 4 + path.count("/")
-        self.calculate_progress(
-            map_file.filterBySectionType(".text"), asm_path, nonmatchings, depth
-        )
+        self.calculate_progress(map_file.filterBySectionType(".text"), asm_path, depth)
         self.add_segment_progress(map_file.filterBySectionType(".data"))
         self.add_segment_progress(map_file.filterBySectionType(".rodata"))
         self.add_segment_progress(map_file.filterBySectionType(".bss"))
@@ -140,9 +114,7 @@ class DecompProgressStats:
         return
 
     # modified version of mapfile_parser.MapFile.getProgress
-    def calculate_progress(
-        self, map_file: MapFile, asmPath: Path, nonmatchings: Path, pathIndex: int
-    ):
+    def calculate_progress(self, map_file: MapFile, asmPath: Path, pathIndex: int):
         totalStats = ProgressStats()
         progressPerFolder: dict[str, ProgressStats] = dict()
         for file in [file for segment in map_file for file in segment]:
@@ -166,19 +138,27 @@ class DecompProgressStats:
                 wholeFileIsUndecomped = False
 
             for func in file:
+                if func.name.endswith(".NON_MATCHING"):
+                    continue
+
                 self.functions_total += 1
-                funcAsmPath = nonmatchings / extensionlessFilePath / f"{func.name}.s"
+
+                funcNonMatching = f"{func.name}.NON_MATCHING"
+
+                funcSize = 0
+                if func.size is not None:
+                    funcSize = func.size
 
                 if wholeFileIsUndecomped:
                     totalStats.undecompedSize += func.size
-                    progressPerFolder[folder].undecompedSize += func.size
-                elif funcAsmPath.exists():
-                    totalStats.undecompedSize += func.size
-                    progressPerFolder[folder].undecompedSize += func.size
+                    progressPerFolder[folder].undecompedSize += funcSize
+                elif map_file.findSymbolByName(funcNonMatching) is not None:
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
                 else:
                     self.functions_matching += 1
-                    totalStats.decompedSize += func.size
-                    progressPerFolder[folder].decompedSize += func.size
+                    totalStats.decompedSize += funcSize
+                    progressPerFolder[folder].decompedSize += funcSize
 
         self.code_matching = totalStats.decompedSize
         self.code_total = totalStats.decompedSize + totalStats.undecompedSize
