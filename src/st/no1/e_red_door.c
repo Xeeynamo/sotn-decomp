@@ -154,7 +154,7 @@ void func_us_801BA290(Entity* self) {
             prim->drawMode = DRAW_UNK_1000 | DRAW_HIDE;
             prim = prim->next;
 
-            dr_env = g_api.func_800EDB08((POLY_GT4* ) prim);
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;
