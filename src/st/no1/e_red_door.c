@@ -154,7 +154,8 @@ void func_us_801BA290(Entity* self) {
             prim->drawMode = DRAW_UNK_1000 | DRAW_HIDE;
             prim = prim->next;
 
-            if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
+            dr_env = g_api.func_800EDB08((POLY_GT4* ) prim);
+            if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;
             }
@@ -164,7 +165,7 @@ void func_us_801BA290(Entity* self) {
             prim->priority = 0xDE;
             prim = prim->next;
 
-            self->ext.prim = prim;
+            self->ext.et_801BA290.unk7C = prim;
             while (prim != NULL) {
                 prim->r0 = prim->g0 = prim->b0 = 0x80;
                 LOW(prim->r1) = LOW(prim->r0);
@@ -180,7 +181,7 @@ void func_us_801BA290(Entity* self) {
         break;
 
     case 3:
-        prim = self->ext.prim;
+        prim = self->ext.et_801BA290.unk7C;
         for (i = 0; i < 2; i++) {
             prim->tpage = 0xE;
             if (self->ext.et_801BA290.unk9C != 0) {
@@ -450,7 +451,8 @@ void func_us_801BA290(Entity* self) {
             prim->u0 = 0x50;
             prim->v0 = 0xFF;
             prim->drawMode = DRAW_DEFAULT;
-            prim = prim->next;
+            prim2 = prim->next;
+            prim = prim2;
 
             prim->x0 = 0xB0;
             prim->y0 = 0;
@@ -580,7 +582,7 @@ void func_us_801BA290(Entity* self) {
                 ((long*)(i * 12)) + (0x7E00000 | 2), &unusedA, &unusedB);
 #endif
         }
-        prim = self->ext.prim;
+        prim = self->ext.et_801BA290.unk7C;
         for (rnd = 0, i = 0; i < 6; rnd += 3, i++) {
             LOW(prim->x0) = *(SPAD(i * 3) + 0);
             LOW(prim->x1) = *(SPAD(i * 3) + 1);
@@ -645,7 +647,7 @@ void func_us_801BA290(Entity* self) {
         case 1:
             g_Tilemap.flags ^= 1;
             self->ext.et_801BA290.unkA4 = 0;
-            prim = self->ext.prim;
+            prim = self->ext.et_801BA290.unk7C;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
