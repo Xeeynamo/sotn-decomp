@@ -92,10 +92,10 @@ void func_us_801BA290(Entity* self) {
     } else {
         self->animCurFrame = 0x3D;
     }
-    self->ext.et_801BA290.unk9C = g_CastleFlags[0x13] & 1;
+    self->ext.et_801BA290.unk9C = g_CastleFlags[CASTLE_FLAG_19] & 1;
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_801809C8);
+        InitializeEntity(D_us_801809C8);
         self->animCurFrame = 0x3D;
         self->facingLeft = 1;
         self->hitboxState = 1;
