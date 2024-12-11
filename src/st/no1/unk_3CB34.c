@@ -1,7 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern s32 D_80097408;
+// Mask for all of the statuses where the UP button will
+// be ignored when in elevator position or on the elevator platform
+//
+// Value: 0xC5CFFEDF
+// clang-format off
+#define PLAYER_STATUS_ELEVATOR_MASK                                              \
+    (                                                                            \
+        /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
+        /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
+        /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |     \
+        /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
+        /* 0x0000F000 */ PLAYER_STATUS_CURSE | PLAYER_STATUS_POISON | PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 | \
+        /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
+        /* 0x000000D0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 |  PLAYER_STATUS_UNK10 | \
+        /* 0x0000000F */ PLAYER_STATUS_UNK8 | PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM \
+    )
+// clang-format on
+
 extern u16 D_us_801809F8[];
 extern u8 D_us_80181550[];
 extern u8 D_us_8018155C[];
@@ -30,7 +47,7 @@ void func_us_801BCB34(Entity* self) {
         self->ext.et_801BCB34.unk85 = self->ext.et_801BCB34.unk84;
         self->ext.et_801BCB34.unk86 = 0;
         self->ext.et_801BCB34.unk87 = 0;
-        self->zPriority = D_80097408 + 0x10;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 0x10;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -50,7 +67,7 @@ void func_us_801BCB34(Entity* self) {
 #ifdef VERSION_PSP
         CreateEntityFromEntity(D_psp_0929A720, self, tempEntity);
 #else
-        CreateEntityFromEntity(0x2A, self, tempEntity);
+        CreateEntityFromEntity(E_ID_2A, self, tempEntity);
 #endif
         tempEntity->posY.i.hi -= 0x22;
         tempEntity->ext.et_801BCB34.unk8C = 0;
@@ -62,7 +79,7 @@ void func_us_801BCB34(Entity* self) {
         self->velocityY = 0;
         if ((GetDistanceToPlayerX() < 6) && (GetDistanceToPlayerY() < 0x10)) {
             i = g_Player.status;
-            if (i & 0xC5CFFEDF) {
+            if (i & PLAYER_STATUS_ELEVATOR_MASK) {
                 break;
             }
             dPad = 0;
@@ -177,7 +194,7 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(6, self, tempEntity);
+                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi -= 0x18;
                             tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
@@ -275,7 +292,7 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(6, self, tempEntity);
+                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
@@ -314,7 +331,7 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(6, self, tempEntity);
+                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
