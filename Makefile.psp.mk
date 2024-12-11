@@ -91,7 +91,7 @@ $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(ad
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link_with_deadstrip,tt_$*,$@)
 
-ST_ST0_MERGE = 
+ST_ST0_MERGE = st_common
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
 	$(call link_with_deadstrip,stst0,$@)
 ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door
@@ -107,7 +107,7 @@ $(BUILD_DIR)/%.s.o: %.s
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
 OPT_OVL = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
 # Allow override. Any file in this list will get Op.
-OPT_LO_OVERRIDES = 22A40.c.o 23FE0.c.o 32DA0.c.o 3AE30.c.o
+OPT_LO_OVERRIDES = 67F0.c.o 22A40.c.o 23FE0.c.o 32DA0.c.o 3AE30.c.o 60D80.c.o 60F10.c.o
 OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_LO_OVERRIDES)), -Op, $(OPT_OVL))
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)

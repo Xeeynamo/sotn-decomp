@@ -2283,6 +2283,27 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ struct Primitive* unk88;
+    /* 0x8C */ struct Primitive* unk8C;
+    /* 0x90 */ struct Primitive* unk90;
+    /* 0x94 */ struct Primitive* unk94;
+    /* 0x98 */ struct Primitive* unk98;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ s16 : 16;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ u8 unkA4;
+    /* 0xA5 */ s8 : 8;
+    /* 0xA6 */ s16 : 16;
+    /* 0xA8 */ s16 : 16;
+    /* 0xAA */ s16 : 16;
+    /* 0xAC */ struct Primitive* unkAC;
+} ET_801BA290;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 unk84;
@@ -2490,6 +2511,7 @@ typedef union { // offset=0x7C
     ET_PlatelordUnknown plateLordUnknown;
     ET_801CE2E0 et_801CE2E0;
     ET_801D1DAC et_801D1DAC;
+    ET_801BA290 et_801BA290;
     ET_801BCB34 et_801BCB34;
 } Ext;
 
