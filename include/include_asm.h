@@ -14,8 +14,10 @@
 #define INCLUDE_ASM(FOLDER, NAME)                                              \
     __asm__(".pushsection .text\n"                                             \
             "\t.align\t2\n"                                                    \
-            "\t.globl\t" #NAME "\n"                                            \
+            "\t.globl\t" #NAME ".NON_MATCHING\n"                               \
             "\t.ent\t" #NAME "\n" #NAME ":\n"                                  \
+            "\t.type\t" #NAME ".NON_MATCHING, @object\n"                       \
+            "\t" #NAME ".NON_MATCHING:\n"                                      \
             ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
@@ -25,8 +27,10 @@
 #define INCLUDE_ASM(FOLDER, NAME)                                              \
     __asm__(".pushsection .text\n"                                             \
             "\t.align\t2\n"                                                    \
-            "\t.globl\t" #NAME "\n"                                            \
+            "\t.globl\t" #NAME ".NON_MATCHING\n"                               \
             "\t.ent\t" #NAME "\n" #NAME ":\n"                                  \
+            "\t.type\t" #NAME ".NON_MATCHING, @object\n"                       \
+            "\t" #NAME ".NON_MATCHING:\n"                                      \
             ".include \"" FOLDER "/" #NAME ".s\"\n"                            \
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
