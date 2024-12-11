@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// Mask for all of the statuses where the UP button will
-// be ignored when in elevator position or on the elevator platform
+// Mask for all of the statuses where the UP or DOWN button will
+// be ignored when in elevator
 //
 // Value: 0xC5CFFEDF
 // clang-format off
-#define PLAYER_STATUS_ELEVATOR_MASK                                              \
+#define PLAYER_STATUS_ELEVATOR_READY_MASK                                        \
     (                                                                            \
         /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
         /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
@@ -79,7 +79,7 @@ void func_us_801BCB34(Entity* self) {
         self->velocityY = 0;
         if ((GetDistanceToPlayerX() < 6) && (GetDistanceToPlayerY() < 0x10)) {
             i = g_Player.status;
-            if (i & PLAYER_STATUS_ELEVATOR_MASK) {
+            if (i & PLAYER_STATUS_ELEVATOR_READY_MASK) {
                 break;
             }
             dPad = 0;
@@ -194,7 +194,8 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi -= 0x18;
                             tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
@@ -292,7 +293,8 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
@@ -331,7 +333,8 @@ void func_us_801BCB34(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
                             tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
