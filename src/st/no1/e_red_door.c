@@ -77,7 +77,7 @@ void func_us_801B6490(Entity* self) {
     }
     animParams = &D_us_80180EF8[D_us_80180EEC];
     if (self->step == 0) {
-        InitializeEntity(&D_us_8018095C);
+        InitializeEntity(D_us_8018095C);
         D_us_80180EEC = g_CastleFlags[CASTLE_FLAG_19] & 0x7F;
         g_CastleFlags[CASTLE_FLAG_19] |= 0x80;
         animParams = &D_us_80180EF8[D_us_80180EEC];
