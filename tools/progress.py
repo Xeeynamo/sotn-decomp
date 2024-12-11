@@ -166,19 +166,32 @@ class DecompProgressStats:
                 wholeFileIsUndecomped = False
 
             for func in file:
+                if func.name.endswith(".NON_MATCHING"):
+                    continue
+
                 self.functions_total += 1
+
+                funcNonMatching = f"{func.name}.NON_MATCHING"
+
+                funcSize = 0
+                if func.size is not None:
+                    funcSize = func.size
+
                 funcAsmPath = nonmatchings / extensionlessFilePath / f"{func.name}.s"
 
                 if wholeFileIsUndecomped:
-                    totalStats.undecompedSize += func.size
-                    progressPerFolder[folder].undecompedSize += func.size
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
+                elif map_file.findSymbolByName(funcNonMatching) is not None:
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
                 elif funcAsmPath.exists():
-                    totalStats.undecompedSize += func.size
-                    progressPerFolder[folder].undecompedSize += func.size
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
                 else:
                     self.functions_matching += 1
-                    totalStats.decompedSize += func.size
-                    progressPerFolder[folder].decompedSize += func.size
+                    totalStats.decompedSize += funcSize
+                    progressPerFolder[folder].decompedSize += funcSize
 
         self.code_matching = totalStats.decompedSize
         self.code_total = totalStats.decompedSize + totalStats.undecompedSize
