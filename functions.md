@@ -346,7 +346,7 @@
 | dra    | DecelerateY                         |       47 |          5 |        |                                 |       |
 | dra    | func_psp_090EC568                   |       47 |          5 |        |                                 |       |
 | st0    | func_801B0280                       |       47 |          6 |        |                                 |       |
-| dra    | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.976 |
+| dra    | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.986 |
 | dra    | func_psp_090EBE50                   |       48 |          4 |        |                                 |       |
 | dra    | func_psp_0913A3A0                   |       49 |          4 |        |                                 |       |
 | dra    | func_psp_090F0FD0                   |       49 |          5 |        |                                 |       |
