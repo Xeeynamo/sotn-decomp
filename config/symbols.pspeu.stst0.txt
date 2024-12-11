@@ -108,3 +108,4 @@ g_EInitDraculaRainAttack = 0x09252D50;
 g_EInitSecretStairs = 0x09252D60;
 ST0_RedDoorTiles = 0x09252D70;
 g_Rooms = 0x09257350;
+g_eDamageDisplayClut = 0x09279978;
