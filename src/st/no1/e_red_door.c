@@ -18,7 +18,7 @@ typedef struct {
     CVECTOR color;
 } AnimParam;
 
-extern u16 D_us_8018095C;
+extern u16 D_us_8018095C[];
 extern s16 D_us_80180ED4[];
 extern s32 D_us_80180EEC;
 extern AnimParam D_us_80180EF8[];
