@@ -13,7 +13,72 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CEB28);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CF298);
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CF57C);
+u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
+    switch (arg0) {
+    case 0:
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x1A;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+        prim->next->x1 = g_CurrentEntity->posX.i.hi;
+        prim->next->y0 = g_CurrentEntity->posY.i.hi;
+        LOH(prim->next->r2) = 0x40;
+        LOH(prim->next->b2) = 0x40;
+        prim->next->b3 = 0x80;
+        prim->p3 |= 0x10;
+        prim->next->x2 = 0;
+        prim->next->y2 = prim->next->x2;
+        prim->priority = g_CurrentEntity->zPriority + 3;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        UnkPrimHelper(prim);
+        PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
+        arg0++;
+        /* fallthrough */
+    case 1:
+        prim->next->x2 += 0x300;
+        prim->next->y2 = prim->next->x2;
+        if (prim->next->x2 > 0x1800) {
+            prim->clut = 0x19C;
+            prim->next->b3 = 0x28;
+            arg0++;
+        }
+        break;
+    case 2:
+        prim->next->x2 += 0x180;
+        prim->next->y2 = prim->next->x2;
+        if (prim->next->x2 > 0x2000) {
+            prim->clut = 0x19E;
+            prim->u0 = prim->u2 = 0x40;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v0 = prim->v1 = 0xC0;
+            prim->v2 = prim->v3 = 0xFF;
+            prim->drawMode |= DRAW_UNK_400;
+            prim->next->b3 = 0x40;
+            arg0++;
+        }
+        break;
+    case 3:
+        prim->next->x2 += 0x40;
+        if (prim->next->x2 > 0x2800) {
+            arg0++;
+        }
+        /* fallthrough */
+    case 4:
+        prim->next->x2 += 0x40;
+        prim->next->y2 = prim->next->x2;
+        prim->next->b3 -= 1;
+        if (!prim->next->b3) {
+            arg0++;
+        }
+        break;
+    }
+    UnkPrimHelper(prim);
+    return arg0;
+}
 
 extern u16 D_us_80180AAC[];
 extern u16 D_us_80182A80[];
@@ -230,7 +295,8 @@ void func_us_801CF850(Entity* self) {
             if (!(Random() & 7)) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, tempEntity);
                     tempEntity->posX.i.hi += 0x20 - (Random() & 0x2F);
                     tempEntity->posY.i.hi += 0x20 - (Random() & 0x3F);
                 }
