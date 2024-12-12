@@ -189,6 +189,23 @@ enum SfxModes {
     0x391 // Alucard: Death in the dream world will set your soul wandering for
           // eternity, demon.
 
+// Fairy voiceovers
+#define FAERIE_INTRO_LIFE 0x472    // "Thank you for giving me life"
+#define FAERIE_INTRO_COMMAND 0x473 // "Your word is my command"
+#define FAERIE_LETS_GO 0x476       // "Let's go!"
+#define FAERIE_FOLLOW 0x479        // "I'll follow you anywhere"
+#define FAERIE_WALL_HINT 0x47A     // "There is something funny about this wall"
+#define FAERIE_SUSPICIOUS_HINT 0x48A // "This is really suspicious looking"
+#define FAERIE_MIST_HINT 0x48E       // "If only you could transform into mist"
+#define FAERIE_DARKNESS_HINT                                                   \
+    0x492 // "Some animals can live in complete darkness"
+
+// Demon voiceovers
+#define DEMON_INTRO_COMMAND 0x4E8 // Command me, my lord and master
+#define DEMON_INTRO_READY 0x4ED   // I'm ready to serve, master
+#define DEMON_SWITCH_1 0x4EE // Hmm, a switch.  Why don't I press it and see?
+#define DEMON_SWITCH_2 0x4EF // Hmm, this switch hasn't been pressed yet
+
 #define JP_VO_SH_GROAN 0x52E      // Shaft groans
 #define JP_VO_SH_SCREAM 0x52F     // Shaft screams
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...

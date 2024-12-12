@@ -22,25 +22,25 @@ STATIC_PAD_BSS(2);
 static s32 s_DeltaX;
 static s32 s_DeltaY;
 static s32 s_DistToTargetLocation2;
-static s32 D_us_801785F0;
-static s32 D_us_801785F4;
-static s32 D_us_801785F8;
-static s32 D_us_801785FC;
-static u32 D_us_80178600;
-static s32 D_us_80178604;
-static s32 D_us_80178608;
-static s32 D_us_8017860C;
-static s32 D_us_80178610;
-static s32 D_us_80178614;
-static s32 D_us_80178618;
-static s32 D_us_8017861C;
-static s32 D_us_80178620;
-static s32 D_us_80178624;
-static s32 D_us_80178628;
-static s32 D_us_8017862C;
+static s32 s_AttackTargetLocationX;
+static s32 s_AttackTargetLocationY;
+static s32 s_AttackLocationDeltaX;
+static s32 s_AttackLocationDeltaY;
+static u32 s_AttackAnimationStatus;
+static s32 s_IsTargetFacingLeft;
+static s32 s_TempRand;
+static s32 s_SpecialAttackTargetPosX;
+static s32 s_SpecialAttackTargetPosY;
+static s32 s_SpecialAttackLocationDeltaX;
+static s32 s_SpecialAttackLocationDeltaY;
+static s32 s_SpecialAttackAnimationStatus;
+static s32 s_IsSpecialAttackTargetFacingLeft;
+static s32 s_SpecialAttackIdx;
+static s32 s_SwitchPoxX;
+static s32 s_SwitchPoxY;
 STATIC_PAD_BSS(4);
-static ServantSfxEventDesc* D_us_80178634;
-static s16 D_us_80178638;
+static ServantSfxEventDesc* s_SwitchSfxEvent;
+static s16 s_CurrentSwitchSfxFlag;
 STATIC_PAD_BSS(2);
 static s32 D_us_8017863C;
 static s32 D_us_80178640;
@@ -59,8 +59,8 @@ STATIC_PAD_BSS(2);
 static s32 D_us_8017865C;
 static s32 D_us_80178660;
 static s32 D_us_80178664;
-static ServantSfxEventDesc* D_us_80178668;
-static s16 D_us_8017866C;
+static ServantSfxEventDesc* s_CurrentIntroEvent;
+static s16 s_CurrentIntroSfxFlag;
 STATIC_PAD_BSS(2);
 static s32 D_us_80178670;
 static s32 D_us_80178674;
@@ -75,40 +75,40 @@ static FamiliarStats s_DemonStats;
 static s16 D_us_801786A0[3][8];
 static s32 D_us_801786D0;
 static s32 D_us_801786D4;
-static Entity* D_us_801786D8;
+static Entity* s_CurrentSwitch;
 static s32 D_us_801786DC;
 static s32 s_LastTargetedEntityIndex;
 
-extern s32 g_DemonAbilityStats[10][4];
+extern DemonAbilityStats g_DemonAbilityStats[10];
 extern AnimationFrame* g_DemonAnimationFrames[];
 extern u16 g_DemonClut[80];
 extern SpriteParts* g_DemonSpriteParts[];
 extern ServantEvent g_Events[];
-extern s8 D_us_80171FE8[40];
-extern s16 g_DemonAttackStats[10][6];
+extern s8 g_DemonFrameProps[40];
+extern s16 g_DemonAttackSelector[10][6];
 extern s32 g_DemonSfxMap[8];
 extern u32 D_us_80171B74[8][4];
 extern u32 D_us_80171BF4[][4];
 extern s16 D_us_80171B44[3][8];
-extern s32 g_DemonAttackIdSfxLookup[5][3];
-extern s32* D_us_80172080[];
-extern s32 D_us_8017204C[];
-extern s32 D_us_80172060[];
+extern DemonAttackInfo g_DemonAttackIdSfxLookup[5];
+extern s32 g_SfxDemonSwitchRandomizer[];
+extern s32 g_SfxDemonIntroPrevSummoned[];
+extern s32 g_SfxDemonIntroNewSummoned[];
 extern AnimationFrame D_us_80171CD8;
 // Horizontal offsets for positioning primitives
 extern u16 D_us_80171D10[];
 
-extern void (*s_PassthroughFunctions[])(Entity*);
+extern void (*g_AttackFunctions[])(Entity*);
 
 static void ServantInit(InitializeMode);
 static void UpdateServantDefault(Entity*);
-static void func_us_80174FD0(Entity*);
-static void func_us_8017540C(Entity*);
+static void UpdateServantBasicAttack(Entity*);
+static void UpdateServantSpecialAttack(Entity*);
 static void unused_5800(Entity*);
 static void unused_5808(Entity*);
-static void func_us_80175810(Entity*);
-static void func_us_80175C08(Entity*);
-static void func_us_80175D20(Entity*);
+static void UpdateServantPressSwitch(Entity*);
+static void UpdateSubentitySwitch(Entity*);
+static void UpdateServantAdditionalInit(Entity*);
 static void UpdateServantSfxPassthrough(Entity*);
 static void UpdateEventAttack(Entity*);
 static void func_us_801765A0(Entity*);
@@ -118,14 +118,22 @@ static void func_us_801771B0(Entity*);
 static void func_us_80177690(Entity*);
 
 ServantDesc demon_ServantDesc = {
-    ServantInit,       UpdateServantDefault,
-    func_us_80174FD0,  func_us_8017540C,
-    unused_5800,       unused_5808,
-    func_us_80175810,  func_us_80175C08,
-    func_us_80175D20,  UpdateServantSfxPassthrough,
-    UpdateEventAttack, func_us_801765A0,
-    func_us_80176814,  func_us_80176C1C,
-    func_us_801771B0,  func_us_80177690,
+    ServantInit,
+    UpdateServantDefault,
+    UpdateServantBasicAttack,
+    UpdateServantSpecialAttack,
+    unused_5800,
+    unused_5808,
+    UpdateServantPressSwitch,
+    UpdateSubentitySwitch,
+    UpdateServantAdditionalInit,
+    UpdateServantSfxPassthrough,
+    UpdateEventAttack,
+    func_us_801765A0,
+    func_us_80176814,
+    func_us_80176C1C,
+    func_us_801771B0,
+    func_us_80177690,
 };
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
@@ -169,15 +177,17 @@ static Entity* FindValidTarget(Entity* self) {
         if (entity->posY.i.hi < 0) {
             continue;
         }
-        if (!g_DemonAbilityStats[s_DemonStats.level / 10][2] &&
+        if (!g_DemonAbilityStats[s_DemonStats.level / 10].makeBadAttacks &&
             entity->hitboxState & 8) {
             continue;
         }
 
         if (abs(self->posX.i.hi - entity->posX.i.hi) >
-                g_DemonAbilityStats[s_DemonStats.level / 10][3] ||
+                g_DemonAbilityStats[s_DemonStats.level / 10]
+                    .maxEnemyAxisDelta ||
             abs(self->posY.i.hi - entity->posY.i.hi) >
-                g_DemonAbilityStats[s_DemonStats.level / 10][3]) {
+                g_DemonAbilityStats[s_DemonStats.level / 10]
+                    .maxEnemyAxisDelta) {
             continue;
         }
         if (self->facingLeft && self->posX.i.hi < entity->posX.i.hi) {
@@ -192,7 +202,7 @@ static Entity* FindValidTarget(Entity* self) {
 
         if (entity->flags & FLAG_UNK_80000) {
             if (entity->hitPoints >=
-                g_DemonAbilityStats[s_DemonStats.level / 10][1]) {
+                g_DemonAbilityStats[s_DemonStats.level / 10].minimumEnemyHp) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
@@ -225,7 +235,7 @@ void unused_2DBC(Entity* self) {}
 void ExecuteAbilityInitialize(Entity* self) {
     if (!self->ext.demon.isAbilityInitialized) {
         if ((self->entityId == DEMON_MODE_DEFAULT_UPDATE) ||
-            (self->entityId == DEMON_MODE_UNK_D8)) {
+            (self->entityId == DEMON_MODE_ADDITIONAL_INIT)) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             SetAnimationFrame(self, 0);
@@ -239,10 +249,10 @@ void ExecuteAbilityInitialize(Entity* self) {
     } else {
         switch (self->entityId) {
         case DEMON_MODE_DEFAULT_UPDATE:
-        case DEMON_MODE_UNK_D2:
-        case DEMON_MODE_UNK_D3:
-        case DEMON_MODE_UNK_D6:
-        case DEMON_MODE_UNK_D8:
+        case DEMON_MODE_BASIC_ATTACK:
+        case DEMON_MODE_SPECIAL_ATTACK:
+        case DEMON_MODE_PRESS_SWITCH:
+        case DEMON_MODE_ADDITIONAL_INIT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             SetAnimationFrame(self, 0);
@@ -745,7 +755,7 @@ void ServantInit(InitializeMode mode) {
             (LAYOUT_RECT_PARAMS_UNKNOWN_20 | LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
             entity->entityId = DEMON_MODE_DEFAULT_UPDATE;
         } else {
-            entity->entityId = DEMON_MODE_UNK_D8;
+            entity->entityId = DEMON_MODE_ADDITIONAL_INIT;
         }
         entity->posX.val = FIX(128);
         entity->posY.val = FIX(-32);
@@ -906,15 +916,15 @@ void UpdateServantDefault(Entity* self) {
             if (s_DistToTargetLocation2 < 0x20) {
                 self->ext.demon.abilityTimer++;
                 if (self->ext.demon.abilityTimer >
-                    g_DemonAbilityStats[s_DemonStats.level / 10][0]) {
+                    g_DemonAbilityStats[s_DemonStats.level / 10].timer) {
                     self->ext.demon.abilityTimer = 0;
 
                     if (self->ext.demon.target = FindValidTarget(self)) {
                         if (rand() % 0x100 <=
-                            g_DemonAttackStats[s_DemonStats.level / 10][0]) {
-                            self->entityId = DEMON_MODE_UNK_D2;
+                            g_DemonAttackSelector[s_DemonStats.level / 10][0]) {
+                            self->entityId = DEMON_MODE_BASIC_ATTACK;
                         } else {
-                            self->entityId = DEMON_MODE_UNK_D3;
+                            self->entityId = DEMON_MODE_SPECIAL_ATTACK;
                         }
                         self->step = 0;
                     }
@@ -945,9 +955,9 @@ void UpdateServantDefault(Entity* self) {
                 }
             }
             if (D_us_801786D0 == 2) {
-                D_us_801786D8 = 0;
-                CreateEventEntity(self, DEMON_SUBENTITY_UNK_D7, 0);
-                self->entityId = DEMON_MODE_UNK_D6;
+                s_CurrentSwitch = 0;
+                CreateEventEntity(self, DEMON_SUBENTITY_SWITCH, 0);
+                self->entityId = DEMON_MODE_PRESS_SWITCH;
                 self->step = 0;
             }
         }
@@ -955,10 +965,10 @@ void UpdateServantDefault(Entity* self) {
     }
     ProcessEvent(self, false);
     unused_2DBC(self);
-    ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+    ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
-void func_us_80174FD0(Entity* self) {
+void UpdateServantBasicAttack(Entity* self) {
     if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
     }
@@ -967,7 +977,7 @@ void func_us_80174FD0(Entity* self) {
         ExecuteAbilityInitialize(self);
         break;
     case 1:
-        D_us_80178604 = self->ext.demon.target->facingLeft;
+        s_IsTargetFacingLeft = self->ext.demon.target->facingLeft;
         self->step++;
         // fallthrough
     case 2:
@@ -976,36 +986,40 @@ void func_us_80174FD0(Entity* self) {
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         } else {
-            D_us_801785F0 = self->ext.demon.target->posX.val;
-            D_us_801785F0 += D_us_80178604 ? FIX(32) : FIX(-32);
+            s_AttackTargetLocationX = self->ext.demon.target->posX.val;
+            s_AttackTargetLocationX +=
+                s_IsTargetFacingLeft ? FIX(32) : FIX(-32);
 
-            D_us_801785F4 = self->ext.demon.target->posY.val;
-            self->velocityX = (D_us_801785F0 - self->posX.val) >> 3;
-            self->velocityY = (D_us_801785F4 - self->posY.val) >> 3;
+            s_AttackTargetLocationY = self->ext.demon.target->posY.val;
+            self->velocityX = (s_AttackTargetLocationX - self->posX.val) >> 3;
+            self->velocityY = (s_AttackTargetLocationY - self->posY.val) >> 3;
 
             self->facingLeft = self->velocityX > 0 ? 0 : 1;
             self->posX.val += self->velocityX;
 
             self->posY.val += self->velocityY;
-            D_us_801785F8 = abs(D_us_801785F0 - self->posX.val);
-            D_us_801785FC = abs(D_us_801785F4 - self->posY.val);
-            if ((D_us_801785F8 < FIX(8)) && (D_us_801785FC < FIX(1))) {
-                self->facingLeft = D_us_80178604;
+            s_AttackLocationDeltaX =
+                abs(s_AttackTargetLocationX - self->posX.val);
+            s_AttackLocationDeltaY =
+                abs(s_AttackTargetLocationY - self->posY.val);
+            if ((s_AttackLocationDeltaX < FIX(8)) &&
+                (s_AttackLocationDeltaY < FIX(1))) {
+                self->facingLeft = s_IsTargetFacingLeft;
                 self->step++;
             }
         }
         break;
     case 3:
-        D_us_80178608 = rand() % 2;
-        SetAnimationFrame(self, D_us_80178608 ? 1 : 3);
+        s_TempRand = rand() % 2;
+        SetAnimationFrame(self, s_TempRand ? 1 : 3);
 
         g_api.GetServantStats(
             self,
-            D_us_80178608 ? FAM_ABILITY_DEMON_UNK21 : FAM_ABILITY_DEMON_UNK22,
-            1, &s_DemonStats);
+            s_TempRand ? FAM_ABILITY_DEMON_UNK21 : FAM_ABILITY_DEMON_UNK22, 1,
+            &s_DemonStats);
 
-        D_us_80178608 = rand() % 8;
-        switch (D_us_80178608) {
+        s_TempRand = rand() % 8;
+        switch (s_TempRand) {
         case 0:
             g_api.PlaySfx(g_DemonSfxMap[0]);
             break;
@@ -1019,7 +1033,7 @@ void func_us_80174FD0(Entity* self) {
         self->step++;
         break;
     case 4:
-        if (D_us_80178600 == -2) {
+        if (s_AttackAnimationStatus == -2) {
             self->ext.demon.abilityTimer = 0;
             self->step++;
         }
@@ -1042,24 +1056,22 @@ void func_us_80174FD0(Entity* self) {
             break;
         }
         if ((rand() % 0x100) <=
-            g_DemonAttackStats[s_DemonStats.level / 10][0]) {
+            g_DemonAttackSelector[s_DemonStats.level / 10][0]) {
             self->step = 1;
         } else {
-            self->entityId = DEMON_MODE_UNK_D3;
+            self->entityId = DEMON_MODE_SPECIAL_ATTACK;
             self->step = 0;
         }
 
         break;
     }
-    D_us_80178600 =
-        ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+    s_AttackAnimationStatus =
+        ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
-
-extern s32 g_DemonSfxMap[];
 
 // PSX: https://decomp.me/scratch/vbedA
 // PSP: https://decomp.me/scratch/mRGqb
-void func_us_8017540C(Entity* self) {
+void UpdateServantSpecialAttack(Entity* self) {
     s32 i;
 
     if (D_us_801786D4) {
@@ -1070,7 +1082,7 @@ void func_us_8017540C(Entity* self) {
         ExecuteAbilityInitialize(self);
         break;
     case 1:
-        D_us_80178620 = self->ext.demon.target->facingLeft;
+        s_IsSpecialAttackTargetFacingLeft = self->ext.demon.target->facingLeft;
         self->step++;
 
     case 2:
@@ -1079,50 +1091,57 @@ void func_us_8017540C(Entity* self) {
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         } else {
-            D_us_8017860C = self->ext.demon.target->posX.val;
-            D_us_8017860C += D_us_80178620 ? FIX(32) : FIX(-32);
+            s_SpecialAttackTargetPosX = self->ext.demon.target->posX.val;
+            s_SpecialAttackTargetPosX +=
+                s_IsSpecialAttackTargetFacingLeft ? FIX(32) : FIX(-32);
 
-            D_us_80178610 = self->ext.demon.target->posY.val;
-            self->velocityX = (D_us_8017860C - self->posX.val) >> 3;
-            self->velocityY = (D_us_80178610 - self->posY.val) >> 3;
+            s_SpecialAttackTargetPosY = self->ext.demon.target->posY.val;
+            self->velocityX = (s_SpecialAttackTargetPosX - self->posX.val) >> 3;
+            self->velocityY = (s_SpecialAttackTargetPosY - self->posY.val) >> 3;
             self->facingLeft = self->velocityX > 0 ? 0 : 1;
 
             self->posX.val += self->velocityX;
             self->posY.val += self->velocityY;
 
-            D_us_80178614 = abs(D_us_8017860C - self->posX.val);
-            D_us_80178618 = abs(D_us_80178610 - self->posY.val);
-            if ((D_us_80178614 < FIX(8)) && (D_us_80178618 < FIX(1))) {
-                self->facingLeft = D_us_80178620;
+            s_SpecialAttackLocationDeltaX =
+                abs(s_SpecialAttackTargetPosX - self->posX.val);
+            s_SpecialAttackLocationDeltaY =
+                abs(s_SpecialAttackTargetPosY - self->posY.val);
+            if ((s_SpecialAttackLocationDeltaX < FIX(8)) &&
+                (s_SpecialAttackLocationDeltaY < FIX(1))) {
+                self->facingLeft = s_IsSpecialAttackTargetFacingLeft;
                 self->step++;
             }
         }
         break;
     case 3:
-        D_us_80178624 = rand() % 256;
+        s_SpecialAttackIdx = rand() % 256;
 
         for (i = 1; i < 6; i++) {
-            if (D_us_80178624 <=
-                g_DemonAttackStats[s_DemonStats.level / 10][i]) {
-                D_us_80178624 = i - 1;
+            if (s_SpecialAttackIdx <=
+                g_DemonAttackSelector[s_DemonStats.level / 10][i]) {
+                s_SpecialAttackIdx = i - 1;
                 break;
             }
         }
 
-        SetAnimationFrame(self, g_DemonAttackIdSfxLookup[D_us_80178624][0]);
-        g_api.PlaySfx(
-            g_DemonSfxMap[g_DemonAttackIdSfxLookup[D_us_80178624][1]]);
+        SetAnimationFrame(
+            self, g_DemonAttackIdSfxLookup[s_SpecialAttackIdx].animationIndex);
+        g_api.PlaySfx(g_DemonSfxMap[g_DemonAttackIdSfxLookup[s_SpecialAttackIdx]
+                                        .sfxIndex]);
 
         g_api.GetServantStats(
-            self, g_DemonAttackIdSfxLookup[D_us_80178624][2], 1, &s_DemonStats);
+            self, g_DemonAttackIdSfxLookup[s_SpecialAttackIdx].abilityId, 1,
+            &s_DemonStats);
         // This is for the different Attack types.  Param selects update
         // function from passthrough array
-        CreateEventEntity(self, DEMON_EVENT_ATTACK_UPDATE, D_us_80178624);
+        CreateEventEntity(
+            self, DEMON_SPECIAL_ATTACK_UPDATE, s_SpecialAttackIdx);
 
         self->step++;
         break;
     case 4:
-        if (D_us_8017861C == -2) {
+        if (s_SpecialAttackAnimationStatus == -2) {
             self->ext.demon.abilityTimer = 0;
             self->step++;
         }
@@ -1141,14 +1160,14 @@ void func_us_8017540C(Entity* self) {
         }
         break;
     }
-    D_us_8017861C =
-        ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+    s_SpecialAttackAnimationStatus =
+        ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
 void unused_5800(Entity* self) {}
 void unused_5808(Entity* self) {}
 
-void func_us_80175810(Entity* self) {
+void UpdateServantPressSwitch(Entity* self) {
     Entity* sfxEntity;
     s32 xCalc;
     s32 yCalc;
@@ -1157,17 +1176,17 @@ void func_us_80175810(Entity* self) {
     if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
     }
-    if (D_us_801786D8) {
-        D_us_80178628 = D_us_801786D8->posX.val;
-        D_us_8017862C = D_us_801786D8->posY.val;
-        self->ext.demon.attackVelocityOffset += 0x40;
-        self->ext.demon.attackVelocityOffset &= 0xFFF;
-        D_us_8017862C =
-            (rsin((s32)self->ext.demon.attackVelocityOffset) << 3 << 4) +
-            D_us_8017862C;
+    if (s_CurrentSwitch) {
+        s_SwitchPoxX = s_CurrentSwitch->posX.val;
+        s_SwitchPoxY = s_CurrentSwitch->posY.val;
+        self->ext.demon.switchPressVelocityOffset += 0x40;
+        self->ext.demon.switchPressVelocityOffset &= 0xFFF;
+        s_SwitchPoxY =
+            (rsin((s32)self->ext.demon.switchPressVelocityOffset) << 3 << 4) +
+            s_SwitchPoxY;
 
-        self->velocityX = (D_us_80178628 - self->posX.val) >> 5;
-        self->velocityY = (D_us_8017862C - self->posY.val) >> 5;
+        self->velocityX = (s_SwitchPoxX - self->posX.val) >> 5;
+        self->velocityY = (s_SwitchPoxY - self->posY.val) >> 5;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
     }
@@ -1183,21 +1202,23 @@ void func_us_80175810(Entity* self) {
         }
         self->facingLeft = facingLeft;
 
-        xCalc = (D_us_80178628 - self->posX.val) >> 0x10;
-        yCalc = (D_us_8017862C - self->posY.val) >> 0x10;
+        xCalc = (s_SwitchPoxX - self->posX.val) >> 0x10;
+        yCalc = (s_SwitchPoxY - self->posY.val) >> 0x10;
         if ((SquareRoot12((SQ(xCalc) + SQ(yCalc)) << 0xC) >> 0xC) < 0x10) {
             if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
                 self->facingLeft = 0;
-                D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[1];
+                s_SwitchSfxEvent =
+                    (ServantSfxEventDesc*)g_SfxDemonSwitchRandomizer[1];
             } else {
                 self->facingLeft = 1;
-                D_us_80178634 = (ServantSfxEventDesc*)D_us_80172080[3];
+                s_SwitchSfxEvent =
+                    (ServantSfxEventDesc*)g_SfxDemonSwitchRandomizer[3];
             }
             self->step++;
         }
         break;
     case 2:
-        D_us_80178638 = ((s16*)D_us_80178634)[0];
+        s_CurrentSwitchSfxFlag = ((s16*)s_SwitchSfxEvent)[0];
 #ifndef VERSION_PSP
         g_PauseAllowed = false;
 #endif
@@ -1205,10 +1226,10 @@ void func_us_80175810(Entity* self) {
         // fallthrough
     case 3:
 
-        if (D_us_80178638 < 0) {
+        if (s_CurrentSwitchSfxFlag < 0) {
             if (g_PlaySfxStep > 4) {
 
-                SetAnimationFrame(self, D_us_80178634->animIndex);
+                SetAnimationFrame(self, s_SwitchSfxEvent->animIndex);
 #ifndef VERSION_PSP
                 g_PauseAllowed = true;
 #endif
@@ -1216,17 +1237,17 @@ void func_us_80175810(Entity* self) {
             }
         } else {
             if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
-                D_us_80178638--;
+                s_CurrentSwitchSfxFlag--;
             }
-            if (D_us_80178638 < 0) {
-                SetAnimationFrame(self, D_us_80178634->animIndex);
-                if (D_us_80178634->sfxId != 0 &&
+            if (s_CurrentSwitchSfxFlag < 0) {
+                SetAnimationFrame(self, s_SwitchSfxEvent->animIndex);
+                if (s_SwitchSfxEvent->sfxId != 0 &&
                     !SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) {
                     CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
-                                      D_us_80178634->sfxId);
+                                      s_SwitchSfxEvent->sfxId);
                 }
-                D_us_80178634++;
-                D_us_80178638 = ((s16*)D_us_80178634)[0];
+                s_SwitchSfxEvent++;
+                s_CurrentSwitchSfxFlag = ((s16*)s_SwitchSfxEvent)[0];
             }
         }
         break;
@@ -1239,7 +1260,7 @@ void func_us_80175810(Entity* self) {
         break;
     }
 
-    if (D_us_801786D8 && !D_us_801786D8->entityId) {
+    if (s_CurrentSwitch && !s_CurrentSwitch->entityId) {
 #ifndef VERSION_PSP
         g_PauseAllowed = true;
 #endif
@@ -1259,12 +1280,12 @@ void func_us_80175810(Entity* self) {
     ServantUpdateAnim(self, NULL, g_DemonAnimationFrames);
 }
 
-void func_us_80175C08(Entity* self) {
+void UpdateSubentitySwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
-        D_us_801786D8 = self;
+        s_CurrentSwitch = self;
         D_us_801786DC = 0;
 
         if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
@@ -1303,12 +1324,12 @@ void func_us_80175C08(Entity* self) {
     }
 }
 
-void func_us_80175D20(Entity* self) {
+void UpdateServantAdditionalInit(Entity* self) {
     s16 rnd;
     s32 i;
 
     g_api.GetServantStats(self, 0, 0, &s_DemonStats);
-    if (D_us_801786D4 != 0) {
+    if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     D_us_80178658 = -0x18;
@@ -1381,7 +1402,7 @@ void func_us_80175D20(Entity* self) {
             SetAnimationFrame(self, 11);
         }
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
-            D_us_801786D0 == true || g_CutsceneHasControl ||
+            D_us_801786D0 == 1 || g_CutsceneHasControl ||
             g_unkGraphicsStruct.D_800973FC) {
             SetAnimationFrame(self, 0);
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
@@ -1403,22 +1424,22 @@ void func_us_80175D20(Entity* self) {
         rnd = rand() % 0x100;
         if (s_DemonStats.unk8 == true) {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_8017204C[i * 2]) {
-                    D_us_80178668 =
-                        (ServantSfxEventDesc*)D_us_8017204C[i * 2 + 1];
+                if (rnd <= g_SfxDemonIntroPrevSummoned[i * 2]) {
+                    s_CurrentIntroEvent = (ServantSfxEventDesc*)
+                        g_SfxDemonIntroPrevSummoned[i * 2 + 1];
                     break;
                 }
             }
         } else {
             for (i = 0; true; i++) {
-                if (rnd <= D_us_80172060[i * 2]) {
-                    D_us_80178668 =
-                        (ServantSfxEventDesc*)D_us_80172060[i * 2 + 1];
+                if (rnd <= g_SfxDemonIntroNewSummoned[i * 2]) {
+                    s_CurrentIntroEvent = (ServantSfxEventDesc*)
+                        g_SfxDemonIntroNewSummoned[i * 2 + 1];
                     break;
                 }
             }
         }
-        D_us_8017866C = ((s16*)D_us_80178668)[0];
+        s_CurrentIntroSfxFlag = ((s16*)s_CurrentIntroEvent)[0];
         g_PauseAllowed = false;
         self->step++;
         break;
@@ -1428,26 +1449,26 @@ void func_us_80175D20(Entity* self) {
         } else {
             self->facingLeft = true;
         }
-        if (D_us_8017866C < 0) {
+        if (s_CurrentIntroSfxFlag < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(self, D_us_80178668->animIndex);
+                SetAnimationFrame(self, s_CurrentIntroEvent->animIndex);
                 self->step++;
             }
             break;
         }
         if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 99)) {
-            D_us_8017866C--;
+            s_CurrentIntroSfxFlag--;
         }
-        if (D_us_8017866C < 0) {
-            SetAnimationFrame(self, D_us_80178668->animIndex);
-            if ((D_us_80178668->sfxId != 0) &&
+        if (s_CurrentIntroSfxFlag < 0) {
+            SetAnimationFrame(self, s_CurrentIntroEvent->animIndex);
+            if ((s_CurrentIntroEvent->sfxId != 0) &&
                 (SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH) ==
                  NULL)) {
-                CreateEventEntity(
-                    self, DEMON_EVENT_SFX_PASSTHROUGH, D_us_80178668->sfxId);
+                CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
+                                  s_CurrentIntroEvent->sfxId);
             }
-            D_us_80178668++;
-            D_us_8017866C = ((s16*)D_us_80178668)[0];
+            s_CurrentIntroEvent++;
+            s_CurrentIntroSfxFlag = ((s16*)s_CurrentIntroEvent)[0];
         }
         break;
     case 4:
@@ -1463,14 +1484,12 @@ void func_us_80175D20(Entity* self) {
         break;
     }
     ProcessEvent(self, false);
-    ServantUpdateAnim(self, D_us_80171FE8, g_DemonAnimationFrames);
+    ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-void UpdateEventAttack(Entity* self) {
-    s_PassthroughFunctions[self->params](self);
-}
+void UpdateEventAttack(Entity* self) { g_AttackFunctions[self->params](self); }
 
 void func_us_801765A0(Entity* self) {
     s32 velocityX;
@@ -1928,7 +1947,7 @@ void func_us_80177690(Entity* self) {
     switch (self->params) {
     case 0:
         D_us_801786D0 = 1;
-        entity = SearchForEntityInRange(0, 217);
+        entity = SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH);
         if ((entity != NULL) && (entity->step < 5)) {
             entity->step = 8;
         }
