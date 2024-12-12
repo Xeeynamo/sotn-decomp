@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 #include <servant.h>
+#include <sfx.h>
 
 typedef enum {
     FAERIE_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
@@ -33,16 +34,8 @@ typedef enum {
 #define ROOM_SPECIAL_STATE_SUS_HINT2 9
 #define ROOM_SPECIAL_STATE_SUS_HINT3 11
 
+// These are all SFX keys that are loaded from TT_002.VB/VH
 typedef enum {
-    FAERIE_INTRO_LIFE = 0x472, // "Thank you for giving me life"
-    FAERIE_INTRO_COMMAND,      // "Your word is my command"
-    FAERIE_LETS_GO = 0x476,    // "Let's go!"
-    FAERIE_FOLLOW = 0x479,     // "I'll follow you anywhere"
-    FAERIE_WALL_HINT = 0x47A,  // "There is something funny about this wall"
-    FAERIE_SUSPICIOUS_HINT = 0x48A, // "This is really suspicious looking"
-    FAERIE_MIST_HINT = 0x48E,       // "If only you could transform into mist"
-    FAERIE_DARKNESS_HINT =
-        0x492,              // "Some animals can live in complete darkness"
     FAERIE_HEALING = 0x885, // "Healing!"
     FAERIE_POTION,          // "Potion"
     FAERIE_REGENERATION,    // "Regeneration"

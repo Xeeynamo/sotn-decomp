@@ -3,6 +3,7 @@
 #define DEMON_H
 #include "common.h"
 #include <servant.h>
+#include <sfx.h>
 
 typedef enum {
     DEMON_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
@@ -21,11 +22,8 @@ typedef enum {
     DEMON_MODE_UNK_DE
 } EntityIds;
 
+// These are all SFX keys that are loaded from TT_003.VB/VH
 typedef enum {
-    DEMON_INTRO_COMMAND = 0x4E8, // Command me, my lord and master
-    DEMON_INTRO_READY = 0x4ED,   // I'm ready to serve, master
-    DEMON_SWITCH_1,        // Hmm, a switch.  Why don't I press it and see?
-    DEMON_SWITCH_2,        // Hmm, this switch hasn't been pressed yet
     DEMON_GRUNT_1 = 0x89E, // he-ya
     DEMON_GRUNT_2,         // huh
     DEMON_GRUNT_3,         // hrr
