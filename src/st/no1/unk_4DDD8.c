@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CDDD8);
+void func_us_801CDDD8(u8 step) {
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->ext.et_801CDE20.unk7C = 0;
+    g_CurrentEntity->ext.et_801CDE20.unk7D = 0;
+    g_CurrentEntity->ext.et_801CDE20.unk7E = 0;
+    g_CurrentEntity->step = step;
+}
 
 extern u16 D_us_80180A7C[];
 extern u8* D_us_8018285C[];
