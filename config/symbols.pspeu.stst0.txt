@@ -123,3 +123,4 @@ g_Rooms = 0x09257350;
 g_eDamageDisplayClut = 0x09279978;
 g_LayoutObjVertical = 0x0927BAF0;
 g_LayoutObjHorizontal = 0x0927BAF8;
+eRoomForegroundInit = 0x092799B0;
