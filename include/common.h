@@ -14,6 +14,8 @@
 // solution for doing proper deadstripping like the original.
 #define PSP_DEADSTRIP
 #define VERSION "psp"
+#define NOP                                                                    \
+    static asm nop_##line##() { nop }
 #elif defined(_internal_version_beta)
 #define VERSION_BETA
 #define VERSION "beta"
