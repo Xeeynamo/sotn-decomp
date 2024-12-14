@@ -102,10 +102,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     asm_files = get_asm_files("asm/us")
 
-    # sort by name, then number of branches, then length
+    # sort by name, then number of branches, then length, sort psxsdx to the bottom
     asm_files = sorted(asm_files, key=lambda x: (x["name"]))
     asm_files = sorted(asm_files, key=lambda x: (x["branches"]))
     asm_files = sorted(asm_files, key=lambda x: len(x["text"].split("\n")))
+    asm_files = sorted(asm_files, key=lambda x: 'psxsdk' in x['name'].as_posix())
 
     if args.keywords and len(args.keywords):
         # filter based on keywords
