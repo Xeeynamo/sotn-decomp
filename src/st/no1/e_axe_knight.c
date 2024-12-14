@@ -14,3 +14,5 @@ INCLUDE_ASM("st/no1/nonmatchings/e_axe_knight", func_us_801CAE04);
 INCLUDE_ASM("st/no1/nonmatchings/e_axe_knight", EntityAxeKnightRotateAxe);
 
 INCLUDE_ASM("st/no1/nonmatchings/e_axe_knight", EntityAxeKnightThrowingAxe);
+
+INCLUDE_ASM("st/no1/nonmatchings/e_axe_knight", func_us_801CBA30);

@@ -1,6 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+// Armor Lord fire wave helper
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D1184);
+
+// Armor Lord fire wave helper
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D1388);
+
+// Armor Lord fire wave
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D18BC);
+
+void func_us_801D1A94(void) {}
+
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D1A9C);
+
 extern MATRIX D_us_80182DF4;
 extern SVECTOR D_us_80182E14;
 extern SVECTOR D_us_80182E1C;
@@ -417,42 +430,5 @@ s32 func_us_801D1DAC(void) {
     return 0;
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D2D00);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D348C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D3700);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D37A4);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D38E4);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D3918);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D3A74);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D42EC);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D4400);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D4558);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D4950);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D49E4);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D4F18);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D5008);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D5040);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D544C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D563C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D5808);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D582C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_51DAC", func_us_801D5A10);
+// Armor Lord
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D2D00);
