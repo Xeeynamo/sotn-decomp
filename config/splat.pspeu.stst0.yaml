@@ -66,7 +66,7 @@ segments:
       - [0x14160, c, st0_psp/e_collect]
       - [0x15CC8, c, st0_psp/e_misc]
       - [0x16278, c, st0_psp/collision]
-      - [0x18000, c, st0_psp/popup]
+      - [0x18000, c, st0/popup]
       - [0x185F8, c, st0/e_room_fg]
       - [0x18710, c, st0/st_common]
       - [0x194C0, c, st0_psp/3D8F0]
