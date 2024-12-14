@@ -2325,6 +2325,15 @@ typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 : 8;
+} ET_801CDE20;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
     /* 0x7F */ u8 : 8;
     /* 0x80 */ u32 unk80;
     /* 0x84 */ u8 unk84;
@@ -2526,6 +2535,7 @@ typedef union { // offset=0x7C
     ET_801D1DAC et_801D1DAC;
     ET_801BA290 et_801BA290;
     ET_801BCB34 et_801BCB34;
+    ET_801CDE20 et_801CDE20;
     ET_801CF850 et_801CF850;
 } Ext;
 
