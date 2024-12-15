@@ -321,7 +321,3 @@ void func_us_801CDE20(Entity* self) {
 INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CE958);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CEA2C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CEB28);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CF298);

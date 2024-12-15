@@ -414,34 +414,6 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BDA0C);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BDF9C);
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BE2C8);
-
 INCLUDE_RODATA("st/no1/nonmatchings/unk_3CB34", D_us_801B4808);
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BE880);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BEB54);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BEE00);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BF074);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BF3F4);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BFA34);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BFB40);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C01F0);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C05DC);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C0A40);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C0B9C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C0E98);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C1090);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801C10F4);
+INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BE2C8);
