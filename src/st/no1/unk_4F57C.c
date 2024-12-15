@@ -418,7 +418,36 @@ void func_us_801CF850(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_4F57C", func_us_801D04B8);
+extern u16 D_us_80180AB8[];
+extern s8 D_us_80182B64[][4];
+extern u8 D_us_80182BB8[];
+
+void func_us_801D04B8(Entity* self) {
+    s32 curFrame;
+    s8* hitboxPtr;
+    Entity* tempEntity;
+
+    if (!self->step) {
+        InitializeEntity(D_us_80180AB8);
+    }
+    tempEntity = self - 1;
+    curFrame = tempEntity->animCurFrame;
+    if (curFrame > 0x1D) {
+        curFrame = 0;
+    }
+    hitboxPtr = D_us_80182B64[0];
+    hitboxPtr += D_us_80182BB8[curFrame] * 4;
+    self->hitboxOffX = *hitboxPtr++;
+    self->hitboxOffY = *hitboxPtr++;
+    self->hitboxWidth = *hitboxPtr++;
+    self->hitboxHeight = *hitboxPtr++;
+    self->facingLeft = tempEntity->facingLeft;
+    self->posX.i.hi = tempEntity->posX.i.hi;
+    self->posY.i.hi = tempEntity->posY.i.hi;
+    if (tempEntity->entityId != E_ID_48) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_4F57C", func_us_801D0598);
 
