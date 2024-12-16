@@ -43,7 +43,7 @@ segments:
       - [0xC9C, data]
       - [0x1A5C, .data, st_update]
       - [0x1A88, .data, collision]
-      - [0x1E48, data, st_common]
+      - [0x1E48, .data, st_common]
       - [0x2048, data, e_collect]
       - [0x2338, data, e_misc]
       - [0x2410, data]
