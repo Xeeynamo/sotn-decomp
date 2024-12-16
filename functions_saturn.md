@@ -853,7 +853,7 @@
 | game/f_nonmat/f60720F4.s     | func_060720F4   |      766 |         59 |                                 |       |
 | t_bat/f_nonmat/f60D0A64.s    | func_060D0A64   |      781 |         59 |                                 |       |
 | alucard/f_nonmat/f60C5320.s  | func_060C5320   |      859 |         79 |                                 |       |
-| stage_02/f_nonmat/f60EAFAC.s | func_060EAFAC   |      862 |        103 | https://decomp.me/scratch/ZvlTe | 0.127 |
+| stage_02/f_nonmat/f60EAFAC.s | func_060EAFAC   |      862 |        103 | https://decomp.me/scratch/pk1k6 | 0.055 |
 | zero/f_nonmat/f60155CC.s     | func_060155CC   |      869 |         35 |                                 |       |
 | game/f_nonmat/f606CA10.s     | func_0606CA10   |      874 |         84 |                                 |       |
 | alucard/f_nonmat/f60BE888.s  | func_060BE888   |      886 |         75 |                                 |       |
