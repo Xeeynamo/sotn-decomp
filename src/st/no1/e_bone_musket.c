@@ -46,9 +46,9 @@ void func_us_801CEB28(Entity* self) {
                     CreateEntityFromEntity(E_ID_46, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
-                        tempEntity->posX.i.hi -= D_us_80182A4C[i];
+                        tempEntity->posX.i.hi -= D_80182A4C[i];
                     } else {
-                        tempEntity->posX.i.hi += D_us_80182A4C[i];
+                        tempEntity->posX.i.hi += D_80182A4C[i];
                     }
                     tempEntity->params = i;
                 }
