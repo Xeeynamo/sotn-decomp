@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
+INCLUDE_RODATA("st/no1/nonmatchings/e_misc", D_us_801B4930);
+
 INCLUDE_ASM("st/no1/nonmatchings/e_misc", EntityRelicOrb);
 
 INCLUDE_ASM("st/no1/nonmatchings/e_misc", EntityHeartDrop);
