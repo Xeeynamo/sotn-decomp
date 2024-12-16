@@ -10,7 +10,7 @@ extern u8 D_us_801829E0[];
 extern u8 D_us_80182A24[];
 extern u8 D_us_80182A2C[];
 extern u8 D_us_80182A38[];
-extern s16 D_us_80182A4C[];
+extern s16 D_80182A4C[];
 extern s32 D_us_80182A54[];
 extern u8 D_us_80182A60[][2];
 extern s16 D_us_80182A68[];
