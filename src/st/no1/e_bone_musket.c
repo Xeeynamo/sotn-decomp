@@ -47,6 +47,7 @@ void func_us_801CF298(Entity* self) {
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         PlaySfxPositional(SFX_GUNSHOT_HIGH);
+
     case 1:
         prim = self->ext.prim;
         tempEntity = &PLAYER;
@@ -57,10 +58,12 @@ void func_us_801CF298(Entity* self) {
             } else {
                 prim->x1 = 0x100;
             }
-        } else if (tempVar < prim->x0) {
-            prim->x1 = tempVar;
         } else {
-            prim->x1 = 0;
+            if (tempVar < prim->x0) {
+                prim->x1 = tempVar;
+            } else {
+                prim->x1 = 0;
+            }
         }
         tempVar = abs(prim->x1 - prim->x0);
         self->hitboxWidth = tempVar / 2;
