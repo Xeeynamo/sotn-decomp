@@ -2345,8 +2345,8 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
-    /* 0x80 */ s16 : 16;
-    /* 0x82 */ s16 unk82;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 unk80;
 } ET_MedusaHead;
 
 typedef union { // offset=0x7C

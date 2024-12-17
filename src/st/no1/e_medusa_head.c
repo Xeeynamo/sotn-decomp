@@ -88,13 +88,13 @@ void func_us_801D582C(Entity* self) {
         if (self->velocityY > 0) {
             self->animCurFrame += 2;
         }
-        self->velocityY += self->ext.medusaHead.unk82;
+        self->velocityY += self->ext.medusaHead.unk80;
         dir = self->velocityY;
         if (dir < 0) {
             dir = -dir;
         }
         if (dir >= FIX(2.5)) {
-            self->ext.medusaHead.unk82 = -self->ext.medusaHead.unk82;
+            self->ext.medusaHead.unk80 = -self->ext.medusaHead.unk80;
         }
         MoveEntity();
         return;
@@ -122,8 +122,8 @@ void func_us_801D582C(Entity* self) {
     self->facingLeft = D_us_80183438[dir].facingLeft;
     self->velocityY = FIX(2.5) - ((Random() & 0xF) * FIX(2.5) >> 3);
     if (self->velocityY > 0) {
-        self->ext.medusaHead.unk82 = -0x2800;
+        self->ext.medusaHead.unk80 = -0x2800;
     } else {
-        self->ext.medusaHead.unk82 = 0x2800;
+        self->ext.medusaHead.unk80 = 0x2800;
     }
 }
