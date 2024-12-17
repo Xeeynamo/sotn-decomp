@@ -2354,9 +2354,9 @@ typedef struct {
 } ET_801CEB28;
 
 typedef struct {
-    /* 0x7C */ u16 unk7C;
+    /* 0x7C */ u16 timer;
     /* 0x7E */ s16 : 16;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 accelY;
 } ET_MedusaHead;
 
 typedef union { // offset=0x7C

@@ -45,8 +45,8 @@ void func_us_801D563C(Entity* self) {
     if ((g_Tilemap.scrollY.i.hi >= params->yMax) &&
         (g_Tilemap.scrollY.i.hi <= params->yMin) &&
         (LOH(PLAYER.posY.i.hi) >= 0x20) && (PLAYER.posY.i.hi < 0xC1)) {
-        if (self->ext.medusaHead.unk7C) {
-            self->ext.medusaHead.unk7C--;
+        if (self->ext.medusaHead.timer) {
+            self->ext.medusaHead.timer--;
             return;
         }
         tempEntity =
@@ -61,10 +61,10 @@ void func_us_801D563C(Entity* self) {
                 tempEntity->pfnUpdate = func_us_801D582C;
             }
             tempEntity->zPriority = params->zPriority;
-            self->ext.medusaHead.unk7C = params->timer;
+            self->ext.medusaHead.timer = params->timer;
             return;
         }
-        self->ext.medusaHead.unk7C++;
+        self->ext.medusaHead.timer++;
     }
 }
 
@@ -88,13 +88,13 @@ void func_us_801D582C(Entity* self) {
         if (self->velocityY > 0) {
             self->animCurFrame += 2;
         }
-        self->velocityY += self->ext.medusaHead.unk80;
+        self->velocityY += self->ext.medusaHead.accelY;
         dir = self->velocityY;
         if (dir < 0) {
             dir = -dir;
         }
         if (dir >= FIX(2.5)) {
-            self->ext.medusaHead.unk80 = -self->ext.medusaHead.unk80;
+            self->ext.medusaHead.accelY = -self->ext.medusaHead.accelY;
         }
         MoveEntity();
         return;
@@ -122,8 +122,8 @@ void func_us_801D582C(Entity* self) {
     self->facingLeft = D_us_80183438[dir].facingLeft;
     self->velocityY = FIX(2.5) - ((Random() & 0xF) * FIX(2.5) >> 3);
     if (self->velocityY > 0) {
-        self->ext.medusaHead.unk80 = -0x2800;
+        self->ext.medusaHead.accelY = FIX(-5.0 / 32);
     } else {
-        self->ext.medusaHead.unk80 = 0x2800;
+        self->ext.medusaHead.accelY = FIX(5.0 / 32);
     }
 }
