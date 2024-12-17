@@ -476,7 +476,7 @@
 | wrp    | EntityBackgroundBlock               |       75 |          6 |        |                                 |       |
 | dra    | func_psp_09108D40                   |       75 |         10 |        |                                 |       |
 | dra    | func_800FD6C4                       |       75 |         14 |        |                                 |       |
-| dra    | func_801027C4                       |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.938 |
+| dra    | func_801027C4                       |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.94  |
 | dra    | func_psp_0911B820                   |       76 |          8 |        |                                 |       |
 | dra    | func_psp_09136F30                   |       76 |         13 |        |                                 |       |
 | st0    | func_pspeu_09248080                 |       77 |          2 |        |                                 |       |
