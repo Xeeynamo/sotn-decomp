@@ -2347,7 +2347,7 @@ typedef struct {
     /* 0x7C */ u16 unk7C;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 unk82;
-} MedusaHead;
+} ET_MedusaHead;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -2543,7 +2543,7 @@ typedef union { // offset=0x7C
     ET_801BCB34 et_801BCB34;
     ET_801CDE20 et_801CDE20;
     ET_801CF850 et_801CF850;
-    MedusaHead medusaHead;
+    ET_MedusaHead medusaHead;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
