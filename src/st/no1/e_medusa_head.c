@@ -10,8 +10,19 @@ typedef struct {
     s16 zPriority;
 } MedusaHeadSpawnerParams;
 
+typedef struct {
+    s32 velocityX;
+    s16 posX;
+    s16 facingLeft;
+} MedusaHeadParams;
+
 extern u16 D_us_8018095C[];
+extern u16 D_us_80180B48[];
+extern u16 D_us_80180B54[];
 extern MedusaHeadSpawnerParams D_us_801833D0[];
+extern u8 D_us_80183430[];
+extern MedusaHeadParams D_us_80183438[];
+
 extern void func_us_801D5808(Entity* self);
 extern void func_us_801D582C(Entity* self);
 
@@ -62,17 +73,6 @@ void func_us_801D5808(Entity* self) {
     self->params = 1;
     func_us_801D582C(self);
 }
-
-typedef struct {
-    s32 velocityX;
-    s16 posX;
-    s16 facingLeft;
-} MedusaHeadParams;
-
-extern u16 D_us_80180B48[];
-extern u16 D_us_80180B54[];
-extern u8 D_us_80183430[];
-extern MedusaHeadParams D_us_80183438[];
 
 // Medusa Head
 void func_us_801D582C(Entity* self) {
