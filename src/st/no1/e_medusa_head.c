@@ -106,7 +106,7 @@ void func_us_801D582C(Entity* self) {
         InitializeEntity(D_us_80180B54);
     }
 
-    self->posY.i.hi = player->posY.i.hi;
+    self->posY.i.hi = player->posY.i.hi - 0;
     dir = 0;
     if (player->posX.i.hi < 0x50) {
         dir = 1;
