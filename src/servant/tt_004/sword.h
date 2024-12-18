@@ -17,6 +17,13 @@ typedef enum {
     SWORD_UNK_DD,
     SWORD_UNK_DE,
     SWORD_UNK_DF,
-} SwordEntity;
+} SwordEntityId;
+
+typedef struct {
+    s32 unk0;
+    s16 unk4;
+    s16 unk6;
+    s32 unk8;
+} SwordUnk_A0;
 
 extern ServantDesc sword_ServantDesc;

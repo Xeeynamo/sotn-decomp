@@ -680,14 +680,23 @@ typedef struct {
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 : 16;
+    /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8a;
+    /* 0x8A */ s16 currentX;
     /* 0x8c */ s16 unk8c;
-    /* 0x8e */ s16 unk8e;
+    /* 0x8e */ s16 targetX;
     /* 0x90 */ s32 posX;
     /* 0x94 */ s32 posY;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s32 : 32;
+    /* 0xB4 */ struct Entity* follow;
 } ET_SwordFamiliar;
 
 struct draculaPrimitive;
