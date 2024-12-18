@@ -33,7 +33,10 @@ typedef enum EntityIDs {
     /* 0x15 */ E_GREY_PUFF,
     /* 0x21 */ E_AXE_KNIGHT,
     /* 0x2A */ E_ID_2A = 0x2A,
-    /* 0x41 */ E_ID_41 = 0x41,
+    /* 0x3E */ E_SKELETON = 0x3E,
+    /* 0x3F */ E_SKELETON_THROWN_BONE,
+    /* 0x40 */ E_SKELETON_PIECES,
+    /* 0x41 */ E_ID_41,
     /* 0x42 */ E_ID_42,
     /* 0x43 */ E_ID_43,
     /* 0x46 */ E_ID_46 = 0x46,
@@ -41,3 +44,8 @@ typedef enum EntityIDs {
     /* 0x48 */ E_ID_48,
     /* 0x49 */ E_ID_49,
 } EntityIDs;
+
+// Skeleton
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
