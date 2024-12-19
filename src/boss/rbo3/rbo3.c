@@ -138,8 +138,6 @@ void func_us_80191438(Entity* self) {
     }
 }
 
-extern Entity D_8007A958;
-extern Entity D_8007C0D8;
 extern EInit D_us_80180480;
 extern u8 RBO3_PrizeDrops[];
 extern u8 D_us_801805FC[];
@@ -744,7 +742,6 @@ void func_us_80192998(Entity* self) {
     }
 }
 
-extern Entity D_8007A958;
 extern EInit g_EInitInteractable;
 extern s32 D_us_80180728;
 extern s32 D_us_8018072C;

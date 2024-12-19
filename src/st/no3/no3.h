@@ -220,7 +220,6 @@ extern u32 g_CutsceneFlags;
 
 // *** EntityFireWarg properties START ***
 
-extern Entity D_8007A958;
 extern u8 D_801827DC;
 extern u8 D_801827EC;
 extern u8 D_801827FC;
