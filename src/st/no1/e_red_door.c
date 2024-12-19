@@ -421,7 +421,258 @@ INCLUDE_ASM("st/no1/nonmatchings/e_red_door", func_us_801B9028);
 
 INCLUDE_ASM("st/no1/nonmatchings/e_red_door", func_us_801B9184);
 
-INCLUDE_ASM("st/no1/nonmatchings/e_red_door", func_us_801B9304);
+extern s16 D_us_80181454[];
+extern s16 D_us_80181464[];
+extern u16 g_EInitInteractable[];
+extern s32 D_psp_091CE570;
+
+void func_us_801B9304(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+    s16 angle;
+    u8 count;
+
+#ifdef VERSION_PSP
+    if (D_psp_091CE570) {
+        func_psp_0925F440();
+    }
+#endif
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+#ifdef VERSION_PSP
+        func_psp_0925F440();
+#endif
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801B9304.unk7C = prim;
+            self->ext.et_801B9304.unk84 = prim;
+            for (i = 0; prim != NULL; i++, prim = prim->next,
+                prim->drawMode &= ~DRAW_UNK02, prim = prim->next) {
+                UnkPolyFunc2(prim);
+                prim->tpage = 0x11;
+                prim->clut = 0x19C;
+#ifdef VERSION_PSP
+                prim->u0 = prim->u2 = i * 18;
+                prim->u1 = prim->u3 = prim->u0 + 0x12;
+#else
+                prim->u0 = prim->u2 = i * 16 + 8;
+                prim->u1 = prim->u3 = prim->u0 + 0x10;
+#endif
+                prim->v0 = prim->v1 = 0x6C;
+                prim->v2 = prim->v3 = prim->v0 + 0x10;
+                prim->next->x1 = D_us_80181464[i];
+                prim->next->x1 += D_us_80181454[i];
+                prim->next->y0 = 0xA8;
+                prim->next->r3 = i;
+                LOH(prim->next->r2) = LOH(prim->next->b2) = 0x10;
+                prim->next->b3 = 0;
+                LOH(prim->next->u1) = 0x400;
+                prim->priority = 0xB1;
+                prim->drawMode = DRAW_HIDE;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.et_801B9304.unk80 = 1;
+        break;
+
+    case 1:
+        if (!--self->ext.et_801B9304.unk80) {
+            self->ext.et_801B9304.unk80 = 8;
+            prim = self->ext.et_801B9304.unk84;
+            prim->next->u2 = 1;
+            prim = prim->next;
+            prim = prim->next;
+            if (prim == NULL) {
+                self->step++;
+            } else {
+                self->ext.et_801B9304.unk84 = prim;
+            }
+        }
+        prim = self->ext.et_801B9304.unk7C;
+        while (prim != NULL) {
+            if (prim->p3 == 8) {
+                func_us_801B9184(prim);
+            }
+            prim = prim->next;
+        }
+        break;
+
+    case 2:
+        count = 0;
+        prim = self->ext.et_801B9304.unk7C;
+        while (prim != NULL) {
+            if (prim->p3 == 8) {
+                count += func_us_801B9184(prim);
+            }
+            prim = prim->next;
+        }
+        if (count == 7) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        prim = self->ext.et_801B9304.unk7C;
+        while (prim != NULL) {
+            UnkPolyFunc0(prim);
+            prim = prim->next;
+            prim = prim->next;
+        }
+        prim = self->ext.et_801B9304.unk7C;
+        prim->tpage = 0x11;
+        prim->clut = 0x19C;
+#ifdef VERSION_PSP
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = prim->u0 + 0x7E;
+#else
+        prim->u0 = prim->u2 = 8;
+        prim->u1 = prim->u3 = prim->u0 + 0x70;
+#endif
+        prim->v0 = prim->v1 = 0x6C;
+        prim->v2 = prim->v3 = prim->v0 + 0x10;
+        prim->x0 = prim->x2 = D_us_80181464[0] - 8;
+        prim->x1 = prim->x3 = prim->x0 + 0x70;
+        prim->y0 = prim->y1 = 0xA0;
+        prim->y2 = prim->y3 = 0xB0;
+        prim->priority = 0xB0;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+        self->ext.et_801B9304.unk84 = prim;
+        for (i = 0; i < 3; i++) {
+            UnkPolyFunc2(prim);
+            prim->tpage = 0x11;
+            prim->clut = 0x19C;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
+            prim->v0 = prim->v1 = 0x6C;
+            prim->v2 = prim->v3 = prim->v0 + 0x10;
+            prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0;
+            prim->y0 = prim->y1 = prim->y2 = prim->y3 = 0;
+            prim->next->x1 = D_us_80181464[0] - 8;
+            prim->next->y0 = 0xA8;
+            prim->next->r3 = i * 2;
+            LOH(prim->next->r2) = 0x12;
+            LOH(prim->next->b2) = 0x12;
+            prim->next->b3 = 0x48;
+            LOH(prim->next->u1) = 0;
+            prim->priority = 0xB1;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            prim = prim->next;
+            prim->drawMode &= ~DRAW_UNK02;
+            prim = prim->next;
+        }
+        self->step++;
+        /* fallthrough */
+    case 4:
+        count = 0;
+        prim = self->ext.et_801B9304.unk84;
+        for (i = 0; i < 3; i++) {
+            if (prim->next->r3) {
+                prim->next->r3 -= 1;
+            } else {
+                prim->next->x1 += 2;
+                prim->u0 = prim->u2 += 2;
+                prim->u1 = prim->u3 += 2;
+                UnkPrimHelper(prim);
+            }
+            if (prim->u3 > 0x80) {
+                prim->drawMode = DRAW_HIDE;
+                count++;
+            }
+            prim = prim->next;
+            prim = prim->next;
+        }
+        if (count == 3) {
+            self->step++;
+        }
+        break;
+
+    case 5:
+        prim = self->ext.et_801B9304.unk84;
+        for (i = 0; i < 3; i++) {
+            UnkPolyFunc0(prim);
+            prim = prim->next;
+            prim = prim->next;
+        }
+        prim = self->ext.et_801B9304.unk84;
+        prim->tpage = 0x1A;
+        prim->clut = 0x19E;
+        prim->u0 = prim->u2 = 0xA8;
+        prim->u1 = prim->u3 = prim->u0 + 0x10;
+        prim->v0 = prim->v1 = 0x60;
+        prim->v2 = prim->v3 = prim->v0 + 0x10;
+        prim->x0 = prim->x2 = 0x80;
+        prim->x1 = prim->x3 = prim->x0;
+        prim->y0 = prim->y1 = 0xA8;
+        prim->y2 = prim->y3 = prim->y0;
+        prim->x0 -= 6;
+        prim->x1 += 4;
+        prim->x2 -= 7;
+        prim->x3 += 24;
+        prim->y0 -= 9;
+        prim->y1 -= 4;
+        prim->y2 += 6;
+        prim->y3 += 48;
+        prim->r0 = prim->g0 = prim->b0 = 0x80;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0xB1;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->ext.et_801B9304.unk88 = 8;
+        prim = self->ext.et_801B9304.unk7C;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->r0 = prim->g0 = prim->b0 = 0x80;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        self->step++;
+        break;
+
+    case 7:
+        prim = self->ext.et_801B9304.unk7C;
+        prim->x0 = prim->x2 -= 6;
+        prim->x1 = prim->x3 += 6;
+        PrimDecreaseBrightness(prim, 7);
+        count = PrimDecreaseBrightness(self->ext.et_801B9304.unk84, 7);
+        if (!count) {
+            DestroyEntity(self);
+            break;
+        }
+    case 6:
+        prim = self->ext.et_801B9304.unk7C;
+        if (prim->y0 < (prim->y2 - 2)) {
+            prim->y0 = ++prim->y1;
+            prim->y2 = --prim->y3;
+        } else {
+            prim->y0 = prim->y1 = prim->y2 - 1;
+            self->step = 7;
+        }
+        self->ext.et_801B9304.unk88 += 0x40;
+        prim = self->ext.et_801B9304.unk84;
+        angle = self->ext.et_801B9304.unk88 + 0x600;
+        prim->u0 = ((rcos(angle) * 0xC) >> 0xC) + 0xB0;
+        prim->v0 = ((rsin(angle) * 0xC) >> 0xC) + 0x68;
+        angle = self->ext.et_801B9304.unk88 + 0x200;
+        prim->u1 = ((rcos(angle) * 0xC) >> 0xC) + 0xB0;
+        prim->v1 = ((rsin(angle) * 0xC) >> 0xC) + 0x68;
+        angle = self->ext.et_801B9304.unk88 + 0xA00;
+        prim->u2 = ((rcos(angle) * 0xC) >> 0xC) + 0xB0;
+        prim->v2 = ((rsin(angle) * 0xC) >> 0xC) + 0x68;
+        angle = self->ext.et_801B9304.unk88 + 0xE00;
+        prim->u3 = ((rcos(angle) * 0xC) >> 0xC) + 0xB0;
+        prim->v3 = ((rsin(angle) * 0xC) >> 0xC) + 0x68;
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/e_red_door", func_us_801B9BE4);
 
