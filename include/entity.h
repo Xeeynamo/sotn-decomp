@@ -2362,6 +2362,12 @@ typedef struct {
     /* 0x8D */ u8 unk8D;
 } ET_801CEB28;
 
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 accelY;
+} ET_MedusaHead;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2557,6 +2563,7 @@ typedef union { // offset=0x7C
     ET_801CDE20 et_801CDE20;
     ET_801CF850 et_801CF850;
     ET_801CEB28 et_801CEB28;
+    ET_MedusaHead medusaHead;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
