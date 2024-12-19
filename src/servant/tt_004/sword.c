@@ -423,7 +423,146 @@ void func_us_80173CB8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", ServantInit);
+extern MATRIX D_us_80178B54;
+extern s32 D_us_80178B84;
+extern s32 D_us_80178B7C;
+extern s32 D_us_80178B78;
+
+#ifdef VERSION_PSP
+extern u16 D_91F8618[];
+extern u16 D_psp_092F1138[];
+#endif
+
+#define CLUT_INDEX_SERVANT_2 0x1410
+extern u16 g_ServantClut[16];
+extern u16 g_SwordClut[32];
+extern VECTOR g_TransferVector;
+extern SVECTOR g_RotationAngle;
+
+extern VECTOR D_us_80170080;
+
+#ifdef VERSION_PSP
+extern u16 D_91F8618[];
+extern u16 D_psp_092F1138[];
+#endif
+
+void ServantInit(InitializeMode mode) {
+    Entity* self;
+    s32 i;
+    s32 j;
+    u16* dst;
+    u16* src;
+    s32 posX;
+    RECT rect;
+
+    if (mode == MENU_SWITCH_SERVANT || mode == MENU_SAME_SERVANT) {
+        ProcessEvent(NULL, true);
+        if (mode == MENU_SAME_SERVANT) {
+            return;
+        }
+    }
+
+    self = &g_Entities[UNK_ENTITY_4];
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    src = g_ServantClut;
+
+#ifdef VERSION_PSP
+    for (j = 1; i < LEN(g_SwordClut); j++) {
+        g_SwordClut[j] |= 0x8000;
+    }
+#endif
+
+    for (i = 0; i < LEN(g_ServantClut); i++) {
+        *dst++ = *src++;
+    }
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT_2];
+    src = g_SwordClut;
+
+    for (i = 0; i < LEN(g_SwordClut); i++) {
+        *dst++ = *src++;
+    }
+
+    rect.x = 0;
+    rect.y = 0xF4;
+    rect.w = 0x30;
+    rect.h = 1;
+
+    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    LoadImage(&rect, (u_long*)dst);
+    DestroyEntity(self);
+
+    self->zPriority = PLAYER.zPriority - 2;
+    self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+
+    if (mode == MENU_SWITCH_SERVANT) {
+#ifdef VERSION_PSP
+        if ((D_8003C708.flags & FLAG_UNK_20) ||
+            (D_8003C708.flags & FLAG_UNK_40)) {
+#else
+        if ((LOW(D_8003C708.flags) & (FLAG_UNK_40 | FLAG_UNK_20)) != 0) {
+#endif
+            self->entityId = SWORD_UNK_D1;
+            if (g_CastleFlags[CASTLE_FLAG_464] == 1 ||
+                g_CastleFlags[CASTLE_FLAG_464] == 2) {
+                g_CastleFlags[CASTLE_FLAG_464] = 4;
+            }
+        } else {
+            self->entityId = SWORD_UNK_D8;
+        }
+        self->posX.val = FIX(128);
+        self->posY.val = -FIX(32);
+    } else {
+        self->entityId = SWORD_UNK_D1;
+        if (D_8003C708.flags & FLAG_UNK_20) {
+            if (ServantUnk0()) {
+                self->posX.val = FIX(192);
+            } else {
+                self->posX.val = FIX(64);
+            }
+            self->posY.val = FIX(144);
+        } else {
+#ifdef VERSION_PSP
+            if (PLAYER.facingLeft) {
+                posX = FIX(28);
+            } else {
+                posX = -FIX(28);
+            }
+            self->posX.val = PLAYER.posX.val + posX;
+            self->posY.val = PLAYER.posY.val - FIX(28);
+#else
+            posX = PLAYER.posX.val;
+            if (PLAYER.facingLeft) {
+                self->posX.val = posX + FIX(28);
+            } else {
+                self->posX.val = posX - FIX(28);
+            }
+            self->posY.val = PLAYER.posY.val - FIX(28);
+#endif
+        }
+    }
+
+    D_us_80170080.vx = (self->posX.i.hi - 128) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 128) << 5;
+    D_us_80170080.vz = 0;
+
+    g_api.GetServantStats(self, 0, 0, &s_SwordStats);
+    if (D_us_801700A0[(s_SwordStats.level / 10)].unk8 & 1) {
+        func_us_80172420(self, 0);
+    }
+    if (D_us_801700A0[(s_SwordStats.level / 10)].unk8 & 2) {
+        func_us_80172420(self, 1);
+    }
+
+    RotMatrix(&g_RotationAngle, &D_us_80178B54);
+    TransMatrix(&D_us_80178B54, &g_TransferVector);
+
+    D_us_80178B80 = 0;
+    D_us_80178B84 = 0;
+    D_us_80178B7C = 0;
+    D_us_80178B78 = 0;
+}
 
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", UpdateServantDefault);
 
@@ -443,7 +582,93 @@ INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176674);
 
 void func_us_80176BF0(Entity* self) {}
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176BF8);
+extern s32 D_us_8017865C[];
+extern u32 D_us_8017866C;
+
+void func_us_80176BF8(Entity* self) {
+    const int PRIM_COUNT = 16;
+    Primitive* prim;
+    Primitive* next;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PRIM_COUNT);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PRIM_COUNT; i++) {
+            prim->tpage = 0x1B;
+            prim->clut = 0x141;
+            prim->u0 = prim->u2 = 0;
+            prim->v0 = prim->v1 = 0;
+            prim->u1 = prim->u3 = 16;
+            prim->v2 = prim->v3 = 16;
+            prim->r0 = prim->r1 = ((i + 1) * 4) + 8;
+            prim->g0 = prim->g1 = ((i + 1) * 14) + 8;
+            prim->b0 = prim->b1 = ((i + 1) * 8) + 8;
+            prim->r2 = prim->r3 = (i * 4) + 8;
+            prim->g2 = prim->g3 = (i * 14) + 8;
+            prim->b2 = prim->b3 = (i * 8) + 8;
+            prim->drawMode =
+                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 |
+                DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < (PRIM_COUNT - 1); i++) {
+            prim = prim->next;
+        }
+        LOW(prim->x0) = D_us_8017865C[0];
+        LOW(prim->x1) = D_us_8017865C[1];
+        self->step++;
+        break;
+
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (D_us_80178B78) {
+            for (i = 0; i < (PRIM_COUNT - 1); i++) {
+                next = prim->next;
+                prim->priority = next->priority;
+                prim->drawMode = next->drawMode;
+                LOW(prim->x0) = LOW(next->x0);
+                LOW(prim->x1) = LOW(next->x1);
+                LOW(prim->x2) = LOW(next->x2);
+                LOW(prim->x3) = LOW(next->x3);
+                prim = next;
+            }
+            prim->priority = D_us_8017866C;
+            prim->drawMode &= ~DRAW_HIDE;
+
+            LOW(prim->x2) = LOW(prim->x0);
+            LOW(prim->x3) = LOW(prim->x1);
+            do {
+            } while (0);
+            LOW(prim->x0) = D_us_8017865C[0];
+            LOW(prim->x1) = D_us_8017865C[1];
+        } else {
+            for (i = 0; i < PRIM_COUNT; i++) {
+                prim->drawMode |= DRAW_HIDE;
+                LOW(prim->x0) = LOW(prim->x1) = D_us_8017865C[0];
+                LOW(prim->x2) = LOW(prim->x3) = D_us_8017865C[1];
+                prim = prim->next;
+            }
+            self->step--;
+        }
+        break;
+    }
+
+    D_us_80178B78 = 0;
+}
 
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176F28);
 
