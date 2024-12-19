@@ -45,11 +45,11 @@ void func_us_80172420(Entity* self, s32 entityId) {
     s32 i;
 
     if (self == NULL) {
-        self = &D_800736C8;
+        self = &g_Entities[UNK_ENTITY_4];
     }
 
     for (i = 0; i < 3; i++) {
-        entity = D_80073784 + i;
+        entity = &g_Entities[UNK_ENTITY_5 + i];
         if (entity->entityId == entityId + SWORD_UNK_DA) {
             return;
         }
@@ -96,20 +96,16 @@ void func_us_801724E8(Entity* self, s32 arg1, u32 params) {
 
 #define UNK_SWORD_PRIM_COUNT 96
 
-extern s16 D_us_80170594[72];
-extern s16 D_us_801708F4[72];
+extern s16 D_us_80170594[];
+extern s16 D_us_801708F4[];
 extern s16 D_us_801710E4[UNK_SWORD_PRIM_COUNT];
 extern s16 D_us_80171564[UNK_SWORD_PRIM_COUNT];
-extern s32 D_us_801786D4[UNK_SWORD_PRIM_COUNT * 4];
-extern s32 D_us_80178854[UNK_SWORD_PRIM_COUNT * 4];
-extern s32 D_us_801789D4[UNK_SWORD_PRIM_COUNT * 4];
 
-typedef struct {
-    s16 a, b, c, d;
-} UnkQuad;
-
-extern UnkQuad D_us_80170354[];
-extern UnkQuad D_us_80170DE4[];
+extern SVECTOR D_us_80170354[];
+extern SVECTOR D_us_80170DE4[];
+extern s32 D_us_801786D4[UNK_SWORD_PRIM_COUNT];
+extern s32 D_us_80178854[UNK_SWORD_PRIM_COUNT];
+extern s32 D_us_801789D4[UNK_SWORD_PRIM_COUNT];
 
 void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
     Primitive* prim;
@@ -125,7 +121,7 @@ void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
             uvCoords = D_us_80170594;
         }
 
-        for (i = 0; i < LEN(D_us_80170594); i++) {
+        for (i = 0; i < 72; i++) {
             prim->u0 = *uvCoords++;
             prim->v0 = *uvCoords++;
 
@@ -139,9 +135,9 @@ void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
             prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
             prim = prim->next;
 
-            D_us_801786D4[i] = SP(0x20 + D_us_80170354[i].a * 8);
-            D_us_80178854[i] = SP(0x20 + D_us_80170354[i].b * 8);
-            D_us_801789D4[i] = SP(0x20 + D_us_80170354[i].c * 8);
+            D_us_801786D4[i] = SP(0x20 + D_us_80170354[i].vx * 8);
+            D_us_80178854[i] = SP(0x20 + D_us_80170354[i].vy * 8);
+            D_us_801789D4[i] = SP(0x20 + D_us_80170354[i].vz * 8);
         }
 
         for (; i < UNK_SWORD_PRIM_COUNT; i++) {
@@ -169,9 +165,9 @@ void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
             prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
             prim = prim->next;
 
-            D_us_801786D4[i] = SP(0x20 + D_us_80170DE4[i].a * 8);
-            D_us_80178854[i] = SP(0x20 + D_us_80170DE4[i].b * 8);
-            D_us_801789D4[i] = SP(0x20 + D_us_80170DE4[i].c * 8);
+            D_us_801786D4[i] = SP(32 + D_us_80170DE4[i].vx * 8);
+            D_us_80178854[i] = SP(32 + D_us_80170DE4[i].vy * 8);
+            D_us_801789D4[i] = SP(32 + D_us_80170DE4[i].vz * 8);
         }
     }
 }
@@ -210,7 +206,7 @@ void func_us_8017280C(Entity* self, s32 arg1, s32 arg2) {
     }
 }
 
-extern s16 D_us_801700A4[];
+extern SwordUnk_A0 D_us_801700A0[];
 extern s32 s_SwordCurrentLevel;
 extern s32 D_us_80178B74;
 extern s32 D_us_80178B80;
@@ -240,12 +236,12 @@ void func_us_80172940(Entity* self) {
             }
             g_api.GetServantStats(self, 0, 0, &s_SwordStats);
             self->ext.swordFamiliar.unk80 =
-                D_us_801700A4[(s_SwordStats.level / 10) * 6];
+                D_us_801700A0[(s_SwordStats.level / 10)].unk4;
             self->ext.swordFamiliar.unk82 = 1;
             func_us_8017259C(self, self->ext.swordFamiliar.unk80, 1);
             self->ext.swordFamiliar.unk86 = self->ext.swordFamiliar.unk88 =
                 0x400;
-            self->ext.swordFamiliar.unk8c = self->ext.swordFamiliar.unk8e = 0;
+            self->ext.swordFamiliar.unk8c = self->ext.swordFamiliar.targetX = 0;
             s_SwordCurrentLevel = 0;
             D_us_80178B74 = 1;
             self->step++;
@@ -326,45 +322,34 @@ static s32 Min3(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-    s16 unk10;
-} UnkC8C;
+void func_us_80172C8C(MATRIX* arg0, MATRIX* arg1) {
+    D_us_801782B0 = rsin(arg0->m[0][0]);
+    D_us_801782B4 = rsin(arg0->m[0][1]);
+    D_us_801782B8 = rsin(arg0->m[0][2]);
+    D_us_801782BC = rcos(arg0->m[0][0]);
+    D_us_801782C0 = rcos(arg0->m[0][1]);
+    D_us_801782C4 = rcos(arg0->m[0][2]);
 
-void func_us_80172C8C(UnkC8C* arg0, UnkC8C* arg1) {
-    D_us_801782B0 = rsin(arg0->unk0);
-    D_us_801782B4 = rsin(arg0->unk2);
-    D_us_801782B8 = rsin(arg0->unk4);
-    D_us_801782BC = rcos(arg0->unk0);
-    D_us_801782C0 = rcos(arg0->unk2);
-    D_us_801782C4 = rcos(arg0->unk4);
-
-    arg1->unk0 = (D_us_801782C4 * D_us_801782C0) >> 0xC;
-    arg1->unk2 =
-        ((-D_us_801782B8 * D_us_801782BC) >> 0xC) +
-        ((D_us_801782B0 * ((D_us_801782C4 * D_us_801782B4) >> 0xC)) >> 0xC);
-    arg1->unk4 =
-        ((D_us_801782B8 * D_us_801782B0) >> 0xC) +
-        ((D_us_801782BC * ((D_us_801782C4 * D_us_801782B4) >> 0xC)) >> 0xC);
-    arg1->unk6 = (D_us_801782B8 * D_us_801782C0) >> 0xC;
-    arg1->unk8 =
-        ((D_us_801782C4 * D_us_801782BC) >> 0xC) +
-        ((D_us_801782B0 * ((D_us_801782B8 * D_us_801782B4) >> 0xC)) >> 0xC);
-    arg1->unkA =
-        ((-D_us_801782C4 * D_us_801782B0) >> 0xC) +
-        ((D_us_801782BC * ((D_us_801782B8 * D_us_801782B4) >> 0xC)) >> 0xC);
-    arg1->unkC = -D_us_801782B4 >> 0xC;
-    arg1->unkE = (D_us_801782C0 * D_us_801782B0) >> 0xC;
-    arg1->unk10 = (D_us_801782C0 * D_us_801782BC) >> 0xC;
+    arg1->m[0][0] = FLT_TO_I(D_us_801782C4 * D_us_801782C0);
+    arg1->m[0][1] =
+        FLT_TO_I(-D_us_801782B8 * D_us_801782BC) +
+        FLT_TO_I(D_us_801782B0 * FLT_TO_I(D_us_801782C4 * D_us_801782B4));
+    arg1->m[0][2] =
+        FLT_TO_I(D_us_801782B8 * D_us_801782B0) +
+        FLT_TO_I(D_us_801782BC * FLT_TO_I(D_us_801782C4 * D_us_801782B4));
+    arg1->m[1][0] = FLT_TO_I(D_us_801782B8 * D_us_801782C0);
+    arg1->m[1][1] =
+        FLT_TO_I(D_us_801782C4 * D_us_801782BC) +
+        FLT_TO_I(D_us_801782B0 * FLT_TO_I(D_us_801782B8 * D_us_801782B4));
+    arg1->m[1][2] =
+        FLT_TO_I(-D_us_801782C4 * D_us_801782B0) +
+        FLT_TO_I(D_us_801782BC * FLT_TO_I(D_us_801782B8 * D_us_801782B4));
+    arg1->m[2][0] = FLT_TO_I(-D_us_801782B4);
+    arg1->m[2][1] = FLT_TO_I(D_us_801782C0 * D_us_801782B0);
+    arg1->m[2][2] = FLT_TO_I(D_us_801782C0 * D_us_801782BC);
 }
 
+void func_us_80172E84(Entity*, s32);
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80172E84);
 
 extern s32 D_us_80178344[128];
@@ -415,19 +400,17 @@ Entity* func_us_80173AA0(Entity* self) {
 
 #include "../check_entity_valid.h"
 
-extern s32 D_us_801700A8[];
-
 void func_us_80173CB8(Entity* self) {
     if (self->step) {
         g_api.GetServantStats(self, 0, 0, &s_SwordStats);
         if (s_SwordCurrentLevel != s_SwordStats.level) {
             s_SwordCurrentLevel = s_SwordStats.level;
-            if (D_us_801700A8[(s_SwordStats.level / 10) * 3] & 1) {
+            if (D_us_801700A0[(s_SwordStats.level / 10)].unk8 & 1) {
                 if (SearchForEntityInRange(0, SWORD_UNK_DA) == NULL) {
                     func_us_80172420(self, 0);
                 }
             }
-            if ((D_us_801700A8[(s_SwordStats.level / 10) * 3] & 2) &&
+            if ((D_us_801700A0[(s_SwordStats.level / 10)].unk8 & 2) &&
                 SearchForEntityInRange(0, SWORD_UNK_DB) == NULL) {
                 func_us_80172420(self, 1);
             }
@@ -489,9 +472,8 @@ void func_us_801773CC(Entity* self) {
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 
-extern s32 D_us_801700A0[];
-extern s32 D_us_801786C0[];
-extern s32 D_us_801786C4[];
+extern Point16 D_us_801786C0[];
+extern Point16 D_us_801786C4[];
 
 void func_us_80177480(Entity* self) {
     s32 flag;
@@ -501,7 +483,7 @@ void func_us_80177480(Entity* self) {
     case 0:
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
-        flag = D_us_801700A0[(s_SwordStats.level / 10) * 3];
+        flag = D_us_801700A0[(s_SwordStats.level / 10)].unk0;
         if (flag) {
             spellId = FAM_ABILITY_SWORD_UNK20;
         } else {
@@ -514,11 +496,11 @@ void func_us_80177480(Entity* self) {
         self->hitboxHeight = 4;
 
         if (!self->params) {
-            self->posX.i.hi = D_us_801786C0[0] & 0xFFFF;
-            self->posY.i.hi = (D_us_801786C0[0] >> 16) & 0xFFFF;
+            self->posX.i.hi = LOW(D_us_801786C0[0]) & 0xFFFF;
+            self->posY.i.hi = (LOW(D_us_801786C0[0]) >> 16) & 0xFFFF;
         } else {
-            self->posX.i.hi = D_us_801786C4[0] & 0xFFFF;
-            self->posY.i.hi = (D_us_801786C4[0] >> 16) & 0xFFFF;
+            self->posX.i.hi = LOW(D_us_801786C0[1]) & 0xFFFF;
+            self->posY.i.hi = (LOW(D_us_801786C0[1]) >> 16) & 0xFFFF;
         }
 
         self->step++;
