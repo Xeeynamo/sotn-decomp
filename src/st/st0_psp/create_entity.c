@@ -1,32 +1,33 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../st0/st0.h"
+#include "../pfn_entity_update.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248080);
+extern u16* g_LayoutObjHorizontal;
+extern u16* g_LayoutObjVertical;
+extern u8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_092481A0);
+#include "../st_private.h"
+#include "../create_entity_from_layout.h"
+#include "../create_entity_in_range.h"
+#include "../find_entity_horizontal.h"
+NOP;
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248338);
+void CreateEntitiesToTheRight(s16);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", CreateEntitiesToTheRight);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_092484D0);
+void CreateEntitiesToTheLeft(s16);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", CreateEntitiesToTheLeft);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248540);
+#include "../find_entity_vertical.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_092485C8);
+void CreateEntitiesAbove(s16);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", CreateEntitiesAbove);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248708);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248860);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_092488D8);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248960);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248AA8);
+void CreateEntitiesBelow(s16);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", CreateEntitiesBelow);
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", InitRoomEntities);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", UpdateTilemap);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", func_pspeu_09248F18);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/create_entity", CreateEntityFromEntity);
+#include "../update_room_position.h"
+#include "../create_entity_from_entity.h"

@@ -16,4 +16,6 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityRelicOrb);
 
 #include "../entity_intense_explosion.h"
 
+#include "../clut_lerp.h"
+
 #include "../play_sfx_positional.h"

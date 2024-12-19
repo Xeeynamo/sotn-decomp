@@ -26,8 +26,8 @@ void CreateEntitiesToTheRight(s16 posX) {
 
         expected = 0;
         flag = (g_LayoutObjHorizontal[LAYOUT_OBJ_SLOT] >> 8) + 0xFF;
-        if (flag == 0xFF ||
-            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+        if (flag == 0xFF || (g_unkGraphicsStruct.D_80097428[flag >> 5] &
+                             (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
         }
         g_LayoutObjHorizontal += sizeof(LayoutEntity) / sizeof(u16);
