@@ -889,7 +889,7 @@
 | dra    | func_psp_091224B0                   |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
-| dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.849 |
+| dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | dra    | func_psp_09132AF0                   |     2183 |        161 | Yes    | https://decomp.me/scratch/wULJ5 | 0.975 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    |                                 |       |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/yTQqd | 0.761 |
