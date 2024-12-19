@@ -645,8 +645,9 @@ void func_us_801B9304(Entity* self) {
         count = PrimDecreaseBrightness(self->ext.et_801B9304.unk84, 7);
         if (!count) {
             DestroyEntity(self);
-            break;
+            return;
         }
+        /* fallthrough */
     case 6:
         prim = self->ext.et_801B9304.unk7C;
         if (prim->y0 < (prim->y2 - 2)) {
