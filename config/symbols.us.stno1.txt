@@ -165,3 +165,4 @@ g_LayoutObjVertical = 0x801D6388;
 g_LayoutObjPosHorizontal = 0x801D638C;
 g_LayoutObjPosVertical = 0x801D6390;
 g_ItemIconSlots = 0x801D7024;
+NO1_RedDoorTiles = 0x80180C9C;

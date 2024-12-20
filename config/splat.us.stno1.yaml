@@ -39,7 +39,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0xC84, data, e_red_door]
+      - [0xC84, .data, e_red_door]
       - [0xC9C, data]
       - [0x1A2C, .data, d_prize_drops]
       - [0x1A5C, .data, st_update]
