@@ -669,7 +669,7 @@ typedef struct {
     /* 0x8C */ s16 abilityTimer;
     /* 0x8E */ s16 pad_8E[2];
     /* 0x92 */ s16 attackEndCounter;
-    /* 0x94 */ s16 attackVelocityOffset;
+    /* 0x94 */ s16 switchPressVelocityOffset;
     /* 0x96 */ s16 pad_96[5];
     /* 0xA0 */ s16 unkCounter;
     /* 0xA4 */ struct Entity* target;
@@ -680,14 +680,23 @@ typedef struct {
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 : 16;
+    /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8a;
+    /* 0x8A */ s16 currentX;
     /* 0x8c */ s16 unk8c;
-    /* 0x8e */ s16 unk8e;
+    /* 0x8e */ s16 targetX;
     /* 0x90 */ s32 posX;
     /* 0x94 */ s32 posY;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s32 : 32;
+    /* 0xB4 */ struct Entity* follow;
 } ET_SwordFamiliar;
 
 struct draculaPrimitive;
@@ -2281,6 +2290,84 @@ typedef struct {
     /* 0x90 */ struct Primitive* unk90;
 } ET_801D1DAC;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ struct Primitive* unk88;
+    /* 0x8C */ struct Primitive* unk8C;
+    /* 0x90 */ struct Primitive* unk90;
+    /* 0x94 */ struct Primitive* unk94;
+    /* 0x98 */ struct Primitive* unk98;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ s16 : 16;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ u8 unkA4;
+    /* 0xA5 */ s8 : 8;
+    /* 0xA6 */ s16 : 16;
+    /* 0xA8 */ s16 : 16;
+    /* 0xAA */ s16 : 16;
+    /* 0xAC */ struct Primitive* unkAC;
+} ET_801BA290;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ s16 unk88;
+    /* 0x88 */ s16 : 16;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ struct Primitive* unk90;
+    /* 0x94 */ u8 unk94;
+    /* 0x95 */ u8 : 8;
+    /* 0x96 */ u8 : 8;
+    /* 0x97 */ u8 : 8;
+} ET_801BCB34;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 : 8;
+} ET_801CDE20;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 : 8;
+    /* 0x80 */ u32 unk80;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ struct Primitive* unk88;
+} ET_801CF850;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ struct Entity* unk88;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+} ET_801CEB28;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 accelY;
+} ET_MedusaHead;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2471,6 +2558,12 @@ typedef union { // offset=0x7C
     ET_PlatelordUnknown plateLordUnknown;
     ET_801CE2E0 et_801CE2E0;
     ET_801D1DAC et_801D1DAC;
+    ET_801BA290 et_801BA290;
+    ET_801BCB34 et_801BCB34;
+    ET_801CDE20 et_801CDE20;
+    ET_801CF850 et_801CF850;
+    ET_801CEB28 et_801CEB28;
+    ET_MedusaHead medusaHead;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
