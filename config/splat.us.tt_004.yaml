@@ -39,7 +39,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, sword]
-      - [0x40, data, sword_misc_data]
+      - [0x40, .data, sword_sprite_data]
+      - [0x60, .data, sword_data]
       - [0x19E4, .data, servant_events]
       - [0x2330, .rodata, sword]
       - [0x23FC, .rodata, servant_common]
