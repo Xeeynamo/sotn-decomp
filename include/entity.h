@@ -81,6 +81,13 @@ typedef struct {
            // ones
 
 typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ s16 unk88;
+} ET_NO1_RedDoor;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 unk80;
     /* 0x84 */ struct Primitive* unk84;
@@ -2573,6 +2580,7 @@ typedef union { // offset=0x7C
     ET_801CEB28 et_801CEB28;
     ET_MedusaHead medusaHead;
     ET_801B9304 et_801B9304;
+	ET_NO1_RedDoor no1RedDoor;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
