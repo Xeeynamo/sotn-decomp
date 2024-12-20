@@ -92,9 +92,10 @@ void UpdatePlayerEntities(void) {
             continue;
         }
         if (entity->step == 0) {
-            if (entity->entityId < 0xD0) {
+            if (entity->entityId < SERVANT_ENTITY_START) {
                 // Objects 00-CF
                 entity->pfnUpdate = g_DraEntityTbl[entity->entityId];
+                // familiars
             } else if (entity->entityId < 0xE0) {
                 /* Objects D0-DF
                  * This is setting the update function for your current servant.
@@ -104,7 +105,8 @@ void UpdatePlayerEntities(void) {
                  * entityId = 0xD1 entityId = 0xD0 would be the init code.
                  */
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];
+                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                       SERVANT_ENTITY_START];
             } else if (entity->entityId == 0xEF || entity->entityId == 0xFF ||
                        entity->entityId == 0xED || entity->entityId == 0xFD) {
                 entity->pfnUpdate = g_DraEntityTbl[1];
@@ -187,9 +189,11 @@ void func_8011A870(void) {
         }
 
         if (entity->step == 0) {
-            if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+            if (entity->entityId >= SERVANT_ENTITY_START &&
+                entity->entityId < 0xE0) {
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];
+                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                       SERVANT_ENTITY_START];
             } else {
                 continue;
             }
