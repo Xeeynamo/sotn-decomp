@@ -864,8 +864,8 @@ def add_symbol(splat_config, version: str, name: str, offset: int):
 
 def hydrate_stage_export_table_symbols(splat_config, version: str, export_table):
     add_symbol(splat_config, version, "UpdateStageEntities", export_table[0])
-    add_symbol(splat_config, version, "TestCollisions", export_table[1])
-    add_symbol(splat_config, version, "UpdateTilemap", export_table[2])
+    add_symbol(splat_config, version, "HitDetection", export_table[1])
+    add_symbol(splat_config, version, "UpdateRoomPosition", export_table[2])
     add_symbol(splat_config, version, "InitRoomEntities", export_table[3])
     add_symbol(splat_config, version, "g_Rooms", export_table[4])
     add_symbol(splat_config, version, "g_SpriteBanks", export_table[5])

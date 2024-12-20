@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../st0/st0.h"
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/collision", TestCollisions);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/collision", EntityDamageDisplay);
+#include "../entity_damage_display.h"
