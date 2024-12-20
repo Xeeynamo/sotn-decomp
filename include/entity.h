@@ -2580,7 +2580,7 @@ typedef union { // offset=0x7C
     ET_801CEB28 et_801CEB28;
     ET_MedusaHead medusaHead;
     ET_801B9304 et_801B9304;
-	ET_NO1_RedDoor no1RedDoor;
+    ET_NO1_RedDoor no1RedDoor;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
