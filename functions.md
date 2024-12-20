@@ -252,7 +252,6 @@
 | dra    | func_psp_0910F128                   |       36 |          2 |        |                                 |       |
 | dra    | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
 | dra    | func_psp_0910BC00                   |       36 |          4 |        |                                 |       |
-| st0    | func_pspeu_092484D0                 |       36 |          4 |        |                                 |       |
 | wrp    | FindFirstEntityToTheRight           |       36 |          4 |        |                                 |       |
 | dra    | func_psp_091040A0                   |       36 |          5 |        |                                 |       |
 | dra    | func_psp_0913F7F8                   |       36 |          5 |        |                                 |       |
@@ -274,10 +273,7 @@
 | dra    | func_psp_0913E7B8                   |       38 |          3 |        |                                 |       |
 | dra    | GetEquipmentName                    |       38 |          4 |        |                                 |       |
 | dra    | func_800EDB08                       |       38 |          4 |        |                                 |       |
-| st0    | func_pspeu_09248860                 |       38 |          4 |        |                                 |       |
 | wrp    | FindFirstEntityAbove                |       38 |          4 |        |                                 |       |
-| st0    | CreateEntityFromEntity              |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
-| st0    | func_pspeu_09248F18                 |       39 |          2 |        |                                 |       |
 | wrp    | CreateEntityFromCurrentEntity       |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | wrp    | CreateEntityFromEntity              |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | dra    | func_psp_0913DA28                   |       39 |          3 |        |                                 |       |
@@ -306,8 +302,6 @@
 | dra    | func_psp_090ED1B8                   |       42 |          3 |        |                                 |       |
 | dra    | func_psp_0913D640                   |       42 |          3 |        |                                 |       |
 | dra    | func_80102628                       |       42 |          4 |        |                                 |       |
-| st0    | func_pspeu_09248540                 |       42 |          5 |        |                                 |       |
-| st0    | func_pspeu_092488D8                 |       42 |          5 |        |                                 |       |
 | wrp    | FindFirstEntityBelow                |       42 |          5 |        |                                 |       |
 | wrp    | FindFirstEntityToTheLeft            |       42 |          5 |        |                                 |       |
 | dra    | DebugShowWaitInfo                   |       42 |          7 |        |                                 |       |
@@ -428,7 +422,6 @@
 | dra    | func_psp_090F17D8                   |       64 |          5 |        |                                 |       |
 | dra    | func_801026BC                       |       64 |          7 |        |                                 |       |
 | dra    | func_psp_09127B50                   |       65 |          8 |        |                                 |       |
-| st0    | UpdateTilemap                       |       65 |         11 |        |                                 |       |
 | wrp    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra    | C0B0.rodata                         |       66 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED480                   |       66 |          6 |        |                                 |       |
@@ -479,10 +472,8 @@
 | dra    | func_801027C4                       |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.94  |
 | dra    | func_psp_0911B820                   |       76 |          8 |        |                                 |       |
 | dra    | func_psp_09136F30                   |       76 |         13 |        |                                 |       |
-| st0    | func_pspeu_09248080                 |       77 |          2 |        |                                 |       |
 | wrp    | CreateEntityFromLayout              |       77 |          2 |        |                                 |       |
 | dra    | func_psp_090EF8F0                   |       77 |          4 |        |                                 |       |
-| st0    | EntityRoomForeground                |       77 |          6 |        |                                 |       |
 | wrp    | EntityRoomForeground                |       77 |          6 |        |                                 |       |
 | dra    | CalcPlayerDamage                    |       77 |          9 |        |                                 |       |
 | dra    | CalcPlayerDamageAgain               |       77 |          9 |        |                                 |       |
@@ -522,27 +513,26 @@
 | dra    | TimeAttackController                |       89 |          8 |        |                                 |       |
 | dra    | func_psp_090FF608                   |       89 |         10 |        |                                 |       |
 | dra    | func_psp_0910E378                   |       89 |         11 |        |                                 |       |
-| st0    | func_pspeu_092485C8                 |       89 |         11 |        |                                 |       |
+| st0    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | wrp    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
-| st0    | func_pspeu_09248960                 |       91 |         11 |        |                                 |       |
+| st0    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | wrp    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | dra    | func_psp_09110E90                   |       91 |         19 |        |                                 |       |
 | dra    | func_psp_091446D0                   |       92 |         11 |        |                                 |       |
-| st0    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
 | wrp    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
 | dra    | UpdateGame                          |       92 |         21 | Yes    |                                 |       |
 |        | CreateAdditionalBats                |       93 |          8 |        |                                 |       |
 | dra    | func_psp_091392D8                   |       95 |         11 |        |                                 |       |
 | dra    | func_psp_09114880                   |       95 |         14 |        |                                 |       |
 | dra    | func_psp_09134F40                   |       96 |         11 |        |                                 |       |
-| st0    | func_pspeu_09248708                 |       96 |         12 |        |                                 |       |
+| st0    | CreateEntitiesToTheLeft             |       96 |         12 |        |                                 |       |
 | wrp    | CreateEntitiesToTheLeft             |       96 |         12 |        |                                 |       |
 | dra    | func_psp_091060E0                   |       96 |         16 |        |                                 |       |
 | st0    | func_pspeu_092469A0                 |       97 |          1 |        |                                 |       |
 | dra    | UpdateUnarmedAnim                   |       97 |          6 |        |                                 |       |
 | wrp    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
 | dra    | func_psp_09116B88                   |       98 |         10 |        | https://decomp.me/scratch/mGIed | 0.992 |
-| st0    | func_pspeu_09248AA8                 |       98 |         12 |        |                                 |       |
+| st0    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | wrp    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | st0    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
 | wrp    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
@@ -555,9 +545,7 @@
 | dra    | func_psp_090F1A08                   |      102 |         12 |        |                                 |       |
 | dra    | func_psp_09144038                   |      103 |          2 |        |                                 |       |
 | dra    | func_psp_09125DB8                   |      103 |          4 |        |                                 |       |
-| st0    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
 | wrp    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
-| st0    | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | wrp    | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | st0    | func_801B0058                       |      103 |         13 |        |                                 |       |
 | dra    | func_801349F4                       |      104 |          3 |        |                                 |       |
@@ -565,7 +553,6 @@
 | wrp    | EntityBreakable                     |      104 |         11 |        |                                 |       |
 | dra    | func_psp_09142B40                   |      104 |         14 |        |                                 |       |
 | dra    | SetRoomForegroundLayer              |      105 |          2 |        |                                 |       |
-| st0    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | wrp    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | dra    | func_psp_09141AA0                   |      105 |         15 |        |                                 |       |
 | dra    | func_psp_09111BB8                   |      106 |         11 |        |                                 |       |
@@ -584,8 +571,6 @@
 | wrp    | InitializeEntity                    |      112 |          2 |        |                                 |       |
 | dra    | func_psp_091287D8                   |      112 |          9 |        |                                 |       |
 | dra    | func_psp_090EC380                   |      112 |          9 |        |                                 |       |
-| st0    | func_pspeu_092481A0                 |      113 |         13 |        |                                 |       |
-| st0    | func_pspeu_09248338                 |      113 |         13 |        |                                 |       |
 | wrp    | CheckFieldCollision                 |      113 |         13 |        |                                 |       |
 | wrp    | CreateEntityWhenInHorizontalRange   |      113 |         13 |        |                                 |       |
 | wrp    | CreateEntityWhenInVerticalRange     |      113 |         13 |        |                                 |       |
@@ -776,7 +761,6 @@
 | dra    | func_psp_09104C80                   |      374 |         48 |        |                                 |       |
 | dra    | func_psp_09132550                   |      381 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
 | st0    | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
-| st0    | BottomCornerText                    |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | wrp    | BottomCornerText                    |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | dra    | func_psp_0911F5D8                   |      409 |         42 |        |                                 |       |
 | wrp    | BlitChar                            |      409 |         53 |        | https://decomp.me/scratch/tsOag | 0.999 |
@@ -830,7 +814,6 @@
 | dra    | func_psp_0912E3C0                   |      657 |         61 |        |                                 |       |
 | dra    | func_psp_091203E0                   |      661 |         70 |        |                                 |       |
 | dra    | func_psp_0910D8F8                   |      672 |         81 |        | https://decomp.me/scratch/HLovD | 0.987 |
-| st0    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | wrp    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | dra    | func_psp_0911ABF8                   |      691 |         58 |        | https://decomp.me/scratch/ifDg3 | 0.175 |
 | st0    | EntityClouds                        |      692 |         55 |        |                                 |       |
