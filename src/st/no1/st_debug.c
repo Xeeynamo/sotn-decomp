@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "no1.h"
 
-INCLUDE_ASM("st/no1/nonmatchings/st_debug", EntityUnkId12);
+#include "../entity_unk_id12.h"
