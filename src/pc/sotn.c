@@ -26,7 +26,7 @@ u32 g_CutsceneFlags;
 s32 g_IsCutsceneDone;
 s32 g_SkipCutscene;
 
-ServantDesc D_80170000;
+ServantDesc g_ServantDesc;
 
 GfxBank* g_FakeGfxBank = NULL;
 GfxBank** g_GfxStageBank[0x40] = {

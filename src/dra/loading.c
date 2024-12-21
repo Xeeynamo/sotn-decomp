@@ -127,7 +127,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
 
 void InitializeServant(InitializeMode mode) {
     if (g_Servant != 0) {
-        D_80170000.Init(mode);
+        g_ServantDesc.Init(mode);
     }
 }
 

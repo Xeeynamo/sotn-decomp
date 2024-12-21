@@ -11,4 +11,5 @@ g_PlOvlAluBatSpritesheet = 0x8013C004;
 g_PlOvlSpritesheet = 0x8013C020;
 g_imgUnk8013C200 = 0x8013C200;
 g_imgUnk8013C270 = 0x8013C270;
+g_ServantDesc = 0x80170000;
 g_StageOverlay = 0x80180000;
