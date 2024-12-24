@@ -16,7 +16,7 @@
 | game/f_nonmat/f607872C.s     | func_0607872C   |       17 |          1 |                                 |       |
 | zero/f_nonmat/f6018F04.s     | func_06018F04   |       17 |          1 | https://decomp.me/scratch/8MBlN | 0.704 |
 | zero/f_nonmat/f6016F9C.s     | func_06016F9C   |       19 |          2 | https://decomp.me/scratch/hEOH8 | 0.839 |
-| zero/f_nonmat/f600CB04.s     | func_0600CB04   |       20 |          0 | https://decomp.me/scratch/kFsbY | 1.0   |
+| zero/f_nonmat/f600CB04.s     | func_0600CB04   |       20 |          0 |                                 |       |
 | alucard/f_nonmat/f60A5574.s  | func_060A5574   |       20 |          1 |                                 |       |
 | alucard/f_nonmat/f60A5594.s  | func_060A5594   |       20 |          1 |                                 |       |
 | game/f_nonmat/f6070580.s     | func_06070580   |       20 |          1 | https://decomp.me/scratch/hwV55 | 0.306 |
@@ -224,7 +224,7 @@
 | zero/f_nonmat/f6016C08.s     | func_06016C08   |       51 |          4 |                                 |       |
 | zero/f_nonmat/f600831C.s     | func_0600831C   |       51 |          6 |                                 |       |
 | t_bat/f_nonmat/f60CF294.s    | func_060CF294   |       51 |          7 |                                 |       |
-| t_bat/f_nonmat/f60D125C.s    | func_060D125C   |       51 |          7 | https://decomp.me/scratch/3qtkP | 1.0   |
+| t_bat/f_nonmat/f60D125C.s    | func_060D125C   |       51 |          7 | https://decomp.me/scratch/nVmi2 | 0.758 |
 | zero/f_nonmat/f600AFA8.s     | func_0600AFA8   |       52 |          2 |                                 |       |
 | zero/f_nonmat/f6004E94.s     | func_06004E94   |       52 |          4 |                                 |       |
 | zero/f_nonmat/f6007B34.s     | func_06007B34   |       52 |          4 |                                 |       |
@@ -274,7 +274,7 @@
 | zero/f_nonmat/f6008524.s     | func_06008524   |       58 |          6 | https://decomp.me/scratch/Fakku | 0.73  |
 | zero/f_nonmat/f600A29C.s     | func_0600A29C   |       59 |          4 |                                 |       |
 | game/f_nonmat/f606F798.s     | func_0606F798   |       59 |          5 | https://decomp.me/scratch/07Kza | 0.055 |
-| alucard/f_nonmat/f60A6618.s  | func_060A6618   |       60 |          1 | https://decomp.me/scratch/ckSC8 | 0.438 |
+| alucard/f_nonmat/f60A6618.s  | func_060A6618   |       60 |          1 |                                 |       |
 | zero/f_nonmat/f6011F58.s     | func_06011F58   |       60 |          3 |                                 |       |
 | zero/f_nonmat/f6008AB4.s     | func_06008AB4   |       60 |          8 |                                 |       |
 | game/f_nonmat/f60735A4.s     | func_060735A4   |       61 |          1 |                                 |       |
@@ -532,7 +532,7 @@
 | alucard/f_nonmat/f60BB7A8.s  | func_060BB7A8   |      134 |          6 |                                 |       |
 | zero/f_nonmat/f60046E8.s     | func_060046E8   |      136 |          2 |                                 |       |
 | game/f_nonmat/f6077260.s     | func_06077260   |      136 |          9 |                                 |       |
-| stage_02/f_nonmat/f60DD690.s | func_060DD690   |      137 |         14 | https://decomp.me/scratch/2XzfF | 0.626 |
+| stage_02/f_nonmat/f60DD690.s | func_060DD690   |      137 |         14 | https://decomp.me/scratch/8zsBh | 0.595 |
 | alucard/f_nonmat/f60A80E0.s  | func_060A80E0   |      139 |         14 |                                 |       |
 | zero/f_nonmat/f600CED0.s     | func_0600CED0   |      140 |          3 |                                 |       |
 | zero/f_nonmat/f6007A34.s     | func_06007A34   |      140 |         15 |                                 |       |
