@@ -480,7 +480,7 @@ void EntityFireWarg(Entity* self) {
 
             if (self->animCurFrame == 0x14) {
                 if (self->ext.fireWarg.unk80 == 0) {
-                    ent_s0 = AllocEntity(&D_8007A958, &D_8007A958 + 0x20);
+                    ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (ent_s0 != NULL) {
                         // PSP version 0x1E
                         CreateEntityFromCurrentEntity(E_ID_2E, ent_s0);

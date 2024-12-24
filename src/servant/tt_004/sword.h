@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#define NO_SERVANT_CLUT
 #include <servant.h>
 
 typedef enum {
