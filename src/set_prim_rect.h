@@ -5,8 +5,8 @@ void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->x1 = x + width;
     poly->y1 = y;
     poly->x2 = x;
-    poly->x3 = x + width;
     poly->y2 = y + height;
+    poly->x3 = x + width;
     poly->y3 = y + height;
 }
 
@@ -20,10 +20,10 @@ void SetTexturedPrimRect(
     poly->y2 = y + height;
     poly->x3 = x + width;
     poly->y3 = y + height;
-    poly->v0 = v;
-    poly->v1 = v;
     poly->u0 = u;
+    poly->v0 = v;
     poly->u1 = u + width;
+    poly->v1 = v;
     poly->u2 = u;
     poly->v2 = v + height;
     poly->u3 = u + width;

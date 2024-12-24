@@ -63,19 +63,26 @@ static Weapon dummy_header = {
 
 extern Weapon w_000_header;
 extern Weapon w_002_header;
+extern Weapon w_007_header;
+extern Weapon w_012_header;
+extern Weapon w_034_header;
+extern Weapon w_037_header;
+extern Weapon w_041_header;
 extern Weapon w_046_header;
+extern Weapon w_051_header;
+extern Weapon w_052_header;
 Weapon* g_Weapons[] = {
     &w_000_header, &dummy_header, &w_002_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &w_007_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &w_012_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &w_034_header,
+    &dummy_header, &dummy_header, &w_037_header, &dummy_header, &dummy_header,
+    &dummy_header, &w_041_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &w_046_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &w_051_header, &w_052_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header,
 };
 
@@ -115,7 +122,6 @@ int readSubsetToBuf(char* filename, char* dest, size_t start, size_t size) {
 
 void HandleWeapon0Prg(int fileId) {
     memcpy(&D_8017A000, g_Weapons[fileId], sizeof(Weapon));
-    // todo animsets
 }
 
 void HandleWeapon0Chr(int fileId) {

@@ -21,7 +21,7 @@ void EntityHammer(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B8C);
+        InitializeEntity(g_EInitGurkhaType0);
         self->animCurFrame = 3;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -81,7 +81,7 @@ void EntityHammer(Entity* self) {
                 func_801CE228();
                 func_801CE4CC(otherEnt);
             } else if (self->ext.GH_Props.unkB0[0] == 2 &&
-                       self->ext.GH_Props.unkB0[2] == 1) {
+                       self->ext.GH_Props.unkB4[0] == 1) {
                 func_801CE1E8(8);
             }
         }
@@ -129,7 +129,7 @@ void EntityHammer(Entity* self) {
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             if (self->ext.GH_Props.unkB0[0] == 0 &&
-                self->ext.GH_Props.unkB0[2] == 0) {
+                self->ext.GH_Props.unkB4[0] == 0) {
                 self->step_s++;
             }
             break;
@@ -137,7 +137,7 @@ void EntityHammer(Entity* self) {
             func_801CDF1C(var_s2, &D_80182C9C, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            if (self->ext.GH_Props.unkB0[2] == 0 &&
+            if (self->ext.GH_Props.unkB4[0] == 0 &&
                 self->ext.GH_Props.unkB0[0] == 0) {
                 self->step_s++;
             }
@@ -195,7 +195,7 @@ void EntityHammer(Entity* self) {
             func_801CDFD8(var_s3_2, 0x10);
             func_801CE258(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(0x743);
                 self->step_s++;
             }
@@ -218,16 +218,16 @@ void EntityHammer(Entity* self) {
             func_801CDFD8(var_s3_2, 2);
             func_801CE258(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 4) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->ext.GH_Props.unk84 ^= 1;
             }
             if ((self->ext.GH_Props.unkB0[0] == 6) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(SFX_FM_EXPLODE_D);
-                g_api_func_80102CD8(1);
+                g_api.func_80102CD8(1);
             }
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->ext.GH_Props.unk84 ^= 1;
                 self->step_s++;
             }
@@ -243,7 +243,7 @@ void EntityHammer(Entity* self) {
             func_801CE2CC(var_s2);
             func_801CE258(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
-                (self->ext.GH_Props.unkB0[2] == 0)) {
+                (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->step_s++;
             }
             break;
@@ -262,7 +262,7 @@ void EntityHammer(Entity* self) {
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
         func_801CE258(&D_80182A20);
-        if (self->ext.GH_Props.unkB0[2] == 0) {
+        if (self->ext.GH_Props.unkB4[0] == 0) {
             self->facingLeft ^= 1;
             func_801CE4CC(self);
         }
@@ -282,7 +282,7 @@ void EntityHammer(Entity* self) {
         func_801CE2CC(var_s2);
         func_801CE258(&D_80182A20);
         if (self->ext.GH_Props.unkB0[0] == 0 &&
-            self->ext.GH_Props.unkB0[2] == 0) {
+            self->ext.GH_Props.unkB4[0] == 0) {
             func_801CE4CC(self);
         }
         break;
@@ -320,7 +320,7 @@ void EntityHammer(Entity* self) {
         otherEnt->ext.GH_Props.unkA8 = 0;
     }
     D_8006C384.y = self->ext.GH_Props.unkB0[0];
-    D_8006C38C.y = self->ext.GH_Props.unkB0[2];
+    D_8006C38C.y = self->ext.GH_Props.unkB4[0];
     return;
 }
 
@@ -335,13 +335,13 @@ void EntityGurkhaBodyParts(Entity* self) {
     case 0:
         switch (self->params >> 8) {
         case 0:
-            InitializeEntity(D_80180B8C);
+            InitializeEntity(g_EInitGurkhaType0);
             break;
         case 1:
-            InitializeEntity(D_80180BA4);
+            InitializeEntity(g_EInitGurkhaType1);
             break;
         case 2:
-            InitializeEntity(D_80180BBC);
+            InitializeEntity(g_EInitGurkhaType2);
             break;
         }
         self->hitboxWidth = 6;

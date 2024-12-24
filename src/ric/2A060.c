@@ -38,13 +38,13 @@ void RicEntityTeleport(Entity* self) {
             prim->y0 = 0;
             prim->u0 = 0xC0;
             prim->v0 = 0xF0;
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             prim->priority = 0x1FD;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
             prim = prim->next;
         }
         for (i = 0; i < 2; i++) {
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->priority = 0x1F8;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
@@ -864,7 +864,7 @@ void func_80167A70(Entity* self) {
                 }
                 fakeprim->velocityY.val = -((rand() * 2) + FIX(2.5));
                 fakeprim->drawMode = DRAW_HIDE | DRAW_UNK02;
-                fakeprim->type = 1;
+                fakeprim->type = PRIM_TILE;
             } else {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 =
                     (rand() & 0xF) | 0x30;
@@ -883,7 +883,7 @@ void func_80167A70(Entity* self) {
                 prim->y1 = posY + D_80155D64[arrIndex][3];
                 prim->x3 = prim->x2 = posX + D_80155D64[arrIndex][4];
                 prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
-                prim->type = 3;
+                prim->type = PRIM_G4;
                 prim->priority = PLAYER.zPriority + 2;
             }
         }
@@ -992,11 +992,10 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->ext.subweapon.timer = 0x160;
         if ((self->params < 32) && !(self->params & 3)) {
-            g_api.PlaySfx(0x708);
+            g_api.PlaySfx(SFX_RIC_HYDRO_STORM_ATTACK);
         }
         self->step++;
         break;
-
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
@@ -1029,8 +1028,12 @@ void RicEntityCrashHydroStorm(Entity* self) {
         }
         self->ext.subweapon.timer++;
         break;
-
     case 2:
+#if defined(VERSION_HD)
+        if (self->params == 0x28) {
+            g_Player.unk4E = 1;
+        }
+#endif
         DestroyEntity(self);
         break;
     }
@@ -1064,7 +1067,7 @@ s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
     if ((colRes1 & colSet1) == EFFECT_SOLID ||
         (colRes1 & colSet1) == (EFFECT_UNK_0800 | EFFECT_SOLID)) {
         colRes2 = res2.effects & colSetNo800;
-        if (!((s16)res2.effects & 1)) {
+        if (!((s16)res2.effects & EFFECT_SOLID)) {
             g_CurrentEntity->posY.i.hi = y;
             return 1;
         }

@@ -19,40 +19,40 @@ void EntityCSMoveAlucard(Entity* self) {
     s16 posX;
 
     FntPrint("step %x\n", self->step);
-    if ((D_801A3ED4 != 0) && (self->step < 8)) {
+    if (g_SkipCutscene && (self->step < 8)) {
         SetStep(8);
     }
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_8018047C);
-        D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
+        g_PauseAllowed = false;
+        g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         if (g_DemoMode != Demo_None) {
-            self->ext.generic.unk7C.s = 64;
+            self->ext.utimer.t = 64;
         } else {
-            self->ext.generic.unk7C.s = 128;
+            self->ext.utimer.t = 128;
         }
         break;
 
     case 1:
         g_Player.padSim = 0;
-        if (self->ext.generic.unk7C.u != 0) {
-            self->ext.generic.unk7C.u--;
+        if (self->ext.utimer.t != 0) {
+            self->ext.utimer.t--;
         }
-        if (g_Player.unk0C & 7) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & 1) {
+                if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = 8;
-                } else if (g_Player.unk0C & 2) {
+                } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = 4;
-                } else if (g_Player.unk0C & 4) {
+                } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = 2;
                 }
             }
-        } else if (self->ext.generic.unk7C.u == 0) {
+        } else if (self->ext.utimer.t == 0) {
             self->step++;
             g_Player.padSim = 0x2000;
         }
@@ -63,8 +63,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0x2000;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(D_801A3F84 & 1)) {
-                D_801A3F84 |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 288) {
@@ -79,7 +79,7 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         func_801961DC(0x20);
-        if (D_801A3F84 & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
         }
         break;
@@ -88,8 +88,8 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.padSim = 0x2000;
         posX = player->posX.i.hi + currentRoomTileLayout->scrollX.i.hi;
         if (posX > 256) {
-            if (!(D_801A3F84 & 1)) {
-                D_801A3F84 |= 1;
+            if (!(g_CutsceneFlags & 1)) {
+                g_CutsceneFlags |= 1;
             }
         }
         if (posX > 352) {
@@ -104,7 +104,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 5: // Conversation with fake lisa
         g_Player.D_80072EFC = 1;
-        if (D_801A3F84 & 8) {
+        if (g_CutsceneFlags & 8) {
             SetStep(6);
         }
         break;
@@ -120,7 +120,7 @@ void EntityCSMoveAlucard(Entity* self) {
 
     case 7:
         g_Player.D_80072EFC = 1;
-        if (D_801A3F84 & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             SetStep(8);
         }
         break;
@@ -128,9 +128,9 @@ void EntityCSMoveAlucard(Entity* self) {
     case 8:
         func_801961DC(0x80);
         if (g_unkGraphicsStruct.unkC == 0x80) {
-            D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
+            g_PauseAllowed = true;
+            if (g_unkGraphicsStruct.pauseEnemies != 0) {
+                g_unkGraphicsStruct.pauseEnemies = 0;
             }
             DestroyEntity(self);
         }
@@ -149,14 +149,14 @@ void EntityUnkId23(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_8018047C);
-        D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
+        g_PauseAllowed = false;
+        g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
-        if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
-        } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+        } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
             g_Player.padSim = PAD_L1;
-        } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
         }
         g_Player.D_80072EFC = PAD_L2;
@@ -164,17 +164,17 @@ void EntityUnkId23(Entity* self) {
 
     case 1:
         g_Player.padSim = 0;
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_R1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = PAD_L1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = PAD_R2;
                 }
             }
-        } else if ((g_Player.pl_vram_flag & 1) && (D_801A3F84 & 2)) {
+        } else if ((g_Player.pl_vram_flag & 1) && (g_CutsceneFlags & 2)) {
             diff = player->posX.i.hi - ent->posX.i.hi;
             if (diff < -0x50) {
                 g_Player.padSim = PAD_RIGHT;
@@ -220,16 +220,16 @@ void EntityUnkId23(Entity* self) {
     case 4:
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
-        D_801A3F84 |= 1;
-        if (D_801A3F84 & 0x20) {
+        g_CutsceneFlags |= 1;
+        if (g_CutsceneFlags & 0x20) {
             self->step++;
         }
         break;
 
     case 5:
-        D_8003C8B8 = 1;
-        if (g_unkGraphicsStruct.unk0 != 0) {
-            g_unkGraphicsStruct.unk0 = 0;
+        g_PauseAllowed = true;
+        if (g_unkGraphicsStruct.pauseEnemies != 0) {
+            g_unkGraphicsStruct.pauseEnemies = 0;
         }
         player->posY.i.hi = player->posY.i.hi + 0x100;
         g_Player.padSim = 0;

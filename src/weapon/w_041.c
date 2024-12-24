@@ -145,7 +145,9 @@ static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-extern s32 D_123000_8017B200;
+s32 D_123000_8017B200;
+s32 D_123000_8017B204;
+s32 D_123000_8017B208;
 
 void func_123000_8017A914(void) {
     RECT rect;
@@ -237,11 +239,6 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
     }
     return NULL;
 }
-
-extern s32 D_123000_8017A53C[];
-extern s32 D_123000_8017A54C[];
-extern s32 D_123000_8017B204;
-extern s32 D_123000_8017B208;
 
 void EntityWeaponAttack(Entity* self) {
     u8 pad[38];
@@ -356,7 +353,7 @@ s32 func_ptr_80170004(Entity* self) {
             }
             self->ext.weapon.some_ent =
                 func_123000_8017A994(self, self->ext.weapon.unk80, 0x280);
-            g_api.PlaySfx(0x69B);
+            g_api.PlaySfx(SFX_BAT_WING_SWISHES);
             g_api.PlaySfx(SFX_BAT_SCREECH);
             self->ext.weapon.lifetime = 0x16;
             self->ext.weapon.unk82 = 0x80;

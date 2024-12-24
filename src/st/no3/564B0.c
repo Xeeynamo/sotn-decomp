@@ -90,12 +90,12 @@ void EntityZombieSpawner(Entity* self) {
     s32 rnd;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         self->ext.zombieSpawner.spawnDelay = 1;
         self->flags &= FLAG_UNK_2000;
     }
 
-    if (g_CastleFlags[0x37]) {
+    if (g_CastleFlags[CASTLE_FLAG_55]) {
         self->posX.i.hi = 128;
         if (--self->ext.zombieSpawner.spawnDelay == 0) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);

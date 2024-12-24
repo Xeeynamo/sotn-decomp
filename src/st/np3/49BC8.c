@@ -23,7 +23,7 @@ void EntityZombie(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B08);
+        InitializeEntity(g_EInitZombie);
         self->hitboxWidth = 8;
         self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;
@@ -90,12 +90,12 @@ void EntityZombieSpawner(Entity* self) {
     s32 rnd;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitSpawner);
         self->ext.zombieSpawner.spawnDelay = 1;
         self->flags &= FLAG_UNK_2000;
     }
 
-    if (g_CastleFlags[0x37]) {
+    if (g_CastleFlags[CASTLE_FLAG_55]) {
         self->posX.i.hi = 128;
         if (--self->ext.zombieSpawner.spawnDelay == 0) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);

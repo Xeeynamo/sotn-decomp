@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #include "w_047_2.h"
 #define g_Animset w_047_1
 #define g_Animset2 w_047_2
+#include "sfx.h"
 
 extern AnimationFrame D_14D000_8017A528[];
 extern s16 D_14D000_8017A468[0x20];
@@ -209,7 +210,7 @@ void EntityWeaponAttack(Entity* self) {
             yVar = self->posY.i.hi;
             if (self->flags & FLAG_HAS_PRIMS) {
                 if (!(g_GameTimer & 7)) {
-                    g_api.PlaySfx(SFX_UNK_6A3);
+                    g_api.PlaySfx(SFX_WATER_DAMAGE_SWISHES);
                 }
 
                 prim = &g_PrimBuf[self->primIndex];
@@ -284,7 +285,7 @@ void EntityWeaponAttack(Entity* self) {
     case 3:
         break;
     case 4:
-        self->drawFlags |= FLAG_DRAW_UNK80;
+        self->drawFlags |= FLAG_BLINK;
         if (--self->ext.weapon_047.unk7C == 0) {
             DestroyEntity(self);
         }

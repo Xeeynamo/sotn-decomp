@@ -140,7 +140,7 @@ void RicEntityCrashCrossBeam(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->drawMode = 0x100 | DRAW_HIDE;
+            prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.giantcross.subweaponId = PL_W_CRASH_CROSS_BEAM;
@@ -281,7 +281,7 @@ void RicEntityCrashCrossBeam(Entity* self) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
         temp_a3 = vectors_ptr[2];
-        prim->type = 4;
+        prim->type = PRIM_GT4;
         gte_nclip();
         prim->drawMode = DRAW_HIDE;
         gte_stopz(&nclip);

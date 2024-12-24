@@ -6,7 +6,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &D_801820F0[entity->params];
 
     if (entity->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk5A;
@@ -21,5 +21,5 @@ void EntityRoomForeground(Entity* entity) {
             entity->drawFlags |= FLAG_DRAW_ROTZ;
         }
     }
-    AnimateEntity(objInit->unk10, entity);
+    AnimateEntity(objInit->animFrames, entity);
 }

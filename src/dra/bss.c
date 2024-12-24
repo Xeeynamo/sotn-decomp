@@ -64,7 +64,7 @@ u8* g_DemoPtr;
 s32 g_DemoKeyIdx;
 
 // 5087C.c
-s32 D_80137598;
+bool D_80137598;
 s32 D_8013759C;
 s32 D_801375A0;
 s32 D_801375A4;
@@ -414,7 +414,7 @@ s16 g_SfxScriptUnk6[NUM_CH];
 padding u16 D_8013AEA8[10];
 s32 D_8013AEBC[4];
 s32 D_8013AECC;
-s32 D_8013AED0;
+bool g_canRevealMap;
 s16 D_8013AED4[NUM_CH_2];
 u8 D_8013AEDC;
 u8 D_8013AEDD[3];

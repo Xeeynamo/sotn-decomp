@@ -116,16 +116,16 @@ void DbgMenuNavigate(DbgMenuCtrl* ctrl) {
 
     item = &ctrl->items[ctrl->option];
     prevParam = item->param;
-    if (g_pads->tapped & PAD_L1) {
+    if (g_pads[0].tapped & PAD_L1) {
         item->param -= ctrl->pageScroll;
     }
-    if (g_pads->tapped & PAD_R1) {
+    if (g_pads[0].tapped & PAD_R1) {
         item->param += ctrl->pageScroll;
     }
-    if (g_pads->repeat & PAD_LEFT) {
+    if (g_pads[0].repeat & PAD_LEFT) {
         item->param--;
     }
-    if (g_pads->repeat & PAD_RIGHT) {
+    if (g_pads[0].repeat & PAD_RIGHT) {
         item->param++;
     }
     if (item->param < item->min) {
@@ -136,7 +136,7 @@ void DbgMenuNavigate(DbgMenuCtrl* ctrl) {
 
     switch (item->kind) {
     case DbgMenu_ActionOnInput:
-        if (g_pads->tapped & PAD_CROSS && item->action) {
+        if (g_pads[0].tapped & PAD_CROSS && item->action) {
             item->action(item->param);
         }
         break;
@@ -150,14 +150,14 @@ void DbgMenuNavigate(DbgMenuCtrl* ctrl) {
         break;
     }
 
-    if (g_pads->tapped & PAD_UP) {
+    if (g_pads[0].tapped & PAD_UP) {
         ctrl->option--;
         if (ctrl->option < 0) {
             ctrl->option = ctrl->nItems - 1;
         }
         PLAY_MENU_SOUND();
     }
-    if (g_pads->tapped & PAD_DOWN) {
+    if (g_pads[0].tapped & PAD_DOWN) {
         ctrl->option++;
         if (ctrl->option >= ctrl->nItems) {
             ctrl->option = 0;

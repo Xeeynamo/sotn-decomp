@@ -255,7 +255,11 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
 
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     AnimationFrame* animFrame;
+#if defined(VERSION_PC)
+    s32 ret = 0;
+#else
     s32 ret;
+#endif
 
     if (g_CurrentEntity->animFrameDuration == -1) {
         ret = -1;
@@ -318,12 +322,12 @@ void func_8010DF70(void) {
     }
 }
 
-void func_8010DFF0(s32 arg0, s32 arg1) {
+void func_8010DFF0(s32 resetAnims, s32 arg1) {
     Primitive* prim;
     s32 i;
 
-    if (arg0 != 0) {
-        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk1 = 1;
+    if (resetAnims) {
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
@@ -335,10 +339,10 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk0 = 1;
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 10;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 10;
 
-    if (arg1 != 0) {
+    if (arg1) {
         if (arg1 < 4) {
             g_Player.timers[15] = 4;
         } else {
@@ -350,14 +354,14 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 void func_8010E0A8(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7E.modeU8.unk0 = 0;
+    entity->ext.entSlot1.unk2 = 0;
 }
 
 void func_8010E0B8(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7C.U8.unk1 = 0;
-    entity->ext.generic.unk7C.U8.unk0 = 0;
+    entity->ext.entSlot1.unk1 = 0;
+    entity->ext.entSlot1.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
@@ -383,7 +387,7 @@ void func_8010E168(s32 arg0, s16 arg1) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x15), 0);
-        if (arg1 >= g_Player.timers[13]) {
+        if (g_Player.timers[13] <= arg1) {
             g_Player.timers[13] = arg1;
         }
     } else if (g_Player.timers[14] <= arg1) {
@@ -518,7 +522,7 @@ void func_8010E4D0(void) {
         PLAYER.velocityX = 0;
         SetPlayerStep(Player_AlucardStuck);
         func_80111CC0();
-        PlaySfx(NA_SE_VO_AL_WHAT);
+        PlaySfx(SFX_VO_ALU_WHAT);
         return;
     }
     func_80111CC0();
@@ -690,7 +694,12 @@ void DoGravityJump(void) {
 }
 
 s16 g_SfxAttackGrunts[] = {
-    SFX_UNK_6EE, SFX_UNK_6EF, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
+    SFX_VO_ALU_ATTACK_A,
+    SFX_VO_ALU_ATTACK_B,
+    SFX_VO_ALU_ATTACK_C,
+    SFX_VO_ALU_ATTACK_D,
+    0x0000,
+    0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -703,39 +712,48 @@ void func_8010EA54(s32 arg0) {
     }
 }
 
-s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity* entity = &g_Entities[0x20];
+static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 nFound;
+    s32 nEmpty;
     s32 i;
-    s32 var_a2;
-    s32 ret;
-
-    for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
         if (entity->entityId == E_NONE) {
-            ret++;
+            nEmpty++;
         }
-
-        if (entity->ext.generic.unkB0 != 0) {
-            if (entity->ext.generic.unkB0 == arg0) {
-                var_a2++;
-            }
+        if (entity->ext.subweapon.subweaponId != 0 &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
         }
-
-        if (var_a2 >= arg1) {
+        if (nFound >= limit) {
             return -1;
         }
-        entity++;
     }
-
-    return (ret == 0) ? -1 : 0;
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty == 0) {
+        return -1;
+    }
+    return 0;
 }
 
-s32 func_8010EB5C(void) {
+// Attempts to use subweapon. Performs checks before activating.
+// If it succeeds, factory is called to spawn the subweapon, and return 0.
+// If it fails, return a number 1 through 4 indicating why.
+static s32 func_8010EB5C(void) {
     SubweaponDef subWpn;
     s16 subWpnId;
     s32 atLedge;
     u8 anim;
 
     atLedge = 0;
+    // If control is not pressed
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
@@ -743,16 +761,19 @@ s32 func_8010EB5C(void) {
         atLedge = 1;
     }
     subWpnId = func_800FE3C4(&subWpn, 0, false);
-
+    // If we don't have a subweapon obtained
     if (subWpnId == 0) {
         return 1;
     }
-    if (subWpnId == 6 && g_unkGraphicsStruct.unk0 != 0) {
+    // If it's the stopwatch, but we're already paused
+    if (subWpnId == SUBWPN_STOPWATCH && g_unkGraphicsStruct.pauseEnemies) {
         return 4;
     }
-    if (func_8010EADC(subWpnId, subWpn.unk6) < 0) {
+    // If we already have too many of the subweapon active
+    if (CheckSubwpnChainLimit(subWpnId, subWpn.chainLimit) < 0) {
         return 2;
     }
+    // Should be if we don't have enough hearts?
     subWpnId = func_800FE3C4(&subWpn, 0, true);
     if (subWpnId == 0) {
         return 3;
@@ -785,7 +806,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
         // Hack to load unkAE as an s16 (struct has s8)
         // Longer term, figure out what g_Entites[16-64] are
         // and make dedicated ent extension.
-        if (LOH(entity->ext.generic.unkAE) != itemId) {
+        if (entity->ext.weapon.equipId != itemId) {
             continue;
         }
 
@@ -1033,7 +1054,7 @@ block_45:
                 g_Player.unk46 = 0x8012;
                 g_Player.unk54 = 0xFF;
                 PLAYER.step_s = 0x51;
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
                 return 1;
             }
         }
@@ -1055,45 +1076,45 @@ block_45:
         D_80139824 = 0x28;
         PLAYER.step = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 20: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 21: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 22: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 28: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0xA;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         CheckMoveDirection();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 27: // Estoc
         animVariant = atLedge;
         CheckMoveDirection();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         if (g_Player.pl_vram_flag & 1) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
@@ -1115,14 +1136,14 @@ block_45:
         D_80139824 = 0x80;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 26: // Unknown, not a direct equippable item (but there are 2 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(SFX_UNK_6EF);
+        PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
     case 0: // Most normal swords come in this range
     case 1:
@@ -1248,7 +1269,7 @@ block_45:
         }
         break;
     case 135: // Unknown
-        PlaySfx(SFX_UNK_6F0);
+        PlaySfx(SFX_VO_ALU_ATTACK_C);
         g_Player.timers[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;
@@ -1275,7 +1296,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
     SetPlayerAnim(0xBA);
-    PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
+    PlaySfx(SFX_VO_ALU_DARK_META);
     PlaySfx(SFX_UI_MP_FULL);
     g_Player.timers[11] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
@@ -1290,7 +1311,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
     SetPlayerAnim(0xDA);
-    PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
+    PlaySfx(SFX_VO_ALU_SOUL_STEAL);
     func_80118C28(0xC);
     g_Player.timers[12] = 4;
 }
@@ -1302,7 +1323,7 @@ void func_8010FC50(void) {
     func_8010E3E0();
     CreateEntFactoryFromEntity(g_CurrentEntity, 117, 0);
     SetPlayerAnim(0xF0);
-    PlaySfx(NA_SE_VO_AL_PUNCH);
+    PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[12] = 4;
 }
 
@@ -1313,7 +1334,7 @@ void func_8010FCB8(void) {
     func_8010E3E0();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
     SetPlayerAnim(0xF1);
-    PlaySfx(NA_SE_VO_AL_PUNCH);
+    PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[12] = 4;
 }
 

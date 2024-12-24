@@ -11,7 +11,7 @@ graphviz
 splat64==0.24.6
 crunch64
 spimdisasm>=1.26.0
-rabbitizer>=1.11.0
+rabbitizer==1.12.0
 n64img==0.3.3
 pygfxd
 pillow

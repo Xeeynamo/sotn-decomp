@@ -3,8 +3,7 @@
 #include "game.h"
 #include "sfx.h"
 
-extern u32 D_8019D424;
-extern s32 D_8019D428;
+extern u32 g_CutsceneFlags;
 
 // tile layout
 static s16 D_8018068C[] = {
@@ -86,12 +85,12 @@ void EntityPlatform(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitGeneric);
+            InitializeEntity(g_EInitInteractable);
             self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 9;
             self->zPriority = 0x80;
 
-            if (g_CastleFlags[216] != 0) {
+            if (g_CastleFlags[HG_CS_DONE] != 0) {
                 self->step = 9;
             }
 
@@ -113,13 +112,13 @@ void EntityPlatform(Entity* self) {
     case 1:
         if ((GetDistanceToPlayerX() < 32) &&
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
-            D_8003C8B8 = 0;
-            g_unkGraphicsStruct.unk0 = 1;
-            if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+            g_PauseAllowed = false;
+            g_unkGraphicsStruct.pauseEnemies = 1;
+            if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_R1;
-            } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+            } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                 g_Player.padSim = PAD_L1;
-            } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+            } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 g_Player.padSim = PAD_R2;
             } else if (temp_s1 > 384) {
                 g_Player.padSim = PAD_LEFT;
@@ -128,7 +127,7 @@ void EntityPlatform(Entity* self) {
             } else {
                 g_Player.padSim = 0;
             }
-            g_Entities[1].ext.generic.unk7C.S8.unk0 = 0;
+            g_Entities[1].ext.entSlot1.unk0 = 0;
             g_Player.D_80072EFC = 1;
             self->step++;
         }
@@ -136,13 +135,13 @@ void EntityPlatform(Entity* self) {
 
     case 2:
         g_Player.padSim = 0;
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                     g_Player.padSim = PAD_R1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
                     g_Player.padSim = PAD_L1;
-                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                     g_Player.padSim = PAD_R2;
                 }
             }
@@ -172,7 +171,7 @@ void EntityPlatform(Entity* self) {
             player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
             self->step++;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
-            D_8019D424 |= 1;
+            g_CutsceneFlags |= 1;
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
             func_8018F8EC(0);
         }
@@ -192,7 +191,7 @@ void EntityPlatform(Entity* self) {
             if (player->facingLeft == 0) {
                 g_Player.padSim = PAD_LEFT;
             }
-            D_8019D424 |= 4;
+            g_CutsceneFlags |= 4;
             self->step++;
         }
         func_8018F890(0x200);
@@ -203,7 +202,7 @@ void EntityPlatform(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
 
-        if (D_8019D424 & 8) {
+        if (g_CutsceneFlags & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
             g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
@@ -213,7 +212,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 6:
-        if (D_8019D424 & 2) {
+        if (g_CutsceneFlags & 2) {
             self->step++;
             g_api.PlaySfx(SFX_METAL_CLANG_A);
         }
@@ -227,11 +226,11 @@ void EntityPlatform(Entity* self) {
             player->posY.i.hi++;
             D_80097488.x.i.hi++;
         } else {
-            D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
+            g_PauseAllowed = true;
+            if (g_unkGraphicsStruct.pauseEnemies != 0) {
+                g_unkGraphicsStruct.pauseEnemies = 0;
             }
-            g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+            g_Entities[1].ext.entSlot1.unk0 = 1;
             self->step++;
             g_api.PlaySfx(SFX_DOOR_CLOSE_A);
         }
@@ -276,14 +275,14 @@ void EntityRoomDarkness(Entity* self) {
     switch (self->step) {
     case 0:
         /* Has player seen Maria Holy Glasses Cutscene? */
-        if (g_CastleFlags[216] != 0) {
+        if (g_CastleFlags[HG_CS_DONE] != 0) {
             DestroyEntity(self);
             return;
         }
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
         if (primIndex != -1) {
-            InitializeEntity(g_EInitGeneric);
+            InitializeEntity(g_EInitInteractable);
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->animSet = 0;
@@ -321,7 +320,7 @@ void EntityRoomDarkness(Entity* self) {
         break;
 
     case 1:
-        if (D_8019D424 & 4) {
+        if (g_CutsceneFlags & 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
@@ -345,14 +344,15 @@ void EntityRoomDarkness(Entity* self) {
     }
 }
 
+#if !defined(VERSION_HD)
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
         /* Has player seen Maria Holy Glasses Cutscene? */
-        if (g_CastleFlags[216] != 0) {
+        if (g_CastleFlags[HG_CS_DONE] != 0) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_80180428);
+        InitializeEntity(g_EInitMaria);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
@@ -361,6 +361,9 @@ void EntityMaria(Entity* self) {
         self->zPriority = 0x80;
     }
 }
+#else
+INCLUDE_ASM("st/cen/nonmatchings/F890", EntityMaria);
+#endif
 
 s16 func_8019040C(Primitive* prim, s16 arg1) {
     s16 ret = arg1;
@@ -402,6 +405,7 @@ s16 func_801904B8(Primitive* prim, s16 arg1) {
     return arg1;
 }
 
+#if !defined(VERSION_HD)
 // Elevator when not moving (ID 1A)
 void EntityElevatorStationary(Entity* self) {
     Entity* player = &PLAYER;
@@ -412,13 +416,13 @@ void EntityElevatorStationary(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
-        CreateEntityFromCurrentEntity(E_ID_1B, &self[-1]);
-        self[-1].params = 1;
-        CreateEntityFromCurrentEntity(E_ID_1B, &self[-2]);
-        self[-2].params = 2;
+        CreateEntityFromCurrentEntity(E_ELEVATOR_STATIONARY, &self[-1]);
+        (self - 1)->params = 1;
+        CreateEntityFromCurrentEntity(E_ELEVATOR_STATIONARY, &self[-2]);
+        (self - 2)->params = 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -426,7 +430,7 @@ void EntityElevatorStationary(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.prim = prim;
+        self->ext.cenElevator.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         prim->tpage = 0x12;
         prim->clut = 0x223;
@@ -449,17 +453,17 @@ void EntityElevatorStationary(Entity* self) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
-            g_Entities[1].ext.stub[0x00] = 1;
+            g_Entities[1].ext.entSlot1.unk0 = 1;
             SetStep(3);
         }
         break;
 
     case 1:
-        if (*(u8*)&self[-1].ext.stub[0x4]) {
+        if ((self - 1)->ext.cenElevator.unk80) {
             posX = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_UP) {
                 if (abs(posX) < 8) {
-                    g_Entities[1].ext.stub[0x00] = 1;
+                    g_Entities[1].ext.entSlot1.unk0 = 1;
                     g_Player.D_80072EFC = 2;
                     g_Player.padSim = 0;
                     PLAYER.velocityX = 0;
@@ -490,7 +494,7 @@ void EntityElevatorStationary(Entity* self) {
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                g_Entities[1].ext.stub[0x00] = 0;
+                g_Entities[1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
@@ -527,14 +531,14 @@ void EntityElevatorStationary(Entity* self) {
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                g_Entities[1].ext.stub[0x00] = 0;
+                g_Entities[1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
             break;
         }
     }
-    prim = self->ext.prim;
+    prim = self->ext.cenElevator.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
@@ -561,6 +565,9 @@ void EntityElevatorStationary(Entity* self) {
         DestroyEntity(self);
     }
 }
+#else
+INCLUDE_ASM("st/cen/nonmatchings/F890", EntityElevatorStationary);
+#endif
 
 void EntityUnkId1B(Entity* self) {
     Entity* entity = &self[self->params];
@@ -568,7 +575,7 @@ void EntityUnkId1B(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_EInitElevator);
         if (self->params & 16) {
             self->animCurFrame = self->params & 15;
             self->zPriority = 0x6A;
@@ -580,13 +587,13 @@ void EntityUnkId1B(Entity* self) {
 
     case 1:
         self->posX.i.hi = entity->posX.i.hi;
-        if (self->params == step) {
+        if (self->params == 1) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            self->ext.generic.unk80.modeS8.unk0 =
+            self->ext.cenElevator.unk80 =
                 GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            self->ext.generic.unk80.modeS8.unk0 =
+            self->ext.cenElevator.unk80 =
                 GetPlayerCollisionWith(self, 12, 8, 6);
         }
         break;
@@ -604,7 +611,7 @@ void EntityMovingElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_8018047C);
+        InitializeEntity(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
@@ -614,7 +621,7 @@ void EntityMovingElevator(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.prim = prim;
+        self->ext.cenElevator.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->tpage = 0x12;
@@ -639,7 +646,7 @@ void EntityMovingElevator(Entity* self) {
         }
 
         self->animCurFrame = 10;
-        g_Entities[1].ext.stub[0x00] = 1;
+        g_Entities[1].ext.entSlot1.unk0 = 1;
         SetStep(step);
         break;
 
@@ -659,7 +666,7 @@ void EntityMovingElevator(Entity* self) {
         g_Player.pl_vram_flag = 0x41;
         break;
     }
-    prim = self->ext.prim;
+    prim = self->ext.cenElevator.prim;
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;

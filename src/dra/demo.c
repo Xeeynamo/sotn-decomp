@@ -310,7 +310,7 @@ void DemoUpdate(void) {
                 g_DemoMode = Demo_None;
             }
         } else {
-            g_pads->pressed = btnLo + (btnHi << 8);
+            g_pads[0].pressed = btnLo + (btnHi << 8);
             g_pads[0].tapped = 0;
             g_DemoPtr[2]--;
         }
@@ -331,7 +331,7 @@ void DemoUpdate(void) {
             g_DemoMode = Demo_None;
         }
         curBtnLo = g_pads[0].pressed;
-        curBtnHi = g_pads->pressed >> 8;
+        curBtnHi = g_pads[0].pressed >> 8;
         if (frameCount != 0xFF && btnLo == curBtnLo && btnHi == curBtnHi) {
             g_DemoPtr[2]++;
         } else {

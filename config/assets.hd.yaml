@@ -1,0 +1,33 @@
+files:
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
+    asset_path: assets/st/cen
+    src_path: src/st/cen
+    splat_config_path: config/splat.hd.stcen.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xDC, layers, layers]
+          - [0x134, gfx_banks, graphics_banks]
+          - [0x1EC, layout, entity_layouts]
+          - [0x394, skip]
+          - [0x1308, rooms, rooms]
+          - [0x1334, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
+    asset_path: assets/st/wrp
+    src_path: src/st/wrp
+    splat_config_path: config/splat.hd.stwrp.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xB8, layers, layers]
+          - [0x1B8, gfx_banks, graphics_banks]
+          - [0x23C, layout, entity_layouts]
+          - [0x3E4, skip]
+          - [0x11B0, rooms, rooms]
+          - [0x122C, skip]

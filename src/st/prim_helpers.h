@@ -80,6 +80,8 @@ void UnkPrimHelper(Primitive* prim) {
     gte_stsxy(&prim->x3);
 }
 
+#endif
+
 s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
     s16 sp0;
     s16 tempUv;
@@ -140,7 +142,6 @@ Primitive* FindFirstUnkPrim(Primitive* poly) {
 // Similar to FindFirstUnkPrim, but returns the first prim with
 // p3 == 0 if there is a prim with p3 == 0 at index positions after
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index) {
-
     Primitive* ret;
     int i;
 
@@ -194,8 +195,6 @@ Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
     return prim;
 }
 
-#endif
-
 void PrimResetNext(Primitive* prim) {
     prim->p1 = 0;
     prim->p2 = 0;
@@ -228,7 +227,6 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->next->drawMode = DRAW_HIDE | DRAW_UNK02;
 }
 
-#if !defined(VERSION_PSP)
 void UnkPolyFunc0(Primitive* prim) {
     prim->p3 = 0;
     prim->drawMode = DRAW_HIDE;
@@ -236,7 +234,6 @@ void UnkPolyFunc0(Primitive* prim) {
     prim->next->type = PRIM_GT4;
     prim->next->drawMode = DRAW_HIDE;
 }
-#endif
 
 #if !defined(VERSION_BETA)
 struct SubPrim {

@@ -56,7 +56,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->posY.val = PLAYER.posY.val;
         self->facingLeft = PLAYER.facingLeft;
     }
-    if ((g_Player.unk0C & 0x10000) && (self->step != 4)) {
+    if ((g_Player.status & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
         self->zPriority = PLAYER.zPriority + 2;
         self->step = 4;
         if (g_Player.pl_vram_flag & 1) {
@@ -144,7 +144,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->velocityY += FIX(20.0 / 128);
         self->rotZ = self->rotZ + 0x80;
         if (--self->ext.weapon.lifetime < 16) {
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
         }
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);

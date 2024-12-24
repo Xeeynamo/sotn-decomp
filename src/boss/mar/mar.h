@@ -4,6 +4,8 @@
 
 #include <stage.h>
 
+#define OVL_EXPORT(x) MAR_##x
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -24,7 +26,7 @@ typedef enum {
     /* 0x10 */ E_DUMMY_10,
 
     /* 0x14 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_ID_15,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_CLOCKROOM_CONTROLLER,
     /* 0x17 */ E_CLOCK_HANDS,
     /* 0x18 */ E_BIRDCAGE_DOOR,
@@ -32,7 +34,7 @@ typedef enum {
     /* 0x1A */ E_STATUE_GEAR,
     /* 0x1B */ E_STONE_DOOR,
     /* 0x1C */ E_ID_1C,
-    /* 0x1D */ E_DUMMY_1D,
+    /* 0x1D */ E_CLOCK_ROOM_SHADOW,
 } EntityIDs;
 
 typedef enum Statues {
@@ -40,8 +42,9 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 extern s32 D_800973FC;
 extern u16 g_Statues[];
+extern u16 g_EInitMaria[];
 
 #endif

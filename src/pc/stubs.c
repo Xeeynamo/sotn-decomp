@@ -25,7 +25,7 @@ s16 D_8003C710;
 s16 D_8003C712;
 s32 D_8003C728;
 s32 D_8003C730;
-s32 D_8003C8B8;
+bool g_PauseAllowed;
 s32 g_IsUsingCd;
 Entity* g_CurrentEntity;
 GpuUsage g_GpuUsage;
@@ -42,7 +42,7 @@ GpuBuffer* g_CurrentBuffer;
 u32 g_GameEngineStep;
 s32 D_8003C0F8;
 s32 D_800973EC;
-s32 D_8003C704;
+s32 g_CutsceneHasControl;
 s32 D_800973EC;
 s32 D_8003C73C;
 s32 g_MapCursorTimer;
@@ -193,3 +193,8 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
     return g_FontCharData;
 }
+
+void gte_stsxy01c() { NOT_IMPLEMENTED; }
+void gte_stsxy3_gt3() { NOT_IMPLEMENTED; }
+void gte_ldv01c() { NOT_IMPLEMENTED; }
+void gte_ldv3c() { NOT_IMPLEMENTED; }

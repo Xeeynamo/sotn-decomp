@@ -1,3 +1,6 @@
+#ifndef LIBCD_H
+#define LIBCD_H
+
 #include <types.h>
 
 /* Location */
@@ -167,3 +170,5 @@ u_long StFreeRing(u_long* base);
 int StGetBackloc(CdlLOC* loc);
 void StSetRing(u_long* ring_addr, u_long ring_size1);
 void StUnSetRing(void);
+
+#endif // LIBCD_H

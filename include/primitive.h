@@ -6,7 +6,41 @@
 #define PRIMITIVE_H
 #include "common.h"
 
+typedef enum {
+    PRIORITY_DIALOGUE = 0x1FE,
+} PrimitivePriority;
+
 #define blendMode drawMode // maintained to easily migrate existing scratches
+
+// Macros for simplifying long stretches setting prim colors.
+// "prim red". Do PRED(prim) = 0x80 to set all reds to 0x80.
+#define PRED(p) p->r0 = p->r1 = p->r2 = p->r3
+// "prim green". Do PGRN(prim) = 0x80 to set all greens to 0x80.
+#define PGRN(p) p->g0 = p->g1 = p->g2 = p->g3
+// "prim blue". Do PBLU(prim) = 0x80 to set all blues to 0x80.
+#define PBLU(p) p->b0 = p->b1 = p->b2 = p->b3
+// "prim color". Do PCOL(prim) =  0x80 to set all RGBs to 0x80.
+#define PCOL(p) PRED(p) = PGRN(p) = PBLU(p)
+
+// Alternatively, set a point in a prim to a given shade of grey.
+// prim->r0 = prim->g0 = prim->b0 = 255 becomes
+// PGREY(prim, 0) = 255
+#define PGREY(p, n) p->r##n = p->g##n = p->b##n
+
+typedef enum {
+    PRIM_NONE,
+    PRIM_TILE,
+    PRIM_LINE_G2,
+    PRIM_G4,
+    PRIM_GT4,
+    PRIM_GT3,
+    PRIM_SPRT,
+    PRIM_ENV,
+    PRIM_TILE_ALT = PRIM_TILE | 0x10,
+    PRIM_LINE_G2_ALT = PRIM_LINE_G2 | 0x10,
+    PRIM_G4_ALT = PRIM_G4 | 0x10
+} PrimitiveType;
+
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
 #if defined(VERSION_PC) || defined(VERSION_PSP)
@@ -162,15 +196,40 @@ typedef struct AxePrim {
     /* 0x19 */ u8 v1;
     /* 0x1A */ u16 tpage;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E*/ s16 unk1E;
+    /* 0x1E */ s16 unk1E;
     /* 0x20 */ s16 x2;
     /* 0x22 */ s16 y2;
     /* 0x24 */ u8 step;
     /* 0x26 */ u16 priority;
-    /* 0x2A */ s32 pad;
+    /* 0x28 */ s32 pad;
     /* 0x2C */ s16 timer;
     /* 0x2E */ s16 unk2E;
-    /* 0x30 */ s16 unk30;
+    /* 0x30 */ u8 u3;
+    /* 0x31 */ u8 v3;
     /* 0x32 */ u16 drawMode;
 } AxePrim;
+
+// If we find more uses, can get a better name.
+typedef struct EntranceCascadePrim {
+    /* 0x00 */ struct EntranceCascadePrim* next;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
+#endif
+    /* 0x04 */ s32 : 32;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ s32 : 32;
+    /* 0x10 */ s32 : 32;
+    /* 0x14 */ s16 x1;
+    /* 0x16 */ s16 y1;
+    /* 0x18 */ s32 : 32;
+    /* 0x1C */ s32 : 32;
+    /* 0x20 */ f32 velocityY;
+    /* 0x24 */ s32 : 32;
+    /* 0x28 */ s32 : 24;
+    /* 0x2B */ u8 p3; // TODO not verified
+    /* 0x2C */ f32 velocityX;
+    /* 0x30 */ s16 : 16;
+    /* 0x32 */ u16 drawMode;
+} EntranceCascadePrim; /* size=0x34 */
 #endif

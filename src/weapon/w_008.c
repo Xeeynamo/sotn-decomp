@@ -10,6 +10,7 @@ extern s32 g_HandId;
 #include "w_008_2.h"
 #define g_Animset w_008_1
 #define g_Animset2 w_008_2
+#include "sfx.h"
 
 extern SpriteParts D_3C000_8017A040[];
 extern s8 D_3C000_8017A9F8;
@@ -38,7 +39,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->posY.val = PLAYER.posY.val;
         self->facingLeft = PLAYER.facingLeft;
     }
-    if ((g_Player.unk0C & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
+    if ((g_Player.status & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
         self->zPriority = PLAYER.zPriority + 2;
         self->step = 4;
         if (g_Player.pl_vram_flag & 1) {
@@ -134,7 +135,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->velocityY += FIX(20.0 / 128);
         self->rotZ += 0x80;
         if (--self->ext.timer.t < 0x10) {
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
         }
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
@@ -306,7 +307,7 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             self->ext.shield.unk80 = 0x20;
-            g_api.PlaySfx(SFX_UNK_6B1);
+            g_api.PlaySfx(SFX_TRANSFORM_3X);
             self->step++;
         }
         break;

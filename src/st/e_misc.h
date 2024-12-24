@@ -1,71 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
-
-#ifndef CASTLE_FLAG_BANK
-#define CASTLE_FLAG_BANK 0
-#endif
-
-extern u16 D_80180608[];
 
 #include "entity_relic_orb.h"
 
-void EntityHeartDrop(Entity* self) {
-    u16 index;
-    u8 value;
-    PfnEntityUpdate update;
+#if STAGE != STAGE_ST0
+#include "entity_heart_drop.h"
 
-    if (!self->step) {
-        index = self->ext.heartDrop.unkB4 =
-            self->params + 0x118 + CASTLE_FLAG_BANK;
-        value = g_CastleFlags[(index >> 3) + 0x100] >> (index & 7);
-        if (value & 1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        index -= 0x118 + CASTLE_FLAG_BANK;
-        index = D_80180608[index];
-        if (index < 128) {
-            self->ext.heartDrop.update = EntityPrizeDrop;
-        } else {
-            self->ext.heartDrop.update = EntityEquipItemDrop;
-            index -= 128;
-        }
-        self->params = index + 0x8000;
-    } else {
-        index = self->ext.heartDrop.unkB4;
-        if (self->step < 5) {
-            if (self->hitFlags) {
-                g_CastleFlags[(index >> 3) + 0x100] |= 1 << (index & 7);
-                self->step = 5;
-            }
-        }
-    }
-    update = self->ext.heartDrop.update;
-    update(self);
-}
-
+#if !defined(VERSION_BETA)
 #include "entity_message_box.h"
+#endif
+
+#endif
 
 #include "check_coll_offsets.h"
 
 #include "entity_unkId13.h"
 
-u16 g_eUnk14SpawnRots[] = {
-    /* FE8 */ 0x0010,
-    /* FEA */ 0x0020,
-    /* FEC */ 0x0030,
-    /* FEE */ 0x0040,
-    /* FF0 */ 0x0050,
-    /* FF2 */ 0x0060,
-    /* FF4 */ 0x0070,
-    /* FF6 */ 0x0000,
-};
-#include "entity_unkId14_spawner.h"
+#include "entity_explosion_variants_spawner.h"
 
-#include "entity_unkId15_spawner.h"
+#include "entity_greypuff_spawner.h"
 
-static s16 unk15_rot[] = {
+// NOTE: This entity data is slightly out of order.
+// Grey puff data comes before explosion variants data,
+// but explosion variant entity comes before grey puff entity.
+
+static s16 greyPuff_rot[] = {
     /* FF8 */ 0x0030,
     /* FFA */ 0x0050,
     /* FFC */ 0x0080,
@@ -76,41 +34,41 @@ static s16 unk15_rot[] = {
     /* 1006 */ 0x0000,
 };
 
-static s32 unk15_yVel[] = {
-    /* 1008 */ 0x00000400,
-    /* 100C */ 0x00002400,
-    /* 1010 */ 0x00003C00,
-    /* 1014 */ 0x00006000,
-    /* 1018 */ 0x00007800,
-    /* 101C */ 0x0000C000,
+static s32 greyPuff_yVel[] = {
+    /* 1008 */ FIX(2.0 / 128),
+    /* 100C */ FIX(18.0 / 128),
+    /* 1010 */ FIX(30.0 / 128),
+    /* 1014 */ FIX(48.0 / 128),
+    /* 1018 */ FIX(60.0 / 128),
+    /* 101C */ FIX(96.0 / 128),
 };
 
-s32 unk14_yVel[] = {
-    /* 1020 */ 0x00000800,
-    /* 1024 */ 0x00002800,
-    /* 1028 */ 0x00004800,
-    /* 102C */ 0x00007000,
-    /* 1030 */ 0x0000E000,
-    /* 1034 */ 0x00012000,
+static s32 explode_yVel[] = {
+    /* 1020 */ FIX(4.0 / 128),
+    /* 1024 */ FIX(20.0 / 128),
+    /* 1028 */ FIX(36.0 / 128),
+    /* 102C */ FIX(56.0 / 128),
+    /* 1030 */ FIX(112.0 / 128),
+    /* 1034 */ FIX(144.0 / 128),
 };
 
-u8 unk14_startFrame[] = {
-    /* 1038 */ 0x01,
-    /* 1039 */ 0x09,
-    /* 103A */ 0x15,
-    /* 103B */ 0x2B,
+static u8 explode_startFrame[] = {
+    /* 1038 */ 1,
+    /* 1039 */ 9,
+    /* 103A */ 21,
+    /* 103B */ 43,
 };
 
-u16 unk14_lifetime[] = {
+static u16 explode_lifetime[] = {
     /* 103C */ 0x0010,
     /* 103E */ 0x0018,
     /* 1040 */ 0x002A,
     /* 1042 */ 0x002F,
 };
 
-#include "entity_unkId14.h"
+#include "entity_explosion_variants.h"
 
-#include "entity_unkId15.h"
+#include "entity_greypuff.h"
 
 u32 g_olroxDroolCollOffsets[] = {
     /* 1044 */ 0x00000000,
@@ -120,7 +78,9 @@ u32 g_olroxDroolCollOffsets[] = {
 
 #include "unk_collision_func5.h"
 
+#if !defined(STAGE_IS_NO0)
 #include "unk_collision_func4.h"
+#endif
 
 #include "entity_intense_explosion.h"
 
@@ -130,20 +90,71 @@ u8 g_UnkEntityAnimData[] = {
 
 #include "initialize_unk_entity.h"
 
+#if defined(VERSION_BETA)
+void func_801966B0(u16* sensors) {
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->hitboxState = 0;
+        g_CurrentEntity->zPriority -= 0x10;
+        g_CurrentEntity->drawFlags |= DRAW_HIDE;
+        g_CurrentEntity->unk6C = 0;
+        g_CurrentEntity->step_s++;
+        break;
+    case 1:
+        if (UnkCollisionFunc3(sensors) & 1) {
+            g_CurrentEntity->animCurFrame = 1;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 2:
+        g_CurrentEntity->unk6C += 2;
+        if (g_CurrentEntity->unk6C == 0xC0) {
+            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
+            g_CurrentEntity->step_s++;
+            D_80199DE8 = 64;
+        }
+        break;
+    case 3:
+        if (D_80199DE8 & 1) {
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+        } else {
+            g_CurrentEntity->palette = PAL_OVL(0x19F);
+        }
+        if (!--D_80199DE8) {
+            g_CurrentEntity->hitboxState = 3;
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+            SetStep(1);
+        }
+        break;
+    }
+}
+#endif
+
 #include "make_entity_from_id.h"
 
 #include "make_explosions.h"
 
-u16 g_UnkRecursPrimVecOrder[] = {
-    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "entity_big_red_fireball.h"
 
+#if !defined(STAGE_IS_NO0)
+u16 g_UnkRecursPrimVecOrder[] = {
+    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "unk_recursive_primfunc_1.h"
 
-u16 g_UnkRecursPrim2Inds[] = {
-    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
+u16 g_UnkRecursPrim2Inds[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8,
+#if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) && STAGE != STAGE_ST0
+                              0, 0,
+#endif
+#if defined(VERSION_BETA)
+                              0, 0
+#endif
+};
 
 #include "unk_recursive_primfunc_2.h"
+#endif
 
 #include "clut_lerp.h"
 

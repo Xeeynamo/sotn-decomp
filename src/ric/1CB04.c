@@ -141,13 +141,14 @@ void RicHandleWalk(void) {
 }
 
 void RicHandleRun(void) {
+#ifdef VERSION_US
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
         return;
     }
+#endif
     g_Player.timers[PL_T_8] = 8;
     g_Player.timers[PL_T_CURSE] = 8;
-
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH)) {
         RicDecelerateX(0x2000);
@@ -317,8 +318,8 @@ void RicHandleCrouch(void) {
 
     if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
         (g_Player.padPressed & PAD_DOWN)) {
-        for (i = 0; i < 4; i++) {
-            if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                 g_Player.timers[PL_T_7] = 8;
                 return;
             }
@@ -444,7 +445,7 @@ void func_80159BC8(void) {
 }
 
 void func_80159C04(void) {
-    Entity* entity = PLAYER.ext.player.unkB8;
+    Entity* entity = PLAYER.unkB8;
     s16 temp_v0;
     s32 var_a0;
     s32 var_a2;
@@ -518,7 +519,7 @@ void RicHandleHit(
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x46), 0);
             g_Player.timers[PL_T_2] = 6;
-            g_api.PlaySfx(0x703);
+            g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
             break;
         } else {
             if (damageEffect & ELEMENT_ICE) {
@@ -533,7 +534,7 @@ void RicHandleHit(
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 6;
                     PLAYER.anim = D_8015569C;
-                    g_api.PlaySfx(0x702);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     break;
@@ -544,7 +545,7 @@ void RicHandleHit(
                     PLAYER.anim = D_80155704;
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
-                    g_api.PlaySfx(0x703);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
                     break;
                 case PL_S_FALL:
                 case PL_S_JUMP:
@@ -552,7 +553,7 @@ void RicHandleHit(
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = ric_anim_stun;
-                    g_api.PlaySfx(0x702);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
                     break;
                 }
                 break;
@@ -588,7 +589,7 @@ void RicHandleHit(
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = ric_anim_stun;
-                    g_api.PlaySfx(0x702);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
                     break;
                 case PL_S_CROUCH:
                     PLAYER.velocityY = 0;
@@ -597,7 +598,7 @@ void RicHandleHit(
                     PLAYER.anim = D_80155704;
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
-                    g_api.PlaySfx(0x703);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
                     break;
                 case PL_S_FALL:
                 case PL_S_JUMP:
@@ -605,7 +606,7 @@ void RicHandleHit(
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = ric_anim_stun;
-                    g_api.PlaySfx(0x702);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
                     break;
                 }
                 break;
@@ -685,7 +686,7 @@ void RicHandleHit(
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
             PLAYER.step_s = 5;
-            damage.effects = 0;
+            damage.effects = EFFECT_NONE;
             damage.damageKind = 1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.CalcPlayerDamage(&damage)) {
@@ -697,19 +698,20 @@ void RicHandleHit(
         } else {
             if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
                 (g_StageId != STAGE_DRE)) {
-                for (i = 2; i < 7; i++) {
-                    if (g_Player.colliders3[i].effects & 2) {
+                for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
+                    if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
                         break;
                     }
                 }
-                if (i == 7) {
-                    for (i = 9; i < 0xE; i++) {
-                        if (g_Player.colliders3[i].effects & 2) {
+                if (i == NUM_VERTICAL_SENSORS) {
+                    for (i = NUM_VERTICAL_SENSORS + 2;
+                         i < NUM_VERTICAL_SENSORS * 2; i++) {
+                        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
                             break;
                         }
                     }
                 }
-                if (i == 14) {
+                if (i == NUM_VERTICAL_SENSORS * 2) {
                 block_6dc:
                     PLAYER.velocityY = FIX(-4);
                     func_8015CAAC(FIX(-1.25));
@@ -726,7 +728,7 @@ void RicHandleHit(
                     g_api.PlaySfx(SFX_WALL_DEBRIS_B);
                     g_api.func_80102CD8(2);
                     PLAYER.step_s = 1;
-                    damage.effects = 0;
+                    damage.effects = EFFECT_NONE;
                     damage.damageKind = 1;
                     damage.damageTaken = g_Player.damageTaken;
                     if (g_api.CalcPlayerDamage(&damage)) {
@@ -745,7 +747,7 @@ void RicHandleHit(
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SKID_SMOKE_2, 8), 0);
         }
-        damage.effects = 0;
+        damage.effects = EFFECT_NONE;
         damage.damageKind = 1;
         damage.damageTaken = g_Player.damageTaken;
         if (g_api.CalcPlayerDamage(&damage)) {
@@ -829,7 +831,7 @@ void RicHandleBossGrab(void) {
             PLAYER.anim = ric_anim_stun;
             g_Player.timers[PL_T_2] = 8;
             g_Player.unk40 = 0x8166;
-            g_api.PlaySfx(0x702);
+            g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
         }
         PLAYER.step_s = 1;
         PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -838,7 +840,7 @@ void RicHandleBossGrab(void) {
     case 1:
         // Effectively a switch on g_Player.unk60
         if (g_Player.unk60 == 3) {
-            damage.effects = 0;
+            damage.effects = EFFECT_NONE;
             damage.damageKind = 1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.CalcPlayerDamage(&damage)) {
@@ -849,7 +851,7 @@ void RicHandleBossGrab(void) {
             if (g_Player.unk62 == 0) {
                 g_Player.timers[PL_T_2] = 4;
                 g_Player.unk40 = 0x8166;
-                g_api.PlaySfx(0x703);
+                g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
             }
             g_Player.unk60 = 2;
         } else if (g_Player.unk60 == 4) {
@@ -857,7 +859,7 @@ void RicHandleBossGrab(void) {
             PLAYER.step_s = 2;
             g_Player.unk60 = 0;
             g_Player.damageTaken = g_Player.unk64;
-            g_api.PlaySfx(0x704);
+            g_api.PlaySfx(SFX_VO_RIC_PAIN_D);
         } else if (g_Player.unk60 == 0) {
             PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 1;
@@ -894,7 +896,7 @@ void RicHandleDead(
         func_8015CAAC(FIX(-0.75));
         RicSetAnimation(D_80155544);
         PLAYER.velocityY = FIX(-1.625);
-        g_api.PlaySfx(SFX_UNK_6FF);
+        g_api.PlaySfx(SFX_VO_RIC_DEATH);
         if (damageEffects & ELEMENT_FIRE) {
             func_8015FA5C(0);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
@@ -1168,7 +1170,7 @@ void RicHandleDeadPrologue(void) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_REVIVAL_COLUMN, 0);
             g_DeadPrologueTimer = 0x30;
-            g_api.PlaySfx(0x6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
             dead_prologue_timer = 0xA0;
             PLAYER.step_s++;
         }
@@ -1193,7 +1195,7 @@ void RicHandleDeadPrologue(void) {
         }
         dead_prologue_timer--;
         if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
-            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
         }
         break;
     case 4:
@@ -1206,7 +1208,7 @@ void RicHandleDeadPrologue(void) {
         }
         dead_prologue_timer--;
         if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
-            g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
         }
         break;
     case 5:
@@ -1261,9 +1263,9 @@ void RicHandleSlide(void) {
         isTouchingGround = 1;
     }
     if ((!PLAYER.facingLeft &&
-         (g_Player.colliders[2].effects & EFFECT_UNK_8000)) ||
+         (g_Player.colFloor[2].effects & EFFECT_UNK_8000)) ||
         (PLAYER.facingLeft &&
-         (g_Player.colliders[3].effects & EFFECT_UNK_8000))) {
+         (g_Player.colFloor[3].effects & EFFECT_UNK_8000))) {
         isTouchingGround = 1;
     }
     if (isTouchingGround && (PLAYER.animFrameIdx < 6)) {

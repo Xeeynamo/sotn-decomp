@@ -32,7 +32,7 @@ void func_801CD540(Entity* self) {
 
 void func_801CD620(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
     }
 }
 
@@ -248,12 +248,11 @@ void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
 
     arg1 += (u16)g_CurrentEntity->ext.GH_Props.unkB0[arg2];
 
-    if (g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] == 0) {
+    if (g_CurrentEntity->ext.GH_Props.unkB4[arg2] == 0) {
         func_801CDD80(entIndices, arg1);
-        *(arg2 + 2 + g_CurrentEntity->ext.GH_Props.unkB0) = arg1[0][0];
+        g_CurrentEntity->ext.GH_Props.unkB4[arg2] = arg1[0][0];
     }
-    // I don't know why the reverse array indexing is needed, but it is. Darn.
-    if (!(--((arg2 + 2)[g_CurrentEntity->ext.GH_Props.unkB0]))) {
+    if (!(--g_CurrentEntity->ext.GH_Props.unkB4[arg2])) {
         if (arg1[1][0] == 0) {
             g_CurrentEntity->ext.GH_Props.unkB0[arg2] = 0;
         } else {
@@ -263,12 +262,12 @@ void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
 }
 
 void func_801CDFD8(Entity* self, s32 arg1) {
-    if (self->ext.et_801CDFD8.unkB4 == 0) {
-        func_801CDD00(self, self->ext.et_801CDFD8.unkA4, arg1);
-        self->ext.et_801CDFD8.unkB4 = arg1;
+    if (self->ext.GH_Props.unkB4[0] == 0) {
+        func_801CDD00(self, self->ext.GH_Props.unkA4, arg1);
+        self->ext.GH_Props.unkB4[0] = arg1;
     }
-    self->ext.et_801CDFD8.unkB4--;
-    self->ext.et_801CDFD8.unk9C += self->ext.et_801CDFD8.unkA6;
+    self->ext.GH_Props.unkB4[0]--;
+    self->ext.GH_Props.rotZ += self->ext.GH_Props.unkA6;
     func_801CD83C(self);
 }
 
@@ -278,10 +277,10 @@ void func_801CE04C(Entity* entity, Collider* collider) {
     g_api.CheckCollision(
         entity->posX.i.hi, (s16)(entity->posY.i.hi + collider->unk18), collider,
         0);
-    if (collider->effects & 1) {
+    if (collider->effects & EFFECT_SOLID) {
         var_s0 = 1;
-        if (collider->effects & 0x8000) {
-            if (collider->effects & 0x4000) {
+        if (collider->effects & EFFECT_UNK_8000) {
+            if (collider->effects & EFFECT_UNK_4000) {
                 if (g_CurrentEntity->facingLeft != 0) {
                     var_s0 = 4;
                 } else {
@@ -312,12 +311,12 @@ s32 func_801CE120(Entity* self, s32 facing) {
     }
 
     g_api.CheckCollision(x, y - 6, &collider, 0);
-    if (collider.effects & 1) {
+    if (collider.effects & EFFECT_SOLID) {
         ret |= 2;
     }
 
     g_api.CheckCollision(x, y + 6, &collider, 0);
-    if (!(collider.effects & 1)) {
+    if (!(collider.effects & EFFECT_SOLID)) {
         ret |= 4;
     }
 
@@ -331,19 +330,27 @@ void func_801CE1E8(s16 step) {
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
-
+    // BUG: See below.
     for (i = 0; i < 4; i++) {
         g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;
-        g_CurrentEntity->ext.GH_Props.unkB0[i + 2] = 0;
+        g_CurrentEntity->ext.GH_Props.unkB4[i] = 0;
     }
 }
 
-void func_801CE228(s16 step) {
+void func_801CE228() {
     s32 i;
-
+    // BUG: Array out of bounds writing. Possible explanation:
+    // unkB0 was originally a 4-element array. This loop would iterate
+    // through the 4 elements and write each to zero.
+    // At some point, unkB0 got split to two arrays, unkB0 and unkB4.
+    // Now we zero out both arrays. But since each one is only 2 elements,
+    // the loop should only be `i < 2`. They forgot to change it. This means
+    // that for i = 2 and i = 3, the unkB0 writes are writing into unkB4,
+    // and the unkB4 is writing totally out of bounds.
+    // As far as we know, this bug does not have any consequences.
     for (i = 0; i < 4; i++) {
         g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;
-        g_CurrentEntity->ext.GH_Props.unkB0[i + 2] = 0;
+        g_CurrentEntity->ext.GH_Props.unkB4[i] = 0;
     }
 }
 
@@ -396,8 +403,8 @@ s32 func_801CE4CC(Entity* self) {
     s32 step;
     s32 x;
 
-    if (g_CurrentEntity->ext.et_801CE4CC.unk8E != 0) {
-        g_CurrentEntity->ext.et_801CE4CC.unk8E--;
+    if (g_CurrentEntity->ext.GH_Props.unk8E != 0) {
+        g_CurrentEntity->ext.GH_Props.unk8E--;
     }
 
     x = self->posX.i.hi - PLAYER.posX.i.hi;
@@ -410,7 +417,7 @@ s32 func_801CE4CC(Entity* self) {
         return;
     }
 
-    if (g_CurrentEntity->ext.et_801CE4CC.unk84 == 1) {
+    if (g_CurrentEntity->ext.GH_Props.unk84 == 1) {
         entity = g_CurrentEntity + 10;
     } else {
         entity = g_CurrentEntity + 13;
@@ -442,8 +449,8 @@ s32 func_801CE4CC(Entity* self) {
         }
     }
 
-    if ((g_CurrentEntity->ext.et_801CE4CC.unk8E == 0) && (x < 96)) {
-        g_CurrentEntity->ext.et_801CE4CC.unk8E = 3;
+    if ((g_CurrentEntity->ext.GH_Props.unk8E == 0) && (x < 96)) {
+        g_CurrentEntity->ext.GH_Props.unk8E = 3;
         step = 6;
     }
     if (step != g_CurrentEntity->step) {
@@ -451,7 +458,7 @@ s32 func_801CE4CC(Entity* self) {
     }
     if (g_CurrentEntity->step == 7) {
         if (step == 5) {
-            g_CurrentEntity->ext.et_801CE4CC.unkB0 = 1;
+            g_CurrentEntity->ext.GH_Props.unkB0[0] = 1;
         }
     }
 }

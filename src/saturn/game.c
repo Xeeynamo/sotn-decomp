@@ -183,7 +183,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
 
 // SAT: func_0606F59C
-void func_800FD9D4(SpellDef* spell, s32 id) {
+void GetSpellDef(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(0x15, 2) != 0) {
@@ -306,7 +306,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
-        if (g_Player.unk0C & 0x4000) {
+        if (g_Player.status & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }
     }

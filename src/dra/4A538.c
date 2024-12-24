@@ -283,7 +283,7 @@ void func_800EA7CC(void) {
     clutX = 0x200;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
-            LoadClut2(temp_s0, clutX, i);
+            LoadClut(temp_s0, clutX, i);
         }
     }
 
@@ -291,7 +291,7 @@ void func_800EA7CC(void) {
     clutX = 0;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
-            LoadClut2(temp_s0, clutX, i);
+            LoadClut(temp_s0, clutX, i);
         }
     }
 
@@ -299,7 +299,7 @@ void func_800EA7CC(void) {
     clutX = 0x100;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset]) {
-            LoadClut2(temp_s0, clutX, i);
+            LoadClut(temp_s0, clutX, i);
         }
     }
 }
@@ -607,8 +607,8 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
             D_800705CC[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
         }
 
-        LoadClut2(D_800705CC, 0, 0xFD);
-        LoadClut2(D_800705CC + 0x100, 0, 0xFE);
+        LoadClut(D_800705CC, 0, 0xFD);
+        LoadClut(D_800705CC + 0x100, 0, 0xFE);
     }
     if (D_800973EC == 0) {
         D_80137478[index] = equipIcon;
@@ -805,7 +805,7 @@ void RenderEntities(void) {
         }
 #endif
         r->eDrawFlags = entity->drawFlags;
-        if (r->eDrawFlags & FLAG_DRAW_UNK80 && (r->index ^ g_Timer) & 1) {
+        if (r->eDrawFlags & FLAG_BLINK && (r->index ^ g_Timer) & 1) {
             continue;
         }
         r->flipX = entity->facingLeft * 2;
@@ -1552,7 +1552,7 @@ void RenderTilemap(void) {
 
 void SetRoomForegroundLayer(LayerDef* layerDef) {
     D_8003C708.flags = 0;
-    D_8013AED0 = 1;
+    g_canRevealMap = true; // Default to allowing revealing map
     g_Tilemap.tileDef = layerDef->tileDef;
     g_Tilemap.flags = 0;
     if (g_Tilemap.tileDef == 0) {
@@ -1561,20 +1561,23 @@ void SetRoomForegroundLayer(LayerDef* layerDef) {
 
     g_Tilemap.fg = layerDef->layout;
     g_Tilemap.order = layerDef->zPriority;
-    if (layerDef->rect.params & 0x40) {
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_UNKNOWN_40) {
         g_Tilemap.order = 0x60;
         D_8003C708.flags = layerDef->rect.params;
         D_8003C708.unk2 = 0;
         D_8003C708.unk4 = 0;
         D_8003C708.zPriority = layerDef->zPriority;
     }
-    if (layerDef->rect.params & 0x20) {
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
         g_Tilemap.order = 0x60;
         D_8003C708.flags = layerDef->rect.params;
     }
-    if (layerDef->rect.params & 0x10) {
+    // If this flag is set, disable revealing on map.
+    // Used for hidden rooms including the "running through trees" at start,
+    // and for the Nightmare stage.
+    if (layerDef->rect.params & LAYOUT_RECT_PARAMS_HIDEONMAP) {
         g_Tilemap.order = 0x60;
-        D_8013AED0 = 0;
+        g_canRevealMap = 0;
     };
     g_Tilemap.flags = layerDef->flags;
     g_Tilemap.left = layerDef->rect.left;
@@ -1681,7 +1684,7 @@ s32 func_800EDB58(u8 primType, s32 count) {
     isLooping = 1;
     while (isLooping) {
         var_v1--;
-        if (prim->type != 0) {
+        if (prim->type != PRIM_NONE) {
             var_v1 = i;
             primStartIdx = var_v1 + 1;
             var_v1 = count;
@@ -1760,7 +1763,7 @@ s32 func_800EDD9C(u8 type, s32 count) {
     i = LEN(g_PrimBuf) - 1;
 
     while (i >= 0) {
-        if (prim->type == 0) {
+        if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
                 prim->type = type;

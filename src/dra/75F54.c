@@ -31,7 +31,7 @@ void func_80115F54(void) {
         var_s2 = true;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
-        PlaySfx(NA_SE_VO_AL_DYING);
+        PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.player.anim = 0xC1;
@@ -87,7 +87,7 @@ void func_80116208(void) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.timers[2] = 8;
             g_Player.unk40 = 0x8166;
-            PlaySfx(SFX_UNK_6EB);
+            PlaySfx(SFX_VO_ALU_PAIN_E);
         }
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
@@ -97,7 +97,7 @@ void func_80116208(void) {
     case 1:
         if (g_Player.unk60 == 3) {
             temp_s0 = HandleDamage(&damage, 2, g_Player.unk64, 1);
-            func_80118C84(damage.damageTaken, 0);
+            CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
                 func_80115394(&damage, Player_BossGrab, 1);
@@ -106,7 +106,7 @@ void func_80116208(void) {
             if (g_Player.unk62 == 0) {
                 g_Player.timers[2] = 4;
                 g_Player.unk40 = 0x8166;
-                PlaySfx(SFX_UNK_6E7);
+                PlaySfx(SFX_VO_ALU_PAIN_A);
             }
             if (g_Player.unk62 == 2) {
                 g_Player.timers[2] = 4;
@@ -121,7 +121,7 @@ void func_80116208(void) {
             g_Player.unk60 = 0;
             SetPlayerAnim(0x2E);
             g_Player.damageTaken = g_Player.unk64;
-            PlaySfx(SFX_UNK_6ED);
+            PlaySfx(SFX_VO_ALU_YELL);
             return;
         }
         if (g_Player.unk60 == 0) {
@@ -154,15 +154,15 @@ void PlayerStepHellfire(void) {
         PLAYER.velocityX = 0;
         if (CheckMoveDirection() != 0) {
             if (g_Player.padPressed & PAD_RIGHT) {
-                if ((g_Player.colliders[2].effects &
+                if ((g_Player.colFloor[2].effects &
                      (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
-                    (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
+                    (g_Player.colFloor[1].effects & EFFECT_UNK_8000) ||
                     (PLAYER.posX.i.hi > 248)) {
                     SetSpeedX(FIX(3));
                 }
-            } else if ((g_Player.colliders[3].effects &
+            } else if ((g_Player.colFloor[3].effects &
                         (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
-                       (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
+                       (g_Player.colFloor[1].effects & EFFECT_UNK_8000) ||
                        (PLAYER.posX.i.hi < 8)) {
                 SetSpeedX(FIX(3));
             }
@@ -220,7 +220,7 @@ void func_801166A4(void) {
 
     case 1:
         if (PLAYER.animFrameDuration < 0) {
-            PlaySfx(NA_SE_VO_AL_WHAT);
+            PlaySfx(SFX_VO_ALU_WHAT);
             func_8010E570(0);
         }
         break;
@@ -397,30 +397,32 @@ s32 CheckWingSmashInput(void) {
 }
 
 void ControlBatForm(void) {
+    Entity* newEntity;
     s32 pressingCross;
-    s32 x_offset;
     // When we initially move left/right, bat makes a screech sound.
     s32 screechDone;
+    s16 x_offset;
     u32 directionsPressed;
 
     screechDone = 0;
     if (BatFormFinished()) {
         return;
     }
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
-    PLAYER.rotPivotY = 0;
+
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Player.padPressed & PAD_CROSS;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.rotPivotY = 0;
 
 #if defined(VERSION_HD)
     if (PLAYER.step_s != 3) {
-#elif defined(VERSION_US)
+#else
     // Just to make the curly brackets match at the end of this block
     if (1) {
 #endif
-        if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s != 0) &&
-            (CastSpell(SPELL_WING_SMASH) != 0)) {
+        if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s) &&
+            CastSpell(SPELL_WING_SMASH)) {
             LearnSpell(SPELL_WING_SMASH);
             SetPlayerAnim(0xC6);
             SetSpeedX(FIX(6));
@@ -428,16 +430,16 @@ void ControlBatForm(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5c), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, 67, 0);
             g_WingSmashTimer = 0x40;
-#if defined(VERSION_US)
+#if !defined(VERSION_HD)
             g_WingSmashButtonCounter = 0;
 #endif
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
-                   ((u32)(PLAYER.step_s - 1) < 2U) &&
+                   (PLAYER.step_s == 1 || PLAYER.step_s == 2) &&
                    (IsRelicActive(RELIC_ECHO_OF_BAT))) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 103, 0);
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-                   ((u32)(PLAYER.step_s - 1) < 2U) &&
-                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
+                   (PLAYER.step_s == 1 || PLAYER.step_s == 2) &&
+                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9))) {
             SetPlayerAnim(0xC9);
             PLAYER.step_s = 4;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 5), 0);
@@ -448,27 +450,23 @@ void ControlBatForm(void) {
     case 0:
         g_WingSmashButtonCounter = 0;
         PLAYER.rotZ = 0;
-        g_Player.unk48 = 0;
-        g_Player.unk46 = 0;
-        g_Player.unk44 = 0;
+        g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
         if (g_Entities[16].entityId == 0x22) {
-            PLAYER.animSet = 0xD;
-            D_800AFDA4[1] = 6;
             PLAYER.unk5A = 0;
+            PLAYER.animSet = 13;
+            D_800AFDA4[1] = 6;
             PLAYER.ext.player.anim = 0xCA;
-            if (func_8011203C() == 0) {
+            if (!func_8011203C()) {
                 return;
             }
         } else {
             if (g_Player.unk66 == 0) {
-#if defined(VERSION_US)
-                if (CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(44, 0x20), 0) == NULL) {
+                newEntity = CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(44, 0x20), 0);
+#if !defined(VERSION_HD)
+                if (newEntity == NULL) {
                     return;
                 }
-#elif defined(VERSION_HD)
-                CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(44, 0x20), 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;
@@ -483,14 +481,14 @@ void ControlBatForm(void) {
                 }
             }
             SetPlayerAnim(0xCA);
+            D_800AFDA4[1] = PLAYER.animCurFrame;
             PLAYER.palette = 0x810D;
-            D_800AFDA4[1] = (s16)PLAYER.animCurFrame;
             if (g_Player.unk66 == 1) {
                 return;
             }
             if (g_Player.unk66 == 2) {
-                PLAYER.animSet = 0xD;
                 PLAYER.unk5A = 0;
+                PLAYER.animSet = 0xD;
                 D_800AFDA4[1] = 6;
                 return;
             }
@@ -503,11 +501,11 @@ void ControlBatForm(void) {
         PLAYER.step_s++;
         break;
     case 1:
-        if ((directionsPressed != 0) && (pressingCross == 0)) {
+        if (directionsPressed && !pressingCross) {
             if (PLAYER.ext.player.anim == 0xC3) {
                 PLAYER.animFrameIdx /= 3;
             }
-            PLAYER.step_s += 1;
+            PLAYER.step_s++;
         } else {
             func_8011690C(0);
             DecelerateX(0x1200);
@@ -536,10 +534,10 @@ void ControlBatForm(void) {
             DecelerateX(0x1200);
             break;
         case PAD_DOWN:
-            if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.anim = 0xC5;
-            } else {
+            if (g_Player.pl_vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
+            } else {
+                PLAYER.ext.player.anim = 0xC5;
             }
             if (PLAYER.velocityY > FIX(1.25)) {
                 DecelerateY(0x1200);
@@ -559,10 +557,10 @@ void ControlBatForm(void) {
                 PLAYER.velocityX = FIX(1.25);
             }
             DecelerateY(0x1200);
-            screechDone = 1;
             if (!g_BatScreechDone) {
                 PlaySfx(SFX_BAT_SCREECH);
             }
+            screechDone = 1;
             break;
         case PAD_LEFT:
             PLAYER.ext.player.anim = 0xC2;
@@ -574,10 +572,10 @@ void ControlBatForm(void) {
                 PLAYER.velocityX = FIX(-1.25);
             }
             DecelerateY(0x1200);
-            screechDone = 1;
             if (!g_BatScreechDone) {
                 PlaySfx(SFX_BAT_SCREECH);
             }
+            screechDone = 1;
             break;
         case PAD_RIGHT | PAD_UP:
             PLAYER.ext.player.anim = 0xC2;
@@ -610,10 +608,10 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_RIGHT | PAD_DOWN:
-            if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.anim = 0xC5;
-            } else {
+            if (g_Player.pl_vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
+            } else {
+                PLAYER.ext.player.anim = 0xC5;
             }
             PLAYER.facingLeft = 0;
             func_8011690C(0);
@@ -629,10 +627,10 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT | PAD_DOWN:
-            if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.anim = 0xC5;
-            } else {
+            if (g_Player.pl_vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
+            } else {
+                PLAYER.ext.player.anim = 0xC5;
             }
             PLAYER.facingLeft = 1;
             func_8011690C(0);
@@ -650,8 +648,8 @@ void ControlBatForm(void) {
         }
         break;
     case 3:
-        if (PLAYER.facingLeft == 0 && (g_Player.pl_vram_flag & 4) ||
-            PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 8)) {
+        if (!PLAYER.facingLeft && (g_Player.pl_vram_flag & 4) ||
+            PLAYER.facingLeft && (g_Player.pl_vram_flag & 8)) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
@@ -682,17 +680,14 @@ void ControlBatForm(void) {
                 DecelerateY(0x2000);
             }
             if (g_Player.pl_vram_flag & 0x800) {
-                if (PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 0x400) ||
-                    PLAYER.facingLeft == 0 &&
-                        !(g_Player.pl_vram_flag & 0x400)) {
+                if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x400) ||
+                    !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x400)) {
                     PLAYER.velocityY = FIX(6);
                 }
             }
-            if ((g_Player.pl_vram_flag & 0x8000) != 0) {
-                if (PLAYER.facingLeft != 0 &&
-                        (g_Player.pl_vram_flag & 0x4000) ||
-                    PLAYER.facingLeft == 0 &&
-                        !(g_Player.pl_vram_flag & 0x4000)) {
+            if (g_Player.pl_vram_flag & 0x8000) {
+                if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x4000) ||
+                    !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x4000)) {
                     PLAYER.velocityY = FIX(-6);
                 }
             }
@@ -710,11 +705,11 @@ void ControlBatForm(void) {
                 }
                 if (g_Player.pl_vram_flag & 2) {
                     x_offset = 3;
-                    if (PLAYER.facingLeft != 0) {
-                        x_offset = -3;
+                    if (PLAYER.facingLeft) {
+                        x_offset = -x_offset;
                     }
                     PLAYER.posY.i.hi -= 8;
-                    PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
+                    PLAYER.posX.i.hi += x_offset;
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(4, 1), 0);
                     PLAYER.posY.i.hi += 8;
@@ -752,6 +747,8 @@ void ControlBatForm(void) {
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = 0;
         }
+    }
+    if (D_8013AECC != 0) {
         if (D_8013AECC > 0) {
             D_8013AECC--;
             g_CurrentEntity->posY.i.hi++;
@@ -779,13 +776,13 @@ void func_801177A0(void) {
     switch (PLAYER.step_s) {
     case 0:
         for (i = 0; i < 4; i++) {
-            if (D_800ACED0[i].y < D_800ACE90[i]) {
-                D_800ACED0[i].y++;
+            if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+                g_SensorsFloor[i].y++;
             } else {
                 else_cycles++;
             }
-            if (D_800ACE88[i] < D_800ACEC0[i].y) {
-                D_800ACEC0[i].y--;
+            if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+                g_SensorsCeiling[i].y--;
             } else {
                 else_cycles++;
             }
@@ -886,7 +883,7 @@ void func_80117AC0(void) {
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             SetPlayerAnim(0xC8);
-            PlaySfx(SFX_UNK_6EE);
+            PlaySfx(SFX_VO_ALU_ATTACK_A);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
             PLAYER.animFrameIdx = 0;
@@ -1123,13 +1120,13 @@ void func_801182F8(void) {
     DecelerateY(0x200);
     else_cycles = 0;
     for (i = 0; i < 4; i++) {
-        if (D_800ACED0[i].y < D_800ACE90[i]) {
-            D_800ACED0[i].y++;
+        if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+            g_SensorsFloor[i].y++;
         } else {
             else_cycles++;
         }
-        if (D_800ACE88[i] < D_800ACEC0[i].y) {
-            D_800ACEC0[i].y--;
+        if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+            g_SensorsCeiling[i].y--;
         } else {
             else_cycles++;
         }
@@ -1276,7 +1273,9 @@ void func_80118894(Entity* self) {
     // starting from element 7 and going up to 11. 8013800C therefore must have
     // 11 elements. It may be possible to refactor this code to remove the
     // duplication.
-
+    // D_8013800C looks to be keeping track of how many abilities/attacks are
+    // targeting a specific enemy selecting the lowest targeted entity from 3-6
+    // or 7-11
     search_value = 0;
     if (self < &g_Entities[UNK_ENTITY_20]) {
         while (1) {
@@ -1410,7 +1409,7 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-s32 func_80118C84(s32 arg0, s32 arg1) {
+s32 CreateHPNumMove(s32 arg0, s32 arg1) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
 
     if (entity != NULL) {
@@ -1418,8 +1417,8 @@ s32 func_80118C84(s32 arg0, s32 arg1) {
         entity->entityId = ENTITY_13;
         entity->posX.val = PLAYER.posX.val;
         entity->posY.val = PLAYER.posY.val;
-        entity->ext.generic.unk80.modeS16.unk0 = arg0;
-        entity->ext.generic.unk80.modeS16.unk2 = arg1;
+        entity->ext.hpNumMove.number = arg0;
+        entity->ext.hpNumMove.type = arg1;
         return 0;
     }
     return -1;

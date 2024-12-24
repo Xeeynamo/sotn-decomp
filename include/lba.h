@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef LBA_H
+#define LBA_H
 
 #define OFF_WARNING_TIM 24545
 #define LEN_WARNING_TIM 327700
@@ -46,3 +48,5 @@
 #define vab3Len 107792
 
 #endif
+
+#endif // LBA_H

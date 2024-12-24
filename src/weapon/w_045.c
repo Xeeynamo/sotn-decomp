@@ -9,12 +9,11 @@
 #define g_Animset2 w_045_2
 #include "sfx.h"
 
-static u16 D_13F000_8017A330[] = {
-    0x0000, 0x8822, 0x83E0, 0xECE5, 0xF68A, 0x8048, 0x884C, 0x88B5,
-    0x8D39, 0x821C, 0x9CA4, 0xAD29, 0xBDAD, 0xD231, 0xE6B5, 0xEB7A,
-    0x0000, 0xEB5A, 0xEAB1, 0xDE29, 0xE4E4, 0xA884, 0x8C00, 0x83E0,
-    0x802D, 0x80DD, 0xAA5F, 0x84D1, 0x98C6, 0xB5AD, 0xC631, 0x8421,
-};
+static u16 D_13F000_8017A330[N_ARRAY_PAL][COLORS_PER_PAL] = {
+    {0x0000, 0x8822, 0x83E0, 0xECE5, 0xF68A, 0x8048, 0x884C, 0x88B5, 0x8D39,
+     0x821C, 0x9CA4, 0xAD29, 0xBDAD, 0xD231, 0xE6B5, 0xEB7A},
+    {0x0000, 0xEB5A, 0xEAB1, 0xDE29, 0xE4E4, 0xA884, 0x8C00, 0x83E0, 0x802D,
+     0x80DD, 0xAA5F, 0x84D1, 0x98C6, 0xB5AD, 0xC631, 0x8421}};
 
 static u16* g_WeaponCluts[] = {D_13F000_8017A330};
 static s32 g_HandId = HAND_ID;
@@ -115,7 +114,7 @@ static s32 func_ptr_80170004(Entity* self) {
         } else {
             if (g_Player.padTapped & PAD_SQUARE) {
                 PLAYER.ext.player.anim = 0xCE;
-                g_api.PlaySfx(SFX_UNK_6F0);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
                 PLAYER.animFrameIdx = 0;
                 PLAYER.animFrameDuration = 0;
                 PLAYER.step_s = 1;
@@ -137,10 +136,10 @@ static s32 func_ptr_80170004(Entity* self) {
             }
             if ((PLAYER.animFrameIdx == 1) || (PLAYER.animFrameIdx == 4) ||
                 (PLAYER.animFrameIdx == 7)) {
-                g_api.PlaySfx(SFX_UNK_6EE);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
             }
             if (PLAYER.animFrameIdx == 10) {
-                g_api.PlaySfx(SFX_UNK_6EF);
+                g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
                 return;
             }
             return;
@@ -189,7 +188,7 @@ static void func_ptr_80170008(Entity* self) {
     }
     if (g_Player.padTapped & PAD_SQUARE) {
         PLAYER.ext.player.anim = 0xCE;
-        g_api.PlaySfx(SFX_UNK_6F0);
+        g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
         PLAYER.step = 0x28;
         PLAYER.step_s = 1;
         PLAYER.animFrameIdx = 0;
@@ -264,7 +263,7 @@ static s32 func_ptr_8017000C(Entity* self) {
     if (PLAYER.step_s == 0) {
         if (g_Player.padTapped & PAD_SQUARE) {
             PLAYER.ext.player.anim = 0xCE;
-            g_api.PlaySfx(SFX_UNK_6F0);
+            g_api.PlaySfx(SFX_VO_ALU_ATTACK_C);
             PLAYER.step_s = 1;
             PLAYER.animFrameIdx = 0;
             PLAYER.animFrameDuration = 0;

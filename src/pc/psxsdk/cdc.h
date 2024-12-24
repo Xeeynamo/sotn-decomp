@@ -9,7 +9,11 @@ struct CD_Audio_Buffer {
     uint32_t ReadPos;
 };
 
+#ifdef __cplusplus
+extern "C" struct CD_Audio_Buffer AudioBuffer;
+#else
 extern struct CD_Audio_Buffer AudioBuffer;
+#endif
 
 void GetCDAudio(int32_t samples[2]);
 void XA_ProcessSector(const uint8_t* sdata, struct CD_Audio_Buffer* ab);

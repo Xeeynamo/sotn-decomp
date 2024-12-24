@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include "st0.h"
 #include <stage.h>
+#include "sfx.h"
 
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
@@ -74,7 +76,10 @@ static u16 g_eDamageDisplayClut[] = {
 // Warning: This is different from HitDetection in other overlays.
 // Some of the logic is removed since it doesn't apply in prologue.
 // Attempting to de-duplicate this would involve a lot of #ifdef.
-void HitDetection(void) {
+void OVL_EXPORT(HitDetection)(void) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
@@ -180,8 +185,7 @@ void HitDetection(void) {
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->ext.generic.unkB8.entityPtr =
-                                        iterEnt1;
+                                    iterEnt2->unkB8 = iterEnt1;
                                     iterEnt2->hitFlags = 1;
                                     if ((i == 12) &&
                                         (iterEnt1->flags & FLAG_UNK_8000)) {
@@ -228,7 +232,7 @@ void HitDetection(void) {
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck1 >= hitboxCheck2) {
-                        iterEnt2->ext.player.unkB8 = iterEnt1;
+                        iterEnt2->unkB8 = iterEnt1;
                         iterEnt2->hitFlags = 1;
                         iterEnt2->hitParams = iterEnt1->attackElement;
                         iterEnt2->hitPoints = iterEnt1->attack;
@@ -251,7 +255,8 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + COLLISION_FLAGS_START] |=
+                        miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
@@ -351,7 +356,7 @@ void HitDetection(void) {
                         }
                     } else {
                         miscVar1 &= 0x3FFF;
-                        g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
+                        g_api.PlaySfx(SFX_RIC_WHIP_HIT);
                         if (entFrom5C->hitPoints != 0x7FFE) {
                             if (entFrom5C->hitPoints < (miscVar1 * 2)) {
                                 entFrom5C->hitFlags |= 3;
@@ -418,11 +423,11 @@ void HitDetection(void) {
                                 miscVar3 -= 0x80;
                                 // Create an EntityEquipItemDrop
                                 CreateEntityFromEntity(
-                                    10, iterEnt1, otherEntity);
+                                    E_EQUIP_ITEM_DROP, iterEnt1, otherEntity);
                             } else {
                                 // Create an EntityPrizeDrop
                                 CreateEntityFromEntity(
-                                    3, iterEnt1, otherEntity);
+                                    E_PRIZE_DROP, iterEnt1, otherEntity);
                             }
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned

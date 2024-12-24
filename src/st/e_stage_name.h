@@ -57,7 +57,7 @@ static void StageNamePopupHelper(Primitive* prim) {
     }
 }
 
-extern u16 g_EInitGeneric[];
+extern u16 g_EInitInteractable[];
 void EntityStageNamePopup(Entity* self) {
     u8 pad[100];
     Primitive* prim;
@@ -73,7 +73,7 @@ void EntityStageNamePopup(Entity* self) {
             return;
         }
 
-        InitializeEntity(g_EInitGeneric);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x57);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -149,7 +149,7 @@ void EntityStageNamePopup(Entity* self) {
         prim = prim->next;
 
         self->ext.stpopup.unk84 = prim;
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim->tpage = 0x1A;
         prim->clut = 0x15F;
         prim->u0 = 0;
@@ -169,7 +169,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->g2 = 0;
         prim->b2 = 0x38;
         prim->priority = 0xB0;
-        prim->drawMode = 0x15 | DRAW_HIDE;
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP | DRAW_HIDE;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r2);
         prim = prim->next;
@@ -190,7 +190,7 @@ void EntityStageNamePopup(Entity* self) {
             prim->u2 = prim->u0 = 4;
             prim->u1 = prim->u3 = primIndex = 0x78; // FAKE
             prim->priority = 0xC0;
-            prim->drawMode = 4 | DRAW_HIDE;
+            prim->drawMode = DRAW_COLORS | DRAW_HIDE;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -211,7 +211,7 @@ void EntityStageNamePopup(Entity* self) {
             prim->g0 = 0x78;
             prim->b0 = 0xA8;
             prim->priority = 0xC0;
-            prim->drawMode = 4 | DRAW_HIDE;
+            prim->drawMode = DRAW_COLORS | DRAW_HIDE;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);

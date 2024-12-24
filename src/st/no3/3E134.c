@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include "sfx.h"
 
 // intro owl and leaves
 void EntityFlyingOwlAndLeaves(Entity* entity) {
@@ -10,7 +11,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 56;
         if (entity->params != 0) {
@@ -31,13 +32,13 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 1:
         if (entity->posX.i.hi < 224) {
-            entity->ext.generic.unk7C.s = 0;
+            entity->ext.timer.t = 0;
             entity->step++;
         }
         break;
 
     case 2:
-        if (!(entity->ext.generic.unk7C.s++ & 7)) {
+        if (!(entity->ext.timer.t++ & 7)) {
             g_api.PlaySfx(SE_TREE_BRANCH);
         }
         if (entity->posX.i.hi < 192) {
@@ -52,7 +53,8 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(0x60, newEntity);
+                    CreateEntityFromCurrentEntity(
+                        E_FLYING_OWL_UNK60, newEntity);
                     newEntity->params = i;
                 }
             }
@@ -97,7 +99,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
     }
 
     if (!animFlag) {
-        PlaySfxPositional(SE_OWL_WING_FLAP);
+        PlaySfxPositional(SFX_WING_FLAP_A);
     }
 }
 
@@ -107,7 +109,7 @@ void EntityFallingLeaf(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = (entity->params & 1) + 63;
         entity->zPriority = 0xC1;

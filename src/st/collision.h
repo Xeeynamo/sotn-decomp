@@ -252,8 +252,7 @@ void HitDetection(void) {
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->ext.generic.unkB8.entityPtr =
-                                        iterEnt1;
+                                    iterEnt2->unkB8 = iterEnt1;
                                     // reminder: iterEnt1->hitboxState
                                     if (miscVar1 & 8) {
                                         iterEnt2->hitFlags = 3;
@@ -310,7 +309,7 @@ void HitDetection(void) {
                     if (hitboxCheck1 >= hitboxCheck2) {
                         if ((iterEnt1->attack) &&
                             (iterEnt2->hitPoints < iterEnt1->attack)) {
-                            iterEnt2->ext.player.unkB8 = iterEnt1;
+                            iterEnt2->unkB8 = iterEnt1;
                             if (miscVar1 & 8) {
                                 iterEnt2->hitFlags = 3;
                             } else {
@@ -349,7 +348,8 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + COLLISION_FLAGS_START] |=
+                        miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
@@ -459,7 +459,7 @@ void HitDetection(void) {
                                 // normally this is Alucard shouting "Dark
                                 // Metamorphosis" but obviously if not playing
                                 // as Alucard, this won't match
-                                g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
+                                g_api.PlaySfx(SFX_RIC_WHIP_HIT);
                             } else if (iterEnt2->hitEffect & 0x80) {
                                 g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
@@ -584,7 +584,8 @@ void HitDetection(void) {
                                 CreateEntityFromEntity(
                                     3, iterEnt1, otherEntity);
                             }
-                            otherEntity->ext.drop.unk94 = miscVar1;
+                            otherEntity->ext.equipItemDrop.castleFlag =
+                                miscVar1;
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
                             otherEntity->velocityY = FIX(-3.5);
@@ -612,7 +613,7 @@ void HitDetection(void) {
                 if (!(entFrom5C->hitFlags & 0xF)) {
                     entFrom5C->hitFlags |= 0x10;
                 }
-                if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
+                if ((entFrom5C->flags & FLAG_UNK_10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
                         g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {

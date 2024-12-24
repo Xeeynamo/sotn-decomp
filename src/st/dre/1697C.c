@@ -26,7 +26,7 @@ void EntityFadeToWhite1(Entity* self) {
         break;
 
     case 1:
-        if (D_801A3F84 & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             g_PrimBuf[self->primIndex].drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             g_api.PlaySfx(SFX_FM_EXPLODE_A); // Fade to white
@@ -43,7 +43,7 @@ void EntityFadeToWhite1(Entity* self) {
             self->ext.fadeToWhite.unk7C = 1;
             self->ext.fadeToWhite.unk7E = 0x200;
             self->ext.fadeToWhite.unk80 = 0;
-            D_801A3F84 |= 0x20;
+            g_CutsceneFlags |= 0x20;
             g_api.PlaySfx(SFX_SUC_APPEAR);
             self->step++;
         }
@@ -61,7 +61,7 @@ void EntityFadeToWhite1(Entity* self) {
         break;
 
     case 4:
-        if (D_801A3F84 & 0x200) {
+        if (g_CutsceneFlags & 0x200) {
             self->ext.fadeToWhite.unk7C = 0;
             g_api.PlaySfx(0xA1);
             DestroyEntity(self);
@@ -107,7 +107,7 @@ void EntityFadeToWhite2(Entity* self) {
         break;
 
     case 1:
-        if (D_801A3F84 & 0x10) {
+        if (g_CutsceneFlags & 0x10) {
             g_PrimBuf[self->primIndex].drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             self->step++;
@@ -134,7 +134,7 @@ void EntityFadeToWhite2(Entity* self) {
             prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0 =
                 prim->b3 + 8;
         if (prim->r0 > 240) {
-            D_801A3F84 |= 0x40;
+            g_CutsceneFlags |= 0x40;
             self->step++;
         }
         break;

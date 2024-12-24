@@ -98,62 +98,9 @@ static s8 c_HeartPrizes[] = {1, 5};
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
 
-static void func_8018CAB0(void) {
-    if (g_CurrentEntity->velocityY >= 0) {
-        g_CurrentEntity->ext.equipItemDrop.fallSpeed +=
-            g_CurrentEntity->ext.equipItemDrop.gravity;
-        g_CurrentEntity->velocityX =
-            g_CurrentEntity->ext.equipItemDrop.fallSpeed;
-        if (g_CurrentEntity->velocityX == FIX(1) ||
-            g_CurrentEntity->velocityX == FIX(-1)) {
-            g_CurrentEntity->ext.equipItemDrop.gravity =
-                -g_CurrentEntity->ext.equipItemDrop.gravity;
-        }
-    }
+#include "../prize_drop_fall.h"
 
-    if (g_CurrentEntity->velocityY < FIX(0.25)) {
-        g_CurrentEntity->velocityY += FIX(0.125);
-    }
-}
-
-static void func_8018CB34(u16 arg0) {
-    Collider collider;
-
-    if (g_CurrentEntity->velocityX < 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
-        if (collider.effects & EFFECT_NOTHROUGH) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
-
-    if (arg0) {
-        if (!(collider.effects & EFFECT_NOTHROUGH)) {
-            MoveEntity();
-            FallEntity();
-            return;
-        }
-
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-
-        if (collider.effects & EFFECT_QUICKSAND) {
-            g_CurrentEntity->posY.val += FIX(0.125);
-            return;
-        }
-
-        g_CurrentEntity->posY.i.hi += collider.unk18;
-        return;
-    }
-
-    if (!(collider.effects & EFFECT_NOTHROUGH)) {
-        MoveEntity();
-        func_8018CAB0();
-    }
-}
+#include "../prize_drop_fall2.h"
 
 #include "../collect_heart.h"
 
@@ -213,11 +160,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
 
 #include "../collect_heart_vessel.h"
 
-static void CollectLifeVessel(void) {
-    g_api.PlaySfx(SFX_HEART_PICKUP);
-    g_api.func_800FE044(5, 0x8000);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_life_vessel.h"
 
 static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
@@ -257,7 +200,7 @@ void EntityPrizeDrop(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeData0);
+        InitializeEntity(g_EInitObtainable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = DRAW_DEFAULT;
         if (itemId > 23) {
@@ -314,7 +257,8 @@ void EntityPrizeDrop(Entity* self) {
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
-                g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
+                g_CastleFlags[(index >> 3) + COLLECT_FLAGS_START] |=
+                    1 << (index & 7);
             }
         }
         if (!itemId) {
@@ -349,11 +293,11 @@ void EntityPrizeDrop(Entity* self) {
             self->ext.equipItemDrop.aliveTimer = 0x60;
             self->step++;
         } else {
-            func_8018CAB0();
+            PrizeDropFall();
         }
         break;
     case 3:
-        func_8018CB34(itemId);
+        PrizeDropFall2(itemId);
         if (!(self->params & 0x8000) && !--self->ext.equipItemDrop.aliveTimer) {
             if (itemId) {
                 self->ext.equipItemDrop.aliveTimer = 80;
@@ -364,7 +308,7 @@ void EntityPrizeDrop(Entity* self) {
         }
         break;
     case 4:
-        func_8018CB34(itemId);
+        PrizeDropFall2(itemId);
         if (--self->ext.equipItemDrop.aliveTimer) {
             if (self->ext.equipItemDrop.aliveTimer & 2) {
                 self->animCurFrame = 0;
@@ -400,7 +344,7 @@ void EntityPrizeDrop(Entity* self) {
             if (itemId >= 14 && itemId < 23) {
 #if defined(VERSION_PSP)
                 if (g_PlayableCharacter == PLAYER_MARIA) {
-                    subWeaponId = maria_subweapons_id[g_Status.mariaSubWeapon];
+                    subWeaponId = maria_subweapons_id[g_Status.D_80097C40];
                     if (itemId == subWeaponId) {
                         itemId = 1;
                         self->params = 1;
@@ -464,7 +408,7 @@ void EntityPrizeDrop(Entity* self) {
             }
             break;
         case 2:
-            func_8018CB34(itemId);
+            PrizeDropFall2(itemId);
             prim = &g_PrimBuf[self->primIndex];
             self->ext.equipItemDrop.unk8A++;
             if (self->ext.equipItemDrop.unk8A < 17) {

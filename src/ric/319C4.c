@@ -733,8 +733,8 @@ void func_8016F198(Entity* self) {
 }
 
 // Entity ID #64, created by blueprint #72. This call is in
-// RicEntitySubwpnStopwatch. When Richter has the stopwatch weapon, and uses it
-// as a crash, it makes 4 floating stopwatches. When they are done they
+// RicEntitySubwpnStopwatch. When Richter has the ricStopWatch weapon, and uses
+// it as a crash, it makes 4 floating ricStopWatches. When they are done they
 // disappear in a spinning sparkle. This entity represents that sparkle. 4
 // copies of this entity are made when the crash is done.
 void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
@@ -1054,7 +1054,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
                     selfY = self->posY.i.hi;
                     self->posX.i.hi = self->ext.et_stopWatchSparkle.unk90;
                     self->posY.i.hi = self->ext.et_stopWatchSparkle.unk92;
-                    RicCreateEntFactoryFromEntity(self, BP_73, 0);
+                    RicCreateEntFactoryFromEntity(
+                        self, BP_CRASH_STOPWATCH_LIGHTNING, 0);
                     self->posX.i.hi = selfX;
                     self->posY.i.hi = selfY;
                 } else {
@@ -1078,53 +1079,61 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
     }
 }
 
-void func_80170548(Entity* entity) {
-    switch (entity->step) {
+// Created by blueprint #73.
+// When Stopwatch crash ends, each of the 4 ricStopWatches shoots out a
+// lightning Each lightning can harm enemies. This entity represents the
+// attacking part of that lightning. It does not do any graphics and just has
+// the hitbox. Not clear why this is a dedicated entity rather than having one
+// entity that is graphics + hitbox for the lightning.
+void RicEntityStopwatchCrashLightning(Entity* self) {
+    switch (self->step) {
     case 0:
-        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->ext.generic.unkB0 = 0x1E;
-        RicSetSubweaponParams(entity);
-        entity->hitboxWidth = 8;
-        entity->hitboxHeight = 8;
-        entity->step++;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->ext.subweapon.subweaponId = PL_W_30;
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->step++;
         break;
     case 1:
-        if (++entity->ext.timer.t >= 5) {
-            DestroyEntity(entity);
+        if (++self->ext.timer.t >= 5) {
+            DestroyEntity(self);
         }
         break;
     }
 }
 
-void func_801705EC(Entity* entity) {
-    u16 temp;
-
-    switch (entity->step) {
+void RicEntityCrashStopwatch(Entity* self) {
+    // Kind of funny control flow.
+    // On odd steps, we'll create a ricStopWatch, and on evens, we wait.
+    // We end up producing the 4 individual ricStopWatches.
+    switch (self->step) {
     case 0:
-        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->ext.et_80161FF0.unk7E = 0;
-        entity->step++;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->ext.stopwatchCrash.index = 0;
+        self->step++;
     case 1:
     case 3:
     case 5:
     case 7:
-        temp = entity->ext.et_80161FF0.unk7E + 1;
-        entity->ext.et_80161FF0.unk7E = temp;
+        self->ext.stopwatchCrash.index++;
+        // This value becomes ext.ricStopWatch.crashIndex for each stopwatch.
         RicCreateEntFactoryFromEntity(
-            entity, FACTORY(BP_SUBWPN_STOPWATCH, temp), 0);
-        entity->ext.et_80161FF0.unk7C = 0;
-        entity->step++;
+            self, FACTORY(BP_SUBWPN_STOPWATCH, self->ext.stopwatchCrash.index),
+            0);
+        self->ext.stopwatchCrash.timer = 0;
+        self->step++;
         break;
     case 2:
     case 4:
     case 6:
-        entity->ext.et_80161FF0.unk7C++;
-        if (entity->ext.et_80161FF0.unk7C >= 16) {
-            entity->step++;
+        self->ext.stopwatchCrash.timer++;
+        if (self->ext.stopwatchCrash.timer > 15) {
+            self->step++;
         }
         break;
     case 8:
-        DestroyEntity(entity);
+        DestroyEntity(self);
         break;
     }
 }
@@ -1362,7 +1371,7 @@ void RicEntityAguneaCircle(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC2;
-            prim->drawMode = 0x200 | DRAW_HIDE;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.aguneaCrash.subweaponId = PL_W_CRASH_AGUNEA;
@@ -1554,7 +1563,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     s32 temp_a1_3;
     s32 temp_t0;
     s32 temp_v1_11;
-    if (g_unkGraphicsStruct.unk0) {
+    if (g_unkGraphicsStruct.pauseEnemies) {
         g_unkGraphicsStruct.D_800973FC = 0;
         if ((self->step > 0) && (self->step < 4)) {
             self->step = 4;
@@ -1596,24 +1605,26 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
+        // This holds the index of the ricStopWatch, when created by the crash.
+        // If it's 0, then we just used a normal stopwatch.
         if (self->params & 0xFF00) {
             RicCreateEntFactoryFromEntity(self, BP_66, 0);
-            D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
-            if (self->ext.et_801719A4.unk94 < 4) {
-                D_801758D4[self->ext.et_801719A4.unk94 - 1] = self;
+            D_801758D0 = self->ext.ricStopWatch.crashIndex = self->params >> 8;
+            if (self->ext.ricStopWatch.crashIndex < 4) {
+                D_801758D4[self->ext.ricStopWatch.crashIndex - 1] = self;
             }
-            if (self->ext.et_801719A4.unk94 >= 2) {
-                self->ext.et_801719A4.unk98 =
-                    D_801758D4[self->ext.et_801719A4.unk94 - 2];
+            if (self->ext.ricStopWatch.crashIndex >= 2) {
+                self->ext.ricStopWatch.unk98 =
+                    D_801758D4[self->ext.ricStopWatch.crashIndex - 2];
             }
         } else {
-            RicCreateEntFactoryFromEntity(self, BP_STOPWATCH_RIPPLE, 0);
-            self->ext.et_801719A4.unk94 = 0;
+            RicCreateEntFactoryFromEntity(self, BP_STOPWATCH_CIRCLE, 0);
+            self->ext.ricStopWatch.crashIndex = 0;
         }
-        self->ext.et_801719A4.subweaponId = PL_W_STOPWATCH;
+        self->ext.ricStopWatch.subweaponId = PL_W_STOPWATCH;
         RicSetSubweaponParams(self);
-        g_api.PlaySfx(0x6AD);
-        if (self->ext.et_801719A4.unk94 < 2) {
+        g_api.PlaySfx(SFX_UI_ALERT_TINK);
+        if (self->ext.ricStopWatch.crashIndex < 2) {
             g_unkGraphicsStruct.D_800973FC = 1;
         }
         self->step++;
@@ -1621,36 +1632,36 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode &= ~DRAW_HIDE;
-        self->ext.et_801719A4.unk84.val += 0x18000;
-        if (self->ext.et_801719A4.unk84.val > 0x19FFFF) {
+        self->ext.ricStopWatch.unk84.val += 0x18000;
+        if (self->ext.ricStopWatch.unk84.val > 0x19FFFF) {
             self->step++;
         }
         break;
     case 2:
-        self->ext.et_801719A4.unk84.val += 0xFFFF0000;
-        if (self->ext.et_801719A4.unk84.val <= 0x100000) {
-            self->ext.et_801719A4.unk7C = 5;
-            g_api.PlaySfx(0x6A1);
+        self->ext.ricStopWatch.unk84.val += 0xFFFF0000;
+        if (self->ext.ricStopWatch.unk84.val <= 0x100000) {
+            self->ext.ricStopWatch.t = 5;
+            g_api.PlaySfx(SFX_CLOCK_TICK);
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_801719A4.unk7E >= 0x51) {
-            g_api.PlaySfx(0x6A1);
-            self->ext.et_801719A4.unk7E = 0;
-            self->ext.et_801719A4.unk90 = 1;
-            if (--self->ext.et_801719A4.unk7C < 0) {
+        if (++self->ext.ricStopWatch.unk7E >= 0x51) {
+            g_api.PlaySfx(SFX_CLOCK_TICK);
+            self->ext.ricStopWatch.unk7E = 0;
+            self->ext.ricStopWatch.unk90 = 1;
+            if (--self->ext.ricStopWatch.t < 0) {
                 self->step++;
                 break;
             }
         }
 
-        if (self->ext.et_801719A4.unk7C < 5) {
+        if (self->ext.ricStopWatch.t < 5) {
             prim = g_PrimBuf[self->primIndex].next;
-            if (self->ext.et_801719A4.unk7C >= 10) {
-                self->ext.et_801719A4.unk92 = 1;
+            if (self->ext.ricStopWatch.t >= 10) {
+                self->ext.ricStopWatch.unk92 = 1;
                 // MISMATCH: Not using S4 for this
-                var_s4 = 8 * (self->ext.et_801719A4.unk7C / 10);
+                var_s4 = 8 * (self->ext.ricStopWatch.t / 10);
                 prim->u0 = prim->u2 = var_s4 + 0x18;
                 prim->u1 = prim->u3 = var_s4 + 0x1E;
                 prim->v0 = prim->v1 = 0x40;
@@ -1658,9 +1669,9 @@ void RicEntitySubwpnStopwatch(Entity* self) {
                 prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             } else {
-                self->ext.et_801719A4.unk92 = 0;
+                self->ext.ricStopWatch.unk92 = 0;
             }
-            var_s4 = 8 * (self->ext.et_801719A4.unk7C % 10);
+            var_s4 = 8 * (self->ext.ricStopWatch.t % 10);
             if (var_s4 == 0) {
                 var_s4 = 0x50;
             }
@@ -1681,10 +1692,10 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim = prim->next;
         prim->drawMode |= DRAW_HIDE;
         self->posX.i.hi += self->facingLeft ? 6 : -6;
-        ySub = self->ext.et_801719A4.unk84.i.hi;
+        ySub = self->ext.ricStopWatch.unk84.i.hi;
         self->posY.i.hi -= ySub;
-        self->ext.et_801719A4.unk7C = 0;
-        if (self->ext.et_801719A4.unk94 != 0) {
+        self->ext.ricStopWatch.t = 0;
+        if (self->ext.ricStopWatch.crashIndex != 0) {
             self->step = 7;
             RicCreateEntFactoryFromEntity(self, BP_AGUNEA_THUNDER, 0);
         } else {
@@ -1692,30 +1703,30 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
         break;
     case 5:
-        if (++self->ext.et_801719A4.unk7C >= 4) {
+        if (++self->ext.ricStopWatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x15F;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 =
                 prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
             prim->drawMode |= DRAW_COLORS;
-            g_api.PlaySfx(0x6A4);
+            g_api.PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;
     case 6:
-        if (++self->ext.et_801719A4.unk7C >= 0xF) {
+        if (++self->ext.ricStopWatch.t >= 0xF) {
             RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 7), 0);
             self->step++;
         }
         break;
     case 7:
-        if ((self->ext.et_801719A4.unk94 == 0) ||
-            (self->ext.et_801719A4.unk94 == D_801758D0)) {
+        if ((self->ext.ricStopWatch.crashIndex == 0) ||
+            (self->ext.ricStopWatch.crashIndex == D_801758D0)) {
             g_unkGraphicsStruct.D_800973FC = 0;
         }
-        if (self->ext.et_801719A4.unk94 != 0) {
-            D_801758D4[self->ext.et_801719A4.unk94 - 1] = 0;
+        if (self->ext.ricStopWatch.crashIndex != 0) {
+            D_801758D4[self->ext.ricStopWatch.crashIndex - 1] = 0;
         }
         DestroyEntity(self);
         return;
@@ -1725,20 +1736,20 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     }
     prim = &g_PrimBuf[self->primIndex];
     if (self->step < 5) {
-        if (self->ext.et_801719A4.unk94 < 2) {
+        if (self->ext.ricStopWatch.crashIndex < 2) {
             var_s4 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
             var_s6 = PLAYER.posY.val + FIX(-16);
-        } else if (D_801758D4[self->ext.et_801719A4.unk94 - 2] != NULL) {
-            var_s4 = self->ext.et_801719A4.unk98->posX.val +
+        } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
+            var_s4 = self->ext.ricStopWatch.unk98->posX.val +
                      (PLAYER.facingLeft ? FIX(16) : FIX(-16));
-            var_s6 = self->ext.et_801719A4.unk98->posY.val + FIX(-16);
+            var_s6 = self->ext.ricStopWatch.unk98->posY.val + FIX(-16);
         } else {
             var_s4 = self->posX.val;
             var_s6 = self->posY.val;
         }
         self->posX.val += (var_s4 - self->posX.val) / 12;
         self->posY.val += (var_s6 - self->posY.val) / 4;
-        if (self->ext.et_801719A4.unk94 < 2) {
+        if (self->ext.ricStopWatch.crashIndex < 2) {
             if (PLAYER.facingLeft != self->facingLeft) {
                 if (abs(var_s4 - self->posX.val) < FIX(1)) {
                     self->facingLeft = PLAYER.facingLeft;
@@ -1752,8 +1763,8 @@ void RicEntitySubwpnStopwatch(Entity* self) {
                     self->facingLeft = PLAYER.facingLeft;
                 }
             }
-        } else if (D_801758D4[self->ext.et_801719A4.unk94 - 2] != NULL) {
-            parent = self->ext.et_801719A4.unk98;
+        } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
+            parent = self->ext.ricStopWatch.unk98;
             if (parent->facingLeft != self->facingLeft) {
                 if (abs(var_s4 - self->posX.val) >= FIX(1)) {
                     if (!self->facingLeft) {
@@ -1783,17 +1794,17 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     }
     if (self->step < 3) {
         var_s4 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
-        var_s6 = self->posY.i.hi - self->ext.et_801719A4.unk84.i.hi;
-        if (self->ext.et_801719A4.unk82 < 0x64) {
-            self->ext.et_801719A4.unk82 += 4;
+        var_s6 = self->posY.i.hi - self->ext.ricStopWatch.unk84.i.hi;
+        if (self->ext.ricStopWatch.unk82 < 0x64) {
+            self->ext.ricStopWatch.unk82 += 4;
         }
-        if (self->ext.et_801719A4.unk80 < 0x1000) {
-            self->ext.et_801719A4.unk80 += 0x80;
+        if (self->ext.ricStopWatch.unk80 < 0x1000) {
+            self->ext.ricStopWatch.unk80 += 0x80;
         }
-        firstmult = (self->ext.et_801719A4.unk82 * 8) / 100;
-        secondmult = (self->ext.et_801719A4.unk82 * 0xC) / 100;
-        sine = rsin(self->ext.et_801719A4.unk80);
-        cosine = rcos(self->ext.et_801719A4.unk80);
+        firstmult = (self->ext.ricStopWatch.unk82 * 8) / 100;
+        secondmult = (self->ext.ricStopWatch.unk82 * 0xC) / 100;
+        sine = rsin(self->ext.ricStopWatch.unk80);
+        cosine = rcos(self->ext.ricStopWatch.unk80);
         prim->x0 = var_s4 + ((cosine * -firstmult - sine * -secondmult) >> 0xC);
         prim->y0 = var_s6 + ((sine * -firstmult + cosine * -secondmult) >> 0xC);
         prim->x1 = var_s4 + ((cosine * firstmult - sine * -secondmult) >> 0xC);
@@ -1803,25 +1814,25 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim->y2 = var_s6 + ((sine * -firstmult + cosine * secondmult) >> 0xC);
         prim->y3 = var_s6 + ((sine * firstmult + cosine * secondmult) >> 0xC);
     } else if (self->step < 5U) {
-        if (self->ext.et_801719A4.unk84.val <= 0x100000) {
-            if (self->ext.et_801719A4.unk90 != 0) {
-                self->ext.et_801719A4.unk88 = (rand() % 0x40 + 0x200) * 0x100;
-                self->ext.et_801719A4.unk90 = 0;
+        if (self->ext.ricStopWatch.unk84.val <= 0x100000) {
+            if (self->ext.ricStopWatch.unk90 != 0) {
+                self->ext.ricStopWatch.unk88 = (rand() % 0x40 + 0x200) * 0x100;
+                self->ext.ricStopWatch.unk90 = 0;
             } else {
-                self->ext.et_801719A4.unk88 = (rand() % 0x80 + 0x100) * 0x100;
+                self->ext.ricStopWatch.unk88 = (rand() % 0x80 + 0x100) * 0x100;
             }
-            if (self->ext.et_801719A4.unk80 >= 0) {
-                self->ext.et_801719A4.unk80 = -(rand() % 0x40 + 0x40);
+            if (self->ext.ricStopWatch.unk80 >= 0) {
+                self->ext.ricStopWatch.unk80 = -(rand() % 0x40 + 0x40);
             } else {
-                self->ext.et_801719A4.unk80 = rand() % 0x40 + 0x40;
+                self->ext.ricStopWatch.unk80 = rand() % 0x40 + 0x40;
             }
         }
-        self->ext.et_801719A4.unk84.val += self->ext.et_801719A4.unk88;
-        self->ext.et_801719A4.unk88 -= 0x4000;
+        self->ext.ricStopWatch.unk84.val += self->ext.ricStopWatch.unk88;
+        self->ext.ricStopWatch.unk88 -= 0x4000;
         var_s4 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
-        var_s6 = self->posY.i.hi - self->ext.et_801719A4.unk84.i.hi;
-        sine = rsin(self->ext.et_801719A4.unk80);
-        cosine = rcos(self->ext.et_801719A4.unk80);
+        var_s6 = self->posY.i.hi - self->ext.ricStopWatch.unk84.i.hi;
+        sine = rsin(self->ext.ricStopWatch.unk80);
+        cosine = rcos(self->ext.ricStopWatch.unk80);
         temp_t1 = cosine * 8;
         temp_a3 = -temp_t1;
         temp_t2 = sine * 0xC;
@@ -1839,12 +1850,12 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim->x3 = var_s4 + ((temp_t1 - temp_t2) >> 0xC);
         prim->y3 = var_s6 + ((temp_a2_3 + temp_t0) >> 0xC);
     } else {
-        temp_v0 = 8 - self->ext.et_801719A4.unk7C;
+        temp_v0 = 8 - self->ext.ricStopWatch.t;
         var_a0 = temp_v0;
         if (temp_v0 <= 0) {
             var_a0 = 1;
         }
-        var_a1 = ((self->ext.et_801719A4.unk7C << 0x10) >> 0xB) + 0xC;
+        var_a1 = ((self->ext.ricStopWatch.t << 0x10) >> 0xB) + 0xC;
         if (var_a1 >= 0x80) {
             var_a1 = 0x80;
         }
@@ -1855,25 +1866,25 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     }
     if (self->step < 4) {
         var_s6 = self->posY.i.hi - 0xE;
-        if (self->ext.et_801719A4.unk92 != 0) {
+        if (self->ext.ricStopWatch.unk92 != 0) {
             var_s4 = self->posX.i.hi + (self->facingLeft ? -10 : 4);
             prim = prim->next;
-            if (self->ext.et_801719A4.unk7E < 8) {
+            if (self->ext.ricStopWatch.unk7E < 8) {
                 prim->x0 = prim->x2 =
-                    var_s4 - (self->ext.et_801719A4.unk7E / 2);
+                    var_s4 - (self->ext.ricStopWatch.unk7E / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + (self->ext.et_801719A4.unk7E / 2);
+                    var_s4 + (self->ext.ricStopWatch.unk7E / 2);
                 temp_t2 = 0xF;
                 prim->y0 = prim->y1 =
-                    var_s6 + (self->ext.et_801719A4.unk7E - temp_t2);
+                    var_s6 + (self->ext.ricStopWatch.unk7E - temp_t2);
                 prim->y2 = prim->y3 =
-                    var_s6 - (self->ext.et_801719A4.unk7E - temp_t2);
-            } else if (self->ext.et_801719A4.unk7E >= 0x44) {
-                var_a0 = (0x4C - self->ext.et_801719A4.unk7E) / 2;
+                    var_s6 - (self->ext.ricStopWatch.unk7E - temp_t2);
+            } else if (self->ext.ricStopWatch.unk7E >= 0x44) {
+                var_a0 = (0x4C - self->ext.ricStopWatch.unk7E) / 2;
                 if (var_a0 < 0) {
                     var_a0 = 0;
                 }
-                var_a1 = self->ext.et_801719A4.unk7E - 0x44;
+                var_a1 = self->ext.ricStopWatch.unk7E - 0x44;
                 if (var_a1 >= 9) {
                     var_a1 = 8;
                 }
@@ -1892,12 +1903,12 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             }
             var_s4 = self->posX.i.hi + (self->facingLeft ? -4 : 10);
             prim = prim->next;
-            if (self->ext.et_801719A4.unk7E < 0xC) {
-                var_a0 = (self->ext.et_801719A4.unk7E - 4) / 2;
+            if (self->ext.ricStopWatch.unk7E < 0xC) {
+                var_a0 = (self->ext.ricStopWatch.unk7E - 4) / 2;
                 if (var_a0 < 0) {
                     var_a0 = 0;
                 }
-                var_a1 = 0xB - self->ext.et_801719A4.unk7E;
+                var_a1 = 0xB - self->ext.ricStopWatch.unk7E;
                 if (var_a1 < 0) {
                     var_a1 = 0;
                 }
@@ -1908,45 +1919,45 @@ void RicEntitySubwpnStopwatch(Entity* self) {
                 // FAKE horrible thing needed to match, secondmult should be
                 // totally irrelevant here
                 prim->y2 = prim->y3 = (secondmult = var_s6) + var_a1;
-            } else if (self->ext.et_801719A4.unk7E < 0x48) {
+            } else if (self->ext.ricStopWatch.unk7E < 0x48) {
                 prim->x0 = prim->x2 = var_s4 - 4;
                 prim->x1 = prim->x3 = var_s4 + 4;
                 prim->y0 = prim->y1 = var_s6 - 8;
                 prim->y2 = prim->y3 = var_s6 + 8;
             } else {
                 prim->x0 = prim->x2 =
-                    var_s4 - ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                    var_s4 - ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                    var_s4 + ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 temp_t2 = -0x40;
                 prim->y0 = prim->y1 =
-                    var_s6 - (self->ext.et_801719A4.unk7E + temp_t2);
+                    var_s6 - (self->ext.ricStopWatch.unk7E + temp_t2);
                 prim->y2 = prim->y3 =
-                    var_s6 + (self->ext.et_801719A4.unk7E + temp_t2);
+                    var_s6 + (self->ext.ricStopWatch.unk7E + temp_t2);
             }
         } else {
             var_s4 = self->posX.i.hi + (self->facingLeft ? -4 : 4);
             prim = prim->next;
-            if (self->ext.et_801719A4.unk7E < 8) {
+            if (self->ext.ricStopWatch.unk7E < 8) {
                 prim->x0 = prim->x2 =
-                    var_s4 - (self->ext.et_801719A4.unk7E / 2);
+                    var_s4 - (self->ext.ricStopWatch.unk7E / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + (self->ext.et_801719A4.unk7E / 2);
+                    var_s4 + (self->ext.ricStopWatch.unk7E / 2);
                 temp_t2 = 0xF;
                 prim->y0 = prim->y1 =
-                    var_s6 + (self->ext.et_801719A4.unk7E - temp_t2);
+                    var_s6 + (self->ext.ricStopWatch.unk7E - temp_t2);
                 prim->y2 = prim->y3 =
-                    var_s6 - (self->ext.et_801719A4.unk7E - temp_t2);
-            } else if (self->ext.et_801719A4.unk7E >= 0x48) {
+                    var_s6 - (self->ext.ricStopWatch.unk7E - temp_t2);
+            } else if (self->ext.ricStopWatch.unk7E >= 0x48) {
                 prim->x0 = prim->x2 =
-                    var_s4 - ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                    var_s4 - ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                    var_s4 + ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 temp_t2 = -0x40;
                 prim->y0 = prim->y1 =
-                    var_s6 - (self->ext.et_801719A4.unk7E + temp_t2);
+                    var_s6 - (self->ext.ricStopWatch.unk7E + temp_t2);
                 prim->y2 = prim->y3 =
-                    var_s6 + (self->ext.et_801719A4.unk7E + temp_t2);
+                    var_s6 + (self->ext.ricStopWatch.unk7E + temp_t2);
             } else {
                 prim->x0 = prim->x2 = var_s4 - 5;
                 prim->x1 = prim->x3 = var_s4 + 5;
@@ -1998,9 +2009,7 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
         return;
     }
     prim = &g_PrimBuf[entity->primIndex];
-    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            entity->ext.et_BibleSubwpn.unk7E;
+    PCOL(prim) = entity->ext.et_BibleSubwpn.unk7E;
 }
 
 void RicEntitySubwpnBible(Entity* self) {
@@ -2068,7 +2077,7 @@ void RicEntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            g_api.PlaySfx(0x6B2);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }

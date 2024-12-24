@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "pc.h"
 #include "dra.h"
+#include "stage.h"
 #include "dra_bss.h"
 #include "servant.h"
 
@@ -9,10 +10,21 @@
 #include <string.h>
 #include <cJSON/cJSON.h>
 
+#undef HARD_LINK
+
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
+
+// shared stage data and bss
+#include "../st/e_init_common.h"
+PfnEntityUpdate* PfnEntityUpdates;
+LayoutEntity** g_pStObjLayoutHorizontal;
+LayoutEntity** g_pStObjLayoutVertical;
+u32 g_CutsceneFlags;
+s32 g_IsCutsceneDone;
+s32 g_SkipCutscene;
 
 ServantDesc D_80170000;
 
@@ -50,22 +62,50 @@ u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 // list of exposed API
 void FreePrimitives(s32 index);
 s32 AllocPrimitives(u8 primType, s32 count);
+void func_80102CD8(s32 start);
+void SetSpeedX(s32 speed);
+Entity* GetFreeEntity(s16 start, s16 end);
+void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
 void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+void func_801027C4(u32 arg0);
+void func_800EB758(s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
 bool func_80131F68(void);
+DR_ENV* func_800EDB08(Primitive* prim);
 u16* func_80106A28(u32 arg0, u16 kind);
+void func_80118894(Entity* self);
+Entity* func_80118970(void);
+s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
+u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s8* frameProps, AnimationFrame** frames);
+void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);
+u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
+void AddHearts(s32 value);
+bool LoadMonsterLibrarianPreview(s32 monsterId);
+s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
+void func_8010E0A8(void);
+s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
+void InitStatsAndGear(bool isDeathTakingItems);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
+void GetPlayerSensor(Collider* col);
+void func_800F1FC4(s32 arg0);
 void func_800F2288(s32 arg0);
+s32 func_800FF460(s32 arg0);
+s32 func_800FF494(EnemyDef* arg0);
+bool CdSoundCommandQueueEmpty(void);
+bool func_80133950(void);
+bool func_800F27F4(s32 arg0);
+s32 func_800FF110(s32 arg0);
 bool CalcPlayerDamage(DamageParam* damage);
+void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
 
 int g_Frame = 0;
@@ -98,9 +138,16 @@ static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
-void func_801027C4(u32 arg0);
-
-bool InitGame(void) {
+FILE* cd_fp = NULL;
+struct InitGameParams g_GameParams;
+bool InitGame(struct InitGameParams* params) {
+    g_GameParams = *params;
+    if (params->diskPath) {
+        cd_fp = fopen(params->diskPath, "rb");
+        if (!cd_fp) {
+            WARNF("couldn't open CD at '%s'", params->diskPath);
+        }
+    }
     if (!InitPlatform()) {
         return false;
     }
@@ -110,11 +157,11 @@ bool InitGame(void) {
     api.FreePrimitives = FreePrimitives;
     api.AllocPrimitives = AllocPrimitives;
     api.CheckCollision = CheckCollision;
-    api.func_80102CD8 = NULL;
+    api.func_80102CD8 = func_80102CD8;
     api.UpdateAnim = UpdateAnim;
-    api.SetSpeedX = NULL;
-    api.GetFreeEntity = NULL;
-    api.GetEquipProperties = NULL;
+    api.SetSpeedX = SetSpeedX;
+    api.GetFreeEntity = GetFreeEntity;
+    api.GetEquipProperties = GetEquipProperties;
     api.func_800EA5E4 = func_800EA5E4;
     api.LoadGfxAsync = LoadGfxAsync;
     api.PlaySfx = PlaySfx;
@@ -122,49 +169,49 @@ bool InitGame(void) {
     api.func_800EA538 = func_800EA538;
     api.g_pfn_800EA5AC = func_800EA5AC;
     api.func_801027C4 = func_801027C4;
-    api.func_800EB758 = NULL;
+    api.func_800EB758 = func_800EB758;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
     api.func_80131F68 = func_80131F68;
-    api.func_800EDB08 = NULL;
+    api.func_800EDB08 = func_800EDB08;
     api.func_80106A28 = func_80106A28;
-    api.func_80118894 = NULL;
+    api.func_80118894 = func_80118894;
     api.enemyDefs = g_EnemyDefs;
-    api.func_80118970 = NULL;
-    api.func_80118B18 = NULL;
-    api.UpdateUnarmedAnim = NULL;
+    api.func_80118970 = func_80118970;
+    api.func_80118B18 = func_80118B18;
+    api.UpdateUnarmedAnim = UpdateUnarmedAnim;
     api.PlayAnimation = PlayAnimation;
-    api.func_80118C28 = NULL;
+    api.func_80118C28 = func_80118C28;
     api.func_8010E168 = func_8010E168;
     api.func_8010DFF0 = func_8010DFF0;
-    api.DealDamage = NULL;
+    api.DealDamage = DealDamage;
     api.LoadEquipIcon = LoadEquipIcon;
     api.equipDefs = g_EquipDefs;
     api.accessoryDefs = g_AccessoryDefs;
-    api.AddHearts = NULL;
-    api.LoadMonsterLibrarianPreview = NULL;
-    api.TimeAttackController = NULL;
-    api.func_8010E0A8 = NULL;
-    api.func_800FE044 = NULL;
+    api.AddHearts = AddHearts;
+    api.LoadMonsterLibrarianPreview = LoadMonsterLibrarianPreview;
+    api.TimeAttackController = TimeAttackController;
+    api.func_8010E0A8 = func_8010E0A8;
+    api.func_800FE044 = func_800FE044;
     api.AddToInventory = AddToInventory;
     api.relicDefs = g_RelicDefs;
-    api.InitStatsAndGear = NULL;
+    api.InitStatsAndGear = InitStatsAndGear;
     api.PlaySfxVolPan = PlaySfxVolPan;
     api.SetVolumeCommand22_23 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
-    api.func_8010BF64 = NULL;
-    api.func_800F1FC4 = NULL;
+    api.GetPlayerSensor = GetPlayerSensor;
+    api.func_800F1FC4 = func_800F1FC4;
     api.func_800F2288 = func_800F2288;
-    api.func_8011A3AC = func_8011A3AC;
-    api.func_800FF460 = NULL;
-    api.func_800FF494 = NULL;
-    api.CdSoundCommandQueueEmpty = NULL;
-    api.func_80133950 = NULL;
-    api.func_800F27F4 = NULL;
-    api.func_800FF110 = NULL;
+    api.GetServantStats = GetServantStats;
+    api.func_800FF460 = func_800FF460;
+    api.func_800FF494 = func_800FF494;
+    api.CdSoundCommandQueueEmpty = CdSoundCommandQueueEmpty;
+    api.func_80133950 = func_80133950;
+    api.func_800F27F4 = func_800F27F4;
+    api.func_800FF110 = func_800FF110;
     api.func_800FD664 = func_800FD664;
     api.CalcPlayerDamage = CalcPlayerDamage;
-    api.LearnSpell = NULL;
+    api.LearnSpell = LearnSpell;
     api.DebugInputWait = DebugInputWait;
     api.unused12C = NULL;
     api.unused130 = NULL;
@@ -172,7 +219,6 @@ bool InitGame(void) {
     api.unused138 = NULL;
     api.unused13C = NULL;
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
-
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
     InitStrings();
@@ -220,6 +266,7 @@ bool InitGame(void) {
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
 
+extern const char* g_goldCollectTexts[10]; // refeer to e_collect.h
 void InitSotnMenuTable(void);
 void InitStrings(void) {
     InitSotnMenuTable();
@@ -234,6 +281,9 @@ void InitStrings(void) {
     }
     for (int i = 0; i < LEN(g_EnemyDefs); i++) {
         g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
+    }
+    for (int i = 0; i < LEN(g_goldCollectTexts); i++) {
+        g_goldCollectTexts[i] = AnsiToSotnMenuString(g_goldCollectTexts[i]);
     }
 }
 

@@ -6,6 +6,7 @@
 #include "w_044_2.h"
 #define g_Animset w_044_1
 #define g_Animset2 w_044_2
+#include "sfx.h"
 
 static u16 D_138000_8017A040[] = {
     COLOR16(0, 0, 0, 0),    COLOR16(31, 0, 0, 1),   COLOR16(24, 16, 4, 1),
@@ -182,33 +183,33 @@ void EntityWeaponAttack(Entity* self) {
         prim->tpage = 0x19;
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
-        self->ext.weapon_044.unk8A = 0x40;
-        self->ext.weapon_044.unk94 = 0x180;
-        self->ext.weapon_044.unk90 = 0;
-        self->ext.weapon_044.unk82 = 0x40;
+        self->ext.weapon.unk8A = 0x40;
+        self->ext.weapon.unk94 = 0x180;
+        self->ext.weapon.unk90 = 0;
+        self->ext.weapon.unk82 = 0x40;
         self->posY.i.hi = 64;
-        g_api.PlaySfx(SFX_UNK_6B1);
+        g_api.PlaySfx(SFX_TRANSFORM_3X);
         g_unkGraphicsStruct.unk20 = 2;
         self->step++;
         break;
     case 1:
-        self->ext.weapon_044.unk90 += 4;
-        if (self->ext.weapon_044.unk90 > 0x100) {
-            self->ext.weapon_044.unk90 = 0x100;
+        self->ext.weapon.unk90 += 4;
+        if (self->ext.weapon.unk90 > 0x100) {
+            self->ext.weapon.unk90 = 0x100;
         }
-        self->ext.weapon_044.unk94 -= 4;
-        if (self->ext.weapon_044.unk94 < 0x40) {
+        self->ext.weapon.unk94 -= 4;
+        if (self->ext.weapon.unk94 < 0x40) {
             self->step++;
         }
         break;
     case 2:
-        self->ext.weapon_044.unk90 += 4;
-        if (self->ext.weapon_044.unk90 > 0x100) {
-            self->ext.weapon_044.unk90 = 0x100;
+        self->ext.weapon.unk90 += 4;
+        if (self->ext.weapon.unk90 > 0x100) {
+            self->ext.weapon.unk90 = 0x100;
         }
-        self->ext.weapon_044.unk94--;
-        if (self->ext.weapon_044.unk94 < 0) {
-            self->ext.weapon_044.unk94 = 0;
+        self->ext.weapon.unk94--;
+        if (self->ext.weapon.unk94 < 0) {
+            self->ext.weapon.unk94 = 0;
             g_api.func_80118C28(2);
 
             prim = &g_PrimBuf[self->primIndex];
@@ -227,24 +228,24 @@ void EntityWeaponAttack(Entity* self) {
                 prim->u3--;
             }
 
-            self->ext.weapon_044.unk82 += 8;
+            self->ext.weapon.unk82 += 8;
             self->posY.i.hi -= 8;
-            self->ext.weapon_044.lifetime = 32;
+            self->ext.weapon.lifetime = 32;
             self->step++;
         }
         break;
     case 3:
-        if (--self->ext.weapon_044.lifetime == 0) {
+        if (--self->ext.weapon.lifetime == 0) {
             self->rotX = 0;
             self->rotY = 0x80;
-            self->ext.weapon_044.unk7E = 0xA;
+            self->ext.weapon.unk7E = 0xA;
             self->step++;
         }
         break;
     case 4:
         doLastblock = true;
-        self->rotX += self->ext.weapon_044.unk7E;
-        self->ext.weapon_044.unk7E += 2;
+        self->rotX += self->ext.weapon.unk7E;
+        self->ext.weapon.unk7E += 2;
         if (self->rotX > 0x200) {
             self->rotY--;
             if (self->rotX > 0x380) {
@@ -259,8 +260,8 @@ void EntityWeaponAttack(Entity* self) {
         break;
     case 5:
         doLastblock = true;
-        self->rotX += self->ext.weapon_044.unk7E;
-        self->ext.weapon_044.unk7E += 2;
+        self->rotX += self->ext.weapon.unk7E;
+        self->ext.weapon.unk7E += 2;
         self->rotY--;
         if (self->rotY < 0) {
             self->rotY = 0;
@@ -273,11 +274,11 @@ void EntityWeaponAttack(Entity* self) {
             prim = prim->next;
         }
 
-        self->ext.weapon_044.unk90 -= 3;
-        self->ext.weapon_044.unk94 += 6;
-        if (self->ext.weapon_044.unk90 < 0) {
+        self->ext.weapon.unk90 -= 3;
+        self->ext.weapon.unk94 += 6;
+        if (self->ext.weapon.unk90 < 0) {
             D_80097420 = 0;
-            self->ext.weapon_044.unk90 = 0;
+            self->ext.weapon.unk90 = 0;
             DestroyEntity(self);
             return;
         }
@@ -285,18 +286,18 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     selfY = self->posY.i.hi;
-    selfY_bottom = self->posY.i.hi + self->ext.weapon_044.unk82;
+    selfY_bottom = self->posY.i.hi + self->ext.weapon.unk82;
     offset = 64;
     base = 192;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < (PrimCount - 1); i++) {
         angle = D_138000_8017A260[i];
-        sine = (rsin(angle) >> 5) * self->ext.weapon_044.unk94 / 256;
+        sine = (rsin(angle) >> 5) * self->ext.weapon.unk94 / 256;
         prim->y0 = selfY + sine;
         prim->y2 = selfY_bottom + sine;
 
         angle = D_138000_8017A260[(i + 1) % 16];
-        sine = (rsin(angle) >> 5) * self->ext.weapon_044.unk94 / 256;
+        sine = (rsin(angle) >> 5) * self->ext.weapon.unk94 / 256;
         prim->y1 = selfY + sine;
         prim->y3 = selfY_bottom + sine;
 
@@ -304,14 +305,14 @@ void EntityWeaponAttack(Entity* self) {
         prim->x1 = prim->x3 = offset + ((base - offset) * (i + 1) / 16);
         angle = D_138000_8017A260[i];
         prim->r0 = prim->g0 = prim->b0 = prim->r2 = prim->g2 = prim->b2 =
-            ((rsin(angle) + FIX(1.0 / 16.0)) >> 6) *
-            self->ext.weapon_044.unk90 / 256;
+            ((rsin(angle) + FIX(1.0 / 16.0)) >> 6) * self->ext.weapon.unk90 /
+            256;
         angle = D_138000_8017A260[(i + 1) % 16];
         prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 =
-            ((rsin(angle) + FIX(1.0 / 16.0)) >> 6) *
-            self->ext.weapon_044.unk90 / 256;
+            ((rsin(angle) + FIX(1.0 / 16.0)) >> 6) * self->ext.weapon.unk90 /
+            256;
 
-        D_138000_8017A260[i] += self->ext.weapon_044.unk8A;
+        D_138000_8017A260[i] += self->ext.weapon.unk8A;
 
         prim = prim->next;
     }

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import subprocess
 import mapfile_parser
 import os
 from pathlib import Path
@@ -48,6 +49,21 @@ map_parser.add_argument(
     help="The map file to extract the symbols from",
 )
 map_parser.add_argument(
+    "--no-default",
+    required=False,
+    action="store_true",
+    help="Do not include Splat default symbols that starts with D_ or func_",
+)
+
+elf_parser = subparsers.add_parser(
+    "elf",
+    description="Print the list of symbols from an elf file",
+)
+elf_parser.add_argument(
+    "elf_file_name",
+    help="The elf file to extract the symbols from",
+)
+elf_parser.add_argument(
     "--no-default",
     required=False,
     action="store_true",
@@ -136,39 +152,39 @@ re_func = r"(?P<FUNC>\%(hi|lo))"
 # all the regex patterns supported by the MIPS assembly parser
 patterns = [
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "FUNC", "SYM", "IMM"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+{re_func}\({re_ident('SYM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "FUNC", "SYM"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_reg('RIGHT')}",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+{re_reg('LEFT')},\s+{re_reg('RIGHT')}",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT", "RIGHT"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+{re_reg('LEFT')},\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT", "FUNC", "SYM", "IMM"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_func}\({re_ident('SYM')}\)",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+{re_reg('LEFT')},\s+{re_func}\({re_ident('SYM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT", "FUNC", "SYM"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')}",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+{re_reg('LEFT')}",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+\.{re_ident('LABEL')}",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+\.{re_ident('LABEL')}",
         ["LOC", "VRAM", "VAL", "OP", "LABEL"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+\.{re_ident('LABEL')}",
+        rf"{re_splat_line()}\s+{re_ident('OP')}\s+{re_reg('DST')},\s+\.{re_ident('LABEL')}",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LABEL"],
     ),
     (
-        rf"{re_splat_line()}\\s+{re_ident('OP')}$",
+        rf"{re_splat_line()}\s+{re_ident('OP')}$",
         ["LOC", "VRAM", "VAL", "OP"],
     ),
     (r"glabel (?P<FUNC_NAME>\w+)", ["FUNC_NAME"]),
@@ -214,12 +230,12 @@ def get_non_matching_symbols(asm_ref, asm_cross):
             return imm
         return imm - 0x10000
 
+    syms = dict()
     ref_line_count = len(asm_ref)
     cross_line_count = len(asm_cross)
     if ref_line_count != cross_line_count:
-        return "fail", []
+        return "fail", syms
 
-    syms = dict()
     prev_instr_hi = False
     cross_off = 0
     for i in range(0, ref_line_count):
@@ -232,9 +248,9 @@ def get_non_matching_symbols(asm_ref, asm_cross):
         if tokens_ref == tokens_cross:
             continue  # if tokens are identical, skip and continue
         if tokens_ref == None or tokens_cross == None:
-            return "fail", []  # token mis-match, functions are different
+            return "fail", syms  # token mis-match, functions are different
         if is_value_equal(tokens_ref, tokens_cross, "OP") == False:
-            return "fail", []  # if op code is not the same, functions are different
+            return "fail", syms  # if op code is not the same, functions are different
         if is_value_equal(tokens_ref, tokens_cross, "SYM") == True:
             continue  # if a symbol is found and it is the same then continue
         if "SYM" not in tokens_ref:
@@ -372,6 +388,57 @@ def print_map_symbols(map_file_name, no_default):
         print(f"{syms[vram]} = 0x{vram:08X}; // allow_duplicated:True")
 
 
+def get_elf_symbols(elf_file_name) -> dict:
+    with subprocess.Popen(
+        args=["nm", elf_file_name],
+        stdout=subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=dict(os.environ),
+    ) as p:
+        stdout_raw, stderr_raw = p.communicate()
+        output = stdout_raw.decode("utf-8").splitlines()
+    symbols = dict()
+    for line in output:
+        off, kind, name = line.split(" ")
+        if name.startswith("LM"):
+            continue
+        if name.startswith("_") and name.endswith("_c"):
+            continue
+        if "_compiled" in name:
+            continue
+        if name.startswith("__pad"):
+            continue
+        if name.endswith("_END"):
+            continue
+        if name.endswith("_START"):
+            continue
+        if name.endswith("_VRAM"):
+            continue
+        if kind == "A":
+            continue
+        symbols[name] = int(off, base=16)
+    return symbols
+
+
+def print_elf_symbols(file, elf_file_name, no_default):
+    with subprocess.Popen(
+        args=["nm", elf_file_name],
+        stdout=subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=dict(os.environ),
+    ) as p:
+        stdout_raw, stderr_raw = p.communicate()
+        output = stdout_raw.decode("utf-8").splitlines()
+    symbols = get_elf_symbols(elf_file_name)
+    sorted_symbols = sorted(symbols.items(), key=lambda item: item[1])
+    for name, offset in sorted_symbols:
+        if no_default and (name.startswith("func_") or name.startswith("D_")):
+            continue
+        print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.version == None:
@@ -386,3 +453,5 @@ if __name__ == "__main__":
         remove_orphans_from_config(args.config_yaml)
     elif args.command == "map":
         print_map_symbols(args.map_file_name, args.no_default)
+    elif args.command == "elf":
+        print_elf_symbols(sys.stdout, args.elf_file_name, args.no_default)

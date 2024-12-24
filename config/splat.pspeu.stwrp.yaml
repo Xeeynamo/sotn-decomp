@@ -20,6 +20,7 @@ options:
   asm_jtbl_label_macro: jlabel
   symbol_name_format : psp_$VRAM
   nonmatchings_path: psp
+  disassemble_all: True
   section_order:
     - ".text"
     - ".data"
@@ -30,7 +31,6 @@ options:
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
-    .include "macro.inc"
 sha1: 0584ddb3ba1afce61592d43497212fcb8ebf797b
 
 segments:
@@ -90,19 +90,19 @@ segments:
       - [0xF3A0, data] # D_psp_09246A20
       - [0xF440, data] # D_psp_09246AC0
       - [0xF450, data] # D_psp_09246AD0
-      - [0xF460, data] # D_80181134
+      - [0xF460, data] # eRoomForegroundInit
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
-      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # g_eRedDoorTiles
+      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # WRP_RedDoorTiles
       - [0xF7B0, .data, wrp_psp/wrp_data_F7B0] # D_psp_09246E30
-      - [0xF810, .data, wrp_psp/wrp_data_F810] # g_eBreakableInit
-      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_InitializeData0
-      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_InitializeEntityData0
+      - [0xF810, .data, wrp_psp/wrp_data_F810] # WRP_EInitBreakable
+      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_EInitObtainable
+      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_EInitParticle
       - [0xF840, data] # D_psp_09246EC0
       - [0xF850, data] # D_psp_09246ED0
       - [0xF860, data] # D_80180488
-      - [0xF870, data] # g_eInitGeneric2
+      - [0xF870, data] # g_EInitCommon
       - [0xF880, data] # D_psp_09246F00
       - [0xF890, data] # D_801804C4
       - [0xF8A0, data] # D_psp_09246F20

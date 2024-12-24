@@ -190,8 +190,7 @@ void HitDetection(void) {
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->ext.generic.unkB8.entityPtr =
-                                        iterEnt1;
+                                    iterEnt2->unkB8 = iterEnt1;
                                     // reminder: iterEnt1->hitboxState
                                     if (miscVar1 & 8) {
                                         iterEnt2->hitFlags = 3;
@@ -247,7 +246,7 @@ void HitDetection(void) {
                     hitboxCheck1 *= 2;
                     if (hitboxCheck1 >= hitboxCheck2) {
                         if (iterEnt1->attack) {
-                            iterEnt2->ext.player.unkB8 = iterEnt1;
+                            iterEnt2->unkB8 = iterEnt1;
                             if (miscVar1 & 8) {
                                 iterEnt2->hitFlags = 3;
                             } else {
@@ -279,14 +278,16 @@ void HitDetection(void) {
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (otherEntity != NULL) {
                         // EntitySoulStealOrb
-                        CreateEntityFromEntity(7, iterEnt1, otherEntity);
+                        CreateEntityFromEntity(
+                            E_SOUL_STEAL_ORB, iterEnt1, otherEntity);
                     }
                 }
                 miscVar1 = g_testCollEnemyLookup[entFrom5C->enemyId];
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x120] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) +
+                                  MAD_COLLISION_FLAGS_START] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
@@ -415,7 +416,7 @@ void HitDetection(void) {
                             if (otherEntity != NULL) {
                                 // EntityEnemyBlood
                                 CreateEntityFromEntity(
-                                    13, iterEnt1, otherEntity);
+                                    E_ENEMY_BLOOD, iterEnt1, otherEntity);
                                 if (xCoord > iterEnt1->posX.i.hi) {
                                     otherEntity->params = 1;
                                 }
@@ -493,8 +494,10 @@ void HitDetection(void) {
                                     if (miscVar1) {
                                         miscVar1--;
                                         flaggy_flags = (1 << (miscVar1 & 7));
-                                        g_CastleFlags[(miscVar1 >> 3) +
-                                                      0x140] |= flaggy_flags;
+                                        g_CastleFlags
+                                            [(miscVar1 >> 3) +
+                                             MAD_RAREDROP_FLAGS_START] |=
+                                            flaggy_flags;
                                     }
                                 } else {
                                     miscVar3 -= sp3C->rareItemDropRate;
@@ -510,11 +513,11 @@ void HitDetection(void) {
                                 miscVar3 -= 0x80;
                                 // Create an EntityEquipItemDrop
                                 CreateEntityFromEntity(
-                                    10, iterEnt1, otherEntity);
+                                    E_EQUIP_ITEM_DROP, iterEnt1, otherEntity);
                             } else {
                                 // Create an EntityPrizeDrop
                                 CreateEntityFromEntity(
-                                    3, iterEnt1, otherEntity);
+                                    E_PRIZE_DROP, iterEnt1, otherEntity);
                             }
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
@@ -543,7 +546,7 @@ void HitDetection(void) {
                 if (!(entFrom5C->hitFlags & 0xF)) {
                     entFrom5C->hitFlags |= 0x10;
                 }
-                if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
+                if ((entFrom5C->flags & FLAG_UNK_10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
                         g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#if !defined(VERSION_PSP)
+
 /*
 sine table. can be generated like:
 
@@ -44,34 +44,16 @@ static s16 g_SineTable[] = {
     0xFAFB, 0xFB5B, 0xFBBC, 0xFC1D, 0xFC7F, 0xFCE1, 0xFD44, 0xFDA7, 0xFE0B,
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
-#endif
 
 #include "../destroy_entity.h"
-
-#if !defined(VERSION_PSP)
 #include "../destroy_entities_from_index.h"
-#endif
-
 #include "prevent_entity_from_respawning.h"
-
 #include "animate_entity.h"
-
-#if !defined(VERSION_PSP)
 #include "unk_anim_func.h"
-#endif
-
-#if !defined(VERSION_PSP)
 #include "get_distance_to_player_x.h"
-#endif
-
-#if !defined(VERSION_PSP)
 #include "get_distance_to_player_y.h"
-#endif
-
 #include "get_side_to_player.h"
-
 #include "move_entity.h"
-
 #include "fall_entity.h"
 
 #if defined(VERSION_BETA) || STAGE == STAGE_ST0
@@ -92,9 +74,7 @@ u8 func_8019214C(void) {
 }
 #endif
 
-#if !defined(VERSION_PSP)
 #include "unk_collision_func3.h"
-#endif
 
 #if defined(VERSION_BETA) || STAGE == STAGE_ST0
 s32 func_80192408(u16* sensors, u16 arg1) {
@@ -158,64 +138,26 @@ s32 func_80192408(u16* sensors, u16 arg1) {
 }
 #endif
 
-#if !defined(VERSION_PSP)
 #include "unk_collision_func2.h"
-#endif
-
 #include "alloc_entity.h"
-
-#if !defined(VERSION_PSP)
 #include "get_sine_scaled.h"
-
 #include "get_sine.h"
-
 #include "set_entity_velocity_from_angle.h"
-
 #include "ratan2_shifted.h"
-
 #include "get_angle_between_entities_shifted.h"
-
 #include "get_angle_point_to_entity_shifted.h"
-
 #include "adjust_value_within_threshold.h"
-#endif
-
 #include "unk_entity_func0.h"
-
-#if !defined(VERSION_PSP)
 #include "ratan2.h"
-#endif
-
 #include "get_angle_between_entities.h"
-
-#if !defined(VERSION_PSP)
 #include "get_angle_point_to_entity.h"
-#endif
-
 #include "get_normalized_angle.h"
-
 #include "set_step.h"
-
-#if !defined(VERSION_PSP)
 #include "set_sub_step.h"
-#endif
-
-#if !defined(VERSION_PSP)
 #include "entity_explosion_spawn.h"
-#endif
-
 #include "init_entity.h"
-
 #include "entity_dummy.h"
-
-#if !defined(VERSION_PSP)
 #include "unk_collision_func.h"
-#endif
-
 #include "check_field_collision.h"
-
-#if !defined(VERSION_PSP)
 #include "get_player_collision_with.h"
-#endif
-
 #include "replace_breakable_with_item_drop.h"

@@ -44,7 +44,7 @@ int UpdateFlagCheckerListenMode(void) {
     const int MenuWidth = 64;
     int i;
 
-    if (g_pads->tapped & PAD_L2) {
+    if (g_pads[0].tapped & PAD_L2) {
         // exit listen mode
         g_CastleFlagChangeCursor = -1;
         return;
@@ -128,16 +128,16 @@ void UpdateFlagChecker(void) {
         cy = (g_FlagCursor / BitsCount) / ColumnCount;
         DbgDrawCursor(40 + cx * 8, 48 + cy * 8, 8, 8);
 
-        if (g_pads->repeat & PAD_UP) {
+        if (g_pads[0].repeat & PAD_UP) {
             g_FlagCursor -= BitsCount * ColumnCount;
         }
-        if (g_pads->repeat & PAD_DOWN) {
+        if (g_pads[0].repeat & PAD_DOWN) {
             g_FlagCursor += BitsCount * ColumnCount;
         }
-        if (g_pads->repeat & PAD_LEFT) {
+        if (g_pads[0].repeat & PAD_LEFT) {
             g_FlagCursor--;
         }
-        if (g_pads->repeat & PAD_RIGHT) {
+        if (g_pads[0].repeat & PAD_RIGHT) {
             g_FlagCursor++;
         }
 
@@ -146,39 +146,39 @@ void UpdateFlagChecker(void) {
         }
         g_FlagCursor %= MaxCursor;
 
-        if (g_pads->tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_CROSS) {
             FlipBit(g_FlagOffset + (g_FlagCursor / BitsCount),
                     g_FlagCursor % BitsCount);
         }
-        if (g_pads->tapped & PAD_CIRCLE) {
+        if (g_pads[0].tapped & PAD_CIRCLE) {
             g_IsFlagEditMode = false;
         }
     } else {
         FntPrint("CROSS=Edit   SQUARE=Listen");
-        if (g_pads->repeat & PAD_UP) {
+        if (g_pads[0].repeat & PAD_UP) {
             g_FlagOffset -= ColumnCount;
         }
-        if (g_pads->repeat & PAD_DOWN) {
+        if (g_pads[0].repeat & PAD_DOWN) {
             g_FlagOffset += ColumnCount;
         }
-        if (g_pads->repeat & PAD_LEFT) {
+        if (g_pads[0].repeat & PAD_LEFT) {
             g_FlagOffset--;
         }
-        if (g_pads->repeat & PAD_RIGHT) {
+        if (g_pads[0].repeat & PAD_RIGHT) {
             g_FlagOffset++;
         }
-        if (g_pads->tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_CROSS) {
             g_IsFlagEditMode = true;
         }
     }
 
-    if (g_pads->repeat & PAD_L1) {
+    if (g_pads[0].repeat & PAD_L1) {
         g_FlagOffset -= ColumnCount * RowCount;
     }
-    if (g_pads->repeat & PAD_R1) {
+    if (g_pads[0].repeat & PAD_R1) {
         g_FlagOffset += ColumnCount * RowCount;
     }
-    if (g_pads->tapped & PAD_SQUARE) {
+    if (g_pads[0].tapped & PAD_SQUARE) {
         InitFlagCheckerListenMode();
     }
 

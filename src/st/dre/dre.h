@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
-#define STAGE_DRE_H
+#define STAGE_IS_DRE
 
 #define OVL_EXPORT(x) DRE_##x
 
 #define CASTLE_FLAG_BANK 0xD3
 
-typedef enum {
+typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
@@ -25,7 +25,7 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x15 */ E_ID_14 = 0x14,
-    /* 0x15 */ E_ID_15,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_ID_BACKGROUND_HOUSE,
     /* 0x17 */ E_ID_HOUSE_SPAWNER,
     /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
@@ -51,14 +51,13 @@ void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
-void EntityUnkId14(Entity* entity);
-void EntityUnkId15(Entity* entity);
+void EntityExplosionVariants(Entity* entity);
+void EntityGreyPuff(Entity* entity);
 
 /* *** Initializers *** */
-extern u16 g_InitializeData0[];
+extern u16 g_EInitObtainable[];
 extern u16 D_8018047C[];
-extern u16 g_EInitGeneric[];
-extern u16 D_801804A0[];
+extern u16 g_EInitInteractable[];
 extern u16 D_801804D0[]; // EntitySuccubus
 extern u16 D_801804DC[];
 extern u16 D_80180500[];
@@ -96,14 +95,13 @@ extern s8 g_CloneShootOrder[4][7]; // 0x801807D4
 
 extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
-extern s32 D_801807F8[];
+extern u8 D_801807F8[][4];
 extern u8 D_80180830[];
 extern s16 D_80180D80[];
-extern u16 g_InitializeEntityData0[];
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitParticle[];
+extern u16 g_EInitCommon[];
 extern u16 D_801804F4[];
 extern s8 c_HeartPrizes[];
-extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_801804E8[];
 extern u16 D_8018050C[];
 extern u16 D_80180528[];
@@ -131,12 +129,12 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern s32 D_801A3ED4;
+extern s32 g_SkipCutscene;
 extern Primitive* D_801A3EF0[];
 extern s32 D_801A3F08;
 extern s32 D_801A3F0C;
 extern s32 D_801A3F10[];
-extern u32 D_801A3F84;
+extern u32 g_CutsceneFlags;
 
 // For succubus cutscene
 extern u8 D_8018088C[];
@@ -145,11 +143,9 @@ extern u16 D_80180894[];
 extern u16 D_8018089C[];
 extern u16 D_801808A0[];
 extern s16 D_801808A8[];
-extern const char D_80181B65[];
-extern const char D_801816C8[];
-extern s32 D_801A3ED4;
-extern u32 D_801A3F84;
-extern s32 D_801A3F88;
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
 
 extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard
 

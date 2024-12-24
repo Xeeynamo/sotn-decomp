@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
+#include "sfx.h"
 
 void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->anim = anim;
@@ -87,9 +88,11 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 void DisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
+#if defined(VERSION_US)
     FntPrint("op disable\n");
+#endif
     if (resetAnims) {
-        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk1 = 1;
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
@@ -100,8 +103,8 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
             prim = prim->next;
         }
     }
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
-    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 0xA;
     if (arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
@@ -110,10 +113,10 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 void func_8015CC28(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_1];
 
-    entity->ext.generic.unk7E.modeU8.unk1 = 0;
-    entity->ext.generic.unk7E.modeU8.unk0 = 0;
-    entity->ext.generic.unk7C.U8.unk1 = 0;
-    entity->ext.generic.unk7C.U8.unk0 = 0;
+    entity->ext.entSlot1.unk3 = 0;
+    entity->ext.entSlot1.unk2 = 0;
+    entity->ext.entSlot1.unk1 = 0;
+    entity->ext.entSlot1.unk0 = 0;
 }
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
@@ -158,6 +161,19 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
+#ifdef VERSION_HD
+void RicSetRun(void) {
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_RUN);
+    RicSetAnimation(ric_anim_run);
+    RicSetSpeedX(FIX(2.25));
+    g_Player.timers[PL_T_RUN] = 40;
+    PLAYER.velocityY = 0;
+    RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
+}
+#endif
+
 void RicSetWalk(s32 arg0) {
     if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
         RicSetRun();
@@ -173,6 +189,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
+#ifdef VERSION_US
 void RicSetRun(void) {
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
@@ -187,6 +204,7 @@ void RicSetRun(void) {
             g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
     }
 }
+#endif
 
 void RicSetFall(void) {
     /**
@@ -258,34 +276,9 @@ void RicSetHighJump(void) {
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
-    g_api.PlaySfx(SFX_GRUNT_C);
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
     g_Player.timers[PL_T_12] = 4;
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
-}
-
-s32 func_8015D1D0(s16 subWpnId, s16 maxParticles) {
-    Entity* entity;
-    s32 nFound;
-    s32 nEmpty;
-    s32 i;
-
-    entity = &g_Entities[32];
-    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
-        if (entity->entityId == E_NONE) {
-            nEmpty++;
-        }
-        if (entity->ext.generic.unkB0 != 0 &&
-            entity->ext.generic.unkB0 == subWpnId) {
-            nFound++;
-        }
-        if (nFound >= maxParticles) {
-            return -1;
-        }
-    }
-    if (nEmpty == 0) {
-        return -1;
-    }
-    return 0;
 }

@@ -1,12 +1,15 @@
+#ifndef LIBC_H
+#define LIBC_H
+
 extern void exit();
 extern void puts(char*);
 // setjmp
 extern char* strcat(char*, char*);
-extern int strcmp(char*, char*);
-extern int strncmp(char*, char*);
-extern char* strcpy(char*, char*);
-extern int strlen(char*);
-extern void* memcpy(unsigned char*, unsigned char*, int);
+extern int strcmp(const char*, const char*);
+extern int strncmp(const char*, const char*);
+extern char* strcpy(const char*, const char*);
+extern int strlen(const char*);
+extern void* memcpy(void*, const void*, size_t);
 extern void* memset(unsigned char*, unsigned char, int);
 
 /*
@@ -20,3 +23,5 @@ extern void free(void*);
 int printf(char*, ...);
 
 int abs(int x);
+
+#endif // LIBC_H

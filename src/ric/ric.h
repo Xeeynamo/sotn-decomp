@@ -58,15 +58,6 @@ enum RicSteps {
     PL_S_DEBUG = 0xF0,
 };
 
-enum RicSfxs {
-    SFX_GRUNT_A = 0x6F9,
-    SFX_GRUNT_B,
-    SFX_GRUNT_C,
-    SFX_GRUNT_SUBWPN_A,
-    SFX_HYDROSTORM = 0x700,
-    SFX_CROSS_CRASH,
-};
-
 enum RicTimers {
     PL_T_POISON,
     PL_T_CURSE,
@@ -144,7 +135,7 @@ enum RicEntities {
     E_SUBWPN_BIBLE_TRAIL,            // RicEntitySubwpnBibleTrail
     E_SUBWPN_STOPWATCH,              // RicEntitySubwpnStopwatch
     E_SUBWPN_STOPWATCH_CIRCLE,       // RicEntitySubwpnStopwatchCircle
-    E_801705EC,                      // func_801705EC
+    E_CRASH_STOPWATCH,               // RicEntityCrashStopwatch
     E_8016F198,                      // func_8016F198
     E_AGUNEA_CIRCLE,                 // RicEntityAguneaCircle
     E_AGUNEA_LIGHTNING,              // RicEntityAguneaLightning
@@ -152,7 +143,7 @@ enum RicEntities {
     E_HIT_BY_DARK,                   // RicEntityHitByDark
     E_HIT_BY_HOLY,                   // RicEntityHitByHoly
     E_CRASH_STOPWATCH_DONE_PARTICLE, // RicEntityCrashStopwatchDoneSparkle
-    E_80170548,                      // func_80170548
+    E_CRASH_STOPWATCH_LIGHTNING,     // RicEntityStopwatchCrashLightning
     E_TELEPORT,                      // RicEntityTeleport
     E_DUMMY_66,                      // RicEntityDummy
     NUM_ENTITIES,
@@ -175,6 +166,7 @@ enum RicBlueprints {
     BP_CRASH_CROSS,
     BP_CRASH_CROSSES_ONLY,
     BP_NOT_IMPLEMENTED_1,
+    // 0x10
     BP_NOT_IMPLEMENTED_2,
     BP_ARM_BRANDISH_WHIP,
     BP_18,
@@ -191,6 +183,7 @@ enum RicBlueprints {
     BP_MARIA,
     BP_MARIA_POWERS_INVOKED,
     BP_31,
+    // 0x20
     BP_NOT_IMPLEMENTED_4,
     BP_RIC_BLINK,
     BP_CRASH_CROSS_PARTICLES,
@@ -207,6 +200,7 @@ enum RicBlueprints {
     BP_HIGH_JUMP,
     BP_HIT_BY_CUT,
     BP_HIT_BY_ICE,
+    // 0x30
     BP_HIT_BY_THUNDER,
     BP_VIBHUTI,
     BP_REBOUND_STONE,
@@ -223,7 +217,8 @@ enum RicBlueprints {
     BP_BIBLE,
     BP_BIBLE_TRAIL,
     BP_SUBWPN_STOPWATCH,
-    BP_STOPWATCH_RIPPLE,
+    // 0x40
+    BP_STOPWATCH_CIRCLE,
     BP_CRASH_STOPWATCH,
     BP_66,
     BP_CRASH_AGUNEA,
@@ -232,7 +227,7 @@ enum RicBlueprints {
     BP_HIT_BY_DARK,
     BP_HIT_BY_HOLY,
     BP_AGUNEA_THUNDER,
-    BP_73,
+    BP_CRASH_STOPWATCH_LIGHTNING,
     BP_SMOKE_PUFF_2,
     BP_SKID_SMOKE_2,
     BP_SKID_SMOKE_3,
@@ -263,7 +258,7 @@ enum RicSubweapons {
     PL_W_19,
     PL_W_20,
     PL_W_21,
-    PL_W_22,
+    PL_W_HIGHJUMP,
     PL_W_23,
     PL_W_CRASH_VIBHUTI,
     PL_W_CRASH_REBOUND_STONE,
@@ -314,14 +309,14 @@ extern u8 D_801545B0[];
 extern u8 D_801545C4[16];
 extern u8 D_801545D4[16];
 // These appear to be a set of collision boxes
-extern Point16 D_801545E4[4];
-extern Point16 D_801545F4[4];
-extern Point16 D_80154604[14];
-extern u16 D_8015463C[4];
-extern u16 D_80154644[4];
-extern u16 D_8015464C[8];
-extern u16 D_8015465C[4];
-extern u16 D_80154664[8];
+extern Point16 g_RicSensorsCeiling[];
+extern Point16 g_RicSensorsFloor[];
+extern Point16 g_RicSensorsWall[];
+extern u16 g_RicSensorsCeilingDefault[];
+extern u16 g_RicSensorsFloorDefault[];
+extern u16 g_RicSensorsWallDefault[];
+extern u16 g_RicSensorsCeilingCrouch[];
+extern u16 g_RicSensorsWallCrouch[];
 
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];

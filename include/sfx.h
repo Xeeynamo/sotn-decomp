@@ -54,6 +54,7 @@ enum SfxModes {
 #define SET_UNK_10 0x10
 #define SET_UNK_11 0x11
 #define SET_UNK_12 0x12
+#define SET_UNK_90 0x90
 #define SET_RELEASE_RATE_LOW_20_21 0xa3
 #define SET_RELEASE_RATE_LOW_22_23 0xa7
 #define SET_KEY_ON_20_21 0xa4
@@ -188,65 +189,29 @@ enum SfxModes {
     0x391 // Alucard: Death in the dream world will set your soul wandering for
           // eternity, demon.
 
+// Fairy voiceovers
+#define FAERIE_INTRO_LIFE 0x472    // "Thank you for giving me life"
+#define FAERIE_INTRO_COMMAND 0x473 // "Your word is my command"
+#define FAERIE_LETS_GO 0x476       // "Let's go!"
+#define FAERIE_FOLLOW 0x479        // "I'll follow you anywhere"
+#define FAERIE_WALL_HINT 0x47A     // "There is something funny about this wall"
+#define FAERIE_SUSPICIOUS_HINT 0x48A // "This is really suspicious looking"
+#define FAERIE_MIST_HINT 0x48E       // "If only you could transform into mist"
+#define FAERIE_DARKNESS_HINT                                                   \
+    0x492 // "Some animals can live in complete darkness"
+
+// Demon voiceovers
+#define DEMON_INTRO_COMMAND 0x4E8 // Command me, my lord and master
+#define DEMON_INTRO_READY 0x4ED   // I'm ready to serve, master
+#define DEMON_SWITCH_1 0x4EE // Hmm, a switch.  Why don't I press it and see?
+#define DEMON_SWITCH_2 0x4EF // Hmm, this switch hasn't been pressed yet
+
 #define JP_VO_SH_GROAN 0x52E      // Shaft groans
 #define JP_VO_SH_SCREAM 0x52F     // Shaft screams
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
-#define SFX_UNK_689 0x689
-#define NA_SE_BREAK_GLASS 0x68B
-#define NA_SE_EN_GAIBON_FLAP_WINGS 0x68D
-#define NA_SE_EN_SLOGRA_SPEAR_PROJECTILE 0x690
-#define NA_SE_EN_GAIBON_FLAME 0x691
-#define NA_SE_EN_EXPLOSIVE_DEATH 0x693
-#define NA_SE_EN_SLOGRA_DEATH_EXPLOSION 0x697
-#define SFX_UNK_69A 0x69A
-#define SFX_UNK_69D 0x69D
-#define SFX_UNK_6A0 0x6A0
-#define SFX_UNK_6A3 0x6A3
-#define NA_SE_EV_CLOCK_TICK 0x6A1
-#define REBOUND_STONE_BOUNCE 0x6A4
-#define SFX_UNK_6AD 0x6AD
-#define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
-#define SFX_UNK_6B1 0x6B1
-#define SFX_UNK_6BA 0x6BA
-#define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
-#define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
-#define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
-#define NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES 0x6CB
-#define NA_SE_EN_BLOOD_SKELETON_REASSEMBLES 0x6CC
-#define SFX_UNK_6DF 0x6DF
-#define SFX_UNK_6E0 0x6E0
-#define NA_SE_PL_RIC_UNK_6E2 0x6E2
-#define SFX_UNK_6E7 0x6E7
-#define SFX_UNK_6E8 0x6E8
-#define SFX_UNK_6E9 0x6E9
-#define SFX_UNK_6EA 0x6EA
-#define SFX_UNK_6EB 0x6EB
-#define SFX_UNK_6EC 0x6EC
-#define SFX_UNK_6ED 0x6ED
-#define SFX_UNK_6EE 0x6EE
-#define SFX_UNK_6EF 0x6EF
-#define SFX_UNK_6F0 0x6F0
-#define NA_SE_VO_AL_PUNCH 0x6F1
-#define NA_SE_VO_AL_WHAT 0x6F2
-#define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x6F3
-#define NA_SE_VO_AL_SOUL_STEAL 0x6F4
-#define NA_SE_VO_AL_DYING 0x6F6
-#define SFX_UNK_6FF 0x6FF
-#define SFX_RICHTER_ATTACK_HIT 0x705
-#define ALUCARD_DARK_METAMORPHOSIS 0x705
-#define NA_SE_VO_WO_BARK 0x706
-#define NA_SE_EN_SLOGRA_HISSING 0x709
-#define NA_SE_EN_GAIBON_SCREAM 0x70B
-#define NA_SE_EN_SLOGRA_HURT_2 0x70A
-#define NA_SE_EN_SLOGRA_HURT 0x70C
 #define NA_SE_EN_SPITTLEBONE_ACID_SPLAT 0x73C
-#define NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM 0x746
-#define NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM 0x747
-#define NA_SE_EN_BLOODY_ZOMBIE_INJURED 0x748
-#define NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE 0x749
 #define NA_SE_VO_AXE_KNIGHT_THROW 0x766
 #define NA_SE_VO_AXE_KNIGHT_SCREAM 0x767
 #define NA_SE_EV_WATER_SPLASH 0x7C2
@@ -266,11 +231,6 @@ enum SfxModes {
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_VO_SU_CRYSTAL_2 0x6AF
-#define NA_SE_SU_FLAPPING_WINGS 0x6C6
-#define NA_SE_SU_PETAL_ATTACK 0x6B0
-#define NA_SE_SU_CREATE_CLONES 0x6D5
-#define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
 // Blank, may be a leftover from the Jap version.
 #define NA_VO_SU_BLANK 0x86F
@@ -285,6 +245,7 @@ enum SfxModes {
 #define NA_VO_SU_DELICIOUS 0x8D1
 
 // STAGE NO3 / NP3
+
 #define NA_SE_EV_WINDOW_LATCH 0x79D
 #define SE_DEATH_TAKES_ITEMS 0x7A0
 #define NA_VO_DEATH_LAUGH 0x7A1
@@ -292,36 +253,23 @@ enum SfxModes {
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
 
+// BOSS RBO3 - Medusa
+#define SFX_RBO3_UNK_7C5 0x7C5
+#define SFX_RBO3_UNK_7C8 0x7C8
+#define SFX_RBO3_UNK_7D1 0x7D1
+#define SFX_RBO3_UNK_7FB 0x7FB
+#define SFX_RBO3_UNK_7FD 0x7FD
+#define SFX_RBO3_UNK_7FE 0x7FE
+#define SFX_RBO3_UNK_7FF 0x7FF
+#define SFX_RBO3_UNK_801 0x801
+#define SFX_RBO3_UNK_802 0x802
+#define SFX_RBO3_UNK_804 0x804
+
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_BOSS_DEFEATED 0x7D2
 
-// UI SOUNDS
-#define SE_UI_ERROR 0x686
-#define SE_UI_DEBUG_SELECT 0x688
-#define SE_UI_OVERWRITE_SELECT 0x6A4
-#define SE_UI_OVERWRITE_MSG 0x6AD
-
-// DRA
-#define SFX_UNK_683 0x683
-#define SE_HEALTH_REGAINED 0x68E
-#define SFX_UNK_6B2 0x6B2
-#define SFX_UNK_6F7 0x6F7
-
-// WEAPON SOUNDS
-#define SE_WPN_ALUCARD_SWORD_SWING 0x6A8
-#define SE_WPN_PENTAGRAM 0x6E4
-
-#define SFX_KARMA_COIN 0x682
-#define SFX_KARMA_COIN_HEADS 0x6B1
-
 // UNUSED SOUNDS
-
-#define SE_UNK_TE1_692 0x692
-#define SE_UNK_TE1_6B3 0x6B3
-#define SE_UNK_TE2_6B4 0x6B4
-#define SE_UNK_TE2_6B6 0x6B6
-#define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
 // The VAB IDs appear in large chunks so all sounds proceeding
@@ -386,7 +334,7 @@ enum Sfx {
     SFX_ARROW_SHOT_C,
     SFX_ARROW_SHOT_D,
     SFX_SKELETON_DEATH_A,
-    SFX_SKELETON_DEATH_B,
+    SFX_SKELETON_DEATH_B, // Slinger
     SFX_SKELETON_DEATH_C,
     SFX_FIRE_SHOT,
     SFX_WEAPON_STAB_A,
@@ -473,8 +421,164 @@ enum Sfx {
     SFX_UI_MP_FULL,
     SFX_CANDLE_HIT_WHOOSH_A,
     SFX_CANDLE_HIT_WHOOSH_B,
-    SFX_QUICK_STUTTER_EXPLODE, // 0x680
-    SFX_GOLD_PICKUP = 0x6A9,
+    SFX_QUICK_STUTTER_EXPLODE_A, // 0x680
+    SFX_RARE_FM_IMPACT,          // RARE overlay only
+    SFX_KARMA_COIN_JINGLE,
+    SFX_QUICK_STUTTER_EXPLODE_B,
+    SFX_FM_THUNDER_EXPLODE,
+    SFX_GUNSHOT_HIGH,
+    SFX_UI_ERROR,
+    SFX_LEVEL_UP,
+    SFX_DEBUG_SELECT, // Low Heartbeat sfx used for Debug menu
+    SFX_WEAPON_SCRAPE_ECHO,
+    SFX_GLASS_BREAK_WHOOSH,
+    SFX_DRA_GLASS_BREAK, // "What is a man?!" wine glass shatter
+    SFX_WING_FLAP_A,
+    SFX_WING_FLAP_B,
+    SFX_HEALTH_PICKUP,
+    SFX_STUTTER_FIREBALL,
+    SFX_FM_EXPLODE_SWISHES, // 0x690
+    SFX_SMALL_FLAME_IGNITE,
+    SFX_UNK_TRANSFORM,
+    SFX_STUTTER_EXPLODE_LOW,
+    SFX_FM_STUTTER_EXPLODE,
+    SFX_FAST_STUTTER_EXPLODE,
+    SFX_FM_MULTI_EXPLODE,
+    SFX_STUTTER_EXPLODE_A,
+    SFX_STUTTER_EXPLODE_B,
+    SFX_STUTTER_EXPLODE_C,
+    SFX_FM_EXPLODE_GLASS_ECHO,
+    SFX_BAT_WING_SWISHES,
+    SFX_BAT_SCREECH_SWISH, // Bat Death
+    SFX_MAGIC_SWITCH,
+    SFX_THROW_WEAPON_SWISHES,
+    SFX_THROW_WEAPON_MAGIC,
+    SFX_TRANSFORM_LOW, // 0x6A0 (Alucard Bat/Mist Transform)
+    SFX_CLOCK_TICK,
+    SFX_DEATH_SWISH,
+    SFX_WATER_DAMAGE_SWISHES,
+    SFX_UI_TINK, // Also Rebound Stone Bounce
+    SFX_SKULL_KNOCK_A,
+    SFX_SKULL_KNOCK_B,
+    SFX_SKULL_KNOCK_C,
+    SFX_ALUCARD_SWORD_SWISH,
+    SFX_GOLD_PICKUP,
+    SFX_MARIONETTE_RATTLE,
+    SFX_SEED_SPIT,
+    SFX_CANNON_EXPLODE,
+    SFX_UI_ALERT_TINK,
+    SFX_TINK_JINGLE, // Frozen Shade Shards, NO1 Telescope jingle
+    SFX_GUARD_TINK,
+    SFX_GLASS_SHARDS, // 0x6B0 (Succubus, Frozen Shade, Shamen Shield)
+    SFX_TRANSFORM_3X, // Karma Coin and shields
+    SFX_BIBLE_SCRAPE,
+    SFX_UNK_TICK,
+    SFX_UNK_RATTLE,
+    SFX_RIC_FLAME_WHIP,
+    SFX_UNK_FIRE_BURST,
+    SFX_LOW_CLOCK_TICK,
+    SFX_UNK_LOW_CLOCK_TICK,
+    SFX_UNK_METAL_TING,
+    SFX_FAST_SWORD_SWISHES, // Sword of Dawn
+    SFX_GRANDFATHER_CLOCK_TICK,
+    SFX_MULTI_CLOCK_TICK,
+    SFX_QUIET_STEPS,
+    SFX_BLIPS_A,
+    SFX_UNK_BLIPS_B,
+    SFX_BLIPS_C, // 0x6C0
+    SFX_BLIPS_D, // Fleaman movement
+    SFX_CAT_MULTI_EXPLODE,
+    SFX_SWISHES_ECHO_REPEAT,
+    SFX_RCAT_DISSONANT_DINK,
+    SFX_MAGIC_NOISE_SWEEP,
+    SFX_BOSS_WING_FLAP,
+    SFX_WHIP_TWIRL_SWISH,
+    SFX_BONE_THROW,
+    SFX_CREAK,
+    SFX_LOW_SKEL_EXPLODE,
+    SFX_RED_SKEL_COLLAPSE,
+    SFX_RED_SKEL_REBUILD,
+    SFX_MULTI_NOISE_SWEEP_DOWN,
+    SFX_SKEL_EXPLODE,
+    SFX_EXPLODE_ECHO,
+    SFX_IGNITE_SWISHES, // 0x6D0
+    SFX_SEED_BLIP,
+    SFX_DISSONANT_SCREECH,
+    SFX_RNO4_MAGIC_GLASS_BREAK,
+    SFX_PSWORD_TWIRL_ATTACK,
+    SFX_PSWORD_TWIRL, // Also Succubus Clone Spawn
+    SFX_CROW_CAW_PAIN,
+    SFX_CROW_CAW,
+    SFX_UNK_CLONE_DISAPPEAR,
+    SFX_BOSS_CLONE_DISAPPEAR,
+    SFX_METAL_RATTLE_A,
+    SFX_METAL_RATTLE_B,
+    SFX_METAL_RATTLE_C,
+    SFX_RAPID_SYNTH_BUBBLE,
+    SFX_RAPID_SYNTH_BUBBLE_SHORT,
+    SFX_CRASH_CROSS,
+    SFX_SAVE_COFFIN_SWISH, // 0x6E0
+    SFX_RCEN_GLASS_BREAKS,
+    SFX_RIC_SUC_REVIVE, // RIC and SUC both use this
+    SFX_BUBBLE_BURST,
+    SFX_PENTAGRAM_ATTACK,
+    SFX_UNK_ANIME_EXPLODE,
+    SFX_LOW_SYNTH_BUBBLES,
+    // vabid 1
+    SFX_VO_ALU_PAIN_A,
+    SFX_VO_ALU_PAIN_B,
+    SFX_VO_ALU_PAIN_C,
+    SFX_VO_ALU_PAIN_D,
+    SFX_VO_ALU_PAIN_E,
+    SFX_VO_ALU_SILENCE,
+    SFX_VO_ALU_YELL, // Elevator yell
+    SFX_VO_ALU_ATTACK_A,
+    SFX_VO_ALU_ATTACK_B,
+    SFX_VO_ALU_ATTACK_C, // 0x6F0
+    SFX_VO_ALU_ATTACK_D,
+    SFX_VO_ALU_WHAT,
+    SFX_VO_ALU_DARK_META,
+    SFX_VO_ALU_SOUL_STEAL,
+    SFX_UNK_6F5,
+    SFX_VO_ALU_DEATH,
+    SFX_ALU_WOLF_BARK,
+    SFX_UNK_VO_ALU_WHOA,
+    SFX_VO_RIC_ATTACK_A,
+    SFX_VO_RIC_ATTACK_B,
+    SFX_VO_RIC_ATTACK_C,
+    SFX_VO_RIC_ATTACK_YELL,
+    SFX_UNK_6FD,
+    SFX_UNK_6FE,
+    SFX_VO_RIC_DEATH,
+    SFX_VO_RIC_HYDRO_STORM, // 0x700
+    SFX_VO_RIC_PAIN_A,
+    SFX_VO_RIC_PAIN_B,
+    SFX_VO_RIC_PAIN_C,
+    SFX_VO_RIC_PAIN_D,
+    SFX_RIC_WHIP_HIT,
+    SFX_RIC_WHIP_ATTACK,
+    SFX_RIC_SLIDE_SKID,
+    SFX_RIC_HYDRO_STORM_ATTACK,
+    // vabid 3
+    SFX_SLOGRA_ROAR,
+    SFX_SLOGRA_ROAR_DEFEAT,
+    SFX_SLOGRA_PAIN_A, // Used for Gaibon
+    SFX_SLOGRA_PAIN_B,
+    SFX_MARIONETTE_LAUGH = 0x724,
+    SFX_MARIONETTE_YELL,
+    SFX_FROZEN_SHADE_SCREAM = 0x733,
+    SFX_BLOODY_ZOMBIE_HIT_GRUNT = 0x746,
+    SFX_BLOODY_ZOMBIE_DEATH,
+    SFX_BLOODY_ZOMBIE_HIT,
+    SFX_BLOODY_ZOMBIE_SPLATTER,
+    SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
+    SFX_WARG_PAIN,
+    SFX_WARG_ATTACK,
+    SFX_WARG_GROWL,
+    SFX_GHOST_ENEMY_HOWL = 1849,
+    SFX_CTULHU_LAUGH = 1880,
+    SFX_CLOCK_BELL = 1958,
+    SFX_CLOCK_ROOM_TICK = 1961
 };
 
 #endif

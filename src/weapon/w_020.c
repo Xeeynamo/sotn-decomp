@@ -95,7 +95,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_90000_8017A864;
@@ -111,7 +111,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 2) {
+        if (sp10.effects & EFFECT_UNK_0002) {
             if (xOffset < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {
@@ -124,7 +124,7 @@ static void EntityWeaponAttack(Entity* self) {
         xVar = self->posX.i.hi + xOffset;
         yVar = self->posY.i.hi + yOffset;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk20 + 1;
             self->velocityY = FIX(1.0);
             self->velocityX = self->velocityX / 2;
@@ -154,9 +154,9 @@ static void EntityWeaponAttack(Entity* self) {
         if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
             if (self->anim == D_90000_8017A8C8) {
-                g_api.PlaySfx(SFX_KARMA_COIN);
+                g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
             } else {
-                g_api.PlaySfx(SFX_KARMA_COIN);
+                g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
             }
         }
         if (self->animFrameDuration < 0) {
@@ -176,7 +176,7 @@ static void EntityWeaponAttack(Entity* self) {
                 // effect. Not clear what part of the function triggers
                 // soul-steal.
                 g_Player.timers[12] = 4;
-                self->drawFlags = FLAG_DRAW_UNK80;
+                self->drawFlags = FLAG_BLINK;
                 self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                 self->posY.i.hi = 0;
                 self->posX.i.hi = 0x80;
@@ -186,7 +186,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
                 g_api.func_80118C28(8);
-                g_api.PlaySfx(SFX_KARMA_COIN_HEADS);
+                g_api.PlaySfx(SFX_TRANSFORM_3X);
                 prim = &g_PrimBuf[self->primIndex];
                 prim->r0 = prim->g0 = prim->b0 = 0x5F;
                 prim->r1 = prim->g1 = prim->b1 = 0x5F;
@@ -203,7 +203,7 @@ static void EntityWeaponAttack(Entity* self) {
                 prim->v2 = prim->v3 = var_s4 + 0x67;
                 prim->u0 = prim->u2 = 0x80;
                 prim->u1 = prim->u3 = 0x80 + 0x57;
-                prim->type = 4;
+                prim->type = PRIM_GT4;
                 prim->priority = 0x1B4;
 
                 prim->drawMode = DRAW_HIDE;
@@ -239,7 +239,7 @@ static void EntityWeaponAttack(Entity* self) {
                     prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                         prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                             prim->g3 = prim->b3 = 0x80;
-                    prim->type = 4;
+                    prim->type = PRIM_GT4;
                     prim->priority = 0x1B6;
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
                                      DRAW_COLORS | DRAW_TRANSP;

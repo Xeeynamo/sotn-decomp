@@ -12,7 +12,7 @@ const (
 	RamNull       = Addr(0)
 	RamGameBegin  = Addr(0x800A0000)
 	RamStageBegin = Addr(0x80180000)
-	RamStageEnd   = Addr(0x801C0000)
+	RamStageEnd   = Addr(0x801E0000)
 	RamGameEnd    = Addr(0x801F8000)
 )
 

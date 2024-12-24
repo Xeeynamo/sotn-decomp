@@ -1,1 +1,16 @@
-git wget curl make gcc-mipsel-linux-gnu binutils-mipsel-linux-gnu clang-format python3-pip p7zip-full bchunk unzip binutils-sh-elf
+bchunk
+binutils-mipsel-linux-gnu
+binutils-sh-elf
+bsdmainutils
+cargo
+clang-format
+coreutils
+curl
+gcc-mipsel-linux-gnu
+git
+make
+p7zip-full
+python3-pip
+python3-venv
+unzip
+wget

@@ -2,7 +2,10 @@ rooms.c
 sprites.c
 e_laydef.c
 e_layout.c
+graphics_banks.h
 layers.h
+palette_def.h
 sprite_banks.h
 tilemap_*.h
 tiledef_*.h
+cutscene_data.h

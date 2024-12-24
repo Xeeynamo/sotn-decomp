@@ -37,7 +37,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s32*, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
-void func_8010DFF0(s32 arg0, s32 arg1);
+void func_8010DFF0(s32 resetAnims, s32 arg1);
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);
@@ -51,10 +51,10 @@ u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 s32 SetVolumeCommand22_23(s16 vol, u16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_8010BF64(Unkstruct_8010BF64* arg0);
+void GetPlayerSensor(Collider* col);
 void func_800F1FC4(s32 arg0);
 void func_800F2288(void); // unknown signature
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 s32 func_800FF460(s32 arg0);
 s32 func_800FF494(EnemyDef* arg0);
 bool CdSoundCommandQueueEmpty(void);
@@ -114,10 +114,10 @@ GameApi g_ApiInit = {
     SetVolumeCommand22_23,
     func_800F53A4,
     CheckEquipmentItemCount,
-    func_8010BF64,
+    GetPlayerSensor,
     func_800F1FC4,
     func_800F2288,
-    func_8011A3AC,
+    GetServantStats,
     func_800FF460,
     func_800FF494,
     CdSoundCommandQueueEmpty,

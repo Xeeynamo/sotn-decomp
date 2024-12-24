@@ -1,8 +1,6 @@
 use regex::Regex;
-use std::env::*;
 use std::fs;
 use std::fs::File;
-use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
@@ -67,7 +65,7 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
         dir: dir.to_string(),
         file: file.to_string(),
         similarity: 0.0,
-        decompiled: false,
+        decompiled: file.contains("/matchings/"),
     }
 }
 
@@ -120,8 +118,6 @@ Finds duplicates in two asm directories and prints them out in order to identify
 
 Usage:
 
-make force_extract
-
 Do a 2-way compare with ordering
 cargo run --release -- --dir ../../asm/us/st/nz0/nonmatchings/ --dir ../../asm/us/st/np3/nonmatchings/ --threshold .94
 
@@ -157,8 +153,6 @@ pub struct IncludeAsmEntry {
 
 fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
     let entries = std::fs::read_dir(dir).expect("Unable to read directory");
-
-    let re = Regex::new("INCLUDE_ASM\\(\"([^\"]*)\", ([^)]*)\\)").unwrap();
     let mut output = Vec::new();
 
     entries.for_each(|entry| {
@@ -168,25 +162,52 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
                 println!("checking {:?}", item_path);
 
                 let file = File::open(item_path.clone()).expect("Unable to open file");
-                let reader = BufReader::new(file);
-                for line in reader.lines() {
-                    let line_str = line.unwrap();
+                let mut reader = BufReader::new(file);
+                let mut buffer = String::new();
 
-                    if line_str.contains("INCLUDE_ASM") {
-                        let (full, [asm_dir, asm_file]) = re.captures(&line_str).unwrap().extract();
+                reader
+                    .read_to_string(&mut buffer)
+                    .expect("Unable to read file");
 
-                        output.push(IncludeAsmEntry {
-                            line: line_str.clone(),
-                            path: item_path.to_string_lossy().to_string(),
-                            asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
-                        });
-                    }
-                }
+                output.append(&mut process_buffer_for_include_asm(
+                    &buffer,
+                    &item_path.to_string_lossy(),
+                ));
             } else if item_path.is_dir() {
                 process_directory_for_include_asm(&item_path.to_string_lossy());
             }
         }
     });
+    output
+}
+
+fn process_buffer_for_include_asm(file_content: &str, file_path: &str) -> Vec<IncludeAsmEntry> {
+    let re = Regex::new("INCLUDE_ASM\\((?:\\s+)?\"([^\"]*)\", ([^)]*)\\)").unwrap();
+    let mut output = Vec::new();
+    let mut buffer = String::new();
+
+    for line_str in file_content.lines() {
+        if line_str.contains("INCLUDE_ASM") || !buffer.is_empty() {
+            buffer.push_str(line_str);
+            if !line_str.contains(';') {
+                buffer.push_str(" ");
+                println!("INCLUDE_ASM line did not contain ;, buffering input to subsequent lines");
+                continue;
+            }
+
+            if let Some(captures) = re.captures(&buffer) {
+                let (full, [asm_dir, asm_file]) = captures.extract();
+                output.push(IncludeAsmEntry {
+                    line: buffer.clone(),
+                    path: file_path.to_string(),
+                    asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
+                });
+            } else {
+                println!("Failed to match regex on line: {}", buffer);
+            }
+            buffer.clear();
+        }
+    }
     output
 }
 
@@ -210,105 +231,161 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
 
     let pairs: Vec<SrcAsmPair> = vec![
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/dra/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/boss/mar/matchings/"),
+            src_dir: String::from("../../src/boss/mar/"),
+            overlay_name: String::from("MAR"),
+            include_asm: get_all_include_asm("../../src/boss/mar/"),
+            path_matcher: "/mar/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/boss/rbo3/matchings/"),
+            src_dir: String::from("../../src/boss/rbo3"),
+            overlay_name: String::from("RBO3"),
+            include_asm: get_all_include_asm("../../src/boss/rbo3"),
+            path_matcher: "/rbo3/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/dra/matchings/"),
             src_dir: String::from("../../src/dra/"),
             overlay_name: String::from("DRA"),
             include_asm: get_all_include_asm("../../src/dra/"),
             path_matcher: "/dra/".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/main/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/main/matchings/"),
             src_dir: String::from("../../src/main/"),
             overlay_name: String::from("MAIN"),
             include_asm: get_all_include_asm("../../src/main/"),
             path_matcher: "/main/".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/ric/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/ric/matchings/"),
             src_dir: String::from("../../src/ric/"),
             overlay_name: String::from("RIC"),
             include_asm: get_all_include_asm("../../src/ric/"),
             path_matcher: "/ric/".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/servant/tt_000/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/servant/tt_000/matchings/"),
             src_dir: String::from("../../src/servant/tt_000"),
-            overlay_name: String::from("RIC"),
+            overlay_name: String::from("TT_000"),
             include_asm: get_all_include_asm("../../src/servant/tt_000"),
             path_matcher: "/tt_000/".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/cen/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/servant/tt_001/matchings/"),
+            src_dir: String::from("../../src/servant/tt_001"),
+            overlay_name: String::from("TT_001"),
+            include_asm: get_all_include_asm("../../src/servant/tt_001"),
+            path_matcher: "/tt_001/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/servant/tt_002/matchings/"),
+            src_dir: String::from("../../src/servant/tt_002"),
+            overlay_name: String::from("TT_002"),
+            include_asm: get_all_include_asm("../../src/servant/tt_002"),
+            path_matcher: "/tt_002/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/servant/tt_003/matchings/"),
+            src_dir: String::from("../../src/servant/tt_003"),
+            overlay_name: String::from("TT_003"),
+            include_asm: get_all_include_asm("../../src/servant/tt_003"),
+            path_matcher: "/tt_003/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/servant/tt_004/matchings/"),
+            src_dir: String::from("../../src/servant/tt_004"),
+            overlay_name: String::from("TT_004"),
+            include_asm: get_all_include_asm("../../src/servant/tt_004"),
+            path_matcher: "/tt_004/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/cen/matchings/"),
             src_dir: String::from("../../src/st/cen/"),
             overlay_name: String::from("CEN"),
             include_asm: get_all_include_asm("../../src/st/cen/"),
             path_matcher: "st/cen".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/dre/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/dre/matchings/"),
             src_dir: String::from("../../src/st/dre/"),
             overlay_name: String::from("DRE"),
             include_asm: get_all_include_asm("../../src/st/dre/"),
             path_matcher: "st/dre".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/mad/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/mad/matchings/"),
             src_dir: String::from("../../src/st/mad/"),
             overlay_name: String::from("MAD"),
             include_asm: get_all_include_asm("../../src/st/mad/"),
             path_matcher: "st/mad".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/no3/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/no0/matchings/"),
+            src_dir: String::from("../../src/st/no0/"),
+            overlay_name: String::from("NO0"),
+            include_asm: get_all_include_asm("../../src/st/no0/"),
+            path_matcher: "st/no0".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/no1/matchings/"),
+            src_dir: String::from("../../src/st/no1/"),
+            overlay_name: String::from("NO1"),
+            include_asm: get_all_include_asm("../../src/st/no1/"),
+            path_matcher: "st/no1".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/no3/matchings/"),
             src_dir: String::from("../../src/st/no3/"),
             overlay_name: String::from("NO3"),
             include_asm: get_all_include_asm("../../src/st/no3/"),
             path_matcher: "st/no3".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/np3/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/np3/matchings/"),
             src_dir: String::from("../../src/st/np3/"),
             overlay_name: String::from("NP3"),
             include_asm: get_all_include_asm("../../src/st/np3/"),
             path_matcher: "st/np3".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/nz0/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/nz0/matchings/"),
             src_dir: String::from("../../src/st/nz0/"),
             overlay_name: String::from("NZ0"),
             include_asm: get_all_include_asm("../../src/st/nz0/"),
             path_matcher: "st/nz0".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/rwrp/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/rwrp/matchings/"),
             src_dir: String::from("../../src/st/rwrp/"),
             overlay_name: String::from("RWRP"),
             include_asm: get_all_include_asm("../../src/st/rwrp/"),
             path_matcher: "st/rwrp".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/sel/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/sel/matchings/"),
             src_dir: String::from("../../src/st/sel/"),
             overlay_name: String::from("SEL"),
             include_asm: get_all_include_asm("../../src/st/sel/"),
             path_matcher: "st/sel".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/st0/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/st0/matchings/"),
             src_dir: String::from("../../src/st/st0/"),
             overlay_name: String::from("ST0"),
             include_asm: get_all_include_asm("../../src/st/st0/"),
             path_matcher: "st/st0".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/wrp/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/wrp/matchings/"),
             src_dir: String::from("../../src/st/wrp/"),
             overlay_name: String::from("WRP"),
             include_asm: get_all_include_asm("../../src/st/wrp/"),
             path_matcher: "st/wrp".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/weapon/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/weapon/matchings/"),
             src_dir: String::from("../../src/weapon/"),
             overlay_name: String::from("WEAPON0"),
             include_asm: get_all_include_asm("../../src/weapon/"),
@@ -318,22 +395,19 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
 
     for pair in pairs.clone() {
         let dir = pair.asm_dir;
-        let mut funcs = Vec::new();
-        process_directory(&dir, &mut funcs);
+        process_asm_directory(&dir, &mut files);
 
-        // sort functions by vram address
-        funcs.sort_by_key(|function| {
-            function
-                .ops
-                .first()
-                .map_or(u64::MAX, |instr| instr.vram_addr)
-        });
-
-        files.push(DupsFile {
-            name: dir.to_string(),
-            funcs: funcs.clone(),
-        });
+        let nonmatchings = dir.replace("matchings", "nonmatchings");
+        process_asm_directory(&nonmatchings, &mut files);
     }
+
+    files.sort_by(|a, b| {
+        // First, sort by whether the name contains "nonmatching" (false before true)
+        a.name
+            .contains("nonmatching")
+            .cmp(&b.name.contains("nonmatching"))
+            .then_with(|| a.name.cmp(&b.name)) // Then, sort alphabetically by name
+    });
 
     for file in &files {
         println!("file {}", file.name);
@@ -375,34 +449,25 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
 
                 // sort by the filename then the similarity
                 temp_functions.sort_by(|a, b| {
-                    let file_cmp = a.file.cmp(&b.file);
-                    if file_cmp != std::cmp::Ordering::Equal {
-                        return file_cmp;
-                    }
-
-                    a.similarity
-                        .partial_cmp(&b.similarity)
-                        .unwrap_or(std::cmp::Ordering::Equal)
+                    b.decompiled
+                        .cmp(&a.decompiled)
+                        .then_with(|| a.file.cmp(&b.file))
+                        .then_with(|| {
+                            a.similarity
+                                .partial_cmp(&b.similarity)
+                                .unwrap_or(std::cmp::Ordering::Equal)
+                        })
                 });
 
                 for function in &mut temp_functions {
                     // Write function details to file
-                    let mut decompiled = true;
-
-                    for pair in &pairs.clone() {
-                        if function.file.contains(&pair.path_matcher) {
-                            for inc in &pair.include_asm {
-                                if function.file == inc.asm_path && inc.line.contains(&function.name) {
-                                    decompiled = false;
-                                }
-                            }
-                        }
-                    }
-
                     writeln!(
                         output_file,
                         "| {:<4.2} | {:<8} | {:<35} | {:<2} ",
-                        function.similarity, decompiled, function.name, function.file
+                        function.similarity,
+                        function.decompiled,
+                        function.name,
+                        function.file.strip_prefix("../../").unwrap()
                     )
                     .expect("Error writing to file");
                 }
@@ -553,6 +618,24 @@ fn levenshtein_similarity(s1: &[u8], s2: &[u8]) -> f64 {
     result
 }
 
+fn process_asm_directory(dir: &str, files: &mut Vec<DupsFile>) {
+    let mut funcs = Vec::new();
+    process_directory(&dir, &mut funcs);
+
+    // sort functions by vram address
+    funcs.sort_by_key(|function| {
+        function
+            .ops
+            .first()
+            .map_or(u64::MAX, |instr| instr.vram_addr)
+    });
+
+    files.push(DupsFile {
+        name: dir.to_string(),
+        funcs: funcs.clone(),
+    });
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -593,5 +676,65 @@ mod tests {
         let s2 = "world".as_bytes();
         let similarity = levenshtein_similarity(s1, s2);
         assert_eq!(similarity, 0.2);
+    }
+
+    // INCLUDE_ASM on a single line
+    #[test]
+    fn test_process_buffer_for_include_asm() {
+        let file_content = r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);
+
+INCLUDE_ASM("foo/bar/do_something", DoSomethingElse);"#;
+
+        let result = process_buffer_for_include_asm(file_content, "test.c");
+
+        assert_eq!(result.len(), 2);
+        assert_eq!(
+            result[0],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);"#.to_string(),
+                path: "test.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomething.s".to_string(),
+            }
+        );
+
+        assert_eq!(
+            result[1],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM("foo/bar/do_something", DoSomethingElse);"#.to_string(),
+                path: "test.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomethingElse.s".to_string(),
+            }
+        );
+    }
+
+    // INCLUDE_ASM lint formatted to concurrent lines
+    #[test]
+    fn test_process_buffer_for_include_asm_with_multiline() {
+        let file_content = r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);
+
+INCLUDE_ASM(
+    "foo/bar/do_something", DoSomethingWithSomethingElse);"#;
+
+        let result = process_buffer_for_include_asm(file_content, "test_multiline.c");
+
+        assert_eq!(result.len(), 2);
+        assert_eq!(
+            result[0],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM("foo/bar/do_something", DoSomething);"#.to_string(),
+                path: "test_multiline.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomething.s".to_string(),
+            }
+        );
+        assert_eq!(
+            result[1],
+            IncludeAsmEntry {
+                line: r#"INCLUDE_ASM(     "foo/bar/do_something", DoSomethingWithSomethingElse);"#
+                    .to_string(),
+                path: "test_multiline.c".to_string(),
+                asm_path: "../../asm/us/foo/bar/do_something/DoSomethingWithSomethingElse.s"
+                    .to_string(),
+            }
+        );
     }
 }

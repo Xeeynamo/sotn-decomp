@@ -17,11 +17,13 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
+  disassemble_all: True
   section_order:
     - ".rodata"
     - ".text"
     - ".data"
     - ".bss"
+sha1: 54828d4e44ea9575f2a0917ff63def42a304abff
 segments:
   - [0x800, header]
   - name: main

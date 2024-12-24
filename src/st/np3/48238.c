@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NP3
- * Description: Merman Room (2)
- */
-
 #include "np3.h"
 #include "sfx.h"
 #include "../e_merman.h"
@@ -41,7 +36,7 @@ void EntityMerman(Entity* self) {
 
     switch (self->step) {
     case MERMAN_INIT:
-        InitializeEntity(D_80180ACC);
+        InitializeEntity(g_EInitMerman);
         self->ext.merman.palette = 0x2B9;
         self->zPriority = 0xA9;
         self->velocityY = FIX(-1);
@@ -90,7 +85,7 @@ void EntityMerman(Entity* self) {
             self->velocityY = FIX(0.5);
         }
 
-        pos = D_80181230;
+        pos = g_WaterXTbl;
         pos += (self->params >> 8) & 1;
         posY += g_Tilemap.scrollY.i.hi;
         if (pos[4] < posY) {
@@ -115,7 +110,7 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = D_80181230;
+            pos = g_WaterXTbl;
             pos += (self->params >> 8) & 1;
             camY = g_Tilemap.scrollY.i.hi;
             posY = self->posY.i.hi;
@@ -125,7 +120,8 @@ void EntityMerman(Entity* self) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK0, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_MERMAN_JUMP_WATER, self, newEntity);
                     newEntity->posY.i.hi -= 20;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -157,14 +153,14 @@ void EntityMerman(Entity* self) {
                 self->palette = self->ext.merman.palette;
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK1, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
                     newEntity->velocityX = D_80182418[self->animFrameIdx];
                 }
             } else {
                 self->palette = PAL_DRA(0x2B2);
                 if (self->velocityY > 0) {
-                    func_801C6458(0x15);
+                    CheckMermanEnteringWater(0x15);
                 }
             }
             break;
@@ -212,7 +208,7 @@ void EntityMerman(Entity* self) {
                     SetStep(MERMAN_LUNGE);
                 }
             }
-            if (func_801C6458(0x15)) {
+            if (CheckMermanEnteringWater(0x15)) {
                 self->ext.merman.ignoreCol = 1;
             }
         }
@@ -233,7 +229,7 @@ void EntityMerman(Entity* self) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN_UNK2, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN_SPIT_FIRE, self, newEntity);
                     if (self->facingLeft != 0) {
                         newEntity->posX.i.hi += 12;
                     } else {
@@ -299,7 +295,7 @@ void EntityMerman(Entity* self) {
                 self->hitboxHeight = 17;
                 self->step_s++;
             }
-            func_801C6458(11);
+            CheckMermanEnteringWater(11);
             if (self->ext.merman.isUnderwater) {
                 self->ext.merman.ignoreCol = 1;
             }
@@ -311,7 +307,7 @@ void EntityMerman(Entity* self) {
                 self->velocityY = 0;
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
-            func_801C6458(11);
+            CheckMermanEnteringWater(11);
             if (self->ext.merman.isUnderwater) {
                 self->ext.merman.ignoreCol = 1;
             }
@@ -326,7 +322,8 @@ void EntityMerman(Entity* self) {
         }
         MoveEntity();
         self->velocityY += FIX(0.25);
-        if (!(func_801C6458(21)) && !(self->ext.merman.isUnderwater)) {
+        if (!(CheckMermanEnteringWater(21)) &&
+            !(self->ext.merman.isUnderwater)) {
             self->ext.merman.ignoreCol = 0;
             SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
         }
@@ -360,7 +357,7 @@ void EntityMerman(Entity* self) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_MERMAN_UNK3, self, newEntity);
+                        CreateEntityFromEntity(E_MERMAN_DYING, self, newEntity);
                         newEntity->params = 2;
                     }
                 }
@@ -378,7 +375,7 @@ void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180AD8);
+        InitializeEntity(g_EInitMermanFireball);
         self->hitboxWidth = 6;
         self->animCurFrame = 0;
         self->hitboxHeight = 3;
@@ -386,7 +383,7 @@ void EntityMermanFireball(Entity* self) {
         if (self->facingLeft != 0) {
             self->velocityX = FIX(1.5);
         } else {
-            self->velocityX = ~0x17FFF;
+            self->velocityX = FIX(-1.5);
         }
 
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
@@ -394,8 +391,8 @@ void EntityMermanFireball(Entity* self) {
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_ID_15, self, entity);
-            entity->ext.generic.unk94 = 4;
+            CreateEntityFromEntity(E_GREY_PUFF, self, entity);
+            entity->ext.destructAnim.index = 4;
             entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             entity->zPriority = self->zPriority + 8;
             entity->rotY = entity->rotX = 192;
@@ -422,7 +419,7 @@ void EntityMermanFireball(Entity* self) {
 // some kind of falling object
 void func_801C8F54(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180ACC);
+        InitializeEntity(g_EInitMerman);
         self->animCurFrame = 0;
         self->hitboxState = 0;
         self->zPriority += 4;
@@ -437,7 +434,7 @@ void func_801C8F54(Entity* self) {
 
 void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->palette = 0x82BB;
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = D_80182454[self->params];

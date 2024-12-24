@@ -1,11 +1,8 @@
 /** Unkstruct section:
  * These are to be merged later on
  */
-
-typedef struct {
-    /* 0x0 */ s32 x;
-    /* 0x4 */ s32 y;
-} Point32; // size = 0x8
+#ifndef UNKSTRUCT_H
+#define UNKSTRUCT_H
 
 typedef struct {
     /* 0x00 */ u8 vabid;
@@ -53,17 +50,6 @@ typedef struct {
     /* 0x0E */ u16 unkE;
     /* 0x10 */ u8 unkArray[0x30]; // color buffer
 } Unkstruct_8006C3C4;             // size = 0x40
-
-// Used in:
-// func_8015E7B4
-// func_8010BF64
-typedef struct {
-    /* 0x00 */ char pad0[0x14];
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-} Unkstruct_8010BF64;
 
 // related to SFX
 typedef struct {
@@ -116,7 +102,7 @@ typedef struct {
     /* 0x4 */ u16 palette;
     /* 0x6 */ s8 drawMode;
     /* 0x7 */ char pad_7;
-    /* 0x8 */ s32 unk8;
+    /* 0x8 */ u8* anim;
 } Unkstruct_80180FE0;
 
 typedef struct Unkstruct_801C7954 {
@@ -146,7 +132,7 @@ typedef struct {
 typedef struct {
     /* 0x800973F8 */ s32 D_800973F8;
     /* 0x800973FC */ s32 D_800973FC;
-    /* 0x80097400 */ s32 unk0;
+    /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
     /* 0x80097404 */ s32 unk4;
     /* 0x80097408 */ s32 g_zEntityCenter;
     /* 0x8009740C */ s32 unkC;
@@ -212,3 +198,5 @@ typedef struct {
     u8 b;
     u8 unused;
 } Unkstruct_8017AAD8; // for w_046
+
+#endif // UNKSTRUCT_H

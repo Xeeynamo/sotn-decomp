@@ -19,12 +19,14 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: True
   section_order:
     - ".data"
     - ".rodata"
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 3ae1425d694b0e4d65c6bb71d5a91f1769aec30c
 segments:
   - name: stwrp
     type: code
@@ -34,13 +36,14 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0xA0, .data, header] # palette definitions
       - [0xB8, .data, header] # layers
-      - [0x1B8, .data, d_1b8] # entity gfx
+      - [0x1B8, .data, header] # graphics banks
       - [0x23C, .data, e_laydef] # layout entries header
       - [0x3E4, .data, e_init]
       - [0x528, .data, st_debug]
       - [0x5A8, .data, e_breakable]
-      - [0x608, .data, d_608]
+      - [0x608, .data, d_prize_drops]
       - [0x648, .data, warp]
       - [0x690, .data, st_update]
       - [0x6BC, .data, collision]
@@ -52,9 +55,10 @@ segments:
       - [0x1124, .data, e_room_fg]
       - [0x11B0, .data, rooms]
       - [0x122C, .data, e_layout] # layout entries data
-      - [0x1424, cmp, D_80181420]
-      - [0x1768, cmp, D_80181764]
-      - [0x1D0C, raw, D_80181D08]
+      - [0x1424, cmpgfx, stage_title_jp, 128, 128, 4]
+      - [0x1768, cmpgfx, stage_placeholder, 128, 128, 4]
+      - [0x1D0C, pal, D_80181D0C]
+      - [0x1D2C, pal, D_80181D2C] # unused
       - [0x1D6C, .data, tile_data] # tile data
       - [0x296C, .data, tile_data] # tile definitions
       - [0x6D8C, .data, sprites]

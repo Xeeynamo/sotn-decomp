@@ -331,7 +331,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         if (--self->ext.heavenSword.unk82 == 0) {
-            self->drawFlags = FLAG_DRAW_UNK80;
+            self->drawFlags = FLAG_BLINK;
             self->step++;
         }
         break;
@@ -436,7 +436,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->zPriority = self->ext.weapon.parent->zPriority;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         self->palette = self->ext.weapon.parent->palette + (self->params >> 8);
-        self->drawFlags = self->ext.weapon.parent->drawFlags | FLAG_DRAW_UNK80;
+        self->drawFlags = self->ext.weapon.parent->drawFlags | FLAG_BLINK;
         self->rotZ = self->ext.weapon.parent->rotZ;
         self->ext.weapon.childPalette =
             self->ext.weapon.parent->ext.weapon.childPalette;

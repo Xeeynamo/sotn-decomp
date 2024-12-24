@@ -12,7 +12,7 @@ s32 D_80180648;
 u8 g_EntityUnkId12Data[8];
 
 // e_misc.c
-u8 D_80180608[8]; // different than the D_80180608 in warp.c ???
+u8 WRP_PrizeDrops[8]; // different than the g_HeartDropArray in warp.c ???
 
 // ????
 u8 D_psp_0924BCD0[0x1000];

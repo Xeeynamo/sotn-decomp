@@ -93,15 +93,15 @@ void HandlePlay(void) {
             for (i = 0; i < LEN(g_CastleFlags); i++) {
                 g_CastleFlags[i] = 0;
             }
-            g_CastleFlags[0xB9] = 1;
-            g_CastleFlags[0x9B] = 1;
+            g_CastleFlags[CASTLE_FLAG_185] = 1;
+            g_CastleFlags[CASTLE_FLAG_155] = 1;
             if (g_PlayableCharacter != 0) {
-                g_CastleFlags[0x35] = 1;
-                g_CastleFlags[0x62] = 1;
-                g_CastleFlags[0x63] = 1;
-                g_CastleFlags[0x85] = 1;
-                g_CastleFlags[0x95] = 1;
-                g_CastleFlags[0x96] = 1;
+                g_CastleFlags[CASTLE_FLAG_53] = 1;
+                g_CastleFlags[CASTLE_FLAG_98] = 1;
+                g_CastleFlags[CASTLE_FLAG_99] = 1;
+                g_CastleFlags[CASTLE_FLAG_133] = 1;
+                g_CastleFlags[CASTLE_FLAG_149] = 1;
+                g_CastleFlags[CASTLE_FLAG_150] = 1;
             }
 
             for (i = 0, ptr = &g_MenuNavigation; i < sizeof(MenuNavigation);
@@ -179,8 +179,9 @@ void HandlePlay(void) {
         DestroyAllPrimitives();
         func_800EDAE4();
         func_801024DC();
-        if (g_CastleFlags[0x13] & 0x80) {
-            g_CastleFlags[0x13] = g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
+        if (g_CastleFlags[CASTLE_FLAG_19] & 0x80) {
+            g_CastleFlags[CASTLE_FLAG_19] =
+                g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;
@@ -274,7 +275,7 @@ void HandlePlay(void) {
             prim->tpage = 0x110;
             prim = prim->next;
         }
-        func_800E346C();
+        SetGPUBuffRGBZero();
         g_GameStep++;
         break;
     case Play_WaitStageChr:
@@ -424,7 +425,7 @@ void HandleGameOver(void) {
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
             MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
-            func_800E346C();
+            SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
             D_8013640C = AllocPrimitives(PRIM_GT4, 259);

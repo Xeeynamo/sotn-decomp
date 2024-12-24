@@ -65,7 +65,7 @@ AnimationFrame D_800AD57C[] = {
     {0xFFFF, 0x0000},
 };
 
-u8 D_800AD5E0[] = {
+u8 D_800AD5E0[NUM_VERTICAL_SENSORS * 2] = {
     0x02, 0x09, 0x03, 0x0A, 0x01, 0x08, 0x04,
     0x0B, 0x00, 0x07, 0x05, 0x0C, 0x06, 0x0D,
 };
@@ -674,7 +674,7 @@ void EntityHitByLightning(Entity* self) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
-        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         PlaySfx(SFX_THUNDER_B);
         self->step++;
         break;
@@ -714,10 +714,10 @@ void EntityHitByLightning(Entity* self) {
                    ((rand() % 8) + 8));
         yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
                    ((rand() % 8) + 0xA)) +
-                  self->ext.generic.unk98;
+                  self->ext.hitbylightning.unk98;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
-        self->ext.generic.unk98 -= 0x8000;
+        self->ext.hitbylightning.unk98 -= 0x8000;
         break;
     }
 
@@ -783,7 +783,7 @@ void EntityHitByIce(Entity* self) {
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    sp18 = (g_Player.unk0C & 0x10000) == sp18;
+    sp18 = (g_Player.status & PLAYER_STATUS_UNK10000) == sp18;
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT3, 24);
@@ -804,7 +804,7 @@ void EntityHitByIce(Entity* self) {
                 prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
                                  DRAW_COLORS | DRAW_TRANSP;
             }
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->priority = PLAYER.zPriority + 2;
             prim = prim->next;
         }
@@ -829,7 +829,7 @@ void EntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_MAGIC_SWITCH);
         self->step++;
         break;
     case 1:
@@ -1503,7 +1503,7 @@ void EntityLevelUpAnimation(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        PlaySfx(NA_SE_PL_MAX_HP_MP_INCREASED);
+        PlaySfx(SFX_LEVEL_UP); // Max HP & MP
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000 | FLAG_UNK_10000;
         CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);
@@ -2167,7 +2167,7 @@ void UnknownEntId48(Entity* self) {
     s32 params;
 
     params = (u8)self->params;
-    if (!(g_Player.unk0C & PLAYER_STATUS_MIST_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_MIST_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -2198,7 +2198,7 @@ void UnknownEntId48(Entity* self) {
 void UnknownEntId49(Entity* self) {
     s32 x_offset;
 
-    if (!(g_Player.unk0C & 0x01000000) || (PLAYER.step != 0x2B)) {
+    if (!(g_Player.status & PLAYER_STATUS_AXEARMOR) || (PLAYER.step != 0x2B)) {
         DestroyEntity(self);
         return;
     }
@@ -2230,7 +2230,7 @@ void UnknownEntId49(Entity* self) {
 void func_80123A60(Entity* entity) {
     Entity* player = &PLAYER;
 
-    if (!(g_Player.unk0C & 0x01000000)) {
+    if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
         DestroyEntity(entity);
         return;
     }
@@ -2283,7 +2283,7 @@ void func_80123B40(Entity* self) {
 
         PLAYER = copy;
 
-        if (!(self->flags & 0x800000)) {
+        if (!(self->flags & FLAG_HAS_PRIMS)) {
             DestroyEntity(self);
             return;
         }

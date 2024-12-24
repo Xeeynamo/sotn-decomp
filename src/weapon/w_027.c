@@ -59,7 +59,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->posY.val = PLAYER.posY.val;
         self->facingLeft = PLAYER.facingLeft;
     }
-    if ((g_Player.unk0C & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
+    if ((g_Player.status & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
         self->zPriority = PLAYER.zPriority + 2;
         self->step = 4;
         if (g_Player.pl_vram_flag & 1) {
@@ -155,7 +155,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->velocityY += FIX(20.0 / 128);
         self->rotZ += 0x80;
         if (--self->ext.weapon.lifetime < 16) {
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
         }
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
@@ -409,7 +409,7 @@ static void func_ptr_80170024(Entity* self) {
         }
         self->ext.medshieldlaser.unkA0 = 0x300;
         self->ext.medshieldlaser.unk80 = 0;
-        g_api.PlaySfx(0x6B2);
+        g_api.PlaySfx(SFX_BIBLE_SCRAPE);
         self->step++;
         break;
     case 1:
@@ -417,7 +417,7 @@ static void func_ptr_80170024(Entity* self) {
             !(self->ext.medshieldlaser.unkA4 & 0x800) &&
             (-0x120 <= self->posX.i.hi && self->posX.i.hi <= 0x120) &&
             (0 <= self->posY.i.hi && self->posY.i.hi <= 0x100)) {
-            g_api.PlaySfx(0x6B2);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
         }
         self->ext.medshieldlaser.unkA4 = self->ext.medshieldlaser.unk9C;
         temp_v0_8 = g_api.func_80118B18(
@@ -576,7 +576,7 @@ static void func_ptr_80170028(Entity* self) {
 
     if (self->hitFlags != 0) {
         if (++self->ext.medshieldlaser.unkA2 >= 6) {
-            self->ext.medshieldlaser.parent->ext.weapon.unk90 = 0;
+            self->ext.medshieldlaser.parent->ext.medshieldlaser.target = NULL;
         }
         self->hitFlags = 0;
     }

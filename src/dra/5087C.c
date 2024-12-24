@@ -227,7 +227,7 @@ u8 D_800A2C0C[] = {
 u8* D_800A2D44[] = {D_800A2C0C};
 
 // BSS
-extern s32 D_80137598;
+extern bool D_80137598;
 extern s32 D_8013759C;
 extern s32 D_801375A0;
 extern s32 D_801375A4;
@@ -317,7 +317,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     RoomHeader* room;
     u32 stack[4];
 
-    if (g_Player.unk0C & 0x40000) {
+    if (g_Player.status & PLAYER_STATUS_DEAD) {
         return 0;
     }
     res = func_800F087C(x, y);
@@ -409,7 +409,7 @@ s32 func_800F0CD8(s32 arg0) {
         }
         var_s0 = 48;
         if (!(g_Player.pl_vram_flag & 1) &&
-            !(g_Player.unk0C &
+            !(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
             var_s0 = 24;
         }
@@ -845,7 +845,7 @@ void func_800F2014(void) {
     s32 idx;
     s32 currMapRect;
 
-    if ((D_8013AED0 != 0) && (g_StageId != STAGE_ST0)) {
+    if (g_canRevealMap && (g_StageId != STAGE_ST0)) {
         x = (g_PlayerX >> 8) + g_Tilemap.left;
         y = (g_PlayerY >> 8) + g_Tilemap.top;
         idx = (x >> 2) + (y * 16);
@@ -961,9 +961,9 @@ void func_800F2404(s32 arg0) {
         g_unkGraphicsStruct.D_800973F8 = 0;
         g_unkGraphicsStruct.D_800973FC = 0;
     }
-    D_8003C704 = 0;
+    g_CutsceneHasControl = 0;
 
-    g_unkGraphicsStruct.unk0 = 0;
+    g_unkGraphicsStruct.pauseEnemies = 0;
     g_unkGraphicsStruct.unk18 = 0;
     g_unkGraphicsStruct.unk1C = 0;
     g_unkGraphicsStruct.unkC = 0x80;
@@ -984,7 +984,7 @@ void func_800F2404(s32 arg0) {
     D_80097448[0] = 0;
     D_80097448[1] = 0;
     D_80097450 = 0;
-    func_800E346C();
+    SetGPUBuffRGBZero();
 }
 
 void func_800F24F4(void) {
@@ -1005,7 +1005,7 @@ void func_800F24F4(void) {
 
         var_a0 = 0;
         if (g_StageId == STAGE_RNO4 && x == 18 && y == 30) {
-            D_80137598 = 0;
+            D_80137598 = false;
             return;
         }
         if (g_StageId == STAGE_NO4 && x == 45 && y == 33) {
@@ -1014,17 +1014,17 @@ void func_800F24F4(void) {
             } else {
                 if (TimeAttackController(TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
                                          TIMEATTACK_GET_RECORD)) {
-                    D_80137598 = 0;
+                    D_80137598 = false;
                     return;
                 }
             }
             var_a0 = 1;
         }
         func_801042C4(var_a0);
-        D_80137598 = 1;
+        D_80137598 = true;
         func_80105428();
     } else {
-        D_80137598 = 0;
+        D_80137598 = false;
     }
 }
 
@@ -1080,7 +1080,7 @@ void DrawMapCursor(void) {
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
         if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0 ||
-            D_8003C708.flags & 0x60) {
+            D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
         D_801375C8 = 1;
@@ -1167,7 +1167,7 @@ void RunMainEngine(void) {
         }
         D_8006BB00 = 0;
         D_801375C8 = 0;
-        D_8003C8B8 = 1;
+        g_PauseAllowed = true;
         g_StageId = func_800F16D0();
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
@@ -1192,10 +1192,10 @@ void RunMainEngine(void) {
         g_backbufferY = 0;
         func_800F14CC();
         LoadRoomLayer(D_801375BC.def->tileLayoutId);
-        if (D_8003C708.flags & 0x20) {
+        if (D_8003C708.flags & FLAG_UNK_20) {
             LoadGfxAsync(ANIMSET_DRA(3));
         }
-        if (D_8003C708.flags & 0x40) {
+        if (D_8003C708.flags & FLAG_UNK_40) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
         D_80097910 = g_StagesLba[g_StageId].unk18;
@@ -1203,10 +1203,10 @@ void RunMainEngine(void) {
 #if defined(VERSION_US)
             D_80097910 = SE_INTRO_WIND;
 #elif defined(VERSION_HD)
-            D_80097910 = 0x327;
+            D_80097910 = MU_METAMORPHOSIS;
 #endif
         }
-        if ((D_8003C730 == 0) && !(D_8003C708.flags & 0x20)) {
+        if ((D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
             PlaySfx(D_80097910);
         }
         D_80097928 = 0;
@@ -1277,9 +1277,9 @@ void RunMainEngine(void) {
         }
         D_80097C98 = 0;
         if (D_8003C730 == 1) {
-            func_800E6218(2);
+            InitializeServant(ENGINE_INIT_SERVANT_2);
         } else {
-            func_800E6218(0);
+            InitializeServant(ENGINE_INIT_SERVANT_0);
         }
         if (D_8003C730 == 3) {
             D_8003C730 = 0;
@@ -1482,10 +1482,10 @@ void RunMainEngine(void) {
             func_801028AC(0);
             DrawHudSubweapon();
             func_800E414C();
-            if (D_80137598 != 0) {
+            if (D_80137598) {
                 func_80105428();
             }
-            if (g_Player.unk0C & 0x80000) {
+            if (g_Player.status & PLAYER_STATUS_UNK80000) {
                 g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
@@ -1495,7 +1495,7 @@ void RunMainEngine(void) {
                     MuteCd();
                 }
             } else if (D_8006BB00 != 0) {
-                if (g_unkGraphicsStruct.unk0 != 0) {
+                if (g_unkGraphicsStruct.pauseEnemies != 0) {
                     D_80097928 = 0;
                     D_8006BB00 = 0;
                     UnMuteCd();
@@ -1504,7 +1504,7 @@ void RunMainEngine(void) {
                     UnMuteCd();
                 } else {
                     UnMuteCd();
-                    if (!(D_8003C708.flags & 0x60)) {
+                    if (!(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20))) {
                         PlaySfx(D_80097910);
                         if (D_80097910 != 0) {
                             D_80097928 = 0;
@@ -1513,8 +1513,8 @@ void RunMainEngine(void) {
                     D_8006BB00 = 0;
                 }
             }
-            if (!(g_Player.unk0C & 0x40000)) {
-                if ((g_pads[0].tapped & PAD_START) && (D_8003C8B8 != 0)) {
+            if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
+                if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed) {
                     func_801027A4();
                     if ((g_StageId == STAGE_ST0) ||
                         (g_PlayableCharacter != PLAYER_ALUCARD)) {
@@ -1540,10 +1540,10 @@ void RunMainEngine(void) {
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
-                           (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
+                           (g_StageId != STAGE_ST0) && g_PauseAllowed) {
                     func_801027C4(6);
                     D_800974A4 = 1;
-                    g_GameEngineStep = 20;
+                    g_GameEngineStep = Engine_Map;
                 }
                 break;
             }
@@ -1571,7 +1571,7 @@ void RunMainEngine(void) {
             func_801028AC(1);
             break;
         case Engine_Map:
-            if (D_8013AED0 != 0) {
+            if (g_canRevealMap) {
                 DrawMapCursor();
             }
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
@@ -1618,9 +1618,9 @@ void RunMainEngine(void) {
                         }
                     }
                 }
-                if (D_80137598 != 0) {
+                if (D_80137598) {
                     func_8010427C();
-                    D_80137598 = 0;
+                    D_80137598 = false;
                 }
                 layer = g_api.o.tileLayers[D_801375BC.def->tileLayoutId].fg;
                 if (layer->rect.params & 0x80) {
@@ -1643,7 +1643,7 @@ void RunMainEngine(void) {
                 D_801375A0 = PLAYER.posY.val;
                 PLAYER.posX.i.hi = D_801375C0 + g_Tilemap.scrollX.i.hi;
                 PLAYER.posY.i.hi = D_801375C4 + g_Tilemap.scrollY.i.hi;
-                if (D_8003C708.flags & 0x60) {
+                if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
                     LoadGfxAsync(ANIMSET_DRA(1));
                 }
                 func_800EA538(2);
@@ -1661,10 +1661,10 @@ void RunMainEngine(void) {
                 PLAYER.posY.i.hi = (u8)PLAYER.posY.i.hi;
                 PLAYER.posX.i.hi = (u8)PLAYER.posX.i.hi;
                 LoadRoomLayer(D_801375BC.def->tileLayoutId);
-                if (D_8003C708.flags & 0x20) {
+                if (D_8003C708.flags & FLAG_UNK_20) {
                     LoadGfxAsync(ANIMSET_DRA(3));
                 }
-                if (D_8003C708.flags & 0x40) {
+                if (D_8003C708.flags & FLAG_UNK_40) {
                     LoadGfxAsync(ANIMSET_DRA(4));
                 }
                 g_Tilemap.x =
@@ -1709,7 +1709,7 @@ void RunMainEngine(void) {
                 D_801375A8 = D_801375A0 - PLAYER.posY.val;
                 for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++,
                     ent++) {
-                    if (ent->flags & 0x20000) {
+                    if (ent->flags & FLAG_UNK_20000) {
                         ent->posX.val -= D_801375A4;
                         ent->posY.val -= D_801375A8;
                     }
@@ -1849,7 +1849,7 @@ void RunMainEngine(void) {
                 if (g_StageId == STAGE_ST0) {
                     SetGameState(Game_GameOver);
                     ClearImage(&g_Vram.D_800ACDA0, 0xFF, 0xFF, 0xFF);
-                    func_800E34A4(-1);
+                    SetGPUBuffRGB(-1);
                     DestroyEntitiesFromIndex(0);
                     DestroyAllPrimitives();
                     func_800EDAE4();
@@ -1865,7 +1865,7 @@ void RunMainEngine(void) {
                 break;
             case 2:
                 SetGameState(Game_GameOver);
-                func_800E346C();
+                SetGPUBuffRGBZero();
                 break;
             }
             func_801028AC(0);

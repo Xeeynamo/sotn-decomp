@@ -1,0 +1,105 @@
+options:
+  platform: psx
+  basename: stcen
+  base_path: ..
+  build_path: build/hd
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
+  asm_path: asm/hd/st/cen
+  asset_path: assets/st/cen
+  src_path: src/st/cen
+  ld_script_path: build/hd/stcen.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.stcen.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.stcen.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.hd.stcen.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  symbol_name_format: hd_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+sha1: 32698a322586d2fd4249467c99f5102faff44f30
+segments:
+  - name: stcen
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x1EC, .data, e_laydef]
+      - [0x394, .data, e_init]
+      - [0x4D4, .data, st_debug]
+      - [0x554, .data, e_breakable]
+      - [0x5D8, .data, d_prize_drops]
+      - [0x5D8, .data, cutscene]
+      - [0x684, data, cutscene]
+      - [0x6BC, .data, F890]
+      - [0x7E8, .data, st_update]
+      - [0x814, .data, collision]
+      - [0xBD4, .data, e_red_door]
+      - [0xBEC, .data, st_common]
+      - [0xDEC, data, e_collect]
+      - [0x10DC, data, e_misc]
+      - [0x11F8, .data, e_particles]
+      - [0x127C, .data, e_room_fg]
+      - [0x1308, .data, rooms]
+      - [0x1334, .data, e_layout]
+      - [0x1424, data] # cutscene script?
+      - [0x1678, cmpgfx, stage_title_jp, 128, 128, 4]
+      - [0x19BC, cmpgfx, stage_placeholder, 128, 128, 4]
+      - [0x1F60, data, D_80181F60]
+      - [0x3A60, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x69AC]
+      - [0x4B90, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x69AC]
+      - [0x5850, cmpgfx, e_elevator_cen_g, 128, 128, 4, 0x69CC]
+      - [0x65AC, pal, D_801865AC]
+      - [0x66AC, pal, D_801866AC] # unused
+      - [0x67AC, pal, D_801867AC]
+      - [0x68AC, pal, D_801868AC] # unused
+      - [0x69AC, pal, e_maria_cen_p]
+      - [0x69CC, pal, e_elevator_cen_p]
+      - [0x6A0C, .data, tile_data]
+      - [0xC62C, .data, sprites]
+      - [0xD434, .rodata, cutscene]
+      - [0xD4B8, .rodata, F890]
+      - [0xD4E0, .rodata, e_red_door]
+      - [0xD4F8, .rodata, e_collect]
+      - [0xD580, .rodata, e_misc]
+      - [0xD5CC, .rodata, e_stage_name]
+      - [0xD5E0, .rodata, prim_helpers]
+      - [0xD5E8, c, st_debug]
+      - [0xD884, c, e_breakable]
+      - [0xDB00, c, DB18]
+      - [0xDEF4, c, cutscene]
+      - [0xF818, c, F890]
+      - [0x10DA0, c, st_update]
+      - [0x111D4, c, collision]
+      - [0x12990, c, create_entity]
+      - [0x13508, c, e_red_door]
+      - [0x141B8, c, st_common]
+      - [0x15668, c, e_collect]
+      # no blit_char
+      - [0x16BD8, c, e_misc]
+      - [0x1A140, c, e_stage_name]
+      - [0x1A868, c, e_particles]
+      - [0x1B0AC, c, e_room_fg]
+      - [0x1B240, c, popup]
+      - [0x1B570, c, prim_helpers]
+      - [0x1BDA0, .bss, header]
+      - [0x1BE00, .bss, create_entity]
+      - [0x1be10, sbss, bss]
+      - [0x1CA10, sbss, cutscene]
+      - [0x1CAC4, sbss, e_collect]
+  - [0x1CB04]

@@ -172,7 +172,7 @@ extern u8 g_ReverbDepth;
 extern s32 D_8013AE9C;
 extern s32 D_8013AEBC[4];
 extern s32 D_8013AECC;
-extern s32 D_8013AED0;
+extern bool g_canRevealMap;
 extern s16 D_8013AED4[4];
 extern u8 D_8013AEDC;
 extern s32 D_8013AEE4;
