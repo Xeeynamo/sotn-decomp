@@ -31,7 +31,9 @@ typedef enum EntityIDs {
     // /* 0x13 */ E_UNK_ID_13 = 0x13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x21 */ E_AXE_KNIGHT,
+    /* 0x21 */ E_AXE_KNIGHT_AXE = 0x21,
+    /* 0x22 */ E_AXE_KNIGHT_AXE_2, // func_us_801CBA30
+    /* 0x23 */ E_UNK_ENTITY,       // InitializeUnkEntity
     /* 0x2A */ E_ID_2A = 0x2A,
     /* 0x3E */ E_SKELETON = 0x3E,
     /* 0x3F */ E_SKELETON_THROWN_BONE,
