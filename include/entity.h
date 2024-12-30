@@ -75,10 +75,18 @@ typedef struct {
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 angle;
     /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+} ET_RedDoor; // Normal red doors between stages
+
+typedef struct {
+    /* 0x7C */ u32 unused7C;
+    /* 0x80 */ s16 unused80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 unk86;
     /* 0x88 */ u8 sideToPlayer;
     /* 0x89 */ u8 showedMessage;
-} ET_Door; // Normal red doors between stages, but also magically sealed blue
-           // ones
+} ET_MagicallySealedDoor; // Blue door that displays "Magically Sealed" prompt
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -2412,7 +2420,8 @@ typedef union { // offset=0x7C
     ET_BloodSplatter bloodSplatter;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
-    ET_Door door;
+    ET_RedDoor redDoor;
+    ET_MagicallySealedDoor magicallySealedDoor;
     ET_StagePopup stpopup;
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
