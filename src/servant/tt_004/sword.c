@@ -36,9 +36,117 @@ static s32 D_us_801782B8;
 static s32 D_us_801782BC;
 static s32 D_us_801782C0;
 static s32 D_us_801782C4;
+static s32 D_us_801782C8;
+static s32 D_us_801782CC;
+static s32 D_us_801782D0;
+// static VECTOR D_us_801782D4;
+static s32 D_us_801782D4;
+static s32 D_us_801782D8;
+static s32 D_us_801782DC;
+STATIC_PAD_BSS(4);
+// end static VECTOR D_us_801782D4;
+static MATRIX D_us_801782E4;
+static MATRIX D_us_80178304;
+static MATRIX D_us_80178324;
+static s32 D_us_80178344[128];
+STATIC_PAD_BSS(4);
+static s32 D_us_80178548; // x
+static s32 D_us_8017854C; // y
+static s32 D_us_80178550; // x
+static s32 D_us_80178554; // y
+static s32 D_us_80178558; // z
+static s32 D_us_8017855C;
+static s32 D_us_80178560;
+static s32 D_us_80178564;
+static s32 D_us_80178568;
+static s32 D_us_8017856C;
+static s32 D_us_80178570;
+static s32 D_us_80178574;
+static s32 D_us_80178578;
+static s32 D_us_8017857C;
+static s32 D_us_80178580;
+static s32 D_us_80178584;
+static s32 D_us_80178588;
+static s32 D_us_8017858C;
+static s32 D_us_80178590;
+static s32 D_us_80178594;
+static s32 D_us_80178598;
+static s32 D_us_8017859C;
+static s32 D_us_801785A0;
+static s32 D_us_801785A4;
+static s32 D_us_801785A8;
+static s32 D_us_801785AC;
+static s32 D_us_801785B0;
+static s32 D_us_801785B4;
+static s32 D_us_801785B8;
+static s32 D_us_801785BC;
+static s32 D_us_801785C0;
+static s32 D_us_801785C4;
+static s32 D_us_801785C8;
+static s32 D_us_801785CC;
+static s32 D_us_801785D0;
+static s32 D_us_801785D4;
+static s32 D_us_801785D8;
+static s32 D_us_801785DC;
+static s32 D_us_801785E0;
+static s32 D_us_801785E4;
+static s32 D_us_801785E8;
+static s32 D_us_801785EC;
+static s32 D_us_801785F0;
+static s32 D_us_801785F4;
+static s32 D_us_801785F8;
+static s32 D_us_801785FC;
+static s32 D_us_80178600;
+static s32 D_us_80178604;
+static s32 D_us_80178608;
+static s32 D_us_8017860C;
+static s32 D_us_80178610;
+static s32 D_us_80178614;
+STATIC_PAD_BSS(4);
+static s32 D_us_8017861C; // x
+static s32 D_us_80178620; // y
+static s32 D_us_80178624; // x
+static s32 D_us_80178628; // y
+static s32 D_us_8017862C; // z
+static s32 D_us_80178630;
+static s32 D_us_80178634;
+static s32 D_us_80178638;
+static Primitive* D_us_8017863C;
+STATIC_PAD_BSS(4);
+static s32 D_us_80178644;
+static s32 D_us_80178648;
+static FamiliarStats s_SwordStats;
+static s32 s_SwordCurrentLevel;
+static s32 D_us_8017865C[1];
+static s32 D_us_80178660[3]; // should be part of the preceeding array
+static u32 D_us_8017866C;
+// looks like a struct like:
+//  {
+//    Point16 coord0, coord1, coord2, coord3;
+//    s16 priority;
+//    s16 drawMode;
+//  }
+// but the addressing is funny
+static s32 D_us_80178670; // 0
+static s32 D_us_80178674; // 1
+static s32 D_us_80178678; // 2
+static s32 D_us_8017867C; // 3
+static s16 D_us_80178680; // priority
+static s16 D_us_80178682; // drawMode
+static s32 D_us_80178684[5][3];
 
-extern Entity D_800736C8;
-extern Entity D_80073784[];
+static Point16 D_us_801786C0[1];
+static Point16 D_us_801786C4[4]; // should be part of the preceding array
+static s32 D_us_801786D4[96];
+static s32 D_us_80178854[96];
+static s32 D_us_801789D4[96];
+static MATRIX D_us_80178B54;
+static s32 D_us_80178B74;
+static s32 D_us_80178B78;
+static s32 D_us_80178B7C;
+static s32 D_us_80178B80;
+static s32 D_us_80178B84;
+static s32 D_us_80178B88;
 
 void func_us_80172420(Entity* self, s32 entityId) {
     Entity* entity;
@@ -103,9 +211,6 @@ extern s16 D_us_80171564[UNK_SWORD_PRIM_COUNT];
 
 extern SVECTOR D_us_80170354[];
 extern SVECTOR D_us_80170DE4[];
-extern s32 D_us_801786D4[UNK_SWORD_PRIM_COUNT];
-extern s32 D_us_80178854[UNK_SWORD_PRIM_COUNT];
-extern s32 D_us_801789D4[UNK_SWORD_PRIM_COUNT];
 
 void func_us_8017259C(Entity* arg0, s32 arg1, s32 arg2) {
     Primitive* prim;
@@ -208,8 +313,6 @@ void func_us_8017280C(Entity* self, s32 arg1, s32 arg2) {
 
 extern SwordUnk_A0 D_us_801700A0[];
 extern s32 s_SwordCurrentLevel;
-extern s32 D_us_80178B74;
-extern s32 D_us_80178B80;
 extern FamiliarStats s_SwordStats;
 
 void func_us_80172940(Entity* self) {
@@ -352,9 +455,6 @@ void func_us_80172C8C(MATRIX* arg0, MATRIX* arg1) {
 void func_us_80172E84(Entity*, s32);
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80172E84);
 
-extern s32 D_us_80178344[128];
-extern s32 D_us_80178B88;
-
 Entity* func_us_80173AA0(Entity* self) {
     Entity* entity;
     s32 i;
@@ -422,11 +522,6 @@ void func_us_80173CB8(Entity* self) {
         }
     }
 }
-
-extern MATRIX D_us_80178B54;
-extern s32 D_us_80178B84;
-extern s32 D_us_80178B7C;
-extern s32 D_us_80178B78;
 
 #ifdef VERSION_PSP
 extern u16 D_91F8618[];
@@ -578,12 +673,147 @@ void func_us_80176664(Entity* self) {}
 
 void func_us_8017666C(Entity* self) {}
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176674);
+extern s16 D_us_80170078[];
+extern Point16 D_us_8017007C;
+
+void func_us_80176674(Entity* self) {
+    s32 params;
+    s32 x, y;
+    s32 tmp;
+
+    func_us_80173CB8(self);
+
+    D_us_80178638 += 16;
+    D_us_80178638 &= 0xFFF;
+
+    D_us_80178624 = PLAYER.facingLeft ? -FIX(24) : FIX(24);
+    D_us_80178628 = FIX(28);
+    D_us_8017861C = PLAYER.posX.val + D_us_80178624;
+
+    D_us_80178620 =
+        PLAYER.posY.val - (((rcos(D_us_80178638) << 4) << 4) + D_us_80178628);
+    D_us_80178624 = FIX_TO_I(D_us_8017861C - self->posX.val);
+    D_us_80178628 = FIX_TO_I(D_us_80178620 - self->posY.val);
+
+    D_us_80178634 =
+        FLT_TO_I(SquareRoot12(I_TO_FLT(SQ(D_us_80178624) + SQ(D_us_80178628))));
+
+    if (D_us_80178634 < 0x3C) {
+        self->velocityX = (s32)(D_us_8017861C - self->posX.val) >> 6;
+        self->velocityY = (s32)(D_us_80178620 - self->posY.val) >> 6;
+    } else if (D_us_80178634 < 0x64) {
+        self->velocityX = (s32)(D_us_8017861C - self->posX.val) >> 5;
+        self->velocityY = (s32)(D_us_80178620 - self->posY.val) >> 5;
+    } else {
+        self->velocityX = (s32)(D_us_8017861C - self->posX.val) >> 4;
+        self->velocityY = (s32)(D_us_80178620 - self->posY.val) >> 4;
+    }
+
+    self->posX.val += self->velocityX;
+    self->posY.val += self->velocityY;
+
+    if (D_us_80178634 > 16) {
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_80178628, D_us_80178624) & 0xFFF;
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 8);
+    } else {
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            0x400, self->ext.swordFamiliar.unk88, 8);
+    }
+
+    self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+    D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+
+    D_us_8017862C = -D_us_80170080.vz;
+    D_us_80178624 = abs(D_us_80178624) << 5;
+    D_us_80178628 = abs(D_us_80178628) << 5;
+
+    if (D_us_80178628 > D_us_80178624) {
+        tmp = D_us_80178628;
+    } else {
+        tmp = D_us_80178624;
+    }
+    D_us_80178630 = tmp;
+
+    self->ext.swordFamiliar.currentX =
+        ratan2(D_us_8017862C, D_us_80178630) & 0xFFF;
+    self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+        0x20);
+
+    self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+    D_us_80170080.vz += FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * 96);
+    D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+
+    switch (self->step) {
+    case 0:
+        func_us_80172940(self);
+        if (g_CastleFlags[CASTLE_FLAG_464] == 1 ||
+            g_CastleFlags[CASTLE_FLAG_464] == 2) {
+            g_CastleFlags[CASTLE_FLAG_464] = 3;
+        }
+        break;
+    case 1:
+        if ((IsMovementAllowed(1)) || (CheckAllEntitiesValid()) ||
+            (D_us_80178B80 == 1) || (g_CutsceneHasControl) ||
+            (g_unkGraphicsStruct.D_800973FC != 0)) {
+            self->entityId = SWORD_UNK_D1;
+            self->step = 0;
+            if (g_CastleFlags[CASTLE_FLAG_464] == 3) {
+                g_CastleFlags[CASTLE_FLAG_464] = 4;
+            }
+            return;
+        }
+
+        D_us_80178624 = FIX_TO_I(D_us_8017861C - self->posX.val);
+        D_us_80178628 = FIX_TO_I(D_us_80178620 - self->posY.val);
+        D_us_80178634 = FLT_TO_I(
+            SquareRoot12(I_TO_FLT(SQ(D_us_80178624) + SQ(D_us_80178628))));
+
+        if (D_us_80178634 < 32) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        g_PauseAllowed = false;
+        if (s_SwordStats.unk8 == 1) {
+            CreateEventEntity(self, SWORD_UNK_DD, 0x4FB);
+        } else if (g_CastleFlags[CASTLE_FLAG_464] == 3) {
+            CreateEventEntity(self, SWORD_UNK_DD, 0x4FE);
+            g_CastleFlags[CASTLE_FLAG_464] = 4;
+        } else {
+            // at level 50, change
+            if (s_SwordStats.level < 50) {
+                CreateEventEntity(self, SWORD_UNK_DD, 0x4FC);
+            } else {
+                CreateEventEntity(self, SWORD_UNK_DD, 0x4FF);
+            }
+        }
+        self->step++;
+        break;
+
+    case 3:
+        if (g_PlaySfxStep == 0x63) {
+            self->step++;
+        }
+        break;
+
+    case 4:
+        g_PauseAllowed = true;
+        self->entityId = SWORD_UNK_D1;
+        self->step = 0;
+        break;
+    }
+
+    ProcessEvent(self, false);
+    D_us_80170080.vx = (self->posX.i.hi - 128) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 128) << 5;
+    func_us_80172E84(self, self->ext.swordFamiliar.unk80);
+}
 
 void func_us_80176BF0(Entity* self) {}
-
-extern s32 D_us_8017865C[];
-extern u32 D_us_8017866C;
 
 void func_us_80176BF8(Entity* self) {
     const int PRIM_COUNT = 16;
@@ -672,9 +902,6 @@ void func_us_80176BF8(Entity* self) {
 
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176F28);
 
-extern s32 D_us_80178B80;
-extern s32 D_us_80178B84;
-
 void func_us_801773CC(Entity* self) {
     Entity* entity;
 
@@ -696,9 +923,6 @@ void func_us_801773CC(Entity* self) {
 }
 
 void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
-
-extern Point16 D_us_801786C0[];
-extern Point16 D_us_801786C4[];
 
 void func_us_80177480(Entity* self) {
     s32 flag;
