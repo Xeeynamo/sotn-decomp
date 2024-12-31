@@ -966,11 +966,12 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s8 unk7C;
-    /* 0x7D */ s8 unk7D;
+    /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    struct Primitive* prim;
+    /* 0x84 */ struct Primitive* prim;
+    /* 0x88 */ u8 unk88;
 } ET_AxeKnight;
 
 typedef struct {
