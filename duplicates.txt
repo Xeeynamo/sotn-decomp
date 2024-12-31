@@ -1948,11 +1948,6 @@
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -2023,6 +2018,10 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -2032,16 +2031,16 @@
 | 1.00 | false    | SetColorMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_11/SetColorMatrix.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/no0/matchings/e_axe_knight/AxeKnightUnkFunc1.s 
+| 0.97 | true     | AxeKnightUnkFunc1                   | asm/us/st/no1/matchings/e_blue_axe_knight/AxeKnightUnkFunc1.s 
 | 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/nz0/matchings/e_axe_knight/AxeKnightUnkFunc1.s 
-| 0.97 | false    | AxeKnightUnkFunc1                   | asm/us/st/no1/nonmatchings/e_axe_knight/AxeKnightUnkFunc1.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/no0/matchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
+| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightRotateAxe.s 
 | 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
-| 1.00 | false    | EntityAxeKnightRotateAxe            | asm/us/st/no1/nonmatchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/no0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
+| 0.96 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
 | 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
-| 0.96 | false    | EntityAxeKnightThrowingAxe          | asm/us/st/no1/nonmatchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/no0/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/no1/matchings/e_skeleton/EntitySkeletonThrownBone.s 
@@ -2367,6 +2366,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
