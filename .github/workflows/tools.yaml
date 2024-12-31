@@ -32,7 +32,9 @@ jobs:
           ref: ${{ github.ref }}
           submodules: true
       - name: Install tools requirements
-        run: make update-dependencies
+        run: |
+          make update-dependencies
+          .venv/bin/python3 -m pip install -r tools/requirements-python.txt
       - name: Get dependencies
         uses: actions/cache@v4
         id: get-dependencies
@@ -78,4 +80,9 @@ jobs:
         run: ./test.sh
       - name: Test symbols tool
         working-directory: .
-        run: python3 tools/symbols_test.py
+        run: .venv/bin/python3 tools/symbols_test.py
+      - name: Test make-config (PSX)
+        working-directory: .
+        run: |
+          source .venv/bin/activate
+          python3 tools/make-config.py RLIB
