@@ -1,0 +1,81 @@
+name: Tooling test
+
+on:
+  push:
+    branches:
+      - master
+    paths: 
+      - '.github/workflows/**'
+      - 'tools/**'
+  pull_request:
+    paths: 
+      - '.github/workflows/**'
+      - 'tools/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        version: ["us"]
+        include:
+          - dependency: us
+            version: us
+    # Building and testing cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the CI dependencies
+    if: github.repository == 'Xeeynamo/sotn-decomp'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          submodules: true
+      - name: Install tools requirements
+        run: make update-dependencies
+      - name: Get dependencies
+        uses: actions/cache@v4
+        id: get-dependencies
+        with:
+          path: 'disks/dependencies'
+          key: sotn-${{ matrix.dependency }}-deps
+      - name: Get dependencies (uncached)
+        if: steps.get-dependencies.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.dependency }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+          path: 'disks/dependencies'
+      - name: Cache dependencies
+        if: steps.get-dependencies.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: 'disks/dependencies'
+          key: sotn-${{ matrix.dependency }}-deps
+      - name: Setting up dependencies
+        working-directory: disks
+        run: cat dependencies/* | tar -zxf -
+      - name: Extract dependencies
+        run: make extract_disk
+      - name: Test asset tool
+        working-directory: tools/sotn-assets
+        run: go test .
+      - name: Test sotn string
+        working-directory: tools/sotn_str
+        run: python3 ./test.py
+      - name: Test linter
+        working-directory: tools/lints/sotn-lint
+        run: cargo test
+      - name: Test dups
+        working-directory: tools/dups
+        run: cargo test
+      - name: Test jump table splitting tool
+        working-directory: tools/split_jpt_yaml
+        run: python3 ./test.py
+      - name: Test vab extractor
+        working-directory: tools/vab-ex
+        run: ./test.sh
+      - name: Test symbols tool
+        working-directory: .
+        run: python3 tools/symbols_test.py
