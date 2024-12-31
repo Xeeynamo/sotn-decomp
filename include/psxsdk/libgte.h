@@ -252,8 +252,10 @@ extern long ratan2(long y, long x);
                      "nop;"                                                    \
                      ".word 0x4B58002D")
 
+#ifndef VERSION_PSP
 #define gte_stsxy(r0)                                                          \
     __asm__ volatile("swc2	$14, 0( %0 )" : : "r"(r0) : "memory")
+#endif
 
 #define gte_stsxy3(r0, r1, r2)                                                 \
     __asm__ volatile(                                                          \

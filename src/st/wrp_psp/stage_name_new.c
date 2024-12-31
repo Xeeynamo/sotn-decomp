@@ -75,14 +75,14 @@ void func_psp_09244020(Primitive* arg0) {
     sp40[2 + 16] = 0;
     func_892887C(sp58);
     func_8928ABC();
-    func_8929430(&arg0->x0);
+    gte_stsxy(&arg0->x0);
     func_892887C(sp50);
     func_8928ABC();
-    func_8929430(&arg0->x1);
+    gte_stsxy(&arg0->x1);
     func_892887C(sp48);
     func_8928ABC();
-    func_8929430(&arg0->x2);
+    gte_stsxy(&arg0->x2);
     func_892887C(sp40 + 16);
     func_8928ABC();
-    func_8929430(&arg0->x3);
+    gte_stsxy(&arg0->x3);
 }
