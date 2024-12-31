@@ -99,11 +99,8 @@ static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
 
 #include "../prize_drop_fall.h"
-
 #include "../prize_drop_fall2.h"
-
 #include "../collect_heart.h"
-
 #include "../collect_gold.h"
 
 extern u16 D_80180DC4[];
@@ -438,7 +435,6 @@ void EntityPrizeDrop(Entity* self) {
 }
 
 #include "../entity_explosion.h"
-
 #include "../blink_item.h"
 
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
