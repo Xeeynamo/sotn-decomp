@@ -75,11 +75,11 @@ void EntityMagicallySealedDoor(Entity* self) {
         self->posY.i.hi += 0x1F;
 
         if (self->params & 0x100) {
-            self->ext.door.unk86 = -4;
+            self->ext.magicallySealedDoor.unk86 = -4;
         } else {
-            self->ext.door.unk86 = 4;
+            self->ext.magicallySealedDoor.unk86 = 4;
         }
-        self->posX.i.hi += self->ext.door.unk86;
+        self->posX.i.hi += self->ext.magicallySealedDoor.unk86;
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -134,10 +134,10 @@ void EntityMagicallySealedDoor(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         if (MagicallySealedDoorIsNearPlayer(self)) {
             if (!(self->params & 0x100)) {
-                self->ext.door.angle = 0x1000;
+                self->ext.magicallySealedDoor.angle = 0x1000;
             }
             if (self->params & 0x100) {
-                self->ext.door.angle = 0x800;
+                self->ext.magicallySealedDoor.angle = 0x800;
             }
             g_Player.D_80072EFC = 0x18;
             PLAYER.velocityY = 0;
@@ -148,7 +148,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         }
     case 1:
         GetPlayerCollisionWith(self, 8, 32, 5);
-        self->ext.door.angle = 0xC00;
+        self->ext.magicallySealedDoor.angle = 0xC00;
         for (prim = &g_PrimBuf[self->primIndex], i = 0; prim->next != NULL; i++,
             prim = prim->next) {
             if (i != 0) {
@@ -165,14 +165,14 @@ void EntityMagicallySealedDoor(Entity* self) {
             MagicallySealedDoorIsNearPlayer(self)) {
             // If player does not have the jewel, show the box.
             if (!(g_Status.relics[RELIC_JEWEL_OF_OPEN] & RELIC_FLAG_ACTIVE)) {
-                if (self->ext.door.showedMessage) {
+                if (self->ext.magicallySealedDoor.showedMessage) {
                     break;
                 }
                 messageBox = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (messageBox == NULL) {
                     break;
                 }
-                self->ext.door.showedMessage = 1;
+                self->ext.magicallySealedDoor.showedMessage = 1;
                 CreateEntityFromCurrentEntity(E_SAVE_GAME_POPUP, messageBox);
                 messageBox->posX.i.hi = 0x80;
                 messageBox->posY.i.hi = 0xB0;
@@ -195,7 +195,8 @@ void EntityMagicallySealedDoor(Entity* self) {
             self->animCurFrame = 0;
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 2;
-            self->ext.door.sideToPlayer = (GetSideToPlayer() & 1) ^ 1;
+            self->ext.magicallySealedDoor.sideToPlayer =
+                (GetSideToPlayer() & 1) ^ 1;
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
@@ -204,19 +205,19 @@ void EntityMagicallySealedDoor(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x18;
         if (!(self->params & 0x100)) {
-            self->ext.door.angle += 0x20;
-            if (self->ext.door.angle >= 0x1000) {
-                self->ext.door.angle = 0x1000;
+            self->ext.magicallySealedDoor.angle += 0x20;
+            if (self->ext.magicallySealedDoor.angle >= 0x1000) {
+                self->ext.magicallySealedDoor.angle = 0x1000;
             }
-            if (self->ext.door.angle == 0x1000) {
+            if (self->ext.magicallySealedDoor.angle == 0x1000) {
                 self->step++;
             }
         } else {
-            self->ext.door.angle -= 0x20;
-            if (self->ext.door.angle <= 0x800) {
-                self->ext.door.angle = 0x800;
+            self->ext.magicallySealedDoor.angle -= 0x20;
+            if (self->ext.magicallySealedDoor.angle <= 0x800) {
+                self->ext.magicallySealedDoor.angle = 0x800;
             }
-            if (self->ext.door.angle == 0x800) {
+            if (self->ext.magicallySealedDoor.angle == 0x800) {
                 self->step++;
             }
         }
@@ -225,7 +226,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         if (g_Player.D_80072EFC >= 4) {
             return;
         }
-        if (self->ext.door.sideToPlayer != 0) {
+        if (self->ext.magicallySealedDoor.sideToPlayer != 0) {
             g_Player.padSim = PAD_LEFT;
         } else {
             g_Player.padSim = PAD_RIGHT;
@@ -234,7 +235,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         self->step++;
         break;
     case 4:
-        if (self->ext.door.sideToPlayer == 0) {
+        if (self->ext.magicallySealedDoor.sideToPlayer == 0) {
             g_Player.padSim = PAD_RIGHT;
         } else {
             g_Player.padSim = PAD_LEFT;
@@ -250,17 +251,17 @@ void EntityMagicallySealedDoor(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 4;
         if (!(self->params & 0x100)) {
-            self->ext.door.angle -= 0x20;
-            if (self->ext.door.angle < 0xC01) {
-                self->ext.door.angle = 0xC00;
+            self->ext.magicallySealedDoor.angle -= 0x20;
+            if (self->ext.magicallySealedDoor.angle < 0xC01) {
+                self->ext.magicallySealedDoor.angle = 0xC00;
             }
         } else {
-            self->ext.door.angle += 0x20;
-            if (self->ext.door.angle >= 0xC00) {
-                self->ext.door.angle = 0xC00;
+            self->ext.magicallySealedDoor.angle += 0x20;
+            if (self->ext.magicallySealedDoor.angle >= 0xC00) {
+                self->ext.magicallySealedDoor.angle = 0xC00;
             }
         }
-        if (self->ext.door.angle == 0xC00) {
+        if (self->ext.magicallySealedDoor.angle == 0xC00) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; prim != NULL; i++, prim = prim->next) {
                 if (!(self->params & 0x1000) || (i != 0)) {
@@ -278,14 +279,14 @@ void EntityMagicallySealedDoor(Entity* self) {
         g_api.func_8010DFF0(1, 1);
     }
 
-    x = self->posX.i.hi - self->ext.door.unk86;
+    x = self->posX.i.hi - self->ext.magicallySealedDoor.unk86;
     if (self->params & 0x100) {
         x--;
     } else {
         x++;
     }
 
-    angle = self->ext.door.angle;
+    angle = self->ext.magicallySealedDoor.angle;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; prim->next != NULL; i++, prim = prim->next) {
         if (!(prim->drawMode & DRAW_HIDE)) {
@@ -375,13 +376,14 @@ void EntityMagicallySealedDoor(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
     }
     prim->clut = self->palette;
-    self->ext.door.unk82 += 0x20;
-    if (self->ext.door.unk82 >= 0x381) {
-        self->ext.door.unk82 = -self->ext.door.unk82;
+    self->ext.magicallySealedDoor.unk82 += 0x20;
+    if (self->ext.magicallySealedDoor.unk82 >= 0x381) {
+        self->ext.magicallySealedDoor.unk82 =
+            -self->ext.magicallySealedDoor.unk82;
     }
 
-    self->palette =
-        (abs(self->ext.door.unk82) >> 8) + MAGICALLY_SEALED_DOOR_PALETTE;
+    self->palette = (abs(self->ext.magicallySealedDoor.unk82) >> 8) +
+                    MAGICALLY_SEALED_DOOR_PALETTE;
 
     sp3F = self->params & 0xFF;
     if (self->animCurFrame) {

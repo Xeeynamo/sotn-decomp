@@ -27,20 +27,20 @@ typedef enum {
 typedef struct {
     void (*Init)(InitializeMode mode);
     PfnEntityUpdate Update;
-    void (*Unk08)(Entity* self);
-    void (*Unk0C)(/*?*/);
-    void (*Unk10)(/*?*/);
-    void (*Unk14)(/*?*/);
-    void (*Unk18)(/*?*/);
-    void (*Unk1C)(/*?*/);
-    void (*Unk20)(/*?*/);
-    void (*Unk24)(/*?*/);
-    void (*Unk28)(Entity* self);
-    void (*Unk2C)(Entity* self);
-    void (*Unk30)(/*?*/);
-    void (*Unk34)(/*?*/);
-    void (*Unk38)(/*?*/);
-    void (*Unk3C)(Entity* self);
+    PfnEntityUpdate Unk08;
+    PfnEntityUpdate Unk0C;
+    PfnEntityUpdate Unk10;
+    PfnEntityUpdate Unk14;
+    PfnEntityUpdate Unk18;
+    PfnEntityUpdate Unk1C;
+    PfnEntityUpdate Unk20;
+    PfnEntityUpdate Unk24;
+    PfnEntityUpdate Unk28;
+    PfnEntityUpdate Unk2C;
+    PfnEntityUpdate Unk30;
+    PfnEntityUpdate Unk34;
+    PfnEntityUpdate Unk38;
+    PfnEntityUpdate Unk3C;
 } ServantDesc;
 
 typedef struct {
