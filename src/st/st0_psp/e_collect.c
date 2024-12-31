@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../st0/st0.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924B7E0);
+#include "../prize_drop_fall.h"
+#include "../prize_drop_fall2.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924B8B8);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BA38);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", CollectHeart);
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BB08);
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BBA0);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BD58);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", CollectDummy);
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", EntityPrizeDrop);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", EntityExplosion);
+#include "../entity_explosion.h"
+#include "../blink_item.h"
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", EntityEquipItemDrop);
