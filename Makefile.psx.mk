@@ -29,7 +29,7 @@ extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
 extract_disk_psx%: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
+	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
