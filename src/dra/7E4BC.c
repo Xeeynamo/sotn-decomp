@@ -1147,7 +1147,7 @@ void EntityTransparentWhiteCircle(Entity* self) {
     }
 }
 
-// pink effect on player
+// Potion Entity. Has different effects based on a parameter.
 void EntityPlayerPinkEffect(Entity* self) {
     s16 paramsHi = (self->params & 0x7F00) >> 8;
     Unkstruct_800ADEF0* data_idx = (Unkstruct_800ADEF0*)&D_800ADEF0[paramsHi];
@@ -1188,7 +1188,8 @@ void EntityPlayerPinkEffect(Entity* self) {
         if (self->ext.timer.t == 0xFF) {
             temp2 = data_idx->unk18;
             switch (temp2) {
-            case 0x83:
+            case 0x83: // There is no un-stoning potion, perhaps related to
+                       // fairy using Hammer.
                 if (PLAYER.step == Player_StatusStone) {
                     g_Player.unk5E = 1;
                     D_800ACE44 = 0x40;
@@ -1202,25 +1203,25 @@ void EntityPlayerPinkEffect(Entity* self) {
                 g_Player.timers[1] = 2;
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
-            case 0x84:
+            case 0x84: // Potion most likely.
                 g_Player.unk56 = 1;
                 g_Player.unk58 =
                     GetStatusAilmentTimer(STATUS_AILMENT_UNK04, 0x32);
                 break;
-            case 0x85:
+            case 0x85: // High Potion most likely.
                 g_Player.unk56 = 1;
                 g_Player.unk58 =
                     GetStatusAilmentTimer(STATUS_AILMENT_UNK05, 0x64);
                 break;
-            case 0x86:
+            case 0x86: // Elixir
                 g_Player.unk56 = 1;
                 g_Player.unk58 = g_Status.hpMax;
                 break;
-            case 0x87:
+            case 0x87: // Mana Prism
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 g_Status.mp = g_Status.mpMax;
                 break;
-            default:
+            default: // Used by Resist and Stat Boosting Potions most likely.
                 CreateEntFactoryFromEntity(
                     self, FACTORY(0x2F, D_800AE120[temp2]), 0);
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
