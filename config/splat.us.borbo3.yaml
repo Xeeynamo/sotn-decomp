@@ -20,7 +20,6 @@ options:
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   symbol_name_format: us_$VRAM
-  disassemble_all: True
   section_order:
     - .data
     - .rodata
