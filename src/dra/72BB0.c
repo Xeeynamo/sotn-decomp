@@ -575,7 +575,7 @@ s32 func_80113D7C(s16 damageAmount) {
     step = PLAYER.step;
     temp_s1 = PLAYER.step_s;
     damage.effects = EFFECT_NONE;
-    damage.damageKind = 0;
+    damage.damageKind = DAMAGEKIND_0;
     SetPlayerStep(Player_Kill);
     func_80115394(&damage, step, temp_s1);
     return -1;
@@ -656,16 +656,16 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 0:
         step_sIsZero = true;
         func_80113EE0();
-        if (damage->damageKind < 16) {
+        if (damage->damageKind < DAMAGEKIND_16) {
             func_80113F7C();
         } else {
-            if (damage->damageKind == 16) {
+            if (damage->damageKind == DAMAGEKIND_16) {
                 func_80113F7C();
             }
-            if (damage->damageKind == 17) {
+            if (damage->damageKind == DAMAGEKIND_17) {
                 PLAYER.entityRoomIndex = 1;
             }
-            if (damage->damageKind == 18) {
+            if (damage->damageKind == DAMAGEKIND_18) {
                 PLAYER.entityRoomIndex = 0;
             }
         }
@@ -689,10 +689,10 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         func_80111CC0();
         sfxIndex = 0;
         switch (damage->damageKind) {
-        case 5:
+        case DAMAGEKIND_5:
             i = 13;
             g_Player.damageTaken = damage->damageTaken;
-        case 4:
+        case DAMAGEKIND_4:
             PLAYER.posY.val -= 1;
             PLAYER.velocityY = FIX(-0.5);
             func_8010E3B8(FIX(-8));
@@ -700,13 +700,13 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PLAYER.ext.player.anim = 0x2E;
             g_Player.timers[2] = 0x200;
             PLAYER.facingLeft = PLAYER.entityRoomIndex;
-            if (damage->damageKind == 4) {
+            if (damage->damageKind == DAMAGEKIND_4) {
                 sfxIndex = (rand() & 1) + 1;
             }
             break;
-        case 16:
-        case 17:
-        case 18:
+        case DAMAGEKIND_16:
+        case DAMAGEKIND_17:
+        case DAMAGEKIND_18:
             sfxIndex = (rand() & 1) + 3;
             switch (arg1) {
             case 0:
@@ -724,8 +724,8 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 PLAYER.ext.player.anim = 0x40;
             }
             break;
-        case 3:
-        case 7:
+        case DAMAGEKIND_3:
+        case DAMAGEKIND_7:
             sfxIndex = (rand() & 1) + 3;
             switch (arg1) {
             case 3:
@@ -749,7 +749,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             }
             break;
-        case 2:
+        case DAMAGEKIND_2:
             sfxIndex = (rand() & 1) + 5;
             switch (arg1) {
             case 0:

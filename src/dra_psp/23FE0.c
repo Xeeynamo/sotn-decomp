@@ -537,7 +537,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
     if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, EQUIP_HEAD) != 0 &&
-        damage->damageKind == 7) {
+        damage->damageKind == DAMAGEKIND_7) {
         amount *= 2;
         if (amount < 1) {
             amount = 1;
@@ -579,7 +579,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             damage->damageTaken = 0;
         }
         ret = 7;
-    } else if (damage->damageKind == 6) {
+    } else if (damage->damageKind == DAMAGEKIND_6) {
         if (g_GameTimer % 10 == 0) {
             damage->damageTaken = 1;
         } else {
@@ -587,7 +587,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
         ret = 9;
     } else {
-        if (damage->damageKind < 16) {
+        if (damage->damageKind < DAMAGEKIND_16) {
             damage->damageTaken = amount - g_Status.defenseEquip;
         } else {
             damage->damageTaken = g_Status.hpMax / 8;
@@ -603,13 +603,14 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             }
         }
         if (damage->damageTaken > 0) {
-            if (damage->damageKind == 1 || damage->damageKind == 0) {
+            if (damage->damageKind == DAMAGEKIND_1 ||
+                damage->damageKind == DAMAGEKIND_0) {
                 if ((damage->damageTaken * 2) >= g_Status.hpMax) {
-                    damage->damageKind = 4;
+                    damage->damageKind = DAMAGEKIND_4;
                 } else if (amount * 50 >= g_Status.hpMax) {
-                    damage->damageKind = 3;
+                    damage->damageKind = DAMAGEKIND_3;
                 } else {
-                    damage->damageKind = 2;
+                    damage->damageKind = DAMAGEKIND_2;
                 }
             }
             ret = 3;
@@ -618,10 +619,10 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
                 !(damage->effects &
                   (EFFECT_UNK_0100 | EFFECT_SOLID_FROM_BELOW)) &&
                 !(g_Player.status & PLAYER_STATUS_STONE)) {
-                damage->damageKind = 0;
+                damage->damageKind = DAMAGEKIND_0;
                 ret = 1;
             } else {
-                damage->damageKind = 2;
+                damage->damageKind = DAMAGEKIND_2;
                 ret = 3;
             }
             damage->damageTaken = 1;

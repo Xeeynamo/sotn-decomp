@@ -801,7 +801,7 @@ void EntityAlucard(void) {
                                 ((newStatus == 1) || (newStatus == 7) ||
                                  (newStatus == 8))) {
                                 newStatus = 3;
-                                damage.damageKind = 1;
+                                damage.damageKind = DAMAGEKIND_1;
                             }
                             switch (newStatus) {
                             case 0:
