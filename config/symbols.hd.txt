@@ -1107,7 +1107,6 @@ g_Status_defenseEquip = 0x80097C24;
 g_Status_elementsWeakTo = 0x80097C28;
 g_Status_elementsResist = 0x80097C2A;
 g_Status_elementsImmune = 0x80097C2C;
-g_Status_ELEMENTSABSORB = 0x80097C2E;
 g_Status_timerHours = 0x80097C30;
 g_Status_timerFrames = 0x80097C3C;
 g_Status_D_80097C40 = 0x80097C40;

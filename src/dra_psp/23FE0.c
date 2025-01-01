@@ -519,7 +519,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
     }
 
-    if (g_Status.ELEMENTSABSORB & damage->effects) {
+    if (g_Status.elementsAbsorb & damage->effects) {
         if (amount < 1) {
             amount = 1;
         }
