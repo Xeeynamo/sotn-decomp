@@ -228,6 +228,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_ICE 0x2000
 #define ELEMENT_THUNDER 0x4000
 #define ELEMENT_FIRE 0x8000
+#define ELEMENT_UNK_10000 0x10000
 
 // Flags for entity->drawFlags
 typedef enum {

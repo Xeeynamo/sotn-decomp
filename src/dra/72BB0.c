@@ -792,25 +792,25 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         g_Player.unk40 = 0x8166;
         g_Player.timers[2] = 6;
         PlaySfx(g_SfxPainGrunts[sfxIndex]);
-        if (damage->effects & EFFECT_UNK_0100) {
+        if (damage->effects & ELEMENT_CURSE) {
             g_Player.timers[1] =
                 GetStatusAilmentTimer(STATUS_AILMENT_CURSE, 0x400);
             g_Player.unk40 = 0x8165;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 2), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
             PlaySfx(SFX_VO_ALU_WHAT);
-        } else if (damage->effects & EFFECT_SOLID_FROM_BELOW) {
+        } else if (damage->effects & ELEMENT_POISON) {
             g_Player.timers[0] =
                 GetStatusAilmentTimer(STATUS_AILMENT_POISON, 0xFFF);
             g_Player.unk40 = 0x8164;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x16), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 1), 0);
             PlaySfx(SFX_VO_ALU_WHAT);
-        } else if (damage->effects & EFFECT_UNK_8000) {
+        } else if (damage->effects & ELEMENT_FIRE) {
             PlaySfx(SFX_FM_EXPLODE_SWISHES);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x45), 0);
             g_Player.unk40 = 0x8160;
-            if (damage->effects & 0x10000) {
+            if (damage->effects & ELEMENT_UNK_10000) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 19, 0);
                 g_Player.timers[2] = 10;
             } else {
@@ -818,37 +818,37 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 18, 0);
                 g_Player.timers[2] = 16;
             }
-        } else if (damage->effects & EFFECT_UNK_4000) {
+        } else if (damage->effects & ELEMENT_THUNDER) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 45, 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x46), 0);
             g_Player.timers[2] = 24;
             g_Player.unk40 = 0x8102;
-        } else if (damage->effects & EFFECT_UNK_2000) {
+        } else if (damage->effects & ELEMENT_ICE) {
             CreateEntFactoryFromEntity(g_CurrentEntity, 46, 0);
             g_Player.timers[2] = 12;
             g_Player.unk40 = 0x8169;
             PLAYER.ext.player.anim = 0x2E;
         } else {
-            if (damage->effects & EFFECT_UNK_1000) {
+            if (damage->effects & ELEMENT_HOLY) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 119, 0);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x68), 0);
                 g_Player.timers[2] = 8;
                 g_Player.unk40 = 0x8168;
             }
-            if (damage->effects & EFFECT_UNK_0800) {
+            if (damage->effects & ELEMENT_DARK) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 113, 0);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x62), 0);
                 g_Player.timers[2] = 16;
                 g_Player.unk40 = 0x8164;
             }
-            if (damage->effects & EFFECT_SOLID_FROM_ABOVE) {
+            if (damage->effects & ELEMENT_CUT) {
                 PlaySfx(SFX_WEAPON_STAB_B);
                 g_Player.unk40 = 0x8166;
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x42), 0);
-                if (damage->effects & 0x10000) {
+                if (damage->effects & ELEMENT_UNK_10000) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(21, 5), 0);
                     g_Player.timers[2] = 10;
@@ -858,9 +858,9 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                     g_Player.timers[2] = 16;
                 }
             } else if (!(damage->effects &
-                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                          EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0200 |
-                          EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID_FROM_ABOVE))) {
+                         (ELEMENT_FIRE | ELEMENT_THUNDER | ELEMENT_ICE |
+                          ELEMENT_HOLY | ELEMENT_DARK | ELEMENT_STONE |
+                          ELEMENT_CUT | ELEMENT_POISON))) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(44, 0x58), 0);
             }
