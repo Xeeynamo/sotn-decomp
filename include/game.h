@@ -232,8 +232,18 @@ extern u8 g_BmpCastleMap[0x20000];
 
 // Indices of g_StatBuffTimers
 typedef enum {
-    SBT_DEFENSEUP,
-
+    SBT_DEF,
+    SBT_ATK,
+    SBT_LCK,
+    SBT_INT,
+    SBT_STR,
+    SBT_RESISTFIRE,
+    SBT_RESISTICE,
+    SBT_RESISTTHUNDER,
+    SBT_RESISTCURSE,
+    SBT_RESISTHOLY,
+    SBT_RESISTSTONE,
+    SBT_RESISTDARK,
 } StatBuffTimers;
 
 // Flags for entity->drawFlags

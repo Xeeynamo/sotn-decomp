@@ -719,8 +719,8 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         // Fury Plate "DEF goes up when damage taken", so here we get 0x200
         // frames of defense stat buff.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (g_StatBuffTimers[SBT_DEFENSEUP] < 0x200) {
-                g_StatBuffTimers[SBT_DEFENSEUP] = 0x200;
+            if (g_StatBuffTimers[SBT_DEF] < 0x200) {
+                g_StatBuffTimers[SBT_DEF] = 0x200;
             }
         }
     }
@@ -729,7 +729,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
 
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
-void func_800FEE6C(void) {
+void DecrementStatBuffTimers(void) {
     s32* p = g_StatBuffTimers;
     do {
         if (*p) {

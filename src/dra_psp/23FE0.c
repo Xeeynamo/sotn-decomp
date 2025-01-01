@@ -662,7 +662,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     return ret;
 }
 
-void func_800FEE6C(void) {
+void DecrementStatBuffTimers(void) {
     s32 i;
     for (i = 0; i < 16; i++) {
         if (!g_StatBuffTimers[i]) {
