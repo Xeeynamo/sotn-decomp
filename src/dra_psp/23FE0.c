@@ -505,21 +505,21 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     func_800F53A4();
     damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
-    if (g_Status.defenseElement & damage->effects) {
+    if (g_Status.elementsWeakTo & damage->effects) {
         amount *= 2;
     }
-    if (g_Status.D_80097C2A & damage->effects) {
+    if (g_Status.elementsResist & damage->effects) {
         amount /= 2;
     }
-    if (g_Status.D_80097C2C & damage->effects) {
-        if (g_Status.D_80097C2C & damage->effects & EFFECT_UNK_0200) {
-            damage->effects &= ~EFFECT_UNK_0200;
+    if (g_Status.elementsImmune & damage->effects) {
+        if (g_Status.elementsImmune & damage->effects & ELEMENT_STONE) {
+            damage->effects &= ~ELEMENT_STONE;
         } else {
             return 0;
         }
     }
 
-    if (g_Status.D_80097C2E & damage->effects) {
+    if (g_Status.elementsAbsorb & damage->effects) {
         if (amount < 1) {
             amount = 1;
         }
@@ -537,7 +537,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
     if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, EQUIP_HEAD) != 0 &&
-        damage->damageKind == 7) {
+        damage->damageKind == DAMAGEKIND_7) {
         amount *= 2;
         if (amount < 1) {
             amount = 1;
@@ -573,13 +573,13 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     if (g_Player.status & PLAYER_STATUS_STONE) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (damage->effects & EFFECT_UNK_0200) {
+    } else if (damage->effects & ELEMENT_STONE) {
         damage->damageTaken = amount - ((s32)g_Status.defenseEquip * 2);
         if (damage->damageTaken <= 0) {
             damage->damageTaken = 0;
         }
         ret = 7;
-    } else if (damage->damageKind == 6) {
+    } else if (damage->damageKind == DAMAGEKIND_6) {
         if (g_GameTimer % 10 == 0) {
             damage->damageTaken = 1;
         } else {
@@ -587,7 +587,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
         ret = 9;
     } else {
-        if (damage->damageKind < 16) {
+        if (damage->damageKind < DAMAGEKIND_16) {
             damage->damageTaken = amount - g_Status.defenseEquip;
         } else {
             damage->damageTaken = g_Status.hpMax / 8;
@@ -603,13 +603,14 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             }
         }
         if (damage->damageTaken > 0) {
-            if (damage->damageKind == 1 || damage->damageKind == 0) {
+            if (damage->damageKind == DAMAGEKIND_1 ||
+                damage->damageKind == DAMAGEKIND_0) {
                 if ((damage->damageTaken * 2) >= g_Status.hpMax) {
-                    damage->damageKind = 4;
+                    damage->damageKind = DAMAGEKIND_4;
                 } else if (amount * 50 >= g_Status.hpMax) {
-                    damage->damageKind = 3;
+                    damage->damageKind = DAMAGEKIND_3;
                 } else {
-                    damage->damageKind = 2;
+                    damage->damageKind = DAMAGEKIND_2;
                 }
             }
             ret = 3;
@@ -618,10 +619,10 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
                 !(damage->effects &
                   (EFFECT_UNK_0100 | EFFECT_SOLID_FROM_BELOW)) &&
                 !(g_Player.status & PLAYER_STATUS_STONE)) {
-                damage->damageKind = 0;
+                damage->damageKind = DAMAGEKIND_0;
                 ret = 1;
             } else {
-                damage->damageKind = 2;
+                damage->damageKind = DAMAGEKIND_2;
                 ret = 3;
             }
             damage->damageTaken = 1;
@@ -653,18 +654,18 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (D_80139828[0] < 0x200) {
-                D_80139828[0] = 0x200;
+            if (g_StatBuffTimers[0] < 0x200) {
+                g_StatBuffTimers[0] = 0x200;
             }
         }
     }
     return ret;
 }
 
-void func_800FEE6C(void) {
+void DecrementStatBuffTimers(void) {
     s32 i;
     for (i = 0; i < 16; i++) {
-        if (!D_80139828[i]) {
+        if (!g_StatBuffTimers[i]) {
             continue;
         }
         switch (i) {
@@ -681,7 +682,7 @@ void func_800FEE6C(void) {
         case 9:
         case 10:
         case 11:
-            D_80139828[i]--;
+            g_StatBuffTimers[i]--;
         }
     }
 }
@@ -755,19 +756,19 @@ bool HandleGravityBootsMP(CallMode mode) {
     return -1;
 }
 
-void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
+void func_800FF0A0(s32 context) { g_StatBuffTimers[context] = 0; }
 
-void func_800FF0B8(void) {
+void ClearStatBuffs(void) {
     s32 i;
 
-    for (i = 0; i < LEN(D_80139828); i++) {
+    for (i = 0; i < LEN(g_StatBuffTimers); i++) {
         func_800FF0A0(i);
     }
 }
 
-void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
+void GiveStatBuff(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
 
-s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
+s32 GetStatBuffTimer(s32 arg0) { return g_StatBuffTimers[arg0]; }
 
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     s32 stats[4];

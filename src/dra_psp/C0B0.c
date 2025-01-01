@@ -62,7 +62,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", func_psp_090EB028);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", IsAlucart);
 
-extern s32 D_80139828[16];
+extern s32 g_StatBuffTimers[16];
 
 void func_800F4994(void) {
     s32* statsPtr = &g_Status.statsEquip[0];
@@ -108,13 +108,13 @@ void func_800F4994(void) {
         }
     }
 
-    if (D_80139828[4]) {
+    if (g_StatBuffTimers[4]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (D_80139828[3]) {
+    if (g_StatBuffTimers[3]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (D_80139828[2]) {
+    if (g_StatBuffTimers[2]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
     if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {

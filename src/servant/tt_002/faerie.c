@@ -368,7 +368,7 @@ void CheckForValidAbility(Entity* self) {
             params = 5;
         }
 
-        if (!g_api.func_800FF110(g_ResistItemsParamMap[params * 4]) &&
+        if (!g_api.GetStatBuffTimer(g_ResistItemsParamMap[params * 4]) &&
             g_Status.equipHandCount[g_ResistItemsParamMap[(params * 4) + 1]]) {
             rnd = rand() % 100;
             if (rnd <=

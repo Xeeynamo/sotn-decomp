@@ -501,7 +501,7 @@ void RicHandleHit(
     case 0:
         step_s_zero = true;
         func_80159BC8();
-        if (damageKind < 16) {
+        if (damageKind < DAMAGEKIND_16) {
             func_80159C04();
         } else {
             PLAYER.entityRoomIndex = PLAYER.facingLeft;
@@ -523,8 +523,9 @@ void RicHandleHit(
             break;
         } else {
             if (damageEffect & ELEMENT_ICE) {
-                damageKind = 3;
+                damageKind = DAMAGEKIND_3;
             }
+            // TODO check if this is real, i suspect not. Fix damageKind.
             switch (damageKind - 2) {
             case 0:
                 switch (prevStep) {
@@ -687,7 +688,7 @@ void RicHandleHit(
             PLAYER.velocityY = 0;
             PLAYER.step_s = 5;
             damage.effects = EFFECT_NONE;
-            damage.damageKind = 1;
+            damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.CalcPlayerDamage(&damage)) {
                 RicSetStep(PL_S_DEAD);
@@ -729,7 +730,7 @@ void RicHandleHit(
                     g_api.func_80102CD8(2);
                     PLAYER.step_s = 1;
                     damage.effects = EFFECT_NONE;
-                    damage.damageKind = 1;
+                    damage.damageKind = DAMAGEKIND_1;
                     damage.damageTaken = g_Player.damageTaken;
                     if (g_api.CalcPlayerDamage(&damage)) {
                         RicSetStep(PL_S_DEAD);
@@ -748,7 +749,7 @@ void RicHandleHit(
                 g_CurrentEntity, FACTORY(BP_SKID_SMOKE_2, 8), 0);
         }
         damage.effects = EFFECT_NONE;
-        damage.damageKind = 1;
+        damage.damageKind = DAMAGEKIND_1;
         damage.damageTaken = g_Player.damageTaken;
         if (g_api.CalcPlayerDamage(&damage)) {
             RicSetStep(PL_S_DEAD);
@@ -841,7 +842,7 @@ void RicHandleBossGrab(void) {
         // Effectively a switch on g_Player.unk60
         if (g_Player.unk60 == 3) {
             damage.effects = EFFECT_NONE;
-            damage.damageKind = 1;
+            damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.CalcPlayerDamage(&damage)) {
                 RicSetStep(PL_S_DEAD);

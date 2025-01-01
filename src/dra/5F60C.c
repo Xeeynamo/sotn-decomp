@@ -1106,8 +1106,9 @@ void DrawHudSubweapon() {
     }
 
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, EQUIP_ARMOR)) &&
-        ((g_Player.status & (PLAYER_STATUS_TRANSFORM |
-                             PLAYER_STATUS_UNK4000000)) == 0x04000000)) {
+        ((g_Player.status &
+          (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK4000000)) ==
+         PLAYER_STATUS_UNK4000000)) {
         g_HealingMailTimer[0]++;
         if (g_HealingMailTimer[0] >= 128) {
             g_Player.unk56 = 2;
@@ -1118,7 +1119,10 @@ void DrawHudSubweapon() {
         g_HealingMailTimer[0] = 0;
     }
 
-    func_800FEE6C();
+    // Why in the world would this call be in the HUD code? This codebase is
+    // awful.
+    DecrementStatBuffTimers();
+
     // Represents MP fill level in fraction of 50 (2% each)
     mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
     LoadTPage(D_800C52F8[10] + 4, 0, 0, 0x3DC, 0x100, 8, mpFillSteps);

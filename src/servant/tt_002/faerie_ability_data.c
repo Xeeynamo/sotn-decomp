@@ -87,7 +87,7 @@ FaerieAbilityStats g_FaerieAbilityStats[] = {
 };
 
 // This may be able to be broken into a 4 short struct
-// unknown param for D_80139828, ItemId, FactoryParam, EventParam
+// unknown param for g_StatBuffTimers, ItemId, FactoryParam, EventParam
 s16 g_ResistItemsParamMap[] = {
     0x0005, ITEM_RESIST_FIRE,    0x0009, 0x0005,
     0x0007, ITEM_RESIST_THUNDER, 0x000A, 0x0006,

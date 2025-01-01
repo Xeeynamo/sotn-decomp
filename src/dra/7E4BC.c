@@ -1164,7 +1164,7 @@ void EntityPlayerPinkEffect(Entity* self) {
         if (data_idx->unk18 >= 128) {
             func_8010E168(true, 64);
         } else {
-            func_800FF0F4(data_idx->unk18);
+            GiveStatBuff(data_idx->unk18);
         }
         self->step += 1;
         break;

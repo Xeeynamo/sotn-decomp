@@ -383,7 +383,7 @@ padding s32 D_80139814_;
 s16 g_XaMusicVolume;
 padding u16 g_XaMusicVolume_;
 s32 D_80139824;
-s32 D_80139828[16];
+s32 g_StatBuffTimers[16];
 s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
 s16 g_SoundCommandRingBufferReadPos;
 padding s16 g_SoundCommandRingBufferReadPos_;

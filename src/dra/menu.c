@@ -303,25 +303,25 @@ void func_800F4994(void) {
         }
     }
 
-    if (D_80139828[4]) {
+    if (g_StatBuffTimers[SBT_STR]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (D_80139828[3]) {
+    if (g_StatBuffTimers[SBT_INT]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (D_80139828[2]) {
+    if (g_StatBuffTimers[SBT_LCK]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
-    if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_RIB_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_CON] += 10;
     }
-    if (g_Status.relics[RELIC_EYE_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_EYE_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_LCK] += 10;
     }
-    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_STR] += 10;
     }
-    if (g_Status.relics[RELIC_RING_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_RING_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_INT] += 10;
     }
     if (IsAlucart() != false) {
@@ -395,7 +395,7 @@ s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (D_80139828[1]) {
+    if (g_StatBuffTimers[SBT_ATK]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {
@@ -423,10 +423,10 @@ void CalcDefense(void) {
     s16 totalDefense;
 
     totalDefense = 0;
-    g_Status.defenseElement = 0;
-    g_Status.D_80097C2A = 0;
-    g_Status.D_80097C2C = 0;
-    g_Status.D_80097C2E = 0;
+    g_Status.elementsWeakTo = 0;
+    g_Status.elementsResist = 0;
+    g_Status.elementsImmune = 0;
+    g_Status.elementsAbsorb = 0;
 
     // Iterate over player's hands, hand 0 and hand 1.
     for (i = 0; i < 2; i++) {
@@ -434,8 +434,9 @@ void CalcDefense(void) {
         totalDefense += g_EquipDefs[thisHandItem].defense;
         // If this hand is shield rod and other hand is a shield, defense bonus
         // of 2.
-        if ((thisHandItem == 4) &&
-            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory == 9) {
+        if ((thisHandItem == ITEM_SHIELD_ROD) &&
+            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory ==
+                ITEM_SHIELD) {
             totalDefense += 2;
         }
     }
@@ -443,45 +444,45 @@ void CalcDefense(void) {
     for (i = 0; i < 5; i++) {
         acc = &g_AccessoryDefs[g_Status.equipment[i + 2]];
         totalDefense += acc->defBonus;
-        g_Status.defenseElement |= acc->unk10;
-        g_Status.D_80097C2A |= acc->unk12;
-        g_Status.D_80097C2C |= acc->unk14;
-        g_Status.D_80097C2E |= acc->unk16;
+        g_Status.elementsWeakTo |= acc->weakToElements;
+        g_Status.elementsResist |= acc->resistElements;
+        g_Status.elementsImmune |= acc->immuneElements;
+        g_Status.elementsAbsorb |= acc->absorbElements;
     }
 
-    if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, EQUIP_HAND) != 0) {
-        g_Status.D_80097C2C |= 0x200;
+    if (CheckEquipmentItemCount(ITEM_MEDUSA_SHIELD, EQUIP_HAND) != 0) {
+        g_Status.elementsImmune |= ELEMENT_STONE;
     }
-    if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_HAND) != 0) {
-        g_Status.D_80097C2C |= 0x8000;
+    if (CheckEquipmentItemCount(ITEM_FIRE_SHIELD, EQUIP_HAND) != 0) {
+        g_Status.elementsImmune |= ELEMENT_FIRE;
     }
-    if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
-        g_Status.D_80097C2C |= 0x100;
+    if (g_Status.relics[RELIC_HEART_OF_VLAD] & RELIC_FLAG_ACTIVE) {
+        g_Status.elementsImmune |= ELEMENT_CURSE;
     }
-    if (D_80139828[5]) {
-        g_Status.D_80097C2A |= 0x8000;
+    if (g_StatBuffTimers[SBT_RESISTFIRE]) {
+        g_Status.elementsResist |= ELEMENT_FIRE;
     }
-    if (D_80139828[6]) {
-        g_Status.D_80097C2A |= 0x2000;
+    if (g_StatBuffTimers[SBT_RESISTICE]) {
+        g_Status.elementsResist |= ELEMENT_ICE;
     }
-    if (D_80139828[7]) {
-        g_Status.D_80097C2A |= 0x4000;
+    if (g_StatBuffTimers[SBT_RESISTTHUNDER]) {
+        g_Status.elementsResist |= ELEMENT_THUNDER;
     }
-    if (D_80139828[8]) {
-        g_Status.D_80097C2A |= 0x100;
+    if (g_StatBuffTimers[SBT_RESISTCURSE]) {
+        g_Status.elementsResist |= ELEMENT_CURSE;
     }
-    if (D_80139828[9]) {
-        g_Status.D_80097C2A |= 0x1000;
+    if (g_StatBuffTimers[SBT_RESISTHOLY]) {
+        g_Status.elementsResist |= ELEMENT_HOLY;
     }
-    if (D_80139828[10]) {
+    if (g_StatBuffTimers[SBT_RESISTSTONE]) {
 #if defined(VERSION_US)
-        g_Status.D_80097C2C |= 0x200;
+        g_Status.elementsImmune |= ELEMENT_STONE;
 #elif defined(VERSION_HD)
-        g_Status.D_80097C2A |= 0x200;
+        g_Status.elementsResist |= ELEMENT_STONE;
 #endif
     }
-    if (D_80139828[11]) {
-        g_Status.D_80097C2A |= 0x800;
+    if (g_StatBuffTimers[SBT_RESISTDARK]) {
+        g_Status.elementsResist |= ELEMENT_DARK;
     }
 
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
@@ -490,7 +491,7 @@ void CalcDefense(void) {
         totalDefense += g_RoomCount / 60;
     }
 
-    if (D_80139828[0]) {
+    if (g_StatBuffTimers[SBT_DEF]) {
         totalDefense += 20;
     }
     if (totalDefense < 0) {
