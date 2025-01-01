@@ -450,10 +450,10 @@ void CalcDefense(void) {
         g_Status.elementsAbsorb |= acc->absorbElements;
     }
 
-    if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, EQUIP_HAND) != 0) {
+    if (CheckEquipmentItemCount(ITEM_MEDUSA_SHIELD, EQUIP_HAND) != 0) {
         g_Status.elementsImmune |= ELEMENT_STONE;
     }
-    if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_HAND) != 0) {
+    if (CheckEquipmentItemCount(ITEM_FIRE_SHIELD, EQUIP_HAND) != 0) {
         g_Status.elementsImmune |= ELEMENT_FIRE;
     }
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & RELIC_FLAG_ACTIVE) {
