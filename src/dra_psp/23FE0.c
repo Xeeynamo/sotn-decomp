@@ -505,21 +505,21 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     func_800F53A4();
     damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
-    if (g_Status.defenseElement & damage->effects) {
+    if (g_Status.elementsWeakTo & damage->effects) {
         amount *= 2;
     }
-    if (g_Status.D_80097C2A & damage->effects) {
+    if (g_Status.elementsResist & damage->effects) {
         amount /= 2;
     }
-    if (g_Status.D_80097C2C & damage->effects) {
-        if (g_Status.D_80097C2C & damage->effects & EFFECT_UNK_0200) {
+    if (g_Status.elementsImmune & damage->effects) {
+        if (g_Status.elementsImmune & damage->effects & EFFECT_UNK_0200) {
             damage->effects &= ~EFFECT_UNK_0200;
         } else {
             return 0;
         }
     }
 
-    if (g_Status.D_80097C2E & damage->effects) {
+    if (g_Status.ELEMENTSABSORB & damage->effects) {
         if (amount < 1) {
             amount = 1;
         }

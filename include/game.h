@@ -1101,10 +1101,10 @@ typedef struct {
     /* 80097C00 */ u32 equipment[7];
     /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ s32 defenseEquip;
-    /* 80097C28 */ u16 defenseElement;
-    /* 80097C2A */ u16 D_80097C2A;
-    /* 80097C2C */ u16 D_80097C2C;
-    /* 80097C2E */ u16 D_80097C2E;
+    /* 80097C28 */ u16 elementsWeakTo;
+    /* 80097C2A */ u16 elementsResist;
+    /* 80097C2C */ u16 elementsImmune;
+    /* 80097C2E */ u16 elementsAbsorb;
     /* 80097C30 */ s32 timerHours;
     /* 80097C34 */ s32 timerMinutes;
     /* 80097C38 */ s32 timerSeconds;

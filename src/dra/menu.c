@@ -423,10 +423,10 @@ void CalcDefense(void) {
     s16 totalDefense;
 
     totalDefense = 0;
-    g_Status.defenseElement = 0;
-    g_Status.D_80097C2A = 0;
-    g_Status.D_80097C2C = 0;
-    g_Status.D_80097C2E = 0;
+    g_Status.elementsWeakTo = 0;
+    g_Status.elementsResist = 0;
+    g_Status.elementsImmune = 0;
+    g_Status.elementsAbsorb = 0;
 
     // Iterate over player's hands, hand 0 and hand 1.
     for (i = 0; i < 2; i++) {
@@ -443,45 +443,45 @@ void CalcDefense(void) {
     for (i = 0; i < 5; i++) {
         acc = &g_AccessoryDefs[g_Status.equipment[i + 2]];
         totalDefense += acc->defBonus;
-        g_Status.defenseElement |= acc->unk10;
-        g_Status.D_80097C2A |= acc->unk12;
-        g_Status.D_80097C2C |= acc->unk14;
-        g_Status.D_80097C2E |= acc->unk16;
+        g_Status.elementsWeakTo |= acc->unk10;
+        g_Status.elementsResist |= acc->unk12;
+        g_Status.elementsImmune |= acc->unk14;
+        g_Status.elementsAbsorb |= acc->unk16;
     }
 
     if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, EQUIP_HAND) != 0) {
-        g_Status.D_80097C2C |= 0x200;
+        g_Status.elementsImmune |= 0x200;
     }
     if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_HAND) != 0) {
-        g_Status.D_80097C2C |= 0x8000;
+        g_Status.elementsImmune |= 0x8000;
     }
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
-        g_Status.D_80097C2C |= 0x100;
+        g_Status.elementsImmune |= 0x100;
     }
     if (D_80139828[5]) {
-        g_Status.D_80097C2A |= 0x8000;
+        g_Status.elementsResist |= 0x8000;
     }
     if (D_80139828[6]) {
-        g_Status.D_80097C2A |= 0x2000;
+        g_Status.elementsResist |= 0x2000;
     }
     if (D_80139828[7]) {
-        g_Status.D_80097C2A |= 0x4000;
+        g_Status.elementsResist |= 0x4000;
     }
     if (D_80139828[8]) {
-        g_Status.D_80097C2A |= 0x100;
+        g_Status.elementsResist |= 0x100;
     }
     if (D_80139828[9]) {
-        g_Status.D_80097C2A |= 0x1000;
+        g_Status.elementsResist |= 0x1000;
     }
     if (D_80139828[10]) {
 #if defined(VERSION_US)
-        g_Status.D_80097C2C |= 0x200;
+        g_Status.elementsImmune |= 0x200;
 #elif defined(VERSION_HD)
-        g_Status.D_80097C2A |= 0x200;
+        g_Status.elementsResist |= 0x200;
 #endif
     }
     if (D_80139828[11]) {
-        g_Status.D_80097C2A |= 0x800;
+        g_Status.elementsResist |= 0x800;
     }
 
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
