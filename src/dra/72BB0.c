@@ -560,7 +560,7 @@ s32 func_80113D7C(s16 damageAmount) {
     s16 step;
     u16 temp_s1;
 
-    temp_s0 = HandleDamage(&damage, 2, damageAmount / 2, 1);
+    temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, damageAmount / 2, 1);
     CreateHPNumMove(damage.damageTaken, 0);
     func_800FE8F0();
     if (temp_s0 != 4) {

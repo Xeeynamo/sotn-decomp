@@ -1436,10 +1436,10 @@ typedef struct {
     /* 08 */ s16 attBonus;
     /* 0A */ s16 defBonus;
     /* 0C */ u8 statsBonus[4];
-    /* 10 */ u16 weaknessElements;
-    /* 10 */ u16 resistElements;
+    /* 10 */ u16 weakToElements;
+    /* 12 */ u16 resistElements;
     /* 14 */ u16 immuneElements;
-    /* 10 */ u16 absorbElements;
+    /* 16 */ u16 absorbElements;
     /* 18 */ u16 icon;
     /* 1A */ u16 iconPalette;
     /* 1C */ u16 equipType;

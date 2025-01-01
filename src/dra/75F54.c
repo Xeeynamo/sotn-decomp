@@ -96,7 +96,7 @@ void func_80116208(void) {
         return;
     case 1:
         if (g_Player.unk60 == 3) {
-            temp_s0 = HandleDamage(&damage, 2, g_Player.unk64, 1);
+            temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, g_Player.unk64, 1);
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);

@@ -444,7 +444,7 @@ void CalcDefense(void) {
     for (i = 0; i < 5; i++) {
         acc = &g_AccessoryDefs[g_Status.equipment[i + 2]];
         totalDefense += acc->defBonus;
-        g_Status.elementsWeakTo |= acc->weaknessElements;
+        g_Status.elementsWeakTo |= acc->weakToElements;
         g_Status.elementsResist |= acc->resistElements;
         g_Status.elementsImmune |= acc->immuneElements;
         g_Status.elementsAbsorb |= acc->absorbElements;
