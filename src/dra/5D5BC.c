@@ -819,7 +819,7 @@ void ClearStatBuffs(void) {
     }
 }
 
-// Gives 4096 frames of a stat buff. This is about 45 seconds.
+// Gives 4096 frames of a stat buff. This is about 68 seconds.
 void GiveStatBuff(s32 i) { g_StatBuffTimers[i] = 0x1000; }
 
 s32 GetStatBuffTimer(s32 i) { return g_StatBuffTimers[i]; }
