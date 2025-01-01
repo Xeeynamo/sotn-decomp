@@ -576,8 +576,9 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     }
     // Immune, zero damage
     if (g_Status.elementsImmune & damage->effects) {
-        if (g_Status.elementsImmune & damage->effects & EFFECT_UNK_0200) {
-            damage->effects &= ~EFFECT_UNK_0200;
+        // If there is a stone element, remove it
+        if (g_Status.elementsImmune & damage->effects & ELEMENT_STONE) {
+            damage->effects &= ~ELEMENT_STONE;
         } else {
             return 0;
         }
@@ -637,7 +638,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     if (g_Player.status & PLAYER_STATUS_STONE) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (damage->effects & EFFECT_UNK_0200) {
+    } else if (damage->effects & ELEMENT_STONE) {
         damage->damageTaken = amount - ((s32)g_Status.defenseEquip * 2);
         if (damage->damageTaken <= 0) {
             damage->damageTaken = 0;
