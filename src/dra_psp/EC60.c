@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-extern s32 D_80139828[16];
+extern s32 g_StatBuffTimers[16];
 
 s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     s32 i;
@@ -52,7 +52,7 @@ s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (D_80139828[1]) {
+    if (g_StatBuffTimers[1]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {

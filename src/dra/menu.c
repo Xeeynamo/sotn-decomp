@@ -303,13 +303,13 @@ void func_800F4994(void) {
         }
     }
 
-    if (D_80139828[4]) {
+    if (g_StatBuffTimers[4]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (D_80139828[3]) {
+    if (g_StatBuffTimers[3]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (D_80139828[2]) {
+    if (g_StatBuffTimers[2]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
     if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
@@ -395,7 +395,7 @@ s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (D_80139828[1]) {
+    if (g_StatBuffTimers[1]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {
@@ -458,29 +458,29 @@ void CalcDefense(void) {
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
         g_Status.elementsImmune |= 0x100;
     }
-    if (D_80139828[5]) {
+    if (g_StatBuffTimers[5]) {
         g_Status.elementsResist |= 0x8000;
     }
-    if (D_80139828[6]) {
+    if (g_StatBuffTimers[6]) {
         g_Status.elementsResist |= 0x2000;
     }
-    if (D_80139828[7]) {
+    if (g_StatBuffTimers[7]) {
         g_Status.elementsResist |= 0x4000;
     }
-    if (D_80139828[8]) {
+    if (g_StatBuffTimers[8]) {
         g_Status.elementsResist |= 0x100;
     }
-    if (D_80139828[9]) {
+    if (g_StatBuffTimers[9]) {
         g_Status.elementsResist |= 0x1000;
     }
-    if (D_80139828[10]) {
+    if (g_StatBuffTimers[10]) {
 #if defined(VERSION_US)
         g_Status.elementsImmune |= 0x200;
 #elif defined(VERSION_HD)
         g_Status.elementsResist |= 0x200;
 #endif
     }
-    if (D_80139828[11]) {
+    if (g_StatBuffTimers[11]) {
         g_Status.elementsResist |= 0x800;
     }
 
@@ -490,7 +490,7 @@ void CalcDefense(void) {
         totalDefense += g_RoomCount / 60;
     }
 
-    if (D_80139828[0]) {
+    if (g_StatBuffTimers[0]) {
         totalDefense += 20;
     }
     if (totalDefense < 0) {

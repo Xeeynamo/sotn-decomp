@@ -146,7 +146,7 @@ extern u8 g_SeqPlayingId;
 extern s16 g_SfxScriptTimerCopy[];
 extern s16 g_XaMusicVolume;
 extern s32 D_80139824;
-extern s32 D_80139828[16];
+extern s32 g_StatBuffTimers[16];
 extern s32 D_8013983C;
 extern s32 D_80139840;
 extern s32 D_80139844;

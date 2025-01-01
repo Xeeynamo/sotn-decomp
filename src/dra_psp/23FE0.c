@@ -654,8 +654,8 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (D_80139828[0] < 0x200) {
-                D_80139828[0] = 0x200;
+            if (g_StatBuffTimers[0] < 0x200) {
+                g_StatBuffTimers[0] = 0x200;
             }
         }
     }
@@ -665,7 +665,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
 void func_800FEE6C(void) {
     s32 i;
     for (i = 0; i < 16; i++) {
-        if (!D_80139828[i]) {
+        if (!g_StatBuffTimers[i]) {
             continue;
         }
         switch (i) {
@@ -682,7 +682,7 @@ void func_800FEE6C(void) {
         case 9:
         case 10:
         case 11:
-            D_80139828[i]--;
+            g_StatBuffTimers[i]--;
         }
     }
 }
@@ -756,19 +756,19 @@ bool HandleGravityBootsMP(CallMode mode) {
     return -1;
 }
 
-void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
+void func_800FF0A0(s32 context) { g_StatBuffTimers[context] = 0; }
 
 void func_800FF0B8(void) {
     s32 i;
 
-    for (i = 0; i < LEN(D_80139828); i++) {
+    for (i = 0; i < LEN(g_StatBuffTimers); i++) {
         func_800FF0A0(i);
     }
 }
 
-void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
+void func_800FF0F4(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
 
-s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
+s32 func_800FF110(s32 arg0) { return g_StatBuffTimers[arg0]; }
 
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     s32 stats[4];
