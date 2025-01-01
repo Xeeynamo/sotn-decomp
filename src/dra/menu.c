@@ -312,16 +312,16 @@ void func_800F4994(void) {
     if (g_StatBuffTimers[SBT_LCK]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
-    if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_RIB_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_CON] += 10;
     }
-    if (g_Status.relics[RELIC_EYE_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_EYE_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_LCK] += 10;
     }
-    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_STR] += 10;
     }
-    if (g_Status.relics[RELIC_RING_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_RING_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_INT] += 10;
     }
     if (IsAlucart() != false) {
@@ -456,7 +456,7 @@ void CalcDefense(void) {
     if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_HAND) != 0) {
         g_Status.elementsImmune |= ELEMENT_FIRE;
     }
-    if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_HEART_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.elementsImmune |= ELEMENT_CURSE;
     }
     if (g_StatBuffTimers[SBT_RESISTFIRE]) {
