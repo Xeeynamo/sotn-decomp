@@ -443,10 +443,10 @@ void CalcDefense(void) {
     for (i = 0; i < 5; i++) {
         acc = &g_AccessoryDefs[g_Status.equipment[i + 2]];
         totalDefense += acc->defBonus;
-        g_Status.elementsWeakTo |= acc->unk10;
-        g_Status.elementsResist |= acc->unk12;
-        g_Status.elementsImmune |= acc->unk14;
-        g_Status.elementsAbsorb |= acc->unk16;
+        g_Status.elementsWeakTo |= acc->weaknessElements;
+        g_Status.elementsResist |= acc->resistElements;
+        g_Status.elementsImmune |= acc->immuneElements;
+        g_Status.elementsAbsorb |= acc->absorbElements;
     }
 
     if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, EQUIP_HAND) != 0) {
