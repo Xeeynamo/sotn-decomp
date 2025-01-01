@@ -371,14 +371,14 @@ s32 func_800FF064(s32 arg0) {
 // SAT: func_06070568
 void func_800FF0A0(s32 context) { g_StatBuffTimers[context] = 0; }
 
-// probably PSX func_800FF0B8 but strange to match
+// probably PSX ClearStatBuffs but strange to match
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
 
 // SAT: func_060705A0
-void func_800FF0F4(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
+void GiveStatBuff(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
 
 // SAT: func_060705B8
-s32 func_800FF110(s32 arg0) { return g_StatBuffTimers[arg0]; }
+s32 GetStatBuffTimer(s32 arg0) { return g_StatBuffTimers[arg0]; }
 
 // SAT: func_060705CC
 u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {

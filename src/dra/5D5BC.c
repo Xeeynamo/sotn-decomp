@@ -716,11 +716,11 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             (ret != 9)) {
             AddHearts(damage->damageTaken);
         }
-        // Fury Plate "DEF goes up when damage taken", that logic is not here
-        // though.
+        // Fury Plate "DEF goes up when damage taken", so here we get 0x200
+        // frames of defense stat buff.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (g_StatBuffTimers[0] < 0x200) {
-                g_StatBuffTimers[0] = 0x200;
+            if (g_StatBuffTimers[SBT_DEFENSEUP] < 0x200) {
+                g_StatBuffTimers[SBT_DEFENSEUP] = 0x200;
             }
         }
     }
@@ -809,19 +809,20 @@ bool HandleGravityBootsMP(CallMode mode) {
     return -1;
 }
 
-void func_800FF0A0(s32 i) { g_StatBuffTimers[i] = 0; }
+void ClearStatBuff(s32 i) { g_StatBuffTimers[i] = 0; }
 
-void func_800FF0B8(void) {
+void ClearStatBuffs(void) {
     s32 i;
 
     for (i = 0; i < LEN(g_StatBuffTimers); i++) {
-        func_800FF0A0(i);
+        ClearStatBuff(i);
     }
 }
 
-void func_800FF0F4(s32 i) { g_StatBuffTimers[i] = 0x1000; }
+// Gives 4096 frames of a stat buff. This is about 45 seconds.
+void GiveStatBuff(s32 i) { g_StatBuffTimers[i] = 0x1000; }
 
-s32 func_800FF110(s32 i) { return g_StatBuffTimers[i]; }
+s32 GetStatBuffTimer(s32 i) { return g_StatBuffTimers[i]; }
 
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     s32 stats[4];

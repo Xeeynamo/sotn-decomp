@@ -230,6 +230,12 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_FIRE 0x8000
 #define ELEMENT_UNK_10000 0x10000
 
+// Indices of g_StatBuffTimers
+typedef enum {
+    SBT_DEFENSEUP,
+
+} StatBuffTimers;
+
 // Flags for entity->drawFlags
 typedef enum {
     FLAG_DRAW_DEFAULT = 0x00,
@@ -1581,7 +1587,7 @@ typedef struct {
     /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
-    /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
+    /* 8003C88C */ s32 (*GetStatBuffTimer)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
@@ -1662,7 +1668,7 @@ extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
 extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
 extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
-extern s32 (*g_api_func_800FF110)(s32 arg0);
+extern s32 (*g_api_GetStatBuffTimer)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
 extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);

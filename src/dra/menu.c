@@ -490,7 +490,7 @@ void CalcDefense(void) {
         totalDefense += g_RoomCount / 60;
     }
 
-    if (g_StatBuffTimers[0]) {
+    if (g_StatBuffTimers[SBT_DEFENSEUP]) {
         totalDefense += 20;
     }
     if (totalDefense < 0) {

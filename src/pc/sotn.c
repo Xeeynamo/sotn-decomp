@@ -103,7 +103,7 @@ s32 func_800FF494(EnemyDef* arg0);
 bool CdSoundCommandQueueEmpty(void);
 bool func_80133950(void);
 bool func_800F27F4(s32 arg0);
-s32 func_800FF110(s32 arg0);
+s32 GetStatBuffTimer(s32 arg0);
 bool CalcPlayerDamage(DamageParam* damage);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
@@ -208,7 +208,7 @@ bool InitGame(struct InitGameParams* params) {
     api.CdSoundCommandQueueEmpty = CdSoundCommandQueueEmpty;
     api.func_80133950 = func_80133950;
     api.func_800F27F4 = func_800F27F4;
-    api.func_800FF110 = func_800FF110;
+    api.GetStatBuffTimer = GetStatBuffTimer;
     api.func_800FD664 = func_800FD664;
     api.CalcPlayerDamage = CalcPlayerDamage;
     api.LearnSpell = LearnSpell;
