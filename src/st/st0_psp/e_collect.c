@@ -18,7 +18,7 @@ INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", CollectHeart);
 #include "../collect_gold.h"
 #include "../collect_subweapon.h"
 NOP;
-#include "../destroy_current_entity.h"
+#include "../collect_dummy.h"
 #include "../entity_prize_drop.h"
 #include "../entity_explosion.h"
 #include "../blink_item.h"

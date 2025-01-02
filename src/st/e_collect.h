@@ -182,7 +182,7 @@ Entity* func_801939C4(void) {
     return g_CurrentEntity;
 }
 #else
-#include "destroy_current_entity.h"
+#include "collect_dummy.h"
 #endif
 
 #include "entity_prize_drop.h"
