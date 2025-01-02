@@ -111,7 +111,6 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     u16 subWeapon;
 
     g_api.PlaySfx(SFX_ITEM_PICKUP);
-
     if (g_PlayableCharacter == PLAYER_MARIA) {
         subWeapon = D_091CF6DC;
     } else {
@@ -147,12 +146,12 @@ static void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->ext.equipItemDrop.unk8A = 5;
         if (player->facingLeft ^ 1) {
             g_CurrentEntity->velocityX = FIX(-2);
-            return;
+        } else {
+            g_CurrentEntity->velocityX = FIX(2);
         }
-        g_CurrentEntity->velocityX = FIX(2);
-        return;
+    } else {
+        DestroyEntity(g_CurrentEntity);
     }
-    DestroyEntity(g_CurrentEntity);
 }
 
 #include "../collect_heart_vessel.h"
