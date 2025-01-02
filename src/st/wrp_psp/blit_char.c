@@ -164,7 +164,7 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
     }
 
     LoadTPage((u_long*)D_psp_0924BC78, 0, 0, D_psp_0924BC70 + sp34,
-                 D_psp_0924BC68 + xOffset, size << 1, 0x10);
+              D_psp_0924BC68 + xOffset, size << 1, 0x10);
     D_psp_0924BC78 += size * 0x10;
 
     if (ch == 1) {

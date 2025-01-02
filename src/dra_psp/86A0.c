@@ -127,7 +127,8 @@ void DrawHudSubweapon() {
 
     // Represents MP fill level in fraction of 50 (2% each)
     mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
-    LoadTPage((u_long*)(D_800C52F8[10] + 4), 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
+    LoadTPage(
+        (u_long*)(D_800C52F8[10] + 4), 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
     // Use one clut if MP is full, otherwise a different one
     if (mpFillSteps == 50) {
         prim->clut = 0x162;
