@@ -1027,9 +1027,9 @@ void DrawHudSubweapon() {
     s32 statXPos;
     s32 hpdiff;
     s32 mpFillSteps;
-    s32 leading_zeros;
     s32 digitSpacing;
-    u16 clut;
+    u32 clut;
+    u32 leading_zeros;
 
     if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
         DrawRichterHudSubweapon();
@@ -1041,13 +1041,13 @@ void DrawHudSubweapon() {
         prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
         prim->p2--;
-        if (prim->p2 == 0) {
+        if (!prim->p2) {
             prim->p1 += 1;
             if (prim->p1 == 0xF) {
                 prim->p1 = 0;
-                prim->p2 = rand() + 8;
+                prim->p2 = (rand() & 0xFF) + 8;
                 prim->p3--;
-                if (prim->p3 != 0) {
+                if (prim->p3) {
                     prim->p1 = 1;
                     prim->p2 = 1;
                 } else {
@@ -1066,7 +1066,7 @@ void DrawHudSubweapon() {
                 prim->v3 = g_HudSubwpnSpriteV[prim->p1 - 1] + 16;
             }
         }
-        if (prim->p1 != 0) {
+        if (prim->p1) {
             prim->drawMode = DRAW_ABSPOS;
         } else {
             prim->drawMode = DRAW_HIDE;
@@ -1106,9 +1106,8 @@ void DrawHudSubweapon() {
     }
 
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, EQUIP_ARMOR)) &&
-        ((g_Player.status &
-          (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK4000000)) ==
-         PLAYER_STATUS_UNK4000000)) {
+        (g_Player.status & PLAYER_STATUS_UNK4000000) &&
+        !(g_Player.status & PLAYER_STATUS_TRANSFORM)) {
         g_HealingMailTimer[0]++;
         if (g_HealingMailTimer[0] >= 128) {
             g_Player.unk56 = 2;
@@ -1127,12 +1126,16 @@ void DrawHudSubweapon() {
     mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
     LoadTPage(D_800C52F8[10] + 4, 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
     // Use one clut if MP is full, otherwise a different one
-    prim->clut = mpFillSteps == 50 ? 0x162 : 0x174;
+    if (mpFillSteps == 50) {
+        prim->clut = 0x162;
+    } else {
+        prim->clut = 0x174;
+    }
 
     if (D_8013B5E8 == 0) {
         hpdiff = g_Status.hp - g_PlayerHud.displayHP;
         if (hpdiff > 0) {
-            if (hpdiff >= 11) {
+            if (hpdiff > 10) {
                 g_PlayerHud.displayHP += (hpdiff) / 10;
             } else {
                 g_PlayerHud.displayHP++;
@@ -1156,18 +1159,18 @@ void DrawHudSubweapon() {
         func_800EA5E4(1); // Normal health display
     }
 
-    if (g_PlayerHud.displayHP >= 1000) {
+    if (g_PlayerHud.displayHP > 999) {
         leading_zeros = 0;
         digitSpacing = 6;
         statXPos = 3;
-    } else if (g_PlayerHud.displayHP >= 100) {
+    } else if (g_PlayerHud.displayHP > 99) {
         leading_zeros = 1;
         digitSpacing = 6;
-        statXPos = 0;
+        statXPos = 6 - digitSpacing;
     } else {
         digitSpacing = 7;
-        statXPos = -6;
-        if (g_PlayerHud.displayHP >= 10) {
+        statXPos = 8 - digitSpacing * 2;
+        if (g_PlayerHud.displayHP > 9) {
             leading_zeros = 2;
         } else {
             leading_zeros = 3;
@@ -1175,10 +1178,12 @@ void DrawHudSubweapon() {
     }
     // Thousands digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_PlayerHud.displayHP / 1000) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = ((g_PlayerHud.displayHP / 1000) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos;
-    prim->x1 = prim->x3 = statXPos + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
@@ -1187,10 +1192,12 @@ void DrawHudSubweapon() {
     }
     // Hundreds digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_PlayerHud.displayHP / 100) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_PlayerHud.displayHP / 100) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + digitSpacing;
-    prim->x1 = prim->x3 = statXPos + digitSpacing + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1198,52 +1205,61 @@ void DrawHudSubweapon() {
     }
     // Tens digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_PlayerHud.displayHP / 10) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_PlayerHud.displayHP / 10) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + (digitSpacing * 2);
-    prim->x1 = prim->x3 = statXPos + (digitSpacing * 2) + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
+        leading_zeros--;
         prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_PlayerHud.displayHP % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = ((g_PlayerHud.displayHP % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + (digitSpacing * 3);
-    prim->x1 = prim->x3 = statXPos + (digitSpacing * 3) + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
 
-    if (g_Status.hearts >= 1000) {
+    if (g_Status.hearts > 999) {
         leading_zeros = 0;
         statXPos = 0x3B;
-    } else if (g_Status.hearts >= 100) {
+    } else if (g_Status.hearts > 99) {
         leading_zeros = 1;
         statXPos = 0x37;
     } else {
         statXPos = 0x33;
-        if (g_Status.hearts >= 10) {
+        if (g_Status.hearts > 9) {
             leading_zeros = 2;
         } else {
             leading_zeros = 3;
         }
     }
 
-    // Seems like this should be a simple || but that doesn't work here.
-    if (func_800FE3C4(&subwpn, 0, false) == 0) {
-        clut = 0x196;
-    } else if (g_Timer & 2) {
-        clut = 0x196;
+    if (func_800FE3C4(&subwpn, 0, false)) {
+        // Enable flickering with g_Timer
+        if (g_Timer & 2) {
+            clut = 0x196;
+        } else {
+            clut = 0x193;
+        }
     } else {
-        clut = 0x193;
+        clut = 0x196;
     }
 
     // Thousands digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_Status.hearts / 1000) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = ((g_Status.hearts / 1000) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos;
-    prim->x1 = prim->x3 = statXPos + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1252,10 +1268,12 @@ void DrawHudSubweapon() {
     }
     // Hundreds digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_Status.hearts / 100) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_Status.hearts / 100) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + 4;
-    prim->x1 = prim->x3 = statXPos + 0xC;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1264,20 +1282,25 @@ void DrawHudSubweapon() {
     }
     // Tens digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_Status.hearts / 10) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_Status.hearts / 10) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + 8;
-    prim->x1 = prim->x3 = statXPos + 0x10;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
+        leading_zeros--;
         prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_Status.hearts % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = statXPos + 0xC;
-    prim->x1 = prim->x3 = statXPos + 0x14;
+    prim->u0 = ((g_Status.hearts % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
+    prim->x0 = prim->x2 = statXPos + 12;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->clut = clut;
 }
