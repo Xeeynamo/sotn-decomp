@@ -3,13 +3,82 @@
 
 #define HUD_NUM_SPRITES 14
 
+u8 g_HudSpriteX[HUD_NUM_SPRITES] = {
+    90, 90, 90, 34, 2, 31, 3, 9, 15, 21, 59, 63, 67, 71,
+};
+u8 g_HudSpriteY[HUD_NUM_SPRITES] = {
+    25, 25, 25, 22, 19, 26, 33, 33, 33, 33, 34, 34, 34, 34,
+};
+u8 g_HudSpriteU[HUD_NUM_SPRITES] = {
+    0x00, 0x10, 0x68, 0x20, 0x00, 0x70, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+u8 g_HudSpriteV[HUD_NUM_SPRITES] = {
+    0x20, 0x20, 0x00, 0x00, 0x00, 0x00, 0x20,
+    0x20, 0x20, 0x20, 0x18, 0x18, 0x18, 0x18,
+};
+u8 g_HudSpriteW[HUD_NUM_SPRITES] = {
+    16, 16, 8, 72, 32, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+};
+u8 g_HudSpriteH[HUD_NUM_SPRITES] = {
+    16, 16, 8, 24, 32, 56, 16, 16, 16, 16, 8, 8, 8, 8,
+};
+u16 g_HudSpriteClut[HUD_NUM_SPRITES] = {
+    0x0173, 0x0175, 0x0170, 0x0172, 0x0171, 0x0174, 0x0171,
+    0x0171, 0x0171, 0x0171, 0x0196, 0x0196, 0x0196, 0x0196,
+};
+u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
+    DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
+    0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
+};
+
 extern PlayerHud g_PlayerHud;
 extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
 extern s32 D_8013B5E8;
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/86A0", DrawRichterHudSubweapon);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/86A0", func_psp_090E6058);
+void DrawHud(void) {
+    Primitive* prim;
+    s32 i;
+
+    D_8013B5E8 = 0;
+    g_PlayerHud.displayHP = g_Status.hp;
+    g_HealingMailTimer[0] = 0;
+
+    if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
+        DrawRichterHud();
+        return;
+    }
+
+    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, HUD_NUM_SPRITES);
+    prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+
+    for (i = 0; prim != NULL; i++, prim = prim->next) {
+        SetTexturedPrimRect(
+            prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteW[i],
+            g_HudSpriteH[i], g_HudSpriteU[i], g_HudSpriteV[i]);
+        prim->tpage = 0x1F;
+        prim->clut = g_HudSpriteClut[i];
+        prim->priority = 0x1F0;
+        prim->drawMode = g_HudSpriteBlend[i];
+
+        if (i == 5) {
+            SetPrimRect(prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteH[i],
+                        g_HudSpriteW[i]);
+            prim->y0 = prim->y2;
+            prim->x1 = prim->x0;
+            prim->x2 = prim->x3;
+            prim->y3 = prim->y1;
+        }
+
+        if (i == 1) {
+            prim->p1 = 0;
+            prim->p2 = (rand() & 0xFF) + 8;
+            prim->p3 = (7 & rand()) + 1;
+        }
+    }
+}
 
 u16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,

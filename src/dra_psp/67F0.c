@@ -5,7 +5,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E3170);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E31F8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E4370);
+INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", DrawRichterHud);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E4828);
 

@@ -977,8 +977,8 @@ void DrawHud(void) {
     s32 i;
 
     D_8013B5E8 = 0;
-    g_HealingMailTimer[0] = 0;
     g_PlayerHud.displayHP = g_Status.hp;
+    g_HealingMailTimer[0] = 0;
 
     if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
         DrawRichterHud();
@@ -987,11 +987,8 @@ void DrawHud(void) {
 
     g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
-    if (!prim) {
-        return;
-    }
 
-    for (i = 0; prim != NULL; i++) {
+    for (i = 0; prim != NULL; i++, prim = prim->next) {
         SetTexturedPrimRect(
             prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteW[i],
             g_HudSpriteH[i], g_HudSpriteU[i], g_HudSpriteV[i]);
@@ -1011,11 +1008,9 @@ void DrawHud(void) {
 
         if (i == 1) {
             prim->p1 = 0;
-            prim->p2 = rand() + 8;
+            prim->p2 = (rand() & 0xFF) + 8;
             prim->p3 = (7 & rand()) + 1;
         }
-
-        prim = prim->next;
     }
 }
 
