@@ -62,7 +62,6 @@
 | dra    | func_psp_091119E0             |       20 |          3 |        |                                 |       |
 | dra    | SetPlayerAnim                 |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A58           |       21 |          1 |        |                                 |       |
-| st0    | Random                        |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | dra    | func_8010FAF4                 |       21 |          2 |        |                                 |       |
 | dra    | func_psp_090E8880             |       21 |          2 |        |                                 |       |
 | dra    | func_psp_090F0E10             |       21 |          3 |        |                                 |       |
@@ -320,7 +319,6 @@
 | dra    | func_psp_090E8518             |       78 |         12 |        |                                 |       |
 | dra    | func_psp_09141D28             |       78 |         13 |        |                                 |       |
 | dra    | func_psp_09141E30             |       78 |         13 |        |                                 |       |
-| st0    | UpdateStageEntitiesAlt        |       79 |          9 |        |                                 |       |
 | dra    | func_psp_090EBFA8             |       80 |          3 |        |                                 |       |
 | dra    | func_psp_090E2F60             |       81 |         11 | Yes    |                                 |       |
 | dra    | func_psp_090F76D0             |       82 |          9 |        |                                 |       |
@@ -509,7 +507,6 @@
 | st0    | func_801A8328                 |      262 |         27 |        |                                 |       |
 | dra    | func_psp_09118408             |      264 |         28 |        |                                 |       |
 | st0    | func_801A805C                 |      266 |         33 |        |                                 |       |
-| st0    | UpdateStageEntities           |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | func_psp_09138240             |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8             |      270 |         27 |        |                                 |       |
 | st0    | func_801B101C                 |      275 |         24 |        |                                 |       |
