@@ -174,7 +174,7 @@ static void CollectLifeVessel(void) {
 
 // MAD doesn't take an argument, others do
 #if defined VERSION_BETA || STAGE == STAGE_ST0
-static void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+static void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
 // Extra unused function, putting it in this same if-block.
 Entity* func_801939C4(void) {
     g_CurrentEntity->step = 3;
@@ -182,7 +182,7 @@ Entity* func_801939C4(void) {
     return g_CurrentEntity;
 }
 #else
-#include "destroy_current_entity.h"
+#include "collect_dummy.h"
 #endif
 
 #include "entity_prize_drop.h"

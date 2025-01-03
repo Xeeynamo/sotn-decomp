@@ -1,20 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../st0/st0.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924B7E0);
+extern u8* g_SubweaponAnimPrizeDrop[];
+extern u8* g_MariaSubweaponAnimPrizeDrop[];
+extern u16 aluric_subweapons_id[];
+extern u16 aluric_subweapons_idx[];
+extern u16 maria_subweapons_id[];
+extern s16 D_80180EB8[];
+extern s8 c_HeartPrizes[2];
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924B8B8);
+#include "../prize_drop_fall.h"
+#include "../prize_drop_fall2.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BA38);
+void CollectHeart(u16 goldSize);
+INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", CollectHeart);
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BB08);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BBA0);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", func_pspeu_0924BD58);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", EntityPrizeDrop);
-
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", EntityExplosion);
+#include "../collect_gold.h"
+#include "../collect_subweapon.h"
+NOP;
+#include "../collect_dummy.h"
+#include "../entity_prize_drop.h"
+#include "../entity_explosion.h"
+#include "../blink_item.h"
 
 INCLUDE_ASM("st/st0_psp/psp/st0_psp/e_collect", EntityEquipItemDrop);
