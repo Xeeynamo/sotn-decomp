@@ -447,7 +447,6 @@
 | dra    | func_psp_0911DF30             |      161 |         14 |        |                                 |       |
 | dra    | func_psp_0911E188             |      161 |         19 |        |                                 |       |
 | dra    | func_psp_09128580             |      162 |         17 |        |                                 |       |
-| dra    | func_psp_090E6058             |      164 |         14 |        | https://decomp.me/scratch/Kxg0N | 0.99  |
 | dra    | func_psp_0910EA68             |      164 |         24 |        |                                 |       |
 | dra    | func_psp_09139068             |      166 |         16 |        |                                 |       |
 | dra    | func_psp_090E81A8             |      166 |         19 |        |                                 |       |
@@ -526,7 +525,7 @@
 | dra    | func_psp_091367A0             |      305 |         25 |        | https://decomp.me/scratch/ons5L | 1.0   |
 | st0    | func_pspeu_0924ADF0           |      307 |         26 |        |                                 |       |
 | dra    | func_psp_09112E48             |      309 |         43 | Yes    |                                 |       |
-| dra    | func_psp_090E4370             |      310 |         19 |        | https://decomp.me/scratch/BdOjZ | 0.993 |
+| dra    | DrawRichterHud                |      310 |         19 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | dra    | func_psp_090DD688             |      310 |         46 | Yes    |                                 |       |
 | dra    | func_psp_09122008             |      312 |         24 |        |                                 |       |
 | dra    | func_psp_09142408             |      312 |         36 | Yes    |                                 |       |
