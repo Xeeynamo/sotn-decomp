@@ -341,6 +341,17 @@ def resolve_ovl_export(name: str, ovl_name: str):
     return name.replace("OVL_EXPORT(", f"{ovl_prefix}_").rstrip(")")
 
 
+##### YAML UTILITIES
+class HexInt(int):
+    pass
+
+
+def representer(dumper, data):
+    return yaml.ScalarNode("tag:yaml.org,2002:int", hex(data))
+
+
+yaml.add_representer(HexInt, representer)
+
 ##### SPLAT CONFIG UTILITIES
 
 
@@ -540,6 +551,9 @@ def make_config_psp(ovl_path: str, version: str):
                 rodata_start = -1
     if rodata_start == -1:
         rodata_start = data_start + data_len
+
+    # set global vram address to allow mapping of global symbols
+    config["options"]["global_vram_start"] = HexInt(0x08000000)
 
     ovl_name = config["options"]["basename"]
     splat_config_path = f"config/splat.{version}.{ovl_name}.yaml"
