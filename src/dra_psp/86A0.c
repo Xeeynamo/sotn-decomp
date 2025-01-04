@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
+#include "../dra/dra_bss.h"
 
 #define HUD_NUM_SPRITES 14
 
@@ -34,9 +35,262 @@ u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
 
 extern PlayerHud g_PlayerHud;
 extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
-extern s32 D_8013B5E8;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/86A0", DrawRichterHudSubweapon);
+// Need these for now, they might be changed later.
+extern Primitive* func_psp_090E4CD0(Primitive*);
+extern Primitive* func_psp_090E4828(Primitive*);
+void DrawRichterHudSubweapon(void) {
+    s32 i;
+    s32 temp_s4;
+    s32 temp_a0;
+    s32 temp_s2;
+    Primitive* altPrim;
+    Primitive* prim;
+
+    if (D_8003C744 == 5) {
+        prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        prim = &g_PrimBuf[g_PlayerHud.primIndex2];
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        return;
+    }
+    if ((D_8003C744 == 1) && (g_PlayerHud.unk28 == 0)) {
+        g_PlayerHud.unk10 = g_Entities[80].hitPoints;
+        g_PlayerHud.unk0C = g_PlayerHud.unk10;
+        // Not really sure what the point of this is.
+        g_PlayerHud.unk1C = (g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10;
+        g_PlayerHud.unk20 = 100;
+        g_PlayerHud.unk28 = 1;
+        D_80139008 = g_Status.hearts;
+    }
+    if ((D_8003C744 == 2) && (g_PlayerHud.unk28 == 1)) {
+        g_PlayerHud.unk10 = g_Entities[85].hitPoints;
+        g_PlayerHud.unk0C = g_PlayerHud.unk10;
+        g_PlayerHud.unk28 = 2;
+    }
+    if (g_PlayerHud.unk28 != 100) {
+        if (D_8003C744 == 1) {
+            g_PlayerHud.unk0C = g_Entities[80].hitPoints;
+        }
+        if (D_8003C744 == 2 || D_8003C744 == 3) {
+            g_PlayerHud.unk0C = g_Entities[85].hitPoints;
+        }
+        if (g_PlayerHud.unk0C < 0) {
+            g_PlayerHud.unk0C = 0;
+        }
+    }
+    if (g_PlayerHud.displayHP < g_Status.hp) {
+        g_PlayerHud.displayHP++;
+        D_801397FC = 1;
+    }
+    if (g_PlayerHud.displayHP > g_Status.hp) {
+        g_PlayerHud.displayHP--;
+    }
+    if (D_8003C744 == 1) {
+        if (g_PlayerHud.unk1C <
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
+            g_PlayerHud.unk1C++;
+        }
+        if (g_PlayerHud.unk1C >
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
+            g_PlayerHud.unk1C--;
+        }
+    }
+    if (D_8003C744 == 2 || D_8003C744 == 3) {
+        if (g_PlayerHud.unk1C != 0) {
+            g_PlayerHud.unk1C -= 1;
+        }
+        if (g_PlayerHud.unk20 <
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
+            g_PlayerHud.unk20++;
+        }
+        if (g_PlayerHud.unk20 >
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
+            g_PlayerHud.unk20--;
+        }
+    }
+    if ((D_8003C744 != 0) && (g_PlayerHud.unk14 != 0)) {
+        g_PlayerHud.unk14--;
+    }
+    prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+    prim = prim->next;
+    SetPrimRect(prim, g_PlayerHud.unk14 + 0xD8, 0x16, 0x20, 0x60);
+    if ((D_8003C744 == 3) && (g_PlayerHud.unk20 == 0) &&
+        ((g_PlayerHud.unk24 == 0) || (g_PlayerHud.unk24 >= 0x33U))) {
+        prim->drawMode = DRAW_HIDE;
+        // The i variable is not used, but is set up in the for-loop.
+        for (altPrim = &g_PrimBuf[g_PlayerHud.primIndex2], i = 0;
+             altPrim != NULL; i++, altPrim = altPrim->next) {
+            if (altPrim->p2) {
+                continue;
+            }
+            altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
+            if (altPrim->p1) {
+                altPrim->p1--;
+                continue;
+            }
+            temp_a0 = rand() & 1;
+            altPrim->y0 += temp_a0;
+            altPrim->y1 += temp_a0;
+            temp_a0 = (rand() & 3) + 1;
+            altPrim->y2 += temp_a0;
+            altPrim->y3 += temp_a0;
+            altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
+            if (altPrim->r2 >= 3) {
+                temp_s2 = altPrim->r2 - 3;
+                func_801071CC(altPrim, temp_s2, 2);
+                func_801071CC(altPrim, temp_s2, 3);
+            }
+            if (altPrim->y2 >= 0x100) {
+                altPrim->drawMode =
+                    DRAW_ABSPOS | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                if (altPrim->r0) {
+                    temp_s2 = altPrim->r0--;
+                    func_801071CC(altPrim, temp_s2, 0);
+                    func_801071CC(altPrim, temp_s2, 1);
+                }
+                if (altPrim->y2 >= 0x180) {
+                    altPrim->drawMode =
+                        DRAW_ABSPOS | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                        DRAW_COLORS | DRAW_TRANSP;
+                }
+            }
+            if (altPrim->y2 >= 0x200) {
+                altPrim->drawMode = DRAW_HIDE;
+                altPrim->p2 = 1;
+            }
+        }
+    }
+
+    prim = prim->next;
+    temp_s4 = (g_PlayerHud.displayHP * 0x5B) / g_Status.hpMax;
+    prim->y0 = prim->y1 = prim->y2 - temp_s4;
+    prim = prim->next;
+    SetPrimRect(prim, g_PlayerHud.unk14 + 0xE4, 0x70, 9, 3);
+    temp_s4 = (g_PlayerHud.unk1C * 0x5B) / 100;
+    if (temp_s4 < 0) {
+        temp_s4 = 0;
+    }
+    prim->y0 = prim->y1 = prim->y2 - temp_s4;
+    if (!(prim->p2--)) {
+        prim->p1++;
+        if (prim->p1 == 9) {
+            prim->p1 = 0;
+        }
+        if (D_8003C744 == 2) {
+            prim->p2 = 1;
+        } else {
+            prim->p2 = 4;
+        }
+        prim->clut = prim->p1 + 0x103;
+    }
+    temp_s2 = prim->clut;
+    prim = prim->next;
+    SetPrimRect(prim, g_PlayerHud.unk14 + 0xEC, 0x70, 9, 3);
+    temp_s4 = (g_PlayerHud.unk20 * 0x5B) / 100;
+    if (temp_s4 > 0x5B) {
+        temp_s4 = 0x5B;
+    }
+    prim->y0 = prim->y1 = prim->y2 - temp_s4;
+    prim->clut = temp_s2;
+    prim = prim->next;
+
+    prim->u0 = (g_Status.hearts / 10) * 8;
+    prim->v0 = 0x60;
+    prim->u1 = ((g_Status.hearts / 10) * 8) + 8;
+    prim->v1 = 0x60;
+    prim->u2 = (g_Status.hearts / 10) * 8;
+    prim->v2 = 0x68;
+    prim->u3 = ((g_Status.hearts / 10) * 8) + 8;
+    prim->v3 = 0x68;
+    // Perhaps flashes the heart numbers when you have enough for a crash
+    if (g_Player.status & PLAYER_STATUS_UNK200000) {
+        if (g_Timer & 2) {
+            prim->clut = 0x103;
+        } else {
+            prim->clut = 0x100;
+        }
+    } else {
+        prim->clut = 0x103;
+    }
+    altPrim = prim;
+    prim = prim->next;
+    prim->u0 = (g_Status.hearts % 10) * 8;
+    prim->v0 = 0x60;
+    prim->u1 = ((g_Status.hearts % 10) * 8) + 8;
+    prim->v1 = 0x60;
+    prim->u2 = (g_Status.hearts % 10) * 8;
+    prim->v2 = 0x68;
+    prim->u3 = ((g_Status.hearts % 10) * 8) + 8;
+    prim->v3 = 0x68;
+
+    prim->clut = altPrim->clut;
+    prim->drawMode = altPrim->drawMode;
+    prim = prim->next;
+
+    if (g_PlayableCharacter == PLAYER_MARIA) {
+        prim = func_psp_090E4CD0(prim);
+    } else {
+        prim = func_psp_090E4828(prim);
+    }
+    prim = prim->next;
+
+    if (g_PlayerHud.unk24 == 0) {
+        return;
+    }
+    // This acts like a switch, but does not appear to match if you try one.
+    // Checking != 0 is redundant due to the prior if-block.
+    if (g_PlayerHud.unk24 != 0 && g_PlayerHud.unk24 < 9) {
+        prim->clut = g_PlayerHud.unk24 + 0x102;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 9) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0);
+        prim->clut = 0x103;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 10) {
+        SetTexturedPrimRect(prim, 0x21, 0x1C, 0x40, 8, 0x40, 0x10);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 11) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0x18);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 12) {
+        SetTexturedPrimRect(prim, 0x21, 0x14, 0x40, 0x18, 0x40, 0x40);
+        prim->clut = 0x112;
+        g_PlayerHud.unk24++;
+    } else if (13 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 20) {
+        prim->clut = 0x112 - (g_PlayerHud.unk24 - 13);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 21) {
+    } else if (51 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 58) {
+        prim->clut = g_PlayerHud.unk24 + 0xD8;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 59) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0x18);
+        prim->clut = 0x103;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 60) {
+        SetTexturedPrimRect(prim, 0x21, 0x1C, 0x40, 8, 0x40, 0x10);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 61) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 62) {
+        SetTexturedPrimRect(prim, 0x21, 0x14, 0x40, 0x18, 0x40, 0x28);
+        prim->clut = 0x10A;
+        g_PlayerHud.unk24++;
+    } else if (63 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 70) {
+        prim->clut = 0x10A - (g_PlayerHud.unk24 - 63);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 71) {
+        g_PlayerHud.unk24 = 0;
+    }
+}
 
 void DrawHud(void) {
     Primitive* prim;
