@@ -27,17 +27,17 @@ options:
     - .bss
   ld_bss_is_noload: true
   disasm_unknown: true
+  global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
 sha1: 2ba697c152e240ee0d69619f4a460d145fae04c0
-
 segments:
   - [0x0, bin, mwo_header]
   - name: dra
     type: code
     start: 0x80
-    vram:  0x090DCA00
+    vram: 0x090DCA00
     bss_size: 0x6BF80
     align: 128
     subalign: 8
@@ -214,5 +214,5 @@ segments:
       - [0xEEC58, .rodata, dra_psp/5DA20]
       - [0xEECA8, .rodata, dra_psp/5EC50]
       - [0xEED48, .rodata, dra_psp/65790]
-      - {type: bss, vram: 0x91CB700}
+      - { type: bss, vram: 0x91CB700 }
   - [0xEED80]
