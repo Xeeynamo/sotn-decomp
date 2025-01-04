@@ -77,6 +77,8 @@ segments:
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]
       - [0x1B700, data]
+      - [0x41BF0, .data, st0_psp/e_lock_camera]
+      - [0x41C08, data]
       - [0x41C20, .data, st0_psp/st_update]
       - [0x41C50, data]
       - [0x42308, data, e_room_fg]
