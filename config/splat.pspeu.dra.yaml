@@ -52,7 +52,6 @@ segments:
       - [0x65E0, c, dra_psp/65E0]
       - [0x66B0, c, dra_psp/66B0]
       - [0x67F0, c, dra_psp/67F0]
-      - [0x86A0, c, dra_psp/86A0]
       - [0xA710, c, dra_psp/A710]
       - [0xAA50, c, dra_psp/AA50]
       - [0xB240, c, dra_psp/B240]
@@ -175,8 +174,8 @@ segments:
       - [0x67E90, c, dra_psp/67E90]
       - [0x680C0, c, dra_psp/680C0]
       - [0x68D80, data]
-      - [0x6A818, .data, dra_psp/86A0] # DrawHud arrays
-      - [0x6A8B8, .data, dra_psp/86A0] # Subwpn clut/u/v
+      - [0x6A818, .data, dra_psp/67F0] # DrawHud arrays
+      - [0x6A8B8, .data, dra_psp/67F0] # Subwpn clut/u/v
       - [0x6A8F8, data]
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
