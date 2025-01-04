@@ -1,13 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 bool PlayerIsWithinHitbox(Entity* self) {
-    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
+    s16 posXAbs;
+    s16 posXDiff;
+    s16 posYAbs;
+    s16 posYDiff;
 
-    diffX = abs(diffX);
-    if (self->hitboxWidth >= diffX) {
-        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
-        diffX = abs(diffX);
-        return self->hitboxHeight >= diffX;
-    } else {
+    posXDiff = PLAYER.posX.i.hi - self->posX.i.hi;
+    posXAbs = abs(posXDiff);
+    if (posXAbs > self->hitboxWidth) {
         return false;
     }
+
+    posYDiff = PLAYER.posY.i.hi - self->posY.i.hi;
+    posYAbs = abs(posYDiff);
+    if (posYAbs > self->hitboxHeight) {
+        return false;
+    }
+    return true;
 }
