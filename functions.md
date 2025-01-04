@@ -467,7 +467,6 @@
 | dra    | func_psp_09138DA0             |      197 |         41 |        |                                 |       |
 | dra    | func_psp_0910E4B8             |      198 |         34 | Yes    |                                 |       |
 | dra    | func_psp_090DE7D0             |      200 |         16 |        |                                 |       |
-| dra    | func_psp_090E7150             |      200 |         22 | Yes    | https://decomp.me/scratch/oAM77 | 0.977 |
 | dra    | func_psp_09108E48             |      204 |         31 |        |                                 |       |
 | dra    | func_psp_090EF490             |      205 |         22 |        |                                 |       |
 | dra    | func_psp_0911B928             |      206 |         24 |        | https://decomp.me/scratch/u2tfV | 0.995 |
