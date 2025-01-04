@@ -303,7 +303,7 @@
 | dra    | BatFormFinished               |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40             |       72 |          5 |        |                                 |       |
 | dra    | func_psp_09128978             |       72 |          7 |        |                                 |       |
-| st0    | PlayerIsWithinHitbox          |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.93  |
+| st0    | PlayerIsWithinHitbox          |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
 | dra    | func_psp_09136D18             |       72 |         14 |        |                                 |       |
 | dra    | func_psp_090DFED8             |       73 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD78             |       73 |          7 |        |                                 |       |
@@ -340,7 +340,7 @@
 | dra    | func_psp_090EC248             |       88 |          3 |        |                                 |       |
 | st0    | EntityDraculaBody             |       88 |         10 |        |                                 |       |
 | st0    | EntitySecretStairsCeiling     |       88 |         14 |        |                                 |       |
-| dra    | func_psp_090E4828             |       89 |          7 |        |                                 |       |
+| dra    | func_psp_090E4828             |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
 | dra    | TimeAttackController          |       89 |          8 |        |                                 |       |
 | dra    | func_psp_090FF608             |       89 |         10 |        |                                 |       |
 | dra    | func_psp_0910E378             |       89 |         11 |        |                                 |       |
@@ -455,9 +455,9 @@
 | dra    | func_psp_090F2B20             |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800             |      170 |         17 |        |                                 |       |
 | dra    | func_psp_09111F58             |      172 |         25 |        |                                 |       |
-| st0    | EntityLockCamera              |      173 |         13 |        |                                 |       |
+| st0    | EntityLockCamera              |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.98  |
 | dra    | func_psp_09140960             |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
-| dra    | func_psp_090E4968             |      178 |          3 |        |                                 |       |
+| dra    | func_psp_090E4968             |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | st0    | EntityDraculaGlass            |      179 |         30 |        |                                 |       |
 | dra    | func_8010DBFC                 |      183 |         17 |        | https://decomp.me/scratch/xuNg5 | 1.0   |
 | dra    | func_psp_09139428             |      185 |         25 |        |                                 |       |
@@ -483,7 +483,7 @@
 | dra    | DecompressData                |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
 | dra    | func_psp_0910ECC0             |      219 |         43 |        |                                 |       |
 | dra    | func_psp_091127A0             |      221 |         35 |        |                                 |       |
-| dra    | func_psp_090E4CD0             |      224 |         10 |        |                                 |       |
+| dra    | func_psp_090E4CD0             |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | dra    | func_psp_090E08D8             |      225 |          7 |        |                                 |       |
 | dra    | func_psp_0910B768             |      232 |         32 |        |                                 |       |
 | dra    | func_psp_09108988             |      235 |         31 |        |                                 |       |
