@@ -302,7 +302,6 @@
 | dra    | BatFormFinished               |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40             |       72 |          5 |        |                                 |       |
 | dra    | func_psp_09128978             |       72 |          7 |        |                                 |       |
-| st0    | PlayerIsWithinHitbox          |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
 | dra    | func_psp_09136D18             |       72 |         14 |        |                                 |       |
 | dra    | func_psp_090DFED8             |       73 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD78             |       73 |          7 |        |                                 |       |
@@ -454,7 +453,6 @@
 | dra    | func_psp_090F2B20             |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800             |      170 |         17 |        |                                 |       |
 | dra    | func_psp_09111F58             |      172 |         25 |        |                                 |       |
-| st0    | EntityLockCamera              |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra    | func_psp_09140960             |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
 | dra    | func_psp_090E4968             |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | st0    | EntityDraculaGlass            |      179 |         30 |        |                                 |       |
