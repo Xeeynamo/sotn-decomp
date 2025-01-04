@@ -152,7 +152,7 @@
 | dra    | LoadRoomLayer                 |       36 |          4 |        |                                 |       |
 | dra    | func_psp_0910BC00             |       36 |          4 |        |                                 |       |
 | dra    | func_psp_091040A0             |       36 |          5 |        |                                 |       |
-| dra    | func_psp_0913F7F8             |       36 |          5 |        |                                 |       |
+| dra    | func_801071CC                 |       36 |          5 |        |                                 |       |
 | dra    | func_psp_090F2178             |       37 |          2 |        |                                 |       |
 | dra    | func_psp_090ECF60             |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EEDF8             |       37 |          3 |        |                                 |       |
@@ -455,7 +455,7 @@
 | dra    | func_psp_090F2B20             |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800             |      170 |         17 |        |                                 |       |
 | dra    | func_psp_09111F58             |      172 |         25 |        |                                 |       |
-| st0    | EntityLockCamera              |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.98  |
+| st0    | EntityLockCamera              |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.989 |
 | dra    | func_psp_09140960             |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
 | dra    | func_psp_090E4968             |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | st0    | EntityDraculaGlass            |      179 |         30 |        |                                 |       |
@@ -625,7 +625,6 @@
 | dra    | func_psp_0912F7F8             |     1022 |         72 |        |                                 |       |
 | dra    | func_psp_09109200             |     1045 |        179 |        |                                 |       |
 | st0    | PrologueScroll                |     1058 |        112 | Yes    |                                 |       |
-| dra    | DrawRichterHudSubweapon       |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | st0    | EntityCutscenePhotograph      |     1164 |         88 | Yes    |                                 |       |
 | dra    | ControlBatForm                |     1173 |        197 | Yes    | https://decomp.me/scratch/PhWZ0 | 0.974 |
 | dra    | func_80105428                 |     1174 |        181 |        | https://decomp.me/scratch/HtGSm | 0.708 |
