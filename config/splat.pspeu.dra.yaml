@@ -53,8 +53,6 @@ segments:
       - [0x66B0, c, dra_psp/66B0]
       - [0x67F0, c, dra_psp/67F0]
       - [0xA710, c, dra_psp/A710]
-      - [0xAA50, c, dra_psp/AA50]
-      - [0xB240, c, dra_psp/B240]
       - [0xBDE0, c, dra_psp/BDE0]
       - [0xC0B0, c, dra_psp/C0B0]
       - [0xEC60, c, dra_psp/EC60]
