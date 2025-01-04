@@ -21,6 +21,7 @@ DrawRichterHudSubweapon = 0x090E5020;
 DrawHud = 0x090E6058;
 DrawHudSubweapon = 0x090E62B8;
 func_800F087C = 0x090E7090;
+
 SetNextRoomToLoad = 0x090E73D0;
 func_800F0CD8 = 0x090E74E8;
 func_800F24F4 = 0x090E8B30;
