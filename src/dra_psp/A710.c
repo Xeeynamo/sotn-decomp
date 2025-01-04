@@ -11,14 +11,15 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
             return 0;
         }
         // All must match, otherwise we jump out.
-        if (phi_s1->x != chunkX || phi_s1->y != chunkY || phi_s1->stageId != g_StageId){
+        if (phi_s1->x != chunkX || phi_s1->y != chunkY ||
+            phi_s1->stageId != g_StageId) {
             continue;
         }
-        
-        if(phi_s1->eventId == TIMEATTACK_EVENT_INVALID){
+
+        if (phi_s1->eventId == TIMEATTACK_EVENT_INVALID) {
             return phi_s1->unk10 + 2;
         }
-        if(TimeAttackController(phi_s1->eventId, TIMEATTACK_GET_RECORD) == 0) {
+        if (TimeAttackController(phi_s1->eventId, TIMEATTACK_GET_RECORD) == 0) {
             return phi_s1->unk10 + 2;
         }
     }
