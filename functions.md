@@ -254,7 +254,6 @@
 | dra    | func_psp_090FF548             |       58 |          6 |        |                                 |       |
 | dra    | func_psp_09136E18             |       58 |          6 |        |                                 |       |
 | dra    | func_psp_090F88F0             |       58 |          9 |        |                                 |       |
-| dra    | func_psp_090E7090             |       58 |         10 |        | https://decomp.me/scratch/Qp5kH | 0.998 |
 | dra    | func_80134E64                 |       59 |          3 |        |                                 |       |
 | dra    | func_psp_090FF480             |       59 |         10 |        |                                 |       |
 | dra    | func_psp_09114438             |       59 |         10 |        |                                 |       |
@@ -420,7 +419,7 @@
 | dra    | func_psp_09134B20             |      135 |         13 |        |                                 |       |
 | dra    | func_psp_090EEFA8             |      136 |         11 |        |                                 |       |
 | dra    | func_psp_09141668             |      136 |         21 |        |                                 |       |
-| dra    | func_psp_090EB028             |      139 |          2 |        |                                 |       |
+| dra    | func_psp_090EB028             |      139 |          2 |        | https://decomp.me/scratch/tJnoh | 0.988 |
 | st0    | func_pspeu_092390C0           |      139 |          5 |        |                                 |       |
 | dra    | func_psp_090E7BC0             |      139 |         15 |        |                                 |       |
 | dra    | func_psp_091293E8             |      140 |         10 |        |                                 |       |
@@ -455,7 +454,7 @@
 | dra    | func_psp_090F2B20             |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800             |      170 |         17 |        |                                 |       |
 | dra    | func_psp_09111F58             |      172 |         25 |        |                                 |       |
-| st0    | EntityLockCamera              |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.989 |
+| st0    | EntityLockCamera              |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra    | func_psp_09140960             |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
 | dra    | func_psp_090E4968             |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | st0    | EntityDraculaGlass            |      179 |         30 |        |                                 |       |
@@ -631,7 +630,7 @@
 | wrp    | EntityRelicOrb                |     1185 |         87 | Yes    | https://decomp.me/scratch/V04Wm | 0.998 |
 | dra    | func_psp_09130B00             |     1188 |         81 |        | https://decomp.me/scratch/70r4s | 0.999 |
 | tt_000 | UpdateServantDefault          |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
-| dra    | func_psp_090E31F8             |     1203 |        134 |        |                                 |       |
+| dra    | func_psp_090E31F8             |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading              |     1203 |        196 |        |                                 |       |
 | st0    | ST0_EntityRedDoor             |     1247 |        112 | Yes    |                                 |       |
 | st0    | TestCollisions                |     1332 |        147 |        | https://decomp.me/scratch/53tjX | 0.706 |
