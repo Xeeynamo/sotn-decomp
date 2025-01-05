@@ -135,6 +135,7 @@ func_80106A28 = 0x0913EC20;
 LoadMonsterLibrarianPreview = 0x0913F780;
 func_801071CC = 0x0913F7F8;
 func_80107250 = 0x0913F860;
+func_801072DC = 0x0913F8D0;
 SetPrimRect = 0x0913F8D8;
 SetTexturedPrimRect = 0x0913F908;
 func_80131F68 = 0x09140610;
