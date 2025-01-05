@@ -478,7 +478,6 @@
 | dra    | DecompressData                |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
 | dra    | func_psp_0910ECC0             |      219 |         43 |        |                                 |       |
 | dra    | func_psp_091127A0             |      221 |         35 |        |                                 |       |
-| dra    | func_psp_090E4CD0             |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | dra    | func_psp_090E08D8             |      225 |          7 |        |                                 |       |
 | dra    | func_psp_0910B768             |      232 |         32 |        |                                 |       |
 | dra    | func_psp_09108988             |      235 |         31 |        |                                 |       |
