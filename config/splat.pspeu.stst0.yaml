@@ -81,6 +81,7 @@ segments:
       - [0x41C08, data]
       - [0x41C20, .data, st0_psp/st_update]
       - [0x41C50, data]
+      - [0x41F98, .data, st0_psp/collision]
       - [0x42308, data, e_room_fg]
       - [0x423A8, data]
       - [0x42400, .rodata, st0_psp/30030]
