@@ -74,7 +74,64 @@ void func_psp_090E4C90(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E4CD0);
+extern float func_89260AC(float);
+extern float func_89260D0(float);
+
+Primitive* func_psp_090E4CD0(Primitive* prim) {
+    float sp2C;
+    float sp28;
+    float sp24;
+    float sp20;
+    float sp1C;
+    float sp18;
+    float sp14;
+    float sp10;
+
+    s32 temp_s2;
+    u32 temp_s1;
+    u32 temp_s0;
+
+    if (D_psp_091474B8 >= 0) {
+        sp14 = func_89260AC((3.1415925f * D_psp_091474B8) / 10.0f);
+        sp10 = func_89260D0((3.1415925f * D_psp_091474B8) / 10.0f);
+
+        sp2C = 5.0f + (-5.0f * sp10);
+        sp28 = -(6.0f * sp14);
+        sp24 = 0.9f + (0.099999994f * sp10);
+
+        sp20 = 5.0f - (-5.0f * sp10);
+        sp1C = 6.0f * sp14;
+        sp18 = 0.9f - (0.099999994f * sp10);
+
+        temp_s1 = -127.0f + (63.5f * sp10);
+
+        temp_s0 = -127.0f - (63.5f * sp10);
+
+        D_psp_091474B8++;
+        if (D_psp_091474B8 >= 10) {
+            D_psp_091474B8 = -1;
+            temp_s2 = D_psp_091CDC80;
+            D_psp_091CDC80 = D_psp_091CDC88;
+            D_psp_091CDC88 = temp_s2;
+        }
+    }
+    if (D_psp_091474B8 < 0) {
+        sp2C = 0.0f;
+        sp28 = 0.0f;
+        sp24 = 1.0f;
+        temp_s1 = 0xFF;
+        sp20 = 10.0f;
+        sp1C = 0.0f;
+        sp18 = 0.8f;
+        temp_s0 = 0x80;
+    }
+    func_psp_090E4968(
+        prim, D_psp_091CDC80, (int)sp2C, (int)sp28, sp24, sp24, temp_s1);
+    prim = prim->next;
+    func_psp_090E4968(
+        prim, D_psp_091CDC88, (int)sp20, (int)sp1C, sp18, sp18, temp_s0);
+    return prim;
+}
 
 #define HUD_NUM_SPRITES 14
 
