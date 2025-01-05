@@ -45,7 +45,7 @@ segments:
       - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, .data, 2A218]
       - [0x89C, .data, 2A8DC]
-      - [0x908, .data, 2B0C8]
+      - [0x908, .data, title_card]
       - [0x90C, .data, 2C564]
       - [0xAA4, .data, 2DAC8]
       - [0x1568, .data, 30030]
@@ -116,8 +116,8 @@ segments:
       - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
-      - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
-      - [0x27B00, .rodata, 2B0C8] # EntityStageTitleCard
+      - [0x27AE0, .rodata, title_card] # EntityStageTitleFadeout
+      - [0x27B00, .rodata, title_card] # EntityStageTitleCard
       - [0x27B18, .rodata, 2C564] # func_801ABBBC
       - [0x27B40, .rodata, 2C564] # EntityDracula
       - [0x27B7C, .rodata, 2DAC8] # "charal %x\n"
@@ -140,7 +140,7 @@ segments:
       - [0x28984, c, cutscene]
       - [0x2A218, c]
       - [0x2A8DC, c]
-      - [0x2B0C8, c]
+      - [0xtitle_card, c]
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
