@@ -27,10 +27,10 @@ void EntityPrizeDrop(Entity* self) {
         AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
 #endif
     }
-#if defined(VERSION_PSP) || defined(VERSION_BETA) || STAGE == STAGE_ST0
-    if (self->step && self->step < 5 && self->hitFlags) {
-#else
+#if defined(VERSION_US) && STAGE != STAGE_ST0
     if (self->step > 1 && self->step < 5 && self->hitFlags) {
+#else
+    if (self->step && self->step < 5 && self->hitFlags) {
 #endif
         self->step = 5;
     }
