@@ -11,7 +11,45 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", DrawRichterHud);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E4828);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E4968);
+extern s32 D_psp_09147418[];
+
+void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
+                       float xScale, float yScale, s32 arg6) {
+    s32 x;
+    s32 y;
+    s32 w;
+    s32 h;
+    s32* data;
+
+    data = &D_psp_09147418[idx * 8];
+    x = (data[0] + 2 + xOffset) + (data[2] * (1.0f - xScale));
+    y = (data[1] + 22 + yOffset) + (data[3] * (1.0f - yScale));
+    w = data[2] * xScale;
+    h = data[3] * yScale;
+    prim->x0 = x;
+    prim->y0 = y;
+    prim->x1 = x + w;
+    prim->y1 = y;
+    prim->x2 = x;
+    prim->y2 = y + h;
+    prim->x3 = x + w;
+    prim->y3 = y + h;
+    prim->u0 = data[4];
+    prim->v0 = data[5];
+    prim->u1 = data[4] + data[2];
+    prim->v1 = data[5];
+    prim->u2 = data[4];
+    prim->v2 = data[5] + data[3];
+    prim->u3 = data[4] + data[2];
+    prim->v3 = data[5] + data[3];
+    func_80107250(prim, arg6 & 0xFF);
+    prim->tpage = data[6];
+    prim->clut = data[7];
+    prim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
+    if (prim->clut == 0x17F) {
+        prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
+    }
+}
 
 void func_psp_090E4C18(void) {
     if (D_psp_091474B8 < 0) {
