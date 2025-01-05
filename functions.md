@@ -539,7 +539,6 @@
 | dra    | func_psp_09138778             |      434 |         82 |        |                                 |       |
 | dra    | func_psp_09121970             |      443 |         38 |        | https://decomp.me/scratch/0wPjt | 0.995 |
 | dra    | func_psp_0913C160             |      450 |         49 | Yes    |                                 |       |
-| st0    | EntityStageTitleFadeout       |      456 |         31 | Yes    |                                 |       |
 | dra    | func_psp_0911BC28             |      457 |         29 |        |                                 |       |
 | dra    | func_psp_0911CAA8             |      457 |         38 |        |                                 |       |
 | dra    | func_psp_0913BAE0             |      464 |         52 | Yes    |                                 |       |
@@ -559,7 +558,6 @@
 | dra    | func_psp_09131CA8             |      555 |         41 |        | https://decomp.me/scratch/DqdmE | 0.936 |
 | dra    | func_psp_09127DC0             |      557 |         48 | Yes    |                                 |       |
 | st0    | EntityCutscene                |      557 |         84 | Yes    |                                 |       |
-| st0    | EntityStageTitleCard          |      559 |         43 | Yes    |                                 |       |
 | dra    | func_psp_09139B50             |      564 |         35 |        | https://decomp.me/scratch/tmILF | 0.998 |
 | dra    | func_psp_0910A198             |      565 |        106 |        | https://decomp.me/scratch/IXTZU | 0.986 |
 | dra    | RenderTilemap                 |      570 |         35 |        |                                 |       |
