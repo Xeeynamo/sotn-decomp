@@ -7,16 +7,8 @@ void CollectHeart(u16 arg0) {
     s8 heartPrizes[2];
     s8 mad_unknown[2];
 
-#if defined(VERSION_PSP)
-    heartPrizes[0] = c_HeartPrizes[0];
-    heartPrizes[1] = c_HeartPrizes[1];
-    mad_unknown[0] = c_HeartPrizes[0];
-    mad_unknown[1] = c_HeartPrizes[1];
-#else
     __builtin_memcpy(heartPrizes, c_HeartPrizes[0], 2);
     __builtin_memcpy(mad_unknown, c_HeartPrizes[2], 2);
-#endif
-
 #else
 #define heartPrizes c_HeartPrizes
 #endif
