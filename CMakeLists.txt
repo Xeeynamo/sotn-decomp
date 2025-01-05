@@ -369,7 +369,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/cutscene_data.c
     src/st/st0/2A218.c
     src/st/st0/2A8DC.c
-    src/st/st0/2B0C8.c
+    src/st/st0/title_card.c
     src/st/st0/2C564.c
     src/st/st0/2DAC8.c
     src/st/st0/30030.c

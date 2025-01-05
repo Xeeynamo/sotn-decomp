@@ -1,3 +1,4 @@
+g_PauseAllowed = 0x091CE580;
 SetGameState = 0x09237868;
 func_801B0058 = 0x092378A0;
 func_801B0180 = 0x092379F8;
@@ -140,6 +141,7 @@ explode_startFrame = 0x09279608;
 explode_lifetime = 0x09279610;
 g_eDamageDisplayClut = 0x09279978;
 eRoomForegroundInit = 0x092799B0;
+D_80180908 = 0x09279DA0;
 D_80180660 = 0x0927BAD8;
 g_LayoutObjVertical = 0x0927BAF0;
 g_LayoutObjHorizontal = 0x0927BAF8;
