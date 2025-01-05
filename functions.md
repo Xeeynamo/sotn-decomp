@@ -629,7 +629,6 @@
 | dra    | func_psp_090E31F8             |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading              |     1203 |        196 |        |                                 |       |
 | st0    | ST0_EntityRedDoor             |     1247 |        112 | Yes    |                                 |       |
-| st0    | TestCollisions                |     1332 |        147 |        | https://decomp.me/scratch/KITuv | 0.997 |
 | dra    | func_psp_0910BE88             |     1338 |        206 | Yes    |                                 |       |
 | st0    | EntityDracula                 |     1396 |        179 | Yes    |                                 |       |
 | dra    | func_psp_09114A38             |     1516 |        244 |        |                                 |       |
