@@ -140,7 +140,7 @@ segments:
       - [0x28984, c, cutscene]
       - [0x2A218, c]
       - [0x2A8DC, c]
-      - [0xtitle_card, c]
+      - [0x2B0C8, c, title_card]
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c]
