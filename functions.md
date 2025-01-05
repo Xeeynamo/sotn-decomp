@@ -80,7 +80,7 @@
 | dra    | func_psp_09117B78             |       24 |          2 |        |                                 |       |
 | dra    | func_psp_09104878             |       24 |          3 |        |                                 |       |
 | dra    | func_psp_09141440             |       24 |          4 |        |                                 |       |
-| dra    | func_psp_090E3128             |       24 |          4 |        |                                 |       |
+| dra    | func_psp_090E3128             |       24 |          4 |        | https://decomp.me/scratch/uQ5zc | 0.997 |
 | dra    | func_psp_09108938             |       25 |          1 |        |                                 |       |
 | dra    | func_psp_09136EE0             |       25 |          1 |        |                                 |       |
 | dra    | func_psp_090ED060             |       25 |          2 |        |                                 |       |
@@ -173,7 +173,7 @@
 | dra    | func_psp_0911EB00             |       40 |          2 |        |                                 |       |
 | dra    | func_psp_090ECFD8             |       40 |          4 |        |                                 |       |
 | dra    | func_psp_090F1D68             |       40 |          4 |        |                                 |       |
-| dra    | func_psp_090E3170             |       40 |          4 |        |                                 |       |
+| dra    | func_psp_090E3170             |       40 |          4 |        | https://decomp.me/scratch/XlTbE | 0.968 |
 | dra    | func_psp_0913D9B0             |       40 |          8 |        |                                 |       |
 | dra    | func_psp_09104958             |       41 |          1 |        |                                 |       |
 | dra    | func_psp_09113DE0             |       41 |          2 |        |                                 |       |
@@ -298,7 +298,7 @@
 | dra    | func_psp_090E8A30             |       71 |          5 |        |                                 |       |
 | dra    | func_psp_090F0220             |       71 |          7 |        |                                 |       |
 | dra    | func_psp_09142ED8             |       71 |          7 |        |                                 |       |
-| dra    | func_psp_090E3030             |       71 |         10 |        |                                 |       |
+| dra    | func_psp_090E3030             |       71 |         10 |        | https://decomp.me/scratch/ewhRs | 0.989 |
 | dra    | BatFormFinished               |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40             |       72 |          5 |        |                                 |       |
 | dra    | func_psp_09128978             |       72 |          7 |        |                                 |       |
@@ -318,7 +318,7 @@
 | dra    | func_psp_09141D28             |       78 |         13 |        |                                 |       |
 | dra    | func_psp_09141E30             |       78 |         13 |        |                                 |       |
 | dra    | func_psp_090EBFA8             |       80 |          3 |        |                                 |       |
-| dra    | func_psp_090E2F60             |       81 |         11 | Yes    |                                 |       |
+| dra    | func_psp_090E2F60             |       81 |         11 | Yes    | https://decomp.me/scratch/n90nV | 0.976 |
 | dra    | func_psp_090F76D0             |       82 |          9 |        |                                 |       |
 | dra    | func_psp_090FF298             |       82 |         11 |        |                                 |       |
 | dra    | func_psp_09141C10             |       82 |         15 |        |                                 |       |
@@ -454,7 +454,6 @@
 | dra    | func_psp_0911E800             |      170 |         17 |        |                                 |       |
 | dra    | func_psp_09111F58             |      172 |         25 |        |                                 |       |
 | dra    | func_psp_09140960             |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
-| dra    | func_psp_090E4968             |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | st0    | EntityDraculaGlass            |      179 |         30 |        |                                 |       |
 | dra    | func_8010DBFC                 |      183 |         17 |        | https://decomp.me/scratch/xuNg5 | 1.0   |
 | dra    | func_psp_09139428             |      185 |         25 |        |                                 |       |
@@ -630,7 +629,7 @@
 | dra    | func_psp_090E31F8             |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading              |     1203 |        196 |        |                                 |       |
 | st0    | ST0_EntityRedDoor             |     1247 |        112 | Yes    |                                 |       |
-| st0    | TestCollisions                |     1332 |        147 |        | https://decomp.me/scratch/53tjX | 0.706 |
+| st0    | TestCollisions                |     1332 |        147 |        | https://decomp.me/scratch/KITuv | 0.997 |
 | dra    | func_psp_0910BE88             |     1338 |        206 | Yes    |                                 |       |
 | st0    | EntityDracula                 |     1396 |        179 | Yes    |                                 |       |
 | dra    | func_psp_09114A38             |     1516 |        244 |        |                                 |       |
