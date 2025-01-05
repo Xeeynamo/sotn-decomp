@@ -9,9 +9,33 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E31F8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", DrawRichterHud);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E4828);
-
+extern s32 D_psp_091472F8[];
 extern s32 D_psp_09147418[];
+
+Primitive* func_psp_090E4828(Primitive* prim) {
+    s32* ptr;
+
+    if (D_psp_091CF698 == 0) {
+        prim->drawMode = DRAW_HIDE;
+    } else {
+        if (g_PlayableCharacter == PLAYER_MARIA) {
+            ptr = &D_psp_09147418[D_psp_091CF698 * 8];
+        } else {
+            ptr = &D_psp_091472F8[(D_psp_091CF698 - 1) * 8];
+        }
+        SetTexturedPrimRect(
+            prim, ptr[0] + 2, ptr[1] + 22, ptr[2], ptr[3], ptr[4], ptr[5]);
+        prim->tpage = ptr[6];
+        prim->clut = ptr[7];
+        prim->drawMode = DRAW_ABSPOS;
+        if (prim->clut == 0x17F) {
+            prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
+        }
+    }
+    prim = prim->next;
+    prim->drawMode = DRAW_HIDE;
+    return prim;
+}
 
 void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
                        float xScale, float yScale, s32 arg6) {
