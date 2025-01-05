@@ -24,7 +24,7 @@ extern u16 aluric_subweapons_id[];
 
 #include "../collect_life_vessel.h"
 
-#include "../destroy_current_entity.h"
+#include "../collect_dummy.h"
 
 INCLUDE_RODATA("st/cen/nonmatchings/e_collect", D_hd_8018D4F8);
 
