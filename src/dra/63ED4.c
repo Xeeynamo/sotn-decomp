@@ -1615,7 +1615,7 @@ void func_80107250(Primitive* prim, s32 colorIntensity) {
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
 
-void func_801072DC(POLY_GT4* poly) { func_80107250(poly, 0x80); }
+void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
     setRGB0(poly, 0, 0, 0);

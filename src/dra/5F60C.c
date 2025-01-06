@@ -579,21 +579,28 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     func_800F53A4();
 }
 
+#ifdef VERSION_PSP
+#define RIC_HUD_NUM_SPRITES 10
+#else
+#define RIC_HUD_NUM_SPRITES 9
+#endif
+
 void DrawRichterHud(void) {
+    s32 i;
     Primitive* prim;
 
-    g_PlayerHud.unk0C = 400;
-    g_PlayerHud.unk10 = 400;
     D_801397FC = 0;
     D_80139008 = 0;
     g_PlayerHud.unk28 = 0;
     D_8003C744 = 0;
+    g_PlayerHud.unk0C = 400;
+    g_PlayerHud.unk10 = 400;
     g_PlayerHud.unk14 = 48;
     g_PlayerHud.unk18 = 0;
+    g_PlayerHud.unk1C = g_PlayerHud.unk20 =
+        g_PlayerHud.unk0C * 100 / g_PlayerHud.unk10;
     g_PlayerHud.unk24 = 0;
-    g_PlayerHud.unk20 = 40000 / (u32)g_PlayerHud.unk0C;
-    g_PlayerHud.unk1C = 40000 / g_PlayerHud.unk10;
-    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, 9);
+    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, RIC_HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
@@ -654,6 +661,16 @@ void DrawRichterHud(void) {
     prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
+    // Extra HUD sprite on PSP! Should identify what this is.
+#ifdef VERSION_PSP
+    SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x102;
+    prim->priority = 0x1F0;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+#endif
+
     SetTexturedPrimRect(prim, 33, 20, 64, 24, 64, 40);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
@@ -661,23 +678,16 @@ void DrawRichterHud(void) {
     prim->drawMode = DRAW_ABSPOS;
 
     g_PlayerHud.primIndex2 = func_800EDD9C(4, 16);
-    prim = &g_PrimBuf[g_PlayerHud.primIndex2];
-    if (prim != 0) {
-        s32 u = 32;
-        s32 x = 216;
-        do {
-            SetTexturedPrimRect(prim, x, 22, 2, 96, u, 0);
-            func_801072DC(prim);
-            prim->tpage = 0x1B;
-            prim->clut = 0x100;
-            prim->priority = 0x1EE;
-            prim->drawMode = DRAW_HIDE;
-            prim->p1 = (rand() & 0x3F) + 1;
-            prim->p2 = 0;
-            prim = prim->next;
-            u += 2;
-            x += 2;
-        } while (prim != 0);
+    for (prim = &g_PrimBuf[g_PlayerHud.primIndex2], i = 0; prim != 0; i++,
+        prim = prim->next) {
+        SetTexturedPrimRect(prim, 216 + i * 2, 22, 2, 96, 32 + i * 2, 0);
+        func_801072DC(prim);
+        prim->tpage = 0x1B;
+        prim->clut = 0x100;
+        prim->priority = 0x1EE;
+        prim->drawMode = DRAW_HIDE;
+        prim->p1 = (rand() & 0x3F) + 1;
+        prim->p2 = 0;
     }
 }
 

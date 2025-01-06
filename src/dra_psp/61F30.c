@@ -13,6 +13,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_80107250);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_psp_0913F8C8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_psp_0913F8D0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_801072DC);
 
 #include "../set_prim_rect.h"

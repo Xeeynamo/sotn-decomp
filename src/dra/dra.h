@@ -465,7 +465,7 @@ extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
 
-void func_801072DC(POLY_GT4* poly);
+void func_801072DC(Primitive* prim);
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);

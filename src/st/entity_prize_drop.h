@@ -1,18 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
 // if self->params & 0x8000 then the item will not disappear
+// ST0 seems to contain the earliest known version of this entity.
+// MAD has some very minor enhancements that brings it closer to the US build,
+// such as Life/Heart upgrade drops.
+// US essentially adds castle flags for unique drops
+// PSP iterates on top of the US version by adding drops for Maria
+// PSP ST0 iterates on top of ST0 with the only change on CollectDummy params
 void EntityPrizeDrop(Entity* self) {
-    Collider collider;
     Primitive* prim;
     u16 itemId;
     s16 index;
     s32 primIndex;
-    s32 subWeaponId;
-    s32 subWeaponId_;
+    Collider collider;
 
     // if self->params & 0x8000 then the item will not disappear
     itemId = self->params & 0x7FFF;
     if (self->step) {
-#if defined(VERSION_PSP)
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
         if (g_PlayableCharacter == PLAYER_MARIA) {
             AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
         } else {
@@ -34,7 +39,7 @@ void EntityPrizeDrop(Entity* self) {
 #else
     self->palette = 0;
 #endif
-    if ((u8)self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
+    if (self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
         self->palette = 0x815F;
     }
     switch (self->step) {
@@ -43,14 +48,14 @@ void EntityPrizeDrop(Entity* self) {
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = DRAW_DEFAULT;
 #if STAGE == STAGE_ST0
-        if (itemId >= 23) {
+        if (itemId > 22) {
 #else
         if (itemId > 23) {
 #endif
             itemId = self->params = 0;
         }
 
-#if defined(VERSION_PSP)
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
         if (g_PlayableCharacter == PLAYER_MARIA && itemId >= 0xE &&
             itemId < 23) {
             switch (itemId) {
@@ -67,7 +72,7 @@ void EntityPrizeDrop(Entity* self) {
                 itemId = self->params = 17;
                 break;
             case 19:
-                itemId = 19; // causes a lot of regswaps
+                itemId = 19;
                 self->params = 19;
                 break;
             default:
@@ -76,17 +81,23 @@ void EntityPrizeDrop(Entity* self) {
             }
         }
 #endif
-        if (itemId >= 14 && itemId < 23
-#if defined(VERSION_PSP)
-            && g_PlayableCharacter != PLAYER_MARIA
-#endif
-        ) {
-            subWeaponId_ = aluric_subweapons_id[g_Status.subWeapon];
-            if (itemId == subWeaponId_) {
+
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+        if (itemId >= 14 && itemId < 23 &&
+            g_PlayableCharacter != PLAYER_MARIA) {
+            s32 subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
+            if (itemId == subWeaponId) {
                 itemId = 1;
                 self->params = 1;
             }
         }
+#else
+        if (itemId >= 14 && itemId < 23 &&
+            itemId == aluric_subweapons_id[g_Status.subWeapon]) {
+            itemId = 1;
+            self->params = 1;
+        }
+#endif
         if (!itemId || itemId == 2) {
             self->hitboxWidth = 4;
         }
@@ -97,7 +108,7 @@ void EntityPrizeDrop(Entity* self) {
             DestroyEntity(self);
         } else {
             self->step++;
-#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+#if !defined(VERSION_BETA) && STAGE != STAGE_ST0
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
@@ -177,10 +188,12 @@ void EntityPrizeDrop(Entity* self) {
             CollectHeartVessel();
 #endif
         } else if (itemId < 14) {
-#if defined VERSION_BETA || STAGE == STAGE_ST0
-            DestroyCurrentEntity();
+#if defined VERSION_BETA || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+            // this is only allowed in BETA PSX and ST0 PSX, not on ST0 PSP
+            // probably due to a compilation error fix
+            CollectDummy();
 #else
-            DestroyCurrentEntity(itemId);
+            CollectDummy(itemId);
 #endif
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
@@ -193,15 +206,16 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+#if !defined(VERSION_BETA) && STAGE != STAGE_ST0
     case 6:
 #endif
     case 7:
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
             if (itemId >= 14 && itemId < 23) {
-#if defined(VERSION_PSP)
+                s32 subWeaponId;
                 if (g_PlayableCharacter == PLAYER_MARIA) {
                     subWeaponId = maria_subweapons_id[g_Status.D_80097C40];
                     if (itemId == subWeaponId) {
@@ -215,14 +229,14 @@ void EntityPrizeDrop(Entity* self) {
                         self->params = 1;
                     }
                 }
-#else
-                subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
-                if (itemId == subWeaponId) {
-                    itemId = 1;
-                    self->params = 1;
-                }
-#endif
             }
+#else
+            if (itemId >= 14 && itemId < 23 &&
+                itemId == aluric_subweapons_id[g_Status.subWeapon]) {
+                itemId = 1;
+                self->params = 1;
+            }
+#endif
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
                 self->primIndex = primIndex;
@@ -232,12 +246,12 @@ void EntityPrizeDrop(Entity* self) {
                 prim->clut = 0x170;
 #if defined VERSION_BETA || STAGE == STAGE_ST0
                 prim->u0 = prim->u2 = 0;
-                prim->v0 = prim->v1 = 0;
                 prim->u1 = prim->u3 = 0x20;
+                prim->v0 = prim->v1 = 0;
                 prim->v2 = prim->v3 = 0x20;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 128;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 128;
 #else
                 prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
                 prim->u1 = prim->u3 = prim->v2 = prim->v3 = 0x20;
@@ -285,9 +299,9 @@ void EntityPrizeDrop(Entity* self) {
                 self->animCurFrame = 0;
             } else {
                 index = 32 - self->ext.equipItemDrop.unk8A;
-                prim->r0 = (prim->r1 = (prim->r2 = (prim->r3 -= 8)));
-                prim->g0 = (prim->g1 = (prim->g2 = (prim->g3 -= 8)));
-                prim->b0 = (prim->b1 = (prim->b2 = (prim->b3 -= 8)));
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 8;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 -= 8;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 -= 8;
             }
             prim->x0 = prim->x2 = self->posX.i.hi - index;
             prim->x1 = prim->x3 = self->posX.i.hi + index;
