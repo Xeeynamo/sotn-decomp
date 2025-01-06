@@ -5,8 +5,7 @@
 // BSS
 extern u32 D_8013799C;
 extern s32 D_801379A0;
-extern s32 D_801379A4;
-extern s32 D_801379A8;
+extern s32 D_801379A4[2];
 
 void func_801024DC(void) {
     Primitive* prim;
@@ -23,8 +22,8 @@ void func_801024DC(void) {
         prim = prim->next;
     }
 
-    D_801379A8 = 0;
-    D_801379A4 = 0;
+    D_801379A4[1] = 0;
+    D_801379A4[0] = 0;
 
     D_801379A0 = AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801379A0];
@@ -107,7 +106,7 @@ void func_801027C4(u32 arg0) {
             prim1 = prim1->next;
             prim1->x1 = 0;
             prim1->clut = 0;
-            D_801379A8 = arg0 + 1;
+            D_801379A4[1] = arg0 + 1;
         } while (0);
         break;
     case 1:
@@ -117,12 +116,12 @@ void func_801027C4(u32 arg0) {
     case 7:
         prim1->x1 = 0;
         prim1->clut = 0;
-        D_801379A4 = arg0 + 1;
+        D_801379A4[0] = arg0 + 1;
         break;
     case 4:
         prim1->x1 = 0xFF;
         prim1->clut = 1;
-        D_801379A4 = 2;
+        D_801379A4[0] = 2;
         do {
             prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
                 prim2->b0 = prim1->x1;

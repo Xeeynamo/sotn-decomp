@@ -126,8 +126,7 @@ s32 g_HealingMailTimer[1];
 // both 5D5BC.c and 627C4.c, maybe need another C file in between
 u32 D_8013799C;
 s32 D_801379A0;
-s32 D_801379A4;
-s32 D_801379A8;
+s32 D_801379A4[2];
 
 // 627C4.c, 63ED4.c
 Unkstruct_80102CD8 D_801379AC;
