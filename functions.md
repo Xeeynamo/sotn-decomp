@@ -3,8 +3,8 @@
 | dra    | func_psp_090ED058             |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090F1CE0             |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090FC4D8             |        7 |          1 |        |                                 |       |
+| dra    | func_801072DC                 |        7 |          1 |        |                                 |       |
 | dra    | func_psp_0913F8C8             |        7 |          1 |        |                                 |       |
-| dra    | func_psp_0913F8D0             |        7 |          1 |        |                                 |       |
 | dra    | func_psp_091088E0             |        9 |          1 |        |                                 |       |
 | dra    | func_8010E0A8                 |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09127480             |        9 |          1 |        |                                 |       |
@@ -512,7 +512,6 @@
 | dra    | func_psp_091367A0             |      305 |         25 |        | https://decomp.me/scratch/ons5L | 1.0   |
 | st0    | func_pspeu_0924ADF0           |      307 |         26 |        |                                 |       |
 | dra    | func_psp_09112E48             |      309 |         43 | Yes    |                                 |       |
-| dra    | DrawRichterHud                |      310 |         19 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | dra    | func_psp_090DD688             |      310 |         46 | Yes    |                                 |       |
 | dra    | func_psp_09122008             |      312 |         24 |        |                                 |       |
 | dra    | func_psp_09142408             |      312 |         36 | Yes    |                                 |       |
@@ -608,7 +607,7 @@
 | wrp    | EntityStageNamePopup          |      989 |         83 |        | https://decomp.me/scratch/U3Xj4 | 0.976 |
 | dra    | func_psp_0912F7F8             |     1022 |         72 |        |                                 |       |
 | dra    | func_psp_09109200             |     1045 |        179 |        |                                 |       |
-| st0    | PrologueScroll                |     1058 |        112 | Yes    |                                 |       |
+| st0    | PrologueScroll                |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | st0    | EntityCutscenePhotograph      |     1164 |         88 | Yes    |                                 |       |
 | dra    | ControlBatForm                |     1173 |        197 | Yes    | https://decomp.me/scratch/PhWZ0 | 0.974 |
 | dra    | func_80105428                 |     1174 |        181 |        | https://decomp.me/scratch/HtGSm | 0.708 |
