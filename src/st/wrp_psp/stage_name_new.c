@@ -5,12 +5,7 @@ void func_8928694(s32, void*);
 void func_89286CC(s8[], void*);
 void func_8928624(s32, void*);
 void func_892865C(s32, void*);
-void func_892880C(void*, s32[]);
 void func_892752C(void*, s32[]);
-void func_8928094(int);
-void func_89280A0(s32, s32);
-void func_892887C(s16[]);
-void func_8928ABC();
 
 void func_psp_09244020(Primitive* arg0) {
     s16 sp78[4];
@@ -50,17 +45,17 @@ void func_psp_09244020(Primitive* arg0) {
     }
     sp70[2] = LOH(arg0->next->tpage);
     func_8928694(sp70[2], &sp18[8]);
-    func_892880C(&sp18[8], sp60);
+    TransMatrix((MATRIX*)&sp18[8], (VECTOR*)sp60);
     if (arg0->p3 & 0x10) {
         sp60[0] = (s32)(s16)arg0->next->x2;
         sp60[1] = (s32)(s16)arg0->next->y2;
         sp60[2] = 0x1000;
         func_892752C(&sp18[8], sp60);
     }
-    func_892879C(&sp18[8]);
-    func_892882C(&sp18[8]);
-    func_8928094(0x400);
-    func_89280A0((s16)arg0->next->x1, (s16)arg0->next->y0);
+    gte_SetRotMatrix((MATRIX*)&sp18[8]);
+    gte_SetTransMatrix(&sp18[8]);
+    gte_SetGeomScreen(0x400);
+    SetGeomOffset((s16)arg0->next->x1, (s16)arg0->next->y0);
     sp58[0] = -LOH(arg0->next->r2) / 2;
     sp58[1] = -LOH(arg0->next->b2) / 2;
     sp58[2] = 0;
@@ -73,16 +68,16 @@ void func_psp_09244020(Primitive* arg0) {
     sp40[0 + 16] = (s16)LOH(arg0->next->r2) / 2;
     sp40[1 + 16] = (s16)LOH(arg0->next->b2) / 2;
     sp40[2 + 16] = 0;
-    func_892887C(sp58);
-    func_8928ABC();
-    func_8929430(&arg0->x0);
-    func_892887C(sp50);
-    func_8928ABC();
-    func_8929430(&arg0->x1);
-    func_892887C(sp48);
-    func_8928ABC();
-    func_8929430(&arg0->x2);
-    func_892887C(sp40 + 16);
-    func_8928ABC();
-    func_8929430(&arg0->x3);
+    gte_ldv0((SVECTOR*)sp58);
+    gte_rtps();
+    gte_stsxy((long*)&arg0->x0);
+    gte_ldv0((SVECTOR*)sp50);
+    gte_rtps();
+    gte_stsxy((long*)&arg0->x1);
+    gte_ldv0((SVECTOR*)sp48);
+    gte_rtps();
+    gte_stsxy((long*)&arg0->x2);
+    gte_ldv0((SVECTOR*)(sp40 + 16));
+    gte_rtps();
+    gte_stsxy((long*)&arg0->x3);
 }
