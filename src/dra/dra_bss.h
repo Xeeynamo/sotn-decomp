@@ -16,8 +16,7 @@ extern u8* g_DemoPtr;
 // BSS TODO 5D5BC.c, 627C4.c
 extern u32 D_8013799C;
 extern s32 D_801379A0;
-extern s32 D_801379A4;
-extern s32 D_801379A8;
+extern s32 D_801379A4[2];
 
 // BSS shared between 627C4.c and 63ED4.c
 extern Unkstruct_80102CD8 D_801379AC;
