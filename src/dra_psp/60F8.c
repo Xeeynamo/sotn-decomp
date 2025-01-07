@@ -166,4 +166,11 @@ void func_80102CD8(s32 start) {
     D_801379AC.coords = D_800A3194[start];
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60F8", func_psp_090E2EF8);
+void func_80102D08(void) {
+    D_801379AC.unk8 = D_801379AC.coords[D_801379AC.current];
+    D_801379AC.current++;
+    if (D_801379AC.coords[D_801379AC.current] == COORD_TERMINATOR) {
+        D_801379AC.start = 0;
+        D_801379AC.unk8 = 0;
+    }
+}
