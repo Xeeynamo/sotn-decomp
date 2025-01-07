@@ -203,5 +203,5 @@ void func_80102D70(void) {
     }
 }
 
-// Next func in US is MemCardSetPort; next in PSP is UpdateCapePalette. 
-//Indicates end of this file.
+// Next func in US is MemCardSetPort; next in PSP is UpdateCapePalette.
+// Indicates end of this file.
