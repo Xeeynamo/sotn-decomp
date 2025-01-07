@@ -174,3 +174,5 @@ void func_80102D08(void) {
         D_801379AC.unk8 = 0;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60F8", func_psp_090E2F60);
