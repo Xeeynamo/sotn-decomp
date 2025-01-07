@@ -175,4 +175,31 @@ void func_80102D08(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60F8", func_psp_090E2F60);
+void func_80102D70(void) {
+    switch (D_801379AC.start) {
+    case 0:
+        break;
+    case 1:
+        func_80102D08();
+        g_backbufferY = D_801379AC.unk8;
+        break;
+    case 2:
+        func_80102D08();
+        g_backbufferX = D_801379AC.unk8;
+        break;
+    case 3:
+        func_80102D08();
+        g_backbufferY = D_801379AC.unk8;
+        break;
+    case 4:
+        func_80102D08();
+        g_backbufferY = D_801379AC.unk8;
+        break;
+    case 5:
+        break;
+    case 6:
+        func_80102D08();
+        g_backbufferY = D_801379AC.unk8;
+        break;
+    }
+}
