@@ -47,10 +47,10 @@ segments:
       - [0x33F0, c, dra_psp/33F0]
       - [0x3650, c, dra_psp/3650]
       - [0x4370, c, dra_psp/4370]
-      - [0x5DA0, c, dra/624DC]
-      - [0x60F8, c, dra_psp/60F8]
+      - [0x5DA0, c, dra/624DC] # O4
+      - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra_psp/66B0]
-      - [0x67F0, c, dra_psp/67F0]
+      - [0x67F0, c, dra_psp/67F0] # O0
       - [0xA710, c, dra_psp/A710]
       - [0xBDE0, c, dra_psp/BDE0]
       - [0xC0B0, c, dra_psp/C0B0]
