@@ -172,6 +172,8 @@ segments:
       - [0x67E90, c, dra_psp/67E90]
       - [0x680C0, c, dra_psp/680C0]
       - [0x68D80, data]
+      - [0x69578, .data, dra_psp/60F8]
+      - [0x69600, data]
       - [0x6A818, .data, dra_psp/67F0] # DrawHud arrays
       - [0x6A8B8, .data, dra_psp/67F0] # Subwpn clut/u/v
       - [0x6A8F8, data]

@@ -137,6 +137,33 @@ void func_801028AC(bool exitEarly) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60F8", func_80102CD8);
+#define COORD_TERMINATOR 0x7FFF
+
+s16 D_800A3134[] = {
+    3, -3, 2, -2, 1, -1, COORD_TERMINATOR,
+};
+
+s16 D_800A3144[] = {
+    3, -3, 3, -3, 2, -2, 2, -2, 1, -1, 1, -1, COORD_TERMINATOR,
+};
+
+s16 D_800A3160[] = {
+    +6, -6, +6, -6, +5,
+    -5, +5, -5, +4, -4,
+    +4, -4, +3, -3, +3,
+    -3, +2, -2, +2, -2,
+    +1, -1, +1, -1, COORD_TERMINATOR,
+};
+
+s16* D_800A3194[] = {
+    D_800A3134, D_800A3134, D_800A3144, D_800A3134,
+    D_800A3144, D_800A3144, D_800A3160,
+};
+
+void func_80102CD8(s32 start) {
+    D_801379AC.start = start;
+    D_801379AC.current = 0;
+    D_801379AC.coords = D_800A3194[start];
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60F8", func_psp_090E2EF8);
