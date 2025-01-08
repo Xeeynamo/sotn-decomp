@@ -179,7 +179,7 @@ segments:
       - [0x3CC0C, .rodata, 624DC] # func_801027C4
       - [0x3CC2C, .rodata, 628AC] # func_801028AC
       # - [0x3CC54, .rodata, 628AC] # func_80102D70
-      # - [0x3CC70, .rodata, 628AC] # HandleSaveMenu
+      - [0x3CC70, .rodata, 62DEC] # HandleSaveMenu
       - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
@@ -250,6 +250,7 @@ segments:
       - [0x5F60C, c, 5F60C]
       - [0x624DC, c, 624DC]
       - [0x628AC, c, 628AC]
+      - [0x62DEC, c, 62DEC]
       - [0x63ED4, c, 63ED4]
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
