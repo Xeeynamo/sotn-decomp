@@ -68,7 +68,8 @@ s32 func_800EA5E4(u32 arg0) {
         return 1;
     }
 
-    for (j = 0, clutAnim = &D_8006C3C4[0]; j < LEN(D_8006C3C4); j++, clutAnim++) {
+    for (j = 0, clutAnim = &D_8006C3C4[0]; j < LEN(D_8006C3C4); j++,
+        clutAnim++) {
         if (clutAnim->unk8 != 0) {
             continue;
         }
@@ -90,9 +91,9 @@ s32 func_800EA5E4(u32 arg0) {
             clutAnim->unkArray[i] = 1;
         }
 
-        switch((u8)clutAnim->unk8){
-            case 2:
-            case 16:
+        switch ((u8)clutAnim->unk8) {
+        case 2:
+        case 16:
             clutAnim->unkE = 0x1F;
         }
         return 0;
