@@ -39,7 +39,6 @@
 | dra    | func_psp_090ED2E8             |       15 |          3 |        |                                 |       |
 | dra    | func_psp_091446A8             |       16 |          1 |        |                                 |       |
 | dra    | func_psp_0913D6D0             |       17 |          1 |        |                                 |       |
-| dra    | func_80102CD8                 |       17 |          1 |        | https://decomp.me/scratch/vel4f | 0.967 |
 | dra    | func_psp_09140BF8             |       17 |          1 |        | https://decomp.me/scratch/uWRH2 | 0.329 |
 | dra    | func_psp_0913D5A8             |       17 |          3 |        |                                 |       |
 | dra    | func_800F53A4                 |       17 |          4 |        |                                 |       |
@@ -98,7 +97,7 @@
 | dra    | func_psp_09142928             |       27 |          3 |        |                                 |       |
 | st0    | func_pspeu_09246B88           |       27 |          5 |        |                                 |       |
 | dra    | func_psp_09140DB0             |       27 |          6 |        |                                 |       |
-| dra    | FreePrimitives                |       28 |          2 |        | https://decomp.me/scratch/erI2r | 1.0   |
+| dra    | FreePrimitives                |       28 |          2 |        | https://decomp.me/scratch/YeHtC | 1.0   |
 | dra    | func_psp_09141F50             |       28 |          4 |        |                                 |       |
 | st0    | func_pspeu_09239060           |       29 |          1 |        |                                 |       |
 | dra    | DecompressReadNibble          |       29 |          2 |        |                                 |       |
@@ -123,7 +122,6 @@
 | dra    | func_80107250                 |       31 |          5 |        |                                 |       |
 | dra    | func_psp_090EBEF8             |       31 |          6 |        |                                 |       |
 | dra    | IsAlucart                     |       31 |          7 |        |                                 |       |
-| dra    | func_psp_090E2EF8             |       32 |          2 |        |                                 |       |
 | dra    | func_psp_09104810             |       32 |          3 |        |                                 |       |
 | dra    | func_psp_091143D0             |       32 |          3 |        |                                 |       |
 | dra    | func_psp_09141608             |       32 |          3 |        |                                 |       |
@@ -272,7 +270,7 @@
 | st0    | func_801AA218                 |       63 |          6 |        |                                 |       |
 | dra    | func_psp_0911FBD0             |       63 |          7 |        |                                 |       |
 | st0    | PrimDecreaseBrightness        |       63 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
-| dra    | AllocPrimitives               |       63 |          8 |        |                                 |       |
+| dra    | AllocPrimitives               |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
 | dra    | func_800EDB58                 |       63 |          8 |        |                                 |       |
 | dra    | func_psp_090F17D8             |       64 |          5 |        |                                 |       |
 | dra    | func_psp_09127B50             |       65 |          8 |        |                                 |       |
@@ -315,7 +313,6 @@
 | dra    | func_psp_09141D28             |       78 |         13 |        |                                 |       |
 | dra    | func_psp_09141E30             |       78 |         13 |        |                                 |       |
 | dra    | func_psp_090EBFA8             |       80 |          3 |        |                                 |       |
-| dra    | func_psp_090E2F60             |       81 |         11 | Yes    | https://decomp.me/scratch/n90nV | 0.976 |
 | dra    | func_psp_090F76D0             |       82 |          9 |        |                                 |       |
 | dra    | func_psp_090FF298             |       82 |         11 |        |                                 |       |
 | dra    | func_psp_09141C10             |       82 |         15 |        |                                 |       |
@@ -550,7 +547,7 @@
 | dra    | func_psp_09117C00             |      499 |        105 |        |                                 |       |
 | dra    | func_psp_090EDE28             |      517 |         73 |        |                                 |       |
 | dra    | func_psp_0911C2F8             |      519 |         37 |        |                                 |       |
-| dra    | MainGame                      |      539 |         84 |        |                                 |       |
+| dra    | MainGame                      |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
 | dra    | func_psp_09143758             |      546 |        139 |        |                                 |       |
 | dra    | func_psp_090F2258             |      554 |         79 |        | https://decomp.me/scratch/5zeE3 | 0.682 |
 | dra    | func_psp_09131CA8             |      555 |         41 |        | https://decomp.me/scratch/DqdmE | 0.936 |
@@ -598,7 +595,7 @@
 | dra    | func_psp_0912C120             |      826 |         55 | Yes    | https://decomp.me/scratch/MOeKz | 0.951 |
 | st0    | func_801BC5C0                 |      862 |         92 |        |                                 |       |
 | st0    | func_801AF774                 |      868 |         52 | Yes    |                                 |       |
-| st0    | EntityBackgroundVortex        |      890 |        109 |        |                                 |       |
+| st0    | EntityBackgroundVortex        |      890 |        109 |        | https://decomp.me/scratch/6BCMT | 0.878 |
 | dra    | func_psp_0913A448             |      893 |        109 | Yes    | https://decomp.me/scratch/XL89s | 0.958 |
 | dra    | func_psp_0912D170             |      904 |         88 | Yes    |                                 |       |
 | st0    | func_801ABBBC                 |      927 |        100 | Yes    |                                 |       |
