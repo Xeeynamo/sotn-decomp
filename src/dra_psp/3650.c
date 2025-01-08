@@ -12,3 +12,15 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/3650", func_psp_090E0C30);
 INCLUDE_ASM("dra_psp/psp/dra_psp/3650", func_psp_090E0C68);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3650", func_psp_090E0CA8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3650", func_800EDB08);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3650", func_800EDB58);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3650", AllocPrimitives);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3650", func_800EDD9C);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3650", FreePrimitives);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3650", RenderPrimitives);
