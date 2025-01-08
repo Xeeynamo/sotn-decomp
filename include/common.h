@@ -105,6 +105,8 @@ int sprintf(char* dst, const char* fmt, ...);
 #define FIX(x) ((s32)((x) * 65536.0))
 // Get the integer part of such a fixed-point value
 #define FIX_TO_I(x) ((s32)((x) >> 16))
+// Convert an integer value to fixed-point
+#define I_TO_FIX(x) ((s32)((x) << 16))
 // Get the fractional part of such a fixed-point value
 #define FIX_FRAC(x) (*(s16*)&(x))
 
