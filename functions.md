@@ -275,7 +275,6 @@
 | dra    | func_psp_090F17D8             |       64 |          5 |        |                                 |       |
 | dra    | func_psp_09127B50             |       65 |          8 |        |                                 |       |
 | dra    | func_psp_090ED480             |       66 |          6 |        |                                 |       |
-| st0    | EntityIsNearPlayer            |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
 | dra    | func_psp_09114590             |       66 |         10 |        |                                 |       |
 | dra    | func_psp_09137668             |       66 |         15 |        |                                 |       |
 | dra    | func_psp_090F2038             |       67 |          6 |        |                                 |       |
@@ -298,7 +297,7 @@
 | dra    | func_psp_090F1F40             |       72 |          5 |        |                                 |       |
 | dra    | func_psp_09128978             |       72 |          7 |        |                                 |       |
 | dra    | func_psp_09136D18             |       72 |         14 |        |                                 |       |
-| dra    | func_psp_090DFED8             |       73 |          1 |        |                                 |       |
+| dra    | func_psp_090DFED8             |       73 |          1 |        | https://decomp.me/scratch/4cNbG | 1.0   |
 | dra    | func_psp_090ECD78             |       73 |          7 |        |                                 |       |
 | dra    | func_psp_0913E558             |       73 |          7 |        |                                 |       |
 | dra    | func_psp_090E8658             |       74 |          6 |        |                                 |       |
@@ -374,7 +373,7 @@
 | dra    | func_psp_09138600             |      107 |         17 |        |                                 |       |
 | dra    | func_psp_090EC0C0             |      108 |          3 |        |                                 |       |
 | dra    | func_psp_090F0550             |      108 |          9 |        |                                 |       |
-| dra    | func_800EA5E4                 |      108 |          9 |        |                                 |       |
+| dra    | func_800EA5E4                 |      108 |          9 |        | https://decomp.me/scratch/I1WLh | 0.997 |
 | st0    | EntityDraculaFireball         |      108 |         15 |        |                                 |       |
 | dra    | func_psp_091287D8             |      112 |          9 |        |                                 |       |
 | dra    | func_psp_090EC380             |      112 |          9 |        |                                 |       |
@@ -561,7 +560,7 @@
 | wrp    | EntityEquipItemDrop           |      583 |         67 | Yes    | https://decomp.me/scratch/gZ0R6 | 0.994 |
 | dra    | func_psp_090EFA00             |      584 |         77 | Yes    |                                 |       |
 | dra    | func_psp_090DDEE8             |      609 |         40 |        |                                 |       |
-| dra    | func_psp_090DFFD0             |      609 |         53 |        | https://decomp.me/scratch/k9mkf | 0.915 |
+| dra    | func_psp_090DFFD0             |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
 | dra    | func_psp_09128B00             |      609 |         64 |        |                                 |       |
 | dra    | func_psp_091187D8             |      611 |         62 |        | https://decomp.me/scratch/xRL9N | 0.953 |
 | st0    | EntityEquipItemDrop           |      612 |         62 | Yes    | https://decomp.me/scratch/gZ0R6 | 0.994 |
@@ -612,7 +611,6 @@
 | tt_000 | UpdateServantDefault          |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
 | dra    | func_psp_090E31F8             |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading              |     1203 |        196 |        |                                 |       |
-| st0    | ST0_EntityRedDoor             |     1247 |        112 | Yes    |                                 |       |
 | dra    | func_psp_0910BE88             |     1338 |        206 | Yes    |                                 |       |
 | st0    | EntityDracula                 |     1396 |        179 | Yes    |                                 |       |
 | dra    | func_psp_09114A38             |     1516 |        244 |        |                                 |       |
