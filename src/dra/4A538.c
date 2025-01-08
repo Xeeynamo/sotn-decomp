@@ -52,7 +52,7 @@ s32 func_800EA5E4(u32 arg0) {
     u_long* clut;
     Unkstruct_8006C3C4* clutAnim;
 
-    temp_v0 = arg0 & 0xFF00;
+    temp_v0 = arg0 & ~0xFF; // & 0xFF00 would be more descriptive.
     arg0 = arg0 & 0xFF;
 
     if (temp_v0 & 0x8000) {
@@ -68,21 +68,19 @@ s32 func_800EA5E4(u32 arg0) {
         return 1;
     }
 
-    clutAnim = &D_8006C3C4;
-    for (j = 0; j < LEN(D_8006C3C4); clutAnim++) {
-        j++;
+    for (j = 0, clutAnim = &D_8006C3C4[0]; j < LEN(D_8006C3C4); j++, clutAnim++) {
         if (clutAnim->unk8 != 0) {
             continue;
         }
         clutAnim->desc = clut;
         clutAnim->data = clut + 3;
-        clutAnim->unk8 = (temp_v0 | GET_PAL_OP_KIND(clut[0]));
+        clutAnim->unk8 = (GET_PAL_OP_KIND(clut[0]) | temp_v0);
         clutAnim->index = 0;
         clutAnim->unkC = 0;
 
         // Set unkStruct's array to all zeros, except within this range
         start = clut[1];
-        count = clut[1] + clut[2] - 1;
+        count = clut[2] + start - 1;
         start >>= 8;
         count >>= 8;
         for (i = 0; i < LEN(clutAnim->unkArray); i++) {
@@ -92,7 +90,9 @@ s32 func_800EA5E4(u32 arg0) {
             clutAnim->unkArray[i] = 1;
         }
 
-        if ((u8)clutAnim->unk8 == 2 || (u8)clutAnim->unk8 == 16) {
+        switch((u8)clutAnim->unk8){
+            case 2:
+            case 16:
             clutAnim->unkE = 0x1F;
         }
         return 0;
