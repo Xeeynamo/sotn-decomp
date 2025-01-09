@@ -63,8 +63,8 @@
 | dra    | func_8010FAF4                 |       21 |          2 |        |                                 |       |
 | dra    | func_psp_090E8880             |       21 |          2 |        |                                 |       |
 | dra    | func_psp_090F0E10             |       21 |          3 |        |                                 |       |
-| dra    | func_psp_09111A18             |       22 |          3 |        |                                 |       |
 | dra    | func_psp_090E0C68             |       22 |          3 |        |                                 |       |
+| dra    | func_psp_09111A18             |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09117BC0             |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09140588             |       22 |          3 |        |                                 |       |
 | dra    | func_psp_090F5B10             |       23 |          1 |        |                                 |       |
@@ -344,8 +344,8 @@
 | dra    | func_psp_091392D8             |       95 |         11 |        |                                 |       |
 | dra    | func_psp_09114880             |       95 |         14 |        |                                 |       |
 | dra    | func_psp_09134F40             |       96 |         11 |        |                                 |       |
-| st0    | CreateEntitiesToTheLeft       |       96 |         12 |        |                                 |       |
-| wrp    | CreateEntitiesToTheLeft       |       96 |         12 |        |                                 |       |
+| st0    | CreateEntitiesToTheLeft       |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
+| wrp    | CreateEntitiesToTheLeft       |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dra    | func_psp_091060E0             |       96 |         16 |        |                                 |       |
 | st0    | func_pspeu_092469A0           |       97 |          1 |        |                                 |       |
 | dra    | UpdateUnarmedAnim             |       97 |          6 |        |                                 |       |
@@ -373,7 +373,6 @@
 | dra    | func_psp_09138600             |      107 |         17 |        |                                 |       |
 | dra    | func_psp_090EC0C0             |      108 |          3 |        |                                 |       |
 | dra    | func_psp_090F0550             |      108 |          9 |        |                                 |       |
-| dra    | func_800EA5E4                 |      108 |          9 |        | https://decomp.me/scratch/I1WLh | 0.997 |
 | st0    | EntityDraculaFireball         |      108 |         15 |        |                                 |       |
 | dra    | func_psp_091287D8             |      112 |          9 |        |                                 |       |
 | dra    | func_psp_090EC380             |      112 |          9 |        |                                 |       |
