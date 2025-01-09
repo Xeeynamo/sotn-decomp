@@ -284,6 +284,26 @@ extern long ratan2(long y, long x);
                      : "r"(r0)                                                 \
                      : "memory")
 
+// Store depth queuing value pointed to by `r0`
+//
+// - Params:
+//   - long* r0 - depth queuing value
+#define gte_stdp(r0)                                                           \
+    __asm__ volatile("swc2   $8, 0( %0 )" : : "r"(r0) : "memory")
+
+// Store flag value pointed to by `r0`
+//
+// - Params:
+//   - long* r0 - flag value
+#define gte_stflg(r0)                                                          \
+    __asm__ volatile(                                                          \
+        "cfc2   $12, $31;"                                                     \
+        "nop;"                                                                 \
+        "sw $12, 0( %0 )"                                                      \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "$12", "memory")
+
 #define gte_stszotz(r0)                                                        \
     __asm__ volatile(                                                          \
         "mfc2	$12, $19;"                                                       \
@@ -347,6 +367,9 @@ void gte_ldv0(SVECTOR* v);
 void gte_rtps(void);
 void gte_stsxy(long* sxsy);
 void gte_stszotz(long* otz);
+
+#define gte_stdp(x) func_892804C();
+#define gte_stflg(x) func_892804C();
 
 #else
 

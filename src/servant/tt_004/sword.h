@@ -3,8 +3,8 @@
 #include <servant.h>
 
 typedef enum {
-    SWORD_UNK_D1 = ENTITY_ID_SERVANT,
-    SWORD_UNK_D2,
+    SWORD_DEFAULT = ENTITY_ID_SERVANT,
+    SWORD_CIRCLE_ATTACK,
     SWORD_UNK_D3,
     SWORD_UNK_D4,
     SWORD_UNK_D5,
@@ -21,10 +21,10 @@ typedef enum {
 } SwordEntityId;
 
 typedef struct {
-    s32 unk0;
+    s32 unk0; // flag checked by `UpdateServantDefault`, changes at level 70
     s16 unk4;
     s16 unk6;
-    s32 unk8;
+    s32 unk8; // flag checked by `CheckSwordLevel`, changes at level 90
 } SwordUnk_A0;
 
 extern ServantDesc sword_ServantDesc;

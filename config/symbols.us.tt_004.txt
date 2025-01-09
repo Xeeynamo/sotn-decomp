@@ -12,6 +12,7 @@ g_CurrentRoomY = 0x8017232C;
 Max3 = 0x80172B8C;
 Min3 = 0x80172C0C;
 CheckEntityValid = 0x80173C4C;
+CheckSwordLevel = 0x80173CB8;
 ServantInit = 0x80173E38;
 UpdateServantDefault = 0x80174170;
 func_us_80177F64 = 0x80177460;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sword.h"
 #include <items.h>
+#include <sfx.h>
 
 static void ServantInit(InitializeMode mode);
 static void UpdateServantDefault(Entity* self);
@@ -21,7 +22,8 @@ static void func_us_80177590(Entity* self);
 
 ServantDesc sword_ServantDesc = {
     ServantInit,      UpdateServantDefault,
-    func_us_801746BC, func_us_80174B6C,
+    func_us_801746BC, // active target below level 70
+    func_us_80174B6C, // active target above level 70
     func_us_801758C8, func_us_80176270,
     func_us_80176664, func_us_8017666C,
     func_us_80176674, func_us_80176BF0,
@@ -148,6 +150,8 @@ static s32 D_us_80178B80;
 static s32 D_us_80178B84;
 static s32 D_us_80178B88;
 
+// sets up familiar entity id "state" during initialization
+// and level change
 void func_us_80172420(Entity* self, s32 entityId) {
     Entity* entity;
     s32 i;
@@ -320,7 +324,7 @@ void func_us_80172940(Entity* self) {
     s32 i;
 
     if (self->ext.swordFamiliar.unk7c == 0) {
-        if ((self->entityId == SWORD_UNK_D1) ||
+        if ((self->entityId == SWORD_DEFAULT) ||
             (self->entityId == SWORD_UNK_D8)) {
             self->primIndex =
                 g_api.AllocPrimitives(PRIM_GT4, UNK_SWORD_PRIM_COUNT);
@@ -351,13 +355,13 @@ void func_us_80172940(Entity* self) {
         }
     } else {
         switch (self->entityId) {
-        case SWORD_UNK_D1:
+        case SWORD_DEFAULT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             self->step++;
             break;
 
-        case SWORD_UNK_D2:
+        case SWORD_CIRCLE_ATTACK:
         case SWORD_UNK_D3:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
@@ -500,7 +504,7 @@ Entity* func_us_80173AA0(Entity* self) {
 
 #include "../check_entity_valid.h"
 
-void func_us_80173CB8(Entity* self) {
+void CheckSwordLevel(Entity* self) {
     if (self->step) {
         g_api.GetServantStats(self, 0, 0, &s_SwordStats);
         if (s_SwordCurrentLevel != s_SwordStats.level) {
@@ -510,6 +514,7 @@ void func_us_80173CB8(Entity* self) {
                     func_us_80172420(self, 0);
                 }
             }
+            // reserved for level 90
             if ((D_us_801700A0[(s_SwordStats.level / 10)].unk8 & 2) &&
                 SearchForEntityInRange(0, SWORD_UNK_DB) == NULL) {
                 func_us_80172420(self, 1);
@@ -517,7 +522,7 @@ void func_us_80173CB8(Entity* self) {
 
             if (s_SwordStats.level == 50 && !g_CastleFlags[CASTLE_FLAG_464]) {
                 g_api.AddToInventory(ITEM_SWORD_FAMILIAR, EQUIP_HAND);
-                g_CastleFlags[CASTLE_FLAG_464] = true;
+                g_CastleFlags[CASTLE_FLAG_464] = 1;
             }
         }
     }
@@ -598,7 +603,7 @@ void ServantInit(InitializeMode mode) {
 #else
         if ((LOW(D_8003C708.flags) & (FLAG_UNK_40 | FLAG_UNK_20)) != 0) {
 #endif
-            self->entityId = SWORD_UNK_D1;
+            self->entityId = SWORD_DEFAULT;
             if (g_CastleFlags[CASTLE_FLAG_464] == 1 ||
                 g_CastleFlags[CASTLE_FLAG_464] == 2) {
                 g_CastleFlags[CASTLE_FLAG_464] = 4;
@@ -609,7 +614,7 @@ void ServantInit(InitializeMode mode) {
         self->posX.val = FIX(128);
         self->posY.val = -FIX(32);
     } else {
-        self->entityId = SWORD_UNK_D1;
+        self->entityId = SWORD_DEFAULT;
         if (D_8003C708.flags & FLAG_UNK_20) {
             if (ServantUnk0()) {
                 self->posX.val = FIX(192);
@@ -659,15 +664,376 @@ void ServantInit(InitializeMode mode) {
     D_us_80178B78 = 0;
 }
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", UpdateServantDefault);
+extern s16 D_us_80170078[];
+extern Point16 D_us_8017007C;
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_801746BC);
+void UpdateServantDefault(Entity* self) {
+    Entity* follow;
+    s32 currentX;
+
+    CheckSwordLevel(self);
+
+    // first time we've reached level 90
+    if (g_CastleFlags[CASTLE_FLAG_464] == 1) {
+        self->entityId = SWORD_UNK_D5;
+        self->step = 0;
+        g_CastleFlags[CASTLE_FLAG_464] = 2;
+        return;
+    }
+
+    if (g_Player.unk70) {
+        self->entityId = SWORD_UNK_D4;
+        self->step = 0;
+        return;
+    }
+
+    D_us_80178564 += 16;
+    D_us_80178564 &= 0xFFF;
+
+    if (D_8003C708.flags & FLAG_UNK_20) {
+        switch (ServantUnk0()) {
+        case 0:
+            D_us_80178548 = FIX(0x40);
+            break;
+        case 1:
+            D_us_80178548 = FIX(0xC0);
+            break;
+        case 2:
+            D_us_80178548 = self->posX.i.hi > 128 ? FIX(0xC0) : FIX(0x40);
+            break;
+        }
+        D_us_8017854C = ((rcos(D_us_80178564) << 4) << 4) + FIX(0x90);
+    } else {
+        D_us_80178550 = PLAYER.facingLeft ? FIX(0x1C) : -FIX(0x1C);
+        D_us_80178554 = FIX(0x1C);
+        D_us_80178548 = g_Entities->posX.val + D_us_80178550;
+        D_us_8017854C = PLAYER.posY.val -
+                        (((rcos(D_us_80178564) << 4) << 4) + D_us_80178554);
+    }
+
+    switch (self->step) {
+    case 0:
+        func_us_80172940(self);
+        D_us_80178564 = 0;
+        break;
+
+    case 1:
+
+        D_us_80178550 = FIX_TO_I(D_us_80178548 - self->posX.val);
+        D_us_80178554 = FIX_TO_I(D_us_8017854C - self->posY.val);
+
+        D_us_80178560 = FLT_TO_I(
+            SquareRoot12(I_TO_FLT(SQ(D_us_80178550) + SQ(D_us_80178554))));
+
+        if (D_us_80178560 < 0x10) {
+            self->velocityX = (D_us_80178548 - self->posX.val) >> 6;
+            self->velocityY = (D_us_8017854C - self->posY.val) >> 6;
+        } else if (D_us_80178560 < 0x40) {
+            self->velocityX = (D_us_80178548 - self->posX.val) >> 5;
+            self->velocityY = (D_us_8017854C - self->posY.val) >> 5;
+        } else if (D_us_80178560 < 0x100) {
+            self->velocityX = (D_us_80178548 - self->posX.val) >> 4;
+            self->velocityY = (D_us_8017854C - self->posY.val) >> 4;
+        } else {
+            self->velocityX = (D_us_80178548 - self->posX.val) >> 2;
+            self->velocityY = (D_us_8017854C - self->posY.val) >> 2;
+        }
+
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+
+        if (D_us_80178560 > 0x10) {
+            self->ext.swordFamiliar.unk84 =
+                ratan2(D_us_80178554, D_us_80178550) & 0xFFF;
+            self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+                self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88,
+                8);
+        } else {
+            self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+                0x400, self->ext.swordFamiliar.unk88, 8);
+        }
+
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+
+        D_us_80178558 = -D_us_80170080.vz;
+        D_us_80178550 = abs(D_us_80178550) << 5;
+        D_us_80178554 = abs(D_us_80178554) << 5;
+
+        D_us_8017855C = MAX(D_us_80178550, D_us_80178554);
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_80178558, D_us_8017855C) & 0xFFF;
+
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+            32);
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+
+        D_us_80170080.vz +=
+            FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * 0x60);
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+
+        if (!g_CutsceneHasControl) {
+            if ((self->ext.swordFamiliar.follow = func_us_80173AA0(self)) !=
+                NULL) {
+                // level 70 and higher
+                if (!D_us_801700A0[(s_SwordStats.level / 10)].unk0) {
+                    self->entityId = SWORD_CIRCLE_ATTACK;
+                } else {
+                    self->entityId = SWORD_UNK_D3;
+                }
+                self->step = 0;
+            }
+        }
+        break;
+    }
+
+    ProcessEvent(self, false);
+    D_us_80170080.vx = (self->posX.i.hi - 128) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 128) << 5;
+    func_us_80172E84(self, self->ext.swordFamiliar.unk80);
+}
+
+extern s16 D_us_80170090[];
+extern s32 D_us_80170218;
+
+// only called when the sword has a target
+void func_us_801746BC(Entity* self) {
+    s32 roll;
+    s16* sfxId;
+
+    CheckSwordLevel(self);
+
+    if (g_Player.unk70) {
+        self->entityId = SWORD_UNK_D4;
+        self->step = 0;
+        return;
+    }
+
+    D_us_80170080.vx = (self->posX.i.hi - 128) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 128) << 5;
+    self->ext.swordFamiliar.posX =
+        (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
+    self->ext.swordFamiliar.posY =
+        (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        func_us_80172940(self);
+        break;
+
+    case 1:
+        self->ext.swordFamiliar.unk98 = 1;
+
+        D_us_80178578 = (rand() % 128) + 64 + self->ext.swordFamiliar.posX;
+        D_us_8017857C = (rand() % 128) + 64 + self->ext.swordFamiliar.posY;
+
+        self->step++;
+        break;
+
+    case 2:
+        D_us_80178570 =
+            (D_us_80178578 - self->ext.swordFamiliar.posX) - self->posX.i.hi;
+        D_us_80178574 =
+            (D_us_8017857C - self->ext.swordFamiliar.posY) - self->posY.i.hi;
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_80178574, D_us_80178570) & 0xFFF;
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x20);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+
+        if (self->ext.swordFamiliar.unk84 == self->ext.swordFamiliar.unk86) {
+            self->step++;
+        }
+
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+        break;
+
+    case 3:
+        self->velocityX =
+            (I_TO_FIX(D_us_80178578 - self->ext.swordFamiliar.posX) -
+             self->posX.val) >>
+            4;
+        self->velocityY =
+            (I_TO_FIX(D_us_8017857C - self->ext.swordFamiliar.posY) -
+             self->posY.val) >>
+            4;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+
+        if (CalculateDistance(
+                self, D_us_80178578 - self->ext.swordFamiliar.posX,
+                D_us_8017857C - self->ext.swordFamiliar.posY) < 2) {
+            D_us_8017856C = 0;
+            D_us_80178568 = D_us_8017007C.x & 0xFFF;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        D_us_8017856C++;
+        if (D_us_80170218 < D_us_8017856C) {
+            g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
+            self->step++;
+        }
+        break;
+
+    case 5:
+    case 6:
+        D_us_8017007C.x += 128;
+        D_us_8017007C.x &= 0xFFF;
+
+        if (D_us_8017007C.x == D_us_80178568) {
+            D_us_8017856C = 0;
+            self->step++;
+        }
+        break;
+
+    case 7:
+        D_us_8017856C++;
+        if (D_us_80170218 < D_us_8017856C) {
+            self->step++;
+        }
+        break;
+
+    case 8:
+        if (CheckEntityValid(self->ext.swordFamiliar.follow) == 0 &&
+            (self->ext.swordFamiliar.follow = func_us_80173AA0(self)) == 0) {
+            self->entityId = SWORD_DEFAULT;
+            self->step = 0;
+            break;
+        } else if (g_CutsceneHasControl) {
+            self->entityId = SWORD_DEFAULT;
+            self->step = 0;
+            break;
+        }
+
+        self->step = 1;
+
+        break;
+    }
+
+    ProcessEvent(self, false);
+    D_us_80170080.vx = (self->posX.i.hi - 128) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 128) << 5;
+    func_us_80172E84(self, self->ext.swordFamiliar.unk80);
+
+    if (self->step > 4 && self->step < 7) {
+        if (self->ext.swordFamiliar.unk98) {
+            if ((roll = rand() % 16) < 2) {
+                g_api.PlaySfx(D_us_80170090[roll ? 0 : 1]);
+            }
+            self->ext.swordFamiliar.unk98 = 0;
+        }
+        func_us_801724E8(self, 0, false);
+        func_us_801724E8(self, 0, true);
+    }
+}
 
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80174B6C);
 
 INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_801758C8);
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176270);
+void func_us_80176270(Entity* self) {
+    s32 i;
+
+    D_us_80170080.vx = (self->posX.i.hi - 128) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 128) << 5;
+
+    switch (self->step) {
+    case 0:
+        func_us_80172940(self);
+        break;
+
+    case 1:
+        D_us_801785EC = 0x1000;
+        D_us_801785F0 = 0x1000;
+        D_us_801785F4 = -0x1000;
+        g_api.PlaySfx(SFX_ANIME_SWORD_A);
+        self->step++;
+
+        // fallthrough
+
+    case 2:
+    case 3:
+        D_us_801785F8 = D_us_801785EC - D_us_80170080.vx;
+        D_us_801785FC = D_us_801785F0 - D_us_80170080.vy;
+        D_us_80178600 = D_us_801785F4 - D_us_80170080.vz;
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_801785FC, D_us_801785F8) & 0xFFF;
+
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88,
+            0x180);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+        D_us_80178608 = FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) << 8);
+        D_us_8017860C = FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) << 8);
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+
+        D_us_801785F8 = abs(D_us_801785F8);
+        D_us_801785FC = abs(D_us_801785FC);
+
+        D_us_80178604 = MAX(D_us_801785F8, D_us_801785FC);
+
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_80178600, D_us_80178604) & 0xFFF;
+
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+            0x40);
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+
+        D_us_80178610 = FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) << 8);
+
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+
+        D_us_80170080.vx += D_us_80178608;
+        D_us_80170080.vy += D_us_8017860C;
+        D_us_80170080.vz += D_us_80178610;
+
+        D_us_801785F8 = D_us_801785EC - D_us_80170080.vx;
+        D_us_801785FC = D_us_801785F0 - D_us_80170080.vy;
+        D_us_80178600 = D_us_801785F4 - D_us_80170080.vz;
+
+        D_us_80178614 = SquareRoot0(
+            (D_us_801785F8 * D_us_801785F8) + (D_us_801785FC * D_us_801785FC) +
+            (D_us_80178600 * D_us_80178600));
+
+        if (D_us_80178614 < 0x100) {
+            if (self->step == 2) {
+                D_us_80170080.vx = 0x1000;
+                D_us_80170080.vy = 0x1000;
+                D_us_80170080.vz = -0x1000;
+                D_us_801785EC = -0x1000;
+                D_us_801785F0 = -0x1000;
+                D_us_801785F4 = -0x1000;
+                self->ext.swordFamiliar.unk88 = 0xA00;
+                self->ext.swordFamiliar.targetX = 0;
+                g_api.PlaySfx(SFX_ANIME_SWORD_A);
+            }
+            self->step++;
+        }
+        break;
+
+    case 4:
+        if ((g_Status.relics[RELIC_SWORD_CARD] & 1) &&
+            (g_Status.relics[RELIC_SWORD_CARD] & 2)) {
+            g_Status.relics[RELIC_SWORD_CARD] = 1;
+            g_Servant = 0;
+        }
+
+        for (i = 0; i < 4; i++) {
+            DestroyEntity(&g_Entities[UNK_ENTITY_4 + i]);
+        }
+        return;
+    }
+
+    ProcessEvent(self, false);
+
+    self->posX.i.hi = D_us_80170080.vx / 32 + 128;
+    self->posY.i.hi = D_us_80170080.vy / 32 + 128;
+    func_us_80172E84(self, self->ext.swordFamiliar.unk80);
+}
 
 void func_us_80176664(Entity* self) {}
 
@@ -679,9 +1045,8 @@ extern Point16 D_us_8017007C;
 void func_us_80176674(Entity* self) {
     s32 params;
     s32 x, y;
-    s32 tmp;
 
-    func_us_80173CB8(self);
+    CheckSwordLevel(self);
 
     D_us_80178638 += 16;
     D_us_80178638 &= 0xFFF;
@@ -728,13 +1093,7 @@ void func_us_80176674(Entity* self) {
     D_us_8017862C = -D_us_80170080.vz;
     D_us_80178624 = abs(D_us_80178624) << 5;
     D_us_80178628 = abs(D_us_80178628) << 5;
-
-    if (D_us_80178628 > D_us_80178624) {
-        tmp = D_us_80178628;
-    } else {
-        tmp = D_us_80178624;
-    }
-    D_us_80178630 = tmp;
+    D_us_80178630 = MAX(D_us_80178624, D_us_80178628);
 
     self->ext.swordFamiliar.currentX =
         ratan2(D_us_8017862C, D_us_80178630) & 0xFFF;
@@ -758,7 +1117,7 @@ void func_us_80176674(Entity* self) {
         if ((IsMovementAllowed(1)) || (CheckAllEntitiesValid()) ||
             (D_us_80178B80 == 1) || (g_CutsceneHasControl) ||
             (g_unkGraphicsStruct.D_800973FC != 0)) {
-            self->entityId = SWORD_UNK_D1;
+            self->entityId = SWORD_DEFAULT;
             self->step = 0;
             if (g_CastleFlags[CASTLE_FLAG_464] == 3) {
                 g_CastleFlags[CASTLE_FLAG_464] = 4;
@@ -802,7 +1161,7 @@ void func_us_80176674(Entity* self) {
 
     case 4:
         g_PauseAllowed = true;
-        self->entityId = SWORD_UNK_D1;
+        self->entityId = SWORD_DEFAULT;
         self->step = 0;
         break;
     }
