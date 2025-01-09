@@ -297,7 +297,6 @@
 | dra    | func_psp_090F1F40             |       72 |          5 |        |                                 |       |
 | dra    | func_psp_09128978             |       72 |          7 |        |                                 |       |
 | dra    | func_psp_09136D18             |       72 |         14 |        |                                 |       |
-| dra    | func_psp_090DFED8             |       73 |          1 |        | https://decomp.me/scratch/4cNbG | 1.0   |
 | dra    | func_psp_090ECD78             |       73 |          7 |        |                                 |       |
 | dra    | func_psp_0913E558             |       73 |          7 |        |                                 |       |
 | dra    | func_psp_090E8658             |       74 |          6 |        |                                 |       |
