@@ -35,7 +35,7 @@ void func_us_801D5040(Entity* self) {
         if (entity->step == 7) {
             SetStep(4);
         } else {
-            if (entity->entityId != 0x53) {
+            if (entity->entityId != E_ID_53) {
                 DestroyEntity(self);
                 return;
             }
@@ -108,7 +108,7 @@ void func_us_801D5040(Entity* self) {
         if (!(self->ext.skeletonApeBarrel.unk0 & 7)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(2, entity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
                 rand = Random() & 7;
                 entity->posX.i.hi += D_us_8018333C[rand];
                 rand = (rand - 4) & 7;
@@ -139,7 +139,7 @@ void func_us_801D5040(Entity* self) {
 
     case 4:
         if (self->step_s) {
-            EntityExplosionSpawn(3, 0x65A);
+            EntityExplosionSpawn(3, SFX_FM_EXPLODE_A);
             return;
         }
 
