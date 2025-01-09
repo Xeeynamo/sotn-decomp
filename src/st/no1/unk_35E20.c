@@ -381,7 +381,259 @@ void func_us_801B6490(Entity* self) {
     g_GpuBuffers[1].draw.b0 = animParams->color.b;
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B7188);
+extern u16 D_us_8018095C[];
+extern s16 D_us_80180E8C[];
+extern s16 D_us_80180E9C[];
+extern s16 D_us_80180ED4[];
+extern s32 D_us_80180EEC;
+extern s16 D_us_801D6328[];
+extern s16 D_us_801D6334[];
+
+#define PrimLine(x) ((PrimLineG2*)(x))
+
+void func_us_801B7188(Entity* self) {
+    s32 blink;
+    s16 yLenUnscaled, xLenUnscaled;
+    s32 yVelUnscaled, xVelUnscaled;
+    s16 lenScale;
+    s16 speed;
+    s16 t;
+    s16 xMin, xMax;
+    s32 xVel, yVel;
+    s16 xLen, yLen;
+    s16 x0, x1;
+    s16 y0, y1;
+    s16 angle;
+    s16 posX, posY;
+    s32 i;
+    Primitive* prim;
+
+    if (D_us_80180EEC != 1) {
+        x0 = D_us_80180ED4[self->params * 2 + 0] - g_Tilemap.scrollX.i.hi;
+        x1 = D_us_80180ED4[self->params * 2 + 1] - g_Tilemap.scrollX.i.hi;
+        if (self->params == 4) {
+            if (g_Tilemap.scrollY.i.hi < 0x260) {
+                x0 += 0x50;
+            }
+            if (g_Tilemap.scrollY.i.hi < 0x80) {
+                x0 += 0x10;
+            }
+            if (g_Tilemap.scrollY.i.hi > 0x190) {
+                x1 = 0x7000;
+            }
+        }
+        if (self->params == 2 && g_Tilemap.scrollY.i.hi > 0x1B0) {
+            x0 -= 0x210;
+            x1 = 0x7000;
+        }
+        if (x0 < 0) {
+            x0 = 0;
+        }
+        xMax = 0xFF;
+        if ((x1 + 0x20) > 0 && x1 < 0x100) {
+            if (x1 < 0) {
+                x1 = 0;
+            }
+            if (x0 >= 0x100 && x1 < 0xE0) {
+                xMax = x1 + 0x20;
+            }
+        } else {
+            x1 = 0x7000;
+        }
+        if (x0 > x1) {
+            xMin = x1;
+        } else {
+            xMin = x0;
+        }
+        t = rsin((s16)g_Status.timerMinutes * 0x42) >> 10;
+        t += 4;
+        angle = D_us_80180E8C[t];
+        xLenUnscaled = rcos(angle) >> 8;
+        yLenUnscaled = -(rsin(angle) >> 8);
+        xVelUnscaled = rcos(angle) * 16;
+        yVelUnscaled = -(rsin(angle) * 16);
+        lenScale = D_us_80180E9C[t];
+        speed = 0x30;
+        if (self->step == 0) {
+            InitializeEntity(D_us_8018095C);
+            if (D_us_80180EEC == 0) {
+                g_api.PlaySfx(0x7AF);
+                self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
+                if (self->primIndex == -1) {
+                    DestroyEntity(self);
+                    return;
+                }
+                xLen = (xLenUnscaled * lenScale) >> 4;
+                yLen = (yLenUnscaled * lenScale) >> 4;
+                xVel = xVelUnscaled * speed;
+                yVel = yVelUnscaled * speed;
+                prim = &g_PrimBuf[self->primIndex];
+                i = 0;
+                while (PrimLine(prim) != NULL) {
+                    PrimLine(prim)->r0 = PrimLine(prim)->g0 = 8;
+                    PrimLine(prim)->b0 = 0x4F;
+                    PrimLine(prim)->r1 = PrimLine(prim)->g1 =
+                        PrimLine(prim)->b1 = 0x4F;
+                    PrimLine(prim)->x0 =
+                        (rand() & 0xFF) + (rand() & 0x3F) + 0x10;
+                    PrimLine(prim)->y0 = rand() & 0xFF;
+                    PrimLine(prim)->xLength = xLen;
+                    PrimLine(prim)->yLength = yLen;
+                    PrimLine(prim)->preciseX.i.hi = PrimLine(prim)->x1 =
+                        PrimLine(prim)->xLength + PrimLine(prim)->x0;
+                    PrimLine(prim)->preciseY.i.hi = PrimLine(prim)->y1 =
+                        PrimLine(prim)->yLength + PrimLine(prim)->y0;
+                    PrimLine(prim)->velocityX.val = xVel;
+                    PrimLine(prim)->velocityY.val = yVel;
+                    PrimLine(prim)->priority = 0x48;
+                    PrimLine(prim)->drawMode = DRAW_DEFAULT;
+
+                    i++;
+
+                    if (PrimLine(prim)->next == NULL) {
+                        self->ext.et_801B7188.unk80 = prim;
+                    }
+                    PrimLine(prim) = PrimLine(prim)->next;
+                }
+            }
+            if (D_us_80180EEC == 2) {
+                self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x24);
+                if (self->primIndex == -1) {
+                    DestroyEntity(self);
+                    return;
+                }
+                D_us_801D6334[3] = D_us_801D6328[0] = 0x1000;
+                D_us_801D6334[4] = D_us_801D6328[1] = 0xCCC;
+                D_us_801D6334[0] = D_us_801D6328[2] = 0x999;
+                D_us_801D6334[1] = D_us_801D6328[3] = 0x666;
+                D_us_801D6334[2] = D_us_801D6328[4] = 0x333;
+                i = 0;
+                posX = -(g_Tilemap.scrollX.i.hi * 5) / 4;
+                while (posX < -0x90) {
+                    posX += 0x90;
+                }
+
+                posY = -(g_Tilemap.scrollY.i.hi * 5) / 4;
+                while (posY < -0x14A) {
+                    posY += 0x14A;
+                }
+
+                prim = &g_PrimBuf[self->primIndex];
+
+                while (prim != NULL) {
+                    x0 = (rsin(D_us_801D6328[((i >> 2) + 0) % 5]) >> 9) - 8 +
+                         posX;
+                    x1 = (rsin(D_us_801D6328[((i >> 2) + 1) % 5]) >> 9) - 8 +
+                         posX;
+                    y0 = (rcos(D_us_801D6334[((i >> 2) + 0) % 5]) >> 10) - 8 +
+                         posY;
+                    y1 = (rcos(D_us_801D6334[((i >> 2) + 1) % 5]) >> 10) - 8 +
+                         posY;
+                    prim->x0 = ((i & 3) * 0x90) + x0;
+                    prim->x2 = ((i & 3) * 0x90) + x1;
+                    prim->x1 = prim->x0 + 0x90;
+                    prim->x3 = prim->x2 + 0x90;
+                    prim->y1 = prim->y0 = ((i >> 2) * 0x42) + y0;
+                    prim->y3 = prim->y2 = ((i >> 2) * 0x42 + 0x42) + y1;
+                    prim->u0 = prim->u2 = 2;
+                    prim->v0 = prim->v1 = 0x39;
+                    prim->u1 = prim->u3 = 0x7E;
+                    prim->v2 = prim->v3 = 0x78;
+                    prim->tpage = 0xF;
+                    prim->clut = 0x40;
+                    prim->priority = 0xE0;
+                    prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
+                    i++;
+                    prim = prim->next;
+                }
+            }
+            self->flags |= FLAG_HAS_PRIMS;
+        }
+        if (D_us_80180EEC == 0) {
+            i = 0;
+            blink = g_GameTimer & 3;
+            xLen = (xLenUnscaled * lenScale) >> 4;
+            yLen = (yLenUnscaled * lenScale) >> 4;
+            xVel = xVelUnscaled * speed;
+            yVel = yVelUnscaled * speed;
+
+            prim = &g_PrimBuf[self->primIndex];
+            while (PrimLine(prim) != NULL) {
+                if ((i &= 3) != blink) {
+                    PrimLine(prim)->drawMode = DRAW_HIDE;
+                } else {
+                    PrimLine(prim)->drawMode = DRAW_COLORS;
+                    PrimLine(prim)->preciseX.i.hi = PrimLine(prim)->x0;
+                    PrimLine(prim)->preciseY.i.hi = PrimLine(prim)->y0;
+                    PrimLine(prim)->preciseX.val +=
+                        PrimLine(prim)->velocityX.val;
+                    PrimLine(prim)->preciseY.val +=
+                        PrimLine(prim)->velocityY.val;
+                    PrimLine(prim)->x0 = PrimLine(prim)->preciseX.i.hi;
+                    PrimLine(prim)->y0 = PrimLine(prim)->preciseY.i.hi;
+                    PrimLine(prim)->drawMode = DRAW_COLORS;
+                    if (PrimLine(prim)->x0 < xMin) {
+                        PrimLine(prim)->drawMode = DRAW_HIDE;
+                    }
+                    if (PrimLine(prim)->x1 > xMax) {
+                        PrimLine(prim)->drawMode = DRAW_HIDE;
+                    }
+                    if (PrimLine(prim)->y0 > 0x100) {
+                        PrimLine(prim)->drawMode = DRAW_HIDE;
+                        PrimLine(prim)->x0 =
+                            (rand() & 0xFF) + (rand() & 0x3F) + 0x10;
+                        PrimLine(prim)->y0 -= 0x120;
+                        PrimLine(prim)->xLength = xLen;
+                        PrimLine(prim)->yLength = yLen;
+                        PrimLine(prim)->velocityX.val = xVel;
+                        PrimLine(prim)->velocityY.val = yVel;
+                    }
+                    PrimLine(prim)->preciseX.i.hi = PrimLine(prim)->x1 =
+                        PrimLine(prim)->xLength + PrimLine(prim)->x0;
+                    PrimLine(prim)->preciseY.i.hi = PrimLine(prim)->y1 =
+                        PrimLine(prim)->yLength + PrimLine(prim)->y0;
+                }
+                i++;
+                PrimLine(prim) = PrimLine(prim)->next;
+            }
+            prim = self->ext.et_801B7188.unk80;
+            prim->drawMode = DRAW_DEFAULT;
+            prim->x0 = prim->y0 = prim->x1 = prim->y1 = 0;
+        }
+        if (D_us_80180EEC == 2) {
+            for (i = 0; i < 5; i++) {
+                D_us_801D6328[i] += 16;
+                D_us_801D6334[i] += 16;
+            }
+            posX = -(g_Tilemap.scrollX.i.hi * 5) / 4;
+            while (posX < -0x90) {
+                posX += 0x90;
+            }
+            posY = -(g_Tilemap.scrollY.i.hi * 5) / 4;
+            while (posY < -0x14A) {
+                posY += 0x14A;
+            }
+            i = 0;
+            prim = &g_PrimBuf[self->primIndex];
+            while (prim != NULL) {
+                angle = ((i >> 2) + 0) % 5;
+                x0 = (rsin(D_us_801D6328[angle]) >> 9) - 8 + posX;
+                y0 = (rcos(D_us_801D6334[angle]) >> 10) - 8 + posY;
+                angle = ((i >> 2) + 1) % 5;
+                x1 = (rsin(D_us_801D6328[angle]) >> 9) - 8 + posX;
+                y1 = (rcos(D_us_801D6334[angle]) >> 10) - 8 + posY;
+                prim->x0 = ((i & 3) * 0x90) + x0;
+                prim->x2 = ((i & 3) * 0x90) + x1;
+                prim->x1 = prim->x0 + 0x90;
+                prim->x3 = prim->x2 + 0x90;
+                prim->y1 = prim->y0 = ((i >> 2) * 0x42) + y0;
+                prim->y3 = prim->y2 = ((i >> 2) * 0x42 + 0x42) + y1;
+                i++;
+                prim = prim->next;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B7CC4);
 
