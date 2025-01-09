@@ -670,9 +670,6 @@ extern Point16 D_us_8017007C;
 void UpdateServantDefault(Entity* self) {
     Entity* follow;
     s32 currentX;
-    s32 tmp;
-    s32 var_a1;
-    s32 var_v1;
 
     CheckSwordLevel(self);
 
@@ -702,22 +699,12 @@ void UpdateServantDefault(Entity* self) {
             D_us_80178548 = FIX(0xC0);
             break;
         case 2:
-            if (self->posX.i.hi > 128) {
-                var_v1 = FIX(0xC0);
-            } else {
-                var_v1 = FIX(0x40);
-            }
-            D_us_80178548 = var_v1;
+            D_us_80178548 = self->posX.i.hi > 128 ? FIX(0xC0) : FIX(0x40);
             break;
         }
         D_us_8017854C = ((rcos(D_us_80178564) << 4) << 4) + FIX(0x90);
     } else {
-        if (PLAYER.facingLeft) {
-            var_a1 = FIX(0x1C);
-        } else {
-            var_a1 = -FIX(0x1C);
-        }
-        D_us_80178550 = var_a1;
+        D_us_80178550 = PLAYER.facingLeft ? FIX(0x1C) : -FIX(0x1C);
         D_us_80178554 = FIX(0x1C);
         D_us_80178548 = g_Entities->posX.val + D_us_80178550;
         D_us_8017854C = PLAYER.posY.val -
@@ -773,12 +760,7 @@ void UpdateServantDefault(Entity* self) {
         D_us_80178550 = abs(D_us_80178550) << 5;
         D_us_80178554 = abs(D_us_80178554) << 5;
 
-        if (D_us_80178550 < D_us_80178554) {
-            tmp = D_us_80178554;
-        } else {
-            tmp = D_us_80178550;
-        }
-        D_us_8017855C = tmp;
+        D_us_8017855C = MAX(D_us_80178550, D_us_80178554);
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178558, D_us_8017855C) & 0xFFF;
 
@@ -1063,7 +1045,6 @@ extern Point16 D_us_8017007C;
 void func_us_80176674(Entity* self) {
     s32 params;
     s32 x, y;
-    s32 tmp;
 
     CheckSwordLevel(self);
 
@@ -1112,13 +1093,7 @@ void func_us_80176674(Entity* self) {
     D_us_8017862C = -D_us_80170080.vz;
     D_us_80178624 = abs(D_us_80178624) << 5;
     D_us_80178628 = abs(D_us_80178628) << 5;
-
-    if (D_us_80178628 > D_us_80178624) {
-        tmp = D_us_80178628;
-    } else {
-        tmp = D_us_80178624;
-    }
-    D_us_80178630 = tmp;
+    D_us_80178630 = MAX(D_us_80178624, D_us_80178628);
 
     self->ext.swordFamiliar.currentX =
         ratan2(D_us_8017862C, D_us_80178630) & 0xFFF;
