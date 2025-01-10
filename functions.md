@@ -56,7 +56,7 @@
 | dra    | func_psp_090DDAA8             |       19 |          4 |        |                                 |       |
 | dra    | func_psp_090F0DD8             |       20 |          2 |        |                                 |       |
 | dra    | func_psp_090F88B8             |       20 |          2 |        |                                 |       |
-| dra    | func_psp_090E0C30             |       20 |          2 |        |                                 |       |
+| dra    | func_psp_090E0C30             |       20 |          2 |        | https://decomp.me/scratch/UpVrZ | 1.0   |
 | dra    | func_psp_091119E0             |       20 |          3 |        |                                 |       |
 | dra    | SetPlayerAnim                 |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A58           |       21 |          1 |        |                                 |       |
@@ -414,8 +414,8 @@
 | dra    | func_80132A04                 |      145 |         15 |        |                                 |       |
 | dra    | func_psp_0912E198             |      149 |         13 |        |                                 |       |
 | dra    | func_psp_09114668             |      149 |         27 |        |                                 |       |
-| st0    | InitRoomEntities              |      150 |         10 |        | https://decomp.me/scratch/jXCiL | 0.996 |
-| wrp    | InitRoomEntities              |      150 |         10 |        | https://decomp.me/scratch/jXCiL | 0.996 |
+| st0    | InitRoomEntities              |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
+| wrp    | InitRoomEntities              |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
 | dra    | func_psp_090F0330             |      151 |         12 |        |                                 |       |
 | dra    | func_psp_091121C0             |      152 |         23 |        |                                 |       |
 | dra    | func_psp_09111D30             |      152 |         28 |        |                                 |       |
