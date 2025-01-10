@@ -136,8 +136,15 @@ void func_800EAD7C(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0C30);
+static void DestroyPrimitive(Primitive* prim) {
+    s32 i;
+    s32 n;
+    u32* primData = (u32*)prim;
 
+    for (n = sizeof(Primitive) / sizeof(*primData), i = 0; i < n; i++) {
+        *primData++ = 0;
+    }
+}
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0C68);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0CA8);
