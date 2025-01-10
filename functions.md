@@ -132,7 +132,6 @@
 | dra    | func_psp_09116338             |       33 |          5 |        |                                 |       |
 | dra    | func_psp_090F21F8             |       33 |          6 |        |                                 |       |
 | dra    | func_psp_091161D0             |       33 |          6 |        |                                 |       |
-| dra    | func_psp_090E0870             |       33 |          8 |        |                                 |       |
 | dra    | func_psp_090F1B60             |       34 |          4 |        |                                 |       |
 | dra    | DecompressWriteNibble         |       35 |          2 |        |                                 |       |
 | dra    | InitSoundVars2                |       35 |          2 |        |                                 |       |
@@ -455,7 +454,6 @@
 | dra    | DecompressData                |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
 | dra    | func_psp_0910ECC0             |      219 |         43 |        |                                 |       |
 | dra    | func_psp_091127A0             |      221 |         35 |        |                                 |       |
-| dra    | func_psp_090E08D8             |      225 |          7 |        |                                 |       |
 | dra    | func_psp_0910B768             |      232 |         32 |        |                                 |       |
 | dra    | func_psp_09108988             |      235 |         31 |        |                                 |       |
 | dra    | DrawEntitiesHitbox            |      240 |         15 |        |                                 |       |
