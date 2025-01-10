@@ -56,7 +56,6 @@
 | dra    | func_psp_090DDAA8             |       19 |          4 |        |                                 |       |
 | dra    | func_psp_090F0DD8             |       20 |          2 |        |                                 |       |
 | dra    | func_psp_090F88B8             |       20 |          2 |        |                                 |       |
-| dra    | func_psp_090E0C30             |       20 |          2 |        | https://decomp.me/scratch/UpVrZ | 1.0   |
 | dra    | func_psp_091119E0             |       20 |          3 |        |                                 |       |
 | dra    | SetPlayerAnim                 |       21 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A58           |       21 |          1 |        |                                 |       |
