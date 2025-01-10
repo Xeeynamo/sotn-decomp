@@ -48,7 +48,7 @@ segments:
       - [0x908, .data, title_card]
       - [0x90C, .data, 2C564]
       - [0xAA4, .data, 2DAC8]
-      - [0x1568, .data, 30030]
+      - [0x1568, .data, prologue_scroll]
       - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
@@ -124,7 +124,7 @@ segments:
       - [0x27B8C, .rodata, 2DAC8] # EntityDraculaFinalForm
       - [0x27BDC, .rodata, 2DAC8] # "can't get effect works!\n"
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
-      - [0x27C1C, .rodata, 30030] # PrologueScroll
+      - [0x27C1C, .rodata, prologue_scroll] # PrologueScroll
       - [0x27C6C, .rodata, e_red_door] # EntityRedDoor
       - [0x27C84, .rodata, e_collect] # c_HeartPrizes
       - [0x27C8C, .rodata, e_collect]
@@ -143,7 +143,7 @@ segments:
       - [0x2B0C8, c, title_card]
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
-      - [0x30030, c]
+      - [0x30030, c, prologue_scroll]
       - [0x3101C, c]
       - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]

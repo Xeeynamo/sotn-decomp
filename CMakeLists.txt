@@ -373,7 +373,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/title_card.c
     src/st/st0/2C564.c
     src/st/st0/2DAC8.c
-    src/st/st0/30030.c
+    src/st/st0/prologue_scroll.c
     src/st/st0/3101C.c
     src/st/st0/st_update.c
     src/st/st0/collision.c
