@@ -333,24 +333,16 @@
 | dra    | TimeAttackController          |       89 |          8 |        |                                 |       |
 | dra    | func_psp_090FF608             |       89 |         10 |        |                                 |       |
 | dra    | func_psp_0910E378             |       89 |         11 |        |                                 |       |
-| st0    | CreateEntitiesToTheRight      |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
-| wrp    | CreateEntitiesToTheRight      |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
-| st0    | CreateEntitiesAbove           |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
-| wrp    | CreateEntitiesAbove           |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | dra    | func_psp_09110E90             |       91 |         19 |        |                                 |       |
 | dra    | func_psp_091446D0             |       92 |         11 |        |                                 |       |
 | dra    | UpdateGame                    |       92 |         21 | Yes    |                                 |       |
 | dra    | func_psp_091392D8             |       95 |         11 |        |                                 |       |
 | dra    | func_psp_09114880             |       95 |         14 |        |                                 |       |
 | dra    | func_psp_09134F40             |       96 |         11 |        |                                 |       |
-| st0    | CreateEntitiesToTheLeft       |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
-| wrp    | CreateEntitiesToTheLeft       |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dra    | func_psp_091060E0             |       96 |         16 |        |                                 |       |
 | st0    | func_pspeu_092469A0           |       97 |          1 |        |                                 |       |
 | dra    | UpdateUnarmedAnim             |       97 |          6 |        |                                 |       |
 | dra    | func_psp_09116B88             |       98 |         10 |        | https://decomp.me/scratch/mGIed | 0.992 |
-| st0    | CreateEntitiesBelow           |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
-| wrp    | CreateEntitiesBelow           |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | dra    | func_psp_090ED310             |       99 |         12 |        |                                 |       |
 | st0    | func_801AF6D0                 |      101 |          5 |        |                                 |       |
 | dra    | func_psp_0910BD28             |      101 |         14 |        |                                 |       |
@@ -414,8 +406,6 @@
 | dra    | func_80132A04                 |      145 |         15 |        |                                 |       |
 | dra    | func_psp_0912E198             |      149 |         13 |        |                                 |       |
 | dra    | func_psp_09114668             |      149 |         27 |        |                                 |       |
-| st0    | InitRoomEntities              |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
-| wrp    | InitRoomEntities              |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
 | dra    | func_psp_090F0330             |      151 |         12 |        |                                 |       |
 | dra    | func_psp_091121C0             |      152 |         23 |        |                                 |       |
 | dra    | func_psp_09111D30             |      152 |         28 |        |                                 |       |
