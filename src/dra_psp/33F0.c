@@ -100,9 +100,41 @@ u16 func_800EA720(u16 target, u16 col) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090DFFD0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0870);
+s32 func_800EAD0C(void) { // the return type is needed for matching
+    func_800EA5E4(4);
+    func_800EA5E4(5);
+    func_800EA5E4(6);
+    func_800EA5E4(7);
+    func_800EA5E4(8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E08D8);
+    if (g_PlayableCharacter == PLAYER_ALUCARD && g_StageId != STAGE_ST0) {
+        func_800EA5E4(0x17);
+    }
+}
+
+void func_800EAD7C(void) {
+    s32 index = 0;
+    s32 i;
+    s32 j;
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x200; j < 0x300; j += 0x10) {
+            g_ClutIds[index++] = getClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0; j < 0x100; j += 0x10) {
+            g_ClutIds[index++] = getClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x100; j < 0x200; j += 0x10) {
+            g_ClutIds[index++] = getClut(j, i);
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0C30);
 
