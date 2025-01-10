@@ -1582,6 +1582,7 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801BB984);
 
 extern u16 D_us_801809F8[];
 extern RECT D_us_801B47B0;
+extern s32 D_psp_08C62AA4;
 
 void func_us_801BBD90(Entity* self) {
     s16 dx, dy;
@@ -1729,7 +1730,7 @@ void func_us_801BBD90(Entity* self) {
             }
             self->step_s++;
 #ifdef VERSION_PSP
-            *(s32*)0x08C62AA4 = 1;
+            D_psp_08C62AA4 = 1;
 #endif
         }
         if ((self->posX.i.hi & 0x100) || (self->posY.i.hi < 0)) {
