@@ -101,31 +101,43 @@ s32 func_800EA5E4(u32 arg0) {
     return -1;
 }
 
-u16 func_800EA720(u32 colorDst, u32 colorSrc) {
-    u16 colorRes = colorSrc;
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+// These could be ~RED_MASK, but that doesn't match.
+#define UNRED_MASK 0xFFFF - RED_MASK
+#define UNGREEN_MASK 0xFFFF - GREEN_MASK
+#define UNBLUE_MASK 0xFFFF - BLUE_MASK
 
-    if (GET_RED(colorRes) < GET_RED(colorDst)) {
-        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) + 1);
-    }
-    if (GET_RED(colorDst) < GET_RED(colorRes)) {
-        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) - 1);
-    }
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
-    if (GET_GREEN(colorRes) < GET_GREEN(colorDst)) {
-        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) + 0x20);
+// Takes a color "col" in RGB555 and increments/decrements each component
+// to bring it closer to the target by 1.
+u16 func_800EA720(u16 target, u16 col) {
+    if (GET_RED(target) > GET_RED(col)) {
+        col = (col & UNRED_MASK) | (GET_RED(col) + 1);
     }
-    if (GET_GREEN(colorDst) < GET_GREEN(colorRes)) {
-        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) - 0x20);
-    }
-
-    if (GET_BLUE(colorRes) < GET_BLUE(colorDst)) {
-        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) + 0x400);
-    }
-    if (GET_BLUE(colorDst) < GET_BLUE(colorRes)) {
-        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) - 0x400);
+    if (GET_RED(target) < GET_RED(col)) {
+        col = (col & UNRED_MASK) | (GET_RED(col) - 1);
     }
 
-    return colorRes;
+    if (GET_GREEN(target) > GET_GREEN(col)) {
+        col = (col & UNGREEN_MASK) | (GET_GREEN(col) + (1 << 5));
+    }
+    if (GET_GREEN(target) < GET_GREEN(col)) {
+        col = (col & UNGREEN_MASK) | (GET_GREEN(col) - (1 << 5));
+    }
+
+    if (GET_BLUE(target) > GET_BLUE(col)) {
+        col = (col & UNBLUE_MASK) | (GET_BLUE(col) + (1 << 10));
+    }
+    if (GET_BLUE(target) < GET_BLUE(col)) {
+        col = (col & UNBLUE_MASK) | (GET_BLUE(col) - (1 << 10));
+    }
+
+    return col;
 }
 
 void func_800EA7CC(void) {
