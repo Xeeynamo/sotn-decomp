@@ -1,5 +1,3 @@
-actor_names = 0x80180680;
-MAR_PrizeDrops = 0x80180744;
 bird_cage_pos_x = 0x80181280;
 bird_cage_pos_y = 0x80181284;
 statue_pos_x_1 = 0x80181288;
