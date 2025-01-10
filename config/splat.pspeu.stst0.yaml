@@ -44,7 +44,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, st0_psp/80]
-      - [0x1E8, c, st0_psp/30030]
+      - [0x1E8, c, st0/30030]
       - [0x1578, c, st0_psp/cutscene]
       - [0x3F58, c, st0_psp/2A8DC]
       - [0x4A30, c, st0/title_card]
@@ -73,7 +73,7 @@ segments:
       - [0x194C0, c, st0_psp/3D8F0]
       - [0x19D90, c, st0_psp/prim_helpers]
       - [0x1A4D0, c, st0_psp/e_bg_vortex]
-      - [0x1B200, data]
+      - [0x1B200, .data, st0/30030]
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]
       - [0x1B700, data]
@@ -84,7 +84,7 @@ segments:
       - [0x41F98, .data, st0/collision]
       - [0x42308, data, e_room_fg]
       - [0x423A8, data]
-      - [0x42400, .rodata, st0_psp/30030]
+      - [0x42400, .rodata, st0/30030]
       - [0x42450, .rodata, st0_psp/cutscene]
       - [0x424F8, .rodata, st0/title_card]
       - [0x42530, .rodata, st0_psp/2C564]
