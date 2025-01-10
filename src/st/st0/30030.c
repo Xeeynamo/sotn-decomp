@@ -16,7 +16,7 @@ static void SetGameState(GameState gameState) {
 #define GET_CLUT(x, y) GetClut(x, y)
 #endif
 
-static void func_801B0058(void) {
+static void InitClutIndices(void) {
     s32 clutId;
     s32 i;
     s32 j;
@@ -42,7 +42,7 @@ static void func_801B0058(void) {
     }
 }
 
-void func_801B0180(void) {
+static void ClearScreen(void) {
     RECT rect;
 
     rect.x = 0;
@@ -61,10 +61,10 @@ static void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[1].draw.b0 = 0;
 }
 
-void func_801B01F8(s32 arg0) {
+static void SetStageCinematicBorders(s32 bufferId) {
     g_GpuBuffers[0].draw.clip.y = 0x0014;
     g_GpuBuffers[0].draw.clip.h = 0x00CF;
-    if (!arg0) {
+    if (!bufferId) {
         g_GpuBuffers[1].draw.clip.y = 0x0014;
     } else {
         g_GpuBuffers[1].draw.clip.y = 0x0014 + DISP_STAGE_NEXT_X;
@@ -75,17 +75,17 @@ void func_801B01F8(s32 arg0) {
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
 
-void func_801B0280(void) {
+static void SetStageDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_NEXT_X, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_NEXT_X, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
     SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    func_801B01F8(0);
+    SetStageCinematicBorders(0);
 }
 
-void SetTitleDisplayBuffer(void) {
+static void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, DISP_STAGE_NEXT_X, DISP_TITLE_W,
                   DISP_TITLE_H);
@@ -104,7 +104,7 @@ void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
 
-s32 func_801B0414(void) {
+static s32 IsSkipRequested(void) {
     if (g_pads[0].tapped & PAD_START &&
         ((g_Settings.D_8003CB04 & 2) || g_IsTimeAttackUnlocked)) {
         return 1;
@@ -347,7 +347,7 @@ void PrologueScroll(void) {
             func_pspeu_09246B88();
 #endif
         }
-        skip = func_801B0414();
+        skip = IsSkipRequested();
         if (skip) {
             g_GameStep = Play_16;
         }
@@ -371,7 +371,7 @@ void PrologueScroll(void) {
             D_801BEE00 = 0;
             g_GameStep++;
         }
-        skip = func_801B0414();
+        skip = IsSkipRequested();
         if (skip) {
             g_GameStep = Play_16;
         }
@@ -393,7 +393,7 @@ void PrologueScroll(void) {
             D_801BEE00 = 0;
             g_GameStep++;
         }
-        skip = func_801B0414();
+        skip = IsSkipRequested();
         if (skip) {
             g_GameStep = Play_16;
         }
@@ -404,13 +404,13 @@ void PrologueScroll(void) {
             g_GameStep = Play_16;
             break;
         }
-        skip = func_801B0414();
+        skip = IsSkipRequested();
         if (skip) {
             g_GameStep = Play_16;
         }
         break;
     case 16:
-        g_api.PlaySfx(0x82);
+        g_api.PlaySfx(SET_UNK_82);
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 3);
         prim = &g_PrimBuf[D_801BEE08];
         i = 0;
@@ -466,15 +466,15 @@ void PrologueScroll(void) {
         break;
     case 18:
         g_Settings.D_8003CB04 |= 2;
-        func_801B0058();
+        InitClutIndices();
         g_api.FreePrimitives(D_801BEE08);
         DestroyEntitiesFromIndex(0);
         g_GameStep++;
         break;
     case 19:
         if (!g_api.func_80131F68()) {
-            func_801B0280();
-            func_801B0180();
+            SetStageDisplayBuffer();
+            ClearScreen();
             if (g_StageId == STAGE_ST0) {
                 g_StageId = STAGE_NO3;
                 SetGameState(Game_NowLoading);
