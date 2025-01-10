@@ -1,4 +1,3 @@
-DRE_gfxBanks = 0x801801D0;
 DRE_EntityUpdates = 0x801803C8;
 DRE_EInitBreakable = 0x80180458;
 g_EInitObtainable = 0x80180464;
