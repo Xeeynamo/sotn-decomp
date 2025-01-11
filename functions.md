@@ -69,7 +69,6 @@
 | dra    | func_psp_090F1C98            |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090F6A50            |       23 |          4 |        |                                 |       |
 | dra    | ResetPendingGfxLoad          |       24 |          2 |        |                                 |       |
-| dra    | func_psp_090E0CA8            |       24 |          2 |        | https://decomp.me/scratch/h5dVZ | 0.994 |
 | dra    | func_psp_09117B78            |       24 |          2 |        |                                 |       |
 | dra    | func_psp_09104878            |       24 |          3 |        |                                 |       |
 | dra    | func_psp_09141440            |       24 |          4 |        |                                 |       |
