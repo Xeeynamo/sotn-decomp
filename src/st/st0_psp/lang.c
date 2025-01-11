@@ -5,15 +5,15 @@ extern s32 D_8B42058;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
     switch (D_8B42058) {
     default:
-    case 1:
+    case LANG_EN:
         return en + idx;
-    case 2:
+    case LANG_FR:
         return fr + idx;
-    case 3:
+    case LANG_SP:
         return sp + idx;
-    case 4:
+    case LANG_GE:
         return ge + idx;
-    case 5:
+    case LANG_IT:
         return it + idx;
     }
 }
@@ -21,15 +21,15 @@ u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
 u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
     switch (D_8B42058) {
     default:
-    case 1:
+    case LANG_EN:
         return en;
-    case 2:
+    case LANG_FR:
         return fr;
-    case 3:
+    case LANG_SP:
         return sp;
-    case 4:
+    case LANG_GE:
         return ge;
-    case 5:
+    case LANG_IT:
         return it;
     }
 }
