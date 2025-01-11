@@ -60,7 +60,6 @@
 | dra    | func_8010FAF4                |       21 |          2 |        |                                 |       |
 | dra    | func_psp_090E8880            |       21 |          2 |        |                                 |       |
 | dra    | func_psp_090F0E10            |       21 |          3 |        |                                 |       |
-| dra    | func_psp_090E0C68            |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09111A18            |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09117BC0            |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09140588            |       22 |          3 |        |                                 |       |
