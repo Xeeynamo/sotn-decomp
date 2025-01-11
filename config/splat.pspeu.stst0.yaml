@@ -43,7 +43,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, st0_psp/80]
+      - [0x80, c, st0_psp/lang]
       - [0x1E8, c, st0/prologue_scroll]
       - [0x1578, c, st0_psp/cutscene]
       - [0x3F58, c, st0_psp/2A8DC]
