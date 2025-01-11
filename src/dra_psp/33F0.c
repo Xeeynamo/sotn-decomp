@@ -157,7 +157,17 @@ void DestroyAllPrimitives(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0CA8);
+s32 func_800EDAE4(void) {
+    s32 i;
+    DR_ENV* ptr = &D_800974AC[0];
+
+    for (i = 0; i < 16; i++, ptr++) {
+        ptr->tag = 0;
+    }
+#ifdef VERSION_PSP
+    return 0;
+#endif
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_800EDB08);
 
