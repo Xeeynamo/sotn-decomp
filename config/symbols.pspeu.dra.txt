@@ -7,6 +7,7 @@ func_800EA720 = 0x090DFED8;
 func_800EAD0C = 0x090E0870;
 func_800EAD7C = 0x090E08D8;
 DestroyPrimitive = 0x090E0C30;
+DestroyAllPrimitives = 0x090E0C68;
 func_800EDB08 = 0x090E0CF0;
 func_800EDB58 = 0x090E0D68;
 AllocPrimitives = 0x090E0E30;

@@ -145,7 +145,17 @@ static void DestroyPrimitive(Primitive* prim) {
         *primData++ = 0;
     }
 }
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0C68);
+
+void DestroyAllPrimitives(void) {
+    s32 i;
+    Primitive* prim;
+
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
+        DestroyPrimitive(prim);
+        prim->type = PRIM_NONE;
+        prim++;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090E0CA8);
 
