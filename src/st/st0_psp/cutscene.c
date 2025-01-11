@@ -39,11 +39,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
 
     // Pre-calculate primitives that renders the actor's name
     x = 0x38;
-#if defined(VERSION_PSP)
     g_Dialogue.primIndex[0] = primIndex;
-#else
-    g_Dialogue.primIndex[1] = primIndex;
-#endif
     prim = &g_PrimBuf[primIndex];
     len = actorNameLength;
     actorNameStartIndex = 0;
