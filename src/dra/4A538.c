@@ -1670,9 +1670,9 @@ DR_ENV* func_800EDB08(Primitive* prim) {
 
     for (i = 0; i < LEN(D_800974AC); i++, dr++) {
         if (dr->tag == 0) {
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             SetDrawEnv(dr, 0);
-            #endif
+#endif
             dr->tag = 1;
             setcode(prim, 7);
             *(DR_ENV**)&prim->r1 = dr;

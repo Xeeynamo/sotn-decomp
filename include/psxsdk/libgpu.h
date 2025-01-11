@@ -163,7 +163,7 @@ typedef struct {
     unsigned addr : 24;
     unsigned len : 8;
 #ifdef VERSION_PSP
-s32 dummy;
+    s32 dummy;
 #endif
     u_char r0, g0, b0, code;
 } P_TAG;
