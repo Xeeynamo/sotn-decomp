@@ -69,7 +69,7 @@
 | dra    | func_psp_090F1C98            |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090F6A50            |       23 |          4 |        |                                 |       |
 | dra    | ResetPendingGfxLoad          |       24 |          2 |        |                                 |       |
-| dra    | func_psp_090E0CA8            |       24 |          2 |        |                                 |       |
+| dra    | func_psp_090E0CA8            |       24 |          2 |        | https://decomp.me/scratch/h5dVZ | 0.994 |
 | dra    | func_psp_09117B78            |       24 |          2 |        |                                 |       |
 | dra    | func_psp_09104878            |       24 |          3 |        |                                 |       |
 | dra    | func_psp_09141440            |       24 |          4 |        |                                 |       |
@@ -156,7 +156,7 @@
 | dra    | func_psp_09141570            |       37 |          5 |        |                                 |       |
 | dra    | func_psp_091162B8            |       37 |          6 |        |                                 |       |
 | dra    | func_psp_0913E7B8            |       38 |          3 |        |                                 |       |
-| dra    | func_800EDB08                |       38 |          4 |        |                                 |       |
+| dra    | func_800EDB08                |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
 | dra    | func_psp_0913DA28            |       39 |          3 |        |                                 |       |
 | dra    | LoadMonsterLibrarianPreview  |       39 |          5 |        |                                 |       |
 | dra    | func_psp_0911EA78            |       40 |          2 |        |                                 |       |
@@ -218,7 +218,6 @@
 | dra    | func_psp_09103E68            |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra    | func_psp_091048B8            |       51 |         10 |        |                                 |       |
 | dra    | func_psp_090EAF08            |       51 |         10 |        |                                 |       |
-| st0    | func_pspeu_092377C8          |       51 |         10 |        |                                 |       |
 | dra    | func_800EDD9C                |       52 |          6 |        |                                 |       |
 | st0    | func_801AD838                |       52 |         10 |        |                                 |       |
 | dra    | func_psp_090F18B0            |       53 |          3 |        |                                 |       |
@@ -253,7 +252,6 @@
 | dra    | func_psp_090F77E8            |       61 |          6 |        |                                 |       |
 | dra    | LoadGfxAsync                 |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
 | dra    | func_psp_09106008            |       61 |          9 |        |                                 |       |
-| st0    | func_pspeu_09237700          |       61 |         10 |        |                                 |       |
 | dra    | func_psp_09137038            |       61 |         12 |        |                                 |       |
 | dra    | func_psp_09118330            |       62 |          5 |        |                                 |       |
 | st0    | ST0_EntityBackgroundBlock    |       62 |          5 |        |                                 |       |
@@ -438,7 +436,6 @@
 | dra    | func_psp_09142110            |      208 |         24 |        |                                 |       |
 | dra    | func_psp_090EC9C8            |      209 |         15 |        |                                 |       |
 | dra    | func_psp_0910E758            |      209 |         21 |        |                                 |       |
-| st0    | func_pspeu_09238BF8          |      212 |         14 |        |                                 |       |
 | dra    | func_psp_0911D180            |      215 |         28 |        |                                 |       |
 | dra    | func_psp_09110B78            |      215 |         32 |        |                                 |       |
 | dra    | DecompressData               |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
