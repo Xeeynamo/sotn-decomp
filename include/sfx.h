@@ -54,6 +54,7 @@ enum SfxModes {
 #define SET_UNK_10 0x10
 #define SET_UNK_11 0x11
 #define SET_UNK_12 0x12
+#define SET_UNK_82 0x82
 #define SET_UNK_90 0x90
 #define SET_RELEASE_RATE_LOW_20_21 0xa3
 #define SET_RELEASE_RATE_LOW_22_23 0xa7
@@ -134,8 +135,13 @@ enum SfxModes {
 #define MU_I_AM_THE_WIND 0x33C
 #define MU_SILENCE 0x33D
 #define MU_LAND_OF_BENEDICTION 0x33E
-#define MU_JP_FAIRY_SONG 0x33F      // japanese version of fairy song
+#define MU_JP_FAIRY_SONG 0x33F // japanese version of fairy song
+
+#if defined(VERSION_PSP)
+#define MU_MOONLIGHT_NOCTURNE 0x33D // music during intro scrolling text
+#else
 #define MU_MOONLIGHT_NOCTURNE 0x340 // music during intro scrolling text
+#endif
 
 // japanese intro narration
 #define JP_VO_KATSUTE 0x341 // Narrator says "Katsute ..."
