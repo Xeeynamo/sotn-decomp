@@ -164,9 +164,9 @@ s32 func_800EDAE4(void) {
     for (i = 0; i < 16; i++, ptr++) {
         ptr->tag = 0;
     }
-    #ifdef VERSION_PSP
+#ifdef VERSION_PSP
     return 0;
-    #endif
+#endif
 }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_800EDB08);
