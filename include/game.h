@@ -2079,4 +2079,8 @@ extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
+// exclusive PSP content
+u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
+u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it);
+
 #endif
