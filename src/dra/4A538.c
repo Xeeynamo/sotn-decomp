@@ -1652,13 +1652,16 @@ void DestroyAllPrimitives(void) {
     }
 }
 
-void func_800EDAE4(void) {
+s32 func_800EDAE4(void) {
     s32 i;
-    DR_ENV* ptr = &D_800974AC;
+    DR_ENV* ptr = &D_800974AC[0];
 
     for (i = 0; i < 16; i++, ptr++) {
         ptr->tag = 0;
     }
+    #ifdef VERSION_PSP
+    return 0;
+    #endif
 }
 
 DR_ENV* func_800EDB08(Primitive* prim) {
