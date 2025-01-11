@@ -155,7 +155,6 @@
 | dra    | func_psp_09141570            |       37 |          5 |        |                                 |       |
 | dra    | func_psp_091162B8            |       37 |          6 |        |                                 |       |
 | dra    | func_psp_0913E7B8            |       38 |          3 |        |                                 |       |
-| dra    | func_800EDB08                |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
 | dra    | func_psp_0913DA28            |       39 |          3 |        |                                 |       |
 | dra    | LoadMonsterLibrarianPreview  |       39 |          5 |        |                                 |       |
 | dra    | func_psp_0911EA78            |       40 |          2 |        |                                 |       |
