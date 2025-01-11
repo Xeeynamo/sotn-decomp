@@ -169,7 +169,24 @@ s32 func_800EDAE4(void) {
 #endif
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_800EDB08);
+DR_ENV* func_800EDB08(Primitive* prim) {
+    s32 i;
+    DR_ENV* dr = &D_800974AC[0];
+
+    for (i = 0; i < LEN(D_800974AC); i++, dr++) {
+        if (dr->tag == 0) {
+            #ifdef VERSION_PSP
+            SetDrawEnv(dr, 0);
+            #endif
+            dr->tag = 1;
+            setcode(prim, 7);
+            *(DR_ENV**)&prim->r1 = dr;
+            return dr;
+        }
+    }
+
+    return NULL;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_800EDB58);
 

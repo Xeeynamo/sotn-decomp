@@ -8,6 +8,7 @@ LoadImage = 0x0891BFE4;
 ClearImage = 0x0891CA60;
 LoadTPage = 0x0891CF3C;
 ClearOTag = 0x0891D0E0;
+SetDrawEnv = 0x0891D338;
 PutDrawEnv = 0x0891D484;
 PutDispEnv = 0x0891D68C;
 SetDefDrawEnv = 0x0891DCF4;

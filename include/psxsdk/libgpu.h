@@ -156,10 +156,15 @@ typedef struct {
 #define OT_TYPE u_long
 #endif
 
+// This P_TAG implementation should maybe look more like the O_TAG listed above.
+// In func_800EDB08, the setcode needs to write to offset 0xb.
 #ifndef VERSION_PC
 typedef struct {
     unsigned addr : 24;
     unsigned len : 8;
+#ifdef VERSION_PSP
+s32 dummy;
+#endif
     u_char r0, g0, b0, code;
 } P_TAG;
 #else

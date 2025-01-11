@@ -1665,11 +1665,14 @@ s32 func_800EDAE4(void) {
 }
 
 DR_ENV* func_800EDB08(Primitive* prim) {
-    DR_ENV* dr = &D_800974AC;
     s32 i;
+    DR_ENV* dr = &D_800974AC[0];
 
     for (i = 0; i < LEN(D_800974AC); i++, dr++) {
         if (dr->tag == 0) {
+            #ifdef VERSION_PSP
+            SetDrawEnv(dr, 0);
+            #endif
             dr->tag = 1;
             setcode(prim, 7);
             *(DR_ENV**)&prim->r1 = dr;
