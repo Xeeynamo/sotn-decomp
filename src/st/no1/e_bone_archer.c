@@ -64,7 +64,7 @@ void EntityBoneArcher(Entity* self) {
 
     case 3:
         if (!self->step_s) {
-            self->ext.et_801D0598.unk84 = 0x40;
+            self->ext.boneArcher.unk84 = 0x40;
             self->step_s++;
         }
         self->animCurFrame = 1;
@@ -72,12 +72,12 @@ void EntityBoneArcher(Entity* self) {
         if (GetDistanceToPlayerX() < 0x60) {
             SetStep(13);
         }
-        if (!--self->ext.et_801D0598.unk84) {
-            step = self->ext.et_801D0598.unk8C;
+        if (!--self->ext.boneArcher.unk84) {
+            step = self->ext.boneArcher.unk8C;
             step += 7;
             SetStep(step);
-            if (++self->ext.et_801D0598.unk8C > 2) {
-                self->ext.et_801D0598.unk8C = 0;
+            if (++self->ext.boneArcher.unk8C > 2) {
+                self->ext.boneArcher.unk8C = 0;
             }
         }
         break;
@@ -97,7 +97,7 @@ void EntityBoneArcher(Entity* self) {
     case 4:
     case 5:
         if (!self->step_s) {
-            self->ext.et_801D0598.unk86 = 0x40;
+            self->ext.boneArcher.unk86 = 0x40;
             self->step_s++;
         }
         if (!AnimateEntity(D_us_80182BF8, self)) {
@@ -131,19 +131,19 @@ void EntityBoneArcher(Entity* self) {
             }
             if (tempVar & 0x80) {
                 self->animCurFrame = 1;
-                self->ext.et_801D0598.unk86 = 1;
+                self->ext.boneArcher.unk86 = 1;
                 step = 0xA;
             }
             break;
         }
-        if (!--self->ext.et_801D0598.unk86) {
+        if (!--self->ext.boneArcher.unk86) {
             if (step == 0) {
-                step = self->ext.et_801D0598.unk8C;
+                step = self->ext.boneArcher.unk8C;
                 step += 7;
             }
             SetStep(step);
-            if (++self->ext.et_801D0598.unk8C > 2) {
-                self->ext.et_801D0598.unk8C = 0;
+            if (++self->ext.boneArcher.unk8C > 2) {
+                self->ext.boneArcher.unk8C = 0;
             }
         }
         break;
@@ -223,7 +223,7 @@ void EntityBoneArcher(Entity* self) {
             }
             if (!AnimateEntity(anim, self)) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-                self->ext.et_801D0598.unk84 = 0x40;
+                self->ext.boneArcher.unk84 = 0x40;
                 if (self->step == 9) {
                     SetStep(14);
                 } else {
@@ -275,7 +275,7 @@ void EntityBoneArcher(Entity* self) {
                 tempEntity->velocityX = -D_us_80182D04[i];
             }
             tempEntity->velocityY = D_us_80182D24[i];
-            tempEntity->ext.et_801D0598.unk88 = D_80182D44[i];
+            tempEntity->ext.boneArcher.unk88 = D_80182D44[i];
         }
 
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -290,7 +290,7 @@ void EntityBoneArcher(Entity* self) {
     case 12:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        if (!--self->ext.et_801D0598.unk88) {
+        if (!--self->ext.boneArcher.unk88) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
