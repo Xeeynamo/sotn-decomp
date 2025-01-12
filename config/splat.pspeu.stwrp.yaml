@@ -1,26 +1,25 @@
 options:
-  platform:     psp
-  basename:     dra
-  base_path:    ..
-  build_path:   build/pspeu
-  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
-  asm_path:     asm/pspeu/st/wrp_psp
-  asset_path:   assets/st/wrp
-  src_path:     src/st
+  platform: psp
+  basename: dra
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
+  asm_path: asm/pspeu/st/wrp_psp
+  asset_path: assets/st/wrp
+  src_path: src/st
   ld_script_path: build/pspeu/stwrp.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.stwrp.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stwrp.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.stwrp.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stwrp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: yes
   asm_jtbl_label_macro: jlabel
-  symbol_name_format : psp_$VRAM
+  symbol_name_format: psp_$VRAM
   nonmatchings_path: psp
-  disassemble_all: True
   section_order:
     - ".text"
     - ".data"
@@ -28,22 +27,22 @@ options:
     - ".bss"
   ld_bss_is_noload: True
   disasm_unknown: True
+  global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
 sha1: 0584ddb3ba1afce61592d43497212fcb8ebf797b
-
 segments:
   - [0x0, bin, mwo_header]
   - name: stwrp
     type: code
     start: 0x00000080
-    vram:  0x09237700
+    vram: 0x09237700
     bss_size: 0x1180
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, wrp_psp/create_entity]
+      - [0x80, c, wrp/create_entity]
       - [0x1028, c, wrp_psp/e_stage_name]
       - [0x1EA8, c, wrp/e_red_door]
       - [0x31B0, c, wrp/st_update]
@@ -134,7 +133,7 @@ segments:
       - [0x14498, .rodata, wrp_psp/e_collect]
       - [0x144D0, .rodata, wrp_psp/e_misc]
       - [0x144F8, .rodata, wrp/warp]
-      - [0x14500, .bss, wrp_psp/create_entity]
+      - [0x14500, .bss, wrp/create_entity]
       - [0x14520, .bss, wrp_psp/e_collect]
       - [0x14560, .bss, wrp_psp/bss]
   - [0x14580]

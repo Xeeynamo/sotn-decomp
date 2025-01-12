@@ -129,7 +129,7 @@ void HandlePlay(void) {
         }
         func_800F2120();
         func_800FDE00();
-        func_800FF0B8();
+        ClearStatBuffs();
         ApplyJosephsCloakPalette();
         func_800EAD0C();
         g_GameStep++;

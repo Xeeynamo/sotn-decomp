@@ -20,7 +20,6 @@ options:
   asm_jtbl_label_macro: jlabel
   symbol_name_format: psp_$VRAM
   nonmatchings_path: psp
-  disassemble_all: True
   section_order:
     - .text
     - .data
@@ -28,17 +27,17 @@ options:
     - .bss
   ld_bss_is_noload: true
   disasm_unknown: true
+  global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
 sha1: 2ba697c152e240ee0d69619f4a460d145fae04c0
-
 segments:
   - [0x0, bin, mwo_header]
   - name: dra
     type: code
     start: 0x80
-    vram:  0x090DCA00
+    vram: 0x090DCA00
     bss_size: 0x6BF80
     align: 128
     subalign: 8
@@ -46,16 +45,11 @@ segments:
       - [0x80, c, dra_psp/80]
       - [0x1E50, c, dra_psp/1E50]
       - [0x33F0, c, dra_psp/33F0]
-      - [0x3650, c, dra_psp/3650]
-      - [0x4370, c, dra_psp/4370]
-      - [0x5DA0, c, dra/624DC]
-      - [0x60F8, c, dra_psp/60F8]
-      - [0x65E0, c, dra_psp/65E0]
+      - [0x5DA0, c, dra/624DC] # O4
+      - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra_psp/66B0]
-      - [0x67F0, c, dra_psp/67F0]
-      - [0x86A0, c, dra_psp/86A0]
-      - [0xAA50, c, dra_psp/AA50]
-      - [0xB240, c, dra_psp/B240]
+      - [0x67F0, c, dra_psp/67F0] # O0
+      - [0xA710, c, dra_psp/A710]
       - [0xBDE0, c, dra_psp/BDE0]
       - [0xC0B0, c, dra_psp/C0B0]
       - [0xEC60, c, dra_psp/EC60]
@@ -175,14 +169,19 @@ segments:
       - [0x67E90, c, dra_psp/67E90]
       - [0x680C0, c, dra_psp/680C0]
       - [0x68D80, data]
+      - [0x69578, .data, dra/628AC]
+      - [0x69600, data]
+      - [0x6A818, .data, dra_psp/67F0] # DrawHud arrays
+      - [0x6A8B8, .data, dra_psp/67F0] # Subwpn clut/u/v
+      - [0x6A8F8, data]
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
-      - [0xEE3C0, .rodata, dra_psp/60F8]
-      - [0xEE3E8, .rodata, dra_psp/65E0]
-      - [0xEE408, .rodata, dra_psp/86A0]
+      - [0xEE3C0, .rodata, dra/628AC]
+      - [0xEE3E8, .rodata, dra/628AC]
+      - [0xEE408, .rodata, dra_psp/A710]
       - [0xEE428, .rodata, dra_psp/C0B0]
       - [0xEE4C8, .rodata, dra_psp/11C50]
       - [0xEE4E8, .rodata, dra_psp/13080]
@@ -212,5 +211,5 @@ segments:
       - [0xEEC58, .rodata, dra_psp/5DA20]
       - [0xEECA8, .rodata, dra_psp/5EC50]
       - [0xEED48, .rodata, dra_psp/65790]
-      - {type: bss, vram: 0x91CB700}
+      - { type: bss, vram: 0x91CB700 }
   - [0xEED80]

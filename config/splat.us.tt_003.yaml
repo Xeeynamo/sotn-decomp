@@ -28,7 +28,6 @@ options:
   ld_bss_is_noload: false
   disasm_unknown: true
   include_macro_inc: false
-  disassemble_all: true
 sha1: b54466dec3923d43bd08d71bec688da252153984
 segments:
   - name: tt_003

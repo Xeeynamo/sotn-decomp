@@ -579,21 +579,28 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     func_800F53A4();
 }
 
+#ifdef VERSION_PSP
+#define RIC_HUD_NUM_SPRITES 10
+#else
+#define RIC_HUD_NUM_SPRITES 9
+#endif
+
 void DrawRichterHud(void) {
+    s32 i;
     Primitive* prim;
 
-    g_PlayerHud.unk0C = 400;
-    g_PlayerHud.unk10 = 400;
     D_801397FC = 0;
     D_80139008 = 0;
     g_PlayerHud.unk28 = 0;
     D_8003C744 = 0;
+    g_PlayerHud.unk0C = 400;
+    g_PlayerHud.unk10 = 400;
     g_PlayerHud.unk14 = 48;
     g_PlayerHud.unk18 = 0;
+    g_PlayerHud.unk1C = g_PlayerHud.unk20 =
+        g_PlayerHud.unk0C * 100 / g_PlayerHud.unk10;
     g_PlayerHud.unk24 = 0;
-    g_PlayerHud.unk20 = 40000 / (u32)g_PlayerHud.unk0C;
-    g_PlayerHud.unk1C = 40000 / g_PlayerHud.unk10;
-    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, 9);
+    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, RIC_HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
@@ -654,6 +661,16 @@ void DrawRichterHud(void) {
     prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
+    // Extra HUD sprite on PSP! Should identify what this is.
+#ifdef VERSION_PSP
+    SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x102;
+    prim->priority = 0x1F0;
+    prim->drawMode = DRAW_ABSPOS;
+    prim = prim->next;
+#endif
+
     SetTexturedPrimRect(prim, 33, 20, 64, 24, 64, 40);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
@@ -661,23 +678,16 @@ void DrawRichterHud(void) {
     prim->drawMode = DRAW_ABSPOS;
 
     g_PlayerHud.primIndex2 = func_800EDD9C(4, 16);
-    prim = &g_PrimBuf[g_PlayerHud.primIndex2];
-    if (prim != 0) {
-        s32 u = 32;
-        s32 x = 216;
-        do {
-            SetTexturedPrimRect(prim, x, 22, 2, 96, u, 0);
-            func_801072DC(prim);
-            prim->tpage = 0x1B;
-            prim->clut = 0x100;
-            prim->priority = 0x1EE;
-            prim->drawMode = DRAW_HIDE;
-            prim->p1 = (rand() & 0x3F) + 1;
-            prim->p2 = 0;
-            prim = prim->next;
-            u += 2;
-            x += 2;
-        } while (prim != 0);
+    for (prim = &g_PrimBuf[g_PlayerHud.primIndex2], i = 0; prim != 0; i++,
+        prim = prim->next) {
+        SetTexturedPrimRect(prim, 216 + i * 2, 22, 2, 96, 32 + i * 2, 0);
+        func_801072DC(prim);
+        prim->tpage = 0x1B;
+        prim->clut = 0x100;
+        prim->priority = 0x1EE;
+        prim->drawMode = DRAW_HIDE;
+        prim->p1 = (rand() & 0x3F) + 1;
+        prim->p2 = 0;
     }
 }
 
@@ -693,13 +703,14 @@ RicSubwpnIconParams g_ricSubwpnIcons[] = {
     {0x008, 0x006, 0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F}};
 
 void DrawRichterHudSubweapon(void) {
-    Primitive* prim;
-    Primitive* altPrim;
-    s32 temp_subweapon;
+    s32 i;
+    s32 temp_s4;
     s32 temp_a0;
     s32 temp_s2;
-    u8 temp_r0;
-    u8 temp_p2;
+    Primitive* altPrim;
+    Primitive* prim;
+
+    s32 temp_subweapon;
     RicSubwpnIconParams* temp_s0;
 
     if (D_8003C744 == 5) {
@@ -716,25 +727,24 @@ void DrawRichterHudSubweapon(void) {
         return;
     }
     if ((D_8003C744 == 1) && (g_PlayerHud.unk28 == 0)) {
-        g_PlayerHud.unk20 = 100;
-        g_PlayerHud.unk28 = D_8003C744;
         g_PlayerHud.unk10 = g_Entities[80].hitPoints;
-        g_PlayerHud.unk0C = g_Entities[80].hitPoints;
-        D_80139008 = g_Status.hearts;
+        g_PlayerHud.unk0C = g_PlayerHud.unk10;
         // Not really sure what the point of this is.
-        g_PlayerHud.unk1C =
-            (g_Entities[80].hitPoints * 100) / (u32)g_Entities[80].hitPoints;
+        g_PlayerHud.unk1C = (g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10;
+        g_PlayerHud.unk20 = 100;
+        g_PlayerHud.unk28 = 1;
+        D_80139008 = g_Status.hearts;
     }
     if ((D_8003C744 == 2) && (g_PlayerHud.unk28 == 1)) {
-        g_PlayerHud.unk28 = D_8003C744;
         g_PlayerHud.unk10 = g_Entities[85].hitPoints;
-        g_PlayerHud.unk0C = g_Entities[85].hitPoints;
+        g_PlayerHud.unk0C = g_PlayerHud.unk10;
+        g_PlayerHud.unk28 = 2;
     }
     if (g_PlayerHud.unk28 != 100) {
         if (D_8003C744 == 1) {
             g_PlayerHud.unk0C = g_Entities[80].hitPoints;
         }
-        if ((D_8003C744 - 2) < 2U) {
+        if (D_8003C744 == 2 || D_8003C744 == 3) {
             g_PlayerHud.unk0C = g_Entities[85].hitPoints;
         }
         if (g_PlayerHud.unk0C < 0) {
@@ -745,7 +755,7 @@ void DrawRichterHudSubweapon(void) {
         g_PlayerHud.displayHP++;
         D_801397FC = 1;
     }
-    if (g_Status.hp < g_PlayerHud.displayHP) {
+    if (g_PlayerHud.displayHP > g_Status.hp) {
         g_PlayerHud.displayHP--;
     }
     if (D_8003C744 == 1) {
@@ -753,12 +763,12 @@ void DrawRichterHudSubweapon(void) {
             ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
             g_PlayerHud.unk1C++;
         }
-        if (((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10) <
-            g_PlayerHud.unk1C) {
+        if (g_PlayerHud.unk1C >
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
             g_PlayerHud.unk1C--;
         }
     }
-    if ((D_8003C744 - 2) < 2U) {
+    if (D_8003C744 == 2 || D_8003C744 == 3) {
         if (g_PlayerHud.unk1C != 0) {
             g_PlayerHud.unk1C -= 1;
         }
@@ -766,8 +776,8 @@ void DrawRichterHudSubweapon(void) {
             ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
             g_PlayerHud.unk20++;
         }
-        if (((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10) <
-            g_PlayerHud.unk20) {
+        if (g_PlayerHud.unk20 >
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
             g_PlayerHud.unk20--;
         }
     }
@@ -780,14 +790,14 @@ void DrawRichterHudSubweapon(void) {
     if ((D_8003C744 == 3) && (g_PlayerHud.unk20 == 0) &&
         ((g_PlayerHud.unk24 == 0) || (g_PlayerHud.unk24 >= 0x33U))) {
         prim->drawMode = DRAW_HIDE;
-
-        for (altPrim = &g_PrimBuf[g_PlayerHud.primIndex2]; altPrim != NULL;
-             altPrim = altPrim->next) {
-            if (altPrim->p2 != 0) {
+        // The i variable is not used, but is set up in the for-loop.
+        for (altPrim = &g_PrimBuf[g_PlayerHud.primIndex2], i = 0;
+             altPrim != NULL; i++, altPrim = altPrim->next) {
+            if (altPrim->p2) {
                 continue;
             }
             altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
-            if (altPrim->p1 != 0) {
+            if (altPrim->p1) {
                 altPrim->p1--;
                 continue;
             }
@@ -795,9 +805,9 @@ void DrawRichterHudSubweapon(void) {
             altPrim->y0 += temp_a0;
             altPrim->y1 += temp_a0;
             temp_a0 = (rand() & 3) + 1;
-            altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
             altPrim->y2 += temp_a0;
             altPrim->y3 += temp_a0;
+            altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
             if (altPrim->r2 >= 3) {
                 temp_s2 = altPrim->r2 - 3;
                 func_801071CC(altPrim, temp_s2, 2);
@@ -806,10 +816,8 @@ void DrawRichterHudSubweapon(void) {
             if (altPrim->y2 >= 0x100) {
                 altPrim->drawMode =
                     DRAW_ABSPOS | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-                if (altPrim->r0 != 0) {
-                    temp_r0 = altPrim->r0;
-                    temp_s2 = temp_r0 & 0xFF;
-                    altPrim->r0 = temp_r0 + 0xFF;
+                if (altPrim->r0) {
+                    temp_s2 = altPrim->r0--;
                     func_801071CC(altPrim, temp_s2, 0);
                     func_801071CC(altPrim, temp_s2, 1);
                 }
@@ -827,18 +835,16 @@ void DrawRichterHudSubweapon(void) {
     }
 
     prim = prim->next;
-    temp_a0 = (g_PlayerHud.displayHP * 0x5B) / g_Status.hpMax;
-    prim->y0 = prim->y1 = prim->y2 - temp_a0;
+    temp_s4 = (g_PlayerHud.displayHP * 0x5B) / g_Status.hpMax;
+    prim->y0 = prim->y1 = prim->y2 - temp_s4;
     prim = prim->next;
     SetPrimRect(prim, g_PlayerHud.unk14 + 0xE4, 0x70, 9, 3);
-    temp_a0 = (g_PlayerHud.unk1C * 0x5B) / 100;
-    if (temp_a0 < 0) {
-        temp_a0 = 0;
+    temp_s4 = (g_PlayerHud.unk1C * 0x5B) / 100;
+    if (temp_s4 < 0) {
+        temp_s4 = 0;
     }
-    temp_p2 = prim->p2;
-    prim->y0 = prim->y1 = prim->y2 - temp_a0;
-    prim->p2 = temp_p2 + 0xFF;
-    if (temp_p2 == 0) {
+    prim->y0 = prim->y1 = prim->y2 - temp_s4;
+    if (!(prim->p2--)) {
         prim->p1++;
         if (prim->p1 == 9) {
             prim->p1 = 0;
@@ -853,12 +859,12 @@ void DrawRichterHudSubweapon(void) {
     temp_s2 = prim->clut;
     prim = prim->next;
     SetPrimRect(prim, g_PlayerHud.unk14 + 0xEC, 0x70, 9, 3);
-    temp_a0 = (g_PlayerHud.unk20 * 0x5B) / 100;
-    if (temp_a0 >= 0x5C) {
-        temp_a0 = 0x5B;
+    temp_s4 = (g_PlayerHud.unk20 * 0x5B) / 100;
+    if (temp_s4 > 0x5B) {
+        temp_s4 = 0x5B;
     }
+    prim->y0 = prim->y1 = prim->y2 - temp_s4;
     prim->clut = temp_s2;
-    prim->y0 = prim->y1 = prim->y2 - temp_a0;
     prim = prim->next;
 
     prim->u0 = (g_Status.hearts / 10) * 8;
@@ -870,8 +876,12 @@ void DrawRichterHudSubweapon(void) {
     prim->u3 = ((g_Status.hearts / 10) * 8) + 8;
     prim->v3 = 0x68;
     // Perhaps flashes the heart numbers when you have enough for a crash
-    if ((g_Player.status & PLAYER_STATUS_UNK200000) && !(g_Timer & 2)) {
-        prim->clut = 0x100;
+    if (g_Player.status & PLAYER_STATUS_UNK200000) {
+        if (g_Timer & 2) {
+            prim->clut = 0x103;
+        } else {
+            prim->clut = 0x100;
+        }
     } else {
         prim->clut = 0x103;
     }
@@ -889,8 +899,9 @@ void DrawRichterHudSubweapon(void) {
     prim->clut = altPrim->clut;
     prim->drawMode = altPrim->drawMode;
     prim = prim->next;
+
     temp_subweapon = g_Status.subWeapon;
-    if (temp_subweapon == 0) {
+    if (g_Status.subWeapon == 0) {
         prim->drawMode = DRAW_HIDE;
     } else {
         // Convert from system where 0 is "no subweapon" to "first subweapon"
@@ -906,10 +917,15 @@ void DrawRichterHudSubweapon(void) {
             prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE | DRAW_TRANSP;
         }
     }
+
     prim = prim->next;
-    // This should be a switch, but that doesn't work.
+
     if (g_PlayerHud.unk24 == 0) {
-    } else if (g_PlayerHud.unk24 < 9) {
+        return;
+    }
+    // This acts like a switch, but does not appear to match if you try one.
+    // Checking != 0 is redundant due to the prior if-block.
+    if (g_PlayerHud.unk24 != 0 && g_PlayerHud.unk24 < 9) {
         prim->clut = g_PlayerHud.unk24 + 0x102;
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 == 9) {
@@ -927,7 +943,7 @@ void DrawRichterHudSubweapon(void) {
         prim->clut = 0x112;
         g_PlayerHud.unk24++;
     } else if (13 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 20) {
-        prim->clut = 0x11F - g_PlayerHud.unk24;
+        prim->clut = 0x112 - (g_PlayerHud.unk24 - 13);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 == 21) {
     } else if (51 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 58) {
@@ -948,7 +964,7 @@ void DrawRichterHudSubweapon(void) {
         prim->clut = 0x10A;
         g_PlayerHud.unk24++;
     } else if (63 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 70) {
-        prim->clut = 0x149 - g_PlayerHud.unk24;
+        prim->clut = 0x10A - (g_PlayerHud.unk24 - 63);
         g_PlayerHud.unk24++;
     } else if (g_PlayerHud.unk24 == 71) {
         g_PlayerHud.unk24 = 0;
@@ -977,8 +993,8 @@ void DrawHud(void) {
     s32 i;
 
     D_8013B5E8 = 0;
-    g_HealingMailTimer[0] = 0;
     g_PlayerHud.displayHP = g_Status.hp;
+    g_HealingMailTimer[0] = 0;
 
     if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
         DrawRichterHud();
@@ -987,11 +1003,8 @@ void DrawHud(void) {
 
     g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
-    if (!prim) {
-        return;
-    }
 
-    for (i = 0; prim != NULL; i++) {
+    for (i = 0; prim != NULL; i++, prim = prim->next) {
         SetTexturedPrimRect(
             prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteW[i],
             g_HudSpriteH[i], g_HudSpriteU[i], g_HudSpriteV[i]);
@@ -1011,11 +1024,9 @@ void DrawHud(void) {
 
         if (i == 1) {
             prim->p1 = 0;
-            prim->p2 = rand() + 8;
+            prim->p2 = (rand() & 0xFF) + 8;
             prim->p3 = (7 & rand()) + 1;
         }
-
-        prim = prim->next;
     }
 }
 
@@ -1027,9 +1038,9 @@ void DrawHudSubweapon() {
     s32 statXPos;
     s32 hpdiff;
     s32 mpFillSteps;
-    s32 leading_zeros;
     s32 digitSpacing;
-    u16 clut;
+    u32 clut;
+    u32 leading_zeros;
 
     if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
         DrawRichterHudSubweapon();
@@ -1041,13 +1052,13 @@ void DrawHudSubweapon() {
         prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
         prim->p2--;
-        if (prim->p2 == 0) {
+        if (!prim->p2) {
             prim->p1 += 1;
             if (prim->p1 == 0xF) {
                 prim->p1 = 0;
-                prim->p2 = rand() + 8;
+                prim->p2 = (rand() & 0xFF) + 8;
                 prim->p3--;
-                if (prim->p3 != 0) {
+                if (prim->p3) {
                     prim->p1 = 1;
                     prim->p2 = 1;
                 } else {
@@ -1066,7 +1077,7 @@ void DrawHudSubweapon() {
                 prim->v3 = g_HudSubwpnSpriteV[prim->p1 - 1] + 16;
             }
         }
-        if (prim->p1 != 0) {
+        if (prim->p1) {
             prim->drawMode = DRAW_ABSPOS;
         } else {
             prim->drawMode = DRAW_HIDE;
@@ -1106,8 +1117,8 @@ void DrawHudSubweapon() {
     }
 
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, EQUIP_ARMOR)) &&
-        ((g_Player.status & (PLAYER_STATUS_TRANSFORM |
-                             PLAYER_STATUS_UNK4000000)) == 0x04000000)) {
+        (g_Player.status & PLAYER_STATUS_UNK4000000) &&
+        !(g_Player.status & PLAYER_STATUS_TRANSFORM)) {
         g_HealingMailTimer[0]++;
         if (g_HealingMailTimer[0] >= 128) {
             g_Player.unk56 = 2;
@@ -1118,17 +1129,24 @@ void DrawHudSubweapon() {
         g_HealingMailTimer[0] = 0;
     }
 
-    func_800FEE6C();
+    // Why in the world would this call be in the HUD code? This codebase is
+    // awful.
+    DecrementStatBuffTimers();
+
     // Represents MP fill level in fraction of 50 (2% each)
     mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
     LoadTPage(D_800C52F8[10] + 4, 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
     // Use one clut if MP is full, otherwise a different one
-    prim->clut = mpFillSteps == 50 ? 0x162 : 0x174;
+    if (mpFillSteps == 50) {
+        prim->clut = 0x162;
+    } else {
+        prim->clut = 0x174;
+    }
 
     if (D_8013B5E8 == 0) {
         hpdiff = g_Status.hp - g_PlayerHud.displayHP;
         if (hpdiff > 0) {
-            if (hpdiff >= 11) {
+            if (hpdiff > 10) {
                 g_PlayerHud.displayHP += (hpdiff) / 10;
             } else {
                 g_PlayerHud.displayHP++;
@@ -1152,18 +1170,18 @@ void DrawHudSubweapon() {
         func_800EA5E4(1); // Normal health display
     }
 
-    if (g_PlayerHud.displayHP >= 1000) {
+    if (g_PlayerHud.displayHP > 999) {
         leading_zeros = 0;
         digitSpacing = 6;
         statXPos = 3;
-    } else if (g_PlayerHud.displayHP >= 100) {
+    } else if (g_PlayerHud.displayHP > 99) {
         leading_zeros = 1;
         digitSpacing = 6;
-        statXPos = 0;
+        statXPos = 6 - digitSpacing;
     } else {
         digitSpacing = 7;
-        statXPos = -6;
-        if (g_PlayerHud.displayHP >= 10) {
+        statXPos = 8 - digitSpacing * 2;
+        if (g_PlayerHud.displayHP > 9) {
             leading_zeros = 2;
         } else {
             leading_zeros = 3;
@@ -1171,10 +1189,12 @@ void DrawHudSubweapon() {
     }
     // Thousands digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_PlayerHud.displayHP / 1000) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = ((g_PlayerHud.displayHP / 1000) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos;
-    prim->x1 = prim->x3 = statXPos + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
@@ -1183,10 +1203,12 @@ void DrawHudSubweapon() {
     }
     // Hundreds digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_PlayerHud.displayHP / 100) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_PlayerHud.displayHP / 100) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + digitSpacing;
-    prim->x1 = prim->x3 = statXPos + digitSpacing + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1194,52 +1216,61 @@ void DrawHudSubweapon() {
     }
     // Tens digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_PlayerHud.displayHP / 10) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_PlayerHud.displayHP / 10) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + (digitSpacing * 2);
-    prim->x1 = prim->x3 = statXPos + (digitSpacing * 2) + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
+        leading_zeros--;
         prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_PlayerHud.displayHP % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = ((g_PlayerHud.displayHP % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + (digitSpacing * 3);
-    prim->x1 = prim->x3 = statXPos + (digitSpacing * 3) + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
 
-    if (g_Status.hearts >= 1000) {
+    if (g_Status.hearts > 999) {
         leading_zeros = 0;
         statXPos = 0x3B;
-    } else if (g_Status.hearts >= 100) {
+    } else if (g_Status.hearts > 99) {
         leading_zeros = 1;
         statXPos = 0x37;
     } else {
         statXPos = 0x33;
-        if (g_Status.hearts >= 10) {
+        if (g_Status.hearts > 9) {
             leading_zeros = 2;
         } else {
             leading_zeros = 3;
         }
     }
 
-    // Seems like this should be a simple || but that doesn't work here.
-    if (func_800FE3C4(&subwpn, 0, false) == 0) {
-        clut = 0x196;
-    } else if (g_Timer & 2) {
-        clut = 0x196;
+    if (func_800FE3C4(&subwpn, 0, false)) {
+        // Enable flickering with g_Timer
+        if (g_Timer & 2) {
+            clut = 0x196;
+        } else {
+            clut = 0x193;
+        }
     } else {
-        clut = 0x193;
+        clut = 0x196;
     }
 
     // Thousands digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_Status.hearts / 1000) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = ((g_Status.hearts / 1000) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos;
-    prim->x1 = prim->x3 = statXPos + 8;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1248,10 +1279,12 @@ void DrawHudSubweapon() {
     }
     // Hundreds digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_Status.hearts / 100) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_Status.hearts / 100) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + 4;
-    prim->x1 = prim->x3 = statXPos + 0xC;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1260,20 +1293,25 @@ void DrawHudSubweapon() {
     }
     // Tens digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_Status.hearts / 10) % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->u0 = (((g_Status.hearts / 10) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
     prim->x0 = prim->x2 = statXPos + 8;
-    prim->x1 = prim->x3 = statXPos + 0x10;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
+        leading_zeros--;
         prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of hearts
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_Status.hearts % 10) * 8) + 0x20;
-    prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = statXPos + 0xC;
-    prim->x1 = prim->x3 = statXPos + 0x14;
+    prim->u0 = ((g_Status.hearts % 10) * 8) + 0x20;
+    prim->u2 = prim->u0;
+    prim->u1 = prim->u0 + 8;
+    prim->u3 = prim->u1;
+    prim->x0 = prim->x2 = statXPos + 12;
+    prim->x1 = prim->x3 = prim->x0 + 8;
     prim->clut = clut;
 }

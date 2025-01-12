@@ -52,7 +52,7 @@ s32 func_800EA5E4(u32 arg0) {
     u_long* clut;
     Unkstruct_8006C3C4* clutAnim;
 
-    temp_v0 = arg0 & 0xFF00;
+    temp_v0 = arg0 & ~0xFF; // & 0xFF00 would be more descriptive.
     arg0 = arg0 & 0xFF;
 
     if (temp_v0 & 0x8000) {
@@ -68,21 +68,20 @@ s32 func_800EA5E4(u32 arg0) {
         return 1;
     }
 
-    clutAnim = &D_8006C3C4;
-    for (j = 0; j < LEN(D_8006C3C4); clutAnim++) {
-        j++;
+    for (j = 0, clutAnim = &D_8006C3C4[0]; j < LEN(D_8006C3C4); j++,
+        clutAnim++) {
         if (clutAnim->unk8 != 0) {
             continue;
         }
         clutAnim->desc = clut;
         clutAnim->data = clut + 3;
-        clutAnim->unk8 = (temp_v0 | GET_PAL_OP_KIND(clut[0]));
+        clutAnim->unk8 = (GET_PAL_OP_KIND(clut[0]) | temp_v0);
         clutAnim->index = 0;
         clutAnim->unkC = 0;
 
         // Set unkStruct's array to all zeros, except within this range
         start = clut[1];
-        count = clut[1] + clut[2] - 1;
+        count = clut[2] + start - 1;
         start >>= 8;
         count >>= 8;
         for (i = 0; i < LEN(clutAnim->unkArray); i++) {
@@ -92,7 +91,9 @@ s32 func_800EA5E4(u32 arg0) {
             clutAnim->unkArray[i] = 1;
         }
 
-        if ((u8)clutAnim->unk8 == 2 || (u8)clutAnim->unk8 == 16) {
+        switch ((u8)clutAnim->unk8) {
+        case 2:
+        case 16:
             clutAnim->unkE = 0x1F;
         }
         return 0;
@@ -100,31 +101,43 @@ s32 func_800EA5E4(u32 arg0) {
     return -1;
 }
 
-u16 func_800EA720(u32 colorDst, u32 colorSrc) {
-    u16 colorRes = colorSrc;
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+// These could be ~RED_MASK, but that doesn't match.
+#define UNRED_MASK 0xFFFF - RED_MASK
+#define UNGREEN_MASK 0xFFFF - GREEN_MASK
+#define UNBLUE_MASK 0xFFFF - BLUE_MASK
 
-    if (GET_RED(colorRes) < GET_RED(colorDst)) {
-        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) + 1);
-    }
-    if (GET_RED(colorDst) < GET_RED(colorRes)) {
-        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) - 1);
-    }
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
-    if (GET_GREEN(colorRes) < GET_GREEN(colorDst)) {
-        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) + 0x20);
+// Takes a color "col" in RGB555 and increments/decrements each component
+// to bring it closer to the target by 1.
+u16 func_800EA720(u16 target, u16 col) {
+    if (GET_RED(target) > GET_RED(col)) {
+        col = (col & UNRED_MASK) | (GET_RED(col) + 1);
     }
-    if (GET_GREEN(colorDst) < GET_GREEN(colorRes)) {
-        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) - 0x20);
-    }
-
-    if (GET_BLUE(colorRes) < GET_BLUE(colorDst)) {
-        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) + 0x400);
-    }
-    if (GET_BLUE(colorDst) < GET_BLUE(colorRes)) {
-        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) - 0x400);
+    if (GET_RED(target) < GET_RED(col)) {
+        col = (col & UNRED_MASK) | (GET_RED(col) - 1);
     }
 
-    return colorRes;
+    if (GET_GREEN(target) > GET_GREEN(col)) {
+        col = (col & UNGREEN_MASK) | (GET_GREEN(col) + (1 << 5));
+    }
+    if (GET_GREEN(target) < GET_GREEN(col)) {
+        col = (col & UNGREEN_MASK) | (GET_GREEN(col) - (1 << 5));
+    }
+
+    if (GET_BLUE(target) > GET_BLUE(col)) {
+        col = (col & UNBLUE_MASK) | (GET_BLUE(col) + (1 << 10));
+    }
+    if (GET_BLUE(target) < GET_BLUE(col)) {
+        col = (col & UNBLUE_MASK) | (GET_BLUE(col) - (1 << 10));
+    }
+
+    return col;
 }
 
 void func_800EA7CC(void) {
@@ -1639,21 +1652,27 @@ void DestroyAllPrimitives(void) {
     }
 }
 
-void func_800EDAE4(void) {
+s32 func_800EDAE4(void) {
     s32 i;
-    DR_ENV* ptr = &D_800974AC;
+    DR_ENV* ptr = &D_800974AC[0];
 
     for (i = 0; i < 16; i++, ptr++) {
         ptr->tag = 0;
     }
+#ifdef VERSION_PSP
+    return 0;
+#endif
 }
 
 DR_ENV* func_800EDB08(Primitive* prim) {
-    DR_ENV* dr = &D_800974AC;
     s32 i;
+    DR_ENV* dr = &D_800974AC[0];
 
     for (i = 0; i < LEN(D_800974AC); i++, dr++) {
         if (dr->tag == 0) {
+#ifdef VERSION_PSP
+            SetDrawEnv(dr, 0);
+#endif
             dr->tag = 1;
             setcode(prim, 7);
             *(DR_ENV**)&prim->r1 = dr;

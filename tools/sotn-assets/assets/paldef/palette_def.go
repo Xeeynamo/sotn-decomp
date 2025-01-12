@@ -168,7 +168,10 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr, splatConfig *s
 		if !addr.InRange(psx.RamStageBegin, psx.RamStageEnd) {
 			return nil, fmt.Errorf("invalid palette entry at %s, address out of the stage range: got %s", baseAddr.Sum(i*4*3+4), addr)
 		}
-		name := splatConfig.GetSymbolName(addr.Real(baseAddr))
+		var name string
+		if splatConfig != nil {
+			name = splatConfig.GetSymbolName(addr.Real(baseAddr))
+		}
 		if name == "" {
 			name = fmt.Sprintf("D_%08X", uint32(addr))
 		}

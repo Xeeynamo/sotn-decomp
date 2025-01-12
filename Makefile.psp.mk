@@ -85,16 +85,16 @@ $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(PSX_BASE_SYMS) $(CONFI
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT_PIP) $<
 
-ST_DRA_MERGE = 624DC
+ST_DRA_MERGE = 624DC 628AC
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
 	$(call link_with_deadstrip,dra,$@)
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link_with_deadstrip,tt_$*,$@)
 
-ST_ST0_MERGE = popup e_room_fg st_common
+ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
 	$(call link_with_deadstrip,stst0,$@)
-ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door
+ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door create_entity
 $(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/stwrp.ld $(addprefix $(BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
 	$(call link_with_deadstrip,stwrp,$@)
 
@@ -107,7 +107,7 @@ $(BUILD_DIR)/%.s.o: %.s
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
 OPT_OVL = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
 # Allow override. Any file in this list will get Op.
-OPT_LO_OVERRIDES = 67F0.c.o 22A40.c.o 23FE0.c.o 32DA0.c.o 3AE30.c.o 60D80.c.o 60F10.c.o
+OPT_LO_OVERRIDES = 67F0.c.o 86A0.c.o 22A40.c.o 23FE0.c.o 32DA0.c.o 3AE30.c.o 60D80.c.o 60F10.c.o
 OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_LO_OVERRIDES)), -Op, $(OPT_OVL))
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)

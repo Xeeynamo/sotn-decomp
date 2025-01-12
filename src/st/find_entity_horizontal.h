@@ -11,10 +11,11 @@
  *    `g_LayoutObjHorizontal` will be positioned at an element with a
  *    x position larger than `posX` or the tail eleement.
  */
-void FindFirstEntityToTheRight(s16 posX) {
+static void FindFirstEntityToTheRight(s16 posX) {
     while (1) {
         u16* layoutEntity = g_LayoutObjHorizontal;
-        if (layoutEntity[0] != LAYOUT_OBJ_START && layoutEntity[0] >= posX) {
+        if (layoutEntity[LAYOUT_OBJ_POS_X] != LAYOUT_OBJ_START &&
+            layoutEntity[LAYOUT_OBJ_POS_X] >= posX) {
             break;
         }
 
@@ -33,11 +34,12 @@ void FindFirstEntityToTheRight(s16 posX) {
  *    `g_LayoutObjVertical` will be positioned at an element with an
  *    x position smaller than `posX` or the head element.
  */
-void FindFirstEntityToTheLeft(s16 posX) {
+static void FindFirstEntityToTheLeft(s16 posX) {
     while (true) {
-        u16* layoutObject = g_LayoutObjHorizontal;
-        if (layoutObject[0] != LAYOUT_OBJ_END &&
-            (layoutObject[0] <= posX || layoutObject[0] == LAYOUT_OBJ_START)) {
+        u16* layoutEntity = g_LayoutObjHorizontal;
+        if (layoutEntity[LAYOUT_OBJ_POS_X] != LAYOUT_OBJ_END &&
+            (layoutEntity[LAYOUT_OBJ_POS_X] <= posX ||
+             layoutEntity[LAYOUT_OBJ_POS_X] == LAYOUT_OBJ_START)) {
             break;
         }
         g_LayoutObjHorizontal -= sizeof(LayoutEntity) / sizeof(u16);

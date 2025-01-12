@@ -17,7 +17,6 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
-  disassemble_all: True
   section_order:
     - ".rodata"
     - ".text"

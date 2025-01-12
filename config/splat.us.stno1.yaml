@@ -28,7 +28,6 @@ options:
   ld_bss_is_noload: false
   disasm_unknown: true
   include_macro_inc: false
-  disassemble_all: true
 sha1: 41ccd886308d5527684ae2c41164ecf6c554721f
 segments:
   - name: stno1
@@ -39,15 +38,19 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0xC84, data, e_red_door]
+      - [0x7C0, .data, e_init]
+      - [0xB60, data]
+      - [0xC84, .data, e_red_door]
       - [0xC9C, data]
+      - [0xCFC, .data, st_debug]
+      - [0xD7C, data]
       - [0x1A2C, .data, d_prize_drops]
       - [0x1A5C, .data, st_update]
       - [0x1A88, .data, collision]
       - [0x1E48, .data, st_common]
       - [0x2048, .data, e_collect]
       - [0x2338, .data, e_misc]
-      - [0x2450, data]
+      - [0x2450, .data, e_blue_axe_knight]
       - [0x2610, .data, e_particles]
       - [0x2690, .data, e_room_fg]
       - [0x271C, data]
@@ -55,12 +58,13 @@ segments:
       - [0x281C, data]
       - [0x34670, .rodata, e_mouse]
       - [0x34670, .rodata, e_red_door]
+      - [0x34688, .rodata, unk_35E20]
       - [0x347BC, .rodata, unk_3CB34]
       - [0x34810, .rodata, e_wall_chicken_secret]
       - [0x3486C, .rodata, unk_3FA34]
       - [0x348A8, .rodata, e_collect]
       - [0x34930, .rodata, e_misc]
-      - [0x3497C, .rodata, e_axe_knight]
+      - [0x3497C, .rodata, e_blue_axe_knight]
       - [0x34A00, .rodata, e_stage_name]
       - [0x34A34, .rodata, e_skeleton]
       - [0x34A50, .rodata, unk_4DDD8]
@@ -75,6 +79,8 @@ segments:
       - [0x34CBC, .rodata, prim_helpers]
       - [0x34CC4, c, e_mouse]
       - [0x34E6C, c, e_red_door]
+      - [0x35C64, c, st_debug]
+      - [0x35E20, c, unk_35E20]
       - [0x3CB34, c, unk_3CB34]
       - [0x3E880, c, e_wall_chicken_secret]
       - [0x3FA34, c, unk_3FA34]
@@ -85,7 +91,7 @@ segments:
       - [0x45608, c, e_collect]
       - [0x46B74, c, blit_char]
       - [0x46E24, c, e_misc]
-      - [0x4A314, c, e_axe_knight]
+      - [0x4A314, c, e_blue_axe_knight]
       - [0x4BB24, c, e_stage_name]
       - [0x4C978, c, e_particles]
       - [0x4D1BC, c, e_room_fg]

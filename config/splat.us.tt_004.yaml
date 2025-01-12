@@ -28,7 +28,6 @@ options:
   ld_bss_is_noload: false
   disasm_unknown: true
   include_macro_inc: false
-  disassemble_all: true
 sha1: 0f2ff898829ead77bb15545324c7b8958f9fb4e1
 segments:
   - name: tt_004
@@ -47,5 +46,4 @@ segments:
       - [0x2420, c, sword]
       - [0x763C, c, servant_common]
       - [0x82B0, .bss, sword]
-      - [0x82C8, sbss]
   - [0xA000]

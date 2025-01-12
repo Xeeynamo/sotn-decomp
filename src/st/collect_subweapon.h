@@ -27,12 +27,12 @@ static void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.equipItemDrop.unk8A = 5;
-        if (player->facingLeft != 1) {
+        if (player->facingLeft ^ 1) {
             g_CurrentEntity->velocityX = FIX(-2);
-            return;
+        } else {
+            g_CurrentEntity->velocityX = FIX(2);
         }
-        g_CurrentEntity->velocityX = FIX(2);
-        return;
+    } else {
+        DestroyEntity(g_CurrentEntity);
     }
-    DestroyEntity(g_CurrentEntity);
 }

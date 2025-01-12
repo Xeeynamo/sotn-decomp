@@ -24,6 +24,7 @@ typedef struct {
     u_char cd;      // GPU code
 } CVECTOR;
 
+MATRIX* CompMatrix(MATRIX* m0, MATRIX* m1, MATRIX* m2);
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
 void SetGeomOffset(long ofx, long ofy);
 long RotTransPers(SVECTOR*, long*, long*, long*);
@@ -52,6 +53,7 @@ long RotAverageNclip4(
     long* otz,  // Pointer to OTZ value (output)
     long* flag  // Pointer to flag (output)
 );
+long NormalClip(long sxy0, long sxy1, long sxy2);
 void NormalColorCol(SVECTOR* v0, // Pointer to normal vector (input)
                     CVECTOR* v1, // Pointer to primary color vector (input)
                     CVECTOR* v2  // Pointer to color vector (output)
@@ -72,7 +74,8 @@ extern int rcos(int a);
 extern int rsin(int a);
 extern long ratan2(long y, long x);
 
-#if !defined(VERSION_PC) && !defined(M2CTX) && !defined(PERMUTER)
+#if !defined(VERSION_PC) && !defined(M2CTX) && !defined(PERMUTER) &&           \
+    !defined(VERSION_PSP)
 #define gte_ldv0(r0)                                                           \
     __asm__ volatile("lwc2	$0, 0( %0 );"                                       \
                      "lwc2	$1, 4( %0 )"                                        \
@@ -281,6 +284,26 @@ extern long ratan2(long y, long x);
                      : "r"(r0)                                                 \
                      : "memory")
 
+// Store depth queuing value pointed to by `r0`
+//
+// - Params:
+//   - long* r0 - depth queuing value
+#define gte_stdp(r0)                                                           \
+    __asm__ volatile("swc2   $8, 0( %0 )" : : "r"(r0) : "memory")
+
+// Store flag value pointed to by `r0`
+//
+// - Params:
+//   - long* r0 - flag value
+#define gte_stflg(r0)                                                          \
+    __asm__ volatile(                                                          \
+        "cfc2   $12, $31;"                                                     \
+        "nop;"                                                                 \
+        "sw $12, 0( %0 )"                                                      \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "$12", "memory")
+
 #define gte_stszotz(r0)                                                        \
     __asm__ volatile(                                                          \
         "mfc2	$12, $19;"                                                       \
@@ -335,6 +358,18 @@ extern long ratan2(long y, long x);
                      "mtc2	%2, $27"                                            \
                      :                                                         \
                      : "r"(r0), "r"(r1), "r"(r2))
+
+#elif defined(VERSION_PSP)
+
+void gte_SetGeomScreen(long h);
+void gte_SetRotMatrix(MATRIX* m);
+void gte_ldv0(SVECTOR* v);
+void gte_rtps(void);
+void gte_stsxy(long* sxsy);
+void gte_stszotz(long* otz);
+
+#define gte_stdp(x) func_892804C();
+#define gte_stflg(x) func_892804C();
 
 #else
 

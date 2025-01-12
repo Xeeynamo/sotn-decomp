@@ -3,7 +3,7 @@
 
 extern ObjInit OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
-// void func_801A7D64(Entity* self) {
+
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit* obj = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {

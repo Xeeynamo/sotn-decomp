@@ -16,8 +16,7 @@ extern u8* g_DemoPtr;
 // BSS TODO 5D5BC.c, 627C4.c
 extern u32 D_8013799C;
 extern s32 D_801379A0;
-extern s32 D_801379A4;
-extern s32 D_801379A8;
+extern s32 D_801379A4[2];
 
 // BSS shared between 627C4.c and 63ED4.c
 extern Unkstruct_80102CD8 D_801379AC;
@@ -146,7 +145,7 @@ extern u8 g_SeqPlayingId;
 extern s16 g_SfxScriptTimerCopy[];
 extern s16 g_XaMusicVolume;
 extern s32 D_80139824;
-extern s32 D_80139828[16];
+extern s32 g_StatBuffTimers[16];
 extern s32 D_8013983C;
 extern s32 D_80139840;
 extern s32 D_80139844;
@@ -217,7 +216,7 @@ extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
-extern ServantDesc D_80170000;
+extern ServantDesc g_ServantDesc;
 extern Weapon D_8017A000;
 extern Weapon D_8017D000;
 extern ImgSrc* g_imgUnk8013C200;

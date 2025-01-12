@@ -121,6 +121,12 @@ typedef enum {
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
 
+#ifdef VERSION_PSP // PSP does not need a double buffer
+#define DISP_STAGE_NEXT_X 0
+#else
+#define DISP_STAGE_NEXT_X DISP_STAGE_W
+#endif
+
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
 
@@ -228,6 +234,23 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_ICE 0x2000
 #define ELEMENT_THUNDER 0x4000
 #define ELEMENT_FIRE 0x8000
+#define ELEMENT_UNK_10000 0x10000
+
+// Indices of g_StatBuffTimers
+typedef enum {
+    SBT_DEF,
+    SBT_ATK,
+    SBT_LCK,
+    SBT_INT,
+    SBT_STR,
+    SBT_RESISTFIRE,
+    SBT_RESISTICE,
+    SBT_RESISTTHUNDER,
+    SBT_RESISTCURSE,
+    SBT_RESISTHOLY,
+    SBT_RESISTSTONE,
+    SBT_RESISTDARK,
+} StatBuffTimers;
 
 // Flags for entity->drawFlags
 typedef enum {
@@ -1101,10 +1124,10 @@ typedef struct {
     /* 80097C00 */ u32 equipment[7];
     /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ s32 defenseEquip;
-    /* 80097C28 */ u16 defenseElement;
-    /* 80097C2A */ u16 D_80097C2A;
-    /* 80097C2C */ u16 D_80097C2C;
-    /* 80097C2E */ u16 D_80097C2E;
+    /* 80097C28 */ u16 elementsWeakTo;
+    /* 80097C2A */ u16 elementsResist;
+    /* 80097C2C */ u16 elementsImmune;
+    /* 80097C2E */ u16 elementsAbsorb;
     /* 80097C30 */ s32 timerHours;
     /* 80097C34 */ s32 timerMinutes;
     /* 80097C38 */ s32 timerSeconds;
@@ -1419,10 +1442,10 @@ typedef struct {
     /* 08 */ s16 attBonus;
     /* 0A */ s16 defBonus;
     /* 0C */ u8 statsBonus[4];
-    /* 10 */ u16 unk10;
-    /* 10 */ u16 unk12;
-    /* 14 */ u16 unk14;
-    /* 10 */ u16 unk16;
+    /* 10 */ u16 weakToElements;
+    /* 12 */ u16 resistElements;
+    /* 14 */ u16 immuneElements;
+    /* 16 */ u16 absorbElements;
     /* 18 */ u16 icon;
     /* 1A */ u16 iconPalette;
     /* 1C */ u16 equipType;
@@ -1484,9 +1507,32 @@ typedef struct {
     /* 0x40 */ u8* scriptEnd;      // pointer to the end of the script
 } Dialogue;                        // size = 0x44
 
+// Used for the damageKind of DamageParam
+typedef enum {
+    DAMAGEKIND_0,
+    DAMAGEKIND_1,
+    DAMAGEKIND_2,
+    DAMAGEKIND_3,
+    DAMAGEKIND_4,
+    DAMAGEKIND_5,
+    DAMAGEKIND_6,
+    DAMAGEKIND_7,
+    DAMAGEKIND_8,
+    DAMAGEKIND_9,
+    DAMAGEKIND_10,
+    DAMAGEKIND_11,
+    DAMAGEKIND_12,
+    DAMAGEKIND_13,
+    DAMAGEKIND_14,
+    DAMAGEKIND_15,
+    DAMAGEKIND_16,
+    DAMAGEKIND_17,
+    DAMAGEKIND_18,
+} DamageKind;
+
 typedef struct {
-    u32 effects; // Curse, poison, etc; needs an enum.
-    u32 damageKind;
+    u32 effects;    // Curse, poison, fire, ice, etc.
+    u32 damageKind; // informed by "dam_kind:%04x\n"
     s32 damageTaken;
     u32 unkC;
 } DamageParam;
@@ -1557,7 +1603,7 @@ typedef struct {
     /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
-    /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
+    /* 8003C88C */ s32 (*GetStatBuffTimer)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
@@ -1638,7 +1684,7 @@ extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
 extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
 extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
-extern s32 (*g_api_func_800FF110)(s32 arg0);
+extern s32 (*g_api_GetStatBuffTimer)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
 extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
@@ -2032,5 +2078,17 @@ extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
+
+// exclusive PSP content
+typedef enum {
+    LANG_JP,
+    LANG_EN,
+    LANG_FR,
+    LANG_SP,
+    LANG_GE,
+    LANG_IT,
+} Language;
+u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
+u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
 #endif

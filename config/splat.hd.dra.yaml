@@ -18,7 +18,6 @@ options:
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
-  disassemble_all: True
   section_order:
     - ".data"
     - ".rodata"
@@ -147,6 +146,7 @@ segments:
       - [0x3CC60, .rodata, 5F60C]
       - [0x3CC78, .rodata, 624DC]
       - [0x3CC98, .rodata, 628AC]
+      - [0x3CCDC, .rodata, 62DEC]
       - [0x3CED4, .rodata, 63ED4]
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
@@ -184,6 +184,7 @@ segments:
       - [0x5D5C0, c, 5F60C]
       - [0x6236C, c, 624DC]
       - [0x6273C, c, 628AC]
+      - [0x62C7C, c, 62DEC]
       - [0x63D1C, c, 63ED4]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]

@@ -1581,27 +1581,27 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
     return true;
 }
 
-void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
+void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
-        poly->b0 = colorIntensity;
-        poly->g0 = colorIntensity;
-        poly->r0 = colorIntensity;
+        prim->b0 = colorIntensity;
+        prim->g0 = colorIntensity;
+        prim->r0 = colorIntensity;
         break;
     case 1:
-        poly->b1 = colorIntensity;
-        poly->g1 = colorIntensity;
-        poly->r1 = colorIntensity;
+        prim->b1 = colorIntensity;
+        prim->g1 = colorIntensity;
+        prim->r1 = colorIntensity;
         break;
     case 2:
-        poly->b2 = colorIntensity;
-        poly->g2 = colorIntensity;
-        poly->r2 = colorIntensity;
+        prim->b2 = colorIntensity;
+        prim->g2 = colorIntensity;
+        prim->r2 = colorIntensity;
         break;
     case 3:
-        poly->b3 = colorIntensity;
-        poly->g3 = colorIntensity;
-        poly->r3 = colorIntensity;
+        prim->b3 = colorIntensity;
+        prim->g3 = colorIntensity;
+        prim->r3 = colorIntensity;
         break;
     }
 }
@@ -1615,7 +1615,7 @@ void func_80107250(Primitive* prim, s32 colorIntensity) {
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
 
-void func_801072DC(POLY_GT4* poly) { func_80107250(poly, 0x80); }
+void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
     setRGB0(poly, 0, 0, 0);

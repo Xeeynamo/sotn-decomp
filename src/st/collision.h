@@ -147,7 +147,6 @@ void HitDetection(void) {
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif
-    s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
     Entity* entFrom5C;
@@ -165,7 +164,7 @@ void HitDetection(void) {
     u16 hitboxCheck2;
     s32 yCoord1;
     s32 hitboxWidth;
-    s8 uselessVar;
+    u8 uselessVar;
     Entity* iterEnt1;
     u8 miscVar2;
 
@@ -239,12 +238,12 @@ void HitDetection(void) {
                         hitboxCheck1 = hitboxWidth + *scratchpad_2++;
                         hitboxCheck2 += hitboxCheck1;
                         hitboxCheck1 *= 2;
-                        if (hitboxCheck1 >= hitboxCheck2) {
+                        if (hitboxCheck2 <= hitboxCheck1) {
                             hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
                             hitboxCheck1 = yCoord1 + *scratchpad_2++;
                             hitboxCheck2 += hitboxCheck1;
                             hitboxCheck1 *= 2;
-                            if (hitboxCheck1 >= hitboxCheck2) {
+                            if (hitboxCheck2 <= hitboxCheck1) {
                                 // reusing the i variable here, maybe can be a
                                 // different var
                                 i = iterEnt2->hitEffect & 0x7F;
@@ -301,12 +300,12 @@ void HitDetection(void) {
                 hitboxCheck1 = hitboxWidth + *scratchpad_2++;
                 hitboxCheck2 += hitboxCheck1;
                 hitboxCheck1 *= 2;
-                if (hitboxCheck1 >= hitboxCheck2) {
+                if (hitboxCheck2 <= hitboxCheck1) {
                     hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
                     hitboxCheck1 = yCoord1 + *scratchpad_2++;
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
-                    if (hitboxCheck1 >= hitboxCheck2) {
+                    if (hitboxCheck2 <= hitboxCheck1) {
                         if ((iterEnt1->attack) &&
                             (iterEnt2->hitPoints < iterEnt1->attack)) {
                             iterEnt2->unkB8 = iterEnt1;
@@ -381,11 +380,11 @@ void HitDetection(void) {
                              prim != NULL; prim = prim->next) {
                             if (prim->drawMode == DRAW_HIDE) {
                                 prim->clut = 0x199;
-                                temp_rand = (Random() & 7) - 13;
-                                prim->x0 = prim->x2 = xCoord + temp_rand - 3;
+                                prim->x0 = prim->x2 =
+                                    xCoord - 13 + (Random() & 7) - 3;
                                 prim->x1 = prim->x3 = prim->x0 + 0x20;
-                                temp_rand = (Random() & 7) - 10;
-                                prim->y0 = prim->y1 = yCoord2 + temp_rand - 3;
+                                prim->y0 = prim->y1 =
+                                    yCoord2 - 10 + (Random() & 7) - 3;
                                 prim->y2 = prim->y3 = prim->y0 + 0x20;
                                 prim->p1 = 0;
                                 if (iterEnt2->zPriority > iterEnt1->zPriority) {
@@ -516,7 +515,7 @@ void HitDetection(void) {
                                  (otherEntity != entFrom5C));
                         // I don't understand this; we write to a spot but we
                         // never reference it again.
-                        uselessVar = ((u32)entFrom5C->flags >> 4) & 7 & 0xFF;
+                        uselessVar = ((u32)entFrom5C->flags >> 4) & 7;
                         continue;
                     }
                 }
@@ -652,7 +651,7 @@ void HitDetection(void) {
             prim->v0 = prim->v1 = g_testCollvCoords[miscVar2];
             prim->v2 = prim->v3 = prim->v0 + 0x20;
             miscVar2++;
-            if (miscVar2 >= 7) {
+            if (miscVar2 > 6) {
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->p1 = miscVar2;

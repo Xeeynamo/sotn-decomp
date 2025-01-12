@@ -19,7 +19,6 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
-  disassemble_all: True
   section_order:
     - ".data"
     - ".rodata"
@@ -46,10 +45,10 @@ segments:
       - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, .data, 2A218]
       - [0x89C, .data, 2A8DC]
-      - [0x908, .data, 2B0C8]
+      - [0x908, .data, title_card]
       - [0x90C, .data, 2C564]
       - [0xAA4, .data, 2DAC8]
-      - [0x1568, .data, 30030]
+      - [0x1568, .data, prologue_scroll]
       - [0x15EC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
@@ -117,15 +116,15 @@ segments:
       - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
-      - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
-      - [0x27B00, .rodata, 2B0C8] # EntityStageTitleCard
+      - [0x27AE0, .rodata, title_card] # EntityStageTitleFadeout
+      - [0x27B00, .rodata, title_card] # EntityStageTitleCard
       - [0x27B18, .rodata, 2C564] # func_801ABBBC
       - [0x27B40, .rodata, 2C564] # EntityDracula
       - [0x27B7C, .rodata, 2DAC8] # "charal %x\n"
       - [0x27B8C, .rodata, 2DAC8] # EntityDraculaFinalForm
       - [0x27BDC, .rodata, 2DAC8] # "can't get effect works!\n"
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
-      - [0x27C1C, .rodata, 30030] # PrologueScroll
+      - [0x27C1C, .rodata, prologue_scroll] # PrologueScroll
       - [0x27C6C, .rodata, e_red_door] # EntityRedDoor
       - [0x27C84, .rodata, e_collect] # c_HeartPrizes
       - [0x27C8C, .rodata, e_collect]
@@ -141,10 +140,10 @@ segments:
       - [0x28984, c, cutscene]
       - [0x2A218, c]
       - [0x2A8DC, c]
-      - [0x2B0C8, c]
+      - [0x2B0C8, c, title_card]
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
-      - [0x30030, c]
+      - [0x30030, c, prologue_scroll]
       - [0x3101C, c]
       - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]

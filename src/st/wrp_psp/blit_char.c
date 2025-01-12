@@ -14,20 +14,19 @@ u8 func_psp_0923C2F8(u8 arg0) {
 
 extern s32 D_91ED5F8;
 extern u8* D_psp_0924BC78;
-extern u8* D_psp_0924BC70;
+extern s32 D_psp_0924BC70;
 extern s32 D_psp_0924BC68;
 
 // PSP unique?
-void func_psp_0923C390(u8* arg0, s32 arg1) {
+void func_psp_0923C390(s32 arg0, s32 arg1) {
     D_psp_0924BC78 = (u8*)&D_91ED5F8;
     D_psp_0924BC70 = arg0;
     D_psp_0924BC68 = arg1;
 }
 
 u8 func_psp_0923C2F8(u8 arg0);
-void func_891CF3C(u8*, s32, s32, u8*, s32, s32, s32);
 
-char* BlitChar(char* str, s32 xOffset, u8* pix, s32 stride) {
+char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
     const u16 MINSCODE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
@@ -51,7 +50,7 @@ char* BlitChar(char* str, s32 xOffset, u8* pix, s32 stride) {
     s32 pos;
 
     ch = 0;
-    func_psp_0923C390(pix, stride);
+    func_psp_0923C390(posX, posY);
 
     size = 0x90;
     for (i = 0; i < size * 16; i++) {
@@ -164,11 +163,11 @@ char* BlitChar(char* str, s32 xOffset, u8* pix, s32 stride) {
         }
     }
 
-    func_891CF3C(D_psp_0924BC78, 0, 0, D_psp_0924BC70 + sp34,
-                 D_psp_0924BC68 + xOffset, size << 1, 0x10);
+    LoadTPage((u_long*)D_psp_0924BC78, 0, 0, D_psp_0924BC70 + sp34,
+              D_psp_0924BC68 + xOffset, size << 1, 0x10);
     D_psp_0924BC78 += size * 0x10;
 
     if (ch == 1) {
-        BlitChar(str, xOffset + 0x10, pix, stride + 0x10);
+        BlitChar(str, xOffset + 0x10, posX, posY + 0x10);
     }
 }

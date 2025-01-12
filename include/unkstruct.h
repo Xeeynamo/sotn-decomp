@@ -15,7 +15,7 @@ typedef struct {
 } Unkstruct_800BF554; // size = 0x7
 
 #define MAKE_PAL_OP(kind, freq) ((kind) | ((freq) << 0x10))
-#define GET_PAL_OP_KIND(x) (LOH(x))
+#define GET_PAL_OP_KIND(x) (LOHU(x))
 #define GET_PAL_OP_FREQ(x) (HIH(x))
 
 #define PAL_COPY 1

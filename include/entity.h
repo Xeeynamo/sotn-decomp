@@ -75,10 +75,18 @@ typedef struct {
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 angle;
     /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+} ET_RedDoor; // Normal red doors between stages
+
+typedef struct {
+    /* 0x7C */ u32 unused7C;
+    /* 0x80 */ s16 unused80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 unk86;
     /* 0x88 */ u8 sideToPlayer;
     /* 0x89 */ u8 showedMessage;
-} ET_Door; // Normal red doors between stages, but also magically sealed blue
-           // ones
+} ET_MagicallySealedDoor; // Blue door that displays "Magically Sealed" prompt
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -958,11 +966,12 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s8 unk7C;
-    /* 0x7D */ s8 unk7D;
+    /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    struct Primitive* prim;
+    /* 0x84 */ struct Primitive* prim;
+    /* 0x88 */ u8 unk88;
 } ET_AxeKnight;
 
 typedef struct {
@@ -2320,7 +2329,7 @@ typedef struct {
     /* 0x86 */ u8 unk86;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ s16 unk88;
-    /* 0x88 */ s16 : 16;
+    /* 0x8A */ s16 : 16;
     /* 0x8C */ s16 unk8C;
     /* 0x8E */ s16 : 16;
     /* 0x90 */ struct Primitive* unk90;
@@ -2376,6 +2385,47 @@ typedef struct {
     /* 0x88 */ s16 unk88;
 } ET_801B9304;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ struct Primitive* unk80;
+} ET_801B7188;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 : 8;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+} ET_801BBD90;
+
+typedef struct {
+    /* 0x7C */ s16 unk0;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ struct Entity* unkEntity;
+    /* 0x84 */ u32 unk84;
+} ET_SkeletonApeBarrel;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 : 8;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+} ET_BoneArcher;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2412,7 +2462,8 @@ typedef union { // offset=0x7C
     ET_BloodSplatter bloodSplatter;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
-    ET_Door door;
+    ET_RedDoor redDoor;
+    ET_MagicallySealedDoor magicallySealedDoor;
     ET_StagePopup stpopup;
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
@@ -2564,6 +2615,7 @@ typedef union { // offset=0x7C
     ET_DiplocephalusFireball diplocephalusFireball;
     ET_PlateLord plateLord;
     ET_PlatelordUnknown plateLordUnknown;
+    ET_SkeletonApeBarrel skeletonApeBarrel;
     ET_801CE2E0 et_801CE2E0;
     ET_801D1DAC et_801D1DAC;
     ET_801BA290 et_801BA290;
@@ -2573,6 +2625,9 @@ typedef union { // offset=0x7C
     ET_801CEB28 et_801CEB28;
     ET_MedusaHead medusaHead;
     ET_801B9304 et_801B9304;
+    ET_801B7188 et_801B7188;
+    ET_801BBD90 et_801BBD90;
+    ET_BoneArcher boneArcher;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

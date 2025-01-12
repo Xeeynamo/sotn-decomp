@@ -60,7 +60,7 @@ s32 func_800FF494(EnemyDef* arg0);
 bool CdSoundCommandQueueEmpty(void);
 bool func_80133950(void);
 bool func_800F27F4(s32 arg0);
-s32 func_800FF110(s32 arg0);
+s32 GetStatBuffTimer(s32 arg0);
 s32 func_800FD664(s32 arg0);
 bool CalcPlayerDamage(DamageParam* arg0);
 void LearnSpell(s32 spellId);
@@ -123,7 +123,7 @@ GameApi g_ApiInit = {
     CdSoundCommandQueueEmpty,
     func_80133950,
     func_800F27F4,
-    func_800FF110,
+    GetStatBuffTimer,
     func_800FD664,
     CalcPlayerDamage,
     LearnSpell,

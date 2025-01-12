@@ -28,6 +28,7 @@ options:
   ld_bss_is_noload: true
   disasm_unknown: true
   include_macro_inc: false
+  global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
@@ -37,16 +38,16 @@ segments:
   - name: stst0
     type: code
     start: 0x80
-    vram:  0x09237700
+    vram: 0x09237700
     bss_size: 0x3C00
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, st0_psp/80]
-      - [0x1E8, c, st0_psp/30030]
+      - [0x80, c, st0_psp/lang]
+      - [0x1E8, c, st0/prologue_scroll]
       - [0x1578, c, st0_psp/cutscene]
       - [0x3F58, c, st0_psp/2A8DC]
-      - [0x4A30, c, st0_psp/2B0C8]
+      - [0x4A30, c, st0/title_card]
       - [0x58B8, c, st0_psp/2C564]
       - [0x8230, c, st0_psp/2DAC8]
       - [0xB3A0, c, st0_psp/3101C]
@@ -54,39 +55,46 @@ segments:
       - [0xE658, c, st0_psp/3C5C0]
       - [0xF320, c, st0_psp/st_init_st0]
       - [0xF560, c, st0_psp/2850C]
-      - [0xFD18, c, st0_psp/st_debug]
+      - [0xFD18, c, st0/st_debug]
       - [0xFDF8, c, st0_psp/2A218]
-      - [0x10678, c, st0_psp/e_lock_camera]
-      - [0x10A00, c, st0_psp/create_entity]
-      - [0x119A8, c, st0_psp/e_red_door]
-      - [0x12CB0, c, st0_psp/st_update]
+      - [0x10678, c, st0/e_lock_camera]
+      - [0x10A00, c, st0/create_entity]
+      - [0x119A8, c, st0/e_red_door]
+      - [0x12CB0, c, st0/st_update]
       - [0x131E8, c, st0_psp/e_particles_maria1]
       - [0x13770, c, st0_psp/e_particles_maria2]
       - [0x13C00, c, st0_psp/e_particles]
       - [0x14160, c, st0_psp/e_collect]
       - [0x15CC8, c, st0_psp/e_misc]
-      - [0x16278, c, st0_psp/collision]
+      - [0x16278, c, st0/collision]
       - [0x18000, c, st0/popup]
       - [0x185F8, c, st0/e_room_fg]
       - [0x18710, c, st0/st_common]
       - [0x194C0, c, st0_psp/3D8F0]
       - [0x19D90, c, st0_psp/prim_helpers]
       - [0x1A4D0, c, st0_psp/e_bg_vortex]
-      - [0x1B200, data]
+      - [0x1B200, .data, st0/prologue_scroll]
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]
       - [0x1B700, data]
+      - [0x41BF0, .data, st0/e_lock_camera]
+      - [0x41C08, .data, st0/e_red_door]
+      - [0x41C20, .data, st0/st_update]
+      - [0x41C50, data]
+      - [0x41F98, .data, st0/collision]
       - [0x42308, data, e_room_fg]
       - [0x423A8, data]
-      - [0x42400, .rodata, st0_psp/30030]
+      - [0x42400, .rodata, st0/prologue_scroll]
       - [0x42450, .rodata, st0_psp/cutscene]
-      - [0x424F8, .rodata, st0_psp/2B0C8]
+      - [0x424F8, .rodata, st0/title_card]
       - [0x42530, .rodata, st0_psp/2C564]
       - [0x42580, .rodata, st0_psp/2DAC8]
       - [0x425D8, .rodata, st0_psp/3AB08]
       - [0x42610, .rodata, st0_psp/2A218]
-      - [0x42650, .rodata, st0_psp/e_red_door]
+      - [0x42650, .rodata, st0/e_red_door]
       - [0x42668, .rodata, st0_psp/e_collect]
       - [0x426A0, .rodata, st0_psp/3D8F0]
-      - {type: bss, vram: 0x9279D80}
+      - [0x42700, bss, 42700]
+      - [0x44460, .bss, st0/create_entity]
+      - [0x44480, bss, 44480]
   - [0x42700]

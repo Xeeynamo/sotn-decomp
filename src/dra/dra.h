@@ -20,14 +20,6 @@
 #define SEQ_TABLE_S_MAX 0x10
 #define SEQ_TABLE_T_MAX 1
 
-#define RED_MASK 0x1F
-#define GREEN_MASK 0x3E0
-#define BLUE_MASK 0x7C00
-
-#define GET_RED(x) ((x) & RED_MASK)
-#define GET_GREEN(x) ((x) & GREEN_MASK)
-#define GET_BLUE(x) ((x) & BLUE_MASK)
-
 #define VSYNC_UNK_LEN 1024
 
 #define NUM_CH 4
@@ -465,7 +457,7 @@ extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
 
-void func_801072DC(POLY_GT4* poly);
+void func_801072DC(Primitive* prim);
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
@@ -496,7 +488,7 @@ bool func_800EB720(void);
 void HideAllBackgroundLayers(void);
 void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
-void func_800EDAE4(void);
+s32 func_800EDAE4(void);
 s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
 void DemoGameInit(s32 arg0);
@@ -554,7 +546,7 @@ Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 startIndex);
-void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
+void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(Primitive* prim, s32 colorIntensity);
 void SetTexturedPrimRect(
     Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
