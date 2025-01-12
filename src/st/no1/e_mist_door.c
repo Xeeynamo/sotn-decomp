@@ -20,10 +20,10 @@ extern char D_psp_092753D8[];
 extern char* D_psp_0929A510;
 extern char* D_psp_0929A518;
 extern char* D_psp_0929A520;
-extern char D_us_80183448[] = {
+static char D_us_80183448[] = {
     0x7C, 0x0E, 'M', 'i', 's', 't', ' ', 'c',  'o',  'u',
     'l',  'd',  ' ', 'p', 'a', 's', 's', 0x81, 0x44, 0x00};
-extern char D_us_8018345C[] = {
+static char D_us_8018345C[] = {
     0x94, 0x1E, 'I', ' ', 'h',  'a',  'v',  'e',  ' ',  'n',  'o',
     't',  'h',  'i', 'n', 'g',  ' ',  't',  'o',  ' ',  'd',  'o',
     0x01, 'w',  'i', 't', 'h',  ' ',  't',  'h',  'i',  's',  ' ',
