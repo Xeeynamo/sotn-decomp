@@ -252,7 +252,6 @@
 | dra    | func_psp_09106008            |       61 |          9 |        |                                 |       |
 | dra    | func_psp_09137038            |       61 |         12 |        |                                 |       |
 | dra    | func_psp_09118330            |       62 |          5 |        |                                 |       |
-| st0    | ST0_EntityBackgroundBlock    |       62 |          5 |        |                                 |       |
 | dra    | func_psp_090F2A40            |       63 |          3 |        |                                 |       |
 | st0    | func_801AA218                |       63 |          6 |        |                                 |       |
 | dra    | func_psp_0911FBD0            |       63 |          7 |        |                                 |       |
