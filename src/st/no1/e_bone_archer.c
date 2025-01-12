@@ -302,7 +302,7 @@ void EntityBoneArcher(Entity* self) {
         break;
 
     case 0xFF:
-        #include "../pad2_anim_debug.h"
+#include "../pad2_anim_debug.h"
     }
     tempVar = self->animCurFrame;
     if ((tempVar > 10 && tempVar < 15) || tempVar > 32) {
