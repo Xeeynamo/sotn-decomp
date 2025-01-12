@@ -55,7 +55,7 @@ segments:
       - [0xE658, c, st0_psp/3C5C0]
       - [0xF320, c, st0_psp/st_init_st0]
       - [0xF560, c, st0_psp/2850C]
-      - [0xFD18, c, st0_psp/st_debug]
+      - [0xFD18, c, st0/st_debug]
       - [0xFDF8, c, st0_psp/2A218]
       - [0x10678, c, st0/e_lock_camera]
       - [0x10A00, c, st0/create_entity]
