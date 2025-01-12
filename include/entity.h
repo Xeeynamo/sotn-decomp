@@ -2419,6 +2419,11 @@ typedef struct {
     /* 0x8A */ s16 : 16;
     /* 0x8C */ u8 unk8C;
     /* 0x8D */ u8 : 8;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
 } ET_BoneArcher;
 
 typedef union { // offset=0x7C

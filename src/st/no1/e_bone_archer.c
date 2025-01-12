@@ -319,4 +319,82 @@ void EntityBoneArcher(Entity* self) {
 }
 
 // Bone Archer arrow
-INCLUDE_ASM("st/no1/nonmatchings/e_bone_archer", func_us_801D0F0C);
+extern u16 D_us_80180AD0[];
+
+void EntityBoneArcherArrow(Entity* self) {
+    Entity* tempEntity;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180AD0);
+        self->animCurFrame = 0x16;
+        if (self->facingLeft) {
+            self->velocityX = FIX(4.0);
+        } else {
+            self->velocityX = FIX(-4.0);
+        }
+        if (self->params) {
+            self->hitboxState = 0;
+            self->drawFlags |= FLAG_DRAW_ROTZ;
+            self->animCurFrame += self->params;
+            if (self->params == 1) {
+                self->velocityX = FIX(-0.5);
+            } else {
+                self->velocityX = FIX(0.5);
+            }
+            if (self->facingLeft) {
+                self->velocityX = -self->velocityX;
+            }
+            self->step = 3;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                           FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                           FLAG_UNK_00200000 | FLAG_UNK_2000;
+            break;
+        }
+    case 1:
+        MoveEntity();
+        if (self->flags & FLAG_DEAD) {
+            for (i = 0; i < 2; i++) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_ID_45, self, tempEntity);
+                    tempEntity->params = i + 1;
+                }
+            }
+            DestroyEntity(self);
+            return;
+        }
+        if (self->hitFlags & 0x80) {
+            tempEntity = &PLAYER;
+            self->ext.boneArcher.unk94 =
+                tempEntity->posX.i.hi - self->posX.i.hi;
+            self->ext.boneArcher.unk96 =
+                tempEntity->posY.i.hi - self->posY.i.hi;
+            self->ext.boneArcher.unk88 = 0x20;
+            self->hitboxState = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        tempEntity = &PLAYER;
+        self->posX.i.hi = tempEntity->posX.i.hi - self->ext.boneArcher.unk94;
+        self->posY.i.hi = tempEntity->posY.i.hi - self->ext.boneArcher.unk96;
+        if (!--self->ext.boneArcher.unk88) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 3:
+        MoveEntity();
+        self->velocityY += FIX(0.125);
+        if (self->params == 1) {
+            self->rotZ -= 0x20;
+        } else {
+            self->rotZ += 0x20;
+        }
+        break;
+    }
+}
