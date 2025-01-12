@@ -1,4 +1,5 @@
 #include "common.h"
+#include "registers.h"
 
 void init_ring_status(s32, s32);
 extern s32 D_8003C0FC;

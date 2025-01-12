@@ -1,5 +1,8 @@
 D_80010960 = 0x80010960; // force_migration:True
 D_80010964 = 0x80010964; // force_migration:True
+libcd_CDRegister0 = 0x80032E68;
+libcd_CDRegister2 = 0x80032E70;
+libcd_CDRegister3 = 0x80032E74;
 main_fd = 0x800339F8;
 main_cdlFile = 0x800339FC;
 main_cdlMode = 0x80033A14;
