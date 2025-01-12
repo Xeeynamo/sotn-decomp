@@ -130,6 +130,7 @@ g_EInitDraculaRainAttack = 0x09252D50;
 g_EInitSecretStairs = 0x09252D60;
 ST0_RedDoorTiles = 0x09252D70;
 g_Rooms = 0x09257350;
+ST0_BackgroundBlockInit = 0x092791F0;
 aluric_subweapons_idx = 0x09279420;
 aluric_subweapons_id = 0x09279438;
 c_GoldPrizes = 0x09279450;
