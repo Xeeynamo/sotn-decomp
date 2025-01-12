@@ -68,7 +68,7 @@ void EntitySkeletonPieces(Entity* self);
 void func_us_801CDE20(Entity* self);
 void func_us_801CEA2C(Entity* self);
 void func_us_801CE958(Entity* self);
-void func_us_801D0598(Entity* self);
+void EntityBoneArcher(Entity* self);
 void func_us_801D0F0C(Entity* self);
 void func_us_801CEB28(Entity* self);
 void func_us_801CF298(Entity* self);
@@ -164,7 +164,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801CDE20,
     func_us_801CEA2C,
     func_us_801CE958,
-    func_us_801D0598,
+    EntityBoneArcher,
     func_us_801D0F0C,
     func_us_801CEB28,
     func_us_801CF298,
