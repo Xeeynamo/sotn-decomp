@@ -257,7 +257,7 @@
 | dra    | func_psp_0911FBD0            |       63 |          7 |        |                                 |       |
 | st0    | PrimDecreaseBrightness       |       63 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
 | dra    | AllocPrimitives              |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
-| dra    | func_800EDB58                |       63 |          8 |        |                                 |       |
+| dra    | func_800EDB58                |       63 |          8 |        | https://decomp.me/scratch/UDSDO | 0.612 |
 | dra    | func_psp_090F17D8            |       64 |          5 |        |                                 |       |
 | dra    | func_psp_09127B50            |       65 |          8 |        |                                 |       |
 | dra    | func_psp_090ED480            |       66 |          6 |        |                                 |       |
@@ -592,6 +592,6 @@
 | dra    | func_psp_090F2D80            |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | dra    | func_psp_09132AF0            |     2183 |        161 | Yes    | https://decomp.me/scratch/wULJ5 | 0.975 |
-| st0    | ST0_EntityCutscene           |     2187 |        194 | Yes    |                                 |       |
+| st0    | ST0_EntityCutscene           |     2187 |        194 | Yes    | https://decomp.me/scratch/oCnk1 | 0.684 |
 | dra    | EntityAlucard                |     2716 |        467 | Yes    | https://decomp.me/scratch/yTQqd | 0.761 |
 | dra    | func_psp_091296A8            |     2950 |        257 | Yes    | https://decomp.me/scratch/EQTHy | 0.918 |
