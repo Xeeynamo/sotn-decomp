@@ -34,6 +34,13 @@ const gameMetadata = {
             ]
         },
         {
+            "id": "pspeu",
+            "name": "PSP EU",
+            "overlays": [
+               "dra", "stst0", "stwrp", "tt_000"
+            ]
+        },
+        {
             "id": "hd",
             "name": "Debug JP build (from PSP hdbin)",
             "overlays": [
