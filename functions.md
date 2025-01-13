@@ -392,7 +392,7 @@
 | dra    | func_psp_09114668            |      149 |         27 |        |                                 |       |
 | dra    | func_psp_090F0330            |      151 |         12 |        |                                 |       |
 | dra    | func_psp_091121C0            |      152 |         23 |        |                                 |       |
-| dra    | func_psp_09111D30            |      152 |         28 |        |                                 |       |
+| dra    | func_psp_09111D30            |      152 |         28 |        | https://decomp.me/scratch/GdF3R | 0.98  |
 | dra    | func_80118970                |      153 |         25 |        |                                 |       |
 | dra    | func_psp_09134D08            |      154 |         11 |        |                                 |       |
 | dra    | func_psp_09144810            |      155 |         10 |        |                                 |       |
