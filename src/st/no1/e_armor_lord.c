@@ -9,7 +9,6 @@ INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D1388);
 
 extern u16 g_EInitInteractable[];
 
-// Armor Lord fire wave
 void EntityArmorLordFireWave(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -648,7 +647,8 @@ void EntityArmorLord(Entity* self) {
             PlaySfxPositional(0x752);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_ARMOR_LORD_FIRE_WAVE, self, tempEntity);
+                CreateEntityFromEntity(
+                    E_ARMOR_LORD_FIRE_WAVE, self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
                 tempEntity->pfnUpdate = EntityArmorLordFireWave;
                 tempEntity->step = 0;
