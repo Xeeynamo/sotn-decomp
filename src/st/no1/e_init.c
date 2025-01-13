@@ -74,7 +74,7 @@ void func_us_801CEB28(Entity* self);
 void func_us_801CF298(Entity* self);
 void func_us_801CF850(Entity* self);
 void func_us_801D04B8(Entity* self);
-void func_us_801D2D00(Entity* self);
+void EntityArmorLord(Entity* self);
 void func_us_801D348C(Entity* self);
 void func_us_801D18BC(Entity* self);
 void func_us_801D3700(Entity* self);
@@ -170,7 +170,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801CF298,
     func_us_801CF850,
     func_us_801D04B8,
-    func_us_801D2D00,
+    EntityArmorLord,
     func_us_801D348C,
     func_us_801D18BC,
     func_us_801D3700,
