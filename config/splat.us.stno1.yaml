@@ -56,6 +56,8 @@ segments:
       - [0x271C, data]
       - [0x272C, .data, e_skeleton]
       - [0x281C, data]
+      - [0x3448, .data, e_mist_door]
+      - [0x3488, data]
       - [0x34670, .rodata, e_mouse]
       - [0x34670, .rodata, e_red_door]
       - [0x34688, .rodata, unk_35E20]

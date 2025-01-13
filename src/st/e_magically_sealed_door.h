@@ -173,7 +173,7 @@ void EntityMagicallySealedDoor(Entity* self) {
                     break;
                 }
                 self->ext.magicallySealedDoor.showedMessage = 1;
-                CreateEntityFromCurrentEntity(E_SAVE_GAME_POPUP, messageBox);
+                CreateEntityFromCurrentEntity(E_MESSAGE_BOX, messageBox);
                 messageBox->posX.i.hi = 0x80;
                 messageBox->posY.i.hi = 0xB0;
                 messageBox->ext.messageBox.label = D_80182710;
