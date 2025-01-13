@@ -322,7 +322,7 @@ void func_us_801C10F4(Entity* self) {
     prim->v0 = 0x18;
     prim->x0 = 0;
     prim->y0 = 0;
-    prim->r0 = prim->g0 = prim->b0 = 0;
+    PGREY(prim, 0) = 0;
     prim->priority = 0xC6;
     prim->drawMode = DRAW_DEFAULT;
 
@@ -349,7 +349,7 @@ void func_us_801C10F4(Entity* self) {
     prim->v0 = 0x18;
     prim->x0 = 0x40;
     prim->y0 = 0xA0;
-    prim->r0 = prim->g0 = prim->b0 = 0;
+    PGREY(prim, 0) = 0;
     prim->priority = 0xC4;
     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
 }
