@@ -56,7 +56,7 @@ segments:
       - [0xF320, c, st0_psp/st_init_st0]
       - [0xF560, c, st0_psp/2850C]
       - [0xFD18, c, st0/st_debug]
-      - [0xFDF8, c, st0_psp/2A218]
+      - [0xFDF8, c, st0/2A218] # EntityCutscene
       - [0x10678, c, st0/e_lock_camera]
       - [0x10A00, c, st0/create_entity]
       - [0x119A8, c, st0/e_red_door]
@@ -77,6 +77,7 @@ segments:
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]
       - [0x1B700, data]
+      - [0x41B88, .data, st0/2A218] # EntityCutscene
       - [0x41BF0, .data, st0/e_lock_camera]
       - [0x41C08, .data, st0/e_red_door]
       - [0x41C20, .data, st0/st_update]
@@ -90,7 +91,7 @@ segments:
       - [0x42530, .rodata, st0_psp/2C564]
       - [0x42580, .rodata, st0_psp/2DAC8]
       - [0x425D8, .rodata, st0_psp/3AB08]
-      - [0x42610, .rodata, st0_psp/2A218]
+      - [0x42610, .rodata, st0/2A218] # EntityCutscene
       - [0x42650, .rodata, st0/e_red_door]
       - [0x42668, .rodata, st0_psp/e_collect]
       - [0x426A0, .rodata, st0_psp/3D8F0]
