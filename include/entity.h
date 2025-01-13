@@ -2426,6 +2426,34 @@ typedef struct {
     /* 0x96 */ s16 unk96;
 } ET_BoneArcher;
 
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ u8 : 8;
+    /* 0x7F */ u8 : 8;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u8 : 8;
+    /* 0x83 */ u8 : 8;
+    /* 0x84 */ u8 : 8;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 : 8;
+    /* 0x8A */ u8 : 8;
+    /* 0x8B */ u8 : 8;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 : 8;
+    /* 0x8E */ u8 : 8;
+    /* 0x8F */ u8 : 8;
+    /* 0x90 */ u32 unk90;
+} ET_SpearGuard;
+
+typedef struct {
+    /* 0x7C */ struct Entity* unk7C;
+} ET_SpearGuardUnk;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2628,6 +2656,8 @@ typedef union { // offset=0x7C
     ET_801B7188 et_801B7188;
     ET_801BBD90 et_801BBD90;
     ET_BoneArcher boneArcher;
+    ET_SpearGuard spearGuard;
+    ET_SpearGuardUnk spearGuardUnk;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
