@@ -2427,6 +2427,11 @@ typedef struct {
 } ET_BoneArcher;
 
 typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s32 unk80;
+} ET_801C10F4;
+
+typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 : 8;
     /* 0x7E */ u8 : 8;
@@ -2656,6 +2661,7 @@ typedef union { // offset=0x7C
     ET_801B7188 et_801B7188;
     ET_801BBD90 et_801BBD90;
     ET_BoneArcher boneArcher;
+    ET_801C10F4 et_801C10F4;
     ET_SpearGuard spearGuard;
     ET_SpearGuardUnk spearGuardUnk;
 } Ext;
