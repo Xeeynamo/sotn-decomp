@@ -103,12 +103,11 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-# Much of DRA has O4. Here we set optimization of the overlay - DRA gets O4, otherwise Op.
+# Most of PSP is compiled with -O0, except part of DRA. This block selects the proper flag.
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
-OPT_OVL = $(if $(findstring dra, $@), $(OPT_HIGH), -Op)
-# Allow override. Any file in this list will get Op.
-OPT_LO_OVERRIDES = 67F0.c.o 86A0.c.o 22A40.c.o 23FE0.c.o 32DA0.c.o 3AE30.c.o 60D80.c.o 60F10.c.o
-OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_LO_OVERRIDES)), -Op, $(OPT_OVL))
+# Allow override. Any file in this list will get O4.
+OPT_HI_OVERRIDES = 33F0.c.o A710.c.o C0B0.c.o EC60.c.o 186E8.c.o 61F30.c.o 624DC.c.o 628AC.c.o 63C90.c.o 64EE0.c.o
+OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)

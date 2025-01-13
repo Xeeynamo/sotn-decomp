@@ -44,15 +44,15 @@ segments:
     subsegments:
       - [0x80, c, dra_psp/80]
       - [0x1E50, c, dra_psp/1E50]
-      - [0x33F0, c, dra_psp/33F0]
+      - [0x33F0, c, dra_psp/33F0] # O4
       - [0x5DA0, c, dra/624DC] # O4
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra_psp/66B0]
       - [0x67F0, c, dra_psp/67F0] # O0
-      - [0xA710, c, dra_psp/A710]
+      - [0xA710, c, dra_psp/A710] # O4
       - [0xBDE0, c, dra_psp/BDE0]
-      - [0xC0B0, c, dra_psp/C0B0]
-      - [0xEC60, c, dra_psp/EC60]
+      - [0xC0B0, c, dra_psp/C0B0] # O4
+      - [0xEC60, c, dra_psp/EC60] # O4
       - [0xF4A0, c, dra_psp/F4A0]
       - [0xF4D0, c, dra_psp/F4D0]
       - [0xF740, c, dra_psp/F740]
@@ -76,7 +76,6 @@ segments:
       - [0x15520, c, dra_psp/15520]
       - [0x160C0, c, dra_psp/160C0]
       - [0x18210, c, dra_psp/18210]
-      # Start of shared C. All prior C is PSP-exclusive.
       - [0x186E8, c, dra_psp/186E8]
       - [0x18BE0, c, dra_psp/18BE0]
       - [0x19AB0, c, dra_psp/19AB0]
@@ -90,8 +89,8 @@ segments:
       - [0x1DDC0, c, dra_psp/1DDC0]
       - [0x1E1B0, c, dra_psp/1E1B0]
       - [0x20560, c, dra_psp/20560]
-      - [0x22A40, c, dra_psp/22A40]
-      - [0x23FE0, c, dra_psp/23FE0]
+      - [0x22A40, c, dra_psp/22A40] # O0
+      - [0x23FE0, c, dra_psp/23FE0] # O0
       - [0x26948, c, dra_psp/26948]
       - [0x29420, c, dra_psp/29420]
       - [0x29760, c, dra_psp/29760]
@@ -100,9 +99,9 @@ segments:
       - [0x2E050, c, dra_psp/2E050]
       - [0x2E0E0, c, dra_psp/2E0E0]
       - [0x329F0, c, dra_psp/329F0]
-      - [0x32DA0, c, dra_psp/32DA0]
+      - [0x32DA0, c, dra_psp/32DA0] # O0
       - [0x35060, c, dra_psp/35060]
-      - [0x353B0, c, dra_psp/353B0]
+      - [0x353B0, c, dra_psp/353B0] # O0
       - [0x35840, c, dra_psp/35840]
       - [0x37280, c, dra_psp/37280]
       - [0x375C0, c, dra_psp/375C0]
@@ -117,7 +116,7 @@ segments:
       - [0x398C0, c, dra_psp/398C0]
       - [0x3A4C0, c, dra_psp/3A4C0]
       - [0x3A770, c, dra_psp/3A770]
-      - [0x3AE30, c, dra_psp/3AE30]
+      - [0x3AE30, c, dra_psp/3AE30] # O0
       - [0x3B240, c, dra_psp/3B240]
       - [0x3EEA0, c, dra_psp/3EEA0]
       - [0x41E80, c, dra_psp/41E80]
@@ -149,17 +148,17 @@ segments:
       - [0x5DA20, c, dra_psp/5DA20]
       - [0x5EC50, c, dra_psp/5EC50]
       - [0x60C90, c, dra_psp/60C90]
-      - [0x60D80, c, dra_psp/60D80]
-      - [0x60F10, c, dra_psp/60F10]
+      - [0x60D80, c, dra_psp/60D80] # O0
+      - [0x60F10, c, dra_psp/60F10] # O0
       - [0x61030, c, dra_psp/61030]
-      - [0x61F30, c, dra_psp/61F30]
+      - [0x61F30, c, dra_psp/61F30] # O4
       - [0x62FE0, c, dra_psp/62FE0]
-      - [0x63C90, c, dra_psp/63C90]
+      - [0x63C90, c, dra_psp/63C90] # O4
       - [0x63E60, c, dra_psp/63E60]
       - [0x63FE0, c, dra_psp/63FE0]
       - [0x64370, c, dra_psp/64370]
       - [0x64480, c, dra_psp/64480]
-      - [0x64EE0, c, dra_psp/64EE0]
+      - [0x64EE0, c, dra_psp/64EE0] # O4
       - [0x65290, c, dra_psp/65290]
       - [0x654B0, c, dra_psp/654B0]
       - [0x65790, c, dra_psp/65790]
