@@ -57,15 +57,15 @@ void EntityMistDoor(Entity* self) {
             D_psp_0929A510 = func_psp_092490A8(
                 D_psp_09265B08, D_psp_09265B58, D_psp_09265B20, D_psp_09265B70,
                 D_psp_09265B38);
-            if (g_PlayableCharacter == 2) {
+            if (g_PlayableCharacter == PLAYER_MARIA) {
                 messageBox->ext.messageBox.label = D_psp_0929A518;
-            } else if (g_PlayableCharacter == 1) {
+            } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                 messageBox->ext.messageBox.label = D_psp_0929A510;
             } else {
                 messageBox->ext.messageBox.label = D_psp_0929A520;
             }
 #else
-            if (g_PlayableCharacter != 0) {
+            if (g_PlayableCharacter != PLAYER_ALUCARD) {
                 messageBox->ext.messageBox.label = D_us_8018345C;
             } else {
                 messageBox->ext.messageBox.label = D_us_80183448;
