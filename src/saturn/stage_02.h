@@ -40,7 +40,7 @@ typedef enum {
     E_RELIC_ORB,
     E_HEART_DROP,
     E_ENEMY_BLOOD,
-    E_SAVE_GAME_POPUP,
+    E_MESSAGE_BOX,
     E_DUMMY_0F,
     E_DUMMY_10,
 
