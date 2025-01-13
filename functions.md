@@ -253,7 +253,7 @@
 | dra    | func_psp_09137038            |       61 |         12 |        |                                 |       |
 | dra    | func_psp_09118330            |       62 |          5 |        |                                 |       |
 | dra    | func_psp_090F2A40            |       63 |          3 |        |                                 |       |
-| st0    | func_801AA218                |       63 |          6 |        |                                 |       |
+| st0    | func_801AA218                |       63 |          6 |        | https://decomp.me/scratch/4IhGJ | 0.989 |
 | dra    | func_psp_0911FBD0            |       63 |          7 |        |                                 |       |
 | st0    | PrimDecreaseBrightness       |       63 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
 | dra    | AllocPrimitives              |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
@@ -441,7 +441,7 @@
 | dra    | func_psp_0910B768            |      232 |         32 |        |                                 |       |
 | dra    | func_psp_09108988            |      235 |         31 |        |                                 |       |
 | dra    | DrawEntitiesHitbox           |      240 |         15 |        |                                 |       |
-| st0    | EntitySecretButton           |      240 |         36 |        |                                 |       |
+| st0    | EntitySecretButton           |      240 |         36 |        | https://decomp.me/scratch/qQwps | 0.99  |
 | dra    | func_psp_0912CC20            |      242 |         22 |        |                                 |       |
 | dra    | DemoUpdate                   |      242 |         31 |        |                                 |       |
 | st0    | func_pspeu_09239308          |      243 |         18 |        |                                 |       |
@@ -521,7 +521,7 @@
 | dra    | func_psp_090F2258            |      554 |         79 |        | https://decomp.me/scratch/5zeE3 | 0.682 |
 | dra    | func_psp_09131CA8            |      555 |         41 |        | https://decomp.me/scratch/DqdmE | 0.936 |
 | dra    | func_psp_09127DC0            |      557 |         48 | Yes    |                                 |       |
-| st0    | EntityCutscene               |      557 |         84 | Yes    |                                 |       |
+| st0    | EntityCutscene               |      557 |         84 | Yes    | https://decomp.me/scratch/r33yC | 0.853 |
 | dra    | func_psp_09139B50            |      564 |         35 |        | https://decomp.me/scratch/tmILF | 0.998 |
 | dra    | func_psp_0910A198            |      565 |        106 |        | https://decomp.me/scratch/IXTZU | 0.986 |
 | dra    | RenderTilemap                |      570 |         35 |        |                                 |       |
@@ -536,7 +536,7 @@
 | st0    | EntityEquipItemDrop          |      612 |         62 | Yes    | https://decomp.me/scratch/gZ0R6 | 0.994 |
 | dra    | func_psp_090FFB28            |      618 |         43 |        | https://decomp.me/scratch/18Dbq | 0.999 |
 | dra    | func_800EB758                |      619 |         30 |        |                                 |       |
-| st0    | func_801BD8F0                |      634 |         59 | Yes    |                                 |       |
+| st0    | func_801BD8F0                |      634 |         59 | Yes    | https://decomp.me/scratch/whJF5 | 0.961 |
 | dra    | func_psp_090FE948            |      636 |         42 |        |                                 |       |
 | dra    | func_psp_090DCD28            |      639 |        101 |        |                                 |       |
 | dra    | func_psp_09137900            |      646 |        129 |        |                                 |       |
