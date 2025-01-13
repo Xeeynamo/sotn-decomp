@@ -644,7 +644,7 @@ void EntityArmorLord(Entity* self) {
 
     case 6:
         if (self->animFrameIdx > 5 && !self->step_s) {
-            PlaySfxPositional(0x660);
+            PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             PlaySfxPositional(0x752);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
