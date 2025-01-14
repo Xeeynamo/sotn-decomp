@@ -79,7 +79,7 @@ void func_us_801D348C(Entity* self);
 void func_us_801D18BC(Entity* self);
 void func_us_801D3700(Entity* self);
 void func_us_801D1A94(Entity* self);
-void func_us_801D3A74(Entity* self);
+void EntitySpearGuard(Entity* self);
 void func_us_801D42EC(Entity* self);
 void func_us_801D4558(Entity* self);
 void func_us_801D4950(Entity* self);
@@ -93,7 +93,7 @@ void func_us_801D563C(Entity* self);
 void func_us_801D582C(Entity* self);
 void func_us_801D5808(Entity* self);
 void func_us_801B6198(Entity* self);
-void func_us_801D5A10(Entity* self);
+void EntityMistDoor(Entity* self);
 void func_us_801C10F4(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -175,7 +175,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D18BC,
     func_us_801D3700,
     func_us_801D1A94,
-    func_us_801D3A74,
+    EntitySpearGuard,
     func_us_801D42EC,
     func_us_801D4558,
     func_us_801D4950,
@@ -189,7 +189,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D582C,
     func_us_801D5808,
     func_us_801B6198,
-    func_us_801D5A10,
+    EntityMistDoor,
     func_us_801C10F4};
 
 EInit D_us_80180938 = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
