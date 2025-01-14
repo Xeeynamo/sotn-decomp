@@ -3,7 +3,8 @@
 
 INCLUDE_ASM("st/lib/nonmatchings/create_entity", CreateEntityFromLayout);
 
-INCLUDE_ASM("st/lib/nonmatchings/create_entity", CreateEntityWhenInHorizontalRange);
+INCLUDE_ASM(
+    "st/lib/nonmatchings/create_entity", CreateEntityWhenInHorizontalRange);
 
 INCLUDE_ASM("st/lib/nonmatchings/create_entity", func_us_801C0EFC);
 

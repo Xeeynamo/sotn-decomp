@@ -33,18 +33,24 @@ file_start_funcs = {
     "SkeletonAttackCheck": ["e_skeleton", "UnusedSkeletonEntity"],
 }
 
+
 def get_splat_yaml_filename(version_name, overlay_name):
-    overlay_name = overlay_name.replace("_psp","") # trim lib_psp to just lib
+    overlay_name = overlay_name.replace("_psp", "")  # trim lib_psp to just lib
     return f"config/splat.{version_name}.st{overlay_name}.yaml"
+
+
 def get_symbols_yaml_filename(version_name, overlay_name):
     splatname = get_splat_yaml_filename(version_name, overlay_name)
-    return splatname.replace("splat","symbols").replace(".yaml",".txt")
+    return splatname.replace("splat", "symbols").replace(".yaml", ".txt")
+
+
 def get_nonmatchings_path(version_name, ovl_name):
     if version_name == "pspeu":
         nonmatchings_path = f"psp/{ovl_name}"
     else:
         nonmatchings_path = "nonmatchings"
     return nonmatchings_path
+
 
 def get_file_splits(version_name, overlay_name):
     with open(f"src/st/{overlay_name}/{version_name}.c") as f:
@@ -72,12 +78,16 @@ def get_file_splits(version_name, overlay_name):
                     file_last_func = file_start_funcs[function_name][1]
                 else:
                     file_last_func = ""
-                split_location = get_symbol_addr(version_name, function_name, overlay_name)
+                split_location = get_symbol_addr(
+                    version_name, function_name, overlay_name
+                )
                 file_splits.append([f"0x{split_location}", filename, function_name])
             elif function_name == file_last_func:
                 force_next_func_split = True
             elif force_next_func_split:
-                split_location = get_symbol_addr(version_name, function_name, overlay_name)
+                split_location = get_symbol_addr(
+                    version_name, function_name, overlay_name
+                )
                 file_splits.append(
                     [f"0x{split_location}", f"unk_{split_location}", function_name]
                 )
@@ -134,7 +144,10 @@ def split_c_files(version_name, overlay_name, new_segments):
                 output_buffer = [file_header]
                 output_filename = dest_file
         output_buffer.append(
-            line.replace("{nonmatchings_path}/{version_name}", f"{nonmatchings_path}/{output_filename}")
+            line.replace(
+                "{nonmatchings_path}/{version_name}",
+                f"{nonmatchings_path}/{output_filename}",
+            )
         )
     # Flush the last one
     with open(overlay_dir + output_filename + ".c", "w") as f:
@@ -146,7 +159,9 @@ def split_c_files(version_name, overlay_name, new_segments):
 # Returns address as a string, representing hex location in the ROM (not RAM!)
 # Might return "4ADC8" for example.
 def get_symbol_addr(version_name, symbol_name, overlay_name):
-    overlay_name = overlay_name.replace("_psp","") # cleanup any psp suffix; lib_psp becomes lib
+    overlay_name = overlay_name.replace(
+        "_psp", ""
+    )  # cleanup any psp suffix; lib_psp becomes lib
     with open(f"build/{version_name}/st{overlay_name}.map") as f:
         symlines = f.read().splitlines()
     for line in symlines:
