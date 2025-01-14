@@ -474,7 +474,6 @@
 | dra    | HandleEnding                 |      298 |         60 |        |                                 |       |
 | dra    | func_psp_09144280            |      303 |         47 |        |                                 |       |
 | dra    | func_psp_091367A0            |      305 |         25 |        | https://decomp.me/scratch/ons5L | 1.0   |
-| st0    | func_pspeu_0924ADF0          |      307 |         26 |        |                                 |       |
 | dra    | func_psp_09112E48            |      309 |         43 | Yes    |                                 |       |
 | dra    | func_psp_090DD688            |      310 |         46 | Yes    |                                 |       |
 | dra    | func_psp_09122008            |      312 |         24 |        |                                 |       |
@@ -487,12 +486,10 @@
 | dra    | func_psp_091136F8            |      350 |         56 |        |                                 |       |
 | dra    | func_psp_0913B0F8            |      352 |         34 | Yes    |                                 |       |
 | dra    | func_8011A4D0                |      356 |         51 |        |                                 |       |
-| st0    | EntitySoulStealOrb           |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | dra    | func_psp_090EB8B8            |      368 |         17 |        |                                 |       |
 | dra    | func_psp_0913B5D0            |      369 |         35 | Yes    |                                 |       |
 | dra    | func_psp_090F8348            |      373 |         35 |        |                                 |       |
 | dra    | func_psp_090F5560            |      374 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
-| st0    | func_pspeu_0924A868          |      374 |         35 |        |                                 |       |
 | dra    | func_psp_09104C80            |      374 |         48 |        |                                 |       |
 | dra    | func_psp_09132550            |      381 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
 | st0    | EntityClockTower3D           |      391 |         39 |        |                                 |       |
