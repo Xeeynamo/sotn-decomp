@@ -36,14 +36,14 @@ segments:
   - [0x0, bin, mwo_header]
   - name: stlib
     type: code
-    start: 0x80
-    vram:  0x09237700
+    start: 0x00000080
+    vram: 0x09237700
     bss_size: 0xE00
     align: 128
     subalign: 8
     subsegments:
       - [0x80, c, lib_psp/80]
       - [0x36780, data]
-      - [0x6D800, .rodata, 80]
+      - [0x6D800, .rodata, lib_psp/80]
       - {type: bss, vram: 0x92A5380}
   - [0x6DD80]
