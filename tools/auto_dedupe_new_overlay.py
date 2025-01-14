@@ -1,6 +1,9 @@
-# Automatically de-duplicates a newly created overlay. The overlay should have its code in src/st/{OVL}/us.c
+# Automatically de-duplicates a newly created overlay. The overlay should have its code in src/st/{OVL}/{VER}.c
+# For example, a new overlay could be in src/st/lib_psp/pspeu.c
 
-# Does not work for different versions, does not work for non-stage overlays (familiars, bosses, etc)
+# Does not work for non-stage overlays (familiars, bosses, etc)
+
+# Example usage: python3 tools/auto_dedupe_new_overlay.py pspeu lib_psp
 
 
 import argparse
@@ -30,13 +33,25 @@ file_start_funcs = {
     "SkeletonAttackCheck": ["e_skeleton", "UnusedSkeletonEntity"],
 }
 
+def get_splat_yaml_filename(version_name, overlay_name):
+    overlay_name = overlay_name.replace("_psp","") # trim lib_psp to just lib
+    return f"config/splat.{version_name}.st{overlay_name}.yaml"
+def get_symbols_yaml_filename(version_name, overlay_name):
+    splatname = get_splat_yaml_filename(version_name, overlay_name)
+    return splatname.replace("splat","symbols").replace(".yaml",".txt")
+def get_nonmatchings_path(version_name, ovl_name):
+    if version_name == "pspeu":
+        nonmatchings_path = f"psp/{ovl_name}"
+    else:
+        nonmatchings_path = "nonmatchings"
+    return nonmatchings_path
 
-def get_file_splits(overlay_name):
-    with open(f"src/st/{overlay_name}/us.c") as f:
+def get_file_splits(version_name, overlay_name):
+    with open(f"src/st/{overlay_name}/{version_name}.c") as f:
         clines = f.readlines()
-    with open(f"config/splat.us.st{overlay_name}.yaml") as f:
+    with open(get_splat_yaml_filename(version_name, overlay_name)) as f:
         splatlines = f.readlines()
-    with open(f"config/symbols.us.st{overlay_name}.txt") as f:
+    with open(get_symbols_yaml_filename(version_name, overlay_name)) as f:
         symbollines = f.readlines()
     file_splits = []
     file_last_func = ""
@@ -57,12 +72,12 @@ def get_file_splits(overlay_name):
                     file_last_func = file_start_funcs[function_name][1]
                 else:
                     file_last_func = ""
-                split_location = get_symbol_addr(function_name, overlay_name)
+                split_location = get_symbol_addr(version_name, function_name, overlay_name)
                 file_splits.append([f"0x{split_location}", filename, function_name])
             elif function_name == file_last_func:
                 force_next_func_split = True
             elif force_next_func_split:
-                split_location = get_symbol_addr(function_name, overlay_name)
+                split_location = get_symbol_addr(version_name, function_name, overlay_name)
                 file_splits.append(
                     [f"0x{split_location}", f"unk_{split_location}", function_name]
                 )
@@ -70,8 +85,8 @@ def get_file_splits(overlay_name):
     return file_splits
 
 
-def write_file_splits_to_yaml(overlay_name, new_segments):
-    yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
+def write_file_splits_to_yaml(version_name, overlay_name, new_segments):
+    yaml_filename = get_splat_yaml_filename(version_name, overlay_name)
     # initially open for reading. Then we'll mess with it, and open for writing.
     with open(yaml_filename, "r") as f:
         raw_yaml_lines = f.read().splitlines()
@@ -82,7 +97,7 @@ def write_file_splits_to_yaml(overlay_name, new_segments):
         else:
             # now we output the lines which list the C segments
             # Start with the first block of C, before our first identified segment.
-            first_line = line.replace("us", "first_c_file")
+            first_line = line.replace(version_name, "first_c_file")
             outlines.append(first_line)
             for seg in new_segments:
                 addr, filename, _ = seg
@@ -91,9 +106,9 @@ def write_file_splits_to_yaml(overlay_name, new_segments):
         f.write("\n".join(outlines))
 
 
-def split_c_files(overlay_name, new_segments):
+def split_c_files(version_name, overlay_name, new_segments):
     seg_dict = {s[2]: s[1] for s in new_segments}
-    c_file_in = f"src/st/{overlay_name}/us.c"
+    c_file_in = f"src/st/{overlay_name}/{version_name}.c"
 
     with open(c_file_in, "r") as f:
         c_file_lines = f.read().splitlines()
@@ -104,6 +119,7 @@ def split_c_files(overlay_name, new_segments):
     output_buffer = []
     overlay_dir = f"src/st/{overlay_name}/"
     output_filename = "first_c_file"
+    nonmatchings_path = get_nonmatchings_path(version_name, overlay_name)
     for line in c_file_lines:
         match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
         if match:
@@ -118,7 +134,7 @@ def split_c_files(overlay_name, new_segments):
                 output_buffer = [file_header]
                 output_filename = dest_file
         output_buffer.append(
-            line.replace("nonmatchings/us", f"nonmatchings/{output_filename}")
+            line.replace("{nonmatchings_path}/{version_name}", f"{nonmatchings_path}/{output_filename}")
         )
     # Flush the last one
     with open(overlay_dir + output_filename + ".c", "w") as f:
@@ -129,8 +145,9 @@ def split_c_files(overlay_name, new_segments):
 # Looks in the .map file to find the location of a symbol.
 # Returns address as a string, representing hex location in the ROM (not RAM!)
 # Might return "4ADC8" for example.
-def get_symbol_addr(symbol_name, overlay_name):
-    with open("build/us/st" + overlay_name + ".map") as f:
+def get_symbol_addr(version_name, symbol_name, overlay_name):
+    overlay_name = overlay_name.replace("_psp","") # cleanup any psp suffix; lib_psp becomes lib
+    with open(f"build/{version_name}/st{overlay_name}.map") as f:
         symlines = f.read().splitlines()
     for line in symlines:
         lineparts = line.split()
@@ -143,10 +160,11 @@ def get_symbol_addr(symbol_name, overlay_name):
             return f"{address:X}"
 
 
-def split_rodata(overlay_name, new_segments):
+def split_rodata(version_name, overlay_name, new_segments):
     # Get the rodata and create splat segments
     # Do this by searching for INCLUDE_RODATA in the c files, and make the rodata parse to that file
     overlay_dir = f"src/st/{overlay_name}/"
+    nonmatchings_path = get_nonmatchings_path(version_name, overlay_name)
     yaml_rodata_lines = []
     for seg in new_segments:
         c_file = overlay_dir + seg[1] + ".c"
@@ -158,7 +176,7 @@ def split_rodata(overlay_name, new_segments):
                 # Found a line. Need to add rodata line to yaml.
                 # To do that, we need the rodata address.
                 rodata_name = match.group(1)
-                addr = get_symbol_addr(rodata_name, overlay_name)
+                addr = get_symbol_addr(version_name, rodata_name, overlay_name)
                 yaml_rodata_lines.append(f"      - [0x{addr}, .rodata, {seg[1]}]")
 
             # We have now extracted the rodata from any INCLUDE_RODATA lines. Now also do any jump tables in any functions.
@@ -167,7 +185,7 @@ def split_rodata(overlay_name, new_segments):
             if match:
                 funcname = match.group(1)
                 with open(
-                    f"asm/us/st/{overlay_name}/nonmatchings/us/{funcname}.s"
+                    f"asm/{version_name}/st/{overlay_name}/{nonmatchings_path}/{version_name}/{funcname}.s"
                 ) as asmfile:
                     asmlines = asmfile.read().splitlines()
                     for i, line in enumerate(asmlines):
@@ -191,7 +209,7 @@ def split_rodata(overlay_name, new_segments):
     yaml_rodata_lines = deduped_yaml_rodata
 
     # Now we have the yaml rodata lines. open the yaml file and write the lines into it.
-    yaml_filename = f"config/splat.us.st{overlay_name}.yaml"
+    yaml_filename = get_splat_yaml_filename(version_name, overlay_name)
     # initially open for reading. Then we'll mess with it, and open for writing.
     with open(yaml_filename, "r") as f:
         raw_yaml_lines = f.read().splitlines()
@@ -200,7 +218,7 @@ def split_rodata(overlay_name, new_segments):
         if ".rodata," not in line:
             outlines.append(line)
         else:
-            first_line = line.replace("us", "first_c_file")
+            first_line = line.replace(version_name, "first_c_file")
             outlines.append(first_line)
             for roline in yaml_rodata_lines:
                 outlines.append(roline)
@@ -213,13 +231,19 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument(
+    "ver",
+    help="Game version. Tested with 'us' and 'pspeu'",
+)
+
+
+parser.add_argument(
     "ovl",
     help="Name of overlay (for example, no0)",
 )
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    splits = get_file_splits(args.ovl)
-    write_file_splits_to_yaml(args.ovl, splits)
-    split_c_files(args.ovl, splits)
-    split_rodata(args.ovl, splits)
+    splits = get_file_splits(args.ver, args.ovl)
+    write_file_splits_to_yaml(args.ver, args.ovl, splits)
+    split_c_files(args.ver, args.ovl, splits)
+    split_rodata(args.ver, args.ovl, splits)
