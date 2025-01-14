@@ -45,5 +45,5 @@ segments:
       - [0x80, c, lib_psp/80]
       - [0x36780, data]
       - [0x6D800, .rodata, lib_psp/80]
-      - {type: bss, vram: 0x92A5380}
-  - [0x6DD80]
+      - [0x6DD80, bss, 6DD80]
+  - [0x6EC00]
