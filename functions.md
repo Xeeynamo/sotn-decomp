@@ -253,7 +253,6 @@
 | dra    | func_psp_09137038            |       61 |         12 |        |                                 |       |
 | dra    | func_psp_09118330            |       62 |          5 |        |                                 |       |
 | dra    | func_psp_090F2A40            |       63 |          3 |        |                                 |       |
-| st0    | func_801AA218                |       63 |          6 |        | https://decomp.me/scratch/4IhGJ | 0.989 |
 | dra    | func_psp_0911FBD0            |       63 |          7 |        |                                 |       |
 | st0    | PrimDecreaseBrightness       |       63 |          7 |        | https://decomp.me/scratch/DzATf | 1.0   |
 | dra    | AllocPrimitives              |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
@@ -521,7 +520,6 @@
 | dra    | func_psp_090F2258            |      554 |         79 |        | https://decomp.me/scratch/5zeE3 | 0.682 |
 | dra    | func_psp_09131CA8            |      555 |         41 |        | https://decomp.me/scratch/DqdmE | 0.936 |
 | dra    | func_psp_09127DC0            |      557 |         48 | Yes    |                                 |       |
-| st0    | EntityCutscene               |      557 |         84 | Yes    | https://decomp.me/scratch/r33yC | 0.853 |
 | dra    | func_psp_09139B50            |      564 |         35 |        | https://decomp.me/scratch/tmILF | 0.998 |
 | dra    | func_psp_0910A198            |      565 |        106 |        | https://decomp.me/scratch/IXTZU | 0.986 |
 | dra    | RenderTilemap                |      570 |         35 |        |                                 |       |
