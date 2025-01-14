@@ -2464,6 +2464,16 @@ typedef struct {
     /* 0x7C */ struct Entity* unk7C;
 } ET_SpearGuardUnk;
 
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 unk88;
+} ET_801BF3F4;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2669,6 +2679,7 @@ typedef union { // offset=0x7C
     ET_801C10F4 et_801C10F4;
     ET_SpearGuard spearGuard;
     ET_SpearGuardUnk spearGuardUnk;
+    ET_801BF3F4 et_801BF3F4;
     ET_801BFB40 et_801BFB40;
 } Ext;
 
