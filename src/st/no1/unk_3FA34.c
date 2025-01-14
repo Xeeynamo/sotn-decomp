@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern u16 g_EInitParticle;
+extern u16 g_EInitParticle[];
 
 void func_us_801BFA34(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         self->palette = PAL_OVL(0x19E);
         self->animSet = 2;
         self->animCurFrame = 9;
@@ -32,7 +32,226 @@ void func_us_801BFA34(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801BFB40);
+extern SVEC4 D_us_80181778[];
+extern SVEC4 D_us_801817D8[];
+extern SVEC4 D_us_801818C0[];
+extern MATRIX D_us_80181920;
+extern u32 D_psp_0929A6E8;
+extern u32 D_psp_0929A6F8;
+
+void func_us_801BFB40(Entity* self) {
+    long sxy2, sxy3, p;
+    Collider collider;
+    SVECTOR rot;
+    VECTOR trans;
+    MATRIX m;
+    u8 pad[16];
+    MATRIX lightMatrix;
+    CVECTOR color;
+    u8 pad2[2];
+    Primitive* prim;
+    Entity* tempEntity;
+    SVEC4* positions;
+    SVEC4* normals;
+    s32 primIndex;
+    s16 posX, posY;
+    s32 i;
+    s32 opz;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801BFB40.unk7C = prim;
+            while (prim != NULL) {
+                prim->tpage = 0xE;
+                prim->clut = 0;
+                prim->u0 = 0xE9;
+                prim->u1 = prim->u0 + 0xE;
+                prim->u2 = prim->u0;
+                prim->u3 = prim->u1;
+                prim->v0 = 0x31;
+                prim->v1 = prim->v0;
+                prim->v2 = prim->v0 + 0xE;
+                prim->v3 = prim->v2;
+                prim->r0 = prim->b0 = prim->g0 = 0x80;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                if (self->params) {
+                    prim->priority = 0xC0;
+                } else {
+                    prim->priority = 0xA0;
+                }
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+            }
+            return;
+        }
+        DestroyEntity(self);
+        return;
+    case 1:
+        switch (self->step_s) {
+        case 0:
+            self->velocityX = FIX(0.0625);
+            self->velocityY = 0;
+            self->step_s++;
+            if (self->params) {
+                self->velocityX = -(Random() & 7) * 0x2000;
+                self->velocityY = -0x24000 - (Random() & 3) * 0x4000;
+            }
+            break;
+        case 1:
+            if (!self->params) {
+                self->ext.et_801BFB40.unk80.vx += 0x40;
+                self->ext.et_801BFB40.unk80.vy -= 0x10;
+                self->ext.et_801BFB40.unk80.vz -= 0x10;
+            } else {
+                self->ext.et_801BFB40.unk80.vx += 0x40;
+                self->ext.et_801BFB40.unk80.vy += 0x80;
+                self->ext.et_801BFB40.unk80.vz -= 0x20;
+            }
+            MoveEntity();
+            self->velocityY += FIX(0.125);
+            if (!self->params) {
+                if (self->velocityX > FIX(-1.5)) {
+                    self->velocityX -= 0x400;
+                }
+            }
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi;
+            if (!self->params) {
+                posY += 8;
+            } else {
+                posY += 4;
+            }
+            g_api.CheckCollision(posX, posY, &collider, 0);
+            if (!self->params && (self->velocityX > FIX(-1.0)) &&
+                (collider.effects & EFFECT_SOLID)) {
+                if ((g_Timer & 7) == 0) {
+                    self->posY.i.hi += collider.unk18;
+                }
+                self->velocityY = 0;
+                self->ext.et_801BFB40.unk80.vx = 0;
+                self->ext.et_801BFB40.unk80.vy = 0;
+                self->ext.et_801BFB40.unk80.vz = 0;
+            } else if (collider.effects & EFFECT_SOLID) {
+                g_api.PlaySfx(SFX_STOMP_HARD_B);
+                self->posY.i.hi += collider.unk18;
+                self->velocityY = -self->velocityY / 2;
+                if (self->params) {
+                    if (self->velocityY > FIX(-0.25)) {
+                        tempEntity =
+                            AllocEntity(&g_Entities[64], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            tempEntity->params = 0x10;
+                        }
+                        DestroyEntity(self);
+                        return;
+                    }
+                } else {
+                    for (i = 0; i < 4; i++) {
+                        tempEntity =
+                            AllocEntity(&g_Entities[64], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                            CreateEntityFromEntity(
+                                D_psp_0929A6F8, self, tempEntity);
+#else
+                            CreateEntityFromEntity(E_ID_2F, self, tempEntity);
+#endif
+                            tempEntity->params = i;
+                        }
+                    }
+                    if (self->velocityY > FIX(-1.25)) {
+                        g_api.PlaySfx(0x644);
+                        for (i = 0; i < 3; i++) {
+                            tempEntity =
+                                AllocEntity(&g_Entities[64], &g_Entities[256]);
+                            if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                                CreateEntityFromEntity(
+                                    D_psp_0929A6E8, self, tempEntity);
+#else
+                                CreateEntityFromEntity(
+                                    E_ID_31, self, tempEntity);
+#endif
+                                tempEntity->params = i + 1;
+                            }
+                        }
+                        DestroyEntity(self);
+                        return;
+                    }
+                }
+            }
+            break;
+        }
+        prim = self->ext.et_801BFB40.unk7C;
+        SetGeomScreen(0x400);
+        rot.vx = self->ext.et_801BFB40.unk80.vx;
+        rot.vy = self->ext.et_801BFB40.unk80.vy;
+        rot.vz = self->ext.et_801BFB40.unk80.vz;
+        RotMatrix(&rot, &m);
+        trans.vx = 0;
+        trans.vy = 0;
+        trans.vz = 0x408;
+        if (self->params) {
+            trans.vz = 0x800;
+        }
+        TransMatrix(&m, &trans);
+        SetRotMatrix(&m);
+        SetTransMatrix(&m);
+        if (!self->params) {
+            color.r = 0xA0;
+            color.g = 0xA0;
+            color.b = 0xA0;
+            color.cd = prim->type;
+        } else {
+            color.r = 0x90;
+            color.g = 0x90;
+            color.b = 0x90;
+            color.cd = prim->type;
+        }
+        RotMatrix(&rot, &lightMatrix);
+        SetBackColor(0x40, 0x40, 0x40);
+        SetLightMatrix(&lightMatrix);
+        SetColorMatrix(&D_us_80181920);
+        SetFarColor(0x60, 0x60, 0x60);
+        SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+        if (!self->params) {
+            positions = D_us_801817D8;
+        } else {
+            positions = D_us_80181778;
+        }
+        normals = D_us_801818C0;
+        prim = self->ext.et_801BFB40.unk7C;
+        for (i = 0; i < 6; i++) {
+            opz = RotAverageNclip4(
+                positions->v0, positions->v1, positions->v2, positions->v3,
+                (long*)(&prim->x0), (long*)(&prim->x1), (long*)(&prim->x2),
+                (long*)(&prim->x3), &sxy2, &p, &sxy3);
+            if (opz <= 0) {
+                prim->drawMode = DRAW_HIDE;
+            } else {
+                prim->drawMode = DRAW_COLORS | DRAW_UNK02;
+                NormalColorCol(normals->v0, &color, (CVECTOR*)(&prim->r0));
+                NormalColorCol(normals->v1, &color, (CVECTOR*)(&prim->r1));
+                NormalColorCol(normals->v2, &color, (CVECTOR*)(&prim->r2));
+                NormalColorCol(normals->v3, &color, (CVECTOR*)(&prim->r3));
+            }
+            positions++;
+            normals++;
+            prim = prim->next;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801C01F0);
 

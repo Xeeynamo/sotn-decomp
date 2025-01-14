@@ -649,7 +649,7 @@ void EntityCutscenePhotograph(Entity* self) {
         } else {
             dualFlag = 1;
         }
-        otherEnt = AllocEntity(self, (Entity*)&g_EvHwCardEnd);
+        otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
             CreateEntityFromCurrentEntity(E_ID_2D, otherEnt);
             otherEnt->posX.i.hi = newEntX;
@@ -658,7 +658,7 @@ void EntityCutscenePhotograph(Entity* self) {
             otherEnt->params = 0;
         }
 
-        otherEnt = AllocEntity(self, (Entity*)&g_EvHwCardEnd);
+        otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
             CreateEntityFromCurrentEntity(E_ID_2D, otherEnt);
             otherEnt->posX.i.hi = newEntX;
