@@ -23,7 +23,7 @@ bool CheckGravityBootsInput(void) {
         }
         break;
     case 2:
-        if ((g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer != 0) &&
+        if ((g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer) &&
             --g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer == 0) {
             g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
             break;
@@ -32,14 +32,14 @@ bool CheckGravityBootsInput(void) {
             (g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & 0x8000) &&
             ((PLAYER.step == Player_Crouch) ||
              ((PLAYER.step == Player_Jump) && (g_Player.unk44 & 1)))) {
-            if (g_Player.unk72 == 0) {
-                if (HandleGravityBootsMP(REDUCE) >= 0) {
-                    DoGravityJump();
-                    g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
-                    return 1;
-                }
-            } else {
+            if (g_Player.unk72) {
                 g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
+                break;
+            }
+            if (HandleGravityBootsMP(REDUCE) >= 0) {
+                DoGravityJump();
+                g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
+                return 1;
             }
         }
         break;
