@@ -97,12 +97,12 @@ void func_us_801BFB40(Entity* self) {
     case 1:
         switch (self->step_s) {
         case 0:
-            self->velocityX = FIX(0.0625);
+            self->velocityX = FIX(1.0 / 16);
             self->velocityY = 0;
             self->step_s++;
             if (self->params) {
-                self->velocityX = -(Random() & 7) * 0x2000;
-                self->velocityY = -0x24000 - (Random() & 3) * 0x4000;
+                self->velocityX = -(Random() & 7) * FIX(0.125);
+                self->velocityY = FIX(-2.25) - (Random() & 3) * FIX(0.25);
             }
             break;
         case 1:
@@ -119,7 +119,7 @@ void func_us_801BFB40(Entity* self) {
             self->velocityY += FIX(0.125);
             if (!self->params) {
                 if (self->velocityX > FIX(-1.5)) {
-                    self->velocityX -= 0x400;
+                    self->velocityX -= FIX(0.25 / 16);
                 }
             }
             posX = self->posX.i.hi;
@@ -170,7 +170,7 @@ void func_us_801BFB40(Entity* self) {
                         }
                     }
                     if (self->velocityY > FIX(-1.25)) {
-                        g_api.PlaySfx(0x644);
+                        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
                         for (i = 0; i < 3; i++) {
                             tempEntity =
                                 AllocEntity(&g_Entities[64], &g_Entities[256]);
