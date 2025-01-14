@@ -240,7 +240,7 @@
 | dra    | func_psp_090F88F0            |       58 |          9 |        |                                 |       |
 | dra    | func_80134E64                |       59 |          3 |        |                                 |       |
 | dra    | func_psp_090FF480            |       59 |         10 |        |                                 |       |
-| dra    | func_psp_09114438            |       59 |         10 |        |                                 |       |
+| dra    | DoGravityJump                |       59 |         10 |        |                                 |       |
 | dra    | func_psp_09140C28            |       59 |         10 |        |                                 |       |
 | dra    | HandlePrologueEnd            |       59 |         14 |        |                                 |       |
 | dra    | func_psp_0913F960            |       60 |          5 |        |                                 |       |
@@ -391,7 +391,6 @@
 | dra    | func_psp_09114668            |      149 |         27 |        |                                 |       |
 | dra    | func_psp_090F0330            |      151 |         12 |        |                                 |       |
 | dra    | func_psp_091121C0            |      152 |         23 |        |                                 |       |
-| dra    | func_psp_09111D30            |      152 |         28 |        | https://decomp.me/scratch/GdF3R | 0.98  |
 | dra    | func_80118970                |      153 |         25 |        |                                 |       |
 | dra    | func_psp_09134D08            |      154 |         11 |        |                                 |       |
 | dra    | func_psp_09144810            |      155 |         10 |        |                                 |       |
@@ -483,12 +482,12 @@
 | dra    | func_psp_090EE5D0            |      323 |         37 |        |                                 |       |
 | st0    | func_801AF380                |      325 |          7 |        |                                 |       |
 | dra    | func_psp_09113268            |      335 |         45 | Yes    |                                 |       |
-| st0    | func_pspeu_09251410          |      338 |         36 |        |                                 |       |
+| st0    | func_pspeu_09251410          |      338 |         36 |        | https://decomp.me/scratch/uCQhx | 0.998 |
 | dra    | func_psp_09135098            |      342 |         25 |        | https://decomp.me/scratch/W0WED | 0.934 |
 | dra    | func_psp_091136F8            |      350 |         56 |        |                                 |       |
 | dra    | func_psp_0913B0F8            |      352 |         34 | Yes    |                                 |       |
 | dra    | func_8011A4D0                |      356 |         51 |        |                                 |       |
-| st0    | EntitySoulStealOrb           |      364 |         33 |        | https://decomp.me/scratch/R41nc | 0.997 |
+| st0    | EntitySoulStealOrb           |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | dra    | func_psp_090EB8B8            |      368 |         17 |        |                                 |       |
 | dra    | func_psp_0913B5D0            |      369 |         35 | Yes    |                                 |       |
 | dra    | func_psp_090F8348            |      373 |         35 |        |                                 |       |
@@ -525,13 +524,13 @@
 | dra    | RenderTilemap                |      570 |         35 |        |                                 |       |
 | dra    | func_psp_091190E0            |      573 |         58 |        | https://decomp.me/scratch/5MNdo | 0.966 |
 | dra    | func_psp_0911D490            |      582 |         49 | Yes    |                                 |       |
-| wrp    | EntityEquipItemDrop          |      583 |         67 | Yes    | https://decomp.me/scratch/gZ0R6 | 0.994 |
+| wrp    | EntityEquipItemDrop          |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | func_psp_090EFA00            |      584 |         77 | Yes    |                                 |       |
 | dra    | func_psp_090DDEE8            |      609 |         40 |        |                                 |       |
 | dra    | func_psp_090DFFD0            |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
 | dra    | func_psp_09128B00            |      609 |         64 |        |                                 |       |
 | dra    | func_psp_091187D8            |      611 |         62 |        | https://decomp.me/scratch/xRL9N | 0.953 |
-| st0    | EntityEquipItemDrop          |      612 |         62 | Yes    | https://decomp.me/scratch/gZ0R6 | 0.994 |
+| st0    | EntityEquipItemDrop          |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | func_psp_090FFB28            |      618 |         43 |        | https://decomp.me/scratch/18Dbq | 0.999 |
 | dra    | func_800EB758                |      619 |         30 |        |                                 |       |
 | st0    | func_801BD8F0                |      634 |         59 | Yes    | https://decomp.me/scratch/whJF5 | 0.961 |
