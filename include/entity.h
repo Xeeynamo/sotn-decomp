@@ -2283,11 +2283,11 @@ typedef struct {
 } ET_801CE2E0;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
-    /* 0x80 */ s16 : 16;
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 unk86;
     /* 0x87 */ u8 : 8;
     /* 0x88 */ s16 unk88;
@@ -2297,7 +2297,7 @@ typedef struct {
     /* 0x8E */ u8 unk8E;
     /* 0x8F */ u8 unk8F;
     /* 0x90 */ struct Primitive* unk90;
-} ET_801D1DAC;
+} ET_ArmorLord;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -2430,6 +2430,11 @@ typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ s32 unk80;
 } ET_801C10F4;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ SVECTOR unk80;
+} ET_801BFB40;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -2650,7 +2655,7 @@ typedef union { // offset=0x7C
     ET_PlatelordUnknown plateLordUnknown;
     ET_SkeletonApeBarrel skeletonApeBarrel;
     ET_801CE2E0 et_801CE2E0;
-    ET_801D1DAC et_801D1DAC;
+    ET_ArmorLord armorLord;
     ET_801BA290 et_801BA290;
     ET_801BCB34 et_801BCB34;
     ET_801CDE20 et_801CDE20;
@@ -2664,6 +2669,7 @@ typedef union { // offset=0x7C
     ET_801C10F4 et_801C10F4;
     ET_SpearGuard spearGuard;
     ET_SpearGuardUnk spearGuardUnk;
+    ET_801BFB40 et_801BFB40;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
