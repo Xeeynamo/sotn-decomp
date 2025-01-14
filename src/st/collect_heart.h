@@ -4,11 +4,8 @@
 // This function is messy, maybe there's a better way.
 void CollectHeart(u16 arg0) {
 #if defined VERSION_BETA || STAGE == STAGE_ST0
-    s8 heartPrizes[2];
-    s8 mad_unknown[2];
-
-    __builtin_memcpy(heartPrizes, c_HeartPrizes[0], 2);
-    __builtin_memcpy(mad_unknown, c_HeartPrizes[2], 2);
+    s8 heartPrizes[2] = {0x01, 0x05};
+    s8 mad_unknown[2] = {0x01, 0x02};
 #else
 #define heartPrizes c_HeartPrizes
 #endif
