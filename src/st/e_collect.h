@@ -100,13 +100,19 @@ u8* g_SubweaponAnimPrizeDrop[] = {
 };
 
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
-#if defined VERSION_BETA || STAGE == STAGE_ST0
-// This is weird, the values have to go in later.
-// Note that this array is in rodata. Other overlays have it in data.
-static const s8 c_HeartPrizes[4][2];
-#else
+#if !defined(VERSION_BETA) && STAGE != STAGE_ST0
+// Note that this array is in data. MAD/ST0 have it in rodata.
 s8 c_HeartPrizes[] = {1, 5};
 #endif
+
+// from another file
+extern u16 g_EInitObtainable[];
+
+#include "prize_drop_fall.h"
+
+#include "prize_drop_fall2.h"
+
+#include "collect_heart.h"
 
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
@@ -139,20 +145,6 @@ static u8* g_ExplosionAnimations[] = {
     D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-// from another file
-extern u16 g_EInitObtainable[];
-
-#include "prize_drop_fall.h"
-
-#include "prize_drop_fall2.h"
-
-#include "collect_heart.h"
-
-#if defined VERSION_BETA || STAGE == STAGE_ST0
-// For some reason need to declare the values AFTER the function.
-static const s8 c_HeartPrizes[][2] = {{1, 5}, {0, 0}, {1, 2}, {0, 0}};
-#endif
-
 #include "collect_gold.h"
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
@@ -173,7 +165,7 @@ static void CollectLifeVessel(void) {
 #endif
 
 // MAD doesn't take an argument, others do
-#if defined VERSION_BETA || STAGE == STAGE_ST0
+#if defined VERSION_BETA || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
 static void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
 // Extra unused function, putting it in this same if-block.
 Entity* func_801939C4(void) {
