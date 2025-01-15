@@ -46,7 +46,6 @@ bool CheckGravityBootsInput(void) {
 }
 
 // Used for wolf charge, and for weapons which have a move using this pattern
-// Used for wolf charge, and for weapons which have a move using this pattern
 bool CheckQuarterCircleForwardInput(void) {
     s32 directionsPressed;
     s32 forward;
