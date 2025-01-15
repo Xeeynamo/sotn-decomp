@@ -265,7 +265,80 @@ bool CheckDarkMetamorphosisInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_091127A0);
+bool CheckSummonSpiritInput(void) {
+    s32 directionsPressed;
+    s32 forward;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (g_WasFacingLeft4) {
+        forward = directionsPressed & PAD_LEFT;
+    } else {
+        forward = directionsPressed & PAD_RIGHT;
+    }
+    switch (g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect) {
+    case 0:
+        if (PLAYER.facingLeft == 0) {
+            if (g_Player.padTapped == PAD_LEFT) {
+                g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+                g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+                g_WasFacingLeft4 = 0;
+            }
+            break;
+        }
+        if (g_Player.padTapped == PAD_RIGHT) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            g_WasFacingLeft4 = 1;
+        }
+        break;
+    case 1:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        break;
+
+    case 2:
+        if (directionsPressed == PAD_UP) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (directionsPressed == PAD_DOWN) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        break;
+    case 4:
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) && (PLAYER.step == Player_Crouch) &&
+            (CastSpell(SPELL_SUMMON_SPIRIT) != 0)) {
+            func_8010FC50();
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+            LearnSpell(SPELL_SUMMON_SPIRIT);
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_09112AC8);
 

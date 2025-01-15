@@ -273,24 +273,24 @@ bool CheckSummonSpiritInput(void) {
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     if (g_WasFacingLeft4) {
-        forward = g_Player.padPressed & PAD_LEFT;
+        forward = directionsPressed & PAD_LEFT;
     } else {
-        forward = g_Player.padPressed & PAD_RIGHT;
+        forward = directionsPressed & PAD_RIGHT;
     }
     switch (g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect) {
     case 0:
-        if (!PLAYER.facingLeft) {
+        if (PLAYER.facingLeft == 0) {
             if (g_Player.padTapped == PAD_LEFT) {
                 g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
-                g_WasFacingLeft4 = 0;
                 g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+                g_WasFacingLeft4 = 0;
             }
             break;
         }
         if (g_Player.padTapped == PAD_RIGHT) {
             g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
-            g_WasFacingLeft4 = 1;
             g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            g_WasFacingLeft4 = 1;
         }
         break;
     case 1:
