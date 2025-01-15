@@ -102,5 +102,4 @@ g_GpuBuffers = 0x091FC4E8;
 g_CastleFlags = 0x09234730;
 g_IsCutsceneDone = 0x0927BA98;
 g_SkipCutscene = 0x0927BAA0;
-g_CutsceneFlags = 0x0927BAA8;
 DestroyEntity = 0x092EE938;
