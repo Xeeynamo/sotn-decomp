@@ -539,10 +539,10 @@ bool CheckTetraSpiritInput(void) {
 
 bool CheckSoulStealInput(void) {
     s32 directionsPressed;
-    s32 forward;
     s32 down_forward;
-    s32 backward;
     s32 down_backward;
+    s32 forward;
+    s32 backward;
     s32 down;
 
     directionsPressed =
@@ -561,11 +561,11 @@ bool CheckSoulStealInput(void) {
     down = PAD_DOWN;
     switch (g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect) {
     case 0:
-        if (!PLAYER.facingLeft) {
+        if (PLAYER.facingLeft == 0) {
             if (g_Player.padTapped == PAD_LEFT) {
                 g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
-                g_WasFacingLeft7 = 0;
                 g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+                g_WasFacingLeft7 = 0;
             }
             break;
         }
@@ -574,19 +574,19 @@ bool CheckSoulStealInput(void) {
             // 24. It appears that this spot was forgotten, meaning Soul Steal
             // is easier if you start facing right than left!
             g_ButtonCombo[COMBO_SOUL_STEAL].timer = 20;
-            g_WasFacingLeft7 = 1;
             g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            g_WasFacingLeft7 = 1;
         }
         break;
     case 1:
-        if (directionsPressed != forward) {
-            if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
-                g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
-            }
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
             break;
         }
-        g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
-        g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
         break;
     case 2:
         if ((directionsPressed & down_forward) == down_forward) {
@@ -639,20 +639,21 @@ bool CheckSoulStealInput(void) {
         }
         break;
     case 7:
-        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer != 0) {
-            if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-                !(g_Player.unk46 & 0x8000) &&
-                ((PLAYER.step == Player_Walk) ||
-                 (PLAYER.step == Player_Stand)) &&
-                (CastSpell(SPELL_SOUL_STEAL) != 0)) {
-                func_8010FBF4();
-                g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
-                LearnSpell(SPELL_SOUL_STEAL);
-                return 1;
-            }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
             break;
         }
-        g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) &&
+            ((PLAYER.step == Player_Walk) ||
+             (PLAYER.step == Player_Stand)) &&
+            (CastSpell(SPELL_SOUL_STEAL) != 0)) {
+            func_8010FBF4();
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+            LearnSpell(SPELL_SOUL_STEAL);
+            return 1;
+        }
+        break;
     }
     return 0;
 }

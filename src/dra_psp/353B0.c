@@ -536,6 +536,125 @@ bool CheckTetraSpiritInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_09113268);
+bool CheckSoulStealInput(void) {
+    s32 directionsPressed;
+    s32 down_forward;
+    s32 down_backward;
+    s32 forward;
+    s32 backward;
+    s32 down;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (!g_WasFacingLeft7) {
+        down_forward = PAD_DOWN + PAD_RIGHT;
+        forward = PAD_RIGHT;
+        backward = PAD_LEFT;
+        down_backward = PAD_DOWN + PAD_LEFT;
+    } else {
+        down_forward = PAD_DOWN + PAD_LEFT;
+        forward = PAD_LEFT;
+        backward = PAD_RIGHT;
+        down_backward = PAD_DOWN + PAD_RIGHT;
+    }
+    down = PAD_DOWN;
+    switch (g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect) {
+    case 0:
+        if (PLAYER.facingLeft == 0) {
+            if (g_Player.padTapped == PAD_LEFT) {
+                g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+                g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+                g_WasFacingLeft7 = 0;
+            }
+            break;
+        }
+        if (g_Player.padTapped == PAD_RIGHT) {
+            // @bug - Most spells use a 20-frame button timing. Soul Steal uses
+            // 24. It appears that this spot was forgotten, meaning Soul Steal
+            // is easier if you start facing right than left!
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 20;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            g_WasFacingLeft7 = 1;
+        }
+        break;
+    case 1:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if ((directionsPressed & down_forward) == down_forward) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (directionsPressed == down) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
+        break;
+    case 4:
+        if ((directionsPressed & down_backward) == down_backward) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
+        break;
+    case 5:
+        if (directionsPressed == backward) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
+        break;
+    case 6:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+        }
+        break;
+    case 7:
+        if (--g_ButtonCombo[COMBO_SOUL_STEAL].timer == 0) {
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+            break;
+        }
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) &&
+            ((PLAYER.step == Player_Walk) ||
+             (PLAYER.step == Player_Stand)) &&
+            (CastSpell(SPELL_SOUL_STEAL) != 0)) {
+            func_8010FBF4();
+            g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
+            LearnSpell(SPELL_SOUL_STEAL);
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_091136F8);
