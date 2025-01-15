@@ -457,15 +457,15 @@ bool CheckTetraSpiritInput(void) {
         }
         break;
     case 1:
-        if (directionsPressed == PAD_UP) {
-            // Counts down the required 32 frames before you go to step 2
-            if (--g_ButtonCombo[COMBO_TETRA_SPIRIT].timer == 0) {
-                g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect++;
-                g_WasFacingLeft6 = PLAYER.facingLeft;
-            }
+        if (directionsPressed != PAD_UP) {
+            g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect = 0;
             break;
         }
-        g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect = 0;
+        // Counts down the required 32 frames before you go to step 2
+        if (--g_ButtonCombo[COMBO_TETRA_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect++;
+            g_WasFacingLeft6 = PLAYER.facingLeft;
+        }        
         break;
     case 2:
         // After holding UP, you must let go for one frame to move to step 3
