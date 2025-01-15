@@ -171,8 +171,8 @@ bool CheckBackForwardInput(void) {
 
 bool CheckDarkMetamorphosisInput(void) {
     s32 directionsPressed;
-    s32 up_back;
     s32 up_forward;
+    s32 up_back;
     s32 forward;
     s32 up;
 
@@ -191,22 +191,22 @@ bool CheckDarkMetamorphosisInput(void) {
 
     switch (g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect) {
     case 0:
-        if (!PLAYER.facingLeft) {
+        if (PLAYER.facingLeft == 0) {
             if (g_Player.padTapped & PAD_LEFT) {
                 g_ButtonCombo[COMBO_DARK_METAMORPH].timer = 20;
-                g_WasFacingLeft3 = 0;
                 g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect++;
+                g_WasFacingLeft3 = 0;
             }
             break;
         }
         if (g_Player.padTapped & PAD_RIGHT) {
             g_ButtonCombo[COMBO_DARK_METAMORPH].timer = 20;
-            g_WasFacingLeft3 = 1;
             g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect++;
+            g_WasFacingLeft3 = 1;
         }
         break;
     case 1:
-        if ((up_back & g_Player.padPressed) == up_back) {
+        if ((g_Player.padPressed & up_back) == up_back) {
             g_ButtonCombo[COMBO_DARK_METAMORPH].timer = 20;
             g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect++;
             break;
@@ -246,20 +246,22 @@ bool CheckDarkMetamorphosisInput(void) {
         }
         break;
     case 5:
-        if (--g_ButtonCombo[COMBO_DARK_METAMORPH].timer != 0) {
-            if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-                !(g_Player.unk46 & 0x8000) &&
-                ((PLAYER.step == Player_Walk) ||
-                 (PLAYER.step == Player_Stand)) &&
-                (CastSpell(SPELL_DARK_METAMORPHOSIS) != 0)) {
-                func_8010FB68();
-                g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
-                LearnSpell(SPELL_DARK_METAMORPHOSIS);
-                return 1;
-            }
+        if (--g_ButtonCombo[COMBO_DARK_METAMORPH].timer == 0) {
+            g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
             break;
         }
-        g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
+        
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) &&
+            ((PLAYER.step == Player_Walk) ||
+             (PLAYER.step == Player_Stand)) &&
+            (CastSpell(SPELL_DARK_METAMORPHOSIS) != 0)) {
+            func_8010FB68();
+            g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
+            LearnSpell(SPELL_DARK_METAMORPHOSIS);
+            return 1;
+        }
+        break;
     }
     return 0;
 }
