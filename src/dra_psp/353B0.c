@@ -340,7 +340,88 @@ bool CheckSummonSpiritInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_09112AC8);
+bool CheckHellfireInput(void) {
+    s32 directionsPressed;
+    s32 down_forward;
+    s32 forward;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (g_WasFacingLeft5 == 0) {
+        forward = PAD_RIGHT;
+    } else {
+        forward = PAD_LEFT;
+    }
+
+    if (g_WasFacingLeft5 == 0) {
+        down_forward = PAD_DOWN + PAD_RIGHT;
+    } else {
+        down_forward = PAD_DOWN + PAD_LEFT;
+    }
+    switch (g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect) {
+    case 0:
+        if (g_Player.padTapped == PAD_UP) {
+            g_ButtonCombo[COMBO_HELLFIRE].timer = 20;
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect++;
+        }
+        break;
+    case 1:
+        if (directionsPressed == PAD_DOWN) {
+            g_ButtonCombo[COMBO_HELLFIRE].timer = 21;
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect++;
+            g_WasFacingLeft5 = PLAYER.facingLeft;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_HELLFIRE].timer == 0) {
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if ((directionsPressed & down_forward) == down_forward) {
+            g_ButtonCombo[COMBO_HELLFIRE].timer = 20;
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_HELLFIRE].timer == 0) {
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_HELLFIRE].timer = 20;
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_HELLFIRE].timer == 0) {
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+        }
+        break;
+    case 4:
+        if (g_ButtonCombo[COMBO_HELLFIRE].timer &&
+            --g_ButtonCombo[COMBO_HELLFIRE].timer == 0) {
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+            break;
+        }
+        FntPrint("pl_pose:%02x\n", PLAYER.animFrameIdx);
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) &&
+            ((PLAYER.step == Player_Crouch) ||
+             ((PLAYER.step == Player_Stand) ||
+              (PLAYER.step == Player_Walk)))) {
+            if (g_Player.unk72) {
+                g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+                break;
+            }
+            if (CastSpell(SPELL_HELLFIRE)) {
+                PerformHellfire();
+                g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+                LearnSpell(SPELL_HELLFIRE);
+                return 1;
+            }
+        }        
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_09112E48);
 

@@ -348,13 +348,13 @@ bool CheckHellfireInput(void) {
 
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
-    if (!g_WasFacingLeft5) {
+    if (g_WasFacingLeft5 == 0) {
         forward = PAD_RIGHT;
     } else {
         forward = PAD_LEFT;
     }
 
-    if (!g_WasFacingLeft5) {
+    if (g_WasFacingLeft5 == 0) {
         down_forward = PAD_DOWN + PAD_RIGHT;
     } else {
         down_forward = PAD_DOWN + PAD_LEFT;
@@ -398,28 +398,28 @@ bool CheckHellfireInput(void) {
         }
         break;
     case 4:
-        if ((g_ButtonCombo[COMBO_HELLFIRE].timer == 0) ||
-            --g_ButtonCombo[COMBO_HELLFIRE].timer != 0) {
-            FntPrint("pl_pose:%02x\n", PLAYER.animFrameIdx);
-            if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-                !(g_Player.unk46 & 0x8000) &&
-                ((PLAYER.step == Player_Crouch) ||
-                 ((PLAYER.step == Player_Walk) ||
-                  (PLAYER.step == Player_Stand)))) {
-                if (g_Player.unk72 == 0) {
-                    if (CastSpell(SPELL_HELLFIRE) == 0) {
-                        return 0;
-                    }
-                    PerformHellfire();
-                    g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
-                    LearnSpell(SPELL_HELLFIRE);
-                    return 1;
-                }
-                g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
-            }
-            return 0;
+        if (g_ButtonCombo[COMBO_HELLFIRE].timer &&
+            --g_ButtonCombo[COMBO_HELLFIRE].timer == 0) {
+            g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+            break;
         }
-        g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+        FntPrint("pl_pose:%02x\n", PLAYER.animFrameIdx);
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) &&
+            ((PLAYER.step == Player_Crouch) ||
+             ((PLAYER.step == Player_Stand) ||
+              (PLAYER.step == Player_Walk)))) {
+            if (g_Player.unk72) {
+                g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+                break;
+            }
+            if (CastSpell(SPELL_HELLFIRE)) {
+                PerformHellfire();
+                g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
+                LearnSpell(SPELL_HELLFIRE);
+                return 1;
+            }
+        }        
     }
     return 0;
 }

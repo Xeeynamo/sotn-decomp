@@ -175,6 +175,8 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
+      - [0xA6890, .data, dra_psp/353B0] # "pl_pose:%02x\n"
+      - [0xA68A0, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]
