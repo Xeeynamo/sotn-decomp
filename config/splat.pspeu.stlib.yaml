@@ -1,0 +1,49 @@
+options:
+  platform: psp
+  basename: stlib
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
+  asm_path: asm/pspeu/st/lib_psp
+  asset_path: assets/st/lib
+  src_path: src/st
+  ld_script_path: build/pspeu/stlib.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stlib.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stlib.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stlib.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: psp_$VRAM
+  nonmatchings_path: psp
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: f45dd42ccb88a374491c7c38c19cc80c1cd936ad
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stlib
+    type: code
+    start: 0x00000080
+    vram: 0x09237700
+    bss_size: 0xE00
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, lib_psp/pspeu]
+      - [0x36780, data]
+      - [0x6D800, .rodata, lib_psp/pspeu]
+      - [0x6DD80, bss, 6DD80]
+  - [0x6EC00]
