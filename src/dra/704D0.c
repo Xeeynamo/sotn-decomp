@@ -788,50 +788,43 @@ bool CheckSwordBrothersInput(void) {
 }
 
 void CheckSpecialMoveInputs(void) {
-    s32 var_v0;
+    s32 result;
     s32 i;
 
     for (i = 0; i < 16; i++) {
         switch (i) {
-        case 0:
-            var_v0 = CheckGravityBootsInput();
+        case COMBO_GRAVITY_BOOTS:
+            result = CheckGravityBootsInput();
             break;
-        case 1:
-            var_v0 = CheckQuarterCircleForwardInput();
+        case COMBO_QCF:
+            result = CheckQuarterCircleForwardInput();
             break;
-        case 2:
-            var_v0 = CheckBackForwardInput();
+        case COMBO_BF:
+            result = CheckBackForwardInput();
             break;
-        case 3:
-            var_v0 = CheckHellfireInput();
+        case COMBO_HELLFIRE:
+            result = CheckHellfireInput();
             break;
-        case 4:
-            var_v0 = CheckTetraSpiritInput();
+        case COMBO_TETRA_SPIRIT:
+            result = CheckTetraSpiritInput();
             break;
-        case 6:
-            var_v0 = CheckSoulStealInput();
+        case COMBO_SOUL_STEAL:
+            result = CheckSoulStealInput();
             break;
-        case 9:
-            var_v0 = CheckSwordBrothersInput();
+        case COMBO_SWORD_BROTHERS:
+            result = CheckSwordBrothersInput();
             break;
-        case 14:
-            var_v0 = CheckSummonSpiritInput();
+        case COMBO_SUMMON_SPIRIT:
+            result = CheckSummonSpiritInput();
             break;
-        case 15:
-            var_v0 = CheckDarkMetamorphosisInput();
+        case COMBO_DARK_METAMORPH:
+            result = CheckDarkMetamorphosisInput();
             break;
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
         default:
-            var_v0 = 0;
+            result = 0;
             break;
         }
-        if (var_v0 != 0) {
+        if (result != 0) {
             return;
         }
     }

@@ -127,6 +127,7 @@ CheckHellfireInput = 0x09112AC8;
 CheckTetraSpiritInput = 0x09112E48;
 CheckSoulStealInput = 0x09113268;
 CheckSwordBrothersInput = 0x091136F8;
+CheckSpecialMoveInputs = 0x09113C00;
 DoGravityJump = 0x09114438;
 func_8010FAF4 = 0x09116090;
 PerformHellfire = 0x091160D0;

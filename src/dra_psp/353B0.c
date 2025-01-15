@@ -786,7 +786,48 @@ bool CheckSwordBrothersInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_09113C00);
+void CheckSpecialMoveInputs(void) {
+    s32 result;
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        switch (i) {
+        case COMBO_GRAVITY_BOOTS:
+            result = CheckGravityBootsInput();
+            break;
+        case COMBO_QCF:
+            result = CheckQuarterCircleForwardInput();
+            break;
+        case COMBO_BF:
+            result = CheckBackForwardInput();
+            break;
+        case COMBO_HELLFIRE:
+            result = CheckHellfireInput();
+            break;
+        case COMBO_TETRA_SPIRIT:
+            result = CheckTetraSpiritInput();
+            break;
+        case COMBO_SOUL_STEAL:
+            result = CheckSoulStealInput();
+            break;
+        case COMBO_SWORD_BROTHERS:
+            result = CheckSwordBrothersInput();
+            break;
+        case COMBO_SUMMON_SPIRIT:
+            result = CheckSummonSpiritInput();
+            break;
+        case COMBO_DARK_METAMORPH:
+            result = CheckDarkMetamorphosisInput();
+            break;
+        default:
+            result = 0;
+            break;
+        }
+        if (result != 0) {
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_09113D78);
 
