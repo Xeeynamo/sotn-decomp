@@ -356,6 +356,8 @@ typedef enum {
 // font. e.g. _S("I am a Symphony of the Night encoded string")
 #define _S(x) (x)
 #endif
+// same as above, but it processes a single character from CPP
+#define CH(x) ((x) - 0x20)
 
 #define DEMO_KEY_LEN 3
 #define DEMO_MAX_LEN 0x2000
@@ -1499,13 +1501,17 @@ typedef struct {
     /* 0x14 */ u16 clutIndex;         // CLUT index
     /* 0x16 */ u8 nextCharTimer;      // timer to next character
     /* 0x17 */ u8 unk17;              // unknown
-    // Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
+// Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
+#if defined(VERSION_PSP)
+    /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
+#else
     /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
-    /* 0x30 */ s32 primIndex[3];   // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;          // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;          // global timer
-    /* 0x40 */ u8* scriptEnd;      // pointer to the end of the script
-} Dialogue;                        // size = 0x44
+#endif
+    /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
+    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
+    /* 0x3E */ u16 timer;        // global timer
+    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
+} Dialogue;                      // size = 0x44
 
 // Used for the damageKind of DamageParam
 typedef enum {
@@ -1886,6 +1892,7 @@ typedef enum {
     CASTLE_FLAG_1,
     CASTLE_FLAG_2,
     CASTLE_FLAG_19 = 19, // Randomized by g_RandomizeCastleFlag13; unused
+    CASTLE_FLAG_20,
     // Start NO3/NP3 flags
     CASTLE_FLAG_48 = 48,
     CASTLE_FLAG_49,

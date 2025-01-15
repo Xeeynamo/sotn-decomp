@@ -97,7 +97,7 @@ $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_
 ST_LIB_MERGE = 
 $(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/lib/,$(addsuffix .c.o,$(ST_LIB_MERGE))) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
 	$(call link_with_deadstrip,stlib,$@)
-ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug 2A218 e_particles
+ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug 2A218 e_particles e_collect
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
 	$(call link_with_deadstrip,stst0,$@)
 ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door create_entity

@@ -2464,6 +2464,37 @@ typedef struct {
     /* 0x7C */ struct Entity* unk7C;
 } ET_SpearGuardUnk;
 
+typedef struct {
+    /* 0x7C */ struct Entity* unk7C;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 unk9C;
+} ET_801BDA0C;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+} ET_801B84E4;
+
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 unk88;
+} ET_801BF3F4;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2669,7 +2700,10 @@ typedef union { // offset=0x7C
     ET_801C10F4 et_801C10F4;
     ET_SpearGuard spearGuard;
     ET_SpearGuardUnk spearGuardUnk;
+    ET_801B84E4 et_801B84E4;
+    ET_801BF3F4 et_801BF3F4;
     ET_801BFB40 et_801BFB40;
+    ET_801BDA0C et_801BDA0C;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

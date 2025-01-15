@@ -1,6 +1,5 @@
 g_EInit3DObject = 0x801805D4;
 g_collectVelocity = 0x80181E3C;
-c_HeartPrizes = 0x801A7C84;
 ST0_EntityCutscene = 0x801A9210;
 EntityCutscene = 0x801AA290;
 EntitySecretButton = 0x801AA8DC;

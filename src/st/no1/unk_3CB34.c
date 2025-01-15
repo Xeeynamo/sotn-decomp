@@ -407,13 +407,3 @@ void func_us_801BCB34(Entity* self) {
         prim = prim->next;
     }
 }
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BD8AC);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BDA0C);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BDF9C);
-
-INCLUDE_RODATA("st/no1/nonmatchings/unk_3CB34", D_us_801B4808);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_3CB34", func_us_801BE2C8);
