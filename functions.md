@@ -507,7 +507,7 @@
 | dra    | func_psp_09114668            |      149 |         27 |        |                                 |       |
 | lib    | InitRoomEntities             |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
 | dra    | func_psp_090F0330            |      151 |         12 |        |                                 |       |
-| dra    | func_psp_091121C0            |      152 |         23 |        |                                 |       |
+| dra    | func_psp_091121C0            |      152 |         23 |        | https://decomp.me/scratch/zdVQr | 0.918 |
 | dra    | func_80118970                |      153 |         25 |        |                                 |       |
 | dra    | func_psp_09134D08            |      154 |         11 |        |                                 |       |
 | dra    | func_psp_09144810            |      155 |         10 |        |                                 |       |
@@ -529,7 +529,6 @@
 | lib    | func_psp_09250A60            |      169 |          7 |        |                                 |       |
 | dra    | func_psp_090F2B20            |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800            |      170 |         17 |        |                                 |       |
-| dra    | func_psp_09111F58            |      172 |         25 |        | https://decomp.me/scratch/3KWJI | 0.978 |
 | dra    | func_psp_09140960            |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
 | lib    | func_psp_09238C38            |      177 |         20 |        |                                 |       |
 | lib    | func_psp_0923DA30            |      178 |         16 |        |                                 |       |
