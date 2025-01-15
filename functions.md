@@ -529,7 +529,7 @@
 | lib    | func_psp_09250A60            |      169 |          7 |        |                                 |       |
 | dra    | func_psp_090F2B20            |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800            |      170 |         17 |        |                                 |       |
-| dra    | func_psp_09111F58            |      172 |         25 |        | https://decomp.me/scratch/3KWJI | 0.956 |
+| dra    | func_psp_09111F58            |      172 |         25 |        | https://decomp.me/scratch/3KWJI | 0.978 |
 | dra    | func_psp_09140960            |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
 | lib    | func_psp_09238C38            |      177 |         20 |        |                                 |       |
 | lib    | func_psp_0923DA30            |      178 |         16 |        |                                 |       |
