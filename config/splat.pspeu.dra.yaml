@@ -102,7 +102,6 @@ segments:
       - [0x32DA0, c, dra_psp/32DA0] # O0
       - [0x35060, c, dra_psp/35060]
       - [0x353B0, c, dra_psp/353B0] # O0
-      - [0x35840, c, dra_psp/35840]
       - [0x37280, c, dra_psp/37280]
       - [0x375C0, c, dra_psp/375C0]
       - [0x37930, c, dra_psp/37930]
@@ -197,7 +196,7 @@ segments:
       - [0xEE7B0, .rodata, dra_psp/2E0E0]
       - [0xEE808, .rodata, dra_psp/329F0]
       - [0xEE828, .rodata, dra_psp/32DA0]
-      - [0xEE840, .rodata, dra_psp/35840]
+      - [0xEE840, .rodata, dra_psp/353B0]
       - [0xEE898, .rodata, dra_psp/3EEA0]
       - [0xEE8B8, .rodata, dra_psp/45B30]
       - [0xEE8D8, .rodata, dra_psp/47F50]
