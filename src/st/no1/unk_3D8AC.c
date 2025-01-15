@@ -233,4 +233,179 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_3D8AC", func_us_801BDF9C);
 
 INCLUDE_RODATA("st/no1/nonmatchings/unk_3D8AC", D_us_801B4808);
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3D8AC", func_us_801BE2C8);
+extern s16 D_us_801815B8[];
+extern s16 D_us_801815CC[];
+extern s16 D_us_801815E0[];
+extern SVECTOR D_us_801B4808;
+extern u16 g_EInitInteractable[];
+
+void func_us_801BE2C8(Entity* self) {
+    s32 primIndex;
+    s16 rotZ;
+    s16 rotY;
+    long p, flag;
+    SVECTOR p0, p1, p2, p3;
+    u8 pad[4];
+    VECTOR trans;
+    MATRIX m;
+    Primitive* lastPrim;
+    Primitive* prim;
+    s16 t;
+    s16 iter;
+    s32 i, j;
+    s16* zPointer;
+    s16 posX, posY; // unused
+
+#ifdef VERSION_PSP
+    SVECTOR rot = {0};
+#else
+    SVECTOR rot = D_us_801B4808;
+#endif
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        break;
+
+    case 1:
+        if (self->ext.et_801BE2C8.unk84) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->ext.et_801BE2C8.unk84 = 0;
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x180);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801BE2C8.unk7C = prim;
+            while (prim != NULL) {
+                prim->tpage = 0x1A;
+                prim->clut = 0x15F;
+                prim->u0 = prim->u2 = 0x20;
+                prim->u1 = prim->u3 = 0x28;
+                prim->v0 = prim->v1 = 0xA0;
+                prim->v2 = prim->v3 = 0xA8;
+                prim->r0 = prim->g0 = prim->b0 = 0x10;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                prim->priority = 0xD0;
+                prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
+                lastPrim = prim;
+                prim = prim->next;
+            }
+            self->ext.et_801BE2C8.unk80 = lastPrim;
+            lastPrim->x0 = lastPrim->x2 = 0;
+            lastPrim->x1 = lastPrim->x3 = 0;
+            lastPrim->y0 = lastPrim->y1 = 0;
+            lastPrim->y2 = lastPrim->y3 = 0;
+            lastPrim->r0 = lastPrim->g0 = lastPrim->b0 = 0xFF;
+            LOW(lastPrim->r1) = LOW(lastPrim->r0);
+            LOW(lastPrim->r2) = LOW(lastPrim->r0);
+            LOW(lastPrim->r3) = LOW(lastPrim->r0);
+            lastPrim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                 DRAW_UNK02 | DRAW_TRANSP;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        zPointer = self->ext.et_801BE2C8.unk88;
+        for (i = 0; i < 8; i++) {
+            *zPointer = D_us_801815B8[i];
+            zPointer++;
+        }
+        self->ext.et_801BE2C8.unkA0 = 0;
+        g_api.PlaySfx(0x7AE);
+        self->step++;
+        break;
+
+    case 3:
+        iter = 0;
+        zPointer = self->ext.et_801BE2C8.unk88;
+        prim = self->ext.et_801BE2C8.unk7C;
+        SetGeomScreen(0x100);
+        SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+        for (i = 0; i < 8; i++) {
+            rotY = 0x280;
+            rotZ = *zPointer;
+            RotMatrix(&rot, &m);
+            RotMatrixY(rotY, &m);
+            RotMatrixZ(rotZ, &m);
+            trans.vx = 0;
+            trans.vy = 0;
+            trans.vz = 0x140;
+            TransMatrix(&m, &trans);
+            SetRotMatrix(&m);
+            SetTransMatrix(&m);
+            t = D_us_801815E0[i] - self->ext.et_801BE2C8.unkA0 / 16;
+            if (t < 0) {
+                t = 0;
+            }
+            p0.vx = 0;
+            p0.vy = 0 - t;
+            p0.vz = 0;
+
+            p1.vx = t - 0;
+            p1.vy = 0;
+            p1.vz = 0;
+
+            p2.vx = 0 - t;
+            p2.vy = 0;
+            p2.vz = 0;
+
+            p3.vx = 0;
+            p3.vy = t - 0;
+            p3.vz = 0;
+            for (j = 0; p0.vx < 0xC0; j++, prim = prim->next) {
+                if (iter > 0x170) {
+                    break;
+                }
+                RotAverage4(
+                    &p0, &p1, &p2, &p3, (long*)(&prim->x0), (long*)(&prim->x1),
+                    (long*)(&prim->x2), (long*)(&prim->x3), &p, &flag);
+                prim->r0 = 0x20 - (i % 3) * 8 - j / 4;
+                if (prim->r0 > 0x80) {
+                    prim->r0 = 0;
+                }
+                prim->g0 = 0x20 - (i % 2) * 8 - j / 4;
+                if (prim->g0 > 0x80) {
+                    prim->g0 = 0;
+                }
+                prim->b0 = 0x20 - (i % 4) * 8 - j / 4;
+                if (prim->b0 > 0x80) {
+                    prim->b0 = 0;
+                }
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                iter++;
+                posX = prim->x0;
+                posY = prim->y0;
+                p0.vx += 3;
+                p1.vx += 3;
+                p2.vx += 3;
+                p3.vx += 3;
+            }
+            *zPointer += D_us_801815CC[i];
+            zPointer++;
+        }
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        prim = self->ext.et_801BE2C8.unk80;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        if (self->ext.et_801BE2C8.unk84) {
+            self->ext.et_801BE2C8.unkA0 += 4;
+        }
+        if (self->ext.et_801BE2C8.unkA0 > 0x200) {
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi;
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
