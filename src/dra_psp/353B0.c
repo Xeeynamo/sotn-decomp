@@ -657,4 +657,131 @@ bool CheckSoulStealInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/353B0", func_psp_091136F8);
+bool CheckSwordBrothersInput(void) {
+    s32 directionsPressed;
+    s32 down_forward;
+    s32 forward;
+    s32 up_forward;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (!PLAYER.facingLeft) {
+        down_forward = PAD_DOWN + PAD_RIGHT;
+        forward = PAD_RIGHT;
+        up_forward = PAD_UP + PAD_RIGHT;
+    } else {
+        down_forward = PAD_DOWN + PAD_LEFT;
+        forward = PAD_LEFT;
+        up_forward = PAD_UP + PAD_LEFT;
+    }
+
+    // Check if sword familiar is currently active. If not, prevent having
+    // buttons correct
+    if (g_Servant != FAM_ACTIVE_SWORD) {
+        g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+    }
+
+    switch (g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect) {
+    case 0:
+        if (directionsPressed == PAD_DOWN) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+        }
+        break;
+    case 1:
+        if (directionsPressed == down_forward) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (directionsPressed == up_forward) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        break;
+    case 4:
+        if (directionsPressed == PAD_UP) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 64;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        break;
+    case 5:
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            break;
+        }
+        if (!(directionsPressed & PAD_UP)) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        break;
+    case 6:
+        if (!(directionsPressed & PAD_UP)) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+        }
+        break;
+    case 7:
+        if (directionsPressed == PAD_DOWN) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        break;
+    case 8:
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+        }
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000)) {
+            if (PLAYER.step == Player_Crouch) {
+                if (CastSpell(SPELL_SWORD_BROTHERS) != 0) {
+                    func_8010FD24();
+                    g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect =
+                        COMBO_COMPLETE;
+                    g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;
+                    LearnSpell(SPELL_SWORD_BROTHERS);
+                    g_Player.unk70 = 1;
+                    return 1;
+                }
+                break;
+            }
+            FntPrint("command ok\n");
+            break;
+        }
+        break;
+    case COMBO_COMPLETE:
+        FntPrint("100sword set ok\n");
+        if (--g_ButtonCombo[COMBO_SWORD_BROTHERS].timer == 0) {
+            g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
+            g_Player.unk70 = 1;
+        }
+        break;
+    }
+    return 0;
+}
