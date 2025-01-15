@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "sfx.h"
-#include "player.h"
 
 bool CheckGravityBootsInput(void) {
     switch (g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect) {
@@ -116,8 +114,9 @@ bool CheckQuarterCircleForwardInput(void) {
 
 bool CheckBackForwardInput(void) {
     s32 directionsPressed;
-    s32 backward;
     s32 forward;
+    s32 backward;
+    s32 unused = 2; // Meaningless, PSP-only
 
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
@@ -125,6 +124,11 @@ bool CheckBackForwardInput(void) {
         forward = PAD_RIGHT;
     } else {
         forward = PAD_LEFT;
+    }
+    if (!g_WasFacingLeft2) {
+        backward = PAD_LEFT;
+    } else {
+        backward = PAD_RIGHT;
     }
     switch (g_ButtonCombo[COMBO_BF].buttonsCorrect) {
     case 0:
@@ -150,13 +154,13 @@ bool CheckBackForwardInput(void) {
             g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
         }
         break;
-    case 2:
+    case 0xFE: // Indicates FE might have special flag meaning. Never gets set though.
     default:
-        if (g_Player.unk72 != 0) {
+        if (g_Player.unk72) {
             g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
             break;
         }
-        if (g_ButtonCombo[COMBO_BF].timer != 0 &&
+        if (g_ButtonCombo[COMBO_BF].timer &&
             --g_ButtonCombo[COMBO_BF].timer == 0) {
             g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
             g_WasFacingLeft2 = PLAYER.facingLeft;
