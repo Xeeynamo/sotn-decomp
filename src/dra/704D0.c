@@ -153,7 +153,8 @@ bool CheckBackForwardInput(void) {
             g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
         }
         break;
-    case 0xFE: // Indicates FE might have special flag meaning. Never gets set though.
+    case 0xFE: // Indicates FE might have special flag meaning. Never gets set
+               // though.
     default:
         if (g_Player.unk72) {
             g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
@@ -249,11 +250,10 @@ bool CheckDarkMetamorphosisInput(void) {
             g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
             break;
         }
-        
+
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
             !(g_Player.unk46 & 0x8000) &&
-            ((PLAYER.step == Player_Walk) ||
-             (PLAYER.step == Player_Stand)) &&
+            ((PLAYER.step == Player_Walk) || (PLAYER.step == Player_Stand)) &&
             (CastSpell(SPELL_DARK_METAMORPHOSIS) != 0)) {
             func_8010FB68();
             g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
@@ -406,8 +406,7 @@ bool CheckHellfireInput(void) {
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
             !(g_Player.unk46 & 0x8000) &&
             ((PLAYER.step == Player_Crouch) ||
-             ((PLAYER.step == Player_Stand) ||
-              (PLAYER.step == Player_Walk)))) {
+             ((PLAYER.step == Player_Stand) || (PLAYER.step == Player_Walk)))) {
             if (g_Player.unk72) {
                 g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
                 break;
@@ -418,7 +417,7 @@ bool CheckHellfireInput(void) {
                 LearnSpell(SPELL_HELLFIRE);
                 return 1;
             }
-        }        
+        }
     }
     return 0;
 }
@@ -464,7 +463,7 @@ bool CheckTetraSpiritInput(void) {
         if (--g_ButtonCombo[COMBO_TETRA_SPIRIT].timer == 0) {
             g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect++;
             g_WasFacingLeft6 = PLAYER.facingLeft;
-        }        
+        }
         break;
     case 2:
         // After holding UP, you must let go for one frame to move to step 3
@@ -644,8 +643,7 @@ bool CheckSoulStealInput(void) {
         }
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
             !(g_Player.unk46 & 0x8000) &&
-            ((PLAYER.step == Player_Walk) ||
-             (PLAYER.step == Player_Stand)) &&
+            ((PLAYER.step == Player_Walk) || (PLAYER.step == Player_Stand)) &&
             (CastSpell(SPELL_SOUL_STEAL) != 0)) {
             func_8010FBF4();
             g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
