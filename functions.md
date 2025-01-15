@@ -48,7 +48,6 @@
 | dra    | func_psp_0913D5D8            |       19 |          1 |        |                                 |       |
 | dra    | func_psp_090E8620            |       19 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A20          |       19 |          1 |        |                                 |       |
-| st0    | func_pspeu_092392D0          |       19 |          1 |        |                                 |       |
 | dra    | func_psp_09137498            |       19 |          2 |        |                                 |       |
 | dra    | func_psp_090EDB70            |       19 |          3 |        |                                 |       |
 | dra    | func_psp_090DDAA8            |       19 |          4 |        |                                 |       |
@@ -93,7 +92,6 @@
 | dra    | func_psp_09140DB0            |       27 |          6 |        |                                 |       |
 | dra    | FreePrimitives               |       28 |          2 |        | https://decomp.me/scratch/YeHtC | 1.0   |
 | dra    | func_psp_09141F50            |       28 |          4 |        |                                 |       |
-| st0    | func_pspeu_09239060          |       29 |          1 |        |                                 |       |
 | dra    | DecompressReadNibble         |       29 |          2 |        |                                 |       |
 | st0    | func_801B1198                |       29 |          2 |        |                                 |       |
 | dra    | func_psp_090F2118            |       29 |          3 |        |                                 |       |
@@ -148,7 +146,6 @@
 | dra    | DestroyEntitiesFromIndex     |       37 |          3 |        |                                 |       |
 | dra    | func_psp_0913DAA8            |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EAFA8            |       37 |          3 |        |                                 |       |
-| st0    | func_pspeu_09238F10          |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090ED958            |       37 |          4 |        |                                 |       |
 | dra    | func_psp_091163A8            |       37 |          5 |        |                                 |       |
 | dra    | func_psp_0913E658            |       37 |          5 |        |                                 |       |
@@ -230,7 +227,6 @@
 | dra    | func_psp_091176F0            |       55 |          7 |        |                                 |       |
 | dra    | func_psp_091295F0            |       55 |          7 |        |                                 |       |
 | dra    | func_psp_09141488            |       56 |          2 |        |                                 |       |
-| st0    | func_pspeu_09238F90          |       57 |          2 |        |                                 |       |
 | dra    | func_8011203C                |       57 |          9 |        |                                 |       |
 | dra    | func_psp_0913D7D8            |       57 |          9 |        |                                 |       |
 | dra    | func_psp_090E80E0            |       57 |         15 |        |                                 |       |
@@ -381,7 +377,6 @@
 | dra    | func_psp_090EEFA8            |      136 |         11 |        |                                 |       |
 | dra    | func_psp_09141668            |      136 |         21 |        |                                 |       |
 | dra    | func_psp_090EB028            |      139 |          2 |        | https://decomp.me/scratch/tJnoh | 0.988 |
-| st0    | func_pspeu_092390C0          |      139 |          5 |        |                                 |       |
 | dra    | func_psp_090E7BC0            |      139 |         15 |        |                                 |       |
 | dra    | func_psp_091293E8            |      140 |         10 |        |                                 |       |
 | dra    | func_80118B18                |      141 |         14 |        |                                 |       |
@@ -442,7 +437,6 @@
 | st0    | EntitySecretButton           |      240 |         36 |        | https://decomp.me/scratch/qQwps | 0.99  |
 | dra    | func_psp_0912CC20            |      242 |         22 |        |                                 |       |
 | dra    | DemoUpdate                   |      242 |         31 |        |                                 |       |
-| st0    | func_pspeu_09239308          |      243 |         18 |        |                                 |       |
 | dra    | func_psp_0913C788            |      245 |         26 | Yes    | https://decomp.me/scratch/4HwEq | 0.99  |
 | dra    | func_psp_090FA828            |      245 |         39 | Yes    |                                 |       |
 | dra    | func_psp_09112AC8            |      246 |         41 |        |                                 |       |
