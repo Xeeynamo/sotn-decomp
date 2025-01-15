@@ -8,7 +8,6 @@ void EntityEquipItemDrop(Entity* self) {
     s16 index;
     s32 primIndex;
     const char* name;
-    s32 xPos, yPos; // only used in MAD
 
     itemId = self->params & 0x7FFF;
     if (
@@ -83,10 +82,21 @@ void EntityEquipItemDrop(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         prim->tpage = 0x1A;
         prim->clut = i + 464;
+
+#ifdef VERSION_PSP
+        prim->u0 = prim->u2 = (i & 7) * 0x10 + 1;
+#else
         prim->u0 = prim->u2 = (u8)(i & 7) * 0x10 + 1;
+#endif
         prim->u1 = prim->u3 = prim->u0 + 0xE;
+
+#ifdef VERSION_PSP
+        prim->v0 = prim->v1 = (i & 0x18) * 2 + 0x81;
+#else
         prim->v0 = prim->v1 = (u8)(i & 0x18) * 2 + 0x81;
+#endif
         prim->v2 = prim->v3 = prim->v0 + 0xE;
+
         prim->priority = 0x80;
         prim->drawMode = DRAW_UNK02 | DRAW_COLORS;
 
@@ -173,22 +183,20 @@ void EntityEquipItemDrop(Entity* self) {
         BlinkItem(self, self->ext.equipItemDrop.timer);
 #else
         prim = &g_PrimBuf[self->primIndex];
-        xPos = (u16)self->posX.i.hi;
-        prim->x0 = prim->x2 = xPos - 7;
-        prim->x1 = prim->x3 = xPos + 7;
-        yPos = (u16)self->posY.i.hi;
-        prim->y0 = prim->y1 = yPos - 7;
-        prim->y2 = prim->y3 = yPos + 7;
+        prim->x0 = prim->x2 = self->posX.i.hi - 7;
+        prim->x1 = prim->x3 = prim->x0 + 0xE;
+        prim->y0 = prim->y1 = self->posY.i.hi - 7;
+        prim->y2 = prim->y3 = prim->y0 + 0xE;
         if (self->ext.equipItemDrop.timer) {
             self->ext.equipItemDrop.timer--;
-            if (!(self->ext.equipItemDrop.timer & 2)) {
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = 0x80;
-            } else {
+            if (self->ext.equipItemDrop.timer & 2) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
                     prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
                         prim->b2 = prim->b3 = 0xFF;
+            } else {
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 0x80;
             }
         }
 #endif
