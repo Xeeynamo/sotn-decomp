@@ -77,6 +77,8 @@ segments:
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]
       - [0x1B700, data]
+      - [0x1C500, .data, st0_psp/cutscene]
+      - [0x1C8C8, data]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
       - [0x41BF0, .data, st0/e_lock_camera]
       - [0x41C08, .data, st0/e_red_door]

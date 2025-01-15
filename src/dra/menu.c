@@ -20,8 +20,6 @@ typedef struct {
     /* 0x0A */ s16 padding;
 } MenuContextInit; // size = 0x1C
 
-#define CH(x) ((x) - 0x20)
-
 #if defined(VERSION_US)
 #define ShowText(str, id) func_800F99B8(str, id, 0);
 #elif defined(VERSION_HD)
