@@ -230,7 +230,6 @@
 | dra    | func_8011203C                |       57 |          9 |        |                                 |       |
 | dra    | func_psp_0913D7D8            |       57 |          9 |        |                                 |       |
 | dra    | func_psp_090E80E0            |       57 |         15 |        |                                 |       |
-| st0    | CollectHeart                 |       58 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | dra    | func_psp_090FF548            |       58 |          6 |        |                                 |       |
 | dra    | func_psp_09136E18            |       58 |          6 |        |                                 |       |
 | dra    | func_psp_090F88F0            |       58 |          9 |        |                                 |       |
@@ -521,7 +520,6 @@
 | dra    | func_psp_090DFFD0            |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
 | dra    | func_psp_09128B00            |      609 |         64 |        |                                 |       |
 | dra    | func_psp_091187D8            |      611 |         62 |        | https://decomp.me/scratch/xRL9N | 0.953 |
-| st0    | EntityEquipItemDrop          |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | func_psp_090FFB28            |      618 |         43 |        | https://decomp.me/scratch/18Dbq | 0.999 |
 | dra    | func_800EB758                |      619 |         30 |        |                                 |       |
 | st0    | func_801BD8F0                |      634 |         59 | Yes    | https://decomp.me/scratch/whJF5 | 0.961 |
