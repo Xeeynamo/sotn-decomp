@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/lib/nonmatchings/e_red_door", EntityIsNearPlayer);
 
-INCLUDE_ASM("st/lib/nonmatchings/e_red_door", WRP_EntityRedDoor);
+INCLUDE_ASM("st/lib/nonmatchings/e_red_door", LIB_EntityRedDoor);

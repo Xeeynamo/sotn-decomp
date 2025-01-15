@@ -665,7 +665,7 @@ INCLUDE_RODATA("st/lib/nonmatchings/first_c_file", D_us_801AD760);
 
 INCLUDE_RODATA("st/lib/nonmatchings/first_c_file", D_us_801AD774);
 
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", NZ0_EntityCutscene);
+INCLUDE_ASM("st/lib/nonmatchings/first_c_file", LIB_EntityCutscene);
 
 INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BAF60);
 
