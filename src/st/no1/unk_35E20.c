@@ -1086,7 +1086,126 @@ void func_us_801B9304(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B9BE4);
+extern u16 D_us_80180A1C[];
+extern u32 D_psp_0929A690;
+extern u32 D_psp_0929A6D8;
+
+void func_us_801B9BE4(Entity* self) {
+    Entity* tempEntity;
+    s16 volume;
+    s16 distance;
+    s32 xOffset, yOffset;
+    s32 dx, dy;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A1C);
+        self->animCurFrame = 0x1C;
+        self->zPriority = 0x6C;
+        if (!self->params) {
+#ifdef VERSION_PSP
+            CreateEntityFromEntity(D_psp_0929A6D8, self, self + 1);
+#else
+            CreateEntityFromEntity(E_ID_33, self, self + 1);
+#endif
+            (self + 1)->params = 1;
+            (self + 1)->posY.i.hi += 0x10;
+            self->step = 3;
+        } else {
+            self->palette = 0x8041;
+            self->hitboxState = 3;
+            self->hitboxWidth = 6;
+            self->hitboxHeight = 0x12;
+            self->hitboxOffY = -4;
+            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->rotZ = -0x80;
+            self->animCurFrame = 0x1D;
+            self->step = 1;
+            if (g_CastleFlags[CASTLE_FLAG_16]) {
+                g_api.func_800EA5E4(0x8003);
+                g_api.PlaySfxVolPan(0x7AA, 0, 0);
+                self->hitboxState = 0;
+                self->step = 2;
+            }
+        }
+        break;
+
+    case 1:
+        self->hitboxOffX = -((rsin(self->rotZ) * 32) >> 0xC);
+        self->hitboxOffY = ((rcos(self->rotZ) * 32) >> 0xC);
+        xOffset = ((rsin(self->rotZ) * 18) >> 0xC);
+        yOffset = -((rcos(self->rotZ) * 18) >> 0xC);
+        tempEntity = self - 1;
+        tempEntity->posX.i.hi = self->posX.i.hi + xOffset;
+        tempEntity->posY.i.hi = self->posY.i.hi + yOffset;
+        switch (self->step_s) {
+        case 0:
+            if (self->hitFlags) {
+                g_api.PlaySfx(SFX_DOOR_OPEN);
+                self->ext.et_801B9BE4.unk80 = 16;
+                self->step_s++;
+            }
+            break;
+
+        case 1:
+            self->rotZ += 4;
+            if (!--self->ext.et_801B9BE4.unk80) {
+                self->step_s--;
+            }
+            if (self->rotZ >= 0x20) {
+                self->hitboxState = 0;
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                    CreateEntityFromEntity(D_psp_0929A690, self, tempEntity);
+#else
+                    CreateEntityFromEntity(E_ID_5E, self, tempEntity);
+#endif
+                }
+                g_api.func_80102CD8(1);
+                g_api.func_800EA5E4(0x8003);
+                g_api.PlaySfx(SFX_WEAPON_APPEAR);
+                g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
+                g_CastleFlags[CASTLE_FLAG_16] = 1;
+                self->step = 2;
+            }
+            break;
+        }
+        break;
+
+    case 2:
+        self->rotZ = 0x20;
+        xOffset = ((rsin(self->rotZ) * 18) >> 0xC);
+        yOffset = -((rcos(self->rotZ) * 18) >> 0xC);
+        tempEntity = self - 1;
+        tempEntity->posX.i.hi = self->posX.i.hi + xOffset;
+        tempEntity->posY.i.hi = self->posY.i.hi + yOffset;
+        dx = self->posX.i.hi - 0x80;
+        distance = (abs(dx) - 0x20) >> 5;
+        if (distance > 8) {
+            distance = 8;
+        } else if (distance < 0) {
+            distance = 0;
+        }
+        if (dx < 0) {
+            distance = -distance;
+        }
+        dx = GetDistanceToPlayerX() / 2;
+        dy = GetDistanceToPlayerY();
+        dx = dx * dx + dy * dy;
+        dx = SquareRoot0(dx);
+        volume = 0xA0 - dx;
+        if (volume > 0x7F) {
+            volume = 0x7F;
+        }
+        if (volume < 0) {
+            volume = 0;
+        }
+        g_api.SetVolumeCommand22_23(volume, distance);
+        FntPrint("vol:%x\n", volume);
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801BA034);
 
