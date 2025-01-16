@@ -37,6 +37,7 @@ typedef enum EntityIDs {
     /* 0x2A */ E_ID_2A = 0x2A,
     /* 0x2F */ E_ID_2F = 0x2F,
     /* 0x31 */ E_ID_31 = 0x31,
+    /* 0x33 */ E_ID_33 = 0x33,
     /* 0x36 */ E_ID_36 = 0x36,
     /* 0x38 */ E_ID_38 = 0x38,
     /* 0x39 */ E_ID_39,
@@ -63,6 +64,7 @@ typedef enum EntityIDs {
     /* 0x58 */ E_ID_58 = 0x58,
     /* 0x5A */ E_ID_5A = 0x5A,
     /* 0x5B */ E_ID_5B,
+    /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
 // Skeleton

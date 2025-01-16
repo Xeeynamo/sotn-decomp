@@ -48,7 +48,7 @@ s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
-s32 SetVolumeCommand22_23(s16 vol, u16 distance);
+s32 SetVolumeCommand22_23(s16 vol, s16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetPlayerSensor(Collider* col);

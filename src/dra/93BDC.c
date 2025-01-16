@@ -271,21 +271,17 @@ void SetReleaseRateLow_22_23(void) {
     g_KeyOffChannels |= MASK_22_23;
 }
 
-s32 SetVolumeCommand22_23(s16 vol, u16 distance) {
+s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
     s32 ret = -2;
-    u16 temp;
-
     if (g_CurSfxId22_23 != 0) {
-        ret = 0;
-        temp = distance + 8;
-
-        if (temp >= 0x11) {
+        if (distance < -8 || distance > 8) {
             distance = 0;
             ret = -1;
+        } else {
+            ret = 0;
         }
-
-        g_CurSfxDistance22_23 = distance;
         g_CurSfxVol22_23 = vol;
+        g_CurSfxDistance22_23 = distance;
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
             SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
