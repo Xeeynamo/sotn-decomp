@@ -83,9 +83,9 @@ void EntitySpearGuard(Entity* self);
 void func_us_801D42EC(Entity* self);
 void func_us_801D4558(Entity* self);
 void func_us_801D4950(Entity* self);
-void func_us_801D49E4(Entity* self);
+void EntitySkeletonApe(Entity* self);
 void func_us_801D4F18(Entity* self);
-void func_us_801D5040(Entity* self);
+void EntitySkeletonApeBarrel(Entity* self);
 void func_us_801D544C(Entity* self);
 void func_us_801C0B9C(Entity* self);
 void func_us_801D4400(Entity* self);
@@ -179,9 +179,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D42EC,
     func_us_801D4558,
     func_us_801D4950,
-    func_us_801D49E4,
+    EntitySkeletonApe,
     func_us_801D4F18,
-    func_us_801D5040,
+    EntitySkeletonApeBarrel,
     func_us_801D544C,
     func_us_801C0B9C,
     func_us_801D4400,
