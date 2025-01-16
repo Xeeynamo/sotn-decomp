@@ -61,6 +61,7 @@ InitializeEntity = 0x09243bb8;
 EntityDummy = 0x09243d60;
 CheckFieldCollision = 0x09243d98;
 ReplaceBreakableWithItemDrop = 0x09243f28;
+UnkPrimHelper = 0x09244020;
 PrimResetNext = 0x09244520;
 UnkPolyFunc2 = 0x09244628;
 PrimDecreaseBrightness = 0x09244690;
