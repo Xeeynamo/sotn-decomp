@@ -102,6 +102,8 @@ segments:
       - [0xCD80, .data, d_CD80]
       - [0xCDF8, .data, 692E8]
       - [0xCF18, .data, 6D59C]
+      - [0xCF4C, .data, 6E42C]
+      - [0xCF6C, .data, 6FDF8]
       - [0xCF74, .data, d_CF74]
       - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
@@ -186,7 +188,7 @@ segments:
       - [0x40D38, .rodata, cd] # func_801080DC
       # - [0x40D54, .rodata, cd] # func_80108448
       - [0x40E28, .rodata, 692E8] # EntityAlucard
-      - [0x4108C, .rodata, 6D59C] # func_8010EDB8
+      - [0x4108C, .rodata, 6E42C] # func_8010EDB8
       - [0x41308, .rodata, 704D0] # func_80110968
       # - [0x41320, .rodata, 704D0] # func_80110BC8
       # - [0x41334, .rodata, 704D0] # func_80110DF8
@@ -255,6 +257,8 @@ segments:
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
       - [0x6D59C, c, 6D59C]
+      - [0x6E42C, c, 6E42C]
+      - [0x6FDF8, c, 6FDF8]
       - [0x704D0, c, 704D0]
       - [0x71830, c, 71830]
       - [0x72BB0, c, 72BB0]
