@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
 
-void func_8928694(s32, void*);
-void func_89286CC(s8[], void*);
-void func_8928624(s32, void*);
-void func_892865C(s32, void*);
-void func_892752C(void*, s32[]);
-
 void func_psp_09244020(Primitive* arg0) {
     s16 sp78[4];
     s16 sp70[4];
@@ -36,25 +30,25 @@ void func_psp_09244020(Primitive* arg0) {
     sp60[0] = 0;
     sp60[1] = 0;
     sp60[2] = 0x400 - (s16)LOH(arg0->next->u1);
-    func_89286CC(sp18, &sp18[8]);
+    RotMatrix((SVECTOR*)sp18, (MATRIX*)&sp18[8]);
     if (arg0->p3 & 0x20) {
         sp70[0] = arg0->next->x3;
         sp70[1] = arg0->next->y3;
-        func_8928624(sp70[0], &sp18[8]);
-        func_892865C(sp70[1], &sp18[8]);
+        RotMatrixX(sp70[0], (MATRIX*)&sp18[8]);
+        RotMatrixY(sp70[1], (MATRIX*)&sp18[8]);
     }
     sp70[2] = LOH(arg0->next->tpage);
-    func_8928694(sp70[2], &sp18[8]);
+    RotMatrixZ(sp70[2], (MATRIX*)&sp18[8]);
     TransMatrix((MATRIX*)&sp18[8], (VECTOR*)sp60);
     if (arg0->p3 & 0x10) {
         sp60[0] = (s32)(s16)arg0->next->x2;
         sp60[1] = (s32)(s16)arg0->next->y2;
         sp60[2] = 0x1000;
-        func_892752C(&sp18[8], sp60);
+        ScaleMatrix((MATRIX*)&sp18[8], (VECTOR*)sp60);
     }
-    gte_SetRotMatrix((MATRIX*)&sp18[8]);
-    gte_SetTransMatrix(&sp18[8]);
-    gte_SetGeomScreen(0x400);
+    SetRotMatrix((MATRIX*)&sp18[8]);
+    SetTransMatrix((MATRIX*)&sp18[8]);
+    SetGeomScreen(0x400);
     SetGeomOffset((s16)arg0->next->x1, (s16)arg0->next->y0);
     sp58[0] = -LOH(arg0->next->r2) / 2;
     sp58[1] = -LOH(arg0->next->b2) / 2;
