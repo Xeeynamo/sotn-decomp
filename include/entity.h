@@ -2404,11 +2404,11 @@ typedef struct {
 } ET_801BBD90;
 
 typedef struct {
-    /* 0x7C */ s16 unk0;
+    /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ struct Entity* unkEntity;
     /* 0x84 */ u32 unk84;
-} ET_SkeletonApeBarrel;
+} ET_SkeletonApe;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -2697,7 +2697,7 @@ typedef union { // offset=0x7C
     ET_DiplocephalusFireball diplocephalusFireball;
     ET_PlateLord plateLord;
     ET_PlatelordUnknown plateLordUnknown;
-    ET_SkeletonApeBarrel skeletonApeBarrel;
+    ET_SkeletonApe skeletonApe;
     ET_801CE2E0 et_801CE2E0;
     ET_ArmorLord armorLord;
     ET_801BA290 et_801BA290;
