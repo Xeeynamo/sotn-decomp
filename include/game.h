@@ -1892,6 +1892,7 @@ typedef enum {
     CASTLE_FLAG_1,
     CASTLE_FLAG_2,
     CASTLE_FLAG_16 = 16,
+    CASTLE_FLAG_17,
     CASTLE_FLAG_19 = 19, // Randomized by g_RandomizeCastleFlag13; unused
     CASTLE_FLAG_20,
     // Start NO3/NP3 flags

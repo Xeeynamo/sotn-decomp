@@ -36,7 +36,8 @@ typedef enum EntityIDs {
     /* 0x23 */ E_UNK_ENTITY,       // InitializeUnkEntity
     /* 0x2A */ E_ID_2A = 0x2A,
     /* 0x2F */ E_ID_2F = 0x2F,
-    /* 0x31 */ E_ID_31 = 0x31,
+    /* 0x30 */ E_ID_30,
+    /* 0x31 */ E_ID_31,
     /* 0x33 */ E_ID_33 = 0x33,
     /* 0x36 */ E_ID_36 = 0x36,
     /* 0x38 */ E_ID_38 = 0x38,
