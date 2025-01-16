@@ -111,6 +111,7 @@ segments:
       - [0x37F00, c, dra_psp/37F00]
       - [0x39710, c, dra_psp/39710]
       - [0x39750, c, dra_psp/39750]
+      - [0x39AA8, c, dra_psp/39AA8]
       - [0x3A4C0, c, dra_psp/3A4C0]
       - [0x3A770, c, dra_psp/3A770]
       - [0x3AE30, c, dra_psp/3AE30] # O0

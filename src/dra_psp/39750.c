@@ -15,14 +15,5 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/39750", PerformSwordBrothers);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_8010FD88);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_psp_09116428);
+// Next func in PSP is SetPlayerStep; next in US is func_8010FDF8. File split.
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_psp_09116450);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_psp_09116720);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", SetPlayerAnim);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_psp_09116B88);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", UpdateUnarmedAnim);

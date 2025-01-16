@@ -137,6 +137,7 @@ PerformSummonSpirit = 0x09116240;
 PerformTetraSpirit = 0x091162B8;
 PerformSwordBrothers = 0x09116338;
 func_8010FD88 = 0x091163A8;
+SetPlayerStep = 0x09116428;
 SetPlayerAnim = 0x09116B48;
 UpdateUnarmedAnim = 0x09116CE0;
 func_8010DBFC = 0x09116E40;
