@@ -126,7 +126,6 @@
 | dra    | func_psp_09142DE0            |       31 |          2 |        |                                 |       |
 | dra    | func_psp_090EC968            |       31 |          2 |        |                                 |       |
 | lib    | func_psp_09250FD8            |       31 |          2 |        |                                 |       |
-| st0    | UnkPolyFunc2                 |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | dra    | func_psp_0913E4F8            |       31 |          3 |        |                                 |       |
 | lib    | func_psp_0924F608            |       31 |          3 |        |                                 |       |
 | st0    | func_801B11E8                |       31 |          3 |        |                                 |       |
@@ -217,7 +216,7 @@
 | dra    | func_psp_09114500            |       43 |          6 |        |                                 |       |
 | dra    | func_psp_09117538            |       43 |          8 |        |                                 |       |
 | dra    | func_psp_0910A9D0            |       43 |         11 |        |                                 |       |
-| dra    | func_psp_09142E48            |       44 |          3 |        |                                 |       |
+| dra    | func_psp_09142E48            |       44 |          3 |        | https://decomp.me/scratch/H7rD7 | 0.992 |
 | dra    | func_80134C60                |       45 |          1 |        |                                 |       |
 | dra    | func_psp_09117A90            |       45 |          6 |        | https://decomp.me/scratch/nRChY | 0.713 |
 | lib    | func_psp_0925A798            |       45 |          6 |        |                                 |       |
@@ -309,7 +308,6 @@
 | dra    | func_psp_090F2A40            |       63 |          3 |        |                                 |       |
 | dra    | func_psp_0911FBD0            |       63 |          7 |        |                                 |       |
 | lib    | func_psp_09251098            |       63 |          7 |        |                                 |       |
-| st0    | PrimDecreaseBrightness       |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | dra    | AllocPrimitives              |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
 | dra    | func_800EDB58                |       63 |          8 |        | https://decomp.me/scratch/UDSDO | 0.612 |
 | dra    | func_psp_090F17D8            |       64 |          5 |        |                                 |       |
@@ -335,7 +333,6 @@
 | dra    | func_psp_0910EFE0            |       70 |         11 |        |                                 |       |
 | dra    | InitSoundVars3               |       71 |          1 |        | https://decomp.me/scratch/wDtJk | 0.951 |
 | lib    | func_psp_09250ED0            |       71 |          1 |        |                                 |       |
-| st0    | PrimResetNext                |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
 | dra    | func_psp_090E8A30            |       71 |          5 |        |                                 |       |
 | dra    | func_psp_090F0220            |       71 |          7 |        |                                 |       |
 | dra    | func_psp_09142ED8            |       71 |          7 |        |                                 |       |
@@ -623,7 +620,6 @@
 | lib    | func_psp_0924FF90            |      332 |         41 |        |                                 |       |
 | lib    | func_psp_09257BF8            |      334 |         15 |        |                                 |       |
 | lib    | func_psp_09250560            |      338 |         36 |        |                                 |       |
-| st0    | func_pspeu_09251410          |      338 |         36 |        | https://decomp.me/scratch/uCQhx | 0.999 |
 | dra    | func_psp_09135098            |      342 |         25 |        | https://decomp.me/scratch/W0WED | 0.934 |
 | lib    | func_psp_09241180            |      348 |         34 |        |                                 |       |
 | dra    | func_psp_0913B0F8            |      352 |         34 | Yes    |                                 |       |
