@@ -13,7 +13,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/39750", PerformTetraSpirit);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39750", PerformSwordBrothers);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_psp_091163A8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_8010FD88);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39750", func_psp_09116428);
 
