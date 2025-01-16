@@ -141,7 +141,7 @@
 | dra    | func_psp_090EB850            |       32 |          3 |        |                                 |       |
 | dra    | func_psp_090F01C0            |       32 |          4 |        |                                 |       |
 | dra    | func_psp_091149C8            |       33 |          4 |        |                                 |       |
-| dra    | func_psp_09113D78            |       33 |          5 |        |                                 |       |
+| dra    | func_psp_09113D78            |       33 |          5 |        | https://decomp.me/scratch/tF4Fa | 0.992 |
 | dra    | func_8010FD24                |       33 |          5 |        |                                 |       |
 | dra    | func_psp_090F21F8            |       33 |          6 |        |                                 |       |
 | dra    | func_8010FBF4                |       33 |          6 |        |                                 |       |
