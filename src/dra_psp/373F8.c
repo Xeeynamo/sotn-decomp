@@ -13,7 +13,18 @@ void func_8010E42C(u32 substep) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09113DE0);
+u8 D_800ACF4C[] = {0x00, 0x11, 
+                   0x04, 0x15, 
+                   0x01, 0x10, 
+                   0x03, 0x23};
+
+void func_8010E470(s32 arg0, s32 arg1) {
+    PLAYER.velocityX = arg1;
+    PLAYER.velocityY = 0;
+    PLAYER.step = Player_Crouch;
+    PLAYER.step_s = (s16)D_800ACF4C[arg0 * 2 + 0];
+    SetPlayerAnim(D_800ACF4C[arg0 * 2 + 1]);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09113E70);
 
