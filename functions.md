@@ -33,7 +33,7 @@
 | dra    | func_psp_090F0308            |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C58            |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F6408            |       15 |          1 |        |                                 |       |
-| dra    | func_psp_09116428            |       15 |          1 |        |                                 |       |
+| dra    | SetPlayerStep                |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1EA0            |       15 |          2 |        |                                 |       |
 | dra    | func_psp_09141550            |       15 |          2 |        |                                 |       |
 | dra    | func_psp_091415E0            |       15 |          2 |        |                                 |       |
@@ -135,15 +135,14 @@
 | dra    | func_psp_090EBEF8            |       31 |          6 |        |                                 |       |
 | dra    | IsAlucart                    |       31 |          7 |        |                                 |       |
 | dra    | func_psp_09104810            |       32 |          3 |        |                                 |       |
-| dra    | func_psp_091143D0            |       32 |          3 |        |                                 |       |
+| dra    | func_8010E940                |       32 |          3 |        |                                 |       |
 | dra    | func_psp_09141608            |       32 |          3 |        |                                 |       |
 | dra    | func_psp_090EB850            |       32 |          3 |        |                                 |       |
 | dra    | func_psp_090F01C0            |       32 |          4 |        |                                 |       |
 | dra    | func_psp_091149C8            |       33 |          4 |        |                                 |       |
-| dra    | func_psp_09113D78            |       33 |          5 |        | https://decomp.me/scratch/tF4Fa | 0.992 |
-| dra    | func_8010FD24                |       33 |          5 |        |                                 |       |
+| dra    | PerformSwordBrothers         |       33 |          5 |        |                                 |       |
 | dra    | func_psp_090F21F8            |       33 |          6 |        |                                 |       |
-| dra    | func_8010FBF4                |       33 |          6 |        |                                 |       |
+| dra    | PerformSoulSteal             |       33 |          6 |        |                                 |       |
 | lib    | func_psp_0924EDD8            |       34 |          2 |        |                                 |       |
 | dra    | func_psp_090F1B60            |       34 |          4 |        |                                 |       |
 | dra    | DecompressWriteNibble        |       35 |          2 |        |                                 |       |
@@ -155,7 +154,7 @@
 | dra    | func_psp_090E8E58            |       35 |          4 |        |                                 |       |
 | st0    | func_pspeu_09246B10          |       35 |          4 |        |                                 |       |
 | dra    | func_psp_09108CD0            |       35 |          5 |        |                                 |       |
-| dra    | func_8010FC50                |       35 |          6 |        |                                 |       |
+| dra    | PerformSummonSpirit          |       35 |          6 |        |                                 |       |
 | dra    | func_psp_09140CF0            |       35 |          7 |        |                                 |       |
 | dra    | func_psp_0910F128            |       36 |          2 |        |                                 |       |
 | dra    | LoadRoomLayer                |       36 |          4 |        |                                 |       |
@@ -171,10 +170,10 @@
 | dra    | func_psp_0913DAA8            |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EAFA8            |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090ED958            |       37 |          4 |        |                                 |       |
-| dra    | func_psp_091163A8            |       37 |          5 |        |                                 |       |
+| dra    | func_8010FD88                |       37 |          5 |        |                                 |       |
 | dra    | func_psp_0913E658            |       37 |          5 |        |                                 |       |
 | dra    | func_psp_09141570            |       37 |          5 |        |                                 |       |
-| dra    | func_8010FCB8                |       37 |          6 |        |                                 |       |
+| dra    | PerformTetraSpirit           |       37 |          6 |        |                                 |       |
 | lib    | func_psp_0924F548            |       37 |          6 |        |                                 |       |
 | dra    | func_psp_0913E7B8            |       38 |          3 |        |                                 |       |
 | lib    | func_psp_09237EE0            |       38 |          4 |        |                                 |       |
@@ -239,7 +238,7 @@
 | lib    | func_psp_0924F750            |       49 |          5 |        |                                 |       |
 | dra    | func_psp_090F1968            |       49 |          8 |        |                                 |       |
 | dra    | func_psp_09111A58            |       49 |          8 |        |                                 |       |
-| dra    | func_8010FB68                |       49 |         10 |        |                                 |       |
+| dra    | PerformDarkMetamorphosis     |       49 |         10 |        |                                 |       |
 | dra    | func_psp_0910BC78            |       50 |          3 |        |                                 |       |
 | dra    | func_800EA538                |       50 |          5 |        |                                 |       |
 | dra    | func_psp_09114208            |       50 |          6 |        |                                 |       |
@@ -377,7 +376,7 @@
 | dra    | func_80134D14                |       83 |          4 |        |                                 |       |
 | lib    | func_psp_0924CE08            |       83 |          7 |        |                                 |       |
 | dra    | func_psp_090E8760            |       83 |         11 |        |                                 |       |
-| dra    | func_psp_091142B0            |       83 |         14 |        |                                 |       |
+| dra    | func_8010E83C                |       83 |         14 |        |                                 |       |
 | dra    | func_psp_09136BF8            |       83 |         14 |        |                                 |       |
 | dra    | func_psp_09127348            |       84 |          4 |        |                                 |       |
 | lib    | func_psp_09247EE8            |       84 |          5 |        |                                 |       |
@@ -464,7 +463,7 @@
 | dra    | func_80118894                |      114 |         16 |        |                                 |       |
 | dra    | func_psp_090E8CA8            |      115 |          6 |        |                                 |       |
 | dra    | func_psp_091374D0            |      115 |         27 |        |                                 |       |
-| dra    | func_psp_09113F40            |      116 |         18 |        |                                 |       |
+| dra    | func_8010E570                |      116 |         18 |        |                                 |       |
 | dra    | func_psp_09144A40            |      117 |         10 |        |                                 |       |
 | dra    | PlaySfx                      |      117 |         18 |        | https://decomp.me/scratch/qLAhD | 0.992 |
 | dra    | func_psp_09126A60            |      118 |         10 |        |                                 |       |
