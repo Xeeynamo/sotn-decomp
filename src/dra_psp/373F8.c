@@ -5,7 +5,6 @@
 void func_8010E42C(u32 substep) {
     PLAYER.step = Player_Teleport;
     PLAYER.step_s = substep;
-    
 
     if (substep & 1) {
         SetPlayerAnim(0xF5);
