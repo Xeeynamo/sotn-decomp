@@ -255,7 +255,141 @@ void func_us_801BFB40(Entity* self) {
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801C01F0);
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801C05DC);
+extern u16 D_us_80180A10[];
+extern s16 D_us_80181988[];
+extern u8 D_us_80181998[];
+extern u32 D_psp_0929A6E8;
+extern u32 D_psp_0929A6F0;
+extern u32 D_psp_0929A6F8;
+
+void func_us_801C05DC(Entity* self) {
+    Entity* tempEntity;
+    s32 tilePos;
+    s32 i;
+    u8 animRet;
+
+    u8 max = 0;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A10);
+        if (g_CastleFlags[CASTLE_FLAG_17]) {
+            max = 4;
+            self->animCurFrame = 0;
+            self->step = 3;
+        }
+        break;
+
+    case 1:
+        if (g_CastleFlags[CASTLE_FLAG_17]) {
+            self->zPriority -= 8;
+            self->step++;
+            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromEntity(D_psp_0929A6F0, self, tempEntity);
+#else
+                CreateEntityFromEntity(E_ID_30, self, tempEntity);
+#endif
+            }
+            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromEntity(D_psp_0929A6F0, self, tempEntity);
+#else
+                CreateEntityFromEntity(E_ID_30, self, tempEntity);
+#endif
+                tempEntity->posY.i.hi -= 0x40;
+            }
+        }
+        break;
+
+    case 2:
+        animRet = AnimateEntity(D_us_80181998, self);
+        if (!animRet) {
+            self->animCurFrame = 0;
+            max = 4;
+            self->step++;
+            break;
+        }
+        max = self->animFrameIdx - 2;
+        if (max > 0x80) {
+            max = 0;
+        }
+        if (self->animFrameDuration == 0 && self->animFrameIdx > 1) {
+            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromEntity(D_psp_0929A6F0, self, tempEntity);
+#else
+                CreateEntityFromEntity(E_ID_30, self, tempEntity);
+#endif
+                tempEntity->posY.i.hi -= 0x30 - (max * 16);
+            }
+            tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+            if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromEntity(D_psp_0929A6E8, self, tempEntity);
+#else
+                CreateEntityFromEntity(E_ID_31, self, tempEntity);
+#endif
+                tempEntity->posX.i.hi += 7;
+                tempEntity->posY.i.hi -= 0x38 - (max * 16);
+            }
+        }
+        switch (self->step_s) {
+        case 0:
+            self->step_s++;
+            break;
+
+        case 1:
+            if (g_Timer % 8 == 0) {
+                tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                    CreateEntityFromEntity(D_psp_0929A6F8, self, tempEntity);
+#else
+                    CreateEntityFromEntity(E_ID_2F, self, tempEntity);
+#endif
+                    tempEntity->posY.i.hi -= 0x3D;
+                    tempEntity->posX.i.hi -= (Random() & 3) * 8 - 4;
+                }
+            }
+            if (g_Timer % 24 == 0) {
+                tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, tempEntity);
+                    tempEntity->posX.i.hi -= 4;
+                    tempEntity->params = 0x10;
+                }
+            }
+            if (g_Timer % 32 == 0) {
+                tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    tempEntity->params = 0x11;
+                }
+            }
+            break;
+        }
+        break;
+
+    case 3:
+        if (g_CastleFlags[CASTLE_FLAG_17]) {
+            max = 4;
+        } else {
+            max = 0;
+        }
+        break;
+    }
+
+    for (tilePos = 0x6F, i = 0; i < 4; tilePos += 16, i++) {
+        g_Tilemap.fg[tilePos] = D_us_80181988[i];
+    }
+    for (tilePos = 0x6F, i = 0; i < max; tilePos += 16, i++) {
+        g_Tilemap.fg[tilePos] = D_us_80181988[i + 4];
+    }
+}
 
 // bone throwing skeleton
 INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801C0A40);
