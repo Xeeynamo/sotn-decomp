@@ -255,7 +255,7 @@ bool CheckDarkMetamorphosisInput(void) {
             !(g_Player.unk46 & 0x8000) &&
             ((PLAYER.step == Player_Walk) || (PLAYER.step == Player_Stand)) &&
             (CastSpell(SPELL_DARK_METAMORPHOSIS) != 0)) {
-            func_8010FB68();
+            PerformDarkMetamorphosis();
             g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
             LearnSpell(SPELL_DARK_METAMORPHOSIS);
             return 1;
@@ -330,7 +330,7 @@ bool CheckSummonSpiritInput(void) {
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
             !(g_Player.unk46 & 0x8000) && (PLAYER.step == Player_Crouch) &&
             (CastSpell(SPELL_SUMMON_SPIRIT) != 0)) {
-            func_8010FC50();
+            PerformSummonSpirit();
             g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
             LearnSpell(SPELL_SUMMON_SPIRIT);
             return 1;
@@ -525,7 +525,7 @@ bool CheckTetraSpiritInput(void) {
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
             !(g_Player.unk46 & 0x8000) && (PLAYER.step == Player_Crouch) &&
             (CastSpell(SPELL_TETRA_SPIRIT) != 0)) {
-            func_8010FCB8();
+            PerformTetraSpirit();
             g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect = 0;
             LearnSpell(SPELL_TETRA_SPIRIT);
             return 1;
@@ -645,7 +645,7 @@ bool CheckSoulStealInput(void) {
             !(g_Player.unk46 & 0x8000) &&
             ((PLAYER.step == Player_Walk) || (PLAYER.step == Player_Stand)) &&
             (CastSpell(SPELL_SOUL_STEAL) != 0)) {
-            func_8010FBF4();
+            PerformSoulSteal();
             g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect = 0;
             LearnSpell(SPELL_SOUL_STEAL);
             return 1;
@@ -759,7 +759,7 @@ bool CheckSwordBrothersInput(void) {
             !(g_Player.unk46 & 0x8000)) {
             if (PLAYER.step == Player_Crouch) {
                 if (CastSpell(SPELL_SWORD_BROTHERS) != 0) {
-                    func_8010FD24();
+                    PerformSwordBrothers();
                     g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect =
                         COMBO_COMPLETE;
                     g_ButtonCombo[COMBO_SWORD_BROTHERS].timer = 20;

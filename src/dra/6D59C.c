@@ -1290,7 +1290,7 @@ void PerformHellfire(void) {
     func_8010E3E0();
 }
 
-void func_8010FB68(void) { // Related to Dark Metamorphosis
+void PerformDarkMetamorphosis(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellDarkMetamorphosis);
@@ -1305,7 +1305,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     func_80118C28(0xB);
 }
 
-void func_8010FBF4(void) { // Related to Soul Steal spell
+void PerformSoulSteal(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSoulSteal);
@@ -1316,7 +1316,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     g_Player.timers[12] = 4;
 }
 
-void func_8010FC50(void) {
+void PerformSummonSpirit(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
@@ -1327,7 +1327,7 @@ void func_8010FC50(void) {
     g_Player.timers[12] = 4;
 }
 
-void func_8010FCB8(void) {
+void PerformTetraSpirit(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellTetraSpirit);
@@ -1338,7 +1338,7 @@ void func_8010FCB8(void) {
     g_Player.timers[12] = 4;
 }
 
-void func_8010FD24(void) {
+void PerformSwordBrothers(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSwordBrothers);
