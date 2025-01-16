@@ -30,10 +30,10 @@ void func_8010E470(s32 arg0, s32 arg1) {
 void func_8010E4D0(void) {
     func_80111CC0();
 
-    PLAYER.palette = 0x8100;
+    PLAYER.palette = PAL_OVL(0x100);
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 
-    if ((u32)(g_Player.unk72 - 1) < 2U) {
+    if (g_Player.unk72 == 1 || g_Player.unk72 == 2) {
         SetPlayerAnim(0xC7);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;

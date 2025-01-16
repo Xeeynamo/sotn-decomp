@@ -26,7 +26,25 @@ void func_8010E470(s32 arg0, s32 arg1) {
     SetPlayerAnim(D_800ACF4C[arg0 * 2 + 1]);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09113E70);
+// This may be the function that turns Alucard into stone
+void func_8010E4D0(void) {
+    func_80111CC0();
+
+    PLAYER.palette = PAL_OVL(0x100);
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
+
+    if (g_Player.unk72 == 1 || g_Player.unk72 == 2) {
+        SetPlayerAnim(0xC7);
+        PLAYER.velocityY = 0;
+        PLAYER.velocityX = 0;
+        SetPlayerStep(Player_AlucardStuck);
+        func_80111CC0();
+        PlaySfx(SFX_VO_ALU_WHAT);
+        return;
+    }
+    func_80111CC0();
+    func_8010E470(0, 0);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010E570);
 
