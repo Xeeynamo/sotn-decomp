@@ -100,7 +100,40 @@ void func_8010E570(s32 arg0) {
     SetPlayerAnim(D_800ACF54[anim]);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_091140D8);
+void func_8010E6AC(bool forceAnim13) {
+    bool atLedge;
+
+    atLedge = 0;
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
+
+    SetSpeedX(FIX(1.5));
+    PLAYER.velocityY = 0;
+    SetPlayerStep(Player_Walk);
+
+    if (forceAnim13) {
+        if (PLAYER.ext.player.anim != 13) {
+            SetPlayerAnim(13);
+        }
+    } else {
+        SetPlayerAnim(7);
+        // Factory blueprint 1 has child 2, which is func_8011B5A4
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
+    }
+
+    if (g_Player.unk4C) {
+        PLAYER.ext.player.anim = 9;
+    }
+
+    if ((PLAYER.ext.player.anim == 7) && atLedge) {
+        PLAYER.animFrameIdx = 1;
+    }
+
+    if (g_Player.prev_step == Player_Crouch) {
+        PLAYER.animFrameIdx = 4;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114208);
 
