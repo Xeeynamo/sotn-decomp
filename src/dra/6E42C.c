@@ -2,14 +2,14 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-void func_8010E42C(u16 arg0) {
-    PLAYER.step_s = arg0;
+void func_8010E42C(u32 substep) {
     PLAYER.step = Player_Teleport;
+    PLAYER.step_s = substep;
 
-    if (!(arg0 & 1)) {
-        SetPlayerAnim(0xF4);
-    } else {
+    if (substep & 1) {
         SetPlayerAnim(0xF5);
+    } else {
+        SetPlayerAnim(0xF4);
     }
 }
 

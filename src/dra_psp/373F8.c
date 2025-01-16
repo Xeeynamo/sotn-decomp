@@ -2,8 +2,17 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-// Looks like func_8010E42C, should confirm.
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09113D78);
+void func_8010E42C(u32 substep) {
+    PLAYER.step = Player_Teleport;
+    PLAYER.step_s = substep;
+    
+
+    if (substep & 1) {
+        SetPlayerAnim(0xF5);
+    } else {
+        SetPlayerAnim(0xF4);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09113DE0);
 
