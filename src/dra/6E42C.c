@@ -47,32 +47,35 @@ void func_8010E4D0(void) {
 }
 
 u8 D_800ACF54[] = {
-    0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
+    0x04, 0x05, 
+    0x0A, 0x0B, 
+    0x0E, 0x0F, 
+    0x1D, 0x1E, 
+    0x04, 0x03, 
+    0x00, 0x00,
 };
 
 // Corresponding RIC function is RicLandToTheGround (much simpler)
 void func_8010E570(s32 arg0) {
-    s32 anim;
-    s32 atLedge;
-
-    atLedge = 0;
+    s32 anim = 0;
+    bool atLedge = false;
+    
     if (g_Player.pl_vram_flag & 0x20) {
-        atLedge = 1;
+        atLedge = true;
     }
 
     PLAYER.velocityX = arg0;
     PLAYER.velocityY = 0;
     SetPlayerStep(Player_Stand);
-    if (g_Player.unk48 != 0) {
+    if (g_Player.unk48) {
         PLAYER.step_s = 2;
-        atLedge = 0;
+        atLedge = false;
     }
     switch (g_Player.prev_step) {
-
-    case 9:
+    case Player_UnmorphBat:
         anim = 4;
         break;
-    case 1:
+    case Player_Walk:
         anim = 4;
         if (PLAYER.ext.player.anim == 9) {
             PLAYER.ext.player.anim = D_800ACF54[2 + atLedge];
@@ -82,8 +85,8 @@ void func_8010E570(s32 arg0) {
             anim = 0;
         }
         break;
-    case 3:
-    case 4:
+    case Player_Jump:
+    case Player_Fall:
         anim = 6;
         if (abs(PLAYER.velocityX) > FIX(2.5)) {
             anim = 4;

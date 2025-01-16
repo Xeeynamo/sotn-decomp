@@ -46,7 +46,59 @@ void func_8010E4D0(void) {
     func_8010E470(0, 0);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010E570);
+u8 D_800ACF54[] = {
+    0x04, 0x05, 
+    0x0A, 0x0B, 
+    0x0E, 0x0F, 
+    0x1D, 0x1E, 
+    0x04, 0x03, 
+    0x00, 0x00,
+};
+
+// Corresponding RIC function is RicLandToTheGround (much simpler)
+void func_8010E570(s32 arg0) {
+    s32 anim = 0;
+    bool atLedge = false;
+    
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = true;
+    }
+
+    PLAYER.velocityX = arg0;
+    PLAYER.velocityY = 0;
+    SetPlayerStep(Player_Stand);
+    if (g_Player.unk48) {
+        PLAYER.step_s = 2;
+        atLedge = false;
+    }
+    switch (g_Player.prev_step) {
+    case Player_UnmorphBat:
+        anim = 4;
+        break;
+    case Player_Walk:
+        anim = 4;
+        if (PLAYER.ext.player.anim == 9) {
+            PLAYER.ext.player.anim = D_800ACF54[2 + atLedge];
+            return;
+        }
+        if (PLAYER.ext.player.anim == 7) {
+            anim = 0;
+        }
+        break;
+    case Player_Jump:
+    case Player_Fall:
+        anim = 6;
+        if (abs(PLAYER.velocityX) > FIX(2.5)) {
+            anim = 4;
+        }
+        break;
+    default:
+        anim = 8;
+        break;
+    }
+    anim += atLedge;
+    SetPlayerAnim(D_800ACF54[anim]);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_091140D8);
 
