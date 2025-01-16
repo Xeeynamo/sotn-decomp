@@ -193,7 +193,7 @@
 | dra    | func_psp_090E3170            |       40 |          4 |        | https://decomp.me/scratch/XlTbE | 0.968 |
 | dra    | func_psp_0913D9B0            |       40 |          8 |        |                                 |       |
 | dra    | func_psp_09104958            |       41 |          1 |        |                                 |       |
-| dra    | func_psp_09113DE0            |       41 |          2 |        |                                 |       |
+| dra    | func_psp_09113DE0            |       41 |          2 |        | https://decomp.me/scratch/xvR2q | 0.954 |
 | dra    | func_psp_0913E468            |       41 |          2 |        |                                 |       |
 | dra    | func_800EAEA4                |       41 |          3 |        |                                 |       |
 | dra    | func_psp_091272B8            |       41 |          3 |        |                                 |       |
