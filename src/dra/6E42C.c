@@ -137,21 +137,21 @@ void func_8010E6AC(s32 arg0) {
 void func_8010E7AC(void) {
     SetPlayerStep(Player_Fall);
 
-    if (g_Player.prev_step != 1) {
-        SetPlayerAnim(0x1C);
+    if (g_Player.prev_step != Player_Walk) {
+        SetPlayerAnim(28);
     }
-
-    PLAYER.velocityY = 0x20000;
+    
     PLAYER.velocityX = 0;
-    g_Player.timers[6] = 8;
+    PLAYER.velocityY = FIX(2);
+    g_Player.timers[ALU_T_6] = 8;
 
     if (g_Player.unk04 & 1) {
-        g_Player.timers[5] = 8;
+        g_Player.timers[ALU_T_5] = 8;
     } else {
-        g_Player.timers[5] = 0;
+        g_Player.timers[ALU_T_5] = 0;
     }
 
-    g_Player.unk44 = 0x10;
+    g_Player.unk44 = 16;
 }
 
 void func_8010E83C(s32 arg0) {

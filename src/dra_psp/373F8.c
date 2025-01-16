@@ -135,7 +135,25 @@ void func_8010E6AC(bool forceAnim13) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114208);
+void func_8010E7AC(void) {
+    SetPlayerStep(Player_Fall);
+
+    if (g_Player.prev_step != Player_Walk) {
+        SetPlayerAnim(28);
+    }
+    
+    PLAYER.velocityX = 0;
+    PLAYER.velocityY = FIX(2);
+    g_Player.timers[ALU_T_6] = 8;
+
+    if (g_Player.unk04 & 1) {
+        g_Player.timers[ALU_T_5] = 8;
+    } else {
+        g_Player.timers[ALU_T_5] = 0;
+    }
+
+    g_Player.unk44 = 16;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010E83C);
 

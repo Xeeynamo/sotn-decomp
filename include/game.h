@@ -1770,6 +1770,25 @@ typedef struct {
     /* D_8003C70C */ u32 zPriority;
 } FgLayer32;
 
+enum AluTimers {
+    ALU_T_POISON,
+    ALU_T_CURSE,
+    ALU_T_HITEFFECT,
+    ALU_T_3,
+    ALU_T_4,
+    ALU_T_5,
+    ALU_T_6,
+    ALU_T_7,
+    ALU_T_8,
+    ALU_T_9,
+    ALU_T_10,
+    ALU_T_RUN,
+    ALU_T_12,
+    ALU_T_INVINCIBLE,
+    ALU_T_INVINCIBLE_CONSUMABLES,
+    ALU_T_15,
+};
+
 // A tall player needs to have multiple sensors to detect collision at the
 // center of the body.
 #define NUM_HORIZONTAL_SENSORS 4
@@ -1785,9 +1804,7 @@ typedef struct {
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
-    // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
-    //  13 = invincibility, 14 = invincibility from consumables
-    /* 80072F00 */ s16 timers[16]; // poison timer
+    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
