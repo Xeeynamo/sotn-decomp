@@ -195,7 +195,26 @@ void func_8010E940(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", DoGravityJump);
+void DoGravityJump(void) {
+    if (CheckMoveDirection() != 0) {
+        SetSpeedX(FIX(3));
+    } else {
+        PLAYER.velocityX = 0;
+    }
+
+    if (PLAYER.step == Player_Jump) {
+        g_Player.unk44 |= 1;
+    } else {
+        g_Player.unk44 = 0;
+    }
+    // Factory with blueprint 2, creates child entity 3 which is
+    // EntityGravityBootBeam
+    CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
+    SetPlayerStep(Player_HighJump);
+    PLAYER.velocityY = FIX(-12);
+    SetPlayerAnim(0x21);
+    g_Player.unk4A = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114500);
 
