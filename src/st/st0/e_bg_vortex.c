@@ -72,7 +72,7 @@ void EntityBackgroundVortex(Entity* self) {
                 D_801C1BC8[var_s2].vx = xSize;
                 D_801C1BC8[var_s2].vy = ySize;
                 D_801C1BC8[var_s2].vz = zSize;
-                var_s2 += 1;
+                var_s2++;
             }
             D_801C23C8[j] = brightness;
             angle += 0x80;
@@ -85,12 +85,25 @@ void EntityBackgroundVortex(Entity* self) {
         self->step++;
         break;
     case 2:
+#ifdef VERSION_PSP
+        func_891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0, 0);
+        func_891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0x40, 0);
+        func_891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0x80, 0);
+        func_891CB80(0x180, 0x100, 0x40, 0x40, 0x180, 0xC0, 0);
+#endif
         prim = self->ext.prim;
         while (prim != NULL) {
+#ifdef VERSION_PSP
+            prim->clut = 0x19E;
+            prim->tpage = 6;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x3F;
+#else
             prim->tpage = 0x16;
             prim->clut = 0x19E;
             prim->u0 = prim->u2 = 0x40;
             prim->u1 = prim->u3 = 0x80;
+#endif
             prim->v0 = prim->v1 = 0;
             prim->v2 = prim->v3 = 0x40;
             prim->priority = 0x80;
@@ -100,7 +113,7 @@ void EntityBackgroundVortex(Entity* self) {
         prim = self->ext.prim;
         draw_env = g_CurrentBuffer->draw;
 
-        dr_env = g_api.func_800EDB08(prim);
+        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             DestroyEntity(self);
             return;
@@ -122,7 +135,7 @@ void EntityBackgroundVortex(Entity* self) {
         prim->priority = 2;
         prim->drawMode = DRAW_UNK_1000;
         prim = prim->next;
-        dr_env = g_api.func_800EDB08(prim);
+        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             DestroyEntity(self);
             return;
@@ -190,7 +203,11 @@ void EntityBackgroundVortex(Entity* self) {
         SetRotMatrix(&m);
         transVector.vx = 0;
         transVector.vy = 0;
+#ifdef VERSION_PSP
+        transVector.vz = 0x1E0;
+#else
         transVector.vz = 0xC0;
+#endif
         transVector.vz += self->ext.bgVortex.unkAE;
         TransMatrix(&m, &transVector);
         SetTransMatrix(&m);
@@ -217,14 +234,14 @@ void EntityBackgroundVortex(Entity* self) {
                 vectorIndex2 = var_s2 + ((j + 1) & 0xF);
                 gte_ldv0(&D_801C1BC8[vectorIndex1]);
                 gte_rtps();
-                gte_stsxy(&prim->x0);
+                gte_stsxy((long*)&prim->x0);
                 gte_ldrgb(&scratchColor[i]);
                 gte_dpcs();
                 gte_strgb(&prim->r0);
                 prim->type = PRIM_GT4;
                 gte_ldv0(&D_801C1BC8[vectorIndex2]);
                 gte_rtps();
-                gte_stsxy(&prim->x1);
+                gte_stsxy((long*)&prim->x1);
                 gte_ldrgb(&scratchColor[i]);
                 gte_dpcs();
                 if ((prim->y0 >= 0) || (prim->y1 >= 0)) {
@@ -232,13 +249,13 @@ void EntityBackgroundVortex(Entity* self) {
                     gte_ldv0(&D_801C1BC8[vectorIndex1] + 0x10);
                     gte_rtps();
                     if (prim->y0 <= 0x100 || prim->y1 <= 0x100) {
-                        gte_stsxy(&prim->x2);
+                        gte_stsxy((long*)&prim->x2);
                         gte_ldrgb(&scratchColor[i] + 1);
                         gte_dpcs();
                         gte_strgb(&prim->r2);
                         gte_ldv0(&D_801C1BC8[vectorIndex2] + 0x10);
                         gte_rtps();
-                        gte_stsxy(&prim->x3);
+                        gte_stsxy((long*)&prim->x3);
                         gte_ldrgb(&scratchColor[i] + 1);
                         gte_dpcs();
                         if (prim->x0 <= 0x100 || prim->x1 <= 0x100 ||
@@ -246,7 +263,7 @@ void EntityBackgroundVortex(Entity* self) {
                             gte_strgb(&prim->r3);
                             if (prim->x0 >= 0 || prim->x1 >= 0 ||
                                 prim->x2 >= 0 || prim->x3 >= 0) {
-                                gte_stszotz(&zSize);
+                                gte_stszotz((long*)&zSize);
                                 if (zSize < 0x55) {
                                     prim->priority = 0x58 - zSize;
                                 } else {
