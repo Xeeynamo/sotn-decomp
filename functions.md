@@ -761,7 +761,7 @@
 | lib    | func_psp_092515F8            |     1267 |        134 | Yes    |                                 |       |
 | dra    | func_psp_0910BE88            |     1338 |        206 | Yes    |                                 |       |
 | st0    | EntityDracula                |     1396 |        179 | Yes    |                                 |       |
-| dra    | func_psp_09114A38            |     1516 |        244 |        | https://decomp.me/scratch/1vIIq | 0.99  |
+| dra    | func_psp_09114A38            |     1516 |        244 |        | https://decomp.me/scratch/1vIIq | 0.992 |
 | dra    | RenderEntities               |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives             |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
 | lib    | func_psp_0925F068            |     1588 |        176 | Yes    |                                 |       |
@@ -770,7 +770,7 @@
 | st0    | EntityDraculaFinalForm       |     1733 |        251 | Yes    |                                 |       |
 | dra    | func_psp_091224B0            |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30            |     1745 |        198 |        |                                 |       |
-| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.644 |
+| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.916 |
 | lib    | func_psp_09258B50            |     1920 |        313 |        |                                 |       |
 | dra    | func_psp_090F2D80            |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
