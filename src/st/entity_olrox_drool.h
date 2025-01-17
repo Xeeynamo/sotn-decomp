@@ -40,7 +40,7 @@ void EntityOlroxDrool(Entity* self) {
 
     case 1:
         prim = self->ext.prim;
-        if (CheckColliderOffsets(g_olroxDroolCollOffsets, 0)) {
+        if (CheckColliderOffsets((s16*)g_olroxDroolCollOffsets, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 // When hitting the ground, a sizzling effect is made
