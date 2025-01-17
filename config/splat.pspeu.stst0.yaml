@@ -72,7 +72,7 @@ segments:
       - [0x18710, c, st0/st_common]
       - [0x194C0, c, st0_psp/3D8F0]
       - [0x19D90, c, st0/prim_helpers]
-      - [0x1A4D0, c, st0_psp/e_bg_vortex]
+      - [0x1A4D0, c, st0/e_bg_vortex]
       - [0x1B200, .data, st0/prologue_scroll]
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]

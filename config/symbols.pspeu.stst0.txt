@@ -176,3 +176,5 @@ g_LayoutObjPosHorizontal = 0x0927BAE8;
 g_LayoutObjVertical = 0x0927BAF0;
 g_LayoutObjHorizontal = 0x0927BAF8;
 g_ItemIconSlots = 0x0927BB00;
+D_801C1BC8 = 0x0927D058;
+D_801C23C8 = 0x0927D858;
