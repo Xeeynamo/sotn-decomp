@@ -171,8 +171,38 @@ void EntitySkeletonApe(Entity* self) {
     }
 }
 
-// Skeleton Ape related (barrel spawner?)
-INCLUDE_ASM("st/no1/nonmatchings/e_skeleton_ape", func_us_801D4F18);
+// Skeleton Ape punch attack
+extern EInit D_us_80180B3C;
+extern Point16 D_us_801832FC[];
+extern Point16 D_us_80183310[];
+
+void func_us_801D4F18(Entity* self) {
+    Entity* parent;
+    u16 animCurFrame;
+
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180B3C);
+    }
+
+    parent = self - 1;
+    animCurFrame = parent->animCurFrame - 9;
+    if (animCurFrame >= 6) {
+        animCurFrame = 0;
+    }
+
+    self->hitboxOffX = D_us_801832FC[animCurFrame].x;
+    self->hitboxOffY = D_us_801832FC[animCurFrame].y;
+    self->hitboxWidth = D_us_80183310[animCurFrame].x;
+    self->hitboxHeight = D_us_80183310[animCurFrame].y;
+    self->facingLeft = parent->facingLeft;
+    self->hitboxState = parent->hitboxState & 1;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+
+    if (parent->entityId != E_ID_53) {
+        DestroyEntity(self);
+    }
+}
 
 // Skeleton Ape barrel helper
 void func_us_801D5008(Entity*, Entity*);
