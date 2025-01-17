@@ -771,7 +771,7 @@
 | st0    | EntityDraculaFinalForm       |     1733 |        251 | Yes    |                                 |       |
 | dra    | func_psp_091224B0            |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30            |     1745 |        198 |        |                                 |       |
-| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.264 |
+| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.313 |
 | lib    | func_psp_09258B50            |     1920 |        313 |        |                                 |       |
 | dra    | func_psp_090F2D80            |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
