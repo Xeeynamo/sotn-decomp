@@ -185,11 +185,11 @@ void func_8010E83C(bool clearUnk44bit) {
 }
 
 void func_8010E940(void) {
-    g_Player.unk44 |= 0x21;
-    SetPlayerAnim(0x20);
+    g_Player.unk44 |= (0x20 | 0x01);
+    SetPlayerAnim(32);
     PLAYER.step_s = 0;
-    PLAYER.velocityY = -0x44000;
-    if (g_Player.unk72 != 0) {
+    PLAYER.velocityY = FIX(-4.25);
+    if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
 }

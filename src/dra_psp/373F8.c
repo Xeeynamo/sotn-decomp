@@ -185,7 +185,15 @@ void func_8010E83C(bool clearUnk44bit) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010E940);
+void func_8010E940(void) {
+    g_Player.unk44 |= (0x20 | 0x01);
+    SetPlayerAnim(32);
+    PLAYER.step_s = 0;
+    PLAYER.velocityY = FIX(-4.25);
+    if (g_Player.unk72) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", DoGravityJump);
 
