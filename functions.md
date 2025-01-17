@@ -135,11 +135,11 @@
 | dra    | func_psp_090EBEF8            |       31 |          6 |        |                                 |       |
 | dra    | IsAlucart                    |       31 |          7 |        |                                 |       |
 | dra    | func_psp_09104810            |       32 |          3 |        |                                 |       |
-| dra    | func_8010E940                |       32 |          3 |        |                                 |       |
+| dra    | func_8010E940                |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
 | dra    | func_psp_09141608            |       32 |          3 |        |                                 |       |
 | dra    | func_psp_090EB850            |       32 |          3 |        |                                 |       |
 | dra    | func_psp_090F01C0            |       32 |          4 |        |                                 |       |
-| dra    | func_psp_091149C8            |       33 |          4 |        |                                 |       |
+| dra    | func_psp_091149C8            |       33 |          4 |        | https://decomp.me/scratch/wtaNd | 0.989 |
 | dra    | PerformSwordBrothers         |       33 |          5 |        |                                 |       |
 | dra    | func_psp_090F21F8            |       33 |          6 |        |                                 |       |
 | dra    | PerformSoulSteal             |       33 |          6 |        |                                 |       |
@@ -314,7 +314,7 @@
 | lib    | UpdateRoomPosition           |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra    | func_psp_090ED480            |       66 |          6 |        |                                 |       |
 | lib    | func_psp_0923E498            |       66 |          7 |        |                                 |       |
-| dra    | func_psp_09114590            |       66 |         10 |        |                                 |       |
+| dra    | func_psp_09114590            |       66 |         10 |        | https://decomp.me/scratch/FbBAB | 0.998 |
 | dra    | func_psp_09137668            |       66 |         15 |        |                                 |       |
 | dra    | func_psp_090F2038            |       67 |          6 |        |                                 |       |
 | lib    | func_psp_09239568            |       67 |          6 |        |                                 |       |
@@ -408,7 +408,7 @@
 | lib    | func_psp_09254120            |       95 |          8 |        |                                 |       |
 | lib    | func_psp_09263410            |       95 |          9 |        |                                 |       |
 | dra    | func_psp_091392D8            |       95 |         11 |        |                                 |       |
-| dra    | func_psp_09114880            |       95 |         14 |        |                                 |       |
+| dra    | func_psp_09114880            |       95 |         14 |        | https://decomp.me/scratch/tXeHz | 0.998 |
 | dra    | func_psp_09134F40            |       96 |         11 |        |                                 |       |
 | lib    | func_psp_0924FCB0            |       96 |         11 |        |                                 |       |
 | lib    | func_psp_09237D88            |       96 |         12 |        |                                 |       |
@@ -499,7 +499,7 @@
 | dra    | func_80132A04                |      145 |         15 |        |                                 |       |
 | lib    | func_psp_092420E0            |      146 |         18 |        |                                 |       |
 | dra    | func_psp_0912E198            |      149 |         13 |        |                                 |       |
-| dra    | func_psp_09114668            |      149 |         27 |        |                                 |       |
+| dra    | func_psp_09114668            |      149 |         27 |        | https://decomp.me/scratch/mnHCm | 0.995 |
 | lib    | InitRoomEntities             |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
 | dra    | func_psp_090F0330            |      151 |         12 |        |                                 |       |
 | dra    | func_80118970                |      153 |         25 |        |                                 |       |
@@ -733,7 +733,6 @@
 | st0    | func_801AF774                |      868 |         52 | Yes    |                                 |       |
 | lib    | func_psp_09255068            |      883 |         80 |        |                                 |       |
 | lib    | func_psp_09263810            |      884 |         74 | Yes    |                                 |       |
-| st0    | EntityBackgroundVortex       |      890 |        109 |        | https://decomp.me/scratch/6BCMT | 0.878 |
 | dra    | func_psp_0913A448            |      893 |        109 | Yes    | https://decomp.me/scratch/XL89s | 0.958 |
 | dra    | func_psp_0912D170            |      904 |         88 | Yes    |                                 |       |
 | st0    | func_801ABBBC                |      927 |        100 | Yes    |                                 |       |
@@ -762,7 +761,7 @@
 | lib    | func_psp_092515F8            |     1267 |        134 | Yes    |                                 |       |
 | dra    | func_psp_0910BE88            |     1338 |        206 | Yes    |                                 |       |
 | st0    | EntityDracula                |     1396 |        179 | Yes    |                                 |       |
-| dra    | func_psp_09114A38            |     1516 |        244 |        |                                 |       |
+| dra    | func_psp_09114A38            |     1516 |        244 |        | https://decomp.me/scratch/1vIIq | 0.99  |
 | dra    | RenderEntities               |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives             |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
 | lib    | func_psp_0925F068            |     1588 |        176 | Yes    |                                 |       |
@@ -771,7 +770,7 @@
 | st0    | EntityDraculaFinalForm       |     1733 |        251 | Yes    |                                 |       |
 | dra    | func_psp_091224B0            |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30            |     1745 |        198 |        |                                 |       |
-| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.313 |
+| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.644 |
 | lib    | func_psp_09258B50            |     1920 |        313 |        |                                 |       |
 | dra    | func_psp_090F2D80            |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
