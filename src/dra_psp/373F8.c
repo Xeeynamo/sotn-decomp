@@ -155,7 +155,35 @@ void func_8010E7AC(void) {
     g_Player.unk44 = 16;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010E83C);
+void func_8010E83C(bool clearUnk44bit) {
+    if (g_Player.unk72) {
+        func_8010E7AC();
+        return;
+    } else if (CheckMoveDirection()) {
+        SetPlayerAnim(26);
+        SetSpeedX(FIX(1.5));
+        g_Player.unk44 = 0;
+    } else {
+        SetPlayerAnim(22);
+        PLAYER.velocityX = 0;
+        g_Player.unk44 = 4;
+    }
+
+    PLAYER.velocityY = FIX(-4.875);
+    SetPlayerStep(Player_Jump);
+
+    if (g_Player.prev_step == Player_Walk) {
+        g_Player.unk44 |= 0x10;
+    }
+
+    if (clearUnk44bit) {
+        // clear the bit
+        g_Player.unk44 &= ~1;
+    } else {
+        // set the bit
+        g_Player.unk44 |= 1;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010E940);
 

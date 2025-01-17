@@ -561,7 +561,7 @@ void func_8010E0B8(void);
 s32 func_8010E334(s32 xStart, s32 xEnd);
 void func_8010E470(s32, s32);
 void func_8010E570(s32);
-void func_8010E83C(s32 arg0);
+void func_8010E83C(bool);
 s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
