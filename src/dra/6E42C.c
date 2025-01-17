@@ -220,8 +220,11 @@ s16 g_SfxAttackGrunts[] = {
     SFX_VO_ALU_ATTACK_B,
     SFX_VO_ALU_ATTACK_C,
     SFX_VO_ALU_ATTACK_D,
+    #ifndef VERSION_PSP
     0x0000,
-    0x0000};
+    0x0000
+    #endif
+    };
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;

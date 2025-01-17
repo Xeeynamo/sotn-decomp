@@ -168,7 +168,7 @@ segments:
       - [0x6DE50, data]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra_psp/373F8]
-      - [0xA68E0, data]
+      - [0xA68E8, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]

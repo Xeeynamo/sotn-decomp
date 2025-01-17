@@ -216,7 +216,27 @@ void DoGravityJump(void) {
     g_Player.unk4A = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114500);
+s16 g_SfxAttackGrunts[] = {
+    SFX_VO_ALU_ATTACK_A,
+    SFX_VO_ALU_ATTACK_B,
+    SFX_VO_ALU_ATTACK_C,
+    SFX_VO_ALU_ATTACK_D,
+    #ifndef VERSION_PSP
+    0x0000,
+    0x0000
+    #endif
+    };
+
+void func_8010EA54(s32 arg0) {
+    s16 temp_hi;
+
+    if (arg0 != 0) {
+        temp_hi = rand() % arg0;
+        if (temp_hi < 4) {
+            PlaySfx(g_SfxAttackGrunts[temp_hi]);
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114590);
 
