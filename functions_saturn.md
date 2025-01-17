@@ -172,7 +172,7 @@
 | alucard/f_nonmat/f60AF9D4.s  | func_060AF9D4   |       43 |          2 |                                 |       |
 | stage_02/f_nonmat/f60E9220.s | func_060E9220   |       43 |          2 | https://decomp.me/scratch/1Jnsa | 0.271 |
 | zero/f_nonmat/f60080EC.s     | func_060080EC   |       43 |          2 |                                 |       |
-| t_bat/f_nonmat/f60D11DC.s    | func_060D11DC   |       43 |          3 | https://decomp.me/scratch/z4bWL | 0.832 |
+| t_bat/f_nonmat/f60D11DC.s    | func_060D11DC   |       43 |          3 | https://decomp.me/scratch/krd9b | 0.66  |
 | zero/f_nonmat/f6012428.s     | func_06012428   |       43 |          3 |                                 |       |
 | zero/f_nonmat/f600CBCC.s     | func_0600CBCC   |       43 |          4 |                                 |       |
 | zero/f_nonmat/f600CC14.s     | func_0600CC14   |       43 |          4 |                                 |       |
