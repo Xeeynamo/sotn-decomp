@@ -204,10 +204,20 @@ void func_us_801D4F18(Entity* self) {
     }
 }
 
-// Skeleton Ape barrel helper
-void func_us_801D5008(Entity*, Entity*);
-INCLUDE_ASM("st/no1/nonmatchings/e_skeleton_ape", func_us_801D5008);
+// Skeleton Ape barrel helper, positions barrel sprite when held by the ape
+// self is the barrel and parent is the ape
+// Will likely do a rename pass in the future for the skeleton ape as a whole
+void func_us_801D5008(Entity* self, Entity* parent) {
+    self->posY.i.hi = parent->posY.i.hi - 28;
+    self->posX.i.hi = parent->posX.i.hi;
+    if (self->facingLeft != 0) {
+        self->posX.i.hi -= 10;
+    } else {
+        self->posX.i.hi += 10;
+    }
+}
 
+// Skeleton Ape barrel
 extern u16 D_us_80180B30[];
 extern u8 D_us_80183324[];
 extern s16 D_us_8018332C[];
