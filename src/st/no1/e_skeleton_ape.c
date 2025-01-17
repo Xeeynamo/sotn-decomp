@@ -415,7 +415,7 @@ void func_us_801D544C(Entity* self) {
                 self->velocityY = -velocityY;
                 self->velocityX = self->ext.skeletonApeBarrel.unk80;
             } else {
-                EntityExplosionSpawn(0, 0x655);
+                EntityExplosionSpawn(0, SFX_EXPLODE_B);
             }
         }
 
@@ -430,7 +430,7 @@ void func_us_801D544C(Entity* self) {
         if ((collider.effects & EFFECT_UNK_0002) ||
             (self->ext.skeletonApe.unk7C--,
              self->ext.skeletonApe.unk7C << 0x10 == 0)) {
-            EntityExplosionSpawn(0, 0x655);
+            EntityExplosionSpawn(0, SFX_EXPLODE_B);
         }
         return;
     }
