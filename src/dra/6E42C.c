@@ -272,9 +272,11 @@ static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
 // If it fails, return a number 1 through 4 indicating why.
 static s32 func_8010EB5C(void) {
     SubweaponDef subWpn;
+    s16 chainLimit;
     s16 subWpnId;
+    s16 anim;
+    s16 atLedge2;
     s32 atLedge;
-    u8 anim;
 
     atLedge = 0;
     // If control is not pressed
@@ -294,7 +296,8 @@ static s32 func_8010EB5C(void) {
         return 4;
     }
     // If we already have too many of the subweapon active
-    if (CheckSubwpnChainLimit(subWpnId, subWpn.chainLimit) < 0) {
+    chainLimit = subWpn.chainLimit;
+    if (CheckSubwpnChainLimit(subWpnId, chainLimit) < 0) {
         return 2;
     }
     // Should be if we don't have enough hearts?
@@ -305,13 +308,22 @@ static s32 func_8010EB5C(void) {
     CreateEntFactoryFromEntity(
         g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
     g_Player.timers[10] = 4;
-    if (PLAYER.step_s < 64) {
-        anim = subWpn.anim;
-        if (PLAYER.step == 0) {
-            SetPlayerAnim(anim + atLedge);
-        }
-        func_8010EA54(8);
+    if (PLAYER.step_s >= 64) {
+        return 0;
     }
+    anim = subWpn.anim;
+    switch (PLAYER.step) {
+        case Player_Stand:
+        atLedge2 = atLedge; //stupid duplicate
+        SetPlayerAnim(anim + atLedge2);
+        break;
+        case Player_Crouch:
+        case Player_Walk:
+        case Player_Fall:
+        case Player_Jump:
+        break;
+    }
+    func_8010EA54(8);
     return 0;
 }
 

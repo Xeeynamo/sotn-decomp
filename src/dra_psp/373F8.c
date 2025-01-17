@@ -268,7 +268,65 @@ static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114668);
+// Attempts to use subweapon. Performs checks before activating.
+// If it succeeds, factory is called to spawn the subweapon, and return 0.
+// If it fails, return a number 1 through 4 indicating why.
+static s32 func_8010EB5C(void) {
+    SubweaponDef subWpn;
+    s16 chainLimit;
+    s16 subWpnId;
+    s16 anim;
+    s16 atLedge2;
+    s32 atLedge;
+
+    atLedge = 0;
+    // If control is not pressed
+    if (!(g_Player.padPressed & PAD_UP)) {
+        return 1;
+    }
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, false);
+    // If we don't have a subweapon obtained
+    if (subWpnId == 0) {
+        return 1;
+    }
+    // If it's the stopwatch, but we're already paused
+    if (subWpnId == SUBWPN_STOPWATCH && g_unkGraphicsStruct.pauseEnemies) {
+        return 4;
+    }
+    // If we already have too many of the subweapon active
+    chainLimit = subWpn.chainLimit;
+    if (CheckSubwpnChainLimit(subWpnId, chainLimit) < 0) {
+        return 2;
+    }
+    // Should be if we don't have enough hearts?
+    subWpnId = func_800FE3C4(&subWpn, 0, true);
+    if (subWpnId == 0) {
+        return 3;
+    }
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
+    g_Player.timers[10] = 4;
+    if (PLAYER.step_s >= 64) {
+        return 0;
+    }
+    anim = subWpn.anim;
+    switch (PLAYER.step) {
+        case Player_Stand:
+        atLedge2 = atLedge; //stupid duplicate
+        SetPlayerAnim(anim + atLedge2);
+        break;
+        case Player_Crouch:
+        case Player_Walk:
+        case Player_Fall:
+        case Player_Jump:
+        break;
+    }
+    func_8010EA54(8);
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114880);
 
