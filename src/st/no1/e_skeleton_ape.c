@@ -387,28 +387,28 @@ void func_us_801D544C(Entity* self) {
         self->hitboxState = 0;
         params = self->params;
         posX = D_us_8018334C[params];
-        self->ext.skeletonApeBarrel.unk80 = posX; //assignment makes pointer from integer without a cast
+        self->ext.skeletonApeBarrel.unk80 = posX;
         if (self->facingLeft != 0) {
-            self->ext.skeletonApeBarrel.unk80 = -posX; //assignment makes pointer from integer without a cast
+            self->ext.skeletonApeBarrel.unk80 = -posX;
         }
-        self->ext.skeletonApeBarrel.unk80 = (s32) self->ext.skeletonApeBarrel.unk80 + self->velocityX; //assignment makes pointer from integer without a cast
+        self->ext.skeletonApeBarrel.unk80 = (s32) self->ext.skeletonApeBarrel.unk80 + self->velocityX;
         self->velocityY = D_us_8018335C[params];
         self->animCurFrame = D_us_8018336C[params];
         self->ext.skeletonApe.unk7C = D_us_80183374[params];
         return;
     case 1:
-        self->velocityX = self->ext.skeletonApeBarrel.unk80; //assignment makes integer from pointer without a cast
+        self->velocityX = self->ext.skeletonApeBarrel.unk80;
         velocityY = self->velocityY;
         if (UnkCollisionFunc3(D_us_801833BC[self->params]) & 1) {
             if (velocityY > 0) {
                 velocityY = (s32) (velocityY + ((u32) velocityY >> 0x1F)) >> 1;
-                self->ext.skeletonApeBarrel.unk80 = ((s32) self->ext.skeletonApeBarrel.unk80 / 2); //assignment makes pointer from integer without a cast
+                self->ext.skeletonApeBarrel.unk80 = ((s32) self->ext.skeletonApeBarrel.unk80 / 2);
                 if (velocityY < 0x4000) {
                     velocityY = 0;
                     self->ext.skeletonApeBarrel.unk80 = 0;
                 }
                 self->velocityY = -velocityY;
-                self->velocityX = self->ext.skeletonApeBarrel.unk80; //assignment makes integer from pointer without a cast
+                self->velocityX = self->ext.skeletonApeBarrel.unk80;
             } else {
                 EntityExplosionSpawn(0, 0x655);
             }
