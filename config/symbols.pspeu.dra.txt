@@ -139,6 +139,7 @@ func_8010E83C = 0x091142B0;
 func_8010E940 = 0x091143D0;
 DoGravityJump = 0x09114438;
 func_8010EA54 = 0x09114500;
+CheckSubwpnChainLimit = 0x09114590;
 func_8010FAF4 = 0x09116090;
 PerformHellfire = 0x091160D0;
 PerformDarkMetamorphosis = 0x09116120;

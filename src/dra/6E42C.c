@@ -239,18 +239,18 @@ void func_8010EA54(s32 arg0) {
 
 static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     Entity* entity;
+    s32 i;
     s32 nFound;
     s32 nEmpty;
-    s32 i;
     // Iterate through entities 32-48 (which hold subweapons)
     // Any that match the proposed ID increments the count.
     // If at any point the count reaches the limit, return -1.
     entity = &g_Entities[32];
     for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
-        if (entity->entityId == E_NONE) {
+        if (!entity->entityId) {
             nEmpty++;
         }
-        if (entity->ext.subweapon.subweaponId != 0 &&
+        if (entity->ext.subweapon.subweaponId &&
             entity->ext.subweapon.subweaponId == subwpnId) {
             nFound++;
         }
@@ -260,12 +260,11 @@ static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     }
     // This will indicate that there is an available entity slot
     // to hold the subweapon we're trying to spawn.
-    // At the end, if this is zero, there are none available so return
-    // -1 to indicate there is no room for the proposed subweapon.
-    if (nEmpty == 0) {
-        return -1;
+    if (nEmpty) {
+        return 0;
     }
-    return 0;
+    // if none is empty, return -1 to prevent spawning the subwpn
+    return -1;
 }
 
 // Attempts to use subweapon. Performs checks before activating.
