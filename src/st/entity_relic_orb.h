@@ -238,7 +238,7 @@ void EntityRelicOrb(Entity* self) {
     case 6:
         // This case creates the texture "Obtained RELIC_NAME" and stores it
         // in the VRAM
-#if defined(VERSION_PSP)
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
         msgLen = 0;
         var_s2 = 0;
         temp = false;
@@ -293,8 +293,8 @@ void EntityRelicOrb(Entity* self) {
                     for (i = 0; i < 0x30; i++) {
                         *chPixDst++ = *chPixSrc++;
                     }
-                    LoadTPage(&msgBoxTpage[msgLen * 0x30], 0, 0, vramX, 0x100,
-                              0xC, 0x10);
+                    LoadTPage((u_long*)&msgBoxTpage[msgLen * 0x30], 0, 0, vramX,
+                              0x100, 0xC, 0x10);
                     vramX += 3;
                     msgLen++;
                 }
