@@ -372,9 +372,11 @@ void func_8010ED54(u8 anim) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SwordWarp);
     SetPlayerAnim(anim);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 0x14), 0);
+    // Factory 61 has child 31, EntityPlayerOutline
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
     g_Player.unk48 = 0;
 }
+
 
 bool func_8010EDB8(void) {
     s32 step;

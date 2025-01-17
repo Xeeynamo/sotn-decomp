@@ -142,6 +142,7 @@ func_8010EA54 = 0x09114500;
 CheckSubwpnChainLimit = 0x09114590;
 func_8010EB5C = 0x09114668;
 CheckChainLimit = 0x09114880;
+func_8010ED54 = 0x091149C8;
 func_8010FAF4 = 0x09116090;
 PerformHellfire = 0x091160D0;
 PerformDarkMetamorphosis = 0x09116120;

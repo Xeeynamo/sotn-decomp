@@ -368,7 +368,15 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_091149C8);
+void func_8010ED54(u8 anim) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SwordWarp);
+    SetPlayerAnim(anim);
+    // Factory 61 has child 31, EntityPlayerOutline
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
+    g_Player.unk48 = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_psp_09114A38);
 
