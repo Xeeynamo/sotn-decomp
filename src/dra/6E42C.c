@@ -327,21 +327,25 @@ static s32 func_8010EB5C(void) {
     return 0;
 }
 
+// Checks for deployed weapons that exist and determines if more are allowed.
+// Example: You can only have 3 Buffalo Stars thrown per hand. Returns 0 if
+// allowed to deploy another, -1 if limit is reached.
 s32 CheckChainLimit(s32 itemId, s32 handId) {
     Entity* entity;
     s32 existing_count;
     s32 i;
     s32 chainLimit;
+    Equipment* eDef = &g_EquipDefs[itemId];
 
-    chainLimit = g_EquipDefs[itemId].chainLimit;
+    chainLimit = eDef->chainLimit;
     if (chainLimit & 0x80) {
-        return -(s32)((u16)g_Player.unk46 >> 0xF);
+        if(!(g_Player.unk46 & 0x8000)){
+            return 0;
+        }
+        return -1;
     }
     entity = &g_Entities[16];
     for (i = 16, existing_count = 0; i < 64; i++, entity++) {
-        // Hack to load unkAE as an s16 (struct has s8)
-        // Longer term, figure out what g_Entites[16-64] are
-        // and make dedicated ent extension.
         if (entity->ext.weapon.equipId != itemId) {
             continue;
         }
