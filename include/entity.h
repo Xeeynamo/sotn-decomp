@@ -2413,6 +2413,12 @@ typedef struct {
     /* 0x84 */ u32 unk84;
 } ET_SkeletonApe;
 
+// This is probably not the barrel itself, but it's close enough for now
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x80 */ s32 unk80;
+} ET_SkeletonApeBarrel;
+
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
@@ -2707,6 +2713,7 @@ typedef union { // offset=0x7C
     ET_PlateLord plateLord;
     ET_PlatelordUnknown plateLordUnknown;
     ET_SkeletonApe skeletonApe;
+    ET_SkeletonApeBarrel skeletonApeBarrel;
     ET_801CE2E0 et_801CE2E0;
     ET_ArmorLord armorLord;
     ET_801BA290 et_801BA290;
