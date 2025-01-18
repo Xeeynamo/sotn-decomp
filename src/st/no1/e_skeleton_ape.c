@@ -171,13 +171,53 @@ void EntitySkeletonApe(Entity* self) {
     }
 }
 
-// Skeleton Ape related (barrel spawner?)
-INCLUDE_ASM("st/no1/nonmatchings/e_skeleton_ape", func_us_801D4F18);
+// Skeleton Ape punch attack
+extern EInit D_us_80180B3C;
+extern Point16 D_us_801832FC[];
+extern Point16 D_us_80183310[];
 
-// Skeleton Ape barrel helper
-void func_us_801D5008(Entity*, Entity*);
-INCLUDE_ASM("st/no1/nonmatchings/e_skeleton_ape", func_us_801D5008);
+void func_us_801D4F18(Entity* self) {
+    Entity* parent;
+    u16 animCurFrame;
 
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180B3C);
+    }
+
+    parent = self - 1;
+    animCurFrame = parent->animCurFrame - 9;
+    if (animCurFrame >= 6) {
+        animCurFrame = 0;
+    }
+
+    self->hitboxOffX = D_us_801832FC[animCurFrame].x;
+    self->hitboxOffY = D_us_801832FC[animCurFrame].y;
+    self->hitboxWidth = D_us_80183310[animCurFrame].x;
+    self->hitboxHeight = D_us_80183310[animCurFrame].y;
+    self->facingLeft = parent->facingLeft;
+    self->hitboxState = parent->hitboxState & 1;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+
+    if (parent->entityId != E_ID_53) {
+        DestroyEntity(self);
+    }
+}
+
+// Skeleton Ape barrel helper, positions barrel sprite when held by the ape
+// self is the barrel and parent is the ape
+// Will likely do a rename pass in the future for the skeleton ape as a whole
+void func_us_801D5008(Entity* self, Entity* parent) {
+    self->posY.i.hi = parent->posY.i.hi - 28;
+    self->posX.i.hi = parent->posX.i.hi;
+    if (self->facingLeft != 0) {
+        self->posX.i.hi -= 10;
+    } else {
+        self->posX.i.hi += 10;
+    }
+}
+
+// Skeleton Ape barrel
 extern u16 D_us_80180B30[];
 extern u8 D_us_80183324[];
 extern s16 D_us_8018332C[];
@@ -326,4 +366,69 @@ void EntitySkeletonApeBarrel(Entity* self) {
 }
 
 // Skeleton Ape barrel explosion
-INCLUDE_ASM("st/no1/nonmatchings/e_skeleton_ape", func_us_801D544C);
+extern EInit D_us_80180B30;
+extern s32 D_us_8018334C[];
+extern s32 D_us_8018335C[];
+extern u16 D_us_8018336C[];
+extern u16 D_us_80183374[];
+extern s16* D_us_801833BC[];
+
+void func_us_801D544C(Entity* self) {
+    Collider collider;
+    s16 x, y;
+    s16 params;
+    s32 velocityY;
+    s32 posX;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180B30);
+        self->flags =
+            FLAG_DESTROY_IF_OUT_OF_CAMERA |
+            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_2000;
+        self->hitboxState = 0;
+        params = self->params;
+        posX = D_us_8018334C[params];
+        self->ext.skeletonApeBarrel.unk80 = posX;
+        if (self->facingLeft != 0) {
+            self->ext.skeletonApeBarrel.unk80 = -posX;
+        }
+        self->ext.skeletonApeBarrel.unk80 += self->velocityX;
+        self->velocityY = D_us_8018335C[params];
+        self->animCurFrame = D_us_8018336C[params];
+        self->ext.skeletonApeBarrel.unk7C = D_us_80183374[params];
+        return;
+    case 1:
+        self->velocityX = self->ext.skeletonApeBarrel.unk80;
+        velocityY = self->velocityY;
+        if (UnkCollisionFunc3(D_us_801833BC[self->params]) & 1) {
+            if (velocityY > 0) {
+                velocityY /= 2;
+                self->ext.skeletonApeBarrel.unk80 /= 2;
+                if (velocityY < 0x4000) {
+                    velocityY = 0;
+                    self->ext.skeletonApeBarrel.unk80 = 0;
+                }
+                self->velocityY = -velocityY;
+                self->velocityX = self->ext.skeletonApeBarrel.unk80;
+            } else {
+                EntityExplosionSpawn(0, SFX_EXPLODE_B);
+            }
+        }
+
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        if (self->facingLeft) {
+            x += 0x10;
+        } else {
+            x -= 0x10;
+        }
+        g_api.CheckCollision(x, y, &collider, 0);
+        if ((collider.effects & EFFECT_UNK_0002) ||
+            !--self->ext.skeletonApeBarrel.unk7C) {
+            EntityExplosionSpawn(0, SFX_EXPLODE_B);
+        }
+        return;
+    }
+}
