@@ -405,9 +405,8 @@ void func_us_801D544C(Entity* self) {
         velocityY = self->velocityY;
         if (UnkCollisionFunc3(D_us_801833BC[self->params]) & 1) {
             if (velocityY > 0) {
-                velocityY = (s32)(velocityY + ((u32)velocityY >> 0x1F)) >> 1;
-                self->ext.skeletonApeBarrel.unk80 =
-                    ((s32)self->ext.skeletonApeBarrel.unk80 / 2);
+                velocityY /= 2;
+                self->ext.skeletonApeBarrel.unk80 /= 2;
                 if (velocityY < 0x4000) {
                     velocityY = 0;
                     self->ext.skeletonApeBarrel.unk80 = 0;
@@ -428,8 +427,7 @@ void func_us_801D544C(Entity* self) {
         }
         g_api.CheckCollision(x, y, &collider, 0);
         if ((collider.effects & EFFECT_UNK_0002) ||
-            (self->ext.skeletonApe.unk7C--,
-             self->ext.skeletonApe.unk7C << 0x10 == 0)) {
+            !--self->ext.skeletonApe.unk7C) {
             EntityExplosionSpawn(0, SFX_EXPLODE_B);
         }
         return;
