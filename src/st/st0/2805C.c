@@ -18,33 +18,37 @@ static u8* anims_801A805C[] = {
     D_801806A8, D_801806B4, D_801806BC, D_801806C0, D_801806C4};
 static u8 hitbox_height[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8};
 static u8 explosion_params[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2};
-static u16 palette[] = {0x0100, 0x0100, 0x0212, 0x0212, 0x0212,
-                        0x0212, 0x0212, 0x0212, 0x0212, 0x0212};
-static s16 animset[] = {
+static u16 palette[] = {
+    PAL_DRA(0x100), PAL_DRA(0x100), PAL_DRA(0x212), PAL_DRA(0x212),
+    PAL_DRA(0x212), PAL_DRA(0x212), PAL_DRA(0x212), PAL_DRA(0x212),
+    PAL_DRA(0x212), PAL_DRA(0x212)};
+static u16 animset[] = {
     ANIMSET_OVL(3), ANIMSET_OVL(3), ANIMSET_OVL(4), ANIMSET_OVL(4),
     ANIMSET_OVL(4), ANIMSET_OVL(4), ANIMSET_OVL(4), ANIMSET_OVL(4),
     ANIMSET_OVL(4), ANIMSET_OVL(4)};
-static s16 D_80180738[] = {0x007C, 0x007C, 0x005B, 0x005B, 0x005B,
+static u16 D_80180738[] = {0x007C, 0x007C, 0x005B, 0x005B, 0x005B,
                            0x005B, 0x005B, 0x005B, 0x005B, 0x005B};
-static s8 draw_mode[] = {
-    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30};
-static s16 hitbox_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
-static u16 D_80180770[][5] = {{0, 1, 2, 2, 3}, {0, 1, 2, 3, 0}};
+static u8 draw_mode[] = {
+    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2};
+static u16 hitbox_y[] = {0, 0, 0xFFE8, 0xFFF0, 0, 0, 0, 0, 0, 0, 0, 0};
+static s16 D_80180770[][5] = {{0, 1, 2, 2, 3}, {0, 1, 2, 3, 0}};
 void func_801A805C(Entity* self) {
+    s16* paramsPtr;
     Entity* newEntity;
-    s32 entityCount;
-    u16* paramsPtr;
-    u16 params_;
-    u16* temp;
-    s16 posY;
+    Entity* entityTwo;
     s32 i;
+    s32 entityCount;
+    s16 posY;
     u16 params = self->params >> 0xC;
 
-    if (self->step != 0) {
+    if (self->step) {
         AnimateEntity(anims_801A805C[params], self);
         if (self->hitParams) {
-            params_ = params - 2;
-            if (params_ < 2) {
+            if (params == 2 || params == 3) {
                 self->facingLeft = GetSideToPlayer() & 1;
                 posY = self->posY.i.hi - 40;
 
@@ -54,18 +58,17 @@ void func_801A805C(Entity* self) {
                     entityCount = 3;
                 }
 
+                paramsPtr = D_80180770[0];
                 if (params == 3) {
-                    temp = D_80180770[1];
-                } else {
-                    temp = D_80180770[0];
+                    paramsPtr += 5;
                 }
 
-                for (i = 0, paramsPtr = temp; i < entityCount; i++) {
+                for (i = 0; i < entityCount; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(E_ID_26, self, newEntity);
                         newEntity->posY.i.hi = posY;
-                        newEntity->params = *paramsPtr;
+                        newEntity->params = paramsPtr[i];
                         newEntity->facingLeft = self->facingLeft;
                     }
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -75,23 +78,23 @@ void func_801A805C(Entity* self) {
                         newEntity->params = 0;
                     }
                     posY += 16;
-                    paramsPtr++;
                 }
                 g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_B);
-            } else {
-                if (params == 9) {
-                    newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (newEntity != NULL) {
-                        CreateEntityFromCurrentEntity(E_ID_26, newEntity);
-                        newEntity->params = 0x100;
-                    }
+            } else if (params == 9) {
+                entityTwo = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entityTwo != NULL) {
+                    CreateEntityFromCurrentEntity(E_ID_26, entityTwo);
+                    entityTwo->params = 0x100;
                 }
                 g_api.PlaySfx(SFX_GLASS_BREAK_E);
+            } else {
+                g_api.PlaySfx(SFX_GLASS_BREAK_E);
             }
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
-                newEntity->params = explosion_params[params];
+
+            entityTwo = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entityTwo != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entityTwo);
+                entityTwo->params = explosion_params[params];
             }
             ReplaceBreakableWithItemDrop(self);
         }
@@ -109,12 +112,12 @@ void func_801A805C(Entity* self) {
 
 // Entity ID: 0x26
 void func_801A8328(Entity* self) {
-    s16 firstPrimIndex;
     Entity* newEntity;
-    Collider collider;
     Primitive* prim;
-    s32 velX;
-    s16 temp2;
+    Collider collider;
+    s32 primIndex;
+    s16 posX;
+    s16 posY; // reused for prim->v0-3
 
     switch (self->step) {
     case 0:
@@ -130,57 +133,58 @@ void func_801A8328(Entity* self) {
         }
 
         InitializeEntity(g_EInitParticle);
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        if (firstPrimIndex != -1) {
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->primIndex = firstPrimIndex;
-            self->ext.prim = prim;
-            self->flags |= FLAG_HAS_PRIMS;
-            UnkPolyFunc2(prim);
-            prim->tpage = 0x16;
-            prim->clut = 0x216;
-            prim->u0 = prim->u2 = 0x98;
-            prim->u1 = prim->u3 = 0xA7;
-            temp2 = (self->params * 16) - 124;
-            prim->v2 = prim->v3 = temp2 + 15;
-            prim->v0 = prim->v1 = temp2;
 
-            prim->next->x1 = self->posX.i.hi;
-            prim->next->y0 = self->posY.i.hi;
-            LOH(prim->next->r2) = 0x10;
-            LOH(prim->next->b2) = 0x10;
-            prim->next->b3 = 0x80;
-            prim->priority = self->zPriority;
-            prim->drawMode = DRAW_UNK02;
-            velX = ((Random() & 7) << 0xC) + 0x8000;
-            self->velocityX = velX;
-            if (self->facingLeft == 0) {
-                self->velocityX = -velX;
-            }
-            self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
-        } else {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
             DestroyEntity(self);
-            break;
+            return;
         }
 
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x16;
+        prim->clut = 0x216;
+        prim->u0 = prim->u2 = 0x98;
+        prim->u1 = prim->u3 = 0xA7;
+        posY = 0x84;
+        posY += (self->params * 16);
+        prim->v0 = prim->v1 = posY;
+        prim->v2 = prim->v3 = posY + 15;
+
+        prim->next->x1 = self->posX.i.hi;
+        prim->next->y0 = self->posY.i.hi;
+        LOH(prim->next->r2) = 0x10;
+        LOH(prim->next->b2) = 0x10;
+        prim->next->b3 = 0x80;
+        prim->priority = self->zPriority;
+        prim->drawMode = DRAW_UNK02;
+        self->velocityX = ((Random() & 7) << 0xC) + 0x8000;
+        if (!self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+        self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
+        // fallthrough
     case 1:
         MoveEntity();
-
-        prim = self->ext.prim;
         self->velocityY += FIX(0.125);
+        prim = self->ext.prim;
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
 
-        if (self->facingLeft != 0) {
-            prim->next->tpage += 0x10;
+        if (self->facingLeft) {
+            LOH(prim->next->tpage) += 0x10;
         } else {
-            prim->next->tpage -= 0x10;
+            LOH(prim->next->tpage) -= 0x10;
         }
 
         UnkPrimHelper(prim);
 
-        g_api.CheckCollision(
-            self->posX.i.hi, (s16)(self->posY.i.hi + 8), &collider, 0);
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi + 8;
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(SFX_SMALL_FLAME_IGNITE);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);

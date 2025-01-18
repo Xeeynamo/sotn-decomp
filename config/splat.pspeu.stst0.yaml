@@ -54,7 +54,7 @@ segments:
       - [0xC3E0, c, st0_psp/3AB08]
       - [0xE658, c, st0_psp/3C5C0]
       - [0xF320, c, st0_psp/st_init_st0]
-      - [0xF560, c, st0_psp/2850C]
+      - [0xF560, c, st0/2805C]
       - [0xFD18, c, st0/st_debug]
       - [0xFDF8, c, st0/2A218] # EntityCutscene
       - [0x10678, c, st0/e_lock_camera]
@@ -79,6 +79,8 @@ segments:
       - [0x1B700, data]
       - [0x1C500, .data, st0_psp/cutscene]
       - [0x1C8C8, data]
+      - [0x419E0, .data, st0/2805C]
+      - [0x41B28, data]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
       - [0x41BF0, .data, st0/e_lock_camera]
       - [0x41C08, .data, st0/e_red_door]
