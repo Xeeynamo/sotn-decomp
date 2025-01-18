@@ -582,10 +582,8 @@
 | dra    | func_psp_090EEA88            |      256 |         24 | Yes    |                                 |       |
 | dra    | func_psp_09119D00            |      256 |         34 |        | https://decomp.me/scratch/QRVI1 | 0.995 |
 | dra    | func_psp_090F6430            |      258 |         36 |        |                                 |       |
-| st0    | func_801A8328                |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
 | lib    | func_psp_0925D4D0            |      263 |         19 |        |                                 |       |
 | dra    | func_psp_09118408            |      264 |         28 |        |                                 |       |
-| st0    | func_801A805C                |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
 | lib    | UpdateStageEntities          |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | func_psp_09138240            |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8            |      270 |         27 |        |                                 |       |
@@ -761,7 +759,7 @@
 | lib    | func_psp_092515F8            |     1267 |        134 | Yes    |                                 |       |
 | dra    | func_psp_0910BE88            |     1338 |        206 | Yes    |                                 |       |
 | st0    | EntityDracula                |     1396 |        179 | Yes    |                                 |       |
-| dra    | func_psp_09114A38            |     1516 |        244 |        | https://decomp.me/scratch/1vIIq | 0.992 |
+| dra    | func_psp_09114A38            |     1516 |        244 |        | https://decomp.me/scratch/1vIIq | 0.946 |
 | dra    | RenderEntities               |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives             |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
 | lib    | func_psp_0925F068            |     1588 |        176 | Yes    |                                 |       |
