@@ -582,10 +582,10 @@
 | dra    | func_psp_090EEA88            |      256 |         24 | Yes    |                                 |       |
 | dra    | func_psp_09119D00            |      256 |         34 |        | https://decomp.me/scratch/QRVI1 | 0.995 |
 | dra    | func_psp_090F6430            |      258 |         36 |        |                                 |       |
-| st0    | func_801A8328                |      262 |         27 |        |                                 |       |
+| st0    | func_801A8328                |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
 | lib    | func_psp_0925D4D0            |      263 |         19 |        |                                 |       |
 | dra    | func_psp_09118408            |      264 |         28 |        |                                 |       |
-| st0    | func_801A805C                |      266 |         33 |        |                                 |       |
+| st0    | func_801A805C                |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
 | lib    | UpdateStageEntities          |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | func_psp_09138240            |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8            |      270 |         27 |        |                                 |       |
@@ -689,7 +689,7 @@
 | dra    | func_psp_090FFB28            |      618 |         43 |        | https://decomp.me/scratch/18Dbq | 0.999 |
 | dra    | func_800EB758                |      619 |         30 |        |                                 |       |
 | lib    | func_psp_0923CFC0            |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
-| st0    | func_801BD8F0                |      634 |         59 | Yes    | https://decomp.me/scratch/whJF5 | 0.961 |
+| st0    | func_801BD8F0                |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.962 |
 | dra    | func_psp_090FE948            |      636 |         42 |        |                                 |       |
 | dra    | func_psp_090DCD28            |      639 |        101 |        |                                 |       |
 | lib    | func_psp_092644E0            |      642 |         61 | Yes    |                                 |       |
@@ -770,7 +770,7 @@
 | st0    | EntityDraculaFinalForm       |     1733 |        251 | Yes    |                                 |       |
 | dra    | func_psp_091224B0            |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30            |     1745 |        198 |        |                                 |       |
-| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.916 |
+| lib    | func_psp_09261718            |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.917 |
 | lib    | func_psp_09258B50            |     1920 |        313 |        |                                 |       |
 | dra    | func_psp_090F2D80            |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
