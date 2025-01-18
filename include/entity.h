@@ -2415,10 +2415,8 @@ typedef struct {
 
 // This is probably not the barrel itself, but it's close enough for now
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 : 16;
+    /* 0x7C */ s16 unk7C;
     /* 0x80 */ s32 unk80;
-    /* 0x84 */ u32 unk84;
 } ET_SkeletonApeBarrel;
 
 typedef struct {

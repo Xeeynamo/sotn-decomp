@@ -394,11 +394,10 @@ void func_us_801D544C(Entity* self) {
         if (self->facingLeft != 0) {
             self->ext.skeletonApeBarrel.unk80 = -posX;
         }
-        self->ext.skeletonApeBarrel.unk80 =
-            (s32)self->ext.skeletonApeBarrel.unk80 + self->velocityX;
+        self->ext.skeletonApeBarrel.unk80 += self->velocityX;
         self->velocityY = D_us_8018335C[params];
         self->animCurFrame = D_us_8018336C[params];
-        self->ext.skeletonApe.unk7C = D_us_80183374[params];
+        self->ext.skeletonApeBarrel.unk7C = D_us_80183374[params];
         return;
     case 1:
         self->velocityX = self->ext.skeletonApeBarrel.unk80;
@@ -427,7 +426,7 @@ void func_us_801D544C(Entity* self) {
         }
         g_api.CheckCollision(x, y, &collider, 0);
         if ((collider.effects & EFFECT_UNK_0002) ||
-            !--self->ext.skeletonApe.unk7C) {
+            !--self->ext.skeletonApeBarrel.unk7C) {
             EntityExplosionSpawn(0, SFX_EXPLODE_B);
         }
         return;
