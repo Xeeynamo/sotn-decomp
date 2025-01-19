@@ -845,7 +845,13 @@ void func_8010FAF4(void) {
     g_Player.unk46 = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformHellfire);
+void PerformHellfire(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SpellHellfire);
+    func_8010E168(1, 0x10);
+    func_8010E3E0();
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformDarkMetamorphosis);
 
