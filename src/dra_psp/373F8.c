@@ -868,7 +868,16 @@ void PerformDarkMetamorphosis(void) {
     func_80118C28(0xB);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformSoulSteal);
+void PerformSoulSteal(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SpellSoulSteal);
+    func_8010E3E0();
+    SetPlayerAnim(0xDA);
+    PlaySfx(SFX_VO_ALU_SOUL_STEAL);
+    func_80118C28(0xC);
+    g_Player.timers[12] = 4;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformSummonSpirit);
 
