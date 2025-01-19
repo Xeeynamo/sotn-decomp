@@ -876,7 +876,7 @@ void PerformSoulSteal(void) {
     SetPlayerAnim(0xDA);
     PlaySfx(SFX_VO_ALU_SOUL_STEAL);
     func_80118C28(0xC);
-    g_Player.timers[12] = 4;
+    g_Player.timers[ALU_T_12] = 4;
 }
 
 void PerformSummonSpirit(void) {
@@ -887,13 +887,39 @@ void PerformSummonSpirit(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117,0), 0);
     SetPlayerAnim(0xF0);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
-    g_Player.timers[12] = 4;
+    g_Player.timers[ALU_T_12] = 4;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformTetraSpirit);
+void PerformTetraSpirit(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SpellTetraSpirit);
+    func_8010E3E0();
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
+    SetPlayerAnim(0xF1);
+    PlaySfx(SFX_VO_ALU_ATTACK_D);
+    g_Player.timers[ALU_T_12] = 4;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformSwordBrothers);
+void PerformSwordBrothers(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SpellSwordBrothers);
+    func_8010E3E0();
+    SetPlayerAnim(0xF1);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x17), 0);
+    g_Player.timers[ALU_T_12] = 4;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010FD88);
+void func_8010FD88(void) {
+    PLAYER.step = Player_Stand;
+    PLAYER.step_s = 3;
+    SetSpeedX(FIX(-3.5));
+    g_CurrentEntity->velocityY = 0;
+    SetPlayerAnim(0xDB);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+    g_Player.unk46 = 0;
+    PlaySfx(SFX_SCRAPE_C);
+}
 
 // Next func in PSP is SetPlayerStep; next in US is func_8010FDF8. File split.
