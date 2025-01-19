@@ -162,6 +162,7 @@ explode_startFrame = 0x09279608;
 explode_lifetime = 0x09279610;
 g_eDamageDisplayClut = 0x09279978;
 eRoomForegroundInit = 0x092799B0;
+g_isSecretStairsButtonPressed = 0x09279D98;
 D_80180908 = 0x09279DA0;
 g_Dialogue = 0x0927BA58; // size = 0x44
 g_CutsceneFlags = 0x0927BAA8;

@@ -33,7 +33,7 @@ void EntityWeaponAttack(Entity* self) {
 
     animIndex = (self->params >> 8) & 0x7F;
 
-    if (g_Player.timers[11]) {
+    if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
         animIndex = 2;
     }
 
@@ -100,11 +100,11 @@ void EntityWeaponAttack(Entity* self) {
         SetWeaponProperties(self, 0);
 
         if (animIndex) {
-            if (g_Player.timers[11]) {
+            if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
                 self->attack *= 2;
             }
-            if (g_Player.timers[11] < 0x38) {
-                g_Player.timers[11] = 0x38;
+            if (g_Player.timers[ALU_T_DARKMETAMORPH] < 0x38) {
+                g_Player.timers[ALU_T_DARKMETAMORPH] = 0x38;
                 if (animIndex == 1) {
                     g_api.CreateEntFactoryFromEntity(
                         self, FACTORY(61, 0x11), 0);

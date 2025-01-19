@@ -21,6 +21,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/61030", func_psp_0913E658);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61030", func_psp_0913E6D0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61030", func_psp_0913E7B8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/61030", DestroyEntity);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61030", DestroyEntitiesFromIndex);

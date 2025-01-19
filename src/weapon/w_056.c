@@ -34,7 +34,7 @@ void EntityWeaponAttack(Entity* self) {
 
     animIndex = (self->params >> 8) & 0x7F;
 
-    if (g_Player.timers[11]) {
+    if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
         animIndex = 2;
     }
 

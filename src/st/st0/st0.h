@@ -45,7 +45,6 @@ typedef enum EntityIDs {
     E_DRACULA_UNK2E,
 } EntityIDs;
 
-void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);

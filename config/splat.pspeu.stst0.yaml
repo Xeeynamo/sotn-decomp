@@ -46,7 +46,7 @@ segments:
       - [0x80, c, st0_psp/lang]
       - [0x1E8, c, st0/prologue_scroll]
       - [0x1578, c, st0_psp/cutscene]
-      - [0x3F58, c, st0_psp/2A8DC]
+      - [0x3F58, c, st0/2A8DC]
       - [0x4A30, c, st0/title_card]
       - [0x58B8, c, st0_psp/2C564]
       - [0x8230, c, st0_psp/2DAC8]
@@ -78,7 +78,8 @@ segments:
       - [0x1B538, data, e_init]
       - [0x1B700, data]
       - [0x1C500, .data, st0_psp/cutscene]
-      - [0x1C8C8, data]
+      - [0x1C8C8, .data, st0/2A8DC]
+      - [0x1C930, data]
       - [0x419E0, .data, st0/2805C]
       - [0x41B28, data]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
