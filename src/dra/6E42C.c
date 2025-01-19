@@ -378,7 +378,7 @@ bool func_8010EDB8(void) {
     Entity* ent;
     Equipment* equipped_item;
 
-    s16 var_s2;         // mixed between anim and equip index
+    s16 var_s2; // mixed between anim and equip index
     u16 equipped_id;
     u16 hand;
     s16 animVariant;
@@ -884,7 +884,7 @@ void PerformSummonSpirit(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117,0), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 0), 0);
     SetPlayerAnim(0xF0);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[ALU_T_12] = 4;
