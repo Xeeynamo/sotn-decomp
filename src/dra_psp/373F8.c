@@ -861,7 +861,7 @@ void PerformDarkMetamorphosis(void) {
     SetPlayerAnim(0xBA);
     PlaySfx(SFX_VO_ALU_DARK_META);
     PlaySfx(SFX_UI_MP_FULL);
-    g_Player.timers[11] =
+    g_Player.timers[ALU_T_DARKMETAMORPH] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x11), 0);
@@ -879,7 +879,16 @@ void PerformSoulSteal(void) {
     g_Player.timers[12] = 4;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformSummonSpirit);
+void PerformSummonSpirit(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    SetPlayerStep(Player_SpellSummonSpirit);
+    func_8010E3E0();
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117,0), 0);
+    SetPlayerAnim(0xF0);
+    PlaySfx(SFX_VO_ALU_ATTACK_D);
+    g_Player.timers[12] = 4;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformTetraSpirit);
 
