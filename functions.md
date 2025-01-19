@@ -373,7 +373,6 @@
 | st0    | EntityCutscenePhotographFire |       87 |         10 |        |                                 |       |
 | dra    | func_psp_090EC248            |       88 |          3 |        |                                 |       |
 | st0    | EntityDraculaBody            |       88 |         10 |        |                                 |       |
-| st0    | EntitySecretStairsCeiling    |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra    | TimeAttackController         |       89 |          8 |        |                                 |       |
 | dra    | func_psp_090FF608            |       89 |         10 |        |                                 |       |
 | dra    | func_psp_0910E378            |       89 |         11 |        |                                 |       |
@@ -547,7 +546,6 @@
 | dra    | func_psp_09108988            |      235 |         31 |        |                                 |       |
 | lib    | func_psp_09253498            |      236 |         29 |        |                                 |       |
 | dra    | DrawEntitiesHitbox           |      240 |         15 |        |                                 |       |
-| st0    | EntitySecretButton           |      240 |         36 |        | https://decomp.me/scratch/qQwps | 0.995 |
 | dra    | func_psp_0912CC20            |      242 |         22 |        |                                 |       |
 | dra    | DemoUpdate                   |      242 |         31 |        |                                 |       |
 | lib    | func_psp_0925AFE8            |      243 |         18 |        |                                 |       |
@@ -621,7 +619,6 @@
 | lib    | func_psp_09243960            |      409 |         53 |        |                                 |       |
 | lib    | func_psp_09252858            |      412 |         44 |        |                                 |       |
 | lib    | EntityEnemyBlood             |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
-| st0    | EntitySecretStairs           |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | lib    | func_psp_092564B8            |      425 |         35 | Yes    |                                 |       |
 | dra    | func_psp_09138778            |      434 |         82 |        |                                 |       |
 | dra    | func_psp_09121970            |      443 |         38 |        | https://decomp.me/scratch/0wPjt | 0.995 |
@@ -637,7 +634,7 @@
 | dra    | func_psp_0910D1F0            |      482 |         75 |        |                                 |       |
 | dra    | func_psp_090F06D8            |      493 |         37 |        |                                 |       |
 | dra    | func_psp_0911FCA0            |      495 |         59 |        |                                 |       |
-| dra    | func_psp_09117C00            |      499 |        105 |        |                                 |       |
+| dra    | func_psp_09117C00            |      499 |        105 |        | https://decomp.me/scratch/5ClMV | 0.906 |
 | lib    | EntityMessageBox             |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | dra    | func_psp_090EDE28            |      517 |         73 |        |                                 |       |
 | dra    | func_psp_0911C2F8            |      519 |         37 |        |                                 |       |
