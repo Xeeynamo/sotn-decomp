@@ -2523,6 +2523,11 @@ typedef struct {
     /* 0x80 */ s16 unk80;
 } ET_801B9BE4;
 
+typedef struct {
+    // may be a timer, perhaps related to falling asleep
+    s16 unk0;
+} ET_Chair;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2735,6 +2740,7 @@ typedef union { // offset=0x7C
     ET_801BDA0C et_801BDA0C;
     ET_801BE2C8 et_801BE2C8;
     ET_801B9BE4 et_801B9BE4;
+    ET_Chair chair;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
