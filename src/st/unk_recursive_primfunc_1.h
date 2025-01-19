@@ -27,9 +27,9 @@ Primitive* UnkRecursivePrimFunc1(
     if (arg6 == NULL) {
         return NULL;
     }
-    prim2 = arg7;
+    prim2 = (Primitive*)arg7;
     arg7 += 0x34;
-    vectors = arg7;
+    vectors = (SVECTOR*)arg7;
     arg7 += 0x48;
 
     vectors[0] = *arg0;
@@ -37,7 +37,7 @@ Primitive* UnkRecursivePrimFunc1(
     vectors[6] = *arg2;
     vectors[8] = *arg3;
 
-    uv_values = arg7;
+    uv_values = (uvPair*)arg7;
     arg7 += 0x14; // This is effectively arg7 = arg7->next, since this covers
                   // the full size of arg7.
 
@@ -74,7 +74,7 @@ Primitive* UnkRecursivePrimFunc1(
     uv_values[4].v = (uv_values[3].v + uv_values[5].v + 1) >> 1;
 
     *prim1 = *arg4;
-    vecIndices = &g_UnkRecursPrimVecOrder;
+    vecIndices = (s16*)&g_UnkRecursPrimVecOrder;
     for (i = 0; i < 4; i++) {
         vecIdx1 = *vecIndices++;
         vecIdx2 = *vecIndices++;
@@ -82,8 +82,9 @@ Primitive* UnkRecursivePrimFunc1(
         vecIdx4 = *vecIndices++;
         rotTransResult = RotTransPers4(
             &vectors[vecIdx1], &vectors[vecIdx2], &vectors[vecIdx3],
-            &vectors[vecIdx4], &prim2->x0, &prim2->x1, &prim2->x2, &prim2->x3,
-            &unused1, &unused2);
+            &vectors[vecIdx4], (long*)&prim2->x0, (long*)&prim2->x1,
+            (long*)&prim2->x2, (long*)&prim2->x3, (long*)&unused1,
+            (long*)&unused2);
         *(uvPair*)&prim2->u0 = uv_values[vecIdx1];
         *(uvPair*)&prim2->u1 = uv_values[vecIdx2];
         *(uvPair*)&prim2->u2 = uv_values[vecIdx3];

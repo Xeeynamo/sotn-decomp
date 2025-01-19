@@ -2048,7 +2048,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ u16 unk80;
+    /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 : 32;
     /* 0x84 */ s32 : 32;
@@ -2393,14 +2393,17 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ s32 : 32;
-    /* 0x84 */ u8 : 8;
-    /* 0x85 */ u8 : 8;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ s16 unk8C;
     /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ u8 unk94;
 } ET_801BBD90;
 
 typedef struct {
@@ -2409,6 +2412,12 @@ typedef struct {
     /* 0x80 */ struct Entity* unkEntity;
     /* 0x84 */ u32 unk84;
 } ET_SkeletonApe;
+
+// This is probably not the barrel itself, but it's close enough for now
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x80 */ s32 unk80;
+} ET_SkeletonApeBarrel;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -2704,6 +2713,7 @@ typedef union { // offset=0x7C
     ET_PlateLord plateLord;
     ET_PlatelordUnknown plateLordUnknown;
     ET_SkeletonApe skeletonApe;
+    ET_SkeletonApeBarrel skeletonApeBarrel;
     ET_801CE2E0 et_801CE2E0;
     ET_ArmorLord armorLord;
     ET_801BA290 et_801BA290;
