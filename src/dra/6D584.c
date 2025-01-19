@@ -2,17 +2,13 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+void SetPlayerStep(PlayerSteps step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
+
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
-
-// BSS
-extern s16 g_WasFacingLeft;
-extern s16 g_WasFacingLeft2;
-extern s32 g_WasFacingLeft3;
-extern s32 g_WasFacingLeft4;
-extern s16 g_WasFacingLeft5;
-extern s32 g_WasFacingLeft6;
-extern s32 g_WasFacingLeft7;
 
 // Same function in RIC is func_8015C4AC
 void func_8010D59C(void) {

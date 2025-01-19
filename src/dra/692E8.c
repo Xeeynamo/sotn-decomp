@@ -1940,8 +1940,3 @@ static void CheckWallLeft(void) {
         }
     }
 }
-
-void SetPlayerStep(PlayerSteps step) {
-    PLAYER.step = step;
-    PLAYER.step_s = 0;
-}
