@@ -92,7 +92,7 @@ void func_8010E570(s32 arg0) {
     SetPlayerAnim(D_800ACF54[anim]);
 }
 
-void func_8010E6AC(s32 arg0) {
+void func_8010E6AC(bool forceAnim13) {
     bool atLedge;
 
     atLedge = 0;
@@ -100,20 +100,21 @@ void func_8010E6AC(s32 arg0) {
         atLedge = 1;
     }
 
-    SetSpeedX(0x18000);
+    SetSpeedX(FIX(1.5));
     PLAYER.velocityY = 0;
     SetPlayerStep(Player_Walk);
 
-    if (arg0 != 0) {
-        if (PLAYER.ext.player.anim != 0xD) {
-            SetPlayerAnim(0xD);
+    if (forceAnim13) {
+        if (PLAYER.ext.player.anim != 13) {
+            SetPlayerAnim(13);
         }
     } else {
         SetPlayerAnim(7);
+        // Factory blueprint 1 has child 2, which is func_8011B5A4
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
 
-    if (g_Player.unk4C != 0) {
+    if (g_Player.unk4C) {
         PLAYER.ext.player.anim = 9;
     }
 
@@ -121,7 +122,7 @@ void func_8010E6AC(s32 arg0) {
         PLAYER.animFrameIdx = 1;
     }
 
-    if (g_Player.prev_step == 2) {
+    if (g_Player.prev_step == Player_Crouch) {
         PLAYER.animFrameIdx = 4;
     }
 }
