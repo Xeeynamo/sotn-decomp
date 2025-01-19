@@ -38,6 +38,9 @@ void Update(void);
 void HitDetection(void);
 
 s32 Random();
+#ifdef VERSION_PC
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
+#endif
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);
