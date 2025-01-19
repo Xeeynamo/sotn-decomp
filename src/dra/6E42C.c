@@ -884,7 +884,7 @@ void PerformSummonSpirit(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, 117, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117,0), 0);
     SetPlayerAnim(0xF0);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[ALU_T_12] = 4;
@@ -914,7 +914,7 @@ void PerformSwordBrothers(void) {
 void func_8010FD88(void) {
     PLAYER.step = Player_Stand;
     PLAYER.step_s = 3;
-    SetSpeedX(0xFFFC8000);
+    SetSpeedX(FIX(-3.5));
     g_CurrentEntity->velocityY = 0;
     SetPlayerAnim(0xDB);
     CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
