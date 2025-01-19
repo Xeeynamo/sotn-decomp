@@ -121,8 +121,8 @@ void func_80109328(void) {
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
     }
 
-    if (g_Player.timers[11]) {
-        g_Player.timers[11] = 0;
+    if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
+        g_Player.timers[ALU_T_DARKMETAMORPH] = 0;
         func_801092E8(0);
     }
     PLAYER.drawMode = DRAW_DEFAULT;
@@ -514,10 +514,10 @@ void func_8010A3F0(void) {
     s32 temp = 0x38;
 
     if (D_8017A000.GetWeaponId() == temp && D_8017D000.GetWeaponId() == temp) {
-        if (!g_Player.timers[11]) {
+        if (!g_Player.timers[ALU_T_DARKMETAMORPH]) {
             func_801092E8(1);
         }
-        g_Player.timers[11] = 0x20;
+        g_Player.timers[ALU_T_DARKMETAMORPH] = 0x20;
         temp = g_Player.unk10 != 0;
         if (temp && g_Status.D_80097C40 < -1) {
             g_Status.D_80097C40++;
@@ -950,7 +950,7 @@ block_159:
 block_160:
     g_Player.prev_step = PLAYER.step;
     g_Player.prev_step_s = PLAYER.step_s;
-    D_800ACDF8 = g_Player.timers[11];
+    D_800ACDF8 = g_Player.timers[ALU_T_DARKMETAMORPH];
     switch (PLAYER.step) {
     case Player_Stand:
         func_801120B4();
@@ -1202,7 +1202,7 @@ block_160:
     if (*D_80097448 != 0) {
         newStatus |= 0x08020000;
     }
-    if (g_Player.timers[11]) {
+    if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
         newStatus |= 0x02000000;
     }
     g_Player.status = newStatus;
