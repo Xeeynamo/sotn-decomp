@@ -2,7 +2,15 @@
 #include "st0.h"
 #include "sfx.h"
 
+#ifdef VERSION_PSP
+extern bool g_isSecretStairsButtonPressed;
+extern u32 D_pspeu_09279DF0;
+extern u32 D_pspeu_09279DF8;
+#else
 static bool g_isSecretStairsButtonPressed = 0;
+#endif
+
+extern EInit g_EInitSecretStairs;
 static Point16 D_801808A0[] = {
     {0x280, 0x030}, {0x298, 0x048}, {0x2B0, 0x060}, {0x2C0, 0x070}};
 static u16 D_801808B0[] = {
@@ -23,7 +31,7 @@ void EntitySecretButton(Entity* self) {
         self->hitboxHeight = 6;
         self->hitboxState = 2;
 
-        if (self->params != 0) {
+        if (self->params) {
             self->step = 4;
             self->zPriority += 2;
             break;
@@ -31,8 +39,8 @@ void EntitySecretButton(Entity* self) {
 
         if (g_isSecretStairsButtonPressed) {
             self->animCurFrame = 4;
-            self->hitboxState = 0;
             self->palette += 1;
+            self->hitboxState = 0;
             g_Tilemap.fg[0x1C4] = 0;
             self->step = 3;
             break;
@@ -41,13 +49,17 @@ void EntitySecretButton(Entity* self) {
         break;
 
     case 1:
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             g_Tilemap.fg[0x1C4] = 0;
             self->animCurFrame = 4;
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromEntity(D_pspeu_09279DF8, self, newEntity);
+#else
                 CreateEntityFromEntity(E_SECRET_BUTTON, self, newEntity);
+#endif
                 newEntity->params = 1;
             }
             self->step++;
@@ -55,11 +67,11 @@ void EntitySecretButton(Entity* self) {
         break;
 
     case 2:
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             g_api.PlaySfx(SFX_ANIME_SWORD_B);
-            g_isSecretStairsButtonPressed = true;
             self->hitboxState = 0;
             self->palette += 1;
+            g_isSecretStairsButtonPressed = true;
             self->step++;
         }
         break;
@@ -132,7 +144,7 @@ void EntitySecretStairsCeiling(Entity* entity) {
 }
 
 void EntitySecretStairs(Entity* self) {
-    Entity* newEntity;
+    Entity* otherEntity;
     u16* tilePos;
     s32 temp_s0;
     s32 temp_s1;
@@ -145,13 +157,16 @@ void EntitySecretStairs(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSecretStairs);
         self->animCurFrame = 1;
-        if (self->params == 0) {
+        if (!self->params) {
             self->ext.secretStairs.unk84 = true;
-            newEntity = self + 1;
-            for (i = 0; i < 3; i++) {
-                CreateEntityFromCurrentEntity(E_SECRET_STAIRS, newEntity);
-                newEntity->params = i + 1;
-                newEntity++;
+            otherEntity = self + 1;
+            for (i = 0; i < 3; i++, otherEntity++) {
+#ifdef VERSION_PSP
+                CreateEntityFromCurrentEntity(D_pspeu_09279DF0, otherEntity);
+#else
+                CreateEntityFromCurrentEntity(E_SECRET_STAIRS, otherEntity);
+#endif
+                otherEntity->params = i + 1;
             }
 
         } else {
@@ -159,7 +174,7 @@ void EntitySecretStairs(Entity* self) {
             if (self->params == 3) {
                 self->animCurFrame = 2;
                 self->zPriority += 1;
-                for (tilePos = &D_801808B0; *tilePos != 0xFFFF; tilePos += 2) {
+                for (tilePos = D_801808B0; *tilePos != 0xFFFF; tilePos += 2) {
                     if (!g_isSecretStairsButtonPressed) {
                         g_Tilemap.fg[*tilePos] = 0;
                     } else {
@@ -180,8 +195,8 @@ void EntitySecretStairs(Entity* self) {
             self->step = 15;
             break;
         }
-        self->rotZ = -0x200;
         self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->rotZ = -0x200;
         break;
 
     case 1:
@@ -193,25 +208,26 @@ void EntitySecretStairs(Entity* self) {
 
     case 2:
         self->rotZ += 0x10;
-        if (self->rotZ == 0) {
+        if (!self->rotZ) {
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step++;
         }
         break;
 
     case 3:
-        if (!self->ext.secretStairs.unk84) {
+        if (self->ext.secretStairs.unk84) {
+            g_api.PlaySfx(SFX_DOOR_OPEN);
+            self->step++;
+        } else {
             // TODO: What is self - 1? In case 0 we create self + 1, but
             // it's not clear what entity comes before us.
-            self->posX.i.hi = (self - 1)->posX.i.hi;
-            self->posY.i.hi = (self - 1)->posY.i.hi;
+            otherEntity = self - 1;
+            self->posX.i.hi = otherEntity->posX.i.hi;
+            self->posY.i.hi = otherEntity->posY.i.hi;
             if (self->params == 3) {
                 self->posX.i.hi += 16;
                 self->posY.i.hi += 16;
             }
-        } else {
-            g_api.PlaySfx(SFX_DOOR_OPEN);
-            self->step++;
         }
         break;
 
@@ -221,9 +237,11 @@ void EntitySecretStairs(Entity* self) {
 
         switch (self->step_s) {
         case 0:
-            posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
-            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
-            angle = ratan2(temp_s1 - posY, temp_s0 - posX);
+            posX = (g_Tilemap.scrollX.i.hi + self->posX.i.hi);
+            posY = (g_Tilemap.scrollY.i.hi + self->posY.i.hi);
+            temp_s0 -= posX;
+            temp_s1 -= posY;
+            angle = ratan2(temp_s1, temp_s0);
             self->velocityX = rcos(angle) * 12;
             self->velocityY = rsin(angle) * 12;
             self->step_s++;
@@ -232,14 +250,16 @@ void EntitySecretStairs(Entity* self) {
         case 1:
             MoveEntity();
             posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp_s0 == posX) {
                 g_api.PlaySfx(SFX_DOOR_CLOSE_A);
                 self->posX.i.hi = temp_s0 - g_Tilemap.scrollX.i.hi;
                 self->posY.i.hi = temp_s1 - g_Tilemap.scrollY.i.hi;
                 if (self->params != 3) {
-                    (self + 1)->ext.secretStairs.unk84 = 1;
+                    otherEntity = self + 1;
+                    otherEntity->ext.secretStairs.unk84 = 1;
                 } else {
-                    tilePos = &D_801808B0;
+                    tilePos = D_801808B0;
                     while (*tilePos != 0xFFFF) {
                         g_Tilemap.fg[*tilePos] = *(tilePos + 1);
                         tilePos += 2;
