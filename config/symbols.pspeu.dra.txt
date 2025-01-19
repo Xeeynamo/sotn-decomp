@@ -173,6 +173,7 @@ func_8011A4D0 = 0x09127490;
 CreateEntFactoryFromEntity = 0x09127C30;
 StoreSaveData = 0x0913db20;
 LoadSaveData = 0x0913e220;
+DestroyEntity = 0x0913E7B8;
 DrawEntitiesHitbox = 0x0913e8b0;
 func_80106A28 = 0x0913EC20;
 LoadMonsterLibrarianPreview = 0x0913F780;

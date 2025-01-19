@@ -839,7 +839,11 @@ block_45:
     return true;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", func_8010FAF4);
+void func_8010FAF4(void) {
+    Entity* ent = &g_Entities[E_WEAPON];
+    DestroyEntity(ent);
+    g_Player.unk46 = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/373F8", PerformHellfire);
 

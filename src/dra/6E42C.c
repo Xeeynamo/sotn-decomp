@@ -839,7 +839,8 @@ block_45:
 }
 
 void func_8010FAF4(void) {
-    DestroyEntity(&g_Entities[E_WEAPON]);
+    Entity* ent = &g_Entities[E_WEAPON];
+    DestroyEntity(ent);
     g_Player.unk46 = 0;
 }
 
