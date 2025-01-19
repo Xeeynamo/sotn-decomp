@@ -332,7 +332,89 @@ void func_us_801B8B00(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
+extern SVECTOR D_us_8018138C;
+extern SVECTOR D_us_80181394;
+extern SVECTOR D_us_8018139C;
+extern SVECTOR D_us_801813A4;
+
+void func_us_801B8D30(Entity* self) {
+    s32 primIndex;
+    Primitive* prim;
+    Entity* player;
+    s32 p;
+    s32 flag;
+    s16 posX, posY;
+    SVECTOR vector;
+    VECTOR vector2;
+    MATRIX matrix;
+
+    player = &PLAYER;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        self->animCurFrame = 0;
+
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            prim->r0 = prim->g0 = prim->b0 = 128;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 0x60;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 1:
+        posX = self->posX.i.hi - player->posX.i.hi;
+        posY = self->posY.i.hi - player->posY.i.hi;
+        posX -= 80;
+        prim = self->ext.prim;
+        prim->drawMode = DRAW_HIDE;
+
+        if (abs(posX) < 16) {
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+#ifdef VERSION_PSP
+            self->ext.et_801B8D30.unk80 = posX << 6;
+#else
+            // n.b.! why isn't this just abs?
+            self->ext.et_801B8D30.unk80 =
+                (posX < 0 ? (-((u32)posX)) : posX) << 6;
+#endif
+        }
+        break;
+    }
+
+    prim = self->ext.prim;
+    SetGeomScreen(0x200);
+    vector.vx = 0;
+    vector.vy = self->ext.et_801B8D30.unk80;
+    vector.vz = 0x180;
+    RotMatrixYXZ(&vector, &matrix);
+
+    vector2.vx = 0;
+    vector2.vy = 0;
+    vector2.vz = 0x200;
+    TransMatrix(&matrix, &vector2);
+    SetRotMatrix(&matrix);
+    SetTransMatrix(&matrix);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+    RotAverage4(
+        &D_us_8018138C, &D_us_80181394, &D_us_8018139C, &D_us_801813A4,
+        (long*)&LOW(prim->x0), (long*)&LOW(prim->x1), (long*)&LOW(prim->x2),
+        (long*)&LOW(prim->x3), (long*)&p, (long*)&flag);
+}
 
 extern EInit D_us_80180A1C;
 extern u8 D_us_801813FC[];
