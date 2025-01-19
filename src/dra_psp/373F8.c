@@ -13,10 +13,7 @@ void func_8010E42C(u32 substep) {
     }
 }
 
-u8 D_800ACF4C[] = {0x00, 0x11, 
-                   0x04, 0x15, 
-                   0x01, 0x10, 
-                   0x03, 0x23};
+u8 D_800ACF4C[] = {0x00, 0x11, 0x04, 0x15, 0x01, 0x10, 0x03, 0x23};
 
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.velocityX = arg1;
@@ -47,19 +44,14 @@ void func_8010E4D0(void) {
 }
 
 u8 D_800ACF54[] = {
-    0x04, 0x05, 
-    0x0A, 0x0B, 
-    0x0E, 0x0F, 
-    0x1D, 0x1E, 
-    0x04, 0x03, 
-    0x00, 0x00,
+    0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
 };
 
 // Corresponding RIC function is RicLandToTheGround (much simpler)
 void func_8010E570(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
-    
+
     if (g_Player.pl_vram_flag & 0x20) {
         atLedge = true;
     }
@@ -141,7 +133,7 @@ void func_8010E7AC(void) {
     if (g_Player.prev_step != Player_Walk) {
         SetPlayerAnim(28);
     }
-    
+
     PLAYER.velocityX = 0;
     PLAYER.velocityY = FIX(2);
     g_Player.timers[ALU_T_6] = 8;
@@ -221,11 +213,11 @@ s16 g_SfxAttackGrunts[] = {
     SFX_VO_ALU_ATTACK_B,
     SFX_VO_ALU_ATTACK_C,
     SFX_VO_ALU_ATTACK_D,
-    #ifndef VERSION_PSP
+#ifndef VERSION_PSP
     0x0000,
     0x0000
-    #endif
-    };
+#endif
+};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -314,14 +306,14 @@ static s32 func_8010EB5C(void) {
     }
     anim = subWpn.anim;
     switch (PLAYER.step) {
-        case Player_Stand:
-        atLedge2 = atLedge; //stupid duplicate
+    case Player_Stand:
+        atLedge2 = atLedge; // stupid duplicate
         SetPlayerAnim(anim + atLedge2);
         break;
-        case Player_Crouch:
-        case Player_Walk:
-        case Player_Fall:
-        case Player_Jump:
+    case Player_Crouch:
+    case Player_Walk:
+    case Player_Fall:
+    case Player_Jump:
         break;
     }
     func_8010EA54(8);
@@ -340,7 +332,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
 
     chainLimit = eDef->chainLimit;
     if (chainLimit & 0x80) {
-        if(!(g_Player.unk46 & 0x8000)){
+        if (!(g_Player.unk46 & 0x8000)) {
             return 0;
         }
         return -1;
@@ -381,17 +373,17 @@ void func_8010ED54(u8 anim) {
 bool func_8010EDB8(void) {
     Entity* ent6C;
     bool var_s7; // Triggers on some kind of special move spell
-    Equipment sp10;    
-    bool atLedge; //s6
-    Entity* ent; //s5
-    Equipment* equipped_item; //s0
-    
-    s16 var_s2; // mixed between anim and equip index
-    u16 equipped_id; //s4
-    u16 hand; //s1
-    s16 animVariant; //s3
-    u32 attBtnsPressed; //s8
-    s32 i; //s7
+    Equipment sp10;
+    bool atLedge;
+    Entity* ent;
+    Equipment* equipped_item;
+
+    s16 var_s2;         // mixed between anim and equip index
+    u16 equipped_id;
+    u16 hand;
+    s16 animVariant;
+    u32 attBtnsPressed;
+    s32 i;
 
     var_s7 = false;
 
@@ -425,7 +417,7 @@ bool func_8010EDB8(void) {
         g_Player.D_80072EF8 = PAD_SQUARE;
         hand = 0;
     }
-    if (attBtnsPressed == (PAD_SQUARE | PAD_CIRCLE)){
+    if (attBtnsPressed == (PAD_SQUARE | PAD_CIRCLE)) {
         if (!g_Player.unk72 && D_8013AEE4) {
             var_s2 = D_8013AEE4 & ~0x80000000;
             if (var_s2) {
@@ -433,15 +425,15 @@ bool func_8010EDB8(void) {
                 equipped_id = var_s2;
             }
             g_Player.D_80072EF8 = PAD_SQUARE;
-            if(D_8013AEE4 & 0x80000000){
+            if (D_8013AEE4 & 0x80000000) {
                 hand = 1;
             } else {
                 hand = 0;
             }
             if (CheckChainLimit(equipped_id, hand) >= 0 &&
                 HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0) == 0) {
-                    var_s7 = true;
-                    goto block_45;
+                var_s7 = true;
+                goto block_45;
             }
         }
         g_Player.D_80072EF8 = PAD_SQUARE;
@@ -510,14 +502,16 @@ block_45:
     if (equipped_id) {
         if (equipped_item->unk13 == 55) {     // Medicines
             if (equipped_item->unk14 == 20) { // Library card!
-                if (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk || PLAYER.step == Player_Crouch) {
+                if (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
+                    PLAYER.step == Player_Crouch) {
                     func_8010E42C(0);
                     func_800FDD44(hand);
                     return true;
                 }
                 return false;
             }
-            // Check if there is already an instance of entity 39, EntityPlayerPinkEffect
+            // Check if there is already an instance of entity 39,
+            // EntityPlayerPinkEffect
             for (ent = &g_Entities[32], i = 32; i < 64; i++, ent++) {
                 if (ent->entityId == 39) {
                     return false;
@@ -535,26 +529,26 @@ block_45:
             goto block_70;
         } else if (!var_s7) {
             ent6C = CreateEntFactoryFromEntity(
-                    g_CurrentEntity,
-                    FACTORY(equipped_item->unk13 + ((hand + 1) << 12),
+                g_CurrentEntity,
+                FACTORY(equipped_item->unk13 + ((hand + 1) << 12),
                         (equipped_item->unk14 & 0x7F) + (hand << 7)),
-                    equipped_id);
+                equipped_id);
         } else {
             ent6C = CreateEntFactoryFromEntity(
-                    g_CurrentEntity,
-                    FACTORY(equipped_item->unk13 + ((hand + 1) << 14),
+                g_CurrentEntity,
+                FACTORY(equipped_item->unk13 + ((hand + 1) << 14),
                         (equipped_item->unk14 & 0x7F) + (hand << 7)),
-                    equipped_id);
+                equipped_id);
         }
     } else {
         ent6C = CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY((hand + 42), (hand << 7)), 0);
     }
-    
-    if(ent6C == NULL) {
+
+    if (ent6C == NULL) {
         return false;
     }
-    
+
     func_800FDD44(hand);
     if (var_s7) {
         func_800FDD44((hand + 1) & 1);
@@ -573,12 +567,12 @@ block_45:
         if (sp10.attack >= 11) {
             goto block_1000;
         }
-        // Muramasa with low attack, or Red Rust, has chance to fail.
-        case 13: // Red Rust
+    // Muramasa with low attack, or Red Rust, has chance to fail.
+    case 13: // Red Rust
         if (rand() & 7) {
             goto block_1000;
         }
-        block_70:
+    block_70:
         switch (PLAYER.step) {
         case Player_Stand:
         case Player_Walk:
@@ -600,7 +594,7 @@ block_45:
         PLAYER.step_s = 0x51;
         PlaySfx(SFX_VO_ALU_PAIN_A);
         return true;
-        
+
     case 12: // Shotel
         // When shotel is thrown away, attempting to attack will make a punch
         if (CheckChainLimit(equipped_item->specialMove, hand) >= 0 &&
@@ -686,9 +680,9 @@ block_45:
         g_CurrentEntity->velocityX = 0;
         PlaySfx(SFX_VO_ALU_ATTACK_B);
         goto block_98;
-        
+
     block_1000:
-    func_8010EA54(8);
+        func_8010EA54(8);
 
     case 8:
     case 9: // Combat Knife
@@ -748,10 +742,10 @@ block_45:
     case 18:
         goto block_1000;
     case 5: // Lots of unknown things
-        switch(PLAYER.step){
-            case 0:
-            case 1:
-            case 2:
+        switch (PLAYER.step) {
+        case 0:
+        case 1:
+        case 2:
             g_CurrentEntity->velocityX = g_CurrentEntity->velocityX >> 1;
             animVariant = atLedge;
             SetPlayerAnim(var_s2 + animVariant);
@@ -760,8 +754,8 @@ block_45:
             PLAYER.step = 0;
             PLAYER.step_s = equipped_item->unk11 + 0x40;
             g_CurrentEntity->velocityX = 0;
-            case 3:
-            case 4:
+        case 3:
+        case 4:
             break;
         }
         func_8010EA54(8);
@@ -778,7 +772,7 @@ block_45:
             animVariant = 2;
             PLAYER.step_s = 0;
             // Block can never happen, we just set step_s to 0.
-            if(!g_Player.unk72 && PLAYER.step_s == 2){
+            if (!g_Player.unk72 && PLAYER.step_s == 2) {
                 animVariant = atLedge;
                 PLAYER.step = 0;
                 PLAYER.step_s = 2;
@@ -824,15 +818,15 @@ block_45:
         if (PLAYER.step_s < 0x40) {
             var_s2 = equipped_item->playerAnim;
             switch (PLAYER.step) {
-                case 0:
-                    animVariant = atLedge;
-                    SetPlayerAnim(var_s2 + animVariant);
-                    break;
-                case 2:
-                case 1:
-                case 3:
-                case 4:
-                    break;
+            case 0:
+                animVariant = atLedge;
+                SetPlayerAnim(var_s2 + animVariant);
+                break;
+            case 2:
+            case 1:
+            case 3:
+            case 4:
+                break;
             }
         }
         break;
