@@ -300,7 +300,7 @@ static s32 func_8010EB5C(void) {
     }
     CreateEntFactoryFromEntity(
         g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
-    g_Player.timers[10] = 4;
+    g_Player.timers[ALU_T_10] = 4;
     if (PLAYER.step_s >= 64) {
         return 0;
     }
@@ -921,3 +921,5 @@ void func_8010FD88(void) {
     g_Player.unk46 = 0;
     PlaySfx(SFX_SCRAPE_C);
 }
+
+// Next func in PSP is SetPlayerStep; next in US is func_8010FDF8. File split.
