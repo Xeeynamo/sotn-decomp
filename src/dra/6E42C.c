@@ -860,7 +860,7 @@ void PerformDarkMetamorphosis(void) {
     SetPlayerAnim(0xBA);
     PlaySfx(SFX_VO_ALU_DARK_META);
     PlaySfx(SFX_UI_MP_FULL);
-    g_Player.timers[11] =
+    g_Player.timers[ALU_T_DARKMETAMORPH] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x11), 0);

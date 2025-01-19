@@ -530,7 +530,6 @@ u8* GetEquipCount(EquipKind kind);
 const char* GetEquipmentName(EquipKind kind, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetSpellDef(SpellDef* spell, s32 id);
-s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer);
 void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);

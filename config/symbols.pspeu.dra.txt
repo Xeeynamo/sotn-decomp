@@ -111,6 +111,7 @@ DecompressData = 0x091041D0;
 LoadPendingGfx = 0x09104478;
 func_800EB4F8 = 0x09104628;
 LoadEquipIcon = 0x09104648;
+func_801092E8 = 0x09104958;
 func_80109A44 = 0x091052B8;
 EntityAlucard = 0x09106238;
 func_80111CC0 = 0x09108CD0;

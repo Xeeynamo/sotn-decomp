@@ -1782,7 +1782,7 @@ enum AluTimers {
     ALU_T_8,
     ALU_T_9,
     ALU_T_10,
-    ALU_T_RUN,
+    ALU_T_DARKMETAMORPH,
     ALU_T_12,
     ALU_T_INVINCIBLE,
     ALU_T_INVINCIBLE_CONSUMABLES,
