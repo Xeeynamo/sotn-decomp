@@ -364,7 +364,7 @@ void func_us_801B2BE4(Entity* self) {
     Primitive* prim;
     s32 i;
     s16 index;
-    s16 buttons;
+    s16 tempVar;
     unk_801B2BE4* ptr;
     s32 primIndex;
 
@@ -477,52 +477,52 @@ void func_us_801B2BE4(Entity* self) {
                 index = ptr->unk2;
                 switch (ptr->unk0) {
                 case 0:
-                    buttons = g_Status.equipHandCount[index];
-                    if (g_Status.equipment[0] == index) {
-                        buttons++;
+                    tempVar = g_Status.equipHandCount[index];
+                    if (g_Status.equipment[LEFT_HAND_SLOT] == index) {
+                        tempVar++;
                     }
-                    if (g_Status.equipment[1] == index) {
-                        buttons++;
+                    if (g_Status.equipment[RIGHT_HAND_SLOT] == index) {
+                        tempVar++;
                     }
-                    D_us_801D425C[i] = 0x63 - buttons;
+                    D_us_801D425C[i] = 99 - tempVar;
                     break;
 
                 case 1:
-                    buttons = g_Status.equipBodyCount[index];
-                    if (g_Status.equipment[2] == index) {
-                        buttons++;
+                    tempVar = g_Status.equipBodyCount[index];
+                    if (g_Status.equipment[HEAD_SLOT] == index) {
+                        tempVar++;
                     }
-                    D_us_801D425C[i] = 0x63 - buttons;
+                    D_us_801D425C[i] = 99 - tempVar;
                     break;
 
                 case 2:
-                    buttons = g_Status.equipBodyCount[index];
-                    if (g_Status.equipment[3] == index) {
-                        buttons++;
+                    tempVar = g_Status.equipBodyCount[index];
+                    if (g_Status.equipment[ARMOR_SLOT] == index) {
+                        tempVar++;
                     }
-                    D_us_801D425C[i] = 0x63 - buttons;
+                    D_us_801D425C[i] = 99 - tempVar;
                     break;
 
                 case 3:
-                    buttons = g_Status.equipBodyCount[index];
-                    if (g_Status.equipment[4] == index) {
-                        buttons++;
+                    tempVar = g_Status.equipBodyCount[index];
+                    if (g_Status.equipment[CAPE_SLOT] == index) {
+                        tempVar++;
                     }
-                    D_us_801D425C[i] = 0x63 - buttons;
+                    D_us_801D425C[i] = 99 - tempVar;
                     break;
 
                 case 4:
-                    buttons = g_Status.equipBodyCount[index];
+                    tempVar = g_Status.equipBodyCount[index];
                     if (self->params) {
-                        D_us_801D425C[i] = buttons;
+                        D_us_801D425C[i] = tempVar;
                     } else {
-                        if (g_Status.equipment[5] == index) {
-                            buttons++;
+                        if (g_Status.equipment[ACCESSORY_1_SLOT] == index) {
+                            tempVar++;
                         }
-                        if (g_Status.equipment[6] == index) {
-                            buttons++;
+                        if (g_Status.equipment[ACCESSORY_2_SLOT] == index) {
+                            tempVar++;
                         }
-                        D_us_801D425C[i] = 0x63 - buttons;
+                        D_us_801D425C[i] = 99 - tempVar;
                         break;
                     }
                     break;
@@ -570,9 +570,9 @@ void func_us_801B2BE4(Entity* self) {
         break;
 
     case 3:
-        buttons = g_pads[0].repeat;
+        tempVar = g_pads[0].repeat;
         FntPrint("kosuu %x\n", self->ext.et_801B2BE4.unk82);
-        if (buttons & PAD_DOWN) {
+        if (tempVar & PAD_DOWN) {
             if (self->ext.et_801B2BE4.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk80++;
@@ -581,7 +581,7 @@ void func_us_801B2BE4(Entity* self) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk82++;
             }
-        } else if (buttons & PAD_UP) {
+        } else if (tempVar & PAD_UP) {
             if (self->ext.et_801B2BE4.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk80--;
@@ -590,9 +590,9 @@ void func_us_801B2BE4(Entity* self) {
                 self->ext.et_801B2BE4.unk82--;
             }
 #ifdef VERSION_PSP
-        } else if (buttons & 0x600) {
+        } else if (tempVar & 0x600) {
 #else
-        } else if (buttons & (PAD_R1 + PAD_R2)) {
+        } else if (tempVar & (PAD_R1 + PAD_R2)) {
 #endif
             if (self->ext.et_801B2BE4.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
@@ -606,9 +606,9 @@ void func_us_801B2BE4(Entity* self) {
                 }
             }
 #ifdef VERSION_PSP
-        } else if (buttons & 0x102) {
+        } else if (tempVar & 0x102) {
 #else
-        } else if (buttons & (PAD_L1 + PAD_L2)) {
+        } else if (tempVar & (PAD_L1 + PAD_L2)) {
 #endif
             if (self->ext.et_801B2BE4.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
@@ -623,22 +623,22 @@ void func_us_801B2BE4(Entity* self) {
             }
         }
         index = self->ext.et_801B2BE4.unk82 + self->ext.et_801B2BE4.unk80;
-        if (buttons & PAD_RIGHT) {
+        if (tempVar & PAD_RIGHT) {
             if (D_us_801D415C[index] < D_us_801D425C[index]) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 D_us_801D415C[index]++;
             }
-        } else if (buttons & PAD_LEFT) {
+        } else if (tempVar & PAD_LEFT) {
             if (D_us_801D415C[index] > 1) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 D_us_801D415C[index]--;
             }
         }
-        buttons = g_pads[0].tapped;
+        tempVar = g_pads[0].tapped;
 #ifdef VERSION_PSP
-        if (buttons & D_psp_08B42050) {
+        if (tempVar & D_psp_08B42050) {
 #else
-        if (buttons & PAD_CROSS) {
+        if (tempVar & PAD_CROSS) {
 #endif
             if (g_Status.gold <
                     D_us_801D415C[index] * D_us_801D4364[index].unk4 ||
@@ -649,25 +649,25 @@ void func_us_801B2BE4(Entity* self) {
                     D_us_801D415C[index] * D_us_801D4364[index].unk4;
                 switch (D_us_801D4364[index].unk0) {
                 case 0:
-                    buttons = 0;
+                    tempVar = 0;
                     break;
                 case 1:
-                    buttons = 1;
+                    tempVar = 1;
                     break;
                 case 2:
-                    buttons = 2;
+                    tempVar = 2;
                     break;
                 case 3:
-                    buttons = 3;
+                    tempVar = 3;
                     break;
                 case 4:
-                    buttons = 4;
+                    tempVar = 4;
                     break;
                 }
                 if (D_us_801D4364[index].unk0 < 5) {
                     for (i = 0; i < D_us_801D415C[index]; i++) {
                         g_api.AddToInventory(
-                            D_us_801D4364[index].unk2, (enum EquipKind)buttons);
+                            D_us_801D4364[index].unk2, (enum EquipKind)tempVar);
                     }
                 } else {
                     if (D_us_801D4364[index].unk0 == 5) {
@@ -693,9 +693,9 @@ void func_us_801B2BE4(Entity* self) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
             }
 #ifdef VERSION_PSP
-        } else if (buttons & D_psp_08B42054) {
+        } else if (tempVar & D_psp_08B42054) {
 #else
-        } else if (buttons & PAD_TRIANGLE) {
+        } else if (tempVar & PAD_TRIANGLE) {
 #endif
             SetStep(7);
         }
@@ -736,7 +736,7 @@ void func_us_801B2BE4(Entity* self) {
         case 1:
             if (!g_api.func_80131F68()) {
                 g_CutsceneFlags |= 0x800;
-                g_api.PlaySfx(SFX_LIB_UNK_801B2BE4);
+                g_api.PlaySfx(NA_VO_LI_THANKS);
                 SetStep(3);
             }
             break;
@@ -744,8 +744,8 @@ void func_us_801B2BE4(Entity* self) {
         break;
 
     case 5:
-        buttons = g_pads[0].repeat;
-        if (buttons & PAD_DOWN) {
+        tempVar = g_pads[0].repeat;
+        if (tempVar & PAD_DOWN) {
             if (self->ext.et_801B2BE4.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk80++;
@@ -753,7 +753,7 @@ void func_us_801B2BE4(Entity* self) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk82++;
             }
-        } else if (buttons & PAD_UP) {
+        } else if (tempVar & PAD_UP) {
             if (self->ext.et_801B2BE4.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk80--;
@@ -763,22 +763,22 @@ void func_us_801B2BE4(Entity* self) {
             }
         }
         index = self->ext.et_801B2BE4.unk82 + self->ext.et_801B2BE4.unk80;
-        if (buttons & PAD_RIGHT) {
+        if (tempVar & PAD_RIGHT) {
             if (D_us_801D415C[index] < D_us_801D425C[index]) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 D_us_801D415C[index]++;
             }
-        } else if (buttons & PAD_LEFT) {
+        } else if (tempVar & PAD_LEFT) {
             if (D_us_801D415C[index] > 1) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 D_us_801D415C[index]--;
             }
         }
-        buttons = g_pads[0].tapped;
+        tempVar = g_pads[0].tapped;
 #ifdef VERSION_PSP
-        if (buttons & D_psp_08B42050) {
+        if (tempVar & D_psp_08B42050) {
 #else
-        if (buttons & PAD_CROSS) {
+        if (tempVar & PAD_CROSS) {
 #endif
             if (D_us_801D415C[index] == 0) {
                 g_api.PlaySfx(SFX_UI_ERROR);
@@ -796,9 +796,9 @@ void func_us_801B2BE4(Entity* self) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
             }
 #ifdef VERSION_PSP
-        } else if (buttons & D_psp_08B42054) {
+        } else if (tempVar & D_psp_08B42054) {
 #else
-        } else if (buttons & PAD_TRIANGLE) {
+        } else if (tempVar & PAD_TRIANGLE) {
 #endif
             SetStep(7);
         }
