@@ -2066,8 +2066,8 @@
 | 1.00 | true     | SetTitleDisplayBuffer256            | asm/us/st/sel/matchings/2C048/SetTitleDisplayBuffer256.s 
 | 1.00 | true     | SetTitleDisplayBuffer               | asm/us/st/st0/matchings/prologue_scroll/SetTitleDisplayBuffer.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | DecelerateX                         | asm/us/dra/matchings/6D59C/DecelerateX.s 
-| 1.00 | true     | DecelerateY                         | asm/us/dra/matchings/6D59C/DecelerateY.s 
+| 1.00 | true     | DecelerateX                         | asm/us/dra/matchings/6D584/DecelerateX.s 
+| 1.00 | true     | DecelerateY                         | asm/us/dra/matchings/6D584/DecelerateY.s 
 | 1.00 | true     | DecelerateY                         | asm/us/ric/matchings/20920/DecelerateY.s 
 | 1.00 | true     | RicDecelerateX                      | asm/us/ric/matchings/20920/RicDecelerateX.s 
 -------------------------------------------------------------------------------
@@ -2125,11 +2125,6 @@
 | 1.00 | true     | SetDQB                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetDQB.s 
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2215,6 +2210,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2345,22 +2344,22 @@
 | 1.00 | true     | GetTeleportToOtherCastle            | asm/us/dra/matchings/692E8/GetTeleportToOtherCastle.s 
 | 0.97 | true     | GetTeleportToOtherCastle            | asm/us/ric/matchings/1AC60/GetTeleportToOtherCastle.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetPlayerStep                       | asm/us/dra/matchings/692E8/SetPlayerStep.s 
-| 1.00 | true     | RicSetStep                          | asm/us/ric/matchings/202A8/RicSetStep.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | CheckMoveDirection                  | asm/us/dra/matchings/6D59C/CheckMoveDirection.s 
+| 1.00 | true     | CheckMoveDirection                  | asm/us/dra/matchings/6D584/CheckMoveDirection.s 
 | 1.00 | true     | RicCheckFacing                      | asm/us/ric/matchings/20920/RicCheckFacing.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetSpeedX                           | asm/us/dra/matchings/6D59C/SetSpeedX.s 
+| 1.00 | true     | SetPlayerStep                       | asm/us/dra/matchings/6D584/SetPlayerStep.s 
+| 1.00 | true     | RicSetStep                          | asm/us/ric/matchings/202A8/RicSetStep.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SetSpeedX                           | asm/us/dra/matchings/6D584/SetSpeedX.s 
 | 1.00 | true     | RicSetSpeedX                        | asm/us/ric/matchings/20920/RicSetSpeedX.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/6D59C/func_8010DA2C.s 
+| 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/6D584/func_8010DA2C.s 
 | 1.00 | true     | RicSetAnimation                     | asm/us/ric/matchings/20920/RicSetAnimation.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8010E168                       | asm/us/dra/matchings/6D59C/func_8010E168.s 
+| 1.00 | true     | func_8010E168                       | asm/us/dra/matchings/6D584/func_8010E168.s 
 | 1.00 | true     | RicSetInvincibilityFrames           | asm/us/ric/matchings/20920/RicSetInvincibilityFrames.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8010E3B8                       | asm/us/dra/matchings/6D59C/func_8010E3B8.s 
+| 1.00 | true     | func_8010E3B8                       | asm/us/dra/matchings/6D584/func_8010E3B8.s 
 | 1.00 | true     | func_8015CAAC                       | asm/us/ric/matchings/20920/func_8015CAAC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckSubwpnChainLimit               | asm/us/dra/matchings/6E42C/CheckSubwpnChainLimit.s 
@@ -2572,6 +2571,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
