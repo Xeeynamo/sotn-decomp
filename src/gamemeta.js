@@ -30,14 +30,14 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stdre", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002", "tt_003", "tt_004"
+                "dra", "ric", "weapon", "stcen", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002", "tt_003", "tt_004"
             ]
         },
         {
             "id": "pspeu",
             "name": "PSP EU",
             "overlays": [
-               "dra", "stst0", "stwrp", "tt_000"
+                "dra", "stst0", "stwrp", "tt_000"
             ]
         },
         {
@@ -68,6 +68,10 @@ const gameMetadata = {
         "stdre": {
             "name": "ST/DRE/DRE.BIN",
             "desc": "Nightmare"
+        },
+        "stlib": {
+            "name": "ST/LIB/LIB.BIN",
+            "desc": "Long Library"
         },
         "stmad": {
             "name": "ST/MAD/MAD.BIN",
