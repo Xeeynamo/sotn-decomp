@@ -1935,6 +1935,7 @@ typedef enum {
     CASTLE_FLAG_149 = 149,
     CASTLE_FLAG_150,
     CASTLE_FLAG_155 = 155,
+    CASTLE_FLAG_180 = 180,
     CASTLE_FLAG_185 = 185,
     // WRP
     CASTLE_FLAG_208 = 208,
@@ -1943,6 +1944,7 @@ typedef enum {
     // Cutscenes the player has finished seeing
     SUCC_CS_DONE = 212, // Succubus cutscene (as Lisa)
     HG_CS_DONE = 216,   // Holy Glasses cutscene (in CEN)
+    CASTLE_FLAG_220 = 220,
     HEART_FLAGS_START = 256,
     MAD_COLLISION_FLAGS_START = 288,
     MAD_RAREDROP_FLAGS_START = 320,

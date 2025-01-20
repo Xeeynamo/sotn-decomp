@@ -179,6 +179,8 @@ enum SfxModes {
 #define NA_VO_DR_IT_WAS_NOT 0x359  // Dracula says "It was not by my hand ..."
 #define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
 
+#define SFX_LIB_UNK_801B2BE4 0x3AD
+
 #if defined(VERSION_US)
 #define NA_VO_MA_IF_YOU_WEAR                                                   \
     0x3CE // Maria: If you wear these, you can see beyond evil illusions.
