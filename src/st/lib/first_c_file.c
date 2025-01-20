@@ -725,7 +725,7 @@ void func_us_801B2BE4(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            if (g_api.func_80131F68() != false) {
+            if (g_api.func_80131F68()) {
                 g_api.PlaySfx(SET_STOP_MUSIC);
                 self->step_s++;
             } else {
@@ -734,7 +734,7 @@ void func_us_801B2BE4(Entity* self) {
             break;
 
         case 1:
-            if (g_api.func_80131F68() == false) {
+            if (!g_api.func_80131F68()) {
                 g_CutsceneFlags |= 0x800;
                 g_api.PlaySfx(SFX_LIB_UNK_801B2BE4);
                 SetStep(3);
