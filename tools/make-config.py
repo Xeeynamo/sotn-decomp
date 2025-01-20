@@ -436,6 +436,7 @@ def get_splat_config(
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
             "include_macro_inc": False,
+            "disassemble_all": True
         }
     }
 
@@ -642,7 +643,10 @@ def find_dups(threshold, dir1, dir2) -> dict[str, str]:
 
 
 def split(splat_config_path: str, disassemble_all: bool):
-    if disassemble_all:
+    with open(splat_config_path) as f:
+        c = yaml.load(f, Loader=yaml.SafeLoader)
+        config_disasm_all = c["options"]["disassemble_all"]
+    if disassemble_all and not config_disasm_all == True:
         return exec("splat", "split", splat_config_path, "--disassemble-all")
     else:
         return exec("splat", "split", splat_config_path)
