@@ -839,7 +839,7 @@ void func_us_801B2BE4(Entity* self) {
         case 1:
             if (!g_api.func_80131F68()) {
                 g_CutsceneFlags |= 0x800;
-                g_api.PlaySfx(SFX_LIB_UNK_801B2BE4);
+                g_api.PlaySfx(NA_VO_LI_THANKS);
                 SetStep(5);
             }
             break;
