@@ -375,7 +375,7 @@ void func_us_801B2BE4(Entity* self) {
     if (g_CastleFlags[CASTLE_FLAG_180]) {
         FntPrint("ARE ");
     }
-    if (g_Status.relics[RELIC_SOUL_OF_BAT] & 1) {
+    if (g_Status.relics[RELIC_SOUL_OF_BAT] & RELIC_FLAG_FOUND) {
         FntPrint("BAT ");
     }
     if (g_CastleFlags[HG_CS_DONE]) {
@@ -529,7 +529,7 @@ void func_us_801B2BE4(Entity* self) {
 
                 case 5:
                     index = D_us_801814D4[index];
-                    if (g_Status.relics[index] & 1) {
+                    if (g_Status.relics[index] & RELIC_FLAG_FOUND) {
                         D_us_801D425C[i] = 0;
                     } else {
                         D_us_801D425C[i] = 1;
