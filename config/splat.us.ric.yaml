@@ -19,6 +19,7 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: true
   section_order:
     - ".data"
     - ".rodata"
@@ -45,7 +46,7 @@ segments:
       - [0x18C40, .data, 24788]
       - [0x18ED4, .data, 24788] # RicEntityMaria
       - [0x18F7C, .data, 26C84]
-      - [0x1938C, .data, pl_anims]    
+      - [0x1938C, .data, pl_anims]
       - [0x199AC, .data, 2A060]
       - [0x19D94, .data, 2C4C4]
       - [0x19EE0, .data, 319C4]
