@@ -1926,6 +1926,7 @@ typedef enum {
     CASTLE_FLAG_58,
     CASTLE_FLAG_98 = 98, // Set in DRA, unused
     CASTLE_FLAG_99,      // Set in DRA, unused
+    CASTLE_FLAG_115 = 115,
     // Start NZ0 flags
     CASTLE_FLAG_129 = 129,
     CASTLE_FLAG_130,

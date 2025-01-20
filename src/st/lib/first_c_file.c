@@ -679,7 +679,7 @@ void func_us_801B2BE4(Entity* self) {
                                 D_us_80181510[D_us_801D4364[index].unk2 - 1]);
                         } else {
                             g_api.func_800F2288(0);
-                            g_CastleFlags[0x73] = 1;
+                            g_CastleFlags[CASTLE_FLAG_115] = 1;
                         }
                     }
                 }
