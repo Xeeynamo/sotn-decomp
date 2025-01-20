@@ -347,7 +347,8 @@ void func_us_801C01F0(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-                            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->params = 0x10;
                         }
                     }
