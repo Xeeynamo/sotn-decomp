@@ -408,10 +408,10 @@ void HitDetection(void) {
                     entFrom5C->flags |= FLAG_NOT_AN_ENEMY;
                 }
                 miscVar2 = 0;
-                // Odd structure - may be a macro or a fake match
+                // Odd structure - may be a macro or a fake match,
+                // the block is intentionally a no-op to match PSP
                 if (iterEnt1->hitboxState & 8 && iterEnt2->hitboxState & 4) {
-                    if (miscVar2) {
-                    }
+                    (void)0;
                 } else if (entFrom5C->hitPoints) {
                     if (iterEnt2->attack) {
                         if (!(iterEnt2->hitboxState & 0x80)) {
