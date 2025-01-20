@@ -996,7 +996,7 @@
 | dra    | func_psp_090F06D8                   |      493 |         37 |        |                                 |       |
 | dra    | func_psp_0911FCA0                   |      495 |         59 |        |                                 |       |
 | lib    | pspeu.rodata                        |      498 |          0 | Yes    |                                 |       |
-| dra    | func_psp_09117C00                   |      499 |        105 |        | https://decomp.me/scratch/5ClMV | 0.906 |
+| dra    | func_8010FDF8                       |      499 |        105 |        |                                 |       |
 | lib    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | wrp    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | dra    | func_psp_090EDE28                   |      517 |         73 |        |                                 |       |
@@ -1120,8 +1120,8 @@
 | dra    | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
 | lib    | func_psp_0925F068                   |     1588 |        176 | Yes    |                                 |       |
-| lib    | HitDetection                        |     1627 |        196 |        |                                 |       |
-| wrp    | HitDetection                        |     1627 |        196 |        |                                 |       |
+| lib    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
+| wrp    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | st0    | EntityDraculaFinalForm              |     1733 |        251 | Yes    |                                 |       |
 | dra    | func_psp_091224B0                   |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
