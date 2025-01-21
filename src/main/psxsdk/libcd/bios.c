@@ -6,18 +6,20 @@ const char D_800106B4[] = "%s:(%s) Sync=%s, Ready=%s\n";
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", getintr);
 
+int CD_sync(int, int);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_sync);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_ready);
 
+s32 CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_cw);
 
 const char aIdBiosCV177199[] =
     "$Id: bios.c,v 1.77 1996/05/13 06:58:16 suzu Exp $";
 
 extern u8* D_80032D6C;
-extern volatile s8* D_80032D68;
-extern volatile s8* D_80032D70;
+extern volatile u8* D_80032D68;
+extern volatile u8* D_80032D70;
 extern volatile u8* D_80032D74;
 
 s32 CD_vol(CdlATV* arg0) {
@@ -100,11 +102,79 @@ void CD_initintr(void) {
     InterruptCallback(2, callback);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_init);
+extern volatile u8 D_80032D84;
+extern u_char CD_mode;
+extern u_char CD_com;
+
+int CD_init(void) {
+    puts("CD_init:");
+    printf("addr=%08x\n", &D_80032D84);
+    CD_com = 0;
+    CD_mode = 0;
+    CD_cbready = NULL;
+    CD_cbsync = NULL;
+    CD_status1 = 0;
+    CD_status = 0;
+    ResetCallback();
+    InterruptCallback(2, callback);
+
+    *D_80032D68 = 1;
+    while (*D_80032D74 & 7) {
+        *D_80032D68 = 1;
+        *D_80032D74 = 7;
+        *D_80032D70 = 7;
+    }
+
+    D_80032D80.b = D_80032D80.c = 0;
+    D_80032D80.a = 2;
+
+    *D_80032D68 = 0;
+    *D_80032D74 = 0;
+    *D_80032D78 = 0x1325;
+
+    CD_cw(1U, NULL, NULL, 0);
+    if (CD_status & 0x10) {
+        CD_cw(1U, NULL, NULL, 0);
+    }
+
+    if (CD_cw(0xAU, NULL, NULL, 0) != 0) {
+        return -1;
+    }
+
+    if (CD_cw(0xCU, NULL, NULL, 0) != 0) {
+        return -1;
+    }
+
+    if (CD_sync(0, 0) != 2) {
+        return -1;
+    }
+    return 0;
+}
+
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_datasync);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_getsector);
+extern s32* D_80032D9C;
+extern s32* D_80032DA0;
+extern s32* D_80032DA4;
+extern s32* D_80032DA8;
+extern volatile s32* D_80032DAC;
+
+s32 CD_getsector(void* buffer, size_t size) {
+    *D_80032D68 = 0;
+    *D_80032D74 = 0x80;
+    *D_80032D9C = 0x20943;
+    *D_80032D78 = 0x1323;
+    *D_80032DA0 |= 0x8000;
+    *D_80032DA4 = buffer;
+    *D_80032DA8 = size | 0x10000;
+    while (!(*D_80032D68 & 0x40)) {};
+    *D_80032DAC = 0x11000000;
+    while (*D_80032DAC & 0x01000000) {};
+    *D_80032D78 = 0x1325;
+    return 0;
+}
+
 
 extern int CD_TestParmNum;
 
