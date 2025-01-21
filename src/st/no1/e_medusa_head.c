@@ -85,7 +85,6 @@ void EntityMedusaHeadYellow(Entity* self) {
     EntityMedusaHeadBlue(self);
 }
 
-// Medusa Head
 void EntityMedusaHeadBlue(Entity* self) {
     s32 side;
     Entity* player = &PLAYER;
