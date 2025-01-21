@@ -113,7 +113,7 @@ void EntityMedusaHeadBlue(Entity* self) {
     if (!self->params) {
         InitializeEntity(g_EInitMedusaHeadBlue);
     } else {
-        InitializeEntity(g_EInitMedussaHeadYellow);
+        InitializeEntity(g_EInitMedusaHeadYellow);
     }
 
     self->posY.i.hi = player->posY.i.hi - 0;

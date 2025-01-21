@@ -78,4 +78,4 @@ extern EInit g_EInitSkeletonBone;
 
 // Meduse Head
 extern EInit g_EInitMedusaHeadBlue;
-extern EInit g_EInitMedussaHeadYellow;
+extern EInit g_EInitMedusaHeadYellow;
