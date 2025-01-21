@@ -837,7 +837,7 @@
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
 | st0    | EntityDraculaRainAttack             |      192 |         37 |        |                                 |       |
 | dra    | func_800FE3C4                       |      194 |         20 |        |                                 |       |
-| dra    | func_psp_09116450                   |      196 |         22 |        |                                 |       |
+| dra    | func_psp_09116450                   |      196 |         22 |        | https://decomp.me/scratch/lVQqi | 0.974 |
 | dra    | func_psp_091398F0                   |      196 |         35 | Yes    |                                 |       |
 | lib    | func_psp_09253E20                   |      197 |          1 |        |                                 |       |
 | dra    | func_psp_09138DA0                   |      197 |         41 |        |                                 |       |
@@ -1127,7 +1127,7 @@
 | dra    | func_psp_091224B0                   |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_psp_09261718                   |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.993 |
-| lib    | func_psp_09258B50                   |     1920 |        313 |        |                                 |       |
+| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.775 |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
