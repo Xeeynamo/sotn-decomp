@@ -63,12 +63,18 @@ typedef enum EntityIDs {
     /* 0x53 */ E_ID_55,
     /* 0x56 */ E_ID_56,
     /* 0x58 */ E_ID_58 = 0x58,
-    /* 0x5A */ E_ID_5A = 0x5A,
-    /* 0x5B */ E_ID_5B,
+    /* 0x5A */ E_MEDUSA_HEAD_BLUE = 0x5A,
+    /* 0x5B */ E_MEDUSA_HEAD_YELLOW,
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
+
+extern EInit D_us_8018095C;
 
 // Skeleton
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
+
+// Meduse Head
+extern EInit g_EInitMedusaHeadBlue;
+extern EInit g_EInitMedussaHeadYellow;

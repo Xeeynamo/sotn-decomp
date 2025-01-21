@@ -4,9 +4,9 @@
 typedef struct {
     s16 yMax;
     s16 yMin;
-    s16 timer;
-    s16 count;
-    s16 chance;
+    s16 spawnDelay;
+    s16 spawnCount;
+    s16 yellowChance; // chance out of 15 that medusa head will be yellow
     s16 zPriority;
 } MedusaHeadSpawnerParams;
 
@@ -14,24 +14,36 @@ typedef struct {
     s32 velocityX;
     s16 posX;
     s16 facingLeft;
-} MedusaHeadParams;
+} MedusaHeadInitParams;
 
-extern u16 D_us_8018095C[];
-extern u16 D_us_80180B48[];
-extern u16 D_us_80180B54[];
-extern MedusaHeadSpawnerParams D_us_801833D0[];
-extern u8 D_us_80183430[];
-extern MedusaHeadParams D_us_80183438[];
+// clang-format off
+static MedusaHeadSpawnerParams medusaHeadSpawnerParams[] = {
+    {.yMax = 0x20, .yMin = 0x200, .spawnDelay = 0xC0, .spawnCount = 0x06, .yellowChance = 0x00, .zPriority = 0x00},
+    {.yMax = 0x00, .yMin = 0x1B0, .spawnDelay = 0xC0, .spawnCount = 0x04, .yellowChance = 0x02, .zPriority = 0x00},
+    {.yMax = 0x00, .yMin = 0xF00, .spawnDelay = 0x80, .spawnCount = 0x08, .yellowChance = 0x08, .zPriority = 0x00},
+    {.yMax = 0x00, .yMin = 0xF00, .spawnDelay = 0x50, .spawnCount = 0x20, .yellowChance = 0x10, .zPriority = 0x00},
+    {.yMax = 0x00, .yMin = 0xF00, .spawnDelay = 0x30, .spawnCount = 0x20, .yellowChance = 0x08, .zPriority = 0xB0},
+    {.yMax = 0x00, .yMin = 0x1E0, .spawnDelay = 0x80, .spawnCount = 0x10, .yellowChance = 0x08, .zPriority = 0x00},
+    {.yMax = 0x00, .yMin = 0xF00, .spawnDelay = 0x50, .spawnCount = 0x10, .yellowChance = 0x10, .zPriority = 0x00},
+    {.yMax = 0x00, .yMin = 0xF00, .spawnDelay = 0x50, .spawnCount = 0x10, .yellowChance = 0x10, .zPriority = 0x00},
+};
+// clang-format on
 
-extern void func_us_801D5808(Entity* self);
-extern void func_us_801D582C(Entity* self);
+static u8 anim_medusa_head[] = {8, 1, 8, 2, 0, 0, 0, 0};
 
-// Medusa Head spawner
-void func_us_801D563C(Entity* self) {
+static MedusaHeadInitParams medusaHeadInitParams[] = {
+    {.velocityX = FIX(1.125), .posX = 0xFFF0, .facingLeft = 1},
+    {.velocityX = FIX(-1.125), .posX = 0x0110, .facingLeft = 0},
+};
+
+extern void EntityMedusaHeadYellow(Entity* self);
+extern void EntityMedusaHeadBlue(Entity* self);
+
+void EntityMedusaHeadSpawner(Entity* self) {
     Entity* tempEntity;
 
     u8 index = self->params;
-    MedusaHeadSpawnerParams* params = D_us_801833D0;
+    MedusaHeadSpawnerParams* params = medusaHeadSpawnerParams;
     params += index;
     FntPrint("y:%02x\n", g_Tilemap.scrollY.i.hi);
     if (self->flags & FLAG_DEAD) {
@@ -49,34 +61,33 @@ void func_us_801D563C(Entity* self) {
             self->ext.medusaHead.timer--;
             return;
         }
-        tempEntity =
-            AllocEntity(&g_Entities[128], &g_Entities[128 + params->count]);
+        tempEntity = AllocEntity(
+            &g_Entities[128], &g_Entities[128 + params->spawnCount]);
         if (tempEntity != NULL) {
             DestroyEntity(tempEntity);
-            if ((rand() & 0xF) < params->chance) {
-                tempEntity->entityId = E_ID_5B;
-                tempEntity->pfnUpdate = func_us_801D5808;
+            if ((rand() & 0xF) < params->yellowChance) {
+                tempEntity->entityId = E_MEDUSA_HEAD_YELLOW;
+                tempEntity->pfnUpdate = EntityMedusaHeadYellow;
             } else {
-                tempEntity->entityId = E_ID_5A;
-                tempEntity->pfnUpdate = func_us_801D582C;
+                tempEntity->entityId = E_MEDUSA_HEAD_BLUE;
+                tempEntity->pfnUpdate = EntityMedusaHeadBlue;
             }
             tempEntity->zPriority = params->zPriority;
-            self->ext.medusaHead.timer = params->timer;
+            self->ext.medusaHead.timer = params->spawnDelay;
             return;
         }
         self->ext.medusaHead.timer++;
     }
 }
 
-// Medusa Head helper
-void func_us_801D5808(Entity* self) {
+void EntityMedusaHeadYellow(Entity* self) {
     self->params = 1;
-    func_us_801D582C(self);
+    EntityMedusaHeadBlue(self);
 }
 
 // Medusa Head
-void func_us_801D582C(Entity* self) {
-    s32 dir;
+void EntityMedusaHeadBlue(Entity* self) {
+    s32 side;
     Entity* player = &PLAYER;
 
     if (self->flags & FLAG_DEAD) {
@@ -84,16 +95,16 @@ void func_us_801D582C(Entity* self) {
         return;
     }
     if (self->step) {
-        AnimateEntity(D_us_80183430, self);
+        AnimateEntity(anim_medusa_head, self);
         if (self->velocityY > 0) {
             self->animCurFrame += 2;
         }
         self->velocityY += self->ext.medusaHead.accelY;
-        dir = self->velocityY;
-        if (dir < 0) {
-            dir = -dir;
+        side = self->velocityY;
+        if (side < 0) {
+            side = -side;
         }
-        if (dir >= FIX(2.5)) {
+        if (side >= FIX(2.5)) {
             self->ext.medusaHead.accelY = -self->ext.medusaHead.accelY;
         }
         MoveEntity();
@@ -101,25 +112,25 @@ void func_us_801D582C(Entity* self) {
     }
 
     if (!self->params) {
-        InitializeEntity(D_us_80180B48);
+        InitializeEntity(g_EInitMedusaHeadBlue);
     } else {
-        InitializeEntity(D_us_80180B54);
+        InitializeEntity(g_EInitMedussaHeadYellow);
     }
 
     self->posY.i.hi = player->posY.i.hi - 0;
-    dir = 0;
+    side = 0;
     if (player->posX.i.hi < 0x50) {
-        dir = 1;
+        side = 1;
     } else if (player->posX.i.hi < 0xB1) {
         if ((rand() & 3) == 0) {
-            dir = player->facingLeft;
+            side = player->facingLeft;
         } else {
-            dir = ((player->facingLeft + 1) & 1);
+            side = ((player->facingLeft + 1) & 1);
         }
     }
-    self->posX.i.hi = D_us_80183438[dir].posX;
-    self->velocityX = D_us_80183438[dir].velocityX;
-    self->facingLeft = D_us_80183438[dir].facingLeft;
+    self->posX.i.hi = medusaHeadInitParams[side].posX;
+    self->velocityX = medusaHeadInitParams[side].velocityX;
+    self->facingLeft = medusaHeadInitParams[side].facingLeft;
     self->velocityY = FIX(2.5) - ((Random() & 0xF) * FIX(2.5) >> 3);
     if (self->velocityY > 0) {
         self->ext.medusaHead.accelY = FIX(-5.0 / 32);

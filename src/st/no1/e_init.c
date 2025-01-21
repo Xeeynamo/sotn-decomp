@@ -89,9 +89,9 @@ void EntitySkeletonApeBarrel(Entity* self);
 void func_us_801D544C(Entity* self);
 void func_us_801C0B9C(Entity* self);
 void func_us_801D4400(Entity* self);
-void func_us_801D563C(Entity* self);
-void func_us_801D582C(Entity* self);
-void func_us_801D5808(Entity* self);
+void EntityMedusaHeadSpawner(Entity* self);
+void EntityMedusaHeadBlue(Entity* self);
+void EntityMedusaHeadYellow(Entity* self);
 void func_us_801B6198(Entity* self);
 void EntityMistDoor(Entity* self);
 void func_us_801C10F4(Entity* self);
@@ -185,9 +185,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D544C,
     func_us_801C0B9C,
     func_us_801D4400,
-    func_us_801D563C,
-    func_us_801D582C,
-    func_us_801D5808,
+    EntityMedusaHeadSpawner,
+    EntityMedusaHeadBlue,
+    EntityMedusaHeadYellow,
     func_us_801B6198,
     EntityMistDoor,
     func_us_801C10F4};
@@ -236,5 +236,5 @@ EInit D_us_80180B18 = {ANIMSET_OVL(0x0D), 0x01, 0x50, 0x228, 0x0B1};
 EInit D_us_80180B24 = {ANIMSET_OVL(0x0E), 0x01, 0x4F, 0x225, 0x053};
 EInit D_us_80180B30 = {ANIMSET_OVL(0x0E), 0x28, 0x4F, 0x225, 0x054};
 EInit D_us_80180B3C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
-EInit D_us_80180B48 = {ANIMSET_OVL(0x0F), 0x00, 0x56, 0x22B, 0x12F};
-EInit D_us_80180B54 = {ANIMSET_OVL(0x0F), 0x00, 0x56, 0x22C, 0x130};
+EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(0x0F), 0x00, 0x56, 0x22B, 0x12F};
+EInit g_EInitMedussaHeadYellow = {ANIMSET_OVL(0x0F), 0x00, 0x56, 0x22C, 0x130};
