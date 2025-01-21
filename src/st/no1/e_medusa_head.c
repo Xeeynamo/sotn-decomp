@@ -6,7 +6,7 @@ typedef struct {
     s16 yMin;
     s16 spawnDelay;
     s16 spawnCount;
-    s16 yellowChance; // chance out of 15 that medusa head will be yellow
+    s16 yellowChance; // chance out of 16 that medusa head will be yellow
     s16 zPriority;
 } MedusaHeadSpawnerParams;
 
