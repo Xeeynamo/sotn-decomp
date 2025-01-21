@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-void SetPlayerStep(PlayerSteps step) {
+void SetPlayerStep(s16 step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }

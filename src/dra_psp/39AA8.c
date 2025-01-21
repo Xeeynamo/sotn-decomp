@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", SetPlayerStep);
+void SetPlayerStep(s16 step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09116450);
 
