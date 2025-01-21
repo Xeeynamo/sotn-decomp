@@ -70,7 +70,64 @@ void func_8010D59C(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09116720);
+u8 g_shadowOpacityReductionTable[] = {
+    4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
+u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
+                     32, 32, 32, 32, 32, 32, 32, 32};
+
+// Equivalent in RIC is func_8015C6D4
+void func_8010D800(void) {
+    byte pad[0x28];
+    PlayerDraw* plDraw;
+    Primitive* prim;
+    s32 i;
+    u8 temp_t0;
+    u8 temp_t1;
+    u8 temp_t2;
+
+    temp_t2 = g_Entities[1].ext.entSlot1.unk1;
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    plDraw = &g_PlayerDraw[1];
+    temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.entSlot1.unk2];
+    temp_t0 = g_D_800ACF3C[g_Entities[1].ext.entSlot1.unk2];
+
+    for (i = 0; i < 6; prim = prim->next, i++) {
+        if (prim->r0 > temp_t0) {
+            prim->r0 -= temp_t1;
+        }
+        if (prim->r0 < 112 && prim->b0 < 240) {
+            prim->b0 += 6;
+        }
+        if (prim->r0 < 88) {
+            prim->y1 = 16;
+        } else {
+            prim->y1 = 0;
+        }
+        if (prim->r0 <= temp_t0) {
+            prim->x1 = 0;
+        }
+        if (!((i ^ g_Timer) & 1)) {
+            continue;
+        }
+
+        g_Entities[(i / 2) + 1].posX.i.hi = prim->x0;
+        g_Entities[(i / 2) + 1].posY.i.hi = prim->y0;
+        g_Entities[(i / 2) + 1].animCurFrame = prim->x1;
+        g_Entities[(i / 2) + 1].drawMode = prim->y1;
+        g_Entities[(i / 2) + 1].facingLeft = prim->x2;
+        g_Entities[(i / 2) + 1].palette = prim->y2;
+        g_Entities[(i / 2) + 1].zPriority = PLAYER.zPriority - 2;
+        if (temp_t2) {
+            g_Entities[(i / 2) + 1].animCurFrame = 0;
+            prim->x1 = 0;
+        }
+
+        PRED(plDraw) = PBLU(plDraw) = prim->r0;
+        PGRN(plDraw) = prim->b0;
+        plDraw->enableColorBlend = true;
+        plDraw++;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", SetPlayerAnim);
 
