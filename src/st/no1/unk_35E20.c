@@ -74,8 +74,9 @@ void func_us_801B5E20(Entity* self) {
                 }
                 posY += 0x10;
             }
-            g_api.PlaySfx(0x634);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             break;
+
         case 9:
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
