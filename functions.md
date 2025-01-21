@@ -915,7 +915,7 @@
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
 | dra    | UpdateAnim                          |      288 |         15 |        |                                 |       |
-| dra    | func_psp_09116720                   |      288 |         19 |        |                                 |       |
+| dra    | func_psp_09116720                   |      288 |         19 |        | https://decomp.me/scratch/xTydq | 0.997 |
 | lib    | func_psp_09238EC8                   |      290 |         42 |        |                                 |       |
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
 |        | ProcessEvent                        |      293 |         42 |        |                                 |       |
@@ -1127,7 +1127,7 @@
 | dra    | func_psp_091224B0                   |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_psp_09261718                   |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.993 |
-| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.775 |
+| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.89  |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
