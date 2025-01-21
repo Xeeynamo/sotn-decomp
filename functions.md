@@ -490,9 +490,9 @@
 | dra    | func_psp_09137038                   |       61 |         12 |        |                                 |       |
 | dra    | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09118330                   |       62 |          5 |        |                                 |       |
+| lib    | func_psp_09243F18                   |       62 |          5 |        |                                 |       |
 | lib    | func_psp_0925D350                   |       62 |          5 |        |                                 |       |
 | lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
-| lib    | func_psp_09243F18                   |       62 |          5 |        |                                 |       |
 | st0    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | st0    | ST0_EntityBackgroundBlock           |       62 |          5 |        | https://decomp.me/scratch/WQI2Y | 0.998 |
 | wrp    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -506,6 +506,7 @@
 | dra    | AllocPrimitives                     |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
 | dra    | func_800EDB58                       |       63 |          8 |        | https://decomp.me/scratch/UDSDO | 0.612 |
 |        | ServantUnk0                         |       63 |         12 |        |                                 |       |
+| lib    | 13C60.rodata                        |       64 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090F17D8                   |       64 |          5 |        |                                 |       |
 | dra    | func_801026BC                       |       64 |          7 |        |                                 |       |
 | dra    | func_psp_09127B50                   |       65 |          8 |        |                                 |       |
@@ -545,14 +546,14 @@
 | dra    | func_psp_090F0220                   |       71 |          7 |        |                                 |       |
 | dra    | func_psp_09142ED8                   |       71 |          7 |        |                                 |       |
 | lib    | func_psp_09250468                   |       71 |          7 |        |                                 |       |
-| lib    | func_psp_09266028                   |       71 |          7 |        |                                 |       |
 | lib    | func_psp_09244210                   |       71 |          7 |        |                                 |       |
+| lib    | func_psp_09266028                   |       71 |          7 |        |                                 |       |
 | st0    | GetNormalizedAngle                  |       71 |          7 |        |                                 |       |
 | wrp    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | wrp    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | dra    | func_800FDD44                       |       71 |          8 |        |                                 |       |
-| lib    | func_psp_09250DE8                   |       71 |          9 |        |                                 |       |
 | lib    | func_psp_09254CD0                   |       71 |          9 |        |                                 |       |
+| lib    | func_psp_09250DE8                   |       71 |          9 |        |                                 |       |
 | dra    | func_psp_090E3030                   |       71 |         10 |        | https://decomp.me/scratch/ewhRs | 0.989 |
 | dra    | BatFormFinished                     |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40                   |       72 |          5 |        |                                 |       |
@@ -831,7 +832,7 @@
 | dra    | func_psp_09123E50                   |      186 |         14 |        |                                 |       |
 | lib    | func_psp_0924EFB0                   |      186 |         20 |        |                                 |       |
 | st0    | UnkCollisionFunc3                   |      186 |         20 |        |                                 |       |
-| lib    | func_psp_09254DC0                   |      186 |         25 |        | https://decomp.me/scratch/JOtf5 | 0.987 |
+| lib    | EntityChair                         |      186 |         25 |        |                                 |       |
 | dra    | HandleTitle                         |      186 |         35 | Yes    |                                 |       |
 | dra    | MainMenuHandler                     |      187 |         28 | Yes    |                                 |       |
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
@@ -934,6 +935,7 @@
 | dra    | func_psp_09122008                   |      312 |         24 |        |                                 |       |
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
 | lib    | func_psp_09256018                   |      315 |         26 |        |                                 |       |
+| lib    | unk_1D9E8.rodata                    |      320 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090EE5D0                   |      323 |         37 |        |                                 |       |
 | st0    | func_801AF380                       |      325 |          7 |        |                                 |       |
 | lib    | func_psp_09251168                   |      330 |         47 | Yes    |                                 |       |
@@ -966,7 +968,6 @@
 | st0    | func_psp_0923AD68                   |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | wrp    | func_psp_0923AD68                   |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | dra    | func_psp_09104C80                   |      374 |         48 |        |                                 |       |
-| lib    | 13C60.rodata                        |      378 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09132550                   |      381 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
 | lib    | func_psp_092386A8                   |      382 |         41 |        |                                 |       |
 | st0    | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
@@ -1127,7 +1128,7 @@
 | dra    | func_psp_091224B0                   |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_psp_09261718                   |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.993 |
-| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.89  |
+| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.98  |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
