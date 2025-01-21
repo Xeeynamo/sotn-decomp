@@ -44,7 +44,12 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, lib_psp/pspeu]
+      - [0x11A88, c, lib/collision]
+      - [0x13C60, c, lib_psp/13C60]
       - [0x36780, data]
+      - [0x38138, .data, lib/collision]
+      - [0x38510, data]
       - [0x6D800, .rodata, lib_psp/pspeu]
+      - [0x6D940, .rodata, lib_psp/13C60]
       - [0x6DD80, bss, 6DD80]
   - [0x6EC00]
