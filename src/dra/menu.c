@@ -2122,16 +2122,16 @@ void MenuDraw(void) {
             break;
         case MENU_DG_EQUIP_OVERVIEW:
             MenuDrawStats(2);
-            equipIndex = g_Status.equipment[0];
+            equipIndex = g_Status.equipment[LEFT_HAND_SLOT];
             equip = &g_EquipDefs[equipIndex];
             MenuDrawStr(equip->name, 112, 30, menu);
-            DrawConsumableCount(equipIndex, 0, menu);
+            DrawConsumableCount(equipIndex, LEFT_HAND_SLOT, menu);
             LoadEquipIcon(equip->icon, equip->iconPalette, 0x10);
 
-            equipIndex = g_Status.equipment[1];
+            equipIndex = g_Status.equipment[RIGHT_HAND_SLOT];
             equip = &g_EquipDefs[equipIndex];
             MenuDrawStr(equip->name, 112, 43, menu);
-            DrawConsumableCount(equipIndex, 1, menu);
+            DrawConsumableCount(equipIndex, RIGHT_HAND_SLOT, menu);
             flag = equip->itemCategory == 5;
             LoadEquipIcon(equip->icon, equip->iconPalette, 0x11);
 
@@ -3375,11 +3375,13 @@ block_4:
         func_800EA5E4(0);
         func_800FAC30();
         func_800FB9BC();
-        g_PrevEquippedWeapons[0] = g_Status.equipment[0];
-        g_PrevEquippedWeapons[1] = g_Status.equipment[1];
+        g_PrevEquippedWeapons[LEFT_HAND_SLOT] =
+            g_Status.equipment[LEFT_HAND_SLOT];
+        g_PrevEquippedWeapons[RIGHT_HAND_SLOT] =
+            g_Status.equipment[RIGHT_HAND_SLOT];
         if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
-            *g_PrevEquippedWeapons = 0xD8;
-            g_PrevEquippedWeapons[1] = 0xD8;
+            g_PrevEquippedWeapons[LEFT_HAND_SLOT] = 0xD8;
+            g_PrevEquippedWeapons[RIGHT_HAND_SLOT] = 0xD8;
         }
         g_ServantPrevious = g_Servant;
         for (i = 0; i < NUM_SPELLS; i++) {
