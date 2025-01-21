@@ -1,7 +1,124 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B5E20);
+extern s32 D_80097408[];
+extern u16 D_us_80180938[];
+extern u8* D_us_80180DD8[];
+extern u8 D_us_80180E00[];
+extern u8 D_us_80180E0C[];
+extern u16 D_us_80180E18[];
+extern u16 D_us_80180E2C[];
+extern u16 D_us_80180E40[];
+extern u8 D_us_80180E54[];
+extern u16 D_us_80180E60[];
+extern s16 D_us_80180E78[];
+extern s32 D_psp_0929A590;
+
+void func_us_801B5E20(Entity* self) {
+    Entity* tempEntity;
+    s32 i;
+    s16 posY;
+    s32 count;
+    s16* ptr;
+    u16 params;
+
+    params = self->params >> 0xC;
+    if (!self->step) {
+        InitializeEntity(D_us_80180938);
+        self->zPriority = D_80097408[0] - 0x14;
+        self->drawMode = D_us_80180E54[params];
+        self->hitboxHeight = D_us_80180E00[params];
+        self->animSet = D_us_80180E2C[params];
+        self->unk5A = D_us_80180E40[params];
+        self->palette = D_us_80180E18[params];
+        self->hitboxOffY = D_us_80180E60[params];
+    }
+    AnimateEntity(D_us_80180DD8[params], self);
+    if (self->hitParams) {
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (tempEntity != NULL) {
+            CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
+            tempEntity->params = D_us_80180E0C[params];
+        }
+        switch (params) {
+        case 2:
+        case 3:
+            self->facingLeft = GetSideToPlayer() & 1;
+            posY = self->posY.i.hi - 0x28;
+            if (params == 2) {
+                count = 4;
+            } else {
+                count = 3;
+            }
+            ptr = D_us_80180E78;
+            if (params == 3) {
+                ptr += 5;
+            }
+            for (i = 0; i < count; i++) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                    CreateEntityFromEntity(D_psp_0929A590, self, tempEntity);
+#else
+                    CreateEntityFromEntity(E_ID_5C, self, tempEntity);
+#endif
+                    tempEntity->posY.i.hi = posY;
+                    tempEntity->params = *(ptr + i);
+                    tempEntity->facingLeft = self->facingLeft;
+                }
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    tempEntity->posY.i.hi = posY;
+                    tempEntity->params = 0;
+                }
+                posY += 0x10;
+            }
+            g_api.PlaySfx(SFX_CANDLE_HIT);
+            break;
+
+        case 9:
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromCurrentEntity(D_psp_0929A590, tempEntity);
+#else
+                CreateEntityFromCurrentEntity(E_ID_5C, tempEntity);
+#endif
+                tempEntity->params = 0x100;
+            }
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
+            break;
+
+        case 7:
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
+                tempEntity->params = self->params & 0x1FF;
+            }
+            PreventEntityFromRespawning(self);
+            DestroyEntity(self);
+            return;
+
+        case 8:
+            g_api.PlaySfx(SFX_GLASS_BREAK_E);
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
+                tempEntity->params = 3;
+            }
+            PreventEntityFromRespawning(self);
+            DestroyEntity(self);
+            return;
+
+        default:
+            g_api.PlaySfx(SFX_CANDLE_HIT);
+            break;
+        }
+        ReplaceBreakableWithItemDrop(self);
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B6198);
 

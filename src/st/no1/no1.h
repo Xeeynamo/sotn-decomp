@@ -22,7 +22,7 @@ typedef enum EntityIDs {
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
     // /* 0x0B */ E_RELIC_ORB,
-    // /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_HEART_DROP = 0xC,
     // /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
@@ -65,6 +65,7 @@ typedef enum EntityIDs {
     /* 0x58 */ E_ID_58 = 0x58,
     /* 0x5A */ E_ID_5A = 0x5A,
     /* 0x5B */ E_ID_5B,
+    /* 0x5C */ E_ID_5C,
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
