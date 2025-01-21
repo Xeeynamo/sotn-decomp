@@ -53,7 +53,7 @@ segments:
       - [0x4C78, c, wrp_psp/blit_char]
       - [0x5308, c, wrp_psp/e_collect]
       - [0x7448, c, wrp_psp/e_misc]
-      - [0x95D0, c, wrp_psp/collision]
+      - [0x95D0, c, wrp/collision]
       - [0xB7A8, c, wrp/popup]
       - [0xBDA0, c, wrp/e_room_fg]
       - [0xBEB8, c, wrp/st_common]
@@ -84,10 +84,8 @@ segments:
       - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
       - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
-      - [0xF060, data] # D_psp_092466E0
-      - [0xF390, data] # D_psp_09246A10
-      - [0xF3A0, data] # D_psp_09246A20
-      - [0xF440, data] # D_psp_09246AC0
+      - [0xF060, .data, wrp/collision]
+      - [0xF438, data] # D_psp_09246AB8
       - [0xF450, data] # D_psp_09246AD0
       - [0xF460, data] # eRoomForegroundInit
       - [0xF700, data] # D_psp_09246D80
