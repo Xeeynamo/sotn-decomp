@@ -99,9 +99,9 @@ void* DMACallback(int dma, void (*func)());
 
 void CdDataCallback(void (*func)()) { DMACallback(3, func); }
 
-void CD_datasync();
+void CD_datasync(int);
 
-void CdDataSync(void) { CD_datasync(); }
+void CdDataSync(int mode) { CD_datasync(mode); }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntToPos);
 
