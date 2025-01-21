@@ -6,7 +6,69 @@ void SetPlayerStep(s16 step) {
     PLAYER.step_s = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09116450);
+u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
+                     4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
+
+void func_8010D59C(void) {
+    byte stackpad[40];
+    Primitive* prim;
+    s32 i;
+
+    if (g_Entities[1].ext.entSlot1.unk0) {
+        return;
+    }
+    switch (PLAYER.ext.player.anim) {
+    case 0x5E:
+    case 0x5D:
+    case 0x60:
+    case 0x61:
+    case 0x62:
+        g_Entities[1].ext.entSlot1.unk2 = 10;
+        return;
+    }
+    if ((g_Player.padTapped & GAMEBUTTONS) ||
+        ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
+         GAMEBUTTONS) ||
+        (PLAYER.velocityY > FIX(0.5))) {
+        g_Entities[1].ext.entSlot1.unk2 = 0;
+        g_Entities[1].ext.entSlot1.unk3 = 0;
+    } else {
+        if (g_Entities[1].ext.entSlot1.unk2 >= 10) {
+            return;
+        }
+        if (g_Entities[1].ext.entSlot1.unk3 == 0) {
+            g_Entities[1].ext.entSlot1.unk3 =
+                g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
+        }
+        if (--g_Entities[1].ext.entSlot1.unk3 == 0) {
+            g_Entities[1].ext.entSlot1.unk2++;
+            g_Entities[1].ext.entSlot1.unk3 =
+                g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
+        }
+    }
+    if (g_Entities[1].animFrameIdx) {
+        g_Entities[1].animFrameIdx--;
+        return;
+    }
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    for (i = 0; i < 6; i++) {
+        if (i == g_Entities[1].entityId) {
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            prim->x0 = PLAYER.posX.i.hi;
+            prim->y0 = PLAYER.posY.i.hi;
+            prim->x1 = PLAYER.animCurFrame;
+            prim->y1 = 0;
+            prim->x2 = PLAYER.facingLeft;
+            prim->y2 = PLAYER.palette;
+        }
+        prim = prim->next;
+    }
+    g_Entities[1].animFrameIdx = 2;
+    g_Entities[1].entityId++;
+    if (g_Entities[1].entityId >= 6) {
+        g_Entities[1].entityId = 0;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09116720);
 
