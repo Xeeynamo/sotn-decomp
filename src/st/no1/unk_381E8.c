@@ -17,7 +17,6 @@ extern AnimationFrame D_us_80181108[];
 extern AnimationFrame* D_us_80181348[];
 extern AnimationFrame* D_us_80181368[];
 extern s32 D_us_80181388;
-extern u16 g_EInitCommon[];
 
 void func_us_801B84E4(Entity* self) {
     s16 posX;

@@ -40,7 +40,7 @@ segments:
     subsegments:
       - [0x0, data]
       - [0x7C0, .data, e_init]
-      - [0xB60, data]
+      - [0xB60, .data, e_mouse]
       - [0xC84, .data, e_red_door]
       - [0xC9C, data]
       - [0xCFC, .data, st_debug]
@@ -60,7 +60,7 @@ segments:
       - [0x33D0, .data, e_medusa_head]
       - [0x3448, .data, e_mist_door]
       - [0x3488, data]
-      - [0x34670, .rodata, e_mouse]
+      - [0x34668, .rodata, e_mouse]
       - [0x34670, .rodata, e_red_door]
       - [0x34688, .rodata, unk_35E20]
       - [0x346BC, .rodata, e_chair]
