@@ -282,7 +282,7 @@ void EntityArmorLordFireWave(Entity* self) {
     }
 }
 
-void func_us_801D1A94(void) {}
+void func_us_801D1A94(Entity* self) {}
 
 void func_us_801D1A9C(void) {
     Primitive* prim;
