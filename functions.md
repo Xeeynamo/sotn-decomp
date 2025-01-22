@@ -129,7 +129,7 @@
 | wrp    | FallEntity                          |       20 |          2 |        | https://decomp.me/scratch/ZIw3V | 0.986 |
 | dra    | func_psp_091119E0                   |       20 |          3 |        |                                 |       |
 | dra    | func_psp_0913D798                   |       21 |          1 |        |                                 |       |
-| dra    | SetPlayerAnim                       |       21 |          1 |        |                                 |       |
+| dra    | SetPlayerAnim                       |       21 |          1 |        | https://decomp.me/scratch/G188v | 0.702 |
 | lib    | func_psp_0924F9C0                   |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
@@ -664,7 +664,7 @@
 | lib    | func_psp_0924DF08                   |       97 |          7 |        |                                 |       |
 | lib    | func_psp_09248FB0                   |       97 |         12 |        |                                 |       |
 | wrp    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
-| dra    | func_psp_09116B88                   |       98 |         10 |        | https://decomp.me/scratch/mGIed | 0.992 |
+| dra    | func_psp_09116B88                   |       98 |         10 |        | https://decomp.me/scratch/FWgSo | 0.992 |
 | lib    | func_psp_09238128                   |       98 |         12 |        |                                 |       |
 | st0    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | wrp    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
@@ -1103,8 +1103,8 @@
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    |                                 |       |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/PhWZ0 | 0.974 |
 | dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/HtGSm | 0.708 |
-| lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/V04Wm | 0.998 |
-| wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/V04Wm | 0.998 |
+| lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
+| wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | func_psp_09130B00                   |     1188 |         81 |        | https://decomp.me/scratch/70r4s | 0.999 |
 | tt_000 | UpdateServantDefault                |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
 | lib    | func_psp_0924B568                   |     1202 |        112 | Yes    |                                 |       |
@@ -1128,7 +1128,7 @@
 | dra    | func_psp_091224B0                   |     1738 |        127 | Yes    | https://decomp.me/scratch/1Ktyt | 0.909 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_psp_09261718                   |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.993 |
-| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.98  |
+| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
