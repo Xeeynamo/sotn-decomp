@@ -192,8 +192,6 @@ void func_us_801D1388(Primitive* prim) {
     }
 }
 
-extern u16 g_EInitInteractable[];
-
 void EntityArmorLordFireWave(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -743,7 +741,6 @@ s32 func_us_801D1DAC(void) {
     return 0;
 }
 
-extern u16 D_us_80180ADC[];
 extern s32 D_us_80182D4C;
 extern u8 D_us_80182D50[];
 extern s16 D_us_80182D58[];
@@ -785,9 +782,9 @@ void EntityArmorLord(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_us_80180ADC);
+        InitializeEntity(g_EInitArmorLord);
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ID_4B, self, tempEntity);
+        CreateEntityFromEntity(E_ARMOR_LORD, self, tempEntity);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
 
