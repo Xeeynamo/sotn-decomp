@@ -591,7 +591,6 @@ extern s32 D_us_801D7014;
 extern s32 D_us_801D7018;
 extern s32 D_us_801D701C;
 extern s32 D_us_801D7020;
-extern u16 g_EInitInteractable[];
 
 void func_us_801C10F4(Entity* self) {
     DRAWENV drawEnv;

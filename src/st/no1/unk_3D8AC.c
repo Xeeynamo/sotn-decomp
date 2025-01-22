@@ -2,7 +2,6 @@
 #include "no1.h"
 
 extern s32 D_us_80181570;
-extern u16 g_EInitInteractable[];
 extern s32 D_psp_0929A6C0;
 extern s32 D_psp_0929A6B0;
 extern s32 D_psp_0929A6A8;
@@ -237,7 +236,6 @@ extern s16 D_us_801815B8[];
 extern s16 D_us_801815CC[];
 extern s16 D_us_801815E0[];
 extern SVECTOR D_us_801B4808;
-extern u16 g_EInitInteractable[];
 
 void func_us_801BE2C8(Entity* self) {
     s32 primIndex;
