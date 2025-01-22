@@ -1,8 +1,7 @@
 #include "libcd_internal.h"
+#include <common.h>
 
 extern u8 CD_status;
-extern u8 CD_mode;
-extern u8 CD_com;
 
 int CdStatus(void) { return CD_status; }
 
@@ -31,8 +30,6 @@ int CdReset(int mode) {
     return 1;
 }
 
-void CD_flush();
-
 void CdFlush(void) { CD_flush(); }
 
 extern s32 D_80032AB0;
@@ -45,48 +42,43 @@ s32 CdSetDebug(s32 arg0) {
     return temp_v0;
 }
 
-const char aNone[] = "none";
 extern char* D_80032AC8[];
 
-char* CdComstr(u8 arg0) {
-    if (arg0 > 0x1b) {
-        return &aNone;
+char* CdComstr(unsigned char com) {
+    if (com > 0x1b) {
+        return "none";
     }
 
-    return D_80032AC8[arg0];
+    return D_80032AC8[com];
 }
 
 extern char* D_80032B48[];
 
 char* CdIntstr(u8 intr) {
     if (intr > 6) {
-        return &aNone;
+        return "none";
     }
     return D_80032B48[intr];
 }
 
-void CD_sync();
+int CdSync(int mode, u_char* result) {
+    return CD_sync(mode, result);
+}
 
-void CdSync(void) { CD_sync(); }
+int CdReady(int mode, u_char* result) {
+    return CD_ready(mode, result);
+}
 
-void CD_ready();
-
-void CdReady(void) { CD_ready(); }
-
-long CdSyncCallback(void(*arg0)(void)) {
-    CDCallback temp_v0;
-
-    temp_v0 = CD_cbsync;
-    CD_cbsync = arg0;
-    return temp_v0;
+long CdSyncCallback(void(*func)(void)) {
+    CdlCB old = CD_cbsync;
+    CD_cbsync = func;
+    return old;
 }
 
 long CdReadyCallback(void (*func)(void)) {
-    void (*temp_v0)(u8, u8*);
-
-    temp_v0 = CD_cbready;
+    CdlCB old = CD_cbready;
     CD_cbready = func;
-    return temp_v0;
+    return old;
 }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControl);
@@ -95,33 +87,24 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlF);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlB);
 
-void CD_vol();
-
-s32 CdMix(void) {
-    CD_vol();
+int CdMix(CdlATV* vol) {
+    CD_vol(vol);
     return 1;
 }
 
-s32 CD_getsector();
-
-s32 CdGetSector(void) { return CD_getsector() == 0; }
+int CdGetSector(void* madr, int size) {
+    return CD_getsector(madr, size) == 0;
+}
 
 void* DMACallback(int dma, void (*func)());
 
-void CdDataCallback(void (*func)()) { DMACallback(3, func); }
+long CdDataCallback(void (*func)()) {
+    return DMACallback(3, func);
+}
 
 void CD_datasync(int);
 
 void CdDataSync(int mode) { CD_datasync(mode); }
-
-// TODO: fix libcd.h
-/* Location */
-typedef struct {
-    u_char minute;
-    u_char second;
-    u_char sector;
-    u_char track;
-} CdlLOC;
 
 CdlLOC* CdIntToPos(int i, CdlLOC* p) {
     inline int ENCODE_BCD(n) {

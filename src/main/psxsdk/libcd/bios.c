@@ -1,47 +1,49 @@
 #include "libcd_internal.h"
 #include "../libspu/libspu_internal.h"
-#include <psxsdk/libcd.h>
+#include <common.h>
 
+// this is a string constant in several of the
+// uncompiled functions below
 const char D_800106B4[] = "%s:(%s) Sync=%s, Ready=%s\n";
 
+int getintr();
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", getintr);
 
-int CD_sync(int, int);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_sync);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_ready);
 
-s32 CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3);
+int CD_cw(unsigned char arg0, unsigned char* arg1, unsigned char* arg2, int arg3);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_cw);
 
 const char aIdBiosCV177199[] =
     "$Id: bios.c,v 1.77 1996/05/13 06:58:16 suzu Exp $";
 
-extern u8* D_80032D6C;
-extern volatile u8* D_80032D68;
-extern volatile u8* D_80032D70;
-extern volatile u8* D_80032D74;
+extern unsigned char* D_80032D6C;
+extern volatile unsigned char* D_80032D68;
+extern volatile unsigned char* D_80032D70;
+extern volatile unsigned char* D_80032D74;
 
-s32 CD_vol(CdlATV* arg0) {
+int CD_vol(CdlATV* vol) {
     *D_80032D68 = 2;
-    *D_80032D70 = arg0->val0;
-    *D_80032D74 = arg0->val1;
+    *D_80032D70 = vol->val0;
+    *D_80032D74 = vol->val1;
     *D_80032D68 = 3;
-    *D_80032D6C = arg0->val2;
-    *D_80032D70 = arg0->val3;
+    *D_80032D6C = vol->val2;
+    *D_80032D70 = vol->val3;
     *D_80032D74 = 0x20;
     return 0;
 }
 
-extern volatile s32* D_80032D78;
+extern volatile int* D_80032D78;
 
 typedef struct {
-    u8 a, b, c;
+    unsigned char a, b, c;
 } CD_flush_struct;
 
 extern volatile CD_flush_struct D_80032D80;
-extern volatile u8 D_80032D81[];
-extern volatile u8 D_80032D82;
+extern volatile unsigned char D_80032D81[];
+extern volatile unsigned char D_80032D82;
 
 int CD_flush(void) {
     *D_80032D68 = 1;
@@ -60,11 +62,11 @@ int CD_flush(void) {
 
 extern union SpuUnion* D_80032D7C;
 
-s32 CD_initvol(void) {
-    u8 data[4];
+int CD_initvol(void) {
+    unsigned char data[4];
 
-    if ((u16)D_80032D7C->rxxnv.main_volx.left == 0) {
-        if ((u16)D_80032D7C->rxxnv.main_volx.right == 0) {
+    if ((unsigned short)D_80032D7C->rxxnv.main_volx.left == 0) {
+        if ((unsigned short)D_80032D7C->rxxnv.main_volx.right == 0) {
             D_80032D7C->rxxnv.main_vol.left = 0x3FFF;
             D_80032D7C->rxxnv.main_vol.right = 0x3FFF;
         }
@@ -87,8 +89,9 @@ s32 CD_initvol(void) {
 }
 
 int ResetCallback(void);
-extern s32 CD_status;
-extern s32 CD_status1;
+// TODO: CD_status is a word here, but a byte in sys.c
+extern int CD_status;
+extern int CD_status1;
 void callback(void);
 
 void CD_initintr(void) {
@@ -100,9 +103,7 @@ void CD_initintr(void) {
     InterruptCallback(2, callback);
 }
 
-extern volatile u8 D_80032D84;
-extern u_char CD_mode;
-extern u_char CD_com;
+extern volatile unsigned char D_80032D84;
 
 int CD_init(void) {
     puts("CD_init:");
@@ -152,13 +153,13 @@ int CD_init(void) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_datasync);
 
-extern s32* D_80032D9C;
-extern s32* D_80032DA0;
-extern s32* D_80032DA4;
-extern s32* D_80032DA8;
-extern volatile s32* D_80032DAC;
+extern int* D_80032D9C;
+extern int* D_80032DA0;
+extern int* D_80032DA4;
+extern int* D_80032DA8;
+extern volatile int* D_80032DAC;
 
-s32 CD_getsector(void* buffer, size_t size) {
+int CD_getsector(void* buffer, size_t size) {
     *D_80032D68 = 0;
     *D_80032D74 = 0x80;
     *D_80032D9C = 0x20943;
@@ -178,13 +179,12 @@ extern int CD_TestParmNum;
 
 void CD_set_test_parmnum(int parmNum) { CD_TestParmNum = parmNum; }
 
-s32 getintr();
 extern char D_80039260[];
 extern char D_80039268[];
 
 void callback(void) {
-    s32 interrupt;
-    u8 temp_s1;
+    int interrupt;
+    unsigned char temp_s1;
 
     temp_s1 = *D_80032D68 & 3;
 

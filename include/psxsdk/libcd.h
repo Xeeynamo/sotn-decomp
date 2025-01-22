@@ -135,8 +135,8 @@ char* CdComstr(u_char com);
 char* CdIntstr(u_char intr);
 int CdSync(int mode, u_char* result);
 int CdReady(int mode, u_char* result);
-CdlCB CdSyncCallback(CdlCB func);
-CdlCB CdReadyCallback(CdlCB func);
+long CdSyncCallback(void(*func)(void));
+long CdReadyCallback(void (*func)(void));
 
 // Issues direct primitive commands to the CD-ROM subsystem
 int CdControl(u_char com, u_char* param, u_char* result);
@@ -151,7 +151,7 @@ int CdMix(CdlATV* vol // Pointer to attenuator volume
 );
 
 int CdGetSector(void* madr, int size);
-void(*CdDataCallback(void (*func)()));
+long CdDataCallback(void (*func)());
 CdlLOC* CdIntToPos(int i, CdlLOC* p);
 int CdPosToInt(CdlLOC* p);
 CdlFILE* CdSearchFile(CdlFILE* fp, char* name);
