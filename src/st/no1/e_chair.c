@@ -24,8 +24,6 @@ static s32 func_us_801B8008(Entity* self) {
     return 1;
 }
 
-extern u16 g_EInitCommon[];
-
 void EntityChair(Entity* self) {
     s16 offsetX;
 

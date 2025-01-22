@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void func_us_801B4CC4(Entity* self);
+void EntityMouse(Entity* self);
 void EntityUnkId12(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -113,7 +113,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    func_us_801B4CC4,
+    EntityMouse,
     EntityUnkId12,
     EntityUnkId13,
     EntityExplosionVariants,
