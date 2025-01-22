@@ -39,7 +39,7 @@ int CD_vol(CdlATV* vol) {
 extern volatile int* D_80032D78;
 
 typedef struct {
-    unsigned char sync; // sync state
+    unsigned char sync;  // sync state
     unsigned char ready; // ready state
     unsigned char c;
 } CD_flush_struct;
