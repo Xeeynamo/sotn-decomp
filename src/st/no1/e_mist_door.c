@@ -28,7 +28,6 @@ static char D_us_8018345C[] = {
     't',  'h',  'i', 'n', 'g',  ' ',  't',  'o',  ' ',  'd',  'o',
     0x01, 'w',  'i', 't', 'h',  ' ',  't',  'h',  'i',  's',  ' ',
     'w',  'a',  'l', 'l', 0x81, 0x44, 0x81, 0x44, 0x81, 0x44, 0x00};
-extern u16 g_EInitInteractable[];
 
 void EntityMistDoor(Entity* self) {
     Entity* messageBox;
