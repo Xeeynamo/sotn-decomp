@@ -25,7 +25,7 @@ u8 D_us_80180B88[] = {0x40, 0x58, 0xFF, 0x00};
 u8 D_us_80180B8C[] = {0x40, 0x59, 0xFF, 0x00};
 u8 D_us_80180B90[] = {0x04, 0x1E, 0xFF, 0x00};
 
-MouseInitStruct mouseInit[] = {
+static MouseInitStruct mouseInit[] = {
     {.animSet = ANIMSET_DRA(6),
      .zPriority = 0x1FA,
      .unk5A = 0x00,
