@@ -142,7 +142,38 @@ void SetPlayerAnim(u8 anim) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09116B88);
+AnimationFrame* func_8010DA70(AnimationFrame** frames) {
+    u16* anim;
+    s32 idx;
+    u16* subanim;
+    s32 var_s1;
+    s32 idxSub;
+
+    anim = (u16*)frames[g_CurrentEntity->ext.player.anim];
+    idx = 0;
+    var_s1 = 0;
+    while (true) {
+        if ((&anim[idx * 2])[0] == 0xFFFD) {
+            for(idxSub = 0; true; idxSub++, var_s1++){
+                subanim = (u16*)D_800B0594[(&anim[idx * 2])[1] & 0xFF];
+                if ((&subanim[idxSub * 2])[0] == 0xFFFF) {
+                    idx++;
+                    // Probably fake. Makes PSP registers match.
+                    idxSub = idxSub;
+                    break;
+                }
+                if (var_s1 == g_CurrentEntity->animFrameIdx) {
+                    return (AnimationFrame*)&subanim[idxSub * 2];
+                }
+            }
+        } else if (var_s1 == g_CurrentEntity->animFrameIdx) {
+            return (AnimationFrame*)(anim + idx * 2);
+        } else {
+            var_s1++;
+            idx++;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", UpdateUnarmedAnim);
 

@@ -145,29 +145,28 @@ void SetPlayerAnim(u8 anim) {
 }
 
 AnimationFrame* func_8010DA70(AnimationFrame** frames) {
-    s32 idxSub;
-    s32 var_s1;
+    u16* anim;
     s32 idx;
     u16* subanim;
-    u16* anim;
+    s32 var_s1;
+    s32 idxSub;
 
     anim = (u16*)frames[g_CurrentEntity->ext.player.anim];
     idx = 0;
     var_s1 = 0;
     while (true) {
         if ((&anim[idx * 2])[0] == 0xFFFD) {
-            idxSub = 0;
-            while (true) {
+            for(idxSub = 0; true; idxSub++, var_s1++){
                 subanim = (u16*)D_800B0594[(&anim[idx * 2])[1] & 0xFF];
                 if ((&subanim[idxSub * 2])[0] == 0xFFFF) {
                     idx++;
+                    // Probably fake. Makes PSP registers match.
+                    idxSub = idxSub;
                     break;
                 }
                 if (var_s1 == g_CurrentEntity->animFrameIdx) {
                     return (AnimationFrame*)&subanim[idxSub * 2];
                 }
-                idxSub++;
-                var_s1++;
             }
         } else if (var_s1 == g_CurrentEntity->animFrameIdx) {
             return (AnimationFrame*)(anim + idx * 2);
