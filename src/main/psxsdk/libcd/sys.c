@@ -61,15 +61,11 @@ char* CdIntstr(u8 intr) {
     return D_80032B48[intr];
 }
 
-int CdSync(int mode, u_char* result) {
-    return CD_sync(mode, result);
-}
+int CdSync(int mode, u_char* result) { return CD_sync(mode, result); }
 
-int CdReady(int mode, u_char* result) {
-    return CD_ready(mode, result);
-}
+int CdReady(int mode, u_char* result) { return CD_ready(mode, result); }
 
-long CdSyncCallback(void(*func)(void)) {
+long CdSyncCallback(void (*func)(void)) {
     CdlCB old = CD_cbsync;
     CD_cbsync = func;
     return old;
@@ -92,24 +88,18 @@ int CdMix(CdlATV* vol) {
     return 1;
 }
 
-int CdGetSector(void* madr, int size) {
-    return CD_getsector(madr, size) == 0;
-}
+int CdGetSector(void* madr, int size) { return CD_getsector(madr, size) == 0; }
 
 void* DMACallback(int dma, void (*func)());
 
-long CdDataCallback(void (*func)()) {
-    return DMACallback(3, func);
-}
+long CdDataCallback(void (*func)()) { return DMACallback(3, func); }
 
 void CD_datasync(int);
 
 void CdDataSync(int mode) { CD_datasync(mode); }
 
 CdlLOC* CdIntToPos(int i, CdlLOC* p) {
-    inline int ENCODE_BCD(n) {
-        return ((n / 10) << 4) + (n % 10);
-    }
+    inline int ENCODE_BCD(n) { return ((n / 10) << 4) + (n % 10); }
 
     i += 150;
     p->sector = ENCODE_BCD(i % 75);

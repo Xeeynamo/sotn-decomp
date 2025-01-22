@@ -135,7 +135,7 @@ char* CdComstr(u_char com);
 char* CdIntstr(u_char intr);
 int CdSync(int mode, u_char* result);
 int CdReady(int mode, u_char* result);
-long CdSyncCallback(void(*func)(void));
+long CdSyncCallback(void (*func)(void));
 long CdReadyCallback(void (*func)(void));
 
 // Issues direct primitive commands to the CD-ROM subsystem

@@ -13,7 +13,8 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_sync);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_ready);
 
-int CD_cw(unsigned char arg0, unsigned char* arg1, unsigned char* arg2, int arg3);
+int CD_cw(
+    unsigned char arg0, unsigned char* arg1, unsigned char* arg2, int arg3);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_cw);
 
 const char aIdBiosCV177199[] =
@@ -38,12 +39,12 @@ int CD_vol(CdlATV* vol) {
 extern volatile int* D_80032D78;
 
 typedef struct {
-    unsigned char a, b, c;
+    unsigned char sync; // sync state
+    unsigned char ready; // ready state
+    unsigned char c;
 } CD_flush_struct;
 
 extern volatile CD_flush_struct D_80032D80;
-extern volatile unsigned char D_80032D81[];
-extern volatile unsigned char D_80032D82;
 
 int CD_flush(void) {
     *D_80032D68 = 1;
@@ -53,8 +54,8 @@ int CD_flush(void) {
         *D_80032D70 = 7;
     }
 
-    D_80032D80.b = D_80032D80.c = 0;
-    D_80032D80.a = 2;
+    D_80032D80.ready = D_80032D80.c = 0;
+    D_80032D80.sync = 2;
     *D_80032D68 = 0;
     *D_80032D74 = 0;
     *D_80032D78 = 0x1325;
@@ -63,7 +64,7 @@ int CD_flush(void) {
 extern union SpuUnion* D_80032D7C;
 
 int CD_initvol(void) {
-    unsigned char data[4];
+    CdlATV vol;
 
     if ((unsigned short)D_80032D7C->rxxnv.main_volx.left == 0) {
         if ((unsigned short)D_80032D7C->rxxnv.main_volx.right == 0) {
@@ -75,14 +76,14 @@ int CD_initvol(void) {
     D_80032D7C->rxxnv.cd_vol.left = 0x3FFF;
     D_80032D7C->rxxnv.cd_vol.right = 0x3FFF;
     D_80032D7C->rxxnv.spucnt = 0xC001;
-    data[0] = data[2] = 0x80;
-    data[1] = data[3] = 0;
+    vol.val0 = vol.val2 = 0x80;
+    vol.val1 = vol.val3 = 0;
     *D_80032D68 = 2;
-    *D_80032D70 = data[0];
-    *D_80032D74 = data[1];
+    *D_80032D70 = vol.val0;
+    *D_80032D74 = vol.val1;
     *D_80032D68 = 3;
-    *D_80032D6C = data[2];
-    *D_80032D70 = data[3];
+    *D_80032D6C = vol.val2;
+    *D_80032D70 = vol.val3;
     *D_80032D74 = 0x20;
 
     return 0;
@@ -124,8 +125,8 @@ int CD_init(void) {
         *D_80032D70 = 7;
     }
 
-    D_80032D80.b = D_80032D80.c = 0;
-    D_80032D80.a = 2;
+    D_80032D80.ready = D_80032D80.c = 0;
+    D_80032D80.sync = 2;
 
     *D_80032D68 = 0;
     *D_80032D74 = 0;
@@ -150,7 +151,6 @@ int CD_init(void) {
     return 0;
 }
 
-
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_datasync);
 
 extern int* D_80032D9C;
@@ -167,13 +167,14 @@ int CD_getsector(void* buffer, size_t size) {
     *D_80032DA0 |= 0x8000;
     *D_80032DA4 = buffer;
     *D_80032DA8 = size | 0x10000;
-    while (!(*D_80032D68 & 0x40)) {};
+    while (!(*D_80032D68 & 0x40)) {
+    };
     *D_80032DAC = 0x11000000;
-    while (*D_80032DAC & 0x01000000) {};
+    while (*D_80032DAC & 0x01000000) {
+    };
     *D_80032D78 = 0x1325;
     return 0;
 }
-
 
 extern int CD_TestParmNum;
 
@@ -196,11 +197,11 @@ void callback(void) {
 
         if (interrupt & 4) {
             if (CD_cbready != NULL) {
-                CD_cbready(D_80032D80.b, &D_80039268);
+                CD_cbready(D_80032D80.ready, &D_80039268);
             }
         }
         if (interrupt & 2 && (CD_cbsync != NULL)) {
-            CD_cbsync(D_80032D80.a, &D_80039260);
+            CD_cbsync(D_80032D80.sync, &D_80039260);
         }
     }
     *D_80032D68 = temp_s1;
