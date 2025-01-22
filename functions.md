@@ -904,7 +904,7 @@
 | wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | func_psp_09138240                   |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8                   |      270 |         27 |        |                                 |       |
-| lib    | func_psp_09261338                   |      274 |         43 |        |                                 |       |
+| lib    | func_psp_09261338                   |      274 |         43 |        | https://decomp.me/scratch/JwqB9 | 0.219 |
 | st0    | func_801B101C                       |      275 |         24 |        |                                 |       |
 | dra    | func_psp_090F1078                   |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                       |      277 |         20 |        |                                 |       |
