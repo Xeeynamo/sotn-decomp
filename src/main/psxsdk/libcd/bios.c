@@ -1,4 +1,4 @@
-#include "common.h"
+#include "libcd_internal.h"
 #include "../libspu/libspu_internal.h"
 #include <psxsdk/libcd.h>
 
@@ -87,8 +87,6 @@ s32 CD_initvol(void) {
 }
 
 int ResetCallback(void);
-extern int (*CD_cbready)(u8, char*);
-extern int (*CD_cbsync)(u8, char*);
 extern s32 CD_status;
 extern s32 CD_status1;
 void callback(void);

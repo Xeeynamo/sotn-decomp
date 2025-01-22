@@ -1,4 +1,4 @@
-#include "common.h"
+#include "libcd_internal.h"
 
 extern u8 CD_status;
 extern u8 CD_mode;
@@ -14,7 +14,22 @@ extern int CD_pos;
 
 int* CdLastPos(void) { return &CD_pos; }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReset);
+int CdReset(int mode) {
+    if (mode == 2) {
+        CD_initintr();
+        return 1;
+    }
+
+    if (CD_init()) {
+        return 0;
+    }
+
+    if (mode == 1 && CD_initvol() != 0) {
+        return 0;
+    }
+
+    return 1;
+}
 
 void CD_flush();
 
@@ -58,19 +73,15 @@ void CD_ready();
 
 void CdReady(void) { CD_ready(); }
 
-extern s32 CD_cbsync;
-
-s32 CdSyncCallback(s32 arg0) {
-    s32 temp_v0;
+long CdSyncCallback(void(*arg0)(void)) {
+    CDCallback temp_v0;
 
     temp_v0 = CD_cbsync;
     CD_cbsync = arg0;
     return temp_v0;
 }
 
-extern void (*CD_cbready)(u8, u8*);
-
-void (*CdReadyCallback(void (*func)(u8, u8*)))(u8, u8*) {
+long CdReadyCallback(void (*func)(void)) {
     void (*temp_v0)(u8, u8*);
 
     temp_v0 = CD_cbready;
@@ -103,6 +114,25 @@ void CD_datasync(int);
 
 void CdDataSync(int mode) { CD_datasync(mode); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntToPos);
+// TODO: fix libcd.h
+/* Location */
+typedef struct {
+    u_char minute;
+    u_char second;
+    u_char sector;
+    u_char track;
+} CdlLOC;
+
+CdlLOC* CdIntToPos(int i, CdlLOC* p) {
+    inline int ENCODE_BCD(n) {
+        return ((n / 10) << 4) + (n % 10);
+    }
+
+    i += 150;
+    p->sector = ENCODE_BCD(i % 75);
+    p->second = ENCODE_BCD(i / 75 % 60);
+    p->minute = ENCODE_BCD(i / 75 / 60);
+    return p;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdPosToInt);
