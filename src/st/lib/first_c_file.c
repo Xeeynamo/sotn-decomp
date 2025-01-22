@@ -1235,9 +1235,3 @@ INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BDA34);
 INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BDAE4);
 
 INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BED48);
-
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BEDD8);
-
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BEE38);
-
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801BEFEC);

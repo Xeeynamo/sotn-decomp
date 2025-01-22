@@ -63,6 +63,7 @@ CutsceneRun = 0x801B9AC8;
 func_80194F14 = 0x801B9D74;
 ScaleCutsceneAvatar = 0x801B9E54;
 LIB_EntityCutscene = 0x801B9F58;
+EntityChair = 0x801BEE38;
 Random = 0x801BF130;
 Update = 0x801BF160;
 UpdateStageEntities = 0x801BF45C;
