@@ -26,7 +26,7 @@ typedef struct {
     /* 0x84 */ s32 fallSpeed;
     /* 0x88 */ s16 gravity;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 iconSlot;
+    /* 0x8C */ u16 iconSlot;
     /* 0x8E */ s16 unk8E;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 unk92;
@@ -62,11 +62,11 @@ typedef struct {
     u16 sparkleAnim;
     u32 unk84;
     u32 unk88;
-    s16 iconSlot;
+    u16 iconSlot;
     u16 unk8E;
     u16 floatTimer;
     u16 unk92;
-    s32 yFloatSpeed;
+    u32 yFloatSpeed;
 } ET_RelicOrb;
 
 typedef struct {
