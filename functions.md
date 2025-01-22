@@ -130,8 +130,8 @@
 | dra    | func_psp_091119E0                   |       20 |          3 |        |                                 |       |
 | dra    | func_psp_0913D798                   |       21 |          1 |        |                                 |       |
 | dra    | SetPlayerAnim                       |       21 |          1 |        | https://decomp.me/scratch/G188v | 0.702 |
-| lib    | func_psp_0924F9C0                   |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
+| lib    | func_psp_0924F9C0                   |       21 |          1 |        |                                 |       |
 | lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
 | st0    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -452,6 +452,7 @@
 | dra    | func_psp_091295F0                   |       55 |          7 |        |                                 |       |
 | lib    | func_psp_092445A8                   |       55 |          8 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
+| lib    | 8658.rodata                         |       56 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09141488                   |       56 |          2 |        |                                 |       |
 | lib    | func_psp_09263558                   |       57 |          1 |        |                                 |       |
 | lib    | func_psp_09263628                   |       57 |          1 |        |                                 |       |
@@ -577,6 +578,7 @@
 | wrp    | EntityBackgroundBlock               |       75 |          6 |        |                                 |       |
 | dra    | func_psp_09108D40                   |       75 |         10 |        |                                 |       |
 | dra    | func_800FD6C4                       |       75 |         14 |        |                                 |       |
+| lib    | pspeu.rodata                        |       76 |          0 | Yes    |                                 |       |
 | dra    | func_801027C4                       |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.94  |
 | dra    | func_psp_0911B820                   |       76 |          8 |        |                                 |       |
 | dra    | func_psp_09136F30                   |       76 |         13 |        |                                 |       |
@@ -597,7 +599,7 @@
 | dra    | func_psp_09141E30                   |       78 |         13 |        |                                 |       |
 | dra    | GetSpellDef                         |       79 |          5 |        |                                 |       |
 | lib    | func_psp_09258A38                   |       79 |          7 |        |                                 |       |
-| lib    | UpdateStageEntitiesAlt              |       79 |          9 |        |                                 |       |
+| lib    | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | st0    | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | wrp    | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | CheckEquipmentItemCount             |       79 |         11 |        | https://decomp.me/scratch/5WfaD | 0.419 |
@@ -752,7 +754,6 @@
 | dra    | func_psp_090DCA00                   |      121 |         13 |        |                                 |       |
 | dra    | LoadPendingGfx                      |      123 |         14 |        |                                 |       |
 | dra    | func_psp_09137748                   |      125 |         22 |        |                                 |       |
-| lib    | pspeu.rodata                        |      126 |          0 | Yes    |                                 |       |
 |        | UpdatePrimWhenAlucardIsBat          |      126 |          5 |        |                                 |       |
 | dra    | func_psp_0912CFA0                   |      126 |         10 |        |                                 |       |
 | dra    | LoadEquipIcon                       |      127 |          9 |        |                                 |       |
@@ -898,7 +899,7 @@
 | lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
 | dra    | func_psp_09118408                   |      264 |         28 |        |                                 |       |
 | st0    | func_801A805C                       |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
-| lib    | UpdateStageEntities                 |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
+| lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra    | func_psp_09138240                   |      269 |         49 |        |                                 |       |
