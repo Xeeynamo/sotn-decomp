@@ -881,7 +881,7 @@ def add_symbol(splat_config, version: str, name: str, offset: int):
 
 
 def hydrate_stage_export_table_symbols(splat_config, version: str, export_table):
-    add_symbol(splat_config, version, "UpdateStageEntities", export_table[0])
+    add_symbol(splat_config, version, "Update", export_table[0])
     add_symbol(splat_config, version, "HitDetection", export_table[1])
     add_symbol(splat_config, version, "UpdateRoomPosition", export_table[2])
     add_symbol(splat_config, version, "InitRoomEntities", export_table[3])
@@ -891,7 +891,7 @@ def hydrate_stage_export_table_symbols(splat_config, version: str, export_table)
     # add_symbol(splat_config, version, "NULL", export_table[7]) # ??????
     add_symbol(splat_config, version, "g_TileLayers", export_table[8])
     add_symbol(splat_config, version, "g_EntityGfxs", export_table[9])
-    add_symbol(splat_config, version, "UpdateStageEntitiesAlt", export_table[10])
+    add_symbol(splat_config, version, "UpdateStageEntities", export_table[10])
     add_symbol(splat_config, version, "g_SpriteBank1", export_table[11])
     if len(export_table) <= 12:
         return
