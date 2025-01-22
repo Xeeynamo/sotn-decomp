@@ -1472,7 +1472,7 @@ void func_us_801BDAE4(Entity* self) {
             tempVar = ratan2(-posY, posX);
             self->velocityX = rcos(tempVar) * 0x40;
             self->velocityY = -rsin(tempVar) * 0x40;
-            if (self->velocityY <= 0xFFFF) {
+            if (self->velocityY < FIX(1.0)) {
                 self->velocityY = FIX(1.0);
             }
             if (self->velocityX > 0) {
