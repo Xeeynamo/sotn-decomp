@@ -193,11 +193,10 @@ static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 // BlinkItem must be declared static for EntityEquipItemDrop / EntityRelicOrb
 // below to match.
-#define STATIC_FUNC
+static
 #include "../blink_item.h"
-#undef STATIC_FUNC
 
-u16 g_ItemIconSlots[ICON_SLOT_NUM];
+    u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "../entity_equip_item_drop.h"
 

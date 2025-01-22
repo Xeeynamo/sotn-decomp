@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "game.h"
 
-#ifdef STATIC_FUNC
-static
-#endif
-    void
-    BlinkItem(Entity* self, u16 renderFlags) {
+void BlinkItem(Entity* self, u16 renderFlags) {
     Primitive* prim;
     s32 temp;
     prim = &g_PrimBuf[self->primIndex];
