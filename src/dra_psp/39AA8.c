@@ -129,7 +129,18 @@ void func_8010D800(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", SetPlayerAnim);
+// Unused; deadstripped on PSP
+void func_8010DA2C(AnimationFrame* frames) {
+    g_CurrentEntity->anim = frames;
+    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+}
+
+void SetPlayerAnim(u8 anim) {
+    g_CurrentEntity->ext.player.anim = anim;
+    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09116B88);
 

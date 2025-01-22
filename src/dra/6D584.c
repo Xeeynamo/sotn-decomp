@@ -131,13 +131,14 @@ void func_8010D800(void) {
     }
 }
 
+// Unused; deadstripped on PSP
 void func_8010DA2C(AnimationFrame* frames) {
     g_CurrentEntity->anim = frames;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-void SetPlayerAnim(s32 anim) {
+void SetPlayerAnim(u8 anim) {
     g_CurrentEntity->ext.player.anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
