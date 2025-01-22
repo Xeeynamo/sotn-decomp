@@ -1,6 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+static s32 D_us_80182D4C = 0;
+static u8 D_us_80182D50[] = {5, 4, 6, 6, 5, 4, 6, 5};
+static s16 D_us_80182D58[] = {0, 40, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80182D68[] = {0, 40, 8, 0};
+static s16 D_us_80182D70[] = {32, 24, 48, 40};
+
+// animations
+static u8 D_us_80182D78[] = {
+    0x10, 0x01, 0x18, 0x02, 0x10, 0x01, 0x18, 0x03, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_80182D84[] = {
+    0x20, 0x01, 0x08, 0x04, 0x46, 0x05, 0x06, 0x06, 0x06, 0x07, 0x06, 0x08,
+    0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
+static u8 D_us_80182D9C[] = {0x01, 0x0C, 0x01, 0x0D, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_80182DA4[] = {0x08, 0x0E, 0x08, 0x0F, 0x10, 0x01, 0xFF, 0x00};
+static u8 D_us_80182DAC[] = {
+    0x28, 0x01, 0x08, 0x04, 0x02, 0x11, 0x48, 0x10, 0x01, 0x11, 0x01, 0x12,
+    0x01, 0x13, 0x01, 0x14, 0x21, 0x15, 0x06, 0x16, 0x06, 0x0F, 0x00, 0x00};
+static u8 D_us_80182DC4[] = {
+    0x20, 0x01, 0x06, 0x0F, 0x06, 0x17, 0x06, 0x18, 0x28, 0x19,
+    0x01, 0x1A, 0x01, 0x1B, 0x01, 0x1C, 0x01, 0x1D, 0x40, 0x10,
+    0x06, 0x11, 0x20, 0x04, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_80182DE0[] = {
+    0x08, 0x01, 0x06, 0x04, 0x61, 0x1E, 0x04, 0x04, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_80182DEC[] = {0x18, 0x22, 0x18, 0x23, 0xFF, 0x00, 0x00, 0x00};
+
+static MATRIX armorLordColorMatrix = {
+    {{0, 0, 0x1000}, {0, 0, 0x800}, {0, 0, 0x1000}}};
+
+static SVECTOR armorLordColNormVec1 = {0, 0, 0x1000};
+static SVECTOR armorLordColNormVec2 = {0, 0x800, 0x800};
+static SVECTOR armorLordRotVec = {0, 0, 0};
+
 // Armor Lord fire wave helper
 void func_us_801D1184(Primitive* prim) {
     switch (prim->next->u2) {
@@ -325,11 +357,6 @@ void func_us_801D1A9C(void) {
     }
 }
 
-extern MATRIX D_us_80182DF4;
-extern SVECTOR D_us_80182E14;
-extern SVECTOR D_us_80182E1C;
-extern SVECTOR D_us_80182E24;
-
 s32 func_us_801D1DAC(void) {
     long unusedA, unusedB;
     SVECTOR rotA, rotB, rotC;
@@ -639,7 +666,7 @@ s32 func_us_801D1DAC(void) {
             rotC.vx = 0;
             rotC.vy = (i * 512) + g_CurrentEntity->ext.armorLord.unk8A;
             rotC.vz = 0;
-            RotMatrix(&D_us_80182E24, &m);
+            RotMatrix(&armorLordRotVec, &m);
             RotMatrixY(rotC.vy, &m);
             SetRotMatrix(&m);
             trans.vx = 0;
@@ -653,7 +680,7 @@ s32 func_us_801D1DAC(void) {
             color.b = 0x60;
             color.cd = prim->type;
             RotMatrix(&rotC, &lightMatrix);
-            SetColorMatrix(&D_us_80182DF4);
+            SetColorMatrix(&armorLordColorMatrix);
             SetLightMatrix(&lightMatrix);
             if (g_CurrentEntity->facingLeft) {
                 posX = g_CurrentEntity->posX.i.hi - 5;
@@ -681,8 +708,10 @@ s32 func_us_801D1DAC(void) {
             z = RotTransPers(&rotA, (long*)(&prim->x3), &unusedA, &unusedB);
             z += RotTransPers(&rotB, (long*)(&prim->x1), &unusedA, &unusedB);
             z /= 2;
-            NormalColorCol(&D_us_80182E14, &color, (CVECTOR*)(&prim->r3));
-            NormalColorCol(&D_us_80182E1C, &color, (CVECTOR*)(&prim->r1));
+            NormalColorCol(
+                &armorLordColNormVec1, &color, (CVECTOR*)(&prim->r3));
+            NormalColorCol(
+                &armorLordColNormVec2, &color, (CVECTOR*)(&prim->r1));
             prim->priority = g_CurrentEntity->zPriority + (0x101 - z);
             prim2 = prim;
             prim = prim->next;
@@ -740,20 +769,6 @@ s32 func_us_801D1DAC(void) {
     }
     return 0;
 }
-
-extern s32 D_us_80182D4C;
-extern u8 D_us_80182D50[];
-extern s16 D_us_80182D58[];
-extern s16 D_us_80182D68[];
-extern s16 D_us_80182D70[];
-extern u8 D_us_80182D78[];
-extern u8 D_us_80182D84[];
-extern u8 D_us_80182D9C[];
-extern u8 D_us_80182DA4[];
-extern u8 D_us_80182DAC[];
-extern u8 D_us_80182DC4[];
-extern u8 D_us_80182DE0[];
-extern u8 D_us_80182DEC[];
 
 void EntityArmorLord(Entity* self) {
     Entity* tempEntity;
