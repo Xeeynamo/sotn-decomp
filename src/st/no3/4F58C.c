@@ -125,7 +125,7 @@ void EntityWarg(Entity* self) {
     case 0:
         otherEnt = self + 1;
         self->unk60 = otherEnt;
-        CreateEntityFromCurrentEntity(E_ARMOR_LORD, otherEnt);
+        CreateEntityFromCurrentEntity(E_ID_4B, otherEnt);
         otherEnt->unk5C = self;
         InitializeEntity(D_80180B9C);
         otherEnt->unk60 = self;
