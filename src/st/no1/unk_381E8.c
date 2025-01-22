@@ -187,7 +187,6 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
 
 extern s16 D_us_80181454[];
 extern s16 D_us_80181464[];
-extern u16 g_EInitInteractable[];
 extern s32 D_psp_091CE570;
 
 void func_us_801B9304(Entity* self) {

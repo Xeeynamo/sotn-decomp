@@ -54,7 +54,7 @@ typedef enum EntityIDs {
     /* 0x47 */ E_ID_47,
     /* 0x48 */ E_ID_48,
     /* 0x49 */ E_ID_49,
-    /* 0x4B */ E_ID_4B = 0x4B,
+    /* 0x4B */ E_ARMOR_LORD = 0x4B,
     /* 0x4C */ E_ARMOR_LORD_FIRE_WAVE,
     /* 0x4D */ E_ID_4D,
     /* 0x50 */ E_ID_50 = 0x50,
@@ -69,6 +69,7 @@ typedef enum EntityIDs {
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
+extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 
 extern EInit D_us_8018095C;
@@ -77,6 +78,8 @@ extern EInit D_us_8018095C;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
+
+extern EInit g_EInitArmorLord;
 
 // Medusa Head
 extern EInit g_EInitMedusaHeadBlue;
