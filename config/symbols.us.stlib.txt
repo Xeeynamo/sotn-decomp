@@ -1,6 +1,6 @@
 LIB_pStObjLayoutHorizontal = 0x80180520;
 LIB_pStObjLayoutVertical = 0x801805F4;
-LIB_EntityUpdates = 0x801806C4;
+LIB_EntityUpdates = 0x801806C8;
 g_EInitObtainable = 0x8018080C;
 g_EInitParticle = 0x80180818;
 g_EInitUnkId13 = 0x8018083C;

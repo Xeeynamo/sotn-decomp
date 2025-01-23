@@ -43,7 +43,8 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, lib_psp/pspeu]
+      - [0x80, c, lib/create_entity]
+      - [0x1028, c, lib_psp/pspeu]
       - [0x8120, c, lib/st_update]
       - [0x8658, c, lib_psp/8658]
       - [0x11A88, c, lib/collision]
@@ -61,5 +62,6 @@ segments:
       - [0x6D8B8, .rodata, lib_psp/8658]
       - [0x6D940, .rodata, lib_psp/13C60]
       - [0x6D9E8, .rodata, lib_psp/unk_1D9E8]
-      - [0x6DD80, bss, 6DD80]
+      - [0x6DD80, .bss, lib/create_entity]
+      - [0x6DDA0, bss, 6DDA0]
   - [0x6EC00]
