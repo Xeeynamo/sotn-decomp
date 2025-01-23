@@ -45,6 +45,8 @@ segments:
       - [0xC9C, data]
       - [0xCFC, .data, st_debug]
       - [0xD7C, data]
+      - [0x1508, data, unk_3B984]
+      - [0x1550, data]
       - [0x1570, .data, unk_3D8AC]
       - [0x15F4, data]
       - [0x1A2C, .data, d_prize_drops]

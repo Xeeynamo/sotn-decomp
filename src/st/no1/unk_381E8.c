@@ -438,7 +438,6 @@ void func_us_801B9304(Entity* self) {
     }
 }
 
-extern u16 D_us_80180A1C[];
 extern u32 D_psp_0929A690;
 extern u32 D_psp_0929A6D8;
 
