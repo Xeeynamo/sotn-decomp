@@ -2,6 +2,7 @@
 #include <common.h>
 #include <include_asm.h>
 #include <psxsdk/libetc.h>
+#include <psxsdk/kernel.h>
 
 int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
@@ -37,7 +38,27 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", setIntr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", stopIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", restartIntr);
+void HookEntryInt(unsigned short*);                               /* extern */
+extern unsigned short D_8002C2B8;
+extern unsigned short D_8002C2EA;
+extern int D_8002C2EC;
+extern volatile int* D_8002D34C;
+extern u16* g_InterruptMask;
+
+u16* restartIntr() {
+    u16* p = &D_8002C2B8;
+    
+    if (*p != 0) {
+        return 0;
+    }
+    
+    HookEntryInt(p + 0x1C);
+    *p = 1;
+    *g_InterruptMask = D_8002C2EA;
+    *D_8002D34C = D_8002C2EC;
+    ExitCriticalSection();
+    return p;
+}
 
 void memclr(int* ptr, int size) {
     int i;
