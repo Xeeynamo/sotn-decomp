@@ -31,25 +31,8 @@
 
 #define BIOS_C_FUNCTION(name, id) BIOS_FUNCTION(name, 0xC0, id)
 
-#define SYSCALL(name, number)                                                  \
-    __asm__(                                                                   \
-        ".pushsection .text\n"                                                 \
-        "\t.align\t2\n"                                                        \
-        "\t.globl\t" #name "\n"                                                \
-        "\t.ent\t" #name "\n"                                                  \
-        "" #name " :\n"                                                        \
-        ".set noat\n"                                                          \
-        ".set noreorder\n"                                                     \
-        "\n"                                                                   \
-        "glabel " #name "\n"                                                   \
-        "\taddiu  $a0, $zero, " #number "\n"                                   \
-        "\tsyscall 0\n"                                                        \
-        "\tjr     $ra\n"                                                       \
-        "\tnop\n"                                                              \
-        ".size " #name ", . - " #name "\n"                                     \
-        "\t.set reorder\n"                                                     \
-        "\t.set at\n"                                                          \
-        "\t.end\t" #name "\n"                                                  \
-        ".popsection");
+#define SYSCALL(id)                                                            \
+    __asm__("addiu $a0, $zero, " #id ";"                                       \
+            "syscall 0;");
 
 #endif // BIOS_H
