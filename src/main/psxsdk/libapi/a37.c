@@ -1,3 +1,4 @@
 #include "bios.h"
+#include <kernel.h>
 
-SYSCALL(ExitCriticalSection, 0x2);
+void ExitCriticalSection() { SYSCALL(2) }
