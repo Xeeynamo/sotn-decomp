@@ -175,7 +175,30 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", UpdateUnarmedAnim);
+u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
+    u16* frameIndex;
+
+    frameIndex = frames[g_CurrentEntity->ext.player.anim] + PLAYER.animFrameIdx;
+    if (*frameIndex == 0xFFFF) {
+        return -1;
+    }
+    if (frameProps != NULL) {
+        frameProps = &frameProps[((*frameIndex >> 9) & 0x7F) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
+    }
+    g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
+    if(PLAYER.animFrameDuration < 0){
+        return -1;
+    } else {
+        return 0;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010DBFC);
 

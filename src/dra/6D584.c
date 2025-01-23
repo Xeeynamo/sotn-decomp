@@ -185,14 +185,21 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
         return -1;
     }
     if (frameProps != NULL) {
-        frameProps = &frameProps[(*frameIndex >> 9) << 2];
-        g_CurrentEntity->hitboxOffX = *frameProps++;
-        g_CurrentEntity->hitboxOffY = *frameProps++;
-        g_CurrentEntity->hitboxWidth = *frameProps++;
-        g_CurrentEntity->hitboxHeight = *frameProps++;
+        frameProps = &frameProps[((*frameIndex >> 9) & 0x7F) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
     }
     g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
-    return PLAYER.animFrameDuration >= 0 ? 0 : -1;
+    if(PLAYER.animFrameDuration < 0){
+        return -1;
+    } else {
+        return 0;
+    }
 }
 
 void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
