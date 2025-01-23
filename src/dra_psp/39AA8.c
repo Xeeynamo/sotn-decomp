@@ -200,7 +200,53 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010DBFC);
+void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
+    AnimationFrame* animFrame;
+
+    animFrame = func_8010DA70(frames);
+    if (g_CurrentEntity->animFrameDuration != -1) {
+        if (g_CurrentEntity->animFrameDuration == 0) {
+            g_CurrentEntity->animFrameDuration = animFrame->duration;
+        } else if (--g_CurrentEntity->animFrameDuration == 0) {
+            g_CurrentEntity->animFrameIdx++;
+            animFrame = func_8010DA70(frames);
+            // Using a switch doesn't work
+            if (animFrame->duration == 0x0) {
+                g_CurrentEntity->animFrameIdx = animFrame->unk2;
+                animFrame = func_8010DA70(frames);
+                g_CurrentEntity->animFrameDuration = animFrame->duration;
+            } else if (animFrame->duration == 0xFFFF) {
+                g_CurrentEntity->animFrameIdx--;
+                g_CurrentEntity->animFrameDuration = -1;
+                animFrame = func_8010DA70(frames);
+            } else if (animFrame->duration == 0xFFFE) {
+                g_CurrentEntity->ext.player.anim = animFrame->unk2 & 0xFF;
+                g_CurrentEntity->animFrameIdx = animFrame->unk2 >> 8;
+                animFrame = func_8010DA70(frames);
+                g_CurrentEntity->animFrameDuration = animFrame->duration;
+            } else {
+                g_CurrentEntity->animFrameDuration = animFrame->duration;
+            }
+        }
+    }
+
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+
+        // Please check function UpdateAnim down below
+        frameProps = &frameProps[((animFrame->unk2 >> 9) & 0x7F) * 4];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
+    }
+    g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", UpdateAnim);
 
