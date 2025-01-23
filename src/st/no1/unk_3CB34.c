@@ -19,7 +19,6 @@
     )
 // clang-format on
 
-extern u16 D_us_801809F8[];
 extern u8 D_us_80181550[];
 extern u8 D_us_8018155C[];
 extern s16 D_us_80181568[];

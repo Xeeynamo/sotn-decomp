@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern u16 D_us_80180A1C[];
 extern s16 D_us_80181508[][3];
 extern s16 D_us_8018151C[][3];
+extern u8 D_us_80181540[];
+
+extern s32 D_psp_08C62AA4;
 
 void func_us_801BB984(Entity* self) {
     Primitive* prim;
@@ -129,9 +131,8 @@ void func_us_801BB984(Entity* self) {
     }
 }
 
-extern u16 D_us_801809F8[];
 extern RECT D_us_801B47B0;
-extern s32 D_psp_08C62AA4;
+INCLUDE_RODATA("st/no1/nonmatchings/unk_3B984", D_us_801B47B0);
 
 void func_us_801BBD90(Entity* self) {
     s16 dx, dy;
@@ -407,8 +408,6 @@ void func_us_801BBD90(Entity* self) {
     }
 }
 
-extern u8 D_us_80181540[];
-
 void func_us_801BC598(Primitive* prim) {
     Primitive* otherPrim;
     u8 tempVar;
@@ -517,6 +516,45 @@ void func_us_801BC598(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3B984", func_us_801BC9A8);
+void func_us_801BC9A8(Primitive* prim) {
+    s16 posY;
 
-INCLUDE_RODATA("st/no1/nonmatchings/unk_3B984", D_us_801B47B0);
+    switch (prim->next->u2) {
+    case 0:
+        prim->tpage = 0xE;
+        prim->clut = 0x4A;
+        prim->u0 = 0xD0;
+        prim->u1 = prim->u0 + 0x1F;
+        prim->u2 = prim->u0;
+        prim->u3 = prim->u1;
+        prim->v0 = 0xC0;
+        prim->v1 = prim->v0;
+        prim->v2 = prim->v0 + 0xF;
+        prim->v3 = prim->v2;
+        prim->priority = 0x70;
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        LOH(prim->next->r2) = 0x20;
+        LOH(prim->next->b2) = 0x10;
+        prim->next->b3 = 0x30;
+        prim->next->u2 = 1;
+        /* fallthrough */
+    case 1:
+        prim->next->x1 = g_CurrentEntity->posX.i.hi;
+        prim->next->y0 = g_CurrentEntity->posY.i.hi + 0x24;
+        UnkPrimHelper(prim);
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        if (!g_CurrentEntity->velocityY || g_Timer % 2) {
+            prim->drawMode =
+                DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        } else {
+            prim->drawMode = DRAW_HIDE;
+        }
+        posY = g_Tilemap.scrollY.i.hi + prim->y2;
+        if (posY > 0x810) {
+            prim->drawMode = DRAW_HIDE;
+        }
+        if (posY > 0x610 && posY < 0x650) {
+            prim->drawMode = DRAW_HIDE;
+        }
+    }
+}
