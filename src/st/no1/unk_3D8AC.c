@@ -1,7 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern s32 D_us_80181570;
+static s32 D_us_80181570 = 0;
+static s16 D_us_80181574[] = {0x80, 0x80, 0x100, 0x300, 0x500, 0x700};
+static s16 D_us_80181580[] = {0xC, 0xC, 0x12, 0x16, 0x20, 0x26};
+static s16 D_us_8018158C[] = {0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC};
+static u8 D_us_80181598[] = {0x01, 0x62, 0x01, 0x63, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_801815A0[] = {0x01, 0x64, 0x01, 0x65, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_801815A8[] = {0x02, 0x62, 0x02, 0x63, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_801815B0[] = {0x02, 0x64, 0x02, 0x65, 0x00, 0x00, 0x00, 0x00};
+static s16 D_us_801815B8[] = {
+    0x000, 0x600, 0xE00, 0x100, 0x800, 0xA00, 0x200, 0x400, 0xC00, 0x000};
+static s16 D_us_801815CC[] = {4, 8, 13, -24, -20, -12, 21, -12, 2, 0};
+static s16 D_us_801815E0[] = {20, 8, 12, 13, 16, 6, 12, 16, 8, 4};
+
 extern s32 D_psp_0929A6C0;
 extern s32 D_psp_0929A6B0;
 extern s32 D_psp_0929A6A8;
@@ -65,16 +77,6 @@ void func_us_801BD8AC(Entity* self) {
         break;
     }
 }
-
-extern u16 D_us_801809C8[];
-extern s32 D_us_80181570;
-extern s16 D_us_80181574[];
-extern s16 D_us_80181580[];
-extern s16 D_us_8018158C[];
-extern u8 D_us_80181598[];
-extern u8 D_us_801815A0[];
-extern u8 D_us_801815A8[];
-extern u8 D_us_801815B0[];
 
 void func_us_801BDA0C(Entity* self) {
     s32 flag;
@@ -228,8 +230,6 @@ void func_us_801BDA0C(Entity* self) {
     }
 }
 
-extern u16 g_EInitInteractable[];
-
 void func_us_801BDF9C(Entity* self) {
     Primitive* prim;
     s32 i;
@@ -345,11 +345,6 @@ void func_us_801BDF9C(Entity* self) {
         break;
     }
 }
-
-extern s16 D_us_801815B8[];
-extern s16 D_us_801815CC[];
-extern s16 D_us_801815E0[];
-extern SVECTOR D_us_801B4808;
 
 void func_us_801BE2C8(Entity* self) {
     s32 primIndex;
