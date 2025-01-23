@@ -287,7 +287,7 @@
 | dra    | func_psp_0910F128                   |       36 |          2 |        |                                 |       |
 | dra    | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
 | dra    | func_psp_0910BC00                   |       36 |          4 |        |                                 |       |
-| lib    | func_psp_09237B50                   |       36 |          4 |        |                                 |       |
+| lib    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | st0    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | wrp    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | dra    | func_psp_091040A0                   |       36 |          5 |        |                                 |       |
@@ -314,13 +314,13 @@
 | dra    | DestroyEntity                       |       38 |          3 |        |                                 |       |
 | dra    | GetEquipmentName                    |       38 |          4 |        |                                 |       |
 | dra    | func_800EDB08                       |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
-| lib    | func_psp_09237EE0                   |       38 |          4 |        |                                 |       |
+| lib    | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | st0    | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | wrp    | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | lib    | func_psp_09267080                   |       38 |          7 |        |                                 |       |
-| lib    | func_psp_0924F6C8                   |       39 |          2 |        |                                 |       |
+| lib    | CreateEntityFromCurrentEntity       |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | lib    | CreateEntityFromEntity              |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
-| lib    | func_psp_09238598                   |       39 |          2 |        | https://decomp.me/scratch/gVbRE | 0.994 |
+| lib    | func_psp_0924F6C8                   |       39 |          2 |        |                                 |       |
 | st0    | CreateEntityFromCurrentEntity       |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | st0    | CreateEntityFromEntity              |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | wrp    | CreateEntityFromCurrentEntity       |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
@@ -358,8 +358,8 @@
 | dra    | func_psp_090ED1B8                   |       42 |          3 |        |                                 |       |
 | dra    | func_psp_0913D640                   |       42 |          3 |        |                                 |       |
 | dra    | func_80102628                       |       42 |          4 |        |                                 |       |
-| lib    | func_psp_09237BC0                   |       42 |          5 |        |                                 |       |
-| lib    | func_psp_09237F58                   |       42 |          5 |        |                                 |       |
+| lib    | FindFirstEntityBelow                |       42 |          5 |        |                                 |       |
+| lib    | FindFirstEntityToTheLeft            |       42 |          5 |        |                                 |       |
 | st0    | FindFirstEntityBelow                |       42 |          5 |        |                                 |       |
 | st0    | FindFirstEntityToTheLeft            |       42 |          5 |        |                                 |       |
 | wrp    | FindFirstEntityBelow                |       42 |          5 |        |                                 |       |
@@ -582,7 +582,7 @@
 | dra    | func_801027C4                       |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.94  |
 | dra    | func_psp_0911B820                   |       76 |          8 |        |                                 |       |
 | dra    | func_psp_09136F30                   |       76 |         13 |        |                                 |       |
-| lib    | func_psp_09237700                   |       77 |          2 |        |                                 |       |
+| lib    | CreateEntityFromLayout              |       77 |          2 |        |                                 |       |
 | st0    | CreateEntityFromLayout              |       77 |          2 |        |                                 |       |
 | wrp    | CreateEntityFromLayout              |       77 |          2 |        |                                 |       |
 | dra    | func_psp_090EF8F0                   |       77 |          4 |        |                                 |       |
@@ -634,11 +634,11 @@
 | dra    | TimeAttackController                |       89 |          8 |        |                                 |       |
 | dra    | func_psp_090FF608                   |       89 |         10 |        |                                 |       |
 | dra    | func_psp_0910E378                   |       89 |         11 |        |                                 |       |
-| lib    | func_psp_09237C48                   |       89 |         11 |        |                                 |       |
+| lib    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | st0    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | wrp    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | lib    | func_psp_09247AD8                   |       91 |          7 |        |                                 |       |
-| lib    | func_psp_09237FE0                   |       91 |         11 |        |                                 |       |
+| lib    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | st0    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | wrp    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | dra    | func_psp_09110E90                   |       91 |         19 |        |                                 |       |
@@ -657,7 +657,7 @@
 | dra    | CheckChainLimit                     |       95 |         14 |        |                                 |       |
 | dra    | func_psp_09134F40                   |       96 |         11 |        |                                 |       |
 | lib    | func_psp_0924FCB0                   |       96 |         11 |        |                                 |       |
-| lib    | func_psp_09237D88                   |       96 |         12 |        |                                 |       |
+| lib    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | st0    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | wrp    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dra    | func_psp_091060E0                   |       96 |         16 |        |                                 |       |
@@ -667,7 +667,7 @@
 | lib    | func_psp_09248FB0                   |       97 |         12 |        |                                 |       |
 | wrp    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
 | dra    | func_psp_09116B88                   |       98 |         10 |        | https://decomp.me/scratch/FWgSo | 0.992 |
-| lib    | func_psp_09238128                   |       98 |         12 |        |                                 |       |
+| lib    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | st0    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | wrp    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | lib    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
@@ -723,9 +723,9 @@
 | dra    | func_psp_091287D8                   |      112 |          9 |        |                                 |       |
 | dra    | func_psp_090EC380                   |      112 |          9 |        |                                 |       |
 | lib    | func_psp_09266EE8                   |      112 |         18 |        |                                 |       |
+| lib    | CreateEntityWhenInHorizontalRange   |      113 |         13 |        |                                 |       |
+| lib    | CreateEntityWhenInVerticalRange     |      113 |         13 |        |                                 |       |
 | lib    | func_psp_0924FE00                   |      113 |         13 |        |                                 |       |
-| lib    | func_psp_09237820                   |      113 |         13 |        |                                 |       |
-| lib    | func_psp_092379B8                   |      113 |         13 |        |                                 |       |
 | st0    | CreateEntityWhenInHorizontalRange   |      113 |         13 |        |                                 |       |
 | st0    | CreateEntityWhenInVerticalRange     |      113 |         13 |        |                                 |       |
 | st0    | CheckFieldCollision                 |      113 |         13 |        |                                 |       |
