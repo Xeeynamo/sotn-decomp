@@ -72,5 +72,7 @@ segments:
       - [0x4F094, c, e_skeleton]
       - [0x4F918, c, unk_4F918]
       - [0x5139C, c, prim_helpers]
-      - [0x5415C, sbss]
+      - [0x5415C, bss]
+      - [0x545C4, .bss, create_entity]
+      - [0x545D4, bss]
   - [0x552CC]
