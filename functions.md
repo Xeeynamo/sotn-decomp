@@ -662,7 +662,7 @@
 | wrp    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dra    | func_psp_091060E0                   |       96 |         16 |        |                                 |       |
 | st0    | func_pspeu_092469A0                 |       97 |          1 |        |                                 |       |
-| dra    | UpdateUnarmedAnim                   |       97 |          6 |        |                                 |       |
+| dra    | UpdateUnarmedAnim                   |       97 |          6 |        | https://decomp.me/scratch/3r6LM | 0.998 |
 | lib    | func_psp_0924DF08                   |       97 |          7 |        |                                 |       |
 | lib    | func_psp_09248FB0                   |       97 |         12 |        |                                 |       |
 | wrp    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
@@ -899,12 +899,12 @@
 | lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
 | dra    | func_psp_09118408                   |      264 |         28 |        |                                 |       |
 | st0    | func_801A805C                       |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
-| lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
-| st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
-| wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/RqyKw | 0.994 |
+| lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/3r6LM | 0.998 |
+| st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/3r6LM | 0.998 |
+| wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/3r6LM | 0.998 |
 | dra    | func_psp_09138240                   |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8                   |      270 |         27 |        |                                 |       |
-| lib    | func_psp_09261338                   |      274 |         43 |        | https://decomp.me/scratch/JwqB9 | 0.219 |
+| lib    | func_psp_09261338                   |      274 |         43 |        | https://decomp.me/scratch/JwqB9 | 0.973 |
 | st0    | func_801B101C                       |      275 |         24 |        |                                 |       |
 | dra    | func_psp_090F1078                   |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                       |      277 |         20 |        |                                 |       |
@@ -916,7 +916,7 @@
 | dra    | func_psp_09130730                   |      283 |         37 | Yes    | https://decomp.me/scratch/yJ6yP | 1.0   |
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
-| dra    | UpdateAnim                          |      288 |         15 |        |                                 |       |
+| dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/tdwym | 0.956 |
 | dra    | func_psp_09116720                   |      288 |         19 |        | https://decomp.me/scratch/xTydq | 0.997 |
 | lib    | func_psp_09238EC8                   |      290 |         42 |        |                                 |       |
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
