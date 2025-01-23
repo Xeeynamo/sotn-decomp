@@ -75,6 +75,7 @@ g_api = 0x91CF738;
 g_api_FreePrimitives = 0x091cf778;
 g_api_AllocPrimitives = 0x091cf77c;
 g_api_PlaySfx = 0x091cf7a0;
+g_api_TimeAttackController = 0x91CF804;
 g_api_GetServantStats = 0x091cf838;
 g_PrimBuf = 0x091CFAF8;
 g_backbufferY = 0x091E12F8;
