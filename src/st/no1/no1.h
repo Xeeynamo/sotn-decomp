@@ -87,6 +87,8 @@ extern EInit g_EInitSkeletonBone;
 
 extern EInit g_EInitArmorLord;
 
+extern EInit D_us_80180B0C;
+
 // Medusa Head
 extern EInit g_EInitMedusaHeadBlue;
 extern EInit g_EInitMedusaHeadYellow;
