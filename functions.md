@@ -1133,7 +1133,7 @@
 | lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
-| lib    | func_psp_0925B470                   |     2173 |        195 | Yes    | https://decomp.me/scratch/ZnpH2 | 0.32  |
+| lib    | func_psp_0925B470                   |     2173 |        195 | Yes    | https://decomp.me/scratch/ZnpH2 | 0.525 |
 | dra    | func_psp_09132AF0                   |     2183 |        161 | Yes    | https://decomp.me/scratch/wULJ5 | 0.975 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/oCnk1 | 0.684 |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/yTQqd | 0.761 |
