@@ -34,7 +34,3 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/pspeu", func_psp_0923D8A0);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/pspeu", func_psp_0923DA30);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/pspeu", func_psp_0923DCC8);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/pspeu", func_psp_0923E498);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/pspeu", EntityRedDoor);
