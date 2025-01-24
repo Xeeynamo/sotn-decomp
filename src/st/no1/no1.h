@@ -69,6 +69,7 @@ typedef enum EntityIDs {
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
+extern EInit g_EInitParticle;
 extern EInit D_us_8018095C;
 extern EInit g_EInitInteractable;
 
@@ -79,6 +80,8 @@ extern EInit D_us_801809C8;
 extern EInit D_us_801809F8;
 
 extern EInit D_us_80180A1C;
+
+extern EInit D_us_80180A40;
 
 // Skeleton
 extern EInit g_EInitSkeleton;
