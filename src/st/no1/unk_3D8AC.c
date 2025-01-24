@@ -1,7 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern s32 D_us_80181570;
+static s32 D_us_80181570 = 0;
+static s16 D_us_80181574[] = {0x80, 0x80, 0x100, 0x300, 0x500, 0x700};
+static s16 D_us_80181580[] = {0xC, 0xC, 0x12, 0x16, 0x20, 0x26};
+static s16 D_us_8018158C[] = {0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC};
+static u8 D_us_80181598[] = {0x01, 0x62, 0x01, 0x63, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_801815A0[] = {0x01, 0x64, 0x01, 0x65, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_801815A8[] = {0x02, 0x62, 0x02, 0x63, 0x00, 0x00, 0x00, 0x00};
+static u8 D_us_801815B0[] = {0x02, 0x64, 0x02, 0x65, 0x00, 0x00, 0x00, 0x00};
+static s16 D_us_801815B8[] = {
+    0x000, 0x600, 0xE00, 0x100, 0x800, 0xA00, 0x200, 0x400, 0xC00, 0x000};
+static s16 D_us_801815CC[] = {4, 8, 13, -24, -20, -12, 21, -12, 2, 0};
+static s16 D_us_801815E0[] = {20, 8, 12, 13, 16, 6, 12, 16, 8, 4};
+
 extern s32 D_psp_0929A6C0;
 extern s32 D_psp_0929A6B0;
 extern s32 D_psp_0929A6A8;
@@ -65,16 +77,6 @@ void func_us_801BD8AC(Entity* self) {
         break;
     }
 }
-
-extern u16 D_us_801809C8[];
-extern s32 D_us_80181570;
-extern s16 D_us_80181574[];
-extern s16 D_us_80181580[];
-extern s16 D_us_8018158C[];
-extern u8 D_us_80181598[];
-extern u8 D_us_801815A0[];
-extern u8 D_us_801815A8[];
-extern u8 D_us_801815B0[];
 
 void func_us_801BDA0C(Entity* self) {
     s32 flag;
@@ -228,14 +230,121 @@ void func_us_801BDA0C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_3D8AC", func_us_801BDF9C);
+void func_us_801BDF9C(Entity* self) {
+    Primitive* prim;
+    s32 i;
+    s32 primIndex;
+    s16 posX, posY;
+    s16 xOffset;
+    Primitive* lastPrim;
 
-INCLUDE_RODATA("st/no1/nonmatchings/unk_3D8AC", D_us_801B4808);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        break;
 
-extern s16 D_us_801815B8[];
-extern s16 D_us_801815CC[];
-extern s16 D_us_801815E0[];
-extern SVECTOR D_us_801B4808;
+    case 1:
+        if (self->ext.et_801BE2C8.unk84) {
+            self->step++;
+            self->ext.et_801BE2C8.unk84 = 0;
+        }
+        break;
+
+    case 2:
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x30);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801BE2C8.unk7C = prim;
+            while (prim != NULL) {
+                prim->r0 = prim->g0 = prim->b0 = 8;
+                prim->priority = 0xD0;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+                lastPrim = prim;
+                prim = prim->next;
+            }
+            self->ext.et_801BE2C8.unk80 = lastPrim;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        self->step++;
+        break;
+
+    case 3:
+        xOffset = (self - 1)->ext.et_801BDA0C.unk80 /
+                  0x10000; // note previous entity uses a different ext.
+        if (xOffset < 0) {
+            xOffset = -xOffset;
+        }
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi - 0x28;
+        prim = self->ext.et_801BE2C8.unk7C;
+        for (i = 0; i < 0x20; i++) {
+            prim->x0 = posX - xOffset - 0x20 + i;
+            prim->y0 = posY - 0x20 + i;
+            prim->u0 = xOffset * 2 + 0x40 - i * 2;
+            prim->v0 = 0x94 - i * 2;
+            prim = prim->next;
+        }
+        while (prim != NULL) {
+            prim->x0 = posX - xOffset;
+            prim->y0 = posY;
+            prim->u0 = xOffset * 2;
+            prim->v0 = 0x54;
+            prim = prim->next;
+        }
+        lastPrim = self->ext.et_801BE2C8.unk80;
+        if (self->ext.et_801BE2C8.unk84) {
+            lastPrim->x0 = 0;
+            lastPrim->y0 = 0;
+            lastPrim->u0 = 0xFF;
+            lastPrim->v0 = 0xFF;
+            if (lastPrim->r0 < 0xF8) {
+                lastPrim->r0 += 8;
+                lastPrim->g0 = lastPrim->b0 = lastPrim->r0;
+            } else {
+                (self + 1)->ext.et_801BE2C8.unk84 = 1;
+                self->step++;
+            }
+        }
+        break;
+
+    case 4:
+        prim = self->ext.et_801BE2C8.unk7C;
+        prim->type = PRIM_TILE;
+        prim->r0 = prim->b0 = prim->g0 = 0xFF;
+        prim->priority = 0x40;
+        prim = prim->next;
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        prim = self->ext.et_801BE2C8.unk80;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        (self + 1)->ext.et_801BE2C8.unk84 = 1;
+        self->step++;
+        break;
+
+    case 5:
+        lastPrim = self->ext.et_801BE2C8.unk80;
+        if (lastPrim->r0 > 8) {
+            lastPrim->r0 -= 8;
+            lastPrim->g0 = lastPrim->b0 = lastPrim->r0;
+        } else {
+            (self + 1)->ext.et_801BE2C8.unk84 = 1;
+            prim = self->ext.et_801BE2C8.unk7C;
+            prim = prim->next;
+            g_api.FreePrimitives(prim - g_PrimBuf);
+            prim = self->ext.et_801BE2C8.unk7C;
+            prim->next = NULL;
+            self->step++;
+        }
+        break;
+    }
+}
 
 void func_us_801BE2C8(Entity* self) {
     s32 primIndex;
@@ -254,11 +363,8 @@ void func_us_801BE2C8(Entity* self) {
     s16* zPointer;
     s16 posX, posY; // unused
 
-#ifdef VERSION_PSP
     SVECTOR rot = {0};
-#else
-    SVECTOR rot = D_us_801B4808;
-#endif
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);

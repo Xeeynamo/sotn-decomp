@@ -438,7 +438,6 @@ void func_us_801B9304(Entity* self) {
     }
 }
 
-extern u16 D_us_80180A1C[];
 extern u32 D_psp_0929A690;
 extern u32 D_psp_0929A6D8;
 
@@ -561,7 +560,6 @@ void func_us_801B9BE4(Entity* self) {
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BA034);
 
-extern u16 D_us_801809C8[];
 extern s16 D_us_80181474[][3];
 extern s16 D_us_801814B4[];
 extern u8 D_us_801814C4[];

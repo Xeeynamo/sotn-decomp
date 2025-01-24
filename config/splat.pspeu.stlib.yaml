@@ -43,7 +43,9 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, lib_psp/pspeu]
+      - [0x80, c, lib/create_entity]
+      - [0x1028, c, lib_psp/pspeu]
+      - [0x6E18, c, lib/e_red_door]
       - [0x8120, c, lib/st_update]
       - [0x8658, c, lib_psp/8658]
       - [0x11A88, c, lib/collision]
@@ -51,6 +53,7 @@ segments:
       - [0x1D650, c, lib/e_chair]
       - [0x1D9E8, c, lib_psp/unk_1D9E8]
       - [0x36780, data]
+      - [0x37918, .data, lib/e_red_door]
       - [0x37930, .data, lib/st_update]
       - [0x37960, data]
       - [0x38138, .data, lib/collision]
@@ -58,8 +61,10 @@ segments:
       - [0x60AB8, .data, lib/e_chair]
       - [0x60AE8, data]
       - [0x6D800, .rodata, lib_psp/pspeu]
+      - [0x6D8A0, .rodata, lib/e_red_door]
       - [0x6D8B8, .rodata, lib_psp/8658]
       - [0x6D940, .rodata, lib_psp/13C60]
       - [0x6D9E8, .rodata, lib_psp/unk_1D9E8]
-      - [0x6DD80, bss, 6DD80]
+      - [0x6DD80, .bss, lib/create_entity]
+      - [0x6DDA0, bss, 6DDA0]
   - [0x6EC00]
