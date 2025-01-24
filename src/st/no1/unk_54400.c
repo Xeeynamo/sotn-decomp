@@ -35,7 +35,7 @@ void func_us_801D4400(Entity* self) {
         break;
 
     case 3:
-        self->velocityY += 0x400;
+        self->velocityY += FIX(1.0 / 64);
         self->rotZ = ratan2(-self->velocityY, self->velocityX) & 0xFFFF;
         if (!self->facingLeft) {
             self->rotZ = 0x800 - self->rotZ;
