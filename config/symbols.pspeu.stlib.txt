@@ -33,6 +33,7 @@ BottomCornerText = 0x0924C810;
 EntityRoomForeground = 0x0924D480;
 DestroyEntity = 0x0924EB48;
 PreventEntityFromRespawning = 0x0924EBE0;
+AnimateEntity = 0x0924EC68;
 GetSideToPlayer = 0x0924EEA0;
 AllocEntity = 0x0924F548;
 InitializeEntity = 0x0924FAD0;
