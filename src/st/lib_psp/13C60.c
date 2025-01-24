@@ -41,7 +41,7 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/13C60", func_psp_0924EDD8);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/13C60", func_psp_0924EE48);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/13C60", func_psp_0924EEA0);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/13C60", GetSideToPlayer);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/13C60", func_psp_0924EF28);
 
