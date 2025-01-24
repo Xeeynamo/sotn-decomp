@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern u16 g_EInitParticle[];
-
 void func_us_801BFA34(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitParticle);
