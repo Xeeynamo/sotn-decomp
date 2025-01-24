@@ -29,7 +29,8 @@ void func_us_801BF074(Entity* self) {
         self->animSet = 8;
         self->animCurFrame = 1;
         self->palette = 0x8004;
-        return;
+        break;
+
     case 1:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex != -1) {
