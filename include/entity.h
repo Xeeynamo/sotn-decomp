@@ -2552,6 +2552,10 @@ typedef struct {
 } ET_801BDAE4;
 
 typedef struct {
+    /* 0x7C */ struct Entity* unk7C;
+} ET_801D4400;
+
+typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ u8 : 8;
@@ -2791,6 +2795,7 @@ typedef union { // offset=0x7C
     ET_Chair chair;
     ET_801B2BE4 et_801B2BE4;
     ET_801BDAE4 et_801BDAE4;
+    ET_801D4400 et_801D4400;
     ET_801D4558 et_801D4558;
 } Ext;
 
