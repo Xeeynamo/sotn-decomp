@@ -63,6 +63,8 @@ segments:
       - [0x281C, data]
       - [0x2D4C, .data, e_armor_lord]
       - [0x2E2C, data]
+      - [0x31E0, .data, unk_54400]
+      - [0x3230, data]
       - [0x33D0, .data, e_medusa_head]
       - [0x3448, .data, e_mist_door]
       - [0x3488, data]

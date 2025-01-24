@@ -3,9 +3,19 @@
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_54400", func_us_801D4400);
 
-extern u8 D_us_801831E0[];
-extern s16 D_us_801831F4[];
-extern s16 D_us_80183204[];
+static u8 D_us_801831E0[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0, 0, 0,
+};
+static s16 D_us_801831F4[] = {
+    0, 3, 4, 3, 0, -3, -4, -3,
+};
+static s16 D_us_80183204[] = {
+    -16, -12, 0, 12, 16, 12, 0, -12,
+};
+static u8 D_us_80183214[] = {
+    2, 9,  2, 10, 2, 11, 2, 12, 2, 13, 2,  14, 2, 15,
+    2, 16, 2, 17, 2, 18, 2, 19, 2, 20, -1, 0,  0, 0,
+};
 
 void func_us_801D4558(Entity* self) {
     Entity* tempEntity;
@@ -121,4 +131,19 @@ void func_us_801D4558(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_54400", func_us_801D4950);
+void func_us_801D4950(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180B18);
+        self->drawMode = DRAW_TPAGE;
+        self->hitboxState = 0;
+        break;
+
+    case 1:
+        if (AnimateEntity(D_us_80183214, self) == 0) {
+            DestroyEntity(self);
+        }
+        self->posY.i.hi--;
+        break;
+    }
+}
