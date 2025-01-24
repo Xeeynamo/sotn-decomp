@@ -72,6 +72,7 @@
 | dra    | 14490.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dra    | 32DA0.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dra    | 54180.rodata                        |       16 |          0 | Yes    |                                 |       |
+| lib    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | st0    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | wrp    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | dra    | func_psp_091446A8                   |       16 |          1 |        |                                 |       |
@@ -346,7 +347,7 @@
 | dra    | func_psp_0913E468                   |       41 |          2 |        |                                 |       |
 | dra    | func_800EAEA4                       |       41 |          3 |        |                                 |       |
 | dra    | func_psp_091272B8                   |       41 |          3 |        |                                 |       |
-| lib    | func_psp_0924EEA0                   |       41 |          3 |        |                                 |       |
+| lib    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | st0    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | st0    | func_801ADAC8                       |       41 |          3 |        |                                 |       |
 | wrp    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
@@ -515,6 +516,7 @@
 | st0    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | wrp    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra    | C0B0.rodata                         |       66 |          0 | Yes    |                                 |       |
+| lib    | pspeu.rodata                        |       66 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED480                   |       66 |          6 |        |                                 |       |
 | lib    | func_psp_0923E498                   |       66 |          7 |        |                                 |       |
 | st0    | EntityIsNearPlayer                  |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
@@ -578,7 +580,6 @@
 | wrp    | EntityBackgroundBlock               |       75 |          6 |        |                                 |       |
 | dra    | func_psp_09108D40                   |       75 |         10 |        |                                 |       |
 | dra    | func_800FD6C4                       |       75 |         14 |        |                                 |       |
-| lib    | pspeu.rodata                        |       76 |          0 | Yes    |                                 |       |
 | dra    | func_801027C4                       |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.94  |
 | dra    | func_psp_0911B820                   |       76 |          8 |        |                                 |       |
 | dra    | func_psp_09136F30                   |       76 |         13 |        |                                 |       |
@@ -1112,7 +1113,7 @@
 | dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
 | lib    | func_psp_09268528                   |     1229 |        132 | Yes    |                                 |       |
-| lib    | EntityRedDoor                       |     1247 |        112 | Yes    | https://decomp.me/scratch/z1VlU | 0.997 |
+| lib    | LIB_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
 | st0    | ST0_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
 | wrp    | WRP_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
 | lib    | func_psp_092515F8                   |     1267 |        134 | Yes    |                                 |       |
