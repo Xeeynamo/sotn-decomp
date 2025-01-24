@@ -116,7 +116,6 @@
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra    | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
 | dra    | 5C420.rodata                        |       20 |          0 | Yes    |                                 |       |
-| wrp    | e_misc.rodata                       |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
 | dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
@@ -206,7 +205,6 @@
 | dra    | func_psp_09140DB0                   |       27 |          6 |        |                                 |       |
 | st0    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | title_card.rodata                   |       28 |          0 | Yes    |                                 |       |
-| wrp    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | dra    | FreePrimitives                      |       28 |          2 |        | https://decomp.me/scratch/YeHtC | 1.0   |
 | lib    | func_psp_0924EE48                   |       28 |          2 |        |                                 |       |
 | dra    | func_psp_09141F50                   |       28 |          4 |        |                                 |       |
@@ -356,6 +354,7 @@
 | dra    | func_psp_09128A78                   |       41 |          6 |        |                                 |       |
 | dra    | func_psp_090F6A90                   |       41 |         15 |        |                                 |       |
 |        | bat.rodata                          |       42 |          0 | Yes    |                                 |       |
+| wrp    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED1B8                   |       42 |          3 |        |                                 |       |
 | dra    | func_psp_0913D640                   |       42 |          3 |        |                                 |       |
 | dra    | func_80102628                       |       42 |          4 |        |                                 |       |
@@ -1133,7 +1132,7 @@
 | lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
-| lib    | func_psp_0925B470                   |     2173 |        195 | Yes    | https://decomp.me/scratch/ZnpH2 | 0.525 |
+| lib    | func_psp_0925B470                   |     2173 |        195 | Yes    | https://decomp.me/scratch/ZnpH2 | 0.594 |
 | dra    | func_psp_09132AF0                   |     2183 |        161 | Yes    | https://decomp.me/scratch/wULJ5 | 0.975 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/oCnk1 | 0.684 |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/yTQqd | 0.761 |
