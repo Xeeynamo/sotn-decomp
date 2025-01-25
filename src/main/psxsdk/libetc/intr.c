@@ -9,24 +9,23 @@ static void memclr(s32* ptr, s32 size);
 static void trapIntr();
 s32 setjmp(s32*);
 
-#define	JB_PC		0
-#define	JB_SP		1
-#define	JB_FP		2
-#define	JB_S0		3
-#define	JB_S1		4
-#define	JB_S2		5
-#define	JB_S3		6
-#define	JB_S4		7
-#define	JB_S5		8
-#define	JB_S6		9
-#define	JB_S7		10
-#define	JB_GP		11
-#define	JB_SIZE		12
+#define JB_PC 0
+#define JB_SP 1
+#define JB_FP 2
+#define JB_S0 3
+#define JB_S1 4
+#define JB_S2 5
+#define JB_S3 6
+#define JB_S4 7
+#define JB_S5 8
+#define JB_S6 9
+#define JB_S7 10
+#define JB_GP 11
+#define JB_SIZE 12
 
 typedef int jmp_buf[JB_SIZE];
 
-typedef struct
-{
+typedef struct {
     u16 unk0;
     u16 unk2;
     void (*unk4[11])();
@@ -68,8 +67,7 @@ int CheckCallback(void) { return D_8002C2B8.unk2; }
 
 u16 GetIntrMask(void) { return *g_InterruptMask; }
 
-u16 SetIntrMask(u16 arg0) 
-{
+u16 SetIntrMask(u16 arg0) {
     u16 mask;
 
     mask = *g_InterruptMask;
@@ -140,7 +138,7 @@ s32 setIntr(s32 arg0, s32 arg1) {
 u16* stopIntr() {
     volatile s32* p2;
     volatile u16* mask;
-    
+
     if (D_8002C2B8.unk0 == 0) {
         return NULL;
     }
@@ -160,7 +158,7 @@ u16* restartIntr() {
     if (D_8002C2B8.unk0 != 0) {
         return 0;
     }
-    
+
     HookEntryInt(D_8002C2B8.buf);
     D_8002C2B8.unk0 = 1;
     *g_InterruptMask = D_8002C2B8.unk32;
