@@ -1,3 +1,4 @@
 #include "bios.h"
+#include <kernel.h>
 
-SYSCALL(EnterCriticalSection, 0x1);
+void EnterCriticalSection() { SYSCALL(1) }

@@ -52,7 +52,7 @@ segments:
       - [0x4100, c, wrp/e_particles]
       - [0x4C78, c, wrp_psp/blit_char]
       - [0x5308, c, wrp_psp/e_collect]
-      - [0x7448, c, wrp_psp/e_misc]
+      - [0x8580, c, wrp_psp/e_misc]
       - [0x95D0, c, wrp/collision]
       - [0xB7A8, c, wrp/popup]
       - [0xBDA0, c, wrp/e_room_fg]
@@ -70,14 +70,19 @@ segments:
       - [0xEDD8, .data, wrp_psp/e_collect] # g_goldCollectTexts
       - [0xEE50, .data, wrp_psp/e_collect] # c_GoldPrizes
       - [0xEE80, .data, wrp_psp/e_collect] # c_HeartPrizes
-      - [0xEEA0, data] # D_psp_09246520
-      - [0xEF40, data] # D_psp_092465C0
-      - [0xEF60, data] # D_psp_092465E0
-      - [0xEF70, data] # D_psp_092465F0
-      - [0xEF80, data] # D_psp_09246600
-      - [0xEF90, data] # D_psp_09246610
-      - [0xEFA0, data] # D_psp_09246620
-      - [0xEFB0, data] # D_psp_09246630
+      - [0xEE88, .data, wrp_psp/e_collect] # g_ExplosionYVelocities
+      - [0xEEA0, .data, wrp_psp/e_collect] # D_80180ED8
+      - [0xEEB8, .data, wrp_psp/e_collect] # g_bigRedFireballAnim
+      - [0xEED8, .data, wrp_psp/e_collect] # D_80180F08
+      - [0xEF08, .data, wrp_psp/e_collect] # D_80180F38
+      - [0xEF40, .data, wrp_psp/e_collect] # D_80180F6C
+      - [0xEF48, .data, wrp_psp/e_collect] # g_ExplosionAnimations
+      - [0xEF60, .data, wrp_psp/e_collect] # g_RelicOrbTextBg1EY
+      - [0xEF70, .data, wrp_psp/e_collect] # g_RelicOrbTextBg1SY
+      - [0xEF80, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2SY
+      - [0xEF90, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2EY
+      - [0xEFA0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleX
+      - [0xEFB0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleY
       - [0xEFC0, data] # D_psp_09246640
       - [0xEFD0, data] # D_psp_09246650
       - [0xEFE0, data] # D_psp_09246660
@@ -85,9 +90,8 @@ segments:
       - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
       - [0xF060, .data, wrp/collision]
-      - [0xF438, data] # D_psp_09246AB8
-      - [0xF450, data] # D_psp_09246AD0
-      - [0xF460, data] # eRoomForegroundInit
+      - [0xF438, .data, wrp/e_room_fg]
+      - [0xF4D8, data]
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
@@ -129,7 +133,6 @@ segments:
       - [0x14430, .data, wrp/warp] # EntityWarpRoom FntPrint strings
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp_psp/e_collect]
-      - [0x144D0, .rodata, wrp_psp/e_misc]
       - [0x144F8, .rodata, wrp/warp]
       - [0x14500, .bss, wrp/create_entity]
       - [0x14520, .bss, wrp_psp/e_collect]

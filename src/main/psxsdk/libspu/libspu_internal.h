@@ -5,7 +5,7 @@
 
 #define NUM_SPU_CHANNELS 24
 
-void InterruptCallback(s32, s32);
+void* InterruptCallback(int, void (*)());
 void _SpuInit(s32);
 s32 _spu_read(s32 arg0, s32 arg1);
 void _spu_FiDMA();
