@@ -170,6 +170,7 @@ func_8010E168 = 0x091177B0;
 DecelerateX = 0x09117858;
 DecelerateY = 0x091178F8;
 CheckMoveDirection = 0x09117998;
+func_8010E334 = 0x09117A90;
 SetSpeedX = 0x09117B28;
 func_8010E3E0 = 0x09117BC0;
 func_8010FDF8 = 0x09117C00;

@@ -448,7 +448,14 @@ s32 CheckMoveDirection(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09117A90);
+s32 func_8010E334(s32 xStart, s32 xEnd) {
+    g_Player.unk7A = 1;
+    if (PLAYER.step == 0 && PLAYER.step_s == 1 && PLAYER.posX.i.hi >= xStart &&
+        PLAYER.posX.i.hi <= xEnd) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", SetSpeedX);
 
