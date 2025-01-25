@@ -75,4 +75,4 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_09248480);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_09248588);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_09248FB0);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", PlaySfxPositional);
