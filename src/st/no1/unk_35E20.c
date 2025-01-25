@@ -574,7 +574,7 @@ void func_us_801B7188(Entity* self) {
         if (self->step == 0) {
             InitializeEntity(D_us_8018095C);
             if (D_us_80180EEC == 0) {
-                g_api.PlaySfx(0x7AF);
+                g_api.PlaySfx(SFX_UNK_7AF);
                 self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
@@ -752,10 +752,112 @@ void func_us_801B7188(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B7CC4);
+void func_us_801B7CC4(Entity* self) {
+    if (self->step == 0) {
+        g_api.PlaySfx(SET_RELEASE_RATE_HIGH_20_21);
+        self->step++;
+    }
+    DestroyEntity(self);
+}
 
 void func_us_801B7D24(void) {}
 
 void func_us_801B7D2C(void) {}
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_35E20", func_us_801B7D34);
+// called after collecting max life up
+extern AnimationFrame D_us_80180F48[];
+extern AnimationFrame D_us_80180F6C[];
+extern AnimationFrame D_us_80180F7C[];
+extern s32 D_us_80180F84[];
+
+void func_us_801B7D34(Entity* self) {
+    s16 offsetX;
+    s16 offsetY;
+
+    offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = -0x7FFF;
+        self->zPriority = PLAYER.zPriority - 0x10;
+        self->facingLeft = true;
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+        self->anim = D_us_80180F48;
+        break;
+
+    case 1:
+        if (self->animFrameDuration < 0) {
+            self->animFrameDuration = 0;
+            self->animFrameIdx = 0;
+            self->anim = D_us_80180F6C;
+            self->velocityX = D_us_80180F84[self->facingLeft];
+            // n.b.! this is one higher than INT16_MAX making
+            //       it actually INT16_MIN. the first decrement
+            //       below rolls the value back to positive before
+            //       any comparison which is only against zero.
+            self->ext.et_801B7D34.timer = (INT16_MAX + 1);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (--self->ext.et_801B7D34.timer == 0) {
+            if (!self->facingLeft) {
+                if (offsetX < 0x1e0 && offsetX > 0x1a0) {
+                    self->step = 3;
+                    self->animFrameIdx = 0;
+                    self->animFrameDuration = 0;
+                    self->anim = D_us_80180F7C;
+                    self->ext.et_801B7D34.unk7E = 3;
+                    self->velocityY = FIX(-2.75);
+                    break;
+                }
+            }
+
+            self->step = 1;
+            self->animFrameIdx = 3;
+            self->animFrameDuration = 0;
+            self->anim = D_us_80180F48;
+
+        } else {
+            self->posX.val += self->velocityX;
+            if ((self->facingLeft == false && offsetX < 0x198) ||
+                (self->facingLeft == true && offsetX > 0x208)) {
+                self->facingLeft ^= true;
+                self->velocityX = D_us_80180F84[self->facingLeft];
+                if (!(rand() & 3)) {
+                    self->ext.et_801B7D34.timer = (rand() & 0xF) + 0x18;
+                } else {
+                    self->ext.et_801B7D34.timer = (INT16_MAX + 1);
+                }
+            }
+        }
+        break;
+
+    case 3:
+        self->velocityY += FIX(7.0 / 32.0);
+        self->posY.val += self->velocityY;
+        if (self->velocityY > 0) {
+            offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x8DD;
+            if (offsetY >= 0) {
+                self->posY.i.hi -= offsetY;
+                self->posY.i.lo = 0;
+                if (--self->ext.et_801B7D34.unk7E) {
+                    self->velocityY = FIX(-2.75);
+                    self->animFrameIdx = 0;
+                    self->animFrameDuration = 0;
+                } else {
+                    self->step = 1;
+                    self->animFrameIdx = 3;
+                    self->animFrameDuration = 0;
+                    self->anim = D_us_80180F48;
+                }
+            }
+        }
+        break;
+    }
+
+    g_api.UpdateAnim(NULL, NULL);
+}
