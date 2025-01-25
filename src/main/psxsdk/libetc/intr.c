@@ -3,8 +3,15 @@
 #include <psxsdk/libetc.h>
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
+#include <psxsdk/libc.h>
 #include "../libapi/libapi_internal.h"
 
+typedef struct intrEnv_t intrEnv_t;
+
+static Callback setIntr(s32 arg0, Callback arg1);
+static void* startIntr();
+static void* stopIntr();
+static void* restartIntr();
 static void memclr(void* ptr, s32 size);
 static void trapIntr();
 s32 setjmp(s32*);
@@ -25,138 +32,137 @@ s32 setjmp(s32*);
 
 typedef int jmp_buf[JB_SIZE];
 
-typedef struct
-{
+struct intrEnv_t {
     u16 interruptsInitialized;
     u16 inInterrupt;
-    void (*handlers[11])();
-    u16 unk30;
-    u16 unk32;
-    int unk34;
+    Callback handlers[11];
+    u16 enabledInterruptsMask;
+    u16 savedMask;
+    int savedPcr;
     jmp_buf buf;
-    s32 unk68[0x3EC];
-    s32 stack[0x14];
-} intrEnv_t;
+    s32 stack[1024];
+};
 
-extern intrEnv_t D_8002C2B8;
+static intrEnv_t intrEnv = {0};
+static struct Callbacks callbacks = {
+    "$Id: intr.c,v 1.73 1995/11/10 05:29:40 suzu Exp $",
+    0,
+    setIntr,
+    startIntr,
+    stopIntr,
+    0,
+    restartIntr,
+    &intrEnv};
+struct Callbacks* pCallbacks = &callbacks;
+static volatile u16* i_mask = (u16*)0x1F801070;
+static volatile u16* g_InterruptMask = (u16*)0x1F801074;
+static volatile s32* d_pcr = (s32*)0x1F8010F0;
+static s32 D_8002D350 = 0;
 
-typedef struct
-{
-    struct Callbacks callbacks;
-    struct Callbacks* D_8002D340;
-    volatile u16* D_8002D344;
-    volatile u16* g_InterruptMask; // 8002D348
-    volatile s32* D_8002D34C;
-} D_8002D320_t;
-
-extern D_8002D320_t D_8002D320;
-extern s32 D_8002D350;
-
-int ResetCallback(void) { return D_8002D320.D_8002D340->ResetCallback(); }
+void* ResetCallback(void) { return pCallbacks->ResetCallback(); }
 
 void InterruptCallback(int irq, void (*f)()) {
-    D_8002D320.D_8002D340->InterruptCallback(irq, f);
+    pCallbacks->InterruptCallback(irq, f);
 }
 
 void* DMACallback(int dma, void (*func)()) {
-    return D_8002D320.D_8002D340->DMACallback(dma, func);
+    return pCallbacks->DMACallback(dma, func);
 }
 
-int VSyncCallback(void (*f)()) { D_8002D320.D_8002D340->VSyncCallbacks(0, f); }
+void VSyncCallback(void (*f)()) { pCallbacks->VSyncCallbacks(0, f); }
 
 int VSyncCallbacks(int ch, void (*f)()) {
-    return D_8002D320.D_8002D340->VSyncCallbacks(ch, f);
+    return pCallbacks->VSyncCallbacks(ch, f);
 }
 
-int StopCallback(void) { return D_8002D320.D_8002D340->StopCallback(); }
+void* StopCallback(void) { return pCallbacks->StopCallback(); }
 
-int RestartCallback(void) { return D_8002D320.D_8002D340->RestartCallback(); }
+void* RestartCallback(void) { return pCallbacks->RestartCallback(); }
 
-int CheckCallback(void) { return D_8002C2B8.inInterrupt; }
+int CheckCallback(void) { return intrEnv.inInterrupt; }
 
-u16 GetIntrMask(void) { return *D_8002D320.g_InterruptMask; }
+u16 GetIntrMask(void) { return *g_InterruptMask; }
 
 u16 SetIntrMask(u16 arg0) {
     u16 mask;
 
-    mask = *D_8002D320.g_InterruptMask;
-    *D_8002D320.g_InterruptMask = arg0;
+    mask = *g_InterruptMask;
+    *g_InterruptMask = arg0;
     return mask;
 }
 
 void* startIntr() {
-    if (D_8002C2B8.interruptsInitialized != 0) {
+    if (intrEnv.interruptsInitialized != 0) {
         return NULL;
     }
-    *D_8002D320.D_8002D344 = *D_8002D320.g_InterruptMask = 0;
-    *D_8002D320.D_8002D34C = 0x33333333;
-    memclr(&D_8002C2B8, sizeof(D_8002C2B8) / sizeof(s32));
-    if (setjmp(D_8002C2B8.buf) != 0) {
+    *i_mask = *g_InterruptMask = 0;
+    *d_pcr = 0x33333333;
+    memclr(&intrEnv, sizeof(intrEnv) / sizeof(s32));
+    if (setjmp(intrEnv.buf) != 0) {
         trapIntr();
     }
-    D_8002C2B8.buf[JB_SP] = D_8002C2B8.stack;
-    HookEntryInt(D_8002C2B8.buf);
-    D_8002C2B8.interruptsInitialized = 1;
-    D_8002D320.D_8002D340->VSyncCallbacks = startIntrVSync();
-    D_8002D320.D_8002D340->DMACallback = startIntrDMA();
+    intrEnv.buf[JB_SP] = (s32)&intrEnv.stack[1004];
+    HookEntryInt((u16*)intrEnv.buf);
+    intrEnv.interruptsInitialized = 1;
+    pCallbacks->VSyncCallbacks = startIntrVSync();
+    pCallbacks->DMACallback = startIntrDMA();
     _96_remove();
     ExitCriticalSection();
-    return &D_8002C2B8;
+    return &intrEnv;
 }
 
 void trapIntr() {
     s32 i;
     u16 mask;
 
-    if (D_8002C2B8.interruptsInitialized == 0) {
-        printf("unexpected interrupt(%04x)\n", *D_8002D320.D_8002D344);
+    if (intrEnv.interruptsInitialized == 0) {
+        printf("unexpected interrupt(%04x)\n", *i_mask);
         ReturnFromException();
     }
-    D_8002C2B8.inInterrupt = 1;
-    mask = (D_8002C2B8.unk30 & *D_8002D320.D_8002D344) & *D_8002D320.g_InterruptMask;
+    intrEnv.inInterrupt = 1;
+    mask = (intrEnv.enabledInterruptsMask & *i_mask) & *g_InterruptMask;
     while (mask != 0) {
         for (i = 0; mask && i < 11; ++i, mask >>= 1) {
             if (mask & 1) {
-                *D_8002D320.D_8002D344 = ~(1 << i);
-                if (D_8002C2B8.handlers[i] != NULL) {
-                    D_8002C2B8.handlers[i]();
+                *i_mask = ~(1 << i);
+                if (intrEnv.handlers[i] != NULL) {
+                    intrEnv.handlers[i]();
                 }
             }
         }
-        mask =(D_8002C2B8.unk30 & *D_8002D320.D_8002D344) & *D_8002D320.g_InterruptMask;
+        mask = (intrEnv.enabledInterruptsMask & *i_mask) & *g_InterruptMask;
     }
-    if (*D_8002D320.D_8002D344 & *D_8002D320.g_InterruptMask) {
+    if (*i_mask & *g_InterruptMask) {
         if (D_8002D350++ > 0x800) {
-            printf("intr timeout(%04x:%04x)\n", *D_8002D320.D_8002D344, *D_8002D320.g_InterruptMask);
+            printf("intr timeout(%04x:%04x)\n", *i_mask, *g_InterruptMask);
             D_8002D350 = 0;
-            *D_8002D320.D_8002D344 = 0;
+            *i_mask = 0;
         }
     } else {
         D_8002D350 = 0;
     }
-    D_8002C2B8.inInterrupt = 0;
+    intrEnv.inInterrupt = 0;
     ReturnFromException();
 }
 
-s32 setIntr(s32 arg0, s32 arg1) {
-    s32 temp_s3;
-    s32 temp_s4;
+Callback setIntr(s32 arg0, Callback arg1) {
+    Callback temp_s4;
     u16 temp_v1;
     s32 var_s3;
 
-    temp_s4 = D_8002C2B8.handlers[arg0];
-    if ((arg1 != temp_s4) && (D_8002C2B8.interruptsInitialized != 0)) {
-        temp_v1 = *D_8002D320.g_InterruptMask;
-        *D_8002D320.g_InterruptMask = 0;
+    temp_s4 = intrEnv.handlers[arg0];
+    if ((arg1 != temp_s4) && (intrEnv.interruptsInitialized != 0)) {
+        temp_v1 = *g_InterruptMask;
+        *g_InterruptMask = 0;
         var_s3 = temp_v1 & 0xFFFF;
         if (arg1 != 0) {
-            D_8002C2B8.handlers[arg0] = arg1;
+            intrEnv.handlers[arg0] = arg1;
             var_s3 = var_s3 | (1 << arg0);
-            D_8002C2B8.unk30 |= (1 << arg0);
+            intrEnv.enabledInterruptsMask |= (1 << arg0);
         } else {
-            D_8002C2B8.handlers[arg0] = 0;
+            intrEnv.handlers[arg0] = 0;
             var_s3 = var_s3 & ~(1 << arg0);
-            D_8002C2B8.unk30 &= ~(1 << arg0);
+            intrEnv.enabledInterruptsMask &= ~(1 << arg0);
         }
         if (arg0 == 0) {
             ChangeClearPAD(arg1 == 0);
@@ -171,38 +177,36 @@ s32 setIntr(s32 arg0, s32 arg1) {
         if (arg0 == 6) {
             ChangeClearRCnt(2, arg1 == 0);
         }
-        *D_8002D320.g_InterruptMask = var_s3;
+        *g_InterruptMask = var_s3;
     }
     return temp_s4;
 }
 
-intrEnv_t* stopIntr() {
-    volatile s32* p;
-    if (D_8002C2B8.interruptsInitialized == 0) {
+void* stopIntr() {
+    if (intrEnv.interruptsInitialized == 0) {
         return NULL;
     }
     EnterCriticalSection();
-    D_8002C2B8.unk32 = *D_8002D320.g_InterruptMask;
-    D_8002C2B8.unk34 = *D_8002D320.D_8002D34C;
-    *D_8002D320.D_8002D344 = *D_8002D320.g_InterruptMask = 0;
-    p = D_8002D320.D_8002D34C;
-    *p &= 0x77777777;
-    ResetEntryInt(p);
-    D_8002C2B8.interruptsInitialized = 0;
-    return &D_8002C2B8;
+    intrEnv.savedMask = *g_InterruptMask;
+    intrEnv.savedPcr = *d_pcr;
+    *i_mask = *g_InterruptMask = 0;
+    *d_pcr &= 0x77777777;
+    ResetEntryInt();
+    intrEnv.interruptsInitialized = 0;
+    return &intrEnv;
 }
 
-intrEnv_t* restartIntr() {
-    if (D_8002C2B8.interruptsInitialized != 0) {
+void* restartIntr() {
+    if (intrEnv.interruptsInitialized != 0) {
         return 0;
     }
-    
-    HookEntryInt(D_8002C2B8.buf);
-    D_8002C2B8.interruptsInitialized = 1;
-    *D_8002D320.g_InterruptMask = D_8002C2B8.unk32;
-    *D_8002D320.D_8002D34C = D_8002C2B8.unk34;
+
+    HookEntryInt((u16*)intrEnv.buf);
+    intrEnv.interruptsInitialized = 1;
+    *g_InterruptMask = intrEnv.savedMask;
+    *d_pcr = intrEnv.savedPcr;
     ExitCriticalSection();
-    return &D_8002C2B8;
+    return &intrEnv;
 }
 
 void memclr(void* ptr, s32 size) {

@@ -3,9 +3,11 @@
 
 #include <types.h>
 
-void ResetEntryInt(s32*);
+void ResetEntryInt();
 void HookEntryInt(u16*);
 long long startIntrDMA();
-s32 startIntrVSync();
+void* startIntrVSync();
+void ReturnFromException();
+void ChangeClearRCnt(s32, s32);
 
 #endif
