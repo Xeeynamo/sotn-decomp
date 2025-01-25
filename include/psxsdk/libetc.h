@@ -22,8 +22,8 @@ int VSyncCallbacks(int ch, void (*f)());
 
 void* DMACallback(int dma, void (*func)());
 void* ResetCallback(void);
-void* StopCallback(void);
-void* RestartCallback(void);
+void StopCallback(void);
+long RestartCallback(void);
 int CheckCallback(void);
 
 long SetVideoMode(long mode);

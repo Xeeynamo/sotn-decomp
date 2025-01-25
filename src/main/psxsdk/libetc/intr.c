@@ -75,9 +75,9 @@ int VSyncCallbacks(int ch, void (*f)()) {
     return pCallbacks->VSyncCallbacks(ch, f);
 }
 
-void* StopCallback(void) { return pCallbacks->StopCallback(); }
+void StopCallback(void) { pCallbacks->StopCallback(); }
 
-void* RestartCallback(void) { return pCallbacks->RestartCallback(); }
+long RestartCallback(void) { return (long)pCallbacks->RestartCallback(); }
 
 int CheckCallback(void) { return intrEnv.inInterrupt; }
 
