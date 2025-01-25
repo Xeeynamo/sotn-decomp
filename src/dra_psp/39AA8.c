@@ -360,7 +360,27 @@ void func_8010E0B8(void) {
     g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_091176F0);
+void func_8010E0D0(s32 arg0) {
+    Entity* entity;
+    Entity* player;
+
+    if (arg0 == 1) {
+        player = &PLAYER;
+
+        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x47), 0);
+
+        if (entity != NULL) {
+            entity->flags |= FLAG_UNK_10000;
+        }
+
+        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x40), 0);
+
+        if (entity != NULL) {
+            entity->flags |= FLAG_UNK_10000;
+        }
+    }
+    func_8010DFF0(1, 1);
+}
 
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {

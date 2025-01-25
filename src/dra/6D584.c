@@ -364,15 +364,18 @@ void func_8010E0B8(void) {
 
 void func_8010E0D0(s32 arg0) {
     Entity* entity;
+    Entity* player;
 
     if (arg0 == 1) {
-        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(44, 0x47), 0);
+        player = &PLAYER;
+
+        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x47), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
 
-        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(44, 0x40), 0);
+        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x40), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
@@ -380,6 +383,7 @@ void func_8010E0D0(s32 arg0) {
     }
     func_8010DFF0(1, 1);
 }
+
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
