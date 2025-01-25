@@ -9,7 +9,7 @@ u_long MyPadRead(int id);
 u_long PadRead(int id) { return MyPadRead(id); }
 
 int MyVSyncCallback(void (*f)());
-int VSyncCallback(void (*f)()) { return MyVSyncCallback(f); }
+void VSyncCallback(void (*f)()) { MyVSyncCallback(f); }
 
 int VSyncCallbacks(int ch, void (*f)()) { NOT_IMPLEMENTED; }
 
