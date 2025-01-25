@@ -457,8 +457,25 @@ s32 func_8010E334(s32 xStart, s32 xEnd) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", SetSpeedX);
+// Sets velocity based on an input speed, and the existing facing value
+void SetSpeedX(s32 speed) {
+    if (g_CurrentEntity->facingLeft == 1) {
+        speed = -speed;
+    }
+    g_CurrentEntity->velocityX = speed;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09117B78);
+// Updates the Player velocity in the X Axis
+void func_8010E3B8(s32 velocityX) {
+    if (PLAYER.entityRoomIndex == 1) {
+        velocityX = -velocityX;
+    }
+    PLAYER.velocityX = velocityX;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010E3E0);
+void func_8010E3E0(void) {
+    if (g_Player.unk48) {
+        DestroyEntity(&g_Entities[16]);
+        g_Player.unk48 = 0;
+    }
+}

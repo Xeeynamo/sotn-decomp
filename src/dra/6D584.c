@@ -482,7 +482,7 @@ void func_8010E3B8(s32 velocityX) {
 }
 
 void func_8010E3E0(void) {
-    if (g_Player.unk48 != 0) {
+    if (g_Player.unk48) {
         DestroyEntity(&g_Entities[16]);
         g_Player.unk48 = 0;
     }
