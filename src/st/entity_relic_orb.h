@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+extern s32 D_8B42058;
+extern s32* D_psp_0924BC60;
+extern s32 D_psp_09246640;
+extern s32 D_psp_09246650;
+extern s32 D_psp_09246660;
+extern s32 D_psp_09246668;
+extern s32 D_psp_09246678;
+extern s32 D_psp_09246688;
+#else
 const char* g_RelicOrbTexts[] = {
 #if !defined(VERSION_US) || STAGE == STAGE_ST0
     "を入手した"
@@ -8,13 +18,15 @@ const char* g_RelicOrbTexts[] = {
     "Obtained ",
 #endif
 };
-u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
-u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
+#endif
+
+s16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
+s16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+s16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
 #if STAGE != STAGE_ST0
-u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
-u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
 extern u16 g_EInitObtainable[];
@@ -37,9 +49,9 @@ void EntityRelicOrb(Entity* self) {
 #endif
     u16 relicId;
 #if defined(VERSION_PSP) || STAGE == STAGE_ST0
-    u16 temp;
+    u16 isObtainedTextStored;
 #else
-    bool temp;
+    bool isObtainedTextStored;
 #endif
     RECT rect;
     Primitive* prim;
@@ -61,7 +73,7 @@ void EntityRelicOrb(Entity* self) {
 // The unk7C variable matches different other variables
 // in different versions. We use this as a hack to match everywhere.
 #if STAGE == STAGE_ST0
-#define orbUnk7C temp
+#define orbUnk7C isObtainedTextStored
 #else
 #define orbUnk7C var_s2
 #endif
@@ -241,9 +253,9 @@ void EntityRelicOrb(Entity* self) {
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
         msgLen = 0;
         var_s2 = 0;
-        temp = false;
+        isObtainedTextStored = false;
         msg = g_api.relicDefs[relicId].name;
-        switch (D_PSP_8B42058) {
+        switch (D_8B42058) {
         case 1:
         default:
             D_psp_0924BC60 = &D_psp_09246640;
@@ -262,10 +274,10 @@ void EntityRelicOrb(Entity* self) {
             break;
         }
 
-        if (D_PSP_8B42058 != 4) {
-            func_890C6FC(&sp34, &D_psp_09246688, D_psp_0924BC60, msg);
+        if (D_8B42058 != 4) {
+            psp_sprintf(&sp34, &D_psp_09246688, D_psp_0924BC60, msg);
         } else {
-            func_890C6FC(&sp34, &D_psp_09246688, msg, D_psp_0924BC60);
+            psp_sprintf(&sp34, &D_psp_09246688, msg, D_psp_0924BC60);
         }
         // Presumably this is a strlen call?
         msgLen = func_890CAE0(sp34);
@@ -274,16 +286,16 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7C = 0;
 #elif !defined(VERSION_US) || STAGE == STAGE_ST0
         msgLen = 0;
-        temp = false;
+        isObtainedTextStored = false;
         vramX = 0;
         msg = g_api.relicDefs[relicId].name;
         while (true) {
             ch = *msg++;
             if (ch == 0) {
-                if (temp) {
+                if (isObtainedTextStored) {
                     break;
                 }
-                temp = true;
+                isObtainedTextStored = true;
                 msg = g_RelicOrbTexts[0];
             } else {
                 ch = (ch << 8) | *msg++;
@@ -304,7 +316,7 @@ void EntityRelicOrb(Entity* self) {
         self->ext.relicOrb.unk7C = 0;
 #else
     msgLen = 0;
-    temp = false;
+    isObtainedTextStored = false;
     msg = g_RelicOrbTexts[0];
     chPix = g_Pix[0];
     var_v0_5 = (u8*)chPix;
@@ -315,11 +327,11 @@ void EntityRelicOrb(Entity* self) {
     msgLen = 0;
     while (true) {
         if (*msg == 0) {
-            if (temp) {
+            if (isObtainedTextStored) {
                 break;
             }
             msg = g_api.relicDefs[relicId].name;
-            temp = true;
+            isObtainedTextStored = true;
         } else {
             msg = BlitChar(msg, &msgLen, chPix, 0xC0);
         }
@@ -395,10 +407,10 @@ void EntityRelicOrb(Entity* self) {
 
     case 9:
         prim = &g_PrimBuf[self->primIndex];
-#if !defined(VERSION_US) || STAGE == STAGE_ST0
-        prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
-#else
+#if defined(VERSION_US) && !defined(VERSION_PSP) && STAGE != STAGE_ST0
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
+#else
+        prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
 #endif
         prim->drawMode = DRAW_DEFAULT;
         self->ext.relicOrb.unk7C++;

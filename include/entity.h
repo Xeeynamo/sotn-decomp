@@ -26,7 +26,7 @@ typedef struct {
     /* 0x84 */ s32 fallSpeed;
     /* 0x88 */ s16 gravity;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s16 iconSlot;
+    /* 0x8C */ u16 iconSlot;
     /* 0x8E */ s16 unk8E;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 unk92;
@@ -62,11 +62,11 @@ typedef struct {
     u16 sparkleAnim;
     u32 unk84;
     u32 unk88;
-    s16 iconSlot;
+    u16 iconSlot;
     u16 unk8E;
     u16 floatTimer;
     u16 unk92;
-    s32 yFloatSpeed;
+    u32 yFloatSpeed;
 } ET_RelicOrb;
 
 typedef struct {
@@ -2551,6 +2551,35 @@ typedef struct {
     /* 0x8C */ u16 unk8C;
 } ET_801BDAE4;
 
+typedef struct {
+    /* 0x7C */ struct Entity* unk7C;
+} ET_801D4400;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 : 8;
+    /* 0x7F */ u8 : 8;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ u16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u32 : 32;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ u32 : 32;
+    /* 0xA8 */ u32 : 32;
+    /* 0xAC */ u8 unkAC;
+    /* 0xAD */ u8 : 8;
+    /* 0xAE */ u8 : 8;
+    /* 0xAF */ u8 : 8;
+    /* 0xB0 */ s16 unkB0;
+} ET_801D4558;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2766,6 +2795,8 @@ typedef union { // offset=0x7C
     ET_Chair chair;
     ET_801B2BE4 et_801B2BE4;
     ET_801BDAE4 et_801BDAE4;
+    ET_801D4400 et_801D4400;
+    ET_801D4558 et_801D4558;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
