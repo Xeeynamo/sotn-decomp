@@ -266,6 +266,8 @@ segments:
       - [0x1BCE0, data]
       - [0x1CAB8, .data, psxsdk/libetc/intr]
       - [0x1DB54, data]
+      - [0x1DBA4, .data, psxsdk/libetc/vmode]
+      - [0x1DBA8, data]
       - [0x235E8, .data, psxsdk/libcd/c_002]
       - [0x235F8, .data, psxsdk/libcd/c_003]
       - [0x23608, .data, psxsdk/libcd/c_004]
