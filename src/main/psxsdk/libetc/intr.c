@@ -27,8 +27,12 @@ typedef int jmp_buf[JB_SIZE];
 
 typedef struct
 {
-    u16 unk0[0x1A];
-    int unk38;
+    u16 unk0;
+    u16 unk2;
+    s32 unk4[11];
+    u16 unk30;
+    u16 unk32;
+    int unk34;
     jmp_buf buf;
     s32 unk68[0x3EC];
 } D_8002C2B8_t;
@@ -60,7 +64,7 @@ int StopCallback(void) { return D_8002D340->StopCallback(); }
 
 int RestartCallback(void) { return D_8002D340->RestartCallback(); }
 
-int CheckCallback(void) { return D_8002C2BA; }
+int CheckCallback(void) { return D_8002C2B8.unk2; }
 
 u16 GetIntrMask(void) { return *g_InterruptMask; }
 
@@ -74,7 +78,7 @@ u16 SetIntrMask(u16 arg0)
 }
 
 void* startIntr() {
-    if (D_8002C2B8.unk0[0] != 0) {
+    if (D_8002C2B8.unk0 != 0) {
         return NULL;
     }
     *D_8002D344 = *g_InterruptMask = 0;
@@ -85,7 +89,7 @@ void* startIntr() {
     }
     D_8002C2B8.buf[JB_SP] = (s32)(&D_8002C2B8 + 1);
     HookEntryInt(D_8002C2B8.buf);
-    D_8002C2B8.unk0[0] = 1;
+    D_8002C2B8.unk0 = 1;
     D_8002D340->VSyncCallbacks = startIntrVSync();
     D_8002D340->DMACallback = startIntrDMA();
     _96_remove();
@@ -95,38 +99,74 @@ void* startIntr() {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", trapIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", setIntr);
+s32 setIntr(s32 arg0, s32 arg1) {
+    s32 temp_s3;
+    s32 temp_s4;
+    u16 temp_v1;
+    s32 var_s3;
+
+    temp_s4 = D_8002C2B8.unk4[arg0];
+    if ((arg1 != temp_s4) && (D_8002C2B8.unk0 != 0)) {
+        temp_v1 = *g_InterruptMask;
+        *g_InterruptMask = 0;
+        var_s3 = temp_v1 & 0xFFFF;
+        if (arg1 != 0) {
+            D_8002C2B8.unk4[arg0] = arg1;
+            var_s3 = var_s3 | (1 << arg0);
+            D_8002C2B8.unk30 |= (1 << arg0);
+        } else {
+            D_8002C2B8.unk4[arg0] = 0;
+            var_s3 = var_s3 & ~(1 << arg0);
+            D_8002C2B8.unk30 &= ~(1 << arg0);
+        }
+        if (arg0 == 0) {
+            ChangeClearPAD(arg1 == 0);
+            ChangeClearRCnt(3, arg1 == 0);
+        }
+        if (arg0 == 4) {
+            ChangeClearRCnt(0, arg1 == 0);
+        }
+        if (arg0 == 5) {
+            ChangeClearRCnt(1, arg1 == 0);
+        }
+        if (arg0 == 6) {
+            ChangeClearRCnt(2, arg1 == 0);
+        }
+        *g_InterruptMask = var_s3;
+    }
+    return temp_s4;
+}
 
 u16* stopIntr() {
     volatile s32* p2;
     volatile u16* mask;
     
-    if (D_8002C2B8.unk0[0] == 0) {
+    if (D_8002C2B8.unk0 == 0) {
         return NULL;
     }
     EnterCriticalSection();
     mask = g_InterruptMask;
-    D_8002C2B8.unk0[0x19] = *g_InterruptMask;
-    D_8002C2B8.unk38 = *D_8002D34C;
+    D_8002C2B8.unk32 = *g_InterruptMask;
+    D_8002C2B8.unk34 = *D_8002D34C;
     *D_8002D344 = *mask = 0;
     p2 = D_8002D34C;
     *p2 &= 0x77777777;
     ResetEntryInt(p2);
-    D_8002C2B8.unk0[0] = 0;
+    D_8002C2B8.unk0 = 0;
     return &D_8002C2B8;
 }
 
 u16* restartIntr() {
-    if (D_8002C2B8.unk0[0] != 0) {
+    if (D_8002C2B8.unk0 != 0) {
         return 0;
     }
     
     HookEntryInt(D_8002C2B8.buf);
-    D_8002C2B8.unk0[0] = 1;
-    *g_InterruptMask = D_8002C2B8.unk0[0x19];
-    *D_8002D34C = D_8002C2B8.unk38;
+    D_8002C2B8.unk0 = 1;
+    *g_InterruptMask = D_8002C2B8.unk32;
+    *D_8002D34C = D_8002C2B8.unk34;
     ExitCriticalSection();
-    return &D_8002C2B8.unk0[0];
+    return &D_8002C2B8.unk0;
 }
 
 void memclr(s32* ptr, s32 size) {
