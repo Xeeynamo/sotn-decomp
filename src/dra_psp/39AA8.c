@@ -351,7 +351,9 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010E0A8);
+void func_8010E0A8(void) {
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_091176D8);
 

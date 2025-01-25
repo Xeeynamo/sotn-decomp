@@ -354,9 +354,7 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
 }
 
 void func_8010E0A8(void) {
-    Entity* entity = &g_Entities[UNK_ENTITY_1];
-
-    entity->ext.entSlot1.unk2 = 0;
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
 }
 
 void func_8010E0B8(void) {
