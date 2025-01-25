@@ -171,7 +171,7 @@
 | dra    | func_psp_09136EE0                   |       25 |          1 |        |                                 |       |
 | lib    | func_psp_0924EF28                   |       25 |          1 |        |                                 |       |
 | lib    | func_psp_0924F5B8                   |       25 |          1 |        |                                 |       |
-| lib    | func_psp_0924F970                   |       25 |          1 |        |                                 |       |
+| lib    | func_psp_0924F970                   |       25 |          1 |        | https://decomp.me/scratch/P1Emw | 0.712 |
 | st0    | MoveEntity                          |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | st0    | SetStep                             |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
 | wrp    | MoveEntity                          |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
@@ -293,8 +293,8 @@
 | dra    | func_801071CC                       |       36 |          5 |        |                                 |       |
 | dra    | func_psp_090F2178                   |       37 |          2 |        |                                 |       |
 | lib    | func_psp_0924F7F8                   |       37 |          2 |        |                                 |       |
-| st0    | GetAngleBetweenEntities             |       37 |          2 |        |                                 |       |
-| wrp    | GetAngleBetweenEntities             |       37 |          2 |        |                                 |       |
+| st0    | GetAngleBetweenEntities             |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
+| wrp    | GetAngleBetweenEntities             |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | dra    | CastSpell                           |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090ECF60                   |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EEDF8                   |       37 |          3 |        |                                 |       |
@@ -670,9 +670,9 @@
 | lib    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | st0    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | wrp    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
-| lib    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
-| st0    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
-| wrp    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/XOThB | 0.997 |
+| lib    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
+| st0    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
+| wrp    | EntityExplosion                     |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | dra    | func_psp_090ED310                   |       99 |         12 |        |                                 |       |
 | st0    | func_801AF6D0                       |      101 |          5 |        |                                 |       |
 | lib    | func_psp_0924EC68                   |      101 |          7 |        |                                 |       |
@@ -1132,7 +1132,7 @@
 | lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
-| lib    | func_psp_0925B470                   |     2173 |        195 | Yes    | https://decomp.me/scratch/ZnpH2 | 0.594 |
+| lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
 | dra    | func_psp_09132AF0                   |     2183 |        161 | Yes    | https://decomp.me/scratch/wULJ5 | 0.975 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/oCnk1 | 0.684 |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/yTQqd | 0.761 |
