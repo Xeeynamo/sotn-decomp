@@ -85,7 +85,7 @@ void* startIntr() {
         trapIntr();
     }
     intrEnv.buf[JB_SP] = (s32)&intrEnv.stack[1004];
-    HookEntryInt((u16*)intrEnv.buf);
+    HookEntryInt(intrEnv.buf);
     intrEnv.interruptsInitialized = 1;
     pCallbacks->VSyncCallbacks = startIntrVSync();
     pCallbacks->DMACallback = startIntrDMA();
