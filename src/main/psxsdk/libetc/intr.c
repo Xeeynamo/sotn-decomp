@@ -136,27 +136,27 @@ Callback setIntr(s32 irq, Callback handler) {
     if ((handler != prevHandler) && (intrEnv.interruptsInitialized != 0)) {
         mask = *g_InterruptMask;
         *g_InterruptMask = 0;
-        if (handler != 0) {
+        if (handler != NULL) {
             intrEnv.handlers[irq] = handler;
             mask = mask | (1 << irq);
             intrEnv.enabledInterruptsMask |= (1 << irq);
         } else {
-            intrEnv.handlers[irq] = 0;
+            intrEnv.handlers[irq] = NULL;
             mask = mask & ~(1 << irq);
             intrEnv.enabledInterruptsMask &= ~(1 << irq);
         }
         if (irq == 0) {
-            ChangeClearPAD(handler == 0);
-            ChangeClearRCnt(3, handler == 0);
+            ChangeClearPAD(handler == NULL);
+            ChangeClearRCnt(3, handler == NULL);
         }
         if (irq == 4) {
-            ChangeClearRCnt(0, handler == 0);
+            ChangeClearRCnt(0, handler == NULL);
         }
         if (irq == 5) {
-            ChangeClearRCnt(1, handler == 0);
+            ChangeClearRCnt(1, handler == NULL);
         }
         if (irq == 6) {
-            ChangeClearRCnt(2, handler == 0);
+            ChangeClearRCnt(2, handler == NULL);
         }
         *g_InterruptMask = mask;
     }
