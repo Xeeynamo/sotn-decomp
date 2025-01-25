@@ -52,8 +52,6 @@ void func_us_801CC750(Entity* self) {
     }
 }
 
-extern s32 D_80097408[];
-
 void func_us_801CC8F8(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitCommon);

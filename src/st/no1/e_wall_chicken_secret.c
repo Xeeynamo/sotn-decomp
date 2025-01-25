@@ -2,7 +2,123 @@
 #include "no1.h"
 
 // Breakable wall with chicken
-INCLUDE_ASM("st/no1/nonmatchings/e_wall_chicken_secret", func_us_801BE880);
+extern u16 D_us_801815F4[];
+extern u16 D_us_80181604[][8];
+extern s32 D_psp_0929A740;
+extern s32 D_psp_0929A748;
+
+void func_us_801BE880(Entity* self) {
+    Entity* tempEntity;
+    s32 tilePos;
+    s32 i;
+    u8 animFrame;
+    Entity* tempEntity2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801809C8);
+        self->zPriority = 0x70;
+        self->hitPoints = 0x7FFF;
+        self->hitboxState = 0;
+        self->ext.et_801BE880.unk82 = 0;
+        if (g_CastleFlags[CASTLE_FLAG_18]) {
+            self->step = 5;
+        } else {
+            tempEntity = self + 2;
+#ifdef VERSION_PSP
+            CreateEntityFromEntity(D_psp_0929A748, self, tempEntity);
+#else
+            CreateEntityFromEntity(E_ID_25, self, tempEntity);
+#endif
+            tempEntity->posY.i.hi -= 0x18;
+            tempEntity->params = 2;
+            tempEntity = self + 1;
+#ifdef VERSION_PSP
+            CreateEntityFromEntity(D_psp_0929A748, self, tempEntity);
+#else
+            CreateEntityFromEntity(E_ID_25, self, tempEntity);
+#endif
+            tempEntity->posY.i.hi -= 0x30;
+            tempEntity->params = 1;
+        }
+        break;
+
+    case 1:
+        if (self->ext.et_801BE880.unk82 > 8) {
+            self->ext.et_801BE880.unk82 = 0;
+            for (i = 0; i < 5; i++) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                    CreateEntityFromEntity(D_psp_0929A740, self, tempEntity);
+#else
+                    CreateEntityFromEntity(E_ID_26, self, tempEntity);
+#endif
+                    tempEntity->posX.i.hi += 0x10;
+                    tempEntity->posY.i.hi -= 0x30;
+                    tempEntity->params = i;
+                }
+            }
+            if (self->animCurFrame < 0x4D) {
+                self->animCurFrame++;
+            }
+        }
+        if (self->ext.et_801BE880.unk84) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            self->step_s = 0;
+            self->step = self->ext.et_801BE880.unk84 + 1;
+            if (self->ext.et_801BE880.unk84 == 3) {
+                self->step = 2;
+            }
+        }
+        break;
+
+    case 2:
+        self->animCurFrame = 0x4F;
+        if (self->ext.et_801BE880.unk84 & 2) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            self->step = 4;
+        }
+        break;
+
+    case 3:
+        self->animCurFrame = 0x4E;
+#ifdef VERSION_PSP
+        tempEntity2 = self + 1;
+        if (tempEntity2->step == 1 && (tempEntity2->flags & FLAG_DEAD) == 0) {
+            tempEntity2->flags |= FLAG_DEAD;
+        }
+        PlaySfxPositional(SFX_WALL_DEBRIS_B);
+        self->step = 4;
+#else
+        if (self->ext.et_801BE880.unk84 & 1) {
+            PlaySfxPositional(SFX_WALL_DEBRIS_B);
+            self->step = 4;
+        }
+#endif
+        break;
+
+    case 4:
+        self->animCurFrame = 0x50;
+        g_CastleFlags[CASTLE_FLAG_18] = 1;
+        tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (tempEntity != NULL) {
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);
+            tempEntity->params = 0x43;
+            tempEntity->posY.i.hi -= 0x30;
+        }
+        self->step++;
+        break;
+    default:
+        self->animCurFrame = 0x50;
+        break;
+    }
+    animFrame = self->animCurFrame - 0x4B;
+    for (i = 0; i < 6; i++) {
+        tilePos = D_us_801815F4[i];
+        g_Tilemap.fg[tilePos] = D_us_80181604[animFrame][i];
+    }
+}
 
 // Hit spawner?
 INCLUDE_ASM("st/no1/nonmatchings/e_wall_chicken_secret", func_us_801BEB54);
@@ -106,9 +222,6 @@ void func_us_801BF074(Entity* self) {
     }
 }
 
-extern s32 D_80097408[];
-extern u16 D_us_801815F4[];
-extern u16 D_us_80181604[];
 extern s32 D_us_80181664;
 
 // Secret elevator inside chicken wall
@@ -153,7 +266,7 @@ void func_us_801BF3F4(Entity* self) {
         }
         for (i = 6; i < 8; i++) {
             tilePos = D_us_801815F4[i];
-            g_Tilemap.fg[tilePos] = *(&D_us_80181604[i] + 32);
+            g_Tilemap.fg[tilePos] = D_us_80181604[4][i];
         }
         if (D_us_80181664 != 0) {
             self->posY.i.hi = 0xEE - g_Tilemap.scrollY.i.hi;
@@ -164,7 +277,7 @@ void func_us_801BF3F4(Entity* self) {
                 self->step = 6;
                 for (i = 6; i < 8; i++) {
                     tilePos = D_us_801815F4[i];
-                    g_Tilemap.fg[tilePos] = *(&D_us_80181604[i] + 40);
+                    g_Tilemap.fg[tilePos] = D_us_80181604[5][i];
                 }
             }
         }
@@ -187,7 +300,7 @@ void func_us_801BF3F4(Entity* self) {
         if (!self->params) {
             for (i = 0; i < 8; i++) {
                 tilePos = D_us_801815F4[i];
-                g_Tilemap.fg[tilePos] = *(&D_us_80181604[i] + 40);
+                g_Tilemap.fg[tilePos] = D_us_80181604[5][i];
             }
         }
         g_Player.padSim = 0;
@@ -262,18 +375,18 @@ void func_us_801BF3F4(Entity* self) {
             D_us_80181664 = 0;
             for (i = 6; i < 8; i++) {
                 tilePos = D_us_801815F4[i];
-                g_Tilemap.fg[tilePos] = *(&D_us_80181604[i] + 32);
+                g_Tilemap.fg[tilePos] = D_us_80181604[4][i];
             }
             self->step = 1;
         }
         break;
     }
     if (collision) {
-        D_80097408[0] = 0x6E;
-        PLAYER.zPriority = D_80097408[0];
+        g_unkGraphicsStruct.g_zEntityCenter = 0x6E;
+        PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     } else {
-        D_80097408[0] = 0x94;
-        PLAYER.zPriority = D_80097408[0];
+        g_unkGraphicsStruct.g_zEntityCenter = 0x94;
+        PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     }
     FntPrint("idou_flag %x\n", D_us_80181664);
 }

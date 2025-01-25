@@ -4,7 +4,6 @@
 #include "common.h"
 #include "sfx.h"
 
-extern s32 D_80097408[];
 extern s16 PLAYER_posY_i_hi;
 s16 GetDistanceToPlayerX();
 
@@ -261,7 +260,7 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x10;
         PLAYER.zPriority = 0x94;
         g_Player.padSim = 0;
-        D_80097408[0] = 0x94;
+        g_unkGraphicsStruct.g_zEntityCenter = 0x94;
         g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;

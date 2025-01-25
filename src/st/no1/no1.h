@@ -22,7 +22,7 @@ typedef enum EntityIDs {
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
     // /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP = 0xC,
+    /* 0x0C */ E_HEART_DROP = 0x0C,
     // /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
@@ -34,6 +34,8 @@ typedef enum EntityIDs {
     /* 0x21 */ E_AXE_KNIGHT_AXE = 0x21,
     /* 0x22 */ E_AXE_KNIGHT_AXE_2, // func_us_801CBA30
     /* 0x23 */ E_UNK_ENTITY,       // InitializeUnkEntity
+    /* 0x25 */ E_ID_25 = 0x25,
+    /* 0x26 */ E_ID_26,
     /* 0x2A */ E_ID_2A = 0x2A,
     /* 0x2F */ E_ID_2F = 0x2F,
     /* 0x30 */ E_ID_30,
