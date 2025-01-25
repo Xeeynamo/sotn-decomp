@@ -311,7 +311,18 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     return ret;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09117538);
+void func_8010DF70(void) {
+    g_CurrentEntity = &PLAYER;
+
+    switch (PLAYER.ext.player.anim) {
+    case 0xBA:
+    case 0xBB:
+    case 0xBE:
+    case 0xF0:
+    case 0xF1:
+        PlayAnimation(D_800B0130, D_800B01B8);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010DFF0);
 

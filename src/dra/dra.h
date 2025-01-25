@@ -389,7 +389,7 @@ extern u16 D_800AFC50[];
 extern s16 D_800AFDA4[];
 extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
-extern u8 D_800B0130[];
+extern s8 D_800B0130[];
 extern AnimationFrame* D_800B01B8[];
 extern AnimationFrame* D_800B0594[];
 extern u8 D_800B0608[];
