@@ -25,23 +25,25 @@ s32 setjmp(s32*);
 
 typedef int jmp_buf[JB_SIZE];
 
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-    void (*unk4[11])();
+typedef struct
+{
+    u16 interruptsInitialized;
+    u16 inInterrupt;
+    void (*handlers[11])();
     u16 unk30;
     u16 unk32;
     int unk34;
     jmp_buf buf;
     s32 unk68[0x3EC];
-} D_8002C2B8_t;
+} intrEnv_t;
 
-extern D_8002C2B8_t D_8002C2B8;
+extern intrEnv_t D_8002C2B8;
 
 extern struct Callbacks* D_8002D340;
 extern volatile u16* D_8002D344;
 extern volatile u16* g_InterruptMask; // 8002D348
 extern volatile s32* D_8002D34C;
+extern s32 D_8002D350;
 
 int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
@@ -63,7 +65,7 @@ int StopCallback(void) { return D_8002D340->StopCallback(); }
 
 int RestartCallback(void) { return D_8002D340->RestartCallback(); }
 
-int CheckCallback(void) { return D_8002C2B8.unk2; }
+int CheckCallback(void) { return D_8002C2B8.inInterrupt; }
 
 u16 GetIntrMask(void) { return *g_InterruptMask; }
 
@@ -76,7 +78,7 @@ u16 SetIntrMask(u16 arg0) {
 }
 
 void* startIntr() {
-    if (D_8002C2B8.unk0 != 0) {
+    if (D_8002C2B8.interruptsInitialized != 0) {
         return NULL;
     }
     *D_8002D344 = *g_InterruptMask = 0;
@@ -87,7 +89,7 @@ void* startIntr() {
     }
     D_8002C2B8.buf[JB_SP] = (s32)(&D_8002C2B8 + 1);
     HookEntryInt(D_8002C2B8.buf);
-    D_8002C2B8.unk0 = 1;
+    D_8002C2B8.interruptsInitialized = 1;
     D_8002D340->VSyncCallbacks = startIntrVSync();
     D_8002D340->DMACallback = startIntrDMA();
     _96_remove();
@@ -95,7 +97,39 @@ void* startIntr() {
     return &D_8002C2B8;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", trapIntr);
+void trapIntr() {
+    s32 i;
+    u16 mask;
+
+    if (D_8002C2B8.interruptsInitialized == 0) {
+        printf("unexpected interrupt(%04x)\n", *D_8002D344);
+        ReturnFromException();
+    }
+    D_8002C2B8.inInterrupt = 1;
+    mask = (D_8002C2B8.unk30 & *D_8002D344) & *g_InterruptMask;
+    while (mask != 0) {
+        for (i = 0; mask && i < 11; ++i, mask >>= 1) {
+            if (mask & 1) {
+                *D_8002D344 = ~(1 << i);
+                if (D_8002C2B8.handlers[i] != NULL) {
+                    D_8002C2B8.handlers[i]();
+                }
+            }
+        }
+        mask =(D_8002C2B8.unk30 & *D_8002D344) & *g_InterruptMask;
+    }
+    if (*D_8002D344 & *g_InterruptMask) {
+        if (D_8002D350++ > 0x800) {
+            printf("intr timeout(%04x:%04x)\n", *D_8002D344, *g_InterruptMask);
+            D_8002D350 = 0;
+            *D_8002D344 = 0;
+        }
+    } else {
+        D_8002D350 = 0;
+    }
+    D_8002C2B8.inInterrupt = 0;
+    ReturnFromException();
+}
 
 s32 setIntr(s32 arg0, s32 arg1) {
     s32 temp_s3;
@@ -103,17 +137,17 @@ s32 setIntr(s32 arg0, s32 arg1) {
     u16 temp_v1;
     s32 var_s3;
 
-    temp_s4 = D_8002C2B8.unk4[arg0];
-    if ((arg1 != temp_s4) && (D_8002C2B8.unk0 != 0)) {
+    temp_s4 = D_8002C2B8.handlers[arg0];
+    if ((arg1 != temp_s4) && (D_8002C2B8.interruptsInitialized != 0)) {
         temp_v1 = *g_InterruptMask;
         *g_InterruptMask = 0;
         var_s3 = temp_v1 & 0xFFFF;
         if (arg1 != 0) {
-            D_8002C2B8.unk4[arg0] = arg1;
+            D_8002C2B8.handlers[arg0] = arg1;
             var_s3 = var_s3 | (1 << arg0);
             D_8002C2B8.unk30 |= (1 << arg0);
         } else {
-            D_8002C2B8.unk4[arg0] = 0;
+            D_8002C2B8.handlers[arg0] = 0;
             var_s3 = var_s3 & ~(1 << arg0);
             D_8002C2B8.unk30 &= ~(1 << arg0);
         }
@@ -139,7 +173,7 @@ u16* stopIntr() {
     volatile s32* p2;
     volatile u16* mask;
 
-    if (D_8002C2B8.unk0 == 0) {
+    if (D_8002C2B8.interruptsInitialized == 0) {
         return NULL;
     }
     EnterCriticalSection();
@@ -150,21 +184,21 @@ u16* stopIntr() {
     p2 = D_8002D34C;
     *p2 &= 0x77777777;
     ResetEntryInt(p2);
-    D_8002C2B8.unk0 = 0;
+    D_8002C2B8.interruptsInitialized = 0;
     return &D_8002C2B8;
 }
 
 u16* restartIntr() {
-    if (D_8002C2B8.unk0 != 0) {
+    if (D_8002C2B8.interruptsInitialized != 0) {
         return 0;
     }
 
     HookEntryInt(D_8002C2B8.buf);
-    D_8002C2B8.unk0 = 1;
+    D_8002C2B8.interruptsInitialized = 1;
     *g_InterruptMask = D_8002C2B8.unk32;
     *D_8002D34C = D_8002C2B8.unk34;
     ExitCriticalSection();
-    return &D_8002C2B8.unk0;
+    return &D_8002C2B8.interruptsInitialized;
 }
 
 void memclr(s32* ptr, s32 size) {
