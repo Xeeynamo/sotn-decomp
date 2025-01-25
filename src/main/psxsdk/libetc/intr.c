@@ -37,7 +37,7 @@ static struct Callbacks callbacks = {
     restartIntr,
     &intrEnv};
 struct Callbacks* pCallbacks = &callbacks;
-static volatile u16* i_mask = (u16*)0x1F801070;
+static volatile u16* i_stat = (u16*)0x1F801070;
 static volatile u16* g_InterruptMask = (u16*)0x1F801074;
 static volatile s32* d_pcr = (s32*)0x1F8010F0;
 static s32 D_8002D350 = 0;
@@ -78,7 +78,7 @@ void* startIntr() {
     if (intrEnv.interruptsInitialized != 0) {
         return NULL;
     }
-    *i_mask = *g_InterruptMask = 0;
+    *i_stat = *g_InterruptMask = 0;
     *d_pcr = 0x33333333;
     memclr(&intrEnv, sizeof(intrEnv) / sizeof(s32));
     if (setjmp(intrEnv.buf) != 0) {
@@ -99,27 +99,27 @@ void trapIntr() {
     u16 mask;
 
     if (intrEnv.interruptsInitialized == 0) {
-        printf("unexpected interrupt(%04x)\n", *i_mask);
+        printf("unexpected interrupt(%04x)\n", *i_stat);
         ReturnFromException();
     }
     intrEnv.inInterrupt = 1;
-    mask = (intrEnv.enabledInterruptsMask & *i_mask) & *g_InterruptMask;
+    mask = (intrEnv.enabledInterruptsMask & *i_stat) & *g_InterruptMask;
     while (mask != 0) {
         for (i = 0; mask && i < 11; ++i, mask >>= 1) {
             if (mask & 1) {
-                *i_mask = ~(1 << i);
+                *i_stat = ~(1 << i);
                 if (intrEnv.handlers[i] != NULL) {
                     intrEnv.handlers[i]();
                 }
             }
         }
-        mask = (intrEnv.enabledInterruptsMask & *i_mask) & *g_InterruptMask;
+        mask = (intrEnv.enabledInterruptsMask & *i_stat) & *g_InterruptMask;
     }
-    if (*i_mask & *g_InterruptMask) {
+    if (*i_stat & *g_InterruptMask) {
         if (D_8002D350++ > 0x800) {
-            printf("intr timeout(%04x:%04x)\n", *i_mask, *g_InterruptMask);
+            printf("intr timeout(%04x:%04x)\n", *i_stat, *g_InterruptMask);
             D_8002D350 = 0;
-            *i_mask = 0;
+            *i_stat = 0;
         }
     } else {
         D_8002D350 = 0;
@@ -172,7 +172,7 @@ void* stopIntr() {
     EnterCriticalSection();
     intrEnv.savedMask = *g_InterruptMask;
     intrEnv.savedPcr = *d_pcr;
-    *i_mask = *g_InterruptMask = 0;
+    *i_stat = *g_InterruptMask = 0;
     *d_pcr &= 0x77777777;
     ResetEntryInt();
     intrEnv.interruptsInitialized = 0;
