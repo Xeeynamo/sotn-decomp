@@ -324,7 +324,32 @@ void func_8010DF70(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010DFF0);
+void func_8010DFF0(s32 resetAnims, s32 arg1) {
+    Primitive* prim;
+    s32 i;
+
+    if (resetAnims) {
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
+        g_Entities[UNK_ENTITY_1].animCurFrame = g_Entities[UNK_ENTITY_2].animCurFrame = g_Entities[UNK_ENTITY_3].animCurFrame = 0;
+        prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
+
+        for (i = 0; i < 6; i++) {
+            prim->x1 = 0;
+            prim = prim->next;
+        }
+    }
+
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 10;
+
+    if (arg1) {
+        if (arg1 < 4) {
+            g_Player.timers[ALU_T_15] = 4;
+        } else {
+            g_Player.timers[ALU_T_15] = arg1;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_8010E0A8);
 
