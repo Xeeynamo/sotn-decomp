@@ -5,9 +5,14 @@
 /// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
 /// special and only used for inventory so far.
 typedef enum {
-    EQUIP_RELIC = 5,
-    EQUIP_DOCUMENT,
-} ShopEqipKind;
+    INVENTORY_HAND,
+    INVENTORY_HEAD,
+    INVENTORY_BODY,
+    INVENTORY_CAPE,
+    INVENTORY_ACCESSORY,
+    INVENTORY_RELIC,
+    INVENTORY_DOCUMENT,
+} InventoryCategory;
 
 /// "documents" in the shop have their own
 /// item index, separate from other items.
@@ -36,55 +41,55 @@ typedef struct {
 
 static InventoryItem D_us_8018134C[] = {
     // clang-format off
-    { EQUIP_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
-    { EQUIP_HAND,      0,    ITEM_POTION,         800 },
-    { EQUIP_HAND,      3,    ITEM_HIGH_POTION,    2000 },
-    { EQUIP_HAND,      5,    ITEM_ELIXIR,         8000 },
-    { EQUIP_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
-    { EQUIP_HAND,      0,    ITEM_ANTIVENOM,      200 },
-    { EQUIP_HAND,      0,    ITEM_UNCURSE,        200 },
-    { EQUIP_HAND,      0,    ITEM_HAMMER,         200 },
-    { EQUIP_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
-    { EQUIP_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
-    { EQUIP_HAND,      1,    ITEM_BOOMERANG,      500 },
-    { EQUIP_HAND,      3,    ITEM_JAVELIN,        800 },
-    { EQUIP_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
-    { EQUIP_HAND,      4,    ITEM_SHURIKEN,       2400 },
-    { EQUIP_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
-    { EQUIP_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
-    { EQUIP_HAND,      7,    ITEM_FLAME_STAR,     15000 },
-    { EQUIP_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
-    { EQUIP_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
-    { EQUIP_HAND,      0,    ITEM_SABER,          1500 },
-    { EQUIP_HAND,      0,    ITEM_MACE,           2000 },
-    { EQUIP_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
-    { EQUIP_HAND,      5,    ITEM_FIREBRAND,      10000 },
-    { EQUIP_HAND,      5,    ITEM_ICEBRAND,       10000 },
-    { EQUIP_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
-    { EQUIP_HAND,      5,    ITEM_HARPER,         12000 },
-    { EQUIP_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
-    { EQUIP_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
-    { EQUIP_HEAD,      0,    ITEM_VELVET_HAT,     400 },
-    { EQUIP_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
-    { EQUIP_HEAD,      0,    ITEM_CIRCLET,        4000 },
-    { EQUIP_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
-    { EQUIP_ARMOR,     0,    ITEM_IRON_CUIRASS,   1500 },
-    { EQUIP_ARMOR,     0,    ITEM_STEEL_CUIRASS,  4000 },
-    { EQUIP_ARMOR,     0,    ITEM_DIAMOND_PLATE,  12000 },
-    { EQUIP_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
-    { EQUIP_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
-    { EQUIP_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
-    { EQUIP_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
-    { EQUIP_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
-    { EQUIP_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
-    { EQUIP_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
-    { EQUIP_DOCUMENT,  0x80, DOC_CASTLE_MAP,      103 },
-    { EQUIP_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
-    { EQUIP_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
-    { EQUIP_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
-    { EQUIP_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
-    { EQUIP_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
-    { EQUIP_DOCUMENT,  0,    0x000A,              1000000 },
+    { INVENTORY_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
+    { INVENTORY_HAND,      0,    ITEM_POTION,         800 },
+    { INVENTORY_HAND,      3,    ITEM_HIGH_POTION,    2000 },
+    { INVENTORY_HAND,      5,    ITEM_ELIXIR,         8000 },
+    { INVENTORY_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
+    { INVENTORY_HAND,      0,    ITEM_ANTIVENOM,      200 },
+    { INVENTORY_HAND,      0,    ITEM_UNCURSE,        200 },
+    { INVENTORY_HAND,      0,    ITEM_HAMMER,         200 },
+    { INVENTORY_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
+    { INVENTORY_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
+    { INVENTORY_HAND,      1,    ITEM_BOOMERANG,      500 },
+    { INVENTORY_HAND,      3,    ITEM_JAVELIN,        800 },
+    { INVENTORY_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
+    { INVENTORY_HAND,      4,    ITEM_SHURIKEN,       2400 },
+    { INVENTORY_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
+    { INVENTORY_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
+    { INVENTORY_HAND,      7,    ITEM_FLAME_STAR,     15000 },
+    { INVENTORY_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
+    { INVENTORY_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
+    { INVENTORY_HAND,      0,    ITEM_SABER,          1500 },
+    { INVENTORY_HAND,      0,    ITEM_MACE,           2000 },
+    { INVENTORY_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
+    { INVENTORY_HAND,      5,    ITEM_FIREBRAND,      10000 },
+    { INVENTORY_HAND,      5,    ITEM_ICEBRAND,       10000 },
+    { INVENTORY_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
+    { INVENTORY_HAND,      5,    ITEM_HARPER,         12000 },
+    { INVENTORY_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
+    { INVENTORY_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
+    { INVENTORY_HEAD,      0,    ITEM_VELVET_HAT,     400 },
+    { INVENTORY_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
+    { INVENTORY_HEAD,      0,    ITEM_CIRCLET,        4000 },
+    { INVENTORY_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
+    { INVENTORY_BODY,      0,    ITEM_IRON_CUIRASS,   1500 },
+    { INVENTORY_BODY,      0,    ITEM_STEEL_CUIRASS,  4000 },
+    { INVENTORY_BODY,      0,    ITEM_DIAMOND_PLATE,  12000 },
+    { INVENTORY_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
+    { INVENTORY_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
+    { INVENTORY_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
+    { INVENTORY_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
+    { INVENTORY_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
+    { INVENTORY_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
+    { INVENTORY_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
+    { INVENTORY_DOCUMENT,  0x80, DOC_CASTLE_MAP,      103 },
+    { INVENTORY_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
+    { INVENTORY_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
+    { INVENTORY_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
+    { INVENTORY_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
+    { INVENTORY_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
+    { INVENTORY_DOCUMENT,  0,    0x000A,              1000000 },
     // clang-format on
 };
 
@@ -100,13 +105,13 @@ u16 D_us_801814D4[] = {16, 0};
 // sellable items
 AvailableInventoryItem D_us_801814D8[] = {
     // clang-format off
-    { EQUIP_ACCESSORY, ITEM_ZIRCON,     150 },
-    { EQUIP_ACCESSORY, ITEM_AQUAMARINE, 800 },
-    { EQUIP_ACCESSORY, ITEM_TURQUOISE,  1500 },
-    { EQUIP_ACCESSORY, ITEM_ONYX,       3000 },
-    { EQUIP_ACCESSORY, ITEM_GARNET,     5000 },
-    { EQUIP_ACCESSORY, ITEM_OPAL,       8000 },
-    { EQUIP_ACCESSORY, ITEM_DIAMOND,    20000 },
+    { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
+    { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
+    { INVENTORY_ACCESSORY, ITEM_TURQUOISE,  1500 },
+    { INVENTORY_ACCESSORY, ITEM_ONYX,       3000 },
+    { INVENTORY_ACCESSORY, ITEM_GARNET,     5000 },
+    { INVENTORY_ACCESSORY, ITEM_OPAL,       8000 },
+    { INVENTORY_ACCESSORY, ITEM_DIAMOND,    20000 },
     // clang-format on
 };
 
@@ -276,7 +281,7 @@ void func_us_801B2BE4(Entity* self) {
             for (i = 0; i < 64; i++) {
                 itemId = ptr->itemId;
                 switch (ptr->category) {
-                case EQUIP_HAND:
+                case INVENTORY_HAND:
                     tempVar = g_Status.equipHandCount[itemId];
                     if (g_Status.equipment[LEFT_HAND_SLOT] == itemId) {
                         tempVar++;
@@ -287,7 +292,7 @@ void func_us_801B2BE4(Entity* self) {
                     D_us_801D425C[i] = 99 - tempVar;
                     break;
 
-                case EQUIP_HEAD:
+                case INVENTORY_HEAD:
                     tempVar = g_Status.equipBodyCount[itemId];
                     if (g_Status.equipment[HEAD_SLOT] == itemId) {
                         tempVar++;
@@ -295,7 +300,7 @@ void func_us_801B2BE4(Entity* self) {
                     D_us_801D425C[i] = 99 - tempVar;
                     break;
 
-                case EQUIP_ARMOR:
+                case INVENTORY_BODY:
                     tempVar = g_Status.equipBodyCount[itemId];
                     if (g_Status.equipment[ARMOR_SLOT] == itemId) {
                         tempVar++;
@@ -303,7 +308,7 @@ void func_us_801B2BE4(Entity* self) {
                     D_us_801D425C[i] = 99 - tempVar;
                     break;
 
-                case EQUIP_CAPE:
+                case INVENTORY_CAPE:
                     tempVar = g_Status.equipBodyCount[itemId];
                     if (g_Status.equipment[CAPE_SLOT] == itemId) {
                         tempVar++;
@@ -311,7 +316,7 @@ void func_us_801B2BE4(Entity* self) {
                     D_us_801D425C[i] = 99 - tempVar;
                     break;
 
-                case EQUIP_ACCESSORY:
+                case INVENTORY_ACCESSORY:
                     tempVar = g_Status.equipBodyCount[itemId];
                     if (self->params) {
                         D_us_801D425C[i] = tempVar;
@@ -327,7 +332,7 @@ void func_us_801B2BE4(Entity* self) {
                     }
                     break;
 
-                case EQUIP_RELIC:
+                case INVENTORY_RELIC:
                     itemId = D_us_801814D4[itemId];
                     if (g_Status.relics[itemId] & RELIC_FLAG_FOUND) {
                         D_us_801D425C[i] = 0;
@@ -448,20 +453,20 @@ void func_us_801B2BE4(Entity* self) {
                 g_Status.gold -=
                     D_us_801D415C[itemId] * D_us_801D4364[itemId].price;
                 switch (D_us_801D4364[itemId].category) {
-                case EQUIP_HAND:
-                    tempVar = 0;
+                case INVENTORY_HAND:
+                    tempVar = EQUIP_HAND;
                     break;
-                case EQUIP_HEAD:
-                    tempVar = 1;
+                case INVENTORY_HEAD:
+                    tempVar = EQUIP_HEAD;
                     break;
-                case EQUIP_ARMOR:
-                    tempVar = 2;
+                case INVENTORY_BODY:
+                    tempVar = EQUIP_ARMOR;
                     break;
-                case EQUIP_CAPE:
-                    tempVar = 3;
+                case INVENTORY_CAPE:
+                    tempVar = EQUIP_CAPE;
                     break;
-                case EQUIP_ACCESSORY:
-                    tempVar = 4;
+                case INVENTORY_ACCESSORY:
+                    tempVar = EQUIP_ACCESSORY;
                     break;
                 }
                 if (D_us_801D4364[itemId].category < NUM_EQUIP_KINDS) {
@@ -470,7 +475,7 @@ void func_us_801B2BE4(Entity* self) {
                                              (enum EquipKind)tempVar);
                     }
                 } else {
-                    if (D_us_801D4364[itemId].category == EQUIP_RELIC) {
+                    if (D_us_801D4364[itemId].category == INVENTORY_RELIC) {
                         g_api.func_800FE044(
                             D_us_801814D4[D_us_801D4364[itemId].itemId],
                             0x2000);
