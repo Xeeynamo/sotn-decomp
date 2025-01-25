@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 void EntityExplosionSpawn(u16 params, u16 arg1) {
-    Entity* entity;
 #if STAGE != STAGE_ST0
-    if (arg1 != 0) {
+    if (arg1) {
 #if defined VERSION_BETA
         g_api.PlaySfx(arg1);
 #else
@@ -16,12 +15,11 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
         return;
     }
 
-    entity = g_CurrentEntity;
-    entity->drawFlags = FLAG_DRAW_DEFAULT;
-    entity->entityId = E_EXPLOSION;
-    entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    entity->params = params;
-    entity->animCurFrame = 0;
+    g_CurrentEntity->entityId = E_EXPLOSION;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->params = params;
+    g_CurrentEntity->animCurFrame = 0;
+    g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
 }
