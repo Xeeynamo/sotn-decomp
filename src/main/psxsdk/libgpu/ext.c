@@ -23,7 +23,7 @@ u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
     return GetTPage(tp, abr, x, y);
 }
 
-u_short LoadClut2(u_long* clut, int x, int y) {
+u_short LoadClut(u_long* clut, int x, int y) {
     RECT rect;
 
     rect.x = x;

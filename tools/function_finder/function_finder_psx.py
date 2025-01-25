@@ -90,7 +90,7 @@ def get_asm_files(asm_path):
     return files
 
 def find_wip(o):
-    result = find_scratches(o[1], "ps1", o[7], True)
+    result = find_scratches(o[1], "ps1", o[8], True)
 
     if result:
         return {"link": result[0], "percent": result[1]}
@@ -102,10 +102,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     asm_files = get_asm_files("asm/us")
 
-    # sort by name, then number of branches, then length
+    # sort by name, then number of branches, then length, sort psxsdx to the bottom
     asm_files = sorted(asm_files, key=lambda x: (x["name"]))
     asm_files = sorted(asm_files, key=lambda x: (x["branches"]))
     asm_files = sorted(asm_files, key=lambda x: len(x["text"].split("\n")))
+    asm_files = sorted(asm_files, key=lambda x: 'psxsdk' in x['name'].as_posix())
 
     if args.keywords and len(args.keywords):
         # filter based on keywords
@@ -122,6 +123,9 @@ if __name__ == "__main__":
         length = len(f["text"].split("\n"))
         branches = f["branches"]
         jump_table = f["jump_table"]
+
+        if not "jr         $ra" in f["text"]:
+            continue
 
         if "/psxsdk/" in name:
             ovl_name = name.split("/")[5]  # grab library name
@@ -141,6 +145,7 @@ if __name__ == "__main__":
 
         wip = ""
         wip_percentage = ""
+        dup = ""
         output.append(
             [
                 ovl_name,
@@ -148,6 +153,7 @@ if __name__ == "__main__":
                 length,
                 branches,
                 jump_table,
+                dup,
                 wip,
                 wip_percentage,
                 f["text"] # local asm
@@ -164,24 +170,42 @@ if __name__ == "__main__":
         for i, o in enumerate(output):
             # keep the in-source results as definitive
             if results[i] != None:
-                o[5] = results[i]["link"]
-                o[6] = results[i]["percent"]
+                o[6] = results[i]["link"]
+                o[7] = results[i]["percent"]
 
-    if args.use_call_trees:
-        base_url = (
+    base_url = (
             "https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates"
         )
+
+    if os.path.isfile("gh-duplicates/duplicates.txt"):
+        with open("gh-duplicates/duplicates.txt", "r") as f:
+            dups_text = f.read()
+    else:
+        print("'warning: gh-duplicates/duplicates.txt' file not found, skipping duplicate check", file=sys.stderr)
+        dups_text = None
+
+    if dups_text is not None:
+        for i, o in enumerate(output):
+            full_match = rf'1.00.+\s{o[1]}\s.+{o[0]}';
+            partial_match = rf'0.\d\d.+\s{o[1]}\s.+{o[0]}';
+
+            if re.search(full_match, dups_text) is not None:
+                o[5] = f"[Full]({base_url}/duplicates.txt#:~:text={o[1]})"
+            elif re.search(partial_match, dups_text) is not None:
+                o[5] = f"[Part]({base_url}/duplicates.txt#:~:text={o[1]})"
+
+    if args.use_call_trees:
         for i, o in enumerate(output):
             unique_name = ".".join([o[0], o[1]])
 
-            svg_path = os.path.join("function_calls", f"{unique_name}.svg")
+            svg_path = os.path.join("gh-duplicates/function_calls", f"{unique_name}.svg")
             if os.path.exists(svg_path):
                 o[1] = f"[{o[1]}]({base_url}/{svg_path})"
 
     # delete asm text
     for o in output:
-        del o[7:]
+        del o[8:]
 
-    headers = ["Ovl", "Function", "Length", "Branches", "Jtbl", "WIP", "%"]
+    headers = ["Ovl", "Function", "Length", "Branches", "Jtbl", f"[Duplicate]({base_url}/duplicates.txt)", "WIP", "%"]
     print(tabulate(output, headers=headers, tablefmt="github"))
 

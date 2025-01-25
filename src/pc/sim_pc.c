@@ -8,6 +8,7 @@
 #include <string.h>
 #include <lba.h>
 #include "weapon_pc.h"
+#include "servant_pc.h"
 
 s32 g_SimVabId = 0;
 
@@ -71,6 +72,30 @@ SimFile D_800A036C[] = {
     },
     {
         "SERVANT/SD_BAT.VB",
+        D_80280000,
+        SD_TUKA2_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "SERVANT/SD_GHOST.VH",
+        aPbav_1,
+        SD_TUKA2_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_GHOST.VB",
+        D_80280000,
+        SD_TUKA2_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "SERVANT/SD_FAIRY.VH",
+        aPbav_1,
+        SD_TUKA2_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_FAIRY.VB",
         D_80280000,
         SD_TUKA2_VB_LEN,
         SIM_VB,
@@ -182,16 +207,15 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 }
 
 void InitStageDummy(Overlay* o);
-void InitStageWrp(Overlay* o);
-void InitStageSel(Overlay* o);
+void InitStageCEN(Overlay* o);
+void InitStageNZ0(Overlay* o);
+void InitStageST0(Overlay* o);
+void InitStageWRP(Overlay* o);
+void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
-    char pad[0x20];
-    s32 i;
-    u32* pDst;
-    u32* pSrc;
     u16* clutAddr;
 
     switch (kind) {
@@ -341,6 +365,10 @@ int readToBuf(const char* filename, char* dest) {
     return 0;
 }
 
+static bool isFirstBoot() {
+    return g_StageId == STAGE_SEL && g_GameState == Game_Init;
+}
+
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
     char buf[128];
@@ -385,12 +413,28 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
         break;
     case SimFileType_StagePrg:
+        if (isFirstBoot()) {
+            if (g_GameParams.player >= 0) {
+                g_PlayableCharacter = g_GameParams.player;
+            }
+            if (g_GameParams.stage >= 0) {
+                g_StageId = g_GameParams.stage;
+                SetGameState(Game_NowLoading);
+                g_GameStep = 1;
+            }
+        }
         switch (g_StageId) {
         case STAGE_SEL:
-            InitStageSel(&g_api.o);
+            InitStageSEL(&g_api.o);
+            break;
+        case STAGE_CEN:
+            InitStageCEN(&g_api.o);
+            break;
+        case STAGE_NZ0:
+            InitStageNZ0(&g_api.o);
             break;
         case STAGE_WRP:
-            InitStageWrp(&g_api.o);
+            InitStageWRP(&g_api.o);
             break;
         default:
             InitStageDummy(&g_api.o);
@@ -480,14 +524,10 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         INFOF("TODO: will load weapon 'f1_%03d'", fileId);
         return 0;
     case SimFileType_FamiliarPrg:
-        D_80170000 = g_ServantDesc;
+        HandleServantPrg();
         return 0;
     case SimFileType_FamiliarChr:
-        snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN", 0);
-        u8 temp[0x6000];
-        FileReadToBuf(smolbuf, &temp, 0, 0x6000);
-        LoadTPage(&temp, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
-        LoadTPage(&temp[0x4000], 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        HandleServantChr();
         return 0;
     }
     if (!sim.path) {

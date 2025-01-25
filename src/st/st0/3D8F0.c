@@ -13,10 +13,11 @@ typedef struct {
     s16 unk14;
 } unkstr_801C06B0;
 
-extern SVECTOR D_80182690;
-extern SVECTOR D_80182698;
-extern SVECTOR D_801826A0;
-extern SVECTOR D_801826A8;
+static SVECTOR D_80182690 = {-8, -8, 0};
+static SVECTOR D_80182698 = {8, -8, 0};
+static SVECTOR D_801826A0 = {-8, 8, 0};
+static SVECTOR D_801826A8 = {8, 8, 0};
+static SVECTOR unused = {0, 0, 0};
 extern unkstr_801C06B0 D_801C06B0;
 
 void func_801BD8F0(Entity* self) {
@@ -43,7 +44,7 @@ void func_801BD8F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805D4);
+        InitializeEntity(g_EInit3DObject);
         g_GpuBuffers[0].draw.r0 = 0;
         g_GpuBuffers[0].draw.g0 = 0;
         g_GpuBuffers[0].draw.b0 = 0;
@@ -55,7 +56,7 @@ void func_801BD8F0(Entity* self) {
         self->step++;
         return;
     case 2:
-        sp48 = g_api.func_800EDB58(4, 15 * 15);
+        sp48 = g_api.func_800EDB58(PRIM_GT4, 15 * 15);
         if (sp48 == -1) {
             SetStep(7);
             return;
@@ -261,7 +262,7 @@ void func_801BD8F0(Entity* self) {
             if (var_s8 > 14) {
                 self->ext.GS_Props.pickupFlag = 0;
                 sp44 = self + 1;
-                CreateEntityFromCurrentEntity(0x24, sp44);
+                CreateEntityFromCurrentEntity(E_ID_24, sp44);
             }
         }
         if (var_s8 == 15 * 15) {
@@ -270,9 +271,7 @@ void func_801BD8F0(Entity* self) {
         break;
     case 7:
         sp44 = self + 1;
-        CreateEntityFromCurrentEntity(0x24, sp44);
+        CreateEntityFromCurrentEntity(E_ID_24, sp44);
         DestroyEntity(self);
     }
 }
-
-INCLUDE_ASM("st/st0/nonmatchings/3D8F0", EntityBackgroundVortex);

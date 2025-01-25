@@ -1,23 +1,24 @@
 options:
-  platform:     psp
-  basename:     tt_000
-  base_path:    ..
-  build_path:   build/pspeu
-  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_000.bin
-  asm_path:     asm/pspeu/servant/tt_000
-  asset_path:   assets/servant/tt_000
-  src_path:     src/servant/tt_000
+  platform: psp
+  basename: tt_000
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_000.bin
+  asm_path: asm/pspeu/servant/tt_000
+  asset_path: assets/servant/tt_000
+  src_path: src/servant/tt_000
   ld_script_path: build/pspeu/tt_000.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.tt_000.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.tt_000.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.tt_000.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.tt_000.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: yes
   asm_jtbl_label_macro: jlabel
+  disassemble_all: true
   section_order:
     - ".text"
     - ".data"
@@ -25,25 +26,23 @@ options:
     - ".bss"
   ld_bss_is_noload: True
   disasm_unknown: True
+  global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
-    .include "macro.inc"
 sha1: c8c34ac1d46b31e2e5336df271aa2409f44c9d01
-
 segments:
   - [0x0, bin, mwo_header]
   - name: tt_000
     type: code
     start: 0x00000080
-    vram:  0x092E7680
+    vram: 0x092E7680
     bss_size: 0x500
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, 10E8]
-      - [0x48C8, c, 45E4]
+      - [0x80, c, bat]
       - [0x4C80, data]
-      - [0x5E00, .rodata, 10E8]
-      - {type: bss, vram: 0x092ed480}
+      - [0x5E00, .rodata, bat]
+      - { type: bss, vram: 0x092ed480 }
   - [0x5E80]

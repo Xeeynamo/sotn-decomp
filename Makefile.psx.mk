@@ -1,16 +1,19 @@
+LD              := $(CROSS)ld
+
 # flags
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 
 # configuration
 PSX_OVLS		:= dra ric weapon
-PSX_KSTAGES		:= cen chi dre mad no3 np3 nz0 sel st0 wrp
+PSX_KSTAGES		:= cen chi dre lib mad no0 no1 no3 np3 nz0 sel st0 wrp
 PSX_RSTAGES		:= rwrp
 PSX_BOSTAGES    := mar
-PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES))
-PSX_SERVANTS	:= tt_000
+PSX_RBOSTAGES	:= rbo3
+PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES)) $(addprefix bo,$(PSX_RBOSTAGES))
+PSX_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 PSX_US_TARGETS	:= main $(PSX_OVLS) $(PSX_ALLSTAGES) $(PSX_SERVANTS)
-PSX_HD_TARGETS	:= dra tt_000 stwrp
+PSX_HD_TARGETS	:= dra ric tt_000 stcen stwrp
 
 # immovable
 PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
@@ -20,13 +23,13 @@ extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
-	make extract_assets_hd
-	make build_assets_hd
+	make extract_assets
+	make build_assets
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
 extract_disk_psx%: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
+	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
@@ -61,6 +64,12 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SY
 	$(SPLAT) $<
 	touch $@
 
+$(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
+	echo $(call list_o_files,dra)
+	$(call link,dra,$@)
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
+	$(call link,tt_$*,$@)
+
 $(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
@@ -85,34 +94,11 @@ $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgp
 
 extract_assets: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/CEN/CEN.BIN -o assets/st/cen
+	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/CHI/CHI.BIN -o assets/st/chi
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/DRE/DRE.BIN -o assets/st/dre
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/NO3/NO3.BIN -o assets/st/no3
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/NP3/NP3.BIN -o assets/st/np3
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/NZ0/NZ0.BIN -o assets/st/nz0
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/BOSS/MAR/MAR.BIN -o assets/boss/mar
-	$(SOTNASSETS) config extract config/assets.us.weapon.yaml
-extract_assets_hd: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin -o assets/st/wrp
 build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) stage build_all -i assets/st/cen -o src/st/cen/
+	$(SOTNASSETS) build config/assets.$(VERSION).yaml
 	$(SOTNASSETS) stage build_all -i assets/st/chi -o src/st/chi/
-	$(SOTNASSETS) stage build_all -i assets/st/dre -o src/st/dre/
-	$(SOTNASSETS) stage build_all -i assets/st/no3 -o src/st/no3/
-	$(SOTNASSETS) stage build_all -i assets/st/np3 -o src/st/np3/
-	$(SOTNASSETS) stage build_all -i assets/st/nz0 -o src/st/nz0/
-	$(SOTNASSETS) stage build_all -i assets/st/st0 -o src/st/st0/
-	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
-	$(SOTNASSETS) stage build_all -i assets/st/rwrp -o src/st/rwrp/
-	$(SOTNASSETS) stage build_all -i assets/boss/mar -o src/boss/mar/
-	$(SOTNASSETS) config build config/assets.$(VERSION).weapon.yaml
-build_assets_hd: $(SOTNASSETS)
-	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
@@ -132,3 +118,9 @@ $(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
 	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
+
+
+# anything from MAD is an exception and it should be ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
+	touch $@
+

@@ -64,7 +64,7 @@ u8* g_DemoPtr;
 s32 g_DemoKeyIdx;
 
 // 5087C.c
-s32 D_80137598;
+bool D_80137598;
 s32 D_8013759C;
 s32 D_801375A0;
 s32 D_801375A4;
@@ -126,8 +126,7 @@ s32 g_HealingMailTimer[1];
 // both 5D5BC.c and 627C4.c, maybe need another C file in between
 u32 D_8013799C;
 s32 D_801379A0;
-s32 D_801379A4;
-s32 D_801379A8;
+s32 D_801379A4[2];
 
 // 627C4.c, 63ED4.c
 Unkstruct_80102CD8 D_801379AC;
@@ -383,7 +382,7 @@ padding s32 D_80139814_;
 s16 g_XaMusicVolume;
 padding u16 g_XaMusicVolume_;
 s32 D_80139824;
-s32 D_80139828[16];
+s32 g_StatBuffTimers[16];
 s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
 s16 g_SoundCommandRingBufferReadPos;
 padding s16 g_SoundCommandRingBufferReadPos_;
@@ -414,7 +413,7 @@ s16 g_SfxScriptUnk6[NUM_CH];
 padding u16 D_8013AEA8[10];
 s32 D_8013AEBC[4];
 s32 D_8013AECC;
-s32 D_8013AED0;
+bool g_canRevealMap;
 s16 D_8013AED4[NUM_CH_2];
 u8 D_8013AEDC;
 u8 D_8013AEDD[3];

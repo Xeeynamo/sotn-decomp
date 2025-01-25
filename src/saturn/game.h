@@ -10,4 +10,7 @@
 extern EnemyDef g_EnemyDefs[];
 extern s32 g_RoomCount;
 
+// document g_Player.status
+#define PLAYER_STATUS_POISON 0x00004000
+
 #endif

@@ -7,36 +7,36 @@
  *   - objLayoutId - the room to initialize
  */
 void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = g_pStObjLayoutHorizontal[objLayoutId];
     Tilemap* tilemap = &g_Tilemap;
-    s16 temp_s0;
-    s16 arg0;
+    s16 rightEdge;
+    s16 temp;
     s16 i;
-    u16* temp_v1;
 
-    g_LayoutObjHorizontal = pObjLayoutStart;
-    g_LayoutObjVertical = g_pStObjLayoutVertical[objLayoutId];
+    g_LayoutObjHorizontal = (u16*)OBJ_LAYOUT_HORIZONTAL[objLayoutId];
+    g_LayoutObjVertical = (u16*)OBJ_LAYOUT_VERTICAL[objLayoutId];
 
-    if (*pObjLayoutStart != 0xFFFE) {
-        g_LayoutObjHorizontal = pObjLayoutStart + 1;
-        arg0 = Random() & 0xFF;
+    if (*g_LayoutObjHorizontal != LAYOUT_OBJ_START) {
+        g_LayoutObjHorizontal++;
+        temp = Random() & 0xFF;
         for (i = 0; true; i++) {
-            temp_v1 = g_LayoutObjHorizontal;
-            g_LayoutObjHorizontal = temp_v1 + 1;
-            arg0 -= temp_v1[0];
-            if (arg0 < 0) {
+            temp -= *g_LayoutObjHorizontal++;
+            if (temp < 0) {
+                g_LayoutObjHorizontal =
+                    (u16*)((g_LayoutObjHorizontal[LAYOUT_OBJ_POS_Y] << 16) +
+                           g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X]);
                 break;
             }
-            g_LayoutObjHorizontal = temp_v1 + 3;
+            g_LayoutObjHorizontal += 2;
         }
-        g_LayoutObjHorizontal = (temp_v1[2] << 0x10) + temp_v1[1];
         g_LayoutObjVertical += i * 2 + 2;
-        g_LayoutObjVertical = (g_LayoutObjVertical[LAYOUT_OBJ_POS_Y] << 0x10) +
-                              g_LayoutObjVertical[LAYOUT_OBJ_POS_X];
+        g_LayoutObjVertical =
+            (u16*)((g_LayoutObjVertical[LAYOUT_OBJ_POS_Y] << 0x10) +
+                   g_LayoutObjVertical[LAYOUT_OBJ_POS_X]);
     }
-    arg0 = tilemap->scrollX.i.hi;
-    temp_s0 = arg0 + 320;
-    i = arg0 - 64;
+    temp = tilemap->scrollX.i.hi;
+    i = temp - 64;
+    rightEdge = temp + 320;
+
     if (i < 0) {
         i = 0;
     }
@@ -44,6 +44,8 @@ void InitRoomEntities(s32 objLayoutId) {
     g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_FORWARD;
     g_LayoutObjPosVertical = LAYOUT_OBJ_POSITION_FORWARD;
     FindFirstEntityToTheRight(i);
-    CreateEntitiesToTheRight(temp_s0);
-    FindFirstEntityAbove(tilemap->scrollY.i.hi + 288);
+    CreateEntitiesToTheRight(rightEdge);
+    temp = tilemap->scrollY.i.hi;
+    i = temp + 288;
+    FindFirstEntityAbove(i);
 }

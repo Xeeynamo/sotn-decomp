@@ -70,25 +70,25 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
             ClearImage(&D_800A0240, 0, 0, 0);
             return;
         }
-        if (g_pads->pressed & PAD_UP) {
+        if (g_pads[0].pressed & PAD_UP) {
             self->verticalWave++;
             if (self->verticalWave > 0x40) {
                 self->verticalWave = 0x40;
             }
         }
-        if (g_pads->pressed & PAD_DOWN) {
+        if (g_pads[0].pressed & PAD_DOWN) {
             self->verticalWave--;
             if (self->verticalWave < -0x40) {
                 self->verticalWave = -0x40;
             }
         }
-        if (g_pads->pressed & PAD_RIGHT) {
+        if (g_pads[0].pressed & PAD_RIGHT) {
             self->horizontalWave++;
             if (self->horizontalWave > 0x40) {
                 self->horizontalWave = 0x40;
             }
         }
-        if (g_pads->pressed & PAD_LEFT) {
+        if (g_pads[0].pressed & PAD_LEFT) {
             self->horizontalWave--;
             if (self->horizontalWave < -0x40) {
                 self->horizontalWave = -0x40;
@@ -125,9 +125,9 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
     }
 }
 
-void func_800E6218(s32 arg0) {
+void InitializeServant(InitializeMode mode) {
     if (g_Servant != 0) {
-        D_80170000.Init(arg0);
+        g_ServantDesc.Init(mode);
     }
 }
 
@@ -611,7 +611,7 @@ void HandlePrologueEnd(void) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
-            func_800E346C();
+            SetGPUBuffRGBZero();
             g_GameStep++;
             return;
         }
@@ -717,7 +717,7 @@ void HandleEnding(void) {
             StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
             LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x80194000);
             StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
-            LoadClut2(g_Clut, 0x200, 0xF0);
+            LoadClut(g_Clut, 0x200, 0xF0);
         } else {
             if (LoadFileSim(14, SimFileType_System) < 0) {
                 break;
@@ -734,7 +734,7 @@ void HandleEnding(void) {
             if (LoadFileSim(4, SimFileType_System) < 0) {
                 break;
             }
-            LoadClut2(g_Clut, 0x200, 0xF0);
+            LoadClut(g_Clut, 0x200, 0xF0);
         }
         g_GameStep++;
         break;

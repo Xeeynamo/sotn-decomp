@@ -1,39 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <types.h>
+#include <game.h>
+#include "dialogue2.h"
+
+// As g_Dialogue can be either structs, we only care of the bigger one
+union DiagCombo {
+    Dialogue diag1;
+    Dialogue2 diag2;
+};
 
 u16 msgBoxTpage[768];
 u32 D_801C06B0[4];
 u32 D_801C06C0[1346];
-u16 D_801C1BC8;
-u16 D_801C1BCA;
-u16 D_801C1BCC[1022];
+SVECTOR D_801C1BC8[0x100];
 u32 D_801C23C8[64];
-u32 D_801C24C8;
-u32 g_Dialogue;
-u16 D_801C24D0;
-u16 D_801C24D2;
-u16 D_801C24D4;
-u16 D_801C24D6;
-u16 D_801C24D8;
-u16 D_801C24DA;
-u16 D_801C24DC;
-u8 D_801C24DE;
-u8 D_801C24DF;
-u16 D_801C24E0;
-u8 D_801C24E2;
-u8 D_801C24E3;
-u32 D_801C24E4;
-u32 D_801C24E8;
-u32 D_801C24EC;
-u32 D_801C24F0;
-u32 D_801C24F4;
-u32 D_801C24F8;
-u32 D_801C24FC;
-u32 D_801C2500;
-u32 D_801C2504;
-u16 D_801C2508;
-u16 D_801C250A;
-u32 D_801C250C[27];
+u32 g_SkipCutscene;
+union DiagCombo g_Dialogue;
+u32 D_801C2510[26];
 u32 D_801C2578;
 u32 g_CutsceneFlags;
-u32 D_801C2580;
+s32 g_IsCutsceneDone;

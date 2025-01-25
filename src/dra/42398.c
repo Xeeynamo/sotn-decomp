@@ -58,7 +58,9 @@ void DebugShowWaitInfo(const char* msg) {
     VSync(0);
     PutDrawEnv(&g_CurrentBuffer->draw);
     PutDispEnv(&g_CurrentBuffer->disp);
+#if !defined(VERSION_PSP)
     FntFlush(-1);
+#endif
 }
 
 void DebugInputWait(const char* msg) {
@@ -650,7 +652,7 @@ s32 LoadVabData(void) {
     return 0;
 }
 
-void func_800E346C(void) {
+void SetGPUBuffRGBZero(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -659,7 +661,7 @@ void func_800E346C(void) {
     g_GpuBuffers[1].draw.b0 = 0;
 }
 
-void func_800E34A4(u8 arg0) {
+void SetGPUBuffRGB(u8 arg0) {
     g_GpuBuffers[0].draw.r0 = arg0;
     g_GpuBuffers[0].draw.g0 = arg0;
     g_GpuBuffers[0].draw.b0 = arg0;
@@ -679,7 +681,7 @@ void func_800E34DC(s32 arg0) {
     }
     g_GpuBuffers[1].draw.clip.h = 0x00CF;
     g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
-    func_800E346C();
+    SetGPUBuffRGBZero();
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 0;
     g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
@@ -721,7 +723,7 @@ static void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_800E346C();
+    SetGPUBuffRGBZero();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
@@ -860,7 +862,7 @@ loop_5:
     D_801362C8 = 0;
     g_DebugIsRecordingVideo = false;
     g_DemoMode = Demo_None;
-    D_8003C704 = 0;
+    g_CutsceneHasControl = 0;
     D_800973EC = 0;
     D_800974A4 = 0;
     g_CdStep = CdStep_None;
@@ -917,7 +919,7 @@ loop_5:
         LoadPendingGfx();
         ReadPads();
 #if defined(VERSION_US)
-        if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
+        if ((g_pads[0].pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
             if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
             }
@@ -932,8 +934,8 @@ loop_5:
         if (g_softResetTimer >= 0x80) {
             g_softResetTimer = 0;
 #elif defined(VERSION_HD)
-        if (g_pads->pressed == PAD_RESETCOMBO && g_pads->tapped & PAD_START &&
-            D_800978C4 != 0) {
+        if (g_pads[0].pressed == PAD_RESETCOMBO &&
+            g_pads[0].tapped & PAD_START && D_800978C4 != 0) {
 #endif
             ClearBackbuffer();
             func_801073C0();
@@ -1033,7 +1035,7 @@ void func_800E414C(void) {
     RoomTeleport* temp_a1;
     s32 temp_a0;
 
-    if (!(D_8003C708.flags & 0x40)) {
+    if (!(D_8003C708.flags & FLAG_UNK_40)) {
         return;
     }
 
@@ -1058,7 +1060,7 @@ void func_800E414C(void) {
         }
         PlaySfx(0x80);
         D_80097928 = 1;
-        if (D_8003C708.flags == 0x40) {
+        if (D_8003C708.flags == FLAG_UNK_40) {
             g_Player.D_80072EFC = 0x18;
             g_Player.padSim = PAD_LEFT;
         } else {
@@ -1082,7 +1084,7 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi < 0x78) {
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -1102,7 +1104,7 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi >= 0x89) {
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;

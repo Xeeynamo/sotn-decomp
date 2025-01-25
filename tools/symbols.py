@@ -405,6 +405,8 @@ def get_elf_symbols(elf_file_name) -> dict:
             continue
         if name.startswith("_") and name.endswith("_c"):
             continue
+        if "_compiled" in name:
+            continue
         if name.startswith("__pad"):
             continue
         if name.endswith("_END"):
@@ -419,7 +421,7 @@ def get_elf_symbols(elf_file_name) -> dict:
     return symbols
 
 
-def print_elf_symbols(elf_file_name, no_default):
+def print_elf_symbols(file, elf_file_name, no_default):
     with subprocess.Popen(
         args=["nm", elf_file_name],
         stdout=subprocess.PIPE,
@@ -434,7 +436,7 @@ def print_elf_symbols(elf_file_name, no_default):
     for name, offset in sorted_symbols:
         if no_default and (name.startswith("func_") or name.startswith("D_")):
             continue
-        print(f"{name} = 0x{offset:08X}; // allow_duplicated:True")
+        print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
 
 
 if __name__ == "__main__":
@@ -452,4 +454,4 @@ if __name__ == "__main__":
     elif args.command == "map":
         print_map_symbols(args.map_file_name, args.no_default)
     elif args.command == "elf":
-        print_elf_symbols(args.elf_file_name, args.no_default)
+        print_elf_symbols(sys.stdout, args.elf_file_name, args.no_default)

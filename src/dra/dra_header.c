@@ -48,19 +48,19 @@ s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
-s32 SetVolumeCommand22_23(s16 vol, u16 distance);
+s32 SetVolumeCommand22_23(s16 vol, s16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_8010BF64(Unkstruct_8010BF64* arg0);
+void GetPlayerSensor(Collider* col);
 void func_800F1FC4(s32 arg0);
 void func_800F2288(void); // unknown signature
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 s32 func_800FF460(s32 arg0);
 s32 func_800FF494(EnemyDef* arg0);
 bool CdSoundCommandQueueEmpty(void);
 bool func_80133950(void);
 bool func_800F27F4(s32 arg0);
-s32 func_800FF110(s32 arg0);
+s32 GetStatBuffTimer(s32 arg0);
 s32 func_800FD664(s32 arg0);
 bool CalcPlayerDamage(DamageParam* arg0);
 void LearnSpell(s32 spellId);
@@ -114,16 +114,16 @@ GameApi g_ApiInit = {
     SetVolumeCommand22_23,
     func_800F53A4,
     CheckEquipmentItemCount,
-    func_8010BF64,
+    GetPlayerSensor,
     func_800F1FC4,
     func_800F2288,
-    func_8011A3AC,
+    GetServantStats,
     func_800FF460,
     func_800FF494,
     CdSoundCommandQueueEmpty,
     func_80133950,
     func_800F27F4,
-    func_800FF110,
+    GetStatBuffTimer,
     func_800FD664,
     CalcPlayerDamage,
     LearnSpell,

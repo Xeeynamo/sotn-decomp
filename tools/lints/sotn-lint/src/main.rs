@@ -1,21 +1,29 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
 
-mod fixed;
-mod line_transformer;
 mod bit_flag_line_transformer;
-mod relics;
-mod drawmodes;
-mod flags;
+mod collider_effects;
 mod drawflags;
+mod drawmodes;
+mod enum_line_transformer;
+mod enum_statement;
+mod fixed;
+mod flags;
+mod line_transformer;
+mod player_status;
+mod primitive_type;
+mod relics;
 
-use line_transformer::LineTransformer;
-use fixed::FixedTransformer;
-use relics::RelicsTransformer;
-use drawmodes::DrawModeTransformer;
-use flags::FlagsTransformer;
+use collider_effects::ColliderEffectsTransformer;
 use drawflags::DrawFlagsTransformer;
+use drawmodes::DrawModeTransformer;
+use fixed::FixedTransformer;
+use flags::FlagsTransformer;
+use line_transformer::LineTransformer;
+use player_status::PlayerStatusTransformer;
+use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
+use relics::RelicsTransformer;
 
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>) -> usize {
     let mut alterations = 0;
@@ -56,13 +64,18 @@ fn process_directory(dir_path: &str) {
     let draw_mode_transformer = DrawModeTransformer::new();
     let flags_transformer = FlagsTransformer::new();
     let draw_flags_transformer = DrawFlagsTransformer::new();
+    let primitive_type_transformer = PrimitiveTypeTransformer::new();
+    let player_status_transformer = PlayerStatusTransformer::new();
 
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
         Box::new(relics_transformer),
+        Box::new(ColliderEffectsTransformer::new()),
         Box::new(draw_mode_transformer),
         Box::new(flags_transformer),
         Box::new(draw_flags_transformer),
+        Box::new(primitive_type_transformer),
+        Box::new(player_status_transformer),
         ];
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");

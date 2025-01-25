@@ -178,7 +178,7 @@ void func_ptr_80170008(Entity* self) {
         self->hitboxWidth = 0xC;
         g_api.PlaySfx(SFX_THROW_WEAPON_SWISHES);
         if (flag != 0) {
-            g_api.PlaySfx(0x65B);
+            g_api.PlaySfx(SFX_FM_EXPLODE_B);
         }
         g_Player.timers[10] = 4;
         self->step++;
@@ -340,7 +340,7 @@ static s32 func_ptr_80170014(Entity* self) {
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = self->hitboxWidth = 8;
-        g_api.PlaySfx(0x6EE);
+        g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
         self->ext.weapon.unk7E = 0x40;
         g_Player.timers[10] = 4;
         self->step++;
@@ -403,7 +403,7 @@ static s32 func_ptr_80170014(Entity* self) {
             if (--self->ext.weapon.unk7E == 0) {
                 self->step = 3;
                 self->ext.weapon.unk7E = 0x20;
-                self->drawFlags = FLAG_DRAW_UNK80;
+                self->drawFlags = FLAG_BLINK;
             }
         }
         collX = self->posX.i.hi;

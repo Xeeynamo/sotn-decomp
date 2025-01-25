@@ -5,14 +5,14 @@
 
 extern u32 g_olroxDroolCollOffsets[];
 
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 void EntityOlroxDrool(Entity* self) {
     s16 primIndex;
     Primitive* prim;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;
@@ -40,11 +40,11 @@ void EntityOlroxDrool(Entity* self) {
 
     case 1:
         prim = self->ext.prim;
-        if (CheckColliderOffsets(g_olroxDroolCollOffsets, 0)) {
+        if (CheckColliderOffsets((s16*)g_olroxDroolCollOffsets, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 // When hitting the ground, a sizzling effect is made
-                EntityUnkId14Spawner(self, 1, 2, 0, 0, 3, 0);
+                EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {

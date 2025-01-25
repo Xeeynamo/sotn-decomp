@@ -1,0 +1,205 @@
+options:
+  platform: psp
+  basename: dra
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
+  asm_path: asm/pspeu/dra_psp
+  asset_path: assets/dra_psp
+  src_path: src
+  ld_script_path: build/pspeu/dra.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.dra.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.dra.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.dra.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: psp_$VRAM
+  nonmatchings_path: psp
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 2ba697c152e240ee0d69619f4a460d145fae04c0
+segments:
+  - [0x0, bin, mwo_header]
+  - name: dra
+    type: code
+    start: 0x80
+    vram: 0x090DCA00
+    bss_size: 0x6BF80
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, dra_psp/80]
+      - [0x1E50, c, dra_psp/1E50]
+      - [0x33F0, c, dra_psp/33F0] # O4
+      - [0x5DA0, c, dra/624DC] # O4
+      - [0x60F8, c, dra/628AC] # O4
+      - [0x66B0, c, dra_psp/66B0]
+      - [0x67F0, c, dra_psp/67F0] # O0
+      - [0xA710, c, dra_psp/A710] # O4
+      - [0xBDE0, c, dra_psp/BDE0]
+      - [0xC0B0, c, dra_psp/C0B0] # O4
+      - [0xEC60, c, dra_psp/EC60] # O4
+      - [0xF4A0, c, dra_psp/F4A0]
+      - [0xF4D0, c, dra_psp/F4D0]
+      - [0xF740, c, dra_psp/F740]
+      - [0xFA00, c, dra_psp/FA00]
+      - [0x10340, c, dra_psp/10340]
+      - [0x10990, c, dra_psp/10990]
+      - [0x10BF0, c, dra_psp/10BF0]
+      - [0x111F0, c, dra_psp/111F0]
+      - [0x11C50, c, dra_psp/11C50]
+      - [0x12820, c, dra_psp/12820]
+      - [0x12A00, c, dra_psp/12A00]
+      - [0x12E00, c, dra_psp/12E00]
+      - [0x13080, c, dra_psp/13080]
+      - [0x13BD0, c, dra_psp/13BD0]
+      - [0x14490, c, dra_psp/14490]
+      - [0x14F30, c, dra_psp/14F30]
+      - [0x151E0, c, dra_psp/151E0]
+      - [0x15280, c, dra_psp/15280]
+      - [0x15300, c, dra_psp/15300]
+      - [0x15360, c, dra_psp/15360]
+      - [0x15520, c, dra_psp/15520]
+      - [0x160C0, c, dra_psp/160C0]
+      - [0x18210, c, dra_psp/18210]
+      - [0x186E8, c, dra_psp/186E8]
+      - [0x18BE0, c, dra_psp/18BE0]
+      - [0x19AB0, c, dra_psp/19AB0]
+      - [0x1A0D0, c, dra_psp/1A0D0]
+      - [0x1A110, c, dra_psp/1A110]
+      - [0x1A1A0, c, dra_psp/1A1A0]
+      - [0x1AD50, c, dra_psp/1AD50]
+      - [0x1BF70, c, dra_psp/1BF70]
+      - [0x1C030, c, dra_psp/1C030]
+      - [0x1DCE0, c, dra_psp/1DCE0]
+      - [0x1DDC0, c, dra_psp/1DDC0]
+      - [0x1E1B0, c, dra_psp/1E1B0]
+      - [0x20560, c, dra_psp/20560]
+      - [0x22A40, c, dra_psp/22A40] # O0
+      - [0x23FE0, c, dra_psp/23FE0] # O0
+      - [0x26948, c, dra_psp/26948]
+      - [0x29420, c, dra_psp/29420]
+      - [0x29760, c, dra_psp/29760]
+      - [0x2BF60, c, dra_psp/2BF60]
+      - [0x2C350, c, dra_psp/2C350]
+      - [0x2E050, c, dra_psp/2E050]
+      - [0x2E0E0, c, dra_psp/2E0E0]
+      - [0x329F0, c, dra_psp/329F0]
+      - [0x32DA0, c, dra_psp/32DA0] # O0
+      - [0x35060, c, dra_psp/35060]
+      - [0x353B0, c, dra/704D0] # O0
+      - [0x373F8, c, dra/6E42C]
+      - [0x39AA8, c, dra_psp/39AA8]
+      - [0x3B280, c, dra_psp/3B280]
+      - [0x3EEA0, c, dra_psp/3EEA0]
+      - [0x41E80, c, dra_psp/41E80]
+      - [0x42180, c, dra_psp/42180]
+      - [0x43250, c, dra_psp/43250]
+      - [0x43320, c, dra_psp/43320]
+      - [0x44FF0, c, dra_psp/44FF0]
+      - [0x45B30, c, dra_psp/45B30]
+      - [0x47F50, c, dra_psp/47F50]
+      - [0x4A0E0, c, dra_psp/4A0E0]
+      - [0x4A890, c, dra_psp/4A890]
+      - [0x4B020, c, dra_psp/4B020]
+      - [0x4B440, c, dra_psp/4B440]
+      - [0x4BC00, c, dra_psp/4BC00]
+      - [0x50290, c, dra_psp/50290]
+      - [0x50620, c, dra_psp/50620]
+      - [0x51A40, c, dra_psp/51A40]
+      - [0x53DB0, c, dra_psp/53DB0]
+      - [0x54180, c, dra_psp/54180]
+      - [0x581A0, c, dra_psp/581A0]
+      - [0x585C0, c, dra_psp/585C0]
+      - [0x58C20, c, dra_psp/58C20]
+      - [0x58E60, c, dra_psp/58E60]
+      - [0x5A560, c, dra_psp/5A560]
+      - [0x5A5B0, c, dra_psp/5A5B0]
+      - [0x5B8C0, c, dra_psp/5B8C0]
+      - [0x5BC80, c, dra_psp/5BC80]
+      - [0x5C420, c, dra_psp/5C420]
+      - [0x5DA20, c, dra_psp/5DA20]
+      - [0x5EC50, c, dra_psp/5EC50]
+      - [0x60C90, c, dra_psp/60C90]
+      - [0x60D80, c, dra_psp/60D80] # O0
+      - [0x60F10, c, dra_psp/60F10] # O0
+      - [0x61030, c, dra_psp/61030]
+      - [0x61F30, c, dra_psp/61F30] # O4
+      - [0x62FE0, c, dra_psp/62FE0]
+      - [0x63C90, c, dra_psp/63C90] # O4
+      - [0x63E60, c, dra_psp/63E60]
+      - [0x63FE0, c, dra_psp/63FE0]
+      - [0x64370, c, dra_psp/64370]
+      - [0x64480, c, dra_psp/64480]
+      - [0x64EE0, c, dra_psp/64EE0] # O4
+      - [0x65290, c, dra_psp/65290]
+      - [0x654B0, c, dra_psp/654B0]
+      - [0x65790, c, dra_psp/65790]
+      - [0x65F50, c, dra_psp/65F50]
+      - [0x661C0, c, dra_psp/661C0]
+      - [0x67D50, c, dra_psp/67D50]
+      - [0x67E90, c, dra_psp/67E90]
+      - [0x680C0, c, dra_psp/680C0]
+      - [0x68D80, data]
+      - [0x69578, .data, dra/628AC]
+      - [0x69600, data]
+      - [0x6A818, .data, dra_psp/67F0] # DrawHud arrays
+      - [0x6A8B8, .data, dra_psp/67F0] # Subwpn clut/u/v
+      - [0x6A8F8, data]
+      - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
+      - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
+      - [0x6DE50, data]
+      - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
+      - [0xA68C8, .data, dra/6E42C]
+      - [0xA68E8, data]
+      - [0xEE380, .rodata, dra_psp/80]
+      - [0xEE3A0, .rodata, dra/624DC]
+      - [0xEE3C0, .rodata, dra/628AC]
+      - [0xEE3E8, .rodata, dra/628AC]
+      - [0xEE408, .rodata, dra_psp/A710]
+      - [0xEE428, .rodata, dra_psp/C0B0]
+      - [0xEE4C8, .rodata, dra_psp/11C50]
+      - [0xEE4E8, .rodata, dra_psp/13080]
+      - [0xEE538, .rodata, dra_psp/14490]
+      - [0xEE550, .rodata, dra_psp/160C0]
+      - [0xEE570, .rodata, dra_psp/19AB0]
+      - [0xEE590, .rodata, dra_psp/1A1A0]
+      - [0xEE5C0, .rodata, dra_psp/1C030]
+      - [0xEE600, .rodata, dra_psp/1DCE0]
+      - [0xEE628, .rodata, dra_psp/1DDC0]
+      - [0xEE680, .rodata, dra_psp/23FE0]
+      - [0xEE6C8, .rodata, dra_psp/26948]
+      - [0xEE708, .rodata, dra_psp/29760]
+      - [0xEE7B0, .rodata, dra_psp/2E0E0]
+      - [0xEE808, .rodata, dra_psp/329F0]
+      - [0xEE828, .rodata, dra_psp/32DA0]
+      - [0xEE840, .rodata, dra/704D0]
+      - [0xEE898, .rodata, dra_psp/3EEA0]
+      - [0xEE8B8, .rodata, dra_psp/45B30]
+      - [0xEE8D8, .rodata, dra_psp/47F50]
+      - [0xEE928, .rodata, dra_psp/4B440]
+      - [0xEE968, .rodata, dra_psp/4BC00]
+      - [0xEEB28, .rodata, dra_psp/50620]
+      - [0xEEBF8, .rodata, dra_psp/53DB0]
+      - [0xEEC18, .rodata, dra_psp/54180]
+      - [0xEEC30, .rodata, dra_psp/5C420]
+      - [0xEEC58, .rodata, dra_psp/5DA20]
+      - [0xEECA8, .rodata, dra_psp/5EC50]
+      - [0xEED48, .rodata, dra_psp/65790]
+      - { type: bss, vram: 0x91CB700 }
+  - [0xEED80]

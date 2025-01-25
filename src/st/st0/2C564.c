@@ -1,12 +1,416 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: ST0
- * Enemy: Dracula Boss
- */
-
 #include "st0.h"
 #include "sfx.h"
 
+static bool g_isDraculaFirstFormDefeated = false;
+s32 D_80180910 = 0;
+static u8 D_80180914[] = {0x03, 0x01, 0x04, 0x02, 0x05, 0x03, 0x06, 0x04,
+                          0x07, 0x05, 0x08, 0x06, 0x13, 0x07, 0xFF, 0x00};
+static u8 D_80180924[] = {0x09, 0x07, 0x08, 0x06, 0x07, 0x05, 0x06, 0x04,
+                          0x05, 0x03, 0x04, 0x02, 0x03, 0x01, 0xFF, 0x00};
+static u8 D_80180934[] = {0x06, 0x01, 0x05, 0x08, 0x04, 0x09, 0x03,
+                          0x0A, 0x06, 0x0B, 0x08, 0x0A, 0xFF, 0x00};
+static u8 D_80180944[] = {0x09, 0x0A, 0x05, 0x0B, 0x05, 0x0A, 0x05,
+                          0x09, 0x05, 0x08, 0x05, 0x01, 0xFF, 0x00};
+static u8 D_80180954[] = {0x18, 0x01, 0x08, 0x02, 0x08, 0x0C, 0x08, 0x0D,
+                          0x08, 0x0E, 0x08, 0x0F, 0x01, 0x10, 0xFF, 0x00};
+static u8 D_80180964[] = {
+    0x04, 0x3E, 0x04, 0x3F, 0x05, 0x40, 0x05, 0x41, 0x05, 0x42, 0x08,
+    0x43, 0x05, 0x42, 0x05, 0x41, 0x05, 0x40, 0x04, 0x3F, 0xFF, 0x00};
+static u8 D_8018097C[] = {0x01, 0x13, 0x01, 0x14, 0x01, 0x15, 0x01, 0x16, 0x01,
+                          0x17, 0x01, 0x18, 0x01, 0x19, 0x01, 0x1A, 0x00, 0x00};
+static u8 D_80180990[] = {0x02, 0x1B, 0x01, 0x27, 0x02, 0x1C, 0x01, 0x27, 0x02,
+                          0x1D, 0x01, 0x27, 0x02, 0x1E, 0x01, 0x27, 0x00, 0x00};
+static u8 D_801809A4[] = {
+    0x02, 0x1F, 0x02, 0x20, 0x02, 0x21, 0x02, 0x22, 0x02, 0x23, 0xFF, 0x00};
+static u8 D_801809B0[] = {
+    0x05, 0x24, 0x04, 0x25, 0x03, 0x26, 0x02, 0x27, 0x01, 0x28, 0x01, 0x29,
+    0x01, 0x2A, 0x01, 0x2B, 0x01, 0x2C, 0x01, 0x2D, 0x01, 0x2E, 0x01, 0x2F,
+    0x01, 0x30, 0x01, 0x31, 0x01, 0x32, 0x01, 0x33, 0x02, 0x1B, 0x01, 0x27,
+    0x02, 0x1C, 0x01, 0x27, 0x02, 0x1D, 0x01, 0x27, 0x02, 0x1E, 0xFF, 0x00};
+static u8 D_801809E0[] = {
+    0x03, 0x34, 0x03, 0x35, 0x03, 0x36, 0x03, 0x37, 0x03, 0x38, 0x03,
+    0x39, 0x03, 0x3A, 0x03, 0x3B, 0x03, 0x3C, 0x03, 0x3D, 0xFF, 0x00};
+static u8 D_801809F8_unused[] = {
+    0x28, 0x47, 0x06, 0x48, 0x09, 0x49, 0x0A, 0x4A, 0x0B,
+    0x4B, 0x07, 0x4C, 0x05, 0x4D, 0x28, 0x4E, 0xFF, 0x00};
+static u8 D_80180A0C[] = {
+    0x0E, 0x4F, 0x14, 0x50, 0x0B, 0x51, 0x08, 0x52, 0x4B, 0x53,
+    0x09, 0x54, 0x05, 0x55, 0x20, 0x56, 0x01, 0x57, 0xFF, 0x00};
+static u8 D_80180A20[] = {
+    0x01, 0x57, 0x01, 0x47, 0x29, 0x58, 0x07, 0x47, 0xFF, 0x00};
+static u8 D_80180A2C[] = {0x07, 0x47, 0x08, 0x48, 0x07, 0x49, 0x08, 0x4A, 0x1A,
+                          0x4B, 0x07, 0x4C, 0x05, 0x4D, 0x28, 0x4E, 0xFF, 0x00};
+static u8 D_80180A40[] = {0x02, 0x5A, 0x02, 0x5B, 0xFF, 0x00};
+static u16 D_80180A48[] = {0x20, 0x40, 0x60, 0x80, 0xA0, 0xC0, 0xE0, 0x90};
+static Point16 D_80180A58[] = {{16, 28}, {20, 60}};
+static Point16 D_80180A60[] = {
+    {12, 12}, {12, -12}, {-12, 12}, {-12, -12}, {80, 64}, {48, 34},
+    {26, 20}, {18, 16},  {15, 13},  {13, 12},   {12, 11}, {11, 10},
+    {10, 10}, {9, 9},    {9, 8},    {8, 8},     {8, 4}};
+
+// Helper function for EntityDracula
+static u32 func_801ABBBC(s32 step, Entity* dracula) {
+    draculaPrimitive* prim;
+    s32 randVar;
+    s32 randVar2;
+    s32 colorLimit;
+    s32 var_a1;
+    s32 var_a2;
+    s32 var_a3;
+    s32 i;
+    s32 var_t0;
+    s32 fake_a2;
+    s32 color;
+    u8* redPtr;
+    u8* greenPtr;
+    u8 constFF;
+
+    switch (step) {
+    case 0:
+        prim = dracula->ext.dracula.prim;
+        dracula->ext.dracula.unk80 = prim;
+        for (i = 0; i < 16; i++) {
+            prim->type = PRIM_LINE_G2_ALT;
+            if (i == 15) {
+                prim->type = PRIM_LINE_G2;
+            }
+            if (i & 1) {
+                prim->x0 = prim->x1 = dracula->posX.i.hi + i / 2;
+            } else {
+                prim->x0 = prim->x1 = dracula->posX.i.hi - i / 2;
+            }
+
+            prim->y0 = prim->y1 = 0;
+            prim->r0 = prim->g0 = prim->b0 = 0x70;
+            prim->r1 = prim->g1 = prim->b1 = 0;
+            randVar = Random();
+            prim->r2 = (((randVar & 1) * 0x10) + 0x10);
+            prim->g2 = (((randVar * 8) & 0x10) + 0x10);
+            prim->b2 = (((randVar * 4) & 0x10) + 0x10);
+            prim->priority = dracula->zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            if (i == 0) {
+                prim->drawMode = DRAW_HIDE;
+            }
+            prim = prim->next;
+        }
+        step++;
+        dracula->ext.dracula.unk90 = 1;
+        dracula->ext.dracula.unk92 = 0;
+        dracula->ext.dracula.unk8C = 0;
+        break;
+    case 1:
+        if (dracula->ext.dracula.unk8C++ >= 3) {
+            dracula->ext.dracula.unk90 += 2;
+            if (dracula->ext.dracula.unk90 >= 16) {
+                dracula->ext.dracula.unk90 = 16;
+            }
+            dracula->ext.dracula.unk8C = 0;
+        }
+        prim = dracula->ext.dracula.unk80;
+        i = 0;
+        for (i = 0; i < dracula->ext.dracula.unk90; i++) {
+            prim->y1 += 0x30;
+            if (dracula->ext.dracula.unkA1 != 0) {
+                if (prim->y1 >= 171) {
+                    prim->y1 = 171;
+                }
+            } else if (prim->y1 >= 203) {
+                prim->y1 = 203;
+            }
+            // Iterate through r1, g1, and b1.
+            for (redPtr = &prim->r1, var_a1 = 0; var_a1 < 3; redPtr++,
+                var_a1++) {
+                color = *redPtr;
+                if (color < 0xFF) {
+                    // This ends up offsetting to r2, g2, and b2
+                    color += redPtr[0xC];
+                    if (color > 0xFF) {
+                        color = 0xFF;
+                    }
+                }
+                *redPtr = color;
+            }
+            prim = prim->next;
+        }
+        if (dracula->ext.dracula.unk92++ >= 25) {
+            dracula->ext.dracula.unk92 = 0;
+            step++;
+        }
+        break;
+    case 2:
+        prim = dracula->ext.dracula.unk80;
+        for (i = 0; i < 16; i++) {
+            prim = prim->next;
+        }
+        dracula->ext.dracula.unk84 = prim;
+        for (i = 0; i < 48; i++) {
+            prim->type = PRIM_LINE_G2_ALT;
+            if (i == 47) {
+                prim->type = PRIM_LINE_G2;
+            }
+            prim->r0 = prim->g0 = prim->b0 = 0x70;
+            prim->r1 = prim->g1 = prim->b1 = 0x20;
+            randVar2 = Random();
+            prim->r2 = (((randVar2 & 1) * 4) + 4);
+            prim->g2 = (((randVar2 * 2) & 4) + 4);
+            prim->b2 = ((randVar2 & 4) + 4);
+            if (i & 1) {
+                prim->x0 = prim->x1 = dracula->posX.i.hi + i / 2;
+            } else {
+                prim->x0 = prim->x1 = dracula->posX.i.hi - i / 2;
+            }
+            if (dracula->ext.dracula.unkA1 != 0) {
+                prim->y0 = prim->y1 = 171;
+                if (i >= 0x22) {
+                    prim->y0 = prim->y1 = -0x20;
+                }
+            } else {
+                prim->y0 = prim->y1 = 203;
+            }
+            prim->y1_f32.i.lo = 0;
+            prim->y1_f32.i.hi = prim->y1;
+            // FAKE variable reuse
+            color = (i >> 1);
+            prim->y1_f32_velocity.val =
+                ((color * color * color) << 8) + 0x80000;
+            prim->priority = dracula->zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            if (i == 0) {
+                prim->drawMode = DRAW_HIDE;
+            }
+            prim = prim->next;
+        }
+        step++;
+        dracula->ext.dracula.unk8C = 0;
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
+        break;
+    case 3:
+        prim = dracula->ext.dracula.unk84;
+        if (dracula->ext.dracula.unkA1 != 0) {
+            var_a1 = 0x22;
+        } else {
+            var_a1 = 0x30;
+        }
+        for (i = 0; i < var_a1; prim = prim->next) {
+            prim->y1_f32.i.hi = prim->y1;
+            prim->y1_f32.val -= prim->y1_f32_velocity.val;
+            prim->y1 = prim->y1_f32.i.hi;
+            i++;
+            if (prim->y1 < 0) {
+                prim->y1 = 0U;
+            }
+        }
+        if (++dracula->ext.dracula.unk8C < 9) {
+            prim = dracula->ext.dracula.unk80;
+            for (i = 0; i < 16 - (dracula->ext.dracula.unk8C * 2); i++) {
+                prim = prim->next;
+            }
+            for (; i < 16; i++) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        }
+        prim = dracula->ext.dracula.unk84;
+        for (i = 0, constFF = 0xFF, colorLimit = 0xFF; i < 48; i++) {
+            color = prim->r0;
+            color += 4;
+            prim->r0 = (color > colorLimit ? colorLimit : color);
+            colorLimit -= 2;
+            if (prim->r0 >= 0xFF) {
+                prim->r0 = constFF;
+                step = 4;
+            }
+            prim->b0 = prim->g0 = prim->r0;
+            prim = prim->next;
+        }
+        var_a2 = 0xFF;
+        prim = dracula->ext.dracula.unk84;
+        for (i = 0; i < 48; i++) {
+            redPtr = &prim->r1;
+            for (var_a1 = 0; var_a1 < 3; var_a1 += 1) {
+                color = *redPtr;
+                color += redPtr[0xC];
+                if (var_a2 < color) {
+                    color = var_a2;
+                }
+                *redPtr = color;
+                redPtr++;
+            }
+            prim = prim->next;
+            var_a2 -= 2;
+        }
+        break;
+    case 4:
+        var_t0 = 1;
+        prim = dracula->ext.dracula.unk84;
+        for (i = 0, var_a3 = 0xFF; i < 48; i++) {
+
+            for (redPtr = &prim->r1, var_a1 = 0, var_a2 = var_a3; var_a1 < 3;
+                 redPtr++, var_a1++) {
+                color = *redPtr;
+                color += 0x18;
+                if (var_a2 < color) {
+                    color = var_a2;
+                } else {
+                    var_t0 = 0;
+                }
+                *redPtr = color;
+            }
+            prim = prim->next;
+            var_a3 -= 2;
+        }
+        if (var_t0 != 0) {
+            step = 5;
+        }
+        break;
+    case 5:
+        prim = dracula->ext.dracula.unk80;
+        // @bug: They forgot to do prim = prim->next in this loop!
+        for (i = 0; i < 16; i++) {
+            prim->drawMode = DRAW_HIDE;
+        }
+        prim = dracula->ext.dracula.unk80;
+        prim->type = PRIM_TILE;
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->y0 = 0;
+        if (dracula->ext.dracula.unkA1 != 0) {
+            prim->x0 = dracula->posX.i.hi - 17;
+            prim->u0 = 0x22;
+            prim->v0 = 0xAC;
+        } else {
+            prim->x0 = dracula->posX.i.hi - 24;
+            prim->u0 = 0x30;
+            prim->v0 = 0xCC;
+        }
+        step++;
+        prim->priority = dracula->zPriority + 1;
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        dracula->ext.dracula.unk8C = 0;
+        break;
+    case 6:
+        var_t0 = 1;
+        prim = dracula->ext.dracula.unk84;
+        for (i = 0; i < 48; i++) {
+            redPtr = &prim->r0;
+            var_a1 = 0;
+            greenPtr = &prim->g0;
+            for (; var_a1 < 2;) {
+                color = *redPtr;
+                color -= 10;
+                if (color < 0) {
+                    color = 0;
+                } else {
+                    var_t0 = 0;
+                }
+                var_a1++;
+                greenPtr[0] = greenPtr[1] = color;
+                greenPtr += 0xC;
+                *redPtr = color;
+                redPtr += 0xC;
+            }
+            prim = prim->next;
+        }
+        prim = dracula->ext.dracula.unk80;
+        prim->r0 += 7;
+        if (prim->r0 > 0xE0) {
+            prim->r0 = 0xE0;
+        } else {
+            var_t0 = 0;
+        }
+        prim->g0 = prim->b0 = prim->r0;
+        if (var_t0 != 0) {
+            prim = dracula->ext.dracula.unk84;
+            for (i = 0; i < 48; i++) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            step++;
+            dracula->drawFlags = DRAW_HIDE;
+            dracula->unk6C = 0;
+            dracula->ext.dracula.unkA0 = 1;
+        }
+        break;
+    case 7:
+        prim = dracula->ext.dracula.unk80;
+        color = prim->r0;
+        color -= 16;
+        if (color < 0) {
+            color = 0;
+        }
+        prim->g0 = prim->b0 = prim->r0 = color;
+        if (prim->r0 < 16) {
+            prim->drawMode = DRAW_HIDE;
+            step++;
+        }
+        break;
+    case 8:
+        dracula->unk6C += 10;
+        if (dracula->unk6C >= 0x80U) {
+            step++;
+            dracula->unk6C = 0x80U;
+            dracula->drawFlags = FLAG_DRAW_DEFAULT;
+        }
+        break;
+    case 9:
+        prim = dracula->ext.dracula.prim;
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        step = 0xFF;
+        if (dracula->ext.dracula.unkA1 != 0) {
+            dracula->ext.dracula.unkA1 = 0U;
+        }
+        break;
+    }
+    return step;
+}
+
+// This function is not called from anywhere. Don't know what it's for.
+static s32 func_801AC458(s16 arg0) {
+    s32 ret = arg0;
+    Entity* e;
+    Entity* e2;
+
+    switch (ret) {
+    case 0:
+        e = g_CurrentEntity;
+        ret = 1;
+        e[1].drawFlags = FLAG_DRAW_ROTY;
+        e[1].rotY = 0x600;
+        e[1].animFrameIdx = 0;
+        e[1].animFrameDuration = 0;
+        e[1].step = 2;
+        e[1].posX.i.hi = e->posX.i.hi;
+        e[1].posY.i.hi = e->posY.i.hi + 16;
+
+    case 1:
+        e2 = &g_CurrentEntity[1];
+        if (AnimateEntity(D_80180964, e2) == 0) {
+            ret++;
+        }
+        if (e2->animFrameIdx == 6 && e2->animFrameDuration == 0) {
+            // Using dracula ext since this function is right after dracula.
+            g_CurrentEntity->ext.dracula.unkA0 = 1;
+        }
+        break;
+
+    case 2:
+        e = &g_CurrentEntity[1];
+        e->animCurFrame = 0;
+        e->drawFlags = FLAG_DRAW_DEFAULT;
+        e->step = 1;
+        ret = 0xFF;
+        break;
+    }
+    return ret;
+}
+
+extern u32 g_CutsceneFlags;
 void EntityDracula(Entity* self) {
     s16 primIndex;
     Entity* newEntity;
@@ -43,12 +447,12 @@ void EntityDracula(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805E0);
+        InitializeEntity(g_EInitDracula);
         self->animCurFrame = 0x4F;
         self->ext.dracula.unkA1 = 1;
         self->hitboxState = 0;
         self->facingLeft = 1;
-        CreateEntityFromCurrentEntity(0x1D, &self[1]);
+        CreateEntityFromCurrentEntity(E_DRACULA_UNK1D, &self[1]);
         self[1].zPriority = self->zPriority + 1;
 
         primIndex = g_api.func_800EDB58(PRIM_GT4, 128);
@@ -98,7 +502,7 @@ void EntityDracula(Entity* self) {
             if (self->animFrameIdx == 2 && self->animFrameDuration == 0) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x1F, self, newEntity);
+                    CreateEntityFromEntity(E_DRACULA_UNK1F, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     newEntity->posX.i.hi -= 8;
                     newEntity->posY.i.hi -= 24;
@@ -206,7 +610,7 @@ void EntityDracula(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x1B, self, newEntity);
+                    CreateEntityFromEntity(E_DRACULA_UNK1B, self, newEntity);
                     newEntity->facingLeft = self->facingLeft;
                     newEntity->zPriority = self->zPriority + 1;
                     newEntity->params = i;
@@ -243,7 +647,7 @@ void EntityDracula(Entity* self) {
             if (--self->ext.dracula.unk8C == 0) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x1C, self, newEntity);
+                    CreateEntityFromEntity(E_DRACULA_UNK1C, self, newEntity);
                     index = self->step_s - 1;
                     newEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft != 0) {
@@ -432,9 +836,9 @@ void EntityDracula(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            CreateEntityFromCurrentEntity(0x2B, &self[2]);
+            CreateEntityFromCurrentEntity(E_DRACULA_UNK2B, &self[2]);
             self[2].facingLeft = self->facingLeft;
-            CreateEntityFromCurrentEntity(0x20, &self[5]);
+            CreateEntityFromCurrentEntity(E_DRACULA_UNK20, &self[5]);
             self[5].facingLeft = self->facingLeft;
             self[5].posY.i.hi += 2;
             self->step_s++;
@@ -457,6 +861,8 @@ void EntityDracula(Entity* self) {
         /**
          * Debug: Press SQUARE / CIRCLE on the second controller
          * to advance/rewind current animation frame
+         * NOTE: This case is slightly different from other cases:
+         * It does not have the "charal" print statement.
          */
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params == 0) {
@@ -488,7 +894,7 @@ void EntityDraculaBody(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805E0);
+        InitializeEntity(g_EInitDracula);
         self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
         self->hitboxOffX = 3;
@@ -527,7 +933,7 @@ void EntityDraculaFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_801805EC);
+        InitializeEntity(g_EInitDraculaFireball);
 
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-2);
@@ -555,11 +961,7 @@ void EntityDraculaFireball(Entity* self) {
     }
 }
 
-extern u16 D_801805F8[];
-extern u8 D_80180990[];
-extern u8 D_801809B0[];
-extern s16 D_80180A60[];
-extern s16 D_80180A62[];
+extern EInit g_EInitDraculaMeteorball;
 void EntityDraculaMeteorball(Entity* entity) {
     s32 speedX;
 
@@ -574,7 +976,7 @@ void EntityDraculaMeteorball(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801805F8);
+        InitializeEntity(g_EInitDraculaMeteorball);
         entity->hitboxState = 0;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
         break;
@@ -603,20 +1005,18 @@ void EntityDraculaMeteorball(Entity* entity) {
             Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
-                CreateEntityFromEntity(0x1E, entity, newEntity);
+                CreateEntityFromEntity(E_DRACULA_METEOR, entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
-                randomPosXYIndex = (Random() & 3) * 2;
-                newEntity->posX.i.hi =
-                    newEntity->posX.i.hi + D_80180A60[randomPosXYIndex];
-                newEntity->posY.i.hi =
-                    newEntity->posY.i.hi + D_80180A62[randomPosXYIndex];
+                randomPosXYIndex = (Random() & 3);
+                newEntity->posX.i.hi += D_80180A60[randomPosXYIndex].x;
+                newEntity->posY.i.hi += D_80180A60[randomPosXYIndex].y;
             }
         }
         break;
     }
 }
 
-extern u16 D_801805EC[];
+extern EInit g_EInitDraculaFireball;
 extern u8 D_801809E0[];
 void func_801AD838(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
@@ -625,7 +1025,7 @@ void func_801AD838(Entity* entity) {
     }
 
     if (entity->step == 0) {
-        InitializeEntity(D_801805EC);
+        InitializeEntity(g_EInitDraculaFireball);
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
         entity->velocityY = FIX(-1);
@@ -637,12 +1037,12 @@ void func_801AD838(Entity* entity) {
     }
 }
 
-extern u16 D_801805EC[];
+extern EInit g_EInitDraculaFireball;
 extern u8 D_80180A40[];
 void EntityDraculaGlass(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801805EC);
+        InitializeEntity(g_EInitDraculaFireball);
         entity->animCurFrame = 0x59;
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->hitboxState = 0;
@@ -676,7 +1076,8 @@ void EntityDraculaGlass(Entity* entity) {
                 Entity* glassShardEntity =
                     AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (glassShardEntity != 0) {
-                    CreateEntityFromEntity(31, entity, glassShardEntity);
+                    CreateEntityFromEntity(
+                        E_DRACULA_UNK1F, entity, glassShardEntity);
                     glassShardEntity->params = 1;
                 }
             }

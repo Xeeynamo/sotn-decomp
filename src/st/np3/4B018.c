@@ -36,7 +36,7 @@ void EntityOwl(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B2C);
+        InitializeEntity(g_EInitOwl);
         // Turns out the knight is spawned from the owl. Neat!
         CreateEntityFromEntity(E_OWL_KNIGHT, self, KNIGHT);
         CreateEntityFromEntity(E_801CD620, self, self + 3);
@@ -334,7 +334,7 @@ void EntityOwl(Entity* self) {
                 xVar = self->posX.i.hi;
                 yVar = self->posY.i.hi + 0x10;
                 g_api.CheckCollision(xVar, yVar, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     self->posY.i.hi = self->posY.i.hi + collider.unk18;
                     self->step_s++;
                     if (KNIGHT->posX.i.hi > self->posX.i.hi) {
@@ -373,7 +373,7 @@ void EntityOwl(Entity* self) {
             self->velocityY -= FIX(0.125);
             break;
         case 1:
-            if (self->ext.generic.unk80.modeS32 & 0x50) {
+            if (LOW(self->ext.owl.unk80) & 0x50) {
                 self->ext.owl.unk82 = 0x80;
                 self->step++;
             }
@@ -395,25 +395,7 @@ void EntityOwl(Entity* self) {
         }
         break;
     case 16:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame = self->animCurFrame + 1;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame = self->animCurFrame - 1;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
 
@@ -678,17 +660,17 @@ void EntityOwlKnight(Entity* self) {
             self->velocityX = 0;
         }
         if (self->animFrameDuration == 0 && self->animFrameIdx == 7) {
-            PlaySfxPositional(0x6C7);
+            PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(SFX_SCRAPE_B);
             self->velocityX = FIX(-3);
             if (self->ext.owl.unk80 & 0x10) {
                 self->velocityX -= FIX(2); // now it's -5
             }
             if (self->facingLeft) {
-                EntityUnkId15Spawner(self, 5, 3, 12, 32, 0, -4);
+                EntityGreyPuffSpawner(self, 5, 3, 12, 32, 0, -4);
                 self->velocityX = -self->velocityX;
             } else {
-                EntityUnkId15Spawner(self, 5, 3, -12, 32, 0, 4);
+                EntityGreyPuffSpawner(self, 5, 3, -12, 32, 0, 4);
             }
         }
         break;
@@ -702,14 +684,14 @@ void EntityOwlKnight(Entity* self) {
             self->velocityX = 0;
         }
         if (self->animFrameDuration == 0 && self->animFrameIdx == 5) {
-            PlaySfxPositional(0x6C7);
+            PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-6.0);
             if (self->facingLeft) {
-                EntityUnkId15Spawner(self, 5, 3, 16, 32, 0, -6);
+                EntityGreyPuffSpawner(self, 5, 3, 16, 32, 0, -6);
                 self->velocityX = -self->velocityX;
             } else {
-                EntityUnkId15Spawner(self, 5, 3, -16, 32, 0, 6);
+                EntityGreyPuffSpawner(self, 5, 3, -16, 32, 0, 6);
             }
         }
         break;
@@ -836,10 +818,10 @@ void EntityOwlKnight(Entity* self) {
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-3.0);
             if (self->facingLeft) {
-                EntityUnkId15Spawner(self, 5, 3, 12, 32, 0, -4);
+                EntityGreyPuffSpawner(self, 5, 3, 12, 32, 0, -4);
                 self->velocityX = -self->velocityX;
             } else {
-                EntityUnkId15Spawner(self, 5, 3, -12, 32, 0, 4);
+                EntityGreyPuffSpawner(self, 5, 3, -12, 32, 0, 4);
             }
         }
         break;
@@ -959,14 +941,14 @@ void EntityOwlKnight(Entity* self) {
                 self->velocityX = 0;
             }
             if (self->animFrameDuration == 0 && self->animFrameIdx == 5) {
-                PlaySfxPositional(0x6C7);
+                PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
                 PlaySfxPositional(0x793);
                 self->velocityX = FIX(-8.0);
                 if (self->facingLeft) {
-                    EntityUnkId15Spawner(self, 5, 3, 32, 32, 0, -6);
+                    EntityGreyPuffSpawner(self, 5, 3, 32, 32, 0, -6);
                     self->velocityX = -self->velocityX;
                 } else {
-                    EntityUnkId15Spawner(self, 5, 3, -32, 32, 0, 6);
+                    EntityGreyPuffSpawner(self, 5, 3, -32, 32, 0, 6);
                 }
             }
             break;
@@ -996,25 +978,7 @@ void EntityOwlKnight(Entity* self) {
         }
         break;
     case 32:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame = self->animCurFrame + 1;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame = self->animCurFrame - 1;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     hitboxPtr = D_801828B8;
     index = D_801828C8[self->animCurFrame + 1] - 7;

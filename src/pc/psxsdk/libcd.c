@@ -14,7 +14,7 @@ int current_channel = 0;
 
 int CdReading() { return reading; }
 
-CdlCB CdReadyCallback(CdlCB func) {
+long CdReadyCallback(void (*func)(void)) {
     NOT_IMPLEMENTED;
     return func;
 }
@@ -58,7 +58,8 @@ int CdControl(u_char com, u_char* param, u_char* result) {
     CdlLOC* pos;
 
     if (!cd_fp) {
-        DEBUGF("Cd not open.\n");
+        WARNF("Cd not open.\n");
+        return 1;
     }
 
     switch (com) {

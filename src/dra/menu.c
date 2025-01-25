@@ -20,8 +20,6 @@ typedef struct {
     /* 0x0A */ s16 padding;
 } MenuContextInit; // size = 0x1C
 
-#define CH(x) ((x) - 0x20)
-
 #if defined(VERSION_US)
 #define ShowText(str, id) func_800F99B8(str, id, 0);
 #elif defined(VERSION_HD)
@@ -303,25 +301,25 @@ void func_800F4994(void) {
         }
     }
 
-    if (D_80139828[4]) {
+    if (g_StatBuffTimers[SBT_STR]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (D_80139828[3]) {
+    if (g_StatBuffTimers[SBT_INT]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (D_80139828[2]) {
+    if (g_StatBuffTimers[SBT_LCK]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
-    if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_RIB_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_CON] += 10;
     }
-    if (g_Status.relics[RELIC_EYE_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_EYE_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_LCK] += 10;
     }
-    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_STR] += 10;
     }
-    if (g_Status.relics[RELIC_RING_OF_VLAD] & 2) {
+    if (g_Status.relics[RELIC_RING_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_INT] += 10;
     }
     if (IsAlucart() != false) {
@@ -346,16 +344,18 @@ void func_800F4994(void) {
     }
 }
 
-s32 CalcAttack(s32 equipId, s32 otherEquipId) {
+s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     s32 i;
-    u16 equipmentAttackBonus;
+    s16 equipmentAttackBonus;
     s16 totalAttack;
     s16 strengthStat;
 
     if (g_EquipDefs[equipId].itemCategory == ITEM_FOOD ||
-        g_EquipDefs[equipId].itemCategory == ITEM_MEDICINE ||
-        (g_EquipDefs[equipId].itemCategory == ITEM_SHIELD &&
-         g_EquipDefs[equipId].attack == 1)) {
+        g_EquipDefs[equipId].itemCategory == ITEM_MEDICINE) {
+        return 0;
+    }
+    if (g_EquipDefs[equipId].itemCategory == ITEM_SHIELD &&
+        g_EquipDefs[equipId].attack == 1) {
         return 0;
     }
 
@@ -367,13 +367,13 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
 
     for (i = 0; i < 5; i++) {
         equipmentAttackBonus +=
-            (u16)g_AccessoryDefs[g_Status.equipment[2 + i]].attBonus;
+            g_AccessoryDefs[g_Status.equipment[2 + i]].attBonus;
     }
 
     totalAttack = g_EquipDefs[equipId].attack;
     strengthStat = g_Status.statsTotal[0];
 
-    if (strengthStat >= totalAttack) {
+    if (totalAttack <= strengthStat) {
         totalAttack += strengthStat;
     } else {
         totalAttack += strengthStat / 2;
@@ -393,7 +393,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (D_80139828[1]) {
+    if (g_StatBuffTimers[SBT_ATK]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {
@@ -421,10 +421,10 @@ void CalcDefense(void) {
     s16 totalDefense;
 
     totalDefense = 0;
-    g_Status.defenseElement = 0;
-    g_Status.D_80097C2A = 0;
-    g_Status.D_80097C2C = 0;
-    g_Status.D_80097C2E = 0;
+    g_Status.elementsWeakTo = 0;
+    g_Status.elementsResist = 0;
+    g_Status.elementsImmune = 0;
+    g_Status.elementsAbsorb = 0;
 
     // Iterate over player's hands, hand 0 and hand 1.
     for (i = 0; i < 2; i++) {
@@ -432,8 +432,9 @@ void CalcDefense(void) {
         totalDefense += g_EquipDefs[thisHandItem].defense;
         // If this hand is shield rod and other hand is a shield, defense bonus
         // of 2.
-        if ((thisHandItem == 4) &&
-            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory == 9) {
+        if ((thisHandItem == ITEM_SHIELD_ROD) &&
+            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory ==
+                ITEM_SHIELD) {
             totalDefense += 2;
         }
     }
@@ -441,45 +442,45 @@ void CalcDefense(void) {
     for (i = 0; i < 5; i++) {
         acc = &g_AccessoryDefs[g_Status.equipment[i + 2]];
         totalDefense += acc->defBonus;
-        g_Status.defenseElement |= acc->unk10;
-        g_Status.D_80097C2A |= acc->unk12;
-        g_Status.D_80097C2C |= acc->unk14;
-        g_Status.D_80097C2E |= acc->unk16;
+        g_Status.elementsWeakTo |= acc->weakToElements;
+        g_Status.elementsResist |= acc->resistElements;
+        g_Status.elementsImmune |= acc->immuneElements;
+        g_Status.elementsAbsorb |= acc->absorbElements;
     }
 
-    if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, EQUIP_HAND) != 0) {
-        g_Status.D_80097C2C |= 0x200;
+    if (CheckEquipmentItemCount(ITEM_MEDUSA_SHIELD, EQUIP_HAND) != 0) {
+        g_Status.elementsImmune |= ELEMENT_STONE;
     }
-    if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_HAND) != 0) {
-        g_Status.D_80097C2C |= 0x8000;
+    if (CheckEquipmentItemCount(ITEM_FIRE_SHIELD, EQUIP_HAND) != 0) {
+        g_Status.elementsImmune |= ELEMENT_FIRE;
     }
-    if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
-        g_Status.D_80097C2C |= 0x100;
+    if (g_Status.relics[RELIC_HEART_OF_VLAD] & RELIC_FLAG_ACTIVE) {
+        g_Status.elementsImmune |= ELEMENT_CURSE;
     }
-    if (D_80139828[5]) {
-        g_Status.D_80097C2A |= 0x8000;
+    if (g_StatBuffTimers[SBT_RESISTFIRE]) {
+        g_Status.elementsResist |= ELEMENT_FIRE;
     }
-    if (D_80139828[6]) {
-        g_Status.D_80097C2A |= 0x2000;
+    if (g_StatBuffTimers[SBT_RESISTICE]) {
+        g_Status.elementsResist |= ELEMENT_ICE;
     }
-    if (D_80139828[7]) {
-        g_Status.D_80097C2A |= 0x4000;
+    if (g_StatBuffTimers[SBT_RESISTTHUNDER]) {
+        g_Status.elementsResist |= ELEMENT_THUNDER;
     }
-    if (D_80139828[8]) {
-        g_Status.D_80097C2A |= 0x100;
+    if (g_StatBuffTimers[SBT_RESISTCURSE]) {
+        g_Status.elementsResist |= ELEMENT_CURSE;
     }
-    if (D_80139828[9]) {
-        g_Status.D_80097C2A |= 0x1000;
+    if (g_StatBuffTimers[SBT_RESISTHOLY]) {
+        g_Status.elementsResist |= ELEMENT_HOLY;
     }
-    if (D_80139828[10]) {
+    if (g_StatBuffTimers[SBT_RESISTSTONE]) {
 #if defined(VERSION_US)
-        g_Status.D_80097C2C |= 0x200;
+        g_Status.elementsImmune |= ELEMENT_STONE;
 #elif defined(VERSION_HD)
-        g_Status.D_80097C2A |= 0x200;
+        g_Status.elementsResist |= ELEMENT_STONE;
 #endif
     }
-    if (D_80139828[11]) {
-        g_Status.D_80097C2A |= 0x800;
+    if (g_StatBuffTimers[SBT_RESISTDARK]) {
+        g_Status.elementsResist |= ELEMENT_DARK;
     }
 
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
@@ -488,7 +489,7 @@ void CalcDefense(void) {
         totalDefense += g_RoomCount / 60;
     }
 
-    if (D_80139828[0]) {
+    if (g_StatBuffTimers[SBT_DEF]) {
         totalDefense += 20;
     }
     if (totalDefense < 0) {
@@ -1379,13 +1380,13 @@ void MenuDrawStats(s32 menuDialogue) {
         MenuDrawInt(g_Status.level, 304, 40, ctx);
         MenuDrawStr(g_MenuStr[15], 248, 56, ctx);
         i = 37;
-        if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
+        if (g_Player.status & PLAYER_STATUS_CURSE) {
             i = 40;
         }
-        if (g_Player.unk0C & PLAYER_STATUS_POISON) {
+        if (g_Player.status & PLAYER_STATUS_POISON) {
             i = 38;
         }
-        if (g_Player.unk0C & PLAYER_STATUS_STONE) {
+        if (g_Player.status & PLAYER_STATUS_STONE) {
             i = 39;
         }
         if (IsAlucart()) {
@@ -2121,16 +2122,16 @@ void MenuDraw(void) {
             break;
         case MENU_DG_EQUIP_OVERVIEW:
             MenuDrawStats(2);
-            equipIndex = g_Status.equipment[0];
+            equipIndex = g_Status.equipment[LEFT_HAND_SLOT];
             equip = &g_EquipDefs[equipIndex];
             MenuDrawStr(equip->name, 112, 30, menu);
-            DrawConsumableCount(equipIndex, 0, menu);
+            DrawConsumableCount(equipIndex, LEFT_HAND_SLOT, menu);
             LoadEquipIcon(equip->icon, equip->iconPalette, 0x10);
 
-            equipIndex = g_Status.equipment[1];
+            equipIndex = g_Status.equipment[RIGHT_HAND_SLOT];
             equip = &g_EquipDefs[equipIndex];
             MenuDrawStr(equip->name, 112, 43, menu);
-            DrawConsumableCount(equipIndex, 1, menu);
+            DrawConsumableCount(equipIndex, RIGHT_HAND_SLOT, menu);
             flag = equip->itemCategory == 5;
             LoadEquipIcon(equip->icon, equip->iconPalette, 0x11);
 
@@ -3124,8 +3125,9 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     var_s6 = 0;
     func_800F53A4();
 
-    if ((g_Player.unk0C & 0x17) | (PLAYER.step == Player_UnmorphWolf) |
-        (PLAYER.step == Player_BossGrab) | (g_Player.unk60)) {
+    if ((g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10)) |
+        (PLAYER.step == Player_UnmorphWolf) | (PLAYER.step == Player_BossGrab) |
+        (g_Player.unk60)) {
         if (itemId == ITEM_AXE_LORD_ARMOR) {
             if (D_801375CC == EQUIP_ARMOR) {
                 if (count[ITEM_AXE_LORD_ARMOR] != 0) {
@@ -3373,11 +3375,13 @@ block_4:
         func_800EA5E4(0);
         func_800FAC30();
         func_800FB9BC();
-        g_PrevEquippedWeapons[0] = g_Status.equipment[0];
-        g_PrevEquippedWeapons[1] = g_Status.equipment[1];
+        g_PrevEquippedWeapons[LEFT_HAND_SLOT] =
+            g_Status.equipment[LEFT_HAND_SLOT];
+        g_PrevEquippedWeapons[RIGHT_HAND_SLOT] =
+            g_Status.equipment[RIGHT_HAND_SLOT];
         if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
-            *g_PrevEquippedWeapons = 0xD8;
-            g_PrevEquippedWeapons[1] = 0xD8;
+            g_PrevEquippedWeapons[LEFT_HAND_SLOT] = 0xD8;
+            g_PrevEquippedWeapons[RIGHT_HAND_SLOT] = 0xD8;
         }
         g_ServantPrevious = g_Servant;
         for (i = 0; i < NUM_SPELLS; i++) {
@@ -3411,7 +3415,7 @@ block_4:
         if (func_801025F4() == 0) {
             break;
         }
-        func_800E346C();
+        SetGPUBuffRGBZero();
         func_80102628(0x180);
         SetMenuDisplayBuffer();
         func_800FAC48();
@@ -3515,9 +3519,9 @@ block_4:
                 if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
                     g_Status.statsFamiliars[g_Servant - 1].unk8++;
                 }
-                func_800E6218(1);
+                InitializeServant(MENU_SWITCH_SERVANT);
             } else {
-                func_800E6218(3);
+                InitializeServant(MENU_SAME_SERVANT);
             }
             g_MenuStep += 2;
         } else {
@@ -3533,9 +3537,9 @@ block_4:
         if (!g_UseDisk || !g_IsUsingCd) {
             if (!g_UseDisk) {
                 func_800E6250();
-                func_800E6218(1);
+                InitializeServant(MENU_SWITCH_SERVANT);
             } else if (!g_IsUsingCd) {
-                func_800E6218(1);
+                InitializeServant(MENU_SWITCH_SERVANT);
             }
             g_ServantLoaded = g_Servant;
             if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
@@ -3929,7 +3933,7 @@ block_4:
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             func_801073C0();
             g_CdStep = CdStep_None;
-            func_800E346C();
+            SetGPUBuffRGBZero();
             func_80102628(0x180);
             SetMenuDisplayBuffer();
             func_800FAC48();

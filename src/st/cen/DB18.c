@@ -2,7 +2,10 @@
 
 #include "cen.h"
 
-void func_8018DB18(Entity* self) {
+// Referenced nowhere in code or data. Seems like a complete orphan.
+// Hopefully it's a copy paste from a different stage and we can
+// find out what it was supposed to be?
+void UnusedCENEntity(Entity* self) {
     Entity* newEntity;
     Collider collider;
     Primitive* prim;
@@ -14,21 +17,20 @@ void func_8018DB18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180404);
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = 0xB0;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->animCurFrame = self->params + 28;
         facing = GetSideToPlayer() & 1;
 
         temp = (Random() & 30) + 8;
-        self->ext.generic.unk80.modeS16.unk0 = temp;
+        self->ext.unusedCENEnt.angle = temp;
         if (self->facingLeft != 0) {
-            self->ext.generic.unk80.modeS16.unk0 = -temp;
+            self->ext.unusedCENEnt.angle = -temp;
         }
 
         if (self->params >= 4) {
-            self->ext.generic.unk80.modeS16.unk0 =
-                -self->ext.generic.unk80.modeS16.unk0;
+            self->ext.unusedCENEnt.angle = -self->ext.unusedCENEnt.angle;
         }
 
         if (facing == 0) {
@@ -76,11 +78,11 @@ void func_8018DB18(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->rotZ += self->ext.generic.unk80.modeS16.unk0;
+        self->rotZ += self->ext.unusedCENEnt.angle;
         self->velocityY += FIX(0.25);
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY / 2;
             self->velocityX -= self->velocityX / 3;

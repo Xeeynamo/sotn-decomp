@@ -1,24 +1,25 @@
 options:
-  platform:     psx
-  basename:     stnz0
-  base_path:    ..
-  build_path:   build/us
-  target_path:  disks/us/ST/NZ0/NZ0.BIN
-  asm_path:     asm/us/st/nz0
-  asset_path:   assets/st/nz0
-  src_path:     src/st/nz0
+  platform: psx
+  basename: stnz0
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NZ0/NZ0.BIN
+  asm_path: asm/us/st/nz0
+  asset_path: assets/st/nz0
+  src_path: src/st/nz0
   ld_script_path: build/us/stnz0.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.stnz0.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnz0.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.stnz0.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stnz0.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: true
   section_order:
     - ".data"
     - ".rodata"
@@ -30,18 +31,26 @@ segments:
   - name: stnz0
     type: code
     start: 0x00000000
-    vram:  0x80180000
+    vram: 0x80180000
     align: 4
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0x8C, .data, header] # palette definitions
       - [0x164, .data, header] # layers
-      - [0x47C, data]
+      - [0x47C, .data, header] # graphics banks
       - [0x8EC, .data, e_laydef] # layout entries header
       - [0xA94, .data, e_init]
-      - [0xDBC, data]
+      - [0xDBC, .data, 30958]
       - [0xDE4, .data, e_breakable]
-      - [0xE54, data]
+      - [0xE54, .data, 311C0]
+      - [0xF50, .data, 337B4]
+      - [0xFA4, .data, e_explosion_puff_opaque]
+      - [0x1010, .data, bossfight]
+      - [0x13A4, .data, e_elevator]
+      - [0x13BC, .data, d_prize_drops]
+      - [0x13C8, .data, cutscene]
+      - [0x1474, .data, maria]
       - [0x1574, .data, st_update]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
@@ -54,26 +63,76 @@ segments:
       - [0x2180, .data, e_axe_knight]
       - [0x22D4, .data, e_bloody_zombie]
       - [0x23DC, .data, e_skeleton]
-      - [0x24CC, data] # spittle bone
-      - [0x2584, data] # subweapon container
-      - [0x2610, data] # bloody skeleton
-      - [0x26B8, data] # magically sealed door
+      - [0x24CC, .data, e_spittle_bone]
+      - [0x2584, .data, e_subweapon_container]
+      - [0x2610, .data, e_blood_skeleton]
+      - [0x26B8, .data, e_magically_sealed_door]
       - [0x272C, .data, rooms]
       - [0x2830, .data, e_life_up]
       - [0x2884, .data, e_layout] # layout entries data
-      - [0x3B0C, data]
+      - [0x3B0C, .data, cutscene_data]
+      - [0x3CB8, data]
+      - [0x3CCC, cmpgfx, stage_title_nz0_jp, 128, 128, 4] # unused
+      - [0x4154, cmpgfx, e_blood_skeleton_g, 128, 128, 4, 0x15C3C]
+      - [0x4CE4, cmpgfx, e_slinger_g, 128, 128, 4, 0x15CDC]
+      - [0x58C0, cmpgfx, e_axe_knight_g0, 128, 128, 4, 0x15D3C]
+      - [0x67B0, cmpgfx, e_axe_knight_g1, 128, 128, 4, 0x15D3C]
+      - [0x73A0, cmpgfx, e_bloody_zombie_g, 128, 128, 4, 0x15DBC]
+      - [0x8058, cmpgfx, e_skeleton_g, 128, 128, 4, 0x15E1C]
+      - [0x8BB8, cmpgfx, e_skelerang_g0, 128, 128, 4, 0x15E3C]
+      - [0x9810, cmpgfx, e_skelerang_g1, 128, 128, 4, 0x15E3C]
+      - [0xA508, cmpgfx, e_table_with_globe_g, 128, 128, 4, 0x15E9C]
+      - [0xAAD0, cmpgfx, e_table_with_alembic_g, 128, 128, 4, 0x15F1C]
+      - [0xB0B4, cmpgfx, e_table_blue_flame_g, 128, 128, 4, 0x15F9C]
+      - [0xBCB8, cmpgfx, e_explosion_g, 128, 128, 4, 0x1601C]
+      - [0xCC34, cmpgfx, e_cloche_g, 128, 128, 4, 0x162DC]
+      - [0xD788, cmpgfx, e_slogra_g0, 128, 128, 4, 0x1641C]
+      - [0xE27C, cmpgfx, e_slogra_g1, 128, 128, 4, 0x1641C]
+      - [0xEC64, cmpgfx, e_slogra_g2, 128, 128, 4, 0x1641C]
+      - [0xF528, cmpgfx, e_gaibon_g0, 128, 128, 4, 0x1647C]
+      - [0x10298, cmpgfx, e_gaibon_g1, 128, 128, 4, 0x1647C]
+      - [0x10A58, cmpgfx, e_sealed_door_g, 128, 128, 4, 0x165BC]
+      - [0x11B18, cmpgfx, e_maria_nz0_g0, 128, 128, 4, 0x1663C]
+      - [0x12E2C, cmpgfx, e_maria_nz0_g1, 128, 128, 4, 0x1663C]
+      - [0x13BA4, raw, cutscene_maria]
+      - [0x14924, raw, cutscene_alucard]
+      - [0x156A4, cmpgfx, stage_title_nz0_us, 128, 128, 4]
+      - [0x15C3C, pal, e_blood_skeleton_p]
+      - [0x15CBC, pal, D_80195CBC] # unused
+      - [0x15CDC, pal, e_slinger_p]
+      - [0x15CFC, pal, D_80195CFC] # unused
+      - [0x15D3C, pal, e_axe_knight_p]
+      - [0x15DBC, pal, e_bloody_zombie_p]
+      - [0x15E1C, pal, e_skeleton_p]
+      - [0x15E3C, pal, e_skelerang_p]
+      - [0x15E9C, pal, e_table_with_globe_p]
+      - [0x15F1C, pal, e_table_with_alembic_p]
+      - [0x15F9C, pal, e_table_blue_flame_p]
+      - [0x1601C, pal, e_explosion_p]
+      - [0x1621C, pal, D_8019621C] # unused
+      - [0x162DC, pal, e_cloche_p]
+      - [0x1641C, pal, e_slogra_p]
+      - [0x1647C, pal, e_gaibon_p]
+      - [0x1657C, pal, e_sealed_door_p]
+      - [0x1661C, pal, D_8019661C] # unused
+      - [0x1663C, pal, e_maria_nz0_p]
+      - [0x1665C, pal, D_8019665C]
+      - [0x1675C, pal, D_8019675C] # unused
+      - [0x1685C, pal, D_8019685C]
+      - [0x1695C, pal, D_8019695C] # unused
       - [0x16A5C, .data, tile_data] # tile data
       - [0x20A5C, .data, tile_data] # tile definitions
       - [0x26E8C, .data, sprites]
-      - [0x3058C, rodata]
-      - [0x305A4, .rodata, 311C0] # EntityWargExplosionPuffOpaque
+      - [0x3058C, .rodata, 311C0] # EntityRedEyeBust
+      - [0x30598, .rodata, 337B4] # EntityRelicContainer
+      - [0x305A4, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
       - [0x305FC, .rodata, slogra] # EntitySlogra
       - [0x30618, .rodata, gaibon] # EntityGaibon .rodata, 33FCC
       - [0x3063C, .rodata, e_elevator] # func_801B7034
-      - [0x3064C, rodata]
-      - [0x30664, .rodata, mariacutscene]
+      - [0x3064C, .rodata, cutscene] # actor names
+      - [0x30664, .rodata, cutscene]
       - [0x306E8, .rodata, maria]
       - [0x30728, .rodata, e_red_door]
       - [0x30740, .rodata, e_collect] # CollectGold text
@@ -87,7 +146,7 @@ segments:
       - [0x30880, .rodata, e_skeleton]
       - [0x3089C, .rodata, e_spittle_bone]
       - [0x308C8, .rodata, e_subweapon_container]
-      - [0x308D4, .rodata, e_bloody_skeleton]
+      - [0x308D4, .rodata, e_blood_skeleton]
       - [0x308E8, .rodata, e_magically_sealed_door]
       - [0x30900, .rodata, e_stage_name]
       - [0x30934, .rodata, prim_helpers]
@@ -95,12 +154,13 @@ segments:
       - [0x30958, c]
       - [0x30EEC, c, e_breakable]
       - [0x311C0, c]
+      - [0x337B4, c]
+      - [0x33B78, c, e_explosion_puff_opaque]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
       - [0x34690, c, slogra]
       - [0x35778, c, gaibon]
-      - [0x36DE4, c]
-      - [0x37034, c, e_elevator]
-      - [0x374CC, c, mariacutscene]
+      - [0x36DE4, c, e_elevator]
+      - [0x374CC, c, cutscene]
       - [0x38E0C, c, maria]
       - [0x394D4, c, st_update]
       - [0x39908, c, collision]
@@ -119,7 +179,7 @@ segments:
       - [0x45F2C, c, e_skeleton]
       - [0x4672C, c, e_spittle_bone]
       - [0x47048, c, e_subweapon_container]
-      - [0x47958, c, e_bloody_skeleton]
+      - [0x47958, c, e_blood_skeleton]
       - [0x47CF0, c, e_magically_sealed_door]
       - [0x48ADC, c, e_stage_name]
       - [0x49930, c, prim_helpers]

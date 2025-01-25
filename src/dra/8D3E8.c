@@ -440,8 +440,8 @@ void func_8012E550(void) {
     DecelerateX(FIX(0.125));
     if (g_Player.padTapped & PAD_CROSS) {
         if (g_Player.padPressed & PAD_DOWN) {
-            for (i = 0; i < 4; i++) {
-                if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+                if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.timers[7] = 8;
                     func_8012CED4();
                     PLAYER.animFrameIdx = 4;
@@ -568,8 +568,8 @@ void func_8012E9C0(void) {
 
     PLAYER.palette = 0x810D;
     for (i = 0; i < 4; i++) {
-        if (D_800ACED0[i].y < D_800ACE90[i]) {
-            D_800ACED0[i].y++;
+        if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+            g_SensorsFloor[i].y++;
         }
     }
     func_8010E168(1, 4);
@@ -602,8 +602,8 @@ void func_8012EAD0(void) {
     case 0:
         i = 0;
         for (i = 0; i < 4; i++) {
-            if (D_800ACE88[i] < D_800ACEC0[i].y) {
-                D_800ACEC0[i].y--;
+            if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+                g_SensorsCeiling[i].y--;
             } else {
                 else_cycles++;
             }
@@ -1001,7 +1001,7 @@ void func_8012F894(Entity* self) {
 
     s32 vram_flag_F000;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1285,7 +1285,7 @@ static s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
 void func_80130264(Entity* self) {
     s32 var_v1;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1395,7 +1395,7 @@ static s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
 void func_80130618(Entity* self) {
     s32 var_v1;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1517,7 +1517,7 @@ void func_801309B4(Entity* self) {
     s32 var_v0;
     s32 var_v0_2;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1622,7 +1622,7 @@ void func_801309B4(Entity* self) {
     self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s2) >> 8;
     if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
         self->animFrameDuration == -1) {
-        PlaySfx(SFX_UNK_6F7);
+        PlaySfx(SFX_ALU_WOLF_BARK);
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     }
@@ -1672,7 +1672,7 @@ void func_80130E94(Entity* self) {
     s32 var_s6;
     s32 var_s7;
 
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -1805,7 +1805,7 @@ void func_80130E94(Entity* self) {
 // Entity #60. This is created manually at g_Entities[30].
 // Creation is in func_8012E7A4.
 void func_8013136C(Entity* self) {
-    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -2045,25 +2045,25 @@ void EntityGiantSpinningCross(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->drawMode = 0x100 | DRAW_HIDE;
+            prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             prim = prim->next;
         }
         func_8011A290(self);
         self->hitboxHeight = 0x50;
         self->hitboxWidth = 0xC;
+        self->facingLeft = 0;
         self->posY.i.hi = 0x160;
         self->velocityY = FIX(-6);
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
         PlaySfx(SFX_FIREBALL_SHOT_B);
         self->step++;
-        primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];
+        primUVCoords = &D_800B0F94[0][0];
         for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next,
             primUVCoords += 5) {
-            prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
+            prim->clut = (primUVCoords[4] & 0xF) + 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
                 prim->u0 = primUVCoords[0] + primUVCoords[2];
@@ -2175,7 +2175,7 @@ void EntityGiantSpinningCross(Entity* self) {
     gte_ldv0(&pos);
     gte_rtps();
     prim = &g_PrimBuf[self->primIndex];
-    vectors_ptr = &D_800B0CB4;
+    vectors_ptr = (SVECTOR**)&D_800B0CB4;
     gte_stsxy2(&prim->x0);
     gte_stszotz(&z);
     self->hitboxOffX = prim->x0 - self->posX.i.hi;
@@ -2184,7 +2184,7 @@ void EntityGiantSpinningCross(Entity* self) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
         temp_a3 = vectors_ptr[2];
-        prim->type = 4;
+        prim->type = PRIM_GT4;
         gte_nclip();
         prim->drawMode = DRAW_HIDE;
         gte_stopz(&nclip);

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-extern u16 D_80180A60[];
+extern u16 g_EInitMaria[];
 extern u8 D_us_80180690[];
 extern u8 D_us_801806A4[];
 extern u8 D_us_801806B8[];
@@ -13,7 +13,7 @@ extern u8 D_us_80180718[];
 extern u8 D_us_80180724[];
 extern u8 D_us_80180738[];
 extern u32 g_CutsceneFlags;
-extern s32 D_us_8019AE70;
+extern s32 g_SkipCutscene;
 
 void func_us_8018CA94(Entity* self) {
     Entity* player;
@@ -24,13 +24,13 @@ void func_us_8018CA94(Entity* self) {
     tilemap = &g_Tilemap;
     player = &PLAYER;
 
-    if (D_us_8019AE70 && self->step < 12) {
+    if (g_SkipCutscene && self->step < 12) {
         SetStep(12);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitMaria);
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->unk5A = 0x48;

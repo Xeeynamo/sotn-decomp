@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 
 // params: (& 0xF0) Use an alternate set of hardcoded palette and drawMode
 //         (& 0xFF00) if non-zero, uses ((& 0xFF00) >> 8) as the zPriority
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         self->palette = PAL_OVL(0x170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;

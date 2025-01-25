@@ -89,14 +89,15 @@ class SOTNDecompress:
             elif op == 15:
                 return bytearray(self.decompressed_data)
             else:
-                ch = dictionary[op - 7]
-                if ch == 0x10:
-                    self.write_nibble(ch & 15)
-                elif ch == 0x20:
-                    self.write_nibble(ch & 15)
-                    self.write_nibble(ch & 15)
-                elif ch == 0x60:
-                    count = (ch & 15) + 3
+                kind = dictionary[op - 7] & 0xF0
+                len = dictionary[op - 7] & 0x0F
+                if kind == 0x10:
+                    self.write_nibble(len & 15)
+                elif kind == 0x20:
+                    self.write_nibble(len & 15)
+                    self.write_nibble(len & 15)
+                elif kind == 0x60:
+                    count = (len & 15) + 3
                     while count > 0:
                         self.write_nibble(0)
                         count -= 1
@@ -119,3 +120,9 @@ class SOTNDecompress:
             self.write_flag = 0
             self.decompressed_data[self.dst_pos] += ch << 4
             self.dst_pos += 1
+
+    def last_processed_pos(self):
+        return self.src_pos
+
+    def unprocessed_length(self):
+        return len(self.compressed_data) - self.last_processed_pos()

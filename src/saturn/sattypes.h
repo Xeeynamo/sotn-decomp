@@ -302,7 +302,7 @@ typedef struct Unkstruct_800A7734 {
 
 typedef struct {
     char pad[0x3F8];
-    u32 unk0C;
+    u32 status;
 } PlayerState;
 
 typedef enum {
@@ -379,7 +379,7 @@ extern Unkstruct_800A7734 D_800A7734[];
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
-extern s32 D_80139828[];
+extern s32 g_StatBuffTimers[];
 extern s32 D_8013B5E8;
 extern EquipKind D_801375CC;
 extern PlayerState g_Player;

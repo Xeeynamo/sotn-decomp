@@ -1,0 +1,92 @@
+options:
+  platform: psx
+  basename: borbo3
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/RBO3/RBO3.BIN
+  asm_path: asm/us/boss/rbo3
+  asset_path: assets/boss/rbo3
+  src_path: src/boss/rbo3
+  ld_script_path: build/us/borbo3.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.borbo3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.borbo3.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.borbo3.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  include_macro_inc: false
+sha1: 8748529fc72268169d440fe0b008a5d50154c8b7
+segments:
+  - name: borbo3
+    type: code
+    start: 0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data, header]
+      - [0x1EC, data, e_laydef]
+      - [0x390, data] #e_init
+      - [0x510, .data, st_debug]
+      - [0x590, data] # e_breakable
+      - [0x5F0, .data, d_prize_drops]
+      - [0x5FC, data]
+      - [0x750, .data, st_update]
+      - [0x77C, .data, collision]
+      - [0xB3C, .data, e_red_door] # e_red_door
+      - [0xB54, .data, st_common] # st_common
+      - [0xD54, .data, e_collect] # e_collect
+      - [0x1044, .data, e_misc]
+      - [0x1160, .data, e_particles]
+      - [0x11E0, .data, e_room_fg]
+      - [0x126C, data]
+      - [0x1288, .data, e_life_up]
+      - [0x12DC, data]
+      - [0x7350, pal, D_80187350]
+      - [0x7550, pal, D_80187550] # unused
+      - [0x7610, pal, D_80187610]
+      - [0x10E80, .rodata, rbo3]
+      - [0x10F0C, .rodata, 12D64]
+      - [0x10F3C, .rodata, e_red_door]
+      - [0x10F54, .rodata, e_collect]
+      - [0x10FDC, .rodata, e_misc]
+      - [0x11028, .rodata, e_stage_name]
+      - [0x1105C, .rodata, prim_helpers]
+      - [0x11064, .rodata, e_life_up]
+      - [0x11080, c, st_debug]
+      - [0x11304, c, e_breakable]
+      - [0x11438, c, rbo3]
+      - [0x12D64, c, 12D64]
+      - [0x13198, c, st_update]
+      - [0x135cc, c, collision]
+      - [0x14d88, c, create_entity]
+      - [0x15900, c, e_red_door]
+      - [0x165b0, c, st_common]
+      - [0x17A60, c, e_collect]
+      - [0x18FCC, c, blit_char]
+      - [0x1927c, c, e_misc]
+      - [0x1c760, c, e_stage_name]
+      - [0x1d5b4, c, e_particles]
+      - [0x1DDF8, c, e_room_fg]
+      - [0x1DEE4, c, popup]
+      - [0x1E214, c, prim_helpers]
+      - [0x1EA44, c, e_life_up]
+      - [0x1F978, .bss, create_entity]
+      - [0x1F988, bss]
+      - [0x205F0, .bss, e_collect]
+  - [0x20630]

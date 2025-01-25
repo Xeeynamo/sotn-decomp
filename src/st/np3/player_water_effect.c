@@ -5,7 +5,7 @@ static u16 func_801C4144(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {
     s16 temp;
     s16* ptr;
 
-    ptr = &D_80181230[arg0 * 8];
+    ptr = &g_WaterXTbl[arg0 * 8];
     arg1 -= *ptr++;
     if (arg1 < 0) {
         return 0;
@@ -18,7 +18,7 @@ static u16 func_801C4144(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {
     }
     *arg3++ = temp;
 
-    temp = D_80182168[*ptr++];
+    temp = g_splashAspects[*ptr++];
     if (temp) {
         temp = arg1 / temp;
     } else {
@@ -51,9 +51,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
     Entity* player = &PLAYER;
 
     sp18 = player->posX.i.hi + tilemap->scrollX.i.hi;
-    status = g_Player.unk0C;
-    if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
-        if (status & PLAYER_STATUS_UNK_20) {
+    status = g_Player.status;
+    if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
+        if (status & PLAYER_STATUS_CROUCH) {
             sp4A = 0x14;
             var_s6 = 0x19;
             if (status & PLAYER_STATUS_WOLF_FORM) {
@@ -97,16 +97,16 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                         var_s1 = arg0->ext.aluwater.unk88;
                         if (arg0->ext.aluwater.unk8C < 0xE) {
                             var_s7 = ((0xE - arg0->ext.aluwater.unk8C) << 0xB) +
-                                     (D_80181230[var_s1 + 2] << 8) +
-                                     (D_80181230[var_s1 + 5] << 5);
+                                     (g_WaterXTbl[var_s1 + 2] << 8) +
+                                     (g_WaterXTbl[var_s1 + 5] << 5);
                         } else {
                             if (arg0->ext.aluwater.unk8E < 0xE) {
                                 var_s7 =
                                     ((arg0->ext.aluwater.unk8E + 0xE) << 0xB) +
-                                    (D_80181230[var_s1 + 2] << 8) +
-                                    (D_80181230[var_s1 + 6] << 5);
+                                    (g_WaterXTbl[var_s1 + 2] << 8) +
+                                    (g_WaterXTbl[var_s1 + 6] << 5);
                             } else {
-                                var_s7 = D_80181230[var_s1 + 2] << 8;
+                                var_s7 = g_WaterXTbl[var_s1 + 2] << 8;
                             }
                         }
                         var_s1 = (var_s7 >> 8) & 7;
@@ -126,8 +126,8 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                                 CreateEntityFromEntity(
                                     E_SIDE_WATER_SPLASH, player, var_s0);
                                 var_s0->params =
-                                    (u16)D_80181230[arg0->ext.aluwater.unk88 +
-                                                    7] +
+                                    (u16)g_WaterXTbl[arg0->ext.aluwater.unk88 +
+                                                     7] +
                                     (var_s1 << 4) + i;
                                 var_s0->posY.i.hi += (var_s6 - var_s3);
                                 var_s0->zPriority = player->zPriority;
@@ -156,15 +156,15 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                 }
             } else if ((sp28) && (var_s3 < 9) && (!arg0->ext.aluwater.unk7C)) {
                 if (sp10[0] < 0xE) {
-                    var_s7 =
-                        ((0xE - sp10[0]) << 0xB) + (D_80181230[sp30 + 2] << 8) +
-                        (D_80181230[sp30 + 5] << 5);
+                    var_s7 = ((0xE - sp10[0]) << 0xB) +
+                             (g_WaterXTbl[sp30 + 2] << 8) +
+                             (g_WaterXTbl[sp30 + 5] << 5);
                 } else if (sp10[1] < 0xE) {
-                    var_s7 =
-                        ((sp10[1] + 0xE) << 0xB) + (D_80181230[sp30 + 2] << 8) +
-                        (D_80181230[sp30 + 6] << 5);
+                    var_s7 = ((sp10[1] + 0xE) << 0xB) +
+                             (g_WaterXTbl[sp30 + 2] << 8) +
+                             (g_WaterXTbl[sp30 + 6] << 5);
                 } else {
-                    var_s7 = D_80181230[sp30 + 2] << 8;
+                    var_s7 = g_WaterXTbl[sp30 + 2] << 8;
                 }
                 var_s1 = (var_s7 >> 8) & 7;
                 if (var_s1 == 0 || var_s1 == 7) {
@@ -183,7 +183,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                         CreateEntityFromEntity(
                             E_SIDE_WATER_SPLASH, player, var_s0);
                         var_s0->params =
-                            (u16)D_80181230[sp30 + 7] + (var_s1 << 4) + i;
+                            (u16)g_WaterXTbl[sp30 + 7] + (var_s1 << 4) + i;
                         var_s0->posY.i.hi += (var_s6 - var_s3);
                         var_s0->zPriority = player->zPriority;
                     }
@@ -206,7 +206,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
         } else {
             if (!(status & PLAYER_STATUS_MIST_FORM) && (sp28)) {
                 if (!arg0->ext.aluwater.unk7E) {
-                    var_s1 = D_80181230[sp30 + 7];
+                    var_s1 = g_WaterXTbl[sp30 + 7];
                     if (sp18 != arg0->ext.aluwater.unk80) {
                         if ((var_s3 <= sp4A) && (sp10[0] >= 6) &&
                             (sp10[1] >= 6)) {
@@ -224,7 +224,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                                 } else {
                                     var_s0->params = 0;
                                 }
-                                var_s0->params |= (D_80181230[sp30 + 2] << 8);
+                                var_s0->params |= (g_WaterXTbl[sp30 + 2] << 8);
                                 var_s0->ext.aluwater.unk88 = sp30;
                                 var_s0->ext.aluwater.unk8A = var_s1;
                                 var_s0->zPriority = player->zPriority;
@@ -240,7 +240,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                                 E_SURFACING_WATER, player, var_s0);
                             var_s0->posY.i.hi += (var_s6 - var_s3);
 
-                            var_s0->params = D_80181230[sp30 + 2] << 8;
+                            var_s0->params = g_WaterXTbl[sp30 + 2] << 8;
                             var_s0->ext.aluwater.unk88 = sp30;
                             var_s0->ext.aluwater.unk8A = var_s1;
                             var_s0->zPriority = player->zPriority;
@@ -249,7 +249,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                     }
                 }
                 if (sp28) {
-                    var_s1 = D_80181230[sp30 + 7];
+                    var_s1 = g_WaterXTbl[sp30 + 7];
                     if (var_s1 > 0x1000 || var_s1 < -0x1000) {
                         if (var_s3 >= sp4A) {
                             if (status & PLAYER_STATUS_BAT_FORM) {
@@ -274,8 +274,8 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             arg0->ext.aluwater.unk7E--;
         }
         *D_80097448 = var_s3;
-        if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
-            if (status & PLAYER_STATUS_UNK_20) {
+        if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
+            if (status & PLAYER_STATUS_CROUCH) {
                 if (status & PLAYER_STATUS_WOLF_FORM) {
                     if (var_s3 > 4) {
                         D_80097448[1] = var_s3 - 4;
@@ -336,7 +336,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             }
         }
     } else {
-        InitializeEntity(D_80180A60);
+        InitializeEntity(g_EInitSpawner);
     }
     arg0->ext.aluwater.unk7C = sp28;
     arg0->ext.aluwater.unk80 = sp18;

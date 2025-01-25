@@ -14,6 +14,9 @@ typedef unsigned char u_char;
 typedef unsigned short u_short;
 typedef unsigned long u_long;
 typedef unsigned int size_t;
+
+#define INT32_MAX (0x7FFFFFFF)
+#define INT16_MAX (0x7FFF)
 #else
 #include <sys/types.h>
 #endif
@@ -42,6 +45,9 @@ typedef enum { false, true } bool;
 #define NULL (0)
 #endif
 
+#define S32_MAX INT32_MAX
+#define S16_MAX INT16_MAX
+
 typedef union {
     s32 val;
     struct {
@@ -54,6 +60,11 @@ typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
+
+typedef struct {
+    /* 0x0 */ s32 x;
+    /* 0x4 */ s32 y;
+} Point32; // size = 0x8
 
 typedef struct {
     u8 u;

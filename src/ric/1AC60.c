@@ -157,7 +157,7 @@ void RicInit(s16 initParam) {
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= FLAG_HAS_PRIMS;
     for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
-        prim->drawMode = 0x102 | DRAW_HIDE;
+        prim->drawMode = DRAW_UNK_100 | DRAW_UNK02 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {
         RicCreateEntFactoryFromEntity(playerPtr, FACTORY(BP_TELEPORT, 1), 0);
@@ -173,39 +173,41 @@ void RicInit(s16 initParam) {
     }
 }
 
-static void func_801572A8(bool arg0) {
+static void CheckStageCollision(bool arg0) {
     Collider collider;
     s16 argX;
     s16 argY;
     s32 xVel;
     s32 i;
     s32 j;
-    s32 unk0C;
+    s32 status;
 
     s32* vram_ptr = &g_Player.pl_vram_flag;
     s32* unk04_ptr = &g_Player.unk04;
 
     g_Player.unk04 = *vram_ptr;
     *vram_ptr = 0;
-    unk0C = g_Player.unk0C;
+    status = g_Player.status;
 
     if (arg0) {
-        for (i = 0; i < LEN(D_801545E4); i++) {
-            if (unk0C & 0x20) {
-                D_801545F4[i].y = D_80154644[i];
-                D_801545E4[i].y = D_8015465C[i];
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                g_RicSensorsFloor[i].y = g_RicSensorsFloorDefault[i];
+                g_RicSensorsCeiling[i].y = g_RicSensorsCeilingCrouch[i];
             } else {
-                D_801545F4[i].y = D_80154644[i];
-                D_801545E4[i].y = D_8015463C[i];
+                g_RicSensorsFloor[i].y = g_RicSensorsFloorDefault[i];
+                g_RicSensorsCeiling[i].y = g_RicSensorsCeilingDefault[i];
             }
         }
-        for (i = 0; i < 7; i++) {
-            if (unk0C & 0x20) {
-                D_80154604[i].y = D_80154664[i];
-                D_80154604[i + 7].y = D_80154664[i];
+        for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                g_RicSensorsWall[i].y = g_RicSensorsWallCrouch[i];
+                g_RicSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_RicSensorsWallCrouch[i];
             } else {
-                D_80154604[i].y = D_8015464C[i];
-                D_80154604[i + 7].y = D_8015464C[i];
+                g_RicSensorsWall[i].y = g_RicSensorsWallDefault[i];
+                g_RicSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_RicSensorsWallDefault[i];
             }
         }
     }
@@ -238,37 +240,38 @@ static void func_801572A8(bool arg0) {
     if ((PLAYER.velocityY > 0) && !(*unk04_ptr & 1)) {
         PLAYER.posY.val += PLAYER.velocityY;
     }
-    for (i = 0; i < 4; i++) {
-        argX = PLAYER.posX.i.hi + D_801545F4[i].x;
-        argY = PLAYER.posY.i.hi + D_801545F4[i].y;
-        g_api.CheckCollision(argX, argY, &g_Player.colliders[i], 0);
-        if (g_Player.timers[PL_T_7] && (g_Player.colliders[i].effects & 0x40)) {
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        argX = PLAYER.posX.i.hi + g_RicSensorsFloor[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsFloor[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colFloor[i], 0);
+        if (g_Player.timers[PL_T_7] &&
+            (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
             g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
             if (!(collider.effects & EFFECT_SOLID)) {
-                g_Player.colliders[i].effects = 0;
+                g_Player.colFloor[i].effects = EFFECT_NONE;
             }
         }
     }
-    func_8015E800();
-    for (i = 0; i < 4; i++) {
-        argX = PLAYER.posX.i.hi + D_801545E4[i].x;
-        argY = PLAYER.posY.i.hi + D_801545E4[i].y;
-        g_api.CheckCollision(argX, argY, &g_Player.colliders2[i], 0);
+    RicCheckFloor();
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        argX = PLAYER.posX.i.hi + g_RicSensorsCeiling[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsCeiling[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colCeiling[i], 0);
     }
-    func_8015EE28();
+    RicCheckCeiling();
     if ((*vram_ptr & 1) && (PLAYER.velocityY >= 0)) {
         PLAYER.posY.i.lo = 0;
     }
     if ((*vram_ptr & 2) && (PLAYER.velocityY <= 0)) {
         PLAYER.posY.i.lo = 0;
     }
-    for (i = 0; i < 14; i++) {
-        argX = PLAYER.posX.i.hi + D_80154604[i].x;
-        argY = PLAYER.posY.i.hi + D_80154604[i].y;
-        g_api.CheckCollision(argX, argY, &g_Player.colliders3[i], 0);
+    for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
+        argX = PLAYER.posX.i.hi + g_RicSensorsWall[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsWall[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colWall[i], 0);
     }
-    func_8015F414();
-    func_8015F680();
+    RicCheckWallRight();
+    RicCheckWallLeft();
     if ((*vram_ptr & 4) && (PLAYER.velocityX > 0)) {
         PLAYER.posX.i.lo = 0;
     }
@@ -378,7 +381,7 @@ void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
 void RicMain(void) {
     DamageParam damage;
     s32 temp_s0;
-    s32 var_s4;
+    s32 newStatus;
     s32 damageKind;
     s32 damageEffects;
     s16 playerStep;
@@ -393,6 +396,9 @@ void RicMain(void) {
     g_Player.unk4C = 0;
     g_Player.unk72 = func_80156DE4();
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
+#if defined(VERSION_HD)
+    FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
+#endif
     for (i = 0; i < LEN(g_Player.timers); i++) {
         if (!g_Player.timers[i]) {
             continue;
@@ -469,58 +475,66 @@ void RicMain(void) {
     }
     g_Player.padTapped =
         (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
-    if (PLAYER.step == PL_S_DEAD) {
-        goto block_47;
-    }
-    // Reuse the i variable here even though we aren't iterating
-    i = GetTeleportToOtherCastle();
-    if (i != TELEPORT_CHECK_NONE) {
-        func_8015CC70(i);
-    }
-    // Richter must use step #32 for something else, look into it!
-    if (PLAYER.step == PL_S_INIT) {
-        goto block_48;
-    }
-    if (g_DebugPlayer && RicDebug()) {
-        return;
-    }
-    if (g_Player.unk60 >= 2) {
-        goto block_47;
-    }
-    if (g_Player.unk60 == 1) {
-        playerStep = PLAYER.step;
-        playerStepS = PLAYER.step_s;
-        RicSetStep(PL_S_BOSS_GRAB);
-        goto block_48;
-    }
-    if ((g_Player.timers[PL_T_INVINCIBLE_SCENE] |
-         g_Player.timers[PL_T_INVINCIBLE]) ||
-        !PLAYER.hitParams) {
-        goto block_47;
-    }
-    playerStep = PLAYER.step;
-    playerStepS = PLAYER.step_s;
-    damage.effects = PLAYER.hitParams & ~0x1F;
-    damage.damageKind = PLAYER.hitParams & 0x1F;
-    damage.damageTaken = PLAYER.hitPoints;
-    isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
-    damageKind = damage.damageKind;
-    damageEffects = damage.effects;
-    if (isDamageTakenDeadly) {
-        if (!g_Player.unk5C) {
-            RicSetStep(PL_S_DEAD);
-        } else {
-            g_Status.hp = 1;
-            RicSetStep(PL_S_HIT);
+    if (PLAYER.step != PL_S_DEAD) {
+        // Reuse the i variable here even though we aren't iterating
+        i = GetTeleportToOtherCastle();
+        if (i != TELEPORT_CHECK_NONE) {
+            func_8015CC70(i);
+        }
+        // Richter must use step #32 for something else, look into it!
+        if (PLAYER.step != PL_S_INIT) {
+            if (g_DebugPlayer && RicDebug()) {
+                return;
+            }
+            if (
+#if defined(VERSION_HD)
+                !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
+                  g_Player.timers[PL_T_INVINCIBLE]) &&
+#endif
+                g_Player.unk60 < 2) {
+                if (g_Player.unk60 == 1) {
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
+                    RicSetStep(PL_S_BOSS_GRAB);
+#if defined(VERSION_HD)
+                    goto check_input_combo;
+#endif
+                } else if (
+#if defined(VERSION_US)
+                    !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
+                      g_Player.timers[PL_T_INVINCIBLE]) &&
+#endif
+                    PLAYER.hitParams) {
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
+                    damage.effects = PLAYER.hitParams & ~0x1F;
+                    damage.damageKind = PLAYER.hitParams & 0x1F;
+                    damage.damageTaken = PLAYER.hitPoints;
+                    isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
+                    damageKind = damage.damageKind;
+                    damageEffects = damage.effects;
+                    if (isDamageTakenDeadly) {
+                        if (!g_Player.unk5C) {
+                            RicSetStep(PL_S_DEAD);
+                        } else {
+                            g_Status.hp = 1;
+                            RicSetStep(PL_S_HIT);
+                        }
+                    } else {
+                        RicSetStep(PL_S_HIT);
+                    }
+                } else {
+                    goto check_input_combo;
+                }
+            } else {
+                goto check_input_combo;
+            }
         }
     } else {
-        RicSetStep(PL_S_HIT);
+    check_input_combo:
+        CheckBladeDashInput();
+        CheckHighJumpInput();
     }
-    goto block_48;
-block_47:
-    CheckBladeDashInput();
-    CheckHighJumpInput();
-block_48:
     g_Player.prev_step = PLAYER.step;
     g_Player.prev_step_s = PLAYER.step_s;
     switch (PLAYER.step) {
@@ -585,50 +599,53 @@ block_48:
         func_8015BCD0();
         break;
     }
-    g_Player.unk08 = g_Player.unk0C;
+    g_Player.unk08 = g_Player.status;
 #ifdef VERSION_PC
-    var_s4 = 0;
+    newStatus = 0;
 #endif
     switch (PLAYER.step) {
     case PL_S_STAND:
     case PL_S_WALK:
-        var_s4 = NO_AFTERIMAGE;
+        newStatus = NO_AFTERIMAGE;
         break;
     case PL_S_CROUCH:
-        var_s4 = NO_AFTERIMAGE;
+        newStatus = NO_AFTERIMAGE;
         if (PLAYER.step_s != 2) {
-            var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK_20;
+            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_CROUCH;
         }
         break;
     case PL_S_FALL:
     case PL_S_JUMP:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
         break;
     case PL_S_HIGHJUMP:
         RicSetInvincibilityFrames(1, 4);
         break;
     case PL_S_HIT:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
     case PL_S_STAND_IN_AIR:
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_BOSS_GRAB:
-        var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 |
-                 PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40;
+        newStatus =
+#if defined(VERSION_US)
+            NO_AFTERIMAGE |
+#endif
+            PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000 |
+            PLAYER_STATUS_UNK40;
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_DEAD:
-        var_s4 =
-            NO_AFTERIMAGE | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
         if (PLAYER.step_s == 0x80) {
-            var_s4 = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
-                     PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK10000;
+            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
+                        PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
         }
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_SLIDE:
     case PL_S_SLIDE_KICK:
-        var_s4 = 0x20;
+        newStatus = PLAYER_STATUS_CROUCH;
         break;
     case PL_S_RUN:
     case PL_S_BLADEDASH:
@@ -639,26 +656,26 @@ block_48:
     case PL_S_DEAD_PROLOGUE:
     case PL_S_SUBWPN_CRASH:
     case PL_S_INIT:
-        var_s4 = NO_AFTERIMAGE;
+        newStatus = NO_AFTERIMAGE;
         RicSetInvincibilityFrames(1, 16);
         break;
     }
     if (g_Player.timers[PL_T_ATTACK]) {
-        var_s4 |= PLAYER_STATUS_UNK400;
+        newStatus |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[PL_T_10]) {
-        var_s4 |= PLAYER_STATUS_UNK800;
+        newStatus |= PLAYER_STATUS_UNK800;
     }
     if (g_Player.timers[PL_T_12]) {
-        var_s4 |= PLAYER_STATUS_UNK1000;
+        newStatus |= PLAYER_STATUS_UNK1000;
     }
     if (*D_80097448 != 0) {
-        var_s4 |= PLAYER_STATUS_UNK20000;
+        newStatus |= PLAYER_STATUS_UNK20000;
     }
-    var_s4 |= PLAYER_STATUS_UNK10000000;
-    g_Player.unk0C = var_s4;
+    newStatus |= PLAYER_STATUS_UNK10000000;
+    g_Player.status = newStatus;
     if (g_Player.unk08 & PLAYER_STATUS_UNK10000) {
-        if (!(var_s4 & PLAYER_STATUS_UNK10000)) {
+        if (!(newStatus & PLAYER_STATUS_UNK10000)) {
             if (g_Player.unk5C != 0) {
                 if (g_Status.hp < 2) {
                     RicSetDeadPrologue();
@@ -671,12 +688,12 @@ block_48:
             }
         }
     }
-    if (var_s4 & NO_AFTERIMAGE) {
+    if (newStatus & NO_AFTERIMAGE) {
         DisableAfterImage(1, 4);
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
-        g_Player.unk0C |= 0x100;
+        g_Player.status |= PLAYER_STATUS_UNK100;
     }
     g_api.UpdateAnim(D_80155964, D_8015538C);
     PLAYER.hitboxState = 1;
@@ -689,10 +706,17 @@ block_48:
     if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
-    if ((PLAYER.step == PL_S_DEAD) && (PLAYER.animFrameDuration < 0)) {
-        PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
+    if (PLAYER.step == PL_S_DEAD) {
+        if (PLAYER.animFrameDuration < 0) {
+            PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
+        }
+#if defined(VERSION_HD)
+        PLAYER.posX.val += PLAYER.velocityX;
+        PLAYER.posY.val += PLAYER.velocityY;
+        return;
+#endif
     }
-    if (g_Player.unk0C & 0x50) {
+    if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
     func_8015C4AC();
@@ -705,16 +729,17 @@ block_48:
     if ((abs(PLAYER.velocityY) > FIX(2)) || (abs(PLAYER.velocityX) > FIX(2))) {
         PLAYER.velocityY = PLAYER.velocityY >> 2;
         PLAYER.velocityX = PLAYER.velocityX >> 2;
-        if ((playerY->i.hi < 0) || (func_801572A8(1), (playerY->i.hi < 0)) ||
-            (func_801572A8(0), (playerY->i.hi < 0)) ||
-            (func_801572A8(0), (playerY->i.hi < 0)) ||
-            (func_801572A8(0), (playerY->i.hi < 0))) {
+        if ((playerY->i.hi < 0) ||
+            (CheckStageCollision(1), (playerY->i.hi < 0)) ||
+            (CheckStageCollision(0), (playerY->i.hi < 0)) ||
+            (CheckStageCollision(0), (playerY->i.hi < 0)) ||
+            (CheckStageCollision(0), (playerY->i.hi < 0))) {
             PLAYER.posY.val = FIX(-1);
         }
         PLAYER.velocityX *= 4;
         PLAYER.velocityY *= 4;
     } else {
-        func_801572A8(1);
+        CheckStageCollision(1);
     }
     g_Player.unk04 = temp_s0;
     if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {

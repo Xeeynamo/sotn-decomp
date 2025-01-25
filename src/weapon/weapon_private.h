@@ -15,7 +15,14 @@
 #define HAND_ID 0
 #endif
 
+// Weapon Factories all encode `g_HandId` at the top of the params
 #define WFACTORY(id, param) (((g_HandId + 1) << 12) + FACTORY(id, param))
+
+// This is the same as `WFACTORY`, except the order of operations
+// is changed to add `id` to the `g_HandId` bits and then add then
+// the shifted params. `WFACTORY` groups the `id` and `param`
+// addition operation and is required for all other instances.
+#define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
 
 // create function names like w_000_EntityWeaponAttack
 #ifdef VERSION_PC

@@ -11,7 +11,7 @@ void EntityEnemyBlood(Entity* self) {
     case 0:
         i = g_api.func_800EDB58(PRIM_TILE_ALT, NParticles);
         if (i != -1) {
-            InitializeEntity(g_InitializeData0);
+            InitializeEntity(g_EInitObtainable);
             facingLeft = self->params;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = i;
@@ -77,7 +77,7 @@ void EntityEnemyBlood(Entity* self) {
         }
 
         if (self->hitboxState) {
-            if (!(g_Player.unk0C & PLAYER_STATUS_ABSORB_BLOOD)) {
+            if (!(g_Player.status & PLAYER_STATUS_ABSORB_BLOOD)) {
                 self->hitboxState = 0;
             } else {
                 self->velocityX += self->ext.bloodDroplets.speed;

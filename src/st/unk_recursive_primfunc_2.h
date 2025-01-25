@@ -24,9 +24,9 @@ Primitive* UnkRecursivePrimFunc2(
     if (arg2 == NULL) {
         return NULL;
     }
-    prim2 = arg3;
+    prim2 = (Primitive*)arg3;
     arg3 += 0x34;
-    colors = arg3;
+    colors = (rgb_set*)arg3;
     arg3 = arg3 + 0x24;
 
     colors[0] = *(rgb_set*)&arg0->r0;
@@ -34,9 +34,9 @@ Primitive* UnkRecursivePrimFunc2(
     colors[6] = *(rgb_set*)&arg0->r2;
     colors[8] = *(rgb_set*)&arg0->r3;
 
-    points = arg3;
+    points = (Point16*)arg3;
     arg3 += 0x24;
-    uv_values = arg3;
+    uv_values = (uvPair*)arg3;
     arg3 += 0x14;
     prim1 = arg2;
 
@@ -91,7 +91,7 @@ Primitive* UnkRecursivePrimFunc2(
     points[4].y = ((points[3].y + points[5].y + 1) >> 1);
 
     *prim2 = *arg0;
-    Indices = &g_UnkRecursPrim2Inds;
+    Indices = (s16*)&g_UnkRecursPrim2Inds;
     for (i = 0; i < 4; i++) {
         Idx1 = *Indices++;
         Idx2 = *Indices++;

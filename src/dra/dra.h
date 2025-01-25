@@ -20,14 +20,6 @@
 #define SEQ_TABLE_S_MAX 0x10
 #define SEQ_TABLE_T_MAX 1
 
-#define RED_MASK 0x1F
-#define GREEN_MASK 0x3E0
-#define BLUE_MASK 0x7C00
-
-#define GET_RED(x) ((x) & RED_MASK)
-#define GET_GREEN(x) ((x) & GREEN_MASK)
-#define GET_BLUE(x) ((x) & BLUE_MASK)
-
 #define VSYNC_UNK_LEN 1024
 
 #define NUM_CH 4
@@ -321,25 +313,35 @@ extern GfxBank** g_GfxSharedBank[];
 extern s16** D_800A3B70[18];
 extern u_long* D_800A3BB8[];
 extern Lba g_StagesLba[80];
+
 extern SubweaponDef g_SubwpnDefs[13];
-extern Equipment g_EquipDefs[217];
-extern Accessory g_AccessoryDefs[90];
-extern const char* g_MenuStr[110];
-extern SpellDef g_SpellDefs[28];
+// These are different on PSP since they have text that needs translating.
+#if defined(VERSION_PSP)
+extern RelicDesc* g_RelicDefs;
+extern SpellDef* g_SpellDefs;
+extern EnemyDef* g_EnemyDefs;
+extern Accessory* g_AccessoryDefs;
+extern Equipment* g_EquipDefs;
+#else
 extern RelicDesc g_RelicDefs[30];
+extern SpellDef g_SpellDefs[28];
 extern EnemyDef g_EnemyDefs[400];
+extern Accessory g_AccessoryDefs[90];
+extern Equipment g_EquipDefs[217];
+#endif
+extern const char* g_MenuStr[110];
 extern s32 g_ExpNext[];
 extern u16 D_800AC958[];
 extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
 extern Vram g_Vram;
 extern s32 D_800ACE44;
-extern s16 D_800ACE88[];
-extern s16 D_800ACE90[];
-extern s16 D_800ACE98[];
-extern Point16 D_800ACEC0[];
-extern Point16 D_800ACED0[];
-extern Point16 D_800ACEE0[];
+extern s16 g_SensorsCeilingDefault[];
+extern s16 g_SensorsFloorDefault[];
+extern s16 g_SensorsWallDefault[];
+extern Point16 g_SensorsCeiling[];
+extern Point16 g_SensorsFloor[];
+extern Point16 g_SensorsWall[];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
@@ -455,7 +457,7 @@ extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
 
-void func_801072DC(POLY_GT4* poly);
+void func_801072DC(Primitive* prim);
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
@@ -464,8 +466,8 @@ void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void DemoInit(s32 arg0);
 void DemoUpdate(void);
-void func_800E346C(void);
-void func_800E34A4(u8 arg0);
+void SetGPUBuffRGBZero(void);
+void SetGPUBuffRGB(u8 arg0);
 void func_800E34DC(s32 arg0);
 void SetGameState(GameState gameState);
 void func_800E4970(void);
@@ -486,7 +488,7 @@ bool func_800EB720(void);
 void HideAllBackgroundLayers(void);
 void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
-void func_800EDAE4(void);
+s32 func_800EDAE4(void);
 s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
 void DemoGameInit(s32 arg0);
@@ -504,7 +506,7 @@ void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
-s32 CalcAttack(s32, s32);
+s32 CalcAttack(s32, u32);
 void func_800F4F48(void);
 void CalcDefense(void);
 bool IsAlucart(void);
@@ -527,8 +529,7 @@ u8* GetEquipOrder(EquipKind kind);
 u8* GetEquipCount(EquipKind kind);
 const char* GetEquipmentName(EquipKind kind, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_800FD9D4(SpellDef* spell, s32 id);
-s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer);
+void GetSpellDef(SpellDef* spell, s32 id);
 void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
@@ -544,8 +545,8 @@ Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 startIndex);
-void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
-void func_80107250(POLY_GT4* poly, s32 colorIntensity);
+void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex);
+void func_80107250(Primitive* prim, s32 colorIntensity);
 void SetTexturedPrimRect(
     Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
@@ -559,7 +560,7 @@ void func_8010E0B8(void);
 s32 func_8010E334(s32 xStart, s32 xEnd);
 void func_8010E470(s32, s32);
 void func_8010E570(s32);
-void func_8010E83C(s32 arg0);
+void func_8010E83C(bool);
 s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
@@ -578,7 +579,7 @@ void func_80115C50(void);
 void func_80118894(Entity*);
 
 void func_80118C28(s32 arg0);
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions
@@ -626,14 +627,14 @@ void EntityHolyWaterBreakGlass(Entity* self);
 void EntityStopWatch(Entity* self);
 void EntityStopWatchExpandingCircle(Entity* self);
 void EntitySubwpnBible(Entity* self);
-void func_8012B78C(Entity* self);
+void EntitySubwpnBibleTrail(Entity* self);
 void EntityBatFireball(Entity* self);
 void func_80123B40(Entity* self);
 void func_80119F70(Entity* self);
 void UnknownEntId48(Entity* self);
 void UnknownEntId49(Entity* self);
 void func_80123A60(Entity* self);
-void func_80119D3C(Entity* self);
+void EntitySmallRisingHeart(Entity* self);
 void EntityBatEcho(Entity* self);
 void func_8011B530(Entity* self);
 void func_8011F074(Entity* self);

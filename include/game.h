@@ -24,20 +24,6 @@
 
 typedef long Event;
 
-typedef enum {
-    PRIM_NONE,
-    PRIM_TILE,
-    PRIM_LINE_G2,
-    PRIM_G4,
-    PRIM_GT4,
-    PRIM_GT3,
-    PRIM_SPRT,
-    PRIM_ENV,
-    PRIM_TILE_ALT = PRIM_TILE | 0x10,
-    PRIM_LINE_G2_ALT = PRIM_LINE_G2 | 0x10,
-    PRIM_G4_ALT = PRIM_G4 | 0x10
-} PrimitiveType;
-
 typedef struct Vertex {
     /* 0x0 */ u8 r;
     /* 0x1 */ u8 g;
@@ -103,20 +89,24 @@ typedef enum {
 #define COLOR_LEN ((COLOR_BPP) / 8)
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
-// PS1 and PSP use different values for these two
+// PS1 and PSP use different values for most of these.
 #ifndef VERSION_PSP
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
+#define MAX_DRAW_MODES 0x400
+#define MAX_POLY_GT4_COUNT 0x300
 #endif
 #ifdef VERSION_PSP
 #define OTSIZE 0x600
 #define MAXSPRT16 0x320
+// Very low confidence on these. These make GpuBuffer the right size.
+// More decomp will give proper sizes for individual members.
+#define MAX_DRAW_MODES 0x1F0
+#define MAX_POLY_GT4_COUNT 0x2F0
 #endif
-#define MAX_DRAW_MODES 0x400
 #define MAX_TILE_COUNT 0x100
 #define MAX_LINE_G2_COUNT 0x100
 #define MAX_POLY_GT3_COUNT 0x30
-#define MAX_POLY_GT4_COUNT 0x300
 #define MAX_POLY_G4_COUNT 0x100
 #define MAX_SPRT_COUNT 0x200
 #define MAX_ENV_COUNT 0x10
@@ -130,6 +120,12 @@ typedef enum {
 #define DISP_TITLE_H DISP_ALL_H
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
+
+#ifdef VERSION_PSP // PSP does not need a double buffer
+#define DISP_STAGE_NEXT_X 0
+#else
+#define DISP_STAGE_NEXT_X DISP_STAGE_W
+#endif
 
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
@@ -238,6 +234,23 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_ICE 0x2000
 #define ELEMENT_THUNDER 0x4000
 #define ELEMENT_FIRE 0x8000
+#define ELEMENT_UNK_10000 0x10000
+
+// Indices of g_StatBuffTimers
+typedef enum {
+    SBT_DEF,
+    SBT_ATK,
+    SBT_LCK,
+    SBT_INT,
+    SBT_STR,
+    SBT_RESISTFIRE,
+    SBT_RESISTICE,
+    SBT_RESISTTHUNDER,
+    SBT_RESISTCURSE,
+    SBT_RESISTHOLY,
+    SBT_RESISTSTONE,
+    SBT_RESISTDARK,
+} StatBuffTimers;
 
 // Flags for entity->drawFlags
 typedef enum {
@@ -250,8 +263,10 @@ typedef enum {
     FLAG_DRAW_UNK10 = 0x10,
     FLAG_DRAW_UNK20 = 0x20,
     FLAG_DRAW_UNK40 = 0x40,
-    FLAG_DRAW_UNK80 = 0x80,
+    // renderEntities uses this to disable rendering on even/odd g_Timer
+    FLAG_BLINK = 0x80,
     FLAG_DRAW_UNK100 = 0x100,
+    FLAG_DRAW_UNK400 = 0x400
 } DrawFlag;
 
 // Flags for entity->flags
@@ -289,38 +304,43 @@ typedef enum {
     FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
 } EntityFlag;
 
-// document g_Player.unk0C
-#define PLAYER_STATUS_BAT_FORM 0x00000001
-#define PLAYER_STATUS_MIST_FORM 0x00000002
-#define PLAYER_STATUS_WOLF_FORM 0x00000004
-#define PLAYER_STATUS_TRANSFORM                                                \
-    (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_WOLF_FORM)
-#define PLAYER_STATUS_UNK10 0x10
-#define PLAYER_STATUS_UNK_20 0x00000020
-#define PLAYER_STATUS_UNK40 0x40
-#define PLAYER_STATUS_STONE 0x00000080
-#define PLAYER_STATUS_UNK200 0x200
-#define PLAYER_STATUS_UNK400 0x400
-#define PLAYER_STATUS_UNK800 0x800
-#define PLAYER_STATUS_UNK1000 0x1000
-#define PLAYER_STATUS_UNK2000 0x2000
-#define PLAYER_STATUS_POISON 0x00004000
-#define PLAYER_STATUS_CURSE 0x00008000
-#define PLAYER_STATUS_UNK10000 0x10000 // possibly freezing?
-#define PLAYER_STATUS_UNK20000 0x20000
-#define PLAYER_STATUS_UNK40000 0x40000
-#define PLAYER_STATUS_UNK80000 0x80000
-#define PLAYER_STATUS_UNK100000 0x100000
-#define PLAYER_STATUS_UNK200000 0x200000
-#define PLAYER_STATUS_UNK400000 0x400000
-#define PLAYER_STATUS_UNK800000 0x800000
-#define PLAYER_STATUS_AXEARMOR 0x01000000
-#define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
-#define PLAYER_STATUS_UNK4000000 0x04000000
-#define NO_AFTERIMAGE 0x08000000
-#define PLAYER_STATUS_UNK10000000 0x10000000
-#define PLAYER_STATUS_UNK40000000 0x40000000
-#define PLAYER_STATUS_UNK80000000 0x80000000
+// document g_Player.status
+typedef enum {
+    PLAYER_STATUS_BAT_FORM = 0x1,
+    PLAYER_STATUS_MIST_FORM = 0x2,
+    PLAYER_STATUS_WOLF_FORM = 0x4,
+    PLAYER_STATUS_TRANSFORM =
+        (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM |
+         PLAYER_STATUS_WOLF_FORM),
+    PLAYER_STATUS_UNK8 = 0x8,
+    PLAYER_STATUS_UNK10 = 0x10,
+    PLAYER_STATUS_CROUCH = 0x20,
+    PLAYER_STATUS_UNK40 = 0x40,
+    PLAYER_STATUS_STONE = 0x80,
+    PLAYER_STATUS_UNK100 = 0x100,
+    PLAYER_STATUS_UNK200 = 0x200,
+    PLAYER_STATUS_UNK400 = 0x400,
+    PLAYER_STATUS_UNK800 = 0x800,
+    PLAYER_STATUS_UNK1000 = 0x1000,
+    PLAYER_STATUS_UNK2000 = 0x2000,
+    PLAYER_STATUS_POISON = 0x4000,
+    PLAYER_STATUS_CURSE = 0x8000,
+    PLAYER_STATUS_UNK10000 = 0x10000, // possibly freezing?
+    PLAYER_STATUS_UNK20000 = 0x20000,
+    PLAYER_STATUS_DEAD = 0x40000, // possibly just "dead"
+    PLAYER_STATUS_UNK80000 = 0x80000,
+    PLAYER_STATUS_UNK100000 = 0x100000,
+    PLAYER_STATUS_UNK200000 = 0x200000,
+    PLAYER_STATUS_UNK400000 = 0x400000,
+    PLAYER_STATUS_UNK800000 = 0x800000,
+    PLAYER_STATUS_AXEARMOR = 0x1000000,
+    PLAYER_STATUS_ABSORB_BLOOD = 0x2000000,
+    PLAYER_STATUS_UNK4000000 = 0x4000000,
+    NO_AFTERIMAGE = 0x8000000,
+    PLAYER_STATUS_UNK10000000 = 0x10000000,
+    PLAYER_STATUS_UNK40000000 = 0x40000000,
+    PLAYER_STATUS_UNK80000000 = 0x80000000,
+} PlayerStateStatus;
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
@@ -337,6 +357,8 @@ typedef enum {
 // font. e.g. _S("I am a Symphony of the Night encoded string")
 #define _S(x) (x)
 #endif
+// same as above, but it processes a single character from CPP
+#define CH(x) ((x) - 0x20)
 
 #define DEMO_KEY_LEN 3
 #define DEMO_MAX_LEN 0x2000
@@ -802,7 +824,7 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 velocityX;
     /* 0x0C */ s32 velocityY;
-#if defined(STAGE) || defined(WEAPON)
+#if defined(STAGE) || defined(WEAPON) || defined(SERVANT)
     /* 0x10 */ s16 hitboxOffX;
 #else // hack to match in DRA and RIC
     /* 0x10 */ u16 hitboxOffX;
@@ -830,7 +852,7 @@ typedef struct Entity {
     /* 0x3C */ u16 hitboxState; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
-    /* 0x42 */ s16 attackElement;
+    /* 0x42 */ u16 attackElement;
     /* 0x44 */ u16 hitParams;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
@@ -847,13 +869,14 @@ typedef struct Entity {
     /* 0x5C */ struct Entity* unk5C;
     /* 0x60 */ struct Entity* unk60;
     /* 0x64 */ s32 primIndex;
-    /* 0x68 */ u16 unk68;
+    /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;
     /* 0x6C */ u8 unk6C; // Salem Witch: timer to destroy its shadows.
                          // Thornweed: timer before spawning death explosion
     /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
+    /* 0xB8 */ struct Entity* unkB8;
 } Entity; // size = 0xBC
 
 typedef struct {
@@ -977,7 +1000,7 @@ typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 typedef struct {
     s32 level;
     s32 exp;
-    s32 unk8;
+    s32 unk8; // Possibly the number of times loaded
 } FamiliarStats;
 
 #define RELIC_FLAG_DISABLE 0
@@ -1035,6 +1058,21 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+// This enum has the ids for familiar abilities which use the g_SpellDef
+// table to fetch stats and modifiers for said abilities.
+typedef enum {
+    FAM_ABILITY_BAT_ATTACK = 15,
+    FAM_ABILITY_GHOST_ATTACK = 17,
+    FAM_ABILITY_GHOST_ATTACK_SOULSTEAL,
+    FAM_ABILITY_SWORD_UNK19,
+    FAM_ABILITY_SWORD_UNK20,
+    FAM_ABILITY_DEMON_UNK21,
+    FAM_ABILITY_DEMON_UNK22,
+    FAM_ABILITY_DEMON_UNK24 = 24,
+    FAM_ABILITY_DEMON_UNK25,
+    FAM_ABILITY_DEMON_UNK26,
+} FamiliarAbilityIds;
+
 // Need two familiar enums. One has a zero entry, one does not.
 // This one is used in places that need to access the familiar
 // stats array...
@@ -1090,18 +1128,15 @@ typedef struct {
     /* 80097C00 */ u32 equipment[7];
     /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ s32 defenseEquip;
-    /* 80097C28 */ u16 defenseElement;
-    /* 80097C2A */ u16 D_80097C2A;
-    /* 80097C2C */ u16 D_80097C2C;
-    /* 80097C2E */ u16 D_80097C2E;
+    /* 80097C28 */ u16 elementsWeakTo;
+    /* 80097C2A */ u16 elementsResist;
+    /* 80097C2C */ u16 elementsImmune;
+    /* 80097C2E */ u16 elementsAbsorb;
     /* 80097C30 */ s32 timerHours;
     /* 80097C34 */ s32 timerMinutes;
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
-#if defined(VERSION_PSP)
-    s32 mariaSubWeapon;
-#endif
-    /* 80097C40 */ u32 D_80097C40;
+    /* 80097C40 */ u32 D_80097C40; // reused for Maria subweapon
     /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
@@ -1177,13 +1212,17 @@ typedef struct {
     /* 0x0C */ u8* collision;
 } TileDefinition; // size = 0x10
 
+#define LAYOUT_RECT_PARAMS_HIDEONMAP 0x10
+#define LAYOUT_RECT_PARAMS_UNKNOWN_20 0x20
+#define LAYOUT_RECT_PARAMS_UNKNOWN_40 0x40
+
 typedef struct {
     /* 0x00 */ u32 left : 6;
     /* 0x04 */ u32 top : 6;
     /* 0x08 */ u32 right : 6;
     /* 0x0C */ u32 bottom : 6;
     /* 0x10 */ u8 params : 8;
-} LayoutRect; // size = 0x14
+} LayoutRect; // size = 0x4
 
 typedef struct {
     /* 0x00 */ u16* layout;
@@ -1276,6 +1315,7 @@ typedef struct {
 } AbbreviatedOverlay;
 
 typedef enum {
+    EFFECT_NONE = 0,
     EFFECT_SOLID = 1 << 0,
     EFFECT_UNK_0002 = 1 << 1,
     EFFECT_QUICKSAND = 1 << 2,
@@ -1351,7 +1391,7 @@ typedef struct {
     /* 0x00 */ s16 attack;
     /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
-    /* 0x06 */ u8 unk6;
+    /* 0x06 */ u8 chainLimit; // how many instances of subwpn can coexist
     /* 0x07 */ u8 nFramesInvincibility;
     /* 0x08 */ u16 stunFrames;
     /* 0x0A */ u8 anim;
@@ -1406,10 +1446,10 @@ typedef struct {
     /* 08 */ s16 attBonus;
     /* 0A */ s16 defBonus;
     /* 0C */ u8 statsBonus[4];
-    /* 10 */ u16 unk10;
-    /* 10 */ u16 unk12;
-    /* 14 */ u16 unk14;
-    /* 10 */ u16 unk16;
+    /* 10 */ u16 weakToElements;
+    /* 12 */ u16 resistElements;
+    /* 14 */ u16 immuneElements;
+    /* 16 */ u16 absorbElements;
     /* 18 */ u16 icon;
     /* 1A */ u16 iconPalette;
     /* 1C */ u16 equipType;
@@ -1451,30 +1491,58 @@ typedef struct {
 } RelicOrb; /* size=0x10 */
 
 typedef struct {
-    /* 0x00 */ const char* nextCharDialogue; // ptr to dialogue next character
-    /* 0x04 */ s16 startX;                   // starting x coord
-    /* 0x06 */ s16 nextLineY;                // next line y coord
-    /* 0x08 */ s16 startY;                   // starting y coord
-    /* 0x0A */ s16 nextCharX;                // next char x coord
-    /* 0x0C */ s16 nextLineX;                // next line x coord
-    /* 0x0E */ s16 nextCharY;                // next char y coord
-    /* 0x10 */ s16 portraitAnimTimer;        // portrait animation timer
-    /* 0x12 */ u16 unk12;                    // unknown
-    /* 0x14 */ u16 clutIndex;                // CLUT index
-    /* 0x16 */ u8 nextCharTimer;             // timer to next character
-    /* 0x17 */ u8 unk17;                     // unknown
-    /* 0x18 */ Primitive* prim[6];           // for dialogue graphics rendering
-    /* 0x30 */ s32 primIndex[3];             // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;                    // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;                    // global timer
-    /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
-} Dialogue;                                  // size = 0x44
+    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
+    /* 0x04 */ s16 startX;            // starting x coord
+    /* 0x06 */ s16 nextLineY;         // next line y coord
+    /* 0x08 */ s16 startY;            // starting y coord
+    /* 0x0A */ s16 nextCharX;         // next char x coord
+    /* 0x0C */ s16 nextLineX;         // next line x coord
+    /* 0x0E */ s16 nextCharY;         // next char y coord
+    /* 0x10 */ s16 portraitAnimTimer; // portrait animation timer
+    /* 0x12 */ u16 unk12;             // unknown
+    /* 0x14 */ u16 clutIndex;         // CLUT index
+    /* 0x16 */ u8 nextCharTimer;      // timer to next character
+    /* 0x17 */ u8 unk17;              // unknown
+// Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
+#if defined(VERSION_PSP)
+    /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
+#else
+    /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
+#endif
+    /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
+    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
+    /* 0x3E */ u16 timer;        // global timer
+    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
+} Dialogue;                      // size = 0x44
+
+// Used for the damageKind of DamageParam
+typedef enum {
+    DAMAGEKIND_0,
+    DAMAGEKIND_1,
+    DAMAGEKIND_2,
+    DAMAGEKIND_3,
+    DAMAGEKIND_4,
+    DAMAGEKIND_5,
+    DAMAGEKIND_6,
+    DAMAGEKIND_7,
+    DAMAGEKIND_8,
+    DAMAGEKIND_9,
+    DAMAGEKIND_10,
+    DAMAGEKIND_11,
+    DAMAGEKIND_12,
+    DAMAGEKIND_13,
+    DAMAGEKIND_14,
+    DAMAGEKIND_15,
+    DAMAGEKIND_16,
+    DAMAGEKIND_17,
+    DAMAGEKIND_18,
+} DamageKind;
 
 typedef struct {
-    u32 effects; // Curse, poison, etc; needs an enum.
-    u32 damageKind;
+    u32 effects;    // Curse, poison, fire, ice, etc.
+    u32 damageKind; // informed by "dam_kind:%04x\n"
     s32 damageTaken;
-    s32 unkC;
+    u32 unkC;
 } DamageParam;
 
 typedef struct {
@@ -1530,31 +1598,32 @@ typedef struct {
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
-    /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, u16 distance);
+    /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, s16 distance);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
-    /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
+    /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
-    /* 8003C874 */ void (*func_8011A3AC)(
+    /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
     /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
-    /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
+    /* 8003C88C */ s32 (*GetStatBuffTimer)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
-    /* 8003C8A4 */ void* unused130;
     // this matches on both versions but doing this to show the difference
 #if defined(VERSION_PSP)
+    /* 8003C8A4 */ s32 (*CalcPlayerDamageAgain)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
     /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
 #else
+    /* 8003C8A4 */ void* unused130;
     /* 8003C8A8 */ void* unused134;
     /* 8003C8AC */ void* unused138;
 #endif
@@ -1565,7 +1634,7 @@ typedef struct {
     void (*D_8013C000)(void);
     void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
-    void (*D_8013C00C)(void);
+    void (*GetPlayerSensor)(Collider* col);
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
@@ -1610,20 +1679,20 @@ extern void (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
-extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, u16 distance);
+extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, s16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
-extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
+extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
-extern void (*g_api_func_8011A3AC)(
+extern void (*g_api_GetServantStats)(
     Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
 extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
 extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
 extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
-extern s32 (*g_api_func_800FF110)(s32 arg0);
+extern s32 (*g_api_GetStatBuffTimer)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
 extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
@@ -1699,18 +1768,45 @@ typedef struct {
 } FgLayer; /* size=0x8 */
 
 typedef struct {
-    /* 80072BD0 */ Collider colliders[4];
-    /* 80072C60 */ Collider colliders2[4];
-    /* 80072CF0 */ Collider colliders3[14];
+    /* D_8003C708 */ u32 flags;
+    /* D_8003C70C */ u32 zPriority;
+} FgLayer32;
+
+enum AluTimers {
+    ALU_T_POISON,
+    ALU_T_CURSE,
+    ALU_T_HITEFFECT,
+    ALU_T_3,
+    ALU_T_4,
+    ALU_T_5,
+    ALU_T_6,
+    ALU_T_7,
+    ALU_T_8,
+    ALU_T_9,
+    ALU_T_10,
+    ALU_T_DARKMETAMORPH,
+    ALU_T_12,
+    ALU_T_INVINCIBLE,
+    ALU_T_INVINCIBLE_CONSUMABLES,
+    ALU_T_15,
+};
+
+// A tall player needs to have multiple sensors to detect collision at the
+// center of the body.
+#define NUM_HORIZONTAL_SENSORS 4
+#define NUM_VERTICAL_SENSORS 7
+
+typedef struct {
+    /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
+    /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
+    /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
-    // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
-    //  13 = invincibility, 14 = invincibility from consumables
-    /* 80072F00 */ s16 timers[16]; // poison timer
+    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
@@ -1725,9 +1821,10 @@ typedef struct {
 
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
-    /* 80072F2C */ u32 unk0C;
+    /* 80072F2C */ PlayerStateStatus status;
     /* 80072F30 */ s32 unk10;
     /* 80072F34 */ u32 unk14;
+    // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 unk1C;
     /* 80072F40 */ s32 unk20;
@@ -1811,8 +1908,12 @@ extern s32 g_IsTimeAttackUnlocked;
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 typedef enum {
     CLOCK_ROOM_DOORS, // opened by gold and silver ring; drops down to CEN
-    CASTLE_FLAG_2 = 2,
+    CASTLE_FLAG_1,
+    CASTLE_FLAG_2,
+    CASTLE_FLAG_16 = 16,
+    CASTLE_FLAG_17,
     CASTLE_FLAG_19 = 19, // Randomized by g_RandomizeCastleFlag13; unused
+    CASTLE_FLAG_20,
     // Start NO3/NP3 flags
     CASTLE_FLAG_48 = 48,
     CASTLE_FLAG_49,
@@ -1832,15 +1933,17 @@ typedef enum {
     CASTLE_FLAG_CHI_FALLING_STEP = 83,
     CASTLE_FLAG_98 = 98, // Set in DRA, unused
     CASTLE_FLAG_99,      // Set in DRA, unused
+    MAP_PURCHASED = 115,
     // Start NZ0 flags
     CASTLE_FLAG_129 = 129,
     CASTLE_FLAG_130,
-    CASTLE_FLAG_131,
+    CANNON_WALL_SHORTCUT,
     SG_KILL_ALCH, // Slogra & Gaibon were killed in Alchemy Lab
     CASTLE_FLAG_133,
     CASTLE_FLAG_149 = 149,
     CASTLE_FLAG_150,
     CASTLE_FLAG_155 = 155,
+    CASTLE_FLAG_180 = 180,
     CASTLE_FLAG_185 = 185,
     // WRP
     CASTLE_FLAG_208 = 208,
@@ -1849,18 +1952,21 @@ typedef enum {
     // Cutscenes the player has finished seeing
     SUCC_CS_DONE = 212, // Succubus cutscene (as Lisa)
     HG_CS_DONE = 216,   // Holy Glasses cutscene (in CEN)
+    CASTLE_FLAG_220 = 220,
     HEART_FLAGS_START = 256,
     MAD_COLLISION_FLAGS_START = 288,
     MAD_RAREDROP_FLAGS_START = 320,
     COLLISION_FLAGS_START = 400,
     COLLECT_FLAGS_START = 432,
+    // TT_004
+    CASTLE_FLAG_464 = 464,
 } CastleFlagOffsets;
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
-extern s32 D_8003C704;
+extern s32 g_CutsceneHasControl;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;
 extern s16 D_8003C712;
@@ -1872,7 +1978,7 @@ extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern u32 g_RoomCount;
 extern GameApi g_api;
-extern s32 D_8003C8B8;
+extern bool g_PauseAllowed;
 extern u32 g_GameTimer; // Increases when unpaused
 extern bool D_8003C908;
 extern s32 g_EquippedWeaponIds[2];
@@ -1904,6 +2010,9 @@ extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
+
+#define CLUT_INDEX_SERVANT 0x1400
+#define CLUT_INDEX_SERVANT_OVERWRITE 0x1430
 extern u16 g_Clut[0x3000];
 extern u16 D_8006EBCC[0x1000]; // part of g_Clut
 extern u16 D_8006EBE0;         // part of g_Clut
@@ -2005,5 +2114,17 @@ extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
+
+// exclusive PSP content
+typedef enum {
+    LANG_JP,
+    LANG_EN,
+    LANG_FR,
+    LANG_SP,
+    LANG_GE,
+    LANG_IT,
+} Language;
+u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
+u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
 #endif

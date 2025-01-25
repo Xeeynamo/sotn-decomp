@@ -11,7 +11,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit* obj = &D_801810F4[entity->params];
 
     if (entity->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
         entity->unk5A = obj->unk5A;
@@ -83,7 +83,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
 #undef charcount
 
     prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
-    prim->type = 3;
+    prim->type = PRIM_G4;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
     if (lowerLeft) {
@@ -132,7 +132,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
     prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
-    prim->type = 4;
+    prim->type = PRIM_GT4;
     prim->y0 = prim->y1 = 0xCD;
     prim->tpage = 0x1F;
     prim->clut = 0x197;

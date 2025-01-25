@@ -50,12 +50,15 @@ def get_git_commit_message() -> str:
 class DecompProgressStats:
     name: str
     exists: bool
+    data_imported: int
+    data_total: int
     code_matching: int
     code_total: int
     functions_matching: int
     functions_total: int
     code_matching_prev: int
     functions_prev: int
+    data_prev: int
 
     def get_asm_path(self, ovl_path) -> Path:
         """
@@ -76,28 +79,28 @@ class DecompProgressStats:
         Returns one of the following valid paths:
         `asm/us/main/nonmatchings`
         `asm/us/st/wrp/nonmatchings`
+        `asm/pspeu/dra_psp/psp/dra_psp`
         `asm/pspeu/st/wrp_psp/psp/wrp_psp`
         """
         nonmatchings = f"{asm_path}/nonmatchings"
         if not os.path.exists(nonmatchings):
-            nonmatchings_psp = f"{asm_path}/psp"
-            if not os.path.exists(nonmatchings_psp):
-                # nonmatchings path does not exist, the overlay is 100% decompiled
-                return ""
-            nonmatchings = nonmatchings_psp
-
-        nonmatchings_subdir = os.path.join(nonmatchings, os.path.basename(asm_path))
-        if os.path.exists(nonmatchings_subdir):
-            nonmatchings = nonmatchings_subdir
-
+            nonmatchings_psp = f"{asm_path}/psp/{os.path.basename(asm_path)}"
+            if os.path.exists(nonmatchings_psp) and os.path.exists(
+                f"{asm_path}/matchings"
+            ):
+                nonmatchings = nonmatchings_psp
+            else:
+                print("unable to determine nonmatchings path")
+                exit(1)
         # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
         if nonmatchings.endswith("/main"):
             nonmatchings = nonmatchings[:-5]
-
         return Path(nonmatchings)
 
     def __init__(self, module_name: str, path: str):
         self.name = module_name
+        self.data_imported = 0
+        self.data_total = 0
         self.code_matching = 0
         self.code_total = 0
         self.functions_matching = 0
@@ -119,6 +122,22 @@ class DecompProgressStats:
         self.calculate_progress(
             map_file.filterBySectionType(".text"), asm_path, nonmatchings, depth
         )
+        self.add_segment_progress(map_file.filterBySectionType(".data"))
+        self.add_segment_progress(map_file.filterBySectionType(".rodata"))
+        self.add_segment_progress(map_file.filterBySectionType(".bss"))
+
+    def add_segment_progress(self, map_file: MapFile):
+        for file in [file for segment in map_file for file in segment]:
+            if "dra_data" in str(
+                file.filepath
+            ):  # exclude the VAB chunk at the end of DRA.BIN
+                continue
+            self.data_total += file.size
+            if "src/" in str(file.filepath) or "assets/" in str(file.filepath):
+                self.data_imported += file.size
+            else:
+                continue
+        return
 
     # modified version of mapfile_parser.MapFile.getProgress
     def calculate_progress(
@@ -126,7 +145,6 @@ class DecompProgressStats:
     ):
         totalStats = ProgressStats()
         progressPerFolder: dict[str, ProgressStats] = dict()
-
         for file in [file for segment in map_file for file in segment]:
             if len(file) == 0:
                 continue
@@ -148,19 +166,32 @@ class DecompProgressStats:
                 wholeFileIsUndecomped = False
 
             for func in file:
+                if func.name.endswith(".NON_MATCHING"):
+                    continue
+
                 self.functions_total += 1
+
+                funcNonMatching = f"{func.name}.NON_MATCHING"
+
+                funcSize = 0
+                if func.size is not None:
+                    funcSize = func.size
+
                 funcAsmPath = nonmatchings / extensionlessFilePath / f"{func.name}.s"
 
                 if wholeFileIsUndecomped:
-                    totalStats.undecompedSize += func.size
-                    progressPerFolder[folder].undecompedSize += func.size
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
+                elif map_file.findSymbolByName(funcNonMatching) is not None:
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
                 elif funcAsmPath.exists():
-                    totalStats.undecompedSize += func.size
-                    progressPerFolder[folder].undecompedSize += func.size
+                    totalStats.undecompedSize += funcSize
+                    progressPerFolder[folder].undecompedSize += funcSize
                 else:
                     self.functions_matching += 1
-                    totalStats.decompedSize += func.size
-                    progressPerFolder[folder].decompedSize += func.size
+                    totalStats.decompedSize += funcSize
+                    progressPerFolder[folder].decompedSize += funcSize
 
         self.code_matching = totalStats.decompedSize
         self.code_total = totalStats.decompedSize + totalStats.undecompedSize
@@ -173,6 +204,8 @@ class DecompProgressWeaponStats:
     code_total: int
     functions_matching: int
     functions_total: int
+    data_imported: int
+    data_total: int
     code_matching_prev: int
     functions_prev: int
 
@@ -183,6 +216,8 @@ class DecompProgressWeaponStats:
         self.code_total = 0
         self.functions_matching = 0
         self.functions_total = 0
+        self.data_imported = 0
+        self.data_total = 0
         for i in range(0, 59):
             stats = DecompProgressStats(f"weapon/w0_{i:03d}", "weapon")
             if stats.exists:
@@ -190,6 +225,8 @@ class DecompProgressWeaponStats:
                 self.code_total += stats.code_total
                 self.functions_matching += stats.functions_matching
                 self.functions_total += stats.functions_total
+                self.data_imported += stats.data_imported
+                self.data_total += stats.data_total
 
 
 def remove_not_existing_overlays(progresses):
@@ -222,8 +259,10 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
             or res[slug][version][category] == None
         ):
             return progress
-        last_measures = res[slug][version][category][0]["measures"]
-        assert last_measures != None
+        if len(res[slug][version][category]) > 0:
+            last_measures = res[slug][version][category][0]["measures"]
+        else:
+            last_measures = {}
 
         for ovl in progress:
             if ovl in last_measures:
@@ -239,9 +278,13 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
     def set_func_prev(ovl_name, value):
         progresses[ovl_name].functions_prev = value
 
+    def set_data_prev(ovl_name, value):
+        progresses[ovl_name].data_prev = value
+
     progress = remove_not_existing_overlays(progresses)
     fetch_metrics("code", set_code_prev)
     fetch_metrics("functions", set_func_prev)
+    fetch_metrics("data", set_data_prev)
 
 
 def get_progress_entry(progresses: dict[str, DecompProgressStats]):
@@ -261,12 +304,21 @@ def get_progress_entry(progresses: dict[str, DecompProgressStats]):
             obj[f"{overlay_progress.name}/total"] = overlay_progress.functions_total
         return obj
 
+    def as_data(progresses: DecompProgressStats):
+        obj = {}
+        for key in progresses:
+            overlay_progress = progresses[key]
+            obj[overlay_progress.name] = overlay_progress.data_imported
+            obj[f"{overlay_progress.name}/total"] = overlay_progress.data_total
+        return obj
+
     return {
         "timestamp": mapfile_parser.utils.getGitCommitTimestamp(),
         "git_hash": mapfile_parser.utils.getGitCommitHash(),
         "categories": {
             "code": as_code(progresses),
             "functions": as_functions(progresses),
+            "data": as_data(progresses),
         },
     }
 
@@ -278,7 +330,10 @@ def report_stdout(entry):
 def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev:
+        if (
+            stat.code_matching != stat.code_matching_prev
+            or stat.data_imported != stat.data_prev
+        ):
             coverage = stat.code_matching / stat.code_total
             coverage_diff = (
                 stat.code_matching - stat.code_matching_prev
@@ -287,18 +342,15 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
             funcs_diff = (
                 stat.functions_matching - stat.functions_prev
             ) / stat.functions_total
-            print(
-                str.join(
-                    " ",
-                    [
-                        f"{overlay.upper()} ({args.version}):",
-                        f"coverage {coverage*100:.2f}%",
-                        f"({coverage_diff*100:+.3f}%)",
-                        f"funcs {funcs*100:.2f}%",
-                        f"({funcs_diff*100:+.3f}%)",
-                    ],
-                )
-            )
+            data = stat.data_imported / stat.data_total
+            data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
+            report = f"{overlay.upper()} ({args.version}): "
+            if stat.code_matching != stat.code_matching_prev:
+                report += f"coverage {coverage*100:.2f}% ({coverage_diff*100:+.2f}%) "
+                report += f"funcs {funcs*100:.2f}% ({funcs_diff*100:+.2f}%) "
+            if stat.data_imported != stat.data_prev:
+                report += f"data {data*100:.2f}% ({data_diff*100:+.2f}%) "
+            print(report)
         else:
             print(f"{overlay.upper()} no new progress")
 
@@ -315,24 +367,24 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
     report = ""
     for overlay in progresses:
         stat = progresses[overlay]
-        if stat.code_matching != stat.code_matching_prev:
+        if (
+            stat.code_matching != stat.code_matching_prev
+            or stat.data_imported != stat.data_prev
+        ):
             coverage = stat.code_matching / stat.code_total
             coverage_diff = coverage - (stat.code_matching_prev / stat.code_total)
             funcs = stat.functions_matching / stat.functions_total
             funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
-            report += (
-                str.join(
-                    " ",
-                    [
-                        f"**{overlay.upper()} ({args.version})**:",
-                        f"coverage {coverage*100:.2f}%",
-                        f"({coverage_diff*100:+.2f}%)",
-                        f"funcs {funcs*100:.2f}%",
-                        f"({funcs_diff*100:+.2f}%)",
-                    ],
-                )
-                + "\n"
-            )
+            data = stat.data_imported / stat.data_total
+            data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
+
+            report += f"**{overlay.upper()} ({args.version})**:"
+            if stat.code_matching != stat.code_matching_prev:
+                report += f"coverage {coverage*100:.2f}% ({coverage_diff*100:+.2f}%) "
+                report += f"funcs {funcs*100:.2f}% ({funcs_diff*100:+.2f}%) "
+            if stat.data_imported != stat.data_prev:
+                report += f"data {data*100:.2f}% ({data_diff*100:+.2f}%) "
+            report += "\n"
     if len(report) == 0:
         # nothing to report, do not send any message to Discord
         return
@@ -359,7 +411,10 @@ if __name__ == "__main__":
     progress["stcen"] = DecompProgressStats("stcen", "st/cen")
     progress["stchi"] = DecompProgressStats("stchi", "st/chi")
     progress["stdre"] = DecompProgressStats("stdre", "st/dre")
+    progress["stlib"] = DecompProgressStats("stlib", "st/lib")
     progress["stmad"] = DecompProgressStats("stmad", "st/mad")
+    progress["stno0"] = DecompProgressStats("stno0", "st/no0")
+    progress["stno1"] = DecompProgressStats("stno1", "st/no1")
     progress["stno3"] = DecompProgressStats("stno3", "st/no3")
     progress["stnp3"] = DecompProgressStats("stnp3", "st/np3")
     progress["stnz0"] = DecompProgressStats("stnz0", "st/nz0")
@@ -368,7 +423,12 @@ if __name__ == "__main__":
     progress["stwrp"] = DecompProgressStats("stwrp", "st/wrp")
     progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
     progress["bomar"] = DecompProgressStats("bomar", "boss/mar")
+    progress["borbo3"] = DecompProgressStats("borbo3", "boss/rbo3")
     progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
+    progress["tt_001"] = DecompProgressStats("tt_001", "servant/tt_001")
+    progress["tt_002"] = DecompProgressStats("tt_002", "servant/tt_002")
+    progress["tt_003"] = DecompProgressStats("tt_003", "servant/tt_003")
+    progress["tt_004"] = DecompProgressStats("tt_004", "servant/tt_004")
 
     hydrate_previous_metrics(progress, args.version)
     progress = remove_not_existing_overlays(progress)

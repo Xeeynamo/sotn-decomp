@@ -1,15 +1,22 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
 	"os"
-	"path"
-	"path/filepath"
 	"strconv"
 )
 
@@ -20,67 +27,34 @@ type assetSegmentEntry struct {
 }
 
 type assetFileEntry struct {
-	Target    string              `yaml:"target"`
-	AssetDir  string              `yaml:"asset_path"`
-	SourceDir string              `yaml:"src_path"`
-	Segments  []assetSegmentEntry `yaml:"segments"`
+	Target          string              `yaml:"target"`
+	AssetDir        string              `yaml:"asset_path"`
+	SourceDir       string              `yaml:"src_path"`
+	SplatConfigPath string              `yaml:"splat_config_path"`
+	Segments        []assetSegmentEntry `yaml:"segments"`
 }
 
 type assetConfig struct {
 	Files []assetFileEntry `yaml:"files"`
 }
 
-type assetEntry struct {
-	data     []byte
-	start    int
-	end      int
-	assetDir string
-	name     string
-	args     []string
-	ramBase  psx.Addr
-}
-
-type assetBuildEntry struct {
-	assetDir string
-	srcDir   string
-	name     string
-}
-
-var extractHandlers = map[string]func(assetEntry) error{
-	"frameset": func(e assetEntry) error {
-		var set []*[]sprite
-		var err error
-		if e.start != e.end {
-			r := bytes.NewReader(e.data)
-			set, _, err = readFrameSet(r, e.ramBase, e.ramBase.Sum(e.start))
-			if err != nil {
-				return err
-			}
-		} else {
-			set = make([]*[]sprite, 0)
-		}
-		content, err := json.MarshalIndent(set, "", "  ")
-		if err != nil {
-			return err
-		}
-
-		outPath := path.Join(e.assetDir, fmt.Sprintf("%s.frameset.json", e.name))
-		dir := filepath.Dir(outPath)
-		if err := os.MkdirAll(dir, 0755); err != nil {
-			fmt.Printf("failed to create directory %s: %v\n", dir, err)
-			return err
-		}
-		return os.WriteFile(outPath, content, 0644)
-	},
-}
-
-var buildHandlers = map[string]func(assetBuildEntry) error{
-	"frameset": func(e assetBuildEntry) error {
-		inFileName := path.Join(e.assetDir, fmt.Sprintf("%s.frameset.json", e.name))
-		outFileName := path.Join(e.srcDir, fmt.Sprintf("%s.h", e.name))
-		return buildFrameSet(inFileName, outFileName, e.name)
-	},
-}
+var handlers = func() map[string]assets.Handler {
+	m := make(map[string]assets.Handler)
+	for _, handler := range []assets.Handler{
+		cutscene.Handler,
+		gfxbanks.Handler,
+		layer.Handler,
+		layout.Handler,
+		paldef.Handler,
+		rooms.Handler,
+		skip.Handler,
+		spritebanks.Handler,
+		spriteset.Handler,
+	} {
+		m[handler.Name()] = handler
+	}
+	return m
+}()
 
 func parseArgs(entry []string) (offset int64, kind string, args []string, err error) {
 	if len(entry) < 2 {
@@ -105,36 +79,43 @@ func parseArgs(entry []string) (offset int64, kind string, args []string, err er
 func readConfig(path string) (*assetConfig, error) {
 	yamlFile, err := os.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("Error reading YAML file: %v", err)
+		return nil, fmt.Errorf("error reading YAML file: %v", err)
 	}
 	var data assetConfig
 	if err = yaml.Unmarshal(yamlFile, &data); err != nil {
-		return nil, fmt.Errorf("Error unmarshalling YAML file: %v", err)
+		return nil, fmt.Errorf("error unmarshalling YAML file: %v", err)
 	}
 	return &data, nil
 }
 
 func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
-	handler func(assetEntry) error,
+	handler assets.Extractor,
 	assetDir string,
 	name string,
 	data []byte,
 	start int,
 	end int,
 	args []string,
-	ramBase psx.Addr) {
+	ramBase psx.Addr,
+	splatConfig *splat.Config) {
 	eg.Go(func() error {
-		if err := handler(assetEntry{
-			data:     data,
-			start:    start,
-			end:      end,
-			assetDir: assetDir,
-			ramBase:  ramBase,
-			name:     name,
-			args:     args,
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Printf("unable to extract asset %q in %q: %v", name, assetDir, err)
+			}
+		}()
+		if err := handler.Extract(assets.ExtractArgs{
+			Data:        data,
+			Start:       start,
+			End:         end,
+			AssetDir:    assetDir,
+			RamBase:     ramBase,
+			Name:        name,
+			Args:        args,
+			SplatConfig: splatConfig,
 		}); err != nil {
-			return fmt.Errorf("unable to extract asset %q: %v", name, err)
+			return fmt.Errorf("unable to extract asset %q in %q: %v", name, assetDir, err)
 		}
 		return nil
 	})
@@ -145,6 +126,10 @@ func extractAssetFile(file assetFileEntry) error {
 	data, err := os.ReadFile(file.Target)
 	if err != nil {
 		return err
+	}
+	splatConfig, err := splat.ReadConfig(file.SplatConfigPath)
+	if err != nil {
+		return fmt.Errorf("unable to read splat config at %q: %v", file.SplatConfigPath, err)
 	}
 	for _, segment := range file.Segments {
 		if len(segment.Assets) == 0 {
@@ -163,18 +148,19 @@ func extractAssetFile(file assetFileEntry) error {
 			if size < 0 {
 				return fmt.Errorf("offset 0x%X should be smaller than 0x%X, asset %v", off, off2, segment.Assets[i-1])
 			}
-			if kind == "skip" {
-				continue
-			}
-			if handler, found := extractHandlers[kind]; found {
-				name := strconv.FormatUint(uint64(off), 16)
-				if len(args) > 0 {
-					name = args[0]
-					args = args[1:]
+			if kind != "skip" {
+				if handler, found := handlers[kind]; found {
+					name := strconv.FormatUint(uint64(off), 16)
+					if len(args) > 0 {
+						name = args[0]
+						args = args[1:]
+					}
+					start := int(off) - segment.Start
+					end := start + size
+					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram, splatConfig)
+				} else {
+					return fmt.Errorf("handler %q not found", kind)
 				}
-				start := int(off) - segment.Start
-				end := start + size
-				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
 			}
 			off = off2
 			kind = kind2
@@ -186,18 +172,18 @@ func extractAssetFile(file assetFileEntry) error {
 
 func enqueueBuildAssetEntry(
 	eg *errgroup.Group,
-	handler func(assetBuildEntry) error,
+	handler assets.Builder,
 	assetDir,
 	sourceDir,
 	name string) {
 	eg.Go(func() error {
-		err := handler(assetBuildEntry{
-			assetDir: assetDir,
-			srcDir:   sourceDir,
-			name:     name,
+		err := handler.Build(assets.BuildArgs{
+			AssetDir: assetDir,
+			SrcDir:   sourceDir,
+			Name:     name,
 		})
 		if err != nil {
-			return fmt.Errorf("unable to build asset %q: %v", name, err)
+			return fmt.Errorf("unable to build asset %q at %q: %v", name, assetDir, err)
 		}
 		return nil
 	})
@@ -230,7 +216,7 @@ func buildAssetFile(file assetFileEntry) error {
 			if kind == "skip" {
 				continue
 			}
-			if handler, found := buildHandlers[kind]; found {
+			if handler, found := handlers[kind]; found {
 				name := strconv.FormatUint(uint64(off), 16)
 				if len(args) > 0 {
 					name = args[0]

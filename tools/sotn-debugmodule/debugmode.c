@@ -60,7 +60,7 @@ void Init(void) {
 }
 
 bool UpdateLogic() {
-    if (g_pads->tapped & PAD_L2) {
+    if (g_pads[0].tapped & PAD_L2) {
         if (!g_DebugModePaused) {
             g_DebugMode++;
             if (g_DebugMode >= LEN(g_DebugMenus)) {
@@ -76,7 +76,7 @@ bool UpdateLogic() {
         return;
     }
 
-    if (g_pads->pressed & PAD_TRIANGLE || g_pads->pressed & PAD_START) {
+    if (g_pads[0].pressed & PAD_TRIANGLE || g_pads[0].pressed & PAD_START) {
         PauseDebugMode();
         return;
     }
@@ -132,7 +132,7 @@ bool Update(void) {
     }
 
     if (g_FrameByFrame) {
-        return g_pads->repeat & PAD_L2 || g_pads->tapped & PAD_L1;
+        return g_pads[0].repeat & PAD_L2 || g_pads[0].tapped & PAD_L1;
     }
 
     return entityPaused;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "registers.h"
 
 extern u32 D_8006BAF4;
 extern u32 D_800987B8;

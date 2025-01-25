@@ -842,7 +842,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
                 (s32*)&prim->x1, &sp78, &sp7C, &sp80);
         }
         func_801072DC(prim);
-        prim->type = 5;
+        prim->type = PRIM_GT3;
         if (sp7C >= 0xF0) {
             continue;
         }
@@ -953,7 +953,7 @@ void func_80105078(s32 arg0, s32 arg1) {
             RotAverage3(&sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0,
                         (s32*)&prim->x2, (s32*)&prim->x1, &sp78, &sp80);
         }
-        prim->type = 2;
+        prim->type = PRIM_LINE_G2;
         if (sp7C < 0xF0) {
             if (temp_v0_4 >= 0) {
                 prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 3;
@@ -1001,7 +1001,7 @@ void func_80105428(void) {
     if (D_8003C730 != 0) {
         D_80137E4C = 6;
         D_80137EE4 = 0x100;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         D_801379BC = 7;
         D_8003C730 = 0;
     }
@@ -1033,7 +1033,7 @@ void func_80105428(void) {
         D_80137EE4 = timer_temp;
 
         if (func_8010E334(0x60, 0xA0) != 0) {
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
             D_80137EF0 = D_80097924;
             D_80137EF4 = D_8006C378;
             if (D_80137EE0 == 0) {
@@ -1146,7 +1146,7 @@ void func_80105428(void) {
             D_8006C378 = D_80137EF4;
 
         } else {
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             D_800978C4 = 1;
             D_801379BC = 0;
         }
@@ -1350,7 +1350,7 @@ void func_80105428(void) {
         func_80104790(2, D_80137EE4, D_80137EEC);
         if (D_80137EEC >= 0x40) {
             func_80105078(D_80137EE4, 0);
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             D_800978C4 = 1;
         } else {
             func_80105078(D_80137EE4, (D_80137EEC * 2) + 0x80);
@@ -1426,7 +1426,7 @@ void func_80105428(void) {
                 D_8006C378 = D_80137EF4;
                 func_80103EAC();
                 D_801379BC = 0;
-                D_8003C8B8 = 1;
+                g_PauseAllowed = true;
                 D_800978C4 = 1;
             }
         }
@@ -1436,7 +1436,7 @@ void func_80105428(void) {
     }
     if (((((s16)temp_s3 + 0x400) ^ ((s16)D_801379C8.vy + 0x400)) & 0x800) &&
         ((u32)(D_801379BC - 3) < 7U)) {
-        PlaySfx(SFX_UNK_6E0);
+        PlaySfx(SFX_SAVE_COFFIN_SWISH);
     }
 }
 
@@ -1581,41 +1581,41 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
     return true;
 }
 
-void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
+void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
-        poly->b0 = colorIntensity;
-        poly->g0 = colorIntensity;
-        poly->r0 = colorIntensity;
+        prim->b0 = colorIntensity;
+        prim->g0 = colorIntensity;
+        prim->r0 = colorIntensity;
         break;
     case 1:
-        poly->b1 = colorIntensity;
-        poly->g1 = colorIntensity;
-        poly->r1 = colorIntensity;
+        prim->b1 = colorIntensity;
+        prim->g1 = colorIntensity;
+        prim->r1 = colorIntensity;
         break;
     case 2:
-        poly->b2 = colorIntensity;
-        poly->g2 = colorIntensity;
-        poly->r2 = colorIntensity;
+        prim->b2 = colorIntensity;
+        prim->g2 = colorIntensity;
+        prim->r2 = colorIntensity;
         break;
     case 3:
-        poly->b3 = colorIntensity;
-        poly->g3 = colorIntensity;
-        poly->r3 = colorIntensity;
+        prim->b3 = colorIntensity;
+        prim->g3 = colorIntensity;
+        prim->r3 = colorIntensity;
         break;
     }
 }
 
-void func_80107250(POLY_GT4* poly, s32 colorIntensity) {
-    func_801071CC(poly, (u8)colorIntensity, 0);
-    func_801071CC(poly, (u8)colorIntensity, 1);
-    func_801071CC(poly, (u8)colorIntensity, 2);
-    func_801071CC(poly, (u8)colorIntensity, 3);
+void func_80107250(Primitive* prim, s32 colorIntensity) {
+    func_801071CC(prim, (u8)colorIntensity, 0);
+    func_801071CC(prim, (u8)colorIntensity, 1);
+    func_801071CC(prim, (u8)colorIntensity, 2);
+    func_801071CC(prim, (u8)colorIntensity, 3);
 }
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
 
-void func_801072DC(POLY_GT4* poly) { func_80107250(poly, 0x80); }
+void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
     setRGB0(poly, 0, 0, 0);

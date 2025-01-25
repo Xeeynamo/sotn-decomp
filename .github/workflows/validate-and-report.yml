@@ -76,12 +76,6 @@ jobs:
         run: make -j build
       - name: Check if they match
         run: make check
-      - name: Analyze calls dry run
-        if: matrix.version == 'us'
-        run: |
-          make force_symbols
-          make force_extract
-          .venv/bin/python3 ./tools/analyze_calls.py --ultradry
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder
@@ -185,28 +179,19 @@ jobs:
             make python-dependencies & \
             (sudo apt-get update && sudo apt-get install graphviz) & \
             wait
-      - name: Generate function calls chart
+      - name: Clean ld files
         run: |
-            make force_symbols
-            make force_extract
-            .venv/bin/python3 tools/analyze_calls.py
-            git clean -fdx asm/
-      - name: Generate function report
-        run: |
-            git checkout config/
-            rm -rf build/us/main.ld
-            rm -rf build/us/weapon.ld
-            make -j extract
-            .venv/bin/python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
-            rm -rf gh-duplicates/function_calls/ || true
-            mv function_calls gh-duplicates/
-            mv function_graphs.md gh-duplicates
+            find ./build -type f -name "*.ld" -delete
       - name: Generate duplicates report
         run: |
           make force_symbols
-          make force_extract
+          make -j extract
+          .venv/bin/python3 tools/function_finder/fix_matchings.py
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
+      - name: Generate function report
+        run: |
+            .venv/bin/python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'

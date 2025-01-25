@@ -23,12 +23,6 @@ typedef struct {
 const char aIdSysCV1831995[] =
     "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $";
 
-extern const char D_800101FC[]; // "ResetGraph(%d)...\n"
-extern const char D_80010360[]; // "PutDispEnv(%08x)...\n"
-extern const char D_80010378[]; // "GPU_exeque: null func.\n"
-extern const char
-    D_80010390[]; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n"
-
 s32 VSync(s32);
 
 extern gpu* D_8002C260;
@@ -306,8 +300,65 @@ extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     p->code[1] = get_tw(tw);
 }
 
-extern void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env);
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", SetDrawEnv);
+void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
+    RECT clip_rect;
+    s32 offset;
+    u16 calc_clip_height;
+    DR_ENV* dr_env;
+
+    dr_env = dr_env_in;
+
+    dr_env->code[0] = get_cs(env->clip.x, env->clip.y);
+    dr_env->code[1] =
+        get_ce(env->clip.w + env->clip.x - 1, env->clip.y + env->clip.h - 1);
+    dr_env->code[2] = get_ofs(env->ofs[0], env->ofs[1]);
+    dr_env->code[3] = get_mode(env->dfe, env->dtd, env->tpage);
+    dr_env->code[4] = get_tw(&env->tw);
+    dr_env->code[5] = 0xE6000000;
+
+    offset = 7;
+    if (env->isbg != 0) {
+        clip_rect.x = env->clip.x;
+        clip_rect.y = env->clip.y;
+        clip_rect.w = env->clip.w;
+        clip_rect.h = env->clip.h;
+        clip_rect.w = CLAMP(clip_rect.w, 0, 1023);
+
+        if (clip_rect.h >= 0) {
+            if ((D_8002C26C != 0 && clip_rect.h >= 1024) ||
+                (D_8002C26C == 0 && clip_rect.h >= 512)) {
+                if (D_8002C26C != 0) {
+                    calc_clip_height = 1023;
+                } else {
+                    calc_clip_height = 511;
+                }
+            } else {
+                calc_clip_height = clip_rect.h;
+            }
+        } else {
+            calc_clip_height = 0;
+        }
+
+        clip_rect.h = calc_clip_height;
+        if ((clip_rect.x & 0x3F) || (clip_rect.w & 0x3F)) {
+            clip_rect.x -= env->ofs[0];
+            clip_rect.y -= env->ofs[1];
+            *((s32*)dr_env + offset++) =
+                0x60000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
+            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.x;
+            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.w;
+            clip_rect.x += env->ofs[0];
+            clip_rect.y += env->ofs[1];
+        } else {
+            *((s32*)dr_env + offset++) =
+                0x02000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
+            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.x;
+            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.w;
+        }
+    }
+
+    setlen(dr_env, offset - 1);
+}
 
 int get_mode(int dfe, int dtd, int tpage) {
     if (D_8002C26C) {
@@ -319,11 +370,33 @@ int get_mode(int dfe, int dtd, int tpage) {
     }
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_cs);
+u_long get_cs(short x, short y) {
+    x = CLAMP(x, 0, 0x400 - 1);
+    y = CLAMP(y, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
+    if (D_8002C26C) {
+        return 0xE3000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE3000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
+    }
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ce);
+u_long get_ce(short x, short y) {
+    x = CLAMP(x, 0, 0x400 - 1);
+    y = CLAMP(y, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
+    if (D_8002C26C) {
+        return 0xE4000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE4000000 | ((y & 0x1FF) << 10) | (x & 0x3FF);
+    }
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ofs);
+u_long get_ofs(short x, short y) {
+    if (D_8002C26C) {
+        return 0xE5000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE5000000 | ((y & 0x7FF) << 11) | (x & 0x7FF);
+    }
+}
 
 u_long get_tw(RECT* arg0) {
     u32 pad[4];

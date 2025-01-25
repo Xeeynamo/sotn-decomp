@@ -19,6 +19,7 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: true
   section_order:
     - ".data"
     - ".rodata"
@@ -35,13 +36,15 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0xA0, .data, header] # palette definitions
       - [0xDC, .data, header] # layers
-      - [0x134, .data, header] # gfxbanks
+      - [0x134, .data, header] # graphics banks
       - [0x1EC, .data, e_laydef] # layout entries header
       - [0x394, .data, e_init]
       - [0x4D4, .data, st_debug]
       - [0x554, .data, e_breakable]
-      - [0x5D8, .data, holyglassescutscene]
+      - [0x5D8, .data, d_prize_drops]
+      - [0x5D8, .data, cutscene]
       - [0x68C, .data, F890]
       - [0x7B8, .data, st_update]
       - [0x7E4, .data, collision]
@@ -54,12 +57,25 @@ segments:
       - [0x1248, .data, e_room_fg]
       - [0x12D4, .data, rooms]
       - [0x1300, .data, e_layout] # layout entries data
-      - [0x13F0, data]
+      - [0x13F0, .data, cutscene_data]
+      - [0x1658, cmpgfx, stage_title_jp, 128, 128, 4]
+      - [0x199C, cmpgfx, stage_placeholder, 128, 128, 4]
+      - [0x1F40, raw, cutscene_alucard]
+      - [0x2CC0, raw, cutscene_maria]
+      - [0x3A40, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x698C]
+      - [0x4B70, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x698C]
+      - [0x5830, cmpgfx, e_elevator_cen_g, 128, 128, 4, 0x69AC]
+      - [0x658C, pal, D_8018658C]
+      - [0x668C, pal, D_8018668C] # unused
+      - [0x678C, pal, D_8018678C]
+      - [0x688C, pal, D_8018688C] # unused
+      - [0x698C, pal, e_maria_cen_p]
+      - [0x69AC, pal, e_elevator_cen_p]
       - [0x69EC, .data, tile_data] # tile data
       - [0x81EC, .data, tile_data] # tile definitions
       - [0xC60C, .data, sprites]
       - [0xD414, .rodata, e_init]
-      - [0xD42C, .rodata, holyglassescutscene]
+      - [0xD42C, .rodata, cutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
       - [0xD540, .rodata, e_collect] # EntityPrizeDrop
@@ -71,7 +87,7 @@ segments:
       - [0xD600, c, st_debug]
       - [0xD89C, c, e_breakable]
       - [0xDB18, c]
-      - [0xDF0C, c, holyglassescutscene]
+      - [0xDF0C, c, cutscene]
       - [0xF890, c]
       - [0x10E4C, c, st_update]
       - [0x11280, c, collision]
@@ -79,8 +95,8 @@ segments:
       - [0x135B4, c, e_red_door]
       - [0x14264, c, st_common]
       - [0x15714, c, e_collect]
-      - [0x16C90, c, blit_char] 
-      - [0x16F30, c, e_misc] 
+      - [0x16C90, c, blit_char]
+      - [0x16F30, c, e_misc]
       - [0x1A5F0, c, e_stage_name]
       - [0x1B274, c, e_particles]
       - [0x1BAB8, c, e_room_fg]
@@ -88,6 +104,6 @@ segments:
       - [0x1BED4, c, prim_helpers]
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
-      - [0x1C774, .bss, holyglassescutscene]
+      - [0x1C774, .bss, bss]
       - [0x1C7C0, .bss, e_collect]
   - [0x1D46C]

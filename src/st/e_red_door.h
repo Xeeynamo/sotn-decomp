@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
 #include "sfx.h"
 
-extern u16 g_eInitGeneric2[];
-extern u16 g_eRedDoorTiles[2][8];
+extern u16 g_EInitCommon[];
+extern u16 OVL_EXPORT(RedDoorTiles)[2][8];
 
-u8 g_eRedDoorUV[][8] = {
+static u8 g_eRedDoorUV[][8] = {
     {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
     {0x88, 0xA8, 0x88, 0xA8, 0x21, 0x21, 0x5F, 0x5F},
     {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
@@ -19,7 +18,11 @@ static bool EntityIsNearPlayer(Entity* self) {
 
     diffX = PLAYER.posX.i.hi - self->posX.i.hi;
     distanceX = abs(diffX);
+#ifdef STAGE_IS_NO1
+    if (distanceX > 24) {
+#else
     if (distanceX > 16) {
+#endif
         return false;
     }
 
@@ -35,7 +38,7 @@ static bool EntityIsNearPlayer(Entity* self) {
 // params: (& 0x100) Opens to the right
 //         (& 0xFF) Index into map-specific tiles (g_eRedDoorTiles)
 //                  to place behind the door
-void EntityRedDoor(Entity* self) {
+void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     Primitive* prim;
     s32 i;
     s16 angle;
@@ -50,19 +53,31 @@ void EntityRedDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+#ifdef STAGE_IS_NO1
+        self->ext.redDoor.unk88 = self->params & 0x10;
+        self->params &= 0xFFEF;
+#endif
+        InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
+#ifdef STAGE_IS_NO1
+        if (self->ext.redDoor.unk88) {
+            self->zPriority = 0x58;
+        } else {
+            self->zPriority = PLAYER.zPriority - 0x20;
+        }
+#else
         self->zPriority = PLAYER.zPriority - 0x20;
+#endif
         self->facingLeft = 0;
         self->posY.i.hi += 0x1F;
 
         if (self->params & 0x100) {
-            self->ext.door.unk86 = -4;
+            self->ext.redDoor.unk86 = -4;
         } else {
-            self->ext.door.unk86 = 4;
+            self->ext.redDoor.unk86 = 4;
         }
-        self->posX.i.hi += self->ext.door.unk86;
+        self->posX.i.hi += self->ext.redDoor.unk86;
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, LEN(g_eRedDoorUV));
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -84,7 +99,15 @@ void EntityRedDoor(Entity* self) {
             prim->v3 = uv[7];
             prim->tpage = 0x1F;
             prim->clut = 0x198;
+#ifdef STAGE_IS_NO1
+            if (self->ext.redDoor.unk88) {
+                prim->priority = 0x58;
+            } else {
+                prim->priority = PLAYER.zPriority - 0x20;
+            }
+#else
             prim->priority = PLAYER.zPriority - 0x20;
+#endif
             prim->y0 = prim->y1 = y;
             prim->y2 = prim->y3 = y + 62;
             if (i == 0) {
@@ -109,19 +132,24 @@ void EntityRedDoor(Entity* self) {
         if (EntityIsNearPlayer(self)) {
             if (!(self->params & 0x100)) {
                 g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
-                self->ext.door.angle = 0x1000;
+                self->ext.redDoor.angle = 0x1000;
             }
             if (self->params & 0x100) {
                 g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, 6);
-                self->ext.door.angle = 0x800;
+                self->ext.redDoor.angle = 0x800;
             }
             self->animCurFrame = 0;
             self->step = 4;
             PLAYER.velocityY = 0;
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x18;
+#ifdef STAGE_IS_NO1
+            if (self->ext.redDoor.unk88 && self->step == 3) {
+                PLAYER.zPriority = 0x5C;
+            }
+#endif
         } else {
-            self->ext.door.angle = 0xC00;
+            self->ext.redDoor.angle = 0xC00;
             prim = &g_PrimBuf[self->primIndex];
             i = 0;
             while (prim != NULL) {
@@ -176,22 +204,29 @@ void EntityRedDoor(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x18;
         if (!(self->params & 0x100)) {
-            self->ext.door.angle += 0x20;
-            if (self->ext.door.angle >= 0x1000) {
-                self->ext.door.angle = 0x1000;
+            self->ext.redDoor.angle += 0x20;
+            if (self->ext.redDoor.angle >= 0x1000) {
+                self->ext.redDoor.angle = 0x1000;
             }
-            if (self->ext.door.angle == 0x1000) {
+            if (self->ext.redDoor.angle == 0x1000) {
                 self->step++;
             }
         } else {
-            self->ext.door.angle -= 0x20;
-            if (self->ext.door.angle <= 0x800) {
-                self->ext.door.angle = 0x800;
+            self->ext.redDoor.angle -= 0x20;
+            if (self->ext.redDoor.angle <= 0x800) {
+                self->ext.redDoor.angle = 0x800;
             }
-            if (self->ext.door.angle == 0x800) {
+            if (self->ext.redDoor.angle == 0x800) {
                 self->step++;
             }
         }
+#ifdef STAGE_IS_NO1
+        if (self->ext.redDoor.unk88 && self->step == 3) {
+            g_Tilemap.x = 0x98;
+            PLAYER.zPriority = 0x5C;
+        }
+        g_unkGraphicsStruct.unk18 = 1;
+#endif
         break;
     case 3:
         if (g_Player.D_80072EFC >= 4) {
@@ -203,6 +238,17 @@ void EntityRedDoor(Entity* self) {
             g_Player.padSim = PAD_RIGHT;
         }
         g_Player.D_80072EFC = 3;
+#ifdef STAGE_IS_NO1
+        if (PLAYER.posX.i.hi < 0x64 && self->ext.redDoor.unk88) {
+            g_Tilemap.left++;
+            g_PlayerX -= 0x100;
+            g_Tilemap.x = 0x100;
+            g_unkGraphicsStruct.unk18 = 0;
+        }
+        if (PLAYER.posX.i.hi < 0 || PLAYER.posX.i.hi > 0x100) {
+            g_unkGraphicsStruct.unk18 = 0;
+        }
+#endif
         break;
     case 4:
         if (!(self->params & 0x100)) {
@@ -212,24 +258,34 @@ void EntityRedDoor(Entity* self) {
         }
         g_Player.D_80072EFC = 4;
         if (EntityIsNearPlayer(self) == 0) {
+#ifdef STAGE_IS_NO1
+            if (self->ext.redDoor.unk88) {
+                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
+            }
             self->step++;
+#ifdef VERSION_PSP
+            g_Player.D_80072EFC = 0;
+#endif
+#else
+            self->step++;
+#endif
         }
         break;
     case 5:
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 4;
         if (!(self->params & 0x100)) {
-            self->ext.door.angle -= 0x20;
-            if (self->ext.door.angle < 0xC01) {
-                self->ext.door.angle = 0xC00;
+            self->ext.redDoor.angle -= 0x20;
+            if (self->ext.redDoor.angle < 0xC01) {
+                self->ext.redDoor.angle = 0xC00;
             }
         } else {
-            self->ext.door.angle += 0x20;
-            if (self->ext.door.angle >= 0xC00) {
-                self->ext.door.angle = 0xC00;
+            self->ext.redDoor.angle += 0x20;
+            if (self->ext.redDoor.angle >= 0xC00) {
+                self->ext.redDoor.angle = 0xC00;
             }
         }
-        if (self->ext.door.angle == 0xC00) {
+        if (self->ext.redDoor.angle == 0xC00) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; prim != NULL; i++, prim = prim->next) {
                 prim->drawMode |= DRAW_HIDE;
@@ -242,6 +298,9 @@ void EntityRedDoor(Entity* self) {
             }
             self->animCurFrame = 1;
             self->step = 1;
+#ifdef STAGE_IS_NO1
+            g_unkGraphicsStruct.unk18 = 0;
+#endif
         }
         break;
     }
@@ -251,7 +310,7 @@ void EntityRedDoor(Entity* self) {
         g_api.func_8010DFF0(1, 1);
     }
 
-    x = self->posX.i.hi - self->ext.door.unk86;
+    x = self->posX.i.hi - self->ext.redDoor.unk86;
     if (self->params & 0x100) {
         x--;
     } else {
@@ -259,10 +318,10 @@ void EntityRedDoor(Entity* self) {
     }
 
     i = 0;
-    angle = self->ext.door.angle;
+    angle = self->ext.redDoor.angle;
     prim = &g_PrimBuf[self->primIndex];
     for (; prim != NULL; i++, prim = prim->next) {
-        if (!(prim->drawMode & 8)) {
+        if (!(prim->drawMode & DRAW_HIDE)) {
             if (!(self->params & 0x100)) {
                 if (i == 0) {
                     endX = prim->x0 = prim->x2 =
@@ -351,7 +410,7 @@ void EntityRedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_eRedDoorTiles[sp3F][i];
+            g_Tilemap.fg[tileIdx] = OVL_EXPORT(RedDoorTiles)[sp3F][i];
         }
     } else {
         for (i = 0; i < 4; i++) {
@@ -360,7 +419,7 @@ void EntityRedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_eRedDoorTiles[sp3F][i + 4];
+            g_Tilemap.fg[tileIdx] = OVL_EXPORT(RedDoorTiles)[sp3F][i + 4];
         }
     }
 }

@@ -77,7 +77,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
 #undef charcount
 
     prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
-    prim->type = 3;
+    prim->type = PRIM_G4;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
     if (lowerLeft) {
@@ -126,7 +126,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
     prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
-    prim->type = 4;
+    prim->type = PRIM_GT4;
     prim->y0 = prim->y1 = 0xCD;
     prim->tpage = 0x1F;
     prim->clut = 0x197;
@@ -296,7 +296,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->velocityY += FIX(20.0 / 128);
         g_api.CheckCollision(
             self->posX.i.hi, (s16)(self->posY.i.hi + 8), &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk18;
             // Test for peanut. Peanut should bounce.
             if (((self->params >> 8) & 0x7F) == 6) {
@@ -321,7 +321,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         g_api.CheckCollision(
             (s16)(xShift + self->posX.i.hi), self->posY.i.hi, &sp10, 0);
-        if (sp10.effects & 2) {
+        if (sp10.effects & EFFECT_UNK_0002) {
             if (xShift < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {
@@ -343,7 +343,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         g_api.CheckCollision(
             self->posX.i.hi, (s16)(yShift + self->posY.i.hi), &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += (1 + sp10.unk20);
             self->velocityX /= 2;
             self->velocityY = FIX(1);
@@ -376,7 +376,7 @@ static void EntityWeaponAttack(Entity* self) {
             return;
         }
         if (self->ext.food.timer == 24) {
-            self->drawFlags |= FLAG_DRAW_UNK80;
+            self->drawFlags |= FLAG_BLINK;
         }
         if (--self->ext.food.timer == 0) {
             DestroyEntity(self);
@@ -478,7 +478,7 @@ s32 func_ptr_80170004(Entity* self) {
         xVar = self->posX.i.hi + xShift;
         yVar = self->posY.i.hi + yShift;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk18;
             self->ext.timer.t = 0x200;
             self->step++;
@@ -492,7 +492,7 @@ s32 func_ptr_80170004(Entity* self) {
         xVar = self->posX.i.hi + xShift;
         yVar = self->posY.i.hi + yShift;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 2) {
+        if (sp10.effects & EFFECT_UNK_0002) {
             if (xShift < 0) {
                 self->posX.i.hi += sp10.unkC;
             } else {

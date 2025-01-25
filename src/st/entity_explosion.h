@@ -1,20 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_InitializeEntityData0[];
+extern u16 g_EInitParticle[];
 extern s32 g_ExplosionYVelocities[];
 extern u8* g_ExplosionAnimations[];
 
-// when `AnimateEntity` is not declared, the default declaration
-// is used which assumes a 32 bit return type. This prototype
-// can be forced by setting MISSING_ANIMATE_ENTITY_PROTOTYPE
 // params: (& 0xFF) The explosion type
 //         (& 0xF0) These explosion types use a different (hardcoded) palette
 //                  and drawMode
 //         (& 0xFF00) If non-zero, ((& 0xFF00) >> 8) will override zPriority
-typedef u32 (*AnimateEntityMissingProto)(u8[], Entity*);
-
 void EntityExplosion(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(g_InitializeEntityData0);
+        InitializeEntity(g_EInitParticle);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->animSet = ANIMSET_DRA(2);
@@ -32,12 +27,7 @@ void EntityExplosion(Entity* entity) {
     } else {
         entity->posY.val += entity->velocityY;
 
-#ifdef MISSING_ANIMATE_ENTITY_PROTOTYPE
-        if (!((AnimateEntityMissingProto)AnimateEntity)(
-                g_ExplosionAnimations[entity->params], entity)) {
-#else
         if (!AnimateEntity(g_ExplosionAnimations[entity->params], entity)) {
-#endif
             DestroyEntity(entity);
         }
     }

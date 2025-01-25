@@ -10,7 +10,7 @@
  *    `g_LayoutObjVertical` will be positioned at an element with a
  *    y position larger than `posY` or the tail eleement.
  */
-void FindFirstEntityAbove(s16 posY) {
+static void FindFirstEntityAbove(s16 posY) {
     while (true) {
         u16* ptr = &g_LayoutObjVertical[LAYOUT_OBJ_POS_Y];
         if (*ptr != LAYOUT_OBJ_START && *ptr >= posY) {
@@ -31,10 +31,9 @@ void FindFirstEntityAbove(s16 posY) {
  *    `g_LayoutObjVertical` will be positioned at an element with a
  *    y position smaller than `posY` or the head element.
  */
-void FindFirstEntityBelow(s16 posY) {
+static void FindFirstEntityBelow(s16 posY) {
     while (true) {
         u16* ptr = &g_LayoutObjVertical[LAYOUT_OBJ_POS_Y];
-
         if (*ptr != LAYOUT_OBJ_END &&
             (*ptr <= posY || *ptr == LAYOUT_OBJ_START)) {
             break;

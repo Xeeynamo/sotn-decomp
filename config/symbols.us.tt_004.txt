@@ -1,0 +1,8 @@
+D_us_80170080_y = 0x80170084;
+D_us_80170080_z = 0x80170088;
+Max3 = 0x80172B8C;
+CheckEntityValid = 0x80173C4C;
+CheckSwordLevel = 0x80173CB8;
+DestroyEntity = 0x801777E4;
+GetTargetPositionWithDistanceBuffer = 0x8017794C;
+ProcessEvent = 0x80177BE8;

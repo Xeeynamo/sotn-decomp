@@ -183,7 +183,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
 
 // SAT: func_0606F59C
-void func_800FD9D4(SpellDef* spell, s32 id) {
+void GetSpellDef(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(0x15, 2) != 0) {
@@ -306,7 +306,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
-        if (g_Player.unk0C & 0x4000) {
+        if (g_Player.status & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }
     }
@@ -369,16 +369,16 @@ s32 func_800FF064(s32 arg0) {
 }
 
 // SAT: func_06070568
-void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
+void func_800FF0A0(s32 context) { g_StatBuffTimers[context] = 0; }
 
-// probably PSX func_800FF0B8 but strange to match
+// probably PSX ClearStatBuffs but strange to match
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
 
 // SAT: func_060705A0
-void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
+void GiveStatBuff(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
 
 // SAT: func_060705B8
-s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
+s32 GetStatBuffTimer(s32 arg0) { return g_StatBuffTimers[arg0]; }
 
 // SAT: func_060705CC
 u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {

@@ -91,7 +91,10 @@ define list_st_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
 	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(filter-out $(dir)/tilemap_%.bin $(dir)/tiledef_%.bin,$(wildcard $(dir)/*.bin)))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_801*.bin))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.gfxbin))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.palbin))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/cutscene_*.bin))
 endef
 
 define list_o_files
@@ -141,14 +144,14 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen chi dre mad no3 np3 nz0 sel st0 wrp rwrp mar tt_000
-build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
+build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
+build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx $(SRC_DIR)/weapon
-	git clean -fdx config/
+	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
@@ -205,9 +208,14 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
@@ -217,8 +225,13 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
+	./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
+	./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
+	./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
+	./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
+	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
@@ -245,7 +258,7 @@ check: config/check.$(VERSION).sha patch $(CHECK_FILES)
             color = 196;   \
         system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
         printf " ]\n"; \
-    }' | column --separator '\t' --table
+    }' | column --separator $$'\t' --table
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
@@ -266,9 +279,6 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined
 dra: $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
-	echo $(call list_o_files,dra)
-	$(call link,dra,$@)
 
 ric: $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
@@ -294,11 +304,29 @@ $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
 $(BUILD_DIR)/F_DRE.BIN:
 	$(GFXSTAGE) e assets/st/dre $@
 
+lib: $(BUILD_DIR)/LIB.BIN $(BUILD_DIR)/F_LIB.BIN
+$(BUILD_DIR)/LIB.BIN: $(BUILD_DIR)/stlib.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_LIB.BIN:
+	$(GFXSTAGE) e assets/st/lib $@
+
 mad: $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
 $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_MAD.BIN:
 	$(GFXSTAGE) e assets/st/mad $@
+
+no0: $(BUILD_DIR)/NO0.BIN $(BUILD_DIR)/F_NO0.BIN
+$(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO0.BIN:
+	$(GFXSTAGE) e assets/st/no0 $@
+
+no1: $(BUILD_DIR)/NO1.BIN $(BUILD_DIR)/F_NO1.BIN
+$(BUILD_DIR)/NO1.BIN: $(BUILD_DIR)/stno1.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO1.BIN:
+	$(GFXSTAGE) e assets/st/no1 $@
 
 no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
@@ -346,12 +374,26 @@ $(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
 $(BUILD_DIR)/F_MAR.BIN:
 	$(GFXSTAGE) e assets/boss/mar $@
 
-tt_000: $(BUILD_DIR)/TT_000.BIN
-$(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
+rbo3: $(BUILD_DIR)/RBO3.BIN $(BUILD_DIR)/F_RBO3.BIN
+$(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000_raw.bin
-	cp $< $@
-	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
+$(BUILD_DIR)/F_RBO3.BIN:
+	$(GFXSTAGE) e assets/boss/rbo3 $@
+
+# servant (familiar) targets
+
+tt_000: $(BUILD_DIR)/TT_000.BIN
+tt_001: $(BUILD_DIR)/TT_001.BIN
+tt_002: $(BUILD_DIR)/TT_002.BIN
+tt_003: $(BUILD_DIR)/TT_003.BIN
+tt_004: $(BUILD_DIR)/TT_004.BIN
+
+$(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
+	cp $< $@.tmp
+	truncate -c -s 40960 $@.tmp
+	mv $@.tmp $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
@@ -371,8 +413,6 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
-	$(call link,tt_$*,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
@@ -453,6 +493,9 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stno0.elf > config/symbols.us.stno0.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stno1.elf > config/symbols.us.stno1.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stnp3.elf > config/symbols.us.stnp3.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
@@ -461,10 +504,15 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_003.elf > config/symbols.us.tt_003.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/tt_004.elf > config/symbols.us.tt_004.txt
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
-	$(M2CTX) $(SOURCE)
+	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
 extract_disk: ##@ Extract game files from a disc image.
@@ -481,8 +529,14 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_CHI.BIN $(DISK_DIR)/ST/CHI/F_CHI.BIN
 	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
 	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
+	cp $(BUILD_DIR)/LIB.BIN $(DISK_DIR)/ST/LIB/LIB.BIN
+	cp $(BUILD_DIR)/F_LIB.BIN $(DISK_DIR)/ST/LIB/F_LIB.BIN
 	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
 	cp $(BUILD_DIR)/F_MAD.BIN $(DISK_DIR)/ST/MAD/F_MAD.BIN
+	cp $(BUILD_DIR)/NO0.BIN $(DISK_DIR)/ST/NO0/NO0.BIN
+	cp $(BUILD_DIR)/F_NO0.BIN $(DISK_DIR)/ST/NO0/F_NO0.BIN
+	cp $(BUILD_DIR)/NO1.BIN $(DISK_DIR)/ST/NO1/NO1.BIN
+	cp $(BUILD_DIR)/F_NO1.BIN $(DISK_DIR)/ST/NO1/F_NO1.BIN
 	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
 	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO3.BIN
 	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
@@ -498,7 +552,13 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
 	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
+	cp $(BUILD_DIR)/RBO3.BIN $(DISK_DIR)/BOSS/RBO3/RBO3.BIN
+	cp $(BUILD_DIR)/F_RBO3.BIN $(DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
+	cp $(BUILD_DIR)/TT_001.BIN $(DISK_DIR)/SERVANT/TT_001.BIN
+	cp $(BUILD_DIR)/TT_002.BIN $(DISK_DIR)/SERVANT/TT_002.BIN
+	cp $(BUILD_DIR)/TT_003.BIN $(DISK_DIR)/SERVANT/TT_003.BIN
+	cp $(BUILD_DIR)/TT_004.BIN $(DISK_DIR)/SERVANT/TT_004.BIN
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare
@@ -566,6 +626,12 @@ $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o: $(ASSETS_DIR)/%.gfxbin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 # for now '.dec' files are ignored
 	touch $@
@@ -610,7 +676,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, chi dre, mad, no3, np3, nz0, st0, wrp, rwrp, bomar, tt_000
+.PHONY: main, dra, ric, cen, chi, dre, lib, mad, no0, no1, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies

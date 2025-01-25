@@ -26,6 +26,8 @@ g_pads              = 0x80097490;
 g_Status            = 0x80097964;
 D_80097C98          = 0x80097C98;
 
+g_ServantDesc       = 0x80170000;
+
 D_801A0E5C          = 0x801A0E5C;
 D_801A4E6C          = 0x801A4E6C;
 D_801A6E7C          = 0x801A6E7C;

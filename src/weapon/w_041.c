@@ -145,7 +145,9 @@ static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-extern s32 D_123000_8017B200;
+s32 D_123000_8017B200;
+s32 D_123000_8017B204;
+s32 D_123000_8017B208;
 
 void func_123000_8017A914(void) {
     RECT rect;
@@ -237,11 +239,6 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
     }
     return NULL;
 }
-
-extern s32 D_123000_8017A53C[];
-extern s32 D_123000_8017A54C[];
-extern s32 D_123000_8017B204;
-extern s32 D_123000_8017B208;
 
 void EntityWeaponAttack(Entity* self) {
     u8 pad[38];

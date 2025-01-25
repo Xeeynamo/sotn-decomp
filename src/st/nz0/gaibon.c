@@ -80,7 +80,7 @@ void EntityGaibon(Entity* self) {
     s32 yVar;
     s32 xVar;
 
-    if ((self->step) && (!self->ext.GS_Props.nearDeath) &&
+    if (self->step && (!self->ext.GS_Props.nearDeath) &&
         self->hitPoints < g_api.enemyDefs[0xFE].hitPoints / 2) {
         self->ext.GS_Props.grabedAscending = 0;
         self->ext.GS_Props.nearDeath = 1;
@@ -98,10 +98,10 @@ void EntityGaibon(Entity* self) {
     }
     switch (self->step) {
     case GAIBON_INIT:
-        InitializeEntity(D_80180D30);
+        InitializeEntity(g_EInitGaibon);
         other = self + 1;
         // func_801B69E8
-        CreateEntityFromCurrentEntity(68, other);
+        CreateEntityFromCurrentEntity(E_GAIBON_UNK0, other);
         other->zPriority = (self->zPriority + 4);
         SetStep(GAIBON_IDLE);
         break;
@@ -480,7 +480,7 @@ void EntityGaibon(Entity* self) {
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
             if (UnkCollisionFunc3(D_80181240) & 1) {
-                PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
+                PlaySfxPositional(SFX_SLOGRA_PAIN_A);
                 SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;
@@ -492,14 +492,14 @@ void EntityGaibon(Entity* self) {
                     PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                     SetStep(GAIBON_DYING);
                 } else {
-                    PlaySfxPositional(NA_SE_EN_GAIBON_SCREAM);
+                    PlaySfxPositional(SFX_SLOGRA_PAIN_A);
                 }
             }
             break;
         case GAIBON_NEAR_DEATH_TRANSFORM:
             if (AnimateEntity(D_801812FC, self) == 0) {
                 self->ext.GS_Props.flag++;
-                self->palette = D_80180D30[3] + self->ext.GS_Props.flag;
+                self->palette = g_EInitGaibon[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     self->flags &= ~0xF;
                     SetStep(4);
@@ -517,7 +517,7 @@ void EntityGaibon(Entity* self) {
                 self->flags &= ~0xF;
                 // do-while needed on PSX but not PSP
                 do {
-                    self->palette = D_80180D30[3];
+                    self->palette = g_EInitGaibon[3];
                     PlaySfxPositional(SFX_EXPLODE_SMALL);
                     self->step_s++;
                 } while (0);
@@ -546,25 +546,7 @@ void EntityGaibon(Entity* self) {
         break;
     // Unreachable debug mode
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     if (!(self->flags & FLAG_DEAD)) {
         xVar = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -592,7 +574,7 @@ void func_801B69E8(Entity* self) {
     s16 animCurFrame;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180D30);
+        InitializeEntity(g_EInitGaibon);
         self->hitboxState = 0;
     }
 
@@ -629,7 +611,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D3C);
+        InitializeEntity(g_EInitGaibonProjectile);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
@@ -661,7 +643,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180D48);
+        InitializeEntity(g_EInitGaibonLargeProjectile);
         if (self->params == 0) {
             self->animSet = ANIMSET_DRA(2);
             self->drawFlags = FLAG_DRAW_ROTZ;

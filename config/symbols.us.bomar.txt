@@ -1,3 +1,12 @@
-g_ActorNames = 0x80180680;
-g_HeartDropArray = 0x80180744;
+bird_cage_pos_x = 0x80181280;
+bird_cage_pos_y = 0x80181284;
+statue_pos_x_1 = 0x80181288;
+statue_pos_x_2 = 0x8018128C;
+gear_pos_x = 0x80181290;
+stone_door_pos_x_1 = 0x80181294;
+stone_door_pos_x_2 = 0x80181298;
+statue_pos_x_3 = 0x801812A0;
+anim_bird_cage = 0x801812A8;
+anim_gear_1 = 0x801812C4;
+anim_gear_2 = 0x801812D0;
 g_StoneDoorTiles = 0x801812DC;

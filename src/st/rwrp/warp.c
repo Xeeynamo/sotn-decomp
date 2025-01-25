@@ -5,11 +5,15 @@
 #include "sfx.h"
 
 extern s32 D_80097408[];
-extern s32 g_HeartDropArray[];
 extern s16 PLAYER_posY_i_hi;
 s16 GetDistanceToPlayerX();
 
 #define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
+
+static u32 bg_color_angle[] = {
+    0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
+    0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
+};
 
 static u32 D_80180648 = 0;
 
@@ -45,15 +49,15 @@ s32 WarpBackgroundBrightness;
 //
 // n.b.! this value is also used in src/st/wrp/warp.c
 // clang-format off
-#define PLAYER_UNK0C_READY_MASK                                                  \
+#define PLAYER_STATUS_READY_MASK                                                  \
     (                                                                            \
         /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
         /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
         /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |     \
-        /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
+        /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
         /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 |         \
         /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
-        /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_UNK_20 |  PLAYER_STATUS_UNK10 | \
+        /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |  PLAYER_STATUS_UNK10 | \
         /* 0x00000007 */ PLAYER_STATUS_TRANSFORM                                 \
     )
 // clang-format on
@@ -159,7 +163,7 @@ void EntityRWarpRoom(Entity* self) {
             self->posY.i.hi = 0x90 - g_Tilemap.scrollY.i.hi;
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x10;
-            D_8003C8B8 = 0;
+            g_PauseAllowed = false;
             D_80180648 = 1;
             self->step = 6;
             break;
@@ -169,10 +173,12 @@ void EntityRWarpRoom(Entity* self) {
         // Wait for player to press the UP button
         if (collision & 0x4 && g_pads[0].pressed & PAD_UP &&
             ImplicitGetDistanceToPlayerX() < 8 &&
-            !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
+            !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
-            PLAYER.velocityY = PLAYER.velocityX = D_8003C8B8 = 0;
+            g_PauseAllowed = false;
+            PLAYER.velocityX = 0;
+            PLAYER.velocityY = 0;
             self->step++;
         }
         break;
@@ -180,7 +186,7 @@ void EntityRWarpRoom(Entity* self) {
         // raise alucard on the platform?
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_api.func_8010DFF0(0, 1);
         self->posY.i.hi--;
         moveY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -193,7 +199,7 @@ void EntityRWarpRoom(Entity* self) {
         // Move Alucard in the background and fade him to white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_unkGraphicsStruct.g_zEntityCenter = PLAYER.zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
@@ -208,7 +214,7 @@ void EntityRWarpRoom(Entity* self) {
         // Fade the entire room into white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
@@ -256,7 +262,7 @@ void EntityRWarpRoom(Entity* self) {
         PLAYER.zPriority = 0x94;
         g_Player.padSim = 0;
         D_80097408[0] = 0x94;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;
         prim->g0 = prim->b0 = prim->r0 = 0;
@@ -273,7 +279,7 @@ void EntityRWarpRoom(Entity* self) {
         // Finalize warp by fading in from white
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim = prim->next;
         temp = prim->r0;
@@ -281,7 +287,7 @@ void EntityRWarpRoom(Entity* self) {
         if (temp < 0) {
             temp = 0;
             prim->drawMode = DRAW_HIDE;
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             self->step++;
         }
         if (temp < 0x28) {
@@ -303,10 +309,10 @@ void EntityRWarpRoom(Entity* self) {
 
             if (g_pads[0].pressed & PAD_UP &&
                 ImplicitGetDistanceToPlayerX() < 8 &&
-                !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
+                !(g_Player.status & PLAYER_STATUS_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
-                D_8003C8B8 = 0;
+                g_PauseAllowed = false;
                 self->step = 2;
             }
         }
@@ -339,27 +345,27 @@ void EntityRWarpRoom(Entity* self) {
 
     prim = self->ext.warpRoom.primBg;
     for (i = 0; i < 16; i++) {
-        angle = g_HeartDropArray[(i + 0) % 16];
+        angle = bg_color_angle[(i + 0) % 16];
         prim->r0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 5) % 16];
+        angle = bg_color_angle[(i + 5) % 16];
         prim->g0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 10) % 16];
+        angle = bg_color_angle[(i + 10) % 16];
         prim->b0 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 1) % 16];
+        angle = bg_color_angle[(i + 1) % 16];
         prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 6) % 16];
+        angle = bg_color_angle[(i + 6) % 16];
         prim->g1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
-        angle = g_HeartDropArray[(i + 11) % 16];
+        angle = bg_color_angle[(i + 11) % 16];
         prim->b1 =
             ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             WarpBackgroundBrightness;
-        g_HeartDropArray[i] += 0x20;
+        bg_color_angle[i] += 0x20;
         prim = prim->next;
     }
 }

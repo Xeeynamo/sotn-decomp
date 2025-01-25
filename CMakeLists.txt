@@ -1,34 +1,36 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Sound)
+project(sotn)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (WIN32)
-  set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+    set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
-  set(CMAKE_BUILD_TYPE Debug)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-  set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+    set(CMAKE_BUILD_TYPE Debug)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
 
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-mismatch")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-mismatch")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
+    src/pc/main.c
     src/pc/log.c
     src/pc/stubs.c
     src/pc/sotn.c
@@ -38,19 +40,19 @@ set(SOURCE_FILES_PC
     src/pc/sim_pc.c
     src/pc/pl_arc.c
     src/pc/pl_ric.c
+    src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
     src/pc/weapon_pc.c
     src/pc/psxsdk/PsyCross/src/gte/PsyX_GTE.cpp
     src/pc/psxsdk/PsyCross/src/gte/inline_c.c
     src/pc/psxsdk/PsyCross/src/gte/libgte_.c
-
 )
 
 if(WIN32)
-list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
+    list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
 else()
-list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
+    list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
 endif()
 
 set(SOURCE_FILES_PSX_SDK
@@ -59,8 +61,6 @@ set(SOURCE_FILES_PSX_SDK
 )
 
 set(WANT_LIBSND_LLE FALSE CACHE BOOL "Whether to append use LLE for libsnd")
-
-if(WANT_LIBSND_LLE)
 set(SOURCE_FILES_LIBSND_LLE
     # libsnd
     src/main/psxsdk/libsnd/adsr.c
@@ -149,7 +149,8 @@ set(SOURCE_FILES_LIBSND_LLE
     src/pc/psxsdk/emu.cpp
     src/pc/psxsdk/mednafen/spu.cpp
 )
-list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
+if(WANT_LIBSND_LLE)
+    list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
 endif()
 
 set(SOURCE_FILES_MOCK_SDK
@@ -166,7 +167,7 @@ set(SOURCE_FILES_MOCK_SDK
 )
 
 set(SOURCE_FILES_3RD
-   src/pc/3rd/cJSON/cJSON.c
+    src/pc/3rd/cJSON/cJSON.c
 )
 
 set(SOURCE_FILES_DRA
@@ -184,12 +185,17 @@ set(SOURCE_FILES_DRA
     src/dra/config_us.c
     src/dra/menu.c
     src/dra/5D5BC.c
+    src/dra/5F60C.c
     src/dra/d_C910.c
-    src/dra/627C4.c
+    src/dra/624DC.c
+    src/dra/628AC.c
+    src/dra/62DEC.c
     src/dra/63ED4.c
     src/dra/d_CD80.c
     src/dra/692E8.c
-    src/dra/6D59C.c
+    src/dra/6D584.c
+    src/dra/6E42C.c
+    src/dra/6FDF8.c
     src/dra/704D0.c
     src/dra/71830.c
     src/dra/72BB0.c
@@ -227,7 +233,7 @@ set(SOURCE_FILES_RIC
     src/ric/spriteparts.c
     src/ric/1CB04.c
     src/ric/202A8.c
-    src/ric/21250.c
+    src/ric/211D0.c
     src/ric/26C84.c
     src/ric/2C4C4.c
     src/ric/e_giant_spinning_cross.c
@@ -237,12 +243,30 @@ set(SOURCE_FILES_RIC
 )
 
 set(SOURCE_FILES_TT_000
-    src/servant/tt_000/10E8.c
-    src/servant/tt_000/448.c
-    src/servant/tt_000/45E4.c
-    src/servant/tt_000/4A8.c
-    src/servant/tt_000/608.c
-    src/servant/tt_000/spriteparts.c
+    src/servant/tt_000/bat.c
+    src/servant/tt_000/servant_clutdata.c
+    src/servant/tt_000/bat_animation_data.c
+    src/servant/tt_000/bat_data.c
+    src/servant/tt_000/servant_spriteparts.c
+    src/servant/tt_000/servant_events.c
+)
+
+set(SOURCE_FILES_TT_001
+    src/servant/tt_001/ghost.c
+    src/servant/tt_001/servant_clutdata.c
+    src/servant/tt_001/ghost_animation_data.c
+    src/servant/tt_001/ghost_data.c
+    src/servant/tt_001/servant_spriteparts.c
+    src/servant/tt_001/servant_events.c
+)
+
+set(SOURCE_FILES_TT_002
+    src/servant/tt_002/faerie.c
+    src/servant/tt_002/faerie_ability_data.c
+    src/servant/tt_002/faerie_animation_data.c
+    src/servant/tt_002/faerie_data.c
+    src/servant/tt_002/faerie_spriteparts.c
+    src/servant/tt_002/servant_events.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
@@ -253,17 +277,131 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/33164.c
     src/st/sel/3410C.c
     src/st/sel/3585C.c
-    src/st/sel/3642C.c
+    src/st/sel/cutscene.c
+)
+
+set(SOURCE_FILES_STAGE_CEN
+    src/pc/stages/stage_cen.c
+    src/st/cen/header.c
+    src/st/cen/e_laydef.c
+    src/st/cen/e_init.c
+    src/st/cen/rooms.c
+    src/st/cen/e_layout.c
+    src/st/cen/cutscene_data.c
+    src/st/cen/tile_data.c
+    src/st/cen/sprites.c
+    src/st/cen/st_debug.c
+    src/st/cen/e_breakable.c
+    src/st/cen/DB18.c
+    src/st/cen/d_prize_drops.c
+    src/st/cen/cutscene.c
+    src/st/cen/F890.c
+    src/st/cen/st_update.c
+    src/st/cen/collision.c
+    src/st/cen/create_entity.c
+    src/st/cen/e_red_door.c
+    src/st/cen/st_common.c
+    src/st/cen/e_collect.c
+    src/st/cen/blit_char.c
+    src/st/cen/e_misc.c
+    src/st/cen/e_stage_name.c
+    src/st/cen/e_particles.c
+    src/st/cen/e_room_fg.c
+    src/st/cen/popup.c
+    src/st/cen/prim_helpers.c
+)
+
+set(SOURCE_FILES_STAGE_NZ0
+    src/pc/stages/stage_nz0.c
+    src/st/nz0/header.c
+    src/st/nz0/e_laydef.c
+    src/st/nz0/e_init.c
+    src/st/nz0/rooms.c
+    src/st/nz0/e_layout.c
+    src/st/nz0/cutscene_data.c
+    src/st/nz0/tile_data.c
+    src/st/nz0/sprites.c
+    src/st/nz0/30958.c
+    src/st/nz0/e_breakable.c
+    src/st/nz0/d_prize_drops.c
+    src/st/nz0/311C0.c
+    src/st/nz0/337B4.c
+    src/st/nz0/e_explosion_puff_opaque.c
+    src/st/nz0/bossfight.c
+    src/st/nz0/slogra.c
+    src/st/nz0/gaibon.c
+    src/st/nz0/e_elevator.c
+    src/st/nz0/cutscene.c
+    src/st/nz0/maria.c
+    src/st/nz0/st_update.c
+    src/st/nz0/collision.c
+    src/st/nz0/create_entity.c
+    src/st/nz0/e_red_door.c
+    src/st/nz0/st_common.c
+    src/st/nz0/e_collect.c
+    src/st/nz0/blit_char.c
+    src/st/nz0/e_misc.c
+    src/st/nz0/e_particles.c
+    src/st/nz0/e_room_fg.c
+    src/st/nz0/popup.c
+    src/st/nz0/e_bone_scimitar.c
+    src/st/nz0/e_axe_knight.c
+    src/st/nz0/e_bloody_zombie.c
+    src/st/nz0/e_skeleton.c
+    src/st/nz0/e_spittle_bone.c
+    src/st/nz0/e_subweapon_container.c
+    src/st/nz0/e_blood_skeleton.c
+    src/st/nz0/e_magically_sealed_door.c
+    src/st/nz0/e_stage_name.c
+    src/st/nz0/prim_helpers.c
+    src/st/nz0/e_life_up.c
+)
+
+set (SOURCE_FILES_STAGE_ST0
+    src/pc/stages/stage_st0.c
+    src/st/st0/header.c
+    src/st/st0/e_laydef.c
+    src/st/st0/e_init.c
+    src/st/st0/rooms.c
+    src/st/st0/e_layout.c
+    src/st/st0/tile_data.c
+    src/st/st0/sprites.c
+    src/st/st0/e_lock_camera.c
+    src/st/st0/2805C.c
+    src/st/st0/cutscene.c
+    src/st/st0/cutscene_data.c
+    src/st/st0/2A218.c
+    src/st/st0/2A8DC.c
+    src/st/st0/title_card.c
+    src/st/st0/2C564.c
+    src/st/st0/2DAC8.c
+    src/st/st0/prologue_scroll.c
+    src/st/st0/3101C.c
+    src/st/st0/st_update.c
+    src/st/st0/collision.c
+    src/st/st0/create_entity.c
+    src/st/st0/e_red_door.c
+    src/st/st0/st_common.c
+    src/st/st0/e_collect.c
+    src/st/st0/e_misc.c
+    src/st/st0/e_particles.c
+    src/st/st0/e_room_fg.c
+    src/st/st0/popup.c
+    src/st/st0/3AB08.c
+    src/st/st0/3C5C0.c
+    src/st/st0/prim_helpers.c
+    src/st/st0/3D8F0.c
+    src/st/st0/e_bg_vortex.c
 )
 
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
-    src/st/wrp/d_1b8.c
+    src/st/wrp/header.c
     src/st/wrp/e_laydef.c
     src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
-    src/st/wrp/d_608.c
+    src/st/wrp/d_prize_drops.c
     src/st/wrp/rooms.c
     src/st/wrp/e_layout.c
     src/st/wrp/tile_data.c
@@ -291,6 +429,7 @@ set(SOURCE_FILES_WEAPON
     src/weapon/w_007.c
     src/weapon/w_012.c
     src/weapon/w_034.c
+    src/weapon/w_037.c
     src/weapon/w_041.c
     src/weapon/w_045.c
     src/weapon/w_046.c
@@ -304,6 +443,7 @@ set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WE
 set_source_files_properties(src/weapon/w_007.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_007)
 set_source_files_properties(src/weapon/w_012.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_012)
 set_source_files_properties(src/weapon/w_034.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_034)
+set_source_files_properties(src/weapon/w_037.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_037)
 set_source_files_properties(src/weapon/w_041.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_041)
 set_source_files_properties(src/weapon/w_045.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_045)
 set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
@@ -326,20 +466,25 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_STAGE_SEL}
+    ${SOURCE_FILES_STAGE_CEN}
+    ${SOURCE_FILES_STAGE_NZ0}
+    ${SOURCE_FILES_STAGE_ST0}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}
+    ${SOURCE_FILES_TT_001}
+    ${SOURCE_FILES_TT_002}
 )
 
 add_library(core ${SOURCE_FILES_CORE})
 
-target_include_directories(core PRIVATE
+target_include_directories(core PUBLIC
     include
     src/dra
     src/pc/3rd
-    )
+)
 
-target_compile_definitions(core PRIVATE
+target_compile_definitions(core PUBLIC
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
@@ -347,10 +492,9 @@ target_compile_definitions(core PRIVATE
     HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
-    )
+)
 
 # sdl2 target
-
 add_executable(${PROJECT_NAME}
     src/pc/sdl2.c
     src/pc/render_soft.c
@@ -361,65 +505,25 @@ add_executable(${PROJECT_NAME}
     src/pc/psxsdk/mednafen/gpu_polygon.cpp
     src/pc/psxsdk/mednafen/gpu_sprite.cpp
     src/pc/sdl2_macros.c
-    )
-
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${SDL2_INCLUDE_DIRS}
-    include
-    src/dra
-    src/pc/3rd
-    )
-
+)
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
 if (WIN32)
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${SDL2_LIBRARIES} core)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core)
 else()
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${SDL2_LIBRARIES} core m)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core m)
 endif()
-
-
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    _USE_MATH_DEFINES # needed for msvc
-    VERSION_PC
-    PERMUTER
-    NON_MATCHING
-    HARD_LINK
-    DEMO_KEY_PTR=0
-    _internal_version_us
-    )
-
 if(WANT_LIBSND_LLE)
-target_compile_definitions(core PRIVATE WANT_LIBSND_LLE=1)
-target_compile_definitions(${PROJECT_NAME} PRIVATE WANT_LIBSND_LLE=1)
+    target_compile_definitions(core PRIVATE WANT_LIBSND_LLE=1)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE WANT_LIBSND_LLE=1)
 endif()
 
 # null target
-
 add_executable(${PROJECT_NAME}_null
     src/pc/null.c
-    )
-
-target_include_directories(${PROJECT_NAME}_null PRIVATE
-    include
-    src/dra
-    src/pc/3rd
-    )
+)
 
 if (WIN32)
-target_link_libraries(${PROJECT_NAME}_null PRIVATE
-    core)
+    target_link_libraries(${PROJECT_NAME}_null PRIVATE core)
 else()
-target_link_libraries(${PROJECT_NAME}_null PRIVATE
-    core m)
+    target_link_libraries(${PROJECT_NAME}_null PRIVATE core m)
 endif()
-
-target_compile_definitions(${PROJECT_NAME}_null PRIVATE
-    _USE_MATH_DEFINES # needed for msvc
-    VERSION_PC
-    PERMUTER
-    NON_MATCHING
-    HARD_LINK
-    DEMO_KEY_PTR=0
-    _internal_version_us
-    )

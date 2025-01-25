@@ -76,7 +76,7 @@ typedef enum {
     GAIBON_DYING_TURN_INTO_BONES,
 } GaibonDyingSubSteps;
 
-extern u16 D_80180B68[];
+extern u16 g_EInitGaibonNP3[];
 
 static s32 D_801814B4[] = {
     0x001C0000,
@@ -168,9 +168,9 @@ void EntityGaibon(Entity* self) {
     case 0x0:
         if ((g_CastleFlags[SG_KILL_ALCH] == 0) &&
             (g_CastleFlags[SG_RETR_ENTR] == 0)) {
-            InitializeEntity(D_80180B68);
+            InitializeEntity(g_EInitGaibonNP3);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            CreateEntityFromCurrentEntity(E_801B8CC0, self + 1);
+            CreateEntityFromCurrentEntity(E_GAIBON_IDLE, self + 1);
             (self + 1)->zPriority = self->zPriority + 4;
             SetStep(GAIBON_IDLE);
             break;
@@ -423,7 +423,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     PlaySfxPositional(SFX_EXPLODE_B);
-                    CreateEntityFromEntity(0x54, self, other);
+                    CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -572,7 +572,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_NEAR_DEATH_TRANSFORM:
             if (AnimateEntity(D_80181570, self) == 0) {
                 self->ext.GS_Props.flag++;
-                self->palette = D_80180B68[3] + self->ext.GS_Props.flag;
+                self->palette = g_EInitGaibonNP3[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     D_801812CC = 1;
                     self->flags &= ~0xF;
@@ -637,7 +637,7 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
                 self->flags &= ~0xF;
-                self->palette = D_80180B68[3];
+                self->palette = g_EInitGaibonNP3[3];
                 self->step_s++;
             }
             break;
@@ -661,25 +661,7 @@ void EntityGaibon(Entity* self) {
         }
         break;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     hitboxPtr = &D_80181584[0];
     hitboxPtr += D_801815B4[0][self->animCurFrame] * 4;
@@ -695,7 +677,7 @@ void func_801B8CC0(Entity* self) {
     s16 animCurFrame;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180B68);
+        InitializeEntity(g_EInitGaibonNP3);
         self->hitboxState = 0;
     }
 
@@ -732,7 +714,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B74);
+        InitializeEntity(g_EInitGaibonProjectileNP3);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
@@ -763,7 +745,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B80);
+        InitializeEntity(g_EInitGaibonLargeProjectileNP3);
         if (self->params == 0) {
             self->animSet = ANIMSET_DRA(2);
             self->drawFlags = FLAG_DRAW_ROTZ;

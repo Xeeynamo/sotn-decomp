@@ -1,9 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * Overlay: NP3
- * Enemy: Slogra & Gaibon Boss
- */
-
 #include "np3.h"
 #include "sfx.h"
 
@@ -67,7 +62,7 @@ void EntitySlogra(Entity* self) {
             if ((self->hitPoints < (hitPoints >> 2)) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
                 self->hitboxState = 0;
-                PlaySfxPositional(NA_SE_EN_SLOGRA_HURT_2);
+                PlaySfxPositional(SFX_SLOGRA_ROAR_DEFEAT);
                 SetStep(SLOGRA_LOSE_SPEAR);
             }
         }
@@ -91,7 +86,7 @@ void EntitySlogra(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_80180B44);
+        InitializeEntity(g_EInitSlograNP3);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromCurrentEntity(E_SLOGRA_SPEAR, &self[1]);
 
@@ -167,14 +162,14 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_SPEAR_POKE:
         if (self->step_s == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_HISSING);
+            PlaySfxPositional(SFX_SLOGRA_ROAR);
             self->step_s++;
         }
         if (AnimateEntity(D_80181328, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_SPEAR_SLASH);
+            PlaySfxPositional(SFX_BOSS_WING_FLAP);
         }
         break;
 
@@ -220,7 +215,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_KNOCKBACK:
         if (self->step_s == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_HURT);
+            PlaySfxPositional(SFX_SLOGRA_PAIN_B);
             self->step_s++;
         }
         if (self->ext.GS_Props.nearDeath != 0) {
@@ -297,7 +292,7 @@ void EntitySlogra(Entity* self) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
-            PlaySfxPositional(NA_SE_EN_SLOGRA_BEAK_ATTACK);
+            PlaySfxPositional(SFX_BONE_THROW);
         }
         break;
 
@@ -389,30 +384,10 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_DEBUG:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params == 0) {
-                self->animCurFrame++;
-                self->params |= 1;
-            } else {
-                break;
-            }
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
-    hitbox = &D_8018142C[self->animCurFrame][D_801813EC];
-    hitbox--;
-    hitbox++;
+    hitbox = D_801813EC;
+    hitbox += 4 * D_8018142C[self->animCurFrame];
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
@@ -424,7 +399,7 @@ void EntitySlograSpear(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B50);
+        InitializeEntity(g_EInitSlograSpearNP3);
 
     case 1:
         self->facingLeft = self[-1].facingLeft;
@@ -483,7 +458,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B5C);
+        InitializeEntity(g_EInitSlograProjectileNP3);
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-4);
         } else {

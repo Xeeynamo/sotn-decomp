@@ -2,12 +2,12 @@
 #include <stage.h>
 
 extern ObjInit2 D_80180C10[];
-extern u16 g_eInitGeneric2[];
+extern u16 g_EInitCommon[];
 void func_us_8018AC0C(Entity* self) {
     ObjInit2* objInit = &D_80180C10[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->unk5A = LOH(objInit->facingLeft); // bug?

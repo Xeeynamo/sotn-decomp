@@ -18,10 +18,10 @@ void EntityRoomTransition2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AD0);
+        InitializeEntity(g_EInitSpawner);
         tilemap->y = 0xFC;
         g_Player.padSim = PAD_RIGHT;
-        D_8003C8B8 = 0;
+        g_PauseAllowed = false;
         g_Player.D_80072EFC = 1;
         g_CutsceneFlags |= 0x100;
         break;
@@ -103,7 +103,7 @@ void EntityRoomTransition2(Entity* self) {
             DestroyEntity(self);
             gents = &g_Entities[192];
             tilemap->y = 0;
-            D_8003C8B8 = 1;
+            g_PauseAllowed = true;
             DestroyEntity(gents);
             CreateEntityFromCurrentEntity(E_BG_LIGHTNING, gents);
         }
@@ -131,7 +131,7 @@ void EntityDeathStolenItem(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_eInitGeneric2);
+        InitializeEntity(g_EInitCommon);
         break;
 
     case 1:
@@ -243,7 +243,7 @@ void EntityDeathStolenItem(Entity* self) {
 }
 
 void EntityDeath(Entity* self) {
-    Entity* newEntity = &self[1];
+    Entity* newEntity = self + 1;
     Primitive* prim;
     s16 left, right;
     s32 primIndex;
@@ -292,7 +292,7 @@ void EntityDeath(Entity* self) {
         if (g_CutsceneFlags & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                InitializeEntity(g_eInitGeneric2);
+                InitializeEntity(g_EInitCommon);
                 self->animSet = ANIMSET_OVL(8);
                 self->palette = 0x2D6;
                 self->unk5A = 0x44;
@@ -301,7 +301,7 @@ void EntityDeath(Entity* self) {
                 self->ext.death.unk7C = 0;
                 self->flags |= FLAG_HAS_PRIMS;
                 DestroyEntity(newEntity);
-                CreateEntityFromCurrentEntity(E_ID_5B, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE, newEntity);
                 prim = &g_PrimBuf[primIndex];
 
                 for (i = 0; prim != NULL; i++) {
@@ -363,7 +363,7 @@ void EntityDeath(Entity* self) {
         if (!(self->rotZ & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
                 newEntity->rotZ = self->rotZ;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -545,7 +545,7 @@ void EntityDeath(Entity* self) {
         if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
@@ -562,235 +562,87 @@ void EntityDeath(Entity* self) {
     }
 }
 
-void EntityUnkId5B(Entity* entity) {
-    Entity* newEntity;
-
-    entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.i.hi;
-
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(g_eInitGeneric2);
-        entity->animSet = ANIMSET_OVL(8);
-        entity->palette = 0x2D6;
-        entity->animCurFrame = 0;
-        entity->unk5A = 0x44;
-        break;
-
-    case 1:
-        if (entity->ext.generic.unk7C.u != 0) {
-            switch (entity->ext.generic.unk7C.u) {
-            case 1:
-                AnimateEntity(D_80181B40, entity);
-                break;
-            case 2:
-                AnimateEntity(D_80181B4C, entity);
-                break;
-            case 3:
-                AnimateEntity(D_80181B4C, entity);
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEntity == NULL) {
-                    break;
-                }
-                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
-                newEntity->animCurFrame = entity->animCurFrame;
-                newEntity->params = 1;
-                break;
-            }
-        } else {
-            entity->animCurFrame = 0;
-        }
-    }
-    entity->ext.generic.unk7C.s = 0;
-}
-
-void EntityUnkId5E(Entity* entity) {
-    s16 animCurFrame;
-
-    switch (entity->step) {
-    case 0:
-        animCurFrame = entity->animCurFrame;
-        InitializeEntity(g_eInitGeneric2);
-        entity->animCurFrame = animCurFrame;
-        entity->animSet = ANIMSET_OVL(8);
-        entity->palette = 0x2D6;
-        entity->unk5A = 0x44;
-        if (entity->params != 0) {
-            entity->drawFlags = FLAG_DRAW_UNK8;
-            entity->ext.generic.unk84.U16.unk0 = 0x40;
-        } else {
-            entity->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
-            entity->ext.generic.unk84.U16.unk0 = 0x20;
-        }
-        entity->unk6C = 0x40;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        break;
-
-    case 1:
-        if (!(--entity->ext.generic.unk84.U16.unk0)) {
-            DestroyEntity(entity);
-            break;
-        }
-        if (entity->params != 0) {
-            entity->unk6C = (s8)entity->unk6C - 1;
-        } else {
-            entity->unk6C += -2;
-        }
-        break;
-    }
-}
-
-void func_801C13F8() {
-    Entity* entity;
-    s16 temp_s3;
-    s8 temp_s4;
-    s32 i;
-
-    temp_s4 = Random() & 3;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-
-    for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            // Make a EntityWargExplosionPuffOpaque
-            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
-            entity->params = 2;
-            entity->ext.wargpuff.unk89 = 6 - i;
-            entity->ext.wargpuff.unk84 = temp_s3;
-            entity->ext.wargpuff.unk88 = temp_s4;
-        }
-    }
-}
-
-// A single "puff" of the warg explosion animation, opaque
-void EntityWargExplosionPuffOpaque(Entity* self) {
-    Unkstruct_80180FE0* obj;
-    s32 velocityX;
-    s32 velocityY;
-    s32 params;
-    s32 temp_s0;
-    s32 adjVelocityX;
-    s32 adjVelocityY;
-    u32 temp_v0;
-    s32 rnd;
+// Not 100% sure about this entity, but since it's making scythe shadows,
+// going to guess it's the scythe.
+void EntityDeathScythe(Entity* self) {
+    u16 tempstep;
+    // this is Death.
+    Entity* otherEntity = self - 1;
+    self->posX.i.hi = otherEntity->posX.i.hi;
+    self->posY.i.hi = otherEntity->posY.i.hi;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_InitializeEntityData0);
-        params = self->params & 0xF;
-        obj = &D_80181C5C[params];
-        self->palette = obj->palette + 0xD0;
-        self->drawMode = obj->drawMode;
-        self->animSet = obj->animSet;
-        self->unk5A = obj->unk2;
-        self->ext.wargpuff.unk80 = obj->unk8;
-        self->step = params + 1;
-
-        temp_v0 = self->params & 0xFF00;
-        if (temp_v0 != 0) {
-            self->zPriority = temp_v0 >> 8;
-        }
-
-        if (self->params & 0xF0) {
-            self->palette = 0x819F;
-            self->drawMode = DRAW_TPAGE;
-            self->facingLeft = 1;
-        }
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(8);
+        self->animCurFrame = 0;
+        self->palette = 0x2D6;
+        self->unk5A = 0x44;
         break;
 
     case 1:
-        MoveEntity();
-        self->velocityY = FIX(1.0);
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 2:
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) != 0) {
-            switch (self->step_s) {
-            case 0:
-                self->drawFlags = FLAG_DRAW_UNK8;
-                self->unk6C = 0x80;
-                self->step_s++;
-                break;
-
+        tempstep = self->ext.deathScythe.extStep;
+        if (tempstep) {
+            switch (tempstep) {
             case 1:
-                if (self->animFrameIdx == 5) {
-                    self->step_s++;
-                }
+                AnimateEntity(D_80181B40, self);
                 break;
-
             case 2:
-                self->unk6C += 0xFC;
+                AnimateEntity(D_80181B4C, self);
+                break;
+            case 3:
+                AnimateEntity(D_80181B4C, self);
+                otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (otherEntity == NULL) {
+                    break;
+                }
+                CreateEntityFromCurrentEntity(
+                    E_DEATH_SCYTHE_SHADOW, otherEntity);
+                otherEntity->animCurFrame = self->animCurFrame;
+                otherEntity->params = 1;
                 break;
             }
         } else {
-            DestroyEntity(self);
+            self->animCurFrame = 0;
         }
+    }
+    self->ext.deathScythe.extStep = 0;
+}
+
+// When meeting Death, the scythe spins around, leaving behind semi-transparent
+// copies of itself. This entity represents those semi-transparent copies.
+// Identified through NOP-out in emulator.
+void EntityDeathScytheShadow(Entity* self) {
+    s16 animCurFrame;
+
+    switch (self->step) {
+    case 0:
+        animCurFrame = self->animCurFrame;
+        InitializeEntity(g_EInitCommon);
+        self->animCurFrame = animCurFrame;
+        self->animSet = ANIMSET_OVL(8);
+        self->palette = 0x2D6;
+        self->unk5A = 0x44;
+        if (self->params != 0) {
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->ext.deathScythe.timer = 0x40;
+        } else {
+            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+            self->ext.deathScythe.timer = 0x20;
+        }
+        self->unk6C = 0x40;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         break;
 
-    case 3:
-        if (self->step_s == 0) {
-            self->drawFlags |= FLAG_DRAW_ROTZ;
-            switch (self->ext.wargpuff.unk88) {
-            case 1:
-                if (self->ext.wargpuff.unk89 >= 0x4) {
-                    self->ext.wargpuff.unk89 += 0xFD;
-                    self->ext.wargpuff.unk84 -= 0x800;
-                }
-                break;
-
-            case 2:
-                self->ext.wargpuff.unk84 =
-                    (u16)self->ext.wargpuff.unk84 +
-                    ((u8)self->ext.wargpuff.unk89 * 0xC0);
-                break;
-            }
-            self->ext.wargpuff.unk84 = self->ext.wargpuff.unk84 & 0xFFF;
-            self->rotZ = self->ext.wargpuff.unk84 & 0xFFF;
-            temp_s0 = self->ext.wargpuff.unk89 * 0x140;
-            temp_s0 /= 28;
-            self->velocityX = temp_s0 * rsin(self->ext.wargpuff.unk84);
-            self->velocityY = -(temp_s0 * rcos(self->ext.wargpuff.unk84));
-            self->step_s++;
-        }
-
-        if (self->animFrameIdx >= 13) {
-            velocityX = self->velocityX;
-            if (velocityX < 0) {
-                adjVelocityX = velocityX + 3;
-            } else {
-                adjVelocityX = velocityX;
-            }
-            self->velocityX = velocityX - (adjVelocityX >> 2);
-
-            velocityY = self->velocityY;
-            if (velocityY < 0) {
-                adjVelocityY = velocityY + 3;
-            } else {
-                adjVelocityY = velocityY;
-            }
-            self->velocityY = velocityY - (adjVelocityY >> 2);
-        }
-        MoveEntity();
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
+    case 1:
+        if (!(--self->ext.deathScythe.timer)) {
             DestroyEntity(self);
+            break;
         }
-        break;
-
-    case 4:
-        if (self->step_s == 0) {
-            rnd = Random();
-            self->velocityY = FIX(-0.75);
-            self->facingLeft = rnd & 1;
-            self->rotX = 0xC0;
-            self->drawFlags |= FLAG_DRAW_ROTX;
-            self->step_s++;
-        }
-        MoveEntity();
-        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
-            DestroyEntity(self);
+        if (self->params != 0) {
+            self->unk6C--;
+        } else {
+            self->unk6C += -2;
         }
         break;
     }

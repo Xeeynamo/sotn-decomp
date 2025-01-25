@@ -290,7 +290,7 @@ void HandleTitleScreen(void) {
 #include "../../destroy_entity.h"
 #endif
 
-void func_801B4B9C(Entity* entity, s16 step) {
+void SEL_SetStep(Entity* entity, s16 step) {
     entity->step = step;
     entity->step_s = 0;
     entity->animFrameIdx = 0;
@@ -301,6 +301,8 @@ void func_801B4B9C(Entity* entity, s16 step) {
 #include "../animate_entity.h"
 #endif
 
+// Note: SEL uses entities weirdly. This probably shouldn't be PLAYER.
+// g_Entities[0] is probably its own thing.
 void func_801B4C68(void) {
     Entity* player;
     s16 primIndex;
@@ -336,114 +338,105 @@ void func_801B4C68(void) {
 }
 
 void func_801B4D78(void) {
-    Entity* e = &g_Entities[UNK_ENTITY_3];
+    Entity* self = &g_Entities[UNK_ENTITY_3];
 
-    if (e->step == 0) {
-        e->animSet = ANIMSET_OVL(1);
-        e->animCurFrame = 1;
-        e->palette = 0x200;
-        e->ext.generic.unk80.modeS32 = 0x5C0000;
-        e->posY.i.hi = 208;
-        e->zPriority = 0x80;
-        e->step = 1;
+    if (self->step == 0) {
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 1;
+        self->palette = 0x200;
+        self->ext.unkSelEnts.unk80.val = FIX(92);
+        self->posY.i.hi = 208;
+        self->zPriority = 0x80;
+        self->step = 1;
     }
 }
 
 void func_801B4DE0(void) {
-    Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[UNK_ENTITY_2];
     s16 primIndex;
-    POLY_GT4* poly;
+    Primitive* prim;
 
-    switch (unkEntity->step) {
+    switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            poly = &g_PrimBuf[primIndex];
-            unkEntity->primIndex = primIndex;
-            unkEntity->flags |= FLAG_HAS_PRIMS;
-            *(s32*)&unkEntity->ext.generic.unk7C = poly;
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->ext.unkSelEnts.prim = prim;
 
-            poly->x1 = poly->x3 = 255;
-            poly->y0 = poly->y1 = 4;
-            poly->y2 = poly->y3 = 228;
+            prim->x1 = prim->x3 = 255;
+            prim->y0 = prim->y1 = 4;
+            prim->y2 = prim->y3 = 228;
 
-            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
-                    poly->b3 = 255;
+            PCOL(prim) = 255;
 
-            poly->pad2 = 0xC8;
-            poly->x0 = poly->x2 = 0;
-            poly->pad3 = 81;
+            prim->priority = 0xC8;
+            prim->x0 = prim->x2 = 0;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
             D_801BC3E4 = 0;
-            unkEntity->step++;
+            self->step++;
         }
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->ext.generic.unk7C;
+        prim = self->ext.unkSelEnts.prim;
         if (D_801BC3E4 != 0) {
-            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                    poly->r0 = poly->b3 - 2;
-            if (poly->r0 < 5) {
+            PCOL(prim) = prim->b3 - 2;
+            if (prim->r0 < 5) {
                 D_801BC3E4 = 0;
-                unkEntity->step++;
+                self->step++;
             }
         }
         break;
 
     case 2:
-        poly = *(s32*)&unkEntity->ext.generic.unk7C;
+        prim = self->ext.unkSelEnts.prim;
         if (D_801BC3E4 != 0) {
-            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                    poly->r0 = poly->b3 + 1;
-            if (poly->r0 >= 254) {
+            PCOL(prim) = prim->b3 + 1;
+            if (prim->r0 >= 254) {
                 D_801BC3E4 = 0;
-                unkEntity->step++;
+                self->step++;
             }
         }
     }
 }
 
 void func_801B4FFC(void) {
-    Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[UNK_ENTITY_2];
     s16 primIndex;
-    POLY_GT4* poly;
+    Primitive* prim;
 
-    switch (unkEntity->step) {
+    switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex != -1) {
-            poly = &g_PrimBuf[primIndex];
-            unkEntity->primIndex = primIndex;
-            unkEntity->flags |= FLAG_HAS_PRIMS;
-            *(s32*)&unkEntity->ext.generic.unk7C = poly;
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->ext.unkSelEnts.prim = prim;
 
-            poly->x1 = poly->x3 = 384;
-            poly->y0 = poly->y1 = 4;
-            poly->y2 = poly->y3 = 228;
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 384;
+            prim->y0 = prim->y1 = 4;
+            prim->y2 = prim->y3 = 228;
 
-            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
-                    poly->b3 = poly->x0 = poly->x2 = 0;
+            PCOL(prim) = 0;
 
-            poly->pad2 = 0xC8;
-            poly->pad3 = 0x51;
+            prim->priority = 0xC8;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
 
-            unkEntity->step++;
+            self->step++;
         }
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->ext.generic.unk7C;
+        prim = self->ext.unkSelEnts.prim;
         if (D_801BC3E4 != 0) {
-            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                    poly->r0 = poly->b3 + 2;
-            if (poly->r0 >= 254) {
+            PCOL(prim) = prim->b3 + 2;
+            if (prim->r0 >= 254) {
                 D_801BC3E4 = 0;
-                unkEntity->step++;
+                self->step++;
             }
         }
 
@@ -516,71 +509,72 @@ void func_801B519C(void) {
     }
 }
 
+// Compare to func_801B585C
 void func_801B5350(void) {
-    Entity* entity = &g_Entities[UNK_ENTITY_5];
+    Entity* self = &g_Entities[UNK_ENTITY_5];
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->animSet = ANIMSET_DRA(1);
-        entity->animCurFrame = 142;
-        entity->ext.generic.unk80.modeS32 = 0x800000;
-        entity->posY.i.hi = 159;
-        entity->zPriority = 0xC0;
-        entity->unk5A = 0;
-        entity->palette = 0x8100;
-        entity->step = 1;
+        self->animSet = ANIMSET_DRA(1);
+        self->animCurFrame = 142;
+        self->ext.unkSelEnts.unk80.val = FIX(0x80);
+        self->posY.i.hi = 159;
+        self->zPriority = 0xC0;
+        self->unk5A = 0;
+        self->palette = 0x8100;
+        self->step = 1;
         break;
 
     case 1:
-        entity->animCurFrame = 142;
+        self->animCurFrame = 142;
         break;
 
     case 2:
-        if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
-            func_801B4B9C(entity, 3);
+        if (!(AnimateEntity(D_80180528, self) & 0xFF)) {
+            SEL_SetStep(self, 3);
         }
-        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
 
     case 3:
-        AnimateEntity(D_80180504, entity);
-        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
-        if (entity->ext.generic.unk80.modeS16.unk2 < 0x40) {
-            entity->step = 255;
+        AnimateEntity(D_80180504, self);
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        if (self->ext.unkSelEnts.unk80.i.hi < 0x40) {
+            self->step = 255;
         }
         break;
     }
 }
 
 void func_801B54C8(void) {
-    Entity* e = &g_Entities[UNK_ENTITY_7];
+    Entity* self = &g_Entities[UNK_ENTITY_7];
 
-    if (e->step == 0) {
-        e->animSet = ANIMSET_OVL(2);
-        e->animCurFrame = 38;
-        e->facingLeft = 1;
-        e->unk5A = 0xF;
-        e->ext.generic.unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 158;
-        e->zPriority = 0xC0;
-        e->palette = 0x8210;
-        e->step = 1;
+    if (self->step == 0) {
+        self->animSet = ANIMSET_OVL(2);
+        self->animCurFrame = 38;
+        self->facingLeft = 1;
+        self->unk5A = 0xF;
+        self->ext.unkSelEnts.unk80.val = FIX(120);
+        self->posY.i.hi = 158;
+        self->zPriority = 0xC0;
+        self->palette = 0x8210;
+        self->step = 1;
     }
 }
 
 void func_801B5548(void) {
-    Entity* e = &g_Entities[UNK_ENTITY_7];
+    Entity* self = &g_Entities[UNK_ENTITY_7];
 
-    if (e->step == 0) {
-        e->animSet = ANIMSET_OVL(2);
-        e->animCurFrame = 7;
-        e->unk5A = 0xF;
-        e->ext.generic.unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 158;
-        e->zPriority = 0xC0;
-        e->palette = 0x8210;
-        e->facingLeft = 0;
-        e->step = 1;
+    if (self->step == 0) {
+        self->animSet = ANIMSET_OVL(2);
+        self->animCurFrame = 7;
+        self->unk5A = 0xF;
+        self->ext.unkSelEnts.unk80.val = FIX(120);
+        self->posY.i.hi = 158;
+        self->zPriority = 0xC0;
+        self->palette = 0x8210;
+        self->facingLeft = 0;
+        self->step = 1;
     }
 }
 
@@ -594,7 +588,7 @@ void func_801B55C8(void) {
         self->unk5A = 0x46;
         self->palette = 0x258;
         self->facingLeft = 1;
-        self->ext.generic.unk80.modeS32 = 0x800000;
+        self->ext.unkSelEnts.unk80.val = FIX(0x80);
         self->posY.i.hi = 0xA0;
         self->zPriority = 0xC0;
         self->step++;
@@ -605,11 +599,11 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->velocityX = FIX(-0.75);
-            func_801B4B9C(self, 2);
+            SEL_SetStep(self, 2);
         }
         break;
     case 2:
-        self->ext.generic.unk80.modeS32 += 0xFFFF4000;
+        self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         if (!(AnimateEntity(D_80180580, self) & 0xFF)) {
             self->animSet = ANIMSET_OVL(3);
             self->animCurFrame = 0xC;
@@ -623,7 +617,7 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->facingLeft = 0;
-            func_801B4B9C(self, 4);
+            SEL_SetStep(self, 4);
         }
         break;
     case 4:
@@ -631,7 +625,7 @@ void func_801B55C8(void) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0xC;
-            func_801B4B9C(self, 5);
+            SEL_SetStep(self, 5);
         }
         break;
     case 5:
@@ -640,7 +634,7 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->facingLeft = 1;
             self->animCurFrame = 0x2C;
-            func_801B4B9C(self, 6);
+            SEL_SetStep(self, 6);
         }
         break;
     case 6:
@@ -648,14 +642,14 @@ void func_801B55C8(void) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0x20;
-            func_801B4B9C(self, 7);
+            SEL_SetStep(self, 7);
         }
-        self->ext.generic.unk80.modeS32 += 0xFFFF4000;
+        self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         break;
     case 7:
         AnimateEntity(D_80180564, self);
-        self->ext.generic.unk80.modeS32 += 0xFFFE8000;
-        if (self->ext.generic.unk80.modeS16.unk2 < 0x20) {
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        if (self->ext.unkSelEnts.unk80.i.hi < 0x20) {
             self->step = 0xFF;
         }
         break;

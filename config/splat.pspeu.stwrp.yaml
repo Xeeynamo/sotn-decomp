@@ -1,25 +1,26 @@
 options:
-  platform:     psp
-  basename:     dra
-  base_path:    ..
-  build_path:   build/pspeu
-  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
-  asm_path:     asm/pspeu/st/wrp_psp
-  asset_path:   assets/st/wrp
-  src_path:     src/st
+  platform: psp
+  basename: dra
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
+  asm_path: asm/pspeu/st/wrp_psp
+  asset_path: assets/st/wrp
+  src_path: src/st
   ld_script_path: build/pspeu/stwrp.ld
-  compiler:     GCC
+  compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.stwrp.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stwrp.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.stwrp.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stwrp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: yes
   asm_jtbl_label_macro: jlabel
-  symbol_name_format : psp_$VRAM
+  symbol_name_format: psp_$VRAM
   nonmatchings_path: psp
+  disassemble_all: true
   section_order:
     - ".text"
     - ".data"
@@ -27,23 +28,22 @@ options:
     - ".bss"
   ld_bss_is_noload: True
   disasm_unknown: True
+  global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
-    .include "macro.inc"
 sha1: 0584ddb3ba1afce61592d43497212fcb8ebf797b
-
 segments:
   - [0x0, bin, mwo_header]
   - name: stwrp
     type: code
     start: 0x00000080
-    vram:  0x09237700
+    vram: 0x09237700
     bss_size: 0x1180
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, wrp_psp/create_entity]
+      - [0x80, c, wrp/create_entity]
       - [0x1028, c, wrp_psp/e_stage_name]
       - [0x1EA8, c, wrp/e_red_door]
       - [0x31B0, c, wrp/st_update]
@@ -52,13 +52,12 @@ segments:
       - [0x4100, c, wrp/e_particles]
       - [0x4C78, c, wrp_psp/blit_char]
       - [0x5308, c, wrp_psp/e_collect]
-      - [0x7448, c, wrp_psp/e_misc]
-      - [0x95D0, c, wrp_psp/collision]
+      - [0x8580, c, wrp_psp/e_misc]
+      - [0x95D0, c, wrp/collision]
       - [0xB7A8, c, wrp/popup]
       - [0xBDA0, c, wrp/e_room_fg]
       - [0xBEB8, c, wrp/st_common]
-      - [0xC9A0, c, wrp_psp/stage_name_new]
-      - [0xCEA0, c, wrp_psp/prim_helpers]
+      - [0xC9A0, c, wrp/prim_helpers]
       - [0xD0E0, c, wrp_psp/st_init_wrp]
       - [0xD1B8, c, wrp/e_breakable]
       - [0xD338, c, wrp/st_debug]
@@ -71,38 +70,41 @@ segments:
       - [0xEDD8, .data, wrp_psp/e_collect] # g_goldCollectTexts
       - [0xEE50, .data, wrp_psp/e_collect] # c_GoldPrizes
       - [0xEE80, .data, wrp_psp/e_collect] # c_HeartPrizes
-      - [0xEEA0, data] # D_psp_09246520
-      - [0xEF40, data] # D_psp_092465C0
-      - [0xEF60, data] # D_psp_092465E0
-      - [0xEF70, data] # D_psp_092465F0
-      - [0xEF80, data] # D_psp_09246600
-      - [0xEF90, data] # D_psp_09246610
-      - [0xEFA0, data] # D_psp_09246620
-      - [0xEFB0, data] # D_psp_09246630
+      - [0xEE88, .data, wrp_psp/e_collect] # g_ExplosionYVelocities
+      - [0xEEA0, .data, wrp_psp/e_collect] # D_80180ED8
+      - [0xEEB8, .data, wrp_psp/e_collect] # g_bigRedFireballAnim
+      - [0xEED8, .data, wrp_psp/e_collect] # D_80180F08
+      - [0xEF08, .data, wrp_psp/e_collect] # D_80180F38
+      - [0xEF40, .data, wrp_psp/e_collect] # D_80180F6C
+      - [0xEF48, .data, wrp_psp/e_collect] # g_ExplosionAnimations
+      - [0xEF60, .data, wrp_psp/e_collect] # g_RelicOrbTextBg1EY
+      - [0xEF70, .data, wrp_psp/e_collect] # g_RelicOrbTextBg1SY
+      - [0xEF80, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2SY
+      - [0xEF90, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2EY
+      - [0xEFA0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleX
+      - [0xEFB0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleY
       - [0xEFC0, data] # D_psp_09246640
       - [0xEFD0, data] # D_psp_09246650
       - [0xEFE0, data] # D_psp_09246660
       - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
       - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
-      - [0xF060, data] # D_psp_092466E0
-      - [0xF390, data] # D_psp_09246A10
-      - [0xF3A0, data] # D_psp_09246A20
-      - [0xF440, data] # D_psp_09246AC0
+      - [0xF060, .data, wrp/collision]
+      - [0xF438, data] # D_psp_09246AB8
       - [0xF450, data] # D_psp_09246AD0
       - [0xF460, data] # eRoomForegroundInit
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
-      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # g_eRedDoorTiles
+      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # WRP_RedDoorTiles
       - [0xF7B0, .data, wrp_psp/wrp_data_F7B0] # D_psp_09246E30
-      - [0xF810, .data, wrp_psp/wrp_data_F810] # g_eBreakableInit
-      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_InitializeData0
-      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_InitializeEntityData0
+      - [0xF810, .data, wrp_psp/wrp_data_F810] # WRP_EInitBreakable
+      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_EInitObtainable
+      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_EInitParticle
       - [0xF840, data] # D_psp_09246EC0
       - [0xF850, data] # D_psp_09246ED0
       - [0xF860, data] # D_80180488
-      - [0xF870, data] # g_eInitGeneric2
+      - [0xF870, data] # g_EInitCommon
       - [0xF880, data] # D_psp_09246F00
       - [0xF890, data] # D_801804C4
       - [0xF8A0, data] # D_psp_09246F20
@@ -132,9 +134,8 @@ segments:
       - [0x14430, .data, wrp/warp] # EntityWarpRoom FntPrint strings
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp_psp/e_collect]
-      - [0x144D0, .rodata, wrp_psp/e_misc]
       - [0x144F8, .rodata, wrp/warp]
-      - [0x14500, .bss, wrp_psp/create_entity]
+      - [0x14500, .bss, wrp/create_entity]
       - [0x14520, .bss, wrp_psp/e_collect]
       - [0x14560, .bss, wrp_psp/bss]
   - [0x14580]

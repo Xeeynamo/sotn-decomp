@@ -29,7 +29,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        temp_s0 = self->ext.hpNumMove.unk80;
+        temp_s0 = self->ext.hpNumMove.number;
         self->primIndex = AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -63,13 +63,13 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
             prim->clut = 0x1B2;
-            if (self->ext.hpNumMove.unk80 == 0) {
+            if (self->ext.hpNumMove.number == 0) {
                 prim->clut = 0x1B4;
             }
-            if (self->ext.hpNumMove.unk82 == 1) {
+            if (self->ext.hpNumMove.type == 1) {
                 prim->clut = 0x1B8;
             }
-            if (self->ext.hpNumMove.unk82 == 2) {
+            if (self->ext.hpNumMove.type == 2) {
                 prim->clut = 0x1B6;
             }
             prim->tpage = 0x1A;
@@ -99,17 +99,17 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             prim->r0 = 0xFF;
             prim->g0 = 0x40;
             prim->b0 = 0x40;
-            if (self->ext.hpNumMove.unk80 == 0) {
+            if (self->ext.hpNumMove.number == 0) {
                 prim->r0 = 0x40;
                 prim->g0 = 0x40;
                 prim->b0 = 0xFF;
             }
-            if (self->ext.hpNumMove.unk82 == 1) {
+            if (self->ext.hpNumMove.type == 1) {
                 prim->r0 = 0x40;
                 prim->g0 = 0xFF;
                 prim->b0 = 0x40;
             }
-            if (self->ext.hpNumMove.unk82 == 2) {
+            if (self->ext.hpNumMove.type == 2) {
                 prim->r0 = 0xFF;
                 prim->g0 = 0x40;
                 prim->b0 = 0xFF;
@@ -127,7 +127,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     case 1:
         self->ext.hpNumMove.unk8C++;
         self->ext.hpNumMove.unk8E++;
-        if (self->ext.hpNumMove.unk82 != 2) {
+        if (self->ext.hpNumMove.type != 2) {
             self->posY.i.hi--;
         }
         if (--self->ext.hpNumMove.unk90 == 0) {
@@ -146,7 +146,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     case 3:
         self->ext.hpNumMove.unk8C++;
         self->ext.hpNumMove.unk8E++;
-        if (self->ext.hpNumMove.unk82 != 2) {
+        if (self->ext.hpNumMove.type != 2) {
             self->posY.i.hi--;
         }
         if (--self->ext.hpNumMove.unk90 == 0) {
@@ -192,7 +192,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         self->posX.i.hi += rcos(temp_v0_10) >> 9;
         self->posY.i.hi -= rsin(self->ext.hpNumMove.unk98) >> 9;
         if (self->ext.hpNumMove.unk90 == 0) {
-            if (self->ext.hpNumMove.unk82 != 2) {
+            if (self->ext.hpNumMove.type != 2) {
                 self->step++;
                 break;
             }
@@ -539,41 +539,44 @@ void EntityGuardText(Entity* self) {
     }
 }
 
-void func_80119D3C(Entity* entity) {
+// Small heart that rises and then flickers away.
+// Created by Factory 99 in AddHearts().
+// That call is in the Blood Cloak, Alucard Shield, and Herald Shield.
+void EntitySmallRisingHeart(Entity* self) {
     s32 temp;
     s32 cos;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->posY.i.hi -= 16;
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->ext.generic.unk7C.s = 0;
-        entity->step++;
-        entity->velocityY = FIX(-0.5);
-        entity->ext.generic.unk7E.modeU16 = 0x40;
-        entity->animCurFrame = 0xE;
-        entity->animSet = ANIMSET_DRA(3);
-        entity->ext.generic.unk80.modeS16.unk0 = 0x80;
-        entity->flags = FLAG_POS_CAMERA_LOCKED;
+        self->posY.i.hi -= 16;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->ext.smallRisingHeart.swayAngle = 0;
+        self->step++;
+        self->velocityY = FIX(-0.5);
+        self->ext.smallRisingHeart.swaySpeed = 0x40;
+        self->animCurFrame = 0xE;
+        self->animSet = ANIMSET_DRA(3);
+        self->ext.smallRisingHeart.timer = 0x80;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
         break;
 
     case 1:
-        if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
-            entity->drawFlags = FLAG_DRAW_UNK80;
+        if (self->ext.smallRisingHeart.timer < 32) {
+            self->drawFlags = FLAG_BLINK;
         }
-        entity->posY.val += entity->velocityY;
-        cos = rcos(entity->ext.generic.unk7C.s);
-        entity->ext.generic.unk7C.s =
-            entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
+        self->posY.val += self->velocityY;
+        cos = rcos(self->ext.smallRisingHeart.swayAngle);
+        self->ext.smallRisingHeart.swayAngle +=
+            self->ext.smallRisingHeart.swaySpeed;
         temp = cos * 8;
 
         if (!(g_GameTimer & 3)) {
-            entity->ext.generic.unk7E.modeU16--;
+            self->ext.smallRisingHeart.swaySpeed--;
         }
-        entity->posX.val += temp;
-        entity->ext.generic.unk80.modeS16.unk0--;
-        if (entity->ext.generic.unk80.modeS16.unk0 == 0) {
-            DestroyEntity(entity);
+        self->posX.val += temp;
+        self->ext.smallRisingHeart.timer--;
+        if (self->ext.smallRisingHeart.timer == 0) {
+            DestroyEntity(self);
         }
         break;
     }
@@ -673,7 +676,7 @@ void func_80119F70(Entity* entity) {
         break;
 
     case 1:
-        if (!(g_Player.unk0C & 0x10000)) {
+        if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
             DestroyEntity(entity);
             return;
         }
@@ -708,7 +711,7 @@ void func_80119F70(Entity* entity) {
 void func_8011A290(Entity* entity) {
     SubweaponDef subwpn;
 
-    func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
+    func_800FE3C4(&subwpn, entity->ext.subweapon.subweaponId, 0);
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
     entity->hitboxState = subwpn.hitboxState;
@@ -716,14 +719,14 @@ void func_8011A290(Entity* entity) {
     entity->stunFrames = subwpn.stunFrames;
     entity->hitEffect = subwpn.hitEffect;
     entity->entityRoomIndex = subwpn.entityRoomIndex;
-    entity->ext.generic.unkB2 = subwpn.crashId;
+    entity->ext.subweapon.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
 
 void func_8011A328(Entity* entity, s32 arg1) {
     SpellDef spell;
 
-    func_800FD9D4(&spell, arg1);
+    GetSpellDef(&spell, arg1);
     entity->attack = spell.attack;
     entity->attackElement = spell.attackElement;
     entity->hitboxState = spell.hitboxState;
@@ -734,21 +737,27 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_80118894(entity);
 }
 
-void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out) {
+/// @brief Fetches current FamiliarStats and
+/// @param servant Entity to update with spell or attack information
+/// @param spellId Spell/attack to execute
+/// @param fetchSpell Fndicates if spell information should be fetched
+/// @param out Fetched FamiliarStats set here
+void GetServantStats(
+    Entity* servant, s32 spellId, s32 fetchSpell, FamiliarStats* out) {
     SpellDef spell;
 
     *out = g_Status.statsFamiliars[g_Servant - 1];
-    if (arg2 != 0) {
-        func_800FD9D4(&spell, spellId);
-        entity->attack = spell.attack;
-        entity->attackElement = spell.attackElement;
-        entity->hitboxState = spell.hitboxState;
-        entity->nFramesInvincibility = spell.nFramesInvincibility;
-        entity->stunFrames = spell.stunFrames;
-        entity->hitEffect = spell.hitEffect;
-        entity->entityRoomIndex = spell.entityRoomIndex;
-        entity->attack = spell.attack * ((out->level * 4 / 95) + 1);
-        func_80118894(entity);
+    if (fetchSpell) {
+        GetSpellDef(&spell, spellId);
+        servant->attack = spell.attack;
+        servant->attackElement = spell.attackElement;
+        servant->hitboxState = spell.hitboxState;
+        servant->nFramesInvincibility = spell.nFramesInvincibility;
+        servant->stunFrames = spell.stunFrames;
+        servant->hitEffect = spell.hitEffect;
+        servant->entityRoomIndex = spell.entityRoomIndex;
+        servant->attack = spell.attack * ((out->level * 4 / 95) + 1);
+        func_80118894(servant);
     }
 }
 

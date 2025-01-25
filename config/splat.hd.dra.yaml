@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: true
   section_order:
     - ".data"
     - ".rodata"
@@ -83,11 +84,11 @@ segments:
       - [0x2D1C, .data, menu] # HD exclusive array of strings
       - [0x2D88, .data, menu]
       - [0x2ED0, .data, 5D5BC] # g_LevelHPIncrease
-      - [0x2EF8, .data, 5D5BC] # hud sprites def
-      - [0x2FCC, .data, 5D5BC] # g_CapePaletteDefs
-      - [0x301C, .data, 5D5BC] # g_CheatCodes
-      - [0x3024, .data, 5D5BC] # D_800A3014
-      - [0x3144, .data, 627C4] # D_800A3194
+      - [0x2EF8, .data, 5F60C] # hud sprites def
+      - [0x2FCC, .data, 5F60C] # g_CapePaletteDefs
+      - [0x301C, .data, 5F60C] # g_CheatCodes
+      - [0x3024, .data, 5F60C] # D_800A3014
+      - [0x3144, .data, 628AC] # D_800A3194
       - [0x31C0, .data, 63ED4] # D_800A3210
       - [0x3340, .data, 63ED4] # D_800A33A0-D_800A35D0
       - [0x37E8, .data, 63ED4] # Palette, GFX desc until D_800A3BB8
@@ -97,7 +98,9 @@ segments:
       - [0xCA20, .data, cd]
       - [0xCE48, .data, d_CD80]
       - [0xCEB8, .data, 692E8]
-      - [0xCFDC, .data, 6D59C]
+      - [0xCFDC, .data, 6D584]
+      - [0xD010, .data, 6E42C]
+      - [0xD030, .data, 6FDF8]
       - [0xD038, .data, d_CF74]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
@@ -143,13 +146,16 @@ segments:
       - [0x3C488, .rodata, 5087C]
       - [0x3C548, .rodata, menu]
       - [0x3CC18, .rodata, 5D5BC]
-      - [0x3CC78, .rodata, 627C4]
+      - [0x3CC60, .rodata, 5F60C]
+      - [0x3CC78, .rodata, 624DC]
+      - [0x3CC98, .rodata, 628AC]
+      - [0x3CCDC, .rodata, 62DEC]
       - [0x3CED4, .rodata, 63ED4]
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
       - [0x40D64, .rodata, 692E8]
-      - [0x40FA8, .rodata, 6D59C]
+      - [0x40FA8, .rodata, 6E42C]
       - [0x41224, .rodata, 704D0]
       - [0x4132C, .rodata, 71830]
       - [0x414A4, .rodata, 72BB0]
@@ -178,11 +184,16 @@ segments:
       - [0x50F00, c, 5087C]
       - [0x54E50, c, menu]
       - [0x5D570, c, 5D5BC]
-      - [0x62654, c, 627C4]
+      - [0x5D5C0, c, 5F60C]
+      - [0x6236C, c, 624DC]
+      - [0x6273C, c, 628AC]
+      - [0x62C7C, c, 62DEC]
       - [0x63D1C, c, 63ED4]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
-      - [0x6D2E0, c, 6D59C]
+      - [0x6D2C8, c, 6D584]
+      - [0x6E170, c, 6E42C]
+      - [0x6FB3C, c, 6FDF8]
       - [0x7021C, c, 704D0]
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]

@@ -19,6 +19,7 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
+  disassemble_all: true
   section_order:
     - ".data"
     - ".rodata"
@@ -35,18 +36,20 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0xA0, .data, header] # palette definitions
       - [0xE8, .data, header] # layers
-      - [0x128, data]
+      - [0x128, .data, header] # graphics banks
       - [0x220, .data, e_laydef] # layout entries header
       - [0x3C8, data]
-      - [0x590, data]
+      - [0x580, .data, st_debug]
       - [0x610, data]
       - [0x630, data]
       - [0x640, data]
       - [0x650, data]
+      - [0x660, .data, d_prize_drops]
       - [0x660, data]
       - [0x770, data]
-      - [0x938, .data, succubuscutscene]
+      - [0x938, .data, cutscene]
       - [0x944, data]
       - [0x97C, .data, st_update]
       - [0x9A8, .data, collision]
@@ -60,14 +63,39 @@ segments:
       - [0x14AC, data]
       - [0x1608, .data, e_layout] # layout entries data
       - [0x16C0, data]
+      - [0x16C8, .data, cutscene_data]
+      - [0x1D08, data] # unused
+      - [0x1D30, cmpgfx, stage_title_jp, 128, 128, 4] # unused
+      - [0x1F80, cmpgfx, stage_placeholder, 128, 128, 4]
+      - [0x2524, cmpgfx, e_succubus_g0, 128, 128, 4, 0xAEA8]
+      - [0x2F60, cmpgfx, e_succubus_g1, 128, 128, 4, 0xAEC8]
+      - [0x3A2C, cmpgfx, e_succubus_g2, 128, 128, 4, 0xAEC8]
+      - [0x46CC, cmpgfx, e_succubus_g3, 128, 128, 4, 0xAEC8]
+      - [0x5320, cmpgfx, e_succubus_g4, 128, 128, 4, 0xAEA8]
+      - [0x5EA0, cmpgfx, e_succubus_g5, 128, 128, 4, 0xAEA8]
+      - [0x6A50, cmpgfx, e_succubus_g6, 128, 128, 4, 0xAEA8]
+      - [0x7510, cmpgfx, e_succubus_g7, 128, 128, 4, 0xAF28]
+      - [0x800C, raw, cutscene_alucard]
+      - [0x8D8C, raw, cutscene_mother]
+      - [0x9B0C, raw, cutscene_succubus]
+      - [0xA88C, cmpgfx, stage_title_us, 128, 128, 4]
+      - [0xABE8, pal, D_8018ABE8]
+      - [0xADE8, pal, D_8018ADE8] # unused
+      - [0xAEA8, pal, e_succubus_p]
+      - [0xAF48, pal, D_8018AF48]
+      - [0xB048, pal, D_8018B048] # unused
+      - [0xB148, pal, D_8018B148]
+      - [0xB248, pal, D_8018B248] # unused
+      - [0xB348, pal, D_8018B348]
+      - [0xB448, pal, D_8018B448] # unused
       - [0xB548, .data, tile_data] # tile data
       - [0xBD48, .data, tile_data] # tile definitions
       - [0x10168, .data, sprites]
-      - [0x1171C, .rodata, 11A64]
+      - [0x1171C, .rodata, 11E34]
       - [0x11728, .rodata, succubus] # EntitySuccubus
-      - [0x11808, .rodata, succubuscutscene]
-      - [0x1181C, .rodata, succubuscutscene] #D_80180938, names
-      - [0x1183C, .rodata, succubuscutscene] #EntitySuccubusCutscene
+      - [0x11808, .rodata, cutscene]
+      - [0x1181C, .rodata, cutscene] #D_80180938, names
+      - [0x1183C, .rodata, cutscene] #DRE_EntityCutscene
       - [0x118C0, .rodata, 161DC] #EntityCSMoveAlucard, string and jumps
       - [0x118F8, .rodata, 161DC] # EntityUnkId23
       - [0x11910, .rodata, 1697C] # EntityFadeToWhite
@@ -77,9 +105,11 @@ segments:
       - [0x11A14, .rodata, e_misc]
       - [0x11A28, .rodata, 20734] # EntityStageNamePopup
       - [0x11A5C, .rodata, prim_helpers]
-      - [0x11A64, c]
-      - [0x11A64, c, succubus]
-      - [0x14774, c, succubuscutscene]
+      - [0x11A64, c, st_debug]
+      - [0x11D00, c, e_breakable]
+      - [0x11E34, c]
+      - [0x12104, c, succubus]
+      - [0x14774, c, cutscene]
       - [0x161DC, c]
       - [0x1697C, c]
       - [0x16F90, c, st_update]

@@ -49,14 +49,14 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityStopWatch,
     EntityStopWatchExpandingCircle,
     EntitySubwpnBible,
-    func_8012B78C,
+    EntitySubwpnBibleTrail,
     EntityBatFireball,
     func_80123B40,
     func_80119F70,
     UnknownEntId48,
     UnknownEntId49,
     func_80123A60,
-    func_80119D3C,
+    EntitySmallRisingHeart,
     EntityBatEcho,
     func_8011B530,
     func_8011F074,
@@ -92,13 +92,21 @@ void UpdatePlayerEntities(void) {
             continue;
         }
         if (entity->step == 0) {
-            if (entity->entityId < 0xD0) {
+            if (entity->entityId < SERVANT_ENTITY_START) {
                 // Objects 00-CF
                 entity->pfnUpdate = g_DraEntityTbl[entity->entityId];
+                // familiars
             } else if (entity->entityId < 0xE0) {
-                // Objects D0-DF
+                /* Objects D0-DF
+                 * This is setting the update function for your current servant.
+                 * In the servant code, entityId is updated when the "mode" of
+                 * the servant is changed like when the bat goes from "seek"
+                 * mode to "attack" mode.  These update functions start at
+                 * entityId = 0xD1 entityId = 0xD0 would be the init code.
+                 */
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];
+                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                       SERVANT_ENTITY_START];
             } else if (entity->entityId == 0xEF || entity->entityId == 0xFF ||
                        entity->entityId == 0xED || entity->entityId == 0xFD) {
                 entity->pfnUpdate = g_DraEntityTbl[1];
@@ -123,7 +131,7 @@ void UpdatePlayerEntities(void) {
                      entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
                     DestroyEntity(g_CurrentEntity);
                 } else {
-                    if (entity->flags & 0x100000) {
+                    if (entity->flags & FLAG_UNK_100000) {
                         UpdateAnim(NULL, D_800ACFB4);
                     }
                 }
@@ -153,7 +161,7 @@ void UpdatePlayerEntities(void) {
         }
     }
     // Appears to be a temporary debugging block that was left in.
-    if ((g_Player.unk0C & 0xC0000) ||
+    if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
         (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
 #if defined(VERSION_US)
         // Japanese for "without hit".
@@ -181,9 +189,11 @@ void func_8011A870(void) {
         }
 
         if (entity->step == 0) {
-            if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+            if (entity->entityId >= SERVANT_ENTITY_START &&
+                entity->entityId < 0xE0) {
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];
+                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                       SERVANT_ENTITY_START];
             } else {
                 continue;
             }
@@ -550,7 +560,7 @@ void func_8011B5A4(Entity* self) {
     switch (self->step) {
     case 0:
         // Note that paramsHi is uninitialized here - possible bug?
-        if ((g_Player.unk0C & 0x20000) && (paramsHi != 9)) {
+        if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
             DestroyEntity(self);
             return;
         }
@@ -597,34 +607,36 @@ void func_8011B5A4(Entity* self) {
             self->posY.i.hi -= (20 + (rand() % 4));
         }
         if (paramsHi == 4) {
-            for (i = paramsLo * 2; i < 14; i++) {
-                if (g_Player.colliders3[D_800AD5E0[i]].effects & 3) {
+            for (i = paramsLo * 2; i < LEN(D_800AD5E0); i++) {
+                if (g_Player.colWall[D_800AD5E0[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
                     break;
                 }
             }
-            if (i == 14) {
+            if (i == LEN(D_800AD5E0)) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5E0[i]].x;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5E0[i]].y;
+            self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5E0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5E0[i]].y;
             self->velocityY = FIX(-0.25);
             self->rotY = self->rotX = D_800AD570[1] + 0x40;
             self->step++;
             return;
         }
         if (paramsHi == 8) { /* switch 1 */
-            for (i = paramsLo * 2; i < 10; i++) {
-                if (g_Player.colliders3[D_800AD5F0[i]].effects & 3) {
+            for (i = paramsLo * 2; i < LEN(D_800AD5F0); i++) {
+                if (g_Player.colWall[D_800AD5F0[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
                     break;
                 }
             }
-            if (i == 10) {
+            if (i == LEN(D_800AD5F0)) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5F0[i]].x;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5F0[i]].y;
+            self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5F0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5F0[i]].y;
             self->velocityY = D_800AD558[paramsLo];
             self->rotY = self->rotX = D_800AD570[paramsLo] + 0x20;
             self->step++;
@@ -766,8 +778,8 @@ void EntityPlayerBlinkWhite(Entity* self) {
         sp48 = 1;
     }
     if ((((sp70 & 0x3F) != 0x1D) &&
-         (g_Player.unk0C & PLAYER_STATUS_MIST_FORM)) ||
-        (g_Player.unk0C & PLAYER_STATUS_AXEARMOR)) {
+         (g_Player.status & PLAYER_STATUS_MIST_FORM)) ||
+        (g_Player.status & PLAYER_STATUS_AXEARMOR)) {
         goto block_229;
     }
     if ((g_Player.unk6C) && sp70 != 0x20 && sp70 != 0x21 &&
@@ -997,7 +1009,7 @@ block_748:
                 }
                 break;
             case 0x7008:
-                if ((g_Player.unk0C & PLAYER_STATUS_UNK400000) == 0) {
+                if ((g_Player.status & PLAYER_STATUS_UNK400000) == 0) {
                     self->step += 1;
                 }
                 break;
@@ -1008,7 +1020,7 @@ block_748:
                 }
                 /* fallthrough */
             case 0x700B:
-                if ((g_Player.unk0C & PLAYER_STATUS_UNK40000000) == 0) {
+                if ((g_Player.status & PLAYER_STATUS_UNK40000000) == 0) {
                     self->step += 1;
                 }
                 break;
@@ -1393,8 +1405,8 @@ void EntityPlayerOutline(Entity* self) {
     s16 selfX;
     s16 selfY;
 
-    if ((g_Player.unk0C & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_UNK40000 |
-                           PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
+    if ((g_Player.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_DEAD |
+                            PLAYER_STATUS_STONE | PLAYER_STATUS_TRANSFORM)) ||
         !(PLAYER.animCurFrame & 0x7FFF) || (!PLAYER.animSet) ||
         ((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D))) {
         DestroyEntity(self);
@@ -1671,7 +1683,7 @@ void EntityGravityBootBeam(Entity* self) {
             self->step = 2;
         }
         // If transformed, timer drains faster
-        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->step = 3;
         }
         break;

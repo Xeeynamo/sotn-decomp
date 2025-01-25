@@ -9,7 +9,13 @@
 #define VERSION "hd"
 #elif defined(_internal_version_pspeu)
 #define VERSION_PSP
+// use this to flag code as only non-psp due to deadstripping.
+// will make it easier to restore stripped code if we ever work out a
+// solution for doing proper deadstripping like the original.
+#define PSP_DEADSTRIP
 #define VERSION "psp"
+#define NOP                                                                    \
+    static asm nop_##line##() { nop }
 #elif defined(_internal_version_beta)
 #define VERSION_BETA
 #define VERSION "beta"
@@ -17,6 +23,23 @@
 #warning "Version not specified. Falling back to the US version."
 #define VERSION_US
 #define VERSION "us"
+#endif
+
+#ifndef M2CTX
+#if defined(_MSC_VER)
+#if defined(_WIN64) || defined(_M_X64) || defined(_M_ARM64)
+#define PLATFORM_64BIT
+#endif
+#elif defined(__GNUC__) || defined(__clang__) || defined(__MWERKS__)
+#if defined(__x86_64__) || defined(__aarch64__) || defined(__ppc64__) ||       \
+    defined(__powerpc64__) || defined(__riscv_xlen)
+#define PLATFORM_64BIT
+#endif
+#else
+#if (defined(__LP64__) || defined(_LP64))
+#define PLATFORM_64BIT
+#endif
+#endif
 #endif
 
 #include "include_asm.h"
@@ -28,14 +51,21 @@
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 #define SQ(x) ((x) * (x))
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
-#define MAX(a, b) ((a) > (b) ? (b) : (a))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 #ifdef _MSC_VER
 #define __builtin_memcpy memcpy
 #endif
 
+#ifdef _MSC_VER
+#define ZERO_LEN 1
+#else
+#define ZERO_LEN 0
+#endif
+
 #if defined(VERSION_PC)
 #ifndef _MSC_VER
+#include <assert.h>
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
 #else
@@ -44,7 +74,7 @@
 #endif
 
 #elif defined(VERSION_PSP)
-#define STATIC_ASSERT(x)
+#define STATIC_ASSERT(x, y)
 #define PACKED
 
 #else
@@ -58,6 +88,7 @@
 #define LOHU(x) (*(u16*)&(x))
 #define LOW(x) (*(s32*)&(x))
 #define LOWU(x) (*(u32*)&(x))
+#define F(x) (*(f32*)&(x))
 
 #if defined(HACKS) && !defined(PERMUTER)
 #define ALIGNED4 __attribute__((aligned(4)))
@@ -74,6 +105,8 @@ int sprintf(char* dst, const char* fmt, ...);
 #define FIX(x) ((s32)((x) * 65536.0))
 // Get the integer part of such a fixed-point value
 #define FIX_TO_I(x) ((s32)((x) >> 16))
+// Convert an integer value to fixed-point
+#define I_TO_FIX(x) ((s32)((x) << 16))
 // Get the fractional part of such a fixed-point value
 #define FIX_FRAC(x) (*(s16*)&(x))
 
@@ -88,6 +121,8 @@ int sprintf(char* dst, const char* fmt, ...);
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
 #define FLT(x) ((s32)((x) * 4096.0))
+#define I_TO_FLT(x) ((s32)(x) << 12)
+#define FLT_TO_I(x) ((s32)(x) >> 12)
 
 // Access to the Scratchpad memory. Different on different systems.
 #if defined(VERSION_PC)
@@ -99,6 +134,7 @@ int sprintf(char* dst, const char* fmt, ...);
 #define SP(x) (0x1F800000 + (x))
 #endif
 
+#define CLAMP(x, min, max) x < min ? min : (x > max ? max : x)
 #define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
 #define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
 
