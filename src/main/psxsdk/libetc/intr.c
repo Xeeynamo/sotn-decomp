@@ -128,41 +128,39 @@ void trapIntr() {
     ReturnFromException();
 }
 
-Callback setIntr(s32 arg0, Callback arg1) {
-    Callback temp_s4;
-    u16 temp_v1;
-    s32 var_s3;
+Callback setIntr(s32 irq, Callback handler) {
+    Callback prevHandler;
+    s32 mask;
 
-    temp_s4 = intrEnv.handlers[arg0];
-    if ((arg1 != temp_s4) && (intrEnv.interruptsInitialized != 0)) {
-        temp_v1 = *g_InterruptMask;
+    prevHandler = intrEnv.handlers[irq];
+    if ((handler != prevHandler) && (intrEnv.interruptsInitialized != 0)) {
+        mask = *g_InterruptMask;
         *g_InterruptMask = 0;
-        var_s3 = temp_v1 & 0xFFFF;
-        if (arg1 != 0) {
-            intrEnv.handlers[arg0] = arg1;
-            var_s3 = var_s3 | (1 << arg0);
-            intrEnv.enabledInterruptsMask |= (1 << arg0);
+        if (handler != 0) {
+            intrEnv.handlers[irq] = handler;
+            mask = mask | (1 << irq);
+            intrEnv.enabledInterruptsMask |= (1 << irq);
         } else {
-            intrEnv.handlers[arg0] = 0;
-            var_s3 = var_s3 & ~(1 << arg0);
-            intrEnv.enabledInterruptsMask &= ~(1 << arg0);
+            intrEnv.handlers[irq] = 0;
+            mask = mask & ~(1 << irq);
+            intrEnv.enabledInterruptsMask &= ~(1 << irq);
         }
-        if (arg0 == 0) {
-            ChangeClearPAD(arg1 == 0);
-            ChangeClearRCnt(3, arg1 == 0);
+        if (irq == 0) {
+            ChangeClearPAD(handler == 0);
+            ChangeClearRCnt(3, handler == 0);
         }
-        if (arg0 == 4) {
-            ChangeClearRCnt(0, arg1 == 0);
+        if (irq == 4) {
+            ChangeClearRCnt(0, handler == 0);
         }
-        if (arg0 == 5) {
-            ChangeClearRCnt(1, arg1 == 0);
+        if (irq == 5) {
+            ChangeClearRCnt(1, handler == 0);
         }
-        if (arg0 == 6) {
-            ChangeClearRCnt(2, arg1 == 0);
+        if (irq == 6) {
+            ChangeClearRCnt(2, handler == 0);
         }
-        *g_InterruptMask = var_s3;
+        *g_InterruptMask = mask;
     }
-    return temp_s4;
+    return prevHandler;
 }
 
 void* stopIntr() {
