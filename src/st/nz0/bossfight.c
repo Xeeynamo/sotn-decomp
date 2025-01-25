@@ -210,7 +210,7 @@ void EntityBossFightManager(Entity* self) {
         newEnt->posY.i.hi = newEntY;
         newEnt->params = 5;
         g_BossFlag |= BOSS_FLAG_DOORS_OPEN; // Reopen the door
-        g_CastleFlags[SG_KILL_ALCH] = 1;
+        g_CastleFlags[SLO_GAI_DEFEATED] = 1;
         D_80097928 = 1;
         D_80097910 = MU_DANCE_OF_GOLD;
         self->step++;

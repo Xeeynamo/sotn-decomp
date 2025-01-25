@@ -62,7 +62,7 @@ void func_us_801BB984(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_16]) {
+        if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
             if (tempEntity->ext.et_801BBD90.unk84 == params &&
                 tempEntity->ext.et_801BBD90.unk85 == params) {
                 SetStep(2);

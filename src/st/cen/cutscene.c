@@ -171,7 +171,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if (g_CastleFlags[HG_CS_DONE] != 0) {
+        if (g_CastleFlags[MET_MARIA_IN_CEN] != 0) {
             DestroyEntity(self);
             return;
         }
@@ -603,7 +603,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     case 7:
         DestroyEntity(self);
-        g_CastleFlags[HG_CS_DONE] = 1;
+        g_CastleFlags[MET_MARIA_IN_CEN] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_GET_HOLYGLASSES, TIMEATTACK_SET_RECORD);
         g_CutsceneHasControl = 0;

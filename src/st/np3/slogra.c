@@ -82,7 +82,8 @@ void EntitySlogra(Entity* self) {
 
     switch (self->step) {
     case SLOGRA_INIT:
-        if (g_CastleFlags[SG_KILL_ALCH] || g_CastleFlags[SG_RETR_ENTR]) {
+        if (g_CastleFlags[SLO_GAI_DEFEATED] ||
+            g_CastleFlags[SLO_GAI_RETREATED]) {
             DestroyEntity(self);
             return;
         }
@@ -349,7 +350,7 @@ void EntitySlogra(Entity* self) {
             }
             self->ext.GS_Props.timer = 64;
             PlaySfxPositional(SFX_STUTTER_EXPLODE_A);
-            g_CastleFlags[SG_RETR_ENTR] |= 1;
+            g_CastleFlags[SLO_GAI_RETREATED] |= 1;
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
