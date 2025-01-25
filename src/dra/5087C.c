@@ -905,8 +905,7 @@ void func_800F223C(void) {
     g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
 }
 
-// seems to pre-populate the map with certain rooms explored
-// it might be related to the castle maps bought from the merchant
+// called when castle map is bought from the librarian
 void func_800F2288(s32 arg0) {
     s32 subMap;
     s32 idx;
