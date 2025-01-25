@@ -18,6 +18,9 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     if (x > 0x120 || x < -0x20 || y < -0x180 || y > 0x180) {
         return 0;
     }
+
+    x = pl->posX.i.hi - x;
+    y = pl->posY.i.hi - y;
 #else
     if (self->posX.i.hi & 0x100) {
         return 0;
@@ -25,10 +28,11 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     if (self->posY.i.hi & 0x100) {
         return 0;
     }
-#endif
 
     x = pl->posX.i.hi - self->posX.i.hi;
     y = pl->posY.i.hi - self->posY.i.hi;
+#endif
+
     if (self->facingLeft) {
         x += self->hitboxOffX;
     } else {
@@ -60,71 +64,73 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
     y += h;
     w += w;
     h += h;
-    if ((u16)x > w || (u16)y > h) {
-        return 0;
-    }
 
-    if (x && x != w) {
-        // check collision from top
-        if (flags & 4 && checks ^ 2 && pl->velocityY >= 0 && y < 8) {
-            pl->posY.i.hi -= y;
+    if ((u16)x <= w && (u16)y <= h) {
+
+        if (x && x != w) {
+            // check collision from top
+            if (flags & 4 && checks ^ 2 && pl->velocityY >= 0 && y < 8) {
+                pl->posY.i.hi -= y;
 #if STAGE == STAGE_ST0
-            g_Player.pl_vram_flag |= 0x41;
+                g_Player.pl_vram_flag |= 0x41;
 #else
-            D_80097488.y.i.hi -= y;
-            g_Player.pl_vram_flag |= 0x41;
-            if (plStatus & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
-                return 0;
-            }
-#endif
-
-            return 4;
-        }
-
-        // check collision from bottom
-        if (flags & 2 && checks & 2 && (pl->velocityY <= 0 || flags & 0x10)) {
-            y = h - y;
-            if (y < 0x10) {
-                pl->posY.i.hi += y;
-#if STAGE == STAGE_ST0
-                g_Player.pl_vram_flag |= 0x42;
-#else
-                D_80097488.y.i.hi += y;
-                g_Player.pl_vram_flag |= 0x42;
+                D_80097488.y.i.hi -= y;
+                g_Player.pl_vram_flag |= 0x41;
                 if (plStatus &
                     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
                     return 0;
                 }
 #endif
-                return 2;
+
+                return 4;
+            }
+
+            // check collision from bottom
+            if (flags & 2 && checks & 2 &&
+                (pl->velocityY <= 0 || flags & 0x10)) {
+                y = (s16)h - y;
+                if (y < 0x10) {
+                    pl->posY.i.hi += y;
+#if STAGE == STAGE_ST0
+                    g_Player.pl_vram_flag |= 0x42;
+#else
+                    D_80097488.y.i.hi += y;
+                    g_Player.pl_vram_flag |= 0x42;
+                    if (plStatus &
+                        (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                        return 0;
+                    }
+#endif
+                    return 2;
+                }
             }
         }
-    }
 
-    // check collision from the sides
-    if (y && y != h && flags & 1) {
-        if (checks & 1) {
-            x = w - x;
-            if (flags & 8 && x > 2) {
-                x = 2;
-            }
-            pl->posX.i.hi += x;
+        // check collision from the sides
+        if (y && y != h && flags & 1) {
+            if (checks & 1) {
+                x = (s16)w - x;
+                if (flags & 8 && x > 2) {
+                    x = 2;
+                }
+                pl->posX.i.hi += x;
 #if STAGE != STAGE_ST0
-            D_80097488.x.i.hi += x;
-            g_Player.pl_vram_flag |= 0x48;
+                D_80097488.x.i.hi += x;
+                g_Player.pl_vram_flag |= 0x48;
 #endif
-            return 1;
-        } else {
-            if (flags & 8 && x > 2) {
-                x = 2;
-            }
-            pl->posX.i.hi -= x;
+                return 1;
+            } else {
+                if (flags & 8 && x > 2) {
+                    x = 2;
+                }
+                pl->posX.i.hi -= x;
 #if STAGE != STAGE_ST0
 
-            D_80097488.x.i.hi -= x;
-            g_Player.pl_vram_flag |= 0x44;
+                D_80097488.x.i.hi -= x;
+                g_Player.pl_vram_flag |= 0x44;
 #endif
-            return 1;
+                return 1;
+            }
         }
     }
     return 0;
