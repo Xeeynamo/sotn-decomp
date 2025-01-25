@@ -29,7 +29,7 @@ typedef struct
 {
     u16 unk0;
     u16 unk2;
-    s32 unk4[11];
+    void (*unk4[11])();
     u16 unk30;
     u16 unk32;
     int unk34;

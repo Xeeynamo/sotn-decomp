@@ -11,7 +11,6 @@ struct Callbacks {
     int (*RestartCallback)(void);
 };
 
-extern unsigned short D_8002C2BA;
 extern struct Callbacks* D_8002D340;
 
 int VSync(int mode);
