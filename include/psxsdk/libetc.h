@@ -9,6 +9,7 @@ struct Callbacks {
     int (*StopCallback)(void);
     int (*VSyncCallbacks)(int ch, void (*f)());
     int (*RestartCallback)(void);
+    void* D_8002C2B8;
 };
 
 extern struct Callbacks* D_8002D340;
