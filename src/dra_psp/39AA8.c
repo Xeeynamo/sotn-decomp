@@ -154,7 +154,7 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     var_s1 = 0;
     while (true) {
         if ((&anim[idx * 2])[0] == 0xFFFD) {
-            for(idxSub = 0; true; idxSub++, var_s1++){
+            for (idxSub = 0; true; idxSub++, var_s1++) {
                 subanim = (u16*)D_800B0594[(&anim[idx * 2])[1] & 0xFF];
                 if ((&subanim[idxSub * 2])[0] == 0xFFFF) {
                     idx++;
@@ -193,7 +193,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
         g_CurrentEntity->hitboxHeight = *frameProps;
     }
     g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
-    if(PLAYER.animFrameDuration < 0){
+    if (PLAYER.animFrameDuration < 0) {
         return -1;
     } else {
         return 0;
@@ -248,7 +248,68 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", UpdateAnim);
+// Nasty casting. This is just
+// g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx] But PSP is weird and
+// does odd stuff with the struct indexing. So we cast the pointer to u16, index
+// off of animFrameIdx*2, and cast back to AnimationFrame.
+#define CURRANIM                                                               \
+    (*((AnimationFrame*)(&(                                                    \
+        ((u16*)g_CurrentEntity->anim)[g_CurrentEntity->animFrameIdx * 2]))))
+
+u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
+#if defined(VERSION_PC)
+    s32 ret = 0;
+#else
+    s32 ret;
+#endif
+
+#if defined(VERSION_PSP)
+    if (!g_CurrentEntity->anim) {
+        return -1;
+    }
+#endif
+
+    if (g_CurrentEntity->animFrameDuration == -1) {
+        ret = -1;
+    } else if (g_CurrentEntity->animFrameDuration == 0) {
+        g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+        ret = 0;
+    } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
+        g_CurrentEntity->animFrameIdx++;
+        // Effectively a switch statement, but breaks if I actually use one.
+        if (CURRANIM.duration == 0) {
+            g_CurrentEntity->animFrameIdx = CURRANIM.unk2;
+            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+            ret = 0;
+        } else if (CURRANIM.duration == 0xFFFF) {
+            g_CurrentEntity->animFrameIdx--;
+            g_CurrentEntity->animFrameDuration = -1;
+            ret = -1;
+        } else if (CURRANIM.duration == 0xFFFE) {
+            g_CurrentEntity->anim = anims[CURRANIM.unk2];
+            g_CurrentEntity->animFrameIdx = 0;
+            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+            ret = -2;
+        } else {
+            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+        }
+    }
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+        frameProps = &frameProps[((CURRANIM.unk2 >> 9) & 0x7F) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
+    }
+    g_CurrentEntity->animCurFrame = CURRANIM.unk2 & 0x1FF;
+    return ret;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/39AA8", func_psp_09117538);
 
