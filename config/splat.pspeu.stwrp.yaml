@@ -90,9 +90,8 @@ segments:
       - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
       - [0xF060, .data, wrp/collision]
-      - [0xF438, data] # D_psp_09246AB8
-      - [0xF450, data] # D_psp_09246AD0
-      - [0xF460, data] # eRoomForegroundInit
+      - [0xF438, .data, wrp/e_room_fg]
+      - [0xF4D8, data]
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0

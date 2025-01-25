@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#if !defined(VERSION_PSP)
 static u8 foregroundAnim1[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 foregroundAnim2[] = {0x40, 0x02, 0xFF, 0x00};
 static u8 foregroundAnim3[] = {0x40, 0x02, 0xFF, 0x00};
@@ -15,11 +14,6 @@ static ObjInit eRoomForegroundInit[] = {
     {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim5},
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim4},
 };
-
-#else
-extern ObjInit eRoomForegroundInit[];
-
-#endif
 
 extern u16 g_EInitCommon[];
 void EntityRoomForeground(Entity* entity) {
