@@ -462,8 +462,8 @@ s32 func_8010E334(s32 xStart, s32 xEnd) {
     // PS1 optimizes into loading PLAYER.step as a word, rather than doing
     // two accesses for step and step_s. Breaking it up like this prevents
     // the optimization and results in a match.
-    if (PLAYER.step == Player_Stand){
-        if(PLAYER.step_s == 1 && PLAYER.posX.i.hi >= xStart &&
+    if (PLAYER.step == Player_Stand) {
+        if (PLAYER.step_s == 1 && PLAYER.posX.i.hi >= xStart &&
             PLAYER.posX.i.hi <= xEnd) {
             return 1;
         }
