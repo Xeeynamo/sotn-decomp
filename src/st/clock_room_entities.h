@@ -334,7 +334,7 @@ void EntityStoneDoor(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;
-        if (g_CastleFlags[CLOCK_ROOM_DOORS] == 0) {
+        if (g_CastleFlags[CEN_OPEN] == 0) {
             self->posX.i.hi += stone_door_pos_x_1[params];
             UpdateStoneDoorTiles(true);
         } else {
@@ -342,17 +342,17 @@ void EntityStoneDoor(Entity* self) {
             UpdateStoneDoorTiles(false);
         }
         self->posY.i.hi += 88;
-        self->ext.stoneDoor.flag = g_CastleFlags[CLOCK_ROOM_DOORS];
+        self->ext.stoneDoor.flag = g_CastleFlags[CEN_OPEN];
         break;
 
     case 1:
         if (self->ext.stoneDoor.flag == NULL) {
-            if (g_CastleFlags[CLOCK_ROOM_DOORS]) {
+            if (g_CastleFlags[CEN_OPEN]) {
                 self->ext.stoneDoor.unk80 = 0;
                 self->step++;
             }
         }
-        self->ext.stoneDoor.flag = g_CastleFlags[CLOCK_ROOM_DOORS];
+        self->ext.stoneDoor.flag = g_CastleFlags[CEN_OPEN];
         break;
 
     case 2:

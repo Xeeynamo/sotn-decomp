@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern s32 D_80097408[];
 extern u16 D_us_80180938[];
 extern u8* D_us_80180DD8[];
 extern u8 D_us_80180E00[];
@@ -25,7 +24,7 @@ void func_us_801B5E20(Entity* self) {
     params = self->params >> 0xC;
     if (!self->step) {
         InitializeEntity(D_us_80180938);
-        self->zPriority = D_80097408[0] - 0x14;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = D_us_80180E54[params];
         self->hitboxHeight = D_us_80180E00[params];
         self->animSet = D_us_80180E2C[params];
@@ -189,8 +188,8 @@ void func_us_801B6490(Entity* self) {
     animParams = &D_us_80180EF8[D_us_80180EEC];
     if (self->step == 0) {
         InitializeEntity(D_us_8018095C);
-        D_us_80180EEC = g_CastleFlags[CASTLE_FLAG_19] & 0x7F;
-        g_CastleFlags[CASTLE_FLAG_19] |= 0x80;
+        D_us_80180EEC = g_CastleFlags[NO1_WEATHER] & 0x7F;
+        g_CastleFlags[NO1_WEATHER] |= 0x80;
         animParams = &D_us_80180EF8[D_us_80180EEC];
         g_api.func_800EA5E4(animParams->animSet);
         self->anim = animParams->anim;

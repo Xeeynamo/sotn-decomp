@@ -104,7 +104,7 @@ segments:
       - [0x35060, c, dra_psp/35060]
       - [0x353B0, c, dra/704D0] # O0
       - [0x373F8, c, dra/6E42C]
-      - [0x39AA8, c, dra_psp/39AA8]
+      - [0x39AA8, c, dra/6D584]
       - [0x3B280, c, dra_psp/3B280]
       - [0x3EEA0, c, dra_psp/3EEA0]
       - [0x41E80, c, dra_psp/41E80]
@@ -166,7 +166,8 @@ segments:
       - [0x6DE50, data]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra/6E42C]
-      - [0xA68E8, data]
+      - [0xA68E8, .data, dra/6D584]
+      - [0xA6920, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]
