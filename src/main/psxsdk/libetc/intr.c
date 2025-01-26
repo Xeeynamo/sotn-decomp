@@ -26,7 +26,7 @@ typedef struct {
     } jmpEnv;
 } intrEnv_t;
 
-static intrEnv_t intrEnv = {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, {0}};
+static intrEnv_t intrEnv = {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, {{0}, {0}}};
 
 static struct Callbacks callbacks = {
     "$Id: intr.c,v 1.73 1995/11/10 05:29:40 suzu Exp $",
@@ -45,13 +45,13 @@ void InterruptCallback(int irq, void (*f)()) {
     pCallbacks->InterruptCallback(irq, f);
 }
 
-void* DMACallback(int dma, void (*func)()) {
+Callback DMACallback(int dma, void (*func)()) {
     return pCallbacks->DMACallback(dma, func);
 }
 
 void VSyncCallback(void (*f)()) { pCallbacks->VSyncCallbacks(0, f); }
 
-int VSyncCallbacks(int ch, void (*f)()) {
+Callback VSyncCallbacks(int ch, void (*f)()) {
     return pCallbacks->VSyncCallbacks(ch, f);
 }
 
@@ -185,7 +185,7 @@ void* restartIntr() {
         return 0;
     }
 
-    HookEntryInt((u16*)intrEnv.jmpEnv.buf);
+    HookEntryInt(intrEnv.jmpEnv.buf);
     intrEnv.interruptsInitialized = 1;
     *g_InterruptMask = intrEnv.savedMask;
     *d_pcr = intrEnv.savedPcr;

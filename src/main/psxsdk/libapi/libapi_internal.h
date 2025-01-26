@@ -19,11 +19,11 @@
 
 typedef int jmp_buf[JB_SIZE];
 
-s32 setjmp(jmp_buf*);
+s32 setjmp(jmp_buf);
 void ResetEntryInt();
-void HookEntryInt(jmp_buf*);
+void HookEntryInt(jmp_buf);
 long long startIntrDMA();
-void* startIntrVSync();
+Callback (*startIntrVSync(void))(s32, Callback);
 void ReturnFromException();
 void ChangeClearRCnt(s32, s32);
 
