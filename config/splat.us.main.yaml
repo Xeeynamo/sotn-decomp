@@ -280,5 +280,10 @@ segments:
       - [0x23678, data]
       - [0x23708, .data, psxsdk/libsnd/vs_vtbp] # needs to be ram address + 0x800
       - [0x23710, data]
+      - [0x29A5C, .data, psxsdk/libetc/pad]
+      - [0x29A60, data]
+      - [0x2BE84, bss]
+      - [0x63880, .bss, psxsdk/libetc/pad]
+      - [0x63884, bss]
   - [0x89800]
 

@@ -1,8 +1,8 @@
 #include "common.h"
 #include <libetc.h>
 
-extern int PadIdentifier;
-extern int pad_buf;
+int PadIdentifier;
+int pad_buf = 0;
 
 void PadInit(int mode) {
     PadIdentifier = mode;
