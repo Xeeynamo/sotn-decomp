@@ -7,6 +7,7 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B832C);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B83CC);
 
+// entering the ark
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8430);
 
 extern AnimationFrame D_us_80180FE0[];
@@ -175,12 +176,16 @@ void func_us_801B84E4(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
+// entering the ark
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8B00);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 
+// entering doppleganger's room
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
 
+// in vertical room before doppleganger
+// maybe some decoration at the bottom
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9028);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);

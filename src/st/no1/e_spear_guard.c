@@ -5,7 +5,11 @@
 INCLUDE_ASM("st/no1/nonmatchings/e_spear_guard", func_us_801D37A4);
 
 // Spear Guard helper
-INCLUDE_ASM("st/no1/nonmatchings/e_spear_guard", func_us_801D38E4);
+void func_us_801D38E4() {
+    if (GetDistanceToPlayerY() > 64) {
+        SetStep(3);
+    }
+}
 
 // Spear Guard helper
 extern u16 D_us_80182F74[];
