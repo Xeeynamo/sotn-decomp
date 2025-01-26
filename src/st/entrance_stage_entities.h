@@ -98,11 +98,11 @@ void EntityBackgroundLightning(Entity* self) {
             self->step = 4;
             break;
         }
-        if (g_CastleFlags[CASTLE_FLAG_55]) {
+        if (g_CastleFlags[CASTLE_TURNED_ON]) {
             self->params = 0;
         }
 #else
-        g_CastleFlags[CASTLE_FLAG_55] |= 1;
+        g_CastleFlags[CASTLE_TURNED_ON] |= 1;
         if (self->params & FLAG_DEAD) {
             self->step = 4;
             break;
@@ -185,7 +185,7 @@ void EntityBackgroundLightning(Entity* self) {
         otherEnt = &PLAYER;
         playerRealX = g_Tilemap.scrollX.i.hi + otherEnt->posX.i.hi;
         if (playerRealX > 0x300) {
-            g_CastleFlags[CASTLE_FLAG_55] = 1;
+            g_CastleFlags[CASTLE_TURNED_ON] = 1;
             SetStep(2);
         }
 #endif
@@ -466,7 +466,7 @@ void EntityCastleDoor(Entity* self) {
             prim = prim->next;
         }
 #if defined(STAGE_IS_NO3)
-        if (g_CastleFlags[CASTLE_FLAG_52]) {
+        if (g_CastleFlags[PROLOGUE_COMPLETE]) {
             self->ext.castleDoor.rotZ = 0;
             self->step = 5;
         }
@@ -488,7 +488,7 @@ void EntityCastleDoor(Entity* self) {
         self->ext.castleDoor.rotZ = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
-        g_CastleFlags[CASTLE_FLAG_52] = 1;
+        g_CastleFlags[PROLOGUE_COMPLETE] = 1;
         break;
 
     case 2:
@@ -962,7 +962,7 @@ void EntityCavernDoorLever(Entity* self) {
         self->rotZ = -0x200;
         self->drawFlags |= FLAG_DRAW_ROTZ;
         CreateEntityFromEntity(E_CAVERN_DOOR_PLATFORM, self, self + 1);
-        if (g_CastleFlags[CASTLE_FLAG_48] != 0) {
+        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT] != 0) {
             self->rotZ = 0;
         }
 
@@ -971,10 +971,10 @@ void EntityCavernDoorLever(Entity* self) {
             self->rotZ += 4;
             if (self->rotZ > 0) {
                 self->rotZ = 0;
-                if (g_CastleFlags[CASTLE_FLAG_48] == 0) {
+                if (g_CastleFlags[NO4_TO_NP3_SHORTCUT] == 0) {
                     g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
-                g_CastleFlags[CASTLE_FLAG_48] = 1;
+                g_CastleFlags[NO4_TO_NP3_SHORTCUT] = 1;
             } else if (!(g_Timer & 0xF)) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
@@ -1042,7 +1042,7 @@ void EntityCavernDoor(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &cavernDoorTiles[0];
-        if (g_CastleFlags[CASTLE_FLAG_48]) {
+        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
             self->step = 128;
             self->animCurFrame = 0;
             tileLayoutPtr += 3;
@@ -1075,7 +1075,7 @@ void EntityCavernDoor(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_48]) {
+        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
 #if defined(STAGE_IS_NO3)
             g_api.PlaySfx(SFX_SWITCH_CLICK);
 #endif
@@ -1194,7 +1194,7 @@ void EntityWeightsSwitch(Entity* self) {
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
-        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT] != 0) {
             self->step = 2;
             self->posY.i.hi += 4;
         }
@@ -1207,7 +1207,7 @@ void EntityWeightsSwitch(Entity* self) {
             if ((g_Tilemap.scrollY.i.hi + self->posY.i.hi) > 160) {
                 self->posY.i.hi = 160 - g_Tilemap.scrollY.i.hi;
                 g_api.PlaySfx(SFX_SWITCH_CLICK);
-                g_CastleFlags[CASTLE_FLAG_49] = 1;
+                g_CastleFlags[NO0_TO_NP3_SHORTCUT] = 1;
                 self->step++;
             }
         }
@@ -1254,14 +1254,14 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->posX.i.hi = 416 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 64 - g_Tilemap.scrollY.i.hi;
 #endif
-        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT] != 0) {
             self->posY.i.hi += 111;
             self->step = 3;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_49] != 0) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT] != 0) {
             self->step++;
         }
         break;
@@ -1332,14 +1332,14 @@ void EntityPathBlockTallWeight(Entity* self) {
             prim = prim->next;
         }
 
-        if (g_CastleFlags[CASTLE_FLAG_49]) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
             self->posY.i.hi -= 128;
             self->step = 3;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_49]) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
             self->step++;
         }
         break;
@@ -1477,7 +1477,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (g_CastleFlags[JEWEL_SWORD_ROOM] & rockBroken) {
+        if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tileLayoutPtr = &leftRockTiles[1];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -1534,7 +1534,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = ITEM_POT_ROAST;
             }
-            g_CastleFlags[JEWEL_SWORD_ROOM] |= rockBroken;
+            g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
@@ -1543,7 +1543,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     case 2:
         if ((self->hitFlags != 0) &&
             (g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
-            g_CastleFlags[JEWEL_SWORD_ROOM] |= wolfFlag;
+            g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= wolfFlag;
         }
         break;
     }
@@ -1575,7 +1575,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (g_CastleFlags[JEWEL_SWORD_ROOM] & rockBroken) {
+        if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tileLayoutPtr = &rightRockTiles[1];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -1628,7 +1628,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->ext.mermanRock.unk84 >= 2) {
-            g_CastleFlags[JEWEL_SWORD_ROOM] |= rockBroken;
+            g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
@@ -1637,7 +1637,7 @@ void EntityMermanRockRightSide(Entity* self) {
     case 2:
         if ((self->hitFlags != 0) &&
             (g_Player.status & PLAYER_STATUS_BAT_FORM)) {
-            g_CastleFlags[JEWEL_SWORD_ROOM] |= batFlag;
+            g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= batFlag;
         }
         break;
     }
@@ -1652,13 +1652,13 @@ void EntityJewelSwordDoor(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        if (g_CastleFlags[CASTLE_FLAG_58] != 0) {
+        if (g_CastleFlags[JEWEL_SWORD_ROOM_OPEN] != 0) {
             self->step = 2;
         }
         break;
 
     case 1:
-        if ((g_CastleFlags[JEWEL_SWORD_ROOM] & 12) == 12) {
+        if ((g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 12) == 12) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
@@ -1680,7 +1680,7 @@ void EntityJewelSwordDoor(Entity* self) {
             }
         }
 
-        g_CastleFlags[CASTLE_FLAG_58] |= 1;
+        g_CastleFlags[JEWEL_SWORD_ROOM_OPEN] |= 1;
         g_api.func_800F1FC4(0x3A);
         self->step++;
         break;
@@ -2048,7 +2048,7 @@ void EntityDeathSkySwirl(Entity* self) {
     MATRIX mtx;
 
     if (self->step == 0) {
-        if (g_CastleFlags[CASTLE_FLAG_53]) {
+        if (g_CastleFlags[IVE_BEEN_ROBBED]) {
             DestroyEntity(self);
             return;
         }
@@ -2147,7 +2147,7 @@ void EntityHeartRoomSwitch(Entity* self) {
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
-        if (g_CastleFlags[CASTLE_FLAG_50]) {
+        if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
             self->step = 2;
             self->posY.i.hi += 4;
         }
@@ -2159,7 +2159,7 @@ void EntityHeartRoomSwitch(Entity* self) {
             self->posY.val += FIX(0.25);
             if ((g_Tilemap.scrollY.i.hi + self->posY.i.hi) > 193) {
                 self->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
-                g_CastleFlags[CASTLE_FLAG_50] = 1;
+                g_CastleFlags[WRP_TO_NP3_SHORTCUT] = 1;
 #if defined(STAGE_IS_NO3)
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
 #else
@@ -2187,7 +2187,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         self->animCurFrame = 37;
         self->zPriority = 0x5E;
 
-        if (g_CastleFlags[CASTLE_FLAG_50]) {
+        if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
             self->step = 128;
             self->animCurFrame = 0;
             for (tilePos = 0x48, i = 0; i < 8; tilePos += 0x10, i++) {
@@ -2222,7 +2222,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_50]) {
+        if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
             g_api.PlaySfx(SFX_STONE_MOVE_A);
             self->step++;
         }

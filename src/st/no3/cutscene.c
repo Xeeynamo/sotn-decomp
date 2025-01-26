@@ -96,7 +96,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     switch (self->step) {
     case 0:
         CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
-        if ((g_CastleFlags[CASTLE_FLAG_53]) ||
+        if ((g_CastleFlags[IVE_BEEN_ROBBED]) ||
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             g_Entities[192].params = 0;
@@ -531,7 +531,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         break;
 
     case 7:
-        g_CastleFlags[CASTLE_FLAG_53] = 1;
+        g_CastleFlags[IVE_BEEN_ROBBED] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
         g_CutsceneHasControl = 0;
