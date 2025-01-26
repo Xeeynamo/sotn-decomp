@@ -13,7 +13,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142DE0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142E48);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142ED8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", PlaySfxVolPan);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", PlaySfx);
 
