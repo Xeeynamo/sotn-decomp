@@ -188,8 +188,74 @@ void func_us_801BEB54(Entity* self) {
     }
 }
 
+extern s16 D_us_80181668[];
+extern s32 D_us_80181678[][2];
+extern u8 D_us_801816E8[];
+
 // Wall particles on hit
-INCLUDE_ASM("st/no1/nonmatchings/e_wall_chicken_secret", func_us_801BEE00);
+void func_us_801BEE00(Entity* self) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        self->animSet = 8;
+        self->animCurFrame = 1;
+        self->palette = 0x8004;
+        break;
+
+    case 1:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801BE880.unk7C = prim;
+            UnkPolyFunc2(prim);
+            prim->tpage = 0xE;
+            prim->clut = 2;
+            prim->u0 = 0x70;
+            prim->u1 = 0x78;
+            prim->u2 = prim->u0;
+            prim->u3 = prim->u1;
+            prim->v0 = 0xF6;
+            prim->v1 = prim->v0;
+            prim->v2 = 0xFD;
+            prim->v3 = prim->v2;
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_UNK02;
+            prim->next->x1 = self->posX.i.hi;
+            prim->next->y0 = self->posY.i.hi;
+            LOH(prim->next->r2) = 4;
+            LOH(prim->next->b2) = 4;
+            prim->next->b3 = 0x80;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        self->velocityX = D_us_80181678[self->params][0];
+        self->velocityY = D_us_80181678[self->params][1];
+        self->step++;
+        break;
+
+    case 2:
+        prim = self->ext.et_801BE880.unk7C;
+        LOH(prim->next->tpage) += 0x180;
+        prim->next->x1 = self->posX.i.hi;
+        prim->next->y0 = self->posY.i.hi;
+        UnkPrimHelper(prim);
+        if (!AnimateEntity(D_us_801816E8, self)) {
+            self->animCurFrame = 0;
+        }
+        if (UnkCollisionFunc5(D_us_80181668) != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->velocityY -= FIX(0.0625);
+        break;
+    }
+}
 
 extern s32 D_us_801816A8[][2];
 extern s16 D_us_801816D0[];

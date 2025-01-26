@@ -2581,8 +2581,7 @@ typedef struct {
 } ET_801D4558;
 
 typedef struct {
-    /* 0x7C */ u16 : 16;
-    /* 0x7E */ u16 : 16;
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ u8 unk84;
