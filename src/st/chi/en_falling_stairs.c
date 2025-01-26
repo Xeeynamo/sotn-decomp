@@ -469,7 +469,7 @@ void EntityFallingStep(Entity* self) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 9;
         g_api.CheckCollision(posX, posY, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
 
             // Check for lowest possible position
@@ -495,7 +495,7 @@ void EntityFallingStep(Entity* self) {
 
                 posY -= 2;
                 g_api.CheckCollision(posX, posY, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     self->velocityX = -self->velocityX;
                 }
             }

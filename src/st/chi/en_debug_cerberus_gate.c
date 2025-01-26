@@ -85,7 +85,7 @@ void EntityCerberusGateDebug(Entity* self) {
         prim = prim->next;
 
         while (prim != NULL) {
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             prim->u0 = prim->v0 = 1;
             prim->r0 = 0x20;
             prim->g0 = 0x40;
@@ -112,7 +112,7 @@ void EntityCerberusGateDebug(Entity* self) {
             return;
         }
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects == 0) {
+        if (collider.effects == EFFECT_NONE) {
             return;
         }
 

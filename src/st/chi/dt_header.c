@@ -35,9 +35,9 @@ Overlay OVL_EXPORT(Overlay) = {
 #include "sprite_banks.h"
 
 // Palette Data -- These addresses are to the binary data
-extern u16* bn_pal_unused_0[0x30];  // Unused (US)
+extern u16* bn_pal_unused_0[0x30]; // Unused (US)
 extern u16* bn_pal_salem_witch_projectiles[0x100];
-extern u16* bn_pal_unused_1[0x60];  // Unused (US)
+extern u16* bn_pal_unused_1[0x60]; // Unused (US)
 extern u16* bn_pal_gremlin[0x40];
 extern u16* bn_pal_salem_witch[0x20];
 extern u16* bn_pal_thornweed_corpseweed[0x40];

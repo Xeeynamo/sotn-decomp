@@ -576,7 +576,7 @@ void EntityCorpseweed(Entity* self) {
             x = self->posX.i.hi;
             y = self->posY.i.hi + 8;
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 g_api.PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
                 self->posY.i.hi += collider.unk18;
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -831,7 +831,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         x = self->posX.i.hi;
         y = self->posY.i.hi + 1;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
             self->posY.i.hi += collider.unk18;
             SetStep(DEATH);

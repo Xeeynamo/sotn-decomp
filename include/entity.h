@@ -2005,7 +2005,6 @@ typedef struct {
 
 // ==========================
 
-
 typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ u16 unk7E;

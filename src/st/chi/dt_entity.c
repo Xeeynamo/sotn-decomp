@@ -104,10 +104,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 // D_80180610
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 
-//NOTE: BEGIN ../e_init_common.h
-//      I would include ../e_init_common.h here, but the last entry in there
-//      has a different .enemyId value than is needed here
-// D_8018061C
+// NOTE: BEGIN ../e_init_common.h
+//       I would include ../e_init_common.h here, but the last entry in there
+//       has a different .enemyId value than is needed here
+//  D_8018061C
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 1};
 // D_80180628
 EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0x00, 0x000, 2};
@@ -124,8 +124,9 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0x00, 0x000, 3};
 // D_80180670
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0x00, 0x000, 3};
 // D_8018067C
-EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};    // ../e_init_common.h has 3 for the last value
-//NOTE: END ../e_init_common.h
+EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0),
+                       5}; // ../e_init_common.h has 3 for the last value
+// NOTE: END ../e_init_common.h
 
 // D_80180688
 EInit g_EInitSalemWitch = {ANIMSET_OVL(3), 1, 72, PAL_DRA(516), 221};
@@ -197,11 +198,10 @@ ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = PAL_DRA(0),
         .drawFlags = DRAW_TRANSP | DRAW_UNK02,
-        .drawMode = 0x30,
+        .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
         .unkC = 0,
         .animFrames = AnimFrames_80180734,
-    }
-};
+    }};
 
 // D_80180768
 u16 OVL_EXPORT(RedDoorTiles)[][8] = {

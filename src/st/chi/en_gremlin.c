@@ -95,7 +95,7 @@ void EntityGremlin(Entity* self) {
         if (self->velocityX > 0) {
             xPos += MovementSpeed;
             g_api.CheckCollision(xPos, yPos, &collider, 0);
-            if (collider.effects & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 // Collided with tile
                 self->posX.i.hi += collider.unk14;
                 self->velocityX = FIX(-1);
@@ -109,7 +109,7 @@ void EntityGremlin(Entity* self) {
         } else {
             xPos -= MovementSpeed;
             g_api.CheckCollision(xPos, yPos, &collider, 0);
-            if (collider.effects & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 // Collided with tile
                 self->posX.i.hi += collider.unk1C;
                 self->velocityX = FIX(1);
@@ -128,7 +128,7 @@ void EntityGremlin(Entity* self) {
         if (self->velocityY > 0) {
             yPos += MovementSpeed;
             g_api.CheckCollision(xPos, yPos, &collider, 0);
-            if (collider.effects & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 // Collided with tile
                 self->posX.i.hi += collider.unk18;
                 self->velocityY = FIX(-1);
@@ -142,7 +142,7 @@ void EntityGremlin(Entity* self) {
         } else {
             yPos -= MovementSpeed;
             g_api.CheckCollision(xPos, yPos, &collider, 0);
-            if (collider.effects & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 // Collided with tile
                 self->posX.i.hi += collider.unk20;
                 self->velocityY = FIX(1);

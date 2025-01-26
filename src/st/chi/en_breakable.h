@@ -175,7 +175,7 @@ void EntityBreakableDebris(Entity* self) {
         self->velocityY += FIX(0.25);
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY / 2;
             self->velocityX -= self->velocityX / 3;

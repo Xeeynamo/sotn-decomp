@@ -78,7 +78,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
         g_api_CheckCollision(
             self->posX.i.hi, (s16)(self->posY.i.hi + 6), &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             if (self->animCurFrame >= 0xC) {
                 // Break into a couple pieces
