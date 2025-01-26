@@ -172,6 +172,7 @@ DecelerateY = 0x091178F8;
 CheckMoveDirection = 0x09117998;
 func_8010E334 = 0x09117A90;
 SetSpeedX = 0x09117B28;
+func_8010E3B8 = 0x09117B78;
 func_8010E3E0 = 0x09117BC0;
 func_8010FDF8 = 0x09117C00;
 GetFreeEntity = 0x09124828;
