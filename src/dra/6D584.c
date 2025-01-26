@@ -16,12 +16,12 @@ void func_8010D59C(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[1].ext.entSlot1.unk0 != 0) {
+    if (g_Entities[1].ext.entSlot1.unk0) {
         return;
     }
     switch (PLAYER.ext.player.anim) {
-    case 0x5D:
     case 0x5E:
+    case 0x5D:
     case 0x60:
     case 0x61:
     case 0x62:
@@ -42,13 +42,13 @@ void func_8010D59C(void) {
             g_Entities[1].ext.entSlot1.unk3 =
                 g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
         }
-        if (!(--g_Entities[1].ext.entSlot1.unk3 & 0xFF)) {
+        if (--g_Entities[1].ext.entSlot1.unk3 == 0) {
             g_Entities[1].ext.entSlot1.unk2++;
             g_Entities[1].ext.entSlot1.unk3 =
                 g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
         }
     }
-    if (g_Entities[1].animFrameIdx != 0) {
+    if (g_Entities[1].animFrameIdx) {
         g_Entities[1].animFrameIdx--;
         return;
     }

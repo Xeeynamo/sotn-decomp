@@ -9,6 +9,7 @@ void SetPlayerStep(s16 step) {
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
 
+// Same function in RIC is func_8015C4AC
 void func_8010D59C(void) {
     byte stackpad[40];
     Primitive* prim;
@@ -423,6 +424,12 @@ void DecelerateY(s32 amount) {
     }
 }
 
+// Checks the player's left/right inputs and compares to the facing direction.
+// If the player is pressing the opposite of facing, we change the facing value
+// to turn the player around, and return -1.
+// If the player is pressing the same direction they are facing, return 1
+// If the player is not pressing left or right, return 0
+// Note that if the player is pressing both left and right, left is ignored.
 s32 CheckMoveDirection(void) {
     if (g_Player.unk44 & 2) {
         return 0;
