@@ -195,7 +195,7 @@
 | dra    | func_psp_09140D68                   |       26 |          4 |        |                                 |       |
 | dra    | GetEquipItemCategory                |       27 |          1 |        |                                 |       |
 | dra    | SetTexturedPrimRect                 |       27 |          1 |        |                                 |       |
-| lib    | func_psp_09251040                   |       27 |          1 |        |                                 |       |
+| lib    | UnkPolyFunc0                        |       27 |          1 |        |                                 |       |
 | lib    | Ratan2Shifted                       |       27 |          2 |        | https://decomp.me/scratch/zOAvE | 1.0   |
 | dra    | func_psp_091428D0                   |       27 |          3 |        |                                 |       |
 | dra    | func_psp_09142928                   |       27 |          3 |        |                                 |       |
@@ -218,7 +218,7 @@
 | dra    | func_psp_090F2118                   |       29 |          3 |        |                                 |       |
 |        | DestroyServantEntity                |       29 |          4 |        |                                 |       |
 | dra    | func_psp_09141878                   |       29 |          5 |        |                                 |       |
-| lib    | func_psp_09250CE0                   |       29 |          5 |        |                                 |       |
+| lib    | FindFirstUnkPrim                    |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | dra    | 13080.rodata                        |       30 |          0 | Yes    |                                 |       |
 | dra    | 1C030.rodata                        |       30 |          0 | Yes    |                                 |       |
 | dra    | 4B440.rodata                        |       30 |          0 | Yes    |                                 |       |
@@ -237,7 +237,7 @@
 | dra    | func_psp_09142D78                   |       31 |          2 |        |                                 |       |
 | dra    | func_psp_09142DE0                   |       31 |          2 |        |                                 |       |
 | dra    | func_psp_090EC968                   |       31 |          2 |        |                                 |       |
-| lib    | func_psp_09250FD8                   |       31 |          2 |        |                                 |       |
+| lib    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | st0    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | wrp    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | dra    | func_800FF460                       |       31 |          3 |        |                                 |       |
@@ -355,7 +355,7 @@
 | dra    | func_psp_09128A78                   |       41 |          6 |        |                                 |       |
 | dra    | func_psp_090F6A90                   |       41 |         15 |        |                                 |       |
 |        | bat.rodata                          |       42 |          0 | Yes    |                                 |       |
-| lib    | 18EE0.rodata                        |       42 |          0 | Yes    |                                 |       |
+| lib    | 19AE8.rodata                        |       42 |          0 | Yes    |                                 |       |
 | wrp    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED1B8                   |       42 |          3 |        |                                 |       |
 | dra    | func_psp_0913D640                   |       42 |          3 |        |                                 |       |
@@ -473,7 +473,7 @@
 | dra    | DoGravityJump                       |       59 |         10 |        |                                 |       |
 | dra    | func_psp_090FF480                   |       59 |         10 |        |                                 |       |
 | dra    | func_psp_09140C28                   |       59 |         10 |        |                                 |       |
-| lib    | func_psp_09250D30                   |       59 |         11 |        |                                 |       |
+| lib    | FindFirstUnkPrim2                   |       59 |         11 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | dra    | HandlePrologueEnd                   |       59 |         14 |        |                                 |       |
 | dra    | 29760.rodata                        |       60 |          0 | Yes    |                                 |       |
 | st0    | cutscene.rodata                     |       60 |          0 | Yes    |                                 |       |
@@ -503,7 +503,7 @@
 |        | CreateBlueTrailEntity               |       63 |          6 |        |                                 |       |
 | st0    | func_801AA218                       |       63 |          6 |        | https://decomp.me/scratch/4IhGJ | 0.989 |
 | dra    | func_psp_0911FBD0                   |       63 |          7 |        |                                 |       |
-| lib    | func_psp_09251098                   |       63 |          7 |        |                                 |       |
+| lib    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | st0    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | wrp    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | dra    | AllocPrimitives                     |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
@@ -541,7 +541,7 @@
 | dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
 | dra    | func_psp_0910EFE0                   |       70 |         11 |        |                                 |       |
 | dra    | InitSoundVars3                      |       71 |          1 |        | https://decomp.me/scratch/wDtJk | 0.951 |
-| lib    | func_psp_09250ED0                   |       71 |          1 |        |                                 |       |
+| lib    | PrimResetNext                       |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
 | st0    | PrimResetNext                       |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
 | wrp    | PrimResetNext                       |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
 | dra    | func_801024DC                       |       71 |          5 |        |                                 |       |
@@ -556,7 +556,7 @@
 | wrp    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | dra    | func_800FDD44                       |       71 |          8 |        |                                 |       |
 | lib    | func_psp_09254CD0                   |       71 |          9 |        |                                 |       |
-| lib    | func_psp_09250DE8                   |       71 |          9 |        |                                 |       |
+| lib    | PrimToggleVisibility                |       71 |          9 |        | https://decomp.me/scratch/8l5Dr | 1.0   |
 | dra    | func_psp_090E3030                   |       71 |         10 |        | https://decomp.me/scratch/ewhRs | 0.989 |
 | dra    | BatFormFinished                     |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40                   |       72 |          5 |        |                                 |       |
@@ -814,7 +814,7 @@
 | dra    | func_psp_090E81A8                   |      166 |         19 |        |                                 |       |
 | st0    | EntityDraculaMeteorball             |      166 |         24 |        |                                 |       |
 | dra    | func_psp_09105DA0                   |      167 |         27 |        |                                 |       |
-| lib    | func_psp_09250A60                   |      169 |          7 |        |                                 |       |
+| lib    | UpdateAnimation                     |      169 |          7 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_psp_090F2B20                   |      169 |         15 |        |                                 |       |
 | dra    | func_psp_0911E800                   |      170 |         17 |        |                                 |       |
 | dra    | HandleTransformationMP              |      170 |         34 |        |                                 |       |
@@ -945,7 +945,7 @@
 | lib    | GetPlayerCollisionWith              |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | lib    | func_psp_09257BF8                   |      334 |         15 |        |                                 |       |
 | dra    | CheckSoulStealInput                 |      335 |         45 | Yes    |                                 |       |
-| lib    | func_psp_09250560                   |      338 |         36 |        |                                 |       |
+| lib    | UnkPrimHelper                       |      338 |         36 |        |                                 |       |
 | st0    | UnkPrimHelper                       |      338 |         36 |        |                                 |       |
 | wrp    | UnkPrimHelper                       |      338 |         36 |        |                                 |       |
 | dra    | func_psp_09135098                   |      342 |         25 |        | https://decomp.me/scratch/W0WED | 0.934 |
