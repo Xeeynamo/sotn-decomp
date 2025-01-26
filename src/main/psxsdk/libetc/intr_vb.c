@@ -9,7 +9,8 @@ extern void InterruptCallback(int, void*);
 
 static Callback D_8002D354[8] = {0};
 volatile int Vcount = 0;
-static volatile u_long* D_8002D378 = (u_long*) 0x1F801114; /* Timer 1 Counter Mode */
+static volatile u_long* D_8002D378 =
+    (u_long*)0x1F801114; /* Timer 1 Counter Mode */
 
 Callback (*startIntrVSync(void))(s32, Callback) {
     *D_8002D378 = 0x107;

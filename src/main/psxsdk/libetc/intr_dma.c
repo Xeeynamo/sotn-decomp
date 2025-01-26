@@ -8,7 +8,8 @@ void DMA_memclr(int* ptr, int size);
 
 extern void InterruptCallback(int, void*);
 
-static volatile u_long* D_8002D37C = (u_long*)0x1F8010F4; /* DMA Interrupt Register */
+static volatile u_long* D_8002D37C =
+    (u_long*)0x1F8010F4; /* DMA Interrupt Register */
 static Callback D_8002D380[8] = {0};
 static u_long* D_8002D3A0 = (u_long*)0x1F801080;
 
