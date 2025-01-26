@@ -172,19 +172,19 @@ void func_us_801B2BE4(Entity* self) {
     s32 primIndex;
 
 #ifndef VERSION_PSP
-    if (g_CastleFlags[CASTLE_FLAG_98]) {
+    if (g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH]) {
         FntPrint("HIP ");
     }
-    if (g_CastleFlags[CASTLE_FLAG_180]) {
+    if (g_CastleFlags[RICHTER_CS_AFTER_M_AND_W]) {
         FntPrint("ARE ");
     }
     if (g_Status.relics[RELIC_SOUL_OF_BAT] & RELIC_FLAG_FOUND) {
         FntPrint("BAT ");
     }
-    if (g_CastleFlags[HG_CS_DONE]) {
+    if (g_CastleFlags[MET_MARIA_IN_CEN]) {
         FntPrint("CEN ");
     }
-    if (g_CastleFlags[CASTLE_FLAG_150]) {
+    if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
         FntPrint("REV ");
     }
     if (g_CastleFlags[CASTLE_FLAG_220]) {
@@ -487,7 +487,7 @@ void func_us_801B2BE4(Entity* self) {
                         } else {
                             // castle map
                             g_api.func_800F2288(0);
-                            g_CastleFlags[MAP_PURCHASED] = 1;
+                            g_CastleFlags[BOUGHT_CASTLE_MAP] = 1;
                         }
                     }
                 }

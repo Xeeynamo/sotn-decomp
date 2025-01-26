@@ -188,8 +188,8 @@ void func_us_801B6490(Entity* self) {
     animParams = &D_us_80180EF8[D_us_80180EEC];
     if (self->step == 0) {
         InitializeEntity(D_us_8018095C);
-        D_us_80180EEC = g_CastleFlags[CASTLE_FLAG_19] & 0x7F;
-        g_CastleFlags[CASTLE_FLAG_19] |= 0x80;
+        D_us_80180EEC = g_CastleFlags[NO1_WEATHER] & 0x7F;
+        g_CastleFlags[NO1_WEATHER] |= 0x80;
         animParams = &D_us_80180EF8[D_us_80180EEC];
         g_api.func_800EA5E4(animParams->animSet);
         self->anim = animParams->anim;

@@ -70,7 +70,7 @@ void func_us_801C2CD8(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x2D;
         self->zPriority = 0x9E;
-        if (g_CastleFlags[CASTLE_FLAG_1]) {
+        if (g_CastleFlags[NO4_OPEN]) {
             self->posY.i.hi += 4;
             self->step = 3;
         }
@@ -83,7 +83,7 @@ void func_us_801C2CD8(Entity* self) {
             self->ext.timer.t++;
             if (self->ext.timer.t > 8) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-                g_CastleFlags[CASTLE_FLAG_1] = 1;
+                g_CastleFlags[NO4_OPEN] = 1;
                 self->step++;
             }
         }
@@ -121,7 +121,7 @@ void func_us_801C2E7C(Entity* self) {
     u32 castleFlag1;
 
     params = self->params;
-    castleFlag1 = g_CastleFlags[CASTLE_FLAG_1];
+    castleFlag1 = g_CastleFlags[NO4_OPEN];
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
@@ -237,6 +237,6 @@ void func_us_801C2E7C(Entity* self) {
 }
 
 void func_us_801C3308(Entity* self) {
-    g_CastleFlags[CASTLE_FLAG_1] = 1;
+    g_CastleFlags[NO4_OPEN] = 1;
     DestroyEntity(self);
 }

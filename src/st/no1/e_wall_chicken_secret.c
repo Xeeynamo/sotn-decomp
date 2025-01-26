@@ -22,7 +22,7 @@ void func_us_801BE880(Entity* self) {
         self->hitPoints = 0x7FFF;
         self->hitboxState = 0;
         self->ext.et_801BE880.unk82 = 0;
-        if (g_CastleFlags[CASTLE_FLAG_18]) {
+        if (g_CastleFlags[NO1_SECRET_WALL_BROKEN]) {
             self->step = 5;
         } else {
             tempEntity = self + 2;
@@ -101,7 +101,7 @@ void func_us_801BE880(Entity* self) {
 
     case 4:
         self->animCurFrame = 0x50;
-        g_CastleFlags[CASTLE_FLAG_18] = 1;
+        g_CastleFlags[NO1_SECRET_WALL_BROKEN] = 1;
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, tempEntity);

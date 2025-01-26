@@ -3,6 +3,7 @@
 #define GAME_H
 #include "common.h"
 #include "log.h"
+#include "castle_flags.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -1898,63 +1899,6 @@ typedef struct {
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
-
-// Holds flags that checks if certain switches are enabled to allow to have
-// shortcuts around the castle. One typical example is the wood column that
-// prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
-// column will disappear.
-extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-typedef enum {
-    CLOCK_ROOM_DOORS, // opened by gold and silver ring; drops down to CEN
-    CASTLE_FLAG_1,
-    CASTLE_FLAG_2,
-    CASTLE_FLAG_16 = 16,
-    CASTLE_FLAG_17,
-    CASTLE_FLAG_18,
-    CASTLE_FLAG_19, // Randomized by g_RandomizeCastleFlag13; unused
-    CASTLE_FLAG_20,
-    // Start NO3/NP3 flags
-    CASTLE_FLAG_48 = 48,
-    CASTLE_FLAG_49,
-    CASTLE_FLAG_50,
-    JEWEL_SWORD_ROOM,
-    CASTLE_FLAG_52,
-    CASTLE_FLAG_53,
-    CASTLE_FLAG_54, // Unused
-    CASTLE_FLAG_55,
-    DEATH_STAIRWAY_BROKEN, // Piece of stairs right before Death room
-    SG_RETR_ENTR,          // Slogra/Gaibon retreated from Entrance encounter
-    CASTLE_FLAG_58,
-    CASTLE_FLAG_98 = 98, // Set in DRA, unused
-    CASTLE_FLAG_99,      // Set in DRA, unused
-    MAP_PURCHASED = 115,
-    // Start NZ0 flags
-    CASTLE_FLAG_129 = 129,
-    CASTLE_FLAG_130,
-    CANNON_WALL_SHORTCUT,
-    SG_KILL_ALCH, // Slogra & Gaibon were killed in Alchemy Lab
-    CASTLE_FLAG_133,
-    CASTLE_FLAG_149 = 149,
-    CASTLE_FLAG_150,
-    CASTLE_FLAG_155 = 155,
-    CASTLE_FLAG_180 = 180,
-    CASTLE_FLAG_185 = 185,
-    // WRP
-    CASTLE_FLAG_208 = 208,
-    // RWRP
-    CASTLE_FLAG_209,
-    // Cutscenes the player has finished seeing
-    SUCC_CS_DONE = 212, // Succubus cutscene (as Lisa)
-    HG_CS_DONE = 216,   // Holy Glasses cutscene (in CEN)
-    CASTLE_FLAG_220 = 220,
-    HEART_FLAGS_START = 256,
-    MAD_COLLISION_FLAGS_START = 288,
-    MAD_RAREDROP_FLAGS_START = 320,
-    COLLISION_FLAGS_START = 400,
-    COLLECT_FLAGS_START = 432,
-    // TT_004
-    CASTLE_FLAG_464 = 464,
-} CastleFlagOffsets;
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
