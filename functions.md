@@ -1000,7 +1000,7 @@
 | dra    | func_psp_0910D1F0                   |      482 |         75 |        |                                 |       |
 | dra    | func_psp_090F06D8                   |      493 |         37 |        |                                 |       |
 | dra    | func_psp_0911FCA0                   |      495 |         59 |        |                                 |       |
-| dra    | func_8010FDF8                       |      499 |        105 |        |                                 |       |
+| dra    | func_8010FDF8                       |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.965 |
 | lib    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | wrp    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | dra    | func_psp_090EDE28                   |      517 |         73 |        |                                 |       |
