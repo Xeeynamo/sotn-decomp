@@ -10,6 +10,8 @@
 
 #include "stage.h"
 
+#define STAGE_IS_CHI
+
 #define OVL_EXPORT(x) CHI_##x
 
 #define CASTLE_FLAG_BANK 0x52
@@ -36,7 +38,7 @@ typedef enum {
     /* 0x12 */ E_CAMERA_LOCK,
     /* 0x13 */ E_PARTICLE_TRAIL,
     /* 0x14 */ E_ID_14,
-    /* 0x15 */ E_ID_15, // E_GREY_PUFF
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_DEMON_SWITCH_WALL,
     /* 0x17 */ E_DEMON_SWITCH,
     /* 0x18 */ E_BREAKABLE_WALL,
@@ -65,29 +67,27 @@ typedef enum {
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 
-extern u16 g_eBreakableWithDebrisInit[];
-extern u16 g_InitializeData0[];
-extern u16 g_InitializeEntityData0[];
-extern u16 g_EInitGeneric[];
-extern u16 g_InitDataEnt13[];
-extern u16 g_EntityUnkId12Init[];
-extern u16 g_eInitGeneric2[];
-extern u16 g_eDamageDisplayInit[];
-extern u16 g_InitTilemap[];
-extern u16 g_InitSalemWitch[];
-extern u16 g_InitSalemWitchCurse[];
-extern u16 g_InitSalemWitchTribolt[];
-extern u16 g_InitGremlin[];
-extern u16 g_EntityInit_801806B8[];
-extern u16 g_InitGremlinFire[];
-extern u16 g_InitThornweed[];
-extern u16 g_EntityInit_801806DC[];
-extern u16 g_InitCorpseweed[];
-extern u16 g_InitCorpseweedProjectile[];
-extern u16 g_InitVenusWeedRoot[];
-extern u16 g_InitVenusWeedFlower[];
-extern u16 g_InitVenusWeedTendril[];
-extern u16 g_InitVenusWeedDart[];
-extern ObjInit g_eBackgroundBlockInit[];
+extern EInit OVL_EXPORT(EInitBreakable);
+extern u16 g_EInitObtainable[];
+extern u16 g_EInitParticle[];
+extern u16 g_EInitInteractable[];
+extern u16 g_EInitUnkId13[];
+extern u16 g_EInitUnkId12[];
+extern u16 g_EInitCommon[];
+extern u16 g_EInitDamageNum[];
+extern u16 g_EInitSecret[];
+extern u16 g_EInitSalemWitch[];
+extern u16 g_EInitSalemWitchCurse[];
+extern u16 g_EInitSalemWitchTribolt[];
+extern u16 g_EInitGremlin[];
+extern u16 g_EInitGremlinFire[];
+extern u16 g_EInitThornweed[];
+extern u16 g_EInitCorpseweed[];
+extern u16 g_EInitCorpseweedProjectile[];
+extern u16 g_EInitVenusWeedRoot[];
+extern u16 g_EInitVenusWeedFlower[];
+extern u16 g_EInitVenusWeedTendril[];
+extern u16 g_EInitVenusWeedDart[];
+extern ObjInit2 g_eBackgroundBlockInit[];
 
 #endif

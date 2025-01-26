@@ -57,7 +57,7 @@ void EntityDemonSwitch(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitTilemap);
+        InitializeEntity(&g_EInitSecret);
 
         self->animCurFrame = 3;
         self->hitPoints = 32767;
@@ -127,7 +127,7 @@ void EntityDemonSwitchWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitTilemap);
+        InitializeEntity(&g_EInitSecret);
 
         self->animCurFrame = 1; // Default: Collision (closed)
 
@@ -248,7 +248,7 @@ void EntityDemonSwitchWall(Entity* self) {
 #if defined(VERSION_PSP)
             CreateEntityFromCurrentEntity(D_psp_0926BC50, newEntity);
 #else
-            CreateEntityFromCurrentEntity(E_ID_15, newEntity);
+            CreateEntityFromCurrentEntity(E_GREY_PUFF, newEntity);
 #endif
             newEntity->posX.i.hi = xPos + (Random() & 0x1F);
             newEntity->posY.i.hi = yPos;

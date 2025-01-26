@@ -34,7 +34,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitTilemap);
+        InitializeEntity(&g_EInitSecret);
         animCurFrame = self->params;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->zPriority = 0x69;
@@ -166,7 +166,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitTilemap);
+        InitializeEntity(&g_EInitSecret);
         self->animCurFrame = 2;
         self->animCurFrame = 0;
         self->hitPoints = 0x20;

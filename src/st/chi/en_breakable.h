@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
+/*
+ * File: en_breakable.h
+ * Overlay: CHI
+ * Description: ENTITY - Breakable with debris
+ */
+
+#include "chi.h"
 
 // params: (>> 12) represents the breakable type.
 //                 Any non-zero value is considered a "tall" breakable,
@@ -18,7 +24,7 @@ void EntityBreakableWithDebris(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(&g_eBreakableWithDebrisInit);
+        InitializeEntity(&OVL_EXPORT(EInitBreakable));
         self->zPriority = 0x70;
         self->drawMode = g_eBreakableDrawModes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];
@@ -96,7 +102,7 @@ void EntityBreakableDebris(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_eBreakableWithDebrisInit);
+        InitializeEntity(&OVL_EXPORT(EInitBreakable));
         self->zPriority = 0x70;
         self->hitboxState = 0;
         self->drawFlags = FLAG_DRAW_ROTZ;

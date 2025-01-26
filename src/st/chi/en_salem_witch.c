@@ -173,7 +173,7 @@ void EntitySalemWitch(Entity* self) {
     }
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitSalemWitch);
+        InitializeEntity(&g_EInitSalemWitch);
         self->hitboxOffY = 0xA;
         entity = self + 1;
         CreateEntityFromCurrentEntity(E_SALEM_WITCH_GLOW, entity);
@@ -555,7 +555,7 @@ void EntitySalemWitch(Entity* self) {
         break;
 
     case SHADOW_INIT:
-        InitializeEntity(&g_InitSalemWitch);
+        InitializeEntity(&g_EInitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
         self->animCurFrame = self->params;
@@ -616,7 +616,7 @@ void EntitySalemWitchGlow(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(&g_InitSalemWitch);
+        InitializeEntity(&g_EInitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
@@ -677,7 +677,7 @@ void EntitySalemWitchCurse(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitSalemWitchCurse);
+        InitializeEntity(&g_EInitSalemWitchCurse);
 
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         if (self->facingLeft) {
@@ -870,7 +870,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitGeneric);
+        InitializeEntity(&g_EInitInteractable);
         self->animSet = 5;
         self->palette = PAL_OVL(0x2EB);
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
@@ -959,7 +959,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_InitSalemWitchTribolt);
+        InitializeEntity(&g_EInitSalemWitchTribolt);
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
         self->rotX = 0x80;
         launchDir = self->params - 1;
@@ -1002,7 +1002,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         break;
 
     case TRAIL_INIT:
-        InitializeEntity(&g_InitSalemWitchTribolt);
+        InitializeEntity(&g_EInitSalemWitchTribolt);
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
         self->animCurFrame = self->params;

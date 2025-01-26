@@ -95,10 +95,8 @@ $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgp
 extract_assets: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
 	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
-	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/CHI/CHI.BIN -o assets/st/chi
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build config/assets.$(VERSION).yaml
-	$(SOTNASSETS) stage build_all -i assets/st/chi -o src/st/chi/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)

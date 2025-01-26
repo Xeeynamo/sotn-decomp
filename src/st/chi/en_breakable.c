@@ -51,4 +51,4 @@ static u16 g_eBreakableDebrisOffsets[] = {
 
 // func_8019B698: [E_BREAKABLE] EntityBreakableWithDebris
 // func_8019B914: [E_BREAKABLE_DEBRIS] EntityBreakableDebris
-#include "../en_breakable_with_debris.h"
+#include "en_breakable.h"

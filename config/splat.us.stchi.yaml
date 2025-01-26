@@ -18,14 +18,15 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
-  disassemble_all: True
   extensions_path: tools/splat_ext
+  disassemble_all: True
   section_order:
     - ".data"
     - ".rodata"
     - ".text"
     - ".bss"
     - ".sbss"
+sha1: 4ea14c8B54B8526ee6840b8b54658cafc0B336a2
 segments:
   - name: stchi
     type: code
@@ -38,7 +39,7 @@ segments:
       - [0x0, .data, dt_header]   # Header
       - [0xE8, .data, dt_header]  # Layers
       - [0x298, .data, dt_header] # Gfx banks
-      - [0x3B4, .data, e_laydef] # layout entities header
+      - [0x3B4, .data, e_laydef]  # layout entities header
       - [0x55C, .data, dt_entity]
       - [0x798, .data, st_debug]
       - [0x818, .data, en_breakable]
@@ -51,14 +52,14 @@ segments:
       - [0xE0C, .data, en_red_door]
       - [0xE24, .data, ut_common]
       - [0x1024, .data, en_collect]
-      - [0x1314, .data, en_relic_orb]
-      - [0x1378, .data, en_particles]     # EntityUnkId14Spawner
-      - [0x1388, .data, en_particles]     # EntityUnkId15, EntityUnkId14
-      - [0x13D4, .data, en_particles]     # EntityOlroxDrool
-      - [0x13DC, .data, en_particles]     # func_801A6054
-      - [0x13EC, .data, ut_misc]          # UnkRecursivePrimFunc1
-      - [0x140C, .data, ut_misc]          # UnkRecursivePrimFunc2
-      - [0x142C, .data, en_soul_steal_orb]
+      - [0x1314, .data, en_misc]
+      - [0x1378, .data, en_misc]          # EntityUnkId14Spawner
+      - [0x1388, .data, en_misc]          # EntityUnkId15, EntityUnkId14
+      - [0x13D4, .data, en_misc]          # EntityOlroxDrool
+      - [0x13DC, .data, en_misc]          # func_801A6054
+      - [0x13EC, .data, en_misc]          # UnkRecursivePrimFunc1
+      - [0x140C, .data, en_misc]          # UnkRecursivePrimFunc2
+      - [0x142C, .data, en_particles]     # EntitySoulStealOrb
       - [0x14AC, .data, en_room_foreground]
       - [0x1538, .data, en_salem_witch]   # EntitySalemWitch
       - [0x162C, .data, en_salem_witch]   # EntitySalemWitchGlow
@@ -73,25 +74,25 @@ segments:
       # Binary data
       - [0x195C, .data, rooms]
       - [0x19F8, .data, e_layout] # layout entities data
-      - [0x20D8, cmp, bn_gfx_stage_name_jp_sm]
-      - [0x2508, cmp, bn_gfx_stage_name_jp_lg]
-      - [0x2A60, cmp, bn_gfx_gremlin]
-      - [0x3480, cmp, bn_gfx_salem_witch_1]
-      - [0x41F8, cmp, bn_gfx_salem_witch_2]
-      - [0x4DBC, cmp, bn_gfx_salem_witch_3]
-      - [0x5BA0, cmp, bn_gfx_salem_witch_4]
-      - [0x6B1C, cmp, bn_gfx_salem_witch_5]
-      - [0x70F8, cmp, bn_gfx_thornweed_corpseweed]
-      - [0x7E84, cmp, bn_gfx_venus_weed_1]
-      - [0x8A10, cmp, bn_gfx_venus_weed_2]
-      - [0x9B38, cmp, bn_gfx_stage_name_en]
-      - [0x9FE0, raw, bn_pal_unused_0]  # Unused
-      - [0xA040, raw, bn_pal_salem_witch_projectiles]
-      - [0xA240, raw, bn_pal_unused_1]  # Unused
-      - [0xA300, raw, bn_pal_gremlin]
-      - [0xA380, raw, bn_pal_salem_witch]
-      - [0xA3C0, raw, bn_pal_thornweed_corpseweed]
-      - [0xA440, raw, bn_pal_venus_weed]
+      - [0x20D8, cmpgfx, bn_gfx_stage_name_jp_sm, 128, 128, 4]
+      - [0x2508, cmpgfx, bn_gfx_stage_name_jp_lg, 128, 128, 4]
+      - [0x2A60, cmpgfx, bn_gfx_gremlin, 128, 128, 4, 0xA300]
+      - [0x3480, cmpgfx, bn_gfx_salem_witch_1, 128, 128, 4, 0xA380]
+      - [0x41F8, cmpgfx, bn_gfx_salem_witch_2, 128, 128, 4, 0xA380]
+      - [0x4DBC, cmpgfx, bn_gfx_salem_witch_3, 128, 128, 4, 0xA380]
+      - [0x5BA0, cmpgfx, bn_gfx_salem_witch_4, 128, 128, 4, 0xA380]
+      - [0x6B1C, cmpgfx, bn_gfx_salem_witch_5, 128, 128, 4, 0xA380]
+      - [0x70F8, cmpgfx, bn_gfx_thornweed_corpseweed, 128, 128, 4, 0xA3C0]
+      - [0x7E84, cmpgfx, bn_gfx_venus_weed_1, 128, 128, 4, 0xA440]
+      - [0x8A10, cmpgfx, bn_gfx_venus_weed_2, 128, 128, 4, 0xA440]
+      - [0x9B38, cmpgfx, bn_gfx_stage_name_en, 128, 128, 4]
+      - [0x9FE0, pal, bn_pal_unused_0]  # Unused
+      - [0xA040, pal, bn_pal_salem_witch_projectiles]
+      - [0xA240, pal, bn_pal_unused_1]  # Unused
+      - [0xA300, pal, bn_pal_gremlin]
+      - [0xA380, pal, bn_pal_salem_witch]
+      - [0xA3C0, pal, bn_pal_thornweed_corpseweed]
+      - [0xA440, pal, bn_pal_venus_weed]
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
       - [0x17B90, .data, sprites]
@@ -103,9 +104,9 @@ segments:
       - [0x1B1AC, .rodata, en_collect]                # CollectGold strings
       - [0x1B1FC, .rodata, en_collect]                # jtbl_8019B1FC [EntityPrizeDrop]
       - [0x1B21C, .rodata, en_collect]                # jtbl_8019B21C [EntityEquipItemDrop]
-      - [0x1B234, .rodata, en_relic_orb]              # EntityRelicOrb string
-      - [0x1B244, .rodata, en_relic_orb]              # jtbl_8019B244 [EntityRelicOrb]
-      - [0x1B26C, .rodata, en_message_box]            # jtbl_8019B26C [EntityMessageBox]
+      - [0x1B234, .rodata, en_misc]                   # EntityRelicOrb string
+      - [0x1B244, .rodata, en_misc]                   # jtbl_8019B244 [EntityRelicOrb]
+      - [0x1B26C, .rodata, en_misc]                   # jtbl_8019B26C [EntityMessageBox]
       - [0x1B280, .rodata, en_salem_witch]            # EntitySalemWitch debug string
       - [0x1B290, .rodata, en_salem_witch]            # jtbl_8019B290 [EntitySalemWitch]
       - [0x1B2A8, .rodata, en_salem_witch]            # jtbl_8019B2A8 [EntitySalemWitchTribolt]
@@ -134,13 +135,8 @@ segments:
       - [0x2128C, c, ut_common]
       - [0x2273C, c, en_collect]
       - [0x23CA8, c, ut_blit_char]
-      - [0x23F58, c, en_relic_orb]
-      - [0x24A28, c, en_heart_drop]
-      - [0x24B50, c, en_message_box]
-      - [0x250AC, c, en_particles]
-      - [0x26478, c, ut_misc]
-      - [0x27448, c, en_soul_steal_orb]
-      - [0x277DC, c, en_enemy_blood]
+      - [0x23F58, c, en_misc]
+      - [0x27448, c, en_particles]
       - [0x27C8C, c, en_room_foreground]
       - [0x27D78, c, en_bottom_corner_text]
       - [0x2813C, c, en_salem_witch]
