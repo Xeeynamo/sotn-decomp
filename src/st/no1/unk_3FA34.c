@@ -577,7 +577,7 @@ void func_us_801C1090(s32* value, s32 target, s32 step) {
     }
 }
 
-// "Elevator activatd." text
+// "Elevator activated." text
 extern Primitive* D_us_801D6380;
 extern s32 D_us_801D6FFC;
 extern s32 D_us_801D7000;
