@@ -759,4 +759,3 @@ void func_us_801B7CC4(Entity* self) {
     }
     DestroyEntity(self);
 }
-
