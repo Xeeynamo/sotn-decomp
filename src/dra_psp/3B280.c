@@ -144,5 +144,3 @@ bool func_8010FDF8(s32 branchFlags) {
     }
     return 0;
 }
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B280", func_psp_09118330);
