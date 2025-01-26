@@ -25,9 +25,9 @@
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
 | wrp    | jtbl_psp_0924BB78                   |        9 |          0 | Yes    |                                 |       |
+| dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
 | dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_091088E0                   |        9 |          1 |        |                                 |       |
-| dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
 | dra    | func_psp_09127480                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_0912CC10                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_0913D618                   |        9 |          1 |        |                                 |       |
@@ -36,12 +36,12 @@
 | dra    | func_psp_090DD678                   |        9 |          1 |        |                                 |       |
 |        | unused_1560                         |        9 |          1 |        |                                 |       |
 | wrp    | warp.rodata                         |       11 |          0 | Yes    |                                 |       |
+| dra    | func_8010E0B8                       |       11 |          1 |        |                                 |       |
 | dra    | func_psp_09141860                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C80                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090F67E8                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC80                   |       11 |          1 |        |                                 |       |
-| dra    | func_psp_091176D8                   |       11 |          1 |        | https://decomp.me/scratch/d12qm | 1.0   |
 | dra    | func_psp_0913D628                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_0913D998                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_091405C8                   |       11 |          1 |        |                                 |       |
@@ -57,11 +57,11 @@
 | dra    | func_psp_091405E0                   |       13 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD58                   |       14 |          2 |        |                                 |       |
 | dra    | func_801025F4                       |       15 |          1 |        |                                 |       |
+| dra    | SetPlayerStep                       |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090E4C68                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F0308                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C58                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F6408                   |       15 |          1 |        |                                 |       |
-| dra    | SetPlayerStep                       |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1EA0                   |       15 |          2 |        |                                 |       |
 | dra    | func_psp_09141550                   |       15 |          2 |        |                                 |       |
 | dra    | func_psp_091415E0                   |       15 |          2 |        |                                 |       |
@@ -128,8 +128,8 @@
 | wrp    | EntityDummy                         |       20 |          2 |        | https://decomp.me/scratch/unNIE | 1.0   |
 | wrp    | FallEntity                          |       20 |          2 |        | https://decomp.me/scratch/ZIw3V | 0.986 |
 | dra    | func_psp_091119E0                   |       20 |          3 |        |                                 |       |
-| dra    | func_psp_0913D798                   |       21 |          1 |        |                                 |       |
 | dra    | SetPlayerAnim                       |       21 |          1 |        | https://decomp.me/scratch/G188v | 0.702 |
+| dra    | func_psp_0913D798                   |       21 |          1 |        |                                 |       |
 | lib    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
@@ -143,9 +143,9 @@
 | dra    | func_psp_090F0E10                   |       21 |          3 |        |                                 |       |
 | dra    | 1A1A0.rodata                        |       22 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E4C18                   |       22 |          2 |        |                                 |       |
+| dra    | func_8010E3E0                       |       22 |          3 |        | https://decomp.me/scratch/OVtm6 | 0.805 |
 | dra    | DestroyAllPrimitives                |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09111A18                   |       22 |          3 |        |                                 |       |
-| dra    | func_8010E3E0                       |       22 |          3 |        | https://decomp.me/scratch/OVtm6 | 0.805 |
 | dra    | func_psp_09140588                   |       22 |          3 |        |                                 |       |
 | dra    | func_psp_090F54E0                   |       22 |          4 |        |                                 |       |
 | dra    | func_psp_090F5B10                   |       23 |          1 |        |                                 |       |
@@ -158,9 +158,9 @@
 | dra    | func_psp_090F6A50                   |       23 |          4 |        |                                 |       |
 | dra    | 65790.rodata                        |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
+| dra    | func_8010E3B8                       |       24 |          2 |        |                                 |       |
 | dra    | func_800EDAE4                       |       24 |          2 |        |                                 |       |
 | dra    | ResetPendingGfxLoad                 |       24 |          2 |        |                                 |       |
-| dra    | func_psp_09117B78                   |       24 |          2 |        | https://decomp.me/scratch/S23rG | 0.512 |
 |        | SetEntityAnimation                  |       24 |          2 |        |                                 |       |
 | dra    | func_psp_09104878                   |       24 |          3 |        |                                 |       |
 | dra    | GetEquipCount                       |       24 |          4 |        |                                 |       |
@@ -187,9 +187,9 @@
 | dra    | func_psp_09140E00                   |       25 |          6 |        |                                 |       |
 | dra    | 26948.rodata                        |       26 |          0 | Yes    |                                 |       |
 | st0    | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
+| dra    | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
 | dra    | func_psp_090FA740                   |       26 |          2 |        |                                 |       |
 | dra    | func_psp_091032C8                   |       26 |          2 |        |                                 |       |
-| dra    | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
 | dra    | func_psp_0910F0D8                   |       26 |          3 |        |                                 |       |
 | dra    | func_psp_090E7E90                   |       26 |          3 |        |                                 |       |
 | dra    | func_psp_09140D68                   |       26 |          4 |        |                                 |       |
@@ -375,15 +375,15 @@
 | dra    | func_psp_09124FB8                   |       43 |          5 |        |                                 |       |
 | dra    | func_8010EA54                       |       43 |          6 |        |                                 |       |
 | dra    | SetCgiDisplayBuffer                 |       43 |          6 |        |                                 |       |
-| dra    | func_psp_09117538                   |       43 |          8 |        |                                 |       |
+| dra    | func_8010DF70                       |       43 |          8 |        |                                 |       |
 | dra    | DebugInputWait                      |       43 |          9 |        |                                 |       |
 | dra    | func_psp_0910A9D0                   |       43 |         11 |        |                                 |       |
 | dra    | func_psp_09142E48                   |       44 |          3 |        | https://decomp.me/scratch/H7rD7 | 0.992 |
 | st0    | CollectGold                         |       44 |          3 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | dra    | func_80134C60                       |       45 |          1 |        |                                 |       |
 |        | CalculateAngleToEntity              |       45 |          2 |        |                                 |       |
+| dra    | func_8010E334                       |       45 |          6 |        |                                 |       |
 | dra    | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
-| dra    | func_psp_09117A90                   |       45 |          6 |        | https://decomp.me/scratch/gUEVC | 0.713 |
 | lib    | func_psp_0925A798                   |       45 |          6 |        |                                 |       |
 | st0    | func_pspeu_09242F68                 |       45 |          7 |        |                                 |       |
 | dra    | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
@@ -450,7 +450,7 @@
 | dra    | func_psp_091441B8                   |       55 |          2 |        |                                 |       |
 | dra    | func_psp_091248D0                   |       55 |          5 |        |                                 |       |
 | dra    | LearnSpell                          |       55 |          6 |        |                                 |       |
-| dra    | func_psp_091176F0                   |       55 |          7 |        | https://decomp.me/scratch/abKal | 0.861 |
+| dra    | func_8010E0D0                       |       55 |          7 |        |                                 |       |
 | dra    | func_psp_091295F0                   |       55 |          7 |        |                                 |       |
 | lib    | func_psp_092445A8                   |       55 |          8 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
@@ -574,8 +574,8 @@
 | dra    | CheckMoveDirection                  |       73 |         12 |        |                                 |       |
 | dra    | 50620.rodata                        |       74 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E8658                   |       74 |          6 |        |                                 |       |
-| dra    | func_psp_0910B660                   |       74 |          7 |        |                                 |       |
 | dra    | func_8010DFF0                       |       74 |          7 |        | https://decomp.me/scratch/fbTWl | 0.952 |
+| dra    | func_psp_0910B660                   |       74 |          7 |        |                                 |       |
 | lib    | func_psp_092636F8                   |       75 |          1 |        |                                 |       |
 | wrp    | EntityBackgroundBlock               |       75 |          6 |        |                                 |       |
 | dra    | func_psp_09108D40                   |       75 |         10 |        |                                 |       |
@@ -667,7 +667,7 @@
 | lib    | func_psp_0924DF08                   |       97 |          7 |        |                                 |       |
 | lib    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
 | wrp    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
-| dra    | func_psp_09116B88                   |       98 |         10 |        | https://decomp.me/scratch/FWgSo | 0.992 |
+| dra    | func_8010DA70                       |       98 |         10 |        |                                 |       |
 | lib    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | st0    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | wrp    | CreateEntitiesBelow                 |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
@@ -827,7 +827,7 @@
 | lib    | func_psp_0923DA30                   |      178 |         16 |        |                                 |       |
 | st0    | EntityDraculaGlass                  |      179 |         30 |        |                                 |       |
 | lib    | func_psp_09255D78                   |      181 |         19 |        |                                 |       |
-| dra    | func_8010DBFC                       |      183 |         17 |        | https://decomp.me/scratch/xuNg5 | 1.0   |
+| dra    | PlayAnimation                       |      183 |         17 |        |                                 |       |
 | lib    | func_psp_09244310                   |      184 |         20 |        |                                 |       |
 | wrp    | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra    | func_psp_09139428                   |      185 |         25 |        |                                 |       |
@@ -840,7 +840,7 @@
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
 | st0    | EntityDraculaRainAttack             |      192 |         37 |        |                                 |       |
 | dra    | func_800FE3C4                       |      194 |         20 |        |                                 |       |
-| dra    | func_psp_09116450                   |      196 |         22 |        | https://decomp.me/scratch/lVQqi | 0.974 |
+| dra    | func_8010D59C                       |      196 |         22 |        |                                 |       |
 | dra    | func_psp_091398F0                   |      196 |         35 | Yes    |                                 |       |
 | lib    | func_psp_09253E20                   |      197 |          1 |        |                                 |       |
 | dra    | func_psp_09138DA0                   |      197 |         41 |        |                                 |       |
@@ -918,7 +918,7 @@
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
 | dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
-| dra    | func_psp_09116720                   |      288 |         19 |        | https://decomp.me/scratch/xTydq | 0.997 |
+| dra    | func_8010D800                       |      288 |         19 |        |                                 |       |
 | lib    | func_psp_09238EC8                   |      290 |         42 |        |                                 |       |
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
 |        | ProcessEvent                        |      293 |         42 |        |                                 |       |
