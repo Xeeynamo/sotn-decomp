@@ -20,14 +20,19 @@ typedef struct {
     u16 enabledInterruptsMask;
     u16 savedMask;
     int savedPcr;
-    struct {
-        jmp_buf buf;
-        s32 stack[1024];
-    } jmpEnv;
+    jmp_buf buf;
+    s32 stack[1024];
 } intrEnv_t;
 
 static intrEnv_t intrEnv = {
-    0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, {{0}, {0}}};
+    0, // interruptsInitialized
+    0, // inInterrupt
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+     0}, // handlers (explicit zeros for each element)
+    0,   // enabledInterruptsMask
+    0,   // savedMask
+    0,   // savedPcr
+};
 
 static struct Callbacks callbacks = {
     "$Id: intr.c,v 1.73 1995/11/10 05:29:40 suzu Exp $",
@@ -83,11 +88,11 @@ void* startIntr() {
     *i_stat = *g_InterruptMask = 0;
     *d_pcr = 0x33333333;
     memclr(&intrEnv, sizeof(intrEnv) / sizeof(s32));
-    if (setjmp(intrEnv.jmpEnv.buf) != 0) {
+    if (setjmp(intrEnv.buf) != 0) {
         trapIntr();
     }
-    intrEnv.jmpEnv.buf[JB_SP] = (s32)&intrEnv.jmpEnv.stack[1004];
-    HookEntryInt(intrEnv.jmpEnv.buf);
+    intrEnv.buf[JB_SP] = (s32)&intrEnv.stack[1004];
+    HookEntryInt(intrEnv.buf);
     intrEnv.interruptsInitialized = 1;
     pCallbacks->VSyncCallbacks = startIntrVSync();
     pCallbacks->DMACallback = startIntrDMA();
@@ -186,7 +191,7 @@ void* restartIntr() {
         return 0;
     }
 
-    HookEntryInt(intrEnv.jmpEnv.buf);
+    HookEntryInt(intrEnv.buf);
     intrEnv.interruptsInitialized = 1;
     *g_InterruptMask = intrEnv.savedMask;
     *d_pcr = intrEnv.savedPcr;
