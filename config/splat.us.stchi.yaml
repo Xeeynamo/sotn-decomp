@@ -138,7 +138,7 @@ segments:
       - [0x23F58, c, en_misc]
       - [0x27448, c, en_particles]
       - [0x27C8C, c, en_room_foreground]
-      - [0x27D78, c, en_bottom_corner_text]
+      - [0x27D78, c, en_popup]
       - [0x2813C, c, en_salem_witch]
       - [0x297C8, c, en_gremlin]
       - [0x2A020, c, en_thornweed_corpseweed]
