@@ -86,7 +86,7 @@ bool func_8010FDF8(s32 branchFlags) {
             } else if (g_Player.unk44 & 0x10) {
                 func_8010E6AC(1);
                 PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
-            } else if (abs(PLAYER.velocityX) > 0x20000) {
+            } else if (abs(PLAYER.velocityX) > FIX(2)) {
                 PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 func_8010E570(PLAYER.velocityX);
