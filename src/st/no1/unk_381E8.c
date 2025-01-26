@@ -42,7 +42,7 @@ void func_us_801B84E4(Entity* self) {
             self->ext.et_801B84E4.unk7E = self->ext.et_801B84E4.unk7C + 0x20;
             self->velocityX = FIX(-1.375);
             self->posY.i.hi -= 0x16;
-            self->animSet = -0x7FFF;
+            self->animSet = 0x8001;
             self->zPriority = PLAYER.zPriority;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_us_80181044;

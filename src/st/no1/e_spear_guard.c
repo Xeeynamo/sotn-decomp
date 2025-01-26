@@ -49,7 +49,6 @@ void func_us_801D3918(Entity* self, u8 arg1) {
 }
 
 // Spear Guard
-extern u16 D_us_80180B00[];
 extern u8 D_us_80182F10[];
 extern u8 D_us_80182F14[];
 extern s16 D_us_80182F24[][2];

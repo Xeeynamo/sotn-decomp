@@ -73,31 +73,49 @@ typedef enum EntityIDs {
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
+extern EInit D_us_80180938;
+// extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit D_us_8018095C;
 extern EInit g_EInitInteractable;
-
+// extern EInit D_us_80180974;
+// extern EInit D_us_80180980;
+// extern EInit D_us_8018098C;
+// extern EInit g_EInitUnkId13;
+// extern EInit g_EInitUnkId12;
 extern EInit g_EInitCommon;
-
+// extern EInit g_EInitDamageNum;
 extern EInit D_us_801809C8;
 extern EInit D_us_801809D4;
-
+extern EInit g_EInitAxeKnight;
+extern EInit g_EInitAxeKnightAxe;
 extern EInit D_us_801809F8;
-
+// extern EInit D_us_80180A04;
+extern EInit D_us_80180A10;
 extern EInit D_us_80180A1C;
-
+// extern EInit D_us_80180A28;
+// extern EInit D_us_80180A34;
 extern EInit D_us_80180A40;
-
-// Skeleton
+// extern EInit D_us_80180A4C;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
-
+extern EInit D_us_80180A7C;
+// extern EInit D_us_80180A88;
+extern EInit D_us_80180A94;
+extern EInit D_us_80180AA0;
+extern EInit D_us_80180AAC;
+extern EInit D_us_80180AB8;
+extern EInit D_us_80180AC4;
+extern EInit D_us_80180AD0;
 extern EInit g_EInitArmorLord;
-
+// extern EInit D_us_80180AE8;
+// extern EInit D_us_80180AF4;
+extern EInit D_us_80180B00;
 extern EInit D_us_80180B0C;
 extern EInit D_us_80180B18;
-
-// Medusa Head
+extern EInit D_us_80180B24;
+extern EInit D_us_80180B30;
+extern EInit D_us_80180B3C;
 extern EInit g_EInitMedusaHeadBlue;
 extern EInit g_EInitMedusaHeadYellow;
