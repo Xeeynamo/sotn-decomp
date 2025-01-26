@@ -6,8 +6,6 @@
 #include <psxsdk/libc.h>
 #include "../libapi/libapi_internal.h"
 
-typedef struct intrEnv_t intrEnv_t;
-
 static Callback setIntr(s32 arg0, Callback arg1);
 static void* startIntr();
 static void* stopIntr();
@@ -15,18 +13,21 @@ static void* restartIntr();
 static void memclr(void* ptr, s32 size);
 static void trapIntr();
 
-struct intrEnv_t {
+typedef struct {
     u16 interruptsInitialized;
     u16 inInterrupt;
     Callback handlers[11];
     u16 enabledInterruptsMask;
     u16 savedMask;
     int savedPcr;
-    jmp_buf buf;
-    s32 stack[1024];
-};
+    struct {
+        jmp_buf buf;
+        s32 stack[1024];
+    } jmpEnv;
+} intrEnv_t;
 
-static intrEnv_t intrEnv = {0};
+static intrEnv_t intrEnv = {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, {0}};
+
 static struct Callbacks callbacks = {
     "$Id: intr.c,v 1.73 1995/11/10 05:29:40 suzu Exp $",
     0,
@@ -37,10 +38,6 @@ static struct Callbacks callbacks = {
     restartIntr,
     &intrEnv};
 struct Callbacks* pCallbacks = &callbacks;
-static volatile u16* i_stat = (u16*)0x1F801070;
-static volatile u16* g_InterruptMask = (u16*)0x1F801074;
-static volatile s32* d_pcr = (s32*)0x1F8010F0;
-static s32 D_8002D350 = 0;
 
 void* ResetCallback(void) { return pCallbacks->ResetCallback(); }
 
@@ -64,6 +61,10 @@ long RestartCallback(void) { return (long)pCallbacks->RestartCallback(); }
 
 int CheckCallback(void) { return intrEnv.inInterrupt; }
 
+static volatile u16* i_stat = (u16*)0x1F801070;
+static volatile u16* g_InterruptMask = (u16*)0x1F801074;
+static volatile s32* d_pcr = (s32*)0x1F8010F0;
+
 u16 GetIntrMask(void) { return *g_InterruptMask; }
 
 u16 SetIntrMask(u16 arg0) {
@@ -81,11 +82,11 @@ void* startIntr() {
     *i_stat = *g_InterruptMask = 0;
     *d_pcr = 0x33333333;
     memclr(&intrEnv, sizeof(intrEnv) / sizeof(s32));
-    if (setjmp(intrEnv.buf) != 0) {
+    if (setjmp(intrEnv.jmpEnv.buf) != 0) {
         trapIntr();
     }
-    intrEnv.buf[JB_SP] = (s32)&intrEnv.stack[1004];
-    HookEntryInt(intrEnv.buf);
+    intrEnv.jmpEnv.buf[JB_SP] = (s32)&intrEnv.jmpEnv.stack[1004];
+    HookEntryInt(intrEnv.jmpEnv.buf);
     intrEnv.interruptsInitialized = 1;
     pCallbacks->VSyncCallbacks = startIntrVSync();
     pCallbacks->DMACallback = startIntrDMA();
@@ -93,6 +94,8 @@ void* startIntr() {
     ExitCriticalSection();
     return &intrEnv;
 }
+
+static s32 trapMissedCount = 0;
 
 void trapIntr() {
     s32 i;
@@ -116,13 +119,13 @@ void trapIntr() {
         mask = (intrEnv.enabledInterruptsMask & *i_stat) & *g_InterruptMask;
     }
     if (*i_stat & *g_InterruptMask) {
-        if (D_8002D350++ > 0x800) {
+        if (trapMissedCount++ > 0x800) {
             printf("intr timeout(%04x:%04x)\n", *i_stat, *g_InterruptMask);
-            D_8002D350 = 0;
+            trapMissedCount = 0;
             *i_stat = 0;
         }
     } else {
-        D_8002D350 = 0;
+        trapMissedCount = 0;
     }
     intrEnv.inInterrupt = 0;
     ReturnFromException();
@@ -182,7 +185,7 @@ void* restartIntr() {
         return 0;
     }
 
-    HookEntryInt((u16*)intrEnv.buf);
+    HookEntryInt((u16*)intrEnv.jmpEnv.buf);
     intrEnv.interruptsInitialized = 1;
     *g_InterruptMask = intrEnv.savedMask;
     *d_pcr = intrEnv.savedPcr;
