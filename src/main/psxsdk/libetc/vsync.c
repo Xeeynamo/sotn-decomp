@@ -7,7 +7,7 @@ void ChangeClearRCnt(s32, s32);
 extern volatile s32 Vcount;
 static volatile s32* D_8002C2A8 = (s32*)0x1F801814;
 static volatile s32* D_8002C2AC = (s32*)0x1F801110;
-static volatile s32 Hcount = 0;
+volatile s32 Hcount = 0;
 static volatile s32 prevVcount = 0;
 
 s32 VSync(s32 mode) {
@@ -48,7 +48,7 @@ s32 VSync(s32 mode) {
     return ret;
 }
 
-void v_wait(s32 count, s32 max) {
+static void v_wait(s32 count, s32 max) {
     volatile s32 timeout[2];
 
     timeout[0] = max << 0xF;
