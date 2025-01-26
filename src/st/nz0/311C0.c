@@ -99,7 +99,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->hitboxHeight = 32;
         self->hitboxState = 2;
 
-        cond = g_CastleFlags[CASTLE_FLAG_129] != 0;
+        cond = g_CastleFlags[NZ0_SECRET_WALL_BROKEN] != 0;
         tileLayoutPtr = D_80180E54 + (-cond & 24);
 
         tilePos = 0x260;
@@ -110,7 +110,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             tileLayoutPtr += 2;
         }
 
-        if (g_CastleFlags[CASTLE_FLAG_129] != 0) {
+        if (g_CastleFlags[NZ0_SECRET_WALL_BROKEN] != 0) {
             DestroyEntity(self);
             break;
         }
@@ -143,7 +143,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->step++;
 
         if (self->ext.nz0311c0.unk84 == 3) {
-            g_CastleFlags[CASTLE_FLAG_129] = 1;
+            g_CastleFlags[NZ0_SECRET_WALL_BROKEN] = 1;
             g_api.func_800F1FC4(0x81);
 
             for (i = 0; i < 8; i++) {
@@ -181,7 +181,7 @@ void EntityBottomSecretRoomFloor(
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;
-        flag = (g_CastleFlags[CASTLE_FLAG_130] != 0);
+        flag = (g_CastleFlags[NZ0_SECRET_FLOOR_BROKEN] != 0);
         tileLayoutPtr = D_80180E94 + (-flag & 12);
 
         tilePos = 0x2E7;
@@ -192,7 +192,7 @@ void EntityBottomSecretRoomFloor(
             tilePos += 0x10;
         }
 
-        if (g_CastleFlags[CASTLE_FLAG_130] != 0) {
+        if (g_CastleFlags[NZ0_SECRET_FLOOR_BROKEN] != 0) {
             DestroyEntity(self);
             break;
         }
@@ -225,7 +225,7 @@ void EntityBottomSecretRoomFloor(
         self->step++;
 
         if (self->ext.nz0311c0.unk84 == 3) {
-            g_CastleFlags[CASTLE_FLAG_130] = 1;
+            g_CastleFlags[NZ0_SECRET_FLOOR_BROKEN] = 1;
             g_api.func_800F1FC4(0x82);
             DestroyEntity(self);
         }
@@ -606,7 +606,7 @@ void EntityCannonLever(Entity* self) {
         break;
     }
 
-    if (g_CastleFlags[CANNON_WALL_SHORTCUT] != 0) {
+    if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] != 0) {
         self->hitboxState = 0;
     }
     prim = self->ext.prim;
@@ -659,7 +659,7 @@ void EntityCannon(Entity* self) {
         prim->priority = 0x78;
         prim->drawMode = DRAW_UNK02;
 
-        if (g_CastleFlags[CANNON_WALL_SHORTCUT] != 0) {
+        if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] != 0) {
             self->step = 3;
         }
         break;
@@ -729,7 +729,7 @@ void EntityCannonShot(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
             }
-            g_CastleFlags[CANNON_WALL_SHORTCUT] = 1;
+            g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] = 1;
             DestroyEntity(self);
         }
         break;
@@ -748,20 +748,20 @@ void EntityCannonWall(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
 
-        cond = g_CastleFlags[CANNON_WALL_SHORTCUT] != 0;
+        cond = g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] != 0;
         tileLayoutPtr = (-cond & 6) + D_80180ED4;
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr;
             tilePos += 0x10;
         }
 
-        if (g_CastleFlags[CANNON_WALL_SHORTCUT] != 0) {
+        if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] != 0) {
             DestroyEntity(self);
         }
         break;
 
     case 1:
-        i = g_CastleFlags[CANNON_WALL_SHORTCUT] != 0; // TODO: !FAKE:
+        i = g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] != 0; // TODO: !FAKE:
         if (i) {
             self->step++;
         }

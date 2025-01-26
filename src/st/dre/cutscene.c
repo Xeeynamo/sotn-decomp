@@ -126,7 +126,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[SUCC_CS_DONE]) ||
+        if ((g_CastleFlags[SUCCUBUS_CS]) ||
             (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             if (!self->params) {
@@ -148,7 +148,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
         }
-        if ((g_CastleFlags[SUCC_CS_DONE] != 0) ||
+        if ((g_CastleFlags[SUCCUBUS_CS] != 0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD) ||
             (g_DemoMode != Demo_None)) {
             g_SkipCutscene = 1;
@@ -572,7 +572,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     case 7:
         if (self->params) {
-            g_CastleFlags[SUCC_CS_DONE] = 1;
+            g_CastleFlags[SUCCUBUS_CS] = 1;
             g_Settings.D_8003CB04 |= 0x2000;
         } else {
             g_Settings.D_8003CB04 |= 0x1000;
