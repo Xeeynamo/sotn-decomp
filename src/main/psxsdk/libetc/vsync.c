@@ -3,11 +3,12 @@
 #include <psxsdk/libc.h>
 
 void ChangeClearRCnt(s32, s32);
+
 extern volatile s32 Vcount;
-extern volatile s32* D_8002C2A8;
-extern volatile s32* D_8002C2AC;
-extern volatile s32 D_8002C2B4;
-extern volatile s32 Hcount;
+static volatile s32* D_8002C2A8 = (s32*)0x1F801814;
+static volatile s32* D_8002C2AC = (s32*)0x1F801110;
+static volatile s32 Hcount = 0;
+static volatile s32 D_8002C2B4 = 0;
 
 s32 VSync(s32 arg0) {
     s32 temp_s0;
