@@ -17,15 +17,15 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void EntityMouse(Entity* self);
+void EntityEnvTile(Entity* self);
 void EntityUnkId12(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801B7D24(Entity* self);
+void NO1Unused_801B7D24(Entity* self);
 void func_us_801B6490(Entity* self);
 void func_us_801B7188(Entity* self);
-void func_us_801B7D2C(Entity* self);
+void NO1Unused_801B7D2C(Entity* self);
 void func_us_801B7D34(Entity* self);
 void EntityChair(Entity* self);
 void func_us_801B81E8(Entity* self);
@@ -113,15 +113,15 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    EntityMouse,
+    EntityEnvTile,
     EntityUnkId12,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801B7D24,
+    NO1Unused_801B7D24,
     func_us_801B6490,
     func_us_801B7188,
-    func_us_801B7D2C,
+    NO1Unused_801B7D2C,
     func_us_801B7D34,
     EntityChair,
     func_us_801B81E8,

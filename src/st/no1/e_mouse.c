@@ -1,164 +1,100 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-typedef struct {
-    u16 animSet;
-    u16 zPriority;
-    u16 unk5A;
-    u16 palette;
-    u16 drawFlags;
-    u16 drawMode;
-    u32 flags;
-    u8* anim;
-} MouseInitStruct;
+extern AnimationFrame D_us_80180F48[];
+extern AnimationFrame D_us_80180F6C[];
+extern AnimationFrame D_us_80180F7C[];
+extern s32 D_us_80180F84[];
 
-u8 D_us_80180B60[] = {0x40, 0x01, 0xFF, 0x00};
-u8 D_us_80180B64[] = {0x40, 0x3B, 0xFF, 0x00};
-u8 D_us_80180B68[] = {0x40, 0x3C, 0xFF, 0x00};
-u8 D_us_80180B6C[] = {0x01, 0x48, 0xFF, 0x00};
-u8 D_us_80180B70[] = {0x08, 0x44, 0x08, 0x45, 0x08, 0x46, 0x00, 0x00};
-u8 D_us_80180B78[] = {0x40, 0x57, 0xFF, 0x00};
-u8 D_us_80180B7C[] = {0x40, 0x71, 0xFF, 0x00};
-u8 D_us_80180B80[] = {0x40, 0x51, 0xFF, 0x00};
-u8 D_us_80180B84[] = {0x40, 0x49, 0xFF, 0x00};
-u8 D_us_80180B88[] = {0x40, 0x58, 0xFF, 0x00};
-u8 D_us_80180B8C[] = {0x40, 0x59, 0xFF, 0x00};
-u8 D_us_80180B90[] = {0x04, 0x1E, 0xFF, 0x00};
+// The mouse across from the Doppleganger 10 exit
+void func_us_801B7D34(Entity* self) {
+    s16 offsetX;
+    s16 offsetY;
 
-static MouseInitStruct mouseInit[] = {
-    {.animSet = ANIMSET_DRA(6),
-     .zPriority = 0x1FA,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_TPAGE,
-     .flags = 0,
-     .anim = D_us_80180B60},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x07F,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B64},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x07F,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B68},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x070,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B6C},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x080,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B70},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x08A,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B78},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x056,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B7C},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x070,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B80},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x070,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B84},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x07F,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B88},
-    {.animSet = ANIMSET_OVL(1),
-     .zPriority = 0x07F,
-     .unk5A = 0x00,
-     .palette = 0x000,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B8C},
-    {.animSet = ANIMSET_OVL(4),
-     .zPriority = 0x064,
-     .unk5A = 0x4A,
-     .palette = 0x207,
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_DEFAULT,
-     .flags = 0,
-     .anim = D_us_80180B90},
-};
+    offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
-void EntityMouse(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    MouseInitStruct* ptr;
-
-    ptr = &mouseInit[self->params];
-    if (!self->step) {
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitCommon);
-        self->animSet = ptr->animSet;
-        self->zPriority = ptr->zPriority;
-        self->unk5A = ptr->unk5A;
-        self->palette = ptr->palette;
-        self->drawFlags = ptr->drawFlags;
-        self->drawMode = ptr->drawMode;
-        if (ptr->flags != 0) {
-            self->flags = ptr->flags;
+        self->animSet = 0x8001;
+        self->zPriority = PLAYER.zPriority - 0x10;
+        self->facingLeft = true;
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+        self->anim = D_us_80180F48;
+        break;
+
+    case 1:
+        if (self->animFrameDuration < 0) {
+            self->animFrameDuration = 0;
+            self->animFrameIdx = 0;
+            self->anim = D_us_80180F6C;
+            self->velocityX = D_us_80180F84[self->facingLeft];
+            // n.b.! this is one higher than INT16_MAX making
+            //       it actually INT16_MIN. the first decrement
+            //       below rolls the value back to positive before
+            //       any comparison which is only against zero.
+            self->ext.et_801B7D34.timer = (INT16_MAX + 1);
+            self->step++;
         }
-        if (self->params == 6) {
-            primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
-            if (primIndex == -1) {
-                DestroyEntity(self);
-                return;
+        break;
+
+    case 2:
+        if (--self->ext.et_801B7D34.timer == 0) {
+            if (!self->facingLeft) {
+                if (offsetX < 0x1e0 && offsetX > 0x1a0) {
+                    self->step = 3;
+                    self->animFrameIdx = 0;
+                    self->animFrameDuration = 0;
+                    self->anim = D_us_80180F7C;
+                    self->ext.et_801B7D34.unk7E = 3;
+                    self->velocityY = FIX(-2.75);
+                    break;
+                }
             }
-            self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = primIndex;
-            prim = &g_PrimBuf[primIndex];
-            prim->u0 = 0x30;
-            prim->v0 = 0x50;
-            prim->r0 = prim->g0 = prim->b0 = 0x10;
-            prim->x0 = self->posX.i.hi - 0x30;
-            prim->y0 = self->posY.i.hi - 0x28;
-            prim->priority = self->zPriority - 1;
-            prim->drawMode = DRAW_UNK02;
+
+            self->step = 1;
+            self->animFrameIdx = 3;
+            self->animFrameDuration = 0;
+            self->anim = D_us_80180F48;
+
+        } else {
+            self->posX.val += self->velocityX;
+            if ((self->facingLeft == false && offsetX < 0x198) ||
+                (self->facingLeft == true && offsetX > 0x208)) {
+                self->facingLeft ^= true;
+                self->velocityX = D_us_80180F84[self->facingLeft];
+                if (!(rand() & 3)) {
+                    self->ext.et_801B7D34.timer = (rand() & 0xF) + 0x18;
+                } else {
+                    self->ext.et_801B7D34.timer = (INT16_MAX + 1);
+                }
+            }
         }
+        break;
+
+    case 3:
+        self->velocityY += FIX(7.0 / 32.0);
+        self->posY.val += self->velocityY;
+        if (self->velocityY > 0) {
+            offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi - 0x8DD;
+            if (offsetY >= 0) {
+                self->posY.i.hi -= offsetY;
+                self->posY.i.lo = 0;
+                if (--self->ext.et_801B7D34.unk7E) {
+                    self->velocityY = FIX(-2.75);
+                    self->animFrameIdx = 0;
+                    self->animFrameDuration = 0;
+                } else {
+                    self->step = 1;
+                    self->animFrameIdx = 3;
+                    self->animFrameDuration = 0;
+                    self->anim = D_us_80180F48;
+                }
+            }
+        }
+        break;
     }
-    AnimateEntity(ptr->anim, self);
-    FntPrint("pri:%x\n", self->zPriority);
+
+    g_api.UpdateAnim(NULL, NULL);
 }
