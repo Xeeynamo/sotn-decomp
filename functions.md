@@ -492,7 +492,7 @@
 | st0    | GetLangAt                           |       61 |         10 |        |                                 |       |
 | dra    | func_psp_09137038                   |       61 |         12 |        |                                 |       |
 | dra    | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
-| dra    | func_psp_09118330                   |       62 |          5 |        |                                 |       |
+| dra    | func_psp_09118330                   |       62 |          5 |        | https://decomp.me/scratch/1WCR7 | 0.989 |
 | lib    | func_psp_09243F18                   |       62 |          5 |        |                                 |       |
 | lib    | func_psp_0925D350                   |       62 |          5 |        |                                 |       |
 | lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
@@ -1136,5 +1136,5 @@
 | lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
 | dra    | func_psp_09132AF0                   |     2183 |        161 | Yes    | https://decomp.me/scratch/wULJ5 | 0.975 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/oCnk1 | 0.684 |
-| dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/yTQqd | 0.761 |
+| dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/7l1WU | 0.795 |
 | dra    | func_psp_091296A8                   |     2950 |        257 | Yes    | https://decomp.me/scratch/EQTHy | 0.918 |
