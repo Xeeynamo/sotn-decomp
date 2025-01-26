@@ -2583,7 +2583,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u16 : 16;
     /* 0x7E */ u16 : 16;
-    /* 0x80 */ u16 : 16;
+    /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ u8 unk84;
 } ET_801BE880;

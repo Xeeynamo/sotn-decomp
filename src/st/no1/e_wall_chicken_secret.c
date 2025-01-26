@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// Breakable wall with chicken
 extern u16 D_us_801815F4[];
 extern u16 D_us_80181604[][8];
+extern s32 D_psp_0929A738;
 extern s32 D_psp_0929A740;
 extern s32 D_psp_0929A748;
 
+// Breakable wall with chicken
 void func_us_801BE880(Entity* self) {
     Entity* tempEntity;
     s32 tilePos;
@@ -121,7 +122,71 @@ void func_us_801BE880(Entity* self) {
 }
 
 // Hit spawner?
-INCLUDE_ASM("st/no1/nonmatchings/e_wall_chicken_secret", func_us_801BEB54);
+void func_us_801BEB54(Entity* self) {
+    Entity* tempEntity;
+    s32 i;
+
+    if (self->hitParams) {
+        PlaySfxPositional(SFX_EXPLODE_FAST_B);
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801809D4);
+        self->hitPoints = 0x18;
+        self->hitboxWidth = 0x10;
+        self->hitboxHeight = 0xC;
+        self->hitboxState = 2;
+        self->ext.et_801BE880.unk80 = self->hitPoints;
+        self->hitboxOffY = -0xC;
+        break;
+
+    case 1:
+        if (self->hitPoints ^ self->ext.et_801BE880.unk80) {
+            (self - self->params)->ext.et_801BE880.unk82 +=
+                self->ext.et_801BE880.unk80 - self->hitPoints;
+            self->ext.et_801BE880.unk80 = self->hitPoints;
+        }
+        if (self->flags & FLAG_DEAD) {
+            (self - self->params)->ext.et_801BE880.unk84 |= self->params;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->step_s == 0) {
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                tempEntity->posY.i.hi -= 8;
+                tempEntity->params = 0x13;
+            }
+            for (i = 0; i < 3; i++) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, tempEntity);
+                    tempEntity->posX.i.hi += (i * 0x10) - 0x10;
+                    tempEntity->params = 0x10;
+                }
+            }
+            for (i = 0; i < 5; i++) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+#ifdef VERSION_PSP
+                    CreateEntityFromEntity(D_psp_0929A738, self, tempEntity);
+#else
+                    CreateEntityFromEntity(E_ID_27, self, tempEntity);
+#endif
+                    tempEntity->posX.i.hi += (i * 8) - 0x10 + (Random() & 3);
+                    tempEntity->posY.i.hi -= (Random() & 7) + 0x14;
+                    tempEntity->params = i;
+                }
+            }
+            self->step_s++;
+        }
+        break;
+    }
+}
 
 // Wall particles on hit
 INCLUDE_ASM("st/no1/nonmatchings/e_wall_chicken_secret", func_us_801BEE00);

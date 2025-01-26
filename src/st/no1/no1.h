@@ -36,6 +36,7 @@ typedef enum EntityIDs {
     /* 0x23 */ E_UNK_ENTITY,       // InitializeUnkEntity
     /* 0x25 */ E_ID_25 = 0x25,
     /* 0x26 */ E_ID_26,
+    /* 0x27 */ E_ID_27,
     /* 0x2A */ E_ID_2A = 0x2A,
     /* 0x2F */ E_ID_2F = 0x2F,
     /* 0x30 */ E_ID_30,
@@ -79,6 +80,7 @@ extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
 
 extern EInit D_us_801809C8;
+extern EInit D_us_801809D4;
 
 extern EInit D_us_801809F8;
 
