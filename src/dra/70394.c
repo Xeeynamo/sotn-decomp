@@ -2,7 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-
 s16 D_800ACF6C[] = {0, -8, -16, -22};
 
 s16 func_80110394(void) {

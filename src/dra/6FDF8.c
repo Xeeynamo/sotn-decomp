@@ -15,8 +15,9 @@ bool func_8010FDF8(s32 branchFlags) {
         YAccel = FIX(22.0 / 128);
     }
     if (branchFlags & 0x10000) {
-        if (PLAYER.velocityY < FIX(3.0/8) && FIX(-1.0/8) < PLAYER.velocityY &&
-            !(g_Player.unk44 & 0x20) && g_Player.padPressed & PAD_CROSS) {
+        if (PLAYER.velocityY < FIX(3.0 / 8) &&
+            FIX(-1.0 / 8) < PLAYER.velocityY && !(g_Player.unk44 & 0x20) &&
+            g_Player.padPressed & PAD_CROSS) {
             YAccel = FIX(22.0 / 128 / 5);
         } else {
             YAccel = FIX(22.0 / 128);
@@ -24,7 +25,8 @@ bool func_8010FDF8(s32 branchFlags) {
     }
 
     if (branchFlags & 0x200) {
-        if (PLAYER.velocityY < FIX(3.0/8) && FIX(-1.0/8) < PLAYER.velocityY) {
+        if (PLAYER.velocityY < FIX(3.0 / 8) &&
+            FIX(-1.0 / 8) < PLAYER.velocityY) {
             YAccel = FIX(11.0 / 128);
         } else {
             YAccel = FIX(22.0 / 128);
