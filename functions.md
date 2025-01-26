@@ -900,9 +900,9 @@
 | lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
 | dra    | func_psp_09118408                   |      264 |         28 |        |                                 |       |
 | st0    | func_801A805C                       |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
-| lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/3r6LM | 0.998 |
-| st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/3r6LM | 0.998 |
-| wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/3r6LM | 0.998 |
+| lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
+| st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
+| wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_psp_09138240                   |      269 |         49 |        |                                 |       |
 | dra    | func_psp_0912DDA8                   |      270 |         27 |        |                                 |       |
 | lib    | func_psp_09261338                   |      274 |         43 |        | https://decomp.me/scratch/JwqB9 | 0.973 |
@@ -917,7 +917,7 @@
 | dra    | func_psp_09130730                   |      283 |         37 | Yes    | https://decomp.me/scratch/yJ6yP | 1.0   |
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
-| dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/pav7X | 0.782 |
+| dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_psp_09116720                   |      288 |         19 |        | https://decomp.me/scratch/xTydq | 0.997 |
 | lib    | func_psp_09238EC8                   |      290 |         42 |        |                                 |       |
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
