@@ -38,7 +38,7 @@ segments:
       - [0x8F8, .rodata, psxsdk/libgpu/prim]
       - [0x9C8, .rodata, psxsdk/libgpu/sys]
       - [0xBC4, rodata, psxsdk/libapi/a22] # aVsyncTimeout
-      - [0xC08, .rodata, psxsdk/libetc/intr]
+      - [0xBD4, .rodata, psxsdk/libetc/intr]
       - [0xC40, .rodata, psxsdk/libetc/intr_dma]
       - [0xC6C, .rodata, psxsdk/libc/sprintf]
       - [0xD48, .rodata, psxsdk/libcd/event]
@@ -264,6 +264,8 @@ segments:
       - [0x1B93C, c, psxsdk/libspu/s_n2p]
       - [0x1BB88, c, psxsdk/libspu/sr_gaks]
       - [0x1BCE0, data]
+      - [0x1CAB8, .data, psxsdk/libetc/intr]
+      - [0x1DB54, data]
       - [0x235E8, .data, psxsdk/libcd/c_002]
       - [0x235F8, .data, psxsdk/libcd/c_003]
       - [0x23608, .data, psxsdk/libcd/c_004]

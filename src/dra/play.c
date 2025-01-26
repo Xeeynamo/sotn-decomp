@@ -93,15 +93,15 @@ void HandlePlay(void) {
             for (i = 0; i < LEN(g_CastleFlags); i++) {
                 g_CastleFlags[i] = 0;
             }
-            g_CastleFlags[CASTLE_FLAG_185] = 1;
-            g_CastleFlags[CASTLE_FLAG_155] = 1;
+            g_CastleFlags[INTRO_VIDEO] = 1;
+            g_CastleFlags[ST0_BANNER] = 1;
             if (g_PlayableCharacter != 0) {
-                g_CastleFlags[CASTLE_FLAG_53] = 1;
-                g_CastleFlags[CASTLE_FLAG_98] = 1;
-                g_CastleFlags[CASTLE_FLAG_99] = 1;
-                g_CastleFlags[CASTLE_FLAG_133] = 1;
-                g_CastleFlags[CASTLE_FLAG_149] = 1;
-                g_CastleFlags[CASTLE_FLAG_150] = 1;
+                g_CastleFlags[IVE_BEEN_ROBBED] = 1;
+                g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH] = 1;
+                g_CastleFlags[MET_MARIA_IN_DAI] = 1;
+                g_CastleFlags[MET_MARIA_IN_NZ0] = 1;
+                g_CastleFlags[SHAFT_ORB_DEFEATED] = 1;
+                g_CastleFlags[INVERTED_CASTLE_UNLOCKED] = 1;
             }
 
             for (i = 0, ptr = &g_MenuNavigation; i < sizeof(MenuNavigation);
@@ -179,8 +179,8 @@ void HandlePlay(void) {
         DestroyAllPrimitives();
         func_800EDAE4();
         func_801024DC();
-        if (g_CastleFlags[CASTLE_FLAG_19] & 0x80) {
-            g_CastleFlags[CASTLE_FLAG_19] =
+        if (g_CastleFlags[NO1_WEATHER] & 0x80) {
+            g_CastleFlags[NO1_WEATHER] =
                 g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
         }
         g_GameStep++;

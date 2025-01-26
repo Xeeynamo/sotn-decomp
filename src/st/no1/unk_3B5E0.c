@@ -1,12 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+// Called by elevator doors
+INCLUDE_ASM("st/no1/nonmatchings/unk_3B5E0", func_us_801BB5E0);
+
+// Called by elevator doors
+INCLUDE_ASM("st/no1/nonmatchings/unk_3B5E0", func_us_801BB7B8);
+
 extern s16 D_us_80181508[][3];
 extern s16 D_us_8018151C[][3];
 extern u8 D_us_80181540[];
 
 extern s32 D_psp_08C62AA4;
 
+// Elevator doors
 void func_us_801BB984(Entity* self) {
     Primitive* prim;
     s32 primIndex;

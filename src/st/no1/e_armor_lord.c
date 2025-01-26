@@ -92,7 +92,7 @@ void func_us_801D1184(Primitive* prim) {
     }
 }
 
-// Armor Lord fire wave helper
+// Armor Lord
 void func_us_801D1388(Primitive* prim) {
     Collider collider;
     Primitive* otherPrim;
@@ -992,3 +992,9 @@ void EntityArmorLord(Entity* self) {
         self->posX.i.hi = 0x90 - g_Tilemap.scrollX.i.hi;
     }
 }
+
+// Some kind of helper for the Armor Lord
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D348C);
+
+// Another wave attack helper
+INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D3700);
