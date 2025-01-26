@@ -26,7 +26,8 @@ typedef struct {
     } jmpEnv;
 } intrEnv_t;
 
-static intrEnv_t intrEnv = {0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, {{0}, {0}}};
+static intrEnv_t intrEnv = {
+    0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, {{0}, {0}}};
 
 static struct Callbacks callbacks = {
     "$Id: intr.c,v 1.73 1995/11/10 05:29:40 suzu Exp $",
