@@ -332,7 +332,9 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
 
     if (resetAnims) {
         g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
-        g_Entities[UNK_ENTITY_1].animCurFrame = g_Entities[UNK_ENTITY_2].animCurFrame = g_Entities[UNK_ENTITY_3].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_1].animCurFrame =
+            g_Entities[UNK_ENTITY_2].animCurFrame =
+                g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
 
         for (i = 0; i < 6; i++) {
@@ -353,9 +355,7 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     }
 }
 
-void func_8010E0A8(void) {
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
-}
+void func_8010E0A8(void) { g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0; }
 
 void func_8010E0B8(void) {
     g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
