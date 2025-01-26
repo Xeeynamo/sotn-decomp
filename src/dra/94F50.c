@@ -106,7 +106,7 @@ void ExecSoundCommands(void) {
             case 0x9F:
                 SetReleaseRate1();
                 break;
-            case 0xA0:
+            case SET_RELEASE_RATE_HIGH_20_21 - 1:
                 SetReleaseRateHigh20_21();
                 g_CurSfxId20_21 = 0;
                 break;

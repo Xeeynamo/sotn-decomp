@@ -89,7 +89,7 @@ void EntityCastleDoorTransition(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (g_CastleFlags[CASTLE_FLAG_52]) {
+        if (g_CastleFlags[PROLOGUE_COMPLETE]) {
             DestroyEntity(entity);
             return;
         }

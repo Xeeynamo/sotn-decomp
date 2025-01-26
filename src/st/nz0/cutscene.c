@@ -75,7 +75,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[CASTLE_FLAG_133] != 0) ||
+        if ((g_CastleFlags[MET_MARIA_IN_NZ0] != 0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             return;
@@ -511,7 +511,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     case 7:
         DestroyEntity(self);
-        g_CastleFlags[CASTLE_FLAG_133] = 1;
+        g_CastleFlags[MET_MARIA_IN_NZ0] = 1;
         g_CutsceneHasControl = 0;
         g_Settings.D_8003CB04 |= 0x100;
         break;

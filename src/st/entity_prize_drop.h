@@ -112,7 +112,7 @@ void EntityPrizeDrop(Entity* self) {
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
-                g_CastleFlags[(index >> 3) + COLLECT_FLAGS_START] |=
+                g_CastleFlags[(index >> 3) + ENEMY_LIST_RAREDROP_1B0] |=
                     1 << (index & 7);
             }
 #endif

@@ -166,8 +166,8 @@ void EntityGaibon(Entity* self) {
     }
     switch (self->step) {
     case 0x0:
-        if ((g_CastleFlags[SG_KILL_ALCH] == 0) &&
-            (g_CastleFlags[SG_RETR_ENTR] == 0)) {
+        if ((g_CastleFlags[SLO_GAI_DEFEATED] == 0) &&
+            (g_CastleFlags[SLO_GAI_RETREATED] == 0)) {
             InitializeEntity(g_EInitGaibonNP3);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             CreateEntityFromCurrentEntity(E_GAIBON_IDLE, self + 1);
@@ -592,7 +592,7 @@ void EntityGaibon(Entity* self) {
                 self->facingLeft = 0;
             }
             self->ext.GS_Props.speed = 0;
-            g_CastleFlags[SG_RETR_ENTR] |= 1;
+            g_CastleFlags[SLO_GAI_RETREATED] |= 1;
             self->step_s++;
             /* fallthrough */
         case 1:
