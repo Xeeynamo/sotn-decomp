@@ -7,7 +7,7 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B832C);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B83CC);
 
-// entering the ark
+// Baby birds in the nest
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8430);
 
 extern AnimationFrame D_us_80180FE0[];
@@ -19,6 +19,7 @@ extern AnimationFrame* D_us_80181348[];
 extern AnimationFrame* D_us_80181368[];
 extern s32 D_us_80181388;
 
+// The bird life cycle at the bottom of NO1
 void func_us_801B84E4(Entity* self) {
     s16 posX;
 
@@ -176,7 +177,7 @@ void func_us_801B84E4(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-// entering the ark
+// Triggers in the bottom room of NO1
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8B00);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
@@ -184,8 +185,8 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 // entering doppleganger's room
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
 
-// in vertical room before doppleganger
-// maybe some decoration at the bottom
+// Seems to be some kind of helper for the chair next to the save room
+// It spawns the table and chair sprite
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9028);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
@@ -571,6 +572,7 @@ extern u8 D_us_801814C4[];
 extern SVECTOR D_us_801814D0;
 extern s32 D_psp_0929A6D0;
 
+// This is the spyglass at the bottom of NO1
 void func_us_801BA290(Entity* self) {
     long unusedA;
     long unusedB;
@@ -1211,8 +1213,6 @@ void func_us_801BA290(Entity* self) {
     }
 }
 
+// Triggers when fully zoomed in after interacting with the spyglass
+// Likely the fish function
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB4C0);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB5E0);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB7B8);
