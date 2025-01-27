@@ -547,7 +547,7 @@
 | dra    | func_801024DC                       |       71 |          5 |        |                                 |       |
 | dra    | func_psp_090E8A30                   |       71 |          5 |        |                                 |       |
 | dra    | func_psp_090F0220                   |       71 |          7 |        |                                 |       |
-| dra    | func_psp_09142ED8                   |       71 |          7 |        |                                 |       |
+| dra    | PlaySfxVolPan                       |       71 |          7 |        |                                 |       |
 | lib    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | lib    | func_psp_09244210                   |       71 |          7 |        |                                 |       |
 | lib    | func_psp_09266028                   |       71 |          7 |        |                                 |       |
@@ -702,7 +702,7 @@
 | st0    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | wrp    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | dra    | func_psp_09141AA0                   |      105 |         15 |        |                                 |       |
-| dra    | func_psp_09111BB8                   |      106 |         11 |        |                                 |       |
+| dra    | func_80110394                       |      106 |         11 |        |                                 |       |
 | dra    | func_psp_09136620                   |      106 |         12 |        |                                 |       |
 | lib    | func_psp_09243FF0                   |      106 |         16 |        |                                 |       |
 | st0    | PrizeDropFall2                      |      106 |         16 |        |                                 |       |
