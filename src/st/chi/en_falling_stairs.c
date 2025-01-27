@@ -114,7 +114,7 @@ void EntityFallingStairs(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STAIRS]) {
+        if (g_CastleFlags[CHI_LARGE_STEPS_FALLEN]) {
             DestroyEntity(self);
             return;
         }
@@ -348,7 +348,7 @@ void EntityFallingStairs(Entity* self) {
         // The only tile that overlaps existing graphics
         g_Tilemap.fg[*pDstTileIdx] = 0x1BA;
         self->animCurFrame = 0;
-        g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STAIRS] = 1;
+        g_CastleFlags[CHI_LARGE_STEPS_FALLEN] = 1;
         self->step++;
         break;
     }
@@ -404,7 +404,7 @@ void EntityFallingStep(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        if (g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STEP]) {
+        if (g_CastleFlags[CHI_TINY_STEPS_FALLEN]) {
             DestroyEntity(self);
             return;
         }
@@ -423,7 +423,7 @@ void EntityFallingStep(Entity* self) {
         scrolledY -= TriggerBoxY;
         if ((scrolledX < TriggerBoxW) && (scrolledY < TriggerBoxH) &&
             (g_Player.pl_vram_flag & 1)) {
-            g_CastleFlags[CASTLE_FLAG_CHI_FALLING_STEP] = 1;
+            g_CastleFlags[CHI_TINY_STEPS_FALLEN] = 1;
             self->step++;
         }
         break;
