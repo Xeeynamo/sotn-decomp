@@ -725,7 +725,7 @@ void EntityVenusWeedFlower(Entity* self) {
 
     // Hurt check
     if (self->hitFlags & 3) {
-        PlaySfxPositional(NA_SE_EN_VENUS_WEED_HURT);
+        PlaySfxPositional(SFX_VENUS_WEED_HURT);
 
         // Tell root to wiggle for a bit
         entity = self - 1; // Root
@@ -733,7 +733,7 @@ void EntityVenusWeedFlower(Entity* self) {
     }
     // Death check
     if ((self->flags & FLAG_DEAD) && (self->step < DEATH)) {
-        PlaySfxPositional(NA_SE_EN_VENUS_WEED_DEATH);
+        PlaySfxPositional(SFX_VENUS_WEED_DEATH);
         SetStep(DEATH);
     }
 
@@ -1094,7 +1094,7 @@ void EntityVenusWeedTendril(Entity* self) {
             }
             if (!self->animFrameDuration &&
                 self->animFrameIdx == SpikeSfxAnimFrameIdx) {
-                PlaySfxPositional(NA_SE_EN_VENUS_WEED_ATTACK_TENDRIL_SPIKE);
+                PlaySfxPositional(SFX_DISSONANT_SCREECH);
             }
             break;
 

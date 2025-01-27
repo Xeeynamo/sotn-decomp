@@ -535,7 +535,7 @@ void EntityCorpseweed(Entity* self) {
             // Spawn projectile entity
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                PlaySfxPositional(NA_SE_EN_CORPSEWEED_ATTACK);
+                PlaySfxPositional(SFX_CORPSEWEED_ATTACK);
 
                 CreateEntityFromEntity(E_CORPSEWEED_PROJECTILE, self, entity);
                 entity->zPriority = self->zPriority + 1;

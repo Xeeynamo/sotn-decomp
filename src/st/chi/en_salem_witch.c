@@ -396,7 +396,7 @@ void EntitySalemWitch(Entity* self) {
         self->ext.salemWitch.timer++;
         switch (self->step_s) {
         case ATTACK_CURSE_INIT:
-            PlaySfxPositional(NA_SE_EN_SALEM_WITCH_ATTACK);
+            PlaySfxPositional(SFX_SALEM_WITCH_ATTACK);
             self->step_s++;
             // fallthrough
         case ATTACK_CURSE_CAST:
@@ -444,7 +444,7 @@ void EntitySalemWitch(Entity* self) {
     case ATTACK_TRIBOLT:
         switch (self->step_s) {
         case ATTACK_TRIBOLT_INIT:
-            PlaySfxPositional(NA_SE_EN_SALEM_WITCH_ATTACK);
+            PlaySfxPositional(SFX_SALEM_WITCH_ATTACK);
             self->step_s++;
             // fallthrough
         case ATTACK_TRIBOLT_HANDS_UP:
@@ -491,7 +491,7 @@ void EntitySalemWitch(Entity* self) {
 
             self->ext.salemWitch.timer = HurtDuration;
             self->animCurFrame = AnimFrameHurt;
-            PlaySfxPositional(NA_SE_EN_SALEM_WITCH_HURT);
+            PlaySfxPositional(SFX_SALEM_WITCH_HURT);
             self->step_s++;
             // fallthrough
         case HURT_WAIT:
@@ -527,7 +527,7 @@ void EntitySalemWitch(Entity* self) {
 
             self->ext.salemWitch.timer = DeathDuration;
             self->animCurFrame = AnimFrameHurt;
-            PlaySfxPositional(NA_SE_EN_SALEM_WITCH_DEATH);
+            PlaySfxPositional(SFX_SALEM_WITCH_DEATH);
             self->step_s++;
             // fallthrough
         case DEATH_WAIT:

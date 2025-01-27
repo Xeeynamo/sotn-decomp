@@ -41,7 +41,7 @@ void EntityGremlin(Entity* self) {
 
     // Check for being hurt
     if ((self->hitFlags & 3) && (self->step != HURT_DEATH)) {
-        PlaySfxPositional(NA_SE_EN_GREMLIN_HURT);
+        PlaySfxPositional(SFX_GREMLIN_HURT);
         SetStep(HURT_DEATH);
     }
     // Check for being dead
@@ -192,7 +192,7 @@ void EntityGremlin(Entity* self) {
 
             // Check if dead
             if (self->flags & FLAG_DEAD) {
-                PlaySfxPositional(NA_SE_EN_GREMLIN_DEATH);
+                PlaySfxPositional(SFX_GREMLIN_DEATH);
 
                 // Spawn fire particles
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
