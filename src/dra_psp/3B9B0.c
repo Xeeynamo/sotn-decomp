@@ -18,18 +18,13 @@ void GetPlayerSensor(Collider* col) {
     }
 }
 
+//func_8010BFFC
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09118408);
-
+//CheckFloor
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_091187D8);
-
+//CheckCeiling
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_091190E0);
-
+//CheckWallRight
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119950);
-
+//CheckWallLeft
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119D00);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_0911A0B8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_0911ABF8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_0911B630);
