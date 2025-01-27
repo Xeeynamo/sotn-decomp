@@ -64,7 +64,7 @@ segments:
       - [0x37930, .data, lib/st_update]
       - [0x37960, data]
       - [0x37B70, .data, lib_psp/e_collect]
-      - [0x38068, data]
+      - [0x380B8, data]
       - [0x38138, .data, lib/collision]
       - [0x38510, data]
       - [0x38790, .data, lib/e_room_fg]
