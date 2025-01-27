@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../wrp/wrp.h"
+#include "../lib/lib.h"
 
 static u8 D_80180C94[] = {0x01, 0x0E, 0x00};
 static u8 D_80180C98[] = {
@@ -126,8 +126,11 @@ static u8* g_ExplosionAnimations[] = {
 };
 
 #include "../prize_drop_fall.h"
+
 #include "../prize_drop_fall2.h"
+
 #include "../collect_heart.h"
+
 #include "../collect_gold.h"
 
 #include "../collect_subweapon_psp.h"
@@ -139,6 +142,7 @@ static u8* g_ExplosionAnimations[] = {
 #include "../collect_dummy.h"
 
 #include "../entity_prize_drop.h"
+
 #include "../entity_explosion.h"
 
 // BlinkItem must be declared static for EntityEquipItemDrop / EntityRelicOrb

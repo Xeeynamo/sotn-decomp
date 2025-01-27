@@ -2,14 +2,8 @@
 #include "stage.h"
 
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
-extern s32 D_8B42058;
-extern s32* D_psp_0924BC60;
-extern s32 D_psp_09246640;
-extern s32 D_psp_09246650;
-extern s32 D_psp_09246660;
-extern s32 D_psp_09246668;
-extern s32 D_psp_09246678;
-extern s32 D_psp_09246688;
+extern s32 D_8B42058;     // User's language selection?
+extern char* obtainedStr; // BSS
 #else
 const char* g_RelicOrbTexts[] = {
 #if !defined(VERSION_US) || STAGE == STAGE_ST0
@@ -27,6 +21,16 @@ s16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
 #if STAGE != STAGE_ST0
 s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+#endif
+
+#if defined(VERSION_PSP) && STAGE != STAGE_ST0
+// char* obtainedStr;
+static char obtained_ENG[] = "Obtained\x00";
+static char obtained_FR[] = "Obtenu \xB1 \x00";
+static char obtained_ES[] = "Tienes\x00";
+static char obtained_DE[] = "erhalten\x00";
+static char obtained_IT[] = "Ottenuto\x00";
+static char format_str[] = "%s %s\x00";
 #endif
 
 extern u16 g_EInitObtainable[];
@@ -258,26 +262,26 @@ void EntityRelicOrb(Entity* self) {
         switch (D_8B42058) {
         case 1:
         default:
-            D_psp_0924BC60 = &D_psp_09246640;
+            obtainedStr = obtained_ENG;
             break;
         case 2:
-            D_psp_0924BC60 = &D_psp_09246650;
+            obtainedStr = obtained_FR;
             break;
         case 3:
-            D_psp_0924BC60 = &D_psp_09246660;
+            obtainedStr = obtained_ES;
             break;
         case 4:
-            D_psp_0924BC60 = &D_psp_09246668;
+            obtainedStr = obtained_DE;
             break;
         case 5:
-            D_psp_0924BC60 = &D_psp_09246678;
+            obtainedStr = obtained_IT;
             break;
         }
 
         if (D_8B42058 != 4) {
-            psp_sprintf(&sp34, &D_psp_09246688, D_psp_0924BC60, msg);
+            psp_sprintf(&sp34, format_str, obtainedStr, msg);
         } else {
-            psp_sprintf(&sp34, &D_psp_09246688, msg, D_psp_0924BC60);
+            psp_sprintf(&sp34, format_str, msg, obtainedStr);
         }
         // Presumably this is a strlen call?
         msgLen = func_890CAE0(sp34);
