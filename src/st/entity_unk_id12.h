@@ -28,6 +28,7 @@ static u16 g_EntityUnkId12TilemapProps[] = {
 };
 
 extern u16 g_EInitUnkId12[];
+// EntityCameraLock as a possible name here?
 // params: Which camera lock config to use
 void EntityUnkId12(Entity* self) {
     u16 var_s0;
