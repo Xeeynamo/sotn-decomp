@@ -126,11 +126,11 @@ void EntityBreakableDebris(Entity* self) {
             self->velocityX = FIX(1);
         }
 
-        temp = 0x8000;
+        temp = FIX(0.5);
         temp_v0_2 = Random() << 8;
         self->velocityX = self->velocityX + temp - temp_v0_2;
         self->velocityY = FIX(-3);
-        self->velocityY = (self->params >> 1) * 0x6000 - 0x30000;
+        self->velocityY = (self->params >> 1) * FIX(0.375) - FIX(3);
 
         // "Last standing" debris just sits there (tall breakables only)
         if (self->params == 6) {

@@ -237,7 +237,7 @@ void EntityCorpseweed(Entity* self) {
     const int BobbingSpeedX_Stalk = 0x38;
     const int BobbingSpeedY_Stalk = 0x64;
     // Death
-    const int DeathHeadFallAccel = 0x1800;
+    const int DeathHeadFallAccel = FIX(0.09375);
     const int DeathHeadRotateSpeed = 0x20;
 
     typedef enum Step {
@@ -746,7 +746,7 @@ void EntityCorpseweedProjectile(Entity* self) {
     // Misc
     const int Brightness = 0x40;
     const int RangeMaxX = 0x60;
-    const int SpeedX = 0x800;
+    const int SpeedX = FIX(0.03125);
     const int Gravity = FIX(0.125);
 
     typedef enum Step {

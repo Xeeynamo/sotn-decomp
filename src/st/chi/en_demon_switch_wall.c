@@ -212,7 +212,7 @@ void EntityDemonSwitchWall(Entity* self) {
 #endif
 
         if (self->velocityX < FIX(0.25)) {
-            self->velocityX += 0x200;
+            self->velocityX += FIX(0.0078125);
         }
 
         // Generate a "falling pebble" particle

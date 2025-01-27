@@ -15,7 +15,7 @@
 // func_8019C31C
 // https://decomp.me/scratch/NKGUh
 void EntityBreakableWallDebris(Entity* self) {
-    const int Gravity = 0x2000;
+    const int Gravity = FIX(0.125);
 
     typedef enum Step {
         INIT = 0,
@@ -47,13 +47,13 @@ void EntityBreakableWallDebris(Entity* self) {
         velX = (Random() & 0xF) << 0xC;
         self->velocityX = velX;
         if (self->animCurFrame == 0xD) {
-            self->velocityX = velX + 0x4000;
+            self->velocityX = velX + FIX(0.25);
         }
 
-        velY = ((Random() & 7) << 0xB) - 0x4000;
+        velY = ((Random() & 7) << 0xB) - FIX(0.25);
         self->velocityY = velY;
         if (self->animCurFrame < 0xB) {
-            self->velocityY = velY + 0xFFFF0000;
+            self->velocityY = velY - FIX(1);
         }
 
         self->ext.breakableWallDebris.rotSpeed = ((Random() & 3) + 1) * 32;
@@ -94,7 +94,7 @@ void EntityBreakableWallDebris(Entity* self) {
                 return;
             }
             newVelY = self->velocityY;
-            if (newVelY <= 0x7FFF) {
+            if (newVelY < FIX(0.5)) {
                 // Poof, gone
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
