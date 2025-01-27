@@ -2750,6 +2750,9 @@
 | 1.00 | true     | EntityMistDoor                      | asm/us/st/no1/matchings/e_mist_door/EntityMistDoor.s 
 | 1.00 | false    | func_us_801CF918                    | asm/us/st/lib/nonmatchings/unk_4F918/func_us_801CF918.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801B6198                    | asm/us/st/no1/matchings/unk_35E20/func_us_801B6198.s 
+| 1.00 | true     | func_801A8328                       | asm/us/st/st0/matchings/2805C/func_801A8328.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityDeadMerman                    | asm/us/st/no3/matchings/53F38/EntityDeadMerman.s 
 | 1.00 | true     | EntityDeadMerman                    | asm/us/st/np3/matchings/e_merman2/EntityDeadMerman.s 
 -------------------------------------------------------------------------------
@@ -2926,6 +2929,3 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801BA7EC                       | asm/us/st/sel/matchings/stream/func_801BA7EC.s 
 | 0.95 | true     | func_801BA880                       | asm/us/st/sel/matchings/stream/func_801BA880.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801A8328                       | asm/us/st/st0/matchings/2805C/func_801A8328.s 
-| 1.00 | false    | func_us_801B6198                    | asm/us/st/no1/nonmatchings/unk_35E20/func_us_801B6198.s 
