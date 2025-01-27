@@ -9,7 +9,6 @@ typedef struct {
     s16 yOffset;
 } unk_801D0598;
 
-extern u16 D_us_80180AC4[];
 extern s16 D_us_80182BD8[];
 extern s16 D_us_80182BE8[];
 extern u16 D_us_80182BF0[];
@@ -319,8 +318,6 @@ void EntityBoneArcher(Entity* self) {
 }
 
 // Bone Archer arrow
-extern u16 D_us_80180AD0[];
-
 void EntityBoneArcherArrow(Entity* self) {
     Entity* tempEntity;
     s32 i;

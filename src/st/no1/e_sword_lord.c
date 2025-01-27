@@ -68,7 +68,6 @@ u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
     return arg0;
 }
 
-extern u16 D_us_80180AAC[];
 extern u16 D_us_80182A80[];
 extern u16 D_us_80182A88[][2];
 extern u8 D_us_80182A98[];
@@ -418,7 +417,6 @@ void func_us_801CF850(Entity* self) {
     }
 }
 
-extern u16 D_us_80180AB8[];
 extern s8 D_us_80182B64[][4];
 extern u8 D_us_80182BB8[];
 

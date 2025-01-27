@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// The mouse across from the Doppleganger 10 exit
 extern AnimationFrame D_us_80180F48[];
 extern AnimationFrame D_us_80180F6C[];
 extern AnimationFrame D_us_80180F7C[];
 extern s32 D_us_80180F84[];
 
+// The mouse across from the Doppleganger 10 exit
 void func_us_801B7D34(Entity* self) {
     s16 offsetX;
     s16 offsetY;
@@ -16,7 +16,7 @@ void func_us_801B7D34(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        self->animSet = -0x7FFF;
+        self->animSet = 0x8001;
         self->zPriority = PLAYER.zPriority - 0x10;
         self->facingLeft = true;
         self->animFrameIdx = 0;

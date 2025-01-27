@@ -11,7 +11,6 @@ void func_us_801CDDD8(u8 step) {
     g_CurrentEntity->step = step;
 }
 
-extern u16 D_us_80180A7C[];
 extern u8* D_us_8018285C[];
 extern u8* D_us_80182864[];
 extern u8 D_us_8018286C[];
