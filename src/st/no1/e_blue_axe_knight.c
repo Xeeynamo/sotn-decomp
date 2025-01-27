@@ -17,9 +17,6 @@ typedef enum {
     AXE_KNIGHT_DYING,
 } EntityAxeKnightSteps;
 
-extern EInit g_EInitAxeKnight;
-extern EInit g_EInitAxeKnightAxe;
-
 static s16 sensors_move[] = {0, 32, 8, 0};
 static s16 sensors_ground[4][2] = {{0, 32}, {0, 4}, {8, -4}, {-16, 0}};
 static s16 dead_particle_pos[][2] = {

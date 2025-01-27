@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern u16 D_us_80180B24[];
 extern s16 D_us_80183230[];
 extern s16 D_us_80183240[];
 extern s16 D_us_80183248[];
@@ -172,7 +171,6 @@ void EntitySkeletonApe(Entity* self) {
 }
 
 // Skeleton Ape punch attack
-extern EInit D_us_80180B3C;
 extern Point16 D_us_801832FC[];
 extern Point16 D_us_80183310[];
 
@@ -218,7 +216,6 @@ void func_us_801D5008(Entity* self, Entity* parent) {
 }
 
 // Skeleton Ape barrel
-extern u16 D_us_80180B30[];
 extern u8 D_us_80183324[];
 extern s16 D_us_8018332C[];
 extern s16 D_us_8018333C[];
@@ -366,7 +363,6 @@ void EntitySkeletonApeBarrel(Entity* self) {
 }
 
 // Skeleton Ape barrel explosion
-extern EInit D_us_80180B30;
 extern s32 D_us_8018334C[];
 extern s32 D_us_8018335C[];
 extern u16 D_us_8018336C[];
