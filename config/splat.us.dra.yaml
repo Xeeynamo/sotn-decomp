@@ -257,6 +257,7 @@ segments:
       - [0x63ED4, c, 63ED4]
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
+      - [0x6BF64, c, 6BF64]
       - [0x6D584, c, 6D584]
       - [0x6E42C, c, 6E42C]
       - [0x6FDF8, c, 6FDF8]
