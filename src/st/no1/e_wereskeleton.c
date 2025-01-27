@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+// Seems to be some kind of helper for func_us_801CDE20
 void func_us_801CDDD8(u8 step) {
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
@@ -10,7 +11,6 @@ void func_us_801CDDD8(u8 step) {
     g_CurrentEntity->step = step;
 }
 
-extern u16 D_us_80180A7C[];
 extern u8* D_us_8018285C[];
 extern u8* D_us_80182864[];
 extern u8 D_us_8018286C[];
@@ -25,6 +25,7 @@ extern s16 D_us_80182930[];
 extern s16 D_us_80182940[];
 extern s32 D_us_80182950[][2];
 
+// Wereskeleton
 void func_us_801CDE20(Entity* self) {
     Entity* tempEntity;
     s32 i;
@@ -318,6 +319,8 @@ void func_us_801CDE20(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CE958);
+// Likely the bone throw attack
+INCLUDE_ASM("st/no1/nonmatchings/e_wereskeleton", func_us_801CE958);
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_4DDD8", func_us_801CEA2C);
+// Some wereskeleton helper
+INCLUDE_ASM("st/no1/nonmatchings/e_wereskeleton", func_us_801CEA2C);

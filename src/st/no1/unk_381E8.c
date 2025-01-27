@@ -7,6 +7,7 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B832C);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B83CC);
 
+// Baby birds in the nest
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8430);
 
 extern AnimationFrame D_us_80180FE0[];
@@ -18,10 +19,11 @@ extern AnimationFrame* D_us_80181348[];
 extern AnimationFrame* D_us_80181368[];
 extern s32 D_us_80181388;
 
+// The bird life cycle at the bottom of NO1
 void func_us_801B84E4(Entity* self) {
     s16 posX;
 
-    FntPrint("tori_w:%02x\n", g_CastleFlags[CASTLE_FLAG_20]);
+    FntPrint("tori_w:%02x\n", g_CastleFlags[NO1_BIRD_CYCLE]);
     FntPrint("obj_step:%02x\n", self->step);
     switch (self->step) {
     case 0:
@@ -30,18 +32,18 @@ void func_us_801B84E4(Entity* self) {
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                          FLAG_UNK_20000000 | FLAG_UNK_02000000);
-        if (g_CastleFlags[CASTLE_FLAG_20] == 8) {
+        if (g_CastleFlags[NO1_BIRD_CYCLE] == 8) {
             self->step = 0xFF;
         } else {
             self->ext.et_801B84E4.unk7C =
                 self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-            if (g_CastleFlags[CASTLE_FLAG_20] >= 5) {
+            if (g_CastleFlags[NO1_BIRD_CYCLE] >= 5) {
                 self->ext.et_801B84E4.unk7C += 9;
             }
             self->ext.et_801B84E4.unk7E = self->ext.et_801B84E4.unk7C + 0x20;
             self->velocityX = FIX(-1.375);
             self->posY.i.hi -= 0x16;
-            self->animSet = -0x7FFF;
+            self->animSet = 0x8001;
             self->zPriority = PLAYER.zPriority;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_us_80181044;
@@ -65,7 +67,7 @@ void func_us_801B84E4(Entity* self) {
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_us_80181060;
             self->ext.et_801B84E4.unk80 = 0x90;
-            if (g_CastleFlags[CASTLE_FLAG_20] == 7) {
+            if (g_CastleFlags[NO1_BIRD_CYCLE] == 7) {
                 (self - 1)->anim = D_us_80180FE0;
                 (self - 1)->animFrameDuration = (self - 1)->animFrameIdx = 0;
                 self->ext.et_801B84E4.unk80 = 0x100;
@@ -80,13 +82,13 @@ void func_us_801B84E4(Entity* self) {
             self->velocityY = FIX(0.15625);
             self->velocityX = FIX(-0.5);
             self->step++;
-            if (g_CastleFlags[CASTLE_FLAG_20] == 7) {
+            if (g_CastleFlags[NO1_BIRD_CYCLE] == 7) {
                 self->velocityX = FIX(-1.375);
                 self->step = 8;
                 self->animFrameDuration = self->animFrameIdx = 0;
                 self->anim = D_us_80181044;
                 self->zPriority = PLAYER.zPriority + 8;
-                (self - 1)->anim = D_us_80181020[g_CastleFlags[CASTLE_FLAG_20]];
+                (self - 1)->anim = D_us_80181020[g_CastleFlags[NO1_BIRD_CYCLE]];
             }
         }
         break;
@@ -97,14 +99,14 @@ void func_us_801B84E4(Entity* self) {
         posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (posX <= self->ext.et_801B84E4.unk7C) {
             self->animFrameDuration = self->animFrameIdx = 0;
-            self->anim = D_us_80181348[g_CastleFlags[CASTLE_FLAG_20]];
+            self->anim = D_us_80181348[g_CastleFlags[NO1_BIRD_CYCLE]];
             self->posY.i.hi = (self - 1)->posY.i.hi;
-            if (g_CastleFlags[CASTLE_FLAG_20] == 2 ||
-                g_CastleFlags[CASTLE_FLAG_20] == 3 ||
-                g_CastleFlags[CASTLE_FLAG_20] == 4) {
+            if (g_CastleFlags[NO1_BIRD_CYCLE] == 2 ||
+                g_CastleFlags[NO1_BIRD_CYCLE] == 3 ||
+                g_CastleFlags[NO1_BIRD_CYCLE] == 4) {
                 self->zPriority = PLAYER.zPriority + 8;
             }
-            if (g_CastleFlags[CASTLE_FLAG_20] >= 5) {
+            if (g_CastleFlags[NO1_BIRD_CYCLE] >= 5) {
                 self->posY.i.hi -= 0x10;
             }
             self->step++;
@@ -116,10 +118,10 @@ void func_us_801B84E4(Entity* self) {
             break;
         }
         self->step++;
-        if (D_us_80181368[g_CastleFlags[CASTLE_FLAG_20]] != NULL) {
+        if (D_us_80181368[g_CastleFlags[NO1_BIRD_CYCLE]] != NULL) {
             self->animFrameDuration = self->animFrameIdx = 0;
-            self->anim = D_us_80181368[g_CastleFlags[CASTLE_FLAG_20]];
-            if (g_CastleFlags[CASTLE_FLAG_20]) {
+            self->anim = D_us_80181368[g_CastleFlags[NO1_BIRD_CYCLE]];
+            if (g_CastleFlags[NO1_BIRD_CYCLE]) {
                 self->zPriority = PLAYER.zPriority + 8;
             }
             break;
@@ -132,11 +134,11 @@ void func_us_801B84E4(Entity* self) {
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_us_80181108;
             self->posY.i.hi -= 20;
-            if (g_CastleFlags[CASTLE_FLAG_20] >= 5) {
+            if (g_CastleFlags[NO1_BIRD_CYCLE] >= 5) {
                 self->posY.i.hi += 16;
             }
             self->zPriority = PLAYER.zPriority + 8;
-            (self - 1)->anim = D_us_80181020[g_CastleFlags[CASTLE_FLAG_20]];
+            (self - 1)->anim = D_us_80181020[g_CastleFlags[NO1_BIRD_CYCLE]];
         }
         break;
 
@@ -160,9 +162,9 @@ void func_us_801B84E4(Entity* self) {
         }
         self->posX.val += self->velocityX;
         if (self->posX.i.hi < -0x28) {
-            g_CastleFlags[CASTLE_FLAG_20]++;
-            if (g_CastleFlags[CASTLE_FLAG_20] == 9) {
-                g_CastleFlags[CASTLE_FLAG_20] = 0;
+            g_CastleFlags[NO1_BIRD_CYCLE]++;
+            if (g_CastleFlags[NO1_BIRD_CYCLE] == 9) {
+                g_CastleFlags[NO1_BIRD_CYCLE] = 0;
             }
             self->step++;
         }
@@ -175,12 +177,16 @@ void func_us_801B84E4(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
+// Triggers in the bottom room of NO1
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8B00);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 
+// entering doppleganger's room
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
 
+// Seems to be some kind of helper for the chair next to the save room
+// It spawns the table and chair sprite
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9028);
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
@@ -472,7 +478,7 @@ void func_us_801B9BE4(Entity* self) {
             self->rotZ = -0x80;
             self->animCurFrame = 0x1D;
             self->step = 1;
-            if (g_CastleFlags[CASTLE_FLAG_16]) {
+            if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
                 g_api.func_800EA5E4(0x8003);
                 g_api.PlaySfxVolPan(0x7AA, 0, 0);
                 self->hitboxState = 0;
@@ -517,7 +523,7 @@ void func_us_801B9BE4(Entity* self) {
                 g_api.func_800EA5E4(0x8003);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
-                g_CastleFlags[CASTLE_FLAG_16] = 1;
+                g_CastleFlags[NO1_ELEVATOR_ACTIVATED] = 1;
                 self->step = 2;
             }
             break;
@@ -566,6 +572,7 @@ extern u8 D_us_801814C4[];
 extern SVECTOR D_us_801814D0;
 extern s32 D_psp_0929A6D0;
 
+// This is the spyglass at the bottom of NO1
 void func_us_801BA290(Entity* self) {
     long unusedA;
     long unusedB;
@@ -598,7 +605,7 @@ void func_us_801BA290(Entity* self) {
     } else {
         self->animCurFrame = 0x3D;
     }
-    self->ext.et_801BA290.unk9C = g_CastleFlags[CASTLE_FLAG_19] & 1;
+    self->ext.et_801BA290.unk9C = g_CastleFlags[NO1_WEATHER] & 1;
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801809C8);
@@ -1206,8 +1213,6 @@ void func_us_801BA290(Entity* self) {
     }
 }
 
+// Triggers when fully zoomed in after interacting with the spyglass
+// Likely the fish function
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB4C0);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB5E0);
-
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB7B8);

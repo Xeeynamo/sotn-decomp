@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern u16 D_us_80180A94[];
 extern s16 D_us_80182998[];
 extern s16 D_us_801829A8[];
 extern u8 D_us_801829B0[];
@@ -246,7 +245,6 @@ void func_us_801CEB28(Entity* self) {
     self->hitboxHeight = *hitboxPtr++;
 }
 
-extern u16 D_us_80180AA0[];
 extern u8 D_us_80182A40[];
 
 // Bone musket projectile?

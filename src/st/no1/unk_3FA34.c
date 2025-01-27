@@ -359,7 +359,6 @@ void func_us_801C01F0(Entity* self) {
     }
 }
 
-extern u16 D_us_80180A10[];
 extern s16 D_us_80181988[];
 extern u8 D_us_80181998[];
 extern u32 D_psp_0929A6E8;
@@ -577,7 +576,7 @@ void func_us_801C1090(s32* value, s32 target, s32 step) {
     }
 }
 
-// "Elevator activatd." text
+// "Elevator activated." text
 extern Primitive* D_us_801D6380;
 extern s32 D_us_801D6FFC;
 extern s32 D_us_801D7000;

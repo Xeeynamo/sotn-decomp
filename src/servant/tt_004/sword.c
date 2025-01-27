@@ -520,9 +520,9 @@ void CheckSwordLevel(Entity* self) {
                 func_us_80172420(self, 1);
             }
 
-            if (s_SwordStats.level == 50 && !g_CastleFlags[CASTLE_FLAG_464]) {
+            if (s_SwordStats.level == 50 && !g_CastleFlags[SWORD_FAMILIAR]) {
                 g_api.AddToInventory(ITEM_SWORD_FAMILIAR, EQUIP_HAND);
-                g_CastleFlags[CASTLE_FLAG_464] = 1;
+                g_CastleFlags[SWORD_FAMILIAR] = 1;
             }
         }
     }
@@ -604,9 +604,9 @@ void ServantInit(InitializeMode mode) {
         if ((LOW(D_8003C708.flags) & (FLAG_UNK_40 | FLAG_UNK_20)) != 0) {
 #endif
             self->entityId = SWORD_DEFAULT;
-            if (g_CastleFlags[CASTLE_FLAG_464] == 1 ||
-                g_CastleFlags[CASTLE_FLAG_464] == 2) {
-                g_CastleFlags[CASTLE_FLAG_464] = 4;
+            if (g_CastleFlags[SWORD_FAMILIAR] == 1 ||
+                g_CastleFlags[SWORD_FAMILIAR] == 2) {
+                g_CastleFlags[SWORD_FAMILIAR] = 4;
             }
         } else {
             self->entityId = SWORD_UNK_D8;
@@ -674,10 +674,10 @@ void UpdateServantDefault(Entity* self) {
     CheckSwordLevel(self);
 
     // first time we've reached level 90
-    if (g_CastleFlags[CASTLE_FLAG_464] == 1) {
+    if (g_CastleFlags[SWORD_FAMILIAR] == 1) {
         self->entityId = SWORD_UNK_D5;
         self->step = 0;
-        g_CastleFlags[CASTLE_FLAG_464] = 2;
+        g_CastleFlags[SWORD_FAMILIAR] = 2;
         return;
     }
 
@@ -1108,9 +1108,9 @@ void func_us_80176674(Entity* self) {
     switch (self->step) {
     case 0:
         func_us_80172940(self);
-        if (g_CastleFlags[CASTLE_FLAG_464] == 1 ||
-            g_CastleFlags[CASTLE_FLAG_464] == 2) {
-            g_CastleFlags[CASTLE_FLAG_464] = 3;
+        if (g_CastleFlags[SWORD_FAMILIAR] == 1 ||
+            g_CastleFlags[SWORD_FAMILIAR] == 2) {
+            g_CastleFlags[SWORD_FAMILIAR] = 3;
         }
         break;
     case 1:
@@ -1119,8 +1119,8 @@ void func_us_80176674(Entity* self) {
             (g_unkGraphicsStruct.D_800973FC != 0)) {
             self->entityId = SWORD_DEFAULT;
             self->step = 0;
-            if (g_CastleFlags[CASTLE_FLAG_464] == 3) {
-                g_CastleFlags[CASTLE_FLAG_464] = 4;
+            if (g_CastleFlags[SWORD_FAMILIAR] == 3) {
+                g_CastleFlags[SWORD_FAMILIAR] = 4;
             }
             return;
         }
@@ -1139,9 +1139,9 @@ void func_us_80176674(Entity* self) {
         g_PauseAllowed = false;
         if (s_SwordStats.unk8 == 1) {
             CreateEventEntity(self, SWORD_UNK_DD, 0x4FB);
-        } else if (g_CastleFlags[CASTLE_FLAG_464] == 3) {
+        } else if (g_CastleFlags[SWORD_FAMILIAR] == 3) {
             CreateEventEntity(self, SWORD_UNK_DD, 0x4FE);
-            g_CastleFlags[CASTLE_FLAG_464] = 4;
+            g_CastleFlags[SWORD_FAMILIAR] = 4;
         } else {
             // at level 50, change
             if (s_SwordStats.level < 50) {

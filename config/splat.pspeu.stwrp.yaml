@@ -83,16 +83,13 @@ segments:
       - [0xEF90, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2EY
       - [0xEFA0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleX
       - [0xEFB0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleY
-      - [0xEFC0, data] # D_psp_09246640
-      - [0xEFD0, data] # D_psp_09246650
-      - [0xEFE0, data] # D_psp_09246660
+      - [0xEFC0, .data, wrp_psp/e_collect] # e_relic_orb obtained
       - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
       - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
       - [0xF060, .data, wrp/collision]
-      - [0xF438, data] # D_psp_09246AB8
-      - [0xF450, data] # D_psp_09246AD0
-      - [0xF460, data] # eRoomForegroundInit
+      - [0xF438, .data, wrp/e_room_fg]
+      - [0xF4D8, data]
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0

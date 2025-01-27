@@ -22,7 +22,7 @@ typedef enum EntityIDs {
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
     // /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP = 0xC,
+    /* 0x0C */ E_HEART_DROP = 0x0C,
     // /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
@@ -34,6 +34,9 @@ typedef enum EntityIDs {
     /* 0x21 */ E_AXE_KNIGHT_AXE = 0x21,
     /* 0x22 */ E_AXE_KNIGHT_AXE_2, // func_us_801CBA30
     /* 0x23 */ E_UNK_ENTITY,       // InitializeUnkEntity
+    /* 0x25 */ E_ID_25 = 0x25,
+    /* 0x26 */ E_ID_26,
+    /* 0x27 */ E_ID_27,
     /* 0x2A */ E_ID_2A = 0x2A,
     /* 0x2F */ E_ID_2F = 0x2F,
     /* 0x30 */ E_ID_30,
@@ -70,30 +73,49 @@ typedef enum EntityIDs {
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
+extern EInit D_us_80180938;
+// extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit D_us_8018095C;
 extern EInit g_EInitInteractable;
-
+// extern EInit D_us_80180974;
+// extern EInit D_us_80180980;
+// extern EInit D_us_8018098C;
+// extern EInit g_EInitUnkId13;
+// extern EInit g_EInitUnkId12;
 extern EInit g_EInitCommon;
-
+// extern EInit g_EInitDamageNum;
 extern EInit D_us_801809C8;
-
+extern EInit D_us_801809D4;
+extern EInit g_EInitAxeKnight;
+extern EInit g_EInitAxeKnightAxe;
 extern EInit D_us_801809F8;
-
+// extern EInit D_us_80180A04;
+extern EInit D_us_80180A10;
 extern EInit D_us_80180A1C;
-
+// extern EInit D_us_80180A28;
+// extern EInit D_us_80180A34;
 extern EInit D_us_80180A40;
-
-// Skeleton
+// extern EInit D_us_80180A4C;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
-
+extern EInit D_us_80180A7C;
+// extern EInit D_us_80180A88;
+extern EInit D_us_80180A94;
+extern EInit D_us_80180AA0;
+extern EInit D_us_80180AAC;
+extern EInit D_us_80180AB8;
+extern EInit D_us_80180AC4;
+extern EInit D_us_80180AD0;
 extern EInit g_EInitArmorLord;
-
+// extern EInit D_us_80180AE8;
+// extern EInit D_us_80180AF4;
+extern EInit D_us_80180B00;
 extern EInit D_us_80180B0C;
 extern EInit D_us_80180B18;
-
-// Medusa Head
+extern EInit D_us_80180B24;
+extern EInit D_us_80180B30;
+extern EInit D_us_80180B3C;
 extern EInit g_EInitMedusaHeadBlue;
 extern EInit g_EInitMedusaHeadYellow;

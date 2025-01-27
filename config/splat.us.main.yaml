@@ -37,8 +37,8 @@ segments:
       - [0x874, .rodata, psxsdk/libgpu/font]
       - [0x8F8, .rodata, psxsdk/libgpu/prim]
       - [0x9C8, .rodata, psxsdk/libgpu/sys]
-      - [0xBC4, rodata, psxsdk/libapi/a22] # aVsyncTimeout
-      - [0xC08, .rodata, psxsdk/libetc/intr]
+      - [0xBC4, .rodata, psxsdk/libetc/vsync] # aVsyncTimeout
+      - [0xBD4, .rodata, psxsdk/libetc/intr]
       - [0xC40, .rodata, psxsdk/libetc/intr_dma]
       - [0xC6C, .rodata, psxsdk/libc/sprintf]
       - [0xD48, .rodata, psxsdk/libcd/event]
@@ -81,7 +81,7 @@ segments:
       - [0x5AD8, c, psxsdk/libapi/a20]
       - [0x5AE8, c, psxsdk/libapi/a21]
       - [0x5AF8, c, psxsdk/libapi/a22]
-      - [0x5B08, asm, psxsdk/libetc/vsync]
+      - [0x5B08, c, psxsdk/libetc/vsync]
       - [0x5CEC, c, psxsdk/libapi/l10]
       - [0x5CFC, c, psxsdk/libetc/intr]
       - [0x640C, c, psxsdk/libapi/c114]
@@ -264,6 +264,12 @@ segments:
       - [0x1B93C, c, psxsdk/libspu/s_n2p]
       - [0x1BB88, c, psxsdk/libspu/sr_gaks]
       - [0x1BCE0, data]
+      - [0x1CAA8, .data, psxsdk/libetc/vsync]
+      - [0x1CAB8, .data, psxsdk/libetc/intr]
+      - [0x1DB54, .data, psxsdk/libetc/intr_vb]
+      - [0x1DB7C, .data, psxsdk/libetc/intr_dma]
+      - [0x1DBA4, .data, psxsdk/libetc/vmode]
+      - [0x1DBA8, data]
       - [0x235E8, .data, psxsdk/libcd/c_002]
       - [0x235F8, .data, psxsdk/libcd/c_003]
       - [0x23608, .data, psxsdk/libcd/c_004]
@@ -276,5 +282,10 @@ segments:
       - [0x23678, data]
       - [0x23708, .data, psxsdk/libsnd/vs_vtbp] # needs to be ram address + 0x800
       - [0x23710, data]
+      - [0x29A5C, .data, psxsdk/libetc/pad]
+      - [0x29A60, data]
+      - [0x2BE84, bss]
+      - [0x63880, .bss, psxsdk/libetc/pad]
+      - [0x63884, bss]
   - [0x89800]
 

@@ -217,7 +217,7 @@ void EntityClockRoomController(Entity* self) {
 
         UpdateBirdcages(self, status->timerMinutes);
 
-        if (!g_CastleFlags[CLOCK_ROOM_DOORS]) {
+        if (!g_CastleFlags[CEN_OPEN]) {
             entity = &PLAYER;
             if (entity->posX.i.hi >= 48 && entity->posX.i.hi < 209) {
                 i = g_Status.equipment[ACCESSORY_1_SLOT];
@@ -378,7 +378,7 @@ void EntityClockRoomController(Entity* self) {
             break;
         case 9:
             if (!(--self->ext.clockRoom.unk88)) {
-                g_CastleFlags[CLOCK_ROOM_DOORS] = 1;
+                g_CastleFlags[CEN_OPEN] = 1;
                 g_api.func_800F1FC4(0);
                 SetStep(3);
                 self->ext.clockRoom.unk88 = 0x140;

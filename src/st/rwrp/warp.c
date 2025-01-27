@@ -4,7 +4,6 @@
 #include "common.h"
 #include "sfx.h"
 
-extern s32 D_80097408[];
 extern s16 PLAYER_posY_i_hi;
 s16 GetDistanceToPlayerX();
 
@@ -156,7 +155,7 @@ void EntityRWarpRoom(Entity* self) {
         prim->drawMode = DRAW_HIDE;
 
         WarpBackgroundAmplitiude = 0x100;
-        g_CastleFlags[CASTLE_FLAG_209] |= 1 << self->params;
+        g_CastleFlags[RWRP_UNLOCKS] |= 1 << self->params;
         D_80180648 = 0;
         moveX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
@@ -240,7 +239,7 @@ void EntityRWarpRoom(Entity* self) {
             if (temp > LEN(WarpRoomCoords) - 1) {
                 temp = 0;
             }
-            if (g_CastleFlags[CASTLE_FLAG_209] & (1 << temp)) {
+            if (g_CastleFlags[RWRP_UNLOCKS] & (1 << temp)) {
                 break;
             }
         }
@@ -261,7 +260,7 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x10;
         PLAYER.zPriority = 0x94;
         g_Player.padSim = 0;
-        D_80097408[0] = 0x94;
+        g_unkGraphicsStruct.g_zEntityCenter = 0x94;
         g_PauseAllowed = false;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_HIDE;

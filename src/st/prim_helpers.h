@@ -79,58 +79,59 @@ void UnkPrimHelper(Primitive* prim) {
 }
 
 s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
-    s16 sp0;
-    s16 tempUv;
-    u8 new_var;
-    u8* nextAnimation = texAnimations + ((prim->p1 * 5) & 0xFF);
-    u8 new_var2;
+    u16 sp0;
+    u16 tempUv;
     s32 retVal = 0;
+    u8 index = prim->p1 * 5;
+    u8* nextAnimation = &texAnimations[index];
 
-    if (prim->p2 == 0) {
+    if (!prim->p2) {
         if (*nextAnimation) {
             if (*nextAnimation == 0xFF) {
                 return 0;
             }
-            retVal = 0x80;
-            prim->p2 = nextAnimation[0];
-            ++nextAnimation;
+            prim->p2 = *nextAnimation++;
             tempUv = nextAnimation[0] + (nextAnimation[1] << 8);
             nextAnimation += 2;
             sp0 = nextAnimation[0] + (nextAnimation[1] << 8);
             LOH(prim->u0) = tempUv;
             LOH(prim->u1) = tempUv + *((u8*)(&sp0));
-            new_var = *((u8*)&sp0 + 1);
+            LOH(prim->u2) = tempUv + (*((u8*)&sp0 + 1) << 8);
             LOH(prim->u3) = tempUv + sp0;
-            LOH(prim->u2) = tempUv + (new_var << 8);
-            ++prim->p1;
+            prim->p1++;
+            retVal = (retVal | 0x80) & 0xFFFF;
         } else {
             prim->p1 = 0;
             prim->p2 = 0;
-            prim->p2 = texAnimations[0];
-            tempUv = texAnimations[1] + (texAnimations[2] << 8);
-            sp0 = texAnimations[3] + (texAnimations[4] << 8);
+            nextAnimation = &texAnimations[0];
+            prim->p2 = *nextAnimation++;
+            tempUv = nextAnimation[0] + (nextAnimation[1] << 8);
+            nextAnimation += 2;
+            sp0 = nextAnimation[0] + (nextAnimation[1] << 8);
             LOH(prim->u0) = tempUv;
             LOH(prim->u1) = tempUv + (*(u8*)&sp0);
-            new_var2 = *((u8*)&sp0 + 1);
+            LOH(prim->u2) = tempUv + (*((u8*)&sp0 + 1) << 8);
             LOH(prim->u3) = tempUv + sp0;
-            LOH(prim->u2) = tempUv + (new_var2 << 8);
-            ++prim->p1;
+            prim->p1++;
             return 0;
         }
     }
 
+    prim->p2--;
+#ifndef VERSION_PSP
     retVal |= 1;
-    --prim->p2;
-    return (retVal | 1) & 0xFF;
+#endif
+    retVal = (retVal | 1) & 0xFFFF;
+    return retVal & 0xFF;
 }
 
-Primitive* FindFirstUnkPrim(Primitive* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = poly->next;
-        } else {
-            return poly;
+Primitive* FindFirstUnkPrim(Primitive* prim) {
+    Primitive* primLocal = prim;
+    while (primLocal != NULL) {
+        if (!primLocal->p3) {
+            return primLocal;
         }
+        primLocal = primLocal->next;
     }
     return NULL;
 }
@@ -138,41 +139,42 @@ Primitive* FindFirstUnkPrim(Primitive* poly) {
 // Similar to FindFirstUnkPrim, but returns the first prim with
 // p3 == 0 if there is a prim with p3 == 0 at index positions after
 Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index) {
-    Primitive* ret;
     int i;
+    Primitive* primLocal = prim;
 
-    for (; prim; prim = prim->next) {
-        if (!prim->p3) {
-            ret = prim;
-            for (i = 1; i < index; ++i) {
-                prim = prim->next;
-                if (!prim) {
+    while (primLocal != NULL) {
+        if (!primLocal->p3) {
+            prim = primLocal;
+            for (i = 1; i < index; i++) {
+                primLocal = primLocal->next;
+                if (!primLocal) {
                     return NULL;
                 }
-                if (prim->p3) {
+
+                if (primLocal->p3) {
                     break;
                 }
             }
+
             if (i == index) {
-                return ret;
+                return prim;
             }
         }
+        primLocal = primLocal->next;
     }
     return NULL;
 }
 
-Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
-    Primitive* prim;
-    s8 isVisible;
+Primitive* PrimToggleVisibility(Primitive* prim, s32 count) {
     s32 i;
+    u8 isVisible;
 
-    if (firstPrim->p3) {
-        firstPrim->p3 = 0;
+    if (prim->p3) {
+        prim->p3 = false;
     } else {
-        firstPrim->p3 = 1;
+        prim->p3 = true;
     }
 
-    prim = firstPrim;
     for (i = 0; i < count; i++) {
         if (prim->p3) {
             prim->drawMode &= ~DRAW_HIDE;
@@ -183,8 +185,13 @@ Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
         }
 
         prim = prim->next;
-        if (prim == NULL)
-            return 0;
+        if (prim == NULL) {
+            // Required for PSP match
+            if (true) {
+                return NULL;
+            }
+        }
+
         prim->p3 = isVisible;
     }
 

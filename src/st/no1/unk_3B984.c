@@ -62,7 +62,7 @@ void func_us_801BB984(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_16]) {
+        if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
             if (tempEntity->ext.et_801BBD90.unk84 == params &&
                 tempEntity->ext.et_801BBD90.unk85 == params) {
                 SetStep(2);
@@ -131,9 +131,6 @@ void func_us_801BB984(Entity* self) {
     }
 }
 
-extern RECT D_us_801B47B0;
-INCLUDE_RODATA("st/no1/nonmatchings/unk_3B984", D_us_801B47B0);
-
 void func_us_801BBD90(Entity* self) {
     s16 dx, dy;
     s16 var9a;
@@ -153,7 +150,7 @@ void func_us_801BBD90(Entity* self) {
     RECT unused;
     u8 padding[4];
 
-    unused = D_us_801B47B0;
+    unused = (RECT){.x = 0xf0, .y = 0xc0, .w = 0x10, .h = 0x10};
     tempEntity = self - 1;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi - 0x22;
@@ -407,6 +404,8 @@ void func_us_801BBD90(Entity* self) {
         break;
     }
 }
+
+STATIC_PAD_RODATA(4);
 
 void func_us_801BC598(Primitive* prim) {
     Primitive* otherPrim;

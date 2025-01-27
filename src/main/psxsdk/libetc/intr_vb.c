@@ -3,15 +3,16 @@
 typedef void (*Callback)();
 
 void trapIntrVSync(void);
-void setIntrVSync(int index, Callback callback);
+Callback setIntrVSync(int index, Callback callback);
 void VSync_memclr(int*, int);
-
 extern void InterruptCallback(int, void*);
-extern Callback D_8002D354[8];
-extern volatile u_long* D_8002D378; /* 0x1F801114 - Timer 1 Counter Mode */
-extern volatile int Vcount;
 
-void* startIntrVSync(void) {
+static Callback D_8002D354[8] = {0};
+volatile int Vcount = 0;
+static volatile u_long* D_8002D378 =
+    (u_long*)0x1F801114; /* Timer 1 Counter Mode */
+
+Callback (*startIntrVSync(void))(s32, Callback) {
     *D_8002D378 = 0x107;
     Vcount = 0;
     VSync_memclr(&D_8002D354, 8);
@@ -32,10 +33,12 @@ void trapIntrVSync(void) {
     }
 }
 
-void setIntrVSync(int index, Callback callback) {
-    if (callback != D_8002D354[index]) {
+Callback setIntrVSync(int index, Callback callback) {
+    Callback ret = D_8002D354[index];
+    if (callback != ret) {
         D_8002D354[index] = callback;
     }
+    return ret;
 }
 
 void VSync_memclr(int* ptr, int size) {

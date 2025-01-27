@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-void SetPlayerStep(PlayerSteps step) {
+void SetPlayerStep(s16 step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }
@@ -16,12 +16,12 @@ void func_8010D59C(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[1].ext.entSlot1.unk0 != 0) {
+    if (g_Entities[1].ext.entSlot1.unk0) {
         return;
     }
     switch (PLAYER.ext.player.anim) {
-    case 0x5D:
     case 0x5E:
+    case 0x5D:
     case 0x60:
     case 0x61:
     case 0x62:
@@ -42,13 +42,13 @@ void func_8010D59C(void) {
             g_Entities[1].ext.entSlot1.unk3 =
                 g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
         }
-        if (!(--g_Entities[1].ext.entSlot1.unk3 & 0xFF)) {
+        if (--g_Entities[1].ext.entSlot1.unk3 == 0) {
             g_Entities[1].ext.entSlot1.unk2++;
             g_Entities[1].ext.entSlot1.unk3 =
                 g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
         }
     }
-    if (g_Entities[1].animFrameIdx != 0) {
+    if (g_Entities[1].animFrameIdx) {
         g_Entities[1].animFrameIdx--;
         return;
     }
@@ -82,21 +82,19 @@ void func_8010D800(void) {
     byte pad[0x28];
     PlayerDraw* plDraw;
     Primitive* prim;
-    s32 entNum;
     s32 i;
     u8 temp_t0;
     u8 temp_t1;
     u8 temp_t2;
 
-    i = 0;
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
     temp_t2 = g_Entities[1].ext.entSlot1.unk1;
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    plDraw = &g_PlayerDraw[1];
     temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.entSlot1.unk2];
     temp_t0 = g_D_800ACF3C[g_Entities[1].ext.entSlot1.unk2];
 
-    plDraw = &g_PlayerDraw[1];
     for (i = 0; i < 6; prim = prim->next, i++) {
-        if (temp_t0 < prim->r0) {
+        if (prim->r0 > temp_t0) {
             prim->r0 -= temp_t1;
         }
         if (prim->r0 < 112 && prim->b0 < 240) {
@@ -107,70 +105,68 @@ void func_8010D800(void) {
         } else {
             prim->y1 = 0;
         }
-        if (temp_t0 >= prim->r0) {
+        if (prim->r0 <= temp_t0) {
             prim->x1 = 0;
         }
         if (!((i ^ g_Timer) & 1)) {
             continue;
         }
 
-        entNum = (i / 2) + 1;
-        g_Entities[entNum].posX.i.hi = prim->x0;
-        g_Entities[entNum].posY.i.hi = prim->y0;
-        g_Entities[entNum].animCurFrame = prim->x1;
-        g_Entities[entNum].drawMode = prim->y1;
-        g_Entities[entNum].facingLeft = prim->x2;
-        g_Entities[entNum].palette = prim->y2;
-        g_Entities[entNum].zPriority = PLAYER.zPriority - 2;
+        g_Entities[(i / 2) + 1].posX.i.hi = prim->x0;
+        g_Entities[(i / 2) + 1].posY.i.hi = prim->y0;
+        g_Entities[(i / 2) + 1].animCurFrame = prim->x1;
+        g_Entities[(i / 2) + 1].drawMode = prim->y1;
+        g_Entities[(i / 2) + 1].facingLeft = prim->x2;
+        g_Entities[(i / 2) + 1].palette = prim->y2;
+        g_Entities[(i / 2) + 1].zPriority = PLAYER.zPriority - 2;
         if (temp_t2) {
-            g_Entities[entNum].animCurFrame = 0;
+            g_Entities[(i / 2) + 1].animCurFrame = 0;
             prim->x1 = 0;
         }
 
-        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
-            plDraw->b1 = plDraw->b2 = plDraw->b3 = prim->r0;
-        plDraw->g0 = plDraw->g1 = plDraw->g2 = plDraw->g3 = prim->b0;
+        PRED(plDraw) = PBLU(plDraw) = prim->r0;
+        PGRN(plDraw) = prim->b0;
         plDraw->enableColorBlend = true;
         plDraw++;
     }
 }
 
+// Unused; deadstripped on PSP
 void func_8010DA2C(AnimationFrame* frames) {
     g_CurrentEntity->anim = frames;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-void SetPlayerAnim(s32 anim) {
+void SetPlayerAnim(u8 anim) {
     g_CurrentEntity->ext.player.anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
 
 AnimationFrame* func_8010DA70(AnimationFrame** frames) {
-    s32 idxSub;
-    s32 var_s1;
+    u16* anim;
     s32 idx;
     u16* subanim;
-    u16* anim;
+    s32 var_s1;
+    s32 idxSub;
 
     anim = (u16*)frames[g_CurrentEntity->ext.player.anim];
     idx = 0;
     var_s1 = 0;
     while (true) {
         if ((&anim[idx * 2])[0] == 0xFFFD) {
-            idxSub = 0;
-            while (true) {
+            for (idxSub = 0; true; idxSub++, var_s1++) {
                 subanim = (u16*)D_800B0594[(&anim[idx * 2])[1] & 0xFF];
                 if ((&subanim[idxSub * 2])[0] == 0xFFFF) {
                     idx++;
+                    // Probably fake. Makes PSP registers match.
+                    idxSub = idxSub;
                     break;
                 }
                 if (var_s1 == g_CurrentEntity->animFrameIdx) {
                     return (AnimationFrame*)&subanim[idxSub * 2];
                 }
-                idxSub++;
-                var_s1++;
             }
         } else if (var_s1 == g_CurrentEntity->animFrameIdx) {
             return (AnimationFrame*)(anim + idx * 2);
@@ -189,14 +185,21 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
         return -1;
     }
     if (frameProps != NULL) {
-        frameProps = &frameProps[(*frameIndex >> 9) << 2];
-        g_CurrentEntity->hitboxOffX = *frameProps++;
-        g_CurrentEntity->hitboxOffY = *frameProps++;
-        g_CurrentEntity->hitboxWidth = *frameProps++;
-        g_CurrentEntity->hitboxHeight = *frameProps++;
+        frameProps = &frameProps[((*frameIndex >> 9) & 0x7F) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
     }
     g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
-    return PLAYER.animFrameDuration >= 0 ? 0 : -1;
+    if (PLAYER.animFrameDuration < 0) {
+        return -1;
+    } else {
+        return 0;
+    }
 }
 
 void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
@@ -247,59 +250,66 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
 }
 
+// Nasty casting. This is just
+// g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx] But PSP is weird and
+// does odd stuff with the struct indexing. So we cast the pointer to u16, index
+// off of animFrameIdx*2, and cast back to AnimationFrame.
+#define CURRANIM                                                               \
+    (*((AnimationFrame*)(&(                                                    \
+        ((u16*)g_CurrentEntity->anim)[g_CurrentEntity->animFrameIdx * 2]))))
+
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
-    AnimationFrame* animFrame;
 #if defined(VERSION_PC)
     s32 ret = 0;
 #else
     s32 ret;
 #endif
 
+#if defined(VERSION_PSP)
+    if (!g_CurrentEntity->anim) {
+        return -1;
+    }
+#endif
+
     if (g_CurrentEntity->animFrameDuration == -1) {
         ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
-        g_CurrentEntity->animFrameDuration =
-            g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].duration;
+        g_CurrentEntity->animFrameDuration = CURRANIM.duration;
         ret = 0;
     } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
-        animFrame = &g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx];
         // Effectively a switch statement, but breaks if I actually use one.
-        if (animFrame->duration == 0) {
-            g_CurrentEntity->animFrameIdx = animFrame->unk2;
-            g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].duration;
+        if (CURRANIM.duration == 0) {
+            g_CurrentEntity->animFrameIdx = CURRANIM.unk2;
+            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
             ret = 0;
-        } else if (animFrame->duration == 0xFFFF) {
+        } else if (CURRANIM.duration == 0xFFFF) {
             g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
             ret = -1;
-        } else if (animFrame->duration == 0xFFFE) {
-            g_CurrentEntity->anim = anims[animFrame->unk2];
+        } else if (CURRANIM.duration == 0xFFFE) {
+            g_CurrentEntity->anim = anims[CURRANIM.unk2];
             g_CurrentEntity->animFrameIdx = 0;
+            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
             ret = -2;
-            g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->anim[0].duration;
         } else {
-            g_CurrentEntity->animFrameDuration = animFrame->duration;
+            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
         }
     }
     if (frameProps != NULL) {
         // This is ugly - theoretically the type for frameProps should be
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
-        frameProps =
-            &frameProps[(g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx]
-                             .unk2 >>
-                         9)
-                        << 2];
-        g_CurrentEntity->hitboxOffX = *frameProps++;
-        g_CurrentEntity->hitboxOffY = *frameProps++;
-        g_CurrentEntity->hitboxWidth = *frameProps++;
-        g_CurrentEntity->hitboxHeight = *frameProps++;
+        frameProps = &frameProps[((CURRANIM.unk2 >> 9) & 0x7F) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
     }
-    g_CurrentEntity->animCurFrame =
-        g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+    g_CurrentEntity->animCurFrame = CURRANIM.unk2 & 0x1FF;
     return ret;
 }
 
@@ -322,9 +332,9 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
 
     if (resetAnims) {
         g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
-        g_Entities[UNK_ENTITY_3].animCurFrame = 0;
-        g_Entities[UNK_ENTITY_2].animCurFrame = 0;
-        g_Entities[UNK_ENTITY_1].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_1].animCurFrame =
+            g_Entities[UNK_ENTITY_2].animCurFrame =
+                g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
 
         for (i = 0; i < 6; i++) {
@@ -338,37 +348,34 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
 
     if (arg1) {
         if (arg1 < 4) {
-            g_Player.timers[15] = 4;
+            g_Player.timers[ALU_T_15] = 4;
         } else {
-            g_Player.timers[15] = arg1;
+            g_Player.timers[ALU_T_15] = arg1;
         }
     }
 }
 
-void func_8010E0A8(void) {
-    Entity* entity = &g_Entities[UNK_ENTITY_1];
-
-    entity->ext.entSlot1.unk2 = 0;
-}
+void func_8010E0A8(void) { g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0; }
 
 void func_8010E0B8(void) {
-    Entity* entity = &g_Entities[UNK_ENTITY_1];
-
-    entity->ext.entSlot1.unk1 = 0;
-    entity->ext.entSlot1.unk0 = 0;
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
     Entity* entity;
+    Entity* player;
 
     if (arg0 == 1) {
-        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(44, 0x47), 0);
+        player = &PLAYER;
+
+        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x47), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
 
-        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(44, 0x40), 0);
+        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x40), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
@@ -376,6 +383,7 @@ void func_8010E0D0(s32 arg0) {
     }
     func_8010DFF0(1, 1);
 }
+
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
@@ -449,12 +457,16 @@ s32 CheckMoveDirection(void) {
 }
 
 s32 func_8010E334(s32 xStart, s32 xEnd) {
-    Entity* e = &PLAYER;
-
     g_Player.unk7A = 1;
-    if (e->step == 0 && PLAYER.step_s == 1 && e->posX.i.hi >= xStart &&
-        e->posX.i.hi <= xEnd) {
-        return 1;
+    // Interesting - this could have been all && conditions, but if you try,
+    // PS1 optimizes into loading PLAYER.step as a word, rather than doing
+    // two accesses for step and step_s. Breaking it up like this prevents
+    // the optimization and results in a match.
+    if (PLAYER.step == Player_Stand) {
+        if (PLAYER.step_s == 1 && PLAYER.posX.i.hi >= xStart &&
+            PLAYER.posX.i.hi <= xEnd) {
+            return 1;
+        }
     }
     return 0;
 }
@@ -476,7 +488,7 @@ void func_8010E3B8(s32 velocityX) {
 }
 
 void func_8010E3E0(void) {
-    if (g_Player.unk48 != 0) {
+    if (g_Player.unk48) {
         DestroyEntity(&g_Entities[16]);
         g_Player.unk48 = 0;
     }
