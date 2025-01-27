@@ -493,7 +493,7 @@
 | st0    | GetLangAt                           |       61 |         10 |        |                                 |       |
 | dra    | func_psp_09137038                   |       61 |         12 |        |                                 |       |
 | dra    | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
-| dra    | func_psp_09118330                   |       62 |          5 |        | https://decomp.me/scratch/1WCR7 | 0.989 |
+| dra    | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | lib    | func_psp_0925D350                   |       62 |          5 |        |                                 |       |
 | lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
@@ -1065,7 +1065,7 @@
 | lib    | func_psp_092663F8                   |      739 |         81 | Yes    |                                 |       |
 | dra    | func_80109A44                       |      746 |         77 |        |                                 |       |
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
-| dra    | func_psp_0911A0B8                   |      749 |         52 |        | https://decomp.me/scratch/cjmbN | 0.997 |
+| dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        |                                 |       |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    |                                 |       |
