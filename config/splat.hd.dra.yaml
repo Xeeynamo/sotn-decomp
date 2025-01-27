@@ -100,7 +100,7 @@ segments:
       - [0xCEB8, .data, 692E8]
       - [0xCFDC, .data, 6D584]
       - [0xD010, .data, 6E42C]
-      - [0xD030, .data, 6FDF8]
+      - [0xD030, .data, 70394]
       - [0xD038, .data, d_CF74]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
@@ -194,6 +194,7 @@ segments:
       - [0x6D2C8, c, 6D584]
       - [0x6E170, c, 6E42C]
       - [0x6FB3C, c, 6FDF8]
+      - [0x700E0, c, 70394]
       - [0x7021C, c, 704D0]
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]
