@@ -571,26 +571,7 @@ void EntitySalemWitch(Entity* self) {
         return;
 
     case DEBUG:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            } else {
-                self->animCurFrame++;
-                self->params |= true;
-            }
-        } else {
-            self->params = false;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= true;
-            }
-        } else {
-            self->step_s = false;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 
     // Clamp x position to always be on screen

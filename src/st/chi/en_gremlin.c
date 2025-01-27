@@ -207,26 +207,7 @@ void EntityGremlin(Entity* self) {
         break;
 
     case DEBUG:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= true;
-        } else {
-            self->params = false;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= true;
-        } else {
-            self->step_s = false;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
 
