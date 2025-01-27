@@ -1323,14 +1323,19 @@ block_160:
 }
 
 void GetPlayerSensor(Collider* col) {
+    void (*theFunc)(Collider* col);
+    u32 mod = 0;
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        u32 mod = (g_Player.status >> 1) & 2;
+        if(g_Player.status & PLAYER_STATUS_WOLF_FORM){
+            mod += 2;
+        }
         col->unk14 = g_SensorsWall[0].x - mod;
         col->unk1C = g_SensorsWall[0].y + mod;
         col->unk18 = g_SensorsFloor[1].y - 1;
         col->unk20 = g_SensorsCeiling[1].y + 1;
     } else {
-        g_PlOvl.GetPlayerSensor(col);
+        theFunc = g_PlOvl.GetPlayerSensor;
+        theFunc(col);
     }
 }
 
