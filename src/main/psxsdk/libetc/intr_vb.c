@@ -5,11 +5,12 @@ typedef void (*Callback)();
 void trapIntrVSync(void);
 Callback setIntrVSync(int index, Callback callback);
 void VSync_memclr(int*, int);
-
 extern void InterruptCallback(int, void*);
-extern Callback D_8002D354[8];
-extern volatile u_long* D_8002D378; /* 0x1F801114 - Timer 1 Counter Mode */
-extern volatile int Vcount;
+
+static Callback D_8002D354[8] = {0};
+volatile int Vcount = 0;
+static volatile u_long* D_8002D378 =
+    (u_long*)0x1F801114; /* Timer 1 Counter Mode */
 
 Callback (*startIntrVSync(void))(s32, Callback) {
     *D_8002D378 = 0x107;
