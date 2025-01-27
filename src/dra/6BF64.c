@@ -6,7 +6,7 @@ void GetPlayerSensor(Collider* col) {
     void (*theFunc)(Collider* col);
     u32 mod = 0;
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        if(g_Player.status & PLAYER_STATUS_WOLF_FORM){
+        if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             mod += 2;
         }
         col->unk14 = g_SensorsWall[0].x - mod;

@@ -5,7 +5,7 @@ void GetPlayerSensor(Collider* col) {
     void (*theFunc)(Collider* col);
     u32 mod = 0;
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        if(g_Player.status & PLAYER_STATUS_WOLF_FORM){
+        if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             mod += 2;
         }
         col->unk14 = g_SensorsWall[0].x - mod;
@@ -18,13 +18,13 @@ void GetPlayerSensor(Collider* col) {
     }
 }
 
-//func_8010BFFC
+// func_8010BFFC
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09118408);
-//CheckFloor
+// CheckFloor
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_091187D8);
-//CheckCeiling
+// CheckCeiling
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_091190E0);
-//CheckWallRight
+// CheckWallRight
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119950);
-//CheckWallLeft
+// CheckWallLeft
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119D00);
