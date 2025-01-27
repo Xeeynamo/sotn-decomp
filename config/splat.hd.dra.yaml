@@ -191,6 +191,7 @@ segments:
       - [0x63D1C, c, 63ED4]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
+      - [0x6BCA8, c, 6BF64]
       - [0x6D2C8, c, 6D584]
       - [0x6E170, c, 6E42C]
       - [0x6FB3C, c, 6FDF8]
