@@ -899,7 +899,7 @@
 | dra    | func_psp_090F6430                   |      258 |         36 |        |                                 |       |
 | st0    | func_801A8328                       |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
 | lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
-| dra    | func_psp_09118408                   |      264 |         28 |        |                                 |       |
+| dra    | func_psp_09118408                   |      264 |         28 |        | https://decomp.me/scratch/yGc0z | 0.985 |
 | st0    | func_801A805C                       |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
 | lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
