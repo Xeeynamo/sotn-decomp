@@ -12,6 +12,7 @@ static u16 OVL_EXPORT(PrizeDrops)[] = {
 extern u16 OVL_EXPORT(PrizeDrops)[];
 #endif
 
+// params: Local index of this drop
 void EntityHeartDrop(Entity* self) {
     u16 index;
     u8 value;

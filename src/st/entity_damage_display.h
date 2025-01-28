@@ -38,6 +38,9 @@ typedef struct NumericPrim {
     /* 0x32 */ u16 drawMode;
 } NumericPrim; /* size=0x34 */
 
+// params: (0xC000) "GUARD" (exclusive)
+//         (0x4000) "CRITICAL!!"
+//         (& 0x3FFF) Numeric value
 void EntityDamageDisplay(Entity* self) {
     NumericPrim* prim;
     s16 x;

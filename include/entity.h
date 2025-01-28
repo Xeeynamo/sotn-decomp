@@ -1858,6 +1858,152 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
 } ET_EntityExplosion2;
+// ====== CHI ENTITIES ======
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 angle;
+} ET_BreakableDebris;
+
+// CHI Room3, Top, Demon Switch Wall
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s32 unk80;
+} ET_DemonSwitchWall;
+
+// CHI Room5, Bottom, Breakable Wall
+typedef struct {
+    /* 0x7C */ char pad_7C[0x8];
+    /* 0x84 */ s16 breakCount;
+    /* 0x86 */ char pad_86[0xE];
+    /* 0x94 */ s16 resetTimer;
+} ET_BreakableWall;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x20];
+    /* 0x9C */ s16 rotSpeed;
+} ET_BreakableWallDebris;
+
+// CHI Unused Debug Cerberus Gate
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+} ET_DebugCerberusGate;
+
+// CHI Room3, Middle, Falling Stairs
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s32 primBatchCount;
+    /* 0x84 */ s16 rotateAccel;
+    /* 0x86 */ char pad_86[0x2];
+    /* 0x88 */ Primitive* prim;
+} ET_FallingStairs;
+
+// CHI Room 3/8, Salem Witch
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 idleCircleTimer;
+    /* 0x84 */ u8 thinksPlayerIsEngaging; // Otherwise, retreating
+    /* 0x85 */ u8 willCurseNextAttack;    // Otherwise, tribolt
+    /* 0x86 */ char pad_86[1];
+    /* 0x87 */ u8 isDriftDirectionUp; // Otherwise, down
+    /* 0x88 */ char pad_88[4];
+    /* 0x8C */ s32 targetYPos;
+} ET_SalemWitch;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+} ET_SalemWitchTribolt;
+
+// CHI Room 7/11, Gremlin
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+} ET_Gremlin;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+} ET_GremlinFire;
+
+// CHI Room 4, Thornweed
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x4];
+    /* 0x86 */ u8 isCorpseweedSpawned;
+} ET_Thornweed;
+
+// CHI Room 4, Corpseweed
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ u8 leavesDoneGrowing;
+    /* 0x85 */ u8 stalkDoneGrowing;
+    /* 0x86 */ char pad_86[0x2];
+    /* 0x88 */ s16 bobbingLeavesXT;
+    /* 0x8A */ s16 bobbingLeavesYT;
+    /* 0x8C */ s16 bobbingStalkXT;
+    /* 0x8E */ s16 bobbingStalkYT;
+    /* 0x90 */ s16 bobbingTimer;
+    /* 0x92 */ s16 bobbingAngle;
+} ET_Corpseweed;
+
+// CHI Room 4, Venus Weed
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ Primitive* stemPrim;
+    /* 0x84 */ s16 leavesWidth;
+    /* 0x86 */ s16 leavesHeight;
+    /* 0x88 */ s16 stemWidth;
+    /* 0x88 */ s16 stemHeight;
+    /* 0x8C */ s16 timer;
+    /* 0x8E */ s16 wiggleT;
+    /* 0x90 */ char pad_90[0x1];
+    /* 0x91 */ u8 triggerAttack;
+} ET_VenusWeed;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 triggerAttack;
+    /* 0x8E */ char pad_8E[0x3];
+    /* 0x91 */ u8 clutOffset;
+    /* 0x92 */ u8 nextAttackIsDarts;
+    /* 0x94 */ char pad_94[0x10];
+    /* 0xA4 */ struct Entity* entity;
+} ET_VenusWeedFlower;
+
+typedef struct { // TODO: Not sure about this yet
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 timer;
+    /* 0x8E */ char pad_8E[0x2];
+    /* 0x90 */ u8 spikeStartTimeOffsetIndex;
+    /* 0x91 */ char pad_91[0x2];
+    /* 0x94 */ s16 targetX;
+    /* 0x96 */ char pad_96[0xE];
+    /* 0xA4 */ struct Entity* entity;
+} ET_VenusWeedTendril;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 clutIndex;
+    /* 0x8E */ char pad_8E[0x6];
+    /* 0x94 */ s16 nextPosDeltaX;
+    /* 0x96 */ s16 nextPosDeltaY;
+    /* 0x98 */ s32 speed;
+    /* 0x9C */ s32 accel;
+} ET_VenusWeedDart;
+
+typedef struct {
+    /* 0x7C */ Primitive* firstPart;
+    /* 0x80 */ char pad_80[0x24];
+    /* 0xA4 */ struct Entity* flower;
+} ET_VenusWeedSpike;
+
+// ==========================
 
 typedef struct {
     /* 0x7C */ s16 timer;
@@ -2758,6 +2904,23 @@ typedef union { // offset=0x7C
     ET_UnusedCENEnt unusedCENEnt;
     ET_SmallRisingHeart smallRisingHeart;
     ET_EntranceUnk16 entrance16;
+    ET_BreakableDebris breakableDebris;
+    ET_DemonSwitchWall demonSwitchWall;
+    ET_BreakableWall breakableWall;
+    ET_BreakableWallDebris breakableWallDebris;
+    ET_DebugCerberusGate debugCerberusGate;
+    ET_FallingStairs fallingStairs;
+    ET_SalemWitch salemWitch;
+    ET_SalemWitchTribolt salemWitchTribolt;
+    ET_Gremlin gremlin;
+    ET_GremlinFire gremlinFire;
+    ET_Thornweed thornweed;
+    ET_Corpseweed corpseweed;
+    ET_VenusWeed venusWeed;
+    ET_VenusWeedFlower venusWeedFlower;
+    ET_VenusWeedTendril venusWeedTendril;
+    ET_VenusWeedDart venusWeedDart;
+    ET_VenusWeedSpike venusWeedSpike;
     ET_ExpandingCircle circleExpand;
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
