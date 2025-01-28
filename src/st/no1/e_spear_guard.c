@@ -87,7 +87,7 @@ void EntitySpearGuard(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B00);
+        InitializeEntity(g_EInitSpearGuard);
         self->ext.spearGuard.unk80 = 0xB0;
         self->ext.spearGuard.unk7C = 0x40;
         self->palette += self->params & 3;

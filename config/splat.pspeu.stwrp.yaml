@@ -83,9 +83,7 @@ segments:
       - [0xEF90, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2EY
       - [0xEFA0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleX
       - [0xEFB0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleY
-      - [0xEFC0, data] # D_psp_09246640
-      - [0xEFD0, data] # D_psp_09246650
-      - [0xEFE0, data] # D_psp_09246660
+      - [0xEFC0, .data, wrp_psp/e_collect] # e_relic_orb obtained
       - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
       - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038

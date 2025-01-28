@@ -28,3 +28,5 @@ typedef enum EntityIDs {
     /* 0x21 */ E_ID_21,
     /* 0x22 */ E_ID_22,
 } EntityIDs;
+
+extern u16 g_EInitObtainable[];

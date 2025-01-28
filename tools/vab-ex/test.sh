@@ -1,6 +1,7 @@
 rm -rf ./out
 
 cargo run --release ../../disks/us/ST/CEN/SD_ZKCEN.VH ../../disks/us/ST/CEN/SD_ZKCEN.VB ./out/cen
+cargo run --release ../../disks/us/ST/CHI/SD_ZKCHI.VH ../../disks/us/ST/CHI/SD_ZKCHI.VB ./out/chi
 cargo run --release ../../disks/us/ST/DRE/SD_ZKDRE.VH ../../disks/us/ST/DRE/SD_ZKDRE.VB ./out/dre
 cargo run --release ../../disks/us/ST/MAD/SD_ZKMAD.VH ../../disks/us/ST/MAD/SD_ZKMAD.VB ./out/mad
 cargo run --release ../../disks/us/ST/NO3/SD_ZKNO3.VH ../../disks/us/ST/NO3/SD_ZKNO3.VB ./out/no3

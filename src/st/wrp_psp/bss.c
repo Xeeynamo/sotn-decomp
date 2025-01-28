@@ -37,8 +37,8 @@ u8* D_psp_0924BC78;
 u8* D_psp_0924BC70;
 s32 D_psp_0924BC68;
 
-// e_particles.c
-s32 D_psp_0924BC60;
+// entity_relic_orb.c
+s32 obtainedStr;
 
 // st_update.c
 // u16 g_ItemIconSlots[0x20];

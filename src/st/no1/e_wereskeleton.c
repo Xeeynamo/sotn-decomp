@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// Seems to be some kind of helper for func_us_801CDE20
+// Seems to be some kind of helper for EntityWereskeleton
 void func_us_801CDDD8(u8 step) {
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
-    g_CurrentEntity->ext.et_801CDE20.unk7C = 0;
-    g_CurrentEntity->ext.et_801CDE20.unk7D = 0;
-    g_CurrentEntity->ext.et_801CDE20.unk7E = 0;
+    g_CurrentEntity->ext.wereskeleton.unk7C = 0;
+    g_CurrentEntity->ext.wereskeleton.unk7D = 0;
+    g_CurrentEntity->ext.wereskeleton.unk7E = 0;
     g_CurrentEntity->step = step;
 }
 
@@ -25,8 +25,7 @@ extern s16 D_us_80182930[];
 extern s16 D_us_80182940[];
 extern s32 D_us_80182950[][2];
 
-// Wereskeleton
-void func_us_801CDE20(Entity* self) {
+void EntityWereskeleton(Entity* self) {
     Entity* tempEntity;
     s32 i;
 
@@ -40,7 +39,7 @@ void func_us_801CDE20(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A7C);
+        InitializeEntity(g_EInitWereskeleton);
         CreateEntityFromEntity(E_ID_42, self, self + 1);
         break;
     case 1:
@@ -52,14 +51,14 @@ void func_us_801CDE20(Entity* self) {
         AnimateEntity(D_us_801828C0, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (GetDistanceToPlayerX() < 0x70) {
-            self->ext.et_801CDE20.unk80 = (Random() & 1);
-            self->ext.et_801CDE20.unk7F = (Random() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (Random() & 1);
+            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
             func_us_801CDDD8(3);
         }
         break;
     case 3:
         UnkCollisionFunc2(D_us_801828F8);
-        if (self->ext.et_801CDE20.unk7D) {
+        if (self->ext.wereskeleton.unk7D) {
             if (self->animFrameDuration == 0) {
                 if (self->facingLeft) {
                     self->posX.i.hi += D_us_80182930[self->animCurFrame];
@@ -68,25 +67,25 @@ void func_us_801CDE20(Entity* self) {
                 }
             }
         } else {
-            self->ext.et_801CDE20.unk7D = 1;
+            self->ext.wereskeleton.unk7D = 1;
         }
         if (CheckColliderOffsets(D_us_80182910, self->facingLeft) == 0) {
-            self->ext.et_801CDE20.unk7E |= 1;
+            self->ext.wereskeleton.unk7E |= 1;
         }
-        if (AnimateEntity(D_us_8018285C[self->ext.et_801CDE20.unk80], self) ==
+        if (AnimateEntity(D_us_8018285C[self->ext.wereskeleton.unk80], self) ==
             0) {
             if (self->facingLeft) {
                 self->posX.i.hi -= D_us_80182930[self->animCurFrame];
             } else {
                 self->posX.i.hi += D_us_80182930[self->animCurFrame];
             }
-            if (!--self->ext.et_801CDE20.unk7F) {
-                self->ext.et_801CDE20.unk7E |= 1;
+            if (!--self->ext.wereskeleton.unk7F) {
+                self->ext.wereskeleton.unk7E |= 1;
             }
         }
-        if (self->ext.et_801CDE20.unk7E) {
-            self->ext.et_801CDE20.unk80 = (Random() & 1);
-            self->ext.et_801CDE20.unk7F = (Random() & 1) + 1;
+        if (self->ext.wereskeleton.unk7E) {
+            self->ext.wereskeleton.unk80 = (Random() & 1);
+            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
             func_us_801CDDD8(4);
         }
         break;
@@ -100,15 +99,15 @@ void func_us_801CDE20(Entity* self) {
             }
         }
         if (CheckColliderOffsets(D_us_80182910, self->facingLeft ^ 1) == 0) {
-            self->ext.et_801CDE20.unk7E |= 1;
+            self->ext.wereskeleton.unk7E |= 1;
         }
-        if (AnimateEntity(D_us_80182864[self->ext.et_801CDE20.unk80], self) ==
+        if (AnimateEntity(D_us_80182864[self->ext.wereskeleton.unk80], self) ==
             0) {
-            if (!--self->ext.et_801CDE20.unk7F) {
-                self->ext.et_801CDE20.unk7E |= 1;
+            if (!--self->ext.wereskeleton.unk7F) {
+                self->ext.wereskeleton.unk7E |= 1;
             }
         }
-        if (self->ext.et_801CDE20.unk7E) {
+        if (self->ext.wereskeleton.unk7E) {
             self->animCurFrame = 1;
             if (self->facingLeft) {
                 self->posX.i.hi += D_us_80182940[self->animCurFrame];
@@ -137,8 +136,8 @@ void func_us_801CDE20(Entity* self) {
     case 6:
         if (AnimateEntity(D_us_80182888, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.et_801CDE20.unk80 = (Random() & 1);
-            self->ext.et_801CDE20.unk7F = (Random() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (Random() & 1);
+            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
             func_us_801CDDD8(3);
         }
         break;
@@ -162,14 +161,14 @@ void func_us_801CDE20(Entity* self) {
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_STOMP_HARD_C);
         }
-        if (self->ext.et_801CDE20.unk7C++ > 0x60) {
+        if (self->ext.wereskeleton.unk7C++ > 0x60) {
             self->velocityX = 0;
             func_us_801CDDD8(6);
         }
         break;
     case 8:
         if (AnimateEntity(D_us_80182894, self) == 0) {
-            func_us_801CDDD8(0xA);
+            func_us_801CDDD8(10);
         }
         if (!self->animFrameDuration && self->animFrameIdx == 7) {
             PlaySfxPositional(SFX_CREAK);
@@ -180,7 +179,7 @@ void func_us_801CDE20(Entity* self) {
         break;
     case 9:
         AnimateEntity(D_us_801828C0, self);
-        if (self->ext.et_801CDE20.unk7C % 7 == 0) {
+        if (self->ext.wereskeleton.unk7C % 7 == 0) {
             PlaySfxPositional(SFX_BONE_THROW);
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
@@ -195,8 +194,8 @@ void func_us_801CDE20(Entity* self) {
                 tempEntity->posY.i.hi -= 8;
             }
         }
-        if (self->ext.et_801CDE20.unk7C++ > 0x60) {
-            func_us_801CDDD8(0xA);
+        if (self->ext.wereskeleton.unk7C++ > 0x60) {
+            func_us_801CDDD8(10);
         }
         break;
     case 10:
@@ -204,8 +203,8 @@ void func_us_801CDE20(Entity* self) {
         if ((GetDistanceToPlayerX() > 0x70) && (Random() & 1)) {
             func_us_801CDDD8(5);
         } else {
-            self->ext.et_801CDE20.unk7F = (Random() & 1) + 1;
-            self->ext.et_801CDE20.unk80 = (Random() & 1);
+            self->ext.wereskeleton.unk7F = (Random() & 1) + 1;
+            self->ext.wereskeleton.unk80 = (Random() & 1);
             func_us_801CDDD8(3);
         }
         break;
@@ -274,7 +273,7 @@ void func_us_801CDE20(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.25);
         self->rotZ += 0x80;
-        if (self->ext.et_801CDE20.unk7C++ > 4) {
+        if (self->ext.wereskeleton.unk7C++ > 4) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
@@ -282,7 +281,7 @@ void func_us_801CDE20(Entity* self) {
                 tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
                 tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
             }
-            self->ext.et_801CDE20.unk7C = 0;
+            self->ext.wereskeleton.unk7C = 0;
         }
         break;
     case 32:
@@ -319,8 +318,64 @@ void func_us_801CDE20(Entity* self) {
     }
 }
 
+extern u8 D_us_801828E4[];
+
 // Likely the bone throw attack
-INCLUDE_ASM("st/no1/nonmatchings/e_wereskeleton", func_us_801CE958);
+void func_us_801CE958(Entity* self) {
+    Entity* tempEntity;
+
+    if (self->flags & FLAG_DEAD) {
+        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (tempEntity != NULL) {
+            DestroyEntity(tempEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            tempEntity->params = 0;
+            DestroyEntity(self);
+        }
+    } else {
+        if (self->step) {
+            AnimateEntity(D_us_801828E4, self);
+            MoveEntity();
+            self->velocityY += FIX(0.125);
+            return;
+        }
+        InitializeEntity(D_us_80180A88);
+    }
+}
+
+extern s16 D_us_80182978[][2];
 
 // Some wereskeleton helper
-INCLUDE_ASM("st/no1/nonmatchings/e_wereskeleton", func_us_801CEA2C);
+void func_us_801CEA2C(Entity* self) {
+    u8 curFrame;
+    Entity* tempEntity;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->hitboxState = 1;
+        self->attack = 1;
+        self->attackElement = 1;
+    }
+    tempEntity = self - 1;
+    curFrame = tempEntity->animCurFrame;
+    if (curFrame >= 16 && curFrame < 23) {
+        curFrame -= 15;
+    } else {
+        curFrame = 0;
+    }
+    self->hitboxOffX = D_us_80182978[curFrame][0];
+    self->hitboxOffY = D_us_80182978[curFrame][1];
+    if (curFrame) {
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+    } else {
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 0;
+    }
+    self->facingLeft = tempEntity->facingLeft;
+    self->posX.i.hi = tempEntity->posX.i.hi;
+    self->posY.i.hi = tempEntity->posY.i.hi;
+    if (tempEntity->entityId != E_ID_41) {
+        DestroyEntity(self);
+    }
+}
