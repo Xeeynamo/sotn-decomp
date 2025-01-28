@@ -823,7 +823,7 @@
 | st0    | EntityLockCamera                    |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra    | func_psp_09140960                   |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
 | dra    | CalcAttack                          |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
-| lib    | func_psp_09238C38                   |      177 |         20 |        |                                 |       |
+| lib    | EntityBloodDrips                    |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra    | func_psp_090E4968                   |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | lib    | func_psp_0923DA30                   |      178 |         16 |        |                                 |       |
 | st0    | EntityDraculaGlass                  |      179 |         30 |        |                                 |       |
@@ -972,7 +972,7 @@
 | wrp    | func_psp_0923AD68                   |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | dra    | func_psp_09104C80                   |      374 |         48 |        |                                 |       |
 | dra    | func_psp_09132550                   |      381 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
-| lib    | func_psp_092386A8                   |      382 |         41 |        |                                 |       |
+| lib    | EntityBloodSplatter                 |      382 |         41 |        | https://decomp.me/scratch/UwC1g | 0.999 |
 | st0    | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
 | lib    | func_psp_09257100                   |      396 |         35 |        |                                 |       |
 | lib    | BottomCornerText                    |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
