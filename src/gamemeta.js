@@ -30,14 +30,14 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002", "tt_003", "tt_004"
+                "dra", "ric", "weapon", "stcen", "stchi", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002", "tt_003", "tt_004"
             ]
         },
         {
             "id": "pspeu",
             "name": "PSP EU",
             "overlays": [
-                "dra", "stst0", "stwrp", "tt_000"
+                "dra", "stlib", "stst0", "stwrp", "tt_000"
             ]
         },
         {
@@ -64,6 +64,10 @@ const gameMetadata = {
         "stcen": {
             "name": "ST/CEN/CEN.BIN",
             "desc": "Castle Center"
+        },
+        "stchi": {
+            "name": "ST/CHI/CHI.BIN",
+            "desc": "Abandoned Mine"
         },
         "stdre": {
             "name": "ST/DRE/DRE.BIN",
