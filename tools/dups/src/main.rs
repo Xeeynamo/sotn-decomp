@@ -308,7 +308,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             path_matcher: "st/cen".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/chi/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/chi/matchings/"),
             src_dir: String::from("../../src/st/chi/"),
             overlay_name: String::from("CHI"),
             include_asm: get_all_include_asm("../../src/st/chi/"),
