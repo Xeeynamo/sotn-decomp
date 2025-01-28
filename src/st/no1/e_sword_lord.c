@@ -80,7 +80,7 @@ extern u8 D_us_80182B1C[];
 extern s32 D_us_80182B34[];
 extern s16 D_us_80182B4C[][2];
 
-void func_us_801CF850(Entity* self) {
+void EntitySwordLord(Entity* self) {
     Collider collider;
     Entity* tempEntity;
     Primitive* prim;
@@ -117,7 +117,7 @@ void func_us_801CF850(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AAC);
+        InitializeEntity(g_EInitSwordLord);
         self->facingLeft = GetSideToPlayer() & 1;
         tempEntity = self + 1;
         DestroyEntity(tempEntity);
@@ -351,7 +351,7 @@ void func_us_801CF850(Entity* self) {
         }
         break;
     case 7:
-        InitializeEntity(D_us_80180AAC);
+        InitializeEntity(g_EInitSwordLord);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 0x1E;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |

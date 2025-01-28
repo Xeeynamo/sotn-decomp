@@ -25,7 +25,7 @@ void EntitySkeletonApe(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B24);
+        InitializeEntity(g_EInitSkeletonApe);
         if (self->params == 2) {
             self->flags |= FLAG_UNK_2000;
         }

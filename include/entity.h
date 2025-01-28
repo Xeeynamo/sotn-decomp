@@ -2491,8 +2491,7 @@ typedef struct {
     /* 0x7E */ u8 unk7E;
     /* 0x7F */ u8 unk7F;
     /* 0x80 */ u8 unk80;
-    /* 0x81 */ u8 : 8;
-} ET_801CDE20;
+} ET_Wereskeleton;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -2950,7 +2949,7 @@ typedef union { // offset=0x7C
     ET_ArmorLord armorLord;
     ET_801BA290 et_801BA290;
     ET_801BCB34 et_801BCB34;
-    ET_801CDE20 et_801CDE20;
+    ET_Wereskeleton wereskeleton;
     ET_801CF850 et_801CF850;
     ET_801CEB28 et_801CEB28;
     ET_MedusaHead medusaHead;

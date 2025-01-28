@@ -14,8 +14,7 @@ extern s32 D_us_80182A54[];
 extern u8 D_us_80182A60[][2];
 extern s16 D_us_80182A68[];
 
-// Bone musket
-void func_us_801CEB28(Entity* self) {
+void EntityBoneMusket(Entity* self) {
     Entity* tempEntity;
     s32 i;
     s32 posX;
@@ -26,7 +25,7 @@ void func_us_801CEB28(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A94);
+        InitializeEntity(g_EInitBoneMusket);
         if (self->params & 0x100) {
             self->facingLeft = 1;
             self->params &= 0xFF;

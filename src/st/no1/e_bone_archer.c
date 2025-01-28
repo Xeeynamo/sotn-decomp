@@ -35,7 +35,7 @@ void EntityBoneArcher(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AC4);
+        InitializeEntity(g_EInitBoneArcher);
         if (self->params) {
             self->hitboxState = 0;
             self->animCurFrame = self->params + 0x18;
