@@ -24,19 +24,25 @@ void func_8010BFFC(void) {
     s16 y;
     s32 i;
     bool collided = false;
-    u16 original_Y = PLAYER.posY.i.hi;
+    s16 original_Y = PLAYER.posY.i.hi;
 
-    if ((g_Player.pl_vram_flag & 1) || (D_801396EA != 0) ||
-#if defined(VERSION_US)
-        (g_Player.status &
-         (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) ||
-        ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18)) ||
-#elif defined(VERSION_HD)
-        (g_Player.status & PLAYER_STATUS_TRANSFORM) ||
-#endif
-        (g_Player.unk78 == 1)) {
+    if ((g_Player.pl_vram_flag & 1) || D_801396EA) {
         return;
     }
+#ifdef VERSION_US
+    if ((g_Player.status &
+         (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK40000000)) ||
+        ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18))) {
+        return;
+    }
+#else
+    if (g_Player.status & PLAYER_STATUS_TRANSFORM)
+        return;
+#endif
+    if (g_Player.unk78 == 1) {
+        return;
+    }
+
     if (PLAYER.posY.i.hi < 48) {
         PLAYER.posY.i.hi -= 16;
         while (true) {
@@ -51,9 +57,8 @@ void func_8010BFFC(void) {
                  (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
                 (g_Player.colFloor[3].effects &
                  (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID) {
-                // I don't know man
-                (*(&PLAYER)).posY.i.hi--;
                 PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi--;
                 collided = true;
                 continue;
             }
@@ -77,7 +82,7 @@ void func_8010BFFC(void) {
                     y += 6;
                 }
 #endif
-                CheckCollision(x, y, &g_Player.colFloor[4 + i], 0);
+                CheckCollision(x, y, &g_Player.colFloor[i] + 4, 0);
             }
             if ((g_Player.colCeiling[1].effects &
                  (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
@@ -85,9 +90,8 @@ void func_8010BFFC(void) {
                  (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
                 (g_Player.colCeiling[3].effects &
                  (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID) {
-                // I don't know man
-                (*(&PLAYER)).posY.i.hi++;
                 PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi++;
                 collided = true;
                 continue;
             }
