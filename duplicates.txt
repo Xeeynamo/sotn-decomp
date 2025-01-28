@@ -446,6 +446,7 @@
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/cen/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/chi/matchings/en_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/dre/matchings/e_misc/EntityOlroxDrool.s 
+| 0.92 | true     | EntityBloodDrips                    | asm/us/st/lib/matchings/e_bloody_zombie/EntityBloodDrips.s 
 | 1.00 | true     | func_80195C38                       | asm/us/st/mad/matchings/e_misc/func_80195C38.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/no0/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/no1/matchings/e_misc/EntityOlroxDrool.s 
@@ -458,7 +459,6 @@
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/st0/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/wrp/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | false    | EntityOlroxDrool                    | asm/us/st/lib/nonmatchings/e_misc/EntityOlroxDrool.s 
-| 0.92 | false    | func_us_801C9664                    | asm/us/st/lib/nonmatchings/e_misc_2/func_us_801C9664.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetBlockFill                        | asm/us/main/matchings/psxsdk/libgpu/prim/SetBlockFill.s 
 | 1.00 | true     | SetLineF2                           | asm/us/main/matchings/psxsdk/libgpu/prim/SetLineF2.s 
@@ -1593,6 +1593,7 @@
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/cen/matchings/e_misc/EntityHeartDrop.s 
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/chi/matchings/en_misc/EntityHeartDrop.s 
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/dre/matchings/e_misc/EntityHeartDrop.s 
+| 0.92 | true     | EntityHeartDrop                     | asm/us/st/lib/matchings/e_misc_2/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/st/mad/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/st/no0/matchings/e_misc/EntityHeartDrop.s 
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/no1/matchings/e_misc/EntityHeartDrop.s 
@@ -1601,7 +1602,6 @@
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/nz0/matchings/e_misc/EntityHeartDrop.s 
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/rwrp/matchings/rwrp/e_misc/EntityHeartDrop.s 
 | 0.92 | true     | EntityHeartDrop                     | asm/us/st/wrp/matchings/e_misc/EntityHeartDrop.s 
-| 0.92 | false    | EntityHeartDrop                     | asm/us/st/lib/nonmatchings/e_misc_2/EntityHeartDrop.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UnkCollisionFunc4                   | asm/us/boss/mar/matchings/e_misc/UnkCollisionFunc4.s 
 | 1.00 | true     | UnkCollisionFunc4                   | asm/us/boss/rbo3/matchings/e_misc/UnkCollisionFunc4.s 
@@ -1758,6 +1758,7 @@
 | 0.98 | true     | func_80196C90                       | asm/us/st/cen/matchings/blit_char/func_80196C90.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/chi/matchings/ut_blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/dre/matchings/blit_char/BlitChar.s 
+| 1.00 | true     | BlitChar                            | asm/us/st/lib/matchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/no0/matchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/no1/matchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/no3/matchings/blit_char/BlitChar.s 
@@ -1765,7 +1766,6 @@
 | 1.00 | true     | BlitChar                            | asm/us/st/nz0/matchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/rwrp/matchings/wrp/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/st/wrp/matchings/blit_char/BlitChar.s 
-| 1.00 | false    | BlitChar                            | asm/us/st/lib/nonmatchings/blit_char/BlitChar.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BlinkItem                           | asm/us/boss/mar/matchings/e_collect/BlinkItem.s 
 | 1.00 | true     | BlinkItem                           | asm/us/boss/rbo3/matchings/e_collect/BlinkItem.s 
@@ -1842,6 +1842,7 @@
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/cen/matchings/e_misc/EntityMessageBox.s 
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/chi/matchings/en_misc/EntityMessageBox.s 
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/dre/matchings/e_misc/EntityMessageBox.s 
+| 1.00 | true     | EntityMessageBox                    | asm/us/st/lib/matchings/e_misc_2/EntityMessageBox.s 
 | 1.00 | true     | EntityMessageBox                    | asm/us/st/no0/matchings/e_misc/EntityMessageBox.s 
 | 1.00 | true     | EntityMessageBox                    | asm/us/st/no1/matchings/e_misc/EntityMessageBox.s 
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/no3/matchings/e_misc/EntityMessageBox.s 
@@ -1849,13 +1850,13 @@
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/nz0/matchings/e_misc/EntityMessageBox.s 
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/rwrp/matchings/rwrp/e_misc/EntityMessageBox.s 
 | 0.99 | true     | EntityMessageBox                    | asm/us/st/wrp/matchings/e_misc/EntityMessageBox.s 
-| 1.00 | false    | EntityMessageBox                    | asm/us/st/lib/nonmatchings/e_misc_2/EntityMessageBox.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityRelicOrb                      | asm/us/boss/mar/matchings/e_misc/EntityRelicOrb.s 
 | 1.00 | true     | EntityRelicOrb                      | asm/us/boss/rbo3/matchings/e_misc/EntityRelicOrb.s 
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/cen/matchings/e_misc/EntityRelicOrb.s 
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/chi/matchings/en_misc/EntityRelicOrb.s 
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/dre/matchings/e_misc/EntityRelicOrb.s 
+| 1.00 | true     | EntityRelicOrb                      | asm/us/st/lib/matchings/e_misc_2/EntityRelicOrb.s 
 | 1.00 | true     | EntityRelicOrb                      | asm/us/st/no0/matchings/e_misc/EntityRelicOrb.s 
 | 1.00 | true     | EntityRelicOrb                      | asm/us/st/no1/matchings/e_misc/EntityRelicOrb.s 
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/no3/matchings/e_misc/EntityRelicOrb.s 
@@ -1863,7 +1864,6 @@
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/nz0/matchings/e_misc/EntityRelicOrb.s 
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/rwrp/matchings/rwrp/e_misc/EntityRelicOrb.s 
 | 0.99 | true     | EntityRelicOrb                      | asm/us/st/wrp/matchings/e_misc/EntityRelicOrb.s 
-| 1.00 | false    | EntityRelicOrb                      | asm/us/st/lib/nonmatchings/e_misc_2/EntityRelicOrb.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityStageNamePopup                | asm/us/boss/mar/matchings/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/boss/rbo3/matchings/e_stage_name/EntityStageNamePopup.s 
@@ -2335,6 +2335,18 @@
 | 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
 | 1.00 | false    | func_80194F14                       | asm/us/st/lib/nonmatchings/unk_33EC8/func_80194F14.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityBloodSplatter                 | asm/us/st/lib/matchings/e_bloody_zombie/EntityBloodSplatter.s 
+| 1.00 | true     | EntityBloodSplatter                 | asm/us/st/np3/matchings/e_bloody_zombie/EntityBloodSplatter.s 
+| 1.00 | true     | EntityBloodSplatter                 | asm/us/st/nz0/matchings/e_bloody_zombie/EntityBloodSplatter.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityBloodyZombie                  | asm/us/st/lib/matchings/e_bloody_zombie/EntityBloodyZombie.s 
+| 0.98 | true     | EntityBloodyZombie                  | asm/us/st/np3/matchings/e_bloody_zombie/EntityBloodyZombie.s 
+| 0.98 | true     | EntityBloodyZombie                  | asm/us/st/nz0/matchings/e_bloody_zombie/EntityBloodyZombie.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801C53AC                       | asm/us/st/lib/matchings/e_bloody_zombie/func_801C53AC.s 
+| 1.00 | true     | func_801C53AC                       | asm/us/st/np3/matchings/e_bloody_zombie/func_801C53AC.s 
+| 1.00 | true     | func_801C53AC                       | asm/us/st/nz0/matchings/e_bloody_zombie/func_801C53AC.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_us_801AD324                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD324.s 
 | 1.00 | true     | D_us_801AD33C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD33C.s 
 | 1.00 | true     | D_us_801AD350                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD350.s 
@@ -2370,18 +2382,6 @@
 | 1.00 | true     | EntityBoneScimitarParts             | asm/us/st/no3/matchings/e_bone_scimitar/EntityBoneScimitarParts.s 
 | 1.00 | true     | EntityBoneScimitarParts             | asm/us/st/np3/matchings/e_bone_scimitar/EntityBoneScimitarParts.s 
 | 1.00 | true     | EntityBoneScimitarParts             | asm/us/st/nz0/matchings/e_bone_scimitar/EntityBoneScimitarParts.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityBloodSplatter                 | asm/us/st/np3/matchings/e_bloody_zombie/EntityBloodSplatter.s 
-| 1.00 | true     | EntityBloodSplatter                 | asm/us/st/nz0/matchings/e_bloody_zombie/EntityBloodSplatter.s 
-| 1.00 | false    | EntityBloodSplatter                 | asm/us/st/lib/nonmatchings/e_misc_2/EntityBloodSplatter.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityBloodyZombie                  | asm/us/st/np3/matchings/e_bloody_zombie/EntityBloodyZombie.s 
-| 1.00 | true     | EntityBloodyZombie                  | asm/us/st/nz0/matchings/e_bloody_zombie/EntityBloodyZombie.s 
-| 0.98 | false    | EntityBloodyZombie                  | asm/us/st/lib/nonmatchings/e_misc_2/EntityBloodyZombie.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801C53AC                       | asm/us/st/np3/matchings/e_bloody_zombie/func_801C53AC.s 
-| 1.00 | true     | func_801C53AC                       | asm/us/st/nz0/matchings/e_bloody_zombie/func_801C53AC.s 
-| 1.00 | false    | func_801C53AC                       | asm/us/st/lib/nonmatchings/e_misc_2/func_801C53AC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBirdcageDoor                  | asm/us/boss/mar/matchings/clock_room/EntityBirdcageDoor.s 
 | 1.00 | true     | EntityBirdcageDoor                  | asm/us/st/no0/matchings/clock_room/EntityBirdcageDoor.s 
