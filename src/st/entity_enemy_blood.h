@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// params: True if facing left
 void EntityEnemyBlood(Entity* self) {
     const int NParticles = 12;
     FakePrim* prim;

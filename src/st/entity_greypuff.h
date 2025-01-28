@@ -3,6 +3,7 @@ extern s16 greyPuff_rot[];
 extern s32 greyPuff_yVel[];
 
 // looks like a particle of dust fading away
+// params: Index of rotX and velocityY to use
 void EntityGreyPuff(Entity* self) {
     if (!self->step) {
         self->flags =

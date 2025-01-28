@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern u16 g_EInitUnkId13[];
 
+// EntityParticleTrail as a possible name here?
+// params: The E_EXPLOSION params to use for the trail
 void EntityUnkId13(Entity* self) {
     switch (self->step) {
     case 0:
