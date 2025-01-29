@@ -251,7 +251,7 @@ void func_us_801BBD90(Entity* self) {
     RECT unused;
     u8 padding[4];
 
-    unused = (RECT){.x = 0xf0, .y = 0xc0, .w = 0x10, .h = 0x10};
+    unused = (RECT){.x = 0xF0, .y = 0xC0, .w = 0x10, .h = 0x10};
     tempEntity = self - 1;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi - 0x22;
