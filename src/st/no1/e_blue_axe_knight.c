@@ -117,7 +117,7 @@ static void AxeKnightUnkFunc1(AxePrim* prim) {
     }
 }
 
-// Called by EntityAxeKnight
+// Called by EntityAxeKnightBlue
 extern s16* sprites_3[];
 s32 func_us_801CA51C(Entity* axeKnight) {
     Entity* entity;
@@ -343,8 +343,7 @@ void func_us_801CAD20(void) {
     }
 }
 
-// EntityBlueAxeKnight
-void func_us_801CAE04(Entity* self) {
+void EntityAxeKnightBlue(Entity* self) {
     Entity* nextEntity;
     Entity* newEntity;
     s8* hitbox;
