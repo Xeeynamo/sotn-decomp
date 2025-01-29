@@ -14,8 +14,8 @@ void func_801A7D64(Entity* self) {
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
-            self->flags = objInit->unkC;
+        if (objInit->flags != 0) {
+            self->flags = objInit->flags;
         }
     }
 
