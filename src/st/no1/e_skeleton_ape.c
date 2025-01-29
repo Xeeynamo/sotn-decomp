@@ -35,7 +35,8 @@ void EntitySkeletonApe(Entity* self) {
         if (self->params) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_SKELETON_APE_BARREL, tempEntity);
+                CreateEntityFromCurrentEntity(
+                    E_SKELETON_APE_BARREL, tempEntity);
                 tempEntity->ext.skeletonApe.unkEntity = self;
                 tempEntity->zPriority = self->zPriority - 1;
                 self->ext.skeletonApe.unkEntity = tempEntity;
