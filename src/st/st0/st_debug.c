@@ -14,8 +14,8 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         self->palette = obj->palette;
         self->drawFlags = obj->drawFlags;
         self->drawMode = obj->drawMode;
-        if (obj->unkC != 0) {
-            self->flags = obj->unkC;
+        if (obj->flags != 0) {
+            self->flags = obj->flags;
         }
     }
     AnimateEntity(obj->animFrames, self);

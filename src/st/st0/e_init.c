@@ -122,7 +122,7 @@ ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
      .palette = PAL_DRA(0),
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_TPAGE,
-     .unkC = 0x00000000,
+     .flags = 0,
      D_80180634},
 };
 
