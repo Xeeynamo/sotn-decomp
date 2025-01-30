@@ -424,7 +424,7 @@ void EntityMarionette(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.marionette.unk84 = 0x80;
-            PlaySfxPositional(0x725);
+            PlaySfxPositional(SFX_MARIONETTE_YELL);
             self->step_s++;
             break;
 
