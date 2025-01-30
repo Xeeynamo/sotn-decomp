@@ -230,6 +230,7 @@ extern u16 g_EInitSpittleBoneSpit[]; // Init
 
 // *** EntitySpittleBoneSpit properties END ***
 
+extern u16 g_EInitAxeKnight[];
 extern u16 g_EInitAxeKnightAxe[];
 extern u16 g_EInitLifeMaxTank[];
 extern u16 g_EInitPrizeContainer[];

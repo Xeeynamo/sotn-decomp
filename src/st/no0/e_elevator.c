@@ -59,9 +59,9 @@ s16 func_us_801C2044(Primitive* prim, s16 offset) {
     return offset;
 }
 
-extern u16 g_EInitElevator[];
 extern u8 D_us_80180FC0[];
 extern u8 D_us_80180FD8[];
+
 void func_us_801C2184(Entity* self) {
     Entity* player = &PLAYER;
     Entity* grandparent;

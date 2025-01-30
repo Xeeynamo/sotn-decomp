@@ -82,7 +82,8 @@ void EntityBloodSplatter(Entity* self) {
         self->step++;
         break;
     case 2:
-        prim = FindFirstUnkPrim2(self->ext.bloodSplatter.prim, 2);
+        prim = self->ext.bloodSplatter.prim;
+        prim = FindFirstUnkPrim2(prim, 2);
         if (prim != NULL) {
             self->ext.bloodSplatter.prim2 = prim;
             UnkPolyFunc2(prim);
@@ -116,7 +117,8 @@ void EntityBloodSplatter(Entity* self) {
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         }
 
-        prim = FindFirstUnkPrim2(self->ext.bloodSplatter.prim, 2);
+        prim = self->ext.bloodSplatter.prim;
+        prim = FindFirstUnkPrim2(prim, 2);
         if (prim != NULL) {
             self->ext.bloodSplatter.prim3 = prim;
             UnkPolyFunc2(prim);
@@ -165,9 +167,9 @@ void EntityBloodSplatter(Entity* self) {
         LOW(prim->next->r1) += 0xC00;
 
         if (self->facingLeft) {
-            prim->next->tpage += 0x18;
+            LOH(prim->next->tpage) += 0x18;
         } else {
-            prim->next->tpage -= 0x18;
+            LOH(prim->next->tpage) -= 0x18;
         }
 
         prim->next->b3 -= 2;
@@ -482,19 +484,21 @@ void EntityBloodyZombie(Entity* self) {
 
 void EntityBloodDrips(Entity* self) { // BloodDrips
     Primitive* prim;
-    s16 primIndex;
+    u32 primIndex;
+    u32 i;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
-            prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
-            self->hitboxState = 0;
-            self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
-            while (prim != NULL) {
+            self->hitboxState = 0;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            // i iterator here is otherwise unused but needed for PSP match
+            for (i = 0; prim != NULL; i++, prim = prim->next) {
                 prim->x0 = prim->x1 = self->posX.i.hi;
                 prim->y0 = prim->y1 = self->posY.i.hi;
                 prim->r0 = 255;
@@ -506,7 +510,6 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
                 prim->priority = self->zPriority + 1;
                 prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                   DRAW_UNK02 | DRAW_TRANSP;
-                prim = prim->next;
             }
         } else {
             DestroyEntity(self);
@@ -517,13 +520,13 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
         prim = self->ext.prim;
         if (CheckColliderOffsets(&D_801823C4, 0) != 0) {
             prim->y1 += 2;
-            if (self->step_s == 0) {
+            if (!self->step_s) {
                 self->step_s = 1;
             }
         } else {
             self->velocityY += FIX(0.09375);
             self->posY.val += self->velocityY;
-            if ((prim->y0 - prim->y1) >= 9) {
+            if ((prim->y0 - prim->y1) > 8) {
                 prim->y1 = prim->y0 - 8;
             }
         }
