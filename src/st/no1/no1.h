@@ -107,7 +107,7 @@ extern EInit D_us_80180AA0;
 extern EInit g_EInitSwordLord;
 extern EInit D_us_80180AB8;
 extern EInit g_EInitBoneArcher;
-extern EInit D_us_80180AD0;
+extern EInit g_EInitBoneArcherArrow;
 extern EInit g_EInitArmorLord;
 // extern EInit D_us_80180AE8;
 // extern EInit D_us_80180AF4;
