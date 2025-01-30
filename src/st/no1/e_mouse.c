@@ -2,12 +2,10 @@
 #include "no1.h"
 
 static AnimationFrame D_us_80180F48[] = {
-    {0x0086, 0x0035}, {0x0006, 0x0036}, {0x0036, 0x0037},
-    {0x0006, 0x0036}, {0x0026, 0x0035}, {0x0006, 0x0036},
-    {0x0026, 0x0037}, {0x0006, 0x0036}, {0xFFFF, 0x0000}};
-static AnimationFrame D_us_80180F6C[] = {
-    {0x0006, 0x0038}, {0x0006, 0x0039}, {0x0006, 0x003A}, {0x0000, 0x0000}};
-static AnimationFrame D_us_80180F7C[] = {{0x0036, 0x0036}, {0xFFFF, 0x0000}};
+    {134, 53}, {6, 54},  {54, 55}, {6, 54}, {38, 53},
+    {6, 54},   {38, 55}, {6, 54},  {-1, 0}};
+static AnimationFrame D_us_80180F6C[] = {{6, 56}, {6, 57}, {6, 58}, {0, 0}};
+static AnimationFrame D_us_80180F7C[] = {{54, 54}, {-1, 0}};
 static s32 D_us_80180F84[] = {FIX(-1.5), FIX(1.5)};
 
 // The mouse across from the Doppleganger 10 exit
