@@ -273,6 +273,7 @@ void EntityMarionette(Entity* self) {
                 self->ext.et_marionette.unk84 = 0x30;
             }
             break;
+
         case 2:
             if (!AnimateEntity(self->ext.et_marionette.unk80, self)) {
                 if (GetDistanceToPlayerX() < 0x100) {
@@ -284,7 +285,6 @@ void EntityMarionette(Entity* self) {
                 if (GetDistanceToPlayerX() < 0x60) {
                     SetStep(3);
                 }
-                break;
             }
             break;
         }
