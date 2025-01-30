@@ -304,7 +304,7 @@ void EntitySwordLord(Entity* self) {
             if (self->animCurFrame == 0x1D) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_48, self, tempEntity);
+                    CreateEntityFromEntity(E_SWORD_LORD, self, tempEntity);
                     tempEntity->params = 0;
                     tempEntity->facingLeft = self->facingLeft;
                     tempEntity->step = 7;
@@ -322,7 +322,7 @@ void EntitySwordLord(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(E_ID_48, self, tempEntity);
+                        CreateEntityFromEntity(E_SWORD_LORD, self, tempEntity);
                         tempEntity->params = i + 1;
                         tempEntity->facingLeft = self->facingLeft;
                         tempEntity->step = 7;
@@ -442,7 +442,7 @@ void func_us_801D04B8(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi;
-    if (tempEntity->entityId != E_ID_48) {
+    if (tempEntity->entityId != E_SWORD_LORD) {
         DestroyEntity(self);
     }
 }

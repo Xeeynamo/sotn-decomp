@@ -35,7 +35,8 @@ void EntitySkeletonApe(Entity* self) {
         if (self->params) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_55, tempEntity);
+                CreateEntityFromCurrentEntity(
+                    E_SKELETON_APE_BARREL, tempEntity);
                 tempEntity->ext.skeletonApe.unkEntity = self;
                 tempEntity->zPriority = self->zPriority - 1;
                 self->ext.skeletonApe.unkEntity = tempEntity;
@@ -197,7 +198,7 @@ void func_us_801D4F18(Entity* self) {
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;
 
-    if (parent->entityId != E_ID_53) {
+    if (parent->entityId != E_SKELETON_APE) {
         DestroyEntity(self);
     }
 }
@@ -238,7 +239,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
         if (entity->step == 7) {
             SetStep(4);
         } else {
-            if (entity->entityId != E_ID_53) {
+            if (entity->entityId != E_SKELETON_APE) {
                 DestroyEntity(self);
                 return;
             }
