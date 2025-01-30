@@ -336,9 +336,26 @@ INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 // entering doppleganger's room
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
 
+extern u16 D_us_8018142C[];
+extern u16 D_us_80181440[];
+
 // Seems to be some kind of helper for the chair next to the save room
 // It spawns the table and chair sprite
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9028);
+void func_us_801B9028(Entity* self) {
+    switch (self->step) { /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180A4C);
+        self->animCurFrame = self->params + 1;
+        self->zPriority = D_us_8018142C[self->params];
+        self->drawFlags = FLAG_DRAW_UNK8;
+        self->unk6C = D_us_80181440[self->params];
+        return;
+    case 1:
+        break;
+    case 2:
+#include "../../st/pad2_anim_debug.h"
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
 

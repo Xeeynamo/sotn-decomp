@@ -41,7 +41,7 @@ void EntityBoneMusket(Entity* self) {
         if (UnkCollisionFunc3(D_us_80182998) & 1) {
             if (!self->params) {
                 for (tempEntity = self + 1, i = 1; i < 3; i++, tempEntity++) {
-                    CreateEntityFromEntity(E_ID_46, self, tempEntity);
+                    CreateEntityFromEntity(E_BONE_MUSKET, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi -= D_80182A4C[i];
@@ -223,7 +223,7 @@ void EntityBoneMusket(Entity* self) {
         break;
     case 9:
         tempEntity = self->ext.et_801CEB28.unk88;
-        if ((tempEntity->entityId != E_ID_46) ||
+        if ((tempEntity->entityId != E_BONE_MUSKET) ||
             (tempEntity->flags & FLAG_DEAD)) {
             DestroyEntity(self);
             return;

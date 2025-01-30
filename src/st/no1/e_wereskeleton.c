@@ -212,7 +212,7 @@ void EntityWereskeleton(Entity* self) {
         for (i = 0; i < 5; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                MakeEntityFromId(E_ID_41, self, tempEntity);
+                MakeEntityFromId(E_WERESKELETON, self, tempEntity);
                 tempEntity->palette = 0x8160;
                 tempEntity->hitboxState = 0;
                 tempEntity->facingLeft = self->facingLeft;
@@ -244,7 +244,7 @@ void EntityWereskeleton(Entity* self) {
         for (i = 0; i < 4; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                MakeEntityFromId(E_ID_41, self, tempEntity);
+                MakeEntityFromId(E_WERESKELETON, self, tempEntity);
                 tempEntity->palette = 0x226;
                 tempEntity->hitboxState = 0;
                 tempEntity->facingLeft = self->facingLeft;
@@ -375,7 +375,7 @@ void func_us_801CEA2C(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi;
-    if (tempEntity->entityId != E_ID_41) {
+    if (tempEntity->entityId != E_WERESKELETON) {
         DestroyEntity(self);
     }
 }
