@@ -31,5 +31,7 @@ typedef enum EntityIDs {
     /* 0x22 */ E_ID_22,
 } EntityIDs;
 
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+
 extern EInit g_EInitParticle;
 extern EInit g_EInitObtainable;
