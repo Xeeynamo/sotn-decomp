@@ -13,8 +13,8 @@ void func_801B0958(Entity* self) {
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
-            self->flags = objInit->unkC;
+        if (objInit->flags != 0) {
+            self->flags = objInit->flags;
         }
     }
     AnimateEntity(objInit->animFrames, self);

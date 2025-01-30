@@ -199,7 +199,7 @@ ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
         .palette = PAL_DRA(0),
         .drawFlags = DRAW_TRANSP | DRAW_UNK02,
         .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
-        .unkC = 0,
+        .flags = 0,
         .animFrames = AnimFrames_80180734,
     }};
 

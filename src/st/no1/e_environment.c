@@ -1,17 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-typedef struct {
-    u16 animSet;
-    u16 zPriority;
-    u16 unk5A;
-    u16 palette;
-    u16 drawFlags;
-    u16 drawMode;
-    u32 flags;
-    u8* anim;
-} EnvTileInitStruct;
-
 u8 D_us_80180B60[] = {0x40, 0x01, 0xFF, 0x00};
 u8 D_us_80180B64[] = {0x40, 0x3B, 0xFF, 0x00};
 u8 D_us_80180B68[] = {0x40, 0x3C, 0xFF, 0x00};
@@ -25,7 +14,7 @@ u8 D_us_80180B88[] = {0x40, 0x58, 0xFF, 0x00};
 u8 D_us_80180B8C[] = {0x40, 0x59, 0xFF, 0x00};
 u8 D_us_80180B90[] = {0x04, 0x1E, 0xFF, 0x00};
 
-static EnvTileInitStruct envTileInit[] = {
+static ObjInit envTileInit[] = {
 
     // Life/heart max up text
     {.animSet = ANIMSET_DRA(6),
@@ -35,7 +24,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_TPAGE,
      .flags = 0,
-     .anim = D_us_80180B60},
+     .animFrames = D_us_80180B60},
 
     // The hanging skeleton with the rope
     {.animSet = ANIMSET_OVL(1),
@@ -45,7 +34,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B64},
+     .animFrames = D_us_80180B64},
 
     // The little piece of rope around the column that the skeleton is tied to
     {.animSet = ANIMSET_OVL(1),
@@ -55,7 +44,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B68},
+     .animFrames = D_us_80180B68},
 
     // Tile where the elevator cable goes into the stone
     {.animSet = ANIMSET_OVL(1),
@@ -65,7 +54,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B6C},
+     .animFrames = D_us_80180B6C},
 
     // The gears to the right of the elevator
     {.animSet = ANIMSET_OVL(1),
@@ -75,7 +64,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B70},
+     .animFrames = D_us_80180B70},
 
     // A medium sized stone tile
     {.animSet = ANIMSET_OVL(1),
@@ -85,7 +74,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B78},
+     .animFrames = D_us_80180B78},
 
     // The very dark bricks in the background creating the illusion of depth
     {.animSet = ANIMSET_OVL(1),
@@ -95,7 +84,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B7C},
+     .animFrames = D_us_80180B7C},
 
     // A large stone tile with "seam" in it
     {.animSet = ANIMSET_OVL(1),
@@ -105,7 +94,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B80},
+     .animFrames = D_us_80180B80},
 
     // A small stone tile
     {.animSet = ANIMSET_OVL(1),
@@ -115,7 +104,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B84},
+     .animFrames = D_us_80180B84},
 
     // long instance of rain against wall
     {.animSet = ANIMSET_OVL(1),
@@ -125,7 +114,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B88},
+     .animFrames = D_us_80180B88},
 
     // short instance of rain against wall
     {.animSet = ANIMSET_OVL(1),
@@ -135,7 +124,7 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B8C},
+     .animFrames = D_us_80180B8C},
 
     // mist door
     {.animSet = ANIMSET_OVL(4),
@@ -145,13 +134,13 @@ static EnvTileInitStruct envTileInit[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
      .flags = 0,
-     .anim = D_us_80180B90},
+     .animFrames = D_us_80180B90},
 };
 
 void EntityEnvTile(Entity* self) {
     Primitive* prim;
     s32 primIndex;
-    EnvTileInitStruct* ptr;
+    ObjInit* ptr;
 
     ptr = &envTileInit[self->params];
     if (!self->step) {
@@ -183,6 +172,6 @@ void EntityEnvTile(Entity* self) {
             prim->drawMode = DRAW_UNK02;
         }
     }
-    AnimateEntity(ptr->anim, self);
+    AnimateEntity(ptr->animFrames, self);
     FntPrint("pri:%x\n", self->zPriority);
 }

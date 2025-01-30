@@ -14,7 +14,7 @@ void func_8018E5AC(Entity* self) {
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        temp_v0 = objInit->unkC;
+        temp_v0 = objInit->flags;
         if (temp_v0 != 0) {
             self->flags = temp_v0;
         }
