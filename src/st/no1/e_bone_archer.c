@@ -7,18 +7,56 @@ typedef struct {
     u8 frameB;
     s16 xOffset;
     s16 yOffset;
-} unk_801D0598;
+    s16 pad;
+} unk_801D0598; /* size=0xC */
 
-extern s16 D_us_80182BD8[];
-extern s16 D_us_80182BE8[];
-extern u16 D_us_80182BF0[];
-extern u8 D_us_80182BF8[];
-extern u8 D_us_80182C04[];
-extern u8 D_us_80182C0C[];
-extern unk_801D0598 D_us_80182CD4[];
-extern s32 D_us_80182D04[];
-extern s32 D_us_80182D24[];
-extern u8 D_80182D44[];
+static s16 D_us_80182BD8[] = {0, 16, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80182BE8[] = {0, 16, 12, 0};
+static u16 D_us_80182BF0[] = {-12, 16, 0, -16};
+static u8 D_us_80182BF8[] = {8, 11, 7, 12, 8, 13, 7, 12, 0, 0, 0, 0};
+static u8 D_us_80182C04[] = {5, 13, 5, 12, 5, 11, -1, 0};
+static u8 D_us_80182C0C[] = {5, 14, 5, 13, 5, 1, -1, 0};
+static u8 D_us_80182C14[] = {
+    32, 1, 1, 2, 1, 3, 1,  4, 17, 5, 28, 6,  1, 7, 1, 8, 1, 7, 1,  8, 1,  7,
+    2,  8, 2, 7, 3, 8, 32, 7, 8,  9, 12, 10, 7, 5, 4, 4, 4, 3, 16, 2, -1, 0};
+static u8 D_us_80182C40[] = {
+    17, 1,  28, 15, 1, 16, 1,  17, 1, 16, 1, 17, 1, 16, 2,  17, 2,  16,
+    3,  17, 32, 16, 8, 9,  12, 10, 7, 5,  4, 4,  4, 3,  16, 2,  -1, 0};
+static u8 D_us_80182C64[] = {
+    12, 10, 32, 18, 28, 19, 1,  20, 1, 21, 1, 20, 1, 21, 1, 20, 2,
+    21, 2,  20, 3,  21, 16, 20, 16, 1, 1,  2, 1,  3, 1,  4, 16, 5,
+    28, 6,  1,  7,  1,  8,  1,  7,  1, 8,  1, 7,  2, 8,  2, 7,  3,
+    8,  32, 7,  8,  9,  12, 10, 7,  5, 4,  4, 4,  3, 16, 2, -1, 0};
+static u8 D_us_80182CA8[] = {
+    28, 11, 1,  33, 1,  34, 16, 35, 28, 36, 1,  37, 1,  38, 1,
+    37, 1,  38, 1,  37, 2,  38, 2,  37, 3,  38, 32, 37, 8,  39,
+    12, 40, 3,  35, 3,  34, 3,  33, 16, 11, -1, 0,  0,  0};
+static unk_801D0598 D_us_80182CD4[] = {
+    {.animation = D_us_80182C14,
+     .frameA = 6,
+     .frameB = 0,
+     .xOffset = 10,
+     .yOffset = -2},
+    {.animation = D_us_80182C40,
+     .frameA = 15,
+     .frameB = 0,
+     .xOffset = 10,
+     .yOffset = 2},
+    {.animation = D_us_80182CA8,
+     .frameA = 36,
+     .frameB = 0,
+     .xOffset = 8,
+     .yOffset = -15},
+    {.animation = D_us_80182C64,
+     .frameA = 19,
+     .frameB = 6,
+     .xOffset = 10,
+     .yOffset = 2}};
+static s32 D_us_80182D04[] = {FIX(0.75), FIX(1.75), FIX(1.5),  FIX(1.0),
+                              FIX(2.0),  FIX(1.75), FIX(0.75), FIX(1.5)};
+static s32 D_us_80182D24[] = {FIX(-5.0), FIX(-3.0),   FIX(-2.0), FIX(-3.0),
+                              FIX(-4.0), FIX(-0.875), FIX(-4.0), FIX(-2.0)};
+static u8 D_80182D44[] = {48, 32, 20, 12, 24, 16, 20, 40};
 
 void EntityBoneArcher(Entity* self) {
     unk_801D0598* var_s2;
@@ -318,14 +356,13 @@ void EntityBoneArcher(Entity* self) {
     }
 }
 
-// Bone Archer arrow
 void EntityBoneArcherArrow(Entity* self) {
     Entity* tempEntity;
     s32 i;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AD0);
+        InitializeEntity(g_EInitBoneArcherArrow);
         self->animCurFrame = 0x16;
         if (self->facingLeft) {
             self->velocityX = FIX(4.0);
