@@ -639,7 +639,7 @@
 | lib    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | st0    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | wrp    | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
-| lib    | func_psp_09247AD8                   |       91 |          7 |        |                                 |       |
+| lib    | CheckColliderOffsets                |       91 |          7 |        |                                 |       |
 | lib    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | st0    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | wrp    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
