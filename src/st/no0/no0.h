@@ -76,54 +76,49 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 #define E_PUFF_OPAQUE_PALETTE_OFFSET 0x2C0
 
 extern s16 g_SineTable[];
-extern u16 g_EInitCommon[];
-extern u16 g_EInitParticle[];
-extern u16 g_EInitInteractable[];
 
+// extern EInit OVL_EXPORT(EInitBreakable);
+// extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit D_us_80180A88;
+extern EInit g_EInitInteractable;
+// extern EInit D_us_80180AA0;
 extern EInit D_us_80180AAC;
-
-// Axe knight
+// extern EInit D_us_80180AB8;
+// extern EInit D_us_80180AC4;
+// extern EInit g_EInitUnkId13;
+extern EInit D_us_80180ADC;
+extern EInit g_EInitCommon;
+extern EInit g_EInitStoneRose;
+extern EInit D_us_80180B00;
+extern EInit D_us_80180B0C;
+// extern EInit g_EInitDamageNum;
+extern EInit g_EInitDiplocephalus;
+extern EInit g_EInitDiplocephalusFoot;
+extern EInit D_us_80180B3C;
+extern EInit g_EInitDiplocephalusTail;
+extern EInit g_EInitDiplocephalusFireball;
+extern EInit g_EInitElevator;
+extern EInit g_EInitSkelerang;
+extern EInit g_EInitSkelerangBoomerang;
+extern EInit g_EInitPlateLord;
+extern EInit D_us_80180B90;
+extern EInit g_EInitGhostEnemy;
+extern EInit g_EInitMarionette;
+extern EInit g_EInitSlinger;
+extern EInit g_EInitSlingerPieces;
+extern EInit g_EInitSlingerRib;
+extern EInit g_EInitCtulhu;
+extern EInit g_EInitCtulhuFireball;
+extern EInit g_EInitCtulhuIceShockwave;
+extern EInit g_EInitAxeKnight;
 extern EInit g_EInitAxeKnightAxe;
-
-// Skeleton
+extern EInit g_EInitOuijaTable;
+extern EInit g_EInitOuijaTableComponent;
+extern EInit g_EInitFleaMan;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
 
-// Ouija Table
-extern EInit g_EInitOuijaTable;
-extern EInit g_EInitOuijaTableComponent;
-
-// Flea Man
-extern EInit g_EInitFleaMan;
-
-// Slinger
-extern EInit g_EInitSlinger;
-extern EInit g_EInitSlingerPieces;
-extern EInit g_EInitSlingerRib;
-
-// Ghost (enemy)
-extern EInit g_EInitGhostEnemy;
-
-// Skelerang
-extern EInit g_EInitSkelerang;
-extern EInit g_EInitSkelerangBoomerang;
-
-// Ctulhu
-extern EInit g_EInitCtulhu;
-extern EInit g_EInitCtulhuFireball;
-extern EInit g_EInitCtulhuIceShockwave;
-
-// Diplocephalus
-extern EInit g_EInitDiplocephalus;
-extern EInit g_EInitDiplocephalusFoot;
-extern EInit g_EInitDiplocephalusFireball;
-extern EInit g_EInitDiplocephalusTail;
-extern EInit D_us_80180B3C;
-
 // Clock room
-extern EInit g_Statues;
-
-// Seems shared between a number of entities - ghost spawner,
-// func_us_801C2B24 (clocks?), func_us_801CC750
-extern EInit D_us_80180A88;
+extern u16 g_Statues[];

@@ -57,7 +57,7 @@ void func_us_801D542C(Entity*);
 void func_us_801D4CAC(Entity*);
 void EntityGhostEnemy(Entity*);
 void EntityGhostEnemySpawner(Entity*);
-void func_us_801D66F8(Entity*);
+void EntityMarionette(Entity*);
 void EntitySlinger(Entity*);
 void EntitySlingerRib(Entity*);
 void EntitySlingerPieces(Entity*);
@@ -140,7 +140,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D4CAC,
     EntityGhostEnemy,
     EntityGhostEnemySpawner,
-    func_us_801D66F8,
+    EntityMarionette,
     EntitySlinger,
     EntitySlingerRib,
     EntitySlingerPieces,
@@ -179,7 +179,7 @@ EInit D_us_80180AC4 = {ANIMSET_DRA(0x03), 0x00, 0x48, 0x000, 0x05C};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180ADC = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
-EInit D_us_80180AF4 = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x055};
+EInit g_EInitStoneRose = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x055};
 EInit D_us_80180B00 = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x056};
 EInit D_us_80180B0C = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x057};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
@@ -195,7 +195,7 @@ EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(0x04), 0x2B, 0x48, 0x228, 0x00C};
 EInit g_EInitPlateLord = {ANIMSET_OVL(0x05), 0x01, 0x4C, 0x22B, 0x061};
 EInit D_us_80180B90 = {ANIMSET_OVL(0x05), 0x16, 0x4C, 0x22B, 0x062};
 EInit g_EInitGhostEnemy = {ANIMSET_OVL(0x06), 0x01, 0x4A, 0x200, 0x09C};
-EInit D_us_80180BA8 = {ANIMSET_OVL(0x08), 0x00, 0x48, 0x201, 0x031};
+EInit g_EInitMarionette = {ANIMSET_OVL(0x08), 0x00, 0x48, 0x201, 0x031};
 EInit g_EInitSlinger = {ANIMSET_OVL(0x0A), 0x01, 0x49, 0x203, 0x0B2};
 EInit g_EInitSlingerPieces = {ANIMSET_OVL(0x0A), 0x00, 0x49, 0x203, 0x002};
 EInit g_EInitSlingerRib = {ANIMSET_OVL(0x0A), 0x16, 0x49, 0x203, 0x0B3};
