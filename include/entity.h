@@ -2997,7 +2997,7 @@ typedef union { // offset=0x7C
     ET_801B81E8 et_801B81E8;
     ET_Fish fish;
     ET_Bird bird;
-    ET_Marionette et_marionette;
+    ET_Marionette marionette;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

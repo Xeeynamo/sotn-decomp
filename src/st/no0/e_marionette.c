@@ -165,18 +165,18 @@ void EntityMarionette(Entity* self) {
             self->velocityY = 0;
             switch (self->animCurFrame) {
             case 8:
-                self->ext.et_marionette.unk80 = D_us_80182024;
+                self->ext.marionette.unk80 = D_us_80182024;
                 break;
             case 25:
-                self->ext.et_marionette.unk80 = D_us_8018204C;
+                self->ext.marionette.unk80 = D_us_8018204C;
                 break;
             case 34:
-                self->ext.et_marionette.unk80 = D_us_80182074;
+                self->ext.marionette.unk80 = D_us_80182074;
                 break;
             }
             self->step_s++;
         }
-        if (!AnimateEntity(self->ext.et_marionette.unk80, self)) {
+        if (!AnimateEntity(self->ext.marionette.unk80, self)) {
             if (Random() & 1) {
                 SetStep(4);
             } else {
@@ -192,7 +192,7 @@ void EntityMarionette(Entity* self) {
 
     case 4:
         if (!self->step_s) {
-            self->ext.et_marionette.unk84 = D_us_80182000[Random() & 3];
+            self->ext.marionette.unk84 = D_us_80182000[Random() & 3];
             self->step_s++;
         }
         flag = AnimateEntity(D_us_80182008, self);
@@ -209,7 +209,7 @@ void EntityMarionette(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
         self->velocityY += 0x400;
-        if (!--self->ext.et_marionette.unk84) {
+        if (!--self->ext.marionette.unk84) {
             if (Random() & 1) {
                 SetStep(6);
             } else {
@@ -261,7 +261,7 @@ void EntityMarionette(Entity* self) {
                     }
                     flag = 1;
                 }
-                self->ext.et_marionette.unk80 =
+                self->ext.marionette.unk80 =
                     *(&D_us_80182178[flag] + (Random() & 1));
                 self->velocityX = 0;
                 self->velocityY = FIX(-1.0);
@@ -270,16 +270,16 @@ void EntityMarionette(Entity* self) {
                 }
                 self->step_s++;
                 PlaySfxPositional(SFX_MARIONETTE_RATTLE);
-                self->ext.et_marionette.unk84 = 0x30;
+                self->ext.marionette.unk84 = 0x30;
             }
             break;
 
         case 2:
-            if (!AnimateEntity(self->ext.et_marionette.unk80, self)) {
+            if (!AnimateEntity(self->ext.marionette.unk80, self)) {
                 if (GetDistanceToPlayerX() < 0x100) {
-                    self->ext.et_marionette.unk84--;
+                    self->ext.marionette.unk84--;
                 }
-                if (!self->ext.et_marionette.unk84) {
+                if (!self->ext.marionette.unk84) {
                     SetStep(3);
                 }
                 if (GetDistanceToPlayerX() < 0x60) {
@@ -318,7 +318,7 @@ void EntityMarionette(Entity* self) {
                 self->velocityX = 0;
             }
             self->velocityY += FIX(0.5 / 16);
-            self->ext.et_marionette.unk84 = 0x10;
+            self->ext.marionette.unk84 = 0x10;
             break;
 
         case 2:
@@ -339,8 +339,8 @@ void EntityMarionette(Entity* self) {
             if (self->facingLeft) {
                 self->velocityX = -self->velocityX;
             }
-            if (self->ext.et_marionette.unk84 &&
-                !--self->ext.et_marionette.unk84 && (Random() & 1) == 0) {
+            if (self->ext.marionette.unk84 && !--self->ext.marionette.unk84 &&
+                (Random() & 1) == 0) {
                 SetStep(9);
             } else if (flag & 1) {
                 self->velocityX = 0;
@@ -388,7 +388,7 @@ void EntityMarionette(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX = -self->velocityX;
                 }
-                self->ext.et_marionette.unk84 = 0x80;
+                self->ext.marionette.unk84 = 0x80;
             }
             break;
 
@@ -398,7 +398,7 @@ void EntityMarionette(Entity* self) {
             if (flag & 4) {
                 self->velocityX = 0;
             }
-            if (!--self->ext.et_marionette.unk84 || flag & 4) {
+            if (!--self->ext.marionette.unk84 || flag & 4) {
                 self->velocityX = 0;
                 self->velocityY = 0;
                 SetSubStep(3);
@@ -423,14 +423,14 @@ void EntityMarionette(Entity* self) {
         self->velocityY += FIX(0.5 / 16);
         switch (self->step_s) {
         case 0:
-            self->ext.et_marionette.unk84 = 0x80;
+            self->ext.marionette.unk84 = 0x80;
             PlaySfxPositional(0x725);
             self->step_s++;
             break;
 
         case 1:
             AnimateEntity(D_us_801820B4, self);
-            if (!--self->ext.et_marionette.unk84) {
+            if (!--self->ext.marionette.unk84) {
                 SetSubStep(2);
                 self->animFrameIdx = 5;
                 self->animFrameDuration = 0;
@@ -476,7 +476,7 @@ void EntityMarionette(Entity* self) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
-                self->ext.et_marionette.unk7C = prim;
+                self->ext.marionette.unk7C = prim;
                 dataPtr += 2;
 
                 posX = self->unk5A & 1;
@@ -530,7 +530,7 @@ void EntityMarionette(Entity* self) {
 
         case 1:
             flag = false;
-            prim = self->ext.et_marionette.unk7C;
+            prim = self->ext.marionette.unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
                     func_us_801D6474(prim);
