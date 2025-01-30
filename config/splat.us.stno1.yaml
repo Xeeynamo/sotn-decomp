@@ -64,7 +64,7 @@ segments:
       - [0x272C, .data, e_skeleton]
       - [0x281C, data]
       - [0x2998, .data, e_bone_musket]
-      - [0x2A80, data]
+      - [0x2A80, .data, e_sword_lord]
       - [0x2BD8, .data, e_bone_archer]
       - [0x2D4C, .data, e_armor_lord]
       - [0x2E2C, data]
