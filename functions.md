@@ -116,6 +116,7 @@
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra    | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
 | dra    | 5C420.rodata                        |       20 |          0 | Yes    |                                 |       |
+| lib    | 5940.rodata                         |       20 |          0 | Yes    |                                 |       |
 | lib    | 8658.rodata                         |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
@@ -223,6 +224,7 @@
 | dra    | 13080.rodata                        |       30 |          0 | Yes    |                                 |       |
 | dra    | 1C030.rodata                        |       30 |          0 | Yes    |                                 |       |
 | dra    | 4B440.rodata                        |       30 |          0 | Yes    |                                 |       |
+| lib    | e_shop.rodata                       |       30 |          0 | Yes    |                                 |       |
 | st0    | prologue_scroll.rodata              |       30 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E7ED8                   |       30 |          2 |        |                                 |       |
 | dra    | func_psp_090E7F38                   |       30 |          2 |        |                                 |       |
@@ -440,6 +442,7 @@
 | lib    | func_psp_0925A830                   |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0925D430                   |       51 |         10 |        |                                 |       |
 | st0    | GetLang                             |       51 |         10 |        |                                 |       |
+| lib    | pspeu.rodata                        |       52 |          0 | Yes    |                                 |       |
 | dra    | func_800EDD9C                       |       52 |          6 |        |                                 |       |
 | st0    | func_801AD838                       |       52 |         10 |        |                                 |       |
 | dra    | func_psp_090F18B0                   |       53 |          3 |        |                                 |       |
@@ -495,8 +498,8 @@
 | dra    | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra    | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
-| lib    | func_psp_0925D350                   |       62 |          5 |        |                                 |       |
 | lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
+| lib    | func_psp_0925D350                   |       62 |          5 |        |                                 |       |
 | st0    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | st0    | ST0_EntityBackgroundBlock           |       62 |          5 |        | https://decomp.me/scratch/WQI2Y | 0.998 |
 | wrp    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -517,7 +520,6 @@
 | st0    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | wrp    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra    | C0B0.rodata                         |       66 |          0 | Yes    |                                 |       |
-| lib    | pspeu.rodata                        |       66 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED480                   |       66 |          6 |        |                                 |       |
 | lib    | func_psp_0923E498                   |       66 |          7 |        |                                 |       |
 | st0    | EntityIsNearPlayer                  |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
@@ -774,6 +776,7 @@
 | dra    | func_psp_09134B20                   |      135 |         13 |        |                                 |       |
 | dra    | func_psp_090EEFA8                   |      136 |         11 |        |                                 |       |
 | dra    | func_psp_09141668                   |      136 |         21 |        |                                 |       |
+| lib    | unk_1D9E8.rodata                    |      138 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090EB028                   |      139 |          2 |        | https://decomp.me/scratch/tJnoh | 0.988 |
 | lib    | func_psp_0925ADA0                   |      139 |          5 |        |                                 |       |
 | st0    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
@@ -808,6 +811,7 @@
 | dra    | func_psp_0911DF30                   |      161 |         14 |        |                                 |       |
 | dra    | func_psp_0911E188                   |      161 |         19 |        |                                 |       |
 | dra    | func_psp_09128580                   |      162 |         17 |        |                                 |       |
+| lib    | 2BC10.rodata                        |      164 |          0 | Yes    |                                 |       |
 | dra    | DrawHud                             |      164 |         14 |        |                                 |       |
 | dra    | func_psp_0910EA68                   |      164 |         24 |        |                                 |       |
 | wrp    | EntityUnkId12                       |      165 |         18 |        |                                 |       |
@@ -938,7 +942,6 @@
 | dra    | func_psp_09122008                   |      312 |         24 |        |                                 |       |
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
 | lib    | func_psp_09256018                   |      315 |         26 |        |                                 |       |
-| lib    | unk_1D9E8.rodata                    |      320 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090EE5D0                   |      323 |         37 |        |                                 |       |
 | st0    | func_801AF380                       |      325 |          7 |        |                                 |       |
 | lib    | func_psp_09251168                   |      330 |         47 | Yes    |                                 |       |
