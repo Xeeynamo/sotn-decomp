@@ -45,7 +45,7 @@ segments:
       - [0xC9C, data]
       - [0xCFC, .data, st_debug]
       - [0xD7C, data]
-      - [0x1508, data, unk_3B5E0]
+      - [0x1508, .data, unk_3B5E0]
       - [0x1540, data, unk_3CB34]
       - [0x1570, .data, unk_3D8AC]
       - [0x15F4, data]

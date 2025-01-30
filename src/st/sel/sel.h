@@ -44,12 +44,6 @@ typedef enum {
 } MenuGfx;
 
 typedef struct {
-    s32 unk00[16];
-    s32 unk10[16];
-    s32 unk20[32];
-} Unkstruct_801BA498; /* size=0x100 */
-
-typedef struct {
     /* 801BC8E0 */ s32 icon[BLOCK_PER_CARD];
     /* 801BC91C */ u32 slot[BLOCK_PER_CARD];
     /* 801BC958 */ u32 stage[BLOCK_PER_CARD];
@@ -130,20 +124,6 @@ extern RECT D_801825A4;
 extern const char D_8018B304[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
-extern s32 D_801962F4;
-extern s32 D_801962F8[16];
-extern s32 D_80196338[16];
-extern s32 D_80196378;
-extern s32 D_8019637C[32];
-extern volatile u32* D_801963FC;
-extern volatile u32* D_80196400;
-extern volatile u32* D_80196404;
-extern volatile u32* D_80196408;
-extern volatile u32* D_8019640C;
-extern volatile u32* D_80196410;
-extern volatile u32* D_8019642C;
-extern volatile u32* D_80196430;
-extern volatile u32* D_80196434;
 
 extern const char D_801A7AF8[]; // rstep:%d,%d
 extern const char D_801A7B08[]; // retry:%d

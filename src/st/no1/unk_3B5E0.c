@@ -1,16 +1,111 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// Called by elevator doors
-INCLUDE_ASM("st/no1/nonmatchings/unk_3B5E0", func_us_801BB5E0);
-
-// Called by elevator doors
-INCLUDE_ASM("st/no1/nonmatchings/unk_3B5E0", func_us_801BB7B8);
-
-extern s16 D_us_80181508[][3];
-extern s16 D_us_8018151C[][3];
+static s16 D_us_80181508[][3] = {
+    {0x1845, 0x1875, 0x18A5}, {0x1245, 0x1275, 0x12A5}, {0x945, 0x975, 0x9A5}};
+static s16 D_us_8018151C[][3] = {
+    {0x554, 0x555, 0x554}, {0x554, 0x555, 0x554}, {0x552, 0x553, 0x552},
+    {0x09A, 0x094, 0x09A}, {0x09A, 0x094, 0x09A}, {0x05B, 0x060, 0x05B}};
 
 extern s32 D_psp_08C62AA4;
+
+// Called by elevator doors
+void func_us_801BB5E0(void) {
+    Primitive* prim;
+    s16 yMin, yMax;
+
+    prim = g_CurrentEntity->ext.et_801BBD90.unk7C;
+    yMax = g_CurrentEntity->posY.i.hi + 10;
+    prim->y0 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y2 >= yMax) {
+        if (g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 0;
+        }
+        prim->y2 = yMax;
+    } else {
+        if (!g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 1;
+            PlaySfxPositional(0x7B1);
+        }
+        prim->y2++;
+    }
+    prim->v0 = prim->v2 - (prim->y2 - prim->y0);
+    yMax = g_CurrentEntity->posY.i.hi - 4;
+    prim->y1 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y3 >= yMax) {
+        prim->y3 = yMax;
+    } else {
+        prim->y3++;
+    }
+    prim->v1 = prim->v3 - (prim->y3 - prim->y1);
+
+    prim = prim->next;
+    yMin = g_CurrentEntity->posY.i.hi + 10;
+    prim->y2 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y0 <= yMin) {
+        prim->y0 = yMin;
+    } else {
+        prim->y0--;
+    }
+    prim->v2 = prim->v0 + (prim->y2 - prim->y0);
+    yMin = g_CurrentEntity->posY.i.hi - 4;
+    prim->y3 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y1 <= yMin) {
+        prim->y1 = yMin;
+    } else {
+        prim->y1--;
+    }
+    prim->v3 = prim->v1 + (prim->y3 - prim->y1);
+}
+
+// Called by elevator doors
+void func_us_801BB7B8(void) {
+    Primitive* prim;
+    s16 yMin, yMax;
+
+    prim = g_CurrentEntity->ext.et_801BBD90.unk7C;
+    yMin = g_CurrentEntity->posY.i.hi - 10;
+    prim->y0 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y2 <= yMin) {
+        if (g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 0;
+        }
+        prim->y2 = yMin;
+    } else {
+        if (!g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 1;
+            PlaySfxPositional(0x7B1);
+        }
+        prim->y2--;
+    }
+    prim->v0 = prim->v2 - (prim->y2 - prim->y0);
+    yMin = g_CurrentEntity->posY.i.hi - 24;
+    prim->y1 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y3 <= yMin) {
+        prim->y3 = yMin;
+    } else {
+        prim->y3--;
+    }
+    prim->v1 = prim->v3 - (prim->y3 - prim->y1);
+
+    prim = prim->next;
+    yMax = g_CurrentEntity->posY.i.hi + 24;
+    prim->y2 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y0 >= yMax) {
+        prim->y0 = yMax;
+    } else {
+        prim->y0++;
+    }
+    prim->v2 = prim->v0 + (prim->y2 - prim->y0);
+    yMax = g_CurrentEntity->posY.i.hi + 10;
+    prim->y3 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y1 >= yMax) {
+        prim->y1 = yMax;
+    } else {
+        prim->y1++;
+    }
+    prim->v3 = prim->v1 + (prim->y3 - prim->y1);
+}
 
 // Elevator doors
 void func_us_801BB984(Entity* self) {
@@ -156,7 +251,7 @@ void func_us_801BBD90(Entity* self) {
     RECT unused;
     u8 padding[4];
 
-    unused = (RECT){.x = 0xf0, .y = 0xc0, .w = 0x10, .h = 0x10};
+    unused = (RECT){.x = 0xF0, .y = 0xC0, .w = 0x10, .h = 0x10};
     tempEntity = self - 1;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi - 0x22;
