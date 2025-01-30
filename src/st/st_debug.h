@@ -15,8 +15,8 @@ void EntityBackgroundBlock(Entity* self) {
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->unkC) {
-            self->flags = objInit->unkC;
+        if (objInit->flags) {
+            self->flags = objInit->flags;
         }
         if (self->params == 1) {
             self->rotX = self->rotY = 0x0200;

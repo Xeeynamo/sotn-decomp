@@ -18,8 +18,8 @@ void EntityRoomForeground(Entity* entity) {
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
         entity->drawMode = obj->drawMode;
-        if (obj->unkC != 0) {
-            entity->flags = obj->unkC;
+        if (obj->flags != 0) {
+            entity->flags = obj->flags;
         }
     }
     AnimateEntity(obj->animFrames, entity);

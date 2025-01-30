@@ -13,8 +13,8 @@ void EntityRoomForeground(Entity* entity) {
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
         entity->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
-            entity->flags = objInit->unkC;
+        if (objInit->flags != 0) {
+            entity->flags = objInit->flags;
         }
         if (entity->params >= 5) {
             entity->rotZ = 0x800;

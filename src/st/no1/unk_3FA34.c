@@ -494,8 +494,46 @@ void func_us_801C05DC(Entity* self) {
     }
 }
 
-// bone throwing skeleton
-INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801C0A40);
+extern u16 D_us_801819A4[];
+extern u16 D_us_801819D4[];
+
+void func_us_801C0A40(Entity* self) {
+    s32 i, j;
+    u8 index;
+    s32 tilePos;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A10);
+        self->animCurFrame = 0;
+        if (!g_CastleFlags[CASTLE_FLAG_17]) {
+            self->step = 2;
+            break;
+        }
+        /* fallthrough */
+    case 1:
+        tilePos = 0x15F0;
+        for (index = 0, i = 0; i < 6; i++) {
+            for (j = 0; j < 4; j++) {
+                g_Tilemap.fg[tilePos + j] = D_us_801819D4[index];
+                index++;
+            }
+            tilePos += 0x30;
+        }
+        self->step = 3;
+        break;
+    case 2:
+        tilePos = 0x15F0;
+        for (index = 0, i = 0; i < 6; i++) {
+            for (j = 0; j < 4; j++) {
+                g_Tilemap.fg[tilePos + j] = D_us_801819A4[index];
+                index++;
+            }
+            tilePos += 0x30;
+        }
+        self->step = 3;
+    }
+}
 
 // in the doppleganger room, maybe rotating door
 INCLUDE_ASM("st/no1/nonmatchings/unk_3FA34", func_us_801C0B9C);

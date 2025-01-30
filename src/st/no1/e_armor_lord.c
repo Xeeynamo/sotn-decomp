@@ -799,7 +799,7 @@ void EntityArmorLord(Entity* self) {
         }
         InitializeEntity(g_EInitArmorLord);
         tempEntity = self + 1;
-        CreateEntityFromEntity(E_ARMOR_LORD, self, tempEntity);
+        CreateEntityFromEntity(E_ID_4B, self, tempEntity);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         break;
 
