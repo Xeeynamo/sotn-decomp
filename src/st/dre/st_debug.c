@@ -15,8 +15,8 @@ void EntityUnkId11(Entity* entity) {
         entity->drawFlags = obj->drawFlags;
         entity->drawMode = obj->drawMode;
 
-        if (obj->unkC != 0) {
-            entity->flags = obj->unkC;
+        if (obj->flags != 0) {
+            entity->flags = obj->flags;
         }
 
         if (entity->params == 1) {

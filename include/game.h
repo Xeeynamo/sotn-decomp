@@ -887,7 +887,7 @@ typedef struct {
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
-    /* 0x0C */ u32 unkC;
+    /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit; // size = 0x14
 
@@ -899,7 +899,7 @@ typedef struct { // only difference from above is this one uses a facingLeft
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
-    /* 0x0C */ u32 unkC;
+    /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit2; // size = 0x14
 
