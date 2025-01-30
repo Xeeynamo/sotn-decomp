@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern AnimationFrame D_us_80180F48[];
-extern AnimationFrame D_us_80180F6C[];
-extern AnimationFrame D_us_80180F7C[];
-extern s32 D_us_80180F84[];
+static AnimationFrame D_us_80180F48[] = {
+    {134, 53}, {6, 54},  {54, 55}, {6, 54}, {38, 53},
+    {6, 54},   {38, 55}, {6, 54},  {-1, 0}};
+static AnimationFrame D_us_80180F6C[] = {{6, 56}, {6, 57}, {6, 58}, {0, 0}};
+static AnimationFrame D_us_80180F7C[] = {{54, 54}, {-1, 0}};
+static s32 D_us_80180F84[] = {FIX(-1.5), FIX(1.5)};
 
 // The mouse across from the Doppleganger 10 exit
-void func_us_801B7D34(Entity* self) {
+void EntityMouse(Entity* self) {
     s16 offsetX;
     s16 offsetY;
 
