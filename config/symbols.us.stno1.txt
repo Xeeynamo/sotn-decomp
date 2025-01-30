@@ -5,7 +5,6 @@ g_EInitInteractable = 0x80180968;
 g_EInitCommon = 0x801809B0;
 NO1_RedDoorTiles = 0x80180C9C;
 g_testCollRandTable = 0x801814FC;
-D_80182A4C = 0x80182A4C;
 D_80182D44 = 0x80182D44;
 sprites_3 = 0x801A86BC;
 Random = 0x801C19F0;

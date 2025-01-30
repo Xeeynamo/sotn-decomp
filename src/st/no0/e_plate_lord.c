@@ -154,7 +154,6 @@ bool StepTowards(s16* val, s32 target, s32 step) {
     return false;
 }
 
-extern EInit g_EInitPlateLord;
 static RECT D_us_80181F80[] = {
     {.x = 22, .y = 8, .w = 31, .h = 7}, {.x = 20, .y = 9, .w = 28, .h = 8}};
 extern Point16 D_us_80181F90[];
@@ -1063,7 +1062,6 @@ void func_us_801D4324(Entity* self) {
 }
 
 extern SVECTOR D_us_80181F98;
-static const SVECTOR D_us_801C1684 = {.vx = 0, .vy = 20, .vz = 0};
 
 void func_us_801D44A0(Entity* self) {
     long sp70;
@@ -1082,7 +1080,7 @@ void func_us_801D44A0(Entity* self) {
     s32 primIndex;
     s32 var_s3;
 
-    sp6B = D_us_801C1684;
+    sp6B = (SVECTOR){.vx = 0, .vy = 20, .vz = 0};
     tempEntity = self - 3;
     self->facingLeft = tempEntity->facingLeft;
     self->rotZ = (self->ext.plateLordUnknown.unkB0 - 0x800) / 2;
@@ -1333,8 +1331,6 @@ void func_us_801D4AA4(Entity* self) {
     }
 }
 
-extern u16 D_us_80180B90;
-
 void func_us_801D4CAC(Entity* self) {
     Collider collider;
     Entity* tempEntity;
@@ -1345,7 +1341,7 @@ void func_us_801D4CAC(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180B90);
+        InitializeEntity(D_us_80180B90);
         self->animCurFrame = 0x16;
         self->zPriority = 0xB7;
         self->hitPoints = 0x7FFF;

@@ -80,8 +80,6 @@ static u8 steps[] = {AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_DUCKING_THROW,
 static u32 init_velocity_x[] = {FIX(2), FIX(2), FIX(1)};
 static u32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
 
-extern u16 g_EInitAxeKnight[];
-
 // Weirdly, this function ONLY acts on prim->next, it does not act on prim.
 // However, it does call functions on prim.
 static void AxeKnightUnkFunc1(AxePrim* prim) {
