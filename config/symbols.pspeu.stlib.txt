@@ -38,6 +38,7 @@ EntityEquipItemDrop = 0x09245800;
 EntityRelicOrb = 0x09246058;
 EntityHeartDrop = 0x09247190;
 EntityMessageBox = 0x09247360;
+CheckColliderOffsets = 0x09247AD8;
 EntityIntenseExplosion = 0x09248310;
 PlaySfxPositional = 0x09248FB0;
 HitDetection = 0x09249108;
