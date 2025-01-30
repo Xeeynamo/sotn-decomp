@@ -2,7 +2,6 @@
 #include "common.h"
 #include "no0.h"
 
-extern EInit g_EInitPlateLord;
 extern SVECTOR D_us_80181FC0;
 
 void func_us_801D542C(Entity* self) {
@@ -40,7 +39,7 @@ void func_us_801D542C(Entity* self) {
     tempEntity->attack = 1;
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitPlateLord);
+        InitializeEntity(g_EInitPlateLord);
         self->animCurFrame = 7;
         self->zPriority = 0xB4;
         self->drawFlags |= FLAG_DRAW_ROTZ;

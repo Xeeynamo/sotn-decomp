@@ -44,7 +44,8 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, lib/create_entity]
-      - [0x1028, c, lib_psp/pspeu]
+      - [0x1028, c, lib/e_bloody_zombie]
+      - [0x1848, c, lib_psp/pspeu]
       - [0x6E18, c, lib/e_red_door]
       - [0x8120, c, lib/st_update]
       - [0x8658, c, lib_psp/8658]
@@ -62,6 +63,8 @@ segments:
       - [0x1D650, c, lib/e_chair]
       - [0x1D9E8, c, lib_psp/unk_1D9E8]
       - [0x36780, data]
+      - [0x36800, .data, lib/e_bloody_zombie]
+      - [0x36840, data]
       - [0x37918, .data, lib/e_red_door]
       - [0x37930, .data, lib/st_update]
       - [0x37960, data]

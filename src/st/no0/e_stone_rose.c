@@ -130,7 +130,6 @@ void func_us_801D7DAC(Entity* self) {
     self->attackElement = self->rotPivotX;
 }
 
-extern u16 D_us_80180AF4[];
 extern AnimationFrame D_us_80182280;
 extern AnimationFrame D_us_8018228C;
 extern AnimationFrame D_us_801822B4;
@@ -211,7 +210,7 @@ void func_us_801D8150(Entity* self) {
             }
         }
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        InitializeEntity(D_us_80180AF4);
+        InitializeEntity(g_EInitStoneRose);
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
         }
@@ -480,8 +479,6 @@ void func_us_801D8150(Entity* self) {
 }
 
 // Seed entity
-extern u16 D_us_80180B00[];
-
 void func_us_801D8DF0(Entity* self) {
     Collider collider;
     s16 xOffset;
@@ -548,7 +545,6 @@ void func_us_801D8DF0(Entity* self) {
     self->rotZ = zRotation;
 }
 
-extern u16 D_us_80180B0C[];
 extern AnimationFrame D_us_80182318;
 
 // Seed entity
