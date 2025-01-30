@@ -96,7 +96,7 @@ extern EInit D_us_80180A1C;
 // extern EInit D_us_80180A28;
 // extern EInit D_us_80180A34;
 extern EInit D_us_80180A40;
-// extern EInit D_us_80180A4C;
+extern EInit D_us_80180A4C;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
