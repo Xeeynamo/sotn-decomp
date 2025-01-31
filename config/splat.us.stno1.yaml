@@ -38,7 +38,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x618, .data, e_laydef]
       - [0x7C0, .data, e_init]
       - [0xB60, .data, e_environment]
       - [0xC84, .data, e_red_door]
@@ -72,7 +74,9 @@ segments:
       - [0x3230, .data, e_skeleton_ape]
       - [0x33D0, .data, e_medusa_head]
       - [0x3448, .data, e_mist_door]
-      - [0x3488, data]
+      - [0x3488, .data, rooms]
+      - [0x3544, .data, e_layout]
+      - [0x44FC, data]
       - [0x34668, .rodata, e_environment]
       - [0x34670, .rodata, e_red_door]
       - [0x34688, .rodata, unk_35E20]
