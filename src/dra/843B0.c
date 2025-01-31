@@ -231,37 +231,34 @@ void EntityTeleport(Entity* self) {
     }
 }
 
-void func_80124A8C(Entity* entity) {
-#ifdef PSY_Q_3_5
-    if (PLAYER.step != 0 ||
-        PLAYER.step_s != 4) { // REAL: Matches with PSY-Q 3.5
-#else
-    if (*(s32*)&PLAYER.step != 0x40000) { // !FAKE: Probably ASPSX
-#endif
-        DestroyEntity(entity);
+// Entity #66. Made by final blueprint, #122. Created in func_801120B4.
+void func_80124A8C(Entity* self) {
+    if (PLAYER.step != Player_Stand || PLAYER.step_s != 4) {
+        DestroyEntity(self);
         return;
     }
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->animSet = ANIMSET_DRA(17);
-        entity->velocityY = FIX(-0.375);
-        SetSpeedX(0x4000);
-        entity->unk5A = 0x50;
-        entity->palette = 0x819F;
-        entity->anim = D_800AE294;
-        entity->flags = FLAG_UNK_100000;
-        entity->facingLeft = 0;
-        entity->posY.i.hi -= 16;
-        entity->posX.val += entity->velocityX << 5;
-        entity->step++;
+        self->animSet = ANIMSET_DRA(17);
+        self->velocityY = FIX(-0.375);
+        SetSpeedX(FIX(0.25));
+        self->unk5A = 0x50;
+        self->palette = 0x819F;
+        self->anim = D_800AE294;
+
+        self->posY.i.hi -= 16;
+        self->posX.val += self->velocityX << 5;
+        self->flags = FLAG_UNK_100000;
+        self->facingLeft = 0;
+        self->step++;
         break;
 
     case 1:
-        entity->posX.val += entity->velocityX;
-        entity->posY.val += entity->velocityY;
-        if (entity->animFrameDuration < 0) {
-            DestroyEntity(entity);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
         }
         break;
     }

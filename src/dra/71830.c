@@ -322,7 +322,7 @@ void func_801120B4(void) {
             if (g_StageId == STAGE_NO1) {
                 PlaySfx(0x7AD);
             }
-            CreateEntFactoryFromEntity(g_CurrentEntity, 122, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(122,0), 0);
             D_800ACF78 = 0x200;
         }
         local_flags = 1;
