@@ -177,21 +177,20 @@ void CheckFloor(void) {
                     return;
                 }
                 continue;
-            } 
-            if ((var_s1 & (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) == (EFFECT_UNK_8000 | EFFECT_SOLID)) {
+            }
+            if ((var_s1 & (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
+                (EFFECT_UNK_8000 | EFFECT_SOLID)) {
                 if (i < 2) {
-                    *vram_ptr |=
-                        ((var_s1 & (EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                                    EFFECT_UNK_1000)) +
-                         0x7FFF + 2);
+                    *vram_ptr |= ((var_s1 & (EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                                             EFFECT_UNK_1000)) +
+                                  0x7FFF + 2);
                     *yPosPtr +=
                         g_Player.colFloor[i].unk8 + collider.unk18 - 1 + sp5e;
                     return;
                 }
-                if ((i == 2) &&
-                    ((var_s1 &
-                      (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ==
-                     (EFFECT_UNK_8000 | EFFECT_SOLID))) {
+                if ((i == 2) && ((var_s1 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                                            EFFECT_SOLID)) ==
+                                 (EFFECT_UNK_8000 | EFFECT_SOLID))) {
                     g_Player.colFloor[2].effects = var_s1;
                     g_Player.colFloor[2].unk10 = g_Player.colFloor[2].unk8;
                 }
