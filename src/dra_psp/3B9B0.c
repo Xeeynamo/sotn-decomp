@@ -95,9 +95,8 @@ void func_8010BFFC(void) {
     }
 }
 
-// CheckFloor
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", CheckFloor);
-// CheckCeiling
+
 void CheckCeiling(void) {
     Collider collider;
     s32 temp_fp;
@@ -274,7 +273,87 @@ void CheckCeiling(void) {
     }
 }
 
-// CheckWallRight
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119950);
+void CheckWallRight(void) {
+    Collider collider;
+    s32 temp_s0;
+    s32 i;
+
+    s16 argX;
+    s16 argY;
+
+    s16* yPosPtr = &PLAYER.posY.i.hi;
+    s16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (((g_StageId == STAGE_BO6) || (g_StageId == STAGE_RBO6) ||
+         (g_StageId == STAGE_DRE)) &&
+        (*xPosPtr >= 0xF8)) {
+        *xPosPtr = 0xF8;
+        *vram_ptr |= 4;
+        return;
+    }
+
+    if (g_unkGraphicsStruct.unk18) {
+        return;
+    }
+    temp_s0 =
+        g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                          EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID))) {
+        *vram_ptr |= 4;
+        return;
+    }
+
+    for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
+        temp_s0 = g_Player.colWall[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
+            argX = *xPosPtr + g_SensorsWall[i].x + g_Player.colWall[i].unk4 - 1;
+            argY = *yPosPtr + g_SensorsWall[i].y;
+            CheckCollision(argX, argY, &collider, 0);
+            if ((collider.effects & EFFECT_SOLID) == EFFECT_NONE) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colWall[i].unk4;
+                return;
+            }
+        }
+
+        if (!(*vram_ptr & 1)) {
+            if ((temp_s0 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                            EFFECT_UNK_0800)) == EFFECT_UNK_8000 &&
+                (i != 0) &&
+                ((g_Player.colWall[0].effects & EFFECT_UNK_0800) ||
+                 !(g_Player.colWall[0].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colWall[i].unk4;
+                return;
+            }
+            if (((temp_s0 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_0800)) == EFFECT_UNK_0800) &&
+                (i != 6) &&
+                ((g_Player.colWall[6].effects & EFFECT_UNK_8000) ||
+                 !(g_Player.colWall[6].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colWall[i].unk4;
+                return;
+            }
+        }
+    }
+}
+
 // CheckWallLeft
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119D00);
