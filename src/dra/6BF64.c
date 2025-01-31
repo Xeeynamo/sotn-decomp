@@ -289,15 +289,14 @@ void CheckFloor(void) {
 void CheckCeiling(void) {
     Collider collider;
     s32 temp_fp;
-    u32 temp_s0;
+    u32 var_s2;
     s32 temp_v1;
-    s32 var_a0;
+    u32 var_s1;
     s16 var_a1;
 
     s16 argX;
     s16 argY;
 
-    u32 collidereffects;
 
     s32 i = 1;
 
@@ -316,12 +315,12 @@ void CheckCeiling(void) {
             (collider.effects & EFFECT_MIST_ONLY)) {
             collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
         }
-        temp_s0 = g_Player.colCeiling[i].effects &
+        var_s2 = g_Player.colCeiling[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
-        if ((temp_s0 == EFFECT_SOLID) || (temp_s0 & EFFECT_UNK_8000)) {
+        if ((var_s2 == EFFECT_SOLID) || (var_s2 & EFFECT_UNK_8000)) {
             if ((g_Player.status &
                  (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) &&
-                !(temp_s0 & EFFECT_SOLID)) {
+                !(var_s2 & EFFECT_SOLID)) {
                 continue;
             }
 
@@ -335,8 +334,8 @@ void CheckCeiling(void) {
                 collider.effects & EFFECT_MIST_ONLY) {
                 collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
             }
-            collidereffects = collider.effects;
-            if (!(collidereffects & 1)) {
+            var_s1 = collider.effects;
+            if (!(var_s1 & 1)) {
                 if ((g_Player.colCeiling[i].effects != EFFECT_SOLID) ||
                     (PLAYER.velocityY <= 0)) {
                     *vram_ptr |= 2;
@@ -354,12 +353,12 @@ void CheckCeiling(void) {
                 }
                 continue;
             }
-            if ((collidereffects &
+            if ((var_s1 &
                  (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
                 (EFFECT_UNK_0800 | EFFECT_SOLID)) {
                 if (i < 2) {
                     *vram_ptr |= (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
-                                  ((collidereffects >> 4) &
+                                  ((var_s1 >> 4) &
                                    (EFFECT_UNK_0400 | EFFECT_UNK_0200 |
                                     EFFECT_UNK_0100)));
                     if (!(*vram_ptr & 1)) {
@@ -369,24 +368,24 @@ void CheckCeiling(void) {
                     return;
                 }
                 if ((i == 2) &&
-                    ((collidereffects &
+                    ((var_s1 &
                       (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
                      (EFFECT_UNK_0800 | EFFECT_SOLID))) {
-                    g_Player.colFloor[2].effects = collidereffects;
+                    g_Player.colFloor[2].effects = var_s1;
                     g_Player.colFloor[2].unk8 = g_Player.colFloor[2].unk10;
                 }
                 if ((i == 3) &&
-                    ((collidereffects &
+                    ((var_s1 &
                       (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
                      (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID))) {
-                    g_Player.colFloor[3].effects = collidereffects;
+                    g_Player.colFloor[3].effects = var_s1;
                     g_Player.colFloor[3].unk8 = g_Player.colFloor[3].unk10;
                 }
             }
-            if ((collidereffects & EFFECT_UNK_0800) == EFFECT_NONE) {
+            if ((var_s1 & EFFECT_UNK_0800) == EFFECT_NONE) {
                 *vram_ptr |=
                     (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
-                     ((collidereffects >> 4) &
+                     ((var_s1 >> 4) &
                       (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
                 if (!(*vram_ptr & 1)) {
                     *yPosPtr +=
@@ -395,7 +394,7 @@ void CheckCeiling(void) {
                 return;
             }
         }
-        if ((temp_s0 == (EFFECT_UNK_0800 | EFFECT_SOLID)) && (i < 2)) {
+        if ((var_s2 == (EFFECT_UNK_0800 | EFFECT_SOLID)) && (i < 2)) {
             *vram_ptr |=
                 (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
                  ((g_Player.colCeiling[i].effects >> 4) &
@@ -420,21 +419,21 @@ void CheckCeiling(void) {
             (g_Player.colCeiling[2].effects & EFFECT_UNK_0800)) {
             return;
         }
-        temp_s0 = g_Player.colCeiling[i].effects;
-        temp_fp = ((temp_s0 >> 4) &
+        var_s2 = g_Player.colCeiling[i].effects;
+        temp_fp = ((var_s2 >> 4) &
                    (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)) +
                   (EFFECT_UNK_0800 | EFFECT_UNK_0002);
-        if (temp_s0 & EFFECT_UNK_0800) {
+        if (var_s2 & EFFECT_UNK_0800) {
             if (i == 2) {
-                var_a0 = EFFECT_UNK_4000;
+                var_s1 = EFFECT_UNK_4000;
                 var_a1 = g_Player.colCeiling[2].unk4;
                 temp_v1 = var_a1 + 8;
             } else {
-                var_a0 = 0;
+                var_s1 = 0;
                 var_a1 = g_Player.colCeiling[3].unkC;
                 temp_v1 = 8 - var_a1;
             }
-            if ((temp_s0 & EFFECT_UNK_4000) == var_a0) {
+            if ((var_s2 & EFFECT_UNK_4000) == var_s1) {
                 argX = var_a1 + (*xPosPtr + g_SensorsCeiling[i].x);
                 argY = *yPosPtr + g_SensorsCeiling[i].y;
                 CheckCollision(argX, argY, &collider, 0);
@@ -445,7 +444,7 @@ void CheckCeiling(void) {
                     }
                     return;
                 }
-            } else if ((temp_v1 > 0) && (temp_s0 & 1)) {
+            } else if ((temp_v1 > 0) && (var_s2 & 1)) {
                 argX = var_a1 + (*xPosPtr + g_SensorsCeiling[i].x);
                 argY = *yPosPtr + g_SensorsCeiling[i].y +
                        g_Player.colCeiling[i].unk8;
