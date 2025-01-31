@@ -22,9 +22,3 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/19AE8", func_psp_09253E20);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/19AE8", func_psp_09254120);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/19AE8", func_psp_09254288);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/19AE8", EntityBreakable);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/19AE8", func_psp_09254B18);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/19AE8", func_psp_09254C00);

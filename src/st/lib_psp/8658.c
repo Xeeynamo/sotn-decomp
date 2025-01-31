@@ -16,13 +16,3 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_092420E0);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_092422F8);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_09242880);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", EntitySoulStealOrb);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", EntityEnemyBlood);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_09243888);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", func_psp_09243920);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/8658", BlitChar);

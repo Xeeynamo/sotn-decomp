@@ -1,20 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", EntityRelicOrb);
+#include "../entity_relic_orb.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", EntityHeartDrop);
+#define HEART_DROP_CASTLE_FLAG 0x70
+#include "../entity_heart_drop.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", EntityMessageBox);
-
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", EntityBloodSplatter);
-
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", func_801C53AC);
-
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", EntityBloodyZombie);
-
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", func_us_801C9664);
-
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", func_us_801C9870);
-
-INCLUDE_ASM("st/lib/nonmatchings/e_misc_2", func_us_801CA090);
+#include "../entity_message_box.h"

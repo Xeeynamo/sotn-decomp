@@ -1,14 +1,82 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B81E8);
+extern AnimationFrame D_us_80180F8C[];
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B832C);
+void func_us_801B81E8(Entity* self) {
+    if (self->ext.et_801B81E8.unkEntity->step != 4) {
+        DestroyEntity(self);
+        return;
+    }
 
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
+        self->velocityY = FIX(-3.0 / 8.0);
+        self->velocityX = FIX(1.0 / 4.0);
+        if (self->facingLeft) {
+            self->velocityX = FIX(-0.25);
+        }
+        self->unk5A = 0x20;
+        self->palette = PAL_OVL(0x19F);
+        self->anim = &D_us_80180F8C;
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+        self->facingLeft = 0;
+        self->posY.i.hi -= 16;
+        self->posX.val += self->velocityX << 5;
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    g_api.UpdateAnim(NULL, NULL);
+}
+
+extern s32 D_us_801D637C;
+
+void func_us_801B832C(s8* msg) {
+    s32 temp_v0;
+
+    g_CurrentBuffer = g_CurrentBuffer->next;
+    FntPrint(msg);
+    temp_v0 = D_us_801D637C & 4;
+    D_us_801D637C++;
+    if (temp_v0 != 0) {
+        FntPrint("\no\n");
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
+    FntFlush(-1);
+}
+
+// dead code
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B83CC);
 
 // Baby birds in the nest
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8430);
+extern AnimationFrame* D_us_80181000[];
+
+void func_us_801B8430(Entity* self) {
+    s8 index;
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+        self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                         FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
+        self->animSet = ANIMSET_OVL(1);
+        self->zPriority = PLAYER.zPriority + 4;
+        self->animFrameDuration = self->animFrameIdx = 0;
+        self->anim = D_us_80181000[g_CastleFlags[NO1_BIRD_CYCLE]];
+    }
+    g_api.UpdateAnim(NULL, NULL);
+}
 
 extern AnimationFrame D_us_80180FE0[];
 extern AnimationFrame* D_us_80181020[];
@@ -177,17 +245,117 @@ void func_us_801B84E4(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
+extern AnimationFrame D_us_80181044[];
+extern AnimationFrame D_us_80181108[];
+extern AnimationFrame D_us_8018132C[];
+
 // Triggers in the bottom room of NO1
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8B00);
+void func_us_801B8B00(Entity* self) {
+    s16 offsetX;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->flags |= FLAG_UNK_10000000;
+        self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                         FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                         FLAG_UNK_20000000 | FLAG_UNK_02000000);
+
+        if (g_CastleFlags[NO1_BIRD_CYCLE] != 8) {
+            self->step = 0xFF;
+        } else {
+            self->posY.i.hi -= 16;
+
+            offsetX = -6;
+            if (self->params) {
+                offsetX = 6;
+            }
+            self->posX.i.hi += offsetX;
+
+            self->animSet = ANIMSET_OVL(1);
+            self->zPriority = PLAYER.zPriority;
+            self->animFrameDuration = self->animFrameIdx = 0;
+            self->anim = D_us_8018132C;
+
+            if (self->params) {
+                self->animFrameIdx = 3;
+            }
+        }
+        break;
+
+    case 1:
+        if (g_Tilemap.scrollY.i.hi >= 72) {
+            if (self->params) {
+                self->ext.bird.timer = 0x300;
+            } else {
+                self->ext.bird.timer = 0x200;
+            }
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (--self->ext.bird.timer == 0) {
+            self->animFrameDuration = self->animFrameIdx = 0;
+            self->anim = D_us_80181108;
+            self->posY.i.hi -= 4;
+            g_api.PlaySfx(SFX_WING_FLAP_A);
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (self->animFrameDuration < 0) {
+            self->velocityX = FIX(-1.375);
+            self->animFrameDuration = self->animFrameIdx = 0;
+            self->anim = D_us_80181044;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        self->posX.val += self->velocityX;
+        if (self->posX.i.hi < -0x28) {
+            if (self->params) {
+                g_CastleFlags[NO1_BIRD_CYCLE] = 0;
+            }
+            self->step++;
+        }
+        break;
+
+    default:
+        self->animSet = 0;
+        break;
+    }
+
+    g_api.UpdateAnim(NULL, NULL);
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 
 // entering doppleganger's room
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
 
+extern u16 D_us_8018142C[];
+extern u16 D_us_80181440[];
+
 // Seems to be some kind of helper for the chair next to the save room
 // It spawns the table and chair sprite
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9028);
+void func_us_801B9028(Entity* self) {
+    switch (self->step) { /* irregular */
+    case 0:
+        InitializeEntity(D_us_80180A4C);
+        self->animCurFrame = self->params + 1;
+        self->zPriority = D_us_8018142C[self->params];
+        self->drawFlags = FLAG_DRAW_UNK8;
+        self->unk6C = D_us_80181440[self->params];
+        return;
+    case 1:
+        break;
+    case 2:
+#include "../../st/pad2_anim_debug.h"
+    }
+}
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
 
@@ -564,7 +732,61 @@ void func_us_801B9BE4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BA034);
+extern u16 D_us_80180A04[];
+
+void func_us_801BA034(Entity* self) {
+    Entity* entity;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A04);
+        if (g_CastleFlags[CASTLE_FLAG_17]) {
+            self->posY.i.hi = 0xC3;
+            self->step = 3;
+        }
+        break;
+    case 1:
+        self->posY.i.hi = 0xC0;
+        if (GetPlayerCollisionWith(self, 16, 7, 4) & 0xFF) {
+            self->step++;
+        }
+        break;
+    case 2:
+        GetPlayerCollisionWith(self, 16, 7, 4);
+        if (!(g_Timer & 0xF)) {
+            self->posY.i.hi++;
+        }
+        if (self->posY.i.hi > 0xC2) {
+            g_api.func_80102CD8(1);
+            g_CastleFlags[CASTLE_FLAG_17] = 1;
+            self->step++;
+        }
+        if (g_Timer % 10 == 0) {
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(6, self, entity);
+                entity->params = 0x10;
+                entity->posY.i.hi = 0xBC;
+                entity->rotZ = -0x300;
+                entity->posX.i.hi -= 11;
+                entity->drawFlags |= FLAG_DRAW_ROTZ;
+            }
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(6, self, entity);
+                entity->params = 0x10;
+                entity->posY.i.hi = 0xBC;
+                entity->rotZ = 0x300;
+                entity->posX.i.hi += 11;
+                entity->drawFlags |= FLAG_DRAW_ROTZ;
+            }
+        }
+        break;
+    case 3:
+        self->posY.i.hi = 0xC3;
+        break;
+    }
+}
 
 extern s16 D_us_80181474[][3];
 extern s16 D_us_801814B4[];
@@ -1215,4 +1437,33 @@ void func_us_801BA290(Entity* self) {
 
 // Triggers when fully zoomed in after interacting with the spyglass
 // Likely the fish function
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801BB4C0);
+extern u16 D_us_80180A34[];
+extern u8 D_us_801814E0[];
+extern s16 D_us_801814F8[];
+
+void func_us_801BB4C0(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A34);
+        self->zPriority = 0x49;
+        self->animCurFrame = 0;
+        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->rotY = self->rotX;
+        self->ext.fish.timer = D_us_801814F8[Random() & 7];
+        if (self->rotX < 0x100) {
+            self->zPriority -= 4;
+        }
+        break;
+    case 1:
+        if (!--self->ext.fish.timer) {
+            self->step++;
+            return;
+        }
+        break;
+    case 2:
+        if (!AnimateEntity(D_us_801814E0, self)) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}

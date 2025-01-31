@@ -3,7 +3,6 @@
 
 #include "../player_is_within_hitbox.h"
 
-extern u16 D_us_80180ADC[];
 extern u8 D_us_80180E94[];
 extern u8 D_us_80180E9C[];
 extern u16 D_us_80180EA4[];

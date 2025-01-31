@@ -1,8 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
-    switch (arg0) {
+static u16 D_us_80182A80[] = {0, 30, 24, 0};
+static s16 D_us_80182A88[] = {0, 30, 0, 4, 24, -4, -48, 0};
+static u8 D_us_80182A98[] = {0x40, 0x50, 0x70, 0x90};
+static u8 D_us_80182A9C[] = {
+    15, 1, 10, 2, 10, 3, 13, 4, 10, 3, 10, 2, 0, 0, 0, 0};
+static u8 D_us_80182AAC[] = {
+    40, 1,  8, 5,  8, 6,  8, 7,  8, 8, 31, 7, 3, 9, 3, 10, 2, 11, 2, 12,
+    8,  13, 8, 12, 8, 11, 8, 10, 8, 9, 8,  6, 8, 5, 8, 1,  0, 0,  0, 0};
+static u8 D_us_80182AD4[] = {
+    24, 1,  8,  5,  8,  6, 8,  7, 8,  14, 8,  15, 8,  16, 40,
+    17, 6,  18, 10, 19, 3, 20, 3, 17, 6,  21, 38, 22, 6,  17,
+    6,  15, 6,  14, 6,  7, 6,  6, 6,  5,  6,  1,  0,  0};
+static u8 D_us_80182B00[] = {
+    40, 1, 4, 5, 4, 6, 4, 7, 4, 14, 7, 25, -1, 0, 0, 0};
+static u8 D_us_80182B10[] = {7, 26, 7, 27, 7, 28, 40, 29, -1, 0, 0, 0};
+static u8 D_us_80182B1C[] = {36, 1,  4, 23, 11, 24, 6, 23, 6, 1, 0, 0,
+                             2,  36, 2, 37, 2,  38, 2, 39, 0, 0, 0, 0};
+static s32 D_us_80182B34[] = {0x1000, 0x1000, 0x3A0, 0x700, 0x780, 0x580};
+static Point16 D_us_80182B4C[] = {
+    {23, -51}, {15, -18}, {-13, -10}, {0, 3}, {16, 22}, {-16, 22}};
+static s8 D_us_80182B64[][4] = {
+    {0, 0, 0, 0},      {-47, 16, 28, 8},   {-47, 14, 28, 8},  {-47, 11, 28, 8},
+    {-47, 10, 28, 8},  {-47, 13, 28, 8},   {-56, -3, 25, 4},  {-47, -24, 28, 8},
+    {-47, -27, 28, 8}, {-35, -56, 16, 16}, {7, -62, 4, 32},   {41, -24, 16, 16},
+    {48, -11, 28, 8},  {54, 5, 25, 4},     {-13, -53, 4, 23}, {17, -46, 16, 16},
+    {38, -19, 20, 4},  {38, -29, 20, 4},   {38, -21, 20, 4},  {41, -10, 25, 4},
+    {43, -9, 25, 4}};
+static u8 D_us_80182BB8[] = {
+    0,  1,  2,  3,  4,  5,  6,  7, 8, 9,  10, 11, 12, 13, 14, 15,
+    16, 16, 16, 17, 18, 19, 20, 1, 1, 14, 14, 14, 14, 14, 0,  0};
+
+u8 func_us_801CF57C(u8 step, Primitive* prim) {
+    switch (step) {
     case 0:
         UnkPolyFunc2(prim);
         prim->tpage = 0x1A;
@@ -24,7 +55,7 @@ u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         UnkPrimHelper(prim);
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
-        arg0++;
+        step++;
         /* fallthrough */
     case 1:
         prim->next->x2 += 0x300;
@@ -32,9 +63,10 @@ u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
         if (prim->next->x2 > 0x1800) {
             prim->clut = 0x19C;
             prim->next->b3 = 0x28;
-            arg0++;
+            step++;
         }
         break;
+
     case 2:
         prim->next->x2 += 0x180;
         prim->next->y2 = prim->next->x2;
@@ -46,13 +78,14 @@ u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
             prim->v2 = prim->v3 = 0xFF;
             prim->drawMode |= DRAW_UNK_400;
             prim->next->b3 = 0x40;
-            arg0++;
+            step++;
         }
         break;
+
     case 3:
         prim->next->x2 += 0x40;
         if (prim->next->x2 > 0x2800) {
-            arg0++;
+            step++;
         }
         /* fallthrough */
     case 4:
@@ -60,27 +93,15 @@ u8 func_us_801CF57C(u8 arg0, Primitive* prim) {
         prim->next->y2 = prim->next->x2;
         prim->next->b3 -= 1;
         if (!prim->next->b3) {
-            arg0++;
+            step++;
         }
         break;
     }
     UnkPrimHelper(prim);
-    return arg0;
+    return step;
 }
 
-extern u16 D_us_80182A80[];
-extern u16 D_us_80182A88[][2];
-extern u8 D_us_80182A98[];
-extern u8 D_us_80182A9C[];
-extern u8 D_us_80182AAC[];
-extern u8 D_us_80182AD4[];
-extern u8 D_us_80182B00[];
-extern u8 D_us_80182B10[];
-extern u8 D_us_80182B1C[];
-extern s32 D_us_80182B34[];
-extern s16 D_us_80182B4C[][2];
-
-void func_us_801CF850(Entity* self) {
+void EntitySwordLord(Entity* self) {
     Collider collider;
     Entity* tempEntity;
     Primitive* prim;
@@ -117,17 +138,19 @@ void func_us_801CF850(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AAC);
+        InitializeEntity(g_EInitSwordLord);
         self->facingLeft = GetSideToPlayer() & 1;
         tempEntity = self + 1;
         DestroyEntity(tempEntity);
         CreateEntityFromEntity(E_ID_49, self, tempEntity);
         break;
+
     case 1:
         if (UnkCollisionFunc3(D_us_80182A88) & 1) {
             self->step = 2;
         }
         break;
+
     case 2:
         AnimateEntity(D_us_80182B1C, self);
         self->facingLeft = GetSideToPlayer() & 1;
@@ -143,6 +166,7 @@ void func_us_801CF850(Entity* self) {
             }
         }
         break;
+
     case 3:
         AnimateEntity(D_us_80182A9C, self);
         colRet = UnkCollisionFunc2(D_us_80182A80);
@@ -178,6 +202,7 @@ void func_us_801CF850(Entity* self) {
             }
         }
         break;
+
     case 4:
         colRet = UnkCollisionFunc2(D_us_80182A80);
         if (colRet & 0x60) {
@@ -221,6 +246,7 @@ void func_us_801CF850(Entity* self) {
             }
         }
         break;
+
     case 5:
         colRet = UnkCollisionFunc2(D_us_80182A80);
         if (colRet & 0x60) {
@@ -276,6 +302,7 @@ void func_us_801CF850(Entity* self) {
             }
         }
         break;
+
     case 6:
         switch (self->step_s) {
         case 0:
@@ -300,11 +327,12 @@ void func_us_801CF850(Entity* self) {
                 self->step_s++;
             }
             break;
+
         case 1:
             if (self->animCurFrame == 0x1D) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_ID_48, self, tempEntity);
+                    CreateEntityFromEntity(E_SWORD_LORD, self, tempEntity);
                     tempEntity->params = 0;
                     tempEntity->facingLeft = self->facingLeft;
                     tempEntity->step = 7;
@@ -312,6 +340,7 @@ void func_us_801CF850(Entity* self) {
                 }
                 self->step_s++;
             }
+
         case 2:
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
                 PlaySfxPositional(SFX_ANIME_SWORD_B);
@@ -322,7 +351,7 @@ void func_us_801CF850(Entity* self) {
                     tempEntity =
                         AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromEntity(E_ID_48, self, tempEntity);
+                        CreateEntityFromEntity(E_SWORD_LORD, self, tempEntity);
                         tempEntity->params = i + 1;
                         tempEntity->facingLeft = self->facingLeft;
                         tempEntity->step = 7;
@@ -334,6 +363,7 @@ void func_us_801CF850(Entity* self) {
                 self->step_s++;
             }
             break;
+
         case 3:
             if (!--self->ext.et_801CF850.unk7C) {
                 PlaySfxPositional(SFX_FM_MULTI_EXPLODE);
@@ -350,8 +380,9 @@ void func_us_801CF850(Entity* self) {
             }
         }
         break;
+
     case 7:
-        InitializeEntity(D_us_80180AAC);
+        InitializeEntity(g_EInitSwordLord);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 0x1E;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -361,17 +392,18 @@ void func_us_801CF850(Entity* self) {
         self->zPriority--;
         self->unk6C = 0xA0;
         break;
+
     case 8:
         MoveEntity();
         self->velocityY += self->ext.et_801CF850.unk80;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         if (self->facingLeft) {
-            posX += D_us_80182B4C[self->params][0];
+            posX += D_us_80182B4C[self->params].x;
         } else {
-            posX -= D_us_80182B4C[self->params][0];
+            posX -= D_us_80182B4C[self->params].x;
         }
-        posY += D_us_80182B4C[self->params][1];
+        posY += D_us_80182B4C[self->params].y;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (self->params < 2) {
             if (collider.effects != EFFECT_NONE) {
@@ -389,15 +421,16 @@ void func_us_801CF850(Entity* self) {
             self->step++;
         }
         break;
+
     case 9:
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         if (self->facingLeft) {
-            posX += D_us_80182B4C[self->params][0];
+            posX += D_us_80182B4C[self->params].x;
         } else {
-            posX -= D_us_80182B4C[self->params][0];
+            posX -= D_us_80182B4C[self->params].x;
         }
-        posY += D_us_80182B4C[self->params][1];
+        posY += D_us_80182B4C[self->params].y;
         if (Random() & 0xF) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
@@ -412,13 +445,11 @@ void func_us_801CF850(Entity* self) {
             DestroyEntity(self);
         }
         break;
+
     case 16:
 #include "../pad2_anim_debug.h"
     }
 }
-
-extern s8 D_us_80182B64[][4];
-extern u8 D_us_80182BB8[];
 
 void func_us_801D04B8(Entity* self) {
     s32 curFrame;
@@ -442,7 +473,7 @@ void func_us_801D04B8(Entity* self) {
     self->facingLeft = tempEntity->facingLeft;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi;
-    if (tempEntity->entityId != E_ID_48) {
+    if (tempEntity->entityId != E_SWORD_LORD) {
         DestroyEntity(self);
     }
 }

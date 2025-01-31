@@ -1,17 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern s16 D_us_80183230[];
-extern s16 D_us_80183240[];
-extern s16 D_us_80183248[];
-extern s16 D_us_80183258[];
-extern u8 D_us_80183268[];
-extern u8 D_us_80183280[];
-extern u8 D_us_80183294[];
-extern u8 D_us_8018329C[];
-extern u8 D_us_801832B4[];
-extern u8 D_us_801832C4[];
-extern u8 D_us_801832E8[];
+static s16 D_us_80183230[] = {0, 24, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80183240[] = {0, 24, 8, 0};
+static s16 D_us_80183248[] = {6, 8, 16, 0, 7, 11, 4, 6};
+static s16 D_us_80183258[] = {-16, -8, -4, -8, 6, 3, 16, 12};
+static u8 D_us_80183268[] = {
+    13, 1, 6, 2, 6, 3, 6, 4, 6, 5, 13, 6, 6, 5, 6, 4, 6, 3, 6, 2, 6, 1, 0, 0};
+static u8 D_us_80183280[] = {
+    4, 7, 35, 8, 2, 9, 4, 10, 4, 11, 67, 12, 3, 11, 3, 10, -1, 0, 0, 0};
+static u8 D_us_80183294[] = {35, 1, 67, 13, 1, 1, -1, 0};
+static u8 D_us_8018329C[] = {18, 15, 9, 16, 9, 17, 9, 18, 9, 19, 18, 20,
+                             9,  19, 9, 18, 9, 17, 9, 16, 0, 0,  0,  0};
+static u8 D_us_801832B4[] = {
+    4, 15, 8, 21, 6, 22, 6, 23, 48, 24, 4, 23, -1, 0, 0, 0};
+static u8 D_us_801832C4[] = {
+    3,  27, 3, 28, 3, 27, 2, 28, 2, 27, 2, 28, 1, 27, 1, 28, 1,  27,
+    14, 28, 5, 29, 5, 30, 5, 31, 5, 32, 5, 33, 5, 34, 5, 35, -1, 0};
+static u8 D_us_801832E8[] = {
+    2, 1, 2, 38, 4, 37, 5, 36, 15, 25, 3, 36, 3, 37, 2, 38, 2, 1, 0, 0};
+static Point16 D_us_801832FC[] = {{0, 0}, {-2, 2}, {-6, 4}, {-8, 4}, {9, 2}};
+static Point16 D_us_80183310[] = {
+    {0, 0}, {17, 21}, {20, 20}, {20, 20}, {12, 23}};
+static u8 D_us_80183324[] = {2, 40, 2, 41, 2, 42, 0, 0};
+static s16 D_us_8018332C[] = {0, 16, 0, 4, 8, -4, -16, 0};
+static s16 D_us_8018333C[] = {0, 8, 12, 8, 0, -8, -12, -8};
+static s32 D_us_8018334C[] = {FIX(2.0), FIX(3.0 / 4), FIX(-1.0), FIX(-7.5 / 4)};
+static s32 D_us_8018335C[] = {FIX(-2.25), FIX(-3.25), FIX(-2.75), FIX(-2.0)};
+static u16 D_us_8018336C[] = {0x2B, 0x2C, 0x2D, 0x2E};
+static u16 D_us_80183374[] = {0x38, 0x45, 0x3C, 0x34};
+static s16 D_us_8018337C[] = {0, 4, 0, 4, 8, -4, -16, 0};
+static s16 D_us_8018338C[] = {0, 12, 0, 4, 8, -4, -16, 0};
+static s16 D_us_8018339C[] = {0, 8, 0, 4, 8, -4, -16, 0};
+static s16 D_us_801833AC[] = {0, 16, 0, 4, 8, -4, -16, 0};
+static s16* D_us_801833BC[] = {
+    D_us_8018337C, D_us_8018338C, D_us_8018339C, D_us_801833AC, NULL};
 
 void EntitySkeletonApe(Entity* self) {
     Entity* tempEntity;
@@ -25,7 +48,7 @@ void EntitySkeletonApe(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180B24);
+        InitializeEntity(g_EInitSkeletonApe);
         if (self->params == 2) {
             self->flags |= FLAG_UNK_2000;
         }
@@ -35,7 +58,8 @@ void EntitySkeletonApe(Entity* self) {
         if (self->params) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_55, tempEntity);
+                CreateEntityFromCurrentEntity(
+                    E_SKELETON_APE_BARREL, tempEntity);
                 tempEntity->ext.skeletonApe.unkEntity = self;
                 tempEntity->zPriority = self->zPriority - 1;
                 self->ext.skeletonApe.unkEntity = tempEntity;
@@ -171,9 +195,6 @@ void EntitySkeletonApe(Entity* self) {
 }
 
 // Skeleton Ape punch attack
-extern Point16 D_us_801832FC[];
-extern Point16 D_us_80183310[];
-
 void func_us_801D4F18(Entity* self) {
     Entity* parent;
     u16 animCurFrame;
@@ -197,7 +218,7 @@ void func_us_801D4F18(Entity* self) {
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;
 
-    if (parent->entityId != E_ID_53) {
+    if (parent->entityId != E_SKELETON_APE) {
         DestroyEntity(self);
     }
 }
@@ -216,10 +237,6 @@ void func_us_801D5008(Entity* self, Entity* parent) {
 }
 
 // Skeleton Ape barrel
-extern u8 D_us_80183324[];
-extern s16 D_us_8018332C[];
-extern s16 D_us_8018333C[];
-
 void EntitySkeletonApeBarrel(Entity* self) {
     s16 i;
     Collider collider;
@@ -238,7 +255,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
         if (entity->step == 7) {
             SetStep(4);
         } else {
-            if (entity->entityId != E_ID_53) {
+            if (entity->entityId != E_SKELETON_APE) {
                 DestroyEntity(self);
                 return;
             }
@@ -363,18 +380,12 @@ void EntitySkeletonApeBarrel(Entity* self) {
 }
 
 // Skeleton Ape barrel explosion
-extern s32 D_us_8018334C[];
-extern s32 D_us_8018335C[];
-extern u16 D_us_8018336C[];
-extern u16 D_us_80183374[];
-extern s16* D_us_801833BC[];
-
 void func_us_801D544C(Entity* self) {
     Collider collider;
     s16 x, y;
     s16 params;
     s32 velocityY;
-    s32 posX;
+    s32 velocityX;
 
     switch (self->step) {
     case 0:
@@ -385,10 +396,10 @@ void func_us_801D544C(Entity* self) {
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_2000;
         self->hitboxState = 0;
         params = self->params;
-        posX = D_us_8018334C[params];
-        self->ext.skeletonApeBarrel.unk80 = posX;
+        velocityX = D_us_8018334C[params];
+        self->ext.skeletonApeBarrel.unk80 = velocityX;
         if (self->facingLeft != 0) {
-            self->ext.skeletonApeBarrel.unk80 = -posX;
+            self->ext.skeletonApeBarrel.unk80 = -velocityX;
         }
         self->ext.skeletonApeBarrel.unk80 += self->velocityX;
         self->velocityY = D_us_8018335C[params];

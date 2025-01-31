@@ -37,6 +37,7 @@ extern u16 g_EInitObtainable[];
 extern u16 msgBoxTpage[0x600];
 
 void BlinkItem(Entity* entity, u16 blinkFlag);
+// params: (& 0x7FFF) Relic ID
 void EntityRelicOrb(Entity* self) {
 #if STAGE == STAGE_ST0
     const int PrimCount = 3;

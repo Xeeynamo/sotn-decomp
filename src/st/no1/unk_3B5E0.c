@@ -1,17 +1,111 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// Called by elevator doors
-INCLUDE_ASM("st/no1/nonmatchings/unk_3B5E0", func_us_801BB5E0);
-
-// Called by elevator doors
-INCLUDE_ASM("st/no1/nonmatchings/unk_3B5E0", func_us_801BB7B8);
-
-extern s16 D_us_80181508[][3];
-extern s16 D_us_8018151C[][3];
-extern u8 D_us_80181540[];
+static s16 D_us_80181508[][3] = {
+    {0x1845, 0x1875, 0x18A5}, {0x1245, 0x1275, 0x12A5}, {0x945, 0x975, 0x9A5}};
+static s16 D_us_8018151C[][3] = {
+    {0x554, 0x555, 0x554}, {0x554, 0x555, 0x554}, {0x552, 0x553, 0x552},
+    {0x09A, 0x094, 0x09A}, {0x09A, 0x094, 0x09A}, {0x05B, 0x060, 0x05B}};
 
 extern s32 D_psp_08C62AA4;
+
+// Called by elevator doors
+void func_us_801BB5E0(void) {
+    Primitive* prim;
+    s16 yMin, yMax;
+
+    prim = g_CurrentEntity->ext.et_801BBD90.unk7C;
+    yMax = g_CurrentEntity->posY.i.hi + 10;
+    prim->y0 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y2 >= yMax) {
+        if (g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 0;
+        }
+        prim->y2 = yMax;
+    } else {
+        if (!g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 1;
+            PlaySfxPositional(0x7B1);
+        }
+        prim->y2++;
+    }
+    prim->v0 = prim->v2 - (prim->y2 - prim->y0);
+    yMax = g_CurrentEntity->posY.i.hi - 4;
+    prim->y1 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y3 >= yMax) {
+        prim->y3 = yMax;
+    } else {
+        prim->y3++;
+    }
+    prim->v1 = prim->v3 - (prim->y3 - prim->y1);
+
+    prim = prim->next;
+    yMin = g_CurrentEntity->posY.i.hi + 10;
+    prim->y2 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y0 <= yMin) {
+        prim->y0 = yMin;
+    } else {
+        prim->y0--;
+    }
+    prim->v2 = prim->v0 + (prim->y2 - prim->y0);
+    yMin = g_CurrentEntity->posY.i.hi - 4;
+    prim->y3 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y1 <= yMin) {
+        prim->y1 = yMin;
+    } else {
+        prim->y1--;
+    }
+    prim->v3 = prim->v1 + (prim->y3 - prim->y1);
+}
+
+// Called by elevator doors
+void func_us_801BB7B8(void) {
+    Primitive* prim;
+    s16 yMin, yMax;
+
+    prim = g_CurrentEntity->ext.et_801BBD90.unk7C;
+    yMin = g_CurrentEntity->posY.i.hi - 10;
+    prim->y0 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y2 <= yMin) {
+        if (g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 0;
+        }
+        prim->y2 = yMin;
+    } else {
+        if (!g_CurrentEntity->ext.et_801BBD90.unk95) {
+            g_CurrentEntity->ext.et_801BBD90.unk95 = 1;
+            PlaySfxPositional(0x7B1);
+        }
+        prim->y2--;
+    }
+    prim->v0 = prim->v2 - (prim->y2 - prim->y0);
+    yMin = g_CurrentEntity->posY.i.hi - 24;
+    prim->y1 = g_CurrentEntity->posY.i.hi - 24;
+    if (prim->y3 <= yMin) {
+        prim->y3 = yMin;
+    } else {
+        prim->y3--;
+    }
+    prim->v1 = prim->v3 - (prim->y3 - prim->y1);
+
+    prim = prim->next;
+    yMax = g_CurrentEntity->posY.i.hi + 24;
+    prim->y2 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y0 >= yMax) {
+        prim->y0 = yMax;
+    } else {
+        prim->y0++;
+    }
+    prim->v2 = prim->v0 + (prim->y2 - prim->y0);
+    yMax = g_CurrentEntity->posY.i.hi + 10;
+    prim->y3 = g_CurrentEntity->posY.i.hi + 24;
+    if (prim->y1 >= yMax) {
+        prim->y1 = yMax;
+    } else {
+        prim->y1++;
+    }
+    prim->v3 = prim->v1 + (prim->y3 - prim->y1);
+}
 
 // Elevator doors
 void func_us_801BB984(Entity* self) {
@@ -157,7 +251,7 @@ void func_us_801BBD90(Entity* self) {
     RECT unused;
     u8 padding[4];
 
-    unused = (RECT){.x = 0xf0, .y = 0xc0, .w = 0x10, .h = 0x10};
+    unused = (RECT){.x = 0xF0, .y = 0xC0, .w = 0x10, .h = 0x10};
     tempEntity = self - 1;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi - 0x22;
@@ -413,154 +507,3 @@ void func_us_801BBD90(Entity* self) {
 }
 
 STATIC_PAD_RODATA(4);
-
-void func_us_801BC598(Primitive* prim) {
-    Primitive* otherPrim;
-    u8 tempVar;
-
-    switch (prim->next->u2) {
-    case 0:
-        prim->tpage = 0x1A;
-        prim->clut = 0x1B0;
-        prim->u0 = 0x70;
-        prim->u1 = 0x7F;
-        prim->u2 = prim->u1;
-        prim->u3 = prim->u2;
-        prim->v0 = 0x20;
-        prim->v1 = prim->v0;
-        prim->v2 = 0x2F;
-        prim->v3 = prim->v2;
-        prim->next->b3 = 0x80;
-        if (prim->next->r3 & 0x10) {
-            if (prim->next->r3 & 1) {
-                LOH(prim->next->tpage) = 0xA00;
-            } else {
-                LOH(prim->next->tpage) = 0x600;
-            }
-        } else {
-            if (prim->next->r3 & 1) {
-                LOH(prim->next->tpage) = -0x100;
-            } else {
-                LOH(prim->next->tpage) = 0x100;
-            }
-        }
-        LOH(prim->next->r2) = 0xE;
-        LOH(prim->next->b2) = 0x10;
-        prim->priority = 0xF0;
-        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        prim->next->x3 = 0x10;
-        prim->next->u2 = 1;
-        /* fallthrough */
-    case 1:
-        if (prim->next->r3 & 1) {
-            prim->next->x1 = g_CurrentEntity->posX.i.hi - 0xC;
-        } else {
-            prim->next->x1 = g_CurrentEntity->posX.i.hi + 0xC;
-        }
-        if (prim->next->r3 & 0x10) {
-            prim->next->y0 = g_CurrentEntity->posY.i.hi - 0x25;
-        } else {
-            prim->next->y0 = g_CurrentEntity->posY.i.hi + 0x23;
-        }
-        UpdateAnimation(D_us_80181540, prim);
-        UnkPrimHelper(prim);
-        if (Random() % 8 == 0) {
-            otherPrim = g_CurrentEntity->ext.et_801BBD90.unk7C;
-            otherPrim = FindFirstUnkPrim2(otherPrim, 2);
-            if (otherPrim != NULL) {
-                UnkPolyFunc2(otherPrim);
-                otherPrim->x0 = prim->next->x1;
-                otherPrim->y0 = prim->next->y0;
-                otherPrim->g1 = (Random() & 1) + 1;
-                otherPrim->g2 = (Random() & 3) + 1;
-                otherPrim->next->u2 = 4;
-                otherPrim->next->r3 = prim->next->r3;
-            }
-        }
-        prim->next->x3--;
-        if (!prim->next->x3) {
-            prim->next->u2 = 0;
-            prim->p1 = 0;
-            prim->p2 = 0;
-            UnkPolyFunc0(prim);
-        }
-        break;
-
-    case 4:
-        prim->type = PRIM_TILE;
-        prim->u0 = 1;
-        prim->v0 = 1;
-        prim->b0 = 0xC0;
-        prim->r0 = 0x40;
-        prim->g0 = 0x40;
-        prim->priority = 0xC0;
-        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        prim->next->x3 = 0x20;
-        prim->next->u2 = 5;
-        /* fallthrough */
-    case 5:
-        if (prim->next->r3 & 0x10) {
-            prim->y0 -= prim->g1;
-        } else {
-            prim->y0 += prim->g1;
-        }
-        tempVar = prim->g2;
-        if (g_Timer % tempVar == 0) {
-            if (prim->next->r3 & 1) {
-                prim->x0++;
-            } else {
-                prim->x0--;
-            }
-        }
-        prim->next->x3--;
-        if (!prim->next->x3) {
-            prim->type = PRIM_GT4;
-            prim->next->u2 = 0;
-            UnkPolyFunc0(prim);
-        }
-        break;
-    }
-}
-
-void func_us_801BC9A8(Primitive* prim) {
-    s16 posY;
-
-    switch (prim->next->u2) {
-    case 0:
-        prim->tpage = 0xE;
-        prim->clut = 0x4A;
-        prim->u0 = 0xD0;
-        prim->u1 = prim->u0 + 0x1F;
-        prim->u2 = prim->u0;
-        prim->u3 = prim->u1;
-        prim->v0 = 0xC0;
-        prim->v1 = prim->v0;
-        prim->v2 = prim->v0 + 0xF;
-        prim->v3 = prim->v2;
-        prim->priority = 0x70;
-        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        LOH(prim->next->r2) = 0x20;
-        LOH(prim->next->b2) = 0x10;
-        prim->next->b3 = 0x30;
-        prim->next->u2 = 1;
-        /* fallthrough */
-    case 1:
-        prim->next->x1 = g_CurrentEntity->posX.i.hi;
-        prim->next->y0 = g_CurrentEntity->posY.i.hi + 0x24;
-        UnkPrimHelper(prim);
-        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        if (!g_CurrentEntity->velocityY || g_Timer % 2) {
-            prim->drawMode =
-                DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        } else {
-            prim->drawMode = DRAW_HIDE;
-        }
-        posY = g_Tilemap.scrollY.i.hi + prim->y2;
-        if (posY > 0x810) {
-            prim->drawMode = DRAW_HIDE;
-        }
-        if (posY > 0x610 && posY < 0x650) {
-            prim->drawMode = DRAW_HIDE;
-        }
-    }
-}

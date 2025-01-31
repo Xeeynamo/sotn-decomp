@@ -17,6 +17,22 @@ files:
           - [0x1300, skip]
           - [0x13F0, cutscene, cutscene_data]
           - [0x1658, skip]
+  - target: disks/us/ST/CHI/CHI.BIN
+    asset_path: assets/st/chi
+    src_path: src/st/chi
+    splat_config_path: config/splat.us.stchi.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, paldef, palette_def]
+          - [0xE8, layers, layers]
+          - [0x298, gfx_banks, graphics_banks]
+          - [0x3B4, layout, entity_layouts]
+          - [0x55C, skip]
+          - [0x195C, rooms, rooms]
+          - [0x19F8, skip]
   - target: disks/us/ST/DRE/DRE.BIN
     asset_path: assets/st/dre
     src_path: src/st/dre

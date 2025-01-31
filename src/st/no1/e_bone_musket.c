@@ -1,21 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern s16 D_us_80182998[];
-extern s16 D_us_801829A8[];
-extern u8 D_us_801829B0[];
-extern u8 D_us_801829C8[];
-extern u8 D_us_801829E0[];
-extern u8 D_us_80182A24[];
-extern u8 D_us_80182A2C[];
-extern u8 D_us_80182A38[];
-extern s16 D_80182A4C[];
-extern s32 D_us_80182A54[];
-extern u8 D_us_80182A60[][2];
-extern s16 D_us_80182A68[];
+static s16 D_us_80182998[] = {0, 16, 0, 4, 8, -4, -16, 0};
+static s16 D_us_801829A8[] = {0, 16, 12, 0};
+static u8 D_us_801829B0[] = {2, 8, 2, 9, 2, 10, 12, 11, 20, 12, 1,  2,
+                             1, 3, 1, 4, 1, 5,  6,  6,  4,  7,  -1, 0};
+static u8 D_us_801829C8[] = {2, 10, 12, 11, 20, 12, 1, 2, 1,  3, 1, 4,
+                             1, 5,  12, 6,  8,  7,  4, 1, -1, 0, 0, 0};
+static u8 D_us_801829E0[] = {
+    4,  7,  9,  6,  10, 13, 2,  14, 1,  15, 1,  16, 1,  17, 1,  18, 1,
+    19, 1,  20, 1,  19, 1,  18, 2,  17, 1,  18, 1,  19, 1,  20, 2,  19,
+    18, 20, 5,  6,  5,  7,  5,  1,  20, 23, 5,  22, 7,  21, 5,  22, 10,
+    23, 5,  22, 20, 21, 7,  1,  2,  7,  2,  6,  2,  1,  -1, 0,  0,  0};
+static u8 D_us_80182A24[] = {10, 1, 6, 27, 4, 26, -1, 0};
+static u8 D_us_80182A2C[] = {5, 26, 8, 25, 10, 24, 8, 25, 5, 26, 0, 0};
+static u8 D_us_80182A38[] = {8, 26, 4, 27, 1, 1, -1, 0};
+static u8 D_us_80182A40[] = {1, 28, 1, 29, 1, 30, 1, 0, -1, 0, 0, 0};
+static s16 D_us_80182A4C[] = {0, 20, 40, 0};
+static s32 D_us_80182A54[] = {1, 1, -2};
+static u8 D_us_80182A60[][2] = {{3, 1}, {7, 0}, {5, 1}, {0, 0}};
+static s16 D_us_80182A68[] = {0, 1, 8, 15, -3, -8, 6, 23, -1, -3, 7, 18};
 
-// Bone musket
-void func_us_801CEB28(Entity* self) {
+void EntityBoneMusket(Entity* self) {
     Entity* tempEntity;
     s32 i;
     s32 posX;
@@ -26,7 +32,7 @@ void func_us_801CEB28(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A94);
+        InitializeEntity(g_EInitBoneMusket);
         if (self->params & 0x100) {
             self->facingLeft = 1;
             self->params &= 0xFF;
@@ -42,12 +48,12 @@ void func_us_801CEB28(Entity* self) {
         if (UnkCollisionFunc3(D_us_80182998) & 1) {
             if (!self->params) {
                 for (tempEntity = self + 1, i = 1; i < 3; i++, tempEntity++) {
-                    CreateEntityFromEntity(E_ID_46, self, tempEntity);
+                    CreateEntityFromEntity(E_BONE_MUSKET, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
-                        tempEntity->posX.i.hi -= D_80182A4C[i];
+                        tempEntity->posX.i.hi -= D_us_80182A4C[i];
                     } else {
-                        tempEntity->posX.i.hi += D_80182A4C[i];
+                        tempEntity->posX.i.hi += D_us_80182A4C[i];
                     }
                     tempEntity->params = i;
                 }
@@ -111,6 +117,7 @@ void func_us_801CEB28(Entity* self) {
             break;
         }
         break;
+
     case 4:
         if (!self->step_s) {
             if (self->facingLeft) {
@@ -143,6 +150,7 @@ void func_us_801CEB28(Entity* self) {
             SetStep(5);
         }
         break;
+
     case 6:
         if (!self->step_s) {
             if (self->facingLeft) {
@@ -179,6 +187,7 @@ void func_us_801CEB28(Entity* self) {
             }
         }
         break;
+
     case 5:
         switch (self->step_s) {
         case 0:
@@ -204,6 +213,7 @@ void func_us_801CEB28(Entity* self) {
             break;
         }
         break;
+
     case 7:
         if (self->ext.et_801CEB28.unk8C) {
             self->ext.et_801CEB28.unk8C = 0;
@@ -211,6 +221,7 @@ void func_us_801CEB28(Entity* self) {
             self->ext.et_801CEB28.unk8D = 1;
         }
         break;
+
     case 8:
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_A);
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -222,9 +233,10 @@ void func_us_801CEB28(Entity* self) {
         self->hitboxState = 0;
         SetStep(9);
         break;
+
     case 9:
         tempEntity = self->ext.et_801CEB28.unk88;
-        if ((tempEntity->entityId != E_ID_46) ||
+        if ((tempEntity->entityId != E_BONE_MUSKET) ||
             (tempEntity->flags & FLAG_DEAD)) {
             DestroyEntity(self);
             return;
@@ -244,8 +256,6 @@ void func_us_801CEB28(Entity* self) {
     self->hitboxWidth = *hitboxPtr++;
     self->hitboxHeight = *hitboxPtr++;
 }
-
-extern u8 D_us_80182A40[];
 
 // Bone musket projectile?
 void func_us_801CF298(Entity* self) {

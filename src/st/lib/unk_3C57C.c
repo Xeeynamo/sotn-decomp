@@ -37,6 +37,7 @@ extern s32 D_psp_092A5668;
 extern s32 D_psp_092A5670;
 extern s32 D_psp_092A5678;
 
+// Lesser Demon
 void func_us_801BDAE4(Entity* self) {
     Collider collider;
     Entity* tempEntity;

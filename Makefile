@@ -144,7 +144,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen dre lib mad no0 no1 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
+build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
 build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -211,6 +211,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
@@ -290,6 +291,12 @@ $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_CEN.BIN:
 	$(GFXSTAGE) e assets/st/cen $@
+
+chi: $(BUILD_DIR)/CHI.BIN $(BUILD_DIR)/F_CHI.BIN
+$(BUILD_DIR)/CHI.BIN: $(BUILD_DIR)/stchi.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_CHI.BIN:
+	$(GFXSTAGE) e assets/st/chi $@
 
 dre: $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
@@ -484,6 +491,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stno0.elf > config/symbols.us.stno0.txt
@@ -517,6 +525,8 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
 	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
 	cp $(BUILD_DIR)/F_CEN.BIN $(DISK_DIR)/ST/CEN/F_CEN.BIN
+	cp $(BUILD_DIR)/CHI.BIN $(DISK_DIR)/ST/CHI/CHI.BIN
+	cp $(BUILD_DIR)/F_CHI.BIN $(DISK_DIR)/ST/CHI/F_CHI.BIN
 	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
 	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
 	cp $(BUILD_DIR)/LIB.BIN $(DISK_DIR)/ST/LIB/LIB.BIN
@@ -666,7 +676,7 @@ include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
 .PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, dre, lib, mad, no0, no1, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
+.PHONY: main, dra, ric, cen, chi, dre, lib, mad, no0, no1, no3, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: update-dependencies python-dendencies

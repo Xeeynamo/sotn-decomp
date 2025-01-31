@@ -259,7 +259,8 @@ typedef enum {
     FLAG_DRAW_ROTX = 0x01,
     FLAG_DRAW_ROTY = 0x02,
     FLAG_DRAW_ROTZ = 0x04,
-    FLAG_DRAW_UNK8 = 0x08,
+    FLAG_DRAW_UNK8 = 0x08, // Salem Witch uses this for shadows
+                           // Looks like semi-transparency?
     FLAG_DRAW_UNK10 = 0x10,
     FLAG_DRAW_UNK20 = 0x20,
     FLAG_DRAW_UNK40 = 0x40,
@@ -298,7 +299,7 @@ typedef enum {
     FLAG_UNK_02000000 = 0x02000000,
     FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000,
     FLAG_POS_CAMERA_LOCKED = 0x08000000,
-    FLAG_UNK_10000000 = 0x10000000,
+    FLAG_UNK_10000000 = 0x10000000, // CHI func_801A169C: "Is Airborne"?
     FLAG_UNK_20000000 = 0x20000000,
     FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
     FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
@@ -871,7 +872,8 @@ typedef struct Entity {
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;
-    /* 0x6C */ u8 unk6C;
+    /* 0x6C */ u8 unk6C; // Salem Witch: timer to destroy its shadows.
+                         // Thornweed: timer before spawning death explosion
     /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
@@ -885,7 +887,7 @@ typedef struct {
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
-    /* 0x0C */ u32 unkC;
+    /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit; // size = 0x14
 
@@ -897,7 +899,7 @@ typedef struct { // only difference from above is this one uses a facingLeft
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
-    /* 0x0C */ u32 unkC;
+    /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit2; // size = 0x14
 
@@ -1347,11 +1349,11 @@ typedef struct Collider {
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-} Collider; /* size=0x24 */
+    /* 0x14 */ s32 unk14; // Left edge of queried tile collision
+    /* 0x18 */ s32 unk18; // Top edge of queried tile collision
+    /* 0x1C */ s32 unk1C; // Right edge of queried tile collision
+    /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
+} Collider;               /* size=0x24 */
 
 typedef struct XaMusicConfig {
     u32 cd_addr;

@@ -76,7 +76,7 @@ typedef struct Primitive {
     /* 0x28 */ u8 r3;
     /* 0x29 */ u8 g3;
     /* 0x2A */ u8 b3;
-    /* 0x2B */ u8 p3; // TODO not verified
+    /* 0x2B */ u8 p3; // TODO not verified (CHI uses this like a "step" value)
     /* 0x2C */ s16 x3;
     /* 0x2E */ s16 y3;
     /* 0x30 */ u8 u3; // TODO not verified
