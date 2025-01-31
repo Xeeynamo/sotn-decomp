@@ -231,9 +231,9 @@ void EntityTeleport(Entity* self) {
     }
 }
 
-// Entity #66. Made by final blueprint, #122. Created in func_801120B4.
-void func_80124A8C(Entity* self) {
-    if (PLAYER.step != Player_Stand || PLAYER.step_s != 4) {
+// Entity #66. Made by final blueprint, #122. Created in PlayerStepStand.
+void EntityPlayerSleepZ(Entity* self) {
+    if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_ChairSit) {
         DestroyEntity(self);
         return;
     }

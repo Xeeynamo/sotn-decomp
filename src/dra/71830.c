@@ -221,7 +221,7 @@ bool func_8011203C(void) {
     return false;
 }
 
-void func_801120B4(void) {
+void PlayerStepStand(void) {
     s32 x_offset;
     u16 local_flags = 3;
     s32 atLedge;
@@ -261,9 +261,9 @@ void func_801120B4(void) {
         }
     }
     switch (PLAYER.step_s) {
-    case 0:
+    case Player_Stand_0:
         break;
-    case 1:
+    case Player_Stand_1:
         local_flags = 1;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
@@ -291,7 +291,7 @@ void func_801120B4(void) {
             local_flags = 5;
         }
         break;
-    case 2:
+    case Player_Stand_2:
         switch (PLAYER.ext.player.anim) {
         case 10:
         case 11:
@@ -306,7 +306,7 @@ void func_801120B4(void) {
             }
         }
         break;
-    case 0x3:
+    case Player_Stand_3:
         local_flags = 0;
         if (((u16)PLAYER.animFrameIdx >= 4U) ||
             (PLAYER.ext.player.anim == 0xE)) {
@@ -317,7 +317,7 @@ void func_801120B4(void) {
             local_flags = 7;
         }
         break;
-    case 0x4:
+    case Player_Stand_ChairSit:
         if (PLAYER.ext.player.anim == 0xF2 && --D_800ACF78 == 0) {
             if (g_StageId == STAGE_NO1) {
                 PlaySfx(0x7AD);

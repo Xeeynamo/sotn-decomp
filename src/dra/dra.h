@@ -649,7 +649,7 @@ void func_8011A4C8(Entity* self);
 void EntitySummonSpirit(Entity* self);
 void func_80123F78(Entity* self);
 void EntityTeleport(Entity* self);
-void func_80124A8C(Entity* self);
+void EntityPlayerSleepZ(Entity* self);
 void func_8011A4C8(Entity* self);
 
 // commented as a requirement for UpdateCd to match

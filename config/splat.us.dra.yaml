@@ -198,7 +198,7 @@ segments:
       # - [0x413A0, .rodata, 704D0] # func_8011151C
       - [0x413C0, .rodata, 71830] # func_80111830
       # - [0x41400, .rodata, 71830] # func_801119C4
-      - [0x41410, .rodata, 71830] # func_801120B4
+      - [0x41410, .rodata, 71830] # PlayerStepStand
       - [0x41588, .rodata, 72BB0] # PlayerStepJump
       # - [0x41750, .rodata, 72BB0] # func_801131C4
       # - [0x418E0, .rodata, 72BB0] # func_80113AAC
