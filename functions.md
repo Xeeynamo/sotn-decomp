@@ -706,7 +706,7 @@
 | wrp    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | dra    | func_psp_09141AA0                   |      105 |         15 |        |                                 |       |
 | dra    | func_80110394                       |      106 |         11 |        |                                 |       |
-| dra    | func_psp_09136620                   |      106 |         12 |        |                                 |       |
+| dra    | func_psp_09136620                   |      106 |         12 |        | https://decomp.me/scratch/Mt7Hx | 0.997 |
 | lib    | PrizeDropFall2                      |      106 |         16 |        |                                 |       |
 | st0    | PrizeDropFall2                      |      106 |         16 |        |                                 |       |
 | wrp    | PrizeDropFall2                      |      106 |         16 |        |                                 |       |
@@ -895,15 +895,15 @@
 | dra    | func_psp_090FCEE0                   |      247 |         31 |        |                                 |       |
 | dra    | func_psp_091107E8                   |      250 |         34 |        |                                 |       |
 | dra    | func_psp_09111648                   |      252 |         38 |        |                                 |       |
-| dra    | func_psp_09119950                   |      254 |         34 |        | https://decomp.me/scratch/xgpZh | 0.995 |
+| dra    | CheckWallRight                      |      254 |         34 |        |                                 |       |
 | dra    | func_psp_09126E60                   |      255 |         29 |        |                                 |       |
 | dra    | func_psp_090EEA88                   |      256 |         24 | Yes    |                                 |       |
-| dra    | func_psp_09119D00                   |      256 |         34 |        | https://decomp.me/scratch/QRVI1 | 0.995 |
+| dra    | CheckWallLeft                       |      256 |         34 |        |                                 |       |
 |        | FindValidTarget                     |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
 | dra    | func_psp_090F6430                   |      258 |         36 |        |                                 |       |
 | st0    | func_801A8328                       |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
 | lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
-| dra    | func_psp_09118408                   |      264 |         28 |        | https://decomp.me/scratch/yGc0z | 0.985 |
+| dra    | func_8010BFFC                       |      264 |         28 |        |                                 |       |
 | st0    | func_801A805C                       |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
 | lib    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
@@ -1025,7 +1025,7 @@
 | dra    | func_psp_09139B50                   |      564 |         35 |        | https://decomp.me/scratch/tmILF | 0.998 |
 | dra    | func_psp_0910A198                   |      565 |        106 |        | https://decomp.me/scratch/IXTZU | 0.986 |
 | dra    | RenderTilemap                       |      570 |         35 |        |                                 |       |
-| dra    | func_psp_091190E0                   |      573 |         58 |        | https://decomp.me/scratch/5MNdo | 0.966 |
+| dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
 | lib    | func_psp_09240860                   |      580 |         75 | Yes    |                                 |       |
 | dra    | func_psp_0911D490                   |      582 |         49 | Yes    |                                 |       |
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
@@ -1034,7 +1034,7 @@
 | dra    | func_psp_090DDEE8                   |      609 |         40 |        |                                 |       |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
 | dra    | func_psp_09128B00                   |      609 |         64 |        |                                 |       |
-| dra    | func_psp_091187D8                   |      611 |         62 |        | https://decomp.me/scratch/em5LE | 0.987 |
+| dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
 | st0    | EntityEquipItemDrop                 |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | func_psp_090FFB28                   |      618 |         43 |        | https://decomp.me/scratch/18Dbq | 0.999 |
 | dra    | func_800EB758                       |      619 |         30 |        |                                 |       |
