@@ -334,7 +334,7 @@ void CheckCeiling(void) {
                 collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
             }
             var_s1 = collider.effects;
-            if (!(var_s1 & 1)) {
+            if (!(var_s1 & EFFECT_SOLID)) {
                 if ((g_Player.colCeiling[i].effects != EFFECT_SOLID) ||
                     (PLAYER.velocityY <= 0)) {
                     *vram_ptr |= 2;
