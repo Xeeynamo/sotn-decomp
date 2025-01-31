@@ -297,7 +297,6 @@ void CheckCeiling(void) {
     s16 argX;
     s16 argY;
 
-
     s32 i = 1;
 
     s16* yPosPtr = &PLAYER.posY.i.hi;
@@ -316,7 +315,7 @@ void CheckCeiling(void) {
             collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
         }
         var_s2 = g_Player.colCeiling[i].effects &
-                  (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+                 (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
         if ((var_s2 == EFFECT_SOLID) || (var_s2 & EFFECT_UNK_8000)) {
             if ((g_Player.status &
                  (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) &&
@@ -353,24 +352,22 @@ void CheckCeiling(void) {
                 }
                 continue;
             }
-            if ((var_s1 &
-                 (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
+            if ((var_s1 & (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
                 (EFFECT_UNK_0800 | EFFECT_SOLID)) {
                 if (i < 2) {
-                    *vram_ptr |= (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
-                                  ((var_s1 >> 4) &
-                                   (EFFECT_UNK_0400 | EFFECT_UNK_0200 |
-                                    EFFECT_UNK_0100)));
+                    *vram_ptr |=
+                        (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         ((var_s1 >> 4) & (EFFECT_UNK_0400 | EFFECT_UNK_0200 |
+                                           EFFECT_UNK_0100)));
                     if (!(*vram_ptr & 1)) {
                         *yPosPtr +=
                             g_Player.colCeiling[i].unk10 + collider.unk20 + 1;
                     }
                     return;
                 }
-                if ((i == 2) &&
-                    ((var_s1 &
-                      (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
-                     (EFFECT_UNK_0800 | EFFECT_SOLID))) {
+                if ((i == 2) && ((var_s1 & (EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                                            EFFECT_SOLID)) ==
+                                 (EFFECT_UNK_0800 | EFFECT_SOLID))) {
                     g_Player.colFloor[2].effects = var_s1;
                     g_Player.colFloor[2].unk8 = g_Player.colFloor[2].unk10;
                 }
