@@ -96,9 +96,184 @@ void func_8010BFFC(void) {
 }
 
 // CheckFloor
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_091187D8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", CheckFloor);
 // CheckCeiling
-INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_091190E0);
+void CheckCeiling(void) {
+    Collider collider;
+    s32 temp_fp;
+    u32 var_s2;
+    s32 temp_v1;
+    u32 var_s1;
+    s16 var_a1;
+
+    s16 argX;
+    s16 argY;
+
+
+    s32 i = 1;
+
+    s16* yPosPtr = &PLAYER.posY.i.hi;
+    s16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (g_unkGraphicsStruct.unk18) {
+        return;
+    }
+    for (; i < NUM_HORIZONTAL_SENSORS; i++) {
+        if (g_Player.colCeiling[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            continue;
+        }
+        if ((g_Player.status & PLAYER_STATUS_MIST_FORM) &&
+            (collider.effects & EFFECT_MIST_ONLY)) {
+            collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
+        }
+        var_s2 = g_Player.colCeiling[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+        if ((var_s2 == EFFECT_SOLID) || (var_s2 & EFFECT_UNK_8000)) {
+            if ((g_Player.status &
+                 (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) &&
+                !(var_s2 & EFFECT_SOLID)) {
+                continue;
+            }
+
+            argX = *xPosPtr + g_SensorsCeiling[i].x;
+            argY = *yPosPtr + g_SensorsCeiling[i].y +
+                   g_Player.colCeiling[i].unk10 + 1;
+            CheckCollision(argX, argY, &collider, 0);
+            // If in mist form, and collider is mist, then disable collision on
+            // that collider!
+            if (g_Player.status & PLAYER_STATUS_MIST_FORM &&
+                collider.effects & EFFECT_MIST_ONLY) {
+                collider.effects &= ~(EFFECT_UNK_0002 | EFFECT_SOLID);
+            }
+            var_s1 = collider.effects;
+            if (!(var_s1 & 1)) {
+                if ((g_Player.colCeiling[i].effects != EFFECT_SOLID) ||
+                    (PLAYER.velocityY <= 0)) {
+                    *vram_ptr |= 2;
+                    if (!(*vram_ptr & 1) &&
+                        ((g_Player.unk04 &
+                          (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) !=
+                         (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID))) {
+                        if (g_Player.colCeiling[i].effects & EFFECT_UNK_8000) {
+                            *yPosPtr += g_Player.colCeiling[i].unk10;
+                        } else {
+                            *yPosPtr += g_Player.colCeiling[i].unk20;
+                        }
+                    }
+                    return;
+                }
+                continue;
+            }
+            if ((var_s1 &
+                 (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
+                (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+                if (i < 2) {
+                    *vram_ptr |= (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                                  ((var_s1 >> 4) &
+                                   (EFFECT_UNK_0400 | EFFECT_UNK_0200 |
+                                    EFFECT_UNK_0100)));
+                    if (!(*vram_ptr & 1)) {
+                        *yPosPtr +=
+                            g_Player.colCeiling[i].unk10 + collider.unk20 + 1;
+                    }
+                    return;
+                }
+                if ((i == 2) &&
+                    ((var_s1 &
+                      (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
+                     (EFFECT_UNK_0800 | EFFECT_SOLID))) {
+                    g_Player.colFloor[2].effects = var_s1;
+                    g_Player.colFloor[2].unk8 = g_Player.colFloor[2].unk10;
+                }
+                if ((i == 3) &&
+                    ((var_s1 &
+                      (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
+                     (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID))) {
+                    g_Player.colFloor[3].effects = var_s1;
+                    g_Player.colFloor[3].unk8 = g_Player.colFloor[3].unk10;
+                }
+            }
+            if ((var_s1 & EFFECT_UNK_0800) == EFFECT_NONE) {
+                *vram_ptr |=
+                    (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     ((var_s1 >> 4) &
+                      (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
+                if (!(*vram_ptr & 1)) {
+                    *yPosPtr +=
+                        g_Player.colCeiling[i].unk10 + collider.unk20 + 1;
+                }
+                return;
+            }
+        }
+        if ((var_s2 == (EFFECT_UNK_0800 | EFFECT_SOLID)) && (i < 2)) {
+            *vram_ptr |=
+                (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                 ((g_Player.colCeiling[i].effects >> 4) &
+                  (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
+            if (!(*vram_ptr & 1)) {
+                *yPosPtr += g_Player.colCeiling[i].unk20;
+            }
+            return;
+        }
+    }
+    if (PLAYER.velocityY > 0) {
+        return;
+    }
+    argX = *xPosPtr + g_SensorsCeiling[0].x;
+    argY = (*yPosPtr + g_SensorsCeiling[0].y) - 10;
+    CheckCollision(argX, argY, &collider, 0);
+    if ((collider.effects & EFFECT_SOLID) != EFFECT_NONE) {
+        return;
+    }
+    for (i = 2; i < NUM_HORIZONTAL_SENSORS; i++) {
+        if ((g_Player.colCeiling[3].effects & EFFECT_UNK_0800) &&
+            (g_Player.colCeiling[2].effects & EFFECT_UNK_0800)) {
+            return;
+        }
+        var_s2 = g_Player.colCeiling[i].effects;
+        temp_fp = ((var_s2 >> 4) &
+                   (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)) +
+                  (EFFECT_UNK_0800 | EFFECT_UNK_0002);
+        if (var_s2 & EFFECT_UNK_0800) {
+            if (i == 2) {
+                var_s1 = EFFECT_UNK_4000;
+                var_a1 = g_Player.colCeiling[2].unk4;
+                temp_v1 = var_a1 + 8;
+            } else {
+                var_s1 = 0;
+                var_a1 = g_Player.colCeiling[3].unkC;
+                temp_v1 = 8 - var_a1;
+            }
+            if ((var_s2 & EFFECT_UNK_4000) == var_s1) {
+                argX = var_a1 + (*xPosPtr + g_SensorsCeiling[i].x);
+                argY = *yPosPtr + g_SensorsCeiling[i].y;
+                CheckCollision(argX, argY, &collider, 0);
+                if (collider.effects & EFFECT_SOLID) {
+                    *vram_ptr |= temp_fp;
+                    if (!(*vram_ptr & 1)) {
+                        *yPosPtr += collider.unk20;
+                    }
+                    return;
+                }
+            } else if ((temp_v1 > 0) && (var_s2 & 1)) {
+                argX = var_a1 + (*xPosPtr + g_SensorsCeiling[i].x);
+                argY = *yPosPtr + g_SensorsCeiling[i].y +
+                       g_Player.colCeiling[i].unk8;
+                CheckCollision(argX, argY, &collider, 0);
+                if (collider.effects & EFFECT_SOLID) {
+                    if (!(*vram_ptr & 1)) {
+                        *yPosPtr +=
+                            collider.unk20 + g_Player.colCeiling[i].unk8;
+                    }
+                    *vram_ptr |= temp_fp;
+                    return;
+                }
+            }
+        }
+    }
+}
+
 // CheckWallRight
 INCLUDE_ASM("dra_psp/psp/dra_psp/3B9B0", func_psp_09119950);
 // CheckWallLeft
