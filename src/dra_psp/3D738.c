@@ -28,3 +28,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityBatFireball);
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHellfireBigFireball);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityExpandingCircle);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_80127CC8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911EA78);

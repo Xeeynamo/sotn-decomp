@@ -108,7 +108,6 @@ segments:
       - [0x3B280, c, dra/6FDF8]
       - [0x3B9B0, c, dra/6BF64]
       - [0x3D738, c, dra_psp/3D738]
-      - [0x41E80, c, dra_psp/41E80]
       - [0x42180, c, dra_psp/42180]
       - [0x43250, c, dra_psp/43250]
       - [0x43320, c, dra_psp/43320]
