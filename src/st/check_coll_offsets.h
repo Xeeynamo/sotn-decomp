@@ -12,12 +12,14 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
     while (*arg0 != 0xFF) {
         ret <<= 1;
 
-        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
-                      : (g_CurrentEntity->posX.i.hi - *arg0++);
+        if (facing) {
+            posX = g_CurrentEntity->posX.i.hi + *arg0++;
+        } else {
+            posX = g_CurrentEntity->posX.i.hi - *arg0++;
+        }
         posY = g_CurrentEntity->posY.i.hi + *arg0++;
 
         g_api.CheckCollision(posX, posY, &collider, 0);
-
         if (collider.effects & EFFECT_SOLID) {
             ret |= 1;
         }

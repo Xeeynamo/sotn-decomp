@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-static u16 explosionVariantSizes[] = {
+static s16 explosionVariantSizes[] = {
     /* FE8 */ 0x0010,
     /* FEA */ 0x0020,
     /* FEC */ 0x0030,
@@ -12,7 +12,7 @@ static u16 explosionVariantSizes[] = {
 };
 
 void EntityExplosionVariantsSpawner(
-    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
+    Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
     Entity* newEntity;
     s32 i;
     s16 newX = self->posX.i.hi + x;
@@ -21,13 +21,14 @@ void EntityExplosionVariantsSpawner(
     for (i = 0; i < count; i++) {
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            newEntity->posX.i.hi = newX + xGap * i;
-            newEntity->posY.i.hi = newY;
             newEntity->entityId = E_ID_14;
             newEntity->pfnUpdate = EntityExplosionVariants;
             newEntity->params = params;
-            newEntity->ext.destructAnim.index = arg5 + i;
-            newEntity->rotY = newEntity->rotX = explosionVariantSizes[arg5 + i];
+            newEntity->posX.i.hi = newX + i * xGap;
+            newEntity->posY.i.hi = newY;
+            newEntity->ext.destructAnim.index = i + index;
+            newEntity->rotX = explosionVariantSizes[i + index];
+            newEntity->rotY = newEntity->rotX;
             newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             newEntity->zPriority = self->zPriority + 1;
         }

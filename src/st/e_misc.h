@@ -70,10 +70,6 @@ static u16 explode_lifetime[] = {
 
 #include "entity_greypuff.h"
 
-u32 g_olroxDroolCollOffsets[] = {
-    /* 1044 */ 0x00000000,
-    /* 1048 */ 0x000000FF,
-};
 #include "entity_olrox_drool.h"
 
 #include "unk_collision_func5.h"
@@ -83,10 +79,6 @@ u32 g_olroxDroolCollOffsets[] = {
 #endif
 
 #include "entity_intense_explosion.h"
-
-u8 g_UnkEntityAnimData[] = {
-    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
-};
 
 #include "initialize_unk_entity.h"
 
@@ -140,20 +132,7 @@ void func_801966B0(u16* sensors) {
 #include "entity_big_red_fireball.h"
 
 #if !defined(STAGE_IS_NO0)
-u16 g_UnkRecursPrimVecOrder[] = {
-    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "unk_recursive_primfunc_1.h"
-
-u16 g_UnkRecursPrim2Inds[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8,
-#if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
-    !defined(STAGE_IS_CHI) && STAGE != STAGE_ST0
-                              0, 0,
-#endif
-#if defined(VERSION_BETA)
-                              0, 0
-#endif
-};
-
 #include "unk_recursive_primfunc_2.h"
 #endif
 

@@ -3,7 +3,10 @@
 // hitting the ground. In existing overlays, this entity is not used. But looks
 // like Olrox's drool, so using that until we find any other uses.
 
-extern u32 g_olroxDroolCollOffsets[];
+static u32 g_olroxDroolCollOffsets[] = {
+    /* 1044 */ 0x00000000,
+    /* 1048 */ 0x000000FF,
+};
 
 extern u16 g_EInitParticle[];
 void EntityOlroxDrool(Entity* self) {
