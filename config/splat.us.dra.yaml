@@ -219,9 +219,9 @@ segments:
       # - [0x41DA4, .rodata, 7E4BC] # EntityPlayerDissolves
       # - [0x41DBC, .rodata, 7E4BC] # EntityMist
       - [0x41DD4, .rodata, 843B0] # EntityTeleport
-      # - [0x41E34, .rodata, 843B0] # EntitySubwpnCrashCross
-      # - [0x41E48, .rodata, 843B0] # EntityHellfireHandler
-      # - [0x41E7C, .rodata, 843B0] # func_80128C2C
+      - [0x41E34, .rodata, 84B88] # EntitySubwpnCrashCross
+      # - [0x41E48, .rodata, 84B88] # EntityHellfireHandler
+      # - [0x41E7C, .rodata, 84B88] # func_80128C2C
       - [0x41E90, .rodata, 8A0A4] # EntityStopWatch
       - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
       # - [0x41EC8, .rodata, 8D3E8] # func_8012EF2C
@@ -270,6 +270,7 @@ segments:
       - [0x7A4D0, c, 7A4D0]
       - [0x7E4BC, c, 7E4BC]
       - [0x843B0, c, 843B0]
+      - [0x84B88, c, 84B88]
       - [0x8A0A4, c, 8A0A4]
       - [0x8D3E8, c, 8D3E8]
       - [0x91EBC, c, 91EBC]
