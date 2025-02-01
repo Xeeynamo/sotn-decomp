@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "pfn_entity_update.h"
-
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
-    dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    dst->pfnUpdate = OVL_EXPORT(EntityUpdates)[entityId - 1];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_UnkRecursPrimVecOrder[];
+static u16 g_UnkRecursPrimVecOrder[] = {
+    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 
 // arg7 holds, in order:
 // a Primitive, an array of 9 SVECTORs, an array of 10 uvPairs, and a pointer to
