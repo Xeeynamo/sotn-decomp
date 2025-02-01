@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_09128580);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", EntityUnarmedAttack);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_091287D8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", EntityDiveKickAttack);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_09128978);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_8011B480);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_09128A78);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_8011B530);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_09128B00);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_8011B5A4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_091293E8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", EntityUnkId24);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_091295F0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_091296A8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", EntityPlayerBlinkWhite);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", func_psp_0912C120);
+INCLUDE_ASM("dra_psp/psp/dra_psp/4BC00", EntityPlayerOutline);

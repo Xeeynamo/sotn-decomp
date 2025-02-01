@@ -3,22 +3,22 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911B820);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911B928);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityHolyWater);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911BC28);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityHolyWaterBreakGlass);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911C2F8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityHolyWaterFlame);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911CAA8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntitySubwpnCrashCross);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911D180);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntitySubwpnCrashCrossParticles);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911D490);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityHellfireHandler);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911DCF0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityHellfireNormalFireball);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911DF30);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityBatFireball);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911E188);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityHellfireBigFireball);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", func_psp_0911E3D0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3EEA0", EntityExpandingCircle);

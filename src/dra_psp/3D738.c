@@ -3,6 +3,6 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnThrownDagger);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911ABF8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnThrownAxe);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911B630);

@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/58E60", func_psp_091357E0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/58E60", func_psp_09135BE8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/58E60", EntityTeleport);
 
 // Entity #66. Made by final blueprint, #122. Created in PlayerStepStand.
 void EntityPlayerSleepZ(Entity* self) {
