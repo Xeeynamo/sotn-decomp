@@ -13,8 +13,8 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", func_80118C28);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", func_psp_09124FB8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", func_psp_09125048);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", EntityNumberMovesToHpMeter);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", func_psp_09125DB8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", func_psp_09125F38);
+INCLUDE_ASM("dra_psp/psp/dra_psp/47F50", EntityGuardText);

@@ -3,7 +3,7 @@
 #include "sfx.h"
 
 s32 D_800ACF74 = 0;
-s32 D_800ACF78 = 0;
+s32 g_AlucardChairSleepTimer = 0;
 
 s16 D_800ACF7C[] = {
     1,

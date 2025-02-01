@@ -13,7 +13,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", DemoUpdate);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_090FFAB8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", func_psp_090FFB28);
+INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", EntityBatEcho);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/22A40", TimeAttackController);
 

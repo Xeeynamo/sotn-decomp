@@ -71,7 +71,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntitySummonSpirit,
     func_80123F78,
     EntityTeleport,
-    func_80124A8C,
+    EntityPlayerSleepZ,
     func_8011A4C8};
 
 // Corresponding RIC function is RicUpdatePlayerEntities

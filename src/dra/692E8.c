@@ -954,7 +954,7 @@ block_160:
     D_800ACDF8 = g_Player.timers[ALU_T_DARKMETAMORPH];
     switch (PLAYER.step) {
     case Player_Stand:
-        func_801120B4();
+        PlayerStepStand();
         break;
     case Player_Walk:
         func_80112B64();

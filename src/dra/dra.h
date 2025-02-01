@@ -345,8 +345,8 @@ extern Point16 g_SensorsWall[];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
-extern s32 D_800ACF74; // These two might...
-extern s32 D_800ACF78; // ...be an array
+extern s32 D_800ACF74;               // These two might...
+extern s32 g_AlucardChairSleepTimer; // ...be an array
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
 extern s16 D_800ACF94[16];
@@ -649,7 +649,7 @@ void func_8011A4C8(Entity* self);
 void EntitySummonSpirit(Entity* self);
 void func_80123F78(Entity* self);
 void EntityTeleport(Entity* self);
-void func_80124A8C(Entity* self);
+void EntityPlayerSleepZ(Entity* self);
 void func_8011A4C8(Entity* self);
 
 // commented as a requirement for UpdateCd to match
