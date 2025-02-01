@@ -46,7 +46,7 @@ segments:
       - [0x2068, .data, e_red_door]
       - [0x2080, .data, e_room_fg]
       - [0x210C, .data, st_common]
-      - [0x230C, data]
+      - [0x230C, .data, e_misc]
       - [0x23C0, .data, e_collect]
       - [0x26B0, .data, e_misc_2]
       - [0x2714, .data, e_bloody_zombie]

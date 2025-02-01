@@ -5,6 +5,7 @@
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)
 
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 extern PfnEntityUpdate* PfnEntityUpdates;
 
 // A horizontally ordered array with head and tail sigils in the 1st field

@@ -24,6 +24,8 @@ typedef enum EntityIDs {
     // /* 0x10 */ E_DUMMY_10,
     // /* 0x11 */ E_ID_11,
     // /* 0x13 */ E_UNK_ID_13,
+    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x15 */ E_GREY_PUFF,
     /* 0x1D */ E_BLOOD_DRIPS = 0x1D,
     /* 0x1E */ E_BLOOD_SPLATTER,
     /* 0x20 */ E_ID_20 = 0x20,
@@ -31,6 +33,8 @@ typedef enum EntityIDs {
     /* 0x22 */ E_ID_22,
 } EntityIDs;
 
+extern void EntityExplosionVariants(Entity* entity);
+extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern EInit g_EInitParticle;
