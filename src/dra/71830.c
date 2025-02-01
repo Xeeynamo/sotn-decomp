@@ -284,8 +284,8 @@ void PlayerStepStand(void) {
                 PLAYER.facingLeft = 1;
                 break;
             }
-            PLAYER.step_s = 4;
-            D_800ACF78 = 0x1800;
+            PLAYER.step_s = Player_Stand_ChairSit;
+            g_AlucardChairSleepTimer = 0x1800;
             local_flags |= 0x8000;
         } else if (!(g_Player.padPressed & PAD_UP)) {
             local_flags = 5;
@@ -318,12 +318,12 @@ void PlayerStepStand(void) {
         }
         break;
     case Player_Stand_ChairSit:
-        if (PLAYER.ext.player.anim == 0xF2 && --D_800ACF78 == 0) {
+        if (PLAYER.ext.player.anim == 0xF2 && --g_AlucardChairSleepTimer == 0) {
             if (g_StageId == STAGE_NO1) {
                 PlaySfx(0x7AD);
             }
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(122,0), 0);
-            D_800ACF78 = 0x200;
+            g_AlucardChairSleepTimer = 0x200;
         }
         local_flags = 1;
         break;
@@ -517,7 +517,7 @@ void PlayerStepStand(void) {
                 break;
             }
             PLAYER.step_s = 4;
-            D_800ACF78 = 0x1800;
+            g_AlucardChairSleepTimer = 0x1800;
             local_flags |= 0x8000;
         }
     }
