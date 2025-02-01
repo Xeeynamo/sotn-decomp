@@ -64,6 +64,24 @@ files:
           # TODO broken
           - [0x1130, rooms, rooms]
           - [0x11D4, skip]
+  - target: disks/us/ST/NO1/NO1.BIN
+    asset_path: assets/st/no1
+    src_path: src/st/no1
+    splat_config_path: config/splat.us.stno1.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          #- [0x2C, sprite_banks, sprite_banks]
+          #- [0x8C, paldef, palette_def]
+          #- [0x1C4, layers, layers]
+          #- [0x5A4, gfx_banks, graphics_banks]
+          - [0x618, layout, entity_layouts]
+          - [0x7C0, skip]
+          - [0x3488, rooms, rooms]
+          - [0x3544, skip]
+          #- [0x4CE0, cutscene, cutscene_data]
+          #- [0x4E60, skip]
   - target: disks/us/ST/NO3/NO3.BIN
     asset_path: assets/st/no3
     src_path: src/st/no3
