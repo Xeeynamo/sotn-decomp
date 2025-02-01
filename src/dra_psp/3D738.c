@@ -241,9 +241,9 @@ void EntitySubwpnThrownAxe(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = FIX(-6);
         if (self->facingLeft){
-            self->ext.axeCrash.unk7C = 0x400;
+            self->ext.subwpnAxe.unk7C = 0x400;
         }else{
-            self->ext.axeCrash.unk7C = 0xC00;
+            self->ext.subwpnAxe.unk7C = 0xC00;
         }
         
         if (!(g_Player.status & PLAYER_STATUS_CROUCH)) {
@@ -263,9 +263,9 @@ void EntitySubwpnThrownAxe(Entity* self) {
             if (i != 0) {
                 prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                                  DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
-                self->ext.axeCrash.unk8C[i - 1] = 0;
-                self->ext.axeCrash.unk90[i - 1] = 0;
-                self->ext.axeCrash.unk94[i - 1] = 0;
+                self->ext.subwpnAxe.unk8C[i - 1] = 0;
+                self->ext.subwpnAxe.unk90[i - 1] = 0;
+                self->ext.subwpnAxe.unk94[i - 1] = 0;
             } else {
                 prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             }
@@ -275,7 +275,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->hitboxHeight = 12;
         PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.timers[ALU_T_10] = 4;
-        self->ext.axeCrash.unk98 = 0x7F;
+        self->ext.subwpnAxe.unk98 = 0x7F;
         self->step++;
         break;
     case 1:
@@ -284,12 +284,12 @@ void EntitySubwpnThrownAxe(Entity* self) {
         } else {
             angleOffset = 0x80;
         }
-        self->ext.axeCrash.unk7C += angleOffset;
-        if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            PlaySfxVolPan(SFX_WEAPON_SWISH_C, self->ext.axeCrash.unk98, 0);
-            self->ext.axeCrash.unk98 -= 8;
-            if (self->ext.axeCrash.unk98 < 0) {
-                self->ext.axeCrash.unk98 = 0;
+        self->ext.subwpnAxe.unk7C += angleOffset;
+        if (!(self->ext.subwpnAxe.unk7C & 0x3FF)) {
+            PlaySfxVolPan(SFX_WEAPON_SWISH_C, self->ext.subwpnAxe.unk98, 0);
+            self->ext.subwpnAxe.unk98 -= 8;
+            if (self->ext.subwpnAxe.unk98 < 0) {
+                self->ext.subwpnAxe.unk98 = 0;
             }
         }
         self->velocityY += FIX(34.0 / 128);
@@ -315,7 +315,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         } else {
             angleOffset = -0xC0;
         }
-        self->ext.axeCrash.unk7C += angleOffset;
+        self->ext.subwpnAxe.unk7C += angleOffset;
         self->velocityY += FIX(18.0 / 128);
         if (self->velocityY > FIX(8)) {
             self->velocityY = FIX(8);
@@ -331,9 +331,9 @@ void EntitySubwpnThrownAxe(Entity* self) {
 
     if (self->animFrameDuration == 0) {
         graphicsTemp = self->animFrameIdx;
-        self->ext.axeCrash.unk8C[graphicsTemp] = 0;
-        self->ext.axeCrash.unk90[graphicsTemp] = 1;
-        self->ext.axeCrash.unk94[graphicsTemp] = 1;
+        self->ext.subwpnAxe.unk8C[graphicsTemp] = 0;
+        self->ext.subwpnAxe.unk90[graphicsTemp] = 1;
+        self->ext.subwpnAxe.unk94[graphicsTemp] = 1;
         graphicsTemp++;
         graphicsTemp &= 3;
         self->animFrameIdx = graphicsTemp;
@@ -361,7 +361,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
             
             xVar = self->posX.i.hi;
             yVar = self->posY.i.hi;
-            angleOffset = self->ext.axeCrash.unk7C;
+            angleOffset = self->ext.subwpnAxe.unk7C;
             angle0 += angleOffset;
             angle1 += angleOffset;
             angle2 += angleOffset;
@@ -375,9 +375,9 @@ void EntitySubwpnThrownAxe(Entity* self) {
             prim->x3 = xVar + (((rcos(angle3) << 4) * twentyone) >> 0x10);
             prim->y3 = yVar + -(((rsin(angle3) << 4) * twentyone) >> 0x10);
             prim->drawMode &= ~DRAW_HIDE;
-        } else if (self->ext.axeCrash.unk90[i - 1]) {
-            if (self->ext.axeCrash.unk94[i - 1]) {
-                self->ext.axeCrash.unk94[i - 1] = 0;
+        } else if (self->ext.subwpnAxe.unk90[i - 1]) {
+            if (self->ext.subwpnAxe.unk94[i - 1]) {
+                self->ext.subwpnAxe.unk94[i - 1] = 0;
                 prim->x0 = prevPrim->x0;
                 prim->y0 = prevPrim->y0;
                 prim->x1 = prevPrim->x1;
@@ -387,7 +387,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
                 prim->x3 = prevPrim->x3;
                 prim->y3 = prevPrim->y3;
             }
-            rgbIdx = self->ext.axeCrash.unk8C[i-1]++;
+            rgbIdx = self->ext.subwpnAxe.unk8C[i-1]++;
             if (rgbIdx < 10) {
                 rVal = D_800B0628[rgbIdx*4 + 0];
                 gVal = D_800B0628[rgbIdx*4 + 1];
@@ -406,7 +406,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
                 prim->b3 = bVal;
                 prim->drawMode &= ~DRAW_HIDE;
             } else {
-                self->ext.axeCrash.unk90[i -1] = 0;
+                self->ext.subwpnAxe.unk90[i -1] = 0;
                 prim->drawMode |= DRAW_HIDE;
             }
         }
