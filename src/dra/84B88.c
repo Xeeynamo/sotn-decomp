@@ -3,7 +3,6 @@
 #include "dra_bss.h"
 
 // BSS
-extern s32 D_8013841C;
 extern RECT D_80138424;
 
 typedef enum{
@@ -490,12 +489,20 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     return 0;
 }
 
+extern s32 D_8013841C;
+
+typedef enum{
+    HOLYWATER_INIT,
+    HOLYWATER_FLYING,
+    HOLYWATER_BREAK,
+    HOLYWATER_DESTROY
+} HolyWaterSteps;
 void EntityHolyWater(Entity* self) {
     s16 xOffset;
     s32 collisionFlags = 0;
 
     switch (self->step) {
-    case 0:
+    case HOLYWATER_INIT:
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_DRA(9);
         self->animCurFrame = 0x1D;
@@ -505,11 +512,10 @@ void EntityHolyWater(Entity* self) {
         self->velocityY = FIX(-3.125);
         func_8011A290(self);
         self->hitboxWidth = self->hitboxHeight = 4;
-        g_Player.timers[10] = 4;
+        g_Player.timers[ALU_T_10] = 4;
         self->step++;
         break;
-
-    case 1:
+    case HOLYWATER_FLYING:
         self->posY.val += self->velocityY;
         if (self->velocityY < FIX(4)) {
             self->velocityY += FIX(28.0 / 128);
@@ -533,11 +539,11 @@ void EntityHolyWater(Entity* self) {
             CreateEntFactoryFromEntity(self, FACTORY(59, 0), 0);
             self->animSet = ANIMSET_DRA(0);
             self->ext.holywater.timer = 16;
-            self->step = 2;
+            self->step = HOLYWATER_BREAK;
         }
         break;
 
-    case 2:
+    case HOLYWATER_BREAK:
         if (!(self->ext.holywater.timer & 3)) {
             // Factory 28 has child 23, EntityHolyWaterFlame
             CreateEntFactoryFromEntity(
@@ -550,7 +556,7 @@ void EntityHolyWater(Entity* self) {
         }
         break;
 
-    case 3:
+    case HOLYWATER_DESTROY:
         if (--self->ext.holywater.timer == 0) {
             DestroyEntity(self);
         }

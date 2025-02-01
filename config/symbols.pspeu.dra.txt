@@ -350,6 +350,7 @@ g_WasFacingLeft3 = 0x09234D58;
 g_WasFacingLeft2 = 0x09234D60;
 g_WasFacingLeft = 0x09234D68;
 g_ButtonCombo = 0x09234D70;
+D_8013841C = 0x09234DC0;
 g_sfxRingBufferWritePos = 0x09236b80;
 g_SfxRingBuffer = 0x09236b90;
 g_SoundCommandRingBufferWritePos = 0x09237190;

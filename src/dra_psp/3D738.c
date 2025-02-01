@@ -208,6 +208,12 @@ void EntitySubwpnThrownDagger(Entity* self) {
     }
 }
 
+typedef enum{
+    AXE_INIT,
+    AXE_FLYING,
+    AXE_BOUNCE
+} AxeSteps;
+
 void EntitySubwpnThrownAxe(Entity* self) {
     u8 rVal;
     u8 gVal;
@@ -229,7 +235,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
     twentyone = 21;
 
     switch (self->step) {
-    case 0:
+    case AXE_INIT:
         self->primIndex = AllocPrimitives(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -278,7 +284,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->ext.subwpnAxe.unk98 = 0x7F;
         self->step++;
         break;
-    case 1:
+    case AXE_FLYING:
         if (self->facingLeft) {
             angleOffset = -0x80;
         } else {
@@ -306,10 +312,10 @@ void EntitySubwpnThrownAxe(Entity* self) {
             self->hitboxState = 0;
             self->velocityX = -(self->velocityX / 2);
             self->velocityY = FIX(-3);
-            self->step = 2;
+            self->step = AXE_BOUNCE;
         }
         break;
-    case 2:
+    case AXE_BOUNCE:
         if (self->facingLeft) {
             angleOffset = 0xC0;
         } else {
@@ -482,7 +488,80 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHolyWater);
+extern s32 D_8013841C;
+
+typedef enum{
+    HOLYWATER_INIT,
+    HOLYWATER_FLYING,
+    HOLYWATER_BREAK,
+    HOLYWATER_DESTROY
+} HolyWaterSteps;
+void EntityHolyWater(Entity* self) {
+    s16 xOffset;
+    s32 collisionFlags = 0;
+
+    switch (self->step) {
+    case HOLYWATER_INIT:
+        self->flags = FLAG_POS_CAMERA_LOCKED;
+        self->animSet = ANIMSET_DRA(9);
+        self->animCurFrame = 0x1D;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->posY.i.hi += 8;
+        SetSpeedX(FIX(1.25));
+        self->velocityY = FIX(-3.125);
+        func_8011A290(self);
+        self->hitboxWidth = self->hitboxHeight = 4;
+        g_Player.timers[ALU_T_10] = 4;
+        self->step++;
+        break;
+    case HOLYWATER_FLYING:
+        self->posY.val += self->velocityY;
+        if (self->velocityY < FIX(4)) {
+            self->velocityY += FIX(28.0 / 128);
+        }
+
+        collisionFlags = CheckHolyWaterCollision(0, 0);
+        self->posX.val += self->velocityX;
+        xOffset = 4;
+        if (self->velocityX < 0) {
+            xOffset = -xOffset;
+        }
+        collisionFlags |= func_80125B6C(-7, xOffset);
+
+        if (collisionFlags & 2) {
+            collisionFlags = 1;
+        }
+
+        if (collisionFlags & 1) {
+            PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
+            // Factory 59 has child 40, EntityHolyWaterBreakGlass
+            CreateEntFactoryFromEntity(self, FACTORY(59, 0), 0);
+            self->animSet = ANIMSET_DRA(0);
+            self->ext.holywater.timer = 16;
+            self->step = HOLYWATER_BREAK;
+        }
+        break;
+
+    case HOLYWATER_BREAK:
+        if (!(self->ext.holywater.timer & 3)) {
+            // Factory 28 has child 23, EntityHolyWaterFlame
+            CreateEntFactoryFromEntity(
+                self, FACTORY(28, D_8013841C), self->ext.holywater.unkB2 << 9);
+            D_8013841C++;
+        }
+        if (--self->ext.holywater.timer == 0) {
+            self->ext.holywater.timer = 4;
+            self->step++;
+        }
+        break;
+
+    case HOLYWATER_DESTROY:
+        if (--self->ext.holywater.timer == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHolyWaterBreakGlass);
 
