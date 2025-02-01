@@ -40,8 +40,8 @@ static u8 AnimFrames_CorpseweedProjectileDeath[] = {
 
 // D_80181798
 static u8* AnimFrames_All[] = {
-    &AnimFrames_ThornweedWakeup, &AnimFrames_CorpseweedWakeup, // WakeUp
-    &AnimFrames_ThornweedIdle, &AnimFrames_CorpseweedIdle,     // Idle
+    AnimFrames_ThornweedWakeup, AnimFrames_CorpseweedWakeup, // WakeUp
+    AnimFrames_ThornweedIdle, AnimFrames_CorpseweedIdle,     // Idle
 };
 
 // clang-format off
@@ -105,7 +105,7 @@ void EntityThornweed(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitThornweed);
+        InitializeEntity(g_EInitThornweed);
         if (self->params) {
             self->animCurFrame = AnimFrame_CorpseweedInit;
         } else {
@@ -275,11 +275,11 @@ void EntityCorpseweed(Entity* self) {
     };
 
     Collider collider;
-    Entity* entity;
     Primitive* prim;
+    s32 y;
+    Entity* entity;
     s32 primIdx;
     s32 pos;
-    s32 y;
     s32 x;
     s32 doneCount;
     s16 t;
@@ -290,7 +290,7 @@ void EntityCorpseweed(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitCorpseweed);
+        InitializeEntity(g_EInitCorpseweed);
         self->animCurFrame = AnimFrameInit;
         self->hitboxOffX = 2;
         self->hitboxOffY = 9;
@@ -563,6 +563,8 @@ void EntityCorpseweed(Entity* self) {
             self->ext.corpseweed.stalkDoneGrowing = false;
             self->hitboxState = 0;
             self->drawFlags = FLAG_DRAW_ROTZ;
+            // Need a no-op self access here for PSP match
+            self->step_s;
             self->step_s++;
             // fallthrough
         case DEATH_DROP_HEAD:
@@ -677,15 +679,17 @@ void EntityCorpseweed(Entity* self) {
         t = self->ext.corpseweed.bobbingLeavesXT += BobbingSpeedX_Leaves;
         x = (rcos(t) * 2) >> 0xC;
         pos = (prim->x2 + prim->x3) / 2;
-        prim->x0 = pos - BobbingOriginOffsX_Leaves + x;
-        prim->x1 = pos + BobbingOriginOffsX_Leaves + x;
+        // 0xC represents BobbingOriginOffsX_Leaves
+        prim->x0 = pos - 0xC + x;
+        prim->x1 = pos + 0xC + x;
 
         // Y
         t = self->ext.corpseweed.bobbingLeavesYT += BobbingSpeedY_Leaves;
         y = (rsin(t) * 4) >> 0xC;
         pos = prim->y2;
-        prim->y0 = pos - BobbingOriginOffsY_Leaves + y;
-        prim->y1 = pos - BobbingOriginOffsY_Leaves - y;
+        // 0x28 represents BobbingOriginOffsY_Leaves
+        prim->y0 = pos - 0x28 + y;
+        prim->y1 = pos - 0x28 - y;
     }
 
     // Update stalk for bobbing back and forth
@@ -699,19 +703,22 @@ void EntityCorpseweed(Entity* self) {
         x = (pos * rsin(t)) >> 0xC;
         pos = (prim->x2 + prim->x3) / 2;
         if (self->facingLeft) {
-            prim->x1 = pos + BobbingOriginOffsX_Stalk + x;
-            prim->x0 = pos - BobbingOriginOffsX_Stalk + x;
+            // 0x14 represents BobbingOriginOffsX_Stalk
+            prim->x1 = pos + 0x14 + x;
+            prim->x0 = pos - 0x14 + x;
         } else {
-            prim->x1 = pos - BobbingOriginOffsX_Stalk + x;
-            prim->x0 = pos + BobbingOriginOffsX_Stalk + x;
+            // 0x14 represents BobbingOriginOffsX_Stalk
+            prim->x1 = pos - 0x14 + x;
+            prim->x0 = pos + 0x14 + x;
         }
 
         // Y
         t = self->ext.corpseweed.bobbingStalkYT += BobbingSpeedY_Stalk;
         y = (rsin(t) * 4) >> 0xC;
         pos = prim->y2;
-        prim->y0 = pos - BobbingOriginOffsY_Stalk + y;
-        prim->y1 = pos - BobbingOriginOffsY_Stalk - y;
+        // 0x70 represents BobbingOriginOffsY_Stalk
+        prim->y0 = pos - 0x70 + y;
+        prim->y1 = pos - 0x70 - y;
 
         // Adjust for facing dir
         if (self->facingLeft) {
@@ -784,7 +791,7 @@ void EntityCorpseweedProjectile(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitCorpseweedProjectile);
+        InitializeEntity(g_EInitCorpseweedProjectile);
         x = GetDistanceToPlayerX();
         if (x > RangeMaxX) {
             x = RangeMaxX;
