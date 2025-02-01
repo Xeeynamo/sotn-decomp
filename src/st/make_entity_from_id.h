@@ -4,7 +4,7 @@
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
-#if defined(VERSION_PSP) && defined(STAGE_IS_LIB)
+#if defined(VERSION_PSP)
     dst->pfnUpdate = OVL_EXPORT(EntityUpdates)[entityId - 1];
 #else
     dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
