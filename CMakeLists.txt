@@ -212,6 +212,7 @@ set(SOURCE_FILES_DRA
     src/dra/843B0.c
     src/dra/84B88.c
     src/dra/8A0A4.c
+    src/dra/8BEF8.c
     src/dra/8D3E8.c
     src/dra/91EBC.c
     src/dra/92F60.c
