@@ -457,7 +457,30 @@ s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911B820);
+s32 func_80125B6C(s16 arg0, s16 arg1) {
+    Collider collider;
+    s16 xShift;
+
+    if (g_CurrentEntity->velocityX == 0) {
+        return 0;
+    }
+
+    CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
+                   g_CurrentEntity->posY.i.hi + arg0, &collider, 0);
+    if (g_CurrentEntity->velocityX > 0) {
+        xShift = collider.unk14;
+    } else {
+        xShift = collider.unk1C;
+    }
+
+    if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.i.hi += xShift;
+        g_CurrentEntity->posX.i.lo = 0;
+        return 2;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHolyWater);
 

@@ -467,7 +467,7 @@ s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
     Collider collider;
-    s16 var_a1;
+    s16 xShift;
 
     if (g_CurrentEntity->velocityX == 0) {
         return 0;
@@ -476,14 +476,14 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
                    g_CurrentEntity->posY.i.hi + arg0, &collider, 0);
     if (g_CurrentEntity->velocityX > 0) {
-        var_a1 = collider.unk14;
+        xShift = collider.unk14;
     } else {
-        var_a1 = collider.unk1C;
+        xShift = collider.unk1C;
     }
 
     if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.i.hi += xShift;
         g_CurrentEntity->posX.i.lo = 0;
-        g_CurrentEntity->posX.i.hi += var_a1;
         return 2;
     }
 
