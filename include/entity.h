@@ -1447,30 +1447,6 @@ typedef struct {
   s16 subweaponId;
 } ET_SubwpnAxe;
 typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[3];
-#endif
-  s16 unk7C;
-  s16 unk7E;
-  s16 unk80;
-  s16 unk82;
-  s16 unk84;
-  s16 unk86;
-  s16 unk88;
-  s16 unk8A;
-  u8 unk8C[4];
-  u8 unk90[4];
-  u8 unk94[4];
-  s32 unk98;
-  s32 unk9C;
-  u16 unkA0;
-  s16 unkA2;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s16 subweaponId;
-} ET_AxeCrash;
-typedef struct {
     s16 timer;
     u16 unk7E;
     s16 unk80;
@@ -2785,7 +2761,6 @@ typedef union { // offset=0x7C
     ET_HolyWater holywater;
     ET_CrashCross crashcross;
     ET_SubwpnAxe subwpnAxe;
-    ET_AxeCrash axeCrash;
     ET_VibhutiCrash vibhutiCrash;
     ET_VibhutiCrashCloud vibCrashCloud;
     ET_RicRevivalColumn ricColumn;
@@ -3055,7 +3030,6 @@ SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);
-SYNC_FIELD(ET_Subweapon, ET_AxeCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrossBoomerang, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_BibleSubwpn, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_BibleBeam, subweaponId);
