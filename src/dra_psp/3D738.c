@@ -46,3 +46,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnAgunea);
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityAguneaHitEnemy);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_80129864);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySummonSpirit);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityStopWatchExpandingCircle);
