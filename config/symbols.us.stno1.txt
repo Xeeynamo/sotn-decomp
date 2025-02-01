@@ -1,8 +1,3 @@
-NO1_Overlay = 0x80180000;
-NO1_spriteBanks = 0x8018002C;
-NO1_cluts = 0x801801C4;
-NO1_rooms_layers = 0x80180314;
-NO1_gfxBanks = 0x801805DC;
 NO1_pStObjLayoutHorizontal = 0x80180618;
 NO1_pStObjLayoutVertical = 0x801806EC;
 g_EInitParticle = 0x80180950;

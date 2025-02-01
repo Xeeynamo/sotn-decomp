@@ -322,7 +322,7 @@ void PlayerStepStand(void) {
             if (g_StageId == STAGE_NO1) {
                 PlaySfx(0x7AD);
             }
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(122,0), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(122, 0), 0);
             g_AlucardChairSleepTimer = 0x200;
         }
         local_flags = 1;

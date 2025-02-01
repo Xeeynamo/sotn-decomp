@@ -345,7 +345,7 @@ extern Point16 g_SensorsWall[];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
-extern s32 D_800ACF74; // These two might...
+extern s32 D_800ACF74;               // These two might...
 extern s32 g_AlucardChairSleepTimer; // ...be an array
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
