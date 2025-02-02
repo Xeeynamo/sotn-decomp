@@ -56,11 +56,11 @@ typedef union {
     } i;
 } f32;
 
-typedef union{
+typedef union {
     s16 val;
     struct {
-    u8 lo;
-    u8 hi;
+        u8 lo;
+        u8 hi;
     } i;
 } f16;
 

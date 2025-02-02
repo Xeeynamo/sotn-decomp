@@ -1048,8 +1048,8 @@ void RicEntitySubwpnAxe(Entity* self) {
                 prim->x3 = prevPrim->x3;
                 prim->y3 = prevPrim->y3;
             }
-            temp_v0_4 = self->ext.subwpnAxe.unk8C[sp10-1];
-            self->ext.subwpnAxe.unk8C[sp10-1] = temp_v0_4 + 1;
+            temp_v0_4 = self->ext.subwpnAxe.unk8C[sp10 - 1];
+            self->ext.subwpnAxe.unk8C[sp10 - 1] = temp_v0_4 + 1;
             temp_v1_3 = temp_v0_4 & 0xFF;
             if ((temp_v1_3) < 0xA) {
                 // whyyyyyy
@@ -1073,7 +1073,7 @@ void RicEntitySubwpnAxe(Entity* self) {
                 prim->b3 = bVal;
                 prim->drawMode &= ~DRAW_HIDE;
             } else {
-                self->ext.subwpnAxe.unk90[sp10-1] = 0;
+                self->ext.subwpnAxe.unk90[sp10 - 1] = 0;
                 prim->drawMode |= DRAW_HIDE;
             }
         }
@@ -1248,9 +1248,9 @@ void RicEntityCrashAxe(Entity* self) {
             prim->x3 = temp_s4 + (((rcos(var_v0) << 4) * twentyone) >> 0x10);
             prim->y3 = temp_s5 - (((rsin(var_v0) << 4) * twentyone) >> 0x10);
             prim->drawMode &= ~DRAW_HIDE;
-        } else if (self->ext.subwpnAxe.unk90[sp10-1] != 0) {
-            if (self->ext.subwpnAxe.unk94[sp10-1] != 0) {
-                self->ext.subwpnAxe.unk94[sp10-1] = 0;
+        } else if (self->ext.subwpnAxe.unk90[sp10 - 1] != 0) {
+            if (self->ext.subwpnAxe.unk94[sp10 - 1] != 0) {
+                self->ext.subwpnAxe.unk94[sp10 - 1] = 0;
                 prim->x0 = prevPrim->x0;
                 prim->y0 = prevPrim->y0;
                 prim->x1 = prevPrim->x1;
@@ -1260,8 +1260,8 @@ void RicEntityCrashAxe(Entity* self) {
                 prim->x3 = prevPrim->x3;
                 prim->y3 = prevPrim->y3;
             }
-            temp_v0_4 = self->ext.subwpnAxe.unk8C[sp10-1];
-            self->ext.subwpnAxe.unk8C[sp10-1] = temp_v0_4 + 1;
+            temp_v0_4 = self->ext.subwpnAxe.unk8C[sp10 - 1];
+            self->ext.subwpnAxe.unk8C[sp10 - 1] = temp_v0_4 + 1;
             temp_v1_3 = temp_v0_4 & 0xFF;
             if ((temp_v1_3) < 0xA) {
                 // whyyyyyy
@@ -1285,7 +1285,7 @@ void RicEntityCrashAxe(Entity* self) {
                 prim->b3 = bVal;
                 prim->drawMode &= ~DRAW_HIDE;
             } else {
-                self->ext.subwpnAxe.unk90[sp10-1] = 0;
+                self->ext.subwpnAxe.unk90[sp10 - 1] = 0;
                 prim->drawMode |= DRAW_HIDE;
             }
         }

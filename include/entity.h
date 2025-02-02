@@ -1022,9 +1022,9 @@ typedef struct {
 } ET_8011E4BC;
 
 typedef struct {
-  s16 beamwidth;
-  s16 beamheight;
-  s16 timer;
+    s16 beamwidth;
+    s16 beamheight;
+    s16 timer;
 } ET_HellfireHandler;
 
 typedef struct {
@@ -1385,24 +1385,24 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[2];
 #endif
-  s16 unk7C;
-  f16 unk7E;
-  u8 unk80;
-  byte pad81;
-  u8 unk82;
-  byte pad83;
-  s32 unk84;
-  s32 : 32;
-  struct Entity *parent;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s16 subweaponId;
+    s16 unk7C;
+    f16 unk7E;
+    u8 unk80;
+    byte pad81;
+    u8 unk82;
+    byte pad83;
+    s32 unk84;
+    s32 : 32;
+    struct Entity* parent;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 subweaponId;
 } ET_CrashCross;
 typedef struct {
     /* 0x7C */ s16 timer;
@@ -1426,25 +1426,25 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[3];
 #endif
-  s16 unk7C;
-  s16 unk7E;
-  s16 unk80;
-  s16 unk82;
-  s16 unk84;
-  s16 unk86;
-  s16 unk88;
-  s16 unk8A;
-  u8 unk8C[4];
-  u8 unk90[4];
-  u8 unk94[4];
-  s32 unk98;
-  s32 unk9C;
-  u16 unkA0;
-  s16 unkA2;
-  s32 : 32;
-  s32 : 32;
-  s32 : 32;
-  s16 subweaponId;
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+    u8 unk8C[4];
+    u8 unk90[4];
+    u8 unk94[4];
+    s32 unk98;
+    s32 unk9C;
+    u16 unkA0;
+    s16 unkA2;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 subweaponId;
 } ET_SubwpnAxe;
 typedef struct {
     s16 timer;
