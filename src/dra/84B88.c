@@ -1349,57 +1349,55 @@ void EntityExpandingCircle(Entity* self) {
     }
 }
 
-void func_80127CC8(Entity* entity) {
+void func_80127CC8(Entity* self) {
     Primitive* prim;
-    s32 ret;
 
-    if (PLAYER.step != 34) {
-        DestroyEntity(entity);
+    if (PLAYER.step != Player_SpellHellfire) {
+        // @bug Should be DestroyEntity(self)
+        DestroyEntity();
         return;
     }
 
-    entity->posX.i.hi = PLAYER.posX.i.hi;
+    self->posX.i.hi = PLAYER.posX.i.hi;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        ret = AllocPrimitives(PRIM_G4, 1);
-        entity->primIndex = ret;
+        self->primIndex = AllocPrimitives(PRIM_G4, 1);
 
-        if (ret == -1) {
-            DestroyEntity(entity);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
             g_Player.unk5C = -1;
             return;
         }
 
-        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
                         FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        prim = &g_PrimBuf[entity->primIndex];
+        prim = &g_PrimBuf[self->primIndex];
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = 192;
         prim->g0 = prim->g1 = prim->g2 = prim->g3 = 64;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 64;
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
                          DRAW_COLORS | DRAW_TRANSP;
-        entity->zPriority = 0x1C0;
-        prim->priority = 0x1C0;
-        entity->step++;
+        prim->priority = self->zPriority = 0x1C0;
+        self->step++;
         break;
 
     case 1:
-        if (entity->ext.timer.t++ >= 0xE) {
-            DestroyEntity(entity);
+        if (self->ext.timer.t++ >= 14) {
+            DestroyEntity(self);
             return;
         }
     }
-    prim = &g_PrimBuf[entity->primIndex];
-    prim->x0 = prim->x2 = entity->posX.i.hi - 3;
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = prim->x2 = self->posX.i.hi - 3;
     prim->y1 = prim->y0 = 0;
-    prim->x1 = prim->x3 = entity->posX.i.hi + 3;
+    prim->x1 = prim->x3 = self->posX.i.hi + 3;
     prim->y2 = prim->y3 = 240;
 
     if (g_GameTimer & 1) {
-        prim->drawMode = prim->drawMode | DRAW_HIDE;
+        prim->drawMode |= DRAW_HIDE;
     } else {
-        prim->drawMode = prim->drawMode & ~DRAW_HIDE;
+        prim->drawMode &= ~DRAW_HIDE;
     }
 }
 

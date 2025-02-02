@@ -5,7 +5,6 @@
 #include "disk.h"
 #include "game.h"
 #include "weapon.h"
-#include "servant.h"
 #include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
@@ -543,7 +542,6 @@ void func_80102CD8(s32);
 void func_80103EAC(void);
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
-void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 startIndex);
 void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(Primitive* prim, s32 colorIntensity);
