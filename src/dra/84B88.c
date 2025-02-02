@@ -1130,45 +1130,45 @@ void EntityHellfireHandler(Entity* self) {
 }
 
 // The fireball produced by Hellfire, when you do NOT press up
-void EntityHellfireNormalFireball(Entity* entity) {
-    switch (entity->step) {
+void EntityHellfireNormalFireball(Entity* self) {
+    switch (self->step) {
     case 0:
-        if (entity->params == 0) {
+        if (self->params == 0) {
             PlaySfx(SFX_FIREBALL_SHOT_A);
         }
-        entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
-        entity->animSet = ANIMSET_DRA(9);
-        entity->anim = D_800B0798;
-        entity->zPriority = PLAYER.zPriority + 2;
-        entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
-        SetSpeedX(D_800B0830[entity->params]);
-        entity->velocityY = D_800B083C[entity->params];
-        entity->ext.timer.t = 0x14;
-        func_8011A328(entity, 2);
-        entity->hitboxWidth = 4;
-        entity->hitboxHeight = 4;
-        entity->step++;
+        self->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
+        self->animSet = ANIMSET_DRA(9);
+        self->anim = D_800B0798;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        SetSpeedX(D_800B0830[self->params]);
+        self->velocityY = D_800B083C[self->params];
+        self->ext.timer.t = 20;
+        func_8011A328(self, 2);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->step++;
         break;
 
     case 1:
-        if (entity->hitFlags == 0) {
-            entity->ext.timer.t--;
-            if ((entity->ext.timer.t) == 0) {
-                entity->step++;
-            }
-            entity->posX.val += entity->velocityX;
-            entity->posY.val += entity->velocityY;
+        // Fireballs hitting anything destroys them.
+        if (self->hitFlags) {
+            DestroyEntity(self);
             break;
         }
-        DestroyEntity(entity);
+        
+        if (--self->ext.timer.t == 0) {
+            self->step++;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
         break;
-
     case 2:
-        if (entity->hitFlags != 0) {
-            DestroyEntity(entity);
+        if (self->hitFlags) {
+            DestroyEntity(self);
             break;
         }
-        entity->posX.val += entity->velocityX;
+        self->posX.val += self->velocityX;
         break;
     }
 }

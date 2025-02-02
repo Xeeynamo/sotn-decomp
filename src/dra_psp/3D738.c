@@ -1127,7 +1127,49 @@ void EntityHellfireHandler(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHellfireNormalFireball);
+// The fireball produced by Hellfire, when you do NOT press up
+void EntityHellfireNormalFireball(Entity* self) {
+    switch (self->step) {
+    case 0:
+        if (self->params == 0) {
+            PlaySfx(SFX_FIREBALL_SHOT_A);
+        }
+        self->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
+        self->animSet = ANIMSET_DRA(9);
+        self->anim = D_800B0798;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        SetSpeedX(D_800B0830[self->params]);
+        self->velocityY = D_800B083C[self->params];
+        self->ext.timer.t = 20;
+        func_8011A328(self, 2);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->step++;
+        break;
+
+    case 1:
+        // Fireballs hitting anything destroys them.
+        if (self->hitFlags) {
+            DestroyEntity(self);
+            break;
+        }
+        
+        if (--self->ext.timer.t == 0) {
+            self->step++;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    case 2:
+        if (self->hitFlags) {
+            DestroyEntity(self);
+            break;
+        }
+        self->posX.val += self->velocityX;
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityBatFireball);
 
