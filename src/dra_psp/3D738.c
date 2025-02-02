@@ -1276,7 +1276,76 @@ void EntityHellfireBigFireball(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityExpandingCircle);
+// circle expands out of player
+void EntityExpandingCircle(Entity* self) {
+    Primitive* prim;
+
+    if (PLAYER.facingLeft == 0) {
+        self->posX.i.hi = PLAYER.posX.i.hi - 10;
+    } else {
+        self->posX.i.hi = PLAYER.posX.i.hi + 10;
+    }
+    self->posY.i.hi = PLAYER.posY.i.hi + 2;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.circleExpand.width = 22;
+        self->ext.circleExpand.height = 26;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->u2 = 64;
+        prim->u1 = prim->u3 = 127;
+        prim->v0 = prim->v1 = 192;
+        prim->v2 = prim->v3 = 255;
+        PRED(prim) = 128;
+        PGRN(prim) = 128;
+        PBLU(prim) = 64;
+
+        prim->tpage = 0x1A;
+        prim->clut = 0x15F;
+        prim->priority = PLAYER.zPriority + 1;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->flags =
+            FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->step++;
+        break;
+
+    case 1:
+        self->ext.circleExpand.width += 2;
+        self->ext.circleExpand.height += 2;
+        if (self->ext.circleExpand.width > 56) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y0 = self->posY.i.hi - self->ext.circleExpand.height;
+
+    prim->x1 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y1 = self->posY.i.hi - self->ext.circleExpand.height;
+
+    prim->x2 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y2 = self->posY.i.hi + self->ext.circleExpand.height;
+
+    prim->x3 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
+
+    if (self->ext.circleExpand.width > 40) {
+        prim->r3 -= 12;
+        prim->g3 -= 12;
+        prim->b3 -= 6;
+        PRED(prim);
+        PGRN(prim);
+        PBLU(prim);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_80127CC8);
 
