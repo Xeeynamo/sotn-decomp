@@ -1171,7 +1171,62 @@ void EntityHellfireNormalFireball(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityBatFireball);
+// Entity ID 45. Created by factory blueprint 81.
+// That blueprint is used in ControlBatForm, when step_s is 4.
+// Also, when bat familiar shoots a fireball, the blueprint
+// is used in UpdateBatAttackMode.
+
+void EntityBatFireball(Entity* self) {
+    // This is a 1 when a bat familiar is shooting, and a 0
+    // when the player (in bat form) is shooting the fireball.
+    // Appears to have no impact on the behavior of this function.
+    s16 params = (self->params >> 8) & 0x7F;
+
+    switch (self->step) {
+    case 0:
+        PlaySfx(SFX_QUICK_STUTTER_EXPLODE_A);
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
+        self->animSet = 9;
+        self->anim = D_800B0798;
+        self->zPriority = PLAYER.zPriority - 2;
+
+        // Wow, this is weird logic! But it's in the assembly.
+        if (!params) {
+            self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        }
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+
+        SetSpeedX(FIX(-3.5));
+        // Initial fireball size is 0x40 by 0x40
+        self->posX.val += self->velocityX * 2;
+        self->posY.i.hi -= 4;
+        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->rotX = self->rotY = 0x40;
+        func_8011A328(self, 9);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 8;
+        g_Player.timers[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        // Once the fireball hits something, destroy it.
+        if (self->hitFlags) {
+            DestroyEntity(self);
+            return;
+        }
+        self->posX.val += self->velocityX;
+        // Much like the wing smash, these rot values are actually the size.
+        // After shooting, the fireballs grow until they are 0x100 in size
+        self->rotX += 0x10;
+        self->rotY += 0x10;
+        if (self->rotY > 0x100) {
+            self->rotY = 0x100;
+        }
+        if (self->rotX > 0x180) {
+            self->rotX = 0x180;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHellfireBigFireball);
 
