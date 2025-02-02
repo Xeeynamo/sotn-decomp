@@ -210,6 +210,8 @@ void EntitySubwpnThrownDagger(Entity* self) {
     }
 }
 
+// axe thrown when using subweapon
+// near-duplicate of RicEntitySubwpnAxe
 typedef enum { AXE_INIT, AXE_FLYING, AXE_BOUNCE } AxeSteps;
 
 void EntitySubwpnThrownAxe(Entity* self) {
@@ -561,6 +563,7 @@ void EntityHolyWater(Entity* self) {
     }
 }
 
+// Glass breaking effect for holy water. Duplicate of RIC func_80167A70.
 #define FAKEPRIM ((FakePrim*)prim)
 
 void EntityHolyWaterBreakGlass(Entity* self) {

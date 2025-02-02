@@ -213,6 +213,8 @@ void EntitySubwpnThrownDagger(Entity* self) {
 
 // axe thrown when using subweapon
 // near-duplicate of RicEntitySubwpnAxe
+typedef enum { AXE_INIT, AXE_FLYING, AXE_BOUNCE } AxeSteps;
+
 void EntitySubwpnThrownAxe(Entity* self) {
     u8 rVal;
     u8 gVal;
@@ -220,6 +222,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
     s16 xVar;
     s16 yVar;
     s32 rgbIdx;
+    s32 graphicsTemp;
     s16 angle0;
     s16 angle1;
     s16 angle2;
@@ -228,14 +231,12 @@ void EntitySubwpnThrownAxe(Entity* self) {
     s32 twentyone;
     Primitive* prevPrim;
     s32 i;
-    s32 graphicsTemp;
-
     Primitive* prim;
 
     twentyone = 21;
 
     switch (self->step) {
-    case 0:
+    case AXE_INIT:
         self->primIndex = AllocPrimitives(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -285,7 +286,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->ext.subwpnAxe.unk98 = 0x7F;
         self->step++;
         break;
-    case 1:
+    case AXE_FLYING:
         if (self->facingLeft) {
             angleOffset = -0x80;
         } else {
@@ -313,10 +314,10 @@ void EntitySubwpnThrownAxe(Entity* self) {
             self->hitboxState = 0;
             self->velocityX = -(self->velocityX / 2);
             self->velocityY = FIX(-3);
-            self->step = 2;
+            self->step = AXE_BOUNCE;
         }
         break;
-    case 2:
+    case AXE_BOUNCE:
         if (self->facingLeft) {
             angleOffset = 0xC0;
         } else {
@@ -798,7 +799,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
         func_8011A290(self);
-        LoadImage(&D_800B0788, D_800B06C8);
+        LoadImage(&D_800B0788, (u_long*)D_800B06C8);
         prim = &g_PrimBuf[self->primIndex];
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
         prim->u0 = prim->u2 = 1;
@@ -1003,8 +1004,8 @@ void EntityHellfireHandler(Entity* self) {
         self->posY.i.hi = 120;
         // I think this is to make the yellow laser beam?
         // it ends up looking like the library card effect.
-        LoadImage(&D_800B0788, D_800B06C8);
-        LoadImage(&D_800B0790, D_800B0728);
+        LoadImage(&D_800B0788, (u_long*)D_800B06C8);
+        LoadImage(&D_800B0790, (u_long*)D_800B0728);
         prim = &g_PrimBuf[self->primIndex];
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
         prim->u0 = prim->u2 = 1;
