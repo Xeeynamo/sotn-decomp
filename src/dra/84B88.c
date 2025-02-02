@@ -222,7 +222,6 @@ void EntitySubwpnThrownAxe(Entity* self) {
     s16 xVar;
     s16 yVar;
     s32 rgbIdx;
-    s32 graphicsTemp;
     s16 angle0;
     s16 angle1;
     s16 angle2;
@@ -232,6 +231,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
     Primitive* prevPrim;
     s32 i;
     Primitive* prim;
+    s32 graphicsTemp;
 
     twentyone = 21;
 
