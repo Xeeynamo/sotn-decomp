@@ -1234,22 +1234,21 @@ void EntityBatFireball(Entity* self) {
 void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
-        if (entity->params != 0) {
+        if (entity->params) {
             PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
         }
 
         entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
-        if (entity->params != 0) {
-            entity->posY.i.hi = entity->posY.i.hi + 16;
+        if (entity->params) {
+            entity->posY.i.hi += 16;
         } else {
-            entity->posY.i.hi = entity->posY.i.hi - 4;
+            entity->posY.i.hi -= 4;
         }
-
-        entity->animSet = ANIMSET_DRA(9);
-        entity->rotZ = 0;
-        entity->anim = D_800B07C8;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
+        entity->rotZ = 0;
+        entity->animSet = ANIMSET_DRA(9);
+        entity->anim = D_800B07C8;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(-0x10);

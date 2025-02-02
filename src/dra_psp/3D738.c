@@ -1228,7 +1228,53 @@ void EntityBatFireball(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHellfireBigFireball);
+// Produced in Hellfire when you press UP during the casting
+void EntityHellfireBigFireball(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        if (entity->params) {
+            PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
+        }
+
+        entity->flags = FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
+
+        if (entity->params) {
+            entity->posY.i.hi += 16;
+        } else {
+            entity->posY.i.hi -= 4;
+        }
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
+        entity->rotZ = 0;
+        entity->animSet = ANIMSET_DRA(9);
+        entity->anim = D_800B07C8;
+        entity->zPriority = PLAYER.zPriority + 2;
+        entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        SetSpeedX(-0x10);
+        func_8011A328(entity, 2);
+        entity->hitboxWidth = 8;
+        entity->hitboxHeight = 8;
+        entity->step++;
+        break;
+
+    case 1:
+        if (entity->animFrameIdx >= 23) {
+            if (!(g_GameTimer & 3)) {
+                entity->rotZ += 0x400;
+            }
+            if (entity->velocityX < 0) {
+                entity->velocityX -= FIX(0.09375);
+            } else {
+                entity->velocityX += FIX(0.09375);
+            }
+            if (!(g_GameTimer & 1) && (rand() & 1)) {
+                CreateEntFactoryFromEntity(entity, FACTORY(36, 1), 0);
+            }
+            entity->posX.val += entity->velocityX;
+            entity->posY.val += entity->velocityY;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityExpandingCircle);
 
