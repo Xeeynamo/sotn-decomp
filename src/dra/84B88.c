@@ -1422,23 +1422,25 @@ static void ReboundStoneBounce2(s16 bounceAngle) {
         g_CurrentEntity->ext.reboundStone.unk82++;
     }
 }
+
 // Entity ID 20. Created by blueprint 24. This comes from BlueprintNum for
 // the rebound stone SubweaponDef.
 void EntitySubwpnReboundStone(Entity* self) {
-    Collider collider;
-    u16 playerX;
-    u16 playerY;
+    s16 playerX; //sp5e
+    s16 playerY; //sp5c
+    Collider collider; //sp38
+    s32 speed; //sp34
+    s32 currX; //s8
+    s32 currY; //s7
+    s32 collX;
+    s32 collY;
+    s32 deltaX; //s4
+    s32 deltaY; //s3
+    s32 i; //s2
+    s32 colliderFlags; //s1
     PrimLineG2* prim;
-    s32 colliderFlags;
-    s32 i;
-    s32 deltaX;
-    s32 deltaY;
-    s32 currX;
-    s32 currY;
 
-    s32 speed = 0x400;
-    s32 facingLeft;
-
+    speed = 0x400;
     self->ext.reboundStone.unk82 = 0;
     playerX = self->posX.i.hi;
     playerY = self->posY.i.hi;
@@ -1451,8 +1453,8 @@ void EntitySubwpnReboundStone(Entity* self) {
             return;
         }
 
-        for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL;
-             prim = prim->next, i++) {
+        for (prim = (PrimLineG2*)&g_PrimBuf[self->primIndex], i = 0; prim != NULL;
+             i++, prim = prim->next) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 0xFF;
             prim->priority = PLAYER.zPriority + 2;
@@ -1469,8 +1471,11 @@ void EntitySubwpnReboundStone(Entity* self) {
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->zPriority = PLAYER.zPriority + 2;
 
-        facingLeft = PLAYER.facingLeft;
-        self->ext.reboundStone.stoneAngle = facingLeft == 0 ? 0xE80 : 0x980;
+        if(PLAYER.facingLeft){
+            self->ext.reboundStone.stoneAngle = 0x980;
+        } else {
+            self->ext.reboundStone.stoneAngle = 0xE80;
+        }
         self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
 
         self->ext.reboundStone.lifeTimer = 0x40;
@@ -1491,18 +1496,20 @@ void EntitySubwpnReboundStone(Entity* self) {
         deltaY = -rsin(self->ext.reboundStone.stoneAngle) * 0x10;
         currX = self->posX.val;
         currY = self->posY.val;
-        if (self->ext.reboundStone.unk84 == 0) {
+        if (!self->ext.reboundStone.unk84) {
             for (i = 0; i < 6; i++) {
-                CheckCollision(
-                    FIX_TO_I(currX), FIX_TO_I(currY + deltaY), &collider, 0);
-                if (collider.effects & EFFECT_SOLID) {
-                    colliderFlags =
+                collX = FIX_TO_I(currX);
+                collY = FIX_TO_I(currY + deltaY);
+                CheckCollision(collX ,collY , &collider, 0);
+                colliderFlags =
                         collider.effects &
                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                         EFFECT_UNK_1000 | EFFECT_UNK_0800);
+                         EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+                if (colliderFlags & EFFECT_SOLID) {
+                    colliderFlags &= 0xFF00;
                     if (deltaY > 0) {
                         if ((colliderFlags == 0) ||
-                            (collider.effects & EFFECT_UNK_0800)) {
+                            (colliderFlags & EFFECT_UNK_0800)) {
                             ReboundStoneBounce1(0x800);
                         }
                         if (colliderFlags == EFFECT_UNK_8000) {
@@ -1559,18 +1566,20 @@ void EntitySubwpnReboundStone(Entity* self) {
                         }
                     }
                 }
-                CheckCollision(
-                    FIX_TO_I(currX + deltaX), FIX_TO_I(currY), &collider, 0);
-                if (collider.effects & EFFECT_SOLID) {
-                    colliderFlags =
+                collY = FIX_TO_I(currY);
+                collX = FIX_TO_I(currX + deltaX);
+                CheckCollision(collX ,collY , &collider, 0);
+                colliderFlags =
                         collider.effects &
                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
-                         EFFECT_UNK_1000 | EFFECT_UNK_0800);
+                         EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+                if (colliderFlags & EFFECT_SOLID) {
+                    colliderFlags &= 0xFF00;
                     // Cases when traveling right
                     if (deltaX > 0) {
                         if ((colliderFlags == 0) ||
-                            TEST_BITS(collider.effects, 0x4800) ||
-                            TEST_BITS(collider.effects, 0xC000)) {
+                            TEST_BITS(colliderFlags, 0x4800) ||
+                            TEST_BITS(colliderFlags, 0xC000)) {
                             ReboundStoneBounce1(0x400);
                         }
                         if (colliderFlags == EFFECT_UNK_0800) {
@@ -1629,17 +1638,18 @@ void EntitySubwpnReboundStone(Entity* self) {
                         }
                     }
                 }
-                currX += deltaX;
-                if (self->ext.reboundStone.unk82 != 0) {
+                
+                if (self->ext.reboundStone.unk82) {
                     goto block_93;
                 }
+                currX += deltaX;
                 currY += deltaY;
             }
         } else {
             self->ext.reboundStone.unk84--;
         }
-        if (self->ext.reboundStone.unk82 != 0) {
         block_93:
+        if (self->ext.reboundStone.unk82) {
             CreateEntFactoryFromEntity(self, 10, 0);
             PlaySfx(SFX_UI_TINK);
         }
@@ -1664,7 +1674,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         if (self->ext.reboundStone.lifeTimer == 0x20) {
             self->hitboxState = 0;
         }
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->timer = 0;
             prim = prim->next;
@@ -1672,35 +1682,35 @@ void EntitySubwpnReboundStone(Entity* self) {
         break;
     }
 
+    prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
     i = 0;
-    prim = &g_PrimBuf[self->primIndex];
-    colliderFlags = self->step == 2 ? 4 : 2; // reused var, not colliderFlags
+    if(self->step == 2){  
+        colliderFlags = 4;
+    } else {
+        colliderFlags = 2;
+    } 
     // cleaner to use previous 3 lines than to put them in the for's initializer
     for (; prim != NULL; i++, prim = prim->next) {
-        if (self->ext.reboundStone.unk82 != 0) {
+        if (self->ext.reboundStone.unk82) {
             if (i == self->ext.reboundStone.unk80) {
                 prim->x0 = playerX;
                 prim->y0 = playerY;
                 prim->drawMode &= ~DRAW_HIDE;
-                // unusual nesting of the same condition
-                if (i == self->ext.reboundStone.unk80) {
-                    prim->x1 = self->posX.i.hi;
-                    prim->y1 = self->posY.i.hi;
-                }
             }
-        } else if (i == self->ext.reboundStone.unk80) {
+        }
+        if (i == self->ext.reboundStone.unk80) {
             prim->x1 = self->posX.i.hi;
             prim->y1 = self->posY.i.hi;
         }
         if (!(prim->drawMode & DRAW_HIDE)) {
-            if (prim->timer != 0) {
+            if (prim->timer) {
                 prim->timer--;
             } else {
                 // again not colliderFlags, seems to control stone fading
                 if (colliderFlags < prim->b1) {
                     prim->b1 -= colliderFlags;
                 }
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+                PGREY(prim,0) = PGREY(prim,1);
             }
         }
     }
