@@ -2463,4 +2463,129 @@ void func_80129864(Entity* self) {
     self->ext.et_80129864.unk86 %= 8;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySummonSpirit);
+extern RECT D_80138424;
+
+// opens hole in backround and spirit comes out (ID 0x40)
+void EntitySummonSpirit(Entity* self) {
+    Primitive* prim;
+    s32 timer;
+    s32 selfX;
+    s32 selfY;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        g_unkGraphicsStruct.unk20 = 3;
+        self->ext.summonspirit.spawnTimer = 10;
+        func_80118C28(13);
+        self->step++;
+        #ifdef VERSION_PSP
+        func_891B0DC(0,0);
+        #endif
+        return;
+
+    case 1:
+        if (--self->ext.summonspirit.spawnTimer) {
+            return;
+        }
+        self->primIndex = AllocPrimitives(4, 9);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->posX.i.hi = 0x80;
+        self->posY.i.hi = 0x60;
+        if (PLAYER.posY.i.hi - 0x30 > 0x40) {
+            self->posY.i.hi = PLAYER.posY.i.hi - 0x30;
+        } else {
+            self->posY.i.hi = PLAYER.posY.i.hi + 0x40;
+        }
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+
+        prim->type = PRIM_G4;
+        prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
+        prim->x2 = prim->x0 = selfX - 0x20;
+        prim->x3 = prim->x1 = selfX + 0x1F;
+        prim->y1 = prim->y0 = selfY - 0x20;
+        prim->y2 = prim->y3 = selfY + 0x1F;
+        D_80138424.x = prim->x0;
+        #ifndef VERSION_PSP
+        if (g_CurrentBuffer->disp.disp.x == 0) {
+            D_80138424.x += 0x100;
+        }
+        #endif
+        D_80138424.y = prim->y0;
+        D_80138424.w = 0x3F;
+        D_80138424.h = 0x3F;
+        MoveImage(&D_80138424, 0x200, 0x1C0);
+        prim->priority = 0x1C0;
+        prim = prim->next;
+        for (i = 0; i < 8; i++) {
+            // These should have been Point16 :(
+            prim->x1 = selfX + D_800B0860[(i + 1) * 2];
+            prim->y1 = selfY + D_800B0860[(i + 1) * 2 + 1];
+            prim->x3 = selfX + D_800B0860[i * 2];
+            prim->y3 = selfY + D_800B0860[i * 2 + 1];
+            prim->u1 = D_800B0860[(i + 1) * 2] + 0x20;
+            prim->v1 = D_800B0860[(i + 1) * 2 + 1] + 0xE0;
+            prim->u3 = D_800B0860[i * 2] + 0x20;
+            prim->v3 = D_800B0860[i * 2 + 1] + 0xE0;
+            prim->u0 = prim->u2 = 0x20;
+            prim->v0 = prim->v2 = 0xE0;
+            prim->priority = 0x1C1;
+            if (i >= 4) {
+                prim->priority += 3;
+            }
+            prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
+            prim->tpage = 0x118;
+            prim = prim->next;
+        }
+        self->ext.summonspirit.timer = 0;
+        // This just adds FLAG_HAS_PRIMS. Not sure why it wasn't an |=.
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->step++;
+        break;
+
+    case 2:
+        self->ext.summonspirit.timer++;
+        if (self->ext.summonspirit.timer > 10) {
+            // Both blueprints have child 61, but 118 has a couple 4s in the
+            // other args. 61 is func_80129864. Not yet decompiled.
+            if (self->params) {
+                CreateEntFactoryFromEntity(self, 118, 0);
+            } else {
+                CreateEntFactoryFromEntity(self, 116, 0);
+            }
+            // Blueprint 44 is child 11. EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(self, FACTORY(44, 0x67), 0);
+            PlaySfx(SFX_UI_MP_FULL);
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.summonspirit.timer--;
+        if (self->ext.summonspirit.timer < 0) {
+            g_unkGraphicsStruct.unk20 = 0;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    timer = self->ext.summonspirit.timer;
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    prim = prim->next;
+    for (i = 0; i < 8; i++) {
+        prim->x2 = selfX + (((rcos(i << 9) >> 4) * timer) >> 8);
+        prim->y2 = selfY - (((rsin(i << 9) >> 4) * timer) >> 8);
+        prim->x0 = selfX + (((rcos((i + 1) << 9) >> 4) * timer) >> 8);
+        prim->y0 = selfY - (((rsin((i + 1) << 9) >> 4) * timer) >> 8);
+        prim = prim->next;
+    }
+}

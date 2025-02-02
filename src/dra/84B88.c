@@ -2,9 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-// BSS
-extern RECT D_80138424;
-
 typedef enum{
     DAGGER_INIT,
     DAGGER_FLYING,
@@ -2465,6 +2462,8 @@ void func_80129864(Entity* self) {
     self->ext.et_80129864.unk86 %= 8;
 }
 
+extern RECT D_80138424;
+
 // opens hole in backround and spirit comes out (ID 0x40)
 void EntitySummonSpirit(Entity* self) {
     Primitive* prim;
@@ -2481,6 +2480,9 @@ void EntitySummonSpirit(Entity* self) {
         self->ext.summonspirit.spawnTimer = 10;
         func_80118C28(13);
         self->step++;
+        #ifdef VERSION_PSP
+        func_891B0DC(0,0);
+        #endif
         return;
 
     case 1:
@@ -2510,9 +2512,11 @@ void EntitySummonSpirit(Entity* self) {
         prim->y1 = prim->y0 = selfY - 0x20;
         prim->y2 = prim->y3 = selfY + 0x1F;
         D_80138424.x = prim->x0;
+        #ifndef VERSION_PSP
         if (g_CurrentBuffer->disp.disp.x == 0) {
             D_80138424.x += 0x100;
         }
+        #endif
         D_80138424.y = prim->y0;
         D_80138424.w = 0x3F;
         D_80138424.h = 0x3F;
