@@ -1849,20 +1849,22 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
     }
 }
 
-s32 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
-    u8 isEnd;
+static u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
     s32 i;
     s32 j;
-    u8* pColor;
+    u8* colorPtr; // points to an RGB color
+    u8* channelPtr; // points to a single channel of that color
+    u8 isEnd;
 
     isEnd = 0;
-    pColor = &prim->r0;
-    for (i = 0; i < 4; i++, pColor += OFF(Primitive, r1) - OFF(Primitive, r0)) {
+    colorPtr = &prim->r0;
+    for (i = 0; i < 4; colorPtr += OFF(Primitive, r1) - OFF(Primitive, r0), i++) {
         for (j = 0; j < 3; j++) {
-            pColor[j] -= amount;
+            channelPtr = &colorPtr[j]; //get the red, green, blue, or pad channel
+            *channelPtr -= amount;
 
-            if (pColor[j] < 16) {
-                pColor[j] = 16;
+            if (*channelPtr < 16) {
+                *channelPtr = 16;
             } else {
                 isEnd |= 1;
             }

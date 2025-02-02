@@ -1847,7 +1847,29 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911FBD0);
+u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
+    s32 i;
+    s32 j;
+    u8* colorPtr; // points to an RGB color
+    u8* channelPtr; // points to a single channel of that color
+    u8 isEnd;
+
+    isEnd = 0;
+    colorPtr = &prim->r0;
+    for (i = 0; i < 4; colorPtr += OFF(Primitive, r1) - OFF(Primitive, r0), i++) {
+        for (j = 0; j < 3; j++) {
+            channelPtr = &colorPtr[j]; //get the red, green, blue, or pad channel
+            *channelPtr -= amount;
+
+            if (*channelPtr < 16) {
+                *channelPtr = 16;
+            } else {
+                isEnd |= 1;
+            }
+        }
+    }
+    return isEnd;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnAgunea);
 

@@ -202,6 +202,7 @@ ReboundStoneBounce1 = 0x0911EA78;
 ReboundStoneBounce2 = 0x0911EB00;
 EntitySubwpnReboundStone = 0x0911EB88;
 EntitySubwpnThrownVibhuti = 0x0911F5D8;
+DraPrimDecreaseBrightness = 0x0911FBD0;
 EntitySubwpnAgunea = 0x0911FCA0;
 EntityAguneaHitEnemy = 0x091203E0;
 func_80129864 = 0x09120D88;
