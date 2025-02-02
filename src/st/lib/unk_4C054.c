@@ -16,9 +16,3 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_4C054", func_us_801CCF6C);
 INCLUDE_ASM("st/lib/nonmatchings/unk_4C054", func_us_801CD318);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_4C054", func_us_801CD9EC);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4C054", func_us_801CDB6C);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4C054", func_us_801CDEDC);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4C054", func_us_801CEC0C);
