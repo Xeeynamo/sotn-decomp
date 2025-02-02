@@ -664,14 +664,11 @@ void EntityHolyWaterBreakGlass(Entity* self) {
 void EntityHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
-    s16 pad[2];
+    s16 sp4e; //unused
     Primitive* prim;
-    s16 temp_v0_4;
-    s16 angleTemp;
-    s32 angle;
-    s32 temp_v0;
+    s16 yHeight;
+    s16 angle;
     s32 i;
-    s32 hex80;
     u8 randR;
     u8 randG;
     u8 randB;
@@ -680,20 +677,20 @@ void EntityHolyWaterFlame(Entity* self) {
 
     s16* primYPtr;
 
-    primUBase = D_800B0688[(g_GameTimer & 7)].x;
-    primVBase = D_800B0688[(g_GameTimer & 7)].y;
+    primUBase = D_800B0688[(g_GameTimer & 7) * 2 + 0];
+    primVBase = D_800B0688[(g_GameTimer & 7) * 2 + 1];
     switch (self->step) {
     case 0:
-        randR = (rand() & 0x1F) | 0x40;
-        randG = (rand() & 0x1F) | 0x80;
-        randB = (rand() & 0x1F) | 0x60;
+        randR = (rand() & 0x1F) + 0x40;
+        randG = (rand() & 0x1F) + 0x80;
+        randB = (rand() & 0x1F) + 0x60;
         self->primIndex = AllocPrimitives(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[self->primIndex];
-        while (prim != NULL) {
+        // i is unused in this loop
+        for(prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++, prim = prim->next) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
@@ -702,32 +699,34 @@ void EntityHolyWaterFlame(Entity* self) {
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP |
                              DRAW_UNK02 | DRAW_COLORS | DRAW_HIDE;
-            prim = prim->next;
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         func_8011A290(self);
         self->hitboxWidth = 4;
-        self->posY.i.hi = self->posY.i.hi - 0xA;
+        self->posY.i.hi -= 10;
         CreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
+        self->posY.i.hi += 10;
         self->ext.holywater.timer = 0x50;
-        self->posY.i.hi = self->posY.i.hi + 0xA;
         self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
         self->step += 1;
         return;
     case 1:
-        angleTemp = self->ext.holywater.angle;
+        sp4e = -1;
+        if(self->facingLeft){
+            sp4e = - sp4e;
+        }
+        angle = self->ext.holywater.angle;
         self->ext.holywater.angle += 0x180;
-        angle = angleTemp;
         for (i = 0; i < 4; i++) {
-            sp10[i] = self->posX.i.hi + (rsin(angle) >> 0xA);
-            angle += 0x400;
+            sp10[i] = self->posX.i.hi + (rsin(angle + (i << 10)) >> 10);
         }
         sp10[0] = self->posX.i.hi;
         sp10[4] = self->posX.i.hi;
-        temp_v0_4 =
-            (rsin((s16)((self->ext.holywater.timer * 64) + 0x800)) >> 8) +
+        angle = ((self->ext.holywater.timer - 0x10) * 64) + 0xC00;
+        yHeight =
+            (rsin(angle) >> 8) +
             self->ext.holywater.unk80;
-        sp20[0] = self->posY.i.hi - temp_v0_4;
+        sp20[0] = self->posY.i.hi - yHeight;
         sp20[4] = self->posY.i.hi;
         sp20[2] = (sp20[0] + sp20[4]) / 2;
         sp20[1] = (sp20[0] + sp20[2]) / 2;
@@ -742,16 +741,15 @@ void EntityHolyWaterFlame(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        i = 0;
-        while (prim != NULL) {
+        for(i = 0; prim != NULL; i++, prim = prim->next) {
             if (self->ext.holywater.timer < 0x29) {
-                if (prim->g0 >= 17) {
+                if (prim->g0 > 16) {
                     prim->g0 -= 5;
                 }
-                if (prim->b0 >= 17) {
+                if (prim->b0 > 16) {
                     prim->b0 -= 5;
                 }
-                if (prim->r0 >= 17) {
+                if (prim->r0 > 16) {
                     prim->r0 -= 5;
                 }
                 prim->g1 = prim->g2 = prim->g3 = prim->g0;
@@ -760,28 +758,26 @@ void EntityHolyWaterFlame(Entity* self) {
             }
             prim->x0 = sp10[i] - 8;
             prim->x1 = sp10[i] + 8;
-            prim->y0 = sp10[i + 8];
-            prim->y1 = sp10[i + 8];
+            prim->y0 = sp20[i];
+            prim->y1 = sp20[i];
             prim->x2 = sp10[i + 1] - 8;
             prim->x3 = sp10[i + 1] + 8;
             prim->y2 = sp20[i + 1];
             prim->y3 = sp20[i + 1];
             prim->drawMode &= ~DRAW_HIDE;
-            hex80 = 0x80;
-            prim->u0 = prim->u1 = primUBase - ((i * 7) + hex80);
-            prim->u2 = prim->u3 = primUBase - (((i + 1) * 7) + hex80);
-            prim->v0 = prim->v2 = primVBase - hex80;
-            prim->v1 = prim->v3 = primVBase - 0x70;
-            i++;
+            prim->u0 = prim->u1 = primUBase + 0x80 - (i * 7);
+            prim->u2 = prim->u3 = primUBase + 0x80 - ((i + 1) * 7);
+            prim->v0 = prim->v2 = primVBase + 0x80;
+            prim->v1 = prim->v3 = primVBase + 0x90;
             if ((sp20[4] - sp20[0]) < 7) {
                 prim->drawMode |= DRAW_HIDE;
             }
-            prim = prim->next;
         }
-        self->hitboxHeight = temp_v0_4 >> 1;
-        self->hitboxOffY = (-temp_v0_4 >> 1);
+        self->hitboxHeight = yHeight >> 1;
+        self->hitboxOffY = (-yHeight >> 1);
     }
 }
+
 // cross subweapon crash (full effect with all parts)
 void EntitySubwpnCrashCross(Entity* self) {
     Primitive* prim;

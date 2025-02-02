@@ -658,7 +658,123 @@ void EntityHolyWaterBreakGlass(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHolyWaterFlame);
+// green flame when holy water explodes
+void EntityHolyWaterFlame(Entity* self) {
+    s16 sp10[5];
+    s16 sp20[5];
+    s16 sp4e; //unused
+    Primitive* prim;
+    s16 yHeight;
+    s16 angle;
+    s32 i;
+    u8 randR;
+    u8 randG;
+    u8 randB;
+    u8 primUBase;
+    u8 primVBase;
+
+    s16* primYPtr;
+
+    primUBase = D_800B0688[(g_GameTimer & 7) * 2 + 0];
+    primVBase = D_800B0688[(g_GameTimer & 7) * 2 + 1];
+    switch (self->step) {
+    case 0:
+        randR = (rand() & 0x1F) + 0x40;
+        randG = (rand() & 0x1F) + 0x80;
+        randB = (rand() & 0x1F) + 0x60;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        // i is unused in this loop
+        for(prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++, prim = prim->next) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
+            prim->clut = 0x1B2;
+            prim->tpage = 0x1A;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP |
+                             DRAW_UNK02 | DRAW_COLORS | DRAW_HIDE;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        func_8011A290(self);
+        self->hitboxWidth = 4;
+        self->posY.i.hi -= 10;
+        CreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
+        self->posY.i.hi += 10;
+        self->ext.holywater.timer = 0x50;
+        self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
+        self->step += 1;
+        return;
+    case 1:
+        sp4e = -1;
+        if(self->facingLeft){
+            sp4e = - sp4e;
+        }
+        angle = self->ext.holywater.angle;
+        self->ext.holywater.angle += 0x180;
+        for (i = 0; i < 4; i++) {
+            sp10[i] = self->posX.i.hi + (rsin(angle + (i << 10)) >> 10);
+        }
+        sp10[0] = self->posX.i.hi;
+        sp10[4] = self->posX.i.hi;
+        angle = ((self->ext.holywater.timer - 0x10) * 64) + 0xC00;
+        yHeight =
+            (rsin(angle) >> 8) +
+            self->ext.holywater.unk80;
+        sp20[0] = self->posY.i.hi - yHeight;
+        sp20[4] = self->posY.i.hi;
+        sp20[2] = (sp20[0] + sp20[4]) / 2;
+        sp20[1] = (sp20[0] + sp20[2]) / 2;
+        sp20[3] = (sp20[2] + sp20[4]) / 2;
+        prim = &g_PrimBuf[self->primIndex];
+        if (self->ext.holywater.timer & 3) {
+            self->hitboxState = 0;
+        } else {
+            self->hitboxState = 2;
+        }
+        if (--self->ext.holywater.timer < 0x11) {
+            DestroyEntity(self);
+            return;
+        }
+        for(i = 0; prim != NULL; i++, prim = prim->next) {
+            if (self->ext.holywater.timer < 0x29) {
+                if (prim->g0 > 16) {
+                    prim->g0 -= 5;
+                }
+                if (prim->b0 > 16) {
+                    prim->b0 -= 5;
+                }
+                if (prim->r0 > 16) {
+                    prim->r0 -= 5;
+                }
+                prim->g1 = prim->g2 = prim->g3 = prim->g0;
+                prim->r1 = prim->r2 = prim->r3 = prim->r0;
+                prim->b1 = prim->b2 = prim->b3 = prim->b0;
+            }
+            prim->x0 = sp10[i] - 8;
+            prim->x1 = sp10[i] + 8;
+            prim->y0 = sp20[i];
+            prim->y1 = sp20[i];
+            prim->x2 = sp10[i + 1] - 8;
+            prim->x3 = sp10[i + 1] + 8;
+            prim->y2 = sp20[i + 1];
+            prim->y3 = sp20[i + 1];
+            prim->drawMode &= ~DRAW_HIDE;
+            prim->u0 = prim->u1 = primUBase + 0x80 - (i * 7);
+            prim->u2 = prim->u3 = primUBase + 0x80 - ((i + 1) * 7);
+            prim->v0 = prim->v2 = primVBase + 0x80;
+            prim->v1 = prim->v3 = primVBase + 0x90;
+            if ((sp20[4] - sp20[0]) < 7) {
+                prim->drawMode |= DRAW_HIDE;
+            }
+        }
+        self->hitboxHeight = yHeight >> 1;
+        self->hitboxOffY = (-yHeight >> 1);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnCrashCross);
 
