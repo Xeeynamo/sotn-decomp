@@ -565,16 +565,15 @@ void EntityHolyWater(Entity* self) {
 }
 
 // Glass breaking effect for holy water. Duplicate of RIC func_80167A70.
+#define FAKEPRIM ((FakePrim*)prim)
+
 void EntityHolyWaterBreakGlass(Entity* self) {
     Point16 sp10[8];
     Primitive* prim;
-    FakePrim* fakeprim;
-    s32 velX;
+    s16 posX;
+    s16 posY;
+    s16 arrIndex;
     s32 i;
-    u16 posY;
-    u16 posX;
-    u8 arrIndex;
-    u8 randbit;
 
     switch (self->step) {
     case 0:
@@ -583,42 +582,37 @@ void EntityHolyWaterBreakGlass(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++, prim = prim->next) {
-            if (i < 8) {
-                fakeprim = (FakePrim*)prim;
-                fakeprim->x0 = posX;
-                fakeprim->posX.i.hi = posX;
-                sp10[i].x = posX;
-                fakeprim->y0 = posY;
-                fakeprim->posY.i.hi = posY;
-                sp10[i].y = posY;
+            if (i < 8) {                
+                sp10[i].x = FAKEPRIM->posX.i.hi = FAKEPRIM->x0 = posX;
+                sp10[i].y = FAKEPRIM->posY.i.hi = FAKEPRIM->y0 = posY;
                 // Random velocity from 0.25 to 0.5
-                velX = (rand() & 0x3FFF) + FIX(0.25);
-                fakeprim->velocityX.val = velX;
+                FAKEPRIM->velocityX.val = (rand() & 0x3FFF) + FIX(0.25);
                 if (i & 1) {
-                    fakeprim->velocityX.val = -velX;
+                    FAKEPRIM->velocityX.val = -FAKEPRIM->velocityX.val;
                 }
-                fakeprim->velocityY.val = -((rand() * 2) + FIX(2.5));
-                fakeprim->drawMode = DRAW_HIDE | DRAW_UNK02;
-                fakeprim->type = PRIM_TILE;
+                FAKEPRIM->velocityY.val = -(((rand() & PSP_RANDMASK) * 2) + FIX(2.5));
+                FAKEPRIM->drawMode = DRAW_HIDE | DRAW_UNK02;
+                FAKEPRIM->type = PRIM_TILE;
             } else {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 =
-                    (rand() & 0xF) | 0x30;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
+                    (rand() & 0xF) + 0x30;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = (rand() & 0x7F) + 0x80;
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 =
                     (rand() & 0x1F) + 0x30;
-                randbit = rand() & 1;
-                prim->drawMode =
-                    !(randbit) ? (DRAW_COLORS | DRAW_UNK02)
-                               : (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                if(rand() & 1){
+                    prim->drawMode = (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                   DRAW_UNK02 | DRAW_TRANSP);
+                } else {
+                    prim->drawMode = (DRAW_COLORS | DRAW_UNK02);
+
+                }
                 posX = sp10[i - 8].x;
                 posY = sp10[i - 8].y;
-                arrIndex = i & 3;
-                prim->u0 = arrIndex;
+                prim->u0 = arrIndex = i & 3;
                 prim->x0 = posX + D_800B0658[arrIndex][0];
                 prim->y0 = posY + D_800B0658[arrIndex][1];
                 prim->x1 = posX + D_800B0658[arrIndex][2];
@@ -642,16 +636,15 @@ void EntityHolyWaterBreakGlass(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
-                fakeprim = (FakePrim*)prim;
-                fakeprim->posX.i.hi = fakeprim->x0;
-                fakeprim->posY.i.hi = fakeprim->y0;
-                fakeprim->posX.val += fakeprim->velocityX.val;
-                fakeprim->posY.val += fakeprim->velocityY.val;
-                fakeprim->velocityY.val += FIX(36.0 / 128);
-                sp10[i].x = fakeprim->posX.i.hi;
-                sp10[i].y = fakeprim->posY.i.hi;
-                fakeprim->x0 = fakeprim->posX.i.hi;
-                fakeprim->y0 = fakeprim->posY.i.hi;
+                FAKEPRIM->posX.i.hi = FAKEPRIM->x0;
+                FAKEPRIM->posY.i.hi = FAKEPRIM->y0;
+                FAKEPRIM->posX.val += FAKEPRIM->velocityX.val;
+                FAKEPRIM->posY.val += FAKEPRIM->velocityY.val;
+                FAKEPRIM->velocityY.val += FIX(36.0 / 128);
+                sp10[i].x = FAKEPRIM->posX.i.hi;
+                sp10[i].y = FAKEPRIM->posY.i.hi;
+                FAKEPRIM->x0 = FAKEPRIM->posX.i.hi;
+                FAKEPRIM->y0 = FAKEPRIM->posY.i.hi;
             } else {
                 posX = sp10[i - 8].x;
                 posY = sp10[i - 8].y;

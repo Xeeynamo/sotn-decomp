@@ -22,6 +22,14 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
+// PSP does & 7FFF for many calls to rand(), PS1 does not.
+// This works around that.
+#ifdef VERSION_PSP
+#define PSP_RANDMASK 0x7FFF
+#else
+#define PSP_RANDMASK 0xFFFFFFFF
+#endif
+
 #define SPAD(x) ((s32*)SP(x * sizeof(s32)))
 
 typedef long Event;
