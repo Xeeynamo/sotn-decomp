@@ -216,6 +216,7 @@ func_80118C28 = 0x09124F20;
 EntityNumberMovesToHpMeter = 0x09125048;
 EntityGuardText = 0x09125F38;
 EntitySmallRisingHeart = 0x09126A60;
+func_80119E78 = 0x09126C10;
 func_80119F70 = 0x09126E60;
 func_8011A290 = 0x09127210;
 func_8011A4C8 = 0x09127480;

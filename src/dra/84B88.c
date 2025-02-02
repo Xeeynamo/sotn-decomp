@@ -890,19 +890,21 @@ void EntitySubwpnCrashCross(Entity* self) {
 
 // rising blue particles from cross crash
 void EntitySubwpnCrashCrossParticles(Entity* self) {
+    s16 rand63;
+    s16 var_g0;
+    s16 var_g1;
     Primitive* prim;
-    u16 rand63;
 
     if (self->step == 0) {
         self->primIndex = AllocPrimitives(PRIM_GT4, 64);
-        if (self->primIndex != -1) {
-            self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-            // entity lives for 192 frames
-            self->ext.timer.t = 192;
-            self->step++;
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
             return;
         }
-        DestroyEntity(self);
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        // entity lives for 192 frames
+        self->ext.timer.t = 192;
+        self->step++;
         return;
     }
     // This is some kind of time to live, since it decrements and if 0 gets
@@ -911,8 +913,8 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    // On every third frame, as long as we have over 9 frames left alive
-    if ((self->ext.timer.t >= 9) && !(self->ext.timer.t & 3)) {
+    // On every third frame, as long as we have over 8 frames left alive
+    if ((self->ext.timer.t > 8) && !(self->ext.timer.t & 3)) {
         // iterate through primtives until we find one where r0 == 0, and set to
         // 1
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
@@ -927,29 +929,34 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
 
     for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
         // for any of those prims with nonzero r0 values,
-        if (prim->r0 != 0) {
+        if (prim->r0) {
             // r1 acts as a flag to show whether this has happened.
             if (prim->r1 == 0) {
                 rand63 = rand() & 0x3F; // random integer 0-63
                 prim->g0 = (rand() % 237) + 9;
-                prim->g1 = -0x10 - (rand() & 0x20);
+                prim->g1 = 0xF0 - (rand() & 0x20);
                 prim->clut = 0x1B0;
                 prim->tpage = 0x1A;
                 prim->b0 = 0;
                 prim->b1 = 0;
-                prim->priority = (rand63 + PLAYER.zPriority) - 0x20;
+                prim->priority = (PLAYER.zPriority + rand63) - 0x20;
                 prim->drawMode = DRAW_DEFAULT;
-                prim->g3 = (rand63 >> 2) + 4; // rand15 + 4 means 4 to 19
+                prim->g3 = ((u8)rand63 >> 2) + 4; // rand15 + 4 means 4 to 19
                 prim->r1++;
             } else {
                 prim->g1 -= prim->g3;
-                if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
+                if ((prim->b0 >= 6) || (prim->g1 < 24)) {
                     prim->drawMode = DRAW_HIDE;
                     prim->r0 = 0;
                 }
             }
-            if (prim->r0 != 0) {
-                func_80119E78(prim, prim->g0, prim->g1);
+            if (prim->r0) {
+                // This is stupid.
+                var_g0 = 0;
+                var_g1 = 0;
+                var_g0 |= prim->g0;
+                var_g1 |= prim->g1;
+                func_80119E78(prim, var_g0, var_g1);
             }
         }
     }
