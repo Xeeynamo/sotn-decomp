@@ -404,7 +404,7 @@ extern AnimationFrame D_800B07C8[];
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern u8 D_800B0848[];
-extern u16 D_800B0858[];
+extern s16 D_800B0858[];
 extern s16 D_800B0860[];
 extern s16 D_800B0884[];
 extern s16 D_800B08A8[];
@@ -575,7 +575,7 @@ bool func_80111D24(void);
 void func_80115394(DamageParam* damage, s16 arg1, s16 arg2);
 void func_80115C50(void);
 void func_80118894(Entity*);
-
+Entity* func_80118970(void);
 void func_80118C28(s32 arg0);
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);

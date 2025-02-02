@@ -2222,6 +2222,245 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_80129864);
+void func_80129864(Entity* self) {
+    Primitive* prim;
+    s32 angle_diff;
+    s32 angle_offset;
+    s32 otherX, otherY;
+    s32 action;
+    s32 eleven;
+    s32 twentyfive;
+    
+    s32 s1;
+    s32 s3;
+    s32 s2;
+    s32 i;
+    s32 xDist;
+    s32 yDist;
+    
+    u8 temp_u;
+    u8 temp_v;
+    
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 8; i++) {
+            prim->type = PRIM_TILE;
+            prim->u0 = 1;
+            prim->v0 = 1;
+            prim->drawMode = DRAW_UNK02;
+            prim->priority = 0;
+            prim = prim->next;
+            prim->priority = 0x1C2;
+            prim->drawMode =
+                DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            prim->tpage = 0x1A;
+            prim->clut = 0x19F;
+            prim = prim->next;
+        }
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft
+        self->ext.et_80129864.unk80 = D_800B0858[self->params & 0xFF];
+        self->animSet = 9;
+        self->anim = D_800B0798;
+        self->palette = PAL_OVL(0x19F);
+        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->zPriority = 0x1C3;
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+            FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        if (self->params & 0x7F00) {
+            func_8011A328(self, 3);
+        } else {
+            func_8011A328(self, 1);
+        }
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->step++;
+        break;
+    case 1:
+        s1 = rcos(self->ext.et_80129864.unk82) >> 8;
+        self->ext.et_80129864.unk82 += 0x80;
+        self->ext.et_80129864.unk80 += s1;
+
+        if (self->posY.i.hi < -0x20) {
+            self->ext.et_80129864.ent = func_80118970();
+            self->ext.et_80129864.unk84 = 0;
+            self->ext.et_80129864.unk80 = 0xC00;
+            if ((self->params & 0xFF) >= 2) {
+                self->facingLeft = (self->facingLeft + 1) & 1;
+            }
+            self->step++;
+        }
+        break;
+    case 2:
+        if (self->ext.et_80129864.unk84 < 0x18) {
+            angle_offset = 0x10;
+        } else if (self->ext.et_80129864.unk84 < 0x28) {
+            angle_offset = 0x20;
+        } else if (self->ext.et_80129864.unk84 < 0x38) {
+            angle_offset = 0x40;
+        } else {
+            angle_offset = 0x80;
+        }
+
+        if (self->ext.et_80129864.ent != NULL) {
+            if (!self->ext.et_80129864.ent->entityId) {
+                self->step++;
+                break;
+            } else {
+                otherX = self->ext.et_80129864.ent->posX.i.hi;
+                otherY = self->ext.et_80129864.ent->posY.i.hi;
+            }
+        } else {
+            if (self->facingLeft) {
+                otherX = 0x140;
+                otherY = 0xA0;
+            } else {
+                otherX = -0x40;
+                otherY = 0xA0;
+            }
+            if (self->params & 1) {
+                otherY += 0x40;
+            }
+        }
+        xDist = otherX - self->posX.i.hi;
+        yDist = otherY - self->posY.i.hi;
+        s1 = ratan2(-yDist, xDist) & 0xFFF;
+        s3 = self->ext.et_80129864.unk80 & 0xFFF;
+        angle_diff = abs(s3 - s1);
+        if(angle_offset > angle_diff){
+            angle_offset = angle_diff;
+        }
+        if (s3 < s1) {
+            if (angle_diff < 0x800) {
+                s3 += angle_offset;
+            } else {
+                s3 -= angle_offset;
+            }
+        } else {
+            if (angle_diff < 0x800) {
+                s3 -= angle_offset;
+            } else {
+                s3 += angle_offset;
+            }
+        }
+        self->ext.et_80129864.unk80 = s3 & 0xFFF;
+        if (++self->ext.et_80129864.unk84 > 0x60) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS |
+                      FLAG_UNK_100000 | FLAG_UNK_10000;
+        s1 = rcos(self->ext.et_80129864.unk82) >> 8;
+        self->ext.et_80129864.unk82 += 0x80;
+        self->ext.et_80129864.unk80 += s1;
+        break;
+    }
+
+    self->velocityX = rcos(self->ext.et_80129864.unk80) << 6;
+    self->velocityY = -(rsin(self->ext.et_80129864.unk80) << 6);
+    self->posX.val += self->velocityX;
+    self->posY.val += self->velocityY;
+
+    if (self->facingLeft) {
+        self->rotZ = self->ext.et_80129864.unk80;
+    } else {
+        self->rotZ = 0x800 - self->ext.et_80129864.unk80;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        if (self->ext.et_80129864.unk86 == i) {
+            prim->x1 = 1;
+        }
+
+        switch (prim->x1) {
+        case 0:
+            action = 0;
+            break;
+        case 1:
+            action = 1;
+            prim->x1 += 1;
+            prim->y1 = 0x100;
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            prim->x2 = self->ext.et_80129864.unk80;
+            break;
+        case 2:
+            prim->y1 -= 16;
+            action = 2;
+            break;
+        }
+
+        xDist = prim->x0;
+        yDist = prim->y0;
+        s2 = prim->y1;
+        eleven = 11;
+        twentyfive = 25;
+        s3 = prim->x2;
+        prim = prim->next;
+
+        switch (action) {
+        case 0:
+            prim->drawMode |= DRAW_HIDE;
+            break;
+        case 1:
+#ifdef VERSION_PC
+            // self->animCurFrame starts at 0. Seems like an out of bounds
+            // bug in original?
+            temp_u = D_800B0848[(self->animCurFrame) * 2];
+            temp_v = D_800B0848[(self->animCurFrame) * 2 + 1];
+#else
+            temp_u = D_800B0848[(self->animCurFrame - 1) * 2];
+            temp_v = D_800B0848[(self->animCurFrame - 1) * 2 + 1];
+#endif
+            prim->u0 = prim->u2 = temp_u;
+            prim->u1 = prim->u3 = temp_u + 31;
+            prim->v0 = prim->v1 = temp_v;
+            prim->v2 = prim->v3 = temp_v + 15;
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
+                    prim->g3 = 0x80;
+            prim->drawMode &= ~DRAW_HIDE;
+            break;
+        case 2:
+            if (prim->g3 > 4) {
+                prim->g3 -= 12;
+            }
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 = prim->g3;
+
+            break;
+        }
+
+        if (action) {
+            s1 = s3 - 0x200;
+            prim->x0 = xDist + ((((rcos(s1) >> 4) * eleven >> 8) * s2) >> 8);
+            prim->y0 = yDist - ((((rsin(s1) >> 4) * eleven >> 8) * s2) >> 8);
+            s1 = s3 + 0x200;
+            prim->x2 = xDist + ((((rcos(s1) >> 4) * eleven >> 8) * s2) >> 8);
+            prim->y2 = yDist - ((((rsin(s1) >> 4) * eleven >> 8) * s2) >> 8);
+            s1 = s3 - 0x734;
+            prim->x1 = xDist + ((((rcos(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
+            prim->y1 = yDist - ((((rsin(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
+            s1 = s3 + 0x734;
+            prim->x3 = xDist + ((((rcos(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
+            prim->y3 = yDist - ((((rsin(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
+        }
+        prim = prim->next;
+    }
+
+    self->ext.et_80129864.unk86 += 1;
+    self->ext.et_80129864.unk86 %= 8;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySummonSpirit);

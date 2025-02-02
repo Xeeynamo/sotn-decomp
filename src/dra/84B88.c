@@ -2225,26 +2225,28 @@ void EntityAguneaHitEnemy(Entity* self) {
 }
 
 void func_80129864(Entity* self) {
-    s32 a = 11;
-    s32 b = 25;
     Primitive* prim;
-    s32 s1;
-    s32 s3;
-    s32 s4;
-    s32 i;
-    s32 s6;
-    s32 s7;
-    s32 action;
-
-    u8 temp_u;
-    u8 temp_v;
     s32 angle_diff;
     s32 angle_offset;
     s32 otherX, otherY;
+    s32 action;
+    s32 eleven;
+    s32 twentyfive;
+    
+    s32 s1;
+    s32 s3;
+    s32 s2;
+    s32 i;
+    s32 xDist;
+    s32 yDist;
+    
+    u8 temp_u;
+    u8 temp_v;
+    
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(4, 0x10);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 0x10);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2266,7 +2268,7 @@ void func_80129864(Entity* self) {
             prim = prim->next;
         }
         self->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft
-        self->ext.et_80129864.unk80 = D_800B0858[(u8)self->params];
+        self->ext.et_80129864.unk80 = D_800B0858[self->params & 0xFF];
         self->animSet = 9;
         self->anim = D_800B0798;
         self->palette = PAL_OVL(0x19F);
@@ -2294,7 +2296,7 @@ void func_80129864(Entity* self) {
             self->ext.et_80129864.ent = func_80118970();
             self->ext.et_80129864.unk84 = 0;
             self->ext.et_80129864.unk80 = 0xC00;
-            if ((self->params & 0xFF) > 1) {
+            if ((self->params & 0xFF) >= 2) {
                 self->facingLeft = (self->facingLeft + 1) & 1;
             }
             self->step++;
@@ -2331,11 +2333,14 @@ void func_80129864(Entity* self) {
                 otherY += 0x40;
             }
         }
-
-        s1 = ratan2(self->posY.i.hi - otherY, otherX - self->posX.i.hi) & 0xFFF;
+        xDist = otherX - self->posX.i.hi;
+        yDist = otherY - self->posY.i.hi;
+        s1 = ratan2(-yDist, xDist) & 0xFFF;
         s3 = self->ext.et_80129864.unk80 & 0xFFF;
         angle_diff = abs(s3 - s1);
-        angle_offset = CLAMP_MAX(angle_offset, angle_diff);
+        if(angle_offset > angle_diff){
+            angle_offset = angle_diff;
+        }
         if (s3 < s1) {
             if (angle_diff < 0x800) {
                 s3 += angle_offset;
@@ -2398,10 +2403,12 @@ void func_80129864(Entity* self) {
             break;
         }
 
+        xDist = prim->x0;
+        yDist = prim->y0;
+        s2 = prim->y1;
+        eleven = 11;
+        twentyfive = 25;
         s3 = prim->x2;
-        s6 = prim->x0;
-        s7 = prim->y0;
-        s4 = prim->y1;
         prim = prim->next;
 
         switch (action) {
@@ -2439,23 +2446,23 @@ void func_80129864(Entity* self) {
 
         if (action) {
             s1 = s3 - 0x200;
-            prim->x0 = s6 + ((((rcos(s1) >> 4) * a >> 8) * s4) >> 8);
-            prim->y0 = s7 - ((((rsin(s1) >> 4) * a >> 8) * s4) >> 8);
+            prim->x0 = xDist + ((((rcos(s1) >> 4) * eleven >> 8) * s2) >> 8);
+            prim->y0 = yDist - ((((rsin(s1) >> 4) * eleven >> 8) * s2) >> 8);
             s1 = s3 + 0x200;
-            prim->x2 = s6 + ((((rcos(s1) >> 4) * a >> 8) * s4) >> 8);
-            prim->y2 = s7 - ((((rsin(s1) >> 4) * a >> 8) * s4) >> 8);
+            prim->x2 = xDist + ((((rcos(s1) >> 4) * eleven >> 8) * s2) >> 8);
+            prim->y2 = yDist - ((((rsin(s1) >> 4) * eleven >> 8) * s2) >> 8);
             s1 = s3 - 0x734;
-            prim->x1 = s6 + ((((rcos(s1) >> 4) * b >> 8) * s4) >> 8);
-            prim->y1 = s7 - ((((rsin(s1) >> 4) * b >> 8) * s4) >> 8);
+            prim->x1 = xDist + ((((rcos(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
+            prim->y1 = yDist - ((((rsin(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
             s1 = s3 + 0x734;
-            prim->x3 = s6 + ((((rcos(s1) >> 4) * b >> 8) * s4) >> 8);
-            prim->y3 = s7 - ((((rsin(s1) >> 4) * b >> 8) * s4) >> 8);
+            prim->x3 = xDist + ((((rcos(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
+            prim->y3 = yDist - ((((rsin(s1) >> 4) * twentyfive >> 8) * s2) >> 8);
         }
         prim = prim->next;
     }
 
     self->ext.et_80129864.unk86 += 1;
-    self->ext.et_80129864.unk86 = self->ext.et_80129864.unk86 % 8;
+    self->ext.et_80129864.unk86 %= 8;
 }
 
 // opens hole in backround and spirit comes out (ID 0x40)
