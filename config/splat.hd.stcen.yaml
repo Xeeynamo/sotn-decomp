@@ -29,7 +29,6 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
-  include_macro_inc: false
 sha1: 32698a322586d2fd4249467c99f5102faff44f30
 segments:
   - name: stcen

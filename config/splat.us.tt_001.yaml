@@ -28,7 +28,6 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
-  include_macro_inc: false
 sha1: 326c9d2f9b9e2af678f5d63b30b31fba99ae75d4
 segments:
   - name: tt_001
