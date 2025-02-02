@@ -1399,9 +1399,27 @@ void func_80127CC8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911EA78);
+// These are a pair of helper functions used for the rebound stone rebounding.
+// No clear reason why the first one puts the first line outside the
+// if statement.
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_psp_0911EB00);
+static void ReboundStoneBounce1(s16 bounceAngle) {
+    g_CurrentEntity->ext.reboundStone.stoneAngle =
+        (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
+    }
+}
+
+static void ReboundStoneBounce2(s16 bounceAngle) {
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.stoneAngle =
+            (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnReboundStone);
 

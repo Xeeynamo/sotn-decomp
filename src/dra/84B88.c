@@ -1405,7 +1405,7 @@ void func_80127CC8(Entity* self) {
 // No clear reason why the first one puts the first line outside the
 // if statement.
 
-void ReboundStoneBounce1(s16 bounceAngle) {
+static void ReboundStoneBounce1(s16 bounceAngle) {
     g_CurrentEntity->ext.reboundStone.stoneAngle =
         (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
     if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
@@ -1414,7 +1414,7 @@ void ReboundStoneBounce1(s16 bounceAngle) {
     }
 }
 
-void ReboundStoneBounce2(s16 bounceAngle) {
+static void ReboundStoneBounce2(s16 bounceAngle) {
     if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
         g_CurrentEntity->ext.reboundStone.stoneAngle =
             (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
