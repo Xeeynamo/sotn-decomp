@@ -960,7 +960,172 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHellfireHandler);
+typedef enum{
+    HFH_INIT,
+    HFH_STARTDELAY,
+    HFH_BEAMWIDEN,
+    HFH_BEAMFLICKER,
+    HFH_BEAMSHRINK,
+    HFH_PLAYER_DISAPPEAR,
+    HFH_PLAYER_REAPPEAR,
+    HFH_FINAL_PHASE
+} HellfireHandlerSteps;
+
+void EntityHellfireHandler(Entity* self) {
+    Primitive* prim;
+    s16 selfPosX;
+    s16 selfPosY;
+    // These are probably adjustable variables but for now we don't
+    // know what they are for so we just name them for their values
+    s16 sixteen = 16;
+    s16 four = 4;
+
+    if (PLAYER.step != Player_SpellHellfire) {
+        DestroyEntity(self);
+        return;
+    }
+
+    FntPrint("light_timer:%02x\n", self->ext.hellfireHandler.timer);
+    
+    selfPosX = self->posX.i.hi = PLAYER.posX.i.hi;
+    switch (self->step) {
+    case HFH_INIT:
+        g_Player.unk5C = 0;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk5C = -1;
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        self->posY.i.hi = 120;
+        // I think this is to make the yellow laser beam?
+        // it ends up looking like the library card effect.
+        LoadImage(&D_800B0788, (u_long*)D_800B06C8);
+        LoadImage(&D_800B0790, (u_long*)D_800B0728);
+        prim = &g_PrimBuf[self->primIndex];
+        prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
+        prim->u0 = prim->u2 = 1;
+        prim->u1 = prim->u3 = 0x30;
+        prim->b3 = 0x80;
+        prim->tpage = 0x11C;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_TRANSP;
+        prim->priority = self->zPriority = 0x1C0;
+        PlaySfx(SFX_TELEPORT_BANG_B);
+        self->step++;
+        break;
+    case HFH_STARTDELAY:
+        // Nothing happens since beamwidth is zero.
+        self->ext.hellfireHandler.beamheight += sixteen;
+        if (self->ext.hellfireHandler.beamheight >= 0x80) {
+            self->step++;
+        }
+        break;
+    case HFH_BEAMWIDEN:
+        self->ext.hellfireHandler.beamwidth += four;
+        if (self->ext.hellfireHandler.beamwidth >= 0x16) {
+            self->ext.hellfireHandler.timer = 0x20;
+            self->step++;
+        }
+        break;
+    case HFH_BEAMFLICKER:
+        if (--self->ext.hellfireHandler.timer == 0) {
+            PLAYER.palette = 0x810D;
+            self->step++;
+        }
+        break;
+    case HFH_BEAMSHRINK:
+        PLAYER.palette = 0x810D;
+        self->ext.hellfireHandler.beamwidth -= four * 2;
+        if (self->ext.hellfireHandler.beamwidth < 0) {
+            self->step++;
+            self->ext.hellfireHandler.timer = 0x2A;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->drawMode |= DRAW_HIDE;
+            g_Player.unk5C = 1;
+        }
+        break;
+    case HFH_PLAYER_DISAPPEAR:
+        PLAYER.palette = 0x810D;
+        if (self->ext.hellfireHandler.timer == 0x10) {
+            // Red flickering beam. Blueprint 38 has child 29 or func_80127CC8
+            CreateEntFactoryFromEntity(self, FACTORY(38, 0), 0);
+        }
+        if (--self->ext.hellfireHandler.timer == 0) {
+            self->step++;
+            self->ext.hellfireHandler.beamwidth = 0;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+        if (self->ext.hellfireHandler.timer == 2) {
+            g_Player.unk5C = 2;
+        }
+        break;
+    case HFH_PLAYER_REAPPEAR:
+        PLAYER.palette = 0x8100;
+        self->ext.hellfireHandler.beamwidth += four;
+        if (self->ext.hellfireHandler.beamwidth >= 0x16) {
+            self->step++;
+            self->ext.hellfireHandler.timer = 0x60;
+            prim = &g_PrimBuf[self->primIndex];
+        }
+        break;
+    case HFH_FINAL_PHASE:
+        if (self->ext.hellfireHandler.timer == 0x50) {
+            g_Player.unk5C = 3;
+        }
+        if (self->ext.hellfireHandler.timer == 0x30) {
+            // When you press up during hellfire, you get different fireballs.
+            if (g_Player.padPressed & PAD_UP) {
+                // Blueprint 35 makes child 27, the big black fireballs
+                CreateEntFactoryFromEntity(self, 35, 0);
+            } else {
+                // Blueprint 34 makes child 26, the small, normal fireballs
+                CreateEntFactoryFromEntity(self, 34, 0);
+            }
+        }
+        if (self->ext.hellfireHandler.timer == 0x50) {
+            CreateEntFactoryFromEntity(self, FACTORY(4, 10), 0);
+        }
+        if (self->ext.hellfireHandler.timer < 0x48) {
+            self->ext.hellfireHandler.beamwidth -= four;
+            if (self->ext.hellfireHandler.beamwidth < 0) {
+                self->ext.hellfireHandler.beamwidth = 0;
+            }
+        }
+        if (--self->ext.hellfireHandler.timer == 0x28) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    selfPosY = self->posY.i.hi = 0x78;
+    prim = &g_PrimBuf[self->primIndex];
+    if (g_GameTimer & 1) {
+        prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
+    } else {
+        prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xFC;
+    }
+    prim->x0 = prim->x2 = selfPosX - self->ext.hellfireHandler.beamwidth;
+    prim->y1 = prim->y0 = selfPosY - self->ext.hellfireHandler.beamheight;
+    prim->x1 = prim->x3 = selfPosX + self->ext.hellfireHandler.beamwidth;
+    prim->y2 = prim->y3 = selfPosY + self->ext.hellfireHandler.beamheight;
+    if (self->step == HFH_BEAMFLICKER) {
+        if (prim->b3 < 0xF8) {
+            prim->b3 += 4;
+        }
+        PCOL(prim);
+    }
+    if (self->step == HFH_FINAL_PHASE) {
+        if (prim->b3 > 0x20) {
+            prim->b3 -= 0x20;
+        }
+        PCOL(prim);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityHellfireNormalFireball);
 

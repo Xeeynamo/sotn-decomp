@@ -1022,9 +1022,9 @@ typedef struct {
 } ET_8011E4BC;
 
 typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
+  s16 beamwidth;
+  s16 beamheight;
+  s16 timer;
 } ET_HellfireHandler;
 
 typedef struct {

@@ -165,6 +165,8 @@ segments:
       - [0xA68C8, .data, dra/6E42C]
       - [0xA68E8, .data, dra/6D584]
       - [0xA6920, data]
+      - [0xA6B30, .data, dra_psp/3D738] # "light_timer:%02x\n" for hellfire
+      - [0xA6B48, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]

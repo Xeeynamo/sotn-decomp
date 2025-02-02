@@ -962,9 +962,20 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     }
 }
 
+typedef enum{
+    HFH_INIT,
+    HFH_STARTDELAY,
+    HFH_BEAMWIDEN,
+    HFH_BEAMFLICKER,
+    HFH_BEAMSHRINK,
+    HFH_PLAYER_DISAPPEAR,
+    HFH_PLAYER_REAPPEAR,
+    HFH_FINAL_PHASE
+} HellfireHandlerSteps;
+
 void EntityHellfireHandler(Entity* self) {
     Primitive* prim;
-    u16 selfPosX;
+    s16 selfPosX;
     s16 selfPosY;
     // These are probably adjustable variables but for now we don't
     // know what they are for so we just name them for their values
@@ -976,11 +987,11 @@ void EntityHellfireHandler(Entity* self) {
         return;
     }
 
-    FntPrint("light_timer:%02x\n", self->ext.hellfireHandler.unk80);
-    self->posX.i.hi = PLAYER.posX.i.hi;
-    selfPosX = self->posX.i.hi;
+    FntPrint("light_timer:%02x\n", self->ext.hellfireHandler.timer);
+    
+    selfPosX = self->posX.i.hi = PLAYER.posX.i.hi;
     switch (self->step) {
-    case 0:
+    case HFH_INIT:
         g_Player.unk5C = 0;
         self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
@@ -1007,64 +1018,67 @@ void EntityHellfireHandler(Entity* self) {
         PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
-    case 1:
-        self->ext.hellfireHandler.unk7E += sixteen;
-        if (self->ext.hellfireHandler.unk7E >= 0x80) {
+    case HFH_STARTDELAY:
+        // Nothing happens since beamwidth is zero.
+        self->ext.hellfireHandler.beamheight += sixteen;
+        if (self->ext.hellfireHandler.beamheight >= 0x80) {
             self->step++;
         }
         break;
-    case 2:
-        self->ext.hellfireHandler.unk7C += four;
-        if (self->ext.hellfireHandler.unk7C >= 0x16) {
-            self->ext.hellfireHandler.unk80 = 0x20;
+    case HFH_BEAMWIDEN:
+        self->ext.hellfireHandler.beamwidth += four;
+        if (self->ext.hellfireHandler.beamwidth >= 0x16) {
+            self->ext.hellfireHandler.timer = 0x20;
             self->step++;
         }
         break;
-    case 3:
-        if (--self->ext.hellfireHandler.unk80 == 0) {
+    case HFH_BEAMFLICKER:
+        if (--self->ext.hellfireHandler.timer == 0) {
             PLAYER.palette = 0x810D;
             self->step++;
         }
         break;
-    case 4:
+    case HFH_BEAMSHRINK:
         PLAYER.palette = 0x810D;
-        self->ext.hellfireHandler.unk7C -= four * 2;
-        if (self->ext.hellfireHandler.unk7C < 0) {
-            self->ext.hellfireHandler.unk80 = 0x2A;
+        self->ext.hellfireHandler.beamwidth -= four * 2;
+        if (self->ext.hellfireHandler.beamwidth < 0) {
             self->step++;
+            self->ext.hellfireHandler.timer = 0x2A;
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode |= DRAW_HIDE;
             g_Player.unk5C = 1;
         }
         break;
-    case 5:
+    case HFH_PLAYER_DISAPPEAR:
         PLAYER.palette = 0x810D;
-        if (self->ext.hellfireHandler.unk80 == 0x10) {
-            CreateEntFactoryFromEntity(self, 38, 0);
+        if (self->ext.hellfireHandler.timer == 0x10) {
+            // Red flickering beam. Blueprint 38 has child 29 or func_80127CC8
+            CreateEntFactoryFromEntity(self, FACTORY(38, 0), 0);
         }
-        if (--self->ext.hellfireHandler.unk80 == 0) {
-            self->ext.hellfireHandler.unk7C = 0;
+        if (--self->ext.hellfireHandler.timer == 0) {
             self->step++;
+            self->ext.hellfireHandler.beamwidth = 0;
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode &= ~DRAW_HIDE;
         }
-        if (self->ext.hellfireHandler.unk80 == 2) {
+        if (self->ext.hellfireHandler.timer == 2) {
             g_Player.unk5C = 2;
         }
         break;
-    case 6:
+    case HFH_PLAYER_REAPPEAR:
         PLAYER.palette = 0x8100;
-        self->ext.hellfireHandler.unk7C += four;
-        if (self->ext.hellfireHandler.unk7C >= 0x16) {
-            self->ext.hellfireHandler.unk80 = 0x60;
+        self->ext.hellfireHandler.beamwidth += four;
+        if (self->ext.hellfireHandler.beamwidth >= 0x16) {
             self->step++;
+            self->ext.hellfireHandler.timer = 0x60;
+            prim = &g_PrimBuf[self->primIndex];
         }
         break;
-    case 7:
-        if (self->ext.hellfireHandler.unk80 == 0x50) {
+    case HFH_FINAL_PHASE:
+        if (self->ext.hellfireHandler.timer == 0x50) {
             g_Player.unk5C = 3;
         }
-        if (self->ext.hellfireHandler.unk80 == 0x30) {
+        if (self->ext.hellfireHandler.timer == 0x30) {
             // When you press up during hellfire, you get different fireballs.
             if (g_Player.padPressed & PAD_UP) {
                 // Blueprint 35 makes child 27, the big black fireballs
@@ -1074,49 +1088,45 @@ void EntityHellfireHandler(Entity* self) {
                 CreateEntFactoryFromEntity(self, 34, 0);
             }
         }
-        if (self->ext.hellfireHandler.unk80 == 0x50) {
+        if (self->ext.hellfireHandler.timer == 0x50) {
             CreateEntFactoryFromEntity(self, FACTORY(4, 10), 0);
         }
-        if (self->ext.hellfireHandler.unk80 < 0x48) {
-            self->ext.hellfireHandler.unk7C -= four;
-            if (self->ext.hellfireHandler.unk7C < 0) {
-                self->ext.hellfireHandler.unk7C = 0;
+        if (self->ext.hellfireHandler.timer < 0x48) {
+            self->ext.hellfireHandler.beamwidth -= four;
+            if (self->ext.hellfireHandler.beamwidth < 0) {
+                self->ext.hellfireHandler.beamwidth = 0;
             }
         }
-        if (--self->ext.hellfireHandler.unk80 == 0x28) {
+        if (--self->ext.hellfireHandler.timer == 0x28) {
             DestroyEntity(self);
             return;
         }
         break;
     }
 
-    self->posY.i.hi = 0x78;
-    selfPosY = 0x78;
+    selfPosY = self->posY.i.hi = 0x78;
     prim = &g_PrimBuf[self->primIndex];
     if (g_GameTimer & 1) {
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
     } else {
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xFC;
     }
-    prim->x0 = prim->x2 = selfPosX - self->ext.hellfireHandler.unk7C;
-    prim->y1 = prim->y0 = selfPosY - self->ext.hellfireHandler.unk7E;
-    prim->x1 = prim->x3 = selfPosX + self->ext.hellfireHandler.unk7C;
-    prim->y2 = prim->y3 = selfPosY + self->ext.hellfireHandler.unk7E;
-    if (self->step == 3) {
+    prim->x0 = prim->x2 = selfPosX - self->ext.hellfireHandler.beamwidth;
+    prim->y1 = prim->y0 = selfPosY - self->ext.hellfireHandler.beamheight;
+    prim->x1 = prim->x3 = selfPosX + self->ext.hellfireHandler.beamwidth;
+    prim->y2 = prim->y3 = selfPosY + self->ext.hellfireHandler.beamheight;
+    if (self->step == HFH_BEAMFLICKER) {
         if (prim->b3 < 0xF8) {
             prim->b3 += 4;
         }
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3;
+        PCOL(prim);
     }
-    if (self->step == 7) {
-        if (prim->b3 >= 0x21) {
+    if (self->step == HFH_FINAL_PHASE) {
+        if (prim->b3 > 0x20) {
             prim->b3 -= 0x20;
         }
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3;
+        PCOL(prim);
     }
-    return;
 }
 
 // The fireball produced by Hellfire, when you do NOT press up
