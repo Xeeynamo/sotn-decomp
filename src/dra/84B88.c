@@ -1720,13 +1720,11 @@ void EntitySubwpnReboundStone(Entity* self) {
 void EntitySubwpnThrownVibhuti(Entity* self) {
     Collider collider;
     FakePrim* fakeprim;
-    s16 fakeprimY;
-    s16 collisionOffsetX;
     s16 randomAngle;
-    s16 randomVelocity;
+    s16 fakePrimX;
+    s16 fakeprimY;
+    s16 temp; //used for multiple unrelated things
     s32 i;
-    u16 selfX;
-    u16 selfY;
 
     switch (self->step) {
     case 0:
@@ -1737,70 +1735,68 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         func_8011A290(self);
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
         self->hitboxWidth = self->hitboxHeight = 4;
         self->ext.subweapon.timer = 0x80;
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        fakeprimY = selfY - 8;
-        while (1) {
+        fakePrimX = self->posX.i.hi;
+        fakeprimY = self->posY.i.hi - 8;
+        for(i = 0; true; i++, fakeprim = fakeprim->next){
             fakeprim->drawMode = DRAW_UNK02;
             fakeprim->priority = PLAYER.zPriority + 2;
             if (fakeprim->next == NULL) {
-                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
                 fakeprim->drawMode &= ~DRAW_HIDE;
+                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
                 break;
             }
-            fakeprim->posX.i.hi = selfX;
+            fakeprim->posX.i.hi = fakePrimX;
             fakeprim->posY.i.hi = fakeprimY;
             fakeprim->posX.i.lo = fakeprim->posY.i.lo = 0;
             randomAngle = (rand() & 0xFF) + 0x100;
-            randomVelocity = (rand() & 0xFF) + 0x80;
-            fakeprim->velocityX.val =
-                ((rcos(randomAngle) << 4) * randomVelocity >> 9) + FIX(0.5);
+            temp = (rand() & 0xFF) + 0x80;
+            fakeprim->velocityX.val = ((rcos(randomAngle) << 4) * temp >> 9);
+            fakeprim->velocityX.val += FIX(0.5);
             fakeprim->velocityY.val =
-                -((rsin(randomAngle) << 4) * randomVelocity >> 9);
+                -((rsin(randomAngle) << 4) * temp >> 9);
             fakeprim->velocityX.val = (fakeprim->velocityX.val * 3) >> 1;
             if (self->facingLeft) {
                 fakeprim->velocityX.val = -fakeprim->velocityX.val;
             }
-            fakeprim->delay = 1;
             fakeprim->posY.i.hi -= 4;
-            fakeprim->b0 = fakeprim->g0 = fakeprim->r0 = 0xFF;
-            fakeprim->h = fakeprim->w = 2;
+            fakeprim->delay = 1;
             fakeprim->x0 = fakeprim->posX.i.hi;
             fakeprim->y0 = fakeprim->posY.i.hi;
-            fakeprim = fakeprim->next;
+            fakeprim->r0 = 0xFF;
+            fakeprim->g0 = 0xFF;
+            fakeprim->b0 = 0xFF;
+            fakeprim->w = 2;
+            fakeprim->h = 2;
         }
         PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.timers[10] = 4;
         self->step++;
         break;
     case 1:
+        temp = 2;
         if (self->facingLeft) {
-            collisionOffsetX = -2;
-        } else {
-            collisionOffsetX = 2;
+            temp = -temp;
         }
 
-        if (!--self->ext.subweapon.timer) {
+        if (--self->ext.subweapon.timer == 0) {
             DestroyEntity(self);
             return;
         }
-        fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        i = 0;
-        while (1) {
+        for(fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true; fakeprim = fakeprim->next){
             if (fakeprim->next == NULL) {
+                fakeprim->drawMode &= ~DRAW_HIDE; 
                 fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
-                fakeprim->drawMode &= ~DRAW_HIDE;
                 break;
             }
             fakeprim->posX.i.hi = fakeprim->x0;
             fakeprim->posY.i.hi = fakeprim->y0;
-            if (fakeprim->delay != 0) {
+            if (fakeprim->delay) {
                 if (fakeprim->velocityX.val != 0) {
                     fakeprim->posX.val += fakeprim->velocityX.val;
-                    CheckCollision(fakeprim->posX.i.hi + collisionOffsetX,
+                    CheckCollision(fakeprim->posX.i.hi + temp,
                                    fakeprim->posY.i.hi, &collider, 0);
                     if (collider.effects & EFFECT_UNK_0002) {
                         fakeprim->velocityX.val = 0;
@@ -1816,8 +1812,8 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                         fakeprim->posX.i.hi, fakeprim->posY.i.hi, &collider, 0);
                     if (collider.effects & EFFECT_SOLID) {
                         fakeprim->delay = 0;
-                        fakeprim->posY.i.hi =
-                            fakeprim->posY.i.hi + collider.unk18 - (i % 3 + 1);
+                        fakeprim->posY.i.hi += collider.unk18;
+                        fakeprim->posY.i.hi -= (i % 3 + 1);
                         fakeprim->w = fakeprim->h = 3;
                     }
                 }
@@ -1826,28 +1822,27 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
                 self->posX.i.hi = fakeprim->posX.i.hi;
                 self->posY.i.hi = fakeprim->posY.i.hi;
                 if (fakeprim->drawMode & DRAW_HIDE) {
-                    self->hitboxHeight = 0;
-                    self->hitboxWidth = 0;
+                    self->hitboxWidth = self->hitboxHeight = 0;
                 } else {
                     self->hitboxWidth = self->hitboxHeight = 4;
                 }
-                if (fakeprim->delay != 0) {
+                if (fakeprim->delay) {
                     self->hitboxOffY = 0;
                 } else {
                     self->hitboxOffY = -6;
                 }
             }
-            if ((self->hitFlags != 0) &&
+            if ((self->hitFlags) &&
                 (((self->ext.subweapon.timer + 1) & 7) == i)) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
             if ((self->ext.subweapon.timer - 1) == i) {
                 fakeprim->drawMode = DRAW_HIDE;
             }
+            i++;
             fakeprim->x0 = fakeprim->posX.i.hi;
             fakeprim->y0 = fakeprim->posY.i.hi;
-            fakeprim = fakeprim->next;
-            i++;
+
         }
         self->hitFlags = 0;
         break;
