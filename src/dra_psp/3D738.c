@@ -1847,7 +1847,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
     }
 }
 
-u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
+static u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
     s32 i;
     s32 j;
     u8* colorPtr; // points to an RGB color
@@ -1871,7 +1871,150 @@ u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
     return isEnd;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntitySubwpnAgunea);
+// ID #17. Created by factory blueprint #22. This is the blueprint for the
+// Agunea (lightning) subweapon.
+void EntitySubwpnAgunea(Entity* self) {
+    Entity* ent;
+    Primitive* prim;
+    s32 heartCost;
+    s16 tempX;
+    s16 tempY;
+    u32 heartBroachesWorn;
+
+    if (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10000)) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        } else {
+            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                          FLAG_HAS_PRIMS;
+            self->facingLeft = PLAYER.facingLeft;
+            func_8011A290(self);
+            self->hitboxWidth = self->hitboxHeight = 4;
+            self->hitboxOffX = 4;
+            self->hitboxOffY = 0;
+            self->posY.i.hi = self->ext.agunea.unk82 =
+                PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+            self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->type = PRIM_LINE_G2;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_TRANSP;
+            prim->r1 = 0x60;
+            prim->g1 = 0;
+            prim->b1 = 0x80;
+            SetSpeedX(FIX(6));
+            PlaySfx(SFX_WEAPON_SWISH_C);
+            CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
+            g_Player.timers[10] = 4;
+            self->step++;
+        }
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x20 || self->posY.i.hi > 0x120) {
+            self->step = 2;
+        }
+        if (self->hitFlags) {
+            self->ext.agunea.parent = self->unkB8;
+            self->step = 3;
+        }
+        break;
+    case 4:
+        self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if (++self->ext.agunea.unk7C < 16) {
+            break;
+        }
+        // Fallthrough
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (prim->r1 < 5) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        if ((g_Player.padPressed & (PAD_UP + PAD_SQUARE)) !=
+            (PAD_UP + PAD_SQUARE)) {
+            self->step = 4;
+        }
+        if (!self->ext.agunea.parent->entityId){
+            self->step = 2;
+            return;
+        } 
+        if(self->ext.agunea.unk7C &&
+                (self->ext.agunea.parent->hitPoints > 0x7000 || !self->ext.agunea.parent->hitPoints ||
+                 self->ext.agunea.parent->flags & FLAG_DEAD)) {
+            self->step = 2;
+            return;
+        }
+
+        tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if ((self->ext.agunea.unk7C % 12) == 0) {
+            self->posX.i.hi += ((rand() & 0xF) - 8);
+            self->posY.i.hi += ((rand() & 0xF) - 8);
+            if (self->ext.agunea.unk84 == 0) {
+                CreateEntFactoryFromEntity(self, 23, 0);
+                PlaySfx(SFX_THUNDER_B);
+                CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
+                self->ext.agunea.unk84++;
+            } else {
+                heartCost = 5;
+                // 0x4d is the item ID for the heart broach.
+                heartBroachesWorn =
+                    CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
+                if (heartBroachesWorn == 1) {
+                    heartCost /= 2;
+                }
+                if (heartBroachesWorn == 2) {
+                    heartCost /= 3;
+                }
+                if (heartCost <= 0) {
+                    heartCost = 1;
+                }
+                if (g_Status.hearts >= heartCost) {
+                    g_Status.hearts -= heartCost;
+                    CreateEntFactoryFromEntity(self, 23, 0);
+                    PlaySfx(SFX_THUNDER_B);
+                    CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
+                } else {
+                    self->step = 4;
+                }
+            }
+        }
+        self->posX.i.hi = tempX;
+        self->posY.i.hi = tempY;
+        self->ext.agunea.unk7C++;
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    if (prim->r1 >= 4) {
+        prim->r1 -= 4;
+    }
+    if (prim->g1 >= 4) {
+        prim->g1 -= 4;
+    }
+    if (prim->b1 >= 4) {
+        prim->b1 -= 4;
+    }
+    if (prim->b1 < 5) {
+        prim->drawMode |= DRAW_HIDE;
+    }
+    prim->x0 = self->ext.agunea.unk80;
+    prim->y0 = self->ext.agunea.unk82;
+    prim->x1 = self->posX.i.hi;
+    prim->y1 = self->posY.i.hi;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityAguneaHitEnemy);
 

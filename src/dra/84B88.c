@@ -1879,8 +1879,8 @@ void EntitySubwpnAgunea(Entity* self) {
     Entity* ent;
     Primitive* prim;
     s32 heartCost;
-    u16 tempY;
-    u16 tempX;
+    s16 tempX;
+    s16 tempY;
     u32 heartBroachesWorn;
 
     if (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10000)) {
@@ -1898,8 +1898,7 @@ void EntitySubwpnAgunea(Entity* self) {
                           FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
             func_8011A290(self);
-            self->hitboxHeight = 4;
-            self->hitboxWidth = 4;
+            self->hitboxWidth = self->hitboxHeight = 4;
             self->hitboxOffX = 4;
             self->hitboxOffY = 0;
             self->posY.i.hi = self->ext.agunea.unk82 =
@@ -1926,23 +1925,21 @@ void EntitySubwpnAgunea(Entity* self) {
             self->posY.i.hi < -0x20 || self->posY.i.hi > 0x120) {
             self->step = 2;
         }
-        if (self->hitFlags != 0) {
-            self->step = 3;
+        if (self->hitFlags) {
             self->ext.agunea.parent = self->unkB8;
+            self->step = 3;
         }
         break;
     case 4:
         self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
         self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
-        if (++self->ext.agunea.unk7C >= 16) {
-            if (g_PrimBuf[self->primIndex].r1 < 5) {
-                DestroyEntity(self);
-                return;
-            }
+        if (++self->ext.agunea.unk7C < 16) {
+            break;
         }
-        break;
+        // Fallthrough
     case 2:
-        if (g_PrimBuf[self->primIndex].r1 < 5) {
+        prim = &g_PrimBuf[self->primIndex];
+        if (prim->r1 < 5) {
             DestroyEntity(self);
             return;
         }
@@ -1952,11 +1949,13 @@ void EntitySubwpnAgunea(Entity* self) {
             (PAD_UP + PAD_SQUARE)) {
             self->step = 4;
         }
-        ent = self->ext.agunea.parent;
-        if (ent->entityId == 0 ||
-            self->ext.agunea.unk7C != 0 &&
-                (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
-                 ent->flags & FLAG_DEAD)) {
+        if (!self->ext.agunea.parent->entityId){
+            self->step = 2;
+            return;
+        } 
+        if(self->ext.agunea.unk7C &&
+                (self->ext.agunea.parent->hitPoints > 0x7000 || !self->ext.agunea.parent->hitPoints ||
+                 self->ext.agunea.parent->flags & FLAG_DEAD)) {
             self->step = 2;
             return;
         }
@@ -1977,7 +1976,7 @@ void EntitySubwpnAgunea(Entity* self) {
                 heartBroachesWorn =
                     CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
                 if (heartBroachesWorn == 1) {
-                    heartCost = 2;
+                    heartCost /= 2;
                 }
                 if (heartBroachesWorn == 2) {
                     heartCost /= 3;
@@ -2010,15 +2009,13 @@ void EntitySubwpnAgunea(Entity* self) {
     if (prim->b1 >= 4) {
         prim->b1 -= 4;
     }
-    tempX = prim->b1;
-    if (tempX < 5) {
+    if (prim->b1 < 5) {
         prim->drawMode |= DRAW_HIDE;
     }
     prim->x0 = self->ext.agunea.unk80;
     prim->y0 = self->ext.agunea.unk82;
     prim->x1 = self->posX.i.hi;
     prim->y1 = self->posY.i.hi;
-    return;
 }
 
 void EntityAguneaHitEnemy(Entity* self) {
